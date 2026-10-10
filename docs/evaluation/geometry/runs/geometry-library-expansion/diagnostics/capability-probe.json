@@ -1,0 +1,108 @@
+{
+  "schema": "geometry_capability_probe/1",
+  "registry_count": 24,
+  "registry": [
+    "altitude",
+    "ask_angle_line_plane",
+    "ask_angle_plane_plane",
+    "ask_area",
+    "ask_distance_lines",
+    "ask_distance_point_plane",
+    "ask_length",
+    "ask_volume",
+    "centroid",
+    "equal_length",
+    "face_perpendicular_base",
+    "height",
+    "midpoint",
+    "orthogonal_projection",
+    "perpendicular_line_plane",
+    "perpendicular_lines",
+    "prism",
+    "pyramid",
+    "rectangle",
+    "regular_polygon",
+    "regular_pyramid",
+    "right_angle",
+    "segment_length",
+    "unsupported"
+  ],
+  "missing_library_entries": [
+    "intersect_line_line",
+    "intersect_line_plane",
+    "intersect_plane_plane",
+    "construct_section",
+    "project_point_onto_line",
+    "rhombus",
+    "trapezoid",
+    "divide_segment"
+  ],
+  "unique_projection": {
+    "kernel_matches_independent_foot": true,
+    "plane_foot_chart": [
+      "2/3",
+      "1",
+      "1/3"
+    ],
+    "line_foot_chart": [
+      "1/2",
+      "1/2",
+      "0"
+    ],
+    "function_route_status": "REFUSED",
+    "function_route_code": "UNDERDETERMINED_POINT"
+  },
+  "annotation_audit": {
+    "scope": "frozen fake FULL sample1 only; no rerun",
+    "served_scenes": 46,
+    "unbound_count": 10,
+    "reason_counts": {
+      "measure angle_cos_sq has no registered anchor": 6,
+      "distance between two non-point objects has no registered anchor": 4
+    },
+    "case_arms": [
+      [
+        "expansion/X02",
+        "A"
+      ],
+      [
+        "expansion/X02",
+        "B"
+      ],
+      [
+        "expansion/X04",
+        "A"
+      ],
+      [
+        "expansion/X04",
+        "B"
+      ],
+      [
+        "hybrid/H03",
+        "A"
+      ],
+      [
+        "hybrid/H03",
+        "B"
+      ],
+      [
+        "hybrid/H11",
+        "A"
+      ],
+      [
+        "hybrid/H11",
+        "B"
+      ],
+      [
+        "hybrid/H12",
+        "A"
+      ],
+      [
+        "hybrid/H12",
+        "B"
+      ]
+    ],
+    "classification": "DISPLAY_ANCHOR_GAP_NOT_MATH_ERROR"
+  },
+  "live_gemini_calls": 0
+}

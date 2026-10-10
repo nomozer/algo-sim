@@ -1,0 +1,63 @@
+{
+  "base_commit": "2990d87de861f03b31dd9e7310c50de59bcaf868",
+  "main": "28ac1d61cbaa6b33085bb12392e5f0f5815eb787",
+  "candidate": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "product_source": "cfe2ada5e61e7fec18a84234e64cdb1d3319dd62",
+  "frozen_artifacts_verified": 48,
+  "prior_backend": {
+    "source": "2f1b457cc5c08d551ace7ecfea5ad17a5f781620",
+    "failures": 0,
+    "deselected": 2,
+    "evidence": "hybrid-ab-pilot-readiness/diagnostics/full-backend-authoritative.xml",
+    "current_rerun": false,
+    "errors": 0,
+    "skipped": 1,
+    "passed": 8068
+  },
+  "prior_fake": {
+    "smoke_rows": 24,
+    "calls": 312,
+    "network": 0,
+    "live": 0,
+    "full_rows": 288
+  },
+  "unresolved": [
+    "ISSUE-EVAL-HYBRID-PROMPT-TOKEN-BOUND-UNVERIFIED",
+    "ISSUE-OPS-HYBRID-PERSISTENCE-FAILURE-UNRECOVERED",
+    "Human visual acceptance NOT_PERFORMED",
+    "No live-model/population-safety proof"
+  ],
+  "user_favicon_sha256": "5cd57f27376366a639370e0282456529dbdc227c6aa8a950eb6d7116f317dc62",
+  "expansion_branch": "feat/geometry-library-expansion",
+  "expansion_worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/geometry-library-expansion",
+  "scope_classification": "CORE; audit/design stage only",
+  "baseline": {
+    "passed": 344,
+    "failed": 0,
+    "skipped": 0,
+    "deselected": 0,
+    "seconds": 47.26,
+    "source_commit": "2990d87de861f03b31dd9e7310c50de59bcaf868",
+    "journal": "diagnostics/baseline.xml",
+    "clean_before": true,
+    "clean_after": true
+  },
+  "skills": {
+    "applied": [
+      "brainstorming",
+      "using-git-worktrees",
+      "karpathy-guidelines",
+      "ponytail"
+    ],
+    "inspected": [
+      "graphify (no existing graph; direct source/index fallback)"
+    ],
+    "local_claude_installed": [
+      "impeccable",
+      "playwright-cli"
+    ],
+    "local_claude_usage": "UI skills not applicable to current read-only backend audit; browser skill deferred to approved visual verification"
+  },
+  "stage": "CAPABILITY_AUDIT_DESIGN_PENDING_APPROVAL",
+  "live_gemini_calls": 0
+}

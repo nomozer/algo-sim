@@ -1,0 +1,7 @@
+{
+  "schema": "geometry_projection_b_probe/1",
+  "status": "REFUSED",
+  "code": "UNDERDETERMINED_POINT",
+  "limitation": "Existing base B facts mechanically converted from A; diagnostic probe, not independent quality evidence",
+  "live_gemini_calls": 0
+}

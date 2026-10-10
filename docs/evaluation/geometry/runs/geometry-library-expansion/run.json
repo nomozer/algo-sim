@@ -1,0 +1,58 @@
+{
+  "schema": "geometry_library_expansion/1",
+  "run_id": "geometry-library-expansion",
+  "wave_id": "GEOMETRY_LIBRARY_EXPANSION",
+  "wave_number": 1,
+  "date": "2026-10-10",
+  "environment": "LOCAL",
+  "branch": "feat/geometry-library-expansion",
+  "base_commit": "2990d87de861f03b31dd9e7310c50de59bcaf868",
+  "base_choice": "User explicitly requested verified post-safety source; exception to normal main-only branch bootstrap. No merge.",
+  "documentation_commit_role": "SELF",
+  "stage": "CAPABILITY_AUDIT_DESIGN_PENDING_APPROVAL",
+  "handoff_status": "NOT_READY_IMPLEMENTATION_NOT_STARTED",
+  "intended_final_status": "GEOMETRY_LIBRARY_EXPANSION_AWAITING_REVIEW",
+  "production_changes": 0,
+  "locked_ab_candidate_sha256": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "measured_product_divergence": "NONE_AT_AUDIT_STAGE",
+  "main_unchanged_sha": "28ac1d61cbaa6b33085bb12392e5f0f5815eb787",
+  "default_route": "LLM_ONLY_UNCHANGED",
+  "live_gemini_calls": 0,
+  "paid_api_calls": 0,
+  "baseline": {
+    "focused_passed": 344,
+    "focused_seconds": 47.26,
+    "kernel_section_annotations_passed": 107,
+    "kernel_section_annotations_seconds": 2.51,
+    "failed": 0,
+    "skipped": 0,
+    "deselected": 0
+  },
+  "prior_handoff_verified": {
+    "backend_passed": 8068,
+    "backend_skipped": 1,
+    "backend_deselected": 2,
+    "fake_calls": 312,
+    "live_gemini_calls": 0,
+    "basis": "Preserved XML/certification +48 artifact hashes, not a fresh full-suite/fake rerun"
+  },
+  "proposed_groups": [
+    "Unique point intersections: line-line and line-plane",
+    "Constructive orthogonal projection: point-line and point-plane"
+  ],
+  "deferred": [
+    "Plane-plane line-object API and full section API",
+    "Oblique-prism translation/metric determination",
+    "Rhombus/trapezoid base charts",
+    "General proof engine and visual-anchor expansion"
+  ],
+  "locked_ab_paths_unchanged": [
+    "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness",
+    "docs/evaluation/geometry/runs/hybrid-compiler-selection",
+    "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "backend/scripts/run_hybrid_ab_pilot.py"
+  ],
+  "audit": "audit.md",
+  "preflight": "preflight.json",
+  "user_untracked_preserved": "frontend/public/favicon.svg in original worktree"
+}
