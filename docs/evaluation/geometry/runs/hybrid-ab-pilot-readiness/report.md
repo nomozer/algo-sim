@@ -98,7 +98,7 @@ the product default route, and the existing cache/route dependency tests guard t
 | Renderer metric | `diagnostics/renderer-metric.log` | 14 scenes, 194 pairs; max relative error 7.02e-10 (<1e-9); not visual acceptance |
 | Candidate / cache identity | `diagnostics/verification.json` | Candidate12da4768 / cache125 match; frozen per-mode identities match current code |
 | Full backend, clean detached checkout | `diagnostics/full-backend-authoritative.xml`, clean `2f1b457c` | 8068 pass, 0 fail, 1 skip, 2 deselected; 359.12s; clean before/after |
-| Documentation gates | `diagnostics/docs-audit-final.json`, final clean docs tests | Audit PASS; final test journal being sealed |
+| Documentation gates | `diagnostics/docs-audit-final.json`, `diagnostics/docs-final.xml`, clean `475defaa` | Audit PASS;153 tests PASS/0 fail/skip,38.27s;48 artifact hashes verified; clean before/after |
 | Additional frontend regression/build | Native Vitest + tsc/Vite | 1040 tests/67 files PASS,7.05s; fresh-output build PASS |
 
 Frontend build to the existing `dist` failed on EPERM while emptying its assets directory. Building the same source with a
@@ -140,7 +140,7 @@ guarantee. The degenerate zero-event bootstrap is reported with those limitation
 
 | Decision | Status | Requirement before change |
 |---|---|---|
-| Offline runner readiness | GO — bounded offline wiring/guards certification | Clean backend PASS; final docs/identity journals sealed at handoff; not a reliability or real-model claim |
+| Offline runner readiness | GO — bounded offline wiring/guards certification | Clean backend/docs PASS; identity journals sealed; not a reliability or real-model claim |
 | SMOKE live execution | NO-GO | Human review of exact identities + verified prompt-count/billing basis + storage-risk acceptance/resolution + explicit smoke approval |
 | FULL live execution | NO-GO | Smoke completion/review plus separate exact-identity full approval; no smoke superiority claim |
 

@@ -119,8 +119,24 @@
       "artifact": "diagnostics/full-backend-authoritative.xml"
     },
     "docs_gates": {
-      "status": "PENDING_FINAL_JOURNAL",
-      "audit": "diagnostics/docs-audit-final.json"
+      "status": "PASS",
+      "head": "475defaacad383b03f7d593927140e238e409849",
+      "audit": "diagnostics/docs-audit-final.json",
+      "tests": {
+        "passed": 153,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 38.27,
+        "artifact": "diagnostics/docs-final.xml"
+      },
+      "clean_before": true,
+      "clean_after": true,
+      "artifact_hashes_verified": 48,
+      "candidate_verify": "PASS",
+      "cache_verify": "PASS",
+      "mode_identity_verify": "MATCH_CURRENT_CODE",
+      "historical_audit_test_reconciliation": "Separate historical telemetry; not this run's current test counts"
     },
     "renderer_metric": {
       "scenes": 14,

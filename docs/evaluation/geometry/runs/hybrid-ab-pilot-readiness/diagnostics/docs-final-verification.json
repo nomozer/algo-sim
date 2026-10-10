@@ -1,0 +1,19 @@
+{
+  "schema": "hybrid_ab_final_docs_verification/1",
+  "source_commit": "475defaacad383b03f7d593927140e238e409849",
+  "tests_passed": 153,
+  "failed": 0,
+  "skipped": 0,
+  "seconds": 38.27,
+  "clean_before": true,
+  "clean_after": true,
+  "artifact": "docs-final.xml",
+  "sha256_lf": "3dca4f3b55269061c93af45335cf20e49fd59f453f5a7accffc418cea0f8a107",
+  "audit": "PASS",
+  "immutable_artifact_hashes_verified": 48,
+  "candidate": "MATCH",
+  "cache": "125_MATCH",
+  "frozen_mode_identities": "MATCH",
+  "renderer_scene_reuse": "14 B sample1 scenes structurally match current verified fake outputs",
+  "live_gemini_calls": 0
+}

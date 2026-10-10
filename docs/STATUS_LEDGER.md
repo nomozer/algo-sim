@@ -1701,5 +1701,6 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/
 - **FINAL_DECISION:** HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW. Historical artifact bytes preserved; correction indexed.
 - **AUTHORITATIVE_FILES:** `protocol.md`, `plan.md`, `run.json`, `report.md`, `handoff.md`, `inputs/`, `fake-provider/verified/`, `diagnostics/`.
 - **FOLLOW_UP_SOURCE:** evaluation-only8aad0673 /2f1b457c; product remainscfe2ada5. Prior successful journals preserved separately.
+- **FINAL_DOCS:** clean475defaa,153 PASS/0 fail/skip,38.27s; audit PASS,48 immutable artifact hashes verified.
 - **STORAGE_DISCLOSURE:** two atomic-persistence failures retained locally without resume; cause/errno/winerror UNKNOWN.
   Fresh instrumented/current certifications each312 complete; not a reliability proof. Persistence issue remains OPEN.

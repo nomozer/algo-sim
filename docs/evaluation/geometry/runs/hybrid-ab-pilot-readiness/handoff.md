@@ -6,7 +6,7 @@ cache125; default `LLM_ONLY`. Main unchanged at `28ac1d61cbaa6b33085bb12392e5f0f
 Documentation commit role SELF; user-owned untracked `frontend/public/favicon.svg` preserved and excluded from staging.
 
 Implementation: safety commits `9823a61e`, `ef1a9ae6`, clause fix `2e4b87b6`, runner `e20e681e`, bounded review fix `cfe2ada5`, final taxonomy `8aad0673`, refusal-metadata/scoring completion `2f1b457c`.
-344 focused PASS + 9 mutation killed; 312 fake operations through real adapters with network/live0. Clean full backend8068 PASS /1 skip /2 deselected,359.12s at `2f1b457c`; final docs journals seal this handoff. Consult [`report.md`](report.md) for the final result, not historical count summaries.
+344 focused PASS + 9 mutation killed; 312 fake operations through real adapters with network/live0. Clean full backend8068 PASS /1 skip /2 deselected,359.12s at `2f1b457c`; clean final docs153 PASS,38.27s at `475defaa`, audit PASS,48 artifact hashes verified. Consult [`report.md`](report.md) for the final result, not historical count summaries.
 
 Authoritative protocol/plan: [`protocol.md`](protocol.md), [`plan.md`](plan.md). Machine identity and caps: [`run.json`](run.json).
 Current fake certification: [`fake-provider/verified/CERTIFICATION.json`](fake-provider/verified/CERTIFICATION.json).

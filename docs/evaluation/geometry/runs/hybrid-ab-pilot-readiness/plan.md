@@ -289,7 +289,7 @@
   Run the hybrid, function-route, grounding, geometry-oracle, renderer-metric, and runner test files named by the changed code.
   Preserve full command/output logs in this run's diagnostics.
 
-- [ ] **Step 2: Run repository-required audits and full backend suite**
+- [x] **Step 2: Run repository-required audits and full backend suite**
 
   Run documentation layout/reference audits, candidate divergence/freeze checks in a clean detached worktree, and the full
   backend pytest command from `docs/TEST_TIERS.md`. Record exact pass/fail/skip counts and duration; do not convert missing data
@@ -300,7 +300,7 @@
   Report metric/geometry checks separately from human visual acceptance. If no browser/human review occurred, state that hidden
   edges, labels, faces, and interaction are not visually accepted.
 
-- [ ] **Step 4: Write additive report and handoff**
+- [x] **Step 4: Write additive report and handoff**
 
   Include repaired counterexamples, checker boundary, fake-provider evidence, locked protocol, remaining limits, actual skills
   used, branch/HEAD/working tree/candidate/cache identity, `LIVE GEMINI CALLS = 0`, and GO/NO-GO. Technical readiness may be GO;
@@ -310,12 +310,12 @@
 
   Add the run and `CORRECTED_BY` link, update current pointers, and leave the old report/results untouched.
 
-- [ ] **Step 6: Verify working tree and explicit staging, then commit**
+- [x] **Step 6: Verify working tree and explicit staging, then commit**
 
   Check `git diff --cached --name-only` contains only allowlisted task files and excludes `frontend/public/favicon.svg`.
   Commit `docs: hand off hybrid ab pilot readiness`. Do not merge or push.
 
-- [ ] **Step 7: Fresh whole-branch review and one bounded fix pass**
+- [x] **Step 7: Fresh whole-branch review and one bounded fix pass**
 
   Use `superpowers:requesting-code-review` against the plan/spec and merge base. Any Critical/Important fix must get its own
   RED→GREEN test and a fresh suite run; defer Minor findings explicitly.
