@@ -1,0 +1,28 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "text-to-geometry-functions (run text-to-geometry-functions — research route: text → typed function calls → deterministic construction → Scene3D, beside LLM_ONLY)",
+  "corrects": "docs/evaluation/geometry/runs/regular-prisms/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "8f12f4ab704468c1dd3bda6c85006746b8c50a6ac6eb409f226086c6225cbcbd",
+  "current_candidate_source_commit": "86f683e000e515984588e08e7bf774fb18f493f2",
+  "current_candidate_frozen_at": "86f683e000e515984588e08e7bf774fb18f493f2",
+  "current_candidate_note": "Frozen LOCAL in a clean detached worktree (D:/tmp/tgf-freeze) at 86f683e0, which is also the product commit (the last commit touching backend/app); 106 files (102 + the four new files); --verify match (diagnostics/freeze_86f683e0.log). Taxonomy, primitive set and schema hashes unchanged; CACHE_VERSION stays 125 (no served envelope of /api/analyze changes: the new route is not referenced by run_pipeline or main.py); cache identity lock --verify matches, semantic environment b1714b56… unchanged.",
+  "previous_candidate_hash": "93077b51d033c198bfb68504e3517f98cb2f9738886f058e687f3562d4520883",
+  "intermediate_candidates_in_this_wave": [],
+  "diverged": true,
+  "reason": "text-to-geometry-functions adds a research route that is NOT on the default product path: backend/app/simulation/geometry_functions/ (registry.py — closed library of 16 typed geometry functions for the AI plus a deterministic source gate; engine.py — dependency resolution, affine chart + rational Gram metric built from typed facts, re-check of every fact, IR through geometry_compiler.primitives, existing interpreter under metric.using) and backend/app/ai/function_route.py (entry point; builds Scene3D with the existing builders). No change to the kernel, interpreter, Scene3D builders, IR schema, prompts, grammar card, routing, run_pipeline or main.py; LLM_ONLY stays the default route; 0 live model requests.",
+  "changed_paths": [
+    "backend/app/ai/function_route.py",
+    "backend/app/simulation/geometry_functions/__init__.py",
+    "backend/app/simulation/geometry_functions/engine.py",
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — artifact thesis-final remains immutable and describes candidate d72db7c3 at CACHE_VERSION 94.",
+    "candidate_hien_tai": "Candidate 8f12f4ab (product commit 86f683e0) is the current product identity on feat/text-to-geometry-functions. It is not used to rescore any historical run; the G05 real-model pilot (feat/real-model-pilot-tooling) measured candidate 93077b51.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 125
+}
