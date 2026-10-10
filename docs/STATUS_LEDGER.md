@@ -177,6 +177,20 @@ assurance · ngân sách kể từ đây **làm mất hiệu lực con dấu** v
 phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều này áp cả cho lỗi
 `spec_version` đã biết — biết chỗ hỏng **không** cấp quyền vá rồi chạy lại.
 
+### §0-2026-10-10 — KIẾN TRÚC ĐÍCH: Text-to-Geometry Functions (nguồn: người dùng, theo ý tưởng GVHD)
+
+Ý gốc của GVHD: *"tạo các hình vẽ hình cơ bản bóc tách các hình thành hàm cơ bản để vẽ cho ai đọc đề sử dụng các hàm có
+sẵn để vẽ hình chứ không để ai vẽ hết"*. Quyết định (`docs/architecture/TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md`):
+
+- Text-to-Geometry Functions là kiến trúc nghiên cứu và phát triển ĐÍCH; mọi năng lực dựng hình mới làm trên nó.
+- `LLM_ONLY` là legacy: giữ làm mặc định sản phẩm và đường đối chứng, không thêm năng lực mô phỏng mới.
+- Tái sử dụng hình học/primitive đã có khi kiểm chứng được phù hợp; DSL/FactGraph/constrained decoding chỉ là ứng viên.
+- Chưa xoá legacy, chưa đổi mặc định khi đường AI thật chưa được nghiệm thu.
+
+Phạm vi đề tài (§0-2026-08-24) KHÔNG đổi: vẫn mô phỏng 3D hình học không gian Toán 11–12.
+
+---
+
 ## 6. Lịch sử các Wave Đánh Giá & Hoàn Thiện Tuyến Hình Học (2026-09-17 đến 2026-09-22)
 
 ### WAVE_ID = COMPLETION_RUNNER_REPAIR_OFFLINE
@@ -1590,3 +1604,55 @@ phong tập SEALED MỚI trước khi công bố bất kỳ số nào. Điều n
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `APPROVAL.md` · `labels.json` · `oracle.py`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
 - **INTEGRATION (regular-prisms, 2026-10-10):** user approval `runs/regular-prisms/APPROVAL.md`; integration gate `diagnostics/gates_9b783cb4.log` PASS; `main` fast-forwarded `ea85216b` → `9b783cb4` and pushed (no force; ls-remote verified); branch deleted (git branch -d, git push origin --delete)
+
+### WAVE_ID = TEXT_TO_GEOMETRY_FUNCTIONS
+- **RUN_ID:** text-to-geometry-functions (task text-to-geometry-functions-vertical-slice; LOCAL; branch feat/text-to-geometry-functions, not integrated)
+- **DATE:** 2026-10-10
+- **START_BASE:** 28ac1d61
+- **CODE_COMMIT_OR_NONE:** 86f683e0 (geometry_functions registry 16 functions + engine: affine chart + rational Gram layout, dependency resolution, re-check of every fact; app/ai/function_route.py entry point)
+- **CANDIDATE:** `8f12f4ab704468c1…` (product `86f683e0`, 106 files; frozen LOCAL c71cae4c) · CACHE_VERSION 125 (unchanged) · LLM_ONLY default
+- **EVIDENCE_COMMIT_ROLE:** product + evidence 86f683e0; candidate refreeze c71cae4c; docs ba6aedfb
+- **CLASSIFICATION:** new architecture vertical slice; foundation_only (hand-written function calls, no model)
+- **FULL_PRODUCT_SUITE:** backend pytest 7795 passed / 1 skipped / 2 deselected on a clean tree at c71cae4c; T3 not run (no frontend/src change)
+- **PRODUCT_CHANGED:** YES (backend/app research route only; default path unchanged)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/text-to-geometry-functions/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/text-to-geometry-functions/
+- **PASS:** 27/27 pre-registered fixtures; renderer metric check 10/10 scenes; 6/6 mutations caught
+- **CLOSED:** NONE
+- **OPENED:** NONE
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NO
+- **CORRECTED_BY:** ai-function-route (review found the test_Y exception unfounded: the research route pulled in the whole compiler package; fixed in 99ecb815)
+- **CORRECTS:** NONE
+- **NEXT_ACTION_AT_TIME:** user decision on the architecture
+- **FINAL_DECISION:** AWAITING_REVIEW (architecture accepted by the user on 2026-10-10 — §0-2026-10-10)
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** foundation evidence for the function-call contract and the engine on hand-written calls only
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `FUNCTION_REGISTRY_SPEC.md` · `offline/results.json`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+### WAVE_ID = AI_FUNCTION_ROUTE
+- **RUN_ID:** ai-function-route (task ai-function-route; LOCAL; branch feat/text-to-geometry-functions, not integrated)
+- **DATE:** 2026-10-10
+- **START_BASE:** ba6aedfb
+- **CODE_COMMIT_OR_NONE:** 99ecb815 (IR builders → semantic_program/ir_builders.py, strict compiler guard restored with an import closure) + d5f72ae7 (Gemini function-calling adapter with a fake provider, registry v2 24 functions and five-layer source gate, conditioned normalization, symbolic lengths, side face ⊥ base, centroid, angle between planes, distance between lines)
+- **CANDIDATE:** `168a086e2907577a…` (product `d5f72ae7`, 108 files; frozen LOCAL 616f1f7c) · CACHE_VERSION 125 (unchanged) · LLM_ONLY default
+- **EVIDENCE_COMMIT_ROLE:** preregistration f47c56bb; refactor 99ecb815; product + evidence d5f72ae7; candidate refreeze 616f1f7c; docs (final commit of the run)
+- **CLASSIFICATION:** architecture decision + adapter (offline) + robustness + capability expansion; foundation_only (no live model)
+- **FULL_PRODUCT_SUITE:** see run.json (clean-tree backend pytest after the refreeze)
+- **PRODUCT_CHANGED:** YES (backend/app research route; default path unchanged — AST import closure test)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/ai-function-route/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/ai-function-route/
+- **PASS:** baseline 5/31 → 31/31 pre-registered paraphrase + expansion cases; 58/58 fixtures through the adapter with a fake provider (one model call per problem); renderer metric check 27/27 scenes; 12/12 mutations caught; 27 original fixture outputs unchanged except the registry version string and two reason texts
+- **CLOSED:** NONE
+- **OPENED:** NONE
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** text-to-geometry-functions (test_Y exception; four safety holes of the v1 source gate: line ⊥ line misread as line ⊥ plane, conditional clause, proof goal, negation outside the quote)
+- **NEXT_ACTION_AT_TIME:** AI_FUNCTION_ROUTE_BUDGETED_PILOT_DECISION (user decision; no paid call made)
+- **FINAL_DECISION:** AWAITING_REVIEW
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** architecture decision record; offline evidence of the adapter contract and source gate on hand-written calls — NOT evidence of Gemini paraphrase understanding
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `ADAPTER_REPORT.md` · `SEMANTIC_ROBUSTNESS_EVALUATION.md` · `GEOMETRY_EXPANSION.md` · `EXPERIMENT_PROTOCOL_V2.md` · `LITERATURE_GAP_MATRIX_V2.md`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)

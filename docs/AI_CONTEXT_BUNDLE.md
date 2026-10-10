@@ -186,9 +186,11 @@ Thay đổi chưa commit của người dùng: không restore, sửa, stage ho�
 ## 6. Bước tiếp theo duy nhất
 
 ```text
-CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
+CANONICAL_NEXT_ACTION = AI_FUNCTION_ROUTE_BUDGETED_PILOT_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+Kiến trúc ĐÍCH từ 2026-10-10: Text-to-Geometry Functions (`architecture/TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md`); run `ai-function-route` (nhánh `feat/text-to-geometry-functions`, chưa tích hợp) dựng adapter Gemini offline — việc kế tiếp: người dùng quyết pilot có ngân sách (`runs/ai-function-route/EXPERIMENT_PROTOCOL_V2.md`).
 
 Việc `phone-landscape-layout` (máy local, cùng nhánh) đưa điều khiển vào khung khi ngang và ở 360 px, chạy nghiệm thu cuối (Tier-A
 8/8 một lượt, T3); việc kế tiếp: người dùng duyệt `review.md` của run này cùng các gói dưới. Việc `mobile-canvas-fit` (máy local, cùng nhánh) khép D5 theo phương án (b) thu hẹp ở khổ hẹp và đo lại tám họ trên candidate

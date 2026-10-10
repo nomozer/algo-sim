@@ -10,6 +10,8 @@
 |---|---|
 | [`ASSUMPTION_CERTIFICATE_AMENDMENT.md`](ASSUMPTION_CERTIFICATE_AMENDMENT.md) | chứng chỉ giả định (W15), ràng buộc phép dựng với đề (W17 §15, W18 §16); mã sản phẩm trích đường dẫn này |
 | [`OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`](OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md) | edge identity, visual owner, occlusion span, oracle độc lập |
+| [`TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md`](TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md) | **quyết định kiến trúc đích (2026-10-10)**: Text-to-Geometry Functions; `LLM_ONLY` là legacy (không thêm năng lực); chưa xoá, chưa đổi mặc định |
+| [`TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md`](TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md) | thư viện 24 hàm, cổng nguồn 5 tầng, chuẩn hoá có tiền điều kiện, bố cục khung affine + Gram, độ dài ký hiệu a, adapter Gemini function calling |
 | [`CUBOID_CUBE_CONTRACT_DECISION.md`](CUBOID_CUBE_CONTRACT_DECISION.md) | hình hộp chữ nhật / lập phương / lăng trụ đứng đáy vuông: trường topo, luật nhất quán, fail-closed (đưa về từ `legacy/` ở run `docs-cleanup`) |
 
 ## Tiền đăng ký và snapshot (bất biến)

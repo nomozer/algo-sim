@@ -138,6 +138,9 @@ ALLOWED_CANONICAL_ACTIONS = [
     # frontend-freeze (2026-10-09): người dùng hoãn frontend, tích hợp baseline có ngoại lệ; việc kế tiếp là mở rộng họ
     # hình còn thiếu trên kiến trúc/hàm sẵn có (ROADMAP §0.2), rồi OCR.
     "MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE",
+    # ai-function-route (2026-10-10): Text-to-Geometry Functions là kiến trúc đích; adapter Gemini đã kiểm offline —
+    # việc kế tiếp là quyết định của người dùng về một pilot có ngân sách trên đường mới.
+    "AI_FUNCTION_ROUTE_BUDGETED_PILOT_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

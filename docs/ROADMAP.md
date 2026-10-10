@@ -9,9 +9,24 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = MISSING_FAMILY_EXPANSION_ON_EXISTING_ARCHITECTURE
+CANONICAL_NEXT_ACTION = AI_FUNCTION_ROUTE_BUDGETED_PILOT_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **Quyết định kiến trúc (2026-10-10, người dùng theo ý GVHD):** **Text-to-Geometry Functions là kiến trúc đích**
+  ([`architecture/TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md`](architecture/TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md), contract
+  [`architecture/TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md`](architecture/TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md)). `LLM_ONLY` là legacy: vẫn
+  là mặc định sản phẩm, không thêm năng lực mô phỏng mới trên nó. Mọi mở rộng họ hình (§0.2) từ nay làm trên kiến trúc
+  mới. Chưa xoá legacy, chưa đổi mặc định (cổng: `MIGRATION_CHECKLIST.md` + nghiệm thu đường AI thật).
+
+- **Việc `ai-function-route` (2026-10-10, run [`ai-function-route`](evaluation/geometry/runs/ai-function-route/), LOCAL, nhánh
+  `feat/text-to-geometry-functions`, CHƯA tích hợp, 0 lượt gọi model):** adapter Gemini function calling (provider giả),
+  cổng nguồn 5 tầng, chuẩn hoá quan hệ có tiền điều kiện, độ dài ký hiệu a, mặt bên ⊥ đáy, trọng tâm, góc hai mặt,
+  khoảng cách hai đường; 31/31 ca diễn đạt + mở rộng đăng ký trước, 58/58 qua adapter giả; candidate `168a086e…`.
+  Việc kế tiếp: người dùng quyết pilot Gemini có ngân sách (`EXPERIMENT_PROTOCOL_V2.md` của run).
+
+- **Việc `text-to-geometry-functions` (2026-10-10, run [`text-to-geometry-functions`](evaluation/geometry/runs/text-to-geometry-functions/),
+  LOCAL, cùng nhánh):** vertical slice đầu tiên — registry 16 hàm, engine bố cục khung affine + Gram, 27/27 fixture.
 
 - **Việc `regular-prisms` (2026-10-09, run [`regular-prisms`](evaluation/geometry/runs/regular-prisms/),
   Cloud + LOCAL, ĐÃ TÍCH HỢP `main` = `9b783cb4`):** lát cắt G05 kế tiếp — lăng trụ tam giác đều và lăng trụ lục giác đều qua
