@@ -454,7 +454,8 @@ def _cung_da_giac(a: list[str], b: list[str]) -> bool:
 def _mat_cua_khoi_sau_cum(q: str, cum: re.Pattern[str], vertices: list[str]) -> bool:
     """`hình/khối <loại> ABCD.EFGH`: chỉ token nhãn đầu tiên sau cụm loại mới là tên của khối ấy."""
     for m in cum.finditer(q):
-        token = next((phan for dau, _cuoi, phan in _tu_nhan(q) if dau >= m.end()), None)
+        token = next((phan for dau, _cuoi, phan in _tu_nhan(q)
+                      if dau >= m.end() and not q[m.end():dau].strip()), None)
         if token and any(_cung_da_giac(p, vertices) for p in token):
             return True
     return False

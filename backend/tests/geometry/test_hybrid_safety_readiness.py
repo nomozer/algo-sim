@@ -71,6 +71,15 @@ def _facts(cid: str) -> list[dict]:
     return copy.deepcopy(HOLD[cid]["b_facts"])
 
 
+@pytest.mark.parametrize("fn,phrase", [("regular_polygon", "hình lập phương"),
+                                    ("rectangle", "hình hộp chữ nhật")])
+def test_unnamed_solid_cue_cannot_capture_polygon_in_next_clause(fn, phrase):
+    text = f"Cho {phrase}. Tứ giác KLMN là hình thoi."
+    call = {"id": "c1", "fn": fn, "args": {"vertices": ["K", "L", "M", "N"]},
+            "source": {"quotes": [text]}}
+    assert _ground_a({"text": text, "call": call}) == "OBJECT_NOT_IN_QUOTE"
+
+
 def test_true_on_configuration_is_not_reported_as_proof():
     """Catches mapping a Boolean check on one constructed layout to HOLDS/proved."""
     c = HOLD["H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED"]
