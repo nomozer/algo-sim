@@ -1,0 +1,36 @@
+## text_to_functions_cases
+COMP1: 5 points, 10 pairs, max rel err 0.00e+0 → OK
+COMP2: 7 points, 21 pairs, max rel err 4.98e-10 → OK
+COMP3: 6 points, 15 pairs, max rel err 0.00e+0 → OK
+PRISM1: 6 points, 15 pairs, max rel err 0.00e+0 → OK
+PRISM2: 12 points, 66 pairs, max rel err 4.98e-10 → OK
+PYR1: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+PYR1_P2: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+PYR1_P3: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+REG1: 5 points, 10 pairs, max rel err 2.57e-10 → OK
+REG2: 8 points, 28 pairs, max rel err 4.98e-10 → OK
+RENDER_METRIC_OK
+exit=0
+## paraphrase_cases
+N10_MULTI_NUMBER_LABEL_ALIGNED: 4 points, 6 pairs, max rel err 0.00e+0 → OK
+N12_EQUAL_LENGTH: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+P01_CANONICAL: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+P02_SYMBOL: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+P03_BASE_PLANE_WORDS: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+P04_ALTITUDE: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+P05_PROJECTION: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+P06_TWO_PERPENDICULAR_LINES: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+P07_MULTI_SENTENCE: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+P08_GOAL_FIRST_REORDERED: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+P09_STUDENT_SHORTHAND: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+P10_NO_SPACES_NOTATION: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+RENDER_METRIC_OK
+exit=0
+## geometry_expansion_cases
+X01_SYMBOLIC_SQUARE_PYRAMID: 5 points, 10 pairs, max rel err 5.28e-10 → OK
+X02_FACE_PERPENDICULAR_EQUILATERAL: 5 points, 10 pairs, max rel err 3.73e-10 → OK
+X03_FACE_PERPENDICULAR_FOOT_AT_VERTEX: 5 points, 10 pairs, max rel err 0.00e+0 → OK
+X04_SKEW_LINES_DISTANCE: 6 points, 15 pairs, max rel err 3.73e-10 → OK
+X05_PROJECTION_ON_CENTROID: 6 points, 15 pairs, max rel err 7.02e-10 → OK
+RENDER_METRIC_OK
+exit=0

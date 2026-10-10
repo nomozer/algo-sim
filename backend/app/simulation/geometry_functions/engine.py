@@ -24,13 +24,15 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass, field
 from fractions import Fraction
+from itertools import combinations
 from math import isqrt
 from typing import Any
 
 from app.simulation.geometry import metric as _metric
+from app.simulation.geometry.exact import Vec3
 from app.simulation.semantic_program import ir_builders as P
 
-from .registry import LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, kiem_nguon, nhan_cua_de
+from .registry import LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de
 
 ENGINE_VERSION = "geometry-function-engine/1"
 Z = Fraction(0)
@@ -85,6 +87,12 @@ class KetQuaTuyen:
     spec: Any = None
     exec_result: Any = None
     chart_metric: Any = None
+    #: Đáp số chính xác có cấu trúc: {"coef": hệ số, "dim": bậc theo a (0 khi đề dùng số), "unit": "a" | None}.
+    answer_exact: dict[str, dict[str, Any]] = field(default_factory=dict)
+    #: "a" khi mọi độ dài đề cho theo a (bố cục dựng ở a = 1, đơn vị — không phải dữ kiện); None khi đề dùng số.
+    length_unit: str | None = None
+    #: Chẩn đoán của adapter AI (số lời gọi, usage, lời gọi trùng đã bỏ…) — rỗng khi lời gọi đến từ fixture.
+    ai: dict[str, Any] = field(default_factory=dict)
 
 
 @dataclass
@@ -105,8 +113,10 @@ def _key(c: LoiGoi) -> tuple:
 
 
 class _Dung:
-    def __init__(self, calls: tuple[LoiGoi, ...], text: str) -> None:
+    def __init__(self, calls: tuple[LoiGoi, ...], text: str, ky_hieu: str | None = None) -> None:
         self.calls = tuple(sorted(calls, key=_key))
+        self.ky_hieu = ky_hieu
+        self.centroids: dict[str, tuple[str, ...]] = {}
         self.text_labels = nhan_cua_de(text)
         self.pts: dict[str, V3] = {}
         self.G2: tuple | None = None
@@ -145,10 +155,46 @@ class _Dung:
         if len({frozenset(k.base) for k in self.khoi.values()}) != 1:
             raise TuChoi("UNSUPPORTED_MULTIPLE_BASES", "các khối không chung một mặt đáy (bản này dựng một mặt đáy)")
 
-    # ── độ dài đề cho ───────────────────────────────────────────────────────
-    def do_dai(self, x: str, y: str) -> list[tuple[Fraction, str]]:
-        return [(binh_phuong(c.args.value), c.id) for c in self.of("segment_length")
-                if set(c.args.segment) == {x, y}]
+    # ── độ dài ──────────────────────────────────────────────────────────────
+    def _lop_bang(self, s: frozenset) -> list[tuple[frozenset, tuple[str, ...]]]:
+        """Các đoạn bằng `s` qua chuỗi `equal_length` (kèm id lời gọi của chuỗi)."""
+        lop, hang = {s: ()}, [s]
+        while hang:
+            u = hang.pop()
+            for c in self.of("equal_length"):
+                a, b = frozenset(c.args.segment_a), frozenset(c.args.segment_b)
+                for p, q in ((a, b), (b, a)):
+                    if p == u and q not in lop:
+                        lop[q] = lop[u] + (c.id,)
+                        hang.append(q)
+        return sorted(lop.items(), key=lambda kv: sorted(kv[0]))
+
+    def do_dai(self, x: str, y: str, _suy: bool = True) -> list[tuple[Fraction, tuple[str, ...]]]:
+        """Độ dài² của đoạn xy từ MỌI nguồn tất định: `segment_length`, lớp `equal_length`, hình đã dựng (hai đầu đã
+        đặt), cạnh khác của một đa giác đều chứa xy (cả `side` của nó). Hai nguồn lệch ⇒ INCONSISTENT_FACTS NGAY —
+        mâu thuẫn của đề, không để lọt thành lỗi tự kiểm của engine."""
+        ra: list[tuple[Fraction, tuple[str, ...]]] = []
+        for s, chuoi in self._lop_bang(frozenset((x, y))):
+            ra += [(binh_phuong(c.args.value), (c.id, *chuoi)) for c in self.of("segment_length")
+                   if frozenset(c.args.segment) == s]
+            a, b = sorted(s)
+            if a in self.pts and b in self.pts:
+                ra.append((self.d2(a, b), chuoi))
+        if _suy:
+            for c in self.of("regular_polygon"):
+                v, n = c.args.vertices, len(c.args.vertices)
+                canh = [frozenset((v[i], v[(i + 1) % n])) for i in range(n)]
+                if frozenset((x, y)) not in canh:
+                    continue
+                if c.args.side is not None:
+                    ra.append((binh_phuong(c.args.side), (c.id,)))
+                for e in canh:
+                    if e != frozenset((x, y)):
+                        ra += [(d, (c.id, *ids)) for d, ids in self.do_dai(*sorted(e), _suy=False)]
+        if len({d for d, _ in ra}) > 1:
+            raise TuChoi("INCONSISTENT_FACTS", f"đoạn {x}{y} nhận hai độ dài khác nhau từ các dữ kiện",
+                         tuple(sorted({i for _, ids in ra for i in ids})))
+        return ra
 
     # ── đáy ─────────────────────────────────────────────────────────────────
     def bo_cuc_day(self) -> None:
@@ -161,10 +207,10 @@ class _Dung:
             if c.args.side is not None:
                 s2, dung = binh_phuong(c.args.side), {c.id}
             else:
-                ung = sorted((d, cid) for i in range(len(vong)) for d, cid in self.do_dai(vong[i], vong[(i + 1) % len(vong)]))
+                ung = sorted((d, ids) for i in range(len(vong)) for d, ids in self.do_dai(vong[i], vong[(i + 1) % len(vong)]))
                 if not ung:
                     raise TuChoi("MISSING_DIMENSION", "đa giác đều đáy chưa có độ dài cạnh", (c.id,))
-                s2, dung = ung[0][0], {c.id, ung[0][1]}
+                s2, dung = ung[0][0], {c.id, *ung[0][1]}
             khung, G2 = regular_polygon_chart(len(vong), s2)
             luat = "regular_polygon_chart"
         elif rect:
@@ -175,7 +221,7 @@ class _Dung:
             if not a or not b:
                 raise TuChoi("MISSING_DIMENSION", "hình chữ nhật đáy thiếu một cạnh", (c.id,))
             khung = ((Z, Z), (Fraction(1), Z), (Fraction(1), Fraction(1)), (Z, Fraction(1)))
-            G2, dung, luat = ((a[0][0], Z), (Z, b[0][0])), {c.id, a[0][1], b[0][1]}, "rectangle_chart"
+            G2, dung, luat = ((a[0][0], Z), (Z, b[0][0])), {c.id, *a[0][1], *b[0][1]}, "rectangle_chart"
         elif len(dat) == 3:
             vong = next(iter(self.khoi.values())).base
             khung, G2, dung = self._tam_giac(vong)
@@ -195,9 +241,9 @@ class _Dung:
         canh = {frozenset(p): None for p in ((vong[0], vong[1]), (vong[0], vong[2]), (vong[1], vong[2]))}
         dung: set[str] = set()
         for e in canh:
-            if l := sorted(self.do_dai(*e)):
+            if l := sorted(self.do_dai(*sorted(e))):
                 canh[e] = l[0][0]
-                dung.add(l[0][1])
+                dung |= set(l[0][1])
         for c in self.of("right_angle"):
             V, (X, Y) = c.args.vertex, c.args.rays
             if {V, X, Y} != set(vong):
@@ -243,7 +289,7 @@ class _Dung:
         """h² của đỉnh `dinh` có chân `chan` trong đáy — (a) độ dài đoạn đỉnh–chân, (b) chiều cao khối, (c) độ dài
         đỉnh tới một điểm khác trong đáy (Pythagore trong G). Thiếu cả ba ⇒ MISSING_DIMENSION."""
         if l := sorted(self.do_dai(dinh, chan)):
-            return l[0][0], {l[0][1]}
+            return l[0][0], set(l[0][1])
         if h := sorted((binh_phuong(c.args.value), c.id) for c in self.of("height") if c.args.solid in khoi_ten):
             return h[0][0], {h[0][1]}
         for x in sorted(p for p in self.pts if self.trong_day(p) and p != chan):
@@ -252,17 +298,18 @@ class _Dung:
                 h2 = l[0][0] - self.g(u, u)
                 if h2 <= 0:
                     raise TuChoi("INCONSISTENT_FACTS", f"{dinh}{x} không dài hơn khoảng cách từ chân {chan} tới {x}",
-                                 (l[0][1],))
-                return h2, {l[0][1]}
+                                 tuple(l[0][1]))
+                return h2, set(l[0][1])
         raise TuChoi("MISSING_DIMENSION", f"chưa có dữ kiện cho chiều cao của {dinh}")
 
-    def _dat_ngoai_day(self, ten: str, chan: str, h2: Fraction, luat: str, calls: set[str]) -> None:
+    def _dat_ngoai_day(self, ten: str, chan: str | tuple, h2: Fraction, luat: str, calls: set[str]) -> None:
+        """Đặt `ten` trên đường vuông góc đáy tại chân (`chan` = tên điểm đáy, hoặc toạ độ khung (x, y) dẫn xuất)."""
         if self.h2 is None:
             self.h2 = h2
             z = Fraction(1)
         elif (z := _sqrt_q(h2 / self.h2)) is None:
             raise TuChoi("UNSUPPORTED_MULTIPLE_HEIGHTS", "hai độ cao độc lập có tỉ số vô tỉ — chưa dựng chính xác được")
-        f = self.pts[chan]
+        f = self.pts[chan] if isinstance(chan, str) else chan
         self.dung |= calls
         self._dat(ten, (f[0], f[1], z), luat, calls)
 
@@ -276,7 +323,7 @@ class _Dung:
         for k in self.khoi.values():
             can |= set(k.base) | set(k.top) | ({k.apex} if k.apex else set())
         for c in self.calls:
-            if c.fn.startswith("ask_") or c.fn in ("segment_length", "right_angle", "perpendicular_line_plane"):
+            if c.spec.kind in ("fact", "ask") and c.fn != "height":
                 can |= {x for x in _labels(c)}
         if thieu := sorted(can - set(self.pts)):
             raise TuChoi("UNDERDETERMINED_POINT",
@@ -305,23 +352,43 @@ class _Dung:
                 h2, cs = self._chieu_cao(k.apex, self.tam, [k.name])
                 self._dat_ngoai_day(k.apex, self.tam, h2, "apex_over_center", {k.call, reg[0].id} | cs)
                 return True
-        for c in self.of("perpendicular_line_plane"):
-            mp = set(c.args.plane)
-            if not (mp <= set(self.pts) and all(self.trong_day(v) for v in mp)):
-                if mp <= set(self.pts) or not (mp & set(self.pts)):
+        for c in self.of("centroid"):
+            p, da = c.args.point, c.args.polygon
+            if len(da) != 3:
+                raise TuChoi("UNSUPPORTED_CENTROID", f"{c.id}: bản này dựng trọng tâm TAM GIÁC", (c.id,))
+            if p not in self.pts and all(v in self.pts for v in da):
+                self.centroids[p] = tuple(da)
+                self._dat(p, tuple(sum(self.pts[v][i] for v in da) / 3 for i in range(3)), "centroid_of_triangle", {c.id},
+                          "DERIVED")
+                self.dung.add(c.id)
+                return True
+        for c, (a, b), mp, luat, chan_khai in self._rang_buoc_vuong():
+            if not (set(mp) <= set(self.pts) and all(self.trong_day(v) for v in mp)):
+                if set(mp) <= set(self.pts) or not (set(mp) & set(self.pts)):
                     continue
                 raise TuChoi("UNSUPPORTED_PLANE", f"{c.id}: mặt phẳng {sorted(mp)} không phải mặt đáy đã dựng", (c.id,))
-            a, b = c.args.line
-            chan, dinh = (a, b) if self.trong_day(a) and b not in self.pts else (b, a) if self.trong_day(b) and a not in self.pts else (None, None)
-            if chan is None:
-                if a in self.pts and b in self.pts:
-                    continue                                   # đã dựng ⇒ chỉ còn là dữ kiện để kiểm
-                if (a in self.pts and not self.trong_day(a)) or (b in self.pts and not self.trong_day(b)):
-                    raise TuChoi("FOOT_NOT_DETERMINED", f"{c.id}: không đầu nào của {a}{b} nằm trên mặt đáy", (c.id,))
-                continue                                       # chân chưa dựng (vd trung điểm chưa có) ⇒ đợi
+            if chan_khai is not None:                          # đường cao / hình chiếu: CHÂN do chính lời gọi nêu
+                chan, dinh = chan_khai, (a if b == chan_khai else b)
+                if chan not in self.pts or dinh in self.pts:
+                    continue                                   # chân chưa dựng ⇒ đợi; đỉnh đã có ⇒ chỉ còn kiểm
+                if not self.trong_day(chan):
+                    raise TuChoi("FOOT_NOT_IN_PLANE", f"{c.id}: chân {chan} không nằm trên mặt {''.join(mp)}", (c.id,))
+            else:
+                chan, dinh = ((a, b) if self.trong_day(a) and b not in self.pts else
+                              (b, a) if self.trong_day(b) and a not in self.pts else (None, None))
+                if chan is None:
+                    if a in self.pts and b in self.pts:
+                        continue                               # đã dựng ⇒ chỉ còn là dữ kiện để kiểm
+                    if (a in self.pts and not self.trong_day(a)) or (b in self.pts and not self.trong_day(b)):
+                        raise TuChoi("FOOT_NOT_DETERMINED", f"{c.id}: không đầu nào của {a}{b} nằm trên mặt đáy", (c.id,))
+                    continue                                   # chân chưa dựng (vd trung điểm chưa có) ⇒ đợi
             ten_khoi = [k.name for k in self.khoi.values() if k.apex == dinh]
             h2, cs = self._chieu_cao(dinh, chan, ten_khoi)
-            self._dat_ngoai_day(dinh, chan, h2, "perpendicular_foot_at_" + chan, {c.id} | cs)
+            self._dat_ngoai_day(dinh, chan, h2, luat + chan, {c.id} | cs)
+            return True
+        if self._hai_duong_cat_nhau():
+            return True
+        if self._mat_ben_vuong_goc_day():
             return True
         for k in sorted(self.khoi.values(), key=lambda k: k.name):
             if k.kind == "prism" and k.right and any(t not in self.pts for t in k.top) and all(b in self.pts for b in k.base):
@@ -335,12 +402,83 @@ class _Dung:
                 return True
         return False
 
+    def _rang_buoc_vuong(self):
+        """CHUẨN HOÁ ba cách nói về một đường vuông góc mặt phẳng thành MỘT ràng buộc (lời gọi, đường, mặt, luật, chân):
+        `perpendicular_line_plane` (chân = đầu mút nằm trên mặt); `altitude` (TIỀN ĐIỀU KIỆN: đỉnh là đỉnh của chính khối
+        chóp được nêu, mặt = đáy khối ấy, chân = `foot` phải nằm trên đáy); `orthogonal_projection` (TIỀN ĐIỀU KIỆN: ảnh ≠
+        điểm, ảnh nằm trên mặt). Tiền điều kiện hỏng ⇒ từ chối có mã — không suy diễn quan hệ khi ngữ cảnh không chứng minh."""
+        for c in self.of("perpendicular_line_plane"):
+            yield c, tuple(c.args.line), list(c.args.plane), "perpendicular_foot_at_", None
+        for c in self.of("altitude"):
+            k = self.khoi.get(c.args.solid)
+            if k is None:
+                raise TuChoi("UNKNOWN_SOLID", f"{c.id}: khối {c.args.solid} chưa được dựng bằng lời gọi nào", (c.id,))
+            if k.kind != "pyramid" or k.apex != c.args.apex or c.args.foot == c.args.apex:
+                raise TuChoi("PRECONDITION_FAILED", f"{c.id}: đường cao phải hạ từ ĐỈNH của khối chóp {k.name}", (c.id,))
+            yield c, (c.args.apex, c.args.foot), list(k.base), "altitude_normalized_to_perpendicular_foot_at_", c.args.foot
+        for c in self.of("orthogonal_projection"):
+            if c.args.point == c.args.image:
+                raise TuChoi("PRECONDITION_FAILED", f"{c.id}: hình chiếu trùng chính điểm — không xác định đường vuông góc", (c.id,))
+            yield (c, (c.args.point, c.args.image), list(c.args.plane),
+                   "orthogonal_projection_normalized_to_perpendicular_foot_at_", c.args.image)
+
+    def _hai_duong_cat_nhau(self) -> bool:
+        """ĐỊNH LÝ: PQ ⊥ hai đường (không song song) nằm trong đáy và Q thuộc đáy ⇒ PQ ⊥ đáy, chân Q. Một đường vuông
+        góc thôi KHÔNG đủ — đỉnh để nguyên chưa xác định."""
+        dau = {x for c in self.of("perpendicular_lines") for l in (c.args.line1, c.args.line2) for x in l}
+        for p in sorted(dau - set(self.pts)):
+            theo_chan: dict[str, list] = {}
+            for c in self.of("perpendicular_lines"):
+                for L, M in ((c.args.line1, c.args.line2), (c.args.line2, c.args.line1)):
+                    if p in L and L[0] != L[1]:
+                        q = L[1] if L[0] == p else L[0]
+                        if self.trong_day(q) and all(self.trong_day(m) for m in M):
+                            theo_chan.setdefault(q, []).append(
+                                (tuple(self.pts[M[1]][i] - self.pts[M[0]][i] for i in range(2)), c.id))
+            for q, ds in sorted(theo_chan.items()):
+                for (d1, c1), (d2, c2) in combinations(ds, 2):
+                    if d1[0] * d2[1] - d1[1] * d2[0] != 0:
+                        h2, cs = self._chieu_cao(p, q, [k.name for k in self.khoi.values() if k.apex == p])
+                        self._dat_ngoai_day(p, q, h2, "line_perpendicular_to_two_intersecting_lines_foot_at_" + q,
+                                            {c1, c2} | cs)
+                        return True
+        return False
+
+    def _mat_ben_vuong_goc_day(self) -> bool:
+        """(SAB) ⊥ đáy, A, B trên đáy: S nằm trong mặt phẳng qua AB vuông góc đáy. Chân F = hình chiếu của S lên AB —
+        DẪN XUẤT từ SA², SB², AB² (t = (SA² − SB² + AB²)/2AB²), KHÔNG giả định là trung điểm; h² = SA² − t²AB²."""
+        for c in self.of("face_perpendicular_base"):
+            k = next(iter(self.khoi.values()))
+            if frozenset(c.args.base) != frozenset(k.base):
+                raise TuChoi("UNSUPPORTED_PLANE", f"{c.id}: mặt {''.join(c.args.base)} không phải mặt đáy đã dựng", (c.id,))
+            ngoai = [v for v in c.args.face if v not in k.base]
+            if len(ngoai) != 1:
+                raise TuChoi("PRECONDITION_FAILED", f"{c.id}: mặt bên phải gồm đúng một đỉnh ngoài đáy và một cạnh đáy", (c.id,))
+            s = ngoai[0]
+            A, B = [v for v in c.args.face if v != s]
+            if s in self.pts or not (self.trong_day(A) and self.trong_day(B)):
+                continue
+            la, lb = sorted(self.do_dai(s, A)), sorted(self.do_dai(s, B))
+            if not la or not lb:
+                raise TuChoi("MISSING_DIMENSION", f"{c.id}: mặt ({s}{A}{B}) ⊥ đáy nhưng chưa biết {s}{A} và {s}{B}", (c.id,))
+            ab2 = self.d2(A, B)
+            t = (la[0][0] - lb[0][0] + ab2) / (2 * ab2)
+            h2 = la[0][0] - t * t * ab2
+            if h2 <= 0:
+                raise TuChoi("INCONSISTENT_FACTS", f"{c.id}: tam giác {s}{A}{B} suy biến với các độ dài đã cho",
+                             (c.id, *la[0][1], *lb[0][1]))
+            chan = tuple(self.pts[A][i] + t * (self.pts[B][i] - self.pts[A][i]) for i in range(2))
+            self._dat_ngoai_day(s, chan, h2, f"face_perpendicular_base_foot_on_{A}{B}_t={t}",
+                                {c.id, *la[0][1], *lb[0][1]})
+            return True
+        return False
+
     def _chieu_cao_lang_tru(self, k: _Khoi) -> tuple[Fraction, set[str]]:
         if h := sorted((binh_phuong(c.args.value), c.id) for c in self.of("height") if c.args.solid == k.name):
             return h[0][0], {h[0][1]}
         for b, t in sorted(zip(k.base, k.top)):
             if l := sorted(self.do_dai(b, t)):
-                return l[0][0], {l[0][1]}
+                return l[0][0], set(l[0][1])
         raise TuChoi("MISSING_DIMENSION", f"lăng trụ {k.name} chưa có chiều cao hay cạnh bên", (k.call,))
 
     # ── kiểm lại MỌI dữ kiện trên bố cục ────────────────────────────────────
@@ -386,6 +524,27 @@ class _Dung:
         if c.fn == "midpoint":
             p, (x, y) = a.point, a.segment
             return all(2 * self.pts[p][i] == self.pts[x][i] + self.pts[y][i] for i in range(3))
+        if c.fn == "centroid":
+            return all(3 * self.pts[a.point][i] == sum(self.pts[v][i] for v in a.polygon) for i in range(3))
+        if c.fn == "equal_length":
+            return self.d2(*a.segment_a) == self.d2(*a.segment_b)
+        if c.fn == "perpendicular_lines":
+            return self.g(self._vec(*a.line1), self._vec(*a.line2)) == 0
+        if c.fn in ("altitude", "orthogonal_projection"):
+            if c.fn == "altitude":
+                k = self.khoi[a.solid]
+                dinh, chan, mp = a.apex, a.foot, k.base
+            else:
+                dinh, chan, mp = a.point, a.image, a.plane
+            d = self._vec(chan, dinh)
+            return (self._kc2_mat(chan, mp[:3]) == 0 and self._kc2_mat(dinh, mp[:3]) > 0
+                    and all(self.g(d, self._vec(mp[0], x)) == 0 for x in mp[1:]))
+        if c.fn == "face_perpendicular_base":
+            def phap(m):                                     # covector của mặt (tích có hướng trong khung)
+                u, v = self._vec(m[0], m[1]), self._vec(m[0], m[2])
+                return Vec3(u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0])
+            n1, n2 = phap(a.face), phap(a.base)
+            return self.metric().vector(n2).dot(n1) == 0     # hai mặt ⊥ ⇔ n₁ᵀ G⁻¹ n₂ = 0
         if c.fn == "height":
             k = self.khoi[a.solid]
             dinh = k.apex if k.kind == "pyramid" else k.top[0]
@@ -410,12 +569,22 @@ class _Dung:
         khai: list[dict[str, Any]] = []
         lenh: list[dict[str, Any]] = []
         for s in self.trace:
+            if s["step"] != "place_point":
+                continue
             t = s["object"]
             if t in self.midpoints:
                 a, b = self.midpoints[t]
                 lenh.append({"kind": "construct_point", "target_var": ir_name(t), "label": t,
                              "expr": {"kind": "midpoint", "a": ir_name(a), "b": ir_name(b)}})
                 khai.append(P.memory_declaration(ir_name(t), "point3"))
+            elif t in self.centroids:                        # trọng tâm = chia đoạn từ đỉnh tới trung điểm cạnh đối, 2/3
+                a, b, c3 = self.centroids[t]
+                m = ir_name(t) + "_mid_" + ir_name(b) + ir_name(c3)
+                lenh.append({"kind": "construct_point", "target_var": m,
+                             "expr": {"kind": "midpoint", "a": ir_name(b), "b": ir_name(c3)}})
+                lenh.append({"kind": "construct_point", "target_var": ir_name(t), "label": t,
+                             "expr": {"kind": "divide_segment", "a": ir_name(a), "b": m, "ratio": "2/3"}})
+                khai += [P.memory_declaration(m, "point3"), P.memory_declaration(ir_name(t), "point3")]
             else:
                 lenh.append(P.declare_point(ir_name(t), self.pts[t], t))
                 khai.append(P.memory_declaration(ir_name(t), "point3", provenance="LAYOUT_DERIVED"))
@@ -429,7 +598,7 @@ class _Dung:
             self.trace.append({"step": "construct_solid", "object": k.name, "rule": k.kind, "calls": [k.call],
                                "provenance": "DERIVED"})
         hoi: dict[str, str] = {}
-        for c in self.of("ask_volume", "ask_length", "ask_distance_point_plane", "ask_angle_line_plane", "ask_area"):
+        for c in self.of(*BAC_DAI_LUONG):
             kq, a = f"kq_{c.id}", c.args
             if c.fn == "ask_volume":
                 lenh.append(P.measure_quantity(kq, "volume", "khoi_" + ir_name(a.solid.replace(".", "_"))))
@@ -446,6 +615,18 @@ class _Dung:
                 lenh.append({"kind": "construct_plane", "target_var": mp, "through": [ir_name(x) for x in a.plane[:3]]})
                 khai += [P.memory_declaration(dt, "line3"), P.memory_declaration(mp, "plane3")]
                 lenh.append(P.measure_quantity(kq, "angle_cos_sq", dt, mp))
+            elif c.fn == "ask_angle_plane_plane":
+                m1, m2 = f"mp1_{c.id}", f"mp2_{c.id}"
+                for m, mp in ((m1, a.plane1), (m2, a.plane2)):
+                    lenh.append({"kind": "construct_plane", "target_var": m, "through": [ir_name(x) for x in mp[:3]]})
+                    khai.append(P.memory_declaration(m, "plane3"))
+                lenh.append(P.measure_quantity(kq, "angle_cos_sq", m1, m2))
+            elif c.fn == "ask_distance_lines":
+                d1, d2 = f"dt1_{c.id}", f"dt2_{c.id}"
+                for d, ln in ((d1, a.line1), (d2, a.line2)):
+                    lenh.append(P.construct_line(d, ir_name(ln[0]), ir_name(ln[1])))
+                    khai.append(P.memory_declaration(d, "line3"))
+                lenh.append(P.measure_quantity(kq, "distance", d1, d2))
             else:
                 dg = f"dg_{c.id}"
                 lenh.append(P.construct_polygon(dg, tuple(map(ir_name, a.polygon))))
@@ -459,6 +640,12 @@ class _Dung:
     def metric(self) -> _metric.Metric:
         G2, h2 = self.G2, self.h2 or Fraction(1)
         return _metric.Metric(((G2[0][0], G2[0][1], Z), (G2[1][0], G2[1][1], Z), (Z, Z, h2)))
+
+
+#: Bậc theo độ dài của mỗi đại lượng được hỏi — đáp số với độ dài ký hiệu a là (hệ số tại a = 1) · a^bậc.
+BAC_DAI_LUONG = {"ask_volume": 3, "ask_length": 1, "ask_distance_point_plane": 1, "ask_angle_line_plane": 0,
+                 "ask_area": 2, "ask_angle_plane_plane": 0, "ask_distance_lines": 1}
+_MU = {1: "", 2: "²", 3: "³"}
 
 
 def _labels(c: LoiGoi) -> set[str]:
@@ -483,6 +670,25 @@ def dinh_dang(x: Any) -> str:
     raise TypeError(f"không phải số chính xác: {type(x).__name__}")
 
 
+def _don_vi(calls: tuple[LoiGoi, ...]) -> str | None:
+    """Độ dài ký hiệu: TẤT CẢ độ dài đề cho cùng theo a (đồng bậc 1) ⇒ "a"; tất cả là số ⇒ None; trộn ⇒ từ chối — hình
+    khi ấy KHÔNG đồng dạng khi a đổi, nên không có một bố cục chung nào đúng cho mọi a (không gán a một giá trị)."""
+    loai = {doc_so(getattr(c.args, f))[1] for c in calls for f in c.spec.value_fields if getattr(c.args, f) is not None}
+    if len(loai) > 1:
+        raise TuChoi("NON_HOMOGENEOUS_LENGTHS", "đề trộn độ dài theo a với độ dài là số — chưa dựng được một hình chung cho mọi a",
+                     tuple(sorted(c.id for c in calls for f in c.spec.value_fields if getattr(c.args, f) is not None)))
+    return "a" if loai == {True} else None
+
+
+def _hien_thi_ky_hieu(x: Any, bac: int, ky_hieu: str) -> str:
+    """hệ số · a^bậc → `a³√2/3`, `a√21/7`, `16a³`."""
+    from app.simulation.geometry.radical import Radical
+
+    he, can = (Fraction(x.he), x.can) if isinstance(x, Radical) else (Fraction(x), 1)
+    tu = "" if he.numerator == 1 else str(he.numerator)
+    return f"{tu}{ky_hieu}{_MU[bac]}" + (f"√{can}" if can != 1 else "") + (f"/{he.denominator}" if he.denominator != 1 else "")
+
+
 def dung_tu_loi_goi(problem_text: str, plan: Any) -> KetQuaTuyen:
     """Dựng + kiểm + thực thi từ lời gọi hàm. Trả `KetQuaTuyen` CHƯA có cảnh (`scene3d=None`) nhưng có `spec` và
     `exec_result` — bày cảnh là việc của tầng trên (`app/ai/function_route.py`), cùng hướng phụ thuộc với
@@ -498,7 +704,14 @@ def dung_tu_loi_goi(problem_text: str, plan: Any) -> KetQuaTuyen:
         if esc := [c for c in calls if c.fn == "unsupported"]:
             raise TuChoi("OUT_OF_SCOPE", "; ".join(f"{c.id}: {c.args.reason} ({c.quote!r})" for c in esc),
                          tuple(c.id for c in esc))
-        dung = _Dung(calls, problem_text)
+        ky_hieu = _don_vi(calls)
+        dung = _Dung(calls, problem_text, ky_hieu)
+        if ky_hieu:
+            dung.trace.append({"step": "choose_unit", "object": ky_hieu, "rule": "symbolic_length_unit",
+                               "calls": sorted(c.id for c in calls for f in c.spec.value_fields if getattr(c.args, f)),
+                               "provenance": "LAYOUT_DERIVED",
+                               "note": f"mọi độ dài đề cho tỉ lệ với {ky_hieu} ⇒ hình đồng dạng với hình tại {ky_hieu} = 1; "
+                                       f"dựng ở {ky_hieu} = 1 (đơn vị, không phải dữ kiện), đáp số = hệ số · {ky_hieu}^bậc"})
         dung.thu_khoi()
         dung.bo_cuc_day()
         dung.giai_phu_thuoc()
@@ -519,13 +732,17 @@ def dung_tu_loi_goi(problem_text: str, plan: Any) -> KetQuaTuyen:
                         for t in dung.pts)
         if not kernel_ok:
             raise TuChoi("ENGINE_SELF_CHECK_FAILED", "điểm kernel thực thi khác bố cục engine")
-        tra = {}
+        tra, chinh_xac = {}, {}
         for cid, kq in hoi.items():
             v = fm.get(kq)
-            fn = next(c.fn for c in calls if c.id == cid)
-            tra[cid] = f"cos²={dinh_dang(v)}" if fn == "ask_angle_line_plane" else dinh_dang(v)
+            bac = BAC_DAI_LUONG[next(c.fn for c in calls if c.id == cid)]
+            he = dinh_dang(v)
+            chinh_xac[cid] = {"coef": he, "dim": bac if ky_hieu else 0, "unit": ky_hieu if bac else None}
+            tra[cid] = f"cos²={he}" if bac == 0 else (_hien_thi_ky_hieu(v, bac, ky_hieu) if ky_hieu else he)
         return KetQuaTuyen("SERVED", answers=tra, trace=dung.trace, program=program, points=dict(dung.pts),
                            metric=G.as_json(), kernel_check=True, spec=spec, exec_result=ket, chart_metric=G,
-                           calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quote": c.quote} for c in calls])
+                           answer_exact=chinh_xac, length_unit=ky_hieu,
+                           calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quotes": list(c.quotes)}
+                                  for c in calls])
     except TuChoi as e:
         return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, trace=dung.trace if dung else [])

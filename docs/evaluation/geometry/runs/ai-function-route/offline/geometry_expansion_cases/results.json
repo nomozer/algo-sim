@@ -1,0 +1,820 @@
+{
+ "engine": "geometry-function-engine/1",
+ "registry": "geometry-functions/2",
+ "fixtures": "backend\\tests\\geometry\\fixtures\\geometry_expansion_cases.json",
+ "model_calls": 0,
+ "via": "fake Gemini function calling (app/ai/function_calling)",
+ "surface_sha256": "09ec4a9df17bd3b900be44d7e11034b4e9f643d744f5e59219b87e457414faa8",
+ "rows": [
+  {
+   "id": "X01_SYMBOLIC_SQUARE_PYRAMID",
+   "group": "symbolic_length",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "c5": "a³√2/3"
+   },
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c5": {
+      "coef": "√2/3",
+      "dim": 3
+     }
+    },
+    "unit": "a",
+    "lengths_sq_in_a2": {
+     "SC": "4",
+     "SB": "3"
+    }
+   },
+   "status_and_code_match": true,
+   "trace": [
+    {
+     "step": "choose_unit",
+     "object": "a",
+     "rule": "symbolic_length_unit",
+     "calls": [
+      "c1",
+      "c3"
+     ],
+     "provenance": "LAYOUT_DERIVED",
+     "note": "mọi độ dài đề cho tỉ lệ với a ⇒ hình đồng dạng với hình tại a = 1; dựng ở a = 1 (đơn vị, không phải dữ kiện), đáp số = hệ số · a^bậc"
+    },
+    {
+     "step": "place_point",
+     "object": "A",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "B",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "C",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "D",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "S",
+     "rule": "perpendicular_foot_at_A",
+     "calls": [
+      "c2",
+      "c3"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "construct_solid",
+     "object": "S.ABCD",
+     "rule": "pyramid",
+     "calls": [
+      "c4"
+     ],
+     "provenance": "DERIVED"
+    },
+    {
+     "step": "measure",
+     "object": "ask_volume",
+     "rule": "ask_volume",
+     "calls": [
+      "c5"
+     ],
+     "provenance": "DERIVED"
+    }
+   ],
+   "failed_calls": [],
+   "n_calls": 5,
+   "answer_exact": {
+    "c5": {
+     "coef": "√2/3",
+     "dim": 3,
+     "unit": "a"
+    }
+   },
+   "ai": {
+    "mode": "ANY",
+    "model_calls": 1,
+    "n_calls": 5,
+    "dropped_identical_duplicates": 0,
+    "usage": {
+     "note": "provider giả — không có token thật"
+    },
+    "finish_reason": "STOP",
+    "surface": "09ec4a9df17bd3b900be44d7e11034b4e9f643d744f5e59219b87e457414faa8"
+   }
+  },
+  {
+   "id": "X02_FACE_PERPENDICULAR_EQUILATERAL",
+   "group": "face_perpendicular_base",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "c7": "cos²=4/7",
+    "c6": "a√21/7",
+    "c5": "a³√3/6"
+   },
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c5": {
+      "coef": "√3/6",
+      "dim": 3
+     },
+     "c6": {
+      "coef": "√21/7",
+      "dim": 1
+     },
+     "c7": "cos²=4/7"
+    },
+    "unit": "a",
+    "lengths_sq_in_a2": {
+     "SC": "2",
+     "SD": "2",
+     "SA": "1"
+    }
+   },
+   "status_and_code_match": true,
+   "trace": [
+    {
+     "step": "choose_unit",
+     "object": "a",
+     "rule": "symbolic_length_unit",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED",
+     "note": "mọi độ dài đề cho tỉ lệ với a ⇒ hình đồng dạng với hình tại a = 1; dựng ở a = 1 (đơn vị, không phải dữ kiện), đáp số = hệ số · a^bậc"
+    },
+    {
+     "step": "place_point",
+     "object": "A",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "B",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "C",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "D",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "S",
+     "rule": "face_perpendicular_base_foot_on_AB_t=1/2",
+     "calls": [
+      "c2",
+      "c3"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "construct_solid",
+     "object": "S.ABCD",
+     "rule": "pyramid",
+     "calls": [
+      "c4"
+     ],
+     "provenance": "DERIVED"
+    },
+    {
+     "step": "measure",
+     "object": "ask_angle_plane_plane",
+     "rule": "ask_angle_plane_plane",
+     "calls": [
+      "c7"
+     ],
+     "provenance": "DERIVED"
+    },
+    {
+     "step": "measure",
+     "object": "ask_distance_point_plane",
+     "rule": "ask_distance_point_plane",
+     "calls": [
+      "c6"
+     ],
+     "provenance": "DERIVED"
+    },
+    {
+     "step": "measure",
+     "object": "ask_volume",
+     "rule": "ask_volume",
+     "calls": [
+      "c5"
+     ],
+     "provenance": "DERIVED"
+    }
+   ],
+   "failed_calls": [],
+   "n_calls": 7,
+   "answer_exact": {
+    "c7": {
+     "coef": "4/7",
+     "dim": 0,
+     "unit": null
+    },
+    "c6": {
+     "coef": "√21/7",
+     "dim": 1,
+     "unit": "a"
+    },
+    "c5": {
+     "coef": "√3/6",
+     "dim": 3,
+     "unit": "a"
+    }
+   },
+   "ai": {
+    "mode": "ANY",
+    "model_calls": 1,
+    "n_calls": 7,
+    "dropped_identical_duplicates": 0,
+    "usage": {
+     "note": "provider giả — không có token thật"
+    },
+    "finish_reason": "STOP",
+    "surface": "09ec4a9df17bd3b900be44d7e11034b4e9f643d744f5e59219b87e457414faa8"
+   }
+  },
+  {
+   "id": "X03_FACE_PERPENDICULAR_FOOT_AT_VERTEX",
+   "group": "face_perpendicular_base",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "c6": "16"
+   },
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c6": "16"
+    },
+    "lengths_sq": {
+     "SD": "25",
+     "SC": "41"
+    }
+   },
+   "status_and_code_match": true,
+   "trace": [
+    {
+     "step": "place_point",
+     "object": "A",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "B",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "C",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "D",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "S",
+     "rule": "face_perpendicular_base_foot_on_AB_t=0",
+     "calls": [
+      "c2",
+      "c3",
+      "c4"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "construct_solid",
+     "object": "S.ABCD",
+     "rule": "pyramid",
+     "calls": [
+      "c5"
+     ],
+     "provenance": "DERIVED"
+    },
+    {
+     "step": "measure",
+     "object": "ask_volume",
+     "rule": "ask_volume",
+     "calls": [
+      "c6"
+     ],
+     "provenance": "DERIVED"
+    }
+   ],
+   "failed_calls": [],
+   "n_calls": 6,
+   "answer_exact": {
+    "c6": {
+     "coef": "16",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "ai": {
+    "mode": "ANY",
+    "model_calls": 1,
+    "n_calls": 6,
+    "dropped_identical_duplicates": 0,
+    "usage": {
+     "note": "provider giả — không có token thật"
+    },
+    "finish_reason": "STOP",
+    "surface": "09ec4a9df17bd3b900be44d7e11034b4e9f643d744f5e59219b87e457414faa8"
+   }
+  },
+  {
+   "id": "X04_SKEW_LINES_DISTANCE",
+   "group": "skew_distance",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "c4": "a√3/2"
+   },
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c4": {
+      "coef": "√3/2",
+      "dim": 1
+     }
+    },
+    "unit": "a"
+   },
+   "status_and_code_match": true,
+   "trace": [
+    {
+     "step": "choose_unit",
+     "object": "a",
+     "rule": "symbolic_length_unit",
+     "calls": [
+      "c2",
+      "c3"
+     ],
+     "provenance": "LAYOUT_DERIVED",
+     "note": "mọi độ dài đề cho tỉ lệ với a ⇒ hình đồng dạng với hình tại a = 1; dựng ở a = 1 (đơn vị, không phải dữ kiện), đáp số = hệ số · a^bậc"
+    },
+    {
+     "step": "place_point",
+     "object": "A",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c2"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "B",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c2"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "C",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c2"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "A'",
+     "rule": "right_prism_translate",
+     "calls": [
+      "c1",
+      "c3"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "B'",
+     "rule": "right_prism_translate",
+     "calls": [
+      "c1",
+      "c3"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "C'",
+     "rule": "right_prism_translate",
+     "calls": [
+      "c1",
+      "c3"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "construct_solid",
+     "object": "ABC.A'B'C'",
+     "rule": "prism",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "DERIVED"
+    },
+    {
+     "step": "measure",
+     "object": "ask_distance_lines",
+     "rule": "ask_distance_lines",
+     "calls": [
+      "c4"
+     ],
+     "provenance": "DERIVED"
+    }
+   ],
+   "failed_calls": [],
+   "n_calls": 4,
+   "answer_exact": {
+    "c4": {
+     "coef": "√3/2",
+     "dim": 1,
+     "unit": "a"
+    }
+   },
+   "ai": {
+    "mode": "ANY",
+    "model_calls": 1,
+    "n_calls": 4,
+    "dropped_identical_duplicates": 0,
+    "usage": {
+     "note": "provider giả — không có token thật"
+    },
+    "finish_reason": "STOP",
+    "surface": "09ec4a9df17bd3b900be44d7e11034b4e9f643d744f5e59219b87e457414faa8"
+   }
+  },
+  {
+   "id": "X05_PROJECTION_ON_CENTROID",
+   "group": "centroid_projection",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "c6": "4√11/3"
+   },
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c6": "4√11/3"
+    },
+    "lengths_sq": {
+     "SB": "9",
+     "SC": "9"
+    }
+   },
+   "status_and_code_match": true,
+   "trace": [
+    {
+     "step": "place_point",
+     "object": "A",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "B",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "C",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "G",
+     "rule": "centroid_of_triangle",
+     "calls": [
+      "c2"
+     ],
+     "provenance": "DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "S",
+     "rule": "orthogonal_projection_normalized_to_perpendicular_foot_at_G",
+     "calls": [
+      "c3",
+      "c4"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "construct_solid",
+     "object": "S.ABC",
+     "rule": "pyramid",
+     "calls": [
+      "c5"
+     ],
+     "provenance": "DERIVED"
+    },
+    {
+     "step": "measure",
+     "object": "ask_volume",
+     "rule": "ask_volume",
+     "calls": [
+      "c6"
+     ],
+     "provenance": "DERIVED"
+    }
+   ],
+   "failed_calls": [],
+   "n_calls": 6,
+   "answer_exact": {
+    "c6": {
+     "coef": "4√11/3",
+     "dim": 0,
+     "unit": null
+    }
+   },
+   "ai": {
+    "mode": "ANY",
+    "model_calls": 1,
+    "n_calls": 6,
+    "dropped_identical_duplicates": 0,
+    "usage": {
+     "note": "provider giả — không có token thật"
+    },
+    "finish_reason": "STOP",
+    "surface": "09ec4a9df17bd3b900be44d7e11034b4e9f643d744f5e59219b87e457414faa8"
+   }
+  },
+  {
+   "id": "X06_NON_HOMOGENEOUS_SYMBOL",
+   "group": "symbolic_length",
+   "status": "REFUSED",
+   "code": "NON_HOMOGENEOUS_LENGTHS",
+   "reason": "đề trộn độ dài theo a với độ dài là số — chưa dựng được một hình chung cho mọi a",
+   "answers": {},
+   "expect": {
+    "status": "REFUSED",
+    "code": "NON_HOMOGENEOUS_LENGTHS"
+   },
+   "status_and_code_match": true,
+   "trace": [],
+   "failed_calls": [
+    "c1",
+    "c3"
+   ],
+   "n_calls": 5,
+   "answer_exact": {},
+   "ai": {
+    "mode": "ANY",
+    "model_calls": 1,
+    "n_calls": 5,
+    "dropped_identical_duplicates": 0,
+    "usage": {
+     "note": "provider giả — không có token thật"
+    },
+    "finish_reason": "STOP",
+    "surface": "09ec4a9df17bd3b900be44d7e11034b4e9f643d744f5e59219b87e457414faa8"
+   }
+  },
+  {
+   "id": "X07_FACE_PERPENDICULAR_MISSING",
+   "group": "face_perpendicular_base",
+   "status": "REFUSED",
+   "code": "MISSING_DIMENSION",
+   "reason": "c2: mặt (SAB) ⊥ đáy nhưng chưa biết SA và SB",
+   "answers": {},
+   "expect": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION"
+   },
+   "status_and_code_match": true,
+   "trace": [
+    {
+     "step": "choose_unit",
+     "object": "a",
+     "rule": "symbolic_length_unit",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED",
+     "note": "mọi độ dài đề cho tỉ lệ với a ⇒ hình đồng dạng với hình tại a = 1; dựng ở a = 1 (đơn vị, không phải dữ kiện), đáp số = hệ số · a^bậc"
+    },
+    {
+     "step": "place_point",
+     "object": "A",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "B",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "C",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "D",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    }
+   ],
+   "failed_calls": [
+    "c2"
+   ],
+   "n_calls": 4,
+   "answer_exact": {},
+   "ai": {
+    "mode": "ANY",
+    "model_calls": 1,
+    "n_calls": 4,
+    "dropped_identical_duplicates": 0,
+    "usage": {
+     "note": "provider giả — không có token thật"
+    },
+    "finish_reason": "STOP",
+    "surface": "09ec4a9df17bd3b900be44d7e11034b4e9f643d744f5e59219b87e457414faa8"
+   }
+  },
+  {
+   "id": "X08_FACE_PERPENDICULAR_CONTRADICTION",
+   "group": "face_perpendicular_base",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "reason": "đoạn SA nhận hai độ dài khác nhau từ các dữ kiện",
+   "answers": {},
+   "expect": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS"
+   },
+   "status_and_code_match": true,
+   "trace": [
+    {
+     "step": "choose_unit",
+     "object": "a",
+     "rule": "symbolic_length_unit",
+     "calls": [
+      "c1",
+      "c3"
+     ],
+     "provenance": "LAYOUT_DERIVED",
+     "note": "mọi độ dài đề cho tỉ lệ với a ⇒ hình đồng dạng với hình tại a = 1; dựng ở a = 1 (đơn vị, không phải dữ kiện), đáp số = hệ số · a^bậc"
+    },
+    {
+     "step": "place_point",
+     "object": "A",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "B",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "C",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    },
+    {
+     "step": "place_point",
+     "object": "D",
+     "rule": "regular_polygon_chart",
+     "calls": [
+      "c1"
+     ],
+     "provenance": "LAYOUT_DERIVED"
+    }
+   ],
+   "failed_calls": [
+    "c2",
+    "c3"
+   ],
+   "n_calls": 6,
+   "answer_exact": {},
+   "ai": {
+    "mode": "ANY",
+    "model_calls": 1,
+    "n_calls": 6,
+    "dropped_identical_duplicates": 0,
+    "usage": {
+     "note": "provider giả — không có token thật"
+    },
+    "finish_reason": "STOP",
+    "surface": "09ec4a9df17bd3b900be44d7e11034b4e9f643d744f5e59219b87e457414faa8"
+   }
+  }
+ ]
+}

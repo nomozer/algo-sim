@@ -1,0 +1,9 @@
+X01_SYMBOLIC_SQUARE_PYRAMID SERVED                                {"c5": "a³√2/3"}
+X02_FACE_PERPENDICULAR_EQUILATERAL SERVED                                {"c7": "cos²=4/7", "c6": "a√21/7", "c5": "a³√3/6"}
+X03_FACE_PERPENDICULAR_FOOT_AT_VERTEX SERVED                                {"c6": "16"}
+X04_SKEW_LINES_DISTANCE    SERVED                                {"c4": "a√3/2"}
+X05_PROJECTION_ON_CENTROID SERVED                                {"c6": "4√11/3"}
+X06_NON_HOMOGENEOUS_SYMBOL REFUSED  NON_HOMOGENEOUS_LENGTHS      {}
+X07_FACE_PERPENDICULAR_MISSING REFUSED  MISSING_DIMENSION            {}
+X08_FACE_PERPENDICULAR_CONTRADICTION REFUSED  INCONSISTENT_FACTS           {}
+8/8 khớp kết cục đăng ký trước

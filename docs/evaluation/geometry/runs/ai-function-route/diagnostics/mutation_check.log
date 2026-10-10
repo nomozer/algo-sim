@@ -1,0 +1,13 @@
+MUTATION m1 (vai trò mệnh đề bị bỏ (điều phải chứng minh / 'nếu' thành dữ kiện)): CAUGHT
+MUTATION m2 (phủ định chỉ xét trong quote (như cổng v1)): CAUGHT
+MUTATION m3 (bỏ kiểm tham chiếu mặt phẳng): CAUGHT
+MUTATION m4 (bỏ kiểm vai trò điểm (ảnh hình chiếu)): CAUGHT
+MUTATION m5 (bỏ tiền điều kiện chuẩn hoá đường cao/hình chiếu): CAUGHT
+MUTATION m6 (mặt bên ⊥ đáy: chân luôn tại trung điểm (giả định thay vì dẫn xuất)): CAUGHT
+MUTATION m7 (bỏ kiểm đồng bậc độ dài ký hiệu): CAUGHT
+MUTATION m8 (định lý hai đường: nhận MỘT đường vuông góc): CAUGHT
+MUTATION m9 (bỏ căn giá trị theo nhãn đoạn): CAUGHT
+MUTATION m10 (adapter thực thi phản hồi bị cắt (MAX_TOKENS)): CAUGHT
+MUTATION m11 (adapter cho chế độ AUTO): CAUGHT
+MUTATION m12 (bỏ phát hiện mâu thuẫn độ dài giữa các nguồn): CAUGHT
+ALL CAUGHT

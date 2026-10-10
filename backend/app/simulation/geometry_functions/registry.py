@@ -1,16 +1,27 @@
 # -*- coding: utf-8 -*-
-"""THƯ VIỆN HÀM DỰNG HÌNH + HỢP ĐỒNG AI → LỜI GỌI HÀM (run `text-to-geometry-functions`).
+"""THƯ VIỆN HÀM DỰNG HÌNH + HỢP ĐỒNG AI → LỜI GỌI HÀM (run `text-to-geometry-functions`, mở rộng ở `ai-function-route`).
 
-AI đọc đề và chỉ được CHỌN lời gọi trong `REGISTRY`, mỗi lời gọi kèm `source.quote` — đoạn nguyên văn của đề mà nó
-dựa vào. Lược đồ đóng (`extra="forbid"`): không ô nào nhận toạ độ, không hàm tự do, không mã. Engine tất định
-(`engine.py`) mới là thứ dựng, chọn bố cục và kiểm.
+AI đọc đề và chỉ được CHỌN lời gọi trong `REGISTRY`; mỗi lời gọi kèm `source.quotes` — các đoạn nguyên văn của đề mà nó
+dựa vào (một dữ kiện có thể trải trên nhiều câu). Lược đồ đóng (`extra="forbid"`): không ô nào nhận toạ độ, không hàm
+tự do, không mã. Engine tất định (`engine.py`) mới là thứ chuẩn hoá quan hệ, dựng, chọn bố cục và kiểm.
 
-`kiem_nguon` là cổng nguồn TẤT ĐỊNH, chạy trước mọi phép dựng:
-  · quote phải nằm nguyên văn trong đề (QUOTE_NOT_IN_SOURCE);
-  · mọi nhãn điểm phải là nhãn có trong đề (UNKNOWN_LABEL);
-  · quote mang phủ định ⇒ không được làm dữ kiện (NEGATED_CLAUSE);
-  · quote phải chứa từ khoá của vị từ hàm khai (PREDICATE_NOT_IN_QUOTE) — AI không thể khai "vuông góc" từ "SA = 3";
-  · ô số phải bằng ĐÚNG số duy nhất trong quote (AMBIGUOUS_VALUE_QUOTE / UNGROUNDED_VALUE) — AI không tự thêm số.
+─── CỔNG NGUỒN (`kiem_nguon`) — NĂM TẦNG, TẤT ĐỊNH ───────────────────────────
+1. VỊ TRÍ — mỗi quote nằm trong đề (so bỏ qua khoảng trắng: `SA⊥(ABC)` ≡ `SA ⊥ (ABC)`)      QUOTE_NOT_IN_SOURCE
+   nhãn điểm phải là nhãn của đề                                                          UNKNOWN_LABEL
+2. VAI TRÒ MỆNH ĐỀ — lời gọi khẳng định (mọi hàm trừ `ask_*`/`unsupported`) phải là TIỀN ĐỀ:
+   nằm sau "chứng minh/CMR/chứng tỏ" (chưa có "biết") ⇒ điều phải chứng minh               GOAL_CLAUSE_NOT_PREMISE
+   nằm sau "nếu" mà chưa tới "thì" ⇒ giả thiết điều kiện                                  CONDITIONAL_CLAUSE
+3. PHẠM VI PHỦ ĐỊNH — dấu phủ định trong quote HOẶC ngay trước nó trong cùng mệnh đề        NEGATED_CLAUSE
+4. VỊ TỪ + THAM CHIẾU — từ định nghĩa của CẤU TRÚC câu (`cues`; mỗi cấu trúc là một hàm riêng: "vuông góc với (ABC)",
+   "là đường cao của hình chóp", "hình chiếu vuông góc … là", không phải danh sách đồng nghĩa của một hàm)  PREDICATE_NOT_IN_QUOTE
+   mặt phẳng được nhắc (`(ABC)`, `ABCD`, hoặc "đáy")                                      PLANE_NOT_IN_QUOTE
+   điểm/đoạn đóng vai riêng (đường thẳng, ảnh hình chiếu, chân) được nhắc NGOÀI nhóm mặt phẳng   ROLE_NOT_IN_QUOTE
+5. GIÁ TRỊ — số neo theo NHÃN ĐOẠN khi quote có nhãn ấy (`AB = 3, BC = 4`: BC ↔ 4); không có nhãn thì quote phải có
+   đúng MỘT số                                                            AMBIGUOUS_VALUE_QUOTE / UNGROUNDED_VALUE
+
+Từ khoá là điều kiện CẦN, không đủ: cổng chặn lời gọi mà đoạn trích không nói tới; nó không hiểu câu thay mô hình. Quan
+hệ tương đương (đường cao ⇒ ⊥ mặt đáy tại chân; hình chiếu ⇒ ⊥; ⊥ hai đường cắt nhau ⇒ ⊥ mặt) được CHUẨN HOÁ trong
+engine kèm tiền điều kiện hình học, không ở đây.
 """
 from __future__ import annotations
 
@@ -20,9 +31,9 @@ from dataclasses import dataclass
 from fractions import Fraction
 from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationError
+from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationError, model_validator
 
-REGISTRY_VERSION = "geometry-functions/1"
+REGISTRY_VERSION = "geometry-functions/2"
 
 
 class TuChoi(Exception):
@@ -47,30 +58,38 @@ Label = Annotated[str, BeforeValidator(_nhan), Field(pattern=r"^[A-Z][0-9]*'?$",
 SolidName = Annotated[str, BeforeValidator(_nhan),
                       Field(pattern=r"^(?:[A-Z][0-9]*'?)+\.(?:[A-Z][0-9]*'?)+$", description="ký hiệu khối, vd S.ABC hoặc ABC.A'B'C'")]
 ExactNumber = Annotated[str, BeforeValidator(_nhan),
-                        Field(pattern=r"^(?:\d+(?:[.,]\d+)?(?:/\d+)?|(?:\d+(?:/\d+)?)?√\d+(?:/\d+)?)$",
-                              description="số dương CHÉP từ đề, vd 4, 2/3, √3, 2√3, 3√3/4")]
+                        Field(pattern=r"^(?:\d+(?:[.,]\d+)?(?:/\d+)?a?(?:√\d+)?(?:/\d+)?|a(?:√\d+)?(?:/\d+)?|√\d+(?:/\d+)?)$",
+                              description="độ dài CHÉP từ đề: số dương (4, 2/3, √3, 3√3/4) hoặc theo ký hiệu a (a, 2a, a√3, a√3/2)")]
 Seg = Annotated[list[Label], Field(min_length=2, max_length=2)]
 Poly = Annotated[list[Label], Field(min_length=3)]
 
-_SO = re.compile(r"(?<![A-Za-z0-9'])(?:(?P<he>\d+(?:[.,]\d+)?(?:/\d+)?)?√(?P<can>\d+)(?:/(?P<mau>\d+))?"
-                 r"|(?P<so>\d+(?:[.,]\d+)?)(?:/(?P<mau2>\d+))?)")
+#: Một số chính xác trong văn bản: hệ số · (a) · √căn / mẫu. Không dính chữ/nhãn hai bên (`A1`, `bằng` không tính).
+_SO = re.compile(r"(?<![\w'])(?P<he>\d+(?:[.,]\d+)?(?:/\d+)?)?(?P<sym>a)?(?:√(?P<can>\d+))?(?:/(?P<mau>\d+))?(?![\w'])")
+
+
+def _doc(m: re.Match) -> tuple[Fraction, bool] | None:
+    if not (m["he"] or m["sym"] or m["can"]):
+        return None
+    he = Fraction((m["he"] or "1").replace(",", ".")) / int(m["mau"] or 1)
+    return he * he * int(m["can"] or 1), bool(m["sym"])
+
+
+def doc_so(s: str) -> tuple[Fraction, bool]:
+    """Số chính xác (dạng `ExactNumber`) → (hệ số², có ký hiệu a). Không float: `1,5` đọc thành 3/2."""
+    m = _SO.fullmatch(chuan_hoa(s))
+    if not m or (r := _doc(m)) is None:
+        raise TuChoi("SCHEMA_INVALID", f"không phải số chính xác: {s!r}")
+    return r
 
 
 def binh_phuong(s: str) -> Fraction:
-    """Số chính xác (dạng `ExactNumber`) → giá trị². Không float: `1,5` đọc thành 3/2."""
-    m = _SO.fullmatch(chuan_hoa(s))
-    if not m:
-        raise TuChoi("SCHEMA_INVALID", f"không phải số chính xác: {s!r}")
-    if m["can"]:
-        he = Fraction((m["he"] or "1").replace(",", ".")) / int(m["mau"] or 1)
-        return he * he * int(m["can"])
-    v = Fraction(m["so"].replace(",", ".")) / int(m["mau2"] or 1)
-    return v * v
+    """Hệ số² của một độ dài (với độ dài ký hiệu: hệ số² theo đơn vị a)."""
+    return doc_so(s)[0]
 
 
-def so_trong(quote: str) -> list[Fraction]:
-    """Các số (dạng bình phương) xuất hiện trong một đoạn đề; chữ số dính nhãn (A1) không tính."""
-    return [binh_phuong(m.group(0)) for m in _SO.finditer(chuan_hoa(quote))]
+def so_trong(quote: str) -> list[tuple[int, Fraction, bool]]:
+    """(vị trí, giá trị², có a) của các số trong một đoạn đề; chữ số dính nhãn (A1) không tính."""
+    return [(m.start(), *r) for m in _SO.finditer(chuan_hoa(quote)) if (r := _doc(m)) is not None]
 
 
 # ── đối số có kiểu của từng hàm ─────────────────────────────────────────────
@@ -80,7 +99,7 @@ class _Args(BaseModel):
 
 class RegularPolygonArgs(_Args):
     vertices: Poly = Field(..., description="các đỉnh theo thứ tự vòng quanh")
-    side: ExactNumber | None = Field(None, description="cạnh, nếu cùng mệnh đề nêu")
+    side: ExactNumber | None = Field(None, description="cạnh, nếu đề nêu")
 
 
 class RectangleArgs(_Args):
@@ -102,9 +121,36 @@ class PerpendicularLinePlaneArgs(_Args):
     plane: Poly = Field(..., description="các điểm của mặt phẳng, vd [A, B, C]")
 
 
+class AltitudeArgs(_Args):
+    apex: Label = Field(..., description="đỉnh khối")
+    foot: Label = Field(..., description="chân đường cao, điểm trên mặt đáy")
+    solid: SolidName
+
+
+class OrthogonalProjectionArgs(_Args):
+    point: Label = Field(..., description="điểm được chiếu")
+    plane: Poly = Field(..., description="mặt phẳng chiếu lên")
+    image: Label = Field(..., description="hình chiếu (ảnh) của điểm")
+
+
+class PerpendicularLinesArgs(_Args):
+    line1: Seg
+    line2: Seg
+
+
+class EqualLengthArgs(_Args):
+    segment_a: Seg
+    segment_b: Seg
+
+
 class MidpointArgs(_Args):
     point: Label = Field(..., description="tên trung điểm")
     segment: Seg
+
+
+class CentroidArgs(_Args):
+    point: Label = Field(..., description="tên trọng tâm")
+    polygon: Poly
 
 
 class PyramidArgs(_Args):
@@ -116,6 +162,11 @@ class PrismArgs(_Args):
     base: Poly
     top: Poly = Field(..., description="đáy trên, cùng thứ tự với đáy dưới (A ↔ A')")
     right: bool = Field(..., description="lăng trụ ĐỨNG (đề nói đứng/đều)")
+
+
+class FacePerpendicularBaseArgs(_Args):
+    face: Annotated[list[Label], Field(min_length=3, max_length=3)] = Field(..., description="mặt bên, vd [S, A, B]")
+    base: Poly = Field(..., description="mặt đáy")
 
 
 class HeightArgs(_Args):
@@ -136,9 +187,19 @@ class AskDistancePointPlaneArgs(_Args):
     plane: Annotated[list[Label], Field(min_length=3, max_length=3)]
 
 
+class AskDistanceLinesArgs(_Args):
+    line1: Seg
+    line2: Seg
+
+
 class AskAngleLinePlaneArgs(_Args):
     line: Seg
     plane: Poly
+
+
+class AskAnglePlanePlaneArgs(_Args):
+    plane1: Poly
+    plane2: Poly
 
 
 class AskAreaArgs(_Args):
@@ -155,46 +216,79 @@ class FunctionSpec:
     args: type[_Args]
     kind: Literal["fact", "construct", "ask", "escape"]
     description: str
-    #: Mỗi nhóm phải có ít nhất một từ (không phân biệt hoa thường) trong quote.
+    #: Mỗi nhóm phải có ít nhất một từ (không phân biệt hoa thường) trong các quote; `re:` = biểu thức chính quy.
     keywords: tuple[tuple[str, ...], ...] = ()
     #: Ô số phải neo vào quote.
     value_fields: tuple[str, ...] = ()
+    #: Ô là MẶT PHẲNG phải được nhắc trong quote (nhóm nhãn trùng tập điểm, hoặc "đáy").
+    plane_fields: tuple[str, ...] = ()
+    #: Ô là ĐOẠN/ĐƯỜNG phải được nhắc (hai nhãn liền nhau trong một từ, vd `SA`).
+    segment_fields: tuple[str, ...] = ()
+    #: Ô là ĐIỂM đóng vai riêng phải được nhắc ngoài nhóm mặt phẳng.
+    point_fields: tuple[str, ...] = ()
 
 
+_VUONG = ("vuông", "⊥")
 _F = FunctionSpec
 REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("regular_polygon", RegularPolygonArgs, "fact", "Đa giác đều (tam giác đều, hình vuông, lục giác đều) với các đỉnh "
-       "đã nêu; cạnh nếu cùng mệnh đề cho.", (("đều", "hình vuông"),), ("side",)),
+       "đã nêu; cạnh nếu đề nêu.", (("đều", "hình vuông"),), ("side",)),
     _F("rectangle", RectangleArgs, "fact", "Hình chữ nhật với bốn đỉnh đã nêu.", (("hình chữ nhật",),)),
     _F("right_angle", RightAngleArgs, "fact", "Góc vuông tại một đỉnh (tam giác vuông tại B ⇒ đỉnh B, hai điểm A, C).",
        (("vuông",),)),
+    # Không bắt nhãn đoạn: "cạnh bên bằng 5" (chóp đều) hợp lệ với SA đại diện; số vẫn căn theo nhãn KHI quote có nhãn.
     _F("segment_length", SegmentLengthArgs, "fact", "Độ dài một đoạn thẳng do đề cho.", (), ("value",)),
-    _F("perpendicular_line_plane", PerpendicularLinePlaneArgs, "fact", "Đường thẳng vuông góc với mặt phẳng (SA ⊥ (ABC)).",
-       (("vuông góc", "⊥"),)),
+    _F("perpendicular_line_plane", PerpendicularLinePlaneArgs, "fact", "Đường thẳng vuông góc với mặt phẳng (SA ⊥ (ABC), "
+       "SA vuông góc với mặt phẳng đáy).", (_VUONG,), plane_fields=("plane",), segment_fields=("line",)),
+    _F("altitude", AltitudeArgs, "fact", "Đề nói một đoạn LÀ ĐƯỜNG CAO của khối (SA là đường cao của hình chóp S.ABC).",
+       (("đường cao",), ("chóp", "tứ diện")), point_fields=("foot",)),
+    _F("orthogonal_projection", OrthogonalProjectionArgs, "fact", "Đề nói hình chiếu vuông góc của một điểm lên một mặt "
+       "phẳng là một điểm.", (("hình chiếu",),), plane_fields=("plane",), point_fields=("image",)),
+    _F("perpendicular_lines", PerpendicularLinesArgs, "fact", "Hai đường thẳng vuông góc (SA ⊥ AB). Một lời gọi cho MỖI cặp.",
+       (_VUONG,), segment_fields=("line1", "line2")),
+    _F("equal_length", EqualLengthArgs, "fact", "Hai đoạn bằng nhau (SA = AB).", (("=", "bằng"),),
+       segment_fields=("segment_a", "segment_b")),
+    _F("height", HeightArgs, "fact", "Chiều cao của một khối do đề cho.", (("cao",),), ("value",)),
+    _F("face_perpendicular_base", FacePerpendicularBaseArgs, "fact", "Mặt bên (một đỉnh ngoài đáy + một cạnh đáy) vuông "
+       "góc với mặt đáy.", (_VUONG,), plane_fields=("base", "face")),
     _F("midpoint", MidpointArgs, "construct", "Gọi một điểm là trung điểm của một đoạn.", (("trung điểm",),)),
+    _F("centroid", CentroidArgs, "construct", "Gọi một điểm là trọng tâm của một đa giác.", (("trọng tâm",),)),
     _F("pyramid", PyramidArgs, "construct", "Khối chóp với đỉnh và đáy đã nêu.", (("chóp", "tứ diện"),)),
     _F("regular_pyramid", PyramidArgs, "construct", "Khối chóp ĐỀU: đáy đa giác đều, chân đường cao tại tâm đáy.",
        (("chóp", "tứ diện"), ("đều",))),
     _F("prism", PrismArgs, "construct", "Khối lăng trụ với hai đáy tương ứng; `right` khi đề nói lăng trụ đứng/đều.",
        (("lăng trụ", "hình hộp"),)),
-    _F("height", HeightArgs, "fact", "Chiều cao của một khối do đề cho.", (("cao",),), ("value",)),
-    _F("ask_volume", AskVolumeArgs, "ask", "Đề hỏi thể tích một khối.", (("thể tích",),)),
+    _F("ask_volume", AskVolumeArgs, "ask", "Đề hỏi thể tích một khối.", (("thể tích", r"re:(?<![\w'])V(?![\w'])"),)),
     _F("ask_length", AskLengthArgs, "ask", "Đề hỏi độ dài một đoạn.", (("độ dài", "tính", "tìm"),)),
     _F("ask_distance_point_plane", AskDistancePointPlaneArgs, "ask", "Đề hỏi khoảng cách từ một điểm tới một mặt phẳng.",
        (("khoảng cách",),)),
+    _F("ask_distance_lines", AskDistanceLinesArgs, "ask", "Đề hỏi khoảng cách giữa hai đường thẳng (chéo nhau).",
+       (("khoảng cách",),)),
     _F("ask_angle_line_plane", AskAngleLinePlaneArgs, "ask", "Đề hỏi góc giữa đường thẳng và mặt phẳng (trả cos²).",
        (("góc",),)),
+    _F("ask_angle_plane_plane", AskAnglePlanePlaneArgs, "ask", "Đề hỏi góc giữa hai mặt phẳng (trả cos²).", (("góc",),)),
     _F("ask_area", AskAreaArgs, "ask", "Đề hỏi diện tích một đa giác.", (("diện tích",),)),
     _F("unsupported", UnsupportedArgs, "escape", "Mệnh đề không ánh xạ được vào thư viện — engine sẽ từ chối trung thực."),
 )}
 
-#: Dấu hiệu phủ định trong một mệnh đề — mệnh đề phủ định KHÔNG được làm dữ kiện dương.
-PHU_DINH = ("không phải", "không là", "không vuông góc", "không đều", "không song song", "chưa chắc")
+#: Dấu phủ định — xét trong quote VÀ phần mệnh đề đứng ngay trước nó.
+PHU_DINH = ("không phải", "không là", "không vuông góc", "không ⊥", "không đều", "không song song", "chưa chắc")
+_MUC_TIEU = ("chứng minh", "cmr", "chứng tỏ")
 
 
 class Source(BaseModel):
     model_config = ConfigDict(extra="forbid")
-    quote: str = Field(..., min_length=1, description="đoạn NGUYÊN VĂN của đề mà lời gọi dựa vào")
+    quote: str | None = Field(None, min_length=1, description="một đoạn NGUYÊN VĂN của đề")
+    quotes: list[str] | None = Field(None, min_length=1, description="các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)")
+
+    @model_validator(mode="after")
+    def _co_quote(self) -> "Source":
+        if not (self.quote or self.quotes) or any(not q.strip() for q in self.quotes or []):
+            raise ValueError("lời gọi phải chép ít nhất một đoạn nguyên văn của đề")
+        return self
+
+    def tat_ca(self) -> tuple[str, ...]:
+        return tuple(chuan_hoa(q) for q in ([self.quote] if self.quote else []) + list(self.quotes or []))
 
 
 class FunctionCall(BaseModel):
@@ -203,6 +297,7 @@ class FunctionCall(BaseModel):
     fn: str
     args: dict[str, Any]
     source: Source
+    depends_on: list[str] = Field(default_factory=list, description="id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)")
 
 
 @dataclass(frozen=True)
@@ -212,15 +307,20 @@ class LoiGoi:
     id: str
     fn: str
     args: _Args
-    quote: str
+    quotes: tuple[str, ...]
+    depends_on: tuple[str, ...] = ()
 
     @property
     def spec(self) -> FunctionSpec:
         return REGISTRY[self.fn]
 
+    @property
+    def quote(self) -> str:
+        return " … ".join(self.quotes)
+
 
 def doc_ke_hoach(raw: Any) -> tuple[LoiGoi, ...]:
-    """`{"calls": [...]}` → lời gọi có kiểu. Hàm lạ, ô lạ, kiểu sai ⇒ SCHEMA_INVALID."""
+    """`{"calls": [...]}` → lời gọi có kiểu. Hàm lạ, ô lạ, kiểu sai ⇒ SCHEMA_INVALID; phụ thuộc treo / vòng ⇒ mã riêng."""
     try:
         calls = [FunctionCall.model_validate(c) for c in (raw or {}).get("calls") or []]
     except (ValidationError, AttributeError) as e:
@@ -228,7 +328,7 @@ def doc_ke_hoach(raw: Any) -> tuple[LoiGoi, ...]:
     if not calls:
         raise TuChoi("SCHEMA_INVALID", "kế hoạch rỗng")
     if len({c.id for c in calls}) != len(calls):
-        raise TuChoi("SCHEMA_INVALID", "id lời gọi trùng")
+        raise TuChoi("DUPLICATE_CALL_ID", "id lời gọi trùng")
     ra = []
     for c in calls:
         if c.fn not in REGISTRY:
@@ -237,17 +337,50 @@ def doc_ke_hoach(raw: Any) -> tuple[LoiGoi, ...]:
             a = REGISTRY[c.fn].args.model_validate(c.args)
         except ValidationError as e:
             raise TuChoi("SCHEMA_INVALID", f"{c.id} ({c.fn}): {e.errors()[0]['msg']}", (c.id,)) from None
-        ra.append(LoiGoi(c.id, c.fn, a, chuan_hoa(c.source.quote)))
+        ra.append(LoiGoi(c.id, c.fn, a, c.source.tat_ca(), tuple(c.depends_on)))
+    _kiem_phu_thuoc(ra)
     return tuple(ra)
+
+
+def _kiem_phu_thuoc(calls: list[LoiGoi]) -> None:
+    ids = {c.id for c in calls}
+    canh = {c.id: c.depends_on for c in calls}
+    for c in calls:
+        if treo := sorted(set(c.depends_on) - ids):
+            raise TuChoi("DANGLING_DEPENDENCY", f"{c.id} phụ thuộc lời gọi không tồn tại {treo}", (c.id,))
+    trang: dict[str, int] = {}
+
+    def tham(u: str) -> None:
+        trang[u] = 1
+        for v in canh[u]:
+            if trang.get(v) == 1:
+                raise TuChoi("DEPENDENCY_CYCLE", f"phụ thuộc vòng qua {u} → {v}", (u, v))
+            if v not in trang:
+                tham(v)
+        trang[u] = 2
+
+    for u in sorted(ids):
+        if u not in trang:
+            tham(u)
+
+
+# ── nhãn điểm ───────────────────────────────────────────────────────────────
+_TU = re.compile(r"[\w'.]+")
+
+
+def _tu_nhan(s: str) -> list[tuple[int, int, list[list[str]]]]:
+    """Các từ toàn chữ HOA trong `s`: (đầu, cuối, phần nhãn theo dấu chấm) — `S.ABC` → [[S], [A, B, C]]."""
+    ra = []
+    for m in _TU.finditer(s):
+        w = m.group(0).strip(".")
+        if w and any(ch.isalpha() for ch in w) and all(not ch.isalpha() or "A" <= ch <= "Z" for ch in w):
+            ra.append((m.start(), m.end(), [re.findall(r"[A-Z][0-9]*'?", p) for p in w.split(".") if p]))
+    return ra
 
 
 def nhan_cua_de(text: str) -> set[str]:
     """Nhãn điểm có trong đề: từ chỉ gồm chữ HOA (S.ABC, (ABC), SA, A'B'C'), tách thành từng nhãn."""
-    ra: set[str] = set()
-    for w in re.findall(r"[\w'.]+", chuan_hoa(text)):
-        if any(ch.isalpha() for ch in w) and all(not ch.isalpha() or "A" <= ch <= "Z" for ch in w):
-            ra.update(re.findall(r"[A-Z][0-9]*'?", w))
-    return ra
+    return {n for _a, _b, phan in _tu_nhan(chuan_hoa(text)) for p in phan for n in p}
 
 
 def nhan_cua_loi_goi(c: LoiGoi) -> set[str]:
@@ -259,44 +392,156 @@ def nhan_cua_loi_goi(c: LoiGoi) -> set[str]:
     return ra
 
 
+# ── vị trí quote trong đề (bỏ qua khoảng trắng) ──────────────────────────────
+def _vi_tri(de: str, q: str) -> tuple[int, int] | None:
+    """Vị trí [đầu, cuối) của `q` trong `de`, so sau khi BỎ mọi khoảng trắng (cách gõ ký hiệu khác nhau vẫn khớp)."""
+    goc = [i for i, ch in enumerate(de) if not ch.isspace()]
+    nen = "".join(de[i] for i in goc)
+    qn = "".join(ch for ch in q if not ch.isspace())
+    k = nen.find(qn) if qn else -1
+    return None if k < 0 else (goc[k], goc[k + len(qn) - 1] + 1)
+
+
+def _cau_chua(de: str, vt: int) -> int:
+    """Đầu câu chứa vị trí `vt` (câu tách bởi . ! ? theo sau là khoảng trắng — `S.ABC` không tách)."""
+    dau = 0
+    for m in re.finditer(r"[.!?]\s+", de):
+        if m.end() <= vt:
+            dau = m.end()
+    return dau
+
+
+def _vai_tro(de: str, vt: int) -> str | None:
+    """`GOAL` / `CONDITIONAL` / None (tiền đề) cho đoạn bắt đầu tại `vt`, xét phần câu đứng trước nó."""
+    truoc = de[_cau_chua(de, vt):vt].lower()
+    muc = max((truoc.rfind(m) for m in _MUC_TIEU), default=-1)
+    if muc >= 0 and "biết" not in truoc[muc:]:
+        return "GOAL"
+    neu = truoc.rfind("nếu")
+    if neu >= 0 and re.search(r"(?<!\w)nếu(?!\w)", truoc[neu:]) and "thì" not in truoc[neu:]:
+        return "CONDITIONAL"
+    return None
+
+
+def _phu_dinh(de: str, vt: int, q: str) -> bool:
+    """Phủ định trong quote, hoặc ngay trước nó trong CÙNG mệnh đề (cắt ở , ; :)."""
+    truoc = de[_cau_chua(de, vt):vt]
+    duoi = re.split(r"[,;:]", truoc)[-1]
+    return any(p in (duoi + q).lower() for p in PHU_DINH)
+
+
+def _co_tu(quotes: tuple[str, ...], nhom: tuple[str, ...]) -> bool:
+    for k in nhom:
+        if k.startswith("re:"):
+            if any(re.search(k[3:], q) for q in quotes):
+                return True
+        elif any(k in q.lower() for q in quotes):
+            return True
+    return False
+
+
+def _co_mat(quotes: tuple[str, ...], mp: list[str], cho_day: bool = True) -> bool:
+    """Mặt phẳng được nhắc: nhóm nhãn trùng tập điểm (`(ABC)`, `SAB`), hoặc — với mặt ĐÁY — chữ "đáy"."""
+    if cho_day and any("đáy" in q.lower() for q in quotes):
+        return True
+    return any(set(p) == set(mp) for q in quotes for _a, _b, phan in _tu_nhan(q) for p in phan if len(p) >= 3)
+
+
+def _co_doan(quotes: tuple[str, ...], seg: list[str]) -> bool:
+    x, y = seg
+    return any(any((p[i], p[i + 1]) in ((x, y), (y, x)) for i in range(len(p) - 1))
+               for q in quotes for _a, _b, phan in _tu_nhan(q) for p in phan)
+
+
+def _co_diem_rieng(quotes: tuple[str, ...], ten: str, mp: list[str] | None) -> bool:
+    return any(ten in p and not (mp and set(p) == set(mp)) and len(p) <= 2
+               for q in quotes for _a, _b, phan in _tu_nhan(q) for p in phan)
+
+
+def _so_neo(quotes: tuple[str, ...], seg: list[str] | None) -> list[tuple[Fraction, bool]]:
+    """Số căn theo nhãn đoạn: số ĐẦU TIÊN đứng sau nhãn `seg` trong mỗi quote có nhãn ấy."""
+    if not seg:
+        return []
+    ra = []
+    for q in quotes:
+        qn = chuan_hoa(q)
+        so = so_trong(qn)
+        for dau, cuoi, phan in _tu_nhan(qn):
+            if any((p[i], p[i + 1]) in ((seg[0], seg[1]), (seg[1], seg[0])) for p in phan for i in range(len(p) - 1)):
+                sau = [(v, s) for vt, v, s in so if vt >= cuoi]
+                if sau:
+                    ra.append(sau[0])
+                    break
+    return ra
+
+
 def kiem_nguon(calls: tuple[LoiGoi, ...], text: str) -> None:
     """Cổng nguồn tất định — xem docstring module. Ném `TuChoi` ở lời gọi đầu tiên hỏng (theo thứ tự id)."""
     de = chuan_hoa(text)
     nhan = nhan_cua_de(de)
     for c in sorted(calls, key=lambda c: c.id):
-        q = c.quote
-        if q not in de:
-            raise TuChoi("QUOTE_NOT_IN_SOURCE", f"{c.id}: đoạn {q!r} không có nguyên văn trong đề", (c.id,))
+        vts = []
+        for q in c.quotes:
+            if (vt := _vi_tri(de, q)) is None:
+                raise TuChoi("QUOTE_NOT_IN_SOURCE", f"{c.id}: đoạn {q!r} không có nguyên văn trong đề", (c.id,))
+            vts.append(vt)
         if lac := sorted(nhan_cua_loi_goi(c) - nhan):
             raise TuChoi("UNKNOWN_LABEL", f"{c.id}: nhãn {lac} không có trong đề", (c.id,))
-        if c.fn == "unsupported":
+        if c.spec.kind == "escape":
             continue
-        thuong = q.lower()
-        if any(p in thuong for p in PHU_DINH):
-            raise TuChoi("NEGATED_CLAUSE", f"{c.id}: mệnh đề {q!r} mang phủ định — không làm dữ kiện {c.fn}", (c.id,))
+        if c.spec.kind != "ask":
+            for (dau, _c), q in zip(vts, c.quotes):
+                if (vai := _vai_tro(de, dau)) == "GOAL":
+                    raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{c.id}: {q!r} là điều phải chứng minh, không phải dữ kiện", (c.id,))
+                if vai == "CONDITIONAL":
+                    raise TuChoi("CONDITIONAL_CLAUSE", f"{c.id}: {q!r} nằm trong mệnh đề 'nếu … thì' — không phải dữ kiện", (c.id,))
+        if any(_phu_dinh(de, dau, q) for (dau, _c), q in zip(vts, c.quotes)):
+            raise TuChoi("NEGATED_CLAUSE", f"{c.id}: mệnh đề {c.quote!r} mang phủ định — không làm dữ kiện {c.fn}", (c.id,))
         for nhom in c.spec.keywords:
-            if not any(k in thuong for k in nhom):
-                raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: {c.fn} cần một trong {list(nhom)} trong {q!r}", (c.id,))
-        if c.fn == "prism" and c.args.right and not any(k in thuong for k in ("đứng", "đều", "hình hộp")):
-            raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: lăng trụ đứng cần 'đứng'/'đều' trong {q!r}", (c.id,))
+            if not _co_tu(c.quotes, nhom):
+                raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: {c.fn} cần một trong {list(nhom)} trong {c.quote!r}", (c.id,))
+        if c.fn == "prism" and c.args.right and not _co_tu(c.quotes, ("đứng", "đều", "hình hộp")):
+            raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: lăng trụ đứng cần 'đứng'/'đều' trong {c.quote!r}", (c.id,))
+        for f in c.spec.plane_fields:
+            if not _co_mat(c.quotes, getattr(c.args, f), cho_day=f != "face"):
+                raise TuChoi("PLANE_NOT_IN_QUOTE", f"{c.id}: mặt phẳng {getattr(c.args, f)} không được nhắc trong {c.quote!r}", (c.id,))
+        for f in c.spec.segment_fields:
+            if not _co_doan(c.quotes, getattr(c.args, f)):
+                raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: đoạn {''.join(getattr(c.args, f))} không được nhắc trong {c.quote!r}", (c.id,))
+        for f in c.spec.point_fields:
+            mp = getattr(c.args, "plane", None)
+            if not _co_diem_rieng(c.quotes, getattr(c.args, f), mp):
+                raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: điểm {getattr(c.args, f)} ({f}) không được nhắc trong {c.quote!r}", (c.id,))
         for f in c.spec.value_fields:
-            v = getattr(c.args, f)
-            if v is None:
+            if (v := getattr(c.args, f)) is None:
                 continue
-            so = so_trong(q)
+            gt = doc_so(v)
+            neo = _so_neo(c.quotes, getattr(c.args, "segment", None))
+            if neo:
+                if gt not in neo:
+                    raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {v} không phải số đứng sau nhãn đoạn trong {c.quote!r}", (c.id,))
+                continue
+            so = [(x, s) for q in c.quotes for _vt, x, s in so_trong(q)]
             if len(so) != 1:
                 raise TuChoi("AMBIGUOUS_VALUE_QUOTE", f"{c.id}: quote cho ô số phải chứa đúng MỘT số, có {len(so)}", (c.id,))
-            if binh_phuong(v) != so[0]:
-                raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {v} không phải số trong {q!r}", (c.id,))
+            if gt != so[0]:
+                raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {v} không phải số trong {c.quote!r}", (c.id,))
 
 
 def function_declarations() -> list[dict[str, Any]]:
-    """Khai báo hàm cho function calling của mô hình (một mục mỗi hàm): tên, mô tả, lược đồ đối số + `quote`."""
+    """Khai báo hàm (JSON Schema) — một mục mỗi hàm: đối số + `call_id`, `quotes`, `depends_on`. Bản Gemini (tập con
+    OpenAPI) dẫn xuất từ đây ở `app/ai/function_calling.py`."""
     ra = []
     for s in REGISTRY.values():
         sch = s.args.model_json_schema()
-        props = {**sch.get("properties", {}), "quote": {"type": "string", "description": Source.model_fields["quote"].description}}
+        props = {**sch.get("properties", {}),
+                 "call_id": {"type": "string", "description": "id ngắn, duy nhất trong bài, vd c1"},
+                 "quotes": {"type": "array", "items": {"type": "string"}, "minItems": 1,
+                            "description": Source.model_fields["quotes"].description},
+                 "depends_on": {"type": "array", "items": {"type": "string"},
+                                "description": FunctionCall.model_fields["depends_on"].description}}
         ra.append({"name": s.name, "description": s.description,
                    "parameters": {"type": "object", "properties": props,
-                                  "required": [*sch.get("required", []), "quote"], **({"$defs": sch["$defs"]} if "$defs" in sch else {})}})
+                                  "required": [*sch.get("required", []), "call_id", "quotes"],
+                                  **({"$defs": sch["$defs"]} if "$defs" in sch else {})}})
     return ra

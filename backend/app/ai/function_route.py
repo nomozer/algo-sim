@@ -31,4 +31,8 @@ def run_function_route(problem_text: str, plan: Any) -> KetQuaTuyen:
     if not canh.get("objects"):
         return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", "cảnh rỗng", trace=r.trace)
     r.scene3d = {**canh, "chart_metric": r.metric}
+    if r.length_unit:
+        # Toạ độ khung đo theo đơn vị a (a = 1 là TỈ LỆ hiển thị, không phải dữ kiện đề); đáp số mang a^bậc.
+        r.scene3d["length_unit"] = {"symbol": r.length_unit, "display_scale": f"{r.length_unit} = 1 đơn vị dựng",
+                                    "is_given": False}
     return r
