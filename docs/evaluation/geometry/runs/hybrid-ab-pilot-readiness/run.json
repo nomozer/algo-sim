@@ -1,0 +1,127 @@
+{
+  "schema": "hybrid_ab_pilot_readiness/2",
+  "run_id": "hybrid-ab-pilot-readiness",
+  "wave_id": "HYBRID_AB_PILOT_READINESS",
+  "date": "2026-10-10",
+  "environment": "LOCAL",
+  "branch": "feat/text-to-geometry-functions",
+  "start_head": "5c33406a5697c6f3bac4e56d443f8a9ca6a82fd7",
+  "code_commit": "cfe2ada5e61e7fec18a84234e64cdb1d3319dd62",
+  "product_commit": "cfe2ada5e61e7fec18a84234e64cdb1d3319dd62",
+  "documentation_commit_role": "SELF",
+  "main_unchanged_sha": "28ac1d61cbaa6b33085bb12392e5f0f5815eb787",
+  "status": "HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW",
+  "human_approval": "NOT_REQUESTED_FOR_LIVE",
+  "live_gemini_calls": 0,
+  "default_mode": "LLM_ONLY",
+  "cache_version": 125,
+  "candidate_sha256": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "identities": {
+    "FULL_AB": {
+      "cache_version": "125",
+      "caps": {
+        "accounted_tokens": 6000000,
+        "http_attempts": 450,
+        "logical_calls": 300,
+        "samples": 3,
+        "usd": 7
+      },
+      "corpus_sha256": "8b338bf614413acc3be541b8bd6b86c7316cd20a06f46f8a8951f89d394eba6d",
+      "mode": "FULL_AB",
+      "model": "gemini-2.5-flash",
+      "oracle_sha256": "20afe1d84e50ece2b65ae920dfc5a84fdad95493b7d7b4510c9b875e2d7ea024",
+      "parameters_sha256": "5733130b613f15073fa9642c9ec0c3cd901dddd5354c718f8b7365dac2e8f427",
+      "price_usd_per_million": {
+        "input": 0.3,
+        "output_and_thoughts": 2.5
+      },
+      "product_sha256": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+      "question_obligations_sha256": "8599c6c97acca8df7d58c9b40d31e4922972826d5904a22b5859ede67feccb1f",
+      "runner_sha256": "6426e497cd535ad58fdc7d7c2b94506b6c079d8694a570956ba62124a719ab9f",
+      "schedule_seed": 2026101048,
+      "schedule_sha256": "2c8a5f5c9b9d2972c95d8c77c8e5bd4c432f8a4be0b80f66d13b2a078ddf5d84",
+      "surfaces": {
+        "A": "f329e89155b162ad1e0cd03b6c437542b0be8175907c09153e4b508a2f75f8ee",
+        "B": "aa198078c47ffdf0e05e31b1726c62c1c218a87dc02e7d5698f144c11d27e2ce"
+      }
+    },
+    "SMOKE_AB": {
+      "cache_version": "125",
+      "caps": {
+        "accounted_tokens": 500000,
+        "http_attempts": 36,
+        "logical_calls": 24,
+        "samples": 1,
+        "usd": 0.6
+      },
+      "corpus_sha256": "a9b03c229c2712c0147d94b518ce2ebaaf3f8dc4fe60639bf70cc2e080aae5bd",
+      "mode": "SMOKE_AB",
+      "model": "gemini-2.5-flash",
+      "oracle_sha256": "bc584dc6651ddcb30ffb57b6a1e6cc9408b0137440768c0674fcbea9e5ccc7eb",
+      "parameters_sha256": "b234fb8a0f626e598b7c1ee8e895e48cb23c7e1f0d95052d5cdcd3e4bcbb1d9a",
+      "price_usd_per_million": {
+        "input": 0.3,
+        "output_and_thoughts": 2.5
+      },
+      "product_sha256": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+      "question_obligations_sha256": "8599c6c97acca8df7d58c9b40d31e4922972826d5904a22b5859ede67feccb1f",
+      "runner_sha256": "6426e497cd535ad58fdc7d7c2b94506b6c079d8694a570956ba62124a719ab9f",
+      "schedule_seed": 2026101012,
+      "schedule_sha256": "b5c15d78101060475c0b7dd98b1f7c6d47bec1792f9ac2c5d2f06f61508c48a2",
+      "surfaces": {
+        "A": "f329e89155b162ad1e0cd03b6c437542b0be8175907c09153e4b508a2f75f8ee",
+        "B": "aa198078c47ffdf0e05e31b1726c62c1c218a87dc02e7d5698f144c11d27e2ce"
+      }
+    }
+  },
+  "corrects": "hybrid-compiler-selection",
+  "offline_certification": "fake-provider/review-fix/CERTIFICATION.json",
+  "prior_certification": "fake-provider/CERTIFICATION.json",
+  "prior_certification_note": "Frozen pre-review implementation evidence; superseded for current readiness, not overwritten.",
+  "go_no_go": {
+    "offline_runner": "PENDING_CLEAN_FULL_REGRESSION",
+    "smoke_live": "NO_GO",
+    "full_live": "NO_GO"
+  },
+  "verification": {
+    "focused": {
+      "passed": 341,
+      "failed": 0,
+      "skipped": 0,
+      "deselected": 0,
+      "seconds": 49.29,
+      "artifact": "diagnostics/focused-review-fix.xml"
+    },
+    "mutation": {
+      "killed": 9,
+      "total": 9,
+      "type": "in-memory behavior guard removal"
+    },
+    "fake_provider": {
+      "smoke": 24,
+      "full": 288,
+      "total": 312,
+      "network": 0,
+      "live": 0
+    },
+    "backend_full": {
+      "status": "PENDING"
+    },
+    "docs_gates": {
+      "status": "PENDING"
+    },
+    "renderer_metric": {
+      "scenes": 14,
+      "point_pairs": 194,
+      "max_relative_error": 7.02e-10,
+      "visual_acceptance": "NOT_PERFORMED"
+    }
+  },
+  "limits": [
+    "Payload UTF-8 bytes plus 4096 is an unverified local prompt estimator, not a provider-token upper bound.",
+    "Output 3072 includes thinking; real truncation and thinking allocation were not measured.",
+    "Development corpus and repeated samples cannot establish population safety; zero observed wrong_served is not proof.",
+    "Fake G05 outputs are unsupported apparatus fixtures, not model extraction quality.",
+    "No human visual acceptance or live run authorized."
+  ]
+}

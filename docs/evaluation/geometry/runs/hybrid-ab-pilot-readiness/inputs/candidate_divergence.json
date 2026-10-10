@@ -1,0 +1,27 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-ab-pilot-readiness",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-compiler-selection/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "current_candidate_source_commit": "cfe2ada5e61e7fec18a84234e64cdb1d3319dd62",
+  "current_candidate_frozen_at": "cfe2ada5e61e7fec18a84234e64cdb1d3319dd62",
+  "current_candidate_note": "Frozen LOCAL from clean detached source at cfe2ada5; 110 measured files; CACHE_VERSION 125. The global candidate manifest is mutable current identity, not a historical measurement. Historical run files remain unchanged.",
+  "previous_candidate_hash": "e9d20aa2debc16ed50a83da9aae2d3aa596e88237b97549cee7fb645f230d69d",
+  "diverged": true,
+  "reason": "Shared object-binding now binds regularity witnesses to their polygons and cube/cuboid clauses; configuration observations no longer claim proof or global inconsistency; experimental adapters explicitly refuse malformed parts and preserve typed HTTP failure metadata. No kernel, renderer, schema, prompt, main.py, default routing or live measurement change.",
+  "changed_paths": [
+    "backend/app/simulation/geometry_functions/registry.py",
+    "backend/app/ai/function_route.py",
+    "backend/app/ai/function_calling.py",
+    "backend/app/ai/fact_extraction.py"
+  ],
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "KHÔNG ĐỔI — historical thesis-final and hybrid runs describe their original candidates; no rescoring or modification.",
+    "candidate_hien_tai": "12da4768 is the local experimental branch only, not a promotion or live evaluation.",
+    "live_requests": 0
+  },
+  "cache_version_hien_tai": 125
+}

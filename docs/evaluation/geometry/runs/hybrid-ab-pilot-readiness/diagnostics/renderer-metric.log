@@ -1,0 +1,15 @@
+expansion_X01: 5 points, 10 pairs, max rel err 5.28e-10 → OK
+expansion_X02: 5 points, 10 pairs, max rel err 3.73e-10 → OK
+expansion_X03: 5 points, 10 pairs, max rel err 0.00e+0 → OK
+expansion_X04: 6 points, 15 pairs, max rel err 3.73e-10 → OK
+expansion_X05: 6 points, 15 pairs, max rel err 7.02e-10 → OK
+hybrid_H01: 8 points, 28 pairs, max rel err 0.00e+0 → OK
+hybrid_H02: 8 points, 28 pairs, max rel err 0.00e+0 → OK
+hybrid_H03: 6 points, 15 pairs, max rel err 6.39e-10 → OK
+hybrid_H04: 5 points, 10 pairs, max rel err 1.60e-10 → OK
+hybrid_H07: 4 points, 6 pairs, max rel err 4.98e-10 → OK
+hybrid_H11: 7 points, 21 pairs, max rel err 0.00e+0 → OK
+hybrid_H12: 5 points, 10 pairs, max rel err 4.98e-10 → OK
+hybrid_H14: 5 points, 10 pairs, max rel err 3.73e-10 → OK
+paraphrase_P01: 4 points, 6 pairs, max rel err 5.96e-11 → OK
+RENDER_METRIC_OK

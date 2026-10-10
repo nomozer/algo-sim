@@ -13,6 +13,11 @@ CANONICAL_NEXT_ACTION = AI_FUNCTION_ROUTE_BUDGETED_PILOT_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
+- **Readiness correction (2026-10-10):** [`hybrid-ab-pilot-readiness/report.md`](evaluation/geometry/runs/hybrid-ab-pilot-readiness/report.md)
+  tách object-binding / quan sát cấu hình khỏi chứng minh, khóa SMOKE 24 và FULL 288 riêng, certification fake/network=0.
+  Live vẫn NO-GO; người dùng review exact identities và giới hạn prompt estimator trước mọi quyết định chạy. Kết quả hybrid
+  cũ giữ nguyên nhưng phải đọc cùng correction layer này; không tuyên bố tỷ lệ lỗi thực bằng 0 hay B tốt hơn A.
+
 - **Quyết định kiến trúc (2026-10-10, người dùng theo ý GVHD):** **Text-to-Geometry Functions là kiến trúc đích**
   ([`architecture/TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md`](architecture/TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md), contract
   [`architecture/TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md`](architecture/TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md)). `LLM_ONLY` là legacy: vẫn

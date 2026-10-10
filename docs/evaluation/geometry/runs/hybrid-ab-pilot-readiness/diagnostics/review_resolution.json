@@ -1,0 +1,79 @@
+{
+  "schema": "hybrid_ab_review_resolution/1",
+  "reviewed_base": "5c33406a5697c6f3bac4e56d443f8a9ca6a82fd7",
+  "reviewed_head": "a2db9272567f36542255b3d766a0535598d59585",
+  "reviewer": "single fresh independent agent",
+  "critical": 0,
+  "important": 6,
+  "minor": 1,
+  "post_fix_review": "NOT_PERFORMED",
+  "fix_commit": "cfe2ada5e61e7fec18a84234e64cdb1d3319dd62",
+  "red": {
+    "failed": 24,
+    "passed": 1,
+    "deselected": 72
+  },
+  "green": {
+    "passed": 341,
+    "failed": 0,
+    "artifact": "focused-review-fix.xml"
+  },
+  "findings": [
+    {
+      "id": 1,
+      "severity": "Important",
+      "issue": "Unrelated regularity witness bypasses object binding",
+      "resolution": "Bind each explicit witness / unique named base, both-arm adversarial tests",
+      "status": "FIXED_AND_TESTED"
+    },
+    {
+      "id": 2,
+      "severity": "Important",
+      "issue": "Malformed nested content escapes durable accounting",
+      "resolution": "Explicit extraction refusal and post-response failure row, known usage preserved",
+      "status": "FIXED_AND_TESTED"
+    },
+    {
+      "id": 3,
+      "severity": "Important",
+      "issue": "Fake/live resume provenance can mix",
+      "resolution": "Execution class / live-call counters checked including terminal manifests",
+      "status": "FIXED_AND_TESTED"
+    },
+    {
+      "id": 4,
+      "severity": "Important",
+      "issue": "Stale extraction taxonomy names",
+      "resolution": "Actual emitted source-gate and planner codes mapped; real-route failure tests",
+      "status": "FIXED_AND_TESTED"
+    },
+    {
+      "id": 5,
+      "severity": "Important",
+      "issue": "Sealed refusal/geometry obligations ignored",
+      "resolution": "Refusal codes, scene exact lengths, units and goal/proof obligations enforced; invalid refusal never correct",
+      "status": "FIXED_AND_TESTED"
+    },
+    {
+      "id": 6,
+      "severity": "Important",
+      "issue": "Fake HTTP errors bypass real transport observability",
+      "resolution": "Typed HTTP failure through existing transport, mocked HTTP status/body/usage and leak cases",
+      "status": "FIXED_AND_TESTED"
+    },
+    {
+      "id": 7,
+      "severity": "Minor",
+      "issue": "Undefined selective accuracy and missing negative refusal metric",
+      "resolution": "Null accuracy with served denominator; separate negative refusal denominator/rate",
+      "status": "FIXED_AND_TESTED"
+    }
+  ],
+  "limitations": [
+    "No strict provider-billed token proof",
+    "No live thinking/truncation measurement",
+    "No visual acceptance",
+    "No general proof completeness claim"
+  ],
+  "live_gemini_calls": 0
+}

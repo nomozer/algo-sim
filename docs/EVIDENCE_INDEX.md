@@ -1,5 +1,31 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_COMPILER_SELECTION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-compiler-selection/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-compiler-selection/
+CORRECTED_BY = HYBRID_AB_PILOT_READINESS
+CORRECTS = NONE
+
+Registration of the existing historical run (2026-10-10): parser fixtures, not Gemini quality. Its artifact bytes remain
+unchanged. Read its source-binding / proof / negation interpretations together with the following correction layer.
+
+## WAVE_ID = HYBRID_AB_PILOT_READINESS
+
+REPORT = docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/
+CORRECTED_BY = NONE
+CORRECTS = HYBRID_COMPILER_SELECTION
+CLASSIFICATION = HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW
+CODE_COMMIT = cfe2ada5
+MODEL_REQUEST_COUNT = 0
+
+Authoritative current identity/caps: `run.json`; inputs/oracles: `inputs/`; post-review fake certification:
+`fake-provider/review-fix/CERTIFICATION.json`; 341-pass focused/mutation journal, renderer metric, candidate divergence and
+final clean full regression journal: `diagnostics/`, `report.md`, `handoff.md`. Pre-review fake artifacts remain unchanged,
+superseded for current readiness, not pooled. Offline readiness requires final clean gates; both live modes remain NO-GO.
+No population-safety, provider-budget proof or visual-acceptance claim.
+
 > **Tài liệu Canonical cho việc tra cứu toàn bộ bằng chứng thực nghiệm, báo cáo và chuỗi đính chính.**
 > Quy tắc bảo toàn: Báo cáo và artifact còn làm bằng chứng cho sản phẩm, nghiên cứu hiện hành hoặc khả năng tái lập phải giữ nguyên byte. Có thể đổi đường dẫn nếu mọi consumer/index/manifest được cập nhật; có thể xoá sau inventory khi đã xác minh không còn các vai trò ấy. Sai lệch của bằng chứng còn dùng được đính chính thông qua chuỗi `CORRECTED_BY`, không sửa kết quả lịch sử.
 > Không có chu trình trong chuỗi đính chính (Acyclic DAG).

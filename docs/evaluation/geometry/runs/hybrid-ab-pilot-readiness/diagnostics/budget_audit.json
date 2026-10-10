@@ -1,0 +1,1095 @@
+{
+  "schema": "hybrid_ab_budget_audit/2",
+  "provider_calls": 0,
+  "formula_kind": "UNVERIFIED_CONSERVATIVE_LOCAL_ESTIMATOR",
+  "per_request": [
+    {
+      "case_id": "g05/X1",
+      "arm": "A",
+      "canonical_payload_bytes": 22480,
+      "reservation": {
+        "prompt_tokens": 26576,
+        "output_tokens": 3072,
+        "tokens": 29648,
+        "usd": 0.015652799999999998
+      }
+    },
+    {
+      "case_id": "g05/X1",
+      "arm": "B",
+      "canonical_payload_bytes": 4456,
+      "reservation": {
+        "prompt_tokens": 8552,
+        "output_tokens": 3072,
+        "tokens": 11624,
+        "usd": 0.0102456
+      }
+    },
+    {
+      "case_id": "g05/X4",
+      "arm": "A",
+      "canonical_payload_bytes": 22483,
+      "reservation": {
+        "prompt_tokens": 26579,
+        "output_tokens": 3072,
+        "tokens": 29651,
+        "usd": 0.0156537
+      }
+    },
+    {
+      "case_id": "g05/X4",
+      "arm": "B",
+      "canonical_payload_bytes": 4459,
+      "reservation": {
+        "prompt_tokens": 8555,
+        "output_tokens": 3072,
+        "tokens": 11627,
+        "usd": 0.0102465
+      }
+    },
+    {
+      "case_id": "g05/X6",
+      "arm": "A",
+      "canonical_payload_bytes": 22485,
+      "reservation": {
+        "prompt_tokens": 26581,
+        "output_tokens": 3072,
+        "tokens": 29653,
+        "usd": 0.0156543
+      }
+    },
+    {
+      "case_id": "g05/X6",
+      "arm": "B",
+      "canonical_payload_bytes": 4461,
+      "reservation": {
+        "prompt_tokens": 8557,
+        "output_tokens": 3072,
+        "tokens": 11629,
+        "usd": 0.0102471
+      }
+    },
+    {
+      "case_id": "g05/T2",
+      "arm": "A",
+      "canonical_payload_bytes": 22460,
+      "reservation": {
+        "prompt_tokens": 26556,
+        "output_tokens": 3072,
+        "tokens": 29628,
+        "usd": 0.0156468
+      }
+    },
+    {
+      "case_id": "g05/T2",
+      "arm": "B",
+      "canonical_payload_bytes": 4436,
+      "reservation": {
+        "prompt_tokens": 8532,
+        "output_tokens": 3072,
+        "tokens": 11604,
+        "usd": 0.0102396
+      }
+    },
+    {
+      "case_id": "g05/T5",
+      "arm": "A",
+      "canonical_payload_bytes": 22462,
+      "reservation": {
+        "prompt_tokens": 26558,
+        "output_tokens": 3072,
+        "tokens": 29630,
+        "usd": 0.0156474
+      }
+    },
+    {
+      "case_id": "g05/T5",
+      "arm": "B",
+      "canonical_payload_bytes": 4438,
+      "reservation": {
+        "prompt_tokens": 8534,
+        "output_tokens": 3072,
+        "tokens": 11606,
+        "usd": 0.0102402
+      }
+    },
+    {
+      "case_id": "g05/H1",
+      "arm": "A",
+      "canonical_payload_bytes": 22446,
+      "reservation": {
+        "prompt_tokens": 26542,
+        "output_tokens": 3072,
+        "tokens": 29614,
+        "usd": 0.0156426
+      }
+    },
+    {
+      "case_id": "g05/H1",
+      "arm": "B",
+      "canonical_payload_bytes": 4422,
+      "reservation": {
+        "prompt_tokens": 8518,
+        "output_tokens": 3072,
+        "tokens": 11590,
+        "usd": 0.0102354
+      }
+    },
+    {
+      "case_id": "g05/H2",
+      "arm": "A",
+      "canonical_payload_bytes": 22446,
+      "reservation": {
+        "prompt_tokens": 26542,
+        "output_tokens": 3072,
+        "tokens": 29614,
+        "usd": 0.0156426
+      }
+    },
+    {
+      "case_id": "g05/H2",
+      "arm": "B",
+      "canonical_payload_bytes": 4422,
+      "reservation": {
+        "prompt_tokens": 8518,
+        "output_tokens": 3072,
+        "tokens": 11590,
+        "usd": 0.0102354
+      }
+    },
+    {
+      "case_id": "g05/H8",
+      "arm": "A",
+      "canonical_payload_bytes": 22448,
+      "reservation": {
+        "prompt_tokens": 26544,
+        "output_tokens": 3072,
+        "tokens": 29616,
+        "usd": 0.0156432
+      }
+    },
+    {
+      "case_id": "g05/H8",
+      "arm": "B",
+      "canonical_payload_bytes": 4424,
+      "reservation": {
+        "prompt_tokens": 8520,
+        "output_tokens": 3072,
+        "tokens": 11592,
+        "usd": 0.010236
+      }
+    },
+    {
+      "case_id": "g05/P09",
+      "arm": "A",
+      "canonical_payload_bytes": 22438,
+      "reservation": {
+        "prompt_tokens": 26534,
+        "output_tokens": 3072,
+        "tokens": 29606,
+        "usd": 0.0156402
+      }
+    },
+    {
+      "case_id": "g05/P09",
+      "arm": "B",
+      "canonical_payload_bytes": 4414,
+      "reservation": {
+        "prompt_tokens": 8510,
+        "output_tokens": 3072,
+        "tokens": 11582,
+        "usd": 0.010233
+      }
+    },
+    {
+      "case_id": "g05/P06",
+      "arm": "A",
+      "canonical_payload_bytes": 22404,
+      "reservation": {
+        "prompt_tokens": 26500,
+        "output_tokens": 3072,
+        "tokens": 29572,
+        "usd": 0.01563
+      }
+    },
+    {
+      "case_id": "g05/P06",
+      "arm": "B",
+      "canonical_payload_bytes": 4380,
+      "reservation": {
+        "prompt_tokens": 8476,
+        "output_tokens": 3072,
+        "tokens": 11548,
+        "usd": 0.0102228
+      }
+    },
+    {
+      "case_id": "g05/NX1",
+      "arm": "A",
+      "canonical_payload_bytes": 22458,
+      "reservation": {
+        "prompt_tokens": 26554,
+        "output_tokens": 3072,
+        "tokens": 29626,
+        "usd": 0.0156462
+      }
+    },
+    {
+      "case_id": "g05/NX1",
+      "arm": "B",
+      "canonical_payload_bytes": 4434,
+      "reservation": {
+        "prompt_tokens": 8530,
+        "output_tokens": 3072,
+        "tokens": 11602,
+        "usd": 0.010239
+      }
+    },
+    {
+      "case_id": "g05/NT2",
+      "arm": "A",
+      "canonical_payload_bytes": 22482,
+      "reservation": {
+        "prompt_tokens": 26578,
+        "output_tokens": 3072,
+        "tokens": 29650,
+        "usd": 0.0156534
+      }
+    },
+    {
+      "case_id": "g05/NT2",
+      "arm": "B",
+      "canonical_payload_bytes": 4458,
+      "reservation": {
+        "prompt_tokens": 8554,
+        "output_tokens": 3072,
+        "tokens": 11626,
+        "usd": 0.0102462
+      }
+    },
+    {
+      "case_id": "g05/NT4",
+      "arm": "A",
+      "canonical_payload_bytes": 22467,
+      "reservation": {
+        "prompt_tokens": 26563,
+        "output_tokens": 3072,
+        "tokens": 29635,
+        "usd": 0.0156489
+      }
+    },
+    {
+      "case_id": "g05/NT4",
+      "arm": "B",
+      "canonical_payload_bytes": 4443,
+      "reservation": {
+        "prompt_tokens": 8539,
+        "output_tokens": 3072,
+        "tokens": 11611,
+        "usd": 0.0102417
+      }
+    },
+    {
+      "case_id": "g05/NX7",
+      "arm": "A",
+      "canonical_payload_bytes": 22473,
+      "reservation": {
+        "prompt_tokens": 26569,
+        "output_tokens": 3072,
+        "tokens": 29641,
+        "usd": 0.0156507
+      }
+    },
+    {
+      "case_id": "g05/NX7",
+      "arm": "B",
+      "canonical_payload_bytes": 4449,
+      "reservation": {
+        "prompt_tokens": 8545,
+        "output_tokens": 3072,
+        "tokens": 11617,
+        "usd": 0.0102435
+      }
+    },
+    {
+      "case_id": "g05/N8",
+      "arm": "A",
+      "canonical_payload_bytes": 22487,
+      "reservation": {
+        "prompt_tokens": 26583,
+        "output_tokens": 3072,
+        "tokens": 29655,
+        "usd": 0.0156549
+      }
+    },
+    {
+      "case_id": "g05/N8",
+      "arm": "B",
+      "canonical_payload_bytes": 4463,
+      "reservation": {
+        "prompt_tokens": 8559,
+        "output_tokens": 3072,
+        "tokens": 11631,
+        "usd": 0.0102477
+      }
+    },
+    {
+      "case_id": "g05/N02",
+      "arm": "A",
+      "canonical_payload_bytes": 22460,
+      "reservation": {
+        "prompt_tokens": 26556,
+        "output_tokens": 3072,
+        "tokens": 29628,
+        "usd": 0.0156468
+      }
+    },
+    {
+      "case_id": "g05/N02",
+      "arm": "B",
+      "canonical_payload_bytes": 4436,
+      "reservation": {
+        "prompt_tokens": 8532,
+        "output_tokens": 3072,
+        "tokens": 11604,
+        "usd": 0.0102396
+      }
+    },
+    {
+      "case_id": "paraphrase/P01",
+      "arm": "A",
+      "canonical_payload_bytes": 22456,
+      "reservation": {
+        "prompt_tokens": 26552,
+        "output_tokens": 3072,
+        "tokens": 29624,
+        "usd": 0.0156456
+      }
+    },
+    {
+      "case_id": "paraphrase/P01",
+      "arm": "B",
+      "canonical_payload_bytes": 4432,
+      "reservation": {
+        "prompt_tokens": 8528,
+        "output_tokens": 3072,
+        "tokens": 11600,
+        "usd": 0.0102384
+      }
+    },
+    {
+      "case_id": "paraphrase/P02",
+      "arm": "A",
+      "canonical_payload_bytes": 22439,
+      "reservation": {
+        "prompt_tokens": 26535,
+        "output_tokens": 3072,
+        "tokens": 29607,
+        "usd": 0.0156405
+      }
+    },
+    {
+      "case_id": "paraphrase/P02",
+      "arm": "B",
+      "canonical_payload_bytes": 4415,
+      "reservation": {
+        "prompt_tokens": 8511,
+        "output_tokens": 3072,
+        "tokens": 11583,
+        "usd": 0.0102333
+      }
+    },
+    {
+      "case_id": "paraphrase/P03",
+      "arm": "A",
+      "canonical_payload_bytes": 22482,
+      "reservation": {
+        "prompt_tokens": 26578,
+        "output_tokens": 3072,
+        "tokens": 29650,
+        "usd": 0.0156534
+      }
+    },
+    {
+      "case_id": "paraphrase/P03",
+      "arm": "B",
+      "canonical_payload_bytes": 4458,
+      "reservation": {
+        "prompt_tokens": 8554,
+        "output_tokens": 3072,
+        "tokens": 11626,
+        "usd": 0.0102462
+      }
+    },
+    {
+      "case_id": "paraphrase/P04",
+      "arm": "A",
+      "canonical_payload_bytes": 22468,
+      "reservation": {
+        "prompt_tokens": 26564,
+        "output_tokens": 3072,
+        "tokens": 29636,
+        "usd": 0.0156492
+      }
+    },
+    {
+      "case_id": "paraphrase/P04",
+      "arm": "B",
+      "canonical_payload_bytes": 4444,
+      "reservation": {
+        "prompt_tokens": 8540,
+        "output_tokens": 3072,
+        "tokens": 11612,
+        "usd": 0.010242000000000001
+      }
+    },
+    {
+      "case_id": "paraphrase/P05",
+      "arm": "A",
+      "canonical_payload_bytes": 22502,
+      "reservation": {
+        "prompt_tokens": 26598,
+        "output_tokens": 3072,
+        "tokens": 29670,
+        "usd": 0.0156594
+      }
+    },
+    {
+      "case_id": "paraphrase/P05",
+      "arm": "B",
+      "canonical_payload_bytes": 4478,
+      "reservation": {
+        "prompt_tokens": 8574,
+        "output_tokens": 3072,
+        "tokens": 11646,
+        "usd": 0.0102522
+      }
+    },
+    {
+      "case_id": "paraphrase/P06",
+      "arm": "A",
+      "canonical_payload_bytes": 22457,
+      "reservation": {
+        "prompt_tokens": 26553,
+        "output_tokens": 3072,
+        "tokens": 29625,
+        "usd": 0.0156459
+      }
+    },
+    {
+      "case_id": "paraphrase/P06",
+      "arm": "B",
+      "canonical_payload_bytes": 4433,
+      "reservation": {
+        "prompt_tokens": 8529,
+        "output_tokens": 3072,
+        "tokens": 11601,
+        "usd": 0.0102387
+      }
+    },
+    {
+      "case_id": "paraphrase/P07",
+      "arm": "A",
+      "canonical_payload_bytes": 22463,
+      "reservation": {
+        "prompt_tokens": 26559,
+        "output_tokens": 3072,
+        "tokens": 29631,
+        "usd": 0.0156477
+      }
+    },
+    {
+      "case_id": "paraphrase/P07",
+      "arm": "B",
+      "canonical_payload_bytes": 4439,
+      "reservation": {
+        "prompt_tokens": 8535,
+        "output_tokens": 3072,
+        "tokens": 11607,
+        "usd": 0.0102405
+      }
+    },
+    {
+      "case_id": "paraphrase/P08",
+      "arm": "A",
+      "canonical_payload_bytes": 22425,
+      "reservation": {
+        "prompt_tokens": 26521,
+        "output_tokens": 3072,
+        "tokens": 29593,
+        "usd": 0.0156363
+      }
+    },
+    {
+      "case_id": "paraphrase/P08",
+      "arm": "B",
+      "canonical_payload_bytes": 4401,
+      "reservation": {
+        "prompt_tokens": 8497,
+        "output_tokens": 3072,
+        "tokens": 11569,
+        "usd": 0.0102291
+      }
+    },
+    {
+      "case_id": "paraphrase/P09",
+      "arm": "A",
+      "canonical_payload_bytes": 22383,
+      "reservation": {
+        "prompt_tokens": 26479,
+        "output_tokens": 3072,
+        "tokens": 29551,
+        "usd": 0.0156237
+      }
+    },
+    {
+      "case_id": "paraphrase/P09",
+      "arm": "B",
+      "canonical_payload_bytes": 4359,
+      "reservation": {
+        "prompt_tokens": 8455,
+        "output_tokens": 3072,
+        "tokens": 11527,
+        "usd": 0.0102165
+      }
+    },
+    {
+      "case_id": "paraphrase/P10",
+      "arm": "A",
+      "canonical_payload_bytes": 22435,
+      "reservation": {
+        "prompt_tokens": 26531,
+        "output_tokens": 3072,
+        "tokens": 29603,
+        "usd": 0.0156393
+      }
+    },
+    {
+      "case_id": "paraphrase/P10",
+      "arm": "B",
+      "canonical_payload_bytes": 4411,
+      "reservation": {
+        "prompt_tokens": 8507,
+        "output_tokens": 3072,
+        "tokens": 11579,
+        "usd": 0.010232100000000001
+      }
+    },
+    {
+      "case_id": "expansion/X01",
+      "arm": "A",
+      "canonical_payload_bytes": 22459,
+      "reservation": {
+        "prompt_tokens": 26555,
+        "output_tokens": 3072,
+        "tokens": 29627,
+        "usd": 0.0156465
+      }
+    },
+    {
+      "case_id": "expansion/X01",
+      "arm": "B",
+      "canonical_payload_bytes": 4435,
+      "reservation": {
+        "prompt_tokens": 8531,
+        "output_tokens": 3072,
+        "tokens": 11603,
+        "usd": 0.0102393
+      }
+    },
+    {
+      "case_id": "expansion/X02",
+      "arm": "A",
+      "canonical_payload_bytes": 22599,
+      "reservation": {
+        "prompt_tokens": 26695,
+        "output_tokens": 3072,
+        "tokens": 29767,
+        "usd": 0.0156885
+      }
+    },
+    {
+      "case_id": "expansion/X02",
+      "arm": "B",
+      "canonical_payload_bytes": 4575,
+      "reservation": {
+        "prompt_tokens": 8671,
+        "output_tokens": 3072,
+        "tokens": 11743,
+        "usd": 0.0102813
+      }
+    },
+    {
+      "case_id": "expansion/X03",
+      "arm": "A",
+      "canonical_payload_bytes": 22483,
+      "reservation": {
+        "prompt_tokens": 26579,
+        "output_tokens": 3072,
+        "tokens": 29651,
+        "usd": 0.0156537
+      }
+    },
+    {
+      "case_id": "expansion/X03",
+      "arm": "B",
+      "canonical_payload_bytes": 4459,
+      "reservation": {
+        "prompt_tokens": 8555,
+        "output_tokens": 3072,
+        "tokens": 11627,
+        "usd": 0.0102465
+      }
+    },
+    {
+      "case_id": "expansion/X04",
+      "arm": "A",
+      "canonical_payload_bytes": 22472,
+      "reservation": {
+        "prompt_tokens": 26568,
+        "output_tokens": 3072,
+        "tokens": 29640,
+        "usd": 0.0156504
+      }
+    },
+    {
+      "case_id": "expansion/X04",
+      "arm": "B",
+      "canonical_payload_bytes": 4448,
+      "reservation": {
+        "prompt_tokens": 8544,
+        "output_tokens": 3072,
+        "tokens": 11616,
+        "usd": 0.010243200000000001
+      }
+    },
+    {
+      "case_id": "expansion/X05",
+      "arm": "A",
+      "canonical_payload_bytes": 22527,
+      "reservation": {
+        "prompt_tokens": 26623,
+        "output_tokens": 3072,
+        "tokens": 29695,
+        "usd": 0.0156669
+      }
+    },
+    {
+      "case_id": "expansion/X05",
+      "arm": "B",
+      "canonical_payload_bytes": 4503,
+      "reservation": {
+        "prompt_tokens": 8599,
+        "output_tokens": 3072,
+        "tokens": 11671,
+        "usd": 0.0102597
+      }
+    },
+    {
+      "case_id": "expansion/X06",
+      "arm": "A",
+      "canonical_payload_bytes": 22455,
+      "reservation": {
+        "prompt_tokens": 26551,
+        "output_tokens": 3072,
+        "tokens": 29623,
+        "usd": 0.0156453
+      }
+    },
+    {
+      "case_id": "expansion/X06",
+      "arm": "B",
+      "canonical_payload_bytes": 4431,
+      "reservation": {
+        "prompt_tokens": 8527,
+        "output_tokens": 3072,
+        "tokens": 11599,
+        "usd": 0.0102381
+      }
+    },
+    {
+      "case_id": "expansion/X07",
+      "arm": "A",
+      "canonical_payload_bytes": 22467,
+      "reservation": {
+        "prompt_tokens": 26563,
+        "output_tokens": 3072,
+        "tokens": 29635,
+        "usd": 0.0156489
+      }
+    },
+    {
+      "case_id": "expansion/X07",
+      "arm": "B",
+      "canonical_payload_bytes": 4443,
+      "reservation": {
+        "prompt_tokens": 8539,
+        "output_tokens": 3072,
+        "tokens": 11611,
+        "usd": 0.0102417
+      }
+    },
+    {
+      "case_id": "expansion/X08",
+      "arm": "A",
+      "canonical_payload_bytes": 22498,
+      "reservation": {
+        "prompt_tokens": 26594,
+        "output_tokens": 3072,
+        "tokens": 29666,
+        "usd": 0.0156582
+      }
+    },
+    {
+      "case_id": "expansion/X08",
+      "arm": "B",
+      "canonical_payload_bytes": 4474,
+      "reservation": {
+        "prompt_tokens": 8570,
+        "output_tokens": 3072,
+        "tokens": 11642,
+        "usd": 0.010251
+      }
+    },
+    {
+      "case_id": "hybrid/H01",
+      "arm": "A",
+      "canonical_payload_bytes": 22462,
+      "reservation": {
+        "prompt_tokens": 26558,
+        "output_tokens": 3072,
+        "tokens": 29630,
+        "usd": 0.0156474
+      }
+    },
+    {
+      "case_id": "hybrid/H01",
+      "arm": "B",
+      "canonical_payload_bytes": 4438,
+      "reservation": {
+        "prompt_tokens": 8534,
+        "output_tokens": 3072,
+        "tokens": 11606,
+        "usd": 0.0102402
+      }
+    },
+    {
+      "case_id": "hybrid/H02",
+      "arm": "A",
+      "canonical_payload_bytes": 22499,
+      "reservation": {
+        "prompt_tokens": 26595,
+        "output_tokens": 3072,
+        "tokens": 29667,
+        "usd": 0.0156585
+      }
+    },
+    {
+      "case_id": "hybrid/H02",
+      "arm": "B",
+      "canonical_payload_bytes": 4475,
+      "reservation": {
+        "prompt_tokens": 8571,
+        "output_tokens": 3072,
+        "tokens": 11643,
+        "usd": 0.0102513
+      }
+    },
+    {
+      "case_id": "hybrid/H03",
+      "arm": "A",
+      "canonical_payload_bytes": 22495,
+      "reservation": {
+        "prompt_tokens": 26591,
+        "output_tokens": 3072,
+        "tokens": 29663,
+        "usd": 0.0156573
+      }
+    },
+    {
+      "case_id": "hybrid/H03",
+      "arm": "B",
+      "canonical_payload_bytes": 4471,
+      "reservation": {
+        "prompt_tokens": 8567,
+        "output_tokens": 3072,
+        "tokens": 11639,
+        "usd": 0.0102501
+      }
+    },
+    {
+      "case_id": "hybrid/H04",
+      "arm": "A",
+      "canonical_payload_bytes": 22480,
+      "reservation": {
+        "prompt_tokens": 26576,
+        "output_tokens": 3072,
+        "tokens": 29648,
+        "usd": 0.015652799999999998
+      }
+    },
+    {
+      "case_id": "hybrid/H04",
+      "arm": "B",
+      "canonical_payload_bytes": 4456,
+      "reservation": {
+        "prompt_tokens": 8552,
+        "output_tokens": 3072,
+        "tokens": 11624,
+        "usd": 0.0102456
+      }
+    },
+    {
+      "case_id": "hybrid/H05",
+      "arm": "A",
+      "canonical_payload_bytes": 22442,
+      "reservation": {
+        "prompt_tokens": 26538,
+        "output_tokens": 3072,
+        "tokens": 29610,
+        "usd": 0.0156414
+      }
+    },
+    {
+      "case_id": "hybrid/H05",
+      "arm": "B",
+      "canonical_payload_bytes": 4418,
+      "reservation": {
+        "prompt_tokens": 8514,
+        "output_tokens": 3072,
+        "tokens": 11586,
+        "usd": 0.0102342
+      }
+    },
+    {
+      "case_id": "hybrid/H06",
+      "arm": "A",
+      "canonical_payload_bytes": 22428,
+      "reservation": {
+        "prompt_tokens": 26524,
+        "output_tokens": 3072,
+        "tokens": 29596,
+        "usd": 0.0156372
+      }
+    },
+    {
+      "case_id": "hybrid/H06",
+      "arm": "B",
+      "canonical_payload_bytes": 4404,
+      "reservation": {
+        "prompt_tokens": 8500,
+        "output_tokens": 3072,
+        "tokens": 11572,
+        "usd": 0.01023
+      }
+    },
+    {
+      "case_id": "hybrid/H07",
+      "arm": "A",
+      "canonical_payload_bytes": 22517,
+      "reservation": {
+        "prompt_tokens": 26613,
+        "output_tokens": 3072,
+        "tokens": 29685,
+        "usd": 0.0156639
+      }
+    },
+    {
+      "case_id": "hybrid/H07",
+      "arm": "B",
+      "canonical_payload_bytes": 4493,
+      "reservation": {
+        "prompt_tokens": 8589,
+        "output_tokens": 3072,
+        "tokens": 11661,
+        "usd": 0.0102567
+      }
+    },
+    {
+      "case_id": "hybrid/H08",
+      "arm": "A",
+      "canonical_payload_bytes": 22487,
+      "reservation": {
+        "prompt_tokens": 26583,
+        "output_tokens": 3072,
+        "tokens": 29655,
+        "usd": 0.0156549
+      }
+    },
+    {
+      "case_id": "hybrid/H08",
+      "arm": "B",
+      "canonical_payload_bytes": 4463,
+      "reservation": {
+        "prompt_tokens": 8559,
+        "output_tokens": 3072,
+        "tokens": 11631,
+        "usd": 0.0102477
+      }
+    },
+    {
+      "case_id": "hybrid/H09",
+      "arm": "A",
+      "canonical_payload_bytes": 22439,
+      "reservation": {
+        "prompt_tokens": 26535,
+        "output_tokens": 3072,
+        "tokens": 29607,
+        "usd": 0.0156405
+      }
+    },
+    {
+      "case_id": "hybrid/H09",
+      "arm": "B",
+      "canonical_payload_bytes": 4415,
+      "reservation": {
+        "prompt_tokens": 8511,
+        "output_tokens": 3072,
+        "tokens": 11583,
+        "usd": 0.0102333
+      }
+    },
+    {
+      "case_id": "hybrid/H10",
+      "arm": "A",
+      "canonical_payload_bytes": 22438,
+      "reservation": {
+        "prompt_tokens": 26534,
+        "output_tokens": 3072,
+        "tokens": 29606,
+        "usd": 0.0156402
+      }
+    },
+    {
+      "case_id": "hybrid/H10",
+      "arm": "B",
+      "canonical_payload_bytes": 4414,
+      "reservation": {
+        "prompt_tokens": 8510,
+        "output_tokens": 3072,
+        "tokens": 11582,
+        "usd": 0.010233
+      }
+    },
+    {
+      "case_id": "hybrid/H11",
+      "arm": "A",
+      "canonical_payload_bytes": 22525,
+      "reservation": {
+        "prompt_tokens": 26621,
+        "output_tokens": 3072,
+        "tokens": 29693,
+        "usd": 0.0156663
+      }
+    },
+    {
+      "case_id": "hybrid/H11",
+      "arm": "B",
+      "canonical_payload_bytes": 4501,
+      "reservation": {
+        "prompt_tokens": 8597,
+        "output_tokens": 3072,
+        "tokens": 11669,
+        "usd": 0.0102591
+      }
+    },
+    {
+      "case_id": "hybrid/H12",
+      "arm": "A",
+      "canonical_payload_bytes": 22566,
+      "reservation": {
+        "prompt_tokens": 26662,
+        "output_tokens": 3072,
+        "tokens": 29734,
+        "usd": 0.0156786
+      }
+    },
+    {
+      "case_id": "hybrid/H12",
+      "arm": "B",
+      "canonical_payload_bytes": 4542,
+      "reservation": {
+        "prompt_tokens": 8638,
+        "output_tokens": 3072,
+        "tokens": 11710,
+        "usd": 0.0102714
+      }
+    },
+    {
+      "case_id": "hybrid/H13",
+      "arm": "A",
+      "canonical_payload_bytes": 22520,
+      "reservation": {
+        "prompt_tokens": 26616,
+        "output_tokens": 3072,
+        "tokens": 29688,
+        "usd": 0.0156648
+      }
+    },
+    {
+      "case_id": "hybrid/H13",
+      "arm": "B",
+      "canonical_payload_bytes": 4496,
+      "reservation": {
+        "prompt_tokens": 8592,
+        "output_tokens": 3072,
+        "tokens": 11664,
+        "usd": 0.0102576
+      }
+    },
+    {
+      "case_id": "hybrid/H14",
+      "arm": "A",
+      "canonical_payload_bytes": 22404,
+      "reservation": {
+        "prompt_tokens": 26500,
+        "output_tokens": 3072,
+        "tokens": 29572,
+        "usd": 0.01563
+      }
+    },
+    {
+      "case_id": "hybrid/H14",
+      "arm": "B",
+      "canonical_payload_bytes": 4380,
+      "reservation": {
+        "prompt_tokens": 8476,
+        "output_tokens": 3072,
+        "tokens": 11548,
+        "usd": 0.0102228
+      }
+    }
+  ],
+  "totals": {
+    "2048": {
+      "smoke": {
+        "tokens": 470640,
+        "usd": 0.2493264
+      },
+      "full": {
+        "tokens": 5645322,
+        "usd": 2.9912094
+      }
+    },
+    "3072": {
+      "smoke": {
+        "tokens": 495216,
+        "usd": 0.3107664
+      },
+      "full": {
+        "tokens": 5940234,
+        "usd": 3.7284894
+      }
+    },
+    "8192": {
+      "smoke": {
+        "tokens": 618096,
+        "usd": 0.6179664
+      },
+      "full": {
+        "tokens": 7414794,
+        "usd": 7.4148894
+      }
+    }
+  }
+}

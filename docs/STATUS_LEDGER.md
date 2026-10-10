@@ -1682,3 +1682,21 @@ Phạm vi đề tài (§0-2026-08-24) KHÔNG đổi: vẫn mô phỏng 3D hình 
 - **THESIS_USE:** offline comparison of who selects geometry functions when the AI output is correct; responsibility and surface analysis; NOT evidence that the hybrid is better and NOT evidence of Gemini extraction quality
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `ARCHITECTURE_COMPARISON.md` · `TYPED_FACTS_CONTRACT.md` · `PLANNER_MAP.md` · `AB_OFFLINE_RESULTS.md` · `REAL_MODEL_AB_PROTOCOL.md` · `RESEARCH_GAP_UPDATE.md` · `offline/ab_results.json`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+### WAVE_ID = HYBRID_AB_PILOT_READINESS
+
+REPORT_PATH = docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/
+
+- **DATE:** 2026-10-10; LOCAL, branch `feat/text-to-geometry-functions`; start `5c33406a`; no merge/push.
+- **CODE_COMMIT:** safety `9823a61e`, `ef1a9ae6`, clause `2e4b87b6`, runner `e20e681e`, bounded review `cfe2ada5`.
+- **CORRECTS:** HYBRID_COMPILER_SELECTION — exact object-binding; configuration observation is not a proof/global inconsistency.
+- **CANDIDATE:** `12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52`, 110 files; frozen from clean `cfe2ada5`.
+- **CACHE / DEFAULT:** 125 / `LLM_ONLY`, unchanged. Current divergence authority moves additively to this run.
+- **VERIFICATION:** 341 focused PASS, 9 guard-removal mutants killed; 24+288 fake/network=0; renderer14 scenes/194 pairs,
+  metric PASS (not visual acceptance). Final clean backend/docs journals pending at this registration; consult run report.
+- **MODEL_REQUEST_COUNT:** 0, including free tier/countTokens. USD caps unchanged0.60/7; shared output3072; accounted500k/6M.
+- **LIMITS:** local byte+4096 prompt estimator not provider-bound; fake thinking/truncation is not live performance; zero errors
+  do not prove population safety; development corpus; strict live billed containment unverified. SMOKE/FULL live NO-GO.
+- **FINAL_DECISION:** HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW. Historical artifact bytes preserved; correction indexed.
+- **AUTHORITATIVE_FILES:** `protocol.md`, `plan.md`, `run.json`, `report.md`, `handoff.md`, `inputs/`, `fake-provider/review-fix/`, `diagnostics/`.

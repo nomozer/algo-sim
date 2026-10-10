@@ -937,6 +937,19 @@
 - **suggested_wave:** the next UI wave
 - **default_switch_blocker:** NO
 
+### ISSUE-EVAL-HYBRID-PROMPT-TOKEN-BOUND-UNVERIFIED
+
+- **description:** Hybrid A/B runner reserves actual UTF-8 payload bytes+4096 and a combined3072 output/thinking cap, but
+  byte length/provider overhead are not a proven input-token/billed-cost bound. Output truncation with real Gemini thinking is unmeasured.
+- **evidence:** `docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/report.md`, `diagnostics/budget_audit.json`, `run.json`.
+- **impact:** strict live billed-budget containment cannot be certified by fake usage; a breach may already be billed before stop.
+- **status:** OPEN — offline certification only, live Gemini0; both SMOKE_AB and FULL_AB execution NO-GO.
+- **owner_class:** EVALUATION / PROVIDER_ACCOUNTING
+- **suggested_wave:** human pilot decision with verified full-request prompt-count basis; explicit approval required for real APIs.
+- **default_switch_blocker:** YES (live acceptance not established).
+- **acceptance:** independently verified token/overhead accounting within unchanged USD0.60/7, exact approved identities;
+  real smoke truncation/thinking/billing reviewed before separate full approval. No automatic retry of unknown-cost requests.
+
 ### ISSUE-OPS-BROWSER-SESSION-PROFILE-LEAK
 - **description:** `frontend/scripts/browser-runner.mjs` created a Chrome user-data profile `%TEMP%\w12-*` (~50 MB, SwiftShader caches) on every `BrowserSession.open()` and never removed it; a failure inside `open()` left the Chrome process running, and `compiler-scene-suite.openFixture` dropped the session (Chrome kept running to the end of the script) when a step after `open()` failed. One `measure.sh` run opens roughly 150 sessions.
 - **evidence:** code (pre-fix `browser-runner.mjs` lines 118, 209, 132–135, 390–395; `openFixture`); reproduction `runs/browser-temp-lifecycle/diagnostics/repro-leak.mjs` (3 sessions ⇒ 3 leaked profiles); inventory `runs/browser-temp-lifecycle/results/TEMP_INVENTORY.json` (671 profiles, 33.5 GB left after the user's partial cleanup; the user reports > 1,700 before it).
