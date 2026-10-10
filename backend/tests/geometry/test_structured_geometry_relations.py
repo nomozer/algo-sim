@@ -688,7 +688,7 @@ def test_Y_duong_mac_dinh_VAN_khong_tham_chieu_compiler():
     #     với tới đường nghiên cứu text → geometry functions (ai-function-route: thay phép quét chuỗi + loại trừ cả thư
     #     mục của bản text-to-geometry-functions, vốn không bắt được tham chiếu bắc cầu).
     cam = ("app.simulation.geometry_compiler", "app.simulation.geometry_functions",
-           "app.ai.function_route", "app.ai.function_calling")
+           "app.ai.function_route", "app.ai.function_calling", "app.ai.fact_extraction")
     for diem_vao in ("app.main", "app.ai.pipeline"):
         lo = sorted(m for m in _bao_dong_import(goc, diem_vao) if m.startswith(cam))
         assert lo == [], f"đường mặc định {diem_vao} với tới {lo}"

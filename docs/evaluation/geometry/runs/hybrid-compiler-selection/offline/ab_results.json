@@ -1,0 +1,1696 @@
+{
+ "planner": "geometry-fact-planner/1",
+ "surface_A": "09ec4a9df17bd3b900be44d7e11034b4e9f643d744f5e59219b87e457414faa8",
+ "surface_B": "83dcfa7a92ab9e9becdb950547c9cb7de497cb920f12f65f974d1cab4354e2da",
+ "model_calls": 0,
+ "REAL_MODEL_TOKEN_USAGE": "NOT_MEASURED",
+ "summary": {
+  "parity_A": {
+   "correct_served": 27,
+   "correct_refusal": 31
+  },
+  "parity_B": {
+   "correct_served": 27,
+   "correct_refusal": 31
+  },
+  "holdout_A": {
+   "correct_served": 8,
+   "unsupported": 2,
+   "correct_refusal": 4
+  },
+  "holdout_B": {
+   "correct_served": 8,
+   "unsupported": 2,
+   "correct_refusal": 4
+  },
+  "parity_status_code_equal": "58/58",
+  "holdout_matches_expected": {
+   "A": "14/14",
+   "B": "14/14"
+  }
+ },
+ "rows": [
+  {
+   "set": "text_to_functions_cases",
+   "id": "PYR1",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "PYR1_P2",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c1": "4√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c1": "4√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 6
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "PYR1_P3",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "PRISM1",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c6": "30"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c6": "30"
+    },
+    "class": "correct_served",
+    "planner_calls": 6
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "PRISM2",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c4": "18√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c4": "18√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 4
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "COMP1",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c10": "12/5",
+     "c9": "4"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c10": "12/5",
+     "c9": "4"
+    },
+    "class": "correct_served",
+    "planner_calls": 10
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "COMP2",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c6": "5",
+     "c5": "6√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c6": "5",
+     "c5": "6√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 6
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "COMP3",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c1": "cos²=5/14",
+     "c8": "√14",
+     "c7": "4"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c1": "cos²=5/14",
+     "c8": "√14",
+     "c7": "4"
+    },
+    "class": "correct_served",
+    "planner_calls": 8
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "REG1",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c4": "3√39"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c4": "3√39"
+    },
+    "class": "correct_served",
+    "planner_calls": 4
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "REG2",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c4": "12"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c4": "12"
+    },
+    "class": "correct_served",
+    "planner_calls": 4
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "MISS1",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 4
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "MISS2",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 3
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "CONTRA1",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "CONTRA2",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 6
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "CONTRA3",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 6
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "OOS1",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "OUT_OF_SCOPE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "OUT_OF_SCOPE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 1
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "OOS2",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_REGULAR_POLYGON",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_REGULAR_POLYGON",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 4
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "OOS3",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 4
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "NEG1",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "NEGATED_CLAUSE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "NEGATED_CLAUSE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 4
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "NEG2",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_BASE_SHAPE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_BASE_SHAPE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 3
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "G1_VALUE_NOT_IN_QUOTE",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "G2_QUOTE_NOT_IN_TEXT",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "QUOTE_NOT_IN_SOURCE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "QUOTE_NOT_IN_SOURCE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "G3_PREDICATE_NOT_IN_QUOTE",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "PREDICATE_NOT_IN_QUOTE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "PREDICATE_NOT_IN_QUOTE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "G4_UNKNOWN_LABEL",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "UNKNOWN_LABEL",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "UNKNOWN_LABEL",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 6
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "G5_UNREGISTERED_FUNCTION",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "SCHEMA_INVALID",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "SCHEMA_INVALID",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 0
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "G6_COORDINATE_SMUGGLED",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "SCHEMA_INVALID",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "SCHEMA_INVALID",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 0
+   },
+   "parity": true
+  },
+  {
+   "set": "text_to_functions_cases",
+   "id": "G7_AMBIGUOUS_VALUE_QUOTE",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_VALUE_QUOTE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_VALUE_QUOTE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 4
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "P01_CANONICAL",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "P02_SYMBOL",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "P03_BASE_PLANE_WORDS",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "P04_ALTITUDE",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "P05_PROJECTION",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "P06_TWO_PERPENDICULAR_LINES",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c6": "4√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c6": "4√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 6
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "P07_MULTI_SENTENCE",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "P08_GOAL_FIRST_REORDERED",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c1": "4√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c1": "4√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 6
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "P09_STUDENT_SHORTHAND",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "P10_NO_SPACES_NOTATION",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "4√3"
+    },
+    "class": "correct_served",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "N01_LINE_LINE_MISREAD_AS_LINE_PLANE",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "PLANE_NOT_IN_QUOTE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "PLANE_NOT_IN_QUOTE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "N02_LINE_LINE_ONLY_ONE",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "N03_TRIANGLE_ALTITUDE_NOT_PYRAMID",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "PREDICATE_NOT_IN_QUOTE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "PREDICATE_NOT_IN_QUOTE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "N04_PROJECTION_IMAGE_MISREAD",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "ROLE_NOT_IN_QUOTE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "ROLE_NOT_IN_QUOTE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "N05_CONDITIONAL",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "CONDITIONAL_CLAUSE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "CONDITIONAL_CLAUSE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "N06_PROOF_GOAL_NOT_PREMISE",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "GOAL_CLAUSE_NOT_PREMISE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "GOAL_CLAUSE_NOT_PREMISE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "N07_NEGATION_OUTSIDE_QUOTE",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "NEGATED_CLAUSE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "NEGATED_CLAUSE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "N08_CONTRADICTION_PARAPHRASED",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 6
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "N09_MISSING_HEIGHT_PARAPHRASED",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 4
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "N10_MULTI_NUMBER_LABEL_ALIGNED",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c7": "8"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c7": "8"
+    },
+    "class": "correct_served",
+    "planner_calls": 7
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "N11_MULTI_NUMBER_MISALIGNED",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 7
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "N12_EQUAL_LENGTH",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "16√3/3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "16√3/3"
+    },
+    "class": "correct_served",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "paraphrase_cases",
+   "id": "N13_HEIGHT_QUOTE_TWO_NUMBERS_NO_LABEL",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_VALUE_QUOTE",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_VALUE_QUOTE",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 4
+   },
+   "parity": true
+  },
+  {
+   "set": "geometry_expansion_cases",
+   "id": "X01_SYMBOLIC_SQUARE_PYRAMID",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "a³√2/3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "a³√2/3"
+    },
+    "class": "correct_served",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "geometry_expansion_cases",
+   "id": "X02_FACE_PERPENDICULAR_EQUILATERAL",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c7": "cos²=4/7",
+     "c6": "a√21/7",
+     "c5": "a³√3/6"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c7": "cos²=4/7",
+     "c6": "a√21/7",
+     "c5": "a³√3/6"
+    },
+    "class": "correct_served",
+    "planner_calls": 7
+   },
+   "parity": true
+  },
+  {
+   "set": "geometry_expansion_cases",
+   "id": "X03_FACE_PERPENDICULAR_FOOT_AT_VERTEX",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c6": "16"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c6": "16"
+    },
+    "class": "correct_served",
+    "planner_calls": 6
+   },
+   "parity": true
+  },
+  {
+   "set": "geometry_expansion_cases",
+   "id": "X04_SKEW_LINES_DISTANCE",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c4": "a√3/2"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c4": "a√3/2"
+    },
+    "class": "correct_served",
+    "planner_calls": 4
+   },
+   "parity": true
+  },
+  {
+   "set": "geometry_expansion_cases",
+   "id": "X05_PROJECTION_ON_CENTROID",
+   "kind": "parity",
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c6": "4√11/3"
+    },
+    "class": "correct_served"
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c6": "4√11/3"
+    },
+    "class": "correct_served",
+    "planner_calls": 6
+   },
+   "parity": true
+  },
+  {
+   "set": "geometry_expansion_cases",
+   "id": "X06_NON_HOMOGENEOUS_SYMBOL",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "NON_HOMOGENEOUS_LENGTHS",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "NON_HOMOGENEOUS_LENGTHS",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 5
+   },
+   "parity": true
+  },
+  {
+   "set": "geometry_expansion_cases",
+   "id": "X07_FACE_PERPENDICULAR_MISSING",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 4
+   },
+   "parity": true
+  },
+  {
+   "set": "geometry_expansion_cases",
+   "id": "X08_FACE_PERPENDICULAR_CONTRADICTION",
+   "kind": "parity",
+   "A": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "class": "correct_refusal"
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "class": "correct_refusal",
+    "planner_calls": 6
+   },
+   "parity": true
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H01_CUBE",
+   "kind": "holdout",
+   "covers": [
+    "definitional expansion",
+    "symbolic length",
+    "multi-primitive"
+   ],
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "a√3",
+     "c4": "a³"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 5
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "f4": "a√3",
+     "f3": "a³"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 4,
+    "planner_calls": 5,
+    "goal_checks": {},
+    "negated_checks": {}
+   }
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H02_CUBOID_DISTANCE",
+   "kind": "holdout",
+   "covers": [
+    "definitional expansion",
+    "distance",
+    "symbolic length",
+    "multi-value quote"
+   ],
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c7": "6a/7",
+     "c6": "6a³"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 7
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "f6": "6a/7",
+     "f5": "6a³"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 6,
+    "planner_calls": 7,
+    "goal_checks": {},
+    "negated_checks": {}
+   }
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS",
+   "kind": "holdout",
+   "covers": [
+    "role-based lengths",
+    "regular pyramid",
+    "angle",
+    "symbolic length"
+   ],
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c5": "cos²=1/4",
+     "c4": "a³√6/6"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 5
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "f5": "cos²=1/4",
+     "f4": "a³√6/6"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 5,
+    "planner_calls": 5,
+    "goal_checks": {},
+    "negated_checks": {}
+   }
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H04_FACE_PERP_MIDPOINT_FOOT",
+   "kind": "holdout",
+   "covers": [
+    "side face ⊥ base",
+    "foot at midpoint (derived)"
+   ],
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c6": "8√2/3"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 6
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "f6": "8√2/3"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 6,
+    "planner_calls": 6,
+    "goal_checks": {},
+    "negated_checks": {}
+   }
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H05_FIGURE_NOT_UNIQUE_QUANTITY_UNIQUE",
+   "kind": "holdout",
+   "covers": [
+    "valid but not unique figure"
+   ],
+   "A": {
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT",
+    "answers": {},
+    "class": "unsupported",
+    "expected_class": "unsupported",
+    "n_ai_items": 4
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "FIGURE_NOT_UNIQUE",
+    "answers": {},
+    "class": "unsupported",
+    "expected_class": "unsupported",
+    "n_ai_items": 4,
+    "planner_calls": 4,
+    "goal_checks": {},
+    "negated_checks": {}
+   }
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H06_QUANTITY_NOT_UNIQUE",
+   "kind": "holdout",
+   "covers": [
+    "asked quantity not unique"
+   ],
+   "A": {
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT",
+    "answers": {},
+    "class": "correct_refusal",
+    "expected_class": "correct_refusal",
+    "n_ai_items": 4
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT",
+    "answers": {},
+    "class": "correct_refusal",
+    "expected_class": "correct_refusal",
+    "n_ai_items": 4,
+    "planner_calls": 4,
+    "goal_checks": {},
+    "negated_checks": {}
+   }
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED",
+   "kind": "holdout",
+   "covers": [
+    "proof goal",
+    "clause role"
+   ],
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c7": "a³√3/3"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 7
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "f8": "a³√3/3"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 8,
+    "planner_calls": 7,
+    "goal_checks": {
+     "f7": "HOLDS"
+    },
+    "negated_checks": {}
+   }
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H08_PLANE_PLANE_NOT_BASE",
+   "kind": "holdout",
+   "covers": [
+    "near-miss of face ⊥ base",
+    "unsupported capability"
+   ],
+   "A": {
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_PLANE",
+    "answers": {},
+    "class": "unsupported",
+    "expected_class": "unsupported",
+    "n_ai_items": 5
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_CAPABILITY",
+    "answers": {},
+    "class": "unsupported",
+    "expected_class": "unsupported",
+    "n_ai_items": 5,
+    "planner_calls": 0,
+    "goal_checks": null,
+    "negated_checks": null
+   }
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H09_CUBE_CONTRADICTION",
+   "kind": "holdout",
+   "covers": [
+    "contradiction"
+   ],
+   "A": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "class": "correct_refusal",
+    "expected_class": "correct_refusal",
+    "n_ai_items": 5
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "class": "correct_refusal",
+    "expected_class": "correct_refusal",
+    "n_ai_items": 4,
+    "planner_calls": 5,
+    "goal_checks": {},
+    "negated_checks": {}
+   }
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H10_CUBOID_MISSING_HEIGHT",
+   "kind": "holdout",
+   "covers": [
+    "missing data"
+   ],
+   "A": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": {},
+    "class": "correct_refusal",
+    "expected_class": "correct_refusal",
+    "n_ai_items": 5
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": {},
+    "class": "correct_refusal",
+    "expected_class": "correct_refusal",
+    "n_ai_items": 4,
+    "planner_calls": 5,
+    "goal_checks": {},
+    "negated_checks": {}
+   }
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H11_SKEW_DISTANCE_COMPOSITION",
+   "kind": "holdout",
+   "covers": [
+    "multi-primitive composition",
+    "distance",
+    "symbolic length"
+   ],
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c7": "2a/3"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 7
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "f7": "2a/3"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 7,
+    "planner_calls": 7,
+    "goal_checks": {},
+    "negated_checks": {}
+   }
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H12_PROJECTION_MIDPOINT_ANGLE",
+   "kind": "holdout",
+   "covers": [
+    "projection",
+    "angle",
+    "foot at midpoint (given)",
+    "symbolic length"
+   ],
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c7": "cos²=1/2",
+     "c6": "a³/8"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 7
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "f7": "cos²=1/2",
+     "f6": "a³/8"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 7,
+    "planner_calls": 7,
+    "goal_checks": {},
+    "negated_checks": {}
+   }
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H13_NEGATED_RELATION_CONTRADICTS",
+   "kind": "holdout",
+   "covers": [
+    "negation",
+    "contradiction"
+   ],
+   "A": {
+    "status": "REFUSED",
+    "code": "NEGATED_CLAUSE",
+    "answers": {},
+    "class": "correct_refusal",
+    "expected_class": "correct_refusal",
+    "n_ai_items": 8
+   },
+   "B": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "class": "correct_refusal",
+    "expected_class": "correct_refusal",
+    "n_ai_items": 8,
+    "planner_calls": 7,
+    "goal_checks": {},
+    "negated_checks": {
+     "f6": "HOLDS"
+    }
+   }
+  },
+  {
+   "set": "hybrid_holdout",
+   "id": "H14_REGULAR_TETRAHEDRON",
+   "kind": "holdout",
+   "covers": [
+    "definitional expansion",
+    "symbolic length"
+   ],
+   "A": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "c4": "a³√2/12"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 4
+   },
+   "B": {
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "f3": "a³√2/12"
+    },
+    "class": "correct_served",
+    "expected_class": "correct_served",
+    "n_ai_items": 3,
+    "planner_calls": 4,
+    "goal_checks": {},
+    "negated_checks": {}
+   }
+  }
+ ]
+}

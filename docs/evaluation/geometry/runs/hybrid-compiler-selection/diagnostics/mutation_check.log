@@ -1,0 +1,9 @@
+MUTATION m1 (điều phải chứng minh dùng làm giả thiết): CAUGHT
+MUTATION m2 (không kiểm mệnh đề phủ định sau khi dựng): CAUGHT
+MUTATION m3 (mặt ⊥ mặt bất kỳ ánh xạ thành mặt bên ⊥ đáy (bỏ tiền điều kiện)): CAUGHT
+MUTATION m4 ('cạnh bên' của chóp KHÔNG đều vẫn gán cho SA): CAUGHT
+MUTATION m5 (hình không duy nhất: không chẩn đoán (để nguyên UNDERDETERMINED)): CAUGHT
+MUTATION m6 (bỏ từ chối mệnh đề điều kiện): CAUGHT
+MUTATION m7 (bỏ mở rộng định nghĩa chóp đều ⇒ đáy đều): CAUGHT
+MUTATION m8 (điều phải chứng minh không kiểm trên hình (luôn coi là đúng)): CAUGHT
+ALL CAUGHT

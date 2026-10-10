@@ -1,0 +1,28 @@
+case                                       definitional_expansion        role_resolution relation_type_to_funct  solid_to_construction
+H01_CUBE                                                        2                      1                      2                      1
+H02_CUBOID_DISTANCE                                             1                      0                      2                      1
+H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS                         2                      1                      2                      1
+H04_FACE_PERP_MIDPOINT_FOOT                                     0                      0                      2                      1
+H05_FIGURE_NOT_UNIQUE_QUANTITY_UNIQUE                           0                      1                      1                      1
+H06_QUANTITY_NOT_UNIQUE                                         0                      0                      1                      1
+H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED                          0                      0                      3                      1
+H08_PLANE_PLANE_NOT_BASE                                        0                      0                      0                      0
+H09_CUBE_CONTRADICTION                                          2                      1                      1                      1
+H10_CUBOID_MISSING_HEIGHT                                       1                      0                      1                      1
+H11_SKEW_DISTANCE_COMPOSITION                                   0                      0                      1                      1
+H12_PROJECTION_MIDPOINT_ANGLE                                   0                      0                      2                      1
+H13_NEGATED_RELATION_CONTRADICTS                                0                      0                      3                      1
+H14_REGULAR_TETRAHEDRON                                         3                      1                      1                      1
+TOTAL {'definitional_expansion': 11, 'role_resolution': 5, 'relation_type_to_function': 22, 'solid_to_construction': 13}
+{
+ "A_function_declarations": 24,
+ "A_schema_chars": 19816,
+ "A_prompt_chars": 626,
+ "A_surface_sha256": "09ec4a9df17bd3b900be44d7e11034b4e9f643d744f5e59219b87e457414faa8",
+ "B_fact_kinds": 11,
+ "B_fact_fields": 21,
+ "B_schema_chars": 2999,
+ "B_prompt_chars": 743,
+ "B_surface_sha256": "83dcfa7a92ab9e9becdb950547c9cb7de497cb920f12f65f974d1cab4354e2da",
+ "REAL_MODEL_TOKEN_USAGE": "NOT_MEASURED"
+}

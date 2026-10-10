@@ -93,6 +93,12 @@ class KetQuaTuyen:
     length_unit: str | None = None
     #: Chẩn đoán của adapter AI (số lời gọi, usage, lời gọi trùng đã bỏ…) — rỗng khi lời gọi đến từ fixture.
     ai: dict[str, Any] = field(default_factory=dict)
+    #: Dữ liệu có cấu trúc của lời từ chối (vd điểm chưa xác định) — để tầng trên chẩn đoán mà không phân tích câu chữ.
+    details: dict[str, Any] = field(default_factory=dict)
+    #: Chẩn đoán của planner nhánh B (lời gọi sinh ra, mục tiêu chứng minh đã kiểm…) — rỗng ở nhánh A.
+    planner: dict[str, Any] = field(default_factory=dict)
+    #: Kiểm một lời gọi (dict) trên hình ĐÃ dựng: True/False, None = không kiểm được. Chỉ có khi SERVED.
+    checker: Any = field(default=None, repr=False, compare=False)
 
 
 @dataclass
@@ -327,7 +333,8 @@ class _Dung:
                 can |= {x for x in _labels(c)}
         if thieu := sorted(can - set(self.pts)):
             raise TuChoi("UNDERDETERMINED_POINT",
-                         f"không lời gọi nào xác định vị trí của {thieu} (thiếu quan hệ vuông góc / trung điểm / khối đều)")
+                         f"không lời gọi nào xác định vị trí của {thieu} (thiếu quan hệ vuông góc / trung điểm / khối đều)",
+                         data={"points": thieu})
 
     def _mot_buoc(self) -> bool:
         for c in self.of("midpoint"):
@@ -670,6 +677,18 @@ def dinh_dang(x: Any) -> str:
     raise TypeError(f"không phải số chính xác: {type(x).__name__}")
 
 
+def _kiem_tren_hinh(dung: "_Dung"):
+    """Kiểm MỘT mệnh đề (lời gọi dạng dict, chưa qua cổng nguồn) trên hình đã dựng — dùng cho điều phải chứng minh và mệnh đề
+    phủ định của nhánh B. Không dựng thêm gì; điểm/khối chưa có ⇒ None (không kiểm được), không đoán."""
+    def kiem(call: dict) -> bool | None:
+        try:
+            (c,) = doc_ke_hoach({"calls": [call]})
+            return dung._dung_khong(c)
+        except (TuChoi, KeyError, ZeroDivisionError):
+            return None
+    return kiem
+
+
 def _don_vi(calls: tuple[LoiGoi, ...]) -> str | None:
     """Độ dài ký hiệu: TẤT CẢ độ dài đề cho cùng theo a (đồng bậc 1) ⇒ "a"; tất cả là số ⇒ None; trộn ⇒ từ chối — hình
     khi ấy KHÔNG đồng dạng khi a đổi, nên không có một bố cục chung nào đúng cho mọi a (không gán a một giá trị)."""
@@ -741,8 +760,8 @@ def dung_tu_loi_goi(problem_text: str, plan: Any) -> KetQuaTuyen:
             tra[cid] = f"cos²={he}" if bac == 0 else (_hien_thi_ky_hieu(v, bac, ky_hieu) if ky_hieu else he)
         return KetQuaTuyen("SERVED", answers=tra, trace=dung.trace, program=program, points=dict(dung.pts),
                            metric=G.as_json(), kernel_check=True, spec=spec, exec_result=ket, chart_metric=G,
-                           answer_exact=chinh_xac, length_unit=ky_hieu,
+                           answer_exact=chinh_xac, length_unit=ky_hieu, checker=_kiem_tren_hinh(dung),
                            calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quotes": list(c.quotes)}
                                   for c in calls])
     except TuChoi as e:
-        return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, trace=dung.trace if dung else [])
+        return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, trace=dung.trace if dung else [], details=e.data)

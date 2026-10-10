@@ -1,0 +1,18 @@
+H01_CUBE_A: 8 points, 28 pairs, max rel err 0.00e+0 → OK
+H01_CUBE_B: 8 points, 28 pairs, max rel err 0.00e+0 → OK
+H02_CUBOID_DISTANCE_A: 8 points, 28 pairs, max rel err 0.00e+0 → OK
+H02_CUBOID_DISTANCE_B: 8 points, 28 pairs, max rel err 0.00e+0 → OK
+H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS_A: 6 points, 15 pairs, max rel err 6.39e-10 → OK
+H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS_B: 6 points, 15 pairs, max rel err 6.39e-10 → OK
+H04_FACE_PERP_MIDPOINT_FOOT_A: 5 points, 10 pairs, max rel err 1.60e-10 → OK
+H04_FACE_PERP_MIDPOINT_FOOT_B: 5 points, 10 pairs, max rel err 1.60e-10 → OK
+H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED_A: 4 points, 6 pairs, max rel err 4.98e-10 → OK
+H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED_B: 4 points, 6 pairs, max rel err 4.98e-10 → OK
+H11_SKEW_DISTANCE_COMPOSITION_A: 7 points, 21 pairs, max rel err 0.00e+0 → OK
+H11_SKEW_DISTANCE_COMPOSITION_B: 7 points, 21 pairs, max rel err 0.00e+0 → OK
+H12_PROJECTION_MIDPOINT_ANGLE_A: 5 points, 10 pairs, max rel err 4.98e-10 → OK
+H12_PROJECTION_MIDPOINT_ANGLE_B: 5 points, 10 pairs, max rel err 4.98e-10 → OK
+H14_REGULAR_TETRAHEDRON_A: 5 points, 10 pairs, max rel err 3.73e-10 → OK
+H14_REGULAR_TETRAHEDRON_B: 5 points, 10 pairs, max rel err 3.73e-10 → OK
+RENDER_METRIC_OK
+exit=0

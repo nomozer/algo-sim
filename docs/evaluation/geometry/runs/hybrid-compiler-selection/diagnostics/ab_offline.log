@@ -1,0 +1,25 @@
+{
+ "parity_A": {
+  "correct_served": 27,
+  "correct_refusal": 31
+ },
+ "parity_B": {
+  "correct_served": 27,
+  "correct_refusal": 31
+ },
+ "holdout_A": {
+  "correct_served": 8,
+  "unsupported": 2,
+  "correct_refusal": 4
+ },
+ "holdout_B": {
+  "correct_served": 8,
+  "unsupported": 2,
+  "correct_refusal": 4
+ },
+ "parity_status_code_equal": "58/58",
+ "holdout_matches_expected": {
+  "A": "14/14",
+  "B": "14/14"
+ }
+}
