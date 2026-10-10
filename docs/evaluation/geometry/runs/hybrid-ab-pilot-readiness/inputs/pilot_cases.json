@@ -1,0 +1,245 @@
+{
+  "schema": "hybrid_ab_pilot_cases/1",
+  "rows": [
+    {
+      "id": "g05/X1",
+      "source": "g05",
+      "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'."
+    },
+    {
+      "id": "g05/X4",
+      "source": "g05",
+      "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng √3, chiều cao bằng 2. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'."
+    },
+    {
+      "id": "g05/X6",
+      "source": "g05",
+      "text": "Cho hình lăng trụ đứng ABCDEF.A'B'C'D'E'F' có đáy là lục giác đều cạnh 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'."
+    },
+    {
+      "id": "g05/T2",
+      "source": "g05",
+      "text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2, cạnh bên bằng 3. Tính thể tích khối lăng trụ ABC.A'B'C'."
+    },
+    {
+      "id": "g05/T5",
+      "source": "g05",
+      "text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2/3, chiều cao bằng 9. Tính thể tích khối lăng trụ ABC.A'B'C'."
+    },
+    {
+      "id": "g05/H1",
+      "source": "g05",
+      "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDEF."
+    },
+    {
+      "id": "g05/H2",
+      "source": "g05",
+      "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 2, cạnh bên bằng 4. Tính thể tích khối chóp S.ABCDEF."
+    },
+    {
+      "id": "g05/H8",
+      "source": "g05",
+      "text": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 1/2, chiều cao bằng 6. Tính thể tích khối chóp S.ABCDEF."
+    },
+    {
+      "id": "g05/P09",
+      "source": "g05",
+      "text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 6, cạnh bên bằng 5. Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "g05/P06",
+      "source": "g05",
+      "text": "Cho tứ diện đều ABCD có cạnh bằng 6. Tính thể tích khối tứ diện ABCD."
+    },
+    {
+      "id": "g05/NX1",
+      "source": "g05",
+      "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'."
+    },
+    {
+      "id": "g05/NT2",
+      "source": "g05",
+      "text": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2, chiều cao bằng 3, cạnh bên bằng 4. Tính thể tích khối lăng trụ ABC.A'B'C'."
+    },
+    {
+      "id": "g05/NT4",
+      "source": "g05",
+      "text": "Cho hình lăng trụ xiên ABC.A'B'C' có đáy ABC là tam giác đều cạnh 2, cạnh bên bằng 3. Tính thể tích khối lăng trụ ABC.A'B'C'."
+    },
+    {
+      "id": "g05/NX7",
+      "source": "g05",
+      "text": "Cho hình lăng trụ ngũ giác đều ABCDE.A'B'C'D'E' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDE.A'B'C'D'E'."
+    },
+    {
+      "id": "g05/N8",
+      "source": "g05",
+      "text": "Cho hình chóp S.ABCDEF, không phải là hình chóp lục giác đều S.ABCDEF, có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối chóp S.ABCDEF."
+    },
+    {
+      "id": "g05/N02",
+      "source": "g05",
+      "text": "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 6, cạnh bên bằng 5, chiều cao bằng 4. Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "paraphrase/P01",
+      "source": "paraphrase",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với (ABC) và SA = 3. Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "paraphrase/P02",
+      "source": "paraphrase",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA ⊥ (ABC), SA = 3. Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "paraphrase/P03",
+      "source": "paraphrase",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "paraphrase/P04",
+      "source": "paraphrase",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA là đường cao của hình chóp và SA = 3. Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "paraphrase/P05",
+      "source": "paraphrase",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4. Hình chiếu vuông góc của S lên mặt phẳng (ABC) là điểm A và SA = 3. Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "paraphrase/P06",
+      "source": "paraphrase",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với AB và AC, SA = 3. Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "paraphrase/P07",
+      "source": "paraphrase",
+      "text": "Cho hình chóp S.ABC có đáy là tam giác đều. Cạnh đáy bằng 4. SA vuông góc với đáy, SA = 3. Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "paraphrase/P08",
+      "source": "paraphrase",
+      "text": "Tính thể tích khối chóp S.ABC, biết SA = 3, SA ⊥ (ABC) và đáy ABC là tam giác đều có AB = 4."
+    },
+    {
+      "id": "paraphrase/P09",
+      "source": "paraphrase",
+      "text": "chóp S.ABC, đáy ABC đều cạnh 4, SA vuông đáy, SA=3. tính V"
+    },
+    {
+      "id": "paraphrase/P10",
+      "source": "paraphrase",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA⊥(ABC), SA=3. Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "expansion/X01",
+      "source": "expansion",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy và SA = a√2. Tính thể tích khối chóp S.ABCD."
+    },
+    {
+      "id": "expansion/X02",
+      "source": "expansion",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a. Tam giác SAB đều và nằm trong mặt phẳng vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD, khoảng cách từ A đến mặt phẳng (SCD) và góc giữa hai mặt phẳng (SCD) và (ABCD)."
+    },
+    {
+      "id": "expansion/X03",
+      "source": "expansion",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA = 3, SB = 5 và mặt bên (SAB) vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD."
+    },
+    {
+      "id": "expansion/X04",
+      "source": "expansion",
+      "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác đều cạnh a và AA' = a. Tính khoảng cách giữa hai đường thẳng AA' và BC."
+    },
+    {
+      "id": "expansion/X05",
+      "source": "expansion",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4. Hình chiếu vuông góc của S lên mặt phẳng (ABC) là trọng tâm G của tam giác ABC và SA = 3. Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "expansion/X06",
+      "source": "expansion",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy và SA = 3. Tính thể tích khối chóp S.ABCD."
+    },
+    {
+      "id": "expansion/X07",
+      "source": "expansion",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a và mặt bên (SAB) vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD."
+    },
+    {
+      "id": "expansion/X08",
+      "source": "expansion",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, tam giác SAB đều, SA = 2a và mặt bên (SAB) vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD."
+    },
+    {
+      "id": "hybrid/H01",
+      "source": "hybrid",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Tính thể tích khối lập phương ABCD.A'B'C'D' và độ dài đường chéo AC'."
+    },
+    {
+      "id": "hybrid/H02",
+      "source": "hybrid",
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 3a. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D' và khoảng cách từ A đến mặt phẳng (A'BD)."
+    },
+    {
+      "id": "hybrid/H03",
+      "source": "hybrid",
+      "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a và cạnh bên bằng a√2. Tính thể tích khối chóp S.ABCD và góc giữa cạnh bên SA và mặt đáy."
+    },
+    {
+      "id": "hybrid/H04",
+      "source": "hybrid",
+      "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA = SB = 3 và mặt bên (SAB) vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD."
+    },
+    {
+      "id": "hybrid/H05",
+      "source": "hybrid",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2 và chiều cao bằng 3. Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "hybrid/H06",
+      "source": "hybrid",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2 và SA = 3. Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "hybrid/H07",
+      "source": "hybrid",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = a, BC = a√3, SA vuông góc với (ABC) và SA = 2a. Chứng minh BC vuông góc với (SAB). Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "hybrid/H08",
+      "source": "hybrid",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2, SA = 2 và mặt phẳng (SAB) vuông góc với mặt phẳng (SBC). Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "hybrid/H09",
+      "source": "hybrid",
+      "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 2 và AC' = 3. Tính thể tích khối lập phương ABCD.A'B'C'D'."
+    },
+    {
+      "id": "hybrid/H10",
+      "source": "hybrid",
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a và AD = 2a. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'."
+    },
+    {
+      "id": "hybrid/H11",
+      "source": "hybrid",
+      "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a và AA' = 2a. Gọi M là trung điểm của BC. Tính khoảng cách giữa hai đường thẳng AM và B'C."
+    },
+    {
+      "id": "hybrid/H12",
+      "source": "hybrid",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a. Hình chiếu vuông góc của S lên mặt phẳng (ABC) là trung điểm H của AB và SH = a√3/2. Tính thể tích khối chóp S.ABC và góc giữa SC và mặt phẳng (ABC)."
+    },
+    {
+      "id": "hybrid/H13",
+      "source": "hybrid",
+      "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4, SA vuông góc với (ABC), SA = 4 và BC không vuông góc với mặt phẳng (SAB). Tính thể tích khối chóp S.ABC."
+    },
+    {
+      "id": "hybrid/H14",
+      "source": "hybrid",
+      "text": "Cho tứ diện đều ABCD có cạnh bằng a. Tính thể tích khối tứ diện ABCD."
+    }
+  ]
+}

@@ -1,0 +1,593 @@
+{
+  "chart_metric": [
+    [
+      "1",
+      "1",
+      "0"
+    ],
+    [
+      "1",
+      "4",
+      "0"
+    ],
+    [
+      "0",
+      "0",
+      "4"
+    ]
+  ],
+  "diagnostics": [],
+  "events": [
+    {
+      "action": "INIT",
+      "depends": [],
+      "details": {},
+      "display_label": "Bước dựng hình",
+      "explanation": "Khởi tạo các điểm theo cấu trúc hình và bố trí tất định.",
+      "learner_text": "Đặt các điểm đề cho vào không gian.",
+      "object": null,
+      "semantic_kind": "EXPLANATION",
+      "step_index": 0
+    },
+    {
+      "action": "CREATE",
+      "depends": [
+        "S",
+        "A",
+        "B",
+        "C"
+      ],
+      "details": {
+        "dinh": [
+          "S",
+          "A",
+          "B",
+          "C"
+        ],
+        "label": "S.ABC",
+        "so_mat": 4
+      },
+      "display_label": "Hình chóp S.ABC",
+      "explanation": "Dựng khối S.ABC từ 4 đỉnh và 4 mặt.",
+      "learner_text": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+      "object": "khoi_S_ABC",
+      "semantic_kind": "GEOMETRY_CONSTRUCTION",
+      "step_index": 1
+    },
+    {
+      "action": "MEASURE",
+      "depends": [
+        "khoi_S_ABC"
+      ],
+      "details": {
+        "value": {
+          "coefficient": "1/3",
+          "kind": "radical",
+          "radicand": 3
+        }
+      },
+      "display_label": "Thể tích S.ABC",
+      "explanation": "Tính thể tích khối: √3/3.",
+      "learner_text": "Thể tích S.ABC bằng √3/3.",
+      "object": "kq_f8",
+      "semantic_kind": "FINAL_RESULT",
+      "step_index": 2
+    }
+  ],
+  "formation": {
+    "steps": [
+      {
+        "focus_ids": [],
+        "formation_roles": [
+          "DECLARE_ENTITIES"
+        ],
+        "geometry_progress": [],
+        "learner_text": "Đặt các điểm đề cho vào không gian.",
+        "readout_ids": [],
+        "semantic_kind": "EXPLANATION",
+        "step_index": 0,
+        "visible_ids": [
+          "A",
+          "B",
+          "C",
+          "S"
+        ]
+      },
+      {
+        "focus_ids": [
+          "khoi_S_ABC"
+        ],
+        "formation_roles": [
+          "CLOSE_SOLID"
+        ],
+        "geometry_progress": [],
+        "learner_text": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt).",
+        "readout_ids": [],
+        "semantic_kind": "GEOMETRY_CONSTRUCTION",
+        "step_index": 1,
+        "visible_ids": [
+          "A",
+          "B",
+          "C",
+          "S",
+          "khoi_S_ABC"
+        ]
+      },
+      {
+        "focus_ids": [
+          "kq_f8"
+        ],
+        "formation_roles": [],
+        "geometry_progress": [],
+        "learner_text": "Thể tích S.ABC bằng √3/3.",
+        "readout_ids": [
+          "kq_f8"
+        ],
+        "semantic_kind": "FINAL_RESULT",
+        "step_index": 2,
+        "visible_ids": [
+          "A",
+          "B",
+          "C",
+          "S",
+          "khoi_S_ABC",
+          "kq_f8"
+        ]
+      }
+    ]
+  },
+  "free_objects": [
+    "A",
+    "B",
+    "C",
+    "S"
+  ],
+  "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`.",
+  "length_unit": {
+    "display_scale": "a = 1 đơn vị dựng",
+    "is_given": false,
+    "symbol": "a"
+  },
+  "objects": [
+    {
+      "dependency_edges": [],
+      "depends": [],
+      "display_group": [
+        "given"
+      ],
+      "display_label": "Điểm A",
+      "display_role": "visual_owner",
+      "formation_roles": [],
+      "id": "A",
+      "label": "Điểm A",
+      "notation": "A",
+      "occludes_edges": false,
+      "origin": "free",
+      "parent": "khoi_S_ABC",
+      "producer": null,
+      "reference": "A",
+      "render": "point_marker",
+      "role": "Điểm",
+      "source": {
+        "provenance": "LAYOUT_DERIVED"
+      },
+      "type": "point3",
+      "visual_transform": {
+        "scale": 1,
+        "translate": [
+          0,
+          0,
+          0
+        ]
+      },
+      "xyz": [
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "dependency_edges": [],
+      "depends": [],
+      "display_group": [
+        "given"
+      ],
+      "display_label": "Điểm B",
+      "display_role": "visual_owner",
+      "formation_roles": [],
+      "id": "B",
+      "label": "Điểm B",
+      "notation": "B",
+      "occludes_edges": false,
+      "origin": "free",
+      "parent": "khoi_S_ABC",
+      "producer": null,
+      "reference": "B",
+      "render": "point_marker",
+      "role": "Điểm",
+      "source": {
+        "provenance": "LAYOUT_DERIVED"
+      },
+      "type": "point3",
+      "visual_transform": {
+        "scale": 1,
+        "translate": [
+          0,
+          0,
+          0
+        ]
+      },
+      "xyz": [
+        "1",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "dependency_edges": [],
+      "depends": [],
+      "display_group": [
+        "given"
+      ],
+      "display_label": "Điểm C",
+      "display_role": "visual_owner",
+      "formation_roles": [],
+      "id": "C",
+      "label": "Điểm C",
+      "notation": "C",
+      "occludes_edges": false,
+      "origin": "free",
+      "parent": "khoi_S_ABC",
+      "producer": null,
+      "reference": "C",
+      "render": "point_marker",
+      "role": "Điểm",
+      "source": {
+        "provenance": "LAYOUT_DERIVED"
+      },
+      "type": "point3",
+      "visual_transform": {
+        "scale": 1,
+        "translate": [
+          0,
+          0,
+          0
+        ]
+      },
+      "xyz": [
+        "0",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "dependency_edges": [],
+      "depends": [],
+      "display_group": [
+        "given"
+      ],
+      "display_label": "Điểm S",
+      "display_role": "visual_owner",
+      "formation_roles": [],
+      "id": "S",
+      "label": "Điểm S",
+      "notation": "S",
+      "occludes_edges": false,
+      "origin": "free",
+      "parent": "khoi_S_ABC",
+      "producer": null,
+      "reference": "S",
+      "render": "point_marker",
+      "role": "Điểm",
+      "source": {
+        "provenance": "LAYOUT_DERIVED"
+      },
+      "type": "point3",
+      "visual_transform": {
+        "scale": 1,
+        "translate": [
+          0,
+          0,
+          0
+        ]
+      },
+      "xyz": [
+        "0",
+        "0",
+        "1"
+      ]
+    },
+    {
+      "dependency_edges": [
+        {
+          "relation": "topological",
+          "source_id": "A"
+        },
+        {
+          "relation": "topological",
+          "source_id": "B"
+        },
+        {
+          "relation": "topological",
+          "source_id": "C"
+        },
+        {
+          "relation": "topological",
+          "source_id": "S"
+        }
+      ],
+      "depends": [
+        "A",
+        "B",
+        "C",
+        "S"
+      ],
+      "display_group": [
+        "construction",
+        "solid"
+      ],
+      "display_label": "Hình chóp S.ABC",
+      "display_role": "visual_owner",
+      "edge_ownership": [
+        {
+          "adjacent_surface_ids": [
+            "khoi_S_ABC::face:0",
+            "khoi_S_ABC::face:1"
+          ],
+          "edge_id": "khoi_S_ABC::edge:A-B",
+          "endpoint_ids": [
+            "A",
+            "B"
+          ]
+        },
+        {
+          "adjacent_surface_ids": [
+            "khoi_S_ABC::face:0",
+            "khoi_S_ABC::face:2"
+          ],
+          "edge_id": "khoi_S_ABC::edge:B-C",
+          "endpoint_ids": [
+            "B",
+            "C"
+          ]
+        },
+        {
+          "adjacent_surface_ids": [
+            "khoi_S_ABC::face:0",
+            "khoi_S_ABC::face:3"
+          ],
+          "edge_id": "khoi_S_ABC::edge:A-C",
+          "endpoint_ids": [
+            "A",
+            "C"
+          ]
+        },
+        {
+          "adjacent_surface_ids": [
+            "khoi_S_ABC::face:1",
+            "khoi_S_ABC::face:3"
+          ],
+          "edge_id": "khoi_S_ABC::edge:S-A",
+          "endpoint_ids": [
+            "S",
+            "A"
+          ]
+        },
+        {
+          "adjacent_surface_ids": [
+            "khoi_S_ABC::face:1",
+            "khoi_S_ABC::face:2"
+          ],
+          "edge_id": "khoi_S_ABC::edge:S-B",
+          "endpoint_ids": [
+            "S",
+            "B"
+          ]
+        },
+        {
+          "adjacent_surface_ids": [
+            "khoi_S_ABC::face:2",
+            "khoi_S_ABC::face:3"
+          ],
+          "edge_id": "khoi_S_ABC::edge:S-C",
+          "endpoint_ids": [
+            "S",
+            "C"
+          ]
+        }
+      ],
+      "faces": [
+        [
+          1,
+          2,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          3
+        ],
+        [
+          0,
+          3,
+          1
+        ]
+      ],
+      "formation_roles": [
+        "CLOSE_SOLID"
+      ],
+      "id": "khoi_S_ABC",
+      "label": "Hình chóp S.ABC",
+      "notation": "S.ABC",
+      "origin": "derived",
+      "parent": null,
+      "producer": "construct_solid",
+      "reference": "S.ABC",
+      "render": "mesh",
+      "role": "Đỉnh S, đáy ABC",
+      "source": {
+        "instruction": "construct_solid"
+      },
+      "surfaces": [
+        {
+          "boundary_edge_ids": [
+            "khoi_S_ABC::edge:A-B",
+            "khoi_S_ABC::edge:B-C",
+            "khoi_S_ABC::edge:A-C"
+          ],
+          "occludes_edges": true,
+          "surface_id": "khoi_S_ABC::face:0",
+          "surface_role": "SOLID_FACE",
+          "vertex_indices": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "boundary_edge_ids": [
+            "khoi_S_ABC::edge:S-A",
+            "khoi_S_ABC::edge:A-B",
+            "khoi_S_ABC::edge:S-B"
+          ],
+          "occludes_edges": true,
+          "surface_id": "khoi_S_ABC::face:1",
+          "surface_role": "SOLID_FACE",
+          "vertex_indices": [
+            0,
+            1,
+            2
+          ]
+        },
+        {
+          "boundary_edge_ids": [
+            "khoi_S_ABC::edge:S-B",
+            "khoi_S_ABC::edge:B-C",
+            "khoi_S_ABC::edge:S-C"
+          ],
+          "occludes_edges": true,
+          "surface_id": "khoi_S_ABC::face:2",
+          "surface_role": "SOLID_FACE",
+          "vertex_indices": [
+            0,
+            2,
+            3
+          ]
+        },
+        {
+          "boundary_edge_ids": [
+            "khoi_S_ABC::edge:S-C",
+            "khoi_S_ABC::edge:A-C",
+            "khoi_S_ABC::edge:S-A"
+          ],
+          "occludes_edges": true,
+          "surface_id": "khoi_S_ABC::face:3",
+          "surface_role": "SOLID_FACE",
+          "vertex_indices": [
+            0,
+            3,
+            1
+          ]
+        }
+      ],
+      "type": "solid",
+      "vertex_ids": [
+        "S",
+        "A",
+        "B",
+        "C"
+      ],
+      "vertices": [
+        [
+          "0",
+          "0",
+          "1"
+        ],
+        [
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "1",
+          "0",
+          "0"
+        ],
+        [
+          "0",
+          "1",
+          "0"
+        ]
+      ],
+      "visual_transform": {
+        "scale": 1,
+        "translate": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "annotation": {
+        "anchor": "solid",
+        "category": "measurement",
+        "kind": "volume",
+        "role": "intermediate",
+        "subject_ids": [
+          "khoi_S_ABC"
+        ],
+        "unit": null
+      },
+      "dependency_edges": [
+        {
+          "relation": "structural",
+          "source_id": "khoi_S_ABC"
+        }
+      ],
+      "depends": [
+        "khoi_S_ABC"
+      ],
+      "display_group": [
+        "construction",
+        "measurement"
+      ],
+      "display_label": "Thể tích S.ABC",
+      "display_role": "measurement",
+      "exact": {
+        "coefficient": "1/3",
+        "kind": "radical",
+        "radicand": 3
+      },
+      "formation_roles": [],
+      "id": "kq_f8",
+      "label": "Thể tích S.ABC",
+      "notation": "V(S.ABC)",
+      "occludes_edges": false,
+      "origin": "derived",
+      "parent": null,
+      "producer": "measure.volume",
+      "reference": "V(S.ABC)",
+      "render": "readout",
+      "role": "Thể tích khối",
+      "source": {
+        "instruction": "measure.volume"
+      },
+      "type": "quantity",
+      "value": "√3/3",
+      "visual_transform": {
+        "scale": 1,
+        "translate": [
+          0,
+          0,
+          0
+        ]
+      }
+    }
+  ]
+}

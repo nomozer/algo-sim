@@ -1,0 +1,589 @@
+{
+  "schema": "hybrid_ab_pilot_oracle/1",
+  "rows": [
+    {
+      "id": "g05/X1",
+      "expected": "served:18√3"
+    },
+    {
+      "id": "g05/X4",
+      "expected": "served:9√3"
+    },
+    {
+      "id": "g05/X6",
+      "expected": "served:18√3"
+    },
+    {
+      "id": "g05/T2",
+      "expected": "served:3√3"
+    },
+    {
+      "id": "g05/T5",
+      "expected": "served:√3"
+    },
+    {
+      "id": "g05/H1",
+      "expected": "served:6√3"
+    },
+    {
+      "id": "g05/H2",
+      "expected": "served:12"
+    },
+    {
+      "id": "g05/H8",
+      "expected": "served:3√3/4"
+    },
+    {
+      "id": "g05/P09",
+      "expected": "served:3√39"
+    },
+    {
+      "id": "g05/P06",
+      "expected": "served:18√2"
+    },
+    {
+      "id": "g05/NX1",
+      "expected": "refused"
+    },
+    {
+      "id": "g05/NT2",
+      "expected": "refused"
+    },
+    {
+      "id": "g05/NT4",
+      "expected": "refused"
+    },
+    {
+      "id": "g05/NX7",
+      "expected": "refused"
+    },
+    {
+      "id": "g05/N8",
+      "expected": "refused"
+    },
+    {
+      "id": "g05/N02",
+      "expected": "refused:assumption"
+    },
+    {
+      "id": "paraphrase/P01",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c5": "4√3"
+        },
+        "lengths_sq": {
+          "SB": "25",
+          "SC": "25"
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P02",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c5": "4√3"
+        },
+        "lengths_sq": {
+          "SB": "25",
+          "SC": "25"
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P03",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c5": "4√3"
+        },
+        "lengths_sq": {
+          "SB": "25",
+          "SC": "25"
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P04",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c5": "4√3"
+        },
+        "lengths_sq": {
+          "SB": "25",
+          "SC": "25"
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P05",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c5": "4√3"
+        },
+        "lengths_sq": {
+          "SB": "25",
+          "SC": "25"
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P06",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c6": "4√3"
+        },
+        "lengths_sq": {
+          "SB": "25",
+          "SC": "25"
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P07",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c5": "4√3"
+        },
+        "lengths_sq": {
+          "SB": "25",
+          "SC": "25"
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P08",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c1": "4√3"
+        },
+        "lengths_sq": {
+          "SB": "25",
+          "SC": "25"
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P09",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c5": "4√3"
+        },
+        "lengths_sq": {
+          "SB": "25",
+          "SC": "25"
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P10",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c5": "4√3"
+        },
+        "lengths_sq": {
+          "SB": "25",
+          "SC": "25"
+        }
+      }
+    },
+    {
+      "id": "expansion/X01",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c5": {
+            "coef": "√2/3",
+            "dim": 3
+          }
+        },
+        "unit": "a",
+        "lengths_sq_in_a2": {
+          "SC": "4",
+          "SB": "3"
+        }
+      }
+    },
+    {
+      "id": "expansion/X02",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c5": {
+            "coef": "√3/6",
+            "dim": 3
+          },
+          "c6": {
+            "coef": "√21/7",
+            "dim": 1
+          },
+          "c7": "cos²=4/7"
+        },
+        "unit": "a",
+        "lengths_sq_in_a2": {
+          "SC": "2",
+          "SD": "2",
+          "SA": "1"
+        }
+      }
+    },
+    {
+      "id": "expansion/X03",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c6": "16"
+        },
+        "lengths_sq": {
+          "SD": "25",
+          "SC": "41"
+        }
+      }
+    },
+    {
+      "id": "expansion/X04",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c4": {
+            "coef": "√3/2",
+            "dim": 1
+          }
+        },
+        "unit": "a"
+      }
+    },
+    {
+      "id": "expansion/X05",
+      "expected": {
+        "status": "SERVED",
+        "answers": {
+          "c6": "4√11/3"
+        },
+        "lengths_sq": {
+          "SB": "9",
+          "SC": "9"
+        }
+      }
+    },
+    {
+      "id": "expansion/X06",
+      "expected": {
+        "status": "REFUSED",
+        "code": "NON_HOMOGENEOUS_LENGTHS"
+      }
+    },
+    {
+      "id": "expansion/X07",
+      "expected": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION"
+      }
+    },
+    {
+      "id": "expansion/X08",
+      "expected": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS"
+      }
+    },
+    {
+      "id": "hybrid/H01",
+      "a": {
+        "status": "SERVED",
+        "answers": {
+          "c4": {
+            "coef": "1",
+            "dim": 3
+          },
+          "c5": {
+            "coef": "√3",
+            "dim": 1
+          }
+        },
+        "lengths_sq_in_a2": {
+          "AC'": "3",
+          "BD'": "3"
+        }
+      },
+      "b": {
+        "status": "SERVED",
+        "answers": {
+          "f3": {
+            "coef": "1",
+            "dim": 3
+          },
+          "f4": {
+            "coef": "√3",
+            "dim": 1
+          }
+        },
+        "lengths_sq_in_a2": {
+          "AC'": "3",
+          "BD'": "3"
+        }
+      },
+      "safety": null
+    },
+    {
+      "id": "hybrid/H02",
+      "a": {
+        "status": "SERVED",
+        "answers": {
+          "c6": {
+            "coef": "6",
+            "dim": 3
+          },
+          "c7": {
+            "coef": "6/7",
+            "dim": 1
+          }
+        }
+      },
+      "b": {
+        "status": "SERVED",
+        "answers": {
+          "f5": {
+            "coef": "6",
+            "dim": 3
+          },
+          "f6": {
+            "coef": "6/7",
+            "dim": 1
+          }
+        }
+      },
+      "safety": null
+    },
+    {
+      "id": "hybrid/H03",
+      "a": {
+        "status": "SERVED",
+        "answers": {
+          "c4": {
+            "coef": "√6/6",
+            "dim": 3
+          },
+          "c5": "cos²=1/4"
+        }
+      },
+      "b": {
+        "status": "SERVED",
+        "answers": {
+          "f4": {
+            "coef": "√6/6",
+            "dim": 3
+          },
+          "f5": "cos²=1/4"
+        }
+      },
+      "safety": null
+    },
+    {
+      "id": "hybrid/H04",
+      "a": {
+        "status": "SERVED",
+        "answers": {
+          "c6": "8√2/3"
+        },
+        "lengths_sq": {
+          "SC": "13",
+          "SD": "13"
+        }
+      },
+      "b": {
+        "status": "SERVED",
+        "answers": {
+          "f6": "8√2/3"
+        },
+        "lengths_sq": {
+          "SC": "13",
+          "SD": "13"
+        }
+      },
+      "safety": null
+    },
+    {
+      "id": "hybrid/H05",
+      "a": {
+        "status": "REFUSED",
+        "code": "UNDERDETERMINED_POINT"
+      },
+      "b": {
+        "status": "REFUSED",
+        "code": "FIGURE_NOT_UNIQUE"
+      },
+      "safety": null
+    },
+    {
+      "id": "hybrid/H06",
+      "a": {
+        "status": "REFUSED",
+        "code": "UNDERDETERMINED_POINT"
+      },
+      "b": {
+        "status": "REFUSED",
+        "code": "UNDERDETERMINED_POINT"
+      },
+      "safety": null
+    },
+    {
+      "id": "hybrid/H07",
+      "a": {
+        "status": "SERVED",
+        "answers": {
+          "c7": {
+            "coef": "√3/3",
+            "dim": 3
+          }
+        }
+      },
+      "b": {
+        "status": "SERVED",
+        "answers": {
+          "f8": {
+            "coef": "√3/3",
+            "dim": 3
+          }
+        },
+        "goal_checks": {
+          "f7": {"evidence_state": "TRUE_ON_CONFIGURATION", "proof_status": "UNVERIFIABLE", "can_present_as_proven": false}
+        }
+      },
+      "safety": "configuration_observation_only"
+    },
+    {
+      "id": "hybrid/H08",
+      "a": {
+        "status": "REFUSED",
+        "code": "UNSUPPORTED_PLANE"
+      },
+      "b": {
+        "status": "REFUSED",
+        "code": "UNSUPPORTED_CAPABILITY"
+      },
+      "safety": null
+    },
+    {
+      "id": "hybrid/H09",
+      "a": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS"
+      },
+      "b": {
+        "status": "REFUSED",
+        "code": "INCONSISTENT_FACTS"
+      },
+      "safety": null
+    },
+    {
+      "id": "hybrid/H10",
+      "a": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION"
+      },
+      "b": {
+        "status": "REFUSED",
+        "code": "MISSING_DIMENSION"
+      },
+      "safety": null
+    },
+    {
+      "id": "hybrid/H11",
+      "a": {
+        "status": "SERVED",
+        "answers": {
+          "c7": {
+            "coef": "2/3",
+            "dim": 1
+          }
+        }
+      },
+      "b": {
+        "status": "SERVED",
+        "answers": {
+          "f7": {
+            "coef": "2/3",
+            "dim": 1
+          }
+        }
+      },
+      "safety": null
+    },
+    {
+      "id": "hybrid/H12",
+      "a": {
+        "status": "SERVED",
+        "answers": {
+          "c6": {
+            "coef": "1/8",
+            "dim": 3
+          },
+          "c7": "cos²=1/2"
+        }
+      },
+      "b": {
+        "status": "SERVED",
+        "answers": {
+          "f6": {
+            "coef": "1/8",
+            "dim": 3
+          },
+          "f7": "cos²=1/2"
+        }
+      },
+      "safety": null
+    },
+    {
+      "id": "hybrid/H13",
+      "a": {
+        "status": "REFUSED",
+        "code": "NEGATED_CLAUSE"
+      },
+      "b": {
+        "status": "REFUSED",
+        "code": "NEGATED_CLAUSE"
+      },
+      "safety": "uncertified_negated_clause"
+    },
+    {
+      "id": "hybrid/H14",
+      "a": {
+        "status": "SERVED",
+        "answers": {
+          "c4": {
+            "coef": "√2/12",
+            "dim": 3
+          }
+        },
+        "lengths_sq_in_a2": {
+          "DB": "1",
+          "DC": "1"
+        }
+      },
+      "b": {
+        "status": "SERVED",
+        "answers": {
+          "f3": {
+            "coef": "√2/12",
+            "dim": 3
+          }
+        },
+        "lengths_sq_in_a2": {
+          "DB": "1",
+          "DC": "1"
+        }
+      },
+      "safety": null
+    }
+  ]
+}
+

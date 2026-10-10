@@ -1,0 +1,984 @@
+{
+  "schema": "hybrid_ab_question_obligations/1",
+  "provenance": "Question signatures transcribed from handwritten parser fixtures; G05 volume targets transcribed from sealed text. No production planner/parser used. Ordered plane witnesses use three named points; equivalent alternate planes conservatively require adjudication.",
+  "rows": [
+    {
+      "id": "paraphrase/P01",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P02",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P03",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P04",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P05",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P06",
+      "A": {
+        "c6": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "c6": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P07",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P08",
+      "A": {
+        "c1": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "c1": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P09",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "paraphrase/P10",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "expansion/X01",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        }
+      },
+      "B": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        }
+      }
+    },
+    {
+      "id": "expansion/X02",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        },
+        "c6": {
+          "fn": "ask_distance_point_plane",
+          "args": {
+            "point": "A",
+            "plane": [
+              "S",
+              "C",
+              "D"
+            ]
+          }
+        },
+        "c7": {
+          "fn": "ask_angle_plane_plane",
+          "args": {
+            "plane1": [
+              "S",
+              "C",
+              "D"
+            ],
+            "plane2": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        }
+      },
+      "B": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        },
+        "c6": {
+          "fn": "ask_distance_point_plane",
+          "args": {
+            "point": "A",
+            "plane": [
+              "S",
+              "C",
+              "D"
+            ]
+          }
+        },
+        "c7": {
+          "fn": "ask_angle_plane_plane",
+          "args": {
+            "plane1": [
+              "S",
+              "C",
+              "D"
+            ],
+            "plane2": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "expansion/X03",
+      "A": {
+        "c6": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        }
+      },
+      "B": {
+        "c6": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        }
+      }
+    },
+    {
+      "id": "expansion/X04",
+      "A": {
+        "c4": {
+          "fn": "ask_distance_lines",
+          "args": {
+            "line1": [
+              "A",
+              "A'"
+            ],
+            "line2": [
+              "B",
+              "C"
+            ]
+          }
+        }
+      },
+      "B": {
+        "c4": {
+          "fn": "ask_distance_lines",
+          "args": {
+            "line1": [
+              "A",
+              "A'"
+            ],
+            "line2": [
+              "B",
+              "C"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "expansion/X05",
+      "A": {
+        "c6": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "c6": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "expansion/X06",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        }
+      },
+      "B": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        }
+      }
+    },
+    {
+      "id": "expansion/X07",
+      "A": {
+        "c4": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        }
+      },
+      "B": {
+        "c4": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        }
+      }
+    },
+    {
+      "id": "expansion/X08",
+      "A": {
+        "c6": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        }
+      },
+      "B": {
+        "c6": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H01",
+      "A": {
+        "c4": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCD.A'B'C'D'"
+          }
+        },
+        "c5": {
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "A",
+              "C'"
+            ]
+          }
+        }
+      },
+      "B": {
+        "f3": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCD.A'B'C'D'"
+          }
+        },
+        "f4": {
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "A",
+              "C'"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H02",
+      "A": {
+        "c6": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCD.A'B'C'D'"
+          }
+        },
+        "c7": {
+          "fn": "ask_distance_point_plane",
+          "args": {
+            "point": "A",
+            "plane": [
+              "A'",
+              "B",
+              "D"
+            ]
+          }
+        }
+      },
+      "B": {
+        "f5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCD.A'B'C'D'"
+          }
+        },
+        "f6": {
+          "fn": "ask_distance_point_plane",
+          "args": {
+            "point": "A",
+            "plane": [
+              "A'",
+              "B",
+              "D"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H03",
+      "A": {
+        "c4": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        },
+        "c5": {
+          "fn": "ask_angle_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        }
+      },
+      "B": {
+        "f4": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        },
+        "f5": {
+          "fn": "ask_angle_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H04",
+      "A": {
+        "c6": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        }
+      },
+      "B": {
+        "f6": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCD"
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H05",
+      "A": {
+        "c4": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "f4": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H06",
+      "A": {
+        "c4": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "f4": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H07",
+      "A": {
+        "c7": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "f8": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H08",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "f5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H09",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCD.A'B'C'D'"
+          }
+        }
+      },
+      "B": {
+        "f4": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCD.A'B'C'D'"
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H10",
+      "A": {
+        "c5": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCD.A'B'C'D'"
+          }
+        }
+      },
+      "B": {
+        "f4": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCD.A'B'C'D'"
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H11",
+      "A": {
+        "c7": {
+          "fn": "ask_distance_lines",
+          "args": {
+            "line1": [
+              "A",
+              "M"
+            ],
+            "line2": [
+              "B'",
+              "C"
+            ]
+          }
+        }
+      },
+      "B": {
+        "f7": {
+          "fn": "ask_distance_lines",
+          "args": {
+            "line1": [
+              "A",
+              "M"
+            ],
+            "line2": [
+              "B'",
+              "C"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H12",
+      "A": {
+        "c6": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        },
+        "c7": {
+          "fn": "ask_angle_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "C"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C"
+            ]
+          }
+        }
+      },
+      "B": {
+        "f6": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        },
+        "f7": {
+          "fn": "ask_angle_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "C"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H13",
+      "A": {
+        "c8": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "f8": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "hybrid/H14",
+      "A": {
+        "c4": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "D.ABC"
+          }
+        }
+      },
+      "B": {
+        "f3": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "D.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "g05/X1",
+      "A": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCDEF.A'B'C'D'E'F'"
+          }
+        }
+      },
+      "B": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCDEF.A'B'C'D'E'F'"
+          }
+        }
+      }
+    },
+    {
+      "id": "g05/X4",
+      "A": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCDEF.A'B'C'D'E'F'"
+          }
+        }
+      },
+      "B": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCDEF.A'B'C'D'E'F'"
+          }
+        }
+      }
+    },
+    {
+      "id": "g05/X6",
+      "A": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCDEF.A'B'C'D'E'F'"
+          }
+        }
+      },
+      "B": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCDEF.A'B'C'D'E'F'"
+          }
+        }
+      }
+    },
+    {
+      "id": "g05/T2",
+      "A": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABC.A'B'C'"
+          }
+        }
+      },
+      "B": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABC.A'B'C'"
+          }
+        }
+      }
+    },
+    {
+      "id": "g05/T5",
+      "A": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABC.A'B'C'"
+          }
+        }
+      },
+      "B": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABC.A'B'C'"
+          }
+        }
+      }
+    },
+    {
+      "id": "g05/H1",
+      "A": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCDEF"
+          }
+        }
+      },
+      "B": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCDEF"
+          }
+        }
+      }
+    },
+    {
+      "id": "g05/H2",
+      "A": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCDEF"
+          }
+        }
+      },
+      "B": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCDEF"
+          }
+        }
+      }
+    },
+    {
+      "id": "g05/H8",
+      "A": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCDEF"
+          }
+        }
+      },
+      "B": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABCDEF"
+          }
+        }
+      }
+    },
+    {
+      "id": "g05/P09",
+      "A": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      },
+      "B": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "g05/P06",
+      "A": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCD"
+          }
+        }
+      },
+      "B": {
+        "answer": {
+          "fn": "ask_volume",
+          "args": {
+            "solid": "ABCD"
+          }
+        }
+      }
+    }
+  ]
+}
