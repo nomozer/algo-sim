@@ -441,6 +441,46 @@ def _co_tu(quotes: tuple[str, ...], nhom: tuple[str, ...]) -> bool:
     return False
 
 
+_LAP_PHUONG = re.compile(r"(?<!\w)(?:(?:hình|khối)\s+)?lập\s+phương(?!\w|\s+hóa\b)", re.IGNORECASE)
+_HOP_CHU_NHAT = re.compile(r"(?<!\w)(?:(?:hình|khối)\s+)?hộp\s+chữ\s+nhật(?!\w)", re.IGNORECASE)
+_CHU_NHAT = re.compile(r"(?<!\w)chữ\s+nhật(?!\w|\s+hóa\b)", re.IGNORECASE)
+
+
+def _cung_da_giac(a: list[str], b: list[str]) -> bool:
+    """Hai nhóm nhãn gọi đúng cùng một đa giác; thứ tự đọc quanh mặt không mang nghĩa source-grounding."""
+    return len(a) == len(b) and set(a) == set(b)
+
+
+def _mat_cua_khoi_sau_cum(q: str, cum: re.Pattern[str], vertices: list[str]) -> bool:
+    """`hình/khối <loại> ABCD.EFGH`: chỉ token nhãn đầu tiên sau cụm loại mới là tên của khối ấy."""
+    for m in cum.finditer(q):
+        token = next((phan for dau, _cuoi, phan in _tu_nhan(q) if dau >= m.end()), None)
+        if token and any(_cung_da_giac(p, vertices) for p in token):
+            return True
+    return False
+
+
+def _co_doi_tuong_hinh(c: LoiGoi) -> bool:
+    """Bind hai cue định nghĩa mới (`lập phương`, `chữ nhật`) vào đúng đa giác, không mượn keyword của đối tượng khác."""
+    vertices = list(c.args.vertices)
+    if c.fn == "regular_polygon":
+        return any(_mat_cua_khoi_sau_cum(q, _LAP_PHUONG, vertices) for q in c.quotes)
+    if c.fn != "rectangle":
+        return True
+    for q in c.quotes:
+        if _mat_cua_khoi_sau_cum(q, _HOP_CHU_NHAT, vertices):
+            return True
+        for dau, cuoi, phan in _tu_nhan(q):
+            if not any(_cung_da_giac(p, vertices) for p in phan):
+                continue
+            # `ABCD là hình chữ nhật` / `hình chữ nhật ABCD`; giới hạn tại đúng token nhãn, không nhìn cả quote.
+            if re.match(r"\s+(?:là\s+)?hình\s+chữ\s+nhật(?!\w)", q[cuoi:], re.IGNORECASE):
+                return True
+            if re.search(r"(?<!\w)hình\s+chữ\s+nhật\s*$", q[:dau], re.IGNORECASE):
+                return True
+    return False
+
+
 def _co_mat(quotes: tuple[str, ...], mp: list[str], cho_day: bool = True) -> bool:
     """Mặt phẳng được nhắc: nhóm nhãn trùng tập điểm (`(ABC)`, `SAB`), hoặc — với mặt ĐÁY — chữ "đáy"."""
     if cho_day and any("đáy" in q.lower() for q in quotes):
@@ -498,6 +538,16 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str) -> None:
                     raise TuChoi("CONDITIONAL_CLAUSE", f"{c.id}: {q!r} nằm trong mệnh đề 'nếu … thì' — không phải dữ kiện", (c.id,))
         if any(_phu_dinh(de, dau, q) for (dau, _c), q in zip(vts, c.quotes)):
             raise TuChoi("NEGATED_CLAUSE", f"{c.id}: mệnh đề {c.quote!r} mang phủ định — không làm dữ kiện {c.fn}", (c.id,))
+        if c.fn == "regular_polygon" and not _co_tu(c.quotes, ("đều", "hình vuông")):
+            if not any(_LAP_PHUONG.search(q) for q in c.quotes):
+                raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: regular_polygon thiếu predicate hình đều", (c.id,))
+            if not _co_doi_tuong_hinh(c):
+                raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: cụm lập phương không gọi đúng mặt {c.args.vertices}", (c.id,))
+        if c.fn == "rectangle":
+            if not any(_CHU_NHAT.search(q) for q in c.quotes):
+                raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: rectangle thiếu predicate chữ nhật", (c.id,))
+            if not _co_doi_tuong_hinh(c):
+                raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: cụm chữ nhật không gọi đúng đa giác {c.args.vertices}", (c.id,))
         for nhom in c.spec.keywords:
             if not _co_tu(c.quotes, nhom):
                 raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: {c.fn} cần một trong {list(nhom)} trong {c.quote!r}", (c.id,))

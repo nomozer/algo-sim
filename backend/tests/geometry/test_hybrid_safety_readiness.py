@@ -56,6 +56,17 @@ def test_real_routes_reject_shape_keyword_borrowed_from_another_object(cid):
     assert (b.status, b.code) == ("REFUSED", "OBJECT_NOT_IN_QUOTE")
 
 
+@pytest.mark.parametrize("fn", ["regular_polygon", "rectangle"])
+def test_structural_phrase_binds_either_named_face_but_not_a_mixed_face(fn):
+    """Catches checking only the first face, accepting any four labels, or combining labels across faces."""
+    phrase = "hình lập phương ABCD.EFGH" if fn == "regular_polygon" else "hình hộp chữ nhật ABCD.EFGH"
+    text = f"Cho {phrase}."
+    for vertices, expected in [(["A", "B", "C", "D"], "PASS"), (["E", "F", "G", "H"], "PASS"),
+                               (["A", "B", "G", "H"], "OBJECT_NOT_IN_QUOTE")]:
+        call = {"id": "c1", "fn": fn, "args": {"vertices": vertices}, "source": {"quotes": [phrase]}}
+        assert _ground_a({"text": text, "call": call}) == expected
+
+
 def _facts(cid: str) -> list[dict]:
     return copy.deepcopy(HOLD[cid]["b_facts"])
 
