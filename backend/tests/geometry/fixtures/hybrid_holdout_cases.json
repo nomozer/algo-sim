@@ -1,0 +1,2879 @@
+{
+ "schema": "hybrid_holdout_cases/1",
+ "khai": "TIỀN ĐĂNG KÝ (run hybrid-compiler-selection), viết và commit TRƯỚC khi có planner. Mỗi ca: lời gọi hàm nhánh A và dữ kiện có kiểu nhánh B — CẢ HAI viết tay, đóng vai đầu ra AI đúng (KHÔNG gọi Gemini): offline chỉ kiểm phần tất định của mỗi nhánh khi AI trích đúng, KHÔNG đo năng lực trích xuất của mô hình. Kỳ vọng + hạng (correct_served / correct_refusal / unsupported) ghi riêng cho từng nhánh; `oracle` = lời giải tay, độc lập với engine và với nhánh A.",
+ "cases": [
+  {
+   "id": "H01_CUBE",
+   "covers": [
+    "definitional expansion",
+    "symbolic length",
+    "multi-primitive"
+   ],
+   "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Tính thể tích khối lập phương ABCD.A'B'C'D' và độ dài đường chéo AC'.",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "prism",
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'",
+       "D'"
+      ],
+      "right": true
+     },
+     "source": {
+      "quotes": [
+       "hình lập phương ABCD.A'B'C'D'"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "side": "a"
+     },
+     "source": {
+      "quotes": [
+       "hình lập phương ABCD.A'B'C'D' có cạnh bằng a"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "a"
+     },
+     "source": {
+      "quotes": [
+       "hình lập phương ABCD.A'B'C'D' có cạnh bằng a"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "ABCD.A'B'C'D'"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối lập phương ABCD.A'B'C'D'"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_length",
+     "args": {
+      "segment": [
+       "A",
+       "C'"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "độ dài đường chéo AC'"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "hình lập phương ABCD.A'B'C'D'"
+     ],
+     "solid": "ABCD.A'B'C'D'",
+     "solid_type": "cube"
+    },
+    {
+     "id": "f2",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "có cạnh bằng a"
+     ],
+     "measure": "edge",
+     "solid": "ABCD.A'B'C'D'",
+     "value": "a"
+    },
+    {
+     "id": "f3",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Tính thể tích khối lập phương ABCD.A'B'C'D'"
+     ],
+     "quantity": "volume",
+     "solid": "ABCD.A'B'C'D'"
+    },
+    {
+     "id": "f4",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "độ dài đường chéo AC'"
+     ],
+     "quantity": "length",
+     "points": [
+      "A",
+      "C'"
+     ]
+    }
+   ],
+   "expect_a": {
+    "status": "SERVED",
+    "answers": {
+     "c4": {
+      "coef": "1",
+      "dim": 3
+     },
+     "c5": {
+      "coef": "√3",
+      "dim": 1
+     }
+    },
+    "lengths_sq_in_a2": {
+     "AC'": "3",
+     "BD'": "3"
+    }
+   },
+   "expect_b": {
+    "status": "SERVED",
+    "answers": {
+     "f3": {
+      "coef": "1",
+      "dim": 3
+     },
+     "f4": {
+      "coef": "√3",
+      "dim": 1
+     }
+    },
+    "lengths_sq_in_a2": {
+     "AC'": "3",
+     "BD'": "3"
+    }
+   },
+   "class_a": "correct_served",
+   "class_b": "correct_served",
+   "oracle": "V = a³; AC'² = a² + a² + a² = 3a²"
+  },
+  {
+   "id": "H02_CUBOID_DISTANCE",
+   "covers": [
+    "definitional expansion",
+    "distance",
+    "symbolic length",
+    "multi-value quote"
+   ],
+   "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 3a. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D' và khoảng cách từ A đến mặt phẳng (A'BD).",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "prism",
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'",
+       "D'"
+      ],
+      "right": true
+     },
+     "source": {
+      "quotes": [
+       "hình hộp chữ nhật ABCD.A'B'C'D'"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "rectangle",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình hộp chữ nhật ABCD.A'B'C'D'"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "a"
+     },
+     "source": {
+      "quotes": [
+       "AB = a, AD = 2a, AA' = 3a"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "D"
+      ],
+      "value": "2a"
+     },
+     "source": {
+      "quotes": [
+       "AB = a, AD = 2a, AA' = 3a"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "3a"
+     },
+     "source": {
+      "quotes": [
+       "AB = a, AD = 2a, AA' = 3a"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "ABCD.A'B'C'D'"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'"
+      ]
+     }
+    },
+    {
+     "id": "c7",
+     "fn": "ask_distance_point_plane",
+     "args": {
+      "point": "A",
+      "plane": [
+       "A'",
+       "B",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "khoảng cách từ A đến mặt phẳng (A'BD)"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "hình hộp chữ nhật ABCD.A'B'C'D'"
+     ],
+     "solid": "ABCD.A'B'C'D'",
+     "solid_type": "cuboid"
+    },
+    {
+     "id": "f2",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "AB = a, AD = 2a, AA' = 3a"
+     ],
+     "measure": "segment",
+     "points": [
+      "A",
+      "B"
+     ],
+     "value": "a"
+    },
+    {
+     "id": "f3",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "AB = a, AD = 2a, AA' = 3a"
+     ],
+     "measure": "segment",
+     "points": [
+      "A",
+      "D"
+     ],
+     "value": "2a"
+    },
+    {
+     "id": "f4",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "AB = a, AD = 2a, AA' = 3a"
+     ],
+     "measure": "segment",
+     "points": [
+      "A",
+      "A'"
+     ],
+     "value": "3a"
+    },
+    {
+     "id": "f5",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'"
+     ],
+     "quantity": "volume",
+     "solid": "ABCD.A'B'C'D'"
+    },
+    {
+     "id": "f6",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "khoảng cách từ A đến mặt phẳng (A'BD)"
+     ],
+     "quantity": "distance",
+     "points_a": [
+      "A"
+     ],
+     "points_b": [
+      "A'",
+      "B",
+      "D"
+     ]
+    }
+   ],
+   "expect_a": {
+    "status": "SERVED",
+    "answers": {
+     "c6": {
+      "coef": "6",
+      "dim": 3
+     },
+     "c7": {
+      "coef": "6/7",
+      "dim": 1
+     }
+    }
+   },
+   "expect_b": {
+    "status": "SERVED",
+    "answers": {
+     "f5": {
+      "coef": "6",
+      "dim": 3
+     },
+     "f6": {
+      "coef": "6/7",
+      "dim": 1
+     }
+    }
+   },
+   "class_a": "correct_served",
+   "class_b": "correct_served",
+   "oracle": "V = a·2a·3a = 6a³; góc tam diện vuông tại A: 1/d² = 1/a² + 1/(2a)² + 1/(3a)² = 49/(36a²) ⇒ d = 6a/7"
+  },
+  {
+   "id": "H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS",
+   "covers": [
+    "role-based lengths",
+    "regular pyramid",
+    "angle",
+    "symbolic length"
+   ],
+   "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a và cạnh bên bằng a√2. Tính thể tích khối chóp S.ABCD và góc giữa cạnh bên SA và mặt đáy.",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "regular_pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp tứ giác đều S.ABCD"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "side": "a"
+     },
+     "source": {
+      "quotes": [
+       "tứ giác đều S.ABCD có cạnh đáy bằng a"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "a√2"
+     },
+     "source": {
+      "quotes": [
+       "cạnh bên bằng a√2"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABCD"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABCD"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_angle_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "góc giữa cạnh bên SA và mặt đáy"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "hình chóp tứ giác đều S.ABCD"
+     ],
+     "solid": "S.ABCD",
+     "solid_type": "pyramid",
+     "regular": true
+    },
+    {
+     "id": "f2",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "cạnh đáy bằng a"
+     ],
+     "measure": "base_edge",
+     "solid": "S.ABCD",
+     "value": "a"
+    },
+    {
+     "id": "f3",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "cạnh bên bằng a√2"
+     ],
+     "measure": "lateral_edge",
+     "solid": "S.ABCD",
+     "value": "a√2"
+    },
+    {
+     "id": "f4",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Tính thể tích khối chóp S.ABCD"
+     ],
+     "quantity": "volume",
+     "solid": "S.ABCD"
+    },
+    {
+     "id": "f5",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "góc giữa cạnh bên SA và mặt đáy"
+     ],
+     "quantity": "angle",
+     "points_a": [
+      "S",
+      "A"
+     ],
+     "points_b": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    }
+   ],
+   "expect_a": {
+    "status": "SERVED",
+    "answers": {
+     "c4": {
+      "coef": "√6/6",
+      "dim": 3
+     },
+     "c5": "cos²=1/4"
+    }
+   },
+   "expect_b": {
+    "status": "SERVED",
+    "answers": {
+     "f4": {
+      "coef": "√6/6",
+      "dim": 3
+     },
+     "f5": "cos²=1/4"
+    }
+   },
+   "class_a": "correct_served",
+   "class_b": "correct_served",
+   "oracle": "R² = a²/2; h² = 2a² − a²/2 = 3a²/2; V = ⅓·a²·a√6/2 = a³√6/6; cos²(SA, đáy) = R²/SA² = 1/4"
+  },
+  {
+   "id": "H04_FACE_PERP_MIDPOINT_FOOT",
+   "covers": [
+    "side face ⊥ base",
+    "foot at midpoint (derived)"
+   ],
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA = SB = 3 và mặt bên (SAB) vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD.",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "side": "2"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = SB = 3"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "B"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = SB = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "face_perpendicular_base",
+     "args": {
+      "face": [
+       "S",
+       "A",
+       "B"
+      ],
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "mặt bên (SAB) vuông góc với mặt đáy"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABCD"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABCD"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABCD"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "polygon_shape",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "đáy ABCD là hình vuông cạnh 2"
+     ],
+     "points": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "shape": "square",
+     "value": "2"
+    },
+    {
+     "id": "f2",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "SA = SB = 3"
+     ],
+     "measure": "segment",
+     "points": [
+      "S",
+      "A"
+     ],
+     "value": "3"
+    },
+    {
+     "id": "f3",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "SA = SB = 3"
+     ],
+     "measure": "segment",
+     "points": [
+      "S",
+      "B"
+     ],
+     "value": "3"
+    },
+    {
+     "id": "f4",
+     "kind": "perpendicular",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "mặt bên (SAB) vuông góc với mặt đáy"
+     ],
+     "points_a": [
+      "S",
+      "A",
+      "B"
+     ],
+     "points_b": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    },
+    {
+     "id": "f5",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "hình chóp S.ABCD"
+     ],
+     "solid": "S.ABCD",
+     "solid_type": "pyramid"
+    },
+    {
+     "id": "f6",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Tính thể tích khối chóp S.ABCD"
+     ],
+     "quantity": "volume",
+     "solid": "S.ABCD"
+    }
+   ],
+   "expect_a": {
+    "status": "SERVED",
+    "answers": {
+     "c6": "8√2/3"
+    },
+    "lengths_sq": {
+     "SC": "13",
+     "SD": "13"
+    }
+   },
+   "expect_b": {
+    "status": "SERVED",
+    "answers": {
+     "f6": "8√2/3"
+    },
+    "lengths_sq": {
+     "SC": "13",
+     "SD": "13"
+    }
+   },
+   "class_a": "correct_served",
+   "class_b": "correct_served",
+   "oracle": "SA = SB ⇒ chân H là trung điểm AB; h² = 9 − 1 = 8; V = ⅓·4·2√2 = 8√2/3; SC² = 8 + HC² = 8 + 5 = 13"
+  },
+  {
+   "id": "H05_FIGURE_NOT_UNIQUE_QUANTITY_UNIQUE",
+   "covers": [
+    "valid but not unique figure"
+   ],
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2 và chiều cao bằng 3. Tính thể tích khối chóp S.ABC.",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "2"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 2"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "height",
+     "args": {
+      "solid": "S.ABC",
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "chiều cao bằng 3"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "polygon_shape",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "đáy ABC là tam giác đều cạnh 2"
+     ],
+     "points": [
+      "A",
+      "B",
+      "C"
+     ],
+     "shape": "equilateral_triangle",
+     "value": "2"
+    },
+    {
+     "id": "f2",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "chiều cao bằng 3"
+     ],
+     "measure": "height",
+     "solid": "S.ABC",
+     "value": "3"
+    },
+    {
+     "id": "f3",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "hình chóp S.ABC"
+     ],
+     "solid": "S.ABC",
+     "solid_type": "pyramid"
+    },
+    {
+     "id": "f4",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Tính thể tích khối chóp S.ABC"
+     ],
+     "quantity": "volume",
+     "solid": "S.ABC"
+    }
+   ],
+   "expect_a": {
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT"
+   },
+   "expect_b": {
+    "status": "REFUSED",
+    "code": "FIGURE_NOT_UNIQUE"
+   },
+   "class_a": "unsupported",
+   "class_b": "unsupported",
+   "oracle": "V = ⅓·√3·3 = √3 DUY NHẤT (V = ⅓·S·h) nhưng vị trí đỉnh S không xác định ⇒ không có MỘT hình để hiển thị mà không thêm giả thiết"
+  },
+  {
+   "id": "H06_QUANTITY_NOT_UNIQUE",
+   "covers": [
+    "asked quantity not unique"
+   ],
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2 và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "2"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 2"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "polygon_shape",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "đáy ABC là tam giác đều cạnh 2"
+     ],
+     "points": [
+      "A",
+      "B",
+      "C"
+     ],
+     "shape": "equilateral_triangle",
+     "value": "2"
+    },
+    {
+     "id": "f2",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "SA = 3"
+     ],
+     "measure": "segment",
+     "points": [
+      "S",
+      "A"
+     ],
+     "value": "3"
+    },
+    {
+     "id": "f3",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "hình chóp S.ABC"
+     ],
+     "solid": "S.ABC",
+     "solid_type": "pyramid"
+    },
+    {
+     "id": "f4",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Tính thể tích khối chóp S.ABC"
+     ],
+     "quantity": "volume",
+     "solid": "S.ABC"
+    }
+   ],
+   "expect_a": {
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT"
+   },
+   "expect_b": {
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT"
+   },
+   "class_a": "correct_refusal",
+   "class_b": "correct_refusal",
+   "oracle": "S chạy trên mặt cầu tâm A bán kính 3 ⇒ chiều cao ∈ (0, 3] ⇒ V KHÔNG duy nhất"
+  },
+  {
+   "id": "H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED",
+   "covers": [
+    "proof goal",
+    "clause role"
+   ],
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = a, BC = a√3, SA vuông góc với (ABC) và SA = 2a. Chứng minh BC vuông góc với (SAB). Tính thể tích khối chóp S.ABC.",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "right_angle",
+     "args": {
+      "vertex": "B",
+      "rays": [
+       "A",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "tam giác vuông tại B"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "a"
+     },
+     "source": {
+      "quotes": [
+       "AB = a, BC = a√3"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "B",
+       "C"
+      ],
+      "value": "a√3"
+     },
+     "source": {
+      "quotes": [
+       "AB = a, BC = a√3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông góc với (ABC)"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2a"
+     },
+     "source": {
+      "quotes": [
+       "SA = 2a"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c7",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "right_angle",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "tam giác vuông tại B"
+     ],
+     "at": "B",
+     "points": [
+      "A",
+      "C"
+     ]
+    },
+    {
+     "id": "f2",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "AB = a, BC = a√3"
+     ],
+     "measure": "segment",
+     "points": [
+      "A",
+      "B"
+     ],
+     "value": "a"
+    },
+    {
+     "id": "f3",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "AB = a, BC = a√3"
+     ],
+     "measure": "segment",
+     "points": [
+      "B",
+      "C"
+     ],
+     "value": "a√3"
+    },
+    {
+     "id": "f4",
+     "kind": "perpendicular",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "SA vuông góc với (ABC)"
+     ],
+     "points_a": [
+      "S",
+      "A"
+     ],
+     "points_b": [
+      "A",
+      "B",
+      "C"
+     ]
+    },
+    {
+     "id": "f5",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "SA = 2a"
+     ],
+     "measure": "segment",
+     "points": [
+      "S",
+      "A"
+     ],
+     "value": "2a"
+    },
+    {
+     "id": "f6",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "hình chóp S.ABC"
+     ],
+     "solid": "S.ABC",
+     "solid_type": "pyramid"
+    },
+    {
+     "id": "f7",
+     "kind": "perpendicular",
+     "role": "prove",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "BC vuông góc với (SAB)"
+     ],
+     "points_a": [
+      "B",
+      "C"
+     ],
+     "points_b": [
+      "S",
+      "A",
+      "B"
+     ]
+    },
+    {
+     "id": "f8",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Tính thể tích khối chóp S.ABC"
+     ],
+     "quantity": "volume",
+     "solid": "S.ABC"
+    }
+   ],
+   "expect_a": {
+    "status": "SERVED",
+    "answers": {
+     "c7": {
+      "coef": "√3/3",
+      "dim": 3
+     }
+    }
+   },
+   "expect_b": {
+    "status": "SERVED",
+    "answers": {
+     "f8": {
+      "coef": "√3/3",
+      "dim": 3
+     }
+    },
+    "goal_checks": {
+     "f7": "HOLDS"
+    }
+   },
+   "class_a": "correct_served",
+   "class_b": "correct_served",
+   "oracle": "V = ⅓·(½·a·a√3)·2a = a³√3/3; BC ⊥ AB và BC ⊥ SA ⇒ BC ⊥ (SAB) đúng"
+  },
+  {
+   "id": "H08_PLANE_PLANE_NOT_BASE",
+   "covers": [
+    "near-miss of face ⊥ base",
+    "unsupported capability"
+   ],
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2, SA = 2 và mặt phẳng (SAB) vuông góc với mặt phẳng (SBC). Tính thể tích khối chóp S.ABC.",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "2"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 2"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2"
+     },
+     "source": {
+      "quotes": [
+       "SA = 2"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "face_perpendicular_base",
+     "args": {
+      "face": [
+       "S",
+       "A",
+       "B"
+      ],
+      "base": [
+       "S",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "mặt phẳng (SAB) vuông góc với mặt phẳng (SBC)"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "polygon_shape",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "đáy ABC là tam giác đều cạnh 2"
+     ],
+     "points": [
+      "A",
+      "B",
+      "C"
+     ],
+     "shape": "equilateral_triangle",
+     "value": "2"
+    },
+    {
+     "id": "f2",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "SA = 2"
+     ],
+     "measure": "segment",
+     "points": [
+      "S",
+      "A"
+     ],
+     "value": "2"
+    },
+    {
+     "id": "f3",
+     "kind": "perpendicular",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "mặt phẳng (SAB) vuông góc với mặt phẳng (SBC)"
+     ],
+     "points_a": [
+      "S",
+      "A",
+      "B"
+     ],
+     "points_b": [
+      "S",
+      "B",
+      "C"
+     ]
+    },
+    {
+     "id": "f4",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "hình chóp S.ABC"
+     ],
+     "solid": "S.ABC",
+     "solid_type": "pyramid"
+    },
+    {
+     "id": "f5",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Tính thể tích khối chóp S.ABC"
+     ],
+     "quantity": "volume",
+     "solid": "S.ABC"
+    }
+   ],
+   "expect_a": {
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_PLANE"
+   },
+   "expect_b": {
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_CAPABILITY"
+   },
+   "class_a": "unsupported",
+   "class_b": "unsupported",
+   "oracle": "hai mặt bên vuông góc nhau (không phải mặt bên ⊥ đáy) — thư viện chưa có phép dựng"
+  },
+  {
+   "id": "H09_CUBE_CONTRADICTION",
+   "covers": [
+    "contradiction"
+   ],
+   "text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 2 và AC' = 3. Tính thể tích khối lập phương ABCD.A'B'C'D'.",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "prism",
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'",
+       "D'"
+      ],
+      "right": true
+     },
+     "source": {
+      "quotes": [
+       "hình lập phương ABCD.A'B'C'D'"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "side": "2"
+     },
+     "source": {
+      "quotes": [
+       "hình lập phương ABCD.A'B'C'D' có cạnh bằng 2"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "2"
+     },
+     "source": {
+      "quotes": [
+       "hình lập phương ABCD.A'B'C'D' có cạnh bằng 2"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "C'"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "AC' = 3"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "ABCD.A'B'C'D'"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối lập phương ABCD.A'B'C'D'"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "hình lập phương ABCD.A'B'C'D'"
+     ],
+     "solid": "ABCD.A'B'C'D'",
+     "solid_type": "cube"
+    },
+    {
+     "id": "f2",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "có cạnh bằng 2"
+     ],
+     "measure": "edge",
+     "solid": "ABCD.A'B'C'D'",
+     "value": "2"
+    },
+    {
+     "id": "f3",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "AC' = 3"
+     ],
+     "measure": "segment",
+     "points": [
+      "A",
+      "C'"
+     ],
+     "value": "3"
+    },
+    {
+     "id": "f4",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Tính thể tích khối lập phương ABCD.A'B'C'D'"
+     ],
+     "quantity": "volume",
+     "solid": "ABCD.A'B'C'D'"
+    }
+   ],
+   "expect_a": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS"
+   },
+   "expect_b": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS"
+   },
+   "class_a": "correct_refusal",
+   "class_b": "correct_refusal",
+   "oracle": "AC'² phải là 3·4 = 12 ≠ 9"
+  },
+  {
+   "id": "H10_CUBOID_MISSING_HEIGHT",
+   "covers": [
+    "missing data"
+   ],
+   "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a và AD = 2a. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'.",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "prism",
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'",
+       "D'"
+      ],
+      "right": true
+     },
+     "source": {
+      "quotes": [
+       "hình hộp chữ nhật ABCD.A'B'C'D'"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "rectangle",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình hộp chữ nhật ABCD.A'B'C'D'"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "a"
+     },
+     "source": {
+      "quotes": [
+       "AB = a"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "D"
+      ],
+      "value": "2a"
+     },
+     "source": {
+      "quotes": [
+       "AD = 2a"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "ABCD.A'B'C'D'"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "hình hộp chữ nhật ABCD.A'B'C'D'"
+     ],
+     "solid": "ABCD.A'B'C'D'",
+     "solid_type": "cuboid"
+    },
+    {
+     "id": "f2",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "AB = a"
+     ],
+     "measure": "segment",
+     "points": [
+      "A",
+      "B"
+     ],
+     "value": "a"
+    },
+    {
+     "id": "f3",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "AD = 2a"
+     ],
+     "measure": "segment",
+     "points": [
+      "A",
+      "D"
+     ],
+     "value": "2a"
+    },
+    {
+     "id": "f4",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'"
+     ],
+     "quantity": "volume",
+     "solid": "ABCD.A'B'C'D'"
+    }
+   ],
+   "expect_a": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION"
+   },
+   "expect_b": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION"
+   },
+   "class_a": "correct_refusal",
+   "class_b": "correct_refusal",
+   "oracle": "không có AA' ⇒ chiều cao không xác định"
+  },
+  {
+   "id": "H11_SKEW_DISTANCE_COMPOSITION",
+   "covers": [
+    "multi-primitive composition",
+    "distance",
+    "symbolic length"
+   ],
+   "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = a, AC = 2a và AA' = 2a. Gọi M là trung điểm của BC. Tính khoảng cách giữa hai đường thẳng AM và B'C.",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "prism",
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ],
+      "right": true
+     },
+     "source": {
+      "quotes": [
+       "hình lăng trụ đứng ABC.A'B'C'"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "right_angle",
+     "args": {
+      "vertex": "A",
+      "rays": [
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "tam giác vuông tại A"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "a"
+     },
+     "source": {
+      "quotes": [
+       "AB = a, AC = 2a"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "C"
+      ],
+      "value": "2a"
+     },
+     "source": {
+      "quotes": [
+       "AB = a, AC = 2a"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "2a"
+     },
+     "source": {
+      "quotes": [
+       "AA' = 2a"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "midpoint",
+     "args": {
+      "point": "M",
+      "segment": [
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "M là trung điểm của BC"
+      ]
+     }
+    },
+    {
+     "id": "c7",
+     "fn": "ask_distance_lines",
+     "args": {
+      "line1": [
+       "A",
+       "M"
+      ],
+      "line2": [
+       "B'",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "khoảng cách giữa hai đường thẳng AM và B'C"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "hình lăng trụ đứng ABC.A'B'C'"
+     ],
+     "solid": "ABC.A'B'C'",
+     "solid_type": "prism",
+     "right": true
+    },
+    {
+     "id": "f2",
+     "kind": "right_angle",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "tam giác vuông tại A"
+     ],
+     "at": "A",
+     "points": [
+      "B",
+      "C"
+     ]
+    },
+    {
+     "id": "f3",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "AB = a, AC = 2a"
+     ],
+     "measure": "segment",
+     "points": [
+      "A",
+      "B"
+     ],
+     "value": "a"
+    },
+    {
+     "id": "f4",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "AB = a, AC = 2a"
+     ],
+     "measure": "segment",
+     "points": [
+      "A",
+      "C"
+     ],
+     "value": "2a"
+    },
+    {
+     "id": "f5",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "AA' = 2a"
+     ],
+     "measure": "segment",
+     "points": [
+      "A",
+      "A'"
+     ],
+     "value": "2a"
+    },
+    {
+     "id": "f6",
+     "kind": "point_def",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "M là trung điểm của BC"
+     ],
+     "point": "M",
+     "point_kind": "midpoint",
+     "points": [
+      "B",
+      "C"
+     ]
+    },
+    {
+     "id": "f7",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "khoảng cách giữa hai đường thẳng AM và B'C"
+     ],
+     "quantity": "distance",
+     "points_a": [
+      "A",
+      "M"
+     ],
+     "points_b": [
+      "B'",
+      "C"
+     ]
+    }
+   ],
+   "expect_a": {
+    "status": "SERVED",
+    "answers": {
+     "c7": {
+      "coef": "2/3",
+      "dim": 1
+     }
+    }
+   },
+   "expect_b": {
+    "status": "SERVED",
+    "answers": {
+     "f7": {
+      "coef": "2/3",
+      "dim": 1
+     }
+    }
+   },
+   "class_a": "correct_served",
+   "class_b": "correct_served",
+   "oracle": "A(0,0,0), B(a,0,0), C(0,2a,0), B'(a,0,2a), M(a/2,a,0); u = AM ∥ (1/2,1,0), v = B'C ∥ (−1,2,−2); u×v = (−2,1,2), |u×v| = 3; AB'·(u×v) = 2a ⇒ d = 2a/3"
+  },
+  {
+   "id": "H12_PROJECTION_MIDPOINT_ANGLE",
+   "covers": [
+    "projection",
+    "angle",
+    "foot at midpoint (given)",
+    "symbolic length"
+   ],
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a. Hình chiếu vuông góc của S lên mặt phẳng (ABC) là trung điểm H của AB và SH = a√3/2. Tính thể tích khối chóp S.ABC và góc giữa SC và mặt phẳng (ABC).",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "a"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh a"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "midpoint",
+     "args": {
+      "point": "H",
+      "segment": [
+       "A",
+       "B"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "trung điểm H của AB"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "orthogonal_projection",
+     "args": {
+      "point": "S",
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "image": "H"
+     },
+     "source": {
+      "quotes": [
+       "Hình chiếu vuông góc của S lên mặt phẳng (ABC) là trung điểm H của AB"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "H"
+      ],
+      "value": "a√3/2"
+     },
+     "source": {
+      "quotes": [
+       "SH = a√3/2"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c7",
+     "fn": "ask_angle_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "C"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "góc giữa SC và mặt phẳng (ABC)"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "polygon_shape",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "đáy ABC là tam giác đều cạnh a"
+     ],
+     "points": [
+      "A",
+      "B",
+      "C"
+     ],
+     "shape": "equilateral_triangle",
+     "value": "a"
+    },
+    {
+     "id": "f2",
+     "kind": "point_def",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "trung điểm H của AB"
+     ],
+     "point": "H",
+     "point_kind": "midpoint",
+     "points": [
+      "A",
+      "B"
+     ]
+    },
+    {
+     "id": "f3",
+     "kind": "projection",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Hình chiếu vuông góc của S lên mặt phẳng (ABC) là trung điểm H của AB"
+     ],
+     "point": "S",
+     "points": [
+      "A",
+      "B",
+      "C"
+     ],
+     "at": "H"
+    },
+    {
+     "id": "f4",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "SH = a√3/2"
+     ],
+     "measure": "segment",
+     "points": [
+      "S",
+      "H"
+     ],
+     "value": "a√3/2"
+    },
+    {
+     "id": "f5",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "hình chóp S.ABC"
+     ],
+     "solid": "S.ABC",
+     "solid_type": "pyramid"
+    },
+    {
+     "id": "f6",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Tính thể tích khối chóp S.ABC"
+     ],
+     "quantity": "volume",
+     "solid": "S.ABC"
+    },
+    {
+     "id": "f7",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "góc giữa SC và mặt phẳng (ABC)"
+     ],
+     "quantity": "angle",
+     "points_a": [
+      "S",
+      "C"
+     ],
+     "points_b": [
+      "A",
+      "B",
+      "C"
+     ]
+    }
+   ],
+   "expect_a": {
+    "status": "SERVED",
+    "answers": {
+     "c6": {
+      "coef": "1/8",
+      "dim": 3
+     },
+     "c7": "cos²=1/2"
+    }
+   },
+   "expect_b": {
+    "status": "SERVED",
+    "answers": {
+     "f6": {
+      "coef": "1/8",
+      "dim": 3
+     },
+     "f7": "cos²=1/2"
+    }
+   },
+   "class_a": "correct_served",
+   "class_b": "correct_served",
+   "oracle": "V = ⅓·(a²√3/4)·(a√3/2) = a³/8; HC = a√3/2 = SH ⇒ góc 45°, cos² = 1/2"
+  },
+  {
+   "id": "H13_NEGATED_RELATION_CONTRADICTS",
+   "covers": [
+    "negation",
+    "contradiction"
+   ],
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4, SA vuông góc với (ABC), SA = 4 và BC không vuông góc với mặt phẳng (SAB). Tính thể tích khối chóp S.ABC.",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "right_angle",
+     "args": {
+      "vertex": "B",
+      "rays": [
+       "A",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "tam giác vuông tại B"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "AB = 3, BC = 4"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "B",
+       "C"
+      ],
+      "value": "4"
+     },
+     "source": {
+      "quotes": [
+       "AB = 3, BC = 4"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông góc với (ABC)"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "4"
+     },
+     "source": {
+      "quotes": [
+       "SA = 4"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "B",
+       "C"
+      ],
+      "plane": [
+       "S",
+       "A",
+       "B"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "BC không vuông góc với mặt phẳng (SAB)"
+      ]
+     }
+    },
+    {
+     "id": "c7",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c8",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "right_angle",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "tam giác vuông tại B"
+     ],
+     "at": "B",
+     "points": [
+      "A",
+      "C"
+     ]
+    },
+    {
+     "id": "f2",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "AB = 3, BC = 4"
+     ],
+     "measure": "segment",
+     "points": [
+      "A",
+      "B"
+     ],
+     "value": "3"
+    },
+    {
+     "id": "f3",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "AB = 3, BC = 4"
+     ],
+     "measure": "segment",
+     "points": [
+      "B",
+      "C"
+     ],
+     "value": "4"
+    },
+    {
+     "id": "f4",
+     "kind": "perpendicular",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "SA vuông góc với (ABC)"
+     ],
+     "points_a": [
+      "S",
+      "A"
+     ],
+     "points_b": [
+      "A",
+      "B",
+      "C"
+     ]
+    },
+    {
+     "id": "f5",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "SA = 4"
+     ],
+     "measure": "segment",
+     "points": [
+      "S",
+      "A"
+     ],
+     "value": "4"
+    },
+    {
+     "id": "f6",
+     "kind": "perpendicular",
+     "role": "premise",
+     "negated": true,
+     "ambiguous": false,
+     "quotes": [
+      "BC không vuông góc với mặt phẳng (SAB)"
+     ],
+     "points_a": [
+      "B",
+      "C"
+     ],
+     "points_b": [
+      "S",
+      "A",
+      "B"
+     ]
+    },
+    {
+     "id": "f7",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "hình chóp S.ABC"
+     ],
+     "solid": "S.ABC",
+     "solid_type": "pyramid"
+    },
+    {
+     "id": "f8",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Tính thể tích khối chóp S.ABC"
+     ],
+     "quantity": "volume",
+     "solid": "S.ABC"
+    }
+   ],
+   "expect_a": {
+    "status": "REFUSED",
+    "code": "NEGATED_CLAUSE"
+   },
+   "expect_b": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS"
+   },
+   "class_a": "correct_refusal",
+   "class_b": "correct_refusal",
+   "oracle": "BC ⊥ AB, BC ⊥ SA ⇒ BC ⊥ (SAB) LUÔN đúng ⇒ mệnh đề phủ định sai ⇒ đề mâu thuẫn"
+  },
+  {
+   "id": "H14_REGULAR_TETRAHEDRON",
+   "covers": [
+    "definitional expansion",
+    "symbolic length"
+   ],
+   "text": "Cho tứ diện đều ABCD có cạnh bằng a. Tính thể tích khối tứ diện ABCD.",
+   "a_calls": [
+    {
+     "id": "c1",
+     "fn": "regular_pyramid",
+     "args": {
+      "apex": "D",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "tứ diện đều ABCD"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "a"
+     },
+     "source": {
+      "quotes": [
+       "tứ diện đều ABCD có cạnh bằng a"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "D",
+       "A"
+      ],
+      "value": "a"
+     },
+     "source": {
+      "quotes": [
+       "tứ diện đều ABCD có cạnh bằng a"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "D.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối tứ diện ABCD"
+      ]
+     }
+    }
+   ],
+   "b_facts": [
+    {
+     "id": "f1",
+     "kind": "solid",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "tứ diện đều ABCD"
+     ],
+     "solid": "ABCD",
+     "solid_type": "tetrahedron",
+     "regular": true
+    },
+    {
+     "id": "f2",
+     "kind": "length",
+     "role": "premise",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "có cạnh bằng a"
+     ],
+     "measure": "edge",
+     "solid": "ABCD",
+     "value": "a"
+    },
+    {
+     "id": "f3",
+     "kind": "question",
+     "role": "question",
+     "negated": false,
+     "ambiguous": false,
+     "quotes": [
+      "Tính thể tích khối tứ diện ABCD"
+     ],
+     "quantity": "volume",
+     "solid": "ABCD"
+    }
+   ],
+   "expect_a": {
+    "status": "SERVED",
+    "answers": {
+     "c4": {
+      "coef": "√2/12",
+      "dim": 3
+     }
+    },
+    "lengths_sq_in_a2": {
+     "DB": "1",
+     "DC": "1"
+    }
+   },
+   "expect_b": {
+    "status": "SERVED",
+    "answers": {
+     "f3": {
+      "coef": "√2/12",
+      "dim": 3
+     }
+    },
+    "lengths_sq_in_a2": {
+     "DB": "1",
+     "DC": "1"
+    }
+   },
+   "class_a": "correct_served",
+   "class_b": "correct_served",
+   "oracle": "V = a³/(6√2) = a³√2/12; sáu cạnh bằng a"
+  }
+ ]
+}
