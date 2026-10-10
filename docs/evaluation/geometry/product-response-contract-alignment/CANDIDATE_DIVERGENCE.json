@@ -4,7 +4,7 @@
  "run_id": "thesis-final-20260908T160224Z",
  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
- "current_candidate_hash": "2c4ea2d24f65c2e7f945ce3b69f131304404986820592e1c33c9147eb466af59",
+ "current_candidate_hash": "e9d20aa2debc16ed50a83da9aae2d3aa596e88237b97549cee7fb645f230d69d",
  "lich_su_current_candidate": [
   {
    "hash": "96a9368b50603c79af771bf38f34f340492bfff41365756513d86f74583b517f",
@@ -295,6 +295,11 @@
    "hash": "2c4ea2d24f65c2e7f945ce3b69f131304404986820592e1c33c9147eb466af59",
    "sau_wave": "hybrid-compiler-selection (run hybrid-compiler-selection, nhánh nghiên cứu)",
    "ghi_chu": "Nhánh B THỰC NGHIỆM (không mặc định): `geometry_functions/planner.py` (TypedFact + planner chọn hàm theo loại dữ kiện và kiểu toán hạng, mở rộng định nghĩa, giải vai trò độ dài), `ai/fact_extraction.py` (structured output, provider giả; transport live có cổng, KHÔNG dùng), `run_fact_route` (đổ vào cùng `run_function_route` của nhánh A; kiểm điều phải chứng minh, mệnh đề phủ định, `FIGURE_NOT_UNIQUE`); engine thêm details/planner/checker; registry thêm từ khoá 'lập phương', 'chữ nhật' cho cả hai nhánh. Không đổi kernel, interpreter, Scene3D, lược đồ IR, prompt LLM_ONLY, routing. CACHE_VERSION giữ 125. 0 lượt gọi model. Đóng băng LOCAL tại 65fd0328 (= product commit) trong detached worktree sạch, 110 tệp."
+  },
+  {
+   "hash": "e9d20aa2debc16ed50a83da9aae2d3aa596e88237b97549cee7fb645f230d69d",
+   "sau_wave": "hybrid-compiler-selection (lần đóng băng thứ hai, sau bản sửa của tự rà soát)",
+   "ghi_chu": "Bản sửa của tự rà soát (91e2edf9): checker nhánh B trả UNVERIFIABLE cho câu hỏi và mệnh đề ngoài thư viện (trước đó coi là ĐÚNG); mệnh đề phủ định không kiểm được ⇒ REFUSED NEGATED_CLAUSE (trước đó phục vụ im lặng). Bằng chứng A/B offline tạo lại trùng từng byte. 2c4ea2d2 là candidate trung gian. CACHE_VERSION giữ 125. Đóng băng LOCAL tại 91e2edf9 (= product commit) trong detached worktree sạch D:/tmp/hcs-freeze2, 110 tệp."
   }
  ],
  "diverged": true,
