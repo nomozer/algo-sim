@@ -1,0 +1,886 @@
+{
+ "schema": "geometry_expansion_cases/1",
+ "khai": "TIỀN ĐĂNG KÝ (run ai-function-route) cho mở rộng hình học: độ dài ký hiệu a, mặt bên ⊥ đáy, trọng tâm + hình chiếu, góc hai mặt, khoảng cách hai đường chéo nhau. `oracle` = lời giải sách tính tay, độc lập với engine. Đáp số ký hiệu ghi dạng {coef, dim}: giá trị = coef · a^dim.",
+ "cases": [
+  {
+   "id": "X01_SYMBOLIC_SQUARE_PYRAMID",
+   "group": "symbolic_length",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy và SA = a√2. Tính thể tích khối chóp S.ABCD.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "side": "a"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh a"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông góc với đáy"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "a√2"
+     },
+     "source": {
+      "quotes": [
+       "SA = a√2"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABCD"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABCD"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABCD"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c5": {
+      "coef": "√2/3",
+      "dim": 3
+     }
+    },
+    "unit": "a",
+    "lengths_sq_in_a2": {
+     "SC": "4",
+     "SB": "3"
+    }
+   },
+   "oracle": "V = 1/3 · a² · a√2 = a³√2/3; SC² = SA² + AC² = 2a² + 2a² = 4a²"
+  },
+  {
+   "id": "X02_FACE_PERPENDICULAR_EQUILATERAL",
+   "group": "face_perpendicular_base",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a. Tam giác SAB đều và nằm trong mặt phẳng vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD, khoảng cách từ A đến mặt phẳng (SCD) và góc giữa hai mặt phẳng (SCD) và (ABCD).",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "side": "a"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh a"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "S",
+       "A",
+       "B"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "Tam giác SAB đều"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "face_perpendicular_base",
+     "args": {
+      "face": [
+       "S",
+       "A",
+       "B"
+      ],
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "Tam giác SAB đều và nằm trong mặt phẳng vuông góc với mặt đáy"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABCD"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABCD"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABCD"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "ask_distance_point_plane",
+     "args": {
+      "point": "A",
+      "plane": [
+       "S",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "khoảng cách từ A đến mặt phẳng (SCD)"
+      ]
+     }
+    },
+    {
+     "id": "c7",
+     "fn": "ask_angle_plane_plane",
+     "args": {
+      "plane1": [
+       "S",
+       "C",
+       "D"
+      ],
+      "plane2": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "góc giữa hai mặt phẳng (SCD) và (ABCD)"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c5": {
+      "coef": "√3/6",
+      "dim": 3
+     },
+     "c6": {
+      "coef": "√21/7",
+      "dim": 1
+     },
+     "c7": "cos²=4/7"
+    },
+    "unit": "a",
+    "lengths_sq_in_a2": {
+     "SC": "2",
+     "SD": "2",
+     "SA": "1"
+    }
+   },
+   "oracle": "H trung điểm AB (DẪN XUẤT từ SA = SB, không giả định); SH = a√3/2; V = a³√3/6; AB ∥ (SCD) ⇒ d(A,(SCD)) = d(H,(SCD)) = SH·HM/SM = a√21/7 (M trung điểm CD, HM = a); góc SMH: cos² = HM²/SM² = 4/7; SC² = SH² + HC² = 3/4 + 5/4 = 2"
+  },
+  {
+   "id": "X03_FACE_PERPENDICULAR_FOOT_AT_VERTEX",
+   "group": "face_perpendicular_base",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA = 3, SB = 5 và mặt bên (SAB) vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "B"
+      ],
+      "value": "5"
+     },
+     "source": {
+      "quotes": [
+       "SB = 5"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "face_perpendicular_base",
+     "args": {
+      "face": [
+       "S",
+       "A",
+       "B"
+      ],
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "mặt bên (SAB) vuông góc với mặt đáy"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABCD"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABCD"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABCD"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c6": "16"
+    },
+    "lengths_sq": {
+     "SD": "25",
+     "SC": "41"
+    }
+   },
+   "oracle": "tam giác SAB 3-4-5 vuông tại A ⇒ chân đường cao tại A (KHÔNG phải trung điểm AB); h = 3; V = 16; SD² = 9 + 16"
+  },
+  {
+   "id": "X04_SKEW_LINES_DISTANCE",
+   "group": "skew_distance",
+   "text": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác đều cạnh a và AA' = a. Tính khoảng cách giữa hai đường thẳng AA' và BC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "prism",
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'"
+      ],
+      "right": true
+     },
+     "source": {
+      "quotes": [
+       "hình lăng trụ đứng ABC.A'B'C'"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "a"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh a"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "A'"
+      ],
+      "value": "a"
+     },
+     "source": {
+      "quotes": [
+       "AA' = a"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "ask_distance_lines",
+     "args": {
+      "line1": [
+       "A",
+       "A'"
+      ],
+      "line2": [
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "khoảng cách giữa hai đường thẳng AA' và BC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c4": {
+      "coef": "√3/2",
+      "dim": 1
+     }
+    },
+    "unit": "a"
+   },
+   "oracle": "AA' ⊥ đáy, BC ⊂ đáy ⇒ đoạn vuông góc chung là đường cao từ A của tam giác đều: a√3/2"
+  },
+  {
+   "id": "X05_PROJECTION_ON_CENTROID",
+   "group": "centroid_projection",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4. Hình chiếu vuông góc của S lên mặt phẳng (ABC) là trọng tâm G của tam giác ABC và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "centroid",
+     "args": {
+      "point": "G",
+      "polygon": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "trọng tâm G của tam giác ABC"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "orthogonal_projection",
+     "args": {
+      "point": "S",
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "image": "G"
+     },
+     "source": {
+      "quotes": [
+       "Hình chiếu vuông góc của S lên mặt phẳng (ABC) là trọng tâm G của tam giác ABC"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c6": "4√11/3"
+    },
+    "lengths_sq": {
+     "SB": "9",
+     "SC": "9"
+    }
+   },
+   "oracle": "GA² = 16/3; h² = 9 − 16/3 = 11/3; V = 1/3 · 4√3 · √(11/3) = 4√11/3"
+  },
+  {
+   "id": "X06_NON_HOMOGENEOUS_SYMBOL",
+   "group": "symbolic_length",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với đáy và SA = 3. Tính thể tích khối chóp S.ABCD.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "side": "a"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh a"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông góc với đáy"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABCD"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABCD"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABCD"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "NON_HOMOGENEOUS_LENGTHS"
+   },
+   "oracle": "trộn a với số: hình không đồng dạng khi a đổi ⇒ không dựng một bố cục chung — từ chối, không gán a"
+  },
+  {
+   "id": "X07_FACE_PERPENDICULAR_MISSING",
+   "group": "face_perpendicular_base",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a và mặt bên (SAB) vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "side": "a"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh a"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "face_perpendicular_base",
+     "args": {
+      "face": [
+       "S",
+       "A",
+       "B"
+      ],
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "mặt bên (SAB) vuông góc với mặt đáy"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABCD"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABCD"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABCD"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION"
+   },
+   "oracle": "không biết SA, SB ⇒ không định vị được S trong mặt (SAB)"
+  },
+  {
+   "id": "X08_FACE_PERPENDICULAR_CONTRADICTION",
+   "group": "face_perpendicular_base",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, tam giác SAB đều, SA = 2a và mặt bên (SAB) vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "side": "a"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh a"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "S",
+       "A",
+       "B"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "tam giác SAB đều"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "2a"
+     },
+     "source": {
+      "quotes": [
+       "SA = 2a"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "face_perpendicular_base",
+     "args": {
+      "face": [
+       "S",
+       "A",
+       "B"
+      ],
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "mặt bên (SAB) vuông góc với mặt đáy"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABCD"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABCD"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABCD"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS"
+   },
+   "oracle": "SAB đều cạnh AB = a mâu thuẫn SA = 2a"
+  }
+ ]
+}

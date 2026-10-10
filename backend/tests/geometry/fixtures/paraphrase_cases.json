@@ -1,0 +1,2309 @@
+{
+ "schema": "paraphrase_cases/1",
+ "khai": "TIỀN ĐĂNG KÝ (run ai-function-route), viết và commit TRƯỚC khi sửa cổng nguồn/engine. `calls` đóng vai đầu ra của AI cho TỪNG cách diễn đạt — gán nhãn tay, KHÔNG gọi Gemini: bộ này kiểm đường lời gọi → engine nhận/chuẩn hoá/từ chối đúng từng dạng câu, KHÔNG chứng minh mô hình hiểu được câu ấy. `expect` tính tay.",
+ "cases": [
+  {
+   "id": "P01_CANONICAL",
+   "group": "perpendicular_paraphrase",
+   "canonical_meaning": "đáy ABC tam giác đều cạnh 4; SA ⊥ (ABC) tại A; SA = 3 ⇒ V = 4√3, SB² = 25",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với (ABC) và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông góc với (ABC)"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c5": "4√3"
+    },
+    "lengths_sq": {
+     "SB": "25",
+     "SC": "25"
+    }
+   }
+  },
+  {
+   "id": "P02_SYMBOL",
+   "group": "perpendicular_paraphrase",
+   "canonical_meaning": "đáy ABC tam giác đều cạnh 4; SA ⊥ (ABC) tại A; SA = 3 ⇒ V = 4√3, SB² = 25",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA ⊥ (ABC), SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA ⊥ (ABC)"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c5": "4√3"
+    },
+    "lengths_sq": {
+     "SB": "25",
+     "SC": "25"
+    }
+   }
+  },
+  {
+   "id": "P03_BASE_PLANE_WORDS",
+   "group": "perpendicular_paraphrase",
+   "canonical_meaning": "đáy ABC tam giác đều cạnh 4; SA ⊥ (ABC) tại A; SA = 3 ⇒ V = 4√3, SB² = 25",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "cạnh bên SA vuông góc với mặt phẳng đáy"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c5": "4√3"
+    },
+    "lengths_sq": {
+     "SB": "25",
+     "SC": "25"
+    }
+   }
+  },
+  {
+   "id": "P04_ALTITUDE",
+   "group": "perpendicular_paraphrase",
+   "canonical_meaning": "đáy ABC tam giác đều cạnh 4; SA ⊥ (ABC) tại A; SA = 3 ⇒ V = 4√3, SB² = 25",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA là đường cao của hình chóp và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "altitude",
+     "args": {
+      "apex": "S",
+      "foot": "A",
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "SA là đường cao của hình chóp"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c5": "4√3"
+    },
+    "lengths_sq": {
+     "SB": "25",
+     "SC": "25"
+    }
+   },
+   "note": "tương đương với SA ⊥ (ABC) CHỈ vì A thuộc mặt đáy của chính khối S.ABC (engine kiểm)"
+  },
+  {
+   "id": "P05_PROJECTION",
+   "group": "perpendicular_paraphrase",
+   "canonical_meaning": "đáy ABC tam giác đều cạnh 4; SA ⊥ (ABC) tại A; SA = 3 ⇒ V = 4√3, SB² = 25",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4. Hình chiếu vuông góc của S lên mặt phẳng (ABC) là điểm A và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "orthogonal_projection",
+     "args": {
+      "point": "S",
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "image": "A"
+     },
+     "source": {
+      "quotes": [
+       "Hình chiếu vuông góc của S lên mặt phẳng (ABC) là điểm A"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c5": "4√3"
+    },
+    "lengths_sq": {
+     "SB": "25",
+     "SC": "25"
+    }
+   },
+   "note": "tương đương CHỈ khi A thuộc (ABC) và S không thuộc (ABC)"
+  },
+  {
+   "id": "P06_TWO_PERPENDICULAR_LINES",
+   "group": "perpendicular_paraphrase",
+   "canonical_meaning": "đáy ABC tam giác đều cạnh 4; SA ⊥ (ABC) tại A; SA = 3 ⇒ V = 4√3, SB² = 25",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với AB và AC, SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_lines",
+     "args": {
+      "line1": [
+       "S",
+       "A"
+      ],
+      "line2": [
+       "A",
+       "B"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông góc với AB và AC"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "perpendicular_lines",
+     "args": {
+      "line1": [
+       "S",
+       "A"
+      ],
+      "line2": [
+       "A",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông góc với AB và AC"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c6": "4√3"
+    },
+    "lengths_sq": {
+     "SB": "25",
+     "SC": "25"
+    }
+   },
+   "note": "định lý: đường thẳng ⊥ hai đường cắt nhau của mặt phẳng thì ⊥ mặt phẳng — engine kiểm AB, AC cắt nhau và nằm trong đáy"
+  },
+  {
+   "id": "P07_MULTI_SENTENCE",
+   "group": "perpendicular_paraphrase",
+   "canonical_meaning": "đáy ABC tam giác đều cạnh 4; SA ⊥ (ABC) tại A; SA = 3 ⇒ V = 4√3, SB² = 25",
+   "text": "Cho hình chóp S.ABC có đáy là tam giác đều. Cạnh đáy bằng 4. SA vuông góc với đáy, SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy là tam giác đều",
+       "Cạnh đáy bằng 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông góc với đáy"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c5": "4√3"
+    },
+    "lengths_sq": {
+     "SB": "25",
+     "SC": "25"
+    }
+   }
+  },
+  {
+   "id": "P08_GOAL_FIRST_REORDERED",
+   "group": "perpendicular_paraphrase",
+   "canonical_meaning": "đáy ABC tam giác đều cạnh 4; SA ⊥ (ABC) tại A; SA = 3 ⇒ V = 4√3, SB² = 25",
+   "text": "Tính thể tích khối chóp S.ABC, biết SA = 3, SA ⊥ (ABC) và đáy ABC là tam giác đều có AB = 4.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA ⊥ (ABC)"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "4"
+     },
+     "source": {
+      "quotes": [
+       "AB = 4"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c1": "4√3"
+    },
+    "lengths_sq": {
+     "SB": "25",
+     "SC": "25"
+    }
+   },
+   "note": "dữ kiện nằm trong câu hỏi sau 'biết' vẫn là tiền đề"
+  },
+  {
+   "id": "P09_STUDENT_SHORTHAND",
+   "group": "perpendicular_paraphrase",
+   "canonical_meaning": "đáy ABC tam giác đều cạnh 4; SA ⊥ (ABC) tại A; SA = 3 ⇒ V = 4√3, SB² = 25",
+   "text": "chóp S.ABC, đáy ABC đều cạnh 4, SA vuông đáy, SA=3. tính V",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông đáy"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA=3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "tính V"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c5": "4√3"
+    },
+    "lengths_sq": {
+     "SB": "25",
+     "SC": "25"
+    }
+   }
+  },
+  {
+   "id": "P10_NO_SPACES_NOTATION",
+   "group": "perpendicular_paraphrase",
+   "canonical_meaning": "đáy ABC tam giác đều cạnh 4; SA ⊥ (ABC) tại A; SA = 3 ⇒ V = 4√3, SB² = 25",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA⊥(ABC), SA=3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA ⊥ (ABC)"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c5": "4√3"
+    },
+    "lengths_sq": {
+     "SB": "25",
+     "SC": "25"
+    }
+   },
+   "note": "AI chép quote có khoảng trắng khác đề — khớp bỏ qua khoảng trắng"
+  },
+  {
+   "id": "N01_LINE_LINE_MISREAD_AS_LINE_PLANE",
+   "group": "near_miss",
+   "canonical_meaning": "SA ⊥ AB (đường–đường), KHÔNG phải SA ⊥ (ABC)",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với AB và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông góc với AB"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "PLANE_NOT_IN_QUOTE"
+   }
+  },
+  {
+   "id": "N02_LINE_LINE_ONLY_ONE",
+   "group": "near_miss",
+   "canonical_meaning": "một đường vuông góc không xác định đỉnh",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với AB và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_lines",
+     "args": {
+      "line1": [
+       "S",
+       "A"
+      ],
+      "line2": [
+       "A",
+       "B"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông góc với AB"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT"
+   }
+  },
+  {
+   "id": "N03_TRIANGLE_ALTITUDE_NOT_PYRAMID",
+   "group": "near_miss",
+   "canonical_meaning": "đường cao của TAM GIÁC đáy, không phải của khối chóp",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, AH là đường cao của tam giác ABC và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "altitude",
+     "args": {
+      "apex": "S",
+      "foot": "A",
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "AH là đường cao của tam giác ABC"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "PREDICATE_NOT_IN_QUOTE"
+   }
+  },
+  {
+   "id": "N04_PROJECTION_IMAGE_MISREAD",
+   "group": "near_miss",
+   "canonical_meaning": "ảnh hình chiếu là G, AI gán nhầm A",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4. Hình chiếu vuông góc của S lên mặt phẳng (ABC) là trọng tâm G của tam giác ABC và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "orthogonal_projection",
+     "args": {
+      "point": "S",
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "image": "A"
+     },
+     "source": {
+      "quotes": [
+       "Hình chiếu vuông góc của S lên mặt phẳng (ABC) là trọng tâm G của tam giác ABC"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "ROLE_NOT_IN_QUOTE"
+   }
+  },
+  {
+   "id": "N05_CONDITIONAL",
+   "group": "context",
+   "canonical_meaning": "mệnh đề điều kiện không phải tiền đề vô điều kiện",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4 và SA = 3. Nếu SA vuông góc với (ABC) thì thể tích khối chóp S.ABC bằng bao nhiêu?",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông góc với (ABC)"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "thể tích khối chóp S.ABC bằng bao nhiêu"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "CONDITIONAL_CLAUSE"
+   }
+  },
+  {
+   "id": "N06_PROOF_GOAL_NOT_PREMISE",
+   "group": "context",
+   "canonical_meaning": "điều phải chứng minh không phải dữ kiện",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4 và SA = 3. Chứng minh SA vuông góc với (ABC) và tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông góc với (ABC)"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "GOAL_CLAUSE_NOT_PREMISE"
+   }
+  },
+  {
+   "id": "N07_NEGATION_OUTSIDE_QUOTE",
+   "group": "context",
+   "canonical_meaning": "phủ định đứng ngay trước đoạn AI trích",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA không vuông góc với (ABC) và SA = 3. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "vuông góc với (ABC)"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "NEGATED_CLAUSE"
+   }
+  },
+  {
+   "id": "N08_CONTRADICTION_PARAPHRASED",
+   "group": "contradiction",
+   "canonical_meaning": "hình chiếu tại A, SA = 3 nhưng SB = 4 (phải là 5)",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4. Hình chiếu vuông góc của S lên mặt phẳng (ABC) là điểm A, SA = 3 và SB = 4. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "orthogonal_projection",
+     "args": {
+      "point": "S",
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "image": "A"
+     },
+     "source": {
+      "quotes": [
+       "Hình chiếu vuông góc của S lên mặt phẳng (ABC) là điểm A"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "SA = 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "B"
+      ],
+      "value": "4"
+     },
+     "source": {
+      "quotes": [
+       "SB = 4"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS"
+   }
+  },
+  {
+   "id": "N09_MISSING_HEIGHT_PARAPHRASED",
+   "group": "missing",
+   "canonical_meaning": "đường cao SA nhưng không cho độ dài",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4 và SA là đường cao của hình chóp. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "altitude",
+     "args": {
+      "apex": "S",
+      "foot": "A",
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "SA là đường cao của hình chóp"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION"
+   }
+  },
+  {
+   "id": "N10_MULTI_NUMBER_LABEL_ALIGNED",
+   "group": "multi_value",
+   "canonical_meaning": "một quote nhiều số, căn theo nhãn đoạn",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B với AB = 3, BC = 4, SA ⊥ (ABC), SA = 4. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "right_angle",
+     "args": {
+      "vertex": "B",
+      "rays": [
+       "A",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "tam giác vuông tại B"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "AB = 3, BC = 4"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "B",
+       "C"
+      ],
+      "value": "4"
+     },
+     "source": {
+      "quotes": [
+       "AB = 3, BC = 4"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA ⊥ (ABC)"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "4"
+     },
+     "source": {
+      "quotes": [
+       "SA = 4"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c7",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c7": "8"
+    },
+    "lengths_sq": {
+     "SC": "41"
+    }
+   }
+  },
+  {
+   "id": "N11_MULTI_NUMBER_MISALIGNED",
+   "group": "multi_value",
+   "canonical_meaning": "AI gán BC = 3 từ quote 'AB = 3, BC = 4'",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B với AB = 3, BC = 4, SA ⊥ (ABC), SA = 4. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "right_angle",
+     "args": {
+      "vertex": "B",
+      "rays": [
+       "A",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "tam giác vuông tại B"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "A",
+       "B"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "AB = 3, BC = 4"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "B",
+       "C"
+      ],
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "AB = 3, BC = 4"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA ⊥ (ABC)"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "segment_length",
+     "args": {
+      "segment": [
+       "S",
+       "A"
+      ],
+      "value": "4"
+     },
+     "source": {
+      "quotes": [
+       "SA = 4"
+      ]
+     }
+    },
+    {
+     "id": "c6",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c7",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE"
+   }
+  },
+  {
+   "id": "N12_EQUAL_LENGTH",
+   "group": "equivalent_quantity",
+   "canonical_meaning": "SA = AB ⇒ SA = 4 ⇒ V = 16√3/3",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 4, SA vuông góc với (ABC) và SA = AB. Tính thể tích khối chóp S.ABC.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C"
+      ],
+      "side": "4"
+     },
+     "source": {
+      "quotes": [
+       "đáy ABC là tam giác đều cạnh 4"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "perpendicular_line_plane",
+     "args": {
+      "line": [
+       "S",
+       "A"
+      ],
+      "plane": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA vuông góc với (ABC)"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "equal_length",
+     "args": {
+      "segment_a": [
+       "S",
+       "A"
+      ],
+      "segment_b": [
+       "A",
+       "B"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "SA = AB"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "pyramid",
+     "args": {
+      "apex": "S",
+      "base": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     "source": {
+      "quotes": [
+       "hình chóp S.ABC"
+      ]
+     }
+    },
+    {
+     "id": "c5",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "S.ABC"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "SERVED",
+    "answers": {
+     "c5": "16√3/3"
+    },
+    "lengths_sq": {
+     "SA": "16",
+     "SB": "32"
+    }
+   }
+  },
+  {
+   "id": "N13_HEIGHT_QUOTE_TWO_NUMBERS_NO_LABEL",
+   "group": "multi_value",
+   "canonical_meaning": "quote hai số, ô chiều cao không có nhãn để căn (khoá như G7 cũ)",
+   "text": "Cho hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2, chiều cao bằng 3. Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'.",
+   "calls": [
+    {
+     "id": "c1",
+     "fn": "prism",
+     "args": {
+      "base": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "top": [
+       "A'",
+       "B'",
+       "C'",
+       "D'",
+       "E'",
+       "F'"
+      ],
+      "right": true
+     },
+     "source": {
+      "quotes": [
+       "hình lăng trụ lục giác đều ABCDEF.A'B'C'D'E'F'"
+      ]
+     }
+    },
+    {
+     "id": "c2",
+     "fn": "regular_polygon",
+     "args": {
+      "vertices": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F"
+      ],
+      "side": "2"
+     },
+     "source": {
+      "quotes": [
+       "lục giác đều ABCDEF.A'B'C'D'E'F' có cạnh đáy bằng 2"
+      ]
+     }
+    },
+    {
+     "id": "c3",
+     "fn": "height",
+     "args": {
+      "solid": "ABCDEF.A'B'C'D'E'F'",
+      "value": "3"
+     },
+     "source": {
+      "quotes": [
+       "cạnh đáy bằng 2, chiều cao bằng 3"
+      ]
+     }
+    },
+    {
+     "id": "c4",
+     "fn": "ask_volume",
+     "args": {
+      "solid": "ABCDEF.A'B'C'D'E'F'"
+     },
+     "source": {
+      "quotes": [
+       "Tính thể tích khối lăng trụ ABCDEF.A'B'C'D'E'F'"
+      ]
+     }
+    }
+   ],
+   "expect": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_VALUE_QUOTE"
+   }
+  }
+ ]
+}
