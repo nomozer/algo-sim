@@ -57,7 +57,7 @@ cơ chế; engine chưa phủ lăng trụ xiên và đáy chuỗi góc vuông k 
 | guard + compiler + Scene3D liên quan | 311 passed (lượt chạy cụm) |
 | đột biến | 12/12 bị bắt (`diagnostics/mutation_check.log`) |
 | renderer metric | RENDER_METRIC_OK 27/27 cảnh |
-| full backend suite (cây sạch sau đóng băng) | __SUITE__ |
+| full backend suite (worktree detached sạch tại `3c5f36f1`, sau đóng băng) | **7844 passed, 0 failed**, 1 skipped, 2 deselected (`diagnostics/full_backend_suite_3c5f36f1.log`) — đo trong worktree vì cây chính có `frontend/public/favicon.svg` chưa theo dõi của người dùng |
 | cổng tài liệu | 67/67 |
 | danh tính | candidate `93077b51` → `8f12f4ab` → **`168a086e…`** (108 tệp, đóng băng trong worktree sạch tại `d5f72ae7`); `CACHE_VERSION` 125, khoá cache khớp |
 

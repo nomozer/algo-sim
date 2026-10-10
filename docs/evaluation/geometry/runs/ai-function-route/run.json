@@ -1,0 +1,62 @@
+{
+  "run_id": "ai-function-route",
+  "task_slug": "ai-function-route",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-10-10",
+  "machine": "Claude Code LOCAL (Windows)",
+  "branch": "feat/text-to-geometry-functions (research branch, continued per the brief; local, not pushed, not merged)",
+  "start_head": "ba6aedfb (86f683e0 → c71cae4c → ba6aedfb on main 28ac1d61)",
+  "preserved_unmerged_work": "feat/real-model-pilot-tooling @ 471a2c79 — untouched",
+  "candidate_at_start": "8f12f4ab704468c1dd3bda6c85006746b8c50a6ac6eb409f226086c6225cbcbd",
+  "cache_version": "125 (unchanged)",
+  "default_mode": "LLM_ONLY (unchanged; legacy per the ADR)",
+  "live_model_requests": 0,
+  "MEASUREMENT_CLASS": "FOUNDATION_ONLY_OFFLINE_FIXTURES_AND_FAKE_PROVIDER",
+  "HELD_OUT_CLAIM": "NO",
+  "EVALUATOR_INDEPENDENCE": "PARTIAL (oracles hand-computed and committed before the code change in f47c56bb; same author for fixtures and engine; tests read Scene3D + chart_metric)",
+  "commits": {
+    "review_fix": "99ecb815 (IR builders → semantic_program/ir_builders.py; strict compiler guard restored with an AST import closure)",
+    "preregistration": "f47c56bb (paraphrase_cases.json 23, geometry_expansion_cases.json 8, plan.md)",
+    "product": "d5f72ae7 (adapter, registry v2, engine expansion, tests, evidence)",
+    "candidate_refreeze": "616f1f7c",
+    "docs": "3c5f36f1 (ADR, contract, ledger, state, roadmap, reports) + the final commit of this run (run.json, suite numbers)"
+  },
+  "skills_used": ["superpowers:verification-before-completion", "superpowers:test-driven-development", "mattpocock-skills:domain-modeling (ADR format; placed in docs/architecture per repo rules)", "mattpocock-skills:research (background agent, literature v2)"],
+  "decision": "docs/architecture/TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md — accepted 2026-10-10",
+  "review": "test_Y exception from text-to-geometry-functions was unfounded (whole-folder exception; geometry_compiler.primitives import pulled in the whole compiler through the package __init__) — fixed in 99ecb815, guard back to the original invariant with no exception plus an import closure with a positive control",
+  "adapter": {
+    "file": "backend/app/ai/function_calling.py",
+    "mode": "ANY + allowedFunctionNames (VALIDATED allowed for ablation; AUTO/NONE rejected)",
+    "max_output_tokens": 8192,
+    "requests_per_problem": 1,
+    "surface_sha256": "09ec4a9df17bd3b900be44d7e11034b4e9f643d744f5e59219b87e457414faa8",
+    "input_tokens_per_request": "UNKNOWN (not counted; payload ~21k characters, 24 declarations ~19.8k)",
+    "fake_provider_results": "58/58 (27 original + 23 paraphrase + 8 expansion) match pre-registered outcomes; 13 malformed-response situations tested"
+  },
+  "robustness": {
+    "baseline_before_change": "5/31 pre-registered cases; four safety holes of the v1 gate (N01 line ⊥ line read as line ⊥ plane, N05 conditional, N06 proof goal, N07 negation outside the quote) — diagnostics/baseline_before_change.log",
+    "after": "23/23 paraphrase cases (10 surface forms of SA ⊥ (ABC) give the same figure and 4√3)",
+    "caveat": "hand-written function calls — not evidence that Gemini understands the paraphrases"
+  },
+  "expansion": "8/8: symbolic length a (homogeneous only), side face ⊥ base with derived foot, triangle centroid + orthogonal projection, angle between planes, distance between lines",
+  "tests": {
+    "test_ai_function_route": "49 passed",
+    "test_text_to_geometry_functions": "64 passed (unchanged)",
+    "mutations": "12/12 caught",
+    "renderer_metric": "RENDER_METRIC_OK 27/27 scenes, 315 point pairs",
+    "docs_gates": "67 passed",
+    "full_backend_pytest": "7844 passed, 1 skipped, 2 deselected, 0 failed — clean detached worktree at 3c5f36f1",
+    "node_harness": "compiler-scene-replay-lib.node-test.mjs 88/88 (Tier-A pins)",
+    "frontend": "not run — no frontend/src change"
+  },
+  "identity": {
+    "candidate": "168a086e2907577af57dce9be64078c0e6ca2f2a3aa402be82297d7d9accab16 (108 files; product d5f72ae7; frozen in a clean detached worktree)",
+    "cache_lock": "--verify matches; CACHE_VERSION 125; environment b1714b56… unchanged",
+    "original_27_fixture_evidence": "statuses, codes, answers, traces and all 10 scenes byte-identical when regenerated; results.json differs only in the registry version string and two reason texts; committed evidence not overwritten"
+  },
+  "literature": "LITERATURE_GAP_MATRIX_V2.md — 37 works (22 VERIFIED_PRIMARY, 15 abstract only, 7 excluded NOT_VERIFIED); quotes must be checked against originals before thesis use",
+  "pilot_proposed_not_run": "P-FC1 — EXPERIMENT_PROTOCOL_V2.md §2: caps 160 logical / 240 HTTP / 2.8M tokens / 4 USD; needs user approval",
+  "not_done": "paid pilot, default switch, LLM_ONLY deletion or fixes, frontend, rhombus/trapezoid bases, push, merge",
+  "user_untracked_file_left_alone": "frontend/public/favicon.svg",
+  "status": "NEW_ARCHITECTURE_AI_ADAPTER_AND_GEOMETRY_EXPANSION_AWAITING_REVIEW"
+}
