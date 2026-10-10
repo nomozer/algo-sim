@@ -28,6 +28,11 @@ from pathlib import Path
 import httpx
 import pytest
 
+# One root conftest authority: a child conftest would shadow imports of this
+# module in test_offline_guard. Plugin applies only to explicitly opted-in
+# immutable A/B runner regression, never to current expansion adapter tests.
+pytest_plugins = ("geometry_regression_fixtures",)
+
 
 def duong_dan_db_test(pid: int | None = None) -> str:
     """URL SQLite RIÊNG cho MỘT lượt pytest, đặt tên theo PID.

@@ -1,4 +1,4 @@
-"""Explicit split-candidate regression for a research branch; no production hook.
+"""Explicit split-candidate pytest plugin for a research branch; no production hook.
 
 The immutable A/B runner's budgets refer to its OLD provider surface, not the
 expanded Registry. Supply ALGOSIM_FROZEN_AB_WORKTREE to test that exact surface
