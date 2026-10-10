@@ -1,0 +1,6 @@
+H01_CUBE REFUSED PREDICATE_NOT_IN_QUOTE c1: prism cần một trong ['lăng trụ', 'hình hộp'] trong "hình lập phương ABCD.A'B'C'D'"
+H02_CUBOID_DISTANCE REFUSED PREDICATE_NOT_IN_QUOTE c2: rectangle cần một trong ['hình chữ nhật'] trong "hình hộp chữ nhật ABCD.A'B'C'D'"
+H09_CUBE_CONTRADICTION REFUSED PREDICATE_NOT_IN_QUOTE c1: prism cần một trong ['lăng trụ', 'hình hộp'] trong "hình lập phương ABCD.A'B'C'D'"
+H10_CUBOID_MISSING_HEIGHT REFUSED PREDICATE_NOT_IN_QUOTE c2: rectangle cần một trong ['hình chữ nhật'] trong "hình hộp chữ nhật ABCD.A'B'C'D'"
+H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS SERVED None 
+exit=0

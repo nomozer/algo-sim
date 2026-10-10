@@ -1,0 +1,61 @@
+{
+  "run_id": "hybrid-compiler-selection",
+  "task_slug": "hybrid-compiler-selection",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-10-10",
+  "machine": "Claude Code LOCAL (Windows)",
+  "branch": "feat/text-to-geometry-functions (research branch; local, not pushed, not merged)",
+  "start_head": "3bb38fc7",
+  "preserved_unmerged_work": "feat/real-model-pilot-tooling @ 471a2c79 — untouched",
+  "candidate_at_start": "168a086e2907577af57dce9be64078c0e6ca2f2a3aa402be82297d7d9accab16",
+  "cache_version": "125 (unchanged)",
+  "default_mode": "LLM_ONLY (unchanged)",
+  "architecture_decision": "docs/architecture/TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md — unchanged; this run is an evaluation addendum (ARCHITECTURE_COMPARISON.md)",
+  "live_model_requests": 0,
+  "MEASUREMENT_CLASS": "FOUNDATION_ONLY_OFFLINE_FIXTURES_AND_FAKE_PROVIDER",
+  "HELD_OUT_CLAIM": "NO",
+  "EVALUATOR_INDEPENDENCE": "PARTIAL (holdout expectations and hand oracles committed in f6b1a551 before the planner; coordinate oracle imports no engine code; same author for fixtures, planner and oracles)",
+  "REAL_MODEL_TOKEN_USAGE": "NOT_MEASURED",
+  "commits": {
+    "preregistration": "f6b1a551 (14 holdout cases, plan.md)",
+    "product": "65fd0328 (planner, fact-extraction adapter, run_fact_route, tests, offline evidence)",
+    "candidate_refreeze_intermediate": "6c94a2a8 (2c4ea2d2…)",
+    "self_review_fix": "91e2edf9 (unverifiable negated premise refuses NEGATED_CLAUSE; checker returns UNVERIFIABLE for ask/escape; coordinate oracle)",
+    "candidate_refreeze": "c748c682 (e9d20aa2…)",
+    "docs": "the docs commit of this run + the final commit with the full-suite numbers"
+  },
+  "arms": {
+    "A": {"selector": "model (Gemini function calling, ANY)", "surface_sha256": "09ec4a9df17bd3b900be44d7e11034b4e9f643d744f5e59219b87e457414faa8", "schema_chars": 19816, "function_declarations": 24, "prompt_chars": 626},
+    "B": {"selector": "deterministic planner geometry-fact-planner/1 over model-extracted TypedFacts (structured output, no tools)", "surface_sha256": "83dcfa7a92ab9e9becdb950547c9cb7de497cb920f12f65f974d1cab4354e2da", "schema_chars": 2999, "fact_kinds": 11, "fact_fields": 21, "prompt_chars": 743}
+  },
+  "results": {
+    "parity_58": {"A": {"correct_served": 27, "correct_refusal": 31}, "B": {"correct_served": 27, "correct_refusal": 31}, "status_code_answer_equal": "58/58", "caveat": "B facts converted mechanically from A calls — tests the planner only"},
+    "holdout_14": {"A": {"correct_served": 8, "correct_refusal": 4, "unsupported": 2, "wrong_served": 0, "false_refusal": 0, "infrastructure": 0}, "B": {"correct_served": 8, "correct_refusal": 4, "unsupported": 2, "wrong_served": 0, "false_refusal": 0, "infrastructure": 0}, "matches_preregistration": {"A": "14/14", "B": "14/14"}},
+    "diagnostic_differences": "H05 FIGURE_NOT_UNIQUE (B) vs UNDERDETERMINED_POINT (A); H08 UNSUPPORTED_CAPABILITY vs UNSUPPORTED_PLANE; H13 B proves the negated statement holds (INCONSISTENT_FACTS) vs A NEGATED_CLAUSE; H07 B checks the proof goal (HOLDS)",
+    "responsibility_moved_to_planner_14_cases": {"relation_type_to_function": 22, "solid_to_construction": 13, "definitional_expansion": 11, "role_resolution": 5}
+  },
+  "source_gate_relaxation": "cues 'lập phương' (regular_polygon, prism, right prism) and 'chữ nhật' (rectangle) for both arms; with the old cues arm A refuses H01, H02, H09, H10 with PREDICATE_NOT_IN_QUOTE (diagnostics/old_cue_probe.log); no dedicated negative test for the new cues",
+  "tests": {
+    "test_hybrid_compiler_selection": "107 passed",
+    "function_route_cluster": "278 passed (hybrid + ai_function_route + text_to_geometry_functions + structured_geometry_relations)",
+    "mutations": "10/10 caught",
+    "independent_oracle": "ORACLE_OK 28/28",
+    "renderer_metric": "RENDER_METRIC_OK 16/16 scenes, 256 point pairs",
+    "offline_ab_regenerated_after_fix": "byte-identical",
+    "candidate_and_tier_a": "112 passed; compiler-scene-replay-lib.node-test.mjs 88/88",
+    "docs_gates": "67 passed (test_docs_information_architecture + test_docs_test_telemetry + test_current_state_identity)",
+    "full_backend_pytest": "PENDING",
+    "frontend": "not run — no frontend/src change"
+  },
+  "identity": {
+    "candidate": "e9d20aa2debc16ed50a83da9aae2d3aa596e88237b97549cee7fb645f230d69d (110 files; product 91e2edf9; frozen in a clean detached worktree; --verify match)",
+    "intermediate_candidate": "2c4ea2d24f65c2e7f945ce3b69f131304404986820592e1c33c9147eb466af59 (product 65fd0328)",
+    "cache_lock": "--verify matches; CACHE_VERSION 125; environment b1714b56… unchanged"
+  },
+  "literature": "RESEARCH_GAP_UPDATE.md — 10 new works H01–H10, all VERIFIED_PRIMARY; quotes must be checked against original pages before thesis use",
+  "pilot_proposed_not_run": "P-AB1 — REAL_MODEL_AB_PROTOCOL.md: 48 problems × k=3 × arms A,B = 288 calls; caps 300 logical / 450 HTTP / 5.2M tokens / 7 USD; B′ separate (90 / 135 / 1.6M / 2.1 USD); needs user approval",
+  "skills_used": ["superpowers:verification-before-completion", "superpowers:test-driven-development", "mattpocock-skills:codebase-design", "background Agent for literature"],
+  "not_done": "paid calls, default switch, architecture-target change, LLM_ONLY deletion, edits to historical results, frontend, push, merge",
+  "user_untracked_file_left_alone": "frontend/public/favicon.svg",
+  "status": "HYBRID_COMPILER_SELECTION_OFFLINE_EVALUATION_AWAITING_REVIEW"
+}

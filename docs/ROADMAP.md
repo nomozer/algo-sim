@@ -19,6 +19,12 @@ TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
   là mặc định sản phẩm, không thêm năng lực mô phỏng mới trên nó. Mọi mở rộng họ hình (§0.2) từ nay làm trên kiến trúc
   mới. Chưa xoá legacy, chưa đổi mặc định (cổng: `MIGRATION_CHECKLIST.md` + nghiệm thu đường AI thật).
 
+- **Việc `hybrid-compiler-selection` (2026-10-10, run [`hybrid-compiler-selection`](evaluation/geometry/runs/hybrid-compiler-selection/),
+  LOCAL, cùng nhánh, CHƯA tích hợp, 0 lượt gọi model):** nhánh B thực nghiệm (AI trích dữ kiện có kiểu → planner tất định
+  chọn hàm → cùng back end với nhánh A) so offline với nhánh A: parity 58/58, holdout 14/14 khớp tiền đăng ký ở cả hai nhánh;
+  không tuyên bố Hybrid tốt hơn, ADR không đổi. Pilot A/B thật P-AB1 đề xuất, chưa chạy (`REAL_MODEL_AB_PROTOCOL.md` của run);
+  việc kế tiếp không đổi: người dùng chọn P-FC1, P-AB1 hoặc không chạy.
+
 - **Việc `ai-function-route` (2026-10-10, run [`ai-function-route`](evaluation/geometry/runs/ai-function-route/), LOCAL, nhánh
   `feat/text-to-geometry-functions`, CHƯA tích hợp, 0 lượt gọi model):** adapter Gemini function calling (provider giả),
   cổng nguồn 5 tầng, chuẩn hoá quan hệ có tiền điều kiện, độ dài ký hiệu a, mặt bên ⊥ đáy, trọng tâm, góc hai mặt,

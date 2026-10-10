@@ -1656,3 +1656,29 @@ Phạm vi đề tài (§0-2026-08-24) KHÔNG đổi: vẫn mô phỏng 3D hình 
 - **THESIS_USE:** architecture decision record; offline evidence of the adapter contract and source gate on hand-written calls — NOT evidence of Gemini paraphrase understanding
 - **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `ADAPTER_REPORT.md` · `SEMANTIC_ROBUSTNESS_EVALUATION.md` · `GEOMETRY_EXPANSION.md` · `EXPERIMENT_PROTOCOL_V2.md` · `LITERATURE_GAP_MATRIX_V2.md`
 - **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
+
+### WAVE_ID = HYBRID_COMPILER_SELECTION
+- **RUN_ID:** hybrid-compiler-selection (task hybrid-compiler-selection; LOCAL; branch feat/text-to-geometry-functions, not integrated)
+- **DATE:** 2026-10-10
+- **START_BASE:** 3bb38fc7
+- **CODE_COMMIT_OR_NONE:** 65fd0328 (experimental arm B: TypedFact contract + deterministic planner `geometry_functions/planner.py`, structured-output fact adapter `ai/fact_extraction.py` with a fake provider, `run_fact_route` into the same `run_function_route` as arm A) + 91e2edf9 (self-review fix: unverifiable negated premise refuses NEGATED_CLAUSE; checker returns UNVERIFIABLE for questions and 'unsupported')
+- **CANDIDATE:** `e9d20aa2debc16ed…` (product `91e2edf9`, 110 files; frozen LOCAL c748c682; intermediate `2c4ea2d2…` at 6c94a2a8) · CACHE_VERSION 125 (unchanged) · LLM_ONLY default
+- **EVIDENCE_COMMIT_ROLE:** preregistration f6b1a551; product + evidence 65fd0328; refreeze 6c94a2a8; fix 91e2edf9; refreeze c748c682; docs (final commits of the run)
+- **CLASSIFICATION:** offline architecture evaluation (arm A model-selected functions vs arm B compiler-selected functions); foundation_only (no live model)
+- **FULL_PRODUCT_SUITE:** see run.json (clean-tree backend pytest after the refreeze)
+- **PRODUCT_CHANGED:** YES (backend/app research route only; default path unchanged — AST import closure test_Y)
+- **MODEL_REQUESTS:** 0
+- **REPORT_PATH:** docs/evaluation/geometry/runs/hybrid-compiler-selection/report.md
+- **ARTIFACT_PATH:** docs/evaluation/geometry/runs/hybrid-compiler-selection/
+- **PASS:** parity 58/58 (B facts converted mechanically from A calls); holdout 14/14 pre-registered for both arms (8 correct served, 4 correct refusals, 2 unsupported, 0 wrong served, 0 false refusals); coordinate oracle 28/28; renderer 16/16 scenes; 10/10 mutations caught
+- **CLOSED:** NONE
+- **OPENED:** NONE
+- **PUSH / MERGE / BRANCH_DELETION:** NO / NO / NO
+- **CORRECTED_BY:** NONE
+- **CORRECTS:** NONE (source-gate cues 'lập phương' and 'chữ nhật' relaxed for both arms — declared in AB_OFFLINE_RESULTS.md §6)
+- **NEXT_ACTION_AT_TIME:** AI_FUNCTION_ROUTE_BUDGETED_PILOT_DECISION (user decision between P-FC1, P-AB1 or none; no paid call made)
+- **FINAL_DECISION:** AWAITING_REVIEW
+- **SUPERSEDES:** NONE
+- **THESIS_USE:** offline comparison of who selects geometry functions when the AI output is correct; responsibility and surface analysis; NOT evidence that the hybrid is better and NOT evidence of Gemini extraction quality
+- **AUTHORITATIVE_FILES:** `report.md` · `handoff.md` · `run.json` · `ARCHITECTURE_COMPARISON.md` · `TYPED_FACTS_CONTRACT.md` · `PLANNER_MAP.md` · `AB_OFFLINE_RESULTS.md` · `REAL_MODEL_AB_PROTOCOL.md` · `RESEARCH_GAP_UPDATE.md` · `offline/ab_results.json`
+- **RUN_ID_POLICY:** TASK_NAME (naming policy 2026-10-07)
