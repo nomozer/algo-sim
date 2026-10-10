@@ -1,0 +1,18 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "geometry-library-expansion",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "8ff994c6e20ab982abd208dd8127cd6471bcc56509fd1809433e7a8f5f3601dd",
+  "current_candidate_source_commit": "a0eb1450",
+  "current_candidate_manifest": "BRANCH_CANDIDATE.json",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "reason": "User-approved isolated shared-library research: unique point intersections, constructive projections, typed adapter selection and predicate source-role guards. A/B candidate and evidence remain untouched; this branch is not authorized for a pilot.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring or pooling.",
+    "live_requests": 0
+  }
+}
