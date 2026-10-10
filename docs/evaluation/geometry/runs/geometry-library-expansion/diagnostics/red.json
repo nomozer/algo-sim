@@ -1,0 +1,12 @@
+{
+  "stage": "ORACLE_NEGATIVES_REGISTERED_BEFORE_PRODUCTION_EDITS",
+  "source_commit": "86741f3895488ee3c69cc374fda4519e7b0dd80f",
+  "command": "python -m pytest tests/geometry/test_geometry_library_expansion.py -q --tb=no",
+  "failed": 58,
+  "passed": 0,
+  "expected_missing_capabilities": ["SCHEMA_INVALID", "UNDERDETERMINED_POINT"],
+  "oracle": "Literal Euclidean solutions; no product kernel imported",
+  "fake_transports_only": true,
+  "live_gemini_calls": 0,
+  "interpretation": "RED prerequisite, not readiness evidence"
+}
