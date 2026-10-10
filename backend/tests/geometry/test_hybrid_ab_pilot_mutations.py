@@ -62,7 +62,7 @@ def test_safety_mutant_is_killed_by_behavioral_regression(mutant, tmp_path, monk
             proof_status="PROVED_FROM_HYPOTHESES", can_present_as_proven=True))
     elif mutant == "remove_object_binding":
         check = lambda path: S.test_grounding_oracle_is_literal_and_shared_by_both_arms("MULTIPLE_OBJECTS_CUBE")
-        mutate = lambda: monkeypatch.setattr(S.RG, "_co_doi_tuong_hinh", lambda call: True)
+        mutate = lambda: monkeypatch.setattr(S.RG, "_co_doi_tuong_hinh", lambda call, de="": True)
     elif mutant == "substring_polygon":
         check = lambda path: S.test_structural_phrase_binds_either_named_face_but_not_a_mixed_face("regular_polygon")
         mutate = lambda: monkeypatch.setattr(S.RG, "_cung_da_giac", lambda a, b: bool(set(a) & set(b)))

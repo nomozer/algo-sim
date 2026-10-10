@@ -129,6 +129,8 @@ def parse_response(body: Any, diag: dict[str, Any]) -> dict[str, Any]:
         raise _TuChoiAI("PROVIDER_RESPONSE_INVALID", "thân phản hồi không phải đối tượng JSON")
     diag["usage"] = body.get("usageMetadata") or {}
     cands = body.get("candidates") or []
+    if not isinstance(cands, list) or cands and not isinstance(cands[0], dict):
+        raise _TuChoiAI("MALFORMED_RESPONSE_PART", "candidates phải là danh sách đối tượng")
     if not cands:
         if (body.get("promptFeedback") or {}).get("blockReason"):
             raise _TuChoiAI("PROVIDER_BLOCKED", f"đề bị chặn: {body['promptFeedback']['blockReason']}")
@@ -141,14 +143,21 @@ def parse_response(body: Any, diag: dict[str, Any]) -> dict[str, Any]:
         raise _TuChoiAI("MALFORMED_FUNCTION_CALL", "provider báo lời gọi hàm hỏng")
     if finish not in (None, "STOP"):
         raise _TuChoiAI("PROVIDER_REFUSED", f"finishReason = {finish}")
-    parts = (cand.get("content") or {}).get("parts") or []
+    content = cand.get("content") or {}
+    if not isinstance(content, dict) or not isinstance(content.get("parts", []), list):
+        raise _TuChoiAI("MALFORMED_RESPONSE_PART", "content.parts phải là danh sách")
+    parts = content.get("parts") or []
+    if any(not isinstance(p, dict) or "functionCall" in p and not isinstance(p["functionCall"], dict) for p in parts):
+        raise _TuChoiAI("MALFORMED_RESPONSE_PART", "functionCall phải là đối tượng JSON")
     fcs = [p["functionCall"] for p in parts if isinstance(p, dict) and isinstance(p.get("functionCall"), dict)]
     diag["n_calls"] = len(fcs)
     if not fcs:
         raise _TuChoiAI("NO_FUNCTION_CALL", "mô hình không gọi hàm nào")
     calls, da_co = [], {}
     for fc in fcs:
-        args = dict(fc.get("args") or {})
+        if not isinstance(fc.get("args", {}), dict):
+            raise _TuChoiAI("MALFORMED_RESPONSE_PART", "functionCall.args phải là đối tượng JSON")
+        args = dict(fc.get("args", {}))
         cid = args.pop("call_id", None)
         if not isinstance(cid, str) or not cid.strip():
             raise _TuChoiAI("CALL_ID_MISSING", f"lời gọi {fc.get('name')!r} thiếu call_id")
@@ -186,6 +195,14 @@ def run_ai_function_route(problem_text: str, transport: Callable[[dict[str, Any]
     return r
 
 
+class ProviderHTTPError(RuntimeError):
+    """HTTP failure with recoverable JSON metadata; credentials/body are not included in the exception message."""
+
+    def __init__(self, status_code: int, body: Any) -> None:
+        super().__init__(f"Gemini HTTP {status_code}")
+        self.status_code, self.body = status_code, body
+
+
 def live_transport(api_key: str, model: str | None = None, timeout_seconds: float = 60.0) -> Callable[[dict], dict]:
     """Transport THẬT (không dùng trong lượt này). Kiểm `ALLOW_LIVE_AI` ở MỖI lần gửi; khoá trong header; ghi `ApiBudget`
     và `usageMetadata` như `gemini.call_gemini` để trần ngân sách của bộ đo áp được."""
@@ -203,7 +220,11 @@ def live_transport(api_key: str, model: str | None = None, timeout_seconds: floa
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model or gemini.MODEL}:generateContent"
         res = httpx.post(url, json=payload, headers={"x-goog-api-key": api_key}, timeout=timeout_seconds)
         if res.status_code != 200:
-            raise RuntimeError(f"Gemini HTTP {res.status_code}")
+            try:
+                error_body = res.json()
+            except ValueError:
+                error_body = None  # Raw HTML/text may contain credentials: do not retain it.
+            raise ProviderHTTPError(res.status_code, error_body)
         body = res.json()
         record_usage("function_calling", body.get("usageMetadata") if isinstance(body, dict) else None)
         return body

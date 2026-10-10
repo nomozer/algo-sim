@@ -71,6 +71,17 @@ def _facts(cid: str) -> list[dict]:
     return copy.deepcopy(HOLD[cid]["b_facts"])
 
 
+@pytest.mark.parametrize("unrelated", ["tam giác đều XYZ", "hình vuông XYZT"])
+def test_unrelated_regular_shape_never_bypasses_object_binding(unrelated):
+    text = f"Cho hình lập phương ABCD.EFGH, {unrelated} và tứ giác KLMN."
+    call = {"id": "c1", "fn": "regular_polygon", "args": {"vertices": list("KLMN")},
+            "source": {"quotes": [text]}}
+    fact = {"id": "f1", "kind": "polygon_shape", "role": "premise", "shape": "square",
+            "points": list("KLMN"), "quotes": [text]}
+    assert _ground_a({"text": text, "call": call}) == "OBJECT_NOT_IN_QUOTE"
+    assert _ground_b({"text": text, "fact": fact}) == "OBJECT_NOT_IN_QUOTE"
+
+
 @pytest.mark.parametrize("fn,phrase", [("regular_polygon", "hình lập phương"),
                                     ("rectangle", "hình hộp chữ nhật")])
 def test_unnamed_solid_cue_cannot_capture_polygon_in_next_clause(fn, phrase):

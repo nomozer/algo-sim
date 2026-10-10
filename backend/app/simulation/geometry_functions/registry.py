@@ -461,11 +461,32 @@ def _mat_cua_khoi_sau_cum(q: str, cum: re.Pattern[str], vertices: list[str]) -> 
     return False
 
 
-def _co_doi_tuong_hinh(c: LoiGoi) -> bool:
+def _co_doi_tuong_hinh(c: LoiGoi, de: str = "") -> bool:
     """Bind hai cue định nghĩa mới (`lập phương`, `chữ nhật`) vào đúng đa giác, không mượn keyword của đối tượng khác."""
     vertices = list(c.args.vertices)
     if c.fn == "regular_polygon":
-        return any(_mat_cua_khoi_sau_cum(q, _LAP_PHUONG, vertices) for q in c.quotes)
+        for q in c.quotes:
+            if _mat_cua_khoi_sau_cum(q, _LAP_PHUONG, vertices):
+                return True
+            for dau, cuoi, phan in _tu_nhan(q):
+                if any(_cung_da_giac(p, vertices) for p in phan):
+                    if re.match(r"\s+(?:là\s+)?(?:(?:tam|tứ|ngũ|lục|đa)\s+giác\s+)?đều\b|\s+(?:là\s+)?hình\s+vuông\b",
+                                q[cuoi:], re.IGNORECASE):
+                        return True
+                    if re.search(r"(?:(?:tam|tứ|ngũ|lục|đa)\s+giác\s+đều|hình\s+vuông)\s*$",
+                                 q[:dau], re.IGNORECASE):
+                        return True
+                # Every triangular face of the explicitly named regular tetrahedron is regular.
+                if len(vertices) == 3 and len(phan) == 1 and len(phan[0]) == 4 and set(vertices) <= set(phan[0]):
+                    if re.search(r"\btứ\s+diện\s+đều\s*$", q[:dau], re.IGNORECASE):
+                        return True
+            # Legacy multi-sentence "đáy là tam giác đều": resolve only a unique explicitly named base in the source.
+            if re.fullmatch(r"đáy\s+(?:là\s+)?(?:tam|tứ|ngũ|lục|đa)\s+giác\s+đều", q.strip(), re.IGNORECASE):
+                bases = {tuple(p[1]) for dau, _cuoi, p in _tu_nhan(de) if len(p) == 2 and
+                         re.search(r"(?:chóp|lăng\s+trụ)\s*$", de[:dau], re.IGNORECASE)}
+                if len(bases) == 1 and _cung_da_giac(list(next(iter(bases))), vertices):
+                    return True
+        return False
     if c.fn != "rectangle":
         return True
     for q in c.quotes:
@@ -539,10 +560,10 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str) -> None:
                     raise TuChoi("CONDITIONAL_CLAUSE", f"{c.id}: {q!r} nằm trong mệnh đề 'nếu … thì' — không phải dữ kiện", (c.id,))
         if any(_phu_dinh(de, dau, q) for (dau, _c), q in zip(vts, c.quotes)):
             raise TuChoi("NEGATED_CLAUSE", f"{c.id}: mệnh đề {c.quote!r} mang phủ định — không làm dữ kiện {c.fn}", (c.id,))
-        if c.fn == "regular_polygon" and not _co_tu(c.quotes, ("đều", "hình vuông")):
-            if not any(_LAP_PHUONG.search(q) for q in c.quotes):
+        if c.fn == "regular_polygon":
+            if not _co_tu(c.quotes, ("đều", "hình vuông")) and not any(_LAP_PHUONG.search(q) for q in c.quotes):
                 raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: regular_polygon thiếu predicate hình đều", (c.id,))
-            if not _co_doi_tuong_hinh(c):
+            if not _co_doi_tuong_hinh(c, de):
                 raise TuChoi("OBJECT_NOT_IN_QUOTE", f"{c.id}: cụm lập phương không gọi đúng mặt {c.args.vertices}", (c.id,))
         if c.fn == "rectangle":
             if not any(_CHU_NHAT.search(q) for q in c.quotes):

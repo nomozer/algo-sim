@@ -277,11 +277,9 @@ def _persist(path: Path, state: dict[str, Any], secrets: tuple[str, ...]) -> Non
             raise PilotStopped("SECRET_DETECTED")
 
 
-def _usage(body: Any, reservation: dict[str, Any]) -> dict[str, Any]:
+def _usage(body: Any, reservation: dict[str, Any], *, enforce_reservation: bool = True) -> dict[str, Any]:
     if not isinstance(body, dict):
         raise PilotStopped("PROVIDER_RESPONSE_INVALID")
-    if body.get("error"):
-        raise PilotStopped("HTTP_ERROR")
     usage = body.get("usageMetadata")
     required = ("promptTokenCount", "candidatesTokenCount", "totalTokenCount")
     if not isinstance(usage, dict) or any(type(usage.get(k)) is not int or usage[k] < 0 for k in required):
@@ -293,7 +291,7 @@ def _usage(body: Any, reservation: dict[str, Any]) -> dict[str, Any]:
     prompt, candidates, total = (usage[k] for k in required)
     if total != prompt + candidates + thoughts:
         raise PilotStopped("USAGE_UNKNOWN")
-    if prompt > reservation["prompt_tokens"] or candidates + thoughts > reservation["output_tokens"]:
+    if enforce_reservation and (prompt > reservation["prompt_tokens"] or candidates + thoughts > reservation["output_tokens"]):
         raise PilotStopped("RESERVATION_BREACH")
     return {"input_tokens": prompt, "output_tokens": candidates, "thinking_tokens": thoughts,
             "total_tokens": total, "usd": prompt * 0.30 / 1e6 + (candidates + thoughts) * 2.50 / 1e6}
@@ -305,11 +303,13 @@ def failure_source(code: str | None, arm: str) -> str | None:
     if code.startswith(("PROVIDER", "HTTP", "MODEL_", "USAGE_", "RESPONSE_TRUNCATED")):
         return "infrastructure"
     if code in {"JSON_INVALID", "NO_CANDIDATE", "NO_FUNCTION_CALL", "MALFORMED_FUNCTION_CALL",
-                "CALL_ID_MISSING", "DUPLICATE_CALL_ID", "OBJECT_NOT_IN_QUOTE", "QUOTE_NOT_IN_TEXT",
-                "PREDICATE_NOT_IN_QUOTE", "GOAL_NOT_PREMISE", "NEGATED_CLAUSE", "CONDITIONAL_CLAUSE"}:
+                "MALFORMED_RESPONSE_PART", "CALL_ID_MISSING", "DUPLICATE_CALL_ID", "OBJECT_NOT_IN_QUOTE",
+                "QUOTE_NOT_IN_SOURCE", "PREDICATE_NOT_IN_QUOTE", "GOAL_CLAUSE_NOT_PREMISE", "NEGATED_CLAUSE",
+                "CONDITIONAL_CLAUSE", "UNGROUNDED_VALUE", "ROLE_NOT_IN_QUOTE", "PLANE_NOT_IN_QUOTE",
+                "UNKNOWN_LABEL", "AMBIGUOUS_VALUE_QUOTE"}:
         return "ai_extraction"
     if arm == "B" and code in {"SCHEMA_INVALID", "FACT_INCOMPLETE", "AMBIGUOUS_REFERENCE", "AMBIGUOUS_FACT",
-                               "PLAN_TOO_LARGE", "UNSUPPORTED_FACT"}:
+                               "PLAN_TOO_LARGE", "UNSUPPORTED_CAPABILITY", "UNKNOWN_SOLID"}:
         return "compiler"
     return "geometry"
 
@@ -357,11 +357,17 @@ def run_pilot(mode: PilotMode, provider: Any, out_dir: Path, *, resume: bool = F
             raise PilotStopped("PARTIAL_ARTIFACT") from None
         if state.get("identity") != identity:
             raise PilotStopped("IDENTITY_MISMATCH")
+        execution_class = "LIVE" if getattr(provider, "is_live", False) else "FAKE"
+        if state.get("execution_class") != execution_class:
+            raise PilotStopped("EXECUTION_CLASS_MISMATCH")
         if state.get("pending") is not None or path.with_suffix(".pending").exists():
             raise PilotStopped("REQUEST_STATE_UNKNOWN")
         rows = state.get("rows")
         if not isinstance(rows, list) or state.get("rows_sha256") != _sha(rows) or len(rows) > len(planned):
             raise PilotStopped("PARTIAL_ARTIFACT")
+        if type(state.get("live_model_calls")) is not int or state["live_model_calls"] != (
+                len(rows) if execution_class == "LIVE" else 0):
+            raise PilotStopped("LIVE_COUNT_MISMATCH")
         for index, row in enumerate(rows):
             if row["position"] != index or any(row[k] != getattr(planned[index], k) for k in ("case_id", "sample", "arm")):
                 raise PilotStopped("SCHEDULE_MISMATCH")
@@ -404,12 +410,24 @@ def run_pilot(mode: PilotMode, provider: Any, out_dir: Path, *, resume: bool = F
             try:
                 if getattr(provider, "is_live", False):
                     state["live_model_calls"] += 1
-                body = provider.send(call.arm, payload, 60.0)
+                try:
+                    body = provider.send(call.arm, payload, 60.0)
+                except functions.ProviderHTTPError as error:
+                    record["http_status"] = error.status_code
+                    body = error.body
                 clean, leaked = redact(body, secrets)
                 record["raw_response"] = clean
+                if "http_status" in record or isinstance(body, dict) and body.get("error"):
+                    try:
+                        record["usage"] = _usage(body, reservation)
+                    except PilotStopped as error:
+                        if str(error) == "RESERVATION_BREACH":
+                            record["usage"] = _usage(body, reservation, enforce_reservation=False)
+                        # Failed HTTP responses without usable counters have UNKNOWN cost, never zero.
+                    raise PilotStopped("SECRET_DETECTED" if leaked else "HTTP_ERROR")
+                record["usage"] = _usage(body, reservation)
                 if leaked:
                     raise PilotStopped("SECRET_DETECTED")
-                record["usage"] = _usage(body, reservation)
                 version = body.get("modelVersion")
                 record["model_version"] = version
                 if not isinstance(version, str) or not version:
@@ -432,6 +450,8 @@ def run_pilot(mode: PilotMode, provider: Any, out_dir: Path, *, resume: bool = F
                     raise PilotStopped("PROVIDER_BLOCKED")
                 return body
             except PilotStopped as error:
+                if str(error) == "RESERVATION_BREACH":
+                    record["usage"] = _usage(body, reservation, enforce_reservation=False)
                 stop = str(error)
                 raise
             except Exception as error:
@@ -440,7 +460,14 @@ def run_pilot(mode: PilotMode, provider: Any, out_dir: Path, *, resume: bool = F
             finally:
                 record["latency_seconds"] = time.perf_counter() - started
         adapter = functions.run_ai_function_route if call.arm == "A" else facts.run_ai_fact_route
-        route = adapter(texts[call.case_id], transport)
+        try:
+            route = adapter(texts[call.case_id], transport)
+        except Exception:
+            if not request_started:
+                raise PilotStopped("PERSISTENCE_FAILED" if state["pending"] else "PRE_RESPONSE_FAILURE") from None
+            from app.simulation.geometry_functions import KetQuaTuyen
+            stop = stop or "POST_RESPONSE_FAILURE"
+            route = KetQuaTuyen("REFUSED", stop, "Runner post-response failure; no retry")
         if state["pending"] is not None and not request_started and stop is None:
             # Adapter catches transport exceptions: preserve the uncertain journal when persistence failed.
             raise PilotStopped("PERSISTENCE_FAILED")
@@ -459,6 +486,7 @@ def run_pilot(mode: PilotMode, provider: Any, out_dir: Path, *, resume: bool = F
         record["route"]["ai"]["surface"] = identity["surfaces"][call.arm]
         record["failure_source"] = "infrastructure" if stop else failure_source(route.code, call.arm)
         record["outcome"] = "infrastructure" if stop or record["failure_source"] == "infrastructure" else classify_outcome(call.case_id, call.arm, route)
+        record["obligation_violations"] = [] if stop else oracle_violations(call.case_id, call.arm, route)
         record, leaked = redact(record, secrets)
         if leaked:
             stop = "SECRET_DETECTED"
@@ -473,6 +501,55 @@ def run_pilot(mode: PilotMode, provider: Any, out_dir: Path, *, resume: bool = F
     return state
 
 
+def oracle_violations(case_id: str, arm: str, route: Any) -> list[str]:
+    """Validate only registered obligations, using exact rational chart coordinates (never display coordinates)."""
+    from fractions import Fraction
+    from app.simulation.geometry_functions.engine import ir_name
+    item = next(x for x in _read_json("oracle.json")["rows"] if x["id"] == case_id)
+    expected = item.get(arm.lower(), item.get("expected"))
+    violations = []
+    if route.status != "SERVED":
+        if isinstance(expected, dict) and expected["status"] == "REFUSED":
+            if route.code != expected.get("code"):
+                violations.append("REFUSAL_CODE")
+            if route.scene3d is not None or route.answers:
+                violations.append("REFUSAL_PRESENTATION")
+        return violations
+    scene = getattr(route, "scene3d", None)
+    if not isinstance(scene, dict) or not scene.get("objects"):
+        return ["GEOMETRY_SCENE"]
+    if not isinstance(expected, dict):
+        return violations
+    units = expected.get("unit") or ("a" if any(isinstance(a, dict) and a.get("dim", 0) > 0
+                                               for a in expected.get("answers", {}).values()) else None)
+    if units and (scene.get("length_unit", {}).get("symbol") != units or
+                  scene.get("length_unit", {}).get("is_given") is not False):
+        violations.append("UNIT")
+    lengths = {**expected.get("lengths_sq", {}), **expected.get("lengths_sq_in_a2", {})}
+    try:
+        points = {o["id"]: tuple(Fraction(v) for v in o["xyz"]) for o in scene["objects"]
+                  if o["type"] == "point3" and "xyz" in o}
+        metric = [[Fraction(v) for v in row] for row in scene["chart_metric"]]
+        if len(metric) != 3 or any(len(row) != 3 for row in metric):
+            raise ValueError("invalid metric shape")
+        for segment, squared in lengths.items():
+            a, b = re.findall(r"[A-Z][0-9]*'?", segment)
+            d = [points[ir_name(b)][i] - points[ir_name(a)][i] for i in range(3)]
+            if sum(d[i] * metric[i][j] * d[j] for i in range(3) for j in range(3)) != Fraction(squared):
+                violations.append("EXACT_LENGTH:" + segment)
+    except (KeyError, ValueError, TypeError, IndexError, ZeroDivisionError):
+        violations.append("EXACT_GEOMETRY_UNAVAILABLE")
+    if arm == "B":
+        checks = expected.get("goal_checks", {})
+        if checks and list(route.planner.get("goal_checks", {}).values()) != list(checks.values()):
+            violations.append("GOAL_CHECKS")
+        if item.get("safety") == "configuration_observation_only" and any(
+                check.get("can_present_as_proven") is not False or check.get("proof_status") != "UNVERIFIABLE"
+                for check in route.planner.get("goal_checks", {}).values()):
+            violations.append("PROOF_BOUNDARY")
+    return violations
+
+
 def classify_outcome(case_id: str, arm: str, route: Any) -> str:
     """Use the sidecar oracle only after the production route returns; never send it to the provider."""
     from scripts.hybrid_ab_offline import khoa_dap_so
@@ -480,6 +557,8 @@ def classify_outcome(case_id: str, arm: str, route: Any) -> str:
     expected = item.get(arm.lower(), item.get("expected"))
     positive = isinstance(expected, str) and expected.startswith("served:") or isinstance(expected, dict) and expected["status"] == "SERVED"
     if route.status != "SERVED":
+        if not positive and oracle_violations(case_id, arm, route):
+            return "obligation_violation"
         return "false_refusal" if positive else "correct_refusal"
     if not positive:
         return "wrong_served"
@@ -506,7 +585,7 @@ def classify_outcome(case_id: str, arm: str, route: Any) -> str:
         if checks and arm == "B":
             actual = list(route.planner.get("goal_checks", {}).values())
             correct = correct and actual == list(checks.values())
-    return "correct_served" if correct else "wrong_served"
+    return "correct_served" if correct and not oracle_violations(case_id, arm, route) else "wrong_served"
 
 
 def score_pilot(mode: PilotMode, rows: list[dict[str, Any]], seed: int = 20261010) -> dict[str, Any]:
@@ -517,7 +596,8 @@ def score_pilot(mode: PilotMode, rows: list[dict[str, Any]], seed: int = 2026101
     required = {(x.case_id, x.sample, x.arm) for x in schedule(locked)}
     actual = [(x.get("case_id"), x.get("sample"), x.get("arm")) for x in rows]
     if len(actual) != len(required) or set(actual) != required or any(
-            x.get("outcome") == "infrastructure" or not isinstance(x.get("usage"), dict) for x in rows):
+            x.get("outcome") not in {"correct_served", "wrong_served", "correct_refusal", "false_refusal"} or
+            x.get("obligation_violations") or not isinstance(x.get("usage"), dict) for x in rows):
         return {"label": "INCONCLUSIVE_INFRASTRUCTURE", "completed_rows": len(rows), "expected_rows": len(required)}
     groups = {r.case_id: [x for x in rows if x["case_id"] == r.case_id] for r in locked.rows}
     oracle = _read_json("oracle.json")["rows"]
@@ -562,6 +642,7 @@ def score_pilot(mode: PilotMode, rows: list[dict[str, Any]], seed: int = 2026101
                     intervals["output_ratio"]["lower_one_sided_95"] > 1.10)
         label = "INFERIOR" if inferior else "INCONCLUSIVE_STATISTICAL"
     counts = {}
+    correct_refusal_negative = {}
     for arm in ("A", "B"):
         subset = [x for x in rows if x["arm"] == arm]
         wrong = sum(x["outcome"] == "wrong_served" for x in subset)
@@ -571,13 +652,19 @@ def score_pilot(mode: PilotMode, rows: list[dict[str, Any]], seed: int = 2026101
         clusters_wrong = sum(any(x["arm"] == arm and x["outcome"] == "wrong_served" for x in records)
                              for records in groups.values())
         cluster_upper = 1 - .05 ** (1 / len(groups)) if clusters_wrong == 0 else None
+        served = sum(x["outcome"] in {"correct_served", "wrong_served"} for x in subset)
+        negatives = [x for x in subset if x["case_id"] not in positives]
+        refused = sum(x["outcome"] == "correct_refusal" for x in negatives)
+        correct_refusal_negative[arm] = {"count": refused, "denominator": len(negatives),
+                                         "rate": refused / len(negatives) if negatives else None}
         counts[arm] = {"count": wrong, "denominator": n, "rate": wrong/n,
                        "iid_upper_95": upper, "problem_clusters": len(groups), "cluster_upper_95": cluster_upper,
                        "coverage": sum(x["outcome"] in {"correct_served", "wrong_served"} for x in subset)/n,
-                       "selective_accuracy": (sum(x["outcome"] == "correct_served" for x in subset) /
-                                             max(1, sum(x["outcome"] in {"correct_served", "wrong_served"} for x in subset)))}
+                       "served_denominator": served,
+                       "selective_accuracy": sum(x["outcome"] == "correct_served" for x in subset) / served if served else None}
     return {"label": label, "seed": seed, "bootstrap_replicates": 2000, "paired_intervals": intervals,
-            "wrong_served": counts, "warning": "NO OBSERVED ERROR ≠ PROVED SAFE",
+            "wrong_served": counts, "correct_refusal_negative": correct_refusal_negative,
+            "warning": "NO OBSERVED ERROR ≠ PROVED SAFE",
             "limitation": "Development corpus; IID bounds ignore repeated-sample dependence. Zero-event bootstrap is degenerate; "
                           "cluster bounds quantify unobserved risk and no population safety proof follows."}
 

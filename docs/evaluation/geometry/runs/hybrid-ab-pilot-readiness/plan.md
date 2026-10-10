@@ -318,3 +318,13 @@
 
   Use `superpowers:requesting-code-review` against the plan/spec and merge base. Any Critical/Important fix must get its own
   RED→GREEN test and a fresh suite run; defer Minor findings explicitly.
+
+### Bounded review-fix pass (2026-10-10, before further production edits)
+
+The single fresh review found six Important gaps. Reproduce each with offline RED tests, then repair: bind every regularity
+witness to its polygon; reject malformed nested provider parts explicitly and persist known-usage post-response failures;
+reject fake/live resume-class or live-count mismatches; align extraction taxonomy with emitted source-gate codes; enforce all
+sealed refusal, unit, metric and checker obligations; preserve HTTP status/redacted body through the existing transport.
+Also report undefined selective accuracy as null and separate negative-problem refusal rates. Keep old artifacts untouched;
+re-certify into `fake-provider/review-fix/` and add fresh diagnostics. Move current candidate-divergence authority to this
+additive correction run (old declarations remain historical); do not weaken the regression that checks it. Live remains 0.

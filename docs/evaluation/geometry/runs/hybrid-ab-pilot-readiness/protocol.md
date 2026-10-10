@@ -5,13 +5,20 @@ Run: `hybrid-ab-pilot-readiness`
 Corrects: `hybrid-compiler-selection`  
 Branch: `feat/text-to-geometry-functions`  
 Preflight HEAD: `5c33406a5697c6f3bac4e56d443f8a9ca6a82fd7`  
-Current frozen candidate: `e9d20aa2...` (product commit `91e2edf9`, frozen at `c748c682`)  
+Pre-run frozen candidate: `e9d20aa2...` (product commit `91e2edf9`, frozen at `c748c682`)
 Cache identity: `CACHE_VERSION = "125"`  
 Live Gemini calls in this run: **0**
 
 This is an additive correction layer. Files in `hybrid-compiler-selection` remain byte-identical. After implementation and
 verification, `docs/EVIDENCE_INDEX.md` must connect that run to this one with `CORRECTED_BY`; the historical results remain
 historical observations, not rewritten results.
+
+Review amendment (before the bounded fix pass): every regularity witness must identify the requested polygon; malformed
+response parts and unexpected post-response adapter failures must retain known usage and stop durably; resume must preserve
+FAKE/LIVE provenance; extraction codes must match the emitted source gate; sealed refusal/unit/exact chart-metric/checker
+obligations are correctness requirements. Refusal-obligation violations are recorded separately as `obligation_violation`
+and make a full score inconclusive, not a correct refusal. HTTP errors retain status/redacted JSON body when recoverable,
+otherwise usage is UNKNOWN. No retry is permitted. Undefined selective accuracy is null, with its denominator reported.
 
 ## 1. Scope and non-goals
 

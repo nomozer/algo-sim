@@ -308,11 +308,11 @@ def test_incomplete_or_duplicate_schedule_cannot_be_scored_as_full():
 
 
 def test_reordered_renamed_answer_calls_are_bound_to_questions_not_insertion_order():
-    from types import SimpleNamespace
-    route = SimpleNamespace(status="SERVED", answers={"diagonal": "a√3", "volume": "a³"},
-        answer_exact={"diagonal": {"coef": "√3", "dim": 1}, "volume": {"coef": "1", "dim": 3}},
-        calls=[{"id": "diagonal", "fn": "ask_length", "args": {"segment": ["A", "C'"]}},
-               {"id": "volume", "fn": "ask_volume", "args": {"solid": "ABCD.A'B'C'D'"}}], planner={})
+    route = _fixture_route("hybrid/H01", "A")
+    route.answers = {"diagonal": "a√3", "volume": "a³"}
+    route.answer_exact = {"diagonal": {"coef": "√3", "dim": 1}, "volume": {"coef": "1", "dim": 3}}
+    route.calls = [{"id": "diagonal", "fn": "ask_length", "args": {"segment": ["A", "C'"]}},
+                   {"id": "volume", "fn": "ask_volume", "args": {"solid": "ABCD.A'B'C'D'"}}]
     assert P.classify_outcome("hybrid/H01", "A", route) == "correct_served"
 
 
@@ -401,3 +401,143 @@ def test_existing_httpx_transport_timeout_has_timeout_taxonomy(tmp_path):
     assert result["stop_reason"] == "TIMEOUT"
     assert len(fake.calls) == 1
     assert result["totals"]["actual_usd"] is None
+
+
+@pytest.mark.parametrize("arm,parts", [
+    ("A", [{"functionCall": {"name": "unsupported", "args": 17}}]),
+    ("B", [{"text": 17}]),
+])
+def test_malformed_nested_parts_are_explicit_durable_extraction_failures(tmp_path, monkeypatch, arm, parts):
+    locked = P.load_locked_inputs(P.PilotMode.SMOKE_AB)
+    monkeypatch.setattr(P, "schedule", lambda _: (P.ScheduledCall(locked.rows[0].case_id, 1, arm),))
+    fake = Fake(lambda b: dict(b, candidates=[{"finishReason": "STOP", "content": {"parts": parts}}]))
+    result = P.run_pilot(P.PilotMode.SMOKE_AB, fake, tmp_path)
+    assert result["pending"] is None
+    assert len(result["rows"]) == len(fake.calls) == 1
+    assert result["rows"][0]["usage"]["total_tokens"] == 160
+    assert result["rows"][0]["failure_source"] == "ai_extraction"
+    assert result["rows"][0]["route"]["code"] == "MALFORMED_RESPONSE_PART"
+
+
+def test_unexpected_post_response_adapter_failure_persists_known_cost_and_stops(tmp_path, monkeypatch):
+    from app.ai import function_calling as fc, fact_extraction as fe
+    def broken(text, transport):
+        transport(fe.build_request(text))
+        raise TypeError("must not persist exception secrets")
+    monkeypatch.setattr(fe, "run_ai_fact_route", broken)
+    monkeypatch.setattr(fc, "run_ai_function_route", broken)
+    fake = Fake()
+    result = P.run_pilot(P.PilotMode.SMOKE_AB, fake, tmp_path)
+    assert result["stop_reason"] == "POST_RESPONSE_FAILURE"
+    assert result["pending"] is None and len(result["rows"]) == len(fake.calls) == 1
+    assert result["rows"][0]["usage"]["total_tokens"] == 160
+    assert "exception secrets" not in (tmp_path / "manifest.json").read_text()
+
+
+@pytest.mark.parametrize("stored,incoming,calls", [("FAKE", "LIVE", 0), ("LIVE", "FAKE", 24),
+                                                   ("FAKE", "FAKE", 1), ("LIVE", "LIVE", 0)])
+def test_resume_rejects_execution_class_or_live_counter_mismatch_before_requests(tmp_path, stored, incoming, calls):
+    state = P.run_pilot(P.PilotMode.SMOKE_AB, Fake(), tmp_path)
+    state.update(execution_class=stored, live_model_calls=calls)
+    (tmp_path / "manifest.json").write_text(json.dumps(state), encoding="utf8")
+    fake = Fake()
+    fake.is_live = incoming == "LIVE"
+    with pytest.raises(P.PilotStopped, match="EXECUTION_CLASS_MISMATCH|LIVE_COUNT_MISMATCH"):
+        P.run_pilot(P.PilotMode.SMOKE_AB, fake, tmp_path, resume=True)
+    assert fake.calls == []
+
+
+@pytest.mark.parametrize("change,code", [
+    (lambda c: c["source"].update(quotes=["not in source"]), "QUOTE_NOT_IN_SOURCE"),
+    (lambda c: c["args"].update(side="99"), "UNGROUNDED_VALUE"),
+])
+def test_actual_source_route_failures_have_extraction_taxonomy(change, code):
+    from app.ai.function_route import run_function_route
+    row = json.loads((Path(__file__).parent / "fixtures/paraphrase_cases.json").read_bytes())["cases"][0]
+    call = copy.deepcopy(row["calls"][0])
+    change(call)
+    route = run_function_route(row["text"], {"calls": [call]})
+    assert route.code == code
+    assert P.failure_source(route.code, "A") == "ai_extraction"
+
+
+@pytest.mark.parametrize("code", ["GOAL_CLAUSE_NOT_PREMISE", "ROLE_NOT_IN_QUOTE", "PLANE_NOT_IN_QUOTE",
+                                   "UNKNOWN_LABEL", "AMBIGUOUS_VALUE_QUOTE"])
+def test_remaining_source_gate_codes_have_extraction_taxonomy(code):
+    assert P.failure_source(code, "B") == "ai_extraction"
+
+
+def _fixture_route(case_id, arm):
+    from app.ai.function_route import run_function_route, run_fact_route
+    filename = "hybrid_holdout_cases.json" if case_id.startswith("hybrid/") else "paraphrase_cases.json"
+    prefix = case_id.split("/")[1] + "_"
+    row = next(x for x in json.loads((Path(__file__).parent / "fixtures" / filename).read_bytes())["cases"]
+               if x["id"].startswith(prefix))
+    if arm == "A":
+        return run_function_route(row["text"], {"calls": row.get("a_calls", row.get("calls"))})
+    return run_fact_route(row["text"], {"facts": row["b_facts"]})
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+def test_unsafe_negation_refusal_is_not_counted_correct(arm):
+    route = _fixture_route("hybrid/H13", arm)
+    route.code = "INCONSISTENT_FACTS"
+    assert P.classify_outcome("hybrid/H13", arm, route) == "obligation_violation"
+
+
+@pytest.mark.parametrize("defect", ["missing_scene", "wrong_metric", "wrong_unit", "false_proof"])
+def test_sealed_geometry_units_and_checker_obligations_are_enforced(defect):
+    case = {"missing_scene": "paraphrase/P01", "wrong_metric": "paraphrase/P01",
+            "wrong_unit": "hybrid/H01", "false_proof": "hybrid/H07"}[defect]
+    route = _fixture_route(case, "B" if defect == "false_proof" else "A")
+    assert route.status == "SERVED"
+    if defect == "missing_scene": route.scene3d = None
+    if defect == "wrong_metric": route.scene3d["chart_metric"][0][0] = "999"
+    if defect == "wrong_unit": route.scene3d["length_unit"]["symbol"] = "b"
+    if defect == "false_proof": route.planner["goal_checks"]["f7"]["can_present_as_proven"] = True
+    assert P.classify_outcome(case, "B" if defect == "false_proof" else "A", route) == "wrong_served"
+
+
+@pytest.mark.parametrize("leak", [False, True])
+def test_real_transport_http_error_preserves_redacted_body_status_and_known_usage(tmp_path, monkeypatch, leak):
+    import httpx
+    from app.ai.function_calling import live_transport
+    monkeypatch.setenv("ALLOW_LIVE_AI", "1")
+    body = Fake().send("B", {}, 60)
+    body["error"] = {"code": 429, "message": "fake-key must be redacted" if leak else "fake HTTP limit"}
+    monkeypatch.setattr(httpx, "post", lambda *a, **k: httpx.Response(429, json=body))
+    class MockHTTPProvider:
+        is_live = False
+        calls = 0
+        def send(self, arm, payload, timeout_seconds):
+            self.calls += 1
+            return live_transport("fake-key", timeout_seconds=timeout_seconds)(payload)
+    fake = MockHTTPProvider()
+    result = P.run_pilot(P.PilotMode.SMOKE_AB, fake, tmp_path, secrets=("fake-key",))
+    assert len(result["rows"]) == fake.calls == 1
+    assert result["stop_reason"] == ("SECRET_DETECTED" if leak else "HTTP_ERROR")
+    row = result["rows"][0]
+    assert row["http_status"] == 429 and row["usage"]["total_tokens"] == 160
+    assert row["raw_response"]["error"]["message"] == ("[REDACTED] must be redacted" if leak else "fake HTTP limit")
+
+
+def test_zero_coverage_selective_accuracy_is_unknown_and_negative_refusals_are_separate():
+    summary = P.score_pilot(P.PilotMode.FULL_AB, _scoring_rows("false_refusal", "false_refusal"))
+    assert summary["wrong_served"]["A"]["selective_accuracy"] is None
+    assert summary["wrong_served"]["A"]["served_denominator"] == 0
+    assert summary["correct_refusal_negative"]["A"]["denominator"] > 0
+
+
+def test_obligation_violation_makes_full_score_inconclusive():
+    rows = _scoring_rows()
+    rows[0]["outcome"] = "obligation_violation"
+    assert P.score_pilot(P.PilotMode.FULL_AB, rows)["label"] == "INCONCLUSIVE_INFRASTRUCTURE"
+
+
+def test_known_usage_exceeding_reservation_is_recorded_before_stop(tmp_path):
+    fake = Fake(lambda b: dict(b, usageMetadata={"promptTokenCount": 100, "candidatesTokenCount": 4000,
+                                               "thoughtsTokenCount": 20, "totalTokenCount": 4120}))
+    result = P.run_pilot(P.PilotMode.SMOKE_AB, fake, tmp_path)
+    assert result["stop_reason"] == "RESERVATION_BREACH" and len(fake.calls) == 1
+    assert result["rows"][0]["usage"]["total_tokens"] == 4120
+    assert result["totals"]["actual_usd"] > 0

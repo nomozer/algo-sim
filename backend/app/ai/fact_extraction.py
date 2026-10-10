@@ -63,6 +63,8 @@ def parse_response(body: Any, diag: dict[str, Any]) -> dict[str, Any]:
         raise _TuChoiAI("PROVIDER_RESPONSE_INVALID", "thân phản hồi không phải đối tượng JSON")
     diag["usage"] = body.get("usageMetadata") or {}
     cands = body.get("candidates") or []
+    if not isinstance(cands, list) or cands and not isinstance(cands[0], dict):
+        raise _TuChoiAI("MALFORMED_RESPONSE_PART", "candidates phải là danh sách đối tượng")
     if not cands:
         if (body.get("promptFeedback") or {}).get("blockReason"):
             raise _TuChoiAI("PROVIDER_BLOCKED", f"đề bị chặn: {body['promptFeedback']['blockReason']}")
@@ -72,13 +74,21 @@ def parse_response(body: Any, diag: dict[str, Any]) -> dict[str, Any]:
         raise _TuChoiAI("RESPONSE_TRUNCATED", "phản hồi bị cắt ở trần token — danh sách dữ kiện có thể thiếu")
     if finish not in (None, "STOP"):
         raise _TuChoiAI("PROVIDER_REFUSED", f"finishReason = {finish}")
-    text = "".join(p.get("text", "") for p in (cands[0].get("content") or {}).get("parts") or [] if isinstance(p, dict))
+    content = cands[0].get("content") or {}
+    if not isinstance(content, dict) or not isinstance(content.get("parts", []), list):
+        raise _TuChoiAI("MALFORMED_RESPONSE_PART", "content.parts phải là danh sách")
+    parts = content.get("parts") or []
+    if any(not isinstance(p, dict) or not isinstance(p.get("text", ""), str) for p in parts):
+        raise _TuChoiAI("MALFORMED_RESPONSE_PART", "content.parts.text phải là chuỗi")
+    text = "".join(p.get("text", "") for p in parts if isinstance(p, dict))
     try:
         data = json.loads(text)
     except json.JSONDecodeError as e:
         raise _TuChoiAI("JSON_INVALID", f"đầu ra không phải JSON ({e.msg})") from None
     if not isinstance(data, dict):
         raise _TuChoiAI("JSON_INVALID", "đầu ra không phải đối tượng JSON")
+    if not isinstance(data.get("facts", []), list):
+        raise _TuChoiAI("MALFORMED_RESPONSE_PART", "facts phải là danh sách")
     diag["n_facts"] = len(data.get("facts") or [])
     return data
 
