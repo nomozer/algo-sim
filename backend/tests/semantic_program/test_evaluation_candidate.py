@@ -12,6 +12,7 @@ LUẬN của luận văn.
 """
 import hashlib
 import json
+import os
 import typing
 from pathlib import Path
 
@@ -26,7 +27,7 @@ from app.simulation.semantic_program.obligations import OBLIGATION_KINDS
 
 ROOT = Path(__file__).resolve().parents[3]
 BENCH = ROOT / "docs" / "evaluation" / "semantic-benchmark"
-CANDIDATE = BENCH / "EVALUATION_CANDIDATE.json"
+CANDIDATE = Path(os.environ.get("ALGOSIM_TEST_CANDIDATE", BENCH / "EVALUATION_CANDIDATE.json"))
 
 
 def _sha(text: str) -> str:

@@ -1,0 +1,256 @@
+{
+  "schema": "geometry_library_offline_certification/1",
+  "fake_provider_calls": {
+    "A": 37,
+    "B": 37
+  },
+  "total_fake_calls": 74,
+  "live_gemini_calls": 0,
+  "network_calls": 0,
+  "product_hash": "8ff994c6e20ab982abd208dd8127cd6471bcc56509fd1809433e7a8f5f3601dd",
+  "oracle_cases": [
+    {
+      "arm": "A",
+      "case": 0,
+      "status": "SERVED",
+      "point": "O",
+      "xyz": [
+        "1/2",
+        "1/2",
+        "0"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "ec5534ef885861ae62c3271673a41aa198287a20d6c406c6f26d294e0e1bdd1c"
+    },
+    {
+      "arm": "A",
+      "case": 1,
+      "status": "SERVED",
+      "point": "H",
+      "xyz": [
+        "1",
+        "1",
+        "0"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "b1bd12d28f28c1e0f7117adc45aa4318a2bc842f8d0bfbe6bbfe69e9fc6ee8e6"
+    },
+    {
+      "arm": "A",
+      "case": 2,
+      "status": "SERVED",
+      "point": "H",
+      "xyz": [
+        "1/2",
+        "1/2",
+        "0"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "84d152472078d1145919eb78dd9464919b55609d37111854b613130e4b0d880c"
+    },
+    {
+      "arm": "A",
+      "case": 3,
+      "status": "SERVED",
+      "point": "H",
+      "xyz": [
+        "9/13",
+        "1",
+        "4/13"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "396c25c819e5ab2ff985a08420f77ffea41d82ad32a668fb73a78a42a12a1c98"
+    },
+    {
+      "arm": "A",
+      "case": 4,
+      "status": "SERVED",
+      "point": "H",
+      "xyz": [
+        "0",
+        "0",
+        "0"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "8b4f4494d39b07daeff847947046d5ca8287d5f2ede9ff2f001eae826c388bb7"
+    },
+    {
+      "arm": "A",
+      "case": 5,
+      "status": "SERVED",
+      "point": "H",
+      "xyz": [
+        "1",
+        "0",
+        "0"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "01ed9d6934347ef6e9e5233a30108d8cdba6b33c41895e4395617da99ed8bb04"
+    },
+    {
+      "arm": "A",
+      "case": 6,
+      "status": "SERVED",
+      "point": "H",
+      "xyz": [
+        "0",
+        "0",
+        "0"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "8f5286466738d87284fe0554528c9ddffc640a4b47548f4be42fef46a3f837c4"
+    },
+    {
+      "arm": "B",
+      "case": 0,
+      "status": "SERVED",
+      "point": "O",
+      "xyz": [
+        "1/2",
+        "1/2",
+        "0"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "30365277c7db4dc8626d224a8ff0b9fe48f0735414e4aa65bf68a2e9b67d588f"
+    },
+    {
+      "arm": "B",
+      "case": 1,
+      "status": "SERVED",
+      "point": "H",
+      "xyz": [
+        "1",
+        "1",
+        "0"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "e66d2459593433ead2deb5b16544cc7a41b76a6336ca86ee4f5f11d337602cba"
+    },
+    {
+      "arm": "B",
+      "case": 2,
+      "status": "SERVED",
+      "point": "H",
+      "xyz": [
+        "1/2",
+        "1/2",
+        "0"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "677f8ba9e94c86316cd292d1e5615de82b486d7fb77afd33d0b0a7c6e546e52e"
+    },
+    {
+      "arm": "B",
+      "case": 3,
+      "status": "SERVED",
+      "point": "H",
+      "xyz": [
+        "9/13",
+        "1",
+        "4/13"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "ff7e20b65fefea8084fd33ed1a825a029282785b2d79652c60ce27e6479c3839"
+    },
+    {
+      "arm": "B",
+      "case": 4,
+      "status": "SERVED",
+      "point": "H",
+      "xyz": [
+        "0",
+        "0",
+        "0"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "b0e2b19dbd9cebdfba7dceabde0e0a22d5173c785ffeb359404d258a87505a16"
+    },
+    {
+      "arm": "B",
+      "case": 5,
+      "status": "SERVED",
+      "point": "H",
+      "xyz": [
+        "1",
+        "0",
+        "0"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "894d5d8a8c804f5dafcfceded9bab09d7b5527c34f6c5d0e1ad755dd70710b33"
+    },
+    {
+      "arm": "B",
+      "case": 6,
+      "status": "SERVED",
+      "point": "H",
+      "xyz": [
+        "0",
+        "0",
+        "0"
+      ],
+      "answers": {
+        "c5": "4"
+      },
+      "payload_sha256": "ecc1fdcbe9bb38dc4fafb20ad6d51ade853afb563af732d53a8a86485d1c9417"
+    }
+  ],
+  "interpretation": "Deterministic adapter/library certification only; no extraction-quality or safety-population claim",
+  "new_surface_budget_audit": {
+    "2048": {
+      "smoke": {
+        "tokens": 511596,
+        "usd": 0.2616132
+      },
+      "full": {
+        "tokens": 6136794,
+        "usd": 3.138651
+      }
+    },
+    "3072": {
+      "smoke": {
+        "tokens": 536172,
+        "usd": 0.3230532
+      },
+      "full": {
+        "tokens": 6431706,
+        "usd": 3.8759309999999996
+      }
+    },
+    "8192": {
+      "smoke": {
+        "tokens": 659052,
+        "usd": 0.6302532000000001
+      },
+      "full": {
+        "tokens": 7906266,
+        "usd": 7.562331
+      }
+    }
+  }
+}

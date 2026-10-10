@@ -388,6 +388,8 @@ class _Dung:
                 self.dung.add(c.id)
                 return True
         for c, (a, b), mp, luat, chan_khai in self._rang_buoc_vuong():
+            if c.fn == "orthogonal_projection" and (c.args.point in self.pts or c.args.image not in self.pts):
+                continue  # forward construction waits for all plane operands; never infer its input
             if not (set(mp) <= set(self.pts) and all(self.trong_day(v) for v in mp)):
                 if set(mp) <= set(self.pts) or not (set(mp) & set(self.pts)):
                     continue

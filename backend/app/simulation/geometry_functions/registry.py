@@ -586,6 +586,9 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str) -> None:
                     positions += [dau + m.start() for m in re.finditer(
                         r"[A-Z][0-9]*'?\s+là\s+(?:giao điểm|hình chiếu)|[Hh]ình chiếu", de[dau:_c])]
                 roles = {_vai_tro(de, pos) for pos in positions}
+                if len(positions) > 1 and any(re.search(r"(?<!\w)nếu(?!\w)", de[_cau_chua(de, pos):pos], re.IGNORECASE)
+                                              for pos in positions[1:]):
+                    roles.add("CONDITIONAL")  # a conditional consequent is not an unconditional premise either
                 if "GOAL" in roles:
                     raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{c.id}: {q!r} là điều phải chứng minh, không phải dữ kiện", (c.id,))
                 if "CONDITIONAL" in roles:
@@ -618,10 +621,10 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str) -> None:
             if not _co_diem_rieng(c.quotes, getattr(c.args, f), mp):
                 raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: điểm {getattr(c.args, f)} ({f}) không được nhắc trong {c.quote!r}", (c.id,))
         if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line"):
-            if not construction_source_bound(c):
+            if not construction_source_bound(c, de):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò điểm và toán hạng dựng không khớp nguồn", (c.id,))
         if c.fn == "orthogonal_projection" and c.args.point != c.args.image:
-            if not construction_source_bound(c):
+            if not construction_source_bound(c, de):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò ảnh và điểm chiếu không khớp nguồn", (c.id,))
         for f in c.spec.value_fields:
             if (v := getattr(c.args, f)) is None:
@@ -639,7 +642,7 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str) -> None:
                 raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {v} không phải số trong {c.quote!r}", (c.id,))
 
 
-def construction_source_bound(c: LoiGoi) -> bool:
+def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
     """Bounded construction grammar: bind roles together, never borrow labels across clauses.
 
     Unknown wording is refused, not semantically guessed. Existing plane-foot
@@ -647,7 +650,7 @@ def construction_source_bound(c: LoiGoi) -> bool:
     """
     token = r"[A-Z][0-9]*'?(?:[A-Z][0-9]*'?)*"
     point = r"[A-Z][0-9]*'?"
-    operand = rf"(?:đường thẳng\s+|mặt phẳng\s+)?\(?({token})\)?"
+    operand = rf"(?:đường thẳng\s+|mặt phẳng\s+)?\(?({token}|đáy)\)?"
     a = c.args
     def labels(s):
         return re.findall(point, s)
@@ -667,12 +670,17 @@ def construction_source_bound(c: LoiGoi) -> bool:
                     return True
         else:
             target = a.line if c.fn.endswith("_line") else a.plane
-            patterns = [rf"(?<![\w'])({point})\s+là\s+hình chiếu\s+vuông góc\s+của\s+({point})\s+lên\s+{operand}(?![\w'])",
-                        rf"[Hh]ình chiếu\s+vuông góc\s+của\s+({point})\s+lên\s+{operand}\s+là\s+(?:điểm\s+|trọng tâm\s+|trung điểm\s+)?({point})(?![\w'])"]
+            patterns = [rf"(?<![\w'])({point})\s+là\s+hình chiếu\s+(?:vuông góc\s+)?của\s+({point})\s+(?:lên|trên)\s+{operand}(?![\w'])",
+                        rf"[Hh]ình chiếu\s+(?:vuông góc\s+)?của\s+({point})\s+(?:lên|trên)\s+{operand}\s+là\s+(?:điểm\s+|trọng tâm\s+|trung điểm\s+)?({point})(?![\w'])"]
             for i, pattern in enumerate(patterns):
                 for m in re.finditer(pattern, q):
                     out, src, dst = m.groups() if i == 0 else (m[3], m[1], m[2])
                     pts = labels(dst)
+                    if dst == "đáy" and len(target) >= 3:
+                        bases = {tuple(p[1]) for dau, _cuoi, p in _tu_nhan(de) if len(p) == 2 and
+                                 re.search(r"(?:chóp|lăng\s+trụ)\s*$", de[:dau], re.IGNORECASE)}
+                        if len(bases) == 1 and _cung_da_giac(list(next(iter(bases))), target):
+                            pts = target
                     if out == a.image and src == a.point and (pts == target or (len(target) == 2 and pts == target[::-1])):
                         return True
     return False

@@ -21,6 +21,7 @@ import ast
 import copy
 import hashlib
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -292,10 +293,10 @@ def test_C2_policy_tro_dung_corpus_va_candidate(nguong):
 
 #: Văn bản KHAI độ lệch candidate. Không phải tài liệu đăng ký trước — nó ghi
 #: trạng thái HIỆN TẠI, nên nó được cập nhật, còn chính sách thì không.
-KHAI_LECH = (GOC / "docs" / "evaluation" / "geometry"
+KHAI_LECH = Path(os.environ.get("ALGOSIM_TEST_DIVERGENCE", GOC / "docs" / "evaluation" / "geometry"
              / "runs" / "hybrid-ab-pilot-readiness"
              / "inputs"
-             / "candidate_divergence.json")
+             / "candidate_divergence.json"))
 
 
 def test_C2b_candidate_hien_tai_phai_duoc_KHAI(nguong):

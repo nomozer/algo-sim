@@ -276,6 +276,48 @@ def test_cycle_or_unresolved_operand_no_partial_scene(arm):
 
 
 @pytest.mark.parametrize("arm", ["A", "B"])
+@pytest.mark.parametrize("source,y", [("D", "1"), ("F", "0")])
+def test_projection_waits_for_right_prism_top(arm, monkeypatch, source, y):
+    monkeypatch.setattr(__import__(__name__, fromlist=["BASE"]), "BASE", [
+        "Cho hình lập phương ABCD.EFGH.", "Đáy ABCD là hình vuông cạnh 2.", "AE = 2."])
+    monkeypatch.setattr(__import__(__name__, fromlist=["CALLS"]), "CALLS", [
+        ("prism", {"base": list("ABCD"), "top": list("EFGH"), "right": True}, "Cho hình lập phương ABCD.EFGH."),
+        ("regular_polygon", {"vertices": list("ABCD"), "side": "2"}, "Đáy ABCD là hình vuông cạnh 2."),
+        ("segment_length", {"segment": list("AE"), "value": "2"}, "AE = 2.")])
+    monkeypatch.setattr(__import__(__name__, fromlist=["FACTS"]), "FACTS", [
+        {"kind": "solid", "solid": "ABCD.EFGH", "solid_type": "cube"},
+        {"kind": "polygon_shape", "points": list("ABCD"), "shape": "square", "value": "2"},
+        {"kind": "length", "measure": "segment", "points": list("AE"), "value": "2"}])
+    r, _ = run(arm, [("orthogonal_projection", {"point": source, "plane": list("EBC"), "image": "I"},
+                     {"kind": "projection", "point": source, "points": list("EBC"), "at": "I"},
+                     f"Gọi I là hình chiếu vuông góc của {source} lên (EBC).")], solid="ABCD.EFGH")
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert scene_point(r, "I")["xyz"] == ["1/2", y, "1/2"]
+    assert list(r.answers.values()) == ["8"]
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+@pytest.mark.parametrize("prefix", ["Nếu SA = 3 thì ", "Biết SA = 3; nếu "])
+def test_conditional_consequent_still_not_unconditional_premise(arm, prefix):
+    fn, args, fact, q = copy.deepcopy(POSITIVE[0][:4])
+    r, _ = run(arm, [(fn, args, fact, prefix + q)])
+    assert (r.status, r.code) == ("REFUSED", "CONDITIONAL_CLAUSE"), (r.code, r.reason)
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+@pytest.mark.parametrize("q", ["Hình chiếu vuông góc của S trên mặt phẳng (ABCD) là A.",
+                             "Hình chiếu vuông góc của S lên đáy là A.", "Hình chiếu của S lên (ABCD) là A."])
+def test_existing_inverse_projection_wording_preserved(arm, q, monkeypatch):
+    monkeypatch.setattr(__import__(__name__, fromlist=["BASE"]), "BASE", [BASE[0], BASE[1], q, BASE[3]])
+    monkeypatch.setattr(__import__(__name__, fromlist=["CALLS"]), "CALLS", [CALLS[0], CALLS[1],
+        ("orthogonal_projection", {"point": "S", "plane": list("ABCD"), "image": "A"}, q), CALLS[3]])
+    monkeypatch.setattr(__import__(__name__, fromlist=["FACTS"]), "FACTS", [FACTS[0], FACTS[1],
+        {"kind": "projection", "point": "S", "points": list("ABCD"), "at": "A"}, FACTS[3]])
+    r, _ = run(arm, [])
+    assert r.status == "SERVED" and list(r.answers.values()) == ["4"], (r.code, r.reason)
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
 def test_projection_non_diagonal_gram(arm, monkeypatch):
     monkeypatch.setitem(CALLS[0][1], "base", list("ABC"))
     monkeypatch.setitem(CALLS[1][1], "vertices", list("ABC"))
@@ -298,7 +340,7 @@ def test_behavioral_mutant_is_killed(mutant, monkeypatch):
     from app.simulation.geometry_functions import engine as EN, registry as RG
     from app.simulation.geometry.exact import Vec3
     if mutant == "source_role_guard":
-        monkeypatch.setattr(RG, "construction_source_bound", lambda c: True)
+        monkeypatch.setattr(RG, "construction_source_bound", lambda c, *args: True)
         with pytest.raises(AssertionError):
             test_wrong_source_roles_rejected("A", POSITIVE[0])
     elif mutant == "relation_guard":
