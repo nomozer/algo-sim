@@ -5,7 +5,7 @@
       → giải phụ thuộc + chọn BỐ CỤC (khung affine hữu tỉ + metric Gram G, `geometry.metric`)
       → kiểm lại MỌI dữ kiện trên bố cục (mâu thuẫn ⇒ INCONSISTENT_FACTS; dữ kiện engine đã dùng mà sai ⇒
         ENGINE_SELF_CHECK_FAILED)
-      → IR `SemanticProgramSpec` HIỆN CÓ qua `geometry_compiler.primitives`
+      → IR `SemanticProgramSpec` HIỆN CÓ qua bộ tạo câu lệnh dùng chung `semantic_program.ir_builders`
       → `SemanticProgramInterpreter` + kernel HIỆN CÓ dưới `metric.using(G)` → `build_scene3d` HIỆN CÓ + `chart_metric`.
 
 ─── BỐ CỤC: VÌ SAO KHUNG AFFINE ─────────────────────────────────────────────
@@ -28,7 +28,7 @@ from math import isqrt
 from typing import Any
 
 from app.simulation.geometry import metric as _metric
-from app.simulation.geometry_compiler import primitives as P
+from app.simulation.semantic_program import ir_builders as P
 
 from .registry import LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, kiem_nguon, nhan_cua_de
 

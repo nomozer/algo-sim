@@ -683,15 +683,68 @@ def test_Y_duong_mac_dinh_VAN_khong_tham_chieu_compiler():
 
     goc = Path(A.__file__).resolve().parents[2]          # backend/app
     assert goc.name == "app", goc
-    lo = []
-    for p in goc.rglob("*.py"):
-        # `geometry_functions` (run text-to-geometry-functions) là đường NGHIÊN CỨU tách riêng, tái sử dụng bộ tạo câu
-        # lệnh `geometry_compiler.primitives`; nó không nằm trên đường mặc định — điều đó khoá ở hai dòng dưới.
-        if {"geometry_compiler", "geometry_functions"} & set(p.parts) or p.name == "__init__.py":
-            continue
-        if "geometry_compiler" in p.read_text(encoding="utf-8"):
-            lo.append(str(p.relative_to(goc)))
+
+    # (1) BAO ĐÓNG IMPORT (AST, kể cả import trong hàm) từ hai điểm vào mặc định: không với tới compiler, cũng không
+    #     với tới đường nghiên cứu text → geometry functions (ai-function-route: thay phép quét chuỗi + loại trừ cả thư
+    #     mục của bản text-to-geometry-functions, vốn không bắt được tham chiếu bắc cầu).
+    cam = ("app.simulation.geometry_compiler", "app.simulation.geometry_functions",
+           "app.ai.function_route", "app.ai.function_calling")
+    for diem_vao in ("app.main", "app.ai.pipeline"):
+        lo = sorted(m for m in _bao_dong_import(goc, diem_vao) if m.startswith(cam))
+        assert lo == [], f"đường mặc định {diem_vao} với tới {lo}"
+    # Đối chứng dương: phép tính bao đóng PHẢI thấy một module chỉ với tới được qua hai bậc, một bậc là import TƯƠNG ĐỐI
+    # (`function_route` → `geometry_functions/__init__` → `.engine` → `ir_builders`) — nếu không, (1) xanh vô nghĩa.
+    assert "app.simulation.semantic_program.ir_builders" in _bao_dong_import(goc, "app.ai.function_route")
+
+    # (2) Bất biến gốc, KHÔNG ngoại lệ: ngoài gói compiler, không tệp sản phẩm nào nhắc tới nó. Đường nghiên cứu dùng
+    #     bộ tạo câu lệnh IR trung lập `semantic_program/ir_builders.py` (compiler re-export), không dùng gói compiler.
+    lo = sorted(str(p.relative_to(goc)) for p in goc.rglob("*.py")
+                if "geometry_compiler" not in p.parts and p.name != "__init__.py"
+                and "geometry_compiler" in p.read_text(encoding="utf-8"))
     assert lo == [], f"đường sản phẩm đã tham chiếu compiler: {lo}"
-    for mac_dinh in (goc / "ai" / "pipeline.py", goc / "main.py"):
-        txt = mac_dinh.read_text(encoding="utf-8")
-        assert "geometry_functions" not in txt and "function_route" not in txt, mac_dinh.name
+    assert not any(m.startswith("app.simulation.geometry_compiler")
+                   for m in _bao_dong_import(goc, "app.ai.function_route")), "đường nghiên cứu kéo theo compiler"
+
+
+def _nhap_tu(f, goi: str | None = None) -> set[str]:
+    """Tên module (tuyệt đối) mà một tệp nhập — `from x import y` cho cả `x` lẫn `x.y` (y có thể là module con).
+    `goi` = gói chứa tệp, để phân giải import TƯƠNG ĐỐI (`from .engine import …`)."""
+    import ast
+
+    ra: set[str] = set()
+    for n in ast.walk(ast.parse(f.read_text(encoding="utf-8"))):
+        if isinstance(n, ast.ImportFrom):
+            if n.level:
+                if goi is None:
+                    continue
+                goc_goi = goi.split(".")[: len(goi.split(".")) - (n.level - 1)]
+                mod = ".".join(goc_goi + ([n.module] if n.module else []))
+            else:
+                mod = n.module or ""
+            ra.add(mod)
+            ra |= {f"{mod}.{a.name}" for a in n.names}
+        elif isinstance(n, ast.Import):
+            ra |= {a.name for a in n.names}
+    return ra
+
+
+def _bao_dong_import(goc, bat_dau: str) -> set[str]:
+    """Bao đóng các module `app.*` với tới được từ `bat_dau` theo import tĩnh (AST). Bảo thủ: đếm cả import trong hàm."""
+    def tep(mod: str):
+        p = goc.parent.joinpath(*mod.split("."))
+        return p.with_suffix(".py") if p.with_suffix(".py").exists() else (p / "__init__.py" if (p / "__init__.py").exists() else None)
+
+    da, hang = set(), [bat_dau]
+    while hang:
+        m = hang.pop()
+        if m in da or not m.startswith("app"):
+            continue
+        f = tep(m)
+        if f is None:
+            continue
+        da.add(m)
+        goi = m if f.name == "__init__.py" else m.rsplit(".", 1)[0]
+        hang.extend(x for x in _nhap_tu(f, goi) if x.startswith("app"))
+        if f.name != "__init__.py":                       # nhập `a.b.c` kéo theo `a.b.__init__`
+            hang.append(m.rsplit(".", 1)[0])
+    return da
