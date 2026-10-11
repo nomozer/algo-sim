@@ -12,7 +12,6 @@ LUẬN của luận văn.
 """
 import hashlib
 import json
-import os
 import typing
 from pathlib import Path
 
@@ -27,7 +26,7 @@ from app.simulation.semantic_program.obligations import OBLIGATION_KINDS
 
 ROOT = Path(__file__).resolve().parents[3]
 BENCH = ROOT / "docs" / "evaluation" / "semantic-benchmark"
-CANDIDATE = Path(os.environ.get("ALGOSIM_TEST_CANDIDATE", BENCH / "EVALUATION_CANDIDATE.json"))
+CANDIDATE = BENCH / "EVALUATION_CANDIDATE.json"
 
 
 def _sha(text: str) -> str:
@@ -218,59 +217,190 @@ def test_candidate_ghi_dung_commit_va_cay_sach(manifest):
     assert len(manifest["commit"]) == 40
 
 
-def test_explicit_branch_verification_is_read_only(tmp_path, monkeypatch, manifest):
-    """An opt-in must verify real hashes without rewriting the frozen A/B file."""
+def test_verify_without_a_frozen_manifest_is_refused(tmp_path, monkeypatch, manifest):
     fz = _freeze_module()
-    target = tmp_path / "branch.json"
-    target.write_text(json.dumps(manifest), encoding="utf-8")
-    before = target.read_bytes()
-    monkeypatch.setenv("ALGOSIM_TEST_CANDIDATE", str(target))
-    monkeypatch.setattr(fz, "build", lambda: manifest)
-    monkeypatch.setattr(fz.sys, "argv", ["freeze", "--verify"])
-    assert fz.main() == 0
-    assert target.read_bytes() == before
-
-
-def test_explicit_branch_verification_rejects_drift(tmp_path, monkeypatch, manifest):
-    fz = _freeze_module()
-    target = tmp_path / "branch.json"
-    target.write_text(json.dumps(manifest), encoding="utf-8")
-    changed = {**manifest, "measured_system": {**manifest["measured_system"], "tree_hash": "0" * 64}}
-    monkeypatch.setenv("ALGOSIM_TEST_CANDIDATE", str(target))
-    monkeypatch.setattr(fz, "build", lambda: changed)
-    monkeypatch.setattr(fz.sys, "argv", ["freeze", "--verify"])
-    assert fz.main() == 1
-
-
-def test_explicit_branch_verification_rejects_missing(tmp_path, monkeypatch, manifest):
-    fz = _freeze_module()
-    monkeypatch.setenv("ALGOSIM_TEST_CANDIDATE", str(tmp_path / "missing.json"))
+    monkeypatch.setattr(fz, "OUT", tmp_path / "missing.json")
     monkeypatch.setattr(fz, "build", lambda: manifest)
     monkeypatch.setattr(fz.sys, "argv", ["freeze", "--verify"])
     assert fz.main() == 2
 
 
-def test_branch_test_identity_cannot_freeze(tmp_path, monkeypatch, manifest):
-    fz = _freeze_module()
-    target = tmp_path / "branch.json"
-    legacy = tmp_path / "legacy.json"
-    legacy.write_text("frozen", encoding="utf-8")
-    monkeypatch.setenv("ALGOSIM_TEST_CANDIDATE", str(target))
-    monkeypatch.setattr(fz, "OUT", legacy)
-    monkeypatch.setattr(fz, "build", lambda: manifest)
-    monkeypatch.setattr(fz.sys, "argv", ["freeze"])
-    assert fz.main() == 2
-    assert not target.exists()
-    assert legacy.read_text(encoding="utf-8") == "frozen"
+# ── PRODUCT IDENTITY (review I2, 2026-10-11) ────────────────────────────────────────────────────────────────
+# `3b6104e3` narrowed `product_commit_sha` to MEASURED_SYSTEM_PATHS, so a renderer fix under `frontend/src`
+# (outside `domains/semantic`) no longer turned --verify red — the W12 incident class. The rule is now named in
+# the manifest: product paths minus test-only harness files. A manifest without a rule name is verified with the
+# legacy rule it was frozen under, so no historical identity changes. Every case below commits for real in a
+# throwaway git repository; nothing is simulated.
+import subprocess  # noqa: E402
+
+_REPO_FILES = {
+    "backend/app/core.py": "x = 1\n",
+    "frontend/src/simulations/domains/semantic/route.ts": "export const r = 1;\n",
+    "frontend/src/simulations/domains/geometry/scene3d-view.tsx": "export const v = 1;\n",
+    "frontend/src/simulations/domains/geometry/scene3d-view.test.ts": "it('x', () => {});\n",
+    "frontend/src/simulations/domains/geometry/scene3d-section-fixture.json": "{}\n",
+    "frontend/src/test-setup.ts": "export {};\n",
+    "docs/note.md": "n\n",
+}
 
 
-def test_product_provenance_uses_measured_paths_not_renderer_tests(monkeypatch):
+def _commit(root, changes: dict[str, str | None], msg: str) -> str:
+    for rel, text in changes.items():
+        p = root / rel
+        if text is None:
+            p.unlink()
+        else:
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(text, encoding="utf-8")
+    git = ["git", "-C", str(root), "-c", "user.name=t", "-c", "user.email=t@example.invalid"]
+    subprocess.run([*git, "add", "-A"], check=True, capture_output=True)
+    subprocess.run([*git, "commit", "-q", "-m", msg], check=True, capture_output=True)
+    return subprocess.run([*git, "rev-parse", "HEAD"], check=True, capture_output=True, text=True).stdout.strip()
+
+
+@pytest.fixture
+def repo(tmp_path, monkeypatch):
+    """(freeze module rooted at a fresh repo, repo path, first commit)."""
     fz = _freeze_module()
-    calls = []
-    original = fz._git
-    def traced(*args):
-        calls.append(args)
-        return original(*args)
-    monkeypatch.setattr(fz, "_git", traced)
-    fz.build()
-    assert ("log", "-1", "--format=%H", "--", *fz.MEASURED_SYSTEM_PATHS) in calls
+    root = tmp_path / "repo"
+    root.mkdir()
+    subprocess.run(["git", "init", "-q", str(root)], check=True)
+    first = _commit(root, dict(_REPO_FILES), "product")
+    monkeypatch.setattr(fz, "ROOT", root)
+    return fz, root, first
+
+
+def _frozen(fz, manifest, rule="current"):
+    """Real manifest skeleton + identity computed in the throwaway repo (build() needs the real backend)."""
+    h, n = fz.measured_system_hash()
+    m = {**manifest, "product_commit_sha": fz.product_commit(None if rule is None else fz.PRODUCT_COMMIT_RULE),
+         "measured_system": {**manifest["measured_system"], "tree_hash": h, "so_file": n}}
+    m.pop("product_commit_rule", None)
+    if rule is not None:
+        m["product_commit_rule"] = fz.PRODUCT_COMMIT_RULE
+    return m
+
+
+def _verify(fz, monkeypatch, tmp_path, frozen, current) -> int:
+    out = tmp_path / "candidate.json"
+    out.write_text(json.dumps(frozen), encoding="utf-8")
+    monkeypatch.setattr(fz, "OUT", out)
+    monkeypatch.setattr(fz, "build", lambda: current)
+    monkeypatch.setattr(fz.sys, "argv", ["freeze", "--verify"])
+    return fz.main()
+
+
+def test_I2_1_test_only_commit_keeps_product_identity(repo):
+    fz, root, first = repo
+    _commit(root, {"frontend/src/simulations/domains/geometry/scene3d-view.test.ts": "it('y', () => {});\n",
+                   "frontend/src/test-setup.ts": "export const s = 1;\n"}, "test only")
+    assert fz.product_commit(fz.PRODUCT_COMMIT_RULE) == first
+
+
+def test_I2_2_backend_production_change_moves_identity(repo, manifest, monkeypatch, tmp_path):
+    fz, root, first = repo
+    frozen = _frozen(fz, manifest)
+    second = _commit(root, {"backend/app/core.py": "x = 2\n"}, "backend fix")
+    assert fz.product_commit(fz.PRODUCT_COMMIT_RULE) == second != first
+    assert _verify(fz, monkeypatch, tmp_path, frozen, _frozen(fz, manifest)) == 1
+
+
+def test_I2_3_renderer_production_change_is_caught_W12(repo, manifest, monkeypatch, tmp_path, capsys):
+    """W12: renderer-only fix ⇒ tree hash unchanged (renderer is not in MEASURED_SYSTEM_PATHS) but identity moves."""
+    fz, root, first = repo
+    frozen = _frozen(fz, manifest)
+    second = _commit(root, {"frontend/src/simulations/domains/geometry/scene3d-view.tsx": "export const v = 2;\n"},
+                     "renderer fix")
+    current = _frozen(fz, manifest)
+    assert current["measured_system"]["tree_hash"] == frozen["measured_system"]["tree_hash"]
+    assert current["product_commit_sha"] == second != first
+    assert _verify(fz, monkeypatch, tmp_path, frozen, current) == 1
+    assert "product_commit_sha" in capsys.readouterr().out
+
+
+def test_I2_4_renderer_fixture_only_change_keeps_identity(repo):
+    fz, root, first = repo
+    _commit(root, {"frontend/src/simulations/domains/geometry/scene3d-section-fixture.json": '{"a": 1}\n'},
+            "fixture only")
+    assert fz.product_commit(fz.PRODUCT_COMMIT_RULE) == first
+
+
+def test_I2_5_missing_or_changed_measured_file_is_caught(repo, manifest, monkeypatch, tmp_path):
+    fz, root, _ = repo
+    frozen = _frozen(fz, manifest)
+    (root / "frontend/src/simulations/domains/semantic/route.ts").unlink()  # uncommitted: content hash, not git
+    current = {**frozen, "measured_system": {**frozen["measured_system"],
+                                             "tree_hash": fz.measured_system_hash()[0],
+                                             "so_file": fz.measured_system_hash()[1]}}
+    assert current["measured_system"]["so_file"] == frozen["measured_system"]["so_file"] - 1
+    assert _verify(fz, monkeypatch, tmp_path, frozen, current) == 1
+
+
+def test_I2_6_verify_on_the_right_candidate_passes(repo, manifest, monkeypatch, tmp_path):
+    fz, root, _ = repo
+    _commit(root, {"frontend/src/simulations/domains/geometry/scene3d-view.test.ts": "it('z', () => {});\n"}, "t")
+    frozen = _frozen(fz, manifest)
+    assert _verify(fz, monkeypatch, tmp_path, frozen, _frozen(fz, manifest)) == 0
+
+
+@pytest.mark.parametrize("field", ["product_commit_sha", "tree_hash", "product_commit_rule"])
+def test_I2_7_verify_on_an_altered_candidate_fails(repo, manifest, monkeypatch, tmp_path, field):
+    fz, _, _ = repo
+    frozen = _frozen(fz, manifest)
+    if field == "tree_hash":
+        frozen["measured_system"] = {**frozen["measured_system"], "tree_hash": "0" * 64}
+    elif field == "product_commit_rule":
+        frozen["product_commit_rule"] = "made-up-rule/9"
+    else:
+        frozen[field] = "0" * 40
+    assert _verify(fz, monkeypatch, tmp_path, frozen, _frozen(fz, manifest)) != 0
+
+
+def test_I2_legacy_manifest_is_verified_with_its_own_rule(repo, manifest, monkeypatch, tmp_path):
+    """A manifest frozen before the rule had a name keeps its identity: a later test-only commit moved the legacy
+    product commit, and verifying it with the legacy rule must reproduce exactly that commit."""
+    fz, root, _ = repo
+    _commit(root, {"frontend/src/simulations/domains/geometry/scene3d-view.test.ts": "it('w', () => {});\n"}, "t")
+    legacy = _frozen(fz, manifest, rule=None)
+    assert "product_commit_rule" not in legacy
+    assert legacy["product_commit_sha"] != fz.product_commit(fz.PRODUCT_COMMIT_RULE)
+    assert _verify(fz, monkeypatch, tmp_path, legacy, _frozen(fz, manifest)) == 0
+
+
+def test_I2_every_historical_candidate_reproduces_under_its_recorded_rule():
+    """No historical identity changes: each committed EVALUATION_CANDIDATE.json version re-derives its own
+    product_commit_sha at its own commit."""
+    fz = _freeze_module()
+    rel = "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+    versions = fz._git("log", "--format=%H", "--", rel).split()
+    checked = 0
+    for v in versions:
+        try:
+            m = json.loads(fz._git("show", f"{v}:{rel}"))
+        except json.JSONDecodeError:
+            continue
+        if not m.get("product_commit_sha"):
+            continue
+        assert fz.product_commit(m.get("product_commit_rule"), rev=m["commit"]) == m["product_commit_sha"], v
+        checked += 1
+    assert checked >= 61
+
+
+def test_I2_test_only_files_are_never_imported_by_product_code():
+    """The exclusion is by name; this keeps it honest — no product module may import an excluded file."""
+    import fnmatch
+
+    src = ROOT / "frontend" / "src"
+    files = [p for p in src.rglob("*") if p.is_file() and p.suffix in (".ts", ".tsx", ".json")]
+    fz = _freeze_module()
+
+    def excluded(p):
+        rel = p.relative_to(ROOT).as_posix()
+        return any(fnmatch.fnmatch(rel, g.replace("**/", "*")) for g in fz.TEST_ONLY_GLOBS)
+
+    hidden = [p for p in files if excluded(p) and not p.name.endswith((".test.ts", ".test.tsx"))]
+    assert hidden, "expected fixture/setup files to exist"
+    product = [p for p in files if not excluded(p) and p.suffix in (".ts", ".tsx")]
+    offenders = [(q.name, p.name) for p in hidden for q in product
+                 if p.stem in q.read_text(encoding="utf-8")]
+    assert offenders == []

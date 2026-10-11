@@ -20,7 +20,6 @@ from __future__ import annotations
 
 import hashlib
 import json
-import os
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -58,6 +57,30 @@ MEASURED_SYSTEM_PATHS = (
 )
 
 _BO_QUA = ("__pycache__", ".pyc", ".pyo")
+
+#: DANH TÍNH SẢN PHẨM (`product_commit_sha`) — commit cuối chạm mã sản phẩm, KỂ CẢ renderer ngoài
+#: MEASURED_SYSTEM_PATHS: sửa renderer không đổi `tree_hash` nhưng phải làm --verify đỏ (sự cố W12).
+PRODUCT_PATHS = ("backend/app", "frontend/src")
+#: Bộ đo NẰM TRONG cây sản phẩm. Chỉ đổi chúng thì sản phẩm được đo không đổi ⇒ không buộc đóng băng lại.
+#: Phân loại theo tên; `test_I2_test_only_files_are_never_imported_by_product_code` giữ nó trung thực.
+TEST_ONLY_GLOBS = (
+    "frontend/src/**/*.test.ts",
+    "frontend/src/**/*.test.tsx",
+    "frontend/src/**/*fixture*.json",
+    "frontend/src/test-setup.ts",
+    "frontend/src/test-source.ts",
+)
+#: Tên luật GHI VÀO manifest. Manifest không có tên luật (mọi bản trước review I2, 2026-10-11) được kiểm bằng
+#: luật cũ — `PRODUCT_PATHS` không loại gì — nên không định danh lịch sử nào đổi.
+PRODUCT_COMMIT_RULE = "product-paths-excluding-test-only/1"
+
+
+def product_commit(rule: str | None = PRODUCT_COMMIT_RULE, rev: str = "HEAD") -> str:
+    """Commit cuối chạm sản phẩm tại `rev` theo `rule` (None = luật cũ). Luật lạ ⇒ ValueError."""
+    if rule not in (None, PRODUCT_COMMIT_RULE):
+        raise ValueError(f"luật danh tính sản phẩm không biết: {rule!r}")
+    loai = [] if rule is None else [f":(exclude,glob){g}" for g in TEST_ONLY_GLOBS]
+    return _git("log", "-1", "--format=%H", rev, "--", *PRODUCT_PATHS, *loai)
 
 
 def _sha(text: str) -> str:
@@ -145,9 +168,6 @@ def build() -> dict:
     schema_path = ROOT / "docs" / "schemas" / "semantic_program.schema.json"
     dev_path = BENCH / "dev" / "cases.json"
 
-    product_commit = _git(
-        "log", "-1", "--format=%H", "--", *MEASURED_SYSTEM_PATHS
-    )
     return {
         "khai": (
             "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file "
@@ -156,10 +176,9 @@ def build() -> dict:
         "dong_bang_luc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "commit": _git("rev-parse", "HEAD"),
         "commit_ngan": _git("rev-parse", "--short", "HEAD"),
-        # Tách commit cuối thật sự đổi product khỏi HEAD tại lúc đóng băng.
-        # Harness/tests có thể được hoàn thiện sau product mà không được phép
-        # làm provenance sản phẩm trôi sang một commit chỉ chứa bộ đo.
-        "product_commit_sha": product_commit,
+        # Tách commit cuối thật sự đổi product khỏi HEAD tại lúc đóng băng (renderer tính, test/fixture không).
+        "product_commit_sha": product_commit(),
+        "product_commit_rule": PRODUCT_COMMIT_RULE,
         # Cây phải SẠCH thì `commit` ở trên mới thật sự định danh được bản đang
         # đo. Loại trừ đúng một file: chính manifest này, vì nó được sinh ra
         # trong lúc kiểm — con gà và quả trứng, không phải sự trôi.
@@ -219,28 +238,27 @@ def build() -> dict:
 
 
 def main() -> int:
-    verify = "--verify" in sys.argv
-    # Explicit research-test identity: READ ONLY. The default remains the
-    # historical candidate; this cannot refreeze or overwrite either manifest.
-    test_candidate = os.environ.get("ALGOSIM_TEST_CANDIDATE")
-    if test_candidate and not verify:
-        print("ALGOSIM_TEST_CANDIDATE chỉ được dùng với --verify; không ghi candidate.")
-        return 2
     moi = build()
-    verify_path = Path(test_candidate) if test_candidate else OUT
+    verify = "--verify" in sys.argv
 
     if verify:
-        if not verify_path.exists():
+        if not OUT.exists():
             print("Chưa có EVALUATION_CANDIDATE.json — chạy không có --verify trước.")
             return 2
-        cu = json.loads(verify_path.read_text(encoding="utf-8"))
+        cu = json.loads(OUT.read_text(encoding="utf-8"))
         lech = [
             k for k in ("cache_version", "spec_version_ir")
             if cu.get(k) != moi.get(k)
         ]
-        if cu.get("product_commit_sha") is not None \
-                and cu.get("product_commit_sha") != moi.get("product_commit_sha"):
-            lech.append("product_commit_sha")
+        # Kiểm bằng CHÍNH luật manifest đã đóng băng theo (vắng = luật cũ) — định danh lịch sử không đổi.
+        if cu.get("product_commit_sha") is not None:
+            try:
+                pc = product_commit(cu.get("product_commit_rule"))
+            except ValueError as e:
+                print(f"{e} — không kiểm được danh tính sản phẩm.")
+                return 2
+            if cu["product_commit_sha"] != pc:
+                lech.append("product_commit_sha")
         for nhom in ("taxonomy", "visual_primitive_set", "schema_semantic_program", "dev"):
             khoa = "hash" if nhom != "dev" else "fingerprint"
             if cu.get(nhom, {}).get(khoa) != moi.get(nhom, {}).get(khoa):
