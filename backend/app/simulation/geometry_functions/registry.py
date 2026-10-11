@@ -224,6 +224,16 @@ class AskAreaArgs(_Args):
     polygon: Poly
 
 
+class SectionArgs(_Args):
+    solid: SolidName
+    plane: Poly = Field(..., description="mặt phẳng cắt: ba điểm đã có tên, không thẳng hàng")
+
+
+class IntersectionLineArgs(_Args):
+    plane1: Poly = Field(..., description="mặt phẳng 1: ba điểm đã có tên")
+    plane2: Poly = Field(..., description="mặt phẳng 2: ba điểm đã có tên")
+
+
 class UnsupportedArgs(_Args):
     reason: str = Field(..., min_length=1, description="vì sao mệnh đề không ánh xạ được vào thư viện")
 
@@ -293,6 +303,13 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
        (("góc",),)),
     _F("ask_angle_plane_plane", AskAnglePlanePlaneArgs, "ask", "Đề hỏi góc giữa hai mặt phẳng (trả cos²).", (("góc",),)),
     _F("ask_area", AskAreaArgs, "ask", "Đề hỏi diện tích một đa giác.", (("diện tích",),)),
+    # Slice 1 (run `hybrid-section-slice`): cửa vào cho phép dựng engine chung ĐÃ có (`construct_section`, `intersect_plane_plane`).
+    _F("section", SectionArgs, "construct", "Dựng THIẾT DIỆN của một khối với mặt phẳng qua ba điểm đã có tên.",
+       (("thiết diện",),), plane_fields=("plane",)),
+    _F("intersection_line", IntersectionLineArgs, "construct", "Dựng GIAO TUYẾN của hai mặt phẳng, mỗi mặt qua ba điểm đã có tên.",
+       (("giao tuyến",),), plane_fields=("plane1", "plane2")),
+    _F("ask_section_area", SectionArgs, "ask", "Đề hỏi diện tích thiết diện của một khối cắt bởi một mặt phẳng.",
+       (("diện tích",), ("thiết diện",)), plane_fields=("plane",)),
     _F("unsupported", UnsupportedArgs, "escape", "Mệnh đề không ánh xạ được vào thư viện — engine sẽ từ chối trung thực."),
 )}
 

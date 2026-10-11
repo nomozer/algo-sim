@@ -33,7 +33,7 @@ _NHAN_PHU = ("H", *(f"H{i}" for i in range(1, 100)))
 MAX_CALLS = 64
 
 FactKind = Literal["solid", "polygon_shape", "right_angle", "length", "equal_lengths", "perpendicular", "altitude",
-                   "projection", "point_def", "question", "unsupported"]
+                   "projection", "point_def", "section", "intersection_line", "question", "unsupported"]
 
 
 class TypedFact(BaseModel):
@@ -133,6 +133,7 @@ def _doc_khoi_tho(f: TypedFact) -> _Khoi:
 _CAN = {"solid": ("solid", "solid_type"), "polygon_shape": ("points", "shape"), "right_angle": ("at", "points"),
         "length": ("value", "measure"), "equal_lengths": ("points_a", "points_b"), "perpendicular": ("points_a", "points_b"),
         "altitude": ("points", "solid"), "projection": ("point", "points", "at"), "point_def": ("point", "point_kind", "points"),
+        "section": ("solid", "points"), "intersection_line": ("points_a", "points_b"),
         "question": ("quantity",), "unsupported": ("reason",)}
 _DA_GIAC_DEU = {"equilateral_triangle": 3, "square": 4, "regular_hexagon": 6, "regular_polygon": None}
 
@@ -301,6 +302,10 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
         fn = "midpoint" if f.point_kind == "midpoint" else "centroid"
         args = {"point": f.point, ("segment" if fn == "midpoint" else "polygon"): f.points}
         return phat(f.id, fn, args, q, f"point_def({f.point_kind})")
+    if f.kind == "section":                                         # dựng thiết diện: khối × mặt phẳng qua ba điểm có tên
+        return phat(f.id, "section", {"solid": khoi_cua(f.solid, f).ten, "plane": f.points}, q, "section(solid, plane)")
+    if f.kind == "intersection_line":
+        return phat(f.id, "intersection_line", {"plane1": f.points_a, "plane2": f.points_b}, q, "intersection_line(plane, plane)")
     if f.kind == "question":
         return _cau_hoi(f, q, k, khoi_cua, phat)
     raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: loại dữ kiện {f.kind} chưa có luật", (f.id,))
@@ -353,6 +358,9 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
         kh = khoi_cua(f.solid, f)
         k.volume_asks[f.id] = kh.ten
         return phat(f.id, "ask_volume", {"solid": kh.ten}, q, "question(volume)")
+    if n == "area" and f.solid and len(f.points or []) >= 3:       # diện tích thiết diện của khối cắt bởi mặt phẳng
+        return phat(f.id, "ask_section_area", {"solid": khoi_cua(f.solid, f).ten, "plane": f.points}, q,
+                    "question(area of section)")
     if n == "area":
         return phat(f.id, "ask_area", {"polygon": f.points}, q, "question(area)")
     if n == "length" or (n == "distance" and _toan_hang(f.points_a) == _toan_hang(f.points_b) == "point"):

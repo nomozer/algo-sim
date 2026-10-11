@@ -157,6 +157,7 @@ class _Dung:
         self.tam: str | None = None
         self.midpoints: dict[str, tuple[str, str]] = {}
         self.constructions: dict[str, LoiGoi] = {}
+        self.sections: list[str] = []           # biến IR của thiết diện đã dựng (kiểm khép kín sau khi thực thi)
 
     def of(self, *fns: str) -> list[LoiGoi]:
         return [c for c in self.calls if c.fn in fns]
@@ -736,6 +737,7 @@ class _Dung:
             khai.append(P.memory_declaration(ten, "solid"))
             self.trace.append({"step": "construct_solid", "object": k.name, "rule": k.kind, "calls": [k.call],
                                "provenance": "DERIVED"})
+        td = self._bien_dich_mat_cat(khai, lenh)
         hoi: dict[str, str] = {}
         for c in self.of(*BAC_DAI_LUONG):
             kq, a = f"kq_{c.id}", c.args
@@ -766,6 +768,8 @@ class _Dung:
                     lenh.append(P.construct_line(d, ir_name(ln[0]), ir_name(ln[1])))
                     khai.append(P.memory_declaration(d, "line3"))
                 lenh.append(P.measure_quantity(kq, "distance", d1, d2))
+            elif c.fn == "ask_section_area":
+                lenh.append(P.measure_quantity(kq, "area", td[_khoa_mat_cat(c)]))
             else:
                 dg = f"dg_{c.id}"
                 lenh.append(P.construct_polygon(dg, tuple(map(ir_name, a.polygon))))
@@ -776,6 +780,48 @@ class _Dung:
             self.trace.append({"step": "measure", "object": c.fn, "rule": c.fn, "calls": [c.id], "provenance": "DERIVED"})
         return {"title": "Dựng hình từ lời gọi hàm có nguồn", "memory_declarations": khai, "statements": lenh}, hoi
 
+    def kiem_mat_cat(self) -> None:
+        """Tiền điều kiện của thiết diện / giao tuyến trên hình ĐÃ dựng — từ chối có mã thay vì để kernel ném lúc thực thi:
+        mặt cắt qua ba điểm thẳng hàng hay không cùng mặt ⇒ mã của kernel; hai mặt song song (hay trùng) ⇒ PARALLEL_PLANES."""
+        try:
+            with _metric.using(self.metric()):
+                for c in self.of("section", "ask_section_area"):
+                    self._plane(c.args.plane)
+                for c in self.of("intersection_line"):
+                    p1, p2 = self._plane(c.args.plane1), self._plane(c.args.plane2)
+                    if p1.normal.cross(p2.normal).is_zero():
+                        raise TuChoi("PARALLEL_PLANES", f"{c.id}: hai mặt phẳng song song hoặc trùng nhau — không có giao tuyến",
+                                     (c.id,))
+        except GeometryError as e:
+            raise TuChoi(e.code, str(e), tuple(c.id for c in self.of("section", "ask_section_area", "intersection_line")))
+
+    def _bien_dich_mat_cat(self, khai: list, lenh: list) -> dict[tuple, str]:
+        """Thiết diện và giao tuyến → câu lệnh IR SẴN CÓ (`construct_section`, `intersect_plane_plane`). Một thiết diện (khối,
+        mặt) chỉ dựng MỘT lần dù được yêu cầu dựng và hỏi diện tích; trả {khoá: biến thiết diện}."""
+        td: dict[tuple, str] = {}
+        for c in self.of("section", "ask_section_area"):
+            if (khoa := _khoa_mat_cat(c)) in td:
+                continue
+            ten, mp = f"td_{c.id}", f"mp_td_{c.id}"
+            lenh.append({"kind": "construct_plane", "target_var": mp, "through": [ir_name(x) for x in c.args.plane[:3]],
+                         "label": "(" + "".join(c.args.plane) + ")"})
+            lenh.append({"kind": "construct_section", "target_var": ten, "solid": "khoi_" + ir_name(c.args.solid.replace(".", "_")),
+                         "plane": mp, "label": "thiết diện"})
+            khai += [P.memory_declaration(mp, "plane3"), P.memory_declaration(ten, "section")]
+            td[khoa] = ten
+            self.sections.append(ten)
+            self.trace.append({"step": "construct_section", "object": ten, "rule": c.fn, "calls": [c.id], "provenance": "DERIVED"})
+        for c in self.of("intersection_line"):
+            ten, m1, m2 = f"gt_{c.id}", f"mp1_gt_{c.id}", f"mp2_gt_{c.id}"
+            for m, mp in ((m1, c.args.plane1), (m2, c.args.plane2)):
+                lenh.append({"kind": "construct_plane", "target_var": m, "through": [ir_name(x) for x in mp[:3]],
+                             "label": "(" + "".join(mp) + ")"})
+                khai.append(P.memory_declaration(m, "plane3"))
+            lenh.append({"kind": "assign", "target_var": ten, "expr": {"kind": "intersect_plane_plane", "plane_a": m1, "plane_b": m2}})
+            khai.append(P.memory_declaration(ten, "line3"))
+            self.trace.append({"step": "construct_line", "object": ten, "rule": c.fn, "calls": [c.id], "provenance": "DERIVED"})
+        return td
+
     def metric(self) -> _metric.Metric:
         G2, h2 = self.G2, self.h2 or Fraction(1)
         return _metric.Metric(((G2[0][0], G2[0][1], Z), (G2[1][0], G2[1][1], Z), (Z, Z, h2)))
@@ -783,7 +829,12 @@ class _Dung:
 
 #: Bậc theo độ dài của mỗi đại lượng được hỏi — đáp số với độ dài ký hiệu a là (hệ số tại a = 1) · a^bậc.
 BAC_DAI_LUONG = {"ask_volume": 3, "ask_length": 1, "ask_distance_point_plane": 1, "ask_angle_line_plane": 0,
-                 "ask_area": 2, "ask_angle_plane_plane": 0, "ask_distance_lines": 1}
+                 "ask_area": 2, "ask_angle_plane_plane": 0, "ask_distance_lines": 1, "ask_section_area": 2}
+
+
+def _khoa_mat_cat(c: LoiGoi) -> tuple:
+    """Một thiết diện = (khối, TẬP ba điểm mặt cắt) — `section` và `ask_section_area` cùng khối, cùng mặt dùng chung một đối tượng."""
+    return c.args.solid, frozenset(c.args.plane)
 _MU = {1: "", 2: "²", 3: "³"}
 
 
@@ -873,6 +924,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
             if s["step"] == "place_point" and s["object"] in phu:
                 s.update(binding="AUXILIARY", auxiliary_rule=phu[s["object"]]["rule"], goal=phu[s["object"]]["goal"])
         dung.kiem()
+        dung.kiem_mat_cat()
         program, hoi = dung.bien_dich()
         vr = validate_semantic_program(program)
         if not vr.ok:
@@ -890,6 +942,8 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
                         for t in dung.pts)
         if not kernel_ok:
             raise TuChoi("ENGINE_SELF_CHECK_FAILED", "điểm kernel thực thi khác bố cục engine")
+        if hong := [t for t in dung.sections if not fm[t].is_closed]:
+            raise TuChoi("SECTION_EMPTY", f"mặt phẳng không cắt khối thành một đa giác ({hong}) — không có thiết diện để dựng")
         tra, chinh_xac = {}, {}
         for cid, kq in hoi.items():
             v = fm.get(kq)

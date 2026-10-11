@@ -345,17 +345,21 @@ def test_tampered_declarations_are_refused(tamper, code):
     assert (r.status, r.code) == ("REFUSED", code), r.reason
 
 
-def test_provider_surfaces_are_unchanged():
-    """Slice 1 changes no Typed Facts schema, prompt or function declaration (values recorded before the change)."""
+def test_provider_surfaces_are_pinned():
+    """Any change of the model-facing surface must be a deliberate, recorded decision.
+
+    History: goal decomposition slice 1 changed nothing (A 1e3f71ea…, B a4f368cb…, declarations 41e090cd…). The
+    user-approved section / intersection-line slice (run `hybrid-section-slice`) added `section`, `intersection_line`,
+    `ask_section_area` (A declarations) and two Typed Fact kinds + one prompt rule (B) — values below."""
     import hashlib
 
     from app.ai import fact_extraction as FE
     from app.ai import function_calling as FC
 
-    assert FC.surface_fingerprint() == "1e3f71eada935d7a97fc3ebc121e374a2a42991320b4abe6d0ad8bef63d7b386"
-    assert FE.surface_fingerprint() == "a4f368cb5f6809b53510f7d4d64cb96124cc2eb19295e386da6ad72590a37417"
+    assert FC.surface_fingerprint() == "912b22ef7f89851412b8ff026012454d1f9aa225bdd5bd00eb0d8f2dbd53fa3e"
+    assert FE.surface_fingerprint() == "396f1c9c23779a9f5fdfd1b9979a22cab80ed8dc91c94191799379cd4ce12917"
     decl = json.dumps(RG.function_declarations(), ensure_ascii=False, sort_keys=True).encode()
-    assert hashlib.sha256(decl).hexdigest() == "41e090cd252ad5010dbb000cd4f4a2878e438b7a9eb7a484d5b4aa85061b44fb"
+    assert hashlib.sha256(decl).hexdigest() == "f2ec9698a4ee8af86448790f83d9af340eb6afcfce0a8f258ea67e46bf7504b1"
 
 
 # ── 5. source mutants of the new code must be killed ───────────────────────────────────────────────────────────
