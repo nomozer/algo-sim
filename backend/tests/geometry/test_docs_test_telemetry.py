@@ -89,8 +89,7 @@ def test_inv_05_candidate_and_cache_verify_only():
     """Kiểm tra candidate và cache khóa khớp ở chế độ verify-only."""
     res = C.collect_candidate_cache_proof()
     candidate = json.loads(
-        Path(os.environ.get("ALGOSIM_TEST_CANDIDATE",
-                            REPO / "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"))
+        (REPO / "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json")
         .read_text(encoding="utf-8")
     )
     assert res["candidate_valid"] is True

@@ -29,8 +29,9 @@ import httpx
 import pytest
 
 # One root conftest authority: a child conftest would shadow imports of this
-# module in test_offline_guard. Plugin applies only to explicitly opted-in
-# immutable A/B runner regression, never to current expansion adapter tests.
+# module in test_offline_guard. The plugin pins the locked, hash-verified A/B
+# provider surface for the two named A/B reproduction modules only — no
+# environment switch; every other test sees the current adapters.
 pytest_plugins = ("geometry_regression_fixtures",)
 
 

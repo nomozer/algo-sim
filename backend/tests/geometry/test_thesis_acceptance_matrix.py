@@ -21,7 +21,6 @@ import ast
 import copy
 import hashlib
 import json
-import os
 import sys
 from pathlib import Path
 
@@ -293,10 +292,28 @@ def test_C2_policy_tro_dung_corpus_va_candidate(nguong):
 
 #: Văn bản KHAI độ lệch candidate. Không phải tài liệu đăng ký trước — nó ghi
 #: trạng thái HIỆN TẠI, nên nó được cập nhật, còn chính sách thì không.
-KHAI_LECH = Path(os.environ.get("ALGOSIM_TEST_DIVERGENCE", GOC / "docs" / "evaluation" / "geometry"
-             / "runs" / "hybrid-ab-pilot-readiness"
-             / "inputs"
-             / "candidate_divergence.json"))
+#: Bản gốc nằm trong lượt A/B đã khoá nên KHÔNG sửa tại chỗ: wave sau khai bằng LỚP ĐÍNH CHÍNH
+#: (`"corrects": <đường dẫn lớp trước>`) trong thư mục run của mình. Lớp hiện hành = cuối chuỗi
+#: `corrects` — tìm trong kho, không qua biến môi trường (review I3, 2026-10-11).
+KHAI_LECH_GOC = (GOC / "docs" / "evaluation" / "geometry" / "runs" / "hybrid-ab-pilot-readiness"
+                 / "inputs" / "candidate_divergence.json")
+
+
+def _khai_lech_hien_hanh(goc: Path = KHAI_LECH_GOC) -> Path:
+    runs = GOC / "docs" / "evaluation" / "geometry" / "runs"
+    lop = [*runs.glob("*/candidate_divergence.json"), *runs.glob("*/inputs/candidate_divergence.json")]
+    hien = goc
+    for _ in range(len(lop) + 1):
+        rel = hien.relative_to(GOC).as_posix()
+        sau = [p for p in lop if json.loads(p.read_text(encoding="utf-8")).get("corrects") == rel]
+        assert len(sau) <= 1, f"hai lớp cùng đính chính {rel}: {sorted(map(str, sau))}"
+        if not sau:
+            return hien
+        hien = sau[0]
+    raise AssertionError("chuỗi `corrects` có vòng")
+
+
+KHAI_LECH = _khai_lech_hien_hanh()
 
 
 def test_C2b_candidate_hien_tai_phai_duoc_KHAI(nguong):

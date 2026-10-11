@@ -1,0 +1,1408 @@
+{
+ "A": {
+  "contents": [
+   {
+    "parts": [
+     {
+      "text": "Đề bài:\n\"\"\"\n<<PROBLEM_TEXT>>\n\"\"\""
+     }
+    ],
+    "role": "user"
+   }
+  ],
+  "generationConfig": {
+   "maxOutputTokens": 8192,
+   "temperature": 0.0
+  },
+  "systemInstruction": {
+   "parts": [
+    {
+     "text": "Bạn đọc một đề hình học không gian và CHỈ được gọi các hàm dựng hình đã cung cấp.\n1. Đọc từng mệnh đề. Mỗi dữ kiện, mỗi phép dựng, mỗi câu hỏi ⇒ một lời gọi hàm. Gọi TẤT CẢ trong một lượt trả lời.\n2. `quotes`: chép NGUYÊN VĂN các đoạn đề làm căn cứ cho lời gọi; không diễn đạt lại, không thêm số.\n3. Không thêm dữ kiện đề không nói, không suy hệ quả. Điều phải chứng minh, mệnh đề 'nếu … thì', câu phủ định KHÔNG phải dữ kiện.\n4. Mệnh đề không có hàm phù hợp ⇒ gọi `unsupported` với lý do.\n5. `call_id` dạng c1, c2, …; `depends_on` liệt kê các lời gọi tạo ra điểm/khối mà lời gọi này dùng.\n6. Không viết toạ độ, không viết mã."
+    }
+   ]
+  },
+  "toolConfig": {
+   "functionCallingConfig": {
+    "allowedFunctionNames": [
+     "altitude",
+     "ask_angle_line_plane",
+     "ask_angle_plane_plane",
+     "ask_area",
+     "ask_distance_lines",
+     "ask_distance_point_plane",
+     "ask_length",
+     "ask_volume",
+     "centroid",
+     "equal_length",
+     "face_perpendicular_base",
+     "height",
+     "midpoint",
+     "orthogonal_projection",
+     "perpendicular_line_plane",
+     "perpendicular_lines",
+     "prism",
+     "pyramid",
+     "rectangle",
+     "regular_polygon",
+     "regular_pyramid",
+     "right_angle",
+     "segment_length",
+     "unsupported"
+    ],
+    "mode": "ANY"
+   }
+  },
+  "tools": [
+   {
+    "functionDeclarations": [
+     {
+      "description": "Đa giác đều (tam giác đều, hình vuông, lục giác đều) với các đỉnh đã nêu; cạnh nếu đề nêu.",
+      "name": "regular_polygon",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        },
+        "side": {
+         "description": "cạnh, nếu đề nêu",
+         "nullable": true,
+         "type": "STRING"
+        },
+        "vertices": {
+         "description": "các đỉnh theo thứ tự vòng quanh",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "minItems": 3,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "vertices",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Hình chữ nhật với bốn đỉnh đã nêu.",
+      "name": "rectangle",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        },
+        "vertices": {
+         "description": "bốn đỉnh theo vòng",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 4,
+         "minItems": 4,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "vertices",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Góc vuông tại một đỉnh (tam giác vuông tại B ⇒ đỉnh B, hai điểm A, C).",
+      "name": "right_angle",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        },
+        "rays": {
+         "description": "hai điểm trên hai cạnh góc vuông",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "ARRAY"
+        },
+        "vertex": {
+         "description": "đỉnh góc vuông",
+         "type": "STRING"
+        }
+       },
+       "required": [
+        "vertex",
+        "rays",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Độ dài một đoạn thẳng do đề cho.",
+      "name": "segment_length",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        },
+        "segment": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "ARRAY"
+        },
+        "value": {
+         "description": "độ dài CHÉP từ đề: số dương (4, 2/3, √3, 3√3/4) hoặc theo ký hiệu a (a, 2a, a√3, a√3/2)",
+         "type": "STRING"
+        }
+       },
+       "required": [
+        "segment",
+        "value",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Đường thẳng vuông góc với mặt phẳng (SA ⊥ (ABC), SA vuông góc với mặt phẳng đáy).",
+      "name": "perpendicular_line_plane",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "line": {
+         "description": "hai điểm của đường thẳng, vd [S, A]",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "ARRAY"
+        },
+        "plane": {
+         "description": "các điểm của mặt phẳng, vd [A, B, C]",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "minItems": 3,
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "line",
+        "plane",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Đề nói một đoạn LÀ ĐƯỜNG CAO của khối (SA là đường cao của hình chóp S.ABC).",
+      "name": "altitude",
+      "parameters": {
+       "properties": {
+        "apex": {
+         "description": "đỉnh khối",
+         "type": "STRING"
+        },
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "foot": {
+         "description": "chân đường cao, điểm trên mặt đáy",
+         "type": "STRING"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        },
+        "solid": {
+         "description": "ký hiệu khối, vd S.ABC hoặc ABC.A'B'C'",
+         "type": "STRING"
+        }
+       },
+       "required": [
+        "apex",
+        "foot",
+        "solid",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Đề nói hình chiếu vuông góc của một điểm lên một mặt phẳng là một điểm.",
+      "name": "orthogonal_projection",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "image": {
+         "description": "hình chiếu (ảnh) của điểm",
+         "type": "STRING"
+        },
+        "plane": {
+         "description": "mặt phẳng chiếu lên",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "minItems": 3,
+         "type": "ARRAY"
+        },
+        "point": {
+         "description": "điểm được chiếu",
+         "type": "STRING"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "point",
+        "plane",
+        "image",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Hai đường thẳng vuông góc (SA ⊥ AB). Một lời gọi cho MỖI cặp.",
+      "name": "perpendicular_lines",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "line1": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "ARRAY"
+        },
+        "line2": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "line1",
+        "line2",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Hai đoạn bằng nhau (SA = AB).",
+      "name": "equal_length",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        },
+        "segment_a": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "ARRAY"
+        },
+        "segment_b": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "segment_a",
+        "segment_b",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Chiều cao của một khối do đề cho.",
+      "name": "height",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        },
+        "solid": {
+         "description": "ký hiệu khối, vd S.ABC hoặc ABC.A'B'C'",
+         "type": "STRING"
+        },
+        "value": {
+         "description": "độ dài CHÉP từ đề: số dương (4, 2/3, √3, 3√3/4) hoặc theo ký hiệu a (a, 2a, a√3, a√3/2)",
+         "type": "STRING"
+        }
+       },
+       "required": [
+        "solid",
+        "value",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Mặt bên (một đỉnh ngoài đáy + một cạnh đáy) vuông góc với mặt đáy.",
+      "name": "face_perpendicular_base",
+      "parameters": {
+       "properties": {
+        "base": {
+         "description": "mặt đáy",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "minItems": 3,
+         "type": "ARRAY"
+        },
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "face": {
+         "description": "mặt bên, vd [S, A, B]",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 3,
+         "minItems": 3,
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "face",
+        "base",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Gọi một điểm là trung điểm của một đoạn.",
+      "name": "midpoint",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "point": {
+         "description": "tên trung điểm",
+         "type": "STRING"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        },
+        "segment": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "point",
+        "segment",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Gọi một điểm là trọng tâm của một đa giác.",
+      "name": "centroid",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "point": {
+         "description": "tên trọng tâm",
+         "type": "STRING"
+        },
+        "polygon": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "minItems": 3,
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "point",
+        "polygon",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Khối chóp với đỉnh và đáy đã nêu.",
+      "name": "pyramid",
+      "parameters": {
+       "properties": {
+        "apex": {
+         "description": "nhãn một điểm của đề, vd S, A, A'",
+         "type": "STRING"
+        },
+        "base": {
+         "description": "đáy theo thứ tự vòng quanh",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "minItems": 3,
+         "type": "ARRAY"
+        },
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "apex",
+        "base",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Khối chóp ĐỀU: đáy đa giác đều, chân đường cao tại tâm đáy.",
+      "name": "regular_pyramid",
+      "parameters": {
+       "properties": {
+        "apex": {
+         "description": "nhãn một điểm của đề, vd S, A, A'",
+         "type": "STRING"
+        },
+        "base": {
+         "description": "đáy theo thứ tự vòng quanh",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "minItems": 3,
+         "type": "ARRAY"
+        },
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "apex",
+        "base",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Khối lăng trụ với hai đáy tương ứng; `right` khi đề nói lăng trụ đứng/đều.",
+      "name": "prism",
+      "parameters": {
+       "properties": {
+        "base": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "minItems": 3,
+         "type": "ARRAY"
+        },
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        },
+        "right": {
+         "description": "lăng trụ ĐỨNG (đề nói đứng/đều)",
+         "type": "BOOLEAN"
+        },
+        "top": {
+         "description": "đáy trên, cùng thứ tự với đáy dưới (A ↔ A')",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "minItems": 3,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "base",
+        "top",
+        "right",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Đề hỏi thể tích một khối.",
+      "name": "ask_volume",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        },
+        "solid": {
+         "description": "ký hiệu khối, vd S.ABC hoặc ABC.A'B'C'",
+         "type": "STRING"
+        }
+       },
+       "required": [
+        "solid",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Đề hỏi độ dài một đoạn.",
+      "name": "ask_length",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        },
+        "segment": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "segment",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Đề hỏi khoảng cách từ một điểm tới một mặt phẳng.",
+      "name": "ask_distance_point_plane",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "plane": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 3,
+         "minItems": 3,
+         "type": "ARRAY"
+        },
+        "point": {
+         "description": "nhãn một điểm của đề, vd S, A, A'",
+         "type": "STRING"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "point",
+        "plane",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Đề hỏi khoảng cách giữa hai đường thẳng (chéo nhau).",
+      "name": "ask_distance_lines",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "line1": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "ARRAY"
+        },
+        "line2": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "line1",
+        "line2",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Đề hỏi góc giữa đường thẳng và mặt phẳng (trả cos²).",
+      "name": "ask_angle_line_plane",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "line": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "maxItems": 2,
+         "minItems": 2,
+         "type": "ARRAY"
+        },
+        "plane": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "minItems": 3,
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "line",
+        "plane",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Đề hỏi góc giữa hai mặt phẳng (trả cos²).",
+      "name": "ask_angle_plane_plane",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "plane1": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "minItems": 3,
+         "type": "ARRAY"
+        },
+        "plane2": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "minItems": 3,
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "plane1",
+        "plane2",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Đề hỏi diện tích một đa giác.",
+      "name": "ask_area",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "polygon": {
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "minItems": 3,
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        }
+       },
+       "required": [
+        "polygon",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     },
+     {
+      "description": "Mệnh đề không ánh xạ được vào thư viện — engine sẽ từ chối trung thực.",
+      "name": "unsupported",
+      "parameters": {
+       "properties": {
+        "call_id": {
+         "description": "id ngắn, duy nhất trong bài, vd c1",
+         "type": "STRING"
+        },
+        "depends_on": {
+         "description": "id các lời gọi mà lời gọi này cần (khai báo của AI; engine tự kiểm)",
+         "items": {
+          "type": "STRING"
+         },
+         "type": "ARRAY"
+        },
+        "quotes": {
+         "description": "các đoạn NGUYÊN VĂN của đề (một dữ kiện có thể trải nhiều câu)",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        },
+        "reason": {
+         "description": "vì sao mệnh đề không ánh xạ được vào thư viện",
+         "minLength": 1,
+         "type": "STRING"
+        }
+       },
+       "required": [
+        "reason",
+        "call_id",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "B": {
+  "contents": [
+   {
+    "parts": [
+     {
+      "text": "Đề bài:\n\"\"\"\n<<PROBLEM_TEXT>>\n\"\"\""
+     }
+    ],
+    "role": "user"
+   }
+  ],
+  "generationConfig": {
+   "maxOutputTokens": 8192,
+   "responseMimeType": "application/json",
+   "responseSchema": {
+    "properties": {
+     "facts": {
+      "items": {
+       "description": "MỘT dữ kiện có kiểu. Phẳng (một đối tượng, các ô theo `kind`) để lược đồ structured output của provider diễn đạt được.",
+       "properties": {
+        "ambiguous": {
+         "description": "AI không chắc cách hiểu ⇒ planner từ chối, không đoán",
+         "type": "BOOLEAN"
+        },
+        "at": {
+         "description": "đỉnh góc vuông · ảnh hình chiếu",
+         "nullable": true,
+         "type": "STRING"
+        },
+        "id": {
+         "minLength": 1,
+         "type": "STRING"
+        },
+        "kind": {
+         "enum": [
+          "solid",
+          "polygon_shape",
+          "right_angle",
+          "length",
+          "equal_lengths",
+          "perpendicular",
+          "altitude",
+          "projection",
+          "point_def",
+          "question",
+          "unsupported"
+         ],
+         "type": "STRING"
+        },
+        "measure": {
+         "description": "độ dài này là của gì: một đoạn có tên, cạnh đáy, cạnh bên, chiều cao, mọi cạnh (lập phương, tứ diện đều)",
+         "enum": [
+          "segment",
+          "base_edge",
+          "lateral_edge",
+          "height",
+          "edge"
+         ],
+         "nullable": true,
+         "type": "STRING"
+        },
+        "negated": {
+         "description": "mệnh đề bị phủ định trong đề",
+         "type": "BOOLEAN"
+        },
+        "point": {
+         "description": "nhãn một điểm của đề, vd S, A, A'",
+         "nullable": true,
+         "type": "STRING"
+        },
+        "point_kind": {
+         "enum": [
+          "midpoint",
+          "centroid"
+         ],
+         "nullable": true,
+         "type": "STRING"
+        },
+        "points": {
+         "description": "đỉnh đa giác / đoạn / mặt phẳng tuỳ loại",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "nullable": true,
+         "type": "ARRAY"
+        },
+        "points_a": {
+         "description": "toán hạng 1: 1 điểm, 2 điểm = đường thẳng, ≥3 = mặt phẳng",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "nullable": true,
+         "type": "ARRAY"
+        },
+        "points_b": {
+         "description": "toán hạng 2",
+         "items": {
+          "description": "nhãn một điểm của đề, vd S, A, A'",
+          "type": "STRING"
+         },
+         "nullable": true,
+         "type": "ARRAY"
+        },
+        "quantity": {
+         "enum": [
+          "volume",
+          "area",
+          "length",
+          "distance",
+          "angle"
+         ],
+         "nullable": true,
+         "type": "STRING"
+        },
+        "quotes": {
+         "description": "đoạn NGUYÊN VĂN của đề làm căn cứ",
+         "items": {
+          "type": "STRING"
+         },
+         "minItems": 1,
+         "type": "ARRAY"
+        },
+        "reason": {
+         "nullable": true,
+         "type": "STRING"
+        },
+        "regular": {
+         "description": "đề nói khối ĐỀU",
+         "nullable": true,
+         "type": "BOOLEAN"
+        },
+        "right": {
+         "description": "đề nói lăng trụ ĐỨNG",
+         "nullable": true,
+         "type": "BOOLEAN"
+        },
+        "role": {
+         "description": "premise = đề cho; prove = điều phải chứng minh; condition = trong 'nếu … thì'; question = đề hỏi",
+         "enum": [
+          "premise",
+          "prove",
+          "condition",
+          "question"
+         ],
+         "type": "STRING"
+        },
+        "shape": {
+         "enum": [
+          "equilateral_triangle",
+          "square",
+          "regular_hexagon",
+          "regular_polygon",
+          "rectangle",
+          "triangle"
+         ],
+         "nullable": true,
+         "type": "STRING"
+        },
+        "solid": {
+         "description": "ký hiệu khối như đề viết: S.ABC, ABC.A'B'C', ABCD (tứ diện)",
+         "nullable": true,
+         "type": "STRING"
+        },
+        "solid_type": {
+         "enum": [
+          "pyramid",
+          "prism",
+          "tetrahedron",
+          "cube",
+          "cuboid"
+         ],
+         "nullable": true,
+         "type": "STRING"
+        },
+        "value": {
+         "description": "độ dài CHÉP từ đề: số dương (4, 2/3, √3, 3√3/4) hoặc theo ký hiệu a (a, 2a, a√3, a√3/2)",
+         "nullable": true,
+         "type": "STRING"
+        }
+       },
+       "required": [
+        "id",
+        "kind",
+        "role",
+        "quotes"
+       ],
+       "type": "OBJECT"
+      },
+      "type": "ARRAY"
+     }
+    },
+    "required": [
+     "facts"
+    ],
+    "type": "OBJECT"
+   },
+   "temperature": 0.0
+  },
+  "systemInstruction": {
+   "parts": [
+    {
+     "text": "Bạn đọc một đề hình học không gian và CHỈ trích dữ kiện theo lược đồ; KHÔNG chọn phép dựng, KHÔNG tính.\n1. Mỗi mệnh đề ⇒ một dữ kiện: khối, hình dạng đa giác, góc vuông, độ dài, hai đoạn bằng nhau, vuông góc, đường cao, hình chiếu, điểm định nghĩa (trung điểm/trọng tâm), câu hỏi.\n2. `role`: premise (đề cho) · prove (điều phải chứng minh) · condition (trong 'nếu … thì') · question (đề hỏi).\n3. Mệnh đề phủ định ⇒ `negated = true`. Không chắc cách hiểu ⇒ `ambiguous = true`; không đoán.\n4. `quotes`: chép NGUYÊN VĂN đoạn đề; không thêm số, không suy hệ quả, không thêm dữ kiện đề không nói.\n5. Độ dài: `measure` = segment (đoạn có tên) · base_edge · lateral_edge · height · edge (mọi cạnh); giữ ký hiệu a.\n6. Không viết toạ độ, không viết mã."
+    }
+   ]
+  }
+ },
+ "source_commit": "2990d87d"
+}
