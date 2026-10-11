@@ -71,6 +71,7 @@ import {
   annotationAnchor,
   annotationsAt,
   placeAnnotationLabels,
+  projectionWitnessesAt,
   witnessesShown,
 } from "./scene3d-annotations";
 import { auxiliaryHiddenAt } from "./scene3d-auxiliary";
@@ -1822,11 +1823,12 @@ export function Scene3DWorkspace({
         (m.material as THREE.Material | undefined)?.dispose?.();
       });
     }
-    const ds = witnessesShown(scene, nhanSoDo);
+    // Review I1: cộng đoạn vuông góc PHỤ của điểm hình chiếu đã có mặt ở bước này — cùng cách vẽ, chân do backend phát.
+    const ds = [...witnessesShown(scene, nhanSoDo), ...projectionWitnessesAt(scene, coMatNhan)];
     for (const w of ds) nhom.add(vatNhanChung(w));
     if (typeof window !== "undefined") (window as any).__geo3d_witness_ids = ds.map((w) => w.id);
     veRef.current?.();
-  }, [scene, nhanSoDo]);
+  }, [scene, nhanSoDo, coMatNhan]);
 
   // W2 · F — LƯỚI NỀN tuỳ chọn: mảnh, nhạt, nằm dưới đáy hình (mặt z thấp nhất của cảnh), ô theo cỡ cảnh — không
   // số toạ độ, không đơn vị. Bật/tắt chỉ thêm/bớt nhóm này rồi vẽ lại một khung: camera, bước, lựa chọn không đổi.

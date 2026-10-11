@@ -221,6 +221,9 @@ export interface SceneObject {
    * từ tên biến (`AB_length`) và không tự tính giá trị.
    */
   annotation?: QuantityAnnotation;
+  /** Review I1 — điểm dựng bằng hình chiếu vuông góc: đoạn vuông góc PHỤ từ `from` tới chân (= chính điểm này) +
+   *  hai phương ký hiệu vuông góc, do backend tính (cùng dạng `QuantityAnnotation.witness`). Không phải cạnh khối. */
+  perpendicular_witness?: QuantityAnnotation["witness"];
   /**
    * HÌNH CONG — tham số ngữ nghĩa, **không phải lưới**.
    *

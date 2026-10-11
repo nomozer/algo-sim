@@ -11,12 +11,31 @@ gọi đã có sẵn: module này KHÔNG gọi provider, KHÔNG nhập `pipeline
 """
 from __future__ import annotations
 
+from fractions import Fraction
 from typing import Any
 
 from app.simulation.geometry import metric as _metric
 from app.simulation.geometry_functions import KetQuaTuyen, dung_tu_loi_goi
+from app.simulation.semantic_program.quantity_annotations import _nhan_chung
 from app.simulation.semantic_program.scene3d import build_scene3d
 from app.simulation.semantic_program.simulation_state import build_simulation_state
+
+
+def _gan_nhan_chung_hinh_chieu(canh: dict[str, Any], spec: Any, mem: dict[str, Any]) -> None:
+    """Điểm dựng bằng `project_onto` mang đoạn vuông góc PHỤ (điểm → chân) + hai phương ký hiệu vuông góc tại chân, cùng
+    helper với nhân chứng khoảng cách. Chân phải trùng toạ độ điểm đã dựng; lệch ⇒ ném (cảnh bị từ chối)."""
+    theo_id = {o["id"]: o for o in canh["objects"]}
+    for s in spec.statements:
+        e = getattr(s, "expr", None)
+        if getattr(s, "kind", None) != "construct_point" or getattr(e, "kind", None) != "project_onto":
+            continue
+        w = _nhan_chung(e.point, e.target, mem)
+        o = theo_id.get(s.target_var)
+        if w is None or o is None:
+            continue
+        if list(map(Fraction, w["foot"])) != list(map(Fraction, o["xyz"])):
+            raise ValueError(f"chân vuông góc của {s.target_var} lệch toạ độ đã dựng")
+        o["perpendicular_witness"] = w
 
 
 def run_function_route(problem_text: str, plan: Any) -> KetQuaTuyen:
@@ -25,7 +44,8 @@ def run_function_route(problem_text: str, plan: Any) -> KetQuaTuyen:
         return r
     try:
         with _metric.using(r.chart_metric):
-            canh = build_scene3d(build_simulation_state(r.spec, r.exec_result))
+            canh = build_scene3d(build_simulation_state(r.spec, r.exec_result, r.declared_topology))
+            _gan_nhan_chung_hinh_chieu(canh, r.spec, r.exec_result.final_memory)
     except Exception as e:  # noqa: BLE001 — cảnh hỏng ⇒ từ chối có mã, không phục vụ nửa vời
         return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", f"{type(e).__name__}: {e}", trace=r.trace)
     if not canh.get("objects"):

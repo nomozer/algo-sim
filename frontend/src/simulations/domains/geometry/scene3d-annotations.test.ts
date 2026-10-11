@@ -8,7 +8,8 @@
 import { describe, expect, it } from "vitest";
 import type { Scene3D } from "./scene3d-model";
 import {
-  annotationsAt, annotationAnchor, DEFAULT_ANNOTATION_VIEW, NEO_TOI_DA, placeAnnotationLabels, witnessesShown,
+  annotationsAt, annotationAnchor, DEFAULT_ANNOTATION_VIEW, NEO_TOI_DA, placeAnnotationLabels, projectionWitnessesAt,
+  witnessesShown,
 } from "./scene3d-annotations";
 
 /** W18: "Hiện tất cả" — cùng tập nhãn khả dụng mà W17 hiện khi cả hai công tắc bật. */
@@ -277,5 +278,33 @@ describe("đặt nhãn số đo (§15.5)", () => {
     const m = placeAnnotationLabels([n("thap", 200, 150, 1), n("cao", 200, 150, 5)], [], KHUNG);
     expect(m.get("cao")!.y).toBe(126);
     expect(m.get("thap")!.y).toBe(156);
+  });
+});
+
+/* Review I1 — điểm dựng bằng hình chiếu vuông góc mang đoạn vuông góc PHỤ + ký hiệu tại CHÂN do backend phát
+ * (`perpendicular_witness`). Hiện đúng khi điểm chiếu đã có mặt ở bước đang xem (bất biến #31). */
+describe("nhân chứng hình chiếu (review I1)", () => {
+  const canhChieu = (): Scene3D => ({
+    free_objects: ["A", "B", "C", "S"],
+    objects: [
+      P("A", ["0", "0", "0"]), P("B", ["1", "0", "0"]), P("C", ["0", "1", "0"]), P("S", ["0", "0", "1"]),
+      { ...P("K", ["3/8", "3/8", "1/4"]), origin: "derived", producer: "construct_point", depends: ["A"],
+        perpendicular_witness: { from: "A", foot: ["3/8", "3/8", "1/4"], on: "derived_K_plane",
+          marker: { u: ["-3/8", "-3/8", "3/4"], v: ["-3/8", "-3/8", "-1/4"] } } },
+    ],
+  } as unknown as Scene3D);
+
+  it("điểm chiếu chưa có mặt ở bước này ⇒ không vẽ đoạn vuông góc", () => {
+    expect(projectionWitnessesAt(canhChieu(), new Set(["A", "B", "C", "S"]))).toEqual([]);
+  });
+
+  it("điểm chiếu có mặt ⇒ đoạn từ điểm gốc tới chân, ký hiệu dựng tại CHÍNH chân backend phát", () => {
+    const [w, ...con] = projectionWitnessesAt(canhChieu(), new Set(["A", "B", "C", "S", "K"]));
+    expect(con).toEqual([]);
+    expect(w.id).toBe("perpendicular:K");
+    expect(w.from).toEqual([0, 0, 0]);
+    expect(w.foot).toEqual([3 / 8, 3 / 8, 1 / 4]);
+    expect(w.u).toEqual([-3 / 8, -3 / 8, 3 / 4]);
+    expect(w.v).toEqual([-3 / 8, -3 / 8, -1 / 4]);
   });
 });

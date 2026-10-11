@@ -22,6 +22,7 @@ Một điểm ngoài đáy chỉ được đặt khi CÓ lời gọi xác địn
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass, field
 from fractions import Fraction
 from itertools import combinations
@@ -101,6 +102,27 @@ class KetQuaTuyen:
     planner: dict[str, Any] = field(default_factory=dict)
     #: Kiểm một lời gọi (dict) trên hình ĐÃ dựng: True/False, None = không kiểm được. Chỉ có khi SERVED.
     checker: Any = field(default=None, repr=False, compare=False)
+    #: Hợp đồng CHỈ mang tô-pô khối đề đã khai (`hop_dong_to_po_da_khai`) — cùng một giá trị cho bổ sung dựng hình và bày cảnh.
+    declared_topology: Any = None
+
+
+def hop_dong_to_po_da_khai(calls: tuple[LoiGoi, ...]) -> Any:
+    """Tô-pô khối ĐỀ ĐÃ KHAI → `RequestContract(solid_topology=…)`, thẩm quyền ① của `formation.lop_khoi`.
+
+    Chỉ khi có đúng một khối, là chóp, và câu nguồn của nó viết ký hiệu chấm `S.ABC` khớp đỉnh + đáy của lời gọi.
+    "Tứ diện ABCD" không nêu đỉnh — đỉnh trong lời gọi là lựa chọn của mô hình/planner ⇒ None, không bịa tô-pô.
+    Thiếu tô-pô, formation đọc khối từ quan hệ có kiểu, và phép chiếu `project_onto` A→(SBC) từng đổi gốc S.ABC thành A.SBC.
+    """
+    from app.simulation.semantic_program.request_contract import PyramidTopologySpec, RequestContract
+
+    khoi = [c for c in calls if c.fn in ("pyramid", "prism")]
+    if len(khoi) != 1 or khoi[0].fn != "pyramid":
+        return None
+    a, nhan = khoi[0].args, r"A-Za-z0-9'′"
+    ky_hieu = re.escape(a.apex) + r"\s*\.\s*" + "".join(map(re.escape, a.base))
+    if not any(re.search(rf"(?<![{nhan}]){ky_hieu}(?![{nhan}])", q) for q in khoi[0].quotes):
+        return None
+    return RequestContract(solid_topology=PyramidTopologySpec(apex=a.apex, base_cycle=tuple(a.base)))
 
 
 @dataclass
@@ -851,7 +873,8 @@ def dung_tu_loi_goi(problem_text: str, plan: Any) -> KetQuaTuyen:
         vr = validate_semantic_program(program)
         if not vr.ok:
             raise TuChoi("ENGINE_IR_INVALID", f"IR engine sinh ra không qua thẩm định: {vr.error}")
-        spec = hoan_thien_dung_hinh(vr.spec).spec
+        to_po = hop_dong_to_po_da_khai(calls)
+        spec = hoan_thien_dung_hinh(vr.spec, to_po).spec
         G = dung.metric()
         try:
             with _metric.using(G):
@@ -872,7 +895,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any) -> KetQuaTuyen:
             tra[cid] = f"cos²={he}" if bac == 0 else (_hien_thi_ky_hieu(v, bac, ky_hieu) if ky_hieu else he)
         return KetQuaTuyen("SERVED", answers=tra, trace=dung.trace, program=program, points=dict(dung.pts),
                            metric=G.as_json(), kernel_check=True, spec=spec, exec_result=ket, chart_metric=G,
-                           answer_exact=chinh_xac, length_unit=ky_hieu, checker=_kiem_tren_hinh(dung),
+                           answer_exact=chinh_xac, length_unit=ky_hieu, checker=_kiem_tren_hinh(dung), declared_topology=to_po,
                            calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quotes": list(c.quotes)}
                                   for c in calls])
     except TuChoi as e:

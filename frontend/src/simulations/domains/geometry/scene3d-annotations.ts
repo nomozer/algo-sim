@@ -144,6 +144,19 @@ export function witnessesShown(scene: Scene3D, entries: AnnotationEntry[]): Witn
   });
 }
 
+/** Review I1 — đoạn vuông góc PHỤ của điểm dựng bằng hình chiếu (`perpendicular_witness`, chân do kernel tính) khi
+ *  điểm ấy CÓ MẶT ở bước đang xem (`present` = id của `objectsAt`). Không thuộc khối, không phải chiều cao. */
+export function projectionWitnessesAt(scene: Scene3D, present: ReadonlySet<string>): WitnessShown[] {
+  const theoId = new Map(scene.objects.map((o) => [o.id, o]));
+  return scene.objects.flatMap((o) => {
+    const w = present.has(o.id) ? o.perpendicular_witness : undefined;
+    const tu = w ? theoId.get(w.from)?.xyz : undefined;
+    return w && tu
+      ? [{ id: `perpendicular:${o.id}`, from: toVec3(tu), foot: toVec3(w.foot), u: toVec3(w.marker.u), v: toVec3(w.marker.v) }]
+      : [];
+  });
+}
+
 /** Ô soi (§16.6): dữ kiện số trong chuỗi của đại lượng (`tangNhanManh`) và đầu vào trực tiếp
  *  (`numericalBasis`) — đọc từ cảnh backend phát, không tính gì. */
 export function quantitySources(scene: Scene3D, id: string): { givens: string[]; inputs: string[] } {
