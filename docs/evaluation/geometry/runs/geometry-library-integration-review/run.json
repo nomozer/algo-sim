@@ -1,0 +1,23 @@
+{
+  "schema": "geometry_library_integration_review/1",
+  "run_id": "geometry-library-integration-review",
+  "date": "2026-10-11",
+  "environment": "LOCAL",
+  "branch": "feat/geometry-library-expansion",
+  "reviewed_commit": "be6608a3",
+  "base_commit": "2990d87d",
+  "review_commit": "0343d5ed",
+  "source_changes": 0,
+  "branch_candidate_sha256": "8ff994c6e20ab982abd208dd8127cd6471bcc56509fd1809433e7a8f5f3601dd",
+  "locked_ab_candidate_sha256": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "findings": {"critical": 0, "important": 3, "minor": 7},
+  "focused_tests": {"passed": 311, "failed": 0},
+  "independent_probes": {"matched": 32, "total": 32, "arms": ["A", "B"]},
+  "no_override_run": {"failed": 8, "runner_token_cap": 6, "candidate_identity": 2},
+  "branch_identity_docs_run": {"passed": 173, "xfailed_strict": 2},
+  "full_backend_rerun": "NOT_RERUN_NO_SOURCE_CHANGE",
+  "screenshots": 12,
+  "visual_status": {"automated": "VERIFIED_BY_AUTOMATED_TEST", "agent": "AGENT_VISUALLY_INSPECTED", "human": "HUMAN_ACCEPTANCE_PENDING"},
+  "live_gemini_calls": 0,
+  "final_status": "GEOMETRY_LIBRARY_INTEGRATION_READINESS_AWAITING_APPROVAL"
+}
