@@ -24,9 +24,12 @@ from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
-from .registry import ExactNumber, Label, TuChoi
+from .registry import AUXILIARY_RULES, ExactNumber, Label, TuChoi, nhan_cua_de
 
-PLANNER_VERSION = "geometry-fact-planner/2"
+PLANNER_VERSION = "geometry-fact-planner/3"
+#: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
+#: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
+_NHAN_PHU = ("H", *(f"H{i}" for i in range(1, 100)))
 MAX_CALLS = 64
 
 FactKind = Literal["solid", "polygon_shape", "right_angle", "length", "equal_lengths", "perpendicular", "altitude",
@@ -68,6 +71,8 @@ class KeHoach:
     goals: list[dict[str, Any]] = field(default_factory=list)       # điều phải chứng minh: kiểm SAU khi dựng
     negated: list[dict[str, Any]] = field(default_factory=list)     # mệnh đề phủ định: phải SAI trên hình
     trace: list[dict[str, Any]] = field(default_factory=list)
+    auxiliary: list[dict[str, Any]] = field(default_factory=list)  # điểm phụ do luật phân rã mục tiêu đưa vào (`_phan_ra`)
+    taken: set[str] = field(default_factory=set)                    # nhãn của đề + của dữ kiện: điểm phụ không được trùng
     heights: dict[str, str] = field(default_factory=dict)           # khối → id dữ kiện chiều cao (chẩn đoán tính duy nhất)
     volume_asks: dict[str, str] = field(default_factory=dict)       # id câu hỏi thể tích → khối
     solids: dict[str, "_Khoi"] = field(default_factory=dict)
@@ -149,10 +154,13 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
     return facts
 
 
-def lap_ke_hoach(raw: Any) -> KeHoach:
-    """Dữ kiện có kiểu → kế hoạch lời gọi. Từ chối (`TuChoi`) khi dữ kiện mơ hồ, có điều kiện, thiếu ô, hay không ánh xạ được."""
+def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
+    """Dữ kiện có kiểu → kế hoạch lời gọi. Từ chối (`TuChoi`) khi dữ kiện mơ hồ, có điều kiện, thiếu ô, hay không ánh xạ được.
+    `problem_text` chỉ dùng để chọn nhãn điểm phụ không trùng đề (cổng nguồn kiểm lại độc lập)."""
     facts = doc_du_kien(raw)
     k = KeHoach()
+    k.taken = nhan_cua_de(problem_text) | {n for f in facts for v in (f.points, f.points_a, f.points_b, [f.at, f.point],
+                                                                       _nhan(f.solid or "")) for n in (v or []) if n}
     if mo := [f.id for f in facts if f.ambiguous]:
         raise TuChoi("AMBIGUOUS_FACT", f"AI đánh dấu mơ hồ: {mo} — không đoán cách hiểu", tuple(mo))
     if dk := [f.id for f in facts if f.role == "condition"]:
@@ -357,6 +365,9 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
             return phat(f.id, "ask_distance_point_plane", {"point": a[0], "plane": b[:3]}, q, "question(distance point–plane)")
         if loai == ("line", "line"):
             return phat(f.id, "ask_distance_lines", {"line1": a, "line2": b}, q, "question(distance line–line)")
+        if loai in (("point", "line"), ("line", "point")) and f.role == "question" and not f.negated:
+            p, dt = (a, b) if loai == ("point", "line") else (b, a)
+            return _phan_ra(f, q, k, phat, p[0], dt)
     if n == "angle":
         if loai == ("plane", "line"):
             a, b, loai = b, a, ("line", "plane")
@@ -365,3 +376,24 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
         if loai == ("plane", "plane"):
             return phat(f.id, "ask_angle_plane_plane", {"plane1": a, "plane2": b}, q, "question(angle plane–plane)")
     raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: câu hỏi {n} giữa {loai} chưa có hàm", (f.id,))
+
+
+def _phan_ra(f: TypedFact, q: list[str], k: KeHoach, phat, p: str, dt: list[str]) -> dict:
+    """PHÂN RÃ MỤC TIÊU, độ sâu 1: khoảng cách (điểm, đường) = độ dài từ điểm tới chân vuông góc PHỤ trên đường.
+    Chỉ cho câu hỏi khẳng định (đã chặn điều kiện/mơ hồ ở `lap_ke_hoach`, phủ định/chứng minh ở `_cau_hoi`). Không thêm dữ
+    kiện: hai lời gọi mang ĐÚNG quote của câu hỏi; cổng `kiem_nguon` kiểm lại khai báo này."""
+    luat = "distance(point,line)"
+    x = next((n for n in _NHAN_PHU if n not in k.taken), None)
+    if x is None:
+        raise TuChoi("PLAN_TOO_LARGE", f"{f.id}: hết nhãn điểm phụ", (f.id,))
+    k.taken.add(x)
+    fn_dung, fn_hoi = AUXILIARY_RULES[luat]
+    cid = f"{f.id}_aux"
+    phat(cid, fn_dung, {"point": p, "line": dt, "image": x}, q, f"{luat}→{fn_dung} (điểm phụ {x})")
+    c = phat(f.id, fn_hoi, {"segment": [p, x]}, q, f"{luat}→{fn_hoi}")
+    d = {"label": x, "rule": luat, "goal": f.id, "construct": cid, "ask": f.id, "point": p, "line": list(dt),
+         "quotes": list(dict.fromkeys(q)), "provenance": "DERIVED", "binding": "AUXILIARY"}
+    k.auxiliary.append(d)
+    k.trace.append({"fact": f.id, "step": "decompose_goal", "rule": luat, "calls": [cid, f.id], "auxiliary": x,
+                    "provenance": "DERIVED", "binding": "AUXILIARY"})
+    return c

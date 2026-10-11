@@ -562,11 +562,67 @@ def _so_neo(quotes: tuple[str, ...], seg: list[str] | None) -> list[tuple[Fracti
     return ra
 
 
-def kiem_nguon(calls: tuple[LoiGoi, ...], text: str) -> None:
-    """Cổng nguồn tất định — xem docstring module. Ném `TuChoi` ở lời gọi đầu tiên hỏng (theo thứ tự id)."""
+#: Luật PHÂN RÃ MỤC TIÊU của planner nhánh B (run `hybrid-goal-decomposition`, design option B slice 1): mục tiêu không có hàm
+#: `ask_*` riêng → (hàm dựng ĐIỂM PHỤ, hàm hỏi) SẴN CÓ. Điểm phụ không có trong đề và không bao giờ là giả thiết: nguồn của
+#: nó là chính câu hỏi; cổng chỉ nhận nó khi planner khai báo đúng luật (`_kiem_phu`). Nhánh A không khai báo được gì.
+AUXILIARY_RULES = {"distance(point,line)": ("orthogonal_projection_line", "ask_length")}
+#: "khoảng cách từ S đến (đường thẳng) BD": điểm và đường gắn vai trong CÙNG một cụm; cách nói khác ⇒ từ chối, không đoán.
+_KHOANG_CACH_DIEM_DUONG = re.compile(
+    r"khoảng cách\s+từ\s+(?:điểm\s+)?([A-Z][0-9]*'?)\s+(?:đến|tới)\s+(?:đường thẳng\s+)?([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![\w'])",
+    re.IGNORECASE)
+
+
+def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: set[str]) -> set[str]:
+    """Điểm phụ do planner khai: đúng luật, nhãn không trùng đề, hai lời gọi đúng hình dạng luật, câu hỏi nguồn có thật,
+    không điều kiện/chứng minh/phủ định, và gắn đúng điểm + đường. Trả id các lời gọi đã kiểm (bỏ qua ở vòng thường).
+    Nhãn phụ ở bất kỳ lời gọi nào KHÁC vẫn rơi vào `UNKNOWN_LABEL` của vòng thường."""
+    theo_id = {c.id: c for c in calls}
+    da: set[str] = set()
+    for d in phu:
+        x, luat = d.get("label"), d.get("rule")
+        if luat not in AUXILIARY_RULES:
+            raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x}: luật {luat!r} không có trong bảng phân rã")
+        if x in nhan:
+            raise TuChoi("AUXILIARY_LABEL_COLLISION", f"điểm phụ {x} trùng một nhãn của đề")
+        dung, hoi = theo_id.get(d.get("construct")), theo_id.get(d.get("ask"))
+        fn_dung, fn_hoi = AUXILIARY_RULES[luat]
+        p, dt, qs = d.get("point"), list(d.get("line") or []), tuple(d.get("quotes") or ())
+        if not (dung and hoi and dung.fn == fn_dung and hoi.fn == fn_hoi and dung.args.image == x
+                and dung.args.point == p and dung.args.line == dt and hoi.args.segment == [p, x]
+                and dung.quotes == hoi.quotes == qs and qs):
+            raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x}: lời gọi không khớp luật {luat}",
+                         tuple(i for i in (d.get("construct"), d.get("ask")) if i))
+        ids = (dung.id, hoi.id)
+        if lac := sorted(({p} | set(dt)) - nhan):
+            raise TuChoi("UNKNOWN_LABEL", f"{hoi.id}: nhãn {lac} không có trong đề", ids)
+        vai: list[str | None] = []                       # vai trò mệnh đề TẠI cụm "khoảng cách từ P đến XY" (quote có thể tự mang "Nếu")
+        for q in qs:
+            if (vt := _vi_tri(de, q)) is None:
+                raise TuChoi("QUOTE_NOT_IN_SOURCE", f"{hoi.id}: đoạn {q!r} không có nguyên văn trong đề", ids)
+            if _phu_dinh(de, vt[0], q):
+                raise TuChoi("NEGATED_CLAUSE", f"{hoi.id}: {q!r} mang phủ định", ids)
+            qn = chuan_hoa(q)
+            vai += [_vai_tro(de[:vt[0]] + qn[:m.start()], vt[0] + m.start()) for m in _KHOANG_CACH_DIEM_DUONG.finditer(qn)
+                    if m[1] == p and [m[2], m[3]] in (dt, dt[::-1])]
+        if not vai:
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{hoi.id}: câu hỏi không nói 'khoảng cách từ {p} đến {''.join(dt)}'", ids)
+        if "GOAL" in vai:
+            raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{hoi.id}: câu hỏi nằm trong điều phải chứng minh", ids)
+        if "CONDITIONAL" in vai:
+            raise TuChoi("CONDITIONAL_CLAUSE", f"{hoi.id}: câu hỏi nằm trong mệnh đề 'nếu … thì'", ids)
+        da |= set(ids)
+    return da
+
+
+def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...] = ()) -> None:
+    """Cổng nguồn tất định — xem docstring module. Ném `TuChoi` ở lời gọi đầu tiên hỏng (theo thứ tự id).
+    `auxiliary`: điểm phụ planner nhánh B khai (`AUXILIARY_RULES`); nhánh A không truyền ⇒ mọi nhãn phải có trong đề."""
     de = chuan_hoa(text)
     nhan = nhan_cua_de(de)
+    phu = _kiem_phu(tuple(auxiliary), calls, de, nhan)
     for c in sorted(calls, key=lambda c: c.id):
+        if c.id in phu:
+            continue
         vts = []
         for q in c.quotes:
             if (vt := _vi_tri(de, q)) is None:

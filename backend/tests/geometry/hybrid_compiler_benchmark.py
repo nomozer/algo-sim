@@ -325,9 +325,10 @@ def cases() -> list[dict]:
                                                       role="question", reason="mặt cầu ngoại tiếp chưa có trong thư viện")),
               _refused("unsupported")),
         # Library has the parts — composition / grammar
+        # Pre-registered gap "distance point→line = orthogonal_projection_line + ask_length (no single ask function)",
+        # closed by goal decomposition slice 1 (run `hybrid-goal-decomposition`); expectation unchanged.
         _case("B26", "composition", _with(sq, _ask("q", "Tính khoảng cách từ S đến BD.", "distance", points_a=["S"],
-                                                   points_b=["B", "D"])), _served(),
-              gap="distance point→line = orthogonal_projection_line + ask_length (no single ask function)"),
+                                                   points_b=["B", "D"])), _served()),
         _case("B27", "composition", _with(sq, _f("q", "unsupported", "Tính khoảng cách từ trung điểm của SC đến (SAB).",
                                                  role="question",
                                                  reason="toán hạng là điểm dẫn xuất không có tên (trung điểm của SC)")),
@@ -390,6 +391,8 @@ REFUSAL_CLASS = {
     "AMBIGUOUS_VALUE_QUOTE": "grounding", "UNGROUNDED_VALUE": "grounding", "SOURCE_OBJECT_MISMATCH": "grounding",
     "CONDITIONAL_CLAUSE": "grounding", "NEGATED_CLAUSE": "grounding", "GOAL_CLAUSE_NOT_PREMISE": "grounding",
     "AMBIGUOUS_FACT": "grounding", "AMBIGUOUS_REFERENCE": "grounding",
+    # added with goal decomposition slice 1 (run `hybrid-goal-decomposition`): auxiliary-point gate
+    "AUXILIARY_LABEL_COLLISION": "grounding", "AUXILIARY_RULE_MISMATCH": "malformed",
     # malformed facts / plan
     "SCHEMA_INVALID": "malformed", "FACT_INCOMPLETE": "malformed", "UNKNOWN_SOLID": "malformed", "NO_SOLID": "malformed",
     "DUPLICATE_CALL_ID": "malformed", "DEPENDENCY_CYCLE": "dependency", "DANGLING_DEPENDENCY": "dependency",

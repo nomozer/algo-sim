@@ -38,8 +38,9 @@ def _gan_nhan_chung_hinh_chieu(canh: dict[str, Any], spec: Any, mem: dict[str, A
         o["perpendicular_witness"] = w
 
 
-def run_function_route(problem_text: str, plan: Any) -> KetQuaTuyen:
-    r = dung_tu_loi_goi(problem_text, plan)
+def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = ()) -> KetQuaTuyen:
+    """`auxiliary` chỉ do `run_fact_route` truyền (điểm phụ của planner); nhánh A không có đường nào đặt nó."""
+    r = dung_tu_loi_goi(problem_text, plan, auxiliary)
     if r.status != "SERVED":
         return r
     try:
@@ -66,11 +67,12 @@ def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
     from app.simulation.geometry_functions.planner import PLANNER_VERSION, lap_ke_hoach
 
     try:
-        k = lap_ke_hoach(facts)
+        k = lap_ke_hoach(facts, problem_text)
     except TuChoi as e:
         return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, details=e.data, planner={"version": PLANNER_VERSION})
-    r = run_function_route(problem_text, {"calls": k.calls})
-    r.planner = {"version": PLANNER_VERSION, "calls": k.calls, "trace": k.trace, "goal_checks": {}, "negated_checks": {}}
+    r = run_function_route(problem_text, {"calls": k.calls}, tuple(k.auxiliary))
+    r.planner = {"version": PLANNER_VERSION, "calls": k.calls, "trace": k.trace, "auxiliary": k.auxiliary,
+                 "goal_checks": {}, "negated_checks": {}}
     if r.status != "SERVED":
         if r.code == "UNDERDETERMINED_POINT" and (khong := _hinh_khong_duy_nhat(k, r.details.get("points") or [])):
             return KetQuaTuyen("REFUSED", "FIGURE_NOT_UNIQUE", khong, r.failed_calls, trace=r.trace,
