@@ -1,5 +1,13 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Hybrid simulation capability probes — research branch
+
+Run: `docs/evaluation/geometry/runs/hybrid-simulation-capability-audit/`. Test only, no product code.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/tests/geometry/test_hybrid_simulation_capability_probes.py` | Offline typed-fact probes of the Hybrid route. It contains: `CURRENT` rows pinning today's served answer (oracle) or refusal code for simulation requests (constructions without a question, wording paraphrases, LINE/SEGMENT, degenerate cases); the "engine knows, Hybrid has no way in" section probe (IR + `construct_section` through the existing interpreter and Scene3D); `KNOWN_DEFECTS` as strict xfail (clause role inside the quote, ask gate, centre label exhaustion) | self (27 passed, 5 strict xfail) |
+
 ## Hybrid B compiler capability benchmark — research branch
 
 Run: `docs/evaluation/geometry/runs/hybrid-compiler-capability-audit/`. Test and measurement only; no product code.

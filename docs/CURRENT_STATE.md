@@ -1,8 +1,16 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — hybrid-slice1-main-integration, 2026-10-11
+## LOCAL override — hybrid-simulation-capability-audit, 2026-10-11
 
 Mới nhất:
+- Kiểm toán năng lực mô phỏng (nhánh nghiên cứu, không đổi mã sản phẩm, LIVE Gemini 0). Phần lớn thứ còn thiếu (thiết diện,
+  giao tuyến, mặt ⊥ đường, khối cong) engine/IR chung ĐÃ dựng được; Hybrid thiếu cửa vào (Registry, Typed Facts, planner).
+- **Lỗi CRITICAL mới:** cổng nguồn chung nhận mệnh đề "Nếu … thì" / "Chứng minh" nằm trong quote làm giả thiết
+  (`ISSUE-ARCH-GATE-CLAUSE-ROLE-INSIDE-QUOTE`). `LLM_ONLY` mặc định không dùng cổng này.
+- Đề xuất: S0 sửa cổng, rồi lát "thiết diện + giao tuyến". Report:
+  [`hybrid-simulation-capability-audit`](evaluation/geometry/runs/hybrid-simulation-capability-audit/report.md).
+
+Trước đó (hybrid-slice1-main-integration):
 - Hybrid B slice 1 (B26) + hai bản sửa Important đã tích hợp `main` bằng fast-forward `548066a8` → `a246dd19`; không merge
   commit, không cherry-pick.
 - Candidate `dda3a884` (product `62f0b18e`) verify 0 trên `main`; T3 FULL_PRODUCT_GATE_PASS trên `main` (pytest 8362/0,
@@ -99,7 +107,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > USER_DIRTY_STATE = có — `frontend/public/favicon.svg` untracked của người dùng, giữ nguyên; không stage/commit.
 > CURRENT_WAVE = HYBRID_AB_PILOT_READINESS (run hybrid-ab-pilot-readiness, LOCAL, cùng nhánh, live Gemini0): object-binding chính xác, observation ≠ proof; runner SMOKE24/FULL288 có identity riêng, shared output3072; 344 focused PASS,9 mutation killed,312 fake/network0; clean backend8068 PASS/1 skip/2 deselected tại2f1b457c. CORRECTS HYBRID_COMPILER_SELECTION: lịch sử nguyên byte, đọc cùng correction layer. Report/handoff của run là thẩm quyền; không tuyên bố safety population/visual/real-model.
 > FINAL_DECISION = HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW — offline GO có giới hạn kiểm chứng; SMOKE/FULL live NO-GO (prompt estimator chưa provider-bound, storage cause UNKNOWN, chưa phê duyệt riêng). Main giữ nguyên28ac1d61; không merge/push/default change; human visual acceptance NOT_PERFORMED.
-> CANONICAL_NEXT_ACTION = POST_HYBRID_SLICE1_PRIORITY_DECISION
+> CANONICAL_NEXT_ACTION = HYBRID_GATE_FIX_AND_SECTION_SLICE_DECISION
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 

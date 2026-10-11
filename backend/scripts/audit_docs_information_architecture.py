@@ -152,6 +152,9 @@ ALLOWED_CANONICAL_ACTIONS = [
     "HYBRID_SLICE1_MAIN_INTEGRATION_APPROVAL_DECISION",
     # hybrid-slice1-main-integration (2026-10-11): slice 1 on main; next is the user's choice among the open priorities.
     "POST_HYBRID_SLICE1_PRIORITY_DECISION",
+    # hybrid-simulation-capability-audit (2026-10-11): critical gate defect found; next is the user's decision on the S0
+    # gate fix and the recommended section / intersection-line slice.
+    "HYBRID_GATE_FIX_AND_SECTION_SLICE_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

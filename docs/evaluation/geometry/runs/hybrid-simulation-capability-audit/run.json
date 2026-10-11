@@ -1,0 +1,21 @@
+{
+  "schema": "hybrid_simulation_capability_audit/1",
+  "run_id": "hybrid-simulation-capability-audit",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-10-11",
+  "environment": "LOCAL (Windows)",
+  "branch": "research/hybrid-simulation-capability-audit (from main a6e27a78; not merged, not pushed)",
+  "preflight_verified": {"main": "a6e27a78 = origin/main", "registry_functions": 27, "cache_version": "125",
+                         "candidate": "dda3a884 (product 62f0b18e)", "default_mode": "LLM_ONLY", "differences_from_handoff": "none"},
+  "product_change": false,
+  "live_model_requests": 0,
+  "MEASUREMENT_CLASS": "OFFLINE_TYPED_FACT_PROBES (no fake-provider run, no real model, no browser, no human review)",
+  "HELD_OUT_CLAIM": "NO",
+  "EVALUATOR_INDEPENDENCE": "PARTIAL (probe expectations from an oracle that imports nothing from the product; same author)",
+  "probes": {"file": "backend/tests/geometry/test_hybrid_simulation_capability_probes.py", "passed": 27, "strict_xfail": 5},
+  "critical_findings": ["ISSUE-ARCH-GATE-CLAUSE-ROLE-INSIDE-QUOTE (routes A and B; wrong served answer reproduced)"],
+  "main_conclusion": "missing simulations (section, intersection line, plane ⊥ line, divide_segment, curved) are built by the shared engine/IR/Scene3D but have no Hybrid way in; genuinely missing primitives: apex from a given angle, centroid of > 3 vertices",
+  "recommended": "S0 gate fix (approval: shared gate change) → slice 1 section + intersection line (approval: Registry and Typed Facts surface)",
+  "deferred": ["B27", "B28", "curved on Hybrid", "general goal-directed search / CEGIS / DSL / FactGraph", "LINE/SEGMENT semantics", "orbit p1"],
+  "final_status": "HYBRID_SIMULATION_AUDIT_AWAITING_DECISION"
+}

@@ -1813,3 +1813,14 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-slice1-main-integratio
 - **VERIFICATION ON MAIN:** clean detached worktree — candidate dda3a884 verify 0; T3 FULL_PRODUCT_GATE_PASS (pytest 8362/0, vitest 1051).
 - **SCOPE:** B27/B28 and general goal-directed search not approved; LLM_ONLY unchanged; no real-model accuracy claim; LIVE Gemini 0. New open issue ISSUE-ARCH-LINE-SEGMENT-SEMANTIC-DISTINCTION.
 - **FINAL_DECISION:** HYBRID_SLICE1_INTEGRATED_ON_LOCAL_MAIN — push awaits the user's confirmation; next action POST_HYBRID_SLICE1_PRIORITY_DECISION.
+
+## WAVE_ID = HYBRID_SIMULATION_CAPABILITY_AUDIT
+
+REPORT = docs/evaluation/geometry/runs/hybrid-simulation-capability-audit/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-simulation-capability-audit/
+
+- **DATE / BRANCH:** 2026-10-11, LOCAL; research branch `research/hybrid-simulation-capability-audit` from main a6e27a78; not merged, not pushed.
+- **SCOPE:** audit + executable probes; no product change; LIVE Gemini 0; CACHE_VERSION 125 and candidate dda3a884 unchanged.
+- **FINDINGS:** 27 functions inventoried; coverage matrix in 9 groups; the main missing simulations (section, intersection line, plane ⊥ line, divide_segment, curved) are built by the shared engine/IR/Scene3D but have no Hybrid way in; genuinely missing primitives: apex from a given angle, centroid of > 3 vertices. CRITICAL new defect: clause role inside the quote (ISSUE-ARCH-GATE-CLAUSE-ROLE-INSIDE-QUOTE), reproduced in routes A and B.
+- **PROBES:** `test_hybrid_simulation_capability_probes.py` 27 passed, 5 strict xfail.
+- **FINAL_DECISION:** HYBRID_SIMULATION_AUDIT_AWAITING_DECISION — S0 gate fix, then the section / intersection-line slice (recommended).

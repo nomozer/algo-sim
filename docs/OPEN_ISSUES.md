@@ -1,5 +1,35 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-GATE-CLAUSE-ROLE-INSIDE-QUOTE
+
+- **description:** **CRITICAL.** The shared source gate (`registry.kiem_nguon`) reads the clause role only before the quote of a premise call. Fact functions such as `perpendicular_line_plane` lack the special case that constructions have, so a premise quote that carries its own "Nếu … thì" or "Chứng minh" is accepted as a given.
+  - Probe, with no ⊥ given: the control is `UNDERDETERMINED_POINT`.
+  - "Nếu SA vuông góc với (ABCD) thì SC = 5." typed as a premise → SC = √17 **served**, built from the condition.
+  - The same result for "Chứng minh rằng SA vuông góc với (ABCD)." and in route A.
+  - A quote that starts after "Nếu" is refused correctly.
+- **evidence:** `backend/tests/geometry/test_hybrid_simulation_capability_probes.py` (3 strict xfail); `docs/evaluation/geometry/runs/hybrid-simulation-capability-audit/report.md` §4.
+- **impact:** Wrong served answers are possible on the Hybrid routes (A and B) when the AI mis-types the clause role and quotes the whole sentence. The default `LLM_ONLY` route does not use this gate, so no user is affected today.
+- **scope:** `backend/app/simulation/geometry_functions/registry.py::kiem_nguon` (shared by A and B).
+- **status:** OPEN — fix proposed as S0 in the report; it changes the shared gate, so it needs the user's approval.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** S0, before any new Hybrid slice.
+- **default_switch_blocker:** YES
+
+### ISSUE-ARCH-CONSTRUCTION-WORDING-BREADTH
+
+- **description:** The source grammar for constructions admits few wordings. For projections, "Gọi H là hình chiếu … lên …" and "Hình chiếu … trên … là H" are served, but these are refused:
+  - "Kẻ AH vuông góc với SB tại H" (`PREDICATE_NOT_IN_QUOTE`);
+  - "Gọi H là chân đường vuông góc hạ từ A xuống SB" (`PREDICATE_NOT_IN_QUOTE`);
+  - "Dựng hình chiếu H của A lên SB" (`SOURCE_OBJECT_MISMATCH`);
+  - subscript labels such as M₁ (`UNKNOWN_LABEL`).
+- **evidence:** probes E02, E03, E05, E10 in `test_hybrid_simulation_capability_probes.py`.
+- **impact:** Fail-closed false refusals on common textbook wordings. Their frequency in real problems is not measured.
+- **scope:** Source grammar and label scanner only; no geometry change.
+- **status:** OPEN — slice 3 candidate in the audit report.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** after S0; needs a wording corpus or real-model measurement to prioritise.
+- **default_switch_blocker:** NO
+
 ### ISSUE-ARCH-LINE-SEGMENT-SEMANTIC-DISTINCTION
 
 - **description:** Distance from a point to "XY" is computed to the LINE XY.

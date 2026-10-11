@@ -9,9 +9,16 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = POST_HYBRID_SLICE1_PRIORITY_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_GATE_FIX_AND_SECTION_SLICE_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **Kiểm toán năng lực mô phỏng Hybrid (LOCAL, 2026-10-11, nhánh `research/hybrid-simulation-capability-audit`, run [`hybrid-simulation-capability-audit`](evaluation/geometry/runs/hybrid-simulation-capability-audit/report.md)):**
+  - Kết luận chính: thiết diện, giao tuyến, mặt ⊥ đường, chia đoạn và khối cong đã được engine/IR/Scene3D chung dựng (probe thực thi được). Hybrid chỉ thiếu cửa vào (Registry + Typed Facts + planner + ngữ pháp nguồn).
+  - Primitive thật sự thiếu: dựng đỉnh từ góc cho trước; trọng tâm đa giác > 3 đỉnh.
+  - Lỗi CRITICAL `ISSUE-ARCH-GATE-CLAUSE-ROLE-INSIDE-QUOTE` (cổng chung A/B) phải sửa trước (S0).
+  - Đề xuất: S0 → lát "thiết diện + giao tuyến" → song song → độ rộng cách diễn đạt.
+  - B27/B28/tìm kiếm tổng quát vẫn hoãn. Việc kế tiếp: người dùng quyết S0 và lát đề xuất.
 
 - **Hybrid B slice 1 ĐÃ TÍCH HỢP `main` (2026-10-11, fast-forward `548066a8` → `a246dd19`, run [`hybrid-slice1-main-integration`](evaluation/geometry/runs/hybrid-slice1-main-integration/report.md)):**
   - B26 (khoảng cách điểm–đường qua chân vuông góc phụ) cùng hai bản sửa Important của kiểm toán độc lập; T3 PASS trên `main`.

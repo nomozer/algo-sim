@@ -1,5 +1,22 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_SIMULATION_CAPABILITY_AUDIT
+
+REPORT = docs/evaluation/geometry/runs/hybrid-simulation-capability-audit/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-simulation-capability-audit/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = HYBRID_SIMULATION_AUDIT_AWAITING_DECISION
+CODE_COMMIT = a6e27a78
+VERIFICATION_COMMIT = a6e27a78
+MODEL_REQUEST_COUNT = 0
+
+Audit of Hybrid simulation capability with offline typed-fact probes (27 passed, 5 strict xfail). Shared engine
+builds sections (executable probe against an independent trapezoid oracle) that Hybrid cannot request. New CRITICAL
+gate defect: a premise quote carrying its own "Nếu … thì"/"Chứng minh" is used as a given (served √17 where the
+control is UNDERDETERMINED_POINT), in routes A and B; the default LLM_ONLY route does not use this gate. No product
+change, no real-model claim, no browser or human review of Hybrid scenes.
+
 ## WAVE_ID = HYBRID_SLICE1_MAIN_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-slice1-main-integration/report.md
