@@ -1,0 +1,15 @@
+FAILED tests/geometry/test_hybrid_section_slice.py::test_section_by_plane_through_an_edge_and_a_midpoint
+FAILED tests/geometry/test_hybrid_section_slice.py::test_diagonal_section_is_triangle_sac
+FAILED tests/geometry/test_hybrid_section_slice.py::test_section_through_three_lateral_midpoints_is_the_mid_square
+FAILED tests/geometry/test_hybrid_section_slice.py::test_cube_section_a1bd_is_equilateral_triangle
+FAILED tests/geometry/test_hybrid_section_slice.py::test_section_only_without_area_is_a_simulation
+FAILED tests/geometry/test_hybrid_section_slice.py::test_section_renamed_and_reordered_is_invariant
+FAILED tests/geometry/test_hybrid_section_slice.py::test_intersection_line_of_sab_and_scd_is_parallel_to_ab_through_s
+FAILED tests/geometry/test_hybrid_section_slice.py::test_intersection_line_of_sac_and_sbd_passes_through_s_and_the_centre
+FAILED tests/geometry/test_hybrid_section_slice.py::test_parallel_planes_have_no_intersection_line
+FAILED tests/geometry/test_hybrid_section_slice.py::test_section_grounding[Ch\u1ee9ng minh r\u1eb1ng thi\u1ebft di\u1ec7n c\u1ee7a h\xecnh ch\xf3p S.ABCD c\u1eaft b\u1edfi m\u1eb7t ph\u1eb3ng (MAB) l\xe0 h\xecnh thang.-MAB-GOAL_CLAUSE_NOT_PREMISE]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_section_grounding[N\u1ebfu thi\u1ebft di\u1ec7n c\u1ee7a h\xecnh ch\xf3p S.ABCD c\u1eaft b\u1edfi m\u1eb7t ph\u1eb3ng (MAB) l\xe0 h\xecnh thang th\xec SA = 3.-MAB-CONDITIONAL_CLAUSE]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_section_grounding[X\xe1c \u0111\u1ecbnh thi\u1ebft di\u1ec7n c\u1ee7a h\xecnh ch\xf3p S.ABCD c\u1eaft b\u1edfi m\u1eb7t ph\u1eb3ng (MCD).-MAB-PLANE_NOT_IN_QUOTE]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_section_grounding[M\u1eb7t ph\u1eb3ng (MAB) c\u1eaft h\xecnh ch\xf3p S.ABCD.-MAB-PREDICATE_NOT_IN_QUOTE]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_route_a_section_area
+14 failed, 2 passed in 5.47s

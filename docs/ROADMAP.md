@@ -9,9 +9,20 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_GATE_FIX_AND_SECTION_SLICE_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_S0_AND_SECTION_SLICE_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **S0 + lát thiết diện (LOCAL, 2026-10-11, nhánh nghiên cứu, chưa merge/push):**
+  - **S0** ([`hybrid-gate-clause-role-fix`](evaluation/geometry/runs/hybrid-gate-clause-role-fix/report.md)) sửa lỗi CRITICAL của cổng chung A/B:
+    - vai trò mệnh đề đọc tại vị từ trong quote;
+    - `ask_*` phải là câu hỏi;
+    - T3 PASS.
+  - **Lát 1** ([`hybrid-section-slice`](evaluation/geometry/runs/hybrid-section-slice/report.md)):
+    - Hybrid dựng được thiết diện, giao tuyến và diện tích thiết diện qua IR chung có sẵn;
+    - Registry tăng từ 27 lên 30 hàm, bề mặt provider A/B đổi có chủ đích;
+    - benchmark không đổi.
+  - Việc kế tiếp: người dùng review và quyết định tích hợp. Lát 2 (dựng song song) và lát 3 (cách diễn đạt) chưa duyệt.
 
 - **Kiểm toán năng lực mô phỏng Hybrid (LOCAL, 2026-10-11, nhánh `research/hybrid-simulation-capability-audit`, run [`hybrid-simulation-capability-audit`](evaluation/geometry/runs/hybrid-simulation-capability-audit/report.md)):**
   - Kết luận chính: thiết diện, giao tuyến, mặt ⊥ đường, chia đoạn và khối cong đã được engine/IR/Scene3D chung dựng (probe thực thi được). Hybrid chỉ thiếu cửa vào (Registry + Typed Facts + planner + ngữ pháp nguồn).

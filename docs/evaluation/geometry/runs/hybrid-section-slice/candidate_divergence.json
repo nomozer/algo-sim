@@ -1,0 +1,18 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-section-slice",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-gate-clause-role-fix/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "5a8e0ff619193f436f752435dda50e9f53bced6e73efd26dc7b85bdc6de419b0",
+  "current_candidate_source_commit": "eeceefbc",
+  "previous_candidate_hash": "fd71f0b49935283ef7160ec40620b398cde56d214d109ce4f0af81483d552308",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "reason": "User-approved slice 1 of the simulation capability audit: the Hybrid route can request sections, intersection lines and section areas (Registry section / intersection_line / ask_section_area, Typed Fact kinds section / intersection_line, one extraction-prompt rule), executed by the existing IR (construct_section, intersect_plane_plane, measure area) — backend/app/simulation/geometry_functions/{registry,planner,engine}.py, backend/app/ai/fact_extraction.py. Provider surfaces of A and B change by design; default LLM_ONLY unchanged. Not authorized for a pilot; the locked A/B candidate and evidence are untouched.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring or pooling.",
+    "live_requests": 0
+  }
+}

@@ -1,5 +1,34 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_SECTION_SLICE
+
+REPORT = docs/evaluation/geometry/runs/hybrid-section-slice/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-section-slice/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = HYBRID_S0_AND_SECTION_SLICE_AWAITING_REVIEW
+CODE_COMMIT = eeceefbc
+VERIFICATION_COMMIT = 3e0eebc8
+MODEL_REQUEST_COUNT = 0
+
+Sections, intersection lines and section areas on the Hybrid route through the existing IR. Independent Euclidean
+oracle: trapezoid 117/16, triangle SAC 18, mid square 1, cube A'BD 12; parallel planes refused. Provider surfaces of
+A and B change by design. Offline typed facts and route-A calls only; no real model, no browser, no human review.
+
+## WAVE_ID = HYBRID_GATE_CLAUSE_ROLE_FIX
+
+REPORT = docs/evaluation/geometry/runs/hybrid-gate-clause-role-fix/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-gate-clause-role-fix/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = HYBRID_GATE_CLAUSE_ROLE_FIXED_ON_RESEARCH_BRANCH
+CODE_COMMIT = 8129f4ed
+VERIFICATION_COMMIT = 9a390c71
+MODEL_REQUEST_COUNT = 0
+
+Fix of the CRITICAL gate defect found by HYBRID_SIMULATION_CAPABILITY_AUDIT (clause role inside the quote) and of the
+ask-gate question check, shared by routes A and B. T3 FULL_PRODUCT_GATE_PASS at 9a390c71 (pytest 8409/0, vitest 1051).
+
 ## WAVE_ID = HYBRID_SIMULATION_CAPABILITY_AUDIT
 
 REPORT = docs/evaluation/geometry/runs/hybrid-simulation-capability-audit/report.md

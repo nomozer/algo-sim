@@ -10,7 +10,9 @@
 - **evidence:** `backend/tests/geometry/test_hybrid_simulation_capability_probes.py` (3 strict xfail); `docs/evaluation/geometry/runs/hybrid-simulation-capability-audit/report.md` §4.
 - **impact:** Wrong served answers are possible on the Hybrid routes (A and B) when the AI mis-types the clause role and quotes the whole sentence. The default `LLM_ONLY` route does not use this gate, so no user is affected today.
 - **scope:** `backend/app/simulation/geometry_functions/registry.py::kiem_nguon` (shared by A and B).
-- **status:** OPEN — fix proposed as S0 in the report; it changes the shared gate, so it needs the user's approval.
+- **status:** RESOLVED on the research branch `research/hybrid-simulation-capability-audit` (S0, run `hybrid-gate-clause-role-fix`, `8129f4ed`; T3 PASS at `9a390c71`).
+  - The role is now read at every anchor inside the quote, and any earlier "nếu" in the sentence counts as conditional.
+  - Not yet on `main`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** S0, before any new Hybrid slice.
 - **default_switch_blocker:** YES
@@ -52,7 +54,10 @@
 - **evidence:** `docs/evaluation/geometry/runs/hybrid-slice1-review/report.md` §2 (Important 1, reproduced by the independent reviewer).
 - **impact:** Possible answer to a question the text did not ask, or a hidden contradiction with a stated value, in routes A and B. Pre-existing; not caused by slice 1.
 - **scope:** `registry.kiem_nguon` (shared by A and B).
-- **status:** OPEN.
+- **status:** MOSTLY RESOLVED on the research branch (S0, run `hybrid-gate-clause-role-fix`, `8129f4ed`).
+  - Every `ask_*` now needs a sentence that asks (tính / tìm / xác định / hỏi / bao nhiêu / ?), otherwise `NOT_ASKED_IN_SOURCE`.
+  - **Residual:** a sentence that asks something else while asserting a value of the asked quantity ("Khi khoảng cách … bằng 4 thì SC bằng bao nhiêu?" typed as `ask_distance`) is still answered by the generic `ask_*` path. Only the point–line path has the phrase-bound asserted-value check.
+  - Not yet on `main`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** Its own wave. It changes refusals in both routes, so A/B evidence must be re-read.
 - **default_switch_blocker:** NO

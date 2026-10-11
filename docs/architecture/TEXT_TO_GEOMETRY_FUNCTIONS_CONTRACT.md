@@ -21,14 +21,24 @@ Sửa contract ⇒ wave mới + test. Bản v1 bất biến: `../evaluation/geom
 `a · 2a · a√3 · a√3/2 · 3a/2`. `depends_on` là khai báo của AI: treo ⇒ `DANGLING_DEPENDENCY`, vòng ⇒ `DEPENDENCY_CYCLE`;
 engine tự tính thứ tự dựng, không tin khai báo ấy.
 
-## 2. Thư viện hàm (24)
+## 2. Thư viện hàm (30)
+
+Danh sách đúng theo mã tại run `hybrid-section-slice`, 2026-10-11. Hằng `REGISTRY_VERSION` trong mã vẫn là
+`geometry-functions/3`; bộ hàm được định danh bằng băm khai báo hàm `f2ec9698…`, ghim trong
+`test_hybrid_goal_decomposition.py::test_provider_surfaces_are_pinned`.
 
 | nhóm | hàm |
 |---|---|
 | dữ kiện | `regular_polygon` · `rectangle` · `right_angle` · `segment_length` · `equal_length` · `height` · `perpendicular_line_plane` · `perpendicular_lines` · `altitude` · `orthogonal_projection` · `face_perpendicular_base` |
-| dựng | `midpoint` · `centroid` (tam giác) · `pyramid` · `regular_pyramid` · `prism` |
-| hỏi | `ask_volume` · `ask_area` · `ask_length` · `ask_distance_point_plane` · `ask_distance_lines` · `ask_angle_line_plane` · `ask_angle_plane_plane` (góc trả `cos²`) |
+| dựng | `midpoint` · `centroid` (tam giác) · `pyramid` · `regular_pyramid` · `prism` · `orthogonal_projection_line` · `intersect_line_line` · `intersect_line_plane` · `section` (thiết diện khối × mặt qua ba điểm có tên) · `intersection_line` (giao tuyến hai mặt) |
+| hỏi | `ask_volume` · `ask_area` · `ask_section_area` · `ask_length` · `ask_distance_point_plane` · `ask_distance_lines` · `ask_angle_line_plane` · `ask_angle_plane_plane` (góc trả `cos²`) |
 | thoát | `unsupported` ⇒ `OUT_OF_SCOPE` |
+
+Thiết diện và giao tuyến dùng **IR chung đã có**: `construct_section`, `assign` với `intersect_plane_plane`, `measure area`.
+Hybrid không có engine thứ hai. Mỗi cặp (khối, mặt cắt) chỉ dựng một thiết diện. Các mã từ chối:
+- `PARALLEL_PLANES`: hai mặt song song hoặc trùng nhau;
+- `SECTION_EMPTY`: mặt cắt không cắt khối;
+- mã của kernel: mặt qua ba điểm thẳng hàng.
 
 Mỗi **cấu trúc câu** là một hàm riêng (đường cao, hình chiếu, hai đường vuông góc…), không phải danh sách đồng nghĩa
 của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cần** (§3.4), không phải bộ hiểu câu.
@@ -36,8 +46,13 @@ của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cầ
 ## 3. Cổng nguồn (`kiem_nguon`) — theo thứ tự
 
 1. **Vị trí**: mọi quote nằm trong đề, so sau khi bỏ khoảng trắng (`QUOTE_NOT_IN_SOURCE`); nhãn là nhãn của đề (`UNKNOWN_LABEL`).
-2. **Vai trò mệnh đề** (mọi hàm trừ `ask_*`/`unsupported`): sau "chứng minh/CMR/chứng tỏ" mà chưa có "biết" ⇒
-   `GOAL_CLAUSE_NOT_PREMISE`; sau "nếu" mà chưa tới "thì" ⇒ `CONDITIONAL_CLAUSE`. Dữ kiện sau "biết" trong câu hỏi là tiền đề.
+2. **Vai trò mệnh đề** (mọi hàm trừ `ask_*`/`unsupported`), đọc tại **mọi mốc** của lời gọi trong quote: đầu quote, từ
+   khoá vị từ, nhãn của lời gọi, cụm "X là giao điểm/hình chiếu". Quy tắc từ run `hybrid-gate-clause-role-fix`:
+   - sau "chứng minh/CMR/chứng tỏ" mà chưa có "biết" ⇒ `GOAL_CLAUSE_NOT_PREMISE`;
+   - có "nếu" ở trước mốc trong cùng câu ⇒ `CONDITIONAL_CLAUSE`, kể cả khi mốc ở vế sau "thì";
+   - dữ kiện sau "biết" trong câu hỏi là tiền đề.
+   **Câu hỏi** (`ask_*`): câu chứa quote phải hỏi (tính / tìm / xác định / hỏi / bao nhiêu / ?), nếu không ⇒
+   `NOT_ASKED_IN_SOURCE`.
 3. **Phủ định** trong quote hoặc ngay trước nó trong cùng mệnh đề (cắt ở `, ; :`) ⇒ `NEGATED_CLAUSE`.
 4. **Vị từ + tham chiếu**: từ khoá định nghĩa ⇒ `PREDICATE_NOT_IN_QUOTE`; mặt phẳng được nhắc (nhóm nhãn trùng tập
    điểm, hoặc "đáy" với mặt đáy) ⇒ `PLANE_NOT_IN_QUOTE`; đoạn/đường và điểm đóng vai riêng (ảnh hình chiếu, chân đường

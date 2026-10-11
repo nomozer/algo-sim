@@ -4,7 +4,7 @@
 
 - `main` = `a246dd19` sau fast-forward Hybrid B slice 1 (run `hybrid-slice1-main-integration`; remote: tra `git log -1 origin/main`). Trước đó expansion tích hợp ở `9e3c9789`; orbit p1 là ngoại lệ được chấp nhận (P1).
 - Trên `main`: ADR Hybrid B (A là baseline, chỉ dựa trên offline), benchmark compiler 30 ca, lát 1. T3 PASS trên `main` (pytest 8362/0, vitest 1051). B27/B28 chưa được duyệt.
-- Kiểm toán năng lực mô phỏng (nhánh `research/hybrid-simulation-capability-audit`): engine chung đã dựng được thiết diện/giao tuyến nhưng Hybrid không có cửa vào. Lỗi CRITICAL `ISSUE-ARCH-GATE-CLAUSE-ROLE-INSIDE-QUOTE`. Đề xuất S0 sửa cổng rồi lát thiết diện.
+- Nhánh `research/hybrid-simulation-capability-audit` (chưa merge): kiểm toán năng lực mô phỏng → S0 sửa lỗi CRITICAL cổng chung (vai trò mệnh đề trong quote; `ask_*` phải là câu hỏi) → lát 1 thiết diện/giao tuyến/diện tích thiết diện qua IR có sẵn (Registry 30, bề mặt A/B đổi có chủ đích). Candidate 5a8e0ff6. Xem runs `hybrid-section-slice`, `hybrid-gate-clause-role-fix`.
 - Lát 1 (B26, đã duyệt): planner phân rã khoảng cách điểm–đường qua chân vuông góc phụ (DERIVED/AUXILIARY); cổng nguồn chỉ nhận điểm phụ qua khai báo của planner. Benchmark 19/9/0/2 (trước 18/9/0/3). B27 cần lát 2 (đổi lược đồ, chưa duyệt); B28 là vấn đề từ khoá.
 - Kiểm toán độc lập (run `hybrid-slice1-review`): không có lỗi Critical; sửa 2 lỗi Important — cổng chỉ trả lời khi câu thật sự hỏi (`NOT_ASKED_IN_SOURCE`), nhãn phụ tránh H₁/H_1/ΔSHD.
 - Product 62f0b18e, candidate dda3a884 (refreeze 9da4e853); A/B 12da4768 không đổi; bề mặt provider A/B không đổi; LLM_ONLY/cache125; LIVE Gemini0.
@@ -202,7 +202,7 @@ Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FU
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_GATE_FIX_AND_SECTION_SLICE_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_S0_AND_SECTION_SLICE_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

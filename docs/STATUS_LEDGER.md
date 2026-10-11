@@ -1824,3 +1824,23 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-simulation-capability-
 - **FINDINGS:** 27 functions inventoried; coverage matrix in 9 groups; the main missing simulations (section, intersection line, plane ⊥ line, divide_segment, curved) are built by the shared engine/IR/Scene3D but have no Hybrid way in; genuinely missing primitives: apex from a given angle, centroid of > 3 vertices. CRITICAL new defect: clause role inside the quote (ISSUE-ARCH-GATE-CLAUSE-ROLE-INSIDE-QUOTE), reproduced in routes A and B.
 - **PROBES:** `test_hybrid_simulation_capability_probes.py` 27 passed, 5 strict xfail.
 - **FINAL_DECISION:** HYBRID_SIMULATION_AUDIT_AWAITING_DECISION — S0 gate fix, then the section / intersection-line slice (recommended).
+
+## WAVE_ID = HYBRID_GATE_CLAUSE_ROLE_FIX
+
+REPORT = docs/evaluation/geometry/runs/hybrid-gate-clause-role-fix/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-gate-clause-role-fix/
+
+- **DATE / APPROVAL:** 2026-10-11, LOCAL; user approved S0 (shared gate change) on the research branch.
+- **FIX:** 8129f4ed — clause role read at every anchor inside a premise quote, earlier "nếu" ⇒ CONDITIONAL; ask_* requires an asking sentence (NOT_ASKED_IN_SOURCE). RED 11 failing; 16 focused, 3 mutants killed; cluster 704 passed; benchmark byte-identical.
+- **GATES:** candidate fd71f0b4 (refreeze f8b50b46) declared; T3 FULL_PRODUCT_GATE_PASS at 9a390c71 (pytest 8409/0, vitest 1051). LIVE Gemini 0.
+
+## WAVE_ID = HYBRID_SECTION_SLICE
+
+REPORT = docs/evaluation/geometry/runs/hybrid-section-slice/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-section-slice/
+
+- **DATE / APPROVAL:** 2026-10-11, LOCAL; user approved slice 1 (Registry and Typed Facts surface change) after S0.
+- **CHANGE:** eeceefbc — Registry section / intersection_line / ask_section_area (27 → 30), Typed Fact kinds section / intersection_line, one prompt rule; engine emits existing IR (construct_section, intersect_plane_plane, measure area); PARALLEL_PLANES, SECTION_EMPTY. Provider surfaces A/B change by design (pinned).
+- **TESTS:** RED 14 failing at f261e9e7; 19 focused with an independent oracle and 3 mutants; cluster 720 passed, 5 xfailed; benchmark byte-identical.
+- **GATES:** candidate 5a8e0ff6 (refreeze 3e0eebc8) declared; T3 recorded in run.json. LIVE Gemini 0.
+- **FINAL_DECISION:** HYBRID_S0_AND_SECTION_SLICE_AWAITING_REVIEW.

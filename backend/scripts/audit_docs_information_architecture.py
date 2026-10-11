@@ -155,6 +155,9 @@ ALLOWED_CANONICAL_ACTIONS = [
     # hybrid-simulation-capability-audit (2026-10-11): critical gate defect found; next is the user's decision on the S0
     # gate fix and the recommended section / intersection-line slice.
     "HYBRID_GATE_FIX_AND_SECTION_SLICE_DECISION",
+    # hybrid-section-slice (2026-10-11): S0 + section slice done on the research branch; next is the user's review and
+    # integration decision.
+    "HYBRID_S0_AND_SECTION_SLICE_INTEGRATION_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 
