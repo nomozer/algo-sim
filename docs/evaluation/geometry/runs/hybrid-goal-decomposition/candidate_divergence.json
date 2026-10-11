@@ -1,0 +1,18 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-goal-decomposition",
+  "corrects": "docs/evaluation/geometry/runs/geometry-library-important-fixes/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "cac3022f506f082eed10e82a3f1a7d7706d4a6597405decf94d5ab83bbbdd2bf",
+  "current_candidate_source_commit": "f874b4dd",
+  "previous_candidate_hash": "a8dc02fc3f6efc34168c4a73fb8abdf569998cfd69eebb5f760a8a9c7cb1a2ee",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "reason": "User-approved goal decomposition slice 1 (B26) on the research branch: the Hybrid B planner decomposes distance(point, line) into orthogonal_projection_line onto a compiler-introduced auxiliary foot plus ask_length, admitted by the source gate only through the planner's declaration (backend/app/simulation/geometry_functions/planner.py, registry.py, engine.py; backend/app/ai/function_route.py). No Typed Facts, prompt or provider-surface change; default LLM_ONLY unchanged. Not authorized for a pilot; the locked A/B candidate and evidence are untouched.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring or pooling.",
+    "live_requests": 0
+  }
+}

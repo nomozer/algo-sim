@@ -4,9 +4,9 @@
 
 - `main` = `origin/main` = `548066a8`. Expansion đã tích hợp bằng fast-forward ở `9e3c9789`; orbit p1 là ngoại lệ được chấp nhận (P1).
 - Nhánh nghiên cứu `research/hybrid-compiler-capability-audit` chưa merge/push; trên nó có ADR Hybrid B (A là baseline, chỉ dựa trên offline) và benchmark compiler 30 ca.
-- Kết quả benchmark: 18/9/0/3; lỗ hổng là kết hợp có điểm phụ (B26, B27) và từ khoá "tâm" (B28). Không sửa mã sản phẩm.
-- Candidate a8dc02fc verify 0; A/B 12da4768 không đổi; LLM_ONLY/cache125; LIVE Gemini0.
-- HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_AWAITING_APPROVAL — xem `evaluation/geometry/runs/hybrid-compiler-capability-audit/` (design.md, plan.md).
+- Lát 1 (B26, đã duyệt): planner phân rã khoảng cách điểm–đường qua chân vuông góc phụ (DERIVED/AUXILIARY); cổng nguồn chỉ nhận điểm phụ qua khai báo của planner. Benchmark 19/9/0/2 (trước 18/9/0/3). B27 cần lát 2 (đổi lược đồ, chưa duyệt); B28 là vấn đề từ khoá.
+- Product f874b4dd, candidate cac3022f (refreeze d8d636b5); A/B 12da4768 không đổi; bề mặt provider A/B không đổi; LLM_ONLY/cache125; LIVE Gemini0.
+- HYBRID_GOAL_DECOMPOSITION_SLICE1_AWAITING_REVIEW — xem `evaluation/geometry/runs/hybrid-goal-decomposition/`.
 
 > Handoff cô đọng cho session mới. Code/test thắng khi mâu thuẫn với docs.
 > Không chứa secret hoặc raw model output; giới hạn 300 dòng. Lịch sử từng wave:
@@ -193,14 +193,14 @@ Thay đổi chưa commit của người dùng: không restore, sửa, stage ho�
 
 ## 6. Bước tiếp theo duy nhất
 
-Run hiện tại: `hybrid-compiler-capability-audit` (LOCAL, nhánh nghiên cứu; không đổi sản phẩm; candidate a8dc02fc, cache125); trước đó `geometry-library-important-fixes` (product 4ad89909), `geometry-library-expansion` (8ff994c6) và review `geometry-library-integration-review`.
+Run hiện tại: `hybrid-goal-decomposition` (LOCAL, nhánh nghiên cứu; lát 1 B26; product f874b4dd, candidate cac3022f, cache125); trước đó `hybrid-compiler-capability-audit` (không đổi sản phẩm), `geometry-library-important-fixes` (product 4ad89909), `geometry-library-expansion` (8ff994c6) và review `geometry-library-integration-review`.
 Run A/B trước: `hybrid-ab-pilot-readiness` (product `cfe2ada5`, candidate `12da4768`, giữ nguyên).
 344 focused PASS, 9 mutation killed, 24+288 fake/network=0; clean backend8068 PASS/1 skip/2 deselected; report.md của run.
 Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FULL live NO-GO, không merge/push/default change. `frontend/public/favicon.svg` là của user.
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_GOAL_DECOMPOSITION_SLICE1_REVIEW
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

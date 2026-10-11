@@ -1,5 +1,22 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_GOAL_DECOMPOSITION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-goal-decomposition/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-goal-decomposition/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = HYBRID_GOAL_DECOMPOSITION_SLICE1_AWAITING_REVIEW
+CODE_COMMIT = f874b4dd
+VERIFICATION_COMMIT = d8d636b5
+MODEL_REQUEST_COUNT = 0
+
+Goal decomposition slice 1: distance(point, line) through a compiler-introduced auxiliary foot (DERIVED/AUXILIARY),
+admitted by the source gate only through the planner's declaration. Benchmark (same 30 cases and oracle) moves from
+18/9/0/3 to 19/9/0/2 in both evaluations; only B26 changes. RED baseline at 4a3a4938 kept as a log. Candidate
+divergence declared as a correction layer of the important-fixes declaration. Compiler and fake-provider evidence
+only — no real-model claim. Same author for tests, oracle and implementation.
+
 ## WAVE_ID = HYBRID_COMPILER_CAPABILITY_AUDIT
 
 REPORT = docs/evaluation/geometry/runs/hybrid-compiler-capability-audit/report.md

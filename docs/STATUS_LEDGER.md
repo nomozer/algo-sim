@@ -1778,3 +1778,15 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-compiler-capability-au
 - **BENCHMARK:** 30 pre-registered Vietnamese cases, independent oracle (267eeb58). Both evaluations (verified facts; fake-provider pipeline) give 18 correct served, 9 correct refusals, 0 wrong served, 3 false refusals (B26 point→line distance, B27 unnamed derived operand, B28 "tâm" cue). The commit message of 267eeb58 says 19/8; corrected in the report.
 - **CHANGE:** none to the compiler; options compared in `design.md`, plan in `plan.md`. Candidate a8dc02fc verify 0 (no product change). LIVE Gemini 0.
 - **FINAL_DECISION:** HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_AWAITING_APPROVAL.
+
+## WAVE_ID = HYBRID_GOAL_DECOMPOSITION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-goal-decomposition/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-goal-decomposition/
+
+- **DATE / BRANCH:** 2026-10-11, LOCAL; research branch `research/hybrid-compiler-capability-audit`; not merged, not pushed, no PR.
+- **APPROVAL:** user approved design option B, slice 1 only (B26); slice 2 (B27, Typed Facts schema) not approved; B28 stays a grounding issue.
+- **CHANGE:** planner decomposes distance(point, line) into orthogonal_projection_line onto a fresh auxiliary foot (H, H1, …) plus ask_length; the source gate admits it only through the planner's declaration (AUXILIARY_RULES); engine marks it DERIVED/AUXILIARY (f874b4dd). Gate defect found and fixed during the work: clause role is read at the matched phrase.
+- **TESTS:** RED at 4a3a4938 = 38 failing; GREEN 40/40 focused (9 mutants killed); cluster 629 passed, 4 xfailed. Benchmark 19/9/0/2 in both evaluations (was 18/9/0/3); provider surfaces unchanged.
+- **IDENTITY:** candidate refrozen d8d636b5 (tree cac3022f, product f874b4dd); divergence declared as a correction layer; A/B 12da4768 untouched. LIVE Gemini 0.
+- **FINAL_DECISION:** HYBRID_GOAL_DECOMPOSITION_SLICE1_AWAITING_REVIEW.

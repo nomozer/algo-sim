@@ -1,14 +1,30 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-HYBRID-AUXILIARY-POINT-LIMITS
+
+- **description:** Known limits of goal decomposition slice 1:
+  - **The label is not reserved by syntax.** The auxiliary foot uses the first free label of H, H1, …, which the learner sees. The Registry `Label` pattern is shared with A's provider surface, so a syntactically reserved namespace would change that surface. Collision is excluded by construction and re-checked at the gate.
+  - **Only one wording is accepted.** The gate binds "khoảng cách từ P đến (đường thẳng) XY". Other wordings ("khoảng cách giữa … và …", "d(S, BD)") are refused `SOURCE_OBJECT_MISMATCH`.
+  - **A point on the line gives a coinciding foot.** The distance is served as 0, and the foot is drawn on top of the point under a second label.
+- **evidence:** `docs/evaluation/geometry/runs/hybrid-goal-decomposition/report.md` §5.
+- **impact:** Fail-closed false refusals on other wordings; a possibly confusing scene for the zero case. No wrong answers in the tests.
+- **scope:** `geometry_functions/planner.py::_phan_ra`, `registry.py::_kiem_phu`.
+- **status:** OPEN — recorded, not fixed; human visual review not performed.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** after review of slice 1.
+- **default_switch_blocker:** NO
+
 ### ISSUE-ARCH-HYBRID-COMPILER-NO-GOAL-COMPOSITION
 
 - **description:** The Hybrid B planner maps one fact to one call and cannot introduce an auxiliary object to reach a goal. Benchmark B26 (distance from a point to a line = projection foot + length) is refused `UNSUPPORTED_CAPABILITY`, and B27 (distance from an unnamed midpoint, "trung điểm của SC", to a plane) is refused `OUT_OF_SCOPE`, although the Registry has every part needed.
 - **evidence:** `docs/evaluation/geometry/runs/hybrid-compiler-capability-audit/report.md` §5; strict xfail in `backend/tests/geometry/test_hybrid_compiler_benchmark.py`.
 - **impact:** Correct refusals (fail-closed, 0 wrong served), but common Grade 11–12 questions are not served.
 - **scope:** `geometry_functions/planner.py` and the source gate (B26); Typed Facts schema (B27).
-- **status:** OPEN — design option B awaiting approval (`design.md`, `plan.md` of the run).
+- **status:** PARTLY RESOLVED.
+  - B26 is closed by goal decomposition slice 1 (run `hybrid-goal-decomposition`, 2026-10-11, research branch, awaiting review).
+  - B27 (unnamed derived operand) stays OPEN. It needs slice 2, a Typed Facts schema change, which is not approved.
 - **owner_class:** ARCHITECTURE
-- **suggested_wave:** after `HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION`.
+- **suggested_wave:** slice 2 only after a separate approval.
 - **default_switch_blocker:** NO
 
 ### ISSUE-ARCH-HYBRID-SOURCE-CUE-CENTRE-OF-SQUARE

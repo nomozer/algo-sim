@@ -9,9 +9,15 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_GOAL_DECOMPOSITION_SLICE1_REVIEW
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **Goal decomposition slice 1 (LOCAL, 2026-10-11, cùng nhánh nghiên cứu, chưa merge/push):**
+  - Người dùng duyệt phương án B, chỉ lát 1. Compiler hiện có dựng điểm phụ (chân vuông góc, DERIVED/AUXILIARY) cho khoảng cách điểm–đường.
+  - Benchmark 30 ca: 19/9/0/2 (trước 18/9/0/3); B26 đã phục vụ, 29 ca còn lại không đổi.
+  - Không đổi Typed Facts hay bề mặt provider; `LLM_ONLY` vẫn mặc định.
+  - Việc kế tiếp: người dùng review [`hybrid-goal-decomposition/report.md`](evaluation/geometry/runs/hybrid-goal-decomposition/report.md). Lát 2 (B27) cần phê duyệt riêng.
 
 - **Hybrid compiler audit (LOCAL, 2026-10-11, nhánh `research/hybrid-compiler-capability-audit`, chưa merge/push):**
   - ADR [`architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md): Hybrid B là hướng ưu tiên; A là baseline. Quyết định dựa trên offline, `LLM_ONLY` vẫn mặc định.

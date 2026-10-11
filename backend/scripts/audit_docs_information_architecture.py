@@ -146,6 +146,8 @@ ALLOWED_CANONICAL_ACTIONS = [
     "GEOMETRY_LIBRARY_INTEGRATION_APPROVAL_DECISION",
     # hybrid-compiler-capability-audit (2026-10-11): compiler gaps need a design; next is the user's approval of it.
     "HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION",
+    # hybrid-goal-decomposition (2026-10-11): slice 1 (B26) implemented on the research branch; next is the user's review.
+    "HYBRID_GOAL_DECOMPOSITION_SLICE1_REVIEW",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

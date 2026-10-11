@@ -1,0 +1,39 @@
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_point_off_the_line_b26
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_auxiliary_provenance_and_trace
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_point_on_the_line_is_distance_zero
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_dependency_on_derived_points
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_two_goals_get_distinct_auxiliaries
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_renamed_points
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_reordered_clauses_and_facts
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_scaling_multiplies_the_squared_distance
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_auxiliary_label_avoids_every_label_of_the_text
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_missing_data
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_contradictory_data
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_several_configurations_are_refused
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_line_not_determined
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_degenerate_line
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_question_in_a_proof_clause_is_refused_by_the_gate
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_question_inside_a_conditional_clause_is_refused_by_the_gate
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_negated_quote_is_refused_by_the_gate
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_question_that_names_another_point_is_refused
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_question_that_names_another_line_is_refused
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_question_without_distance_wording_is_refused
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_route_a_cannot_introduce_an_auxiliary
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_tampered_declarations_are_refused[<lambda>-AUXILIARY_LABEL_COLLISION]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_tampered_declarations_are_refused[<lambda>-AUXILIARY_RULE_MISMATCH0]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_tampered_declarations_are_refused[<lambda>-AUXILIARY_RULE_MISMATCH1]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_tampered_declarations_are_refused[<lambda>-AUXILIARY_RULE_MISMATCH2]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_tampered_declarations_are_refused[<lambda>-AUXILIARY_RULE_MISMATCH3]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_tampered_declarations_are_refused[<lambda>-UNKNOWN_LABEL]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_mutant_is_killed[gate: no collision check]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_mutant_is_killed[gate: no structural match]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_mutant_is_killed[gate: no conditional check]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_mutant_is_killed[gate: no proof-goal check]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_mutant_is_killed[gate: no negation check]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_mutant_is_killed[gate: no point/line binding]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_mutant_is_killed[planner: decomposes negated goals]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_mutant_is_killed[planner: ignores taken labels]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_mutant_is_killed[planner: asks the wrong segment]
+FAILED tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B26-facts]
+FAILED tests/geometry/test_hybrid_compiler_benchmark.py::test_case_outcome[B26-pipeline]
+38 failed, 96 passed, 4 xfailed in 11.51s
