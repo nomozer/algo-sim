@@ -32,6 +32,14 @@
   "t3": [{"commit": "d8d636b5", "result": "FULL_PRODUCT_GATE_FAIL",
           "pytest": {"passed": 8333, "failed": 1, "skipped": 1, "xfailed": 4},
           "failed_test": "test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI (candidate divergence not yet declared)",
+          "vitest": 1051, "build": "PASS", "demo_replay": "PASS", "crash_surface": "PASS"},
+         {"commit": "76a60617", "result": "FULL_PRODUCT_GATE_PASS",
+          "pytest": {"passed": 8334, "failed": 0, "skipped": 1, "deselected": 2, "xfailed": 4},
           "vitest": 1051, "build": "PASS", "demo_replay": "PASS", "crash_surface": "PASS"}],
+  "worktrees": {"registered_before": 2, "peak": 4, "after": 2, "removed": ["goal-decomp-red", "goal-decomp-verify"],
+                "force_used": false, "freed_bytes_verify": 1700483287, "freed_red_approx": "1.6G (du -sh)",
+                "kept": "hybrid-compiler-audit (research branch, not integrated)",
+                "unregistered_leftover": ".superpowers/worktrees/geometry-library-expansion (~551 KB, CodexSandboxOffline; needs an administrator)"},
+  "integration": {"offline": "GO conditional on user review", "real_model": "NO-GO (not measured)", "slice2": "NO-GO (not approved)"},
   "final_status": "HYBRID_GOAL_DECOMPOSITION_SLICE1_AWAITING_REVIEW"
 }
