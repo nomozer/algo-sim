@@ -216,3 +216,61 @@ def test_candidate_ghi_dung_commit_va_cay_sach(manifest):
         "không định danh được bản thật sự đem đo."
     )
     assert len(manifest["commit"]) == 40
+
+
+def test_explicit_branch_verification_is_read_only(tmp_path, monkeypatch, manifest):
+    """An opt-in must verify real hashes without rewriting the frozen A/B file."""
+    fz = _freeze_module()
+    target = tmp_path / "branch.json"
+    target.write_text(json.dumps(manifest), encoding="utf-8")
+    before = target.read_bytes()
+    monkeypatch.setenv("ALGOSIM_TEST_CANDIDATE", str(target))
+    monkeypatch.setattr(fz, "build", lambda: manifest)
+    monkeypatch.setattr(fz.sys, "argv", ["freeze", "--verify"])
+    assert fz.main() == 0
+    assert target.read_bytes() == before
+
+
+def test_explicit_branch_verification_rejects_drift(tmp_path, monkeypatch, manifest):
+    fz = _freeze_module()
+    target = tmp_path / "branch.json"
+    target.write_text(json.dumps(manifest), encoding="utf-8")
+    changed = {**manifest, "measured_system": {**manifest["measured_system"], "tree_hash": "0" * 64}}
+    monkeypatch.setenv("ALGOSIM_TEST_CANDIDATE", str(target))
+    monkeypatch.setattr(fz, "build", lambda: changed)
+    monkeypatch.setattr(fz.sys, "argv", ["freeze", "--verify"])
+    assert fz.main() == 1
+
+
+def test_explicit_branch_verification_rejects_missing(tmp_path, monkeypatch, manifest):
+    fz = _freeze_module()
+    monkeypatch.setenv("ALGOSIM_TEST_CANDIDATE", str(tmp_path / "missing.json"))
+    monkeypatch.setattr(fz, "build", lambda: manifest)
+    monkeypatch.setattr(fz.sys, "argv", ["freeze", "--verify"])
+    assert fz.main() == 2
+
+
+def test_branch_test_identity_cannot_freeze(tmp_path, monkeypatch, manifest):
+    fz = _freeze_module()
+    target = tmp_path / "branch.json"
+    legacy = tmp_path / "legacy.json"
+    legacy.write_text("frozen", encoding="utf-8")
+    monkeypatch.setenv("ALGOSIM_TEST_CANDIDATE", str(target))
+    monkeypatch.setattr(fz, "OUT", legacy)
+    monkeypatch.setattr(fz, "build", lambda: manifest)
+    monkeypatch.setattr(fz.sys, "argv", ["freeze"])
+    assert fz.main() == 2
+    assert not target.exists()
+    assert legacy.read_text(encoding="utf-8") == "frozen"
+
+
+def test_product_provenance_uses_measured_paths_not_renderer_tests(monkeypatch):
+    fz = _freeze_module()
+    calls = []
+    original = fz._git
+    def traced(*args):
+        calls.append(args)
+        return original(*args)
+    monkeypatch.setattr(fz, "_git", traced)
+    fz.build()
+    assert ("log", "-1", "--format=%H", "--", *fz.MEASURED_SYSTEM_PATHS) in calls

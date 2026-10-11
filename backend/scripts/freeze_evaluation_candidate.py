@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -145,7 +146,7 @@ def build() -> dict:
     dev_path = BENCH / "dev" / "cases.json"
 
     product_commit = _git(
-        "log", "-1", "--format=%H", "--", "backend/app", "frontend/src"
+        "log", "-1", "--format=%H", "--", *MEASURED_SYSTEM_PATHS
     )
     return {
         "khai": (
@@ -218,14 +219,21 @@ def build() -> dict:
 
 
 def main() -> int:
-    moi = build()
     verify = "--verify" in sys.argv
+    # Explicit research-test identity: READ ONLY. The default remains the
+    # historical candidate; this cannot refreeze or overwrite either manifest.
+    test_candidate = os.environ.get("ALGOSIM_TEST_CANDIDATE")
+    if test_candidate and not verify:
+        print("ALGOSIM_TEST_CANDIDATE chỉ được dùng với --verify; không ghi candidate.")
+        return 2
+    moi = build()
+    verify_path = Path(test_candidate) if test_candidate else OUT
 
     if verify:
-        if not OUT.exists():
+        if not verify_path.exists():
             print("Chưa có EVALUATION_CANDIDATE.json — chạy không có --verify trước.")
             return 2
-        cu = json.loads(OUT.read_text(encoding="utf-8"))
+        cu = json.loads(verify_path.read_text(encoding="utf-8"))
         lech = [
             k for k in ("cache_version", "spec_version_ir")
             if cu.get(k) != moi.get(k)
