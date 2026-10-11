@@ -1740,3 +1740,15 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometry-library-important-fi
 - **TESTS:** I1 17 backend (3 mutants) + 2 frontend; I2 12; I3 readiness 7 + runner 93 without env; plain backend (+core.longpaths) 8198/0/1 skip/2 deselected at 811896f8, earlier runs disclosed in report §4; vitest 1050; build PASS.
 - **OPEN:** orbit gate red identically before the fix (environment); one intermittent test, cause UNKNOWN; Windows core.longpaths prerequisite; human visual acceptance pending.
 - **FINAL_DECISION:** GEOMETRY_LIBRARY_IMPORTANT_FIXES_AWAITING_REVIEW — integration NOT_GO_YET; live pilot/default NO-GO. LIVE Gemini 0.
+
+## WAVE_ID = FINAL_INTEGRATION_GATES
+
+REPORT = docs/evaluation/geometry/runs/final-integration-gates/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/final-integration-gates/
+
+- **DATE / BRANCH:** 2026-10-11, LOCAL, feat/geometry-library-expansion; commits d5f6784c (generator test reports child output), ffe7fd68 (diagnostics); no product change.
+- **ORBIT GATE:** root cause = canvas 545→683 px (layout commits already in main) + fixed 250 ms read under damping; red identically on main 28ac1d61; historical eb6d7d5a passes today; settled camera = exact OrbitControls angle. Threshold/gate unchanged; replacement acceptance proposed. Corrects the important-fixes "environment" attribution.
+- **INTERMITTENT TEST:** 1/9 full runs, 0/3 instrumented repetitions; cause UNKNOWN; now self-reporting, no retry.
+- **GATES:** T3 FULL_PRODUCT_GATE_PASS in clean detached worktree at ffe7fd68 (pytest 8198/0, vitest 1050, build, demo, crash surface 6/6); a T3 run on a dirty tree disclosed and not counted; candidate verify 0 (a8dc02fc).
+- **ENV / CLEANUP:** core.longpaths=true set locally (was unset; global unchanged). Worktrees 8→2 without --force, 10,350,596,096 bytes freed; no branch deleted.
+- **FINAL_DECISION:** ALGOSIM_FINAL_INTEGRATION_GATES_AWAITING_APPROVAL — merge CONDITIONAL GO after human visual acceptance, the 31 identical untracked files in the main checkout, and an orbit-gate acceptance decision. LIVE Gemini 0.

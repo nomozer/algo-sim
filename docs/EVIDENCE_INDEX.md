@@ -1,10 +1,28 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = FINAL_INTEGRATION_GATES
+
+REPORT = docs/evaluation/geometry/runs/final-integration-gates/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/final-integration-gates/
+CORRECTED_BY = NONE
+CORRECTS = GEOMETRY_LIBRARY_IMPORTANT_FIXES
+CLASSIFICATION = ALGOSIM_FINAL_INTEGRATION_GATES_AWAITING_APPROVAL
+CODE_COMMIT = 4ad89909
+VERIFICATION_COMMIT = ffe7fd68
+MODEL_REQUEST_COUNT = 0
+
+Withdraws the important-fixes attribution of the orbit-gate failure to the measurement environment: the
+historical build passes the unmodified gate today, while main 28ac1d61 fails it identically (canvas 545→683 px
+from layout commits already in main + a fixed 250 ms read truncating damping; camera reaches the exact
+OrbitControls angle). Gate and threshold unchanged; replacement acceptance proposed, not applied. T3
+FULL_PRODUCT_GATE_PASS in a clean detached worktree at ffe7fd68 (pytest 8198/0, vitest 1050). Intermittent
+generator test 1/9, cause UNKNOWN, now self-reporting. Worktrees 8→2, 10.35 GB freed. No human visual acceptance.
+
 ## WAVE_ID = GEOMETRY_LIBRARY_IMPORTANT_FIXES
 
 REPORT = docs/evaluation/geometry/runs/geometry-library-important-fixes/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometry-library-important-fixes/
-CORRECTED_BY = NONE
+CORRECTED_BY = FINAL_INTEGRATION_GATES
 CORRECTS = GEOMETRY_LIBRARY_EXPANSION
 CLASSIFICATION = GEOMETRY_LIBRARY_IMPORTANT_FIXES_AWAITING_REVIEW
 CODE_COMMIT = 4ad89909

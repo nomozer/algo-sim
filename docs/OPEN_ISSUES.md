@@ -1,34 +1,34 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
-### ISSUE-EVAL-ORBIT-GATE-RED-IN-CURRENT-ENVIRONMENT
+### ISSUE-EVAL-ORBIT-GATE-CANVAS-HEIGHT-AND-DAMPING-READ
 
-- **description:** `frontend/scripts/scene3d-orbit-gate.mjs` reports `KHONG_DU_VONG` on p1/p6/p7 (333–348° against the historical 437°), for the current renderer AND for the pre-fix renderer `c6a99ac6` built and measured the same way on the same machine.
-- **evidence:** `docs/evaluation/geometry/runs/geometry-library-important-fixes/diagnostics/orbit-gate-*.json`.
-- **impact:** The browser gate cannot be called green; the change of this wave is not the cause (identical before/after).
-- **scope:** Measurement environment / gate calibration, not product logic.
-- **status:** OPEN — rerun where 437° was measured before any recalibration decision.
+- **description:** `frontend/scripts/scene3d-orbit-gate.mjs` reports `KHONG_DU_VONG` (336–347°, threshold 360°) on `main` 28ac1d61 and on this branch. Root cause (2026-10-11): the gate's fixed 700 px drag meets a canvas that grew 545→683 px through layout commits already in `main`, and its fixed 250 ms read truncates OrbitControls damping. Settled, the camera reaches exactly `360·700/h` (369°). The historical build `eb6d7d5a` passes the unmodified gate today. Not a product defect, not the machine.
+- **evidence:** `docs/evaluation/geometry/runs/final-integration-gates/report.md` §1 and `diagnostics/orbit-*.json`.
+- **impact:** The browser gate is red on `main` itself; it no longer measures what it was designed for (no azimuth wall) on the current layout.
+- **scope:** Gate calibration. Threshold and gate unchanged; a replacement acceptance (drag ∝ canvas height, condition-based settle, 360° kept, validated on a known-good window and an injection) is proposed and needs approval.
+- **status:** OPEN — awaiting the user's decision on the replacement acceptance.
 - **owner_class:** TEST
-- **suggested_wave:** Before integration of geometry-library-expansion.
-- **default_switch_blocker:** NO — but an integration blocker until explained.
+- **suggested_wave:** Before or alongside integration of geometry-library-expansion.
+- **default_switch_blocker:** NO
 
 ### ISSUE-EVAL-GENERIC-TIER-A-GENERATOR-INTERMITTENT
 
 - **description:** `backend/tests/geometry/test_generic_tier_a_fixture_generator.py::test_cross_section_fixture_preserves_verifiable_measurement_provenance` failed in 1 of 3 full backend runs (generator subprocess exit ≠ 0, stderr discarded by the test); passes in isolation and 6/6 direct generator runs.
 - **evidence:** `docs/evaluation/geometry/runs/geometry-library-important-fixes/diagnostics/full-backend-gate.summary.txt`.
-- **impact:** A full-suite red can appear without a product change; cause UNKNOWN.
-- **scope:** Test harness; capture the subprocess stderr on failure first.
-- **status:** OPEN
+- **impact:** A full-suite red can appear without a product change; cause UNKNOWN (1 of 9 full runs; 3 instrumented repetitions, isolated and 6 direct runs all green; no timeout or env leak found).
+- **scope:** Test harness. Since `d5f6784c` a failure reports the child's exit code, stdout and stderr (UTF-8) — no retry.
+- **status:** OPEN — read the next failure's own report.
 - **owner_class:** TEST
 - **suggested_wave:** Next test-hardening slice.
 - **default_switch_blocker:** NO
 
 ### ISSUE-OPS-WINDOWS-LONGPATHS-GATE-PREREQUISITE
 
-- **description:** The repository holds paths over 260 characters (`docs/evaluation/geometry/worktree-recovery/…`). Without `core.longpaths=true`, `git status` lists 151 phantom changes and `test_holdout_readiness` sees a dirty tree.
-- **evidence:** `docs/evaluation/geometry/runs/geometry-library-important-fixes/report.md` §4.
-- **impact:** A plain `pytest` on Windows is red for an environment reason.
-- **scope:** Repository/environment configuration (the user's choice), not product code.
-- **status:** OPEN
+- **description:** Worktrees under `.superpowers/worktrees/<name>/` hold 153 paths over 260 characters (`docs/evaluation/geometry/worktree-recovery/…`); the main checkout holds none. Without `core.longpaths=true`, git in such a worktree lists phantom changes and `test_holdout_readiness` sees a dirty tree.
+- **evidence:** `docs/evaluation/geometry/runs/final-integration-gates/report.md` §3.
+- **impact:** Clean-worktree measurement (the repository's own protocol) was red for an environment reason.
+- **scope:** Repository configuration. Set locally on 2026-10-11 (`.git/config` `core.longpaths=true`; global/system untouched).
+- **status:** RESOLVED for this clone — a fresh clone needs the same local setting before worktree measurement.
 - **owner_class:** ENVIRONMENT
 - **suggested_wave:** Decide repository config or document as T3 prerequisite.
 - **default_switch_blocker:** NO

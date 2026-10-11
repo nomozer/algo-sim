@@ -1,12 +1,14 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — geometry-library-important-fixes, 2026-10-11
+## LOCAL override — final-integration-gates, 2026-10-11
 
-Mới nhất: review độc lập tìm I1–I3 và cả ba đã sửa trên cùng nhánh (product `4ad89909`, candidate
-a8dc02fc, 110 file; A/B 12da4768 giữ nguyên). Plain backend (+core.longpaths) 8198 PASS/0 fail tại 811896f8;
-vitest 1050 PASS; orbit gate đỏ y hệt trước sửa (môi trường); một test chập chờn UNKNOWN.
-GEOMETRY_LIBRARY_IMPORTANT_FIXES_AWAITING_REVIEW; integration NOT_GO_YET; live pilot/default NO-GO.
-Report: [`geometry-library-important-fixes`](evaluation/geometry/runs/geometry-library-important-fixes/report.md).
+Mới nhất: T3 FULL_PRODUCT_GATE_PASS trong worktree detached sạch tại `ffe7fd68` (pytest 8198/0, vitest 1050);
+candidate a8dc02fc (product `4ad89909`) verify 0; A/B 12da4768 giữ nguyên. Orbit gate đỏ cả trên main 28ac1d61:
+canvas 545→683 px + đọc sau 250 ms khi damping chưa tắt (không phải sản phẩm, không phải máy; đính chính lượt
+trước). Test chập chờn 1/9, UNKNOWN, nay tự báo. `core.longpaths=true` local. Worktree 8→2.
+ALGOSIM_FINAL_INTEGRATION_GATES_AWAITING_APPROVAL; merge CONDITIONAL GO; live pilot/default NO-GO.
+Report: [`final-integration-gates`](evaluation/geometry/runs/final-integration-gates/report.md); trước đó
+[`geometry-library-important-fixes`](evaluation/geometry/runs/geometry-library-important-fixes/report.md).
 Đoạn dưới là trạng thái của lượt expansion trước đó (giữ để truy vết):
 
 Thẩm quyền cho checkout LOCAL này (các snapshot remote/main cũ dưới đây không phải Git pre-flight):

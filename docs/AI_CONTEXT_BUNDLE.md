@@ -4,8 +4,8 @@
 
 Nhánh `feat/geometry-library-expansion` (base2990d87d → expansion → review `c6a99ac6` → fixes I1–I3, product `4ad89909`); main28ac1d61 không đổi, mục untracked của user giữ nguyên.
 I1 tô-pô khối đã khai (`S.ABC`) vào formation + đoạn vuông góc phụ tại chân; I2 product identity tính renderer, loại test harness, luật ghi tên (61 candidate lịch sử khớp); I3 không còn override `ALGOSIM_*` — runner A/B dùng bề mặt khoá có kiểm băm, pilot live trên bề mặt hiện tại NO-GO (test).
-Candidate a8dc02fc (110 file); A/B12da4768 không đổi. Plain backend (+core.longpaths) 8198 PASS/0 fail tại811896f8 (1 test chập chờn UNKNOWN ở lượt khác); vitest1050; orbit gate đỏ y hệt trước sửa (môi trường).
-GEOMETRY_LIBRARY_IMPORTANT_FIXES_AWAITING_REVIEW; report `evaluation/geometry/runs/geometry-library-important-fixes/report.md`. LLM_ONLY/cache125; LIVE Gemini0; không merge/push; human visual chưa có.
+Candidate a8dc02fc (110 file); A/B12da4768 không đổi. T3 FULL_PRODUCT_GATE_PASS (worktree sạch, ffe7fd68). Orbit gate đỏ cả trên main: canvas 545→683 px + đọc 250 ms dưới damping (không phải sản phẩm/máy). Test chập chờn 1/9 UNKNOWN, nay tự báo. core.longpaths local; worktree 8→2.
+ALGOSIM_FINAL_INTEGRATION_GATES_AWAITING_APPROVAL; report `evaluation/geometry/runs/final-integration-gates/report.md`. Merge CONDITIONAL GO; LLM_ONLY/cache125; LIVE Gemini0; không merge/push; human visual chưa có.
 
 > Handoff cô đọng cho session mới. Code/test thắng khi mâu thuẫn với docs.
 > Không chứa secret hoặc raw model output; giới hạn 300 dòng. Lịch sử từng wave:

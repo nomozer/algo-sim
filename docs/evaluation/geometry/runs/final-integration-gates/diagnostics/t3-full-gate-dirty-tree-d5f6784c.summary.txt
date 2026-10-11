@@ -1,0 +1,2 @@
+      Tests  1050 passed (1050)
+FULL_PRODUCT_GATE_FAIL — không cổng con nào được bỏ qua.
