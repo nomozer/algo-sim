@@ -1,33 +1,19 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — hybrid-slice1-review, 2026-10-11
+## LOCAL override — hybrid-slice1-main-integration, 2026-10-11
 
 Mới nhất:
-- Kiểm toán độc lập lát 1: không có lỗi Critical. Đã sửa 2 lỗi Important:
-  - cổng chỉ trả lời khi câu thật sự HỎI khoảng cách (`NOT_ASKED_IN_SOURCE`);
-  - nhãn phụ tránh cả H₁/H_1/ΔSHD.
-- Product `62f0b18e`, candidate `dda3a884` (refreeze `9da4e853`), khai lệch candidate ở run. Benchmark 19/9/0/2 không đổi.
-- Nhánh nghiên cứu chưa merge/push; việc kế tiếp là người dùng duyệt fast-forward `main`. HYBRID_SLICE1_INTEGRATION_AWAITING_APPROVAL.
-- Report: [`hybrid-slice1-review`](evaluation/geometry/runs/hybrid-slice1-review/report.md).
+- Hybrid B slice 1 (B26) + hai bản sửa Important đã tích hợp `main` bằng fast-forward `548066a8` → `a246dd19`; không merge
+  commit, không cherry-pick.
+- Candidate `dda3a884` (product `62f0b18e`) verify 0 trên `main`; T3 FULL_PRODUCT_GATE_PASS trên `main` (pytest 8362/0,
+  vitest 1051); A/B `12da4768` giữ nguyên; cache125/LLM_ONLY; LIVE Gemini0.
+- B27/B28 chưa được phê duyệt triển khai. Remote: tra `git log -1 origin/main`.
+- Report: [`hybrid-slice1-main-integration`](evaluation/geometry/runs/hybrid-slice1-main-integration/report.md).
 
-Trước đó (hybrid-goal-decomposition):
-- Người dùng duyệt phương án B, chỉ lát 1 (B26). Planner hiện có phân rã khoảng cách điểm–đường thành hình chiếu lên một
-  điểm phụ (DERIVED/AUXILIARY, nhãn tươi H/H1/…) rồi đo độ dài. Cổng nguồn chỉ nhận điểm phụ qua khai báo của planner.
-- Nhánh `research/hybrid-compiler-capability-audit`: product `f874b4dd`, candidate `cac3022f` (refreeze `d8d636b5`),
-  khai lệch candidate ở run. Chưa merge/push.
-- Benchmark 19/9/0/2 (trước 18/9/0/3). Không đổi Typed Facts hay bề mặt provider; cache125/LLM_ONLY; LIVE Gemini0.
-- HYBRID_GOAL_DECOMPOSITION_SLICE1_AWAITING_REVIEW. Report:
-  [`hybrid-goal-decomposition`](evaluation/geometry/runs/hybrid-goal-decomposition/report.md).
-
-Trước đó (hybrid-compiler-capability-audit):
-- `main` = `origin/main` = `548066a8`, sau khi tích hợp expansion bằng fast-forward ở `9e3c9789`.
-- Nhánh nghiên cứu `research/hybrid-compiler-capability-audit` (chưa merge/push) chỉ thêm benchmark, tài liệu và ADR
-  [`HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md); không có mã sản phẩm.
-- Candidate a8dc02fc verify 0; A/B 12da4768 giữ nguyên; cache125/LLM_ONLY không đổi; LIVE Gemini0.
-- Benchmark 30 ca, oracle độc lập: 18/9/0/3 (phục vụ đúng / từ chối đúng / phục vụ sai / từ chối sai). Lỗ hổng là thiếu
-  phép kết hợp có điểm phụ (B26, B27) và từ khoá "tâm" (B28).
-- HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_AWAITING_APPROVAL. Report:
-  [`hybrid-compiler-capability-audit`](evaluation/geometry/runs/hybrid-compiler-capability-audit/report.md).
+Trước đó trong việc Hybrid B (chi tiết ở `STATUS_LEDGER.md` và report của từng run):
+[`hybrid-slice1-review`](evaluation/geometry/runs/hybrid-slice1-review/report.md) (kiểm toán độc lập, 2 lỗi Important đã sửa) ·
+[`hybrid-goal-decomposition`](evaluation/geometry/runs/hybrid-goal-decomposition/report.md) (lát 1, 18/9/0/3 → 19/9/0/2) ·
+[`hybrid-compiler-capability-audit`](evaluation/geometry/runs/hybrid-compiler-capability-audit/report.md) (ADR Hybrid B, benchmark 30 ca).
 
 ## LOCAL override — main-integration-readiness, 2026-10-11
 
@@ -113,7 +99,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > USER_DIRTY_STATE = có — `frontend/public/favicon.svg` untracked của người dùng, giữ nguyên; không stage/commit.
 > CURRENT_WAVE = HYBRID_AB_PILOT_READINESS (run hybrid-ab-pilot-readiness, LOCAL, cùng nhánh, live Gemini0): object-binding chính xác, observation ≠ proof; runner SMOKE24/FULL288 có identity riêng, shared output3072; 344 focused PASS,9 mutation killed,312 fake/network0; clean backend8068 PASS/1 skip/2 deselected tại2f1b457c. CORRECTS HYBRID_COMPILER_SELECTION: lịch sử nguyên byte, đọc cùng correction layer. Report/handoff của run là thẩm quyền; không tuyên bố safety population/visual/real-model.
 > FINAL_DECISION = HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW — offline GO có giới hạn kiểm chứng; SMOKE/FULL live NO-GO (prompt estimator chưa provider-bound, storage cause UNKNOWN, chưa phê duyệt riêng). Main giữ nguyên28ac1d61; không merge/push/default change; human visual acceptance NOT_PERFORMED.
-> CANONICAL_NEXT_ACTION = HYBRID_SLICE1_MAIN_INTEGRATION_APPROVAL_DECISION
+> CANONICAL_NEXT_ACTION = POST_HYBRID_SLICE1_PRIORITY_DECISION
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 

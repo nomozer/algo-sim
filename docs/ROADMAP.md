@@ -9,9 +9,21 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_SLICE1_MAIN_INTEGRATION_APPROVAL_DECISION
+CANONICAL_NEXT_ACTION = POST_HYBRID_SLICE1_PRIORITY_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **Hybrid B slice 1 ĐÃ TÍCH HỢP `main` (2026-10-11, fast-forward `548066a8` → `a246dd19`, run [`hybrid-slice1-main-integration`](evaluation/geometry/runs/hybrid-slice1-main-integration/report.md)):**
+  - B26 (khoảng cách điểm–đường qua chân vuông góc phụ) cùng hai bản sửa Important của kiểm toán độc lập; T3 PASS trên `main`.
+  - Trạng thái remote: tra `git log -1 origin/main`, tài liệu này không ghi.
+  - **B27 (lát 2, đổi lược đồ Typed Facts) và B28 (từ khoá "tâm") CHƯA được phê duyệt triển khai**; tìm kiếm theo mục tiêu tổng quát cũng chưa.
+  - `LLM_ONLY` vẫn mặc định. Chưa có bằng chứng Hybrid B chính xác với Gemini thật.
+  - Việc kế tiếp: người dùng chọn ưu tiên. Ứng viên:
+    - `ISSUE-ARCH-ASK-GATE-NO-QUESTION-CHECK`;
+    - `ISSUE-ARCH-ORBIT-P1-SECTION-SCENE-DOES-NOT-SETTLE` (P1);
+    - phê duyệt lát 2 (B27);
+    - `ISSUE-ARCH-LINE-SEGMENT-SEMANTIC-DISTINCTION`;
+    - giới hạn điểm phụ.
 
 - **Kiểm toán độc lập lát 1 (LOCAL, 2026-10-11):**
   - Không có lỗi Critical; sửa 2 lỗi Important (câu không hỏi thì không trả lời; nhãn phụ tránh H₁/ΔSHD). Benchmark 19/9/0/2 không đổi.

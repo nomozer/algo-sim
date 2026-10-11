@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_SLICE1_MAIN_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-slice1-main-integration/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-slice1-main-integration/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = HYBRID_SLICE1_INTEGRATED_ON_LOCAL_MAIN
+CODE_COMMIT = 62f0b18e
+VERIFICATION_COMMIT = a246dd19
+MODEL_REQUEST_COUNT = 0
+
+Slice 1 (B26) and the review fixes fast-forwarded into main (548066a8 → a246dd19). On main in a clean worktree:
+candidate dda3a884 verify 0, T3 FULL_PRODUCT_GATE_PASS (pytest 8362/0, vitest 1051). Offline evidence only; no
+real-model accuracy claim. B27/B28 not approved.
+
 ## WAVE_ID = HYBRID_SLICE1_REVIEW
 
 REPORT = docs/evaluation/geometry/runs/hybrid-slice1-review/report.md

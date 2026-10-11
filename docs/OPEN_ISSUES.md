@@ -1,5 +1,21 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-LINE-SEGMENT-SEMANTIC-DISTINCTION
+
+- **description:** Distance from a point to "XY" is computed to the LINE XY.
+  - **Wordings and what happens:**
+    - bare "từ S đến BD" and "đường thẳng BD" are read as the line (the textbook convention);
+    - "đoạn thẳng BD" is refused (`SOURCE_OBJECT_MISMATCH`, probe 2026-10-11).
+  - **No segment semantics.** The Registry has no segment-distance function: when the foot falls outside the segment, the distance to the segment differs from the distance to the line. The library's intersections are also of lines ("không phải đoạn hữu hạn").
+  - **Unresolved convention.** Whether a bare "XY" in a given problem means the line or the segment is not decided by the source gate.
+- **evidence:** `backend/app/simulation/geometry_functions/registry.py` (`_KHOANG_CACH_DIEM_DUONG`, intersection descriptions); `docs/evaluation/geometry/runs/hybrid-slice1-main-integration/report.md` §4.
+- **impact:** Correct under the textbook convention for distances. A problem that really means a segment (foot outside it) would be answered with the line distance. No such benchmark case exists, so this is not measured.
+- **scope:** Source grammar + Registry (a segment semantics would be a new capability, not part of slice 1).
+- **status:** OPEN.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** With the next composition slice; needs a decision on the convention and a held-out case.
+- **default_switch_blocker:** NO
+
 ### ISSUE-ARCH-ASK-GATE-NO-QUESTION-CHECK
 
 - **description:** The source gate skips clause-role checks for every `ask_*` call. A clause the AI mis-types as a question is therefore answered, e.g. "Hãy chỉ ra rằng khoảng cách từ S đến (ABCD) bằng 3" or "Giả sử … bằng 4" through `ask_distance_point_plane`. The new point–line path got an allow-list (`NOT_ASKED_IN_SOURCE`); the other `ask_*` paths did not.

@@ -150,6 +150,8 @@ ALLOWED_CANONICAL_ACTIONS = [
     "HYBRID_GOAL_DECOMPOSITION_SLICE1_REVIEW",
     # hybrid-slice1-review (2026-10-11): reviewed and fixed; next is the user's approval to fast-forward main.
     "HYBRID_SLICE1_MAIN_INTEGRATION_APPROVAL_DECISION",
+    # hybrid-slice1-main-integration (2026-10-11): slice 1 on main; next is the user's choice among the open priorities.
+    "POST_HYBRID_SLICE1_PRIORITY_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

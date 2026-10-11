@@ -1802,3 +1802,14 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-slice1-review/
 - **BENCHMARK:** 19/9/0/2 in both evaluations, rows byte-identical to the slice 1 measurement; only B26 differs from the pre-change baseline.
 - **IDENTITY:** candidate refrozen 9da4e853 (tree dda3a884, product 62f0b18e); divergence declared as a correction layer. LIVE Gemini 0. Pre-existing issues recorded: ISSUE-ARCH-ASK-GATE-NO-QUESTION-CHECK, ISSUE-ARCH-ENGINE-CENTRE-LABEL-EXHAUSTION.
 - **FINAL_DECISION:** HYBRID_SLICE1_INTEGRATION_AWAITING_APPROVAL.
+
+## WAVE_ID = HYBRID_SLICE1_MAIN_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-slice1-main-integration/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-slice1-main-integration/
+
+- **DATE / APPROVAL:** 2026-10-11, LOCAL; user approved integrating slice 1 (B26) with the two Important review fixes.
+- **INTEGRATION:** `git merge --ff-only research/hybrid-compiler-capability-audit`, main 548066a8 → a246dd19; no merge commit, no cherry-pick, no force, no PR.
+- **VERIFICATION ON MAIN:** clean detached worktree — candidate dda3a884 verify 0; T3 FULL_PRODUCT_GATE_PASS (pytest 8362/0, vitest 1051).
+- **SCOPE:** B27/B28 and general goal-directed search not approved; LLM_ONLY unchanged; no real-model accuracy claim; LIVE Gemini 0. New open issue ISSUE-ARCH-LINE-SEGMENT-SEMANTIC-DISTINCTION.
+- **FINAL_DECISION:** HYBRID_SLICE1_INTEGRATED_ON_LOCAL_MAIN — push awaits the user's confirmation; next action POST_HYBRID_SLICE1_PRIORITY_DECISION.
