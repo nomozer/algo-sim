@@ -23,7 +23,12 @@ LIVE GEMINI CALLS = 0. PRODUCTION DEFAULT = `LLM_ONLY` (cache 125).
 | Hybrid / function-route cluster | 657 passed, 4 xfailed (B27, B28 × 2) |
 | Benchmark re-measure (scratch directory) | rows byte-identical to [`after/metrics.json`](../hybrid-goal-decomposition/after/metrics.json) |
 | Candidate `--verify` | exit 0 at `9da4e853` |
-| T3 in a clean worktree at the docs commit of this run | recorded in `run.json` (`t3`) by the final commit of this run |
+| T3 in a clean detached worktree at `72381252` | **FULL_PRODUCT_GATE_PASS**: pytest 8362 passed, 0 failed (1 skipped, 2 deselected, 4 xfailed); vitest 1051; build; demo replay; crash surface |
+
+**Clean-up:**
+- Registered worktrees: 2 → 3 → 2. `slice1-review-verify` was removed without `--force` after its `node_modules` junction was taken out with `rmdir`; the junction target is intact. 1 700 544 873 bytes freed.
+- The research worktree is kept until integration, and its test-generated `backend/algosim.db` was removed.
+- `.superpowers/worktrees/geometry-library-expansion` is unregistered: about 551 KB, owned by CodexSandboxOffline. It still needs an administrator; I did not change any ACL.
 
 ## 3. Integration plan (only after your approval; no PR)
 
@@ -56,7 +61,7 @@ git push origin main                      # only with your explicit permission
 
 ## 4. GO / NO-GO
 
-- **Fast-forward `main` with slice 1 + review fix (offline): GO**, once the T3 recorded in `run.json` is `FULL_PRODUCT_GATE_PASS` and you approve.
+- **Fast-forward `main` with slice 1 + review fix (offline): GO**, on your approval. T3 passes at `72381252`, and the candidate is verified and declared.
 - **Real-model claim / pilot: NO-GO** (not measured).
 - **Slice 2 (B27), B28, general goal-directed search: NO-GO** (not approved).
 

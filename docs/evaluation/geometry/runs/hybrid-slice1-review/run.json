@@ -31,5 +31,11 @@
                   "product_files_vs_main": ["backend/app/ai/function_route.py", "backend/app/simulation/geometry_functions/engine.py",
                                             "backend/app/simulation/geometry_functions/planner.py",
                                             "backend/app/simulation/geometry_functions/registry.py"]},
+  "t3": {"commit": "72381252", "worktree": "clean detached", "result": "FULL_PRODUCT_GATE_PASS",
+         "pytest": {"passed": 8362, "failed": 0, "skipped": 1, "deselected": 2, "xfailed": 4},
+         "vitest": 1051, "build": "PASS", "demo_replay": "PASS", "crash_surface": "PASS"},
+  "worktrees": {"registered_before": 2, "peak": 3, "after": 2, "removed": ["slice1-review-verify"], "force_used": false,
+                "freed_bytes": 1700544873, "kept": "hybrid-compiler-audit (until integration)",
+                "unregistered_leftover": ".superpowers/worktrees/geometry-library-expansion (~551 KB, 21 readable files, CodexSandboxOffline; needs an administrator; ACL not changed)"},
   "final_status": "HYBRID_SLICE1_INTEGRATION_AWAITING_APPROVAL"
 }
