@@ -1790,3 +1790,15 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-goal-decomposition/
 - **TESTS:** RED at 4a3a4938 = 38 failing; GREEN 40/40 focused (9 mutants killed); cluster 629 passed, 4 xfailed. Benchmark 19/9/0/2 in both evaluations (was 18/9/0/3); provider surfaces unchanged.
 - **IDENTITY:** candidate refrozen d8d636b5 (tree cac3022f, product f874b4dd); divergence declared as a correction layer; A/B 12da4768 untouched. LIVE Gemini 0.
 - **FINAL_DECISION:** HYBRID_GOAL_DECOMPOSITION_SLICE1_AWAITING_REVIEW.
+
+## WAVE_ID = HYBRID_SLICE1_REVIEW
+
+REPORT = docs/evaluation/geometry/runs/hybrid-slice1-review/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-slice1-review/
+
+- **DATE / BRANCH:** 2026-10-11, LOCAL; research branch `research/hybrid-compiler-capability-audit`; not merged, not pushed, no PR.
+- **REVIEW:** independent read-only reviewer over 4a3a4938..0e28d2f3. Critical 0; Important 2 (gate answered clauses that do not ask the distance; auxiliary label could collide with H₁/H_1/ΔSHD); Minor 6 (3 fixed in scope, 3 recorded).
+- **FIX:** 62f0b18e — NOT_ASKED_IN_SOURCE allow-list, conservative label scanner `nhan_phu_da_dung`, trace attribution, construct id, duplicate declaration. RED 17 failing at 0e28d2f3; 68 focused passed (14 mutants killed); cluster 657 passed, 4 xfailed.
+- **BENCHMARK:** 19/9/0/2 in both evaluations, rows byte-identical to the slice 1 measurement; only B26 differs from the pre-change baseline.
+- **IDENTITY:** candidate refrozen 9da4e853 (tree dda3a884, product 62f0b18e); divergence declared as a correction layer. LIVE Gemini 0. Pre-existing issues recorded: ISSUE-ARCH-ASK-GATE-NO-QUESTION-CHECK, ISSUE-ARCH-ENGINE-CENTRE-LABEL-EXHAUSTION.
+- **FINAL_DECISION:** HYBRID_SLICE1_INTEGRATION_AWAITING_APPROVAL.

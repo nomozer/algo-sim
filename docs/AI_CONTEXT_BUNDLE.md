@@ -5,8 +5,9 @@
 - `main` = `origin/main` = `548066a8`. Expansion đã tích hợp bằng fast-forward ở `9e3c9789`; orbit p1 là ngoại lệ được chấp nhận (P1).
 - Nhánh nghiên cứu `research/hybrid-compiler-capability-audit` chưa merge/push; trên nó có ADR Hybrid B (A là baseline, chỉ dựa trên offline) và benchmark compiler 30 ca.
 - Lát 1 (B26, đã duyệt): planner phân rã khoảng cách điểm–đường qua chân vuông góc phụ (DERIVED/AUXILIARY); cổng nguồn chỉ nhận điểm phụ qua khai báo của planner. Benchmark 19/9/0/2 (trước 18/9/0/3). B27 cần lát 2 (đổi lược đồ, chưa duyệt); B28 là vấn đề từ khoá.
-- Product f874b4dd, candidate cac3022f (refreeze d8d636b5); A/B 12da4768 không đổi; bề mặt provider A/B không đổi; LLM_ONLY/cache125; LIVE Gemini0.
-- HYBRID_GOAL_DECOMPOSITION_SLICE1_AWAITING_REVIEW — xem `evaluation/geometry/runs/hybrid-goal-decomposition/`.
+- Kiểm toán độc lập (run `hybrid-slice1-review`): không có lỗi Critical; sửa 2 lỗi Important — cổng chỉ trả lời khi câu thật sự hỏi (`NOT_ASKED_IN_SOURCE`), nhãn phụ tránh H₁/H_1/ΔSHD.
+- Product 62f0b18e, candidate dda3a884 (refreeze 9da4e853); A/B 12da4768 không đổi; bề mặt provider A/B không đổi; LLM_ONLY/cache125; LIVE Gemini0.
+- HYBRID_SLICE1_INTEGRATION_AWAITING_APPROVAL — xem `evaluation/geometry/runs/hybrid-slice1-review/` (quy trình fast-forward ở handoff.md).
 
 > Handoff cô đọng cho session mới. Code/test thắng khi mâu thuẫn với docs.
 > Không chứa secret hoặc raw model output; giới hạn 300 dòng. Lịch sử từng wave:
@@ -200,7 +201,7 @@ Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FU
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_GOAL_DECOMPOSITION_SLICE1_REVIEW
+CANONICAL_NEXT_ACTION = HYBRID_SLICE1_MAIN_INTEGRATION_APPROVAL_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

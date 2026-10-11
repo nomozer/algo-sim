@@ -9,9 +9,14 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_GOAL_DECOMPOSITION_SLICE1_REVIEW
+CANONICAL_NEXT_ACTION = HYBRID_SLICE1_MAIN_INTEGRATION_APPROVAL_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **Kiểm toán độc lập lát 1 (LOCAL, 2026-10-11):**
+  - Không có lỗi Critical; sửa 2 lỗi Important (câu không hỏi thì không trả lời; nhãn phụ tránh H₁/ΔSHD). Benchmark 19/9/0/2 không đổi.
+  - Việc kế tiếp: người dùng duyệt fast-forward `main` theo [`hybrid-slice1-review/handoff.md`](evaluation/geometry/runs/hybrid-slice1-review/handoff.md).
+  - Lỗ hổng tương tự ở các `ask_*` khác ghi thành `ISSUE-ARCH-ASK-GATE-NO-QUESTION-CHECK` (wave riêng).
 
 - **Goal decomposition slice 1 (LOCAL, 2026-10-11, cùng nhánh nghiên cứu, chưa merge/push):**
   - Người dùng duyệt phương án B, chỉ lát 1. Compiler hiện có dựng điểm phụ (chân vuông góc, DERIVED/AUXILIARY) cho khoảng cách điểm–đường.

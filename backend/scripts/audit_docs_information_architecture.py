@@ -148,6 +148,8 @@ ALLOWED_CANONICAL_ACTIONS = [
     "HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION",
     # hybrid-goal-decomposition (2026-10-11): slice 1 (B26) implemented on the research branch; next is the user's review.
     "HYBRID_GOAL_DECOMPOSITION_SLICE1_REVIEW",
+    # hybrid-slice1-review (2026-10-11): reviewed and fixed; next is the user's approval to fast-forward main.
+    "HYBRID_SLICE1_MAIN_INTEGRATION_APPROVAL_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

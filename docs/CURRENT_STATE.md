@@ -1,8 +1,16 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — hybrid-goal-decomposition, 2026-10-11
+## LOCAL override — hybrid-slice1-review, 2026-10-11
 
 Mới nhất:
+- Kiểm toán độc lập lát 1: không có lỗi Critical. Đã sửa 2 lỗi Important:
+  - cổng chỉ trả lời khi câu thật sự HỎI khoảng cách (`NOT_ASKED_IN_SOURCE`);
+  - nhãn phụ tránh cả H₁/H_1/ΔSHD.
+- Product `62f0b18e`, candidate `dda3a884` (refreeze `9da4e853`), khai lệch candidate ở run. Benchmark 19/9/0/2 không đổi.
+- Nhánh nghiên cứu chưa merge/push; việc kế tiếp là người dùng duyệt fast-forward `main`. HYBRID_SLICE1_INTEGRATION_AWAITING_APPROVAL.
+- Report: [`hybrid-slice1-review`](evaluation/geometry/runs/hybrid-slice1-review/report.md).
+
+Trước đó (hybrid-goal-decomposition):
 - Người dùng duyệt phương án B, chỉ lát 1 (B26). Planner hiện có phân rã khoảng cách điểm–đường thành hình chiếu lên một
   điểm phụ (DERIVED/AUXILIARY, nhãn tươi H/H1/…) rồi đo độ dài. Cổng nguồn chỉ nhận điểm phụ qua khai báo của planner.
 - Nhánh `research/hybrid-compiler-capability-audit`: product `f874b4dd`, candidate `cac3022f` (refreeze `d8d636b5`),
@@ -105,7 +113,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > USER_DIRTY_STATE = có — `frontend/public/favicon.svg` untracked của người dùng, giữ nguyên; không stage/commit.
 > CURRENT_WAVE = HYBRID_AB_PILOT_READINESS (run hybrid-ab-pilot-readiness, LOCAL, cùng nhánh, live Gemini0): object-binding chính xác, observation ≠ proof; runner SMOKE24/FULL288 có identity riêng, shared output3072; 344 focused PASS,9 mutation killed,312 fake/network0; clean backend8068 PASS/1 skip/2 deselected tại2f1b457c. CORRECTS HYBRID_COMPILER_SELECTION: lịch sử nguyên byte, đọc cùng correction layer. Report/handoff của run là thẩm quyền; không tuyên bố safety population/visual/real-model.
 > FINAL_DECISION = HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW — offline GO có giới hạn kiểm chứng; SMOKE/FULL live NO-GO (prompt estimator chưa provider-bound, storage cause UNKNOWN, chưa phê duyệt riêng). Main giữ nguyên28ac1d61; không merge/push/default change; human visual acceptance NOT_PERFORMED.
-> CANONICAL_NEXT_ACTION = HYBRID_GOAL_DECOMPOSITION_SLICE1_REVIEW
+> CANONICAL_NEXT_ACTION = HYBRID_SLICE1_MAIN_INTEGRATION_APPROVAL_DECISION
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 

@@ -1,10 +1,27 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_SLICE1_REVIEW
+
+REPORT = docs/evaluation/geometry/runs/hybrid-slice1-review/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-slice1-review/
+CORRECTED_BY = NONE
+CORRECTS = HYBRID_GOAL_DECOMPOSITION
+CLASSIFICATION = HYBRID_SLICE1_INTEGRATION_AWAITING_APPROVAL
+CODE_COMMIT = 62f0b18e
+VERIFICATION_COMMIT = 9da4e853
+MODEL_REQUEST_COUNT = 0
+
+Independent review of goal decomposition slice 1. Corrects two claims of HYBRID_GOAL_DECOMPOSITION: "negated,
+conditional and proof-only goals are refused" (the gate answered clauses that do not ask the distance; now
+NOT_ASKED_IN_SOURCE) and "collision excluded by construction" (H₁/H_1/ΔSHD escaped the label scanner; now
+nhan_phu_da_dung). Benchmark 19/9/0/2 unchanged (rows byte-identical). Candidate dda3a884 declared. Reviewer
+independent of the implementation session but the same model family; no real-model claim.
+
 ## WAVE_ID = HYBRID_GOAL_DECOMPOSITION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-goal-decomposition/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-goal-decomposition/
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_SLICE1_REVIEW
 CORRECTS = NONE
 CLASSIFICATION = HYBRID_GOAL_DECOMPOSITION_SLICE1_AWAITING_REVIEW
 CODE_COMMIT = f874b4dd

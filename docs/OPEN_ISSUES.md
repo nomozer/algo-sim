@@ -1,12 +1,36 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-ASK-GATE-NO-QUESTION-CHECK
+
+- **description:** The source gate skips clause-role checks for every `ask_*` call. A clause the AI mis-types as a question is therefore answered, e.g. "Hãy chỉ ra rằng khoảng cách từ S đến (ABCD) bằng 3" or "Giả sử … bằng 4" through `ask_distance_point_plane`. The new point–line path got an allow-list (`NOT_ASKED_IN_SOURCE`); the other `ask_*` paths did not.
+- **evidence:** `docs/evaluation/geometry/runs/hybrid-slice1-review/report.md` §2 (Important 1, reproduced by the independent reviewer).
+- **impact:** Possible answer to a question the text did not ask, or a hidden contradiction with a stated value, in routes A and B. Pre-existing; not caused by slice 1.
+- **scope:** `registry.kiem_nguon` (shared by A and B).
+- **status:** OPEN.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** Its own wave. It changes refusals in both routes, so A/B evidence must be re-read.
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-ENGINE-CENTRE-LABEL-EXHAUSTION
+
+- **description:** `engine._mot_buoc` names the centre of a regular base with the first of O, I, O1, O2 that is absent from the text. When the text uses all four, `next()` raises `StopIteration` instead of a coded refusal.
+- **evidence:** independent reviewer probe, `docs/evaluation/geometry/runs/hybrid-slice1-review/report.md` §2.
+- **impact:** Crash instead of `REFUSED` on a rare text. Pre-existing; unrelated to the auxiliary labels (H-series).
+- **scope:** `backend/app/simulation/geometry_functions/engine.py`.
+- **status:** OPEN.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** Next engine slice.
+- **default_switch_blocker:** NO
+
 ### ISSUE-ARCH-HYBRID-AUXILIARY-POINT-LIMITS
 
-- **description:** Known limits of goal decomposition slice 1:
-  - **The label is not reserved by syntax.** The auxiliary foot uses the first free label of H, H1, …, which the learner sees. The Registry `Label` pattern is shared with A's provider surface, so a syntactically reserved namespace would change that surface. Collision is excluded by construction and re-checked at the gate.
-  - **Only one wording is accepted.** The gate binds "khoảng cách từ P đến (đường thẳng) XY". Other wordings ("khoảng cách giữa … và …", "d(S, BD)") are refused `SOURCE_OBJECT_MISMATCH`.
-  - **A point on the line gives a coinciding foot.** The distance is served as 0, and the foot is drawn on top of the point under a second label.
-- **evidence:** `docs/evaluation/geometry/runs/hybrid-goal-decomposition/report.md` §5.
+- **description:** Known limits of goal decomposition slice 1, after its independent review:
+  - **The label is not reserved by syntax.** The auxiliary foot uses the first free label of H, H1, …, which the learner sees. The Registry `Label` pattern is shared with A's provider surface. Since the review, a name counts as taken when it occurs in the text in any form the conservative scanner `nhan_phu_da_dung` recognises (H₁, H_1, letters glued as in ΔSHD); this is checked by the planner and again at the gate.
+  - **Only one wording is accepted:** "khoảng cách từ P đến (đường thẳng) XY", in a sentence that asks it. Other wordings are refused.
+  - **A point on the line, or a redundant question, gives a coinciding foot.** This covers a point on the line (distance 0), two questions on the same point and line, and a stated projection together with the question. The foot is drawn on an existing point under a second label.
+  - **The auxiliary name can appear** in refusal details (`details.points`).
+  - **`lap_ke_hoach` defaults `problem_text` to ""**, so a caller without the text chooses labels blind. The gate still fails closed.
+- **evidence:** `docs/evaluation/geometry/runs/hybrid-goal-decomposition/report.md` §5; `docs/evaluation/geometry/runs/hybrid-slice1-review/report.md` §2, §6.
 - **impact:** Fail-closed false refusals on other wordings; a possibly confusing scene for the zero case. No wrong answers in the tests.
 - **scope:** `geometry_functions/planner.py::_phan_ra`, `registry.py::_kiem_phu`.
 - **status:** OPEN — recorded, not fixed; human visual review not performed.

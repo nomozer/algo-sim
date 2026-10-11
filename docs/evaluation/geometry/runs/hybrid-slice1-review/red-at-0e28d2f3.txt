@@ -1,0 +1,20 @@
+E        +  where None = KetQuaTuyen(status='SERVED', code=None, reason=None, failed_calls=(), answers={'q': '√11'}, scene3d={'objects': [{'id'...yramidTopologySpec(solid_kind='pyramid', apex='S', base_cycle=('A', 'B', 'C', 'D'), base_shape=None), problem_text='')).code
+E        +    where KetQuaTuyen(status='SERVED', code=None, reason=None, failed_calls=(), answers={'q': '√11'}, scene3d={'objects': [{'id'...yramidTopologySpec(solid_kind='pyramid', apex='S', base_cycle=('A', 'B', 'C', 'D'), base_shape=None), problem_text='')) = run_function_route('Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ S đến BD. Gọi H₁ là trung điểm SC.', {'calls': [{'id': 'f1', 'fn': 'pyramid', 'args': {'apex': 'S', 'base': ['A', 'B', 'C', 'D']}, 'source': {'quotes': ['C...: 'q', 'fn': 'ask_length', 'args': {'segment': ['S', 'H1']}, 'source': {'quotes': ['Tính khoảng cách từ S đến BD.']}}]}, ({'label': 'H1', 'rule': 'distance(point,line)', 'goal': 'q', 'construct': 'q_aux', ...},))
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_clause_that_does_not_ask_the_distance_is_refused[H\xe3y ch\u1ec9 ra r\u1eb1ng kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD b\u1eb1ng \u221a11.]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_clause_that_does_not_ask_the_distance_is_refused[G\u1ecdi d l\xe0 kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_clause_that_does_not_ask_the_distance_is_refused[Ch\u1ee9ng minh r\u1eb1ng, bi\u1ebft kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD b\u1eb1ng \u221a11, th\xec SA = 3.]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_clause_that_does_not_ask_the_distance_is_refused[Gi\u1ea3 s\u1eed kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD b\u1eb1ng 4.]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_clause_that_does_not_ask_the_distance_is_refused[Khi kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD b\u1eb1ng 4 th\xec SC b\u1eb1ng bao nhi\xeau?]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_clause_that_does_not_ask_the_distance_is_refused[Bi\u1ebft kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD b\u1eb1ng 4.]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_clause_that_does_not_ask_the_distance_is_refused[Kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD kh\xf4ng b\u1eb1ng 3.]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_clause_that_does_not_ask_the_distance_is_refused[Kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD ch\u1eb3ng b\u1eb1ng 3.]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_clause_that_does_not_ask_the_distance_is_refused[Kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD kh\xe1c 3.]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_auxiliary_label_avoids_labels_the_scanner_misreads[G\u1ecdi H\u2081 l\xe0 h\xecnh chi\u1ebfu c\u1ee7a C l\xean BD.-H2]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_auxiliary_label_avoids_labels_the_scanner_misreads[G\u1ecdi H_1 l\xe0 h\xecnh chi\u1ebfu c\u1ee7a C l\xean BD.-H2]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_auxiliary_label_avoids_labels_the_scanner_misreads[X\xe9t tam gi\xe1c \u0394SHD.-H1]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_auxiliary_label_avoids_labels_the_scanner_misreads[L\u1ea5y \u0111i\u1ec3mH tr\xean SD.-H1]
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_gate_refuses_an_auxiliary_label_written_with_a_subscript_in_the_text
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_trace_attributes_auxiliary_calls_to_the_question_fact
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_construct_id_never_clashes_with_a_fact_id
+FAILED tests/geometry/test_hybrid_goal_decomposition.py::test_two_declarations_cannot_share_a_label
+17 failed, 46 passed in 2.22s
