@@ -23,5 +23,6 @@
   "EVALUATOR_INDEPENDENCE": "PARTIAL (Euclidean oracle with no product import; same author)",
   "tests": {"focused": "19 passed (3 mutants killed)", "cluster": "720 passed, 5 xfailed", "benchmark": "rows byte-identical"},
   "candidate": {"tree_hash": "5a8e0ff619193f436f752435dda50e9f53bced6e73efd26dc7b85bdc6de419b0", "product_commit": "eeceefbc"},
-  "t3": "recorded by the final commit of this run"
+  "t3": {"commit": "cf6293c0", "worktree": "clean detached", "result": "FULL_PRODUCT_GATE_PASS", "pytest": {"passed": 8428, "failed": 0, "skipped": 1, "deselected": 2, "xfailed": 5}, "vitest": 1051, "build": "PASS", "demo_replay": "PASS", "crash_surface": "PASS"},
+  "worktrees": {"created": ["s0-verify", "section-red", "section-verify"], "removed": ["s0-verify", "section-red", "section-verify"], "force_used": false, "freed_bytes_s0_verify": 1700669381, "kept": "simulation-audit (research branch, not integrated)"}
 }
