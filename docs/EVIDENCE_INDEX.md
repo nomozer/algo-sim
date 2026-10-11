@@ -1,5 +1,25 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = MAIN_INTEGRATION_READINESS
+
+REPORT = docs/evaluation/geometry/runs/main-integration-readiness/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/main-integration-readiness/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = ALGOSIM_MAIN_INTEGRATION_READY_FOR_FINAL_APPROVAL
+CODE_COMMIT = 74df2a78
+VERIFICATION_COMMIT = 49cf739e
+MODEL_REQUEST_COUNT = 0
+
+Orbit gate recalibration lives in `docs/evaluation/geometry/runs/orbit-gate-v2/` (pre-registered v2 failed its
+known-good validation and is kept; v3 validated: historical DAT ×3, two injections refused; one v3 batch run
+under concurrent load kept as invalid). v3 is red identically on main 28ac1d61 and on the integration branch: the p1
+scene allocates during orbit, does not settle and leaves later scenes unsettled (product defect, root cause UNKNOWN).
+Projection perpendicular recoloured from the W12 blue to the auxiliary-line colour (74df2a78). Integration branch
+built from main by fast-forward; candidate refrozen (product 74df2a78, tree a8dc02fc); T3 FULL_PRODUCT_GATE_PASS at
+49cf739e. 31 colliding untracked files backed up and verified, not removed (owned by another account). No human
+visual acceptance.
+
 ## WAVE_ID = FINAL_INTEGRATION_GATES
 
 REPORT = docs/evaluation/geometry/runs/final-integration-gates/report.md

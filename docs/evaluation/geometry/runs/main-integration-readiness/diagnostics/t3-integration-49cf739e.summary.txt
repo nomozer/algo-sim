@@ -1,0 +1,27 @@
+8198 passed, 1 skipped, 2 deselected, 1 warning in 336.01s (0:05:36)
+  ✔ pytest (toàn bộ backend) — 338.2s
+ Test Files  68 passed (68)
+      Tests  1051 passed (1051)
+  ✔ vitest (toàn bộ frontend) — 6.7s
+  ✔ typecheck + build production — 6.9s
+✔ n1_thoi_dinh_thu_tu                [PASS   ] dừng=—  bước=6  cảnh=8
+✔ n2_lang_tru_xien_hai_vecto         [PASS   ] dừng=—  bước=7  cảnh=10
+✔ t3_hop_tinh_tien_day_chuyen        [PASS   ] dừng=—  bước=10  cảnh=13
+✔ t4_mat_xich_trong_chuoi_sau        [PASS   ] dừng=—  bước=9  cảnh=12
+✔ n4_giao_duong_mat_roi_do           [REFUSAL] dừng=GROUNDING  bước=None  cảnh=None
+✔ v2_04_thiet_dien_goc_va_the_tich   bước=12 cảnh=13  THIẾT DIỆN · góc · thể tích
+  ✔ tập demo khoá luận — 0.5s
+✔ toạ độ ký hiệu tới kernel            mong=STATIC             thực=STATIC
+✔ toán hạng SAI KIỂU tới kernel        mong=SCHEMA             thực=SCHEMA
+✔ ràng buộc LẦN ĐẦU không khai         mong=OK_SAU_CHUAN_HOA   thực=OK_SAU_CHUAN_HOA
+✔ ràng buộc lần đầu TRONG NHÁNH        mong=STATIC             thực=STATIC
+✔ toạ độ THÔ ở một ô TÊN               mong=SCHEMA             thực=SCHEMA
+✔ rửa năng lực qua biểu thức lồng      mong=SCHEMA             thực=SCHEMA
+  ✔ bề mặt sập của demo — 0.3s
+  ✔ pytest (toàn bộ backend)           338.2s   (engine tất định, validator, cổng phạm vi, lớp học)
+  ✔ vitest (toàn bộ frontend)          6.7s   (module, renderer, guard kiến trúc, manifest)
+  ✔ typecheck + build production       6.9s   (cổng kiểu duy nhất của repo)
+  ✔ tập demo khoá luận                 0.5s   (chuỗi dựng tất định chạy hết, thiết diện/thể tích ra hình)
+  ✔ bề mặt sập của demo                0.3s   (sáu biên từ chối ĐÚNG KIỂU, không ném 500)
+FULL_PRODUCT_GATE_PASS
+t3_exit=0

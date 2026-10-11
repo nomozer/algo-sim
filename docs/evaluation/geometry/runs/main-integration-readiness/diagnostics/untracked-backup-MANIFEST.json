@@ -1,0 +1,321 @@
+{
+  "schema": "untracked-backup/1",
+  "created": "2026-10-11T18:17:22.7492928+07:00",
+  "source_repo": "D:\\Documents\\projects\\algo-sim",
+  "source_branch_of_checkout": "main",
+  "reason": "31 untracked files in the main checkout duplicate tracked files of feat/geometry-library-expansion byte-for-byte and would block a fast-forward of main",
+  "compared_against": "feat/geometry-library-expansion",
+  "files": [
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/diagnostics/artifact-manifest.json",
+      "bytes": 7613,
+      "sha256_raw": "f8b6db82841bad493502b4a7ab58684be52d27107b8e2a657fe7c27fcc1617c1",
+      "sha256_lf": "f8b6db82841bad493502b4a7ab58684be52d27107b8e2a657fe7c27fcc1617c1",
+      "blob_sha256": "f8b6db82841bad493502b4a7ab58684be52d27107b8e2a657fe7c27fcc1617c1",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/diagnostics/budget_audit.json",
+      "bytes": 24268,
+      "sha256_raw": "cfd226d42fbf6706f05dd10c7038e4c1053a2d1087b12dd665e4510918fc969b",
+      "sha256_lf": "cfd226d42fbf6706f05dd10c7038e4c1053a2d1087b12dd665e4510918fc969b",
+      "blob_sha256": "cfd226d42fbf6706f05dd10c7038e4c1053a2d1087b12dd665e4510918fc969b",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/diagnostics/docs-audit-final.json",
+      "bytes": 8838,
+      "sha256_raw": "97c23a480121daf8a1b671588664cfdaf6eb1a48faa01a0fb1e78a8c2649d0a8",
+      "sha256_lf": "97c23a480121daf8a1b671588664cfdaf6eb1a48faa01a0fb1e78a8c2649d0a8",
+      "blob_sha256": "97c23a480121daf8a1b671588664cfdaf6eb1a48faa01a0fb1e78a8c2649d0a8",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/diagnostics/docs-audit.json",
+      "bytes": 8838,
+      "sha256_raw": "ceb0a581dc48173758a4e18097d97107665c72b05967f187ceebdcd1c77ab979",
+      "sha256_lf": "ceb0a581dc48173758a4e18097d97107665c72b05967f187ceebdcd1c77ab979",
+      "blob_sha256": "ceb0a581dc48173758a4e18097d97107665c72b05967f187ceebdcd1c77ab979",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/diagnostics/docs-final-verification.json",
+      "bytes": 625,
+      "sha256_raw": "7242cf7eaf5a5c83f111dcb6c60f795b551723153cc22b627e15d70f0ae94c68",
+      "sha256_lf": "7242cf7eaf5a5c83f111dcb6c60f795b551723153cc22b627e15d70f0ae94c68",
+      "blob_sha256": "7242cf7eaf5a5c83f111dcb6c60f795b551723153cc22b627e15d70f0ae94c68",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/diagnostics/review_resolution-final.json",
+      "bytes": 2968,
+      "sha256_raw": "debb3aa675b5422ae18b8fa4864449779515455b4bda834979051c272e303791",
+      "sha256_lf": "debb3aa675b5422ae18b8fa4864449779515455b4bda834979051c272e303791",
+      "blob_sha256": "debb3aa675b5422ae18b8fa4864449779515455b4bda834979051c272e303791",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/diagnostics/review_resolution.json",
+      "bytes": 2635,
+      "sha256_raw": "e8a7651bb0c0150ba11beac13bdf00310c49fb2540f3568fee04291dedc62fda",
+      "sha256_lf": "e8a7651bb0c0150ba11beac13bdf00310c49fb2540f3568fee04291dedc62fda",
+      "blob_sha256": "e8a7651bb0c0150ba11beac13bdf00310c49fb2540f3568fee04291dedc62fda",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/diagnostics/verification.json",
+      "bytes": 2234,
+      "sha256_raw": "fd31ebf6051448ae418b3551cd5176f75e2a08c37b864bce0f0218c9f7241bf0",
+      "sha256_lf": "fd31ebf6051448ae418b3551cd5176f75e2a08c37b864bce0f0218c9f7241bf0",
+      "blob_sha256": "fd31ebf6051448ae418b3551cd5176f75e2a08c37b864bce0f0218c9f7241bf0",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/handoff.md",
+      "bytes": 3002,
+      "sha256_raw": "f8e3ca2f8e93a617e6287ed8b226018d12c4d36436629483e701a55e0e10b1bd",
+      "sha256_lf": "f8e3ca2f8e93a617e6287ed8b226018d12c4d36436629483e701a55e0e10b1bd",
+      "blob_sha256": "f8e3ca2f8e93a617e6287ed8b226018d12c4d36436629483e701a55e0e10b1bd",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/candidate_divergence.json",
+      "bytes": 1993,
+      "sha256_raw": "3670375c352d3b886f4ff6cf63a39a0b6871534785c4578c3208c690bb021aa9",
+      "sha256_lf": "3670375c352d3b886f4ff6cf63a39a0b6871534785c4578c3208c690bb021aa9",
+      "blob_sha256": "3670375c352d3b886f4ff6cf63a39a0b6871534785c4578c3208c690bb021aa9",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/oracle.json",
+      "bytes": 10803,
+      "sha256_raw": "1381c9f8e8a54cc948adf3a3787324f1a064ff2b6b56e9876bc66d25609ee2ce",
+      "sha256_lf": "1381c9f8e8a54cc948adf3a3787324f1a064ff2b6b56e9876bc66d25609ee2ce",
+      "blob_sha256": "1381c9f8e8a54cc948adf3a3787324f1a064ff2b6b56e9876bc66d25609ee2ce",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/pilot_cases.json",
+      "bytes": 11544,
+      "sha256_raw": "f35a7e1a6762260a324363101889960f085595807e325c65032c2dc31dbfc6c2",
+      "sha256_lf": "f35a7e1a6762260a324363101889960f085595807e325c65032c2dc31dbfc6c2",
+      "blob_sha256": "f35a7e1a6762260a324363101889960f085595807e325c65032c2dc31dbfc6c2",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/question_obligations.json",
+      "bytes": 17383,
+      "sha256_raw": "c73b13b8d2aeb56822eddd68cddc38c7bbafbd8da360c49b1ba4499d0d2df93b",
+      "sha256_lf": "c73b13b8d2aeb56822eddd68cddc38c7bbafbd8da360c49b1ba4499d0d2df93b",
+      "blob_sha256": "c73b13b8d2aeb56822eddd68cddc38c7bbafbd8da360c49b1ba4499d0d2df93b",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/plan.md",
+      "bytes": 19090,
+      "sha256_raw": "be4faf443e410e1ae7581e17e6a2150f0e299f2406cb10ae3e9bd6d182c99af0",
+      "sha256_lf": "be4faf443e410e1ae7581e17e6a2150f0e299f2406cb10ae3e9bd6d182c99af0",
+      "blob_sha256": "be4faf443e410e1ae7581e17e6a2150f0e299f2406cb10ae3e9bd6d182c99af0",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/protocol.md",
+      "bytes": 21768,
+      "sha256_raw": "bbfa47b4c74434b82245c3f8e54bcf94eb414f20f6979e7f6b01cf94b3bb3677",
+      "sha256_lf": "bbfa47b4c74434b82245c3f8e54bcf94eb414f20f6979e7f6b01cf94b3bb3677",
+      "blob_sha256": "bbfa47b4c74434b82245c3f8e54bcf94eb414f20f6979e7f6b01cf94b3bb3677",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/expansion_X01.json",
+      "bytes": 25295,
+      "sha256_raw": "b59cb2f0be98a60660b31450b8a325d91b5da4e6fc5e5815775fabbd7b3ab28e",
+      "sha256_lf": "b59cb2f0be98a60660b31450b8a325d91b5da4e6fc5e5815775fabbd7b3ab28e",
+      "blob_sha256": "b59cb2f0be98a60660b31450b8a325d91b5da4e6fc5e5815775fabbd7b3ab28e",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/expansion_X02.json",
+      "bytes": 38527,
+      "sha256_raw": "1b82279607aa2016831793b5ff752328a3d741dfef5894d2c1c960ede436207c",
+      "sha256_lf": "1b82279607aa2016831793b5ff752328a3d741dfef5894d2c1c960ede436207c",
+      "blob_sha256": "1b82279607aa2016831793b5ff752328a3d741dfef5894d2c1c960ede436207c",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/expansion_X03.json",
+      "bytes": 25047,
+      "sha256_raw": "c8bc8fd4d519f794064e22a326300fda85e6eac667a5c26243d9130c26840a5a",
+      "sha256_lf": "c8bc8fd4d519f794064e22a326300fda85e6eac667a5c26243d9130c26840a5a",
+      "blob_sha256": "c8bc8fd4d519f794064e22a326300fda85e6eac667a5c26243d9130c26840a5a",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/expansion_X04.json",
+      "bytes": 22555,
+      "sha256_raw": "58e7bb464398c58d2403e39519bb06231e51d49cc3782f9393bc4d7ed66a33ab",
+      "sha256_lf": "58e7bb464398c58d2403e39519bb06231e51d49cc3782f9393bc4d7ed66a33ab",
+      "blob_sha256": "58e7bb464398c58d2403e39519bb06231e51d49cc3782f9393bc4d7ed66a33ab",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/expansion_X05.json",
+      "bytes": 16707,
+      "sha256_raw": "a47cf44ea9ae906591d1a7070ad083627217e27c686a401c519b1aa80840d800",
+      "sha256_lf": "a47cf44ea9ae906591d1a7070ad083627217e27c686a401c519b1aa80840d800",
+      "blob_sha256": "a47cf44ea9ae906591d1a7070ad083627217e27c686a401c519b1aa80840d800",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/hybrid_H01.json",
+      "bytes": 25193,
+      "sha256_raw": "e40125d444db8211fecdf261f8ebc4234e3b76aa451d99811d067a292b448571",
+      "sha256_lf": "e40125d444db8211fecdf261f8ebc4234e3b76aa451d99811d067a292b448571",
+      "blob_sha256": "e40125d444db8211fecdf261f8ebc4234e3b76aa451d99811d067a292b448571",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/hybrid_H02.json",
+      "bytes": 27996,
+      "sha256_raw": "8f286305de639cf309b3c00e3a9c85ba9eb9d3d167af4fefeceb553748d80afa",
+      "sha256_lf": "8f286305de639cf309b3c00e3a9c85ba9eb9d3d167af4fefeceb553748d80afa",
+      "blob_sha256": "8f286305de639cf309b3c00e3a9c85ba9eb9d3d167af4fefeceb553748d80afa",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/hybrid_H03.json",
+      "bytes": 33540,
+      "sha256_raw": "9dd3198db92da841810d77b859c67cd2a50171348970951599b1afaf07c3aea4",
+      "sha256_lf": "9dd3198db92da841810d77b859c67cd2a50171348970951599b1afaf07c3aea4",
+      "blob_sha256": "9dd3198db92da841810d77b859c67cd2a50171348970951599b1afaf07c3aea4",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/hybrid_H04.json",
+      "bytes": 25206,
+      "sha256_raw": "5d14b5f6a179e2538216ec708e1e329a4346fa0e8b55817f3804f2c94be4742f",
+      "sha256_lf": "5d14b5f6a179e2538216ec708e1e329a4346fa0e8b55817f3804f2c94be4742f",
+      "blob_sha256": "5d14b5f6a179e2538216ec708e1e329a4346fa0e8b55817f3804f2c94be4742f",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/hybrid_H07.json",
+      "bytes": 12647,
+      "sha256_raw": "b8d0fade0f28e301e593ab0e4420e561d592cb4a5d6a9a77b03480c76f4dd8c5",
+      "sha256_lf": "b8d0fade0f28e301e593ab0e4420e561d592cb4a5d6a9a77b03480c76f4dd8c5",
+      "blob_sha256": "b8d0fade0f28e301e593ab0e4420e561d592cb4a5d6a9a77b03480c76f4dd8c5",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/hybrid_H11.json",
+      "bytes": 24440,
+      "sha256_raw": "f425df782edea83571c4f0000575c1411377ca36b3fb2ab7d33ee61690935c21",
+      "sha256_lf": "f425df782edea83571c4f0000575c1411377ca36b3fb2ab7d33ee61690935c21",
+      "blob_sha256": "f425df782edea83571c4f0000575c1411377ca36b3fb2ab7d33ee61690935c21",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/hybrid_H12.json",
+      "bytes": 21398,
+      "sha256_raw": "dcd4115f4efae6ad054bb5b3477db1ebb131536933d56e05a47809b06107c2a3",
+      "sha256_lf": "dcd4115f4efae6ad054bb5b3477db1ebb131536933d56e05a47809b06107c2a3",
+      "blob_sha256": "dcd4115f4efae6ad054bb5b3477db1ebb131536933d56e05a47809b06107c2a3",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/hybrid_H14.json",
+      "bytes": 13471,
+      "sha256_raw": "a5884ba6997347a44f92138baff8b1e629528dc03939d34370f8d88c96eca7e9",
+      "sha256_lf": "a5884ba6997347a44f92138baff8b1e629528dc03939d34370f8d88c96eca7e9",
+      "blob_sha256": "a5884ba6997347a44f92138baff8b1e629528dc03939d34370f8d88c96eca7e9",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/renderer-scenes/paraphrase_P01.json",
+      "bytes": 12528,
+      "sha256_raw": "8306fa48f539f325d311e1756c72c09611adc3d0ebf766528a3036f30542bf16",
+      "sha256_lf": "8306fa48f539f325d311e1756c72c09611adc3d0ebf766528a3036f30542bf16",
+      "blob_sha256": "8306fa48f539f325d311e1756c72c09611adc3d0ebf766528a3036f30542bf16",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/report.md",
+      "bytes": 17575,
+      "sha256_raw": "ae013e5076c3be2c0e6d85ae2d2a67a3962f1e958e802cd80a556118ed6db5e2",
+      "sha256_lf": "ae013e5076c3be2c0e6d85ae2d2a67a3962f1e958e802cd80a556118ed6db5e2",
+      "blob_sha256": "ae013e5076c3be2c0e6d85ae2d2a67a3962f1e958e802cd80a556118ed6db5e2",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/run.json",
+      "bytes": 7721,
+      "sha256_raw": "d761ad8d8098acf249d9279cdba16b2a94eb694bc099aecc87662649f0e2e66f",
+      "sha256_lf": "d761ad8d8098acf249d9279cdba16b2a94eb694bc099aecc87662649f0e2e66f",
+      "blob_sha256": "d761ad8d8098acf249d9279cdba16b2a94eb694bc099aecc87662649f0e2e66f",
+      "raw_equals_blob": true,
+      "lf_equals_blob": true,
+      "locked": false
+    }
+  ],
+  "restore": "Copy-Item -Recurse -LiteralPath 'D:\\Documents\\projects\\algo-sim-backups\\20261011-hybrid-ab-pilot-readiness-untracked\\files\\docs' -Destination 'D:\\Documents\\projects\\algo-sim\\' (only if the paths are not tracked at that time)"
+}

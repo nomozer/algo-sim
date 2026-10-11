@@ -1752,3 +1752,16 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/final-integration-gates/
 - **GATES:** T3 FULL_PRODUCT_GATE_PASS in clean detached worktree at ffe7fd68 (pytest 8198/0, vitest 1050, build, demo, crash surface 6/6); a T3 run on a dirty tree disclosed and not counted; candidate verify 0 (a8dc02fc).
 - **ENV / CLEANUP:** core.longpaths=true set locally (was unset; global unchanged). Worktrees 8→2 without --force, 10,350,596,096 bytes freed; no branch deleted.
 - **FINAL_DECISION:** ALGOSIM_FINAL_INTEGRATION_GATES_AWAITING_APPROVAL — merge CONDITIONAL GO after human visual acceptance, the 31 identical untracked files in the main checkout, and an orbit-gate acceptance decision. LIVE Gemini 0.
+
+## WAVE_ID = MAIN_INTEGRATION_READINESS
+
+REPORT = docs/evaluation/geometry/runs/main-integration-readiness/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/main-integration-readiness/
+
+- **DATE / BRANCHES:** 2026-10-11, LOCAL; `integration/geometry-functions` from main 28ac1d61 by fast-forward to the verified line (no cherry-pick); feature branch at the same tip.
+- **ORBIT GATE:** v2 pre-registered and failed its known-good validation (kept); v3 pre-registered and validated (historical DAT ×3, azimuth and auto-rotate injections refused); thresholds unchanged; one contaminated v3 batch kept as invalid. v3 red identically on main: p1 section scene allocates and does not settle (product defect, UNKNOWN).
+- **PRODUCT FIX:** projection perpendicular uses the auxiliary-line colour instead of the W12 blue (74df2a78).
+- **GATES:** candidate refrozen at 49cf739e (product 74df2a78, tree a8dc02fc); T3 FULL_PRODUCT_GATE_PASS at 49cf739e (pytest 8198/0, vitest 1051); orbit node tests 10/10.
+- **MAIN CHECKOUT:** 31 untracked files byte-identical to the branch, backed up and verified outside the repository, not removed (owned by CodexSandboxOffline; no Delete right; ACL unchanged).
+- **CLEANUP:** worktrees 3→2 without --force, 1,732,866,048 bytes freed; branches kept.
+- **FINAL_DECISION:** ALGOSIM_MAIN_INTEGRATION_READY_FOR_FINAL_APPROVAL — GO for `git merge --ff-only integration/geometry-functions` on main after final acceptance and an administrator removal of the 31 files. LIVE Gemini 0.

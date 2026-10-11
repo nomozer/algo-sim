@@ -1,0 +1,118 @@
+{
+ "product-app-p1": {
+  "w": [],
+  "canvas": 1,
+  "labels": "ABCDS",
+  "scrollW": 1247
+ },
+ "d0-tetra-S.ABC-no-projection": {
+  "w": [],
+  "canvas": 1,
+  "labels": "ABCS",
+  "scrollW": 1265
+ },
+ "d1-tetra-A-to-SBC": {
+  "w": [
+   "perpendicular:K"
+  ],
+  "canvas": 1,
+  "labels": "ABCSK",
+  "scrollW": 1265
+ },
+ "d2-tetra-B-to-SAC": {
+  "w": [
+   "perpendicular:K"
+  ],
+  "canvas": 1,
+  "labels": "ABCSK",
+  "scrollW": 1265
+ },
+ "d3-tetra-C-to-SAB": {
+  "w": [
+   "perpendicular:K"
+  ],
+  "canvas": 1,
+  "labels": "ABCSK",
+  "scrollW": 1265
+ },
+ "d4-square-intersect-AC-BD": {
+  "w": [],
+  "canvas": 1,
+  "labels": "ABCDOS",
+  "scrollW": 1265
+ },
+ "d5-square-proj-D-to-SBC": {
+  "w": [
+   "perpendicular:H"
+  ],
+  "canvas": 1,
+  "labels": "ABCDSH",
+  "scrollW": 1265
+ },
+ "d6-square-compose-SO-AM": {
+  "w": [],
+  "canvas": 1,
+  "labels": "BCDOSK",
+  "scrollW": 1265
+ },
+ "d7-square-proj-A-to-SO": {
+  "w": [
+   "perpendicular:H"
+  ],
+  "canvas": 1,
+  "labels": "ABCDOSH",
+  "scrollW": 1265
+ },
+ "d8-square-BN-AD-outside": {
+  "w": [],
+  "canvas": 1,
+  "labels": "ABCDNXS",
+  "scrollW": 1265
+ },
+ "d9-product-fixture-p1": {
+  "w": [],
+  "canvas": 1,
+  "labels": "ABCDS",
+  "scrollW": 1265
+ },
+ "d1-tetra-A-to-SBC-aux1": {
+  "w": [
+   "perpendicular:K"
+  ],
+  "canvas": 1,
+  "labels": "ABCSK",
+  "scrollW": 1265
+ },
+ "d5-square-proj-D-to-SBC-aux1": {
+  "w": [
+   "perpendicular:H"
+  ],
+  "canvas": 1,
+  "labels": "ABCDSH",
+  "scrollW": 1265
+ },
+ "d7-square-proj-A-to-SO-aux1": {
+  "w": [
+   "perpendicular:H"
+  ],
+  "canvas": 1,
+  "labels": "ABCDOSH",
+  "scrollW": 1265
+ },
+ "m1-tetra-A-to-SBC": {
+  "w": [
+   "perpendicular:K"
+  ],
+  "canvas": 1,
+  "labels": "ABSK",
+  "scrollW": 375
+ },
+ "m5-square-proj-D-to-SBC": {
+  "w": [
+   "perpendicular:H"
+  ],
+  "canvas": 1,
+  "labels": "ABCDSH",
+  "scrollW": 375
+ }
+}

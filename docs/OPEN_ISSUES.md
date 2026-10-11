@@ -2,13 +2,35 @@
 
 ### ISSUE-EVAL-ORBIT-GATE-CANVAS-HEIGHT-AND-DAMPING-READ
 
-- **description:** `frontend/scripts/scene3d-orbit-gate.mjs` reports `KHONG_DU_VONG` (336–347°, threshold 360°) on `main` 28ac1d61 and on this branch. Root cause (2026-10-11): the gate's fixed 700 px drag meets a canvas that grew 545→683 px through layout commits already in `main`, and its fixed 250 ms read truncates OrbitControls damping. Settled, the camera reaches exactly `360·700/h` (369°). The historical build `eb6d7d5a` passes the unmodified gate today. Not a product defect, not the machine.
-- **evidence:** `docs/evaluation/geometry/runs/final-integration-gates/report.md` §1 and `diagnostics/orbit-*.json`.
-- **impact:** The browser gate is red on `main` itself; it no longer measures what it was designed for (no azimuth wall) on the current layout.
-- **scope:** Gate calibration. Threshold and gate unchanged; a replacement acceptance (drag ∝ canvas height, condition-based settle, 360° kept, validated on a known-good window and an injection) is proposed and needs approval.
-- **status:** OPEN — awaiting the user's decision on the replacement acceptance.
+- **description:** v1 of `frontend/scripts/scene3d-orbit-gate.mjs` read `KHONG_DU_VONG` on `main`: a fixed 700 px drag on a canvas that grew 545→683 px, read at 250 ms under damping.
+- **evidence:** `docs/evaluation/geometry/runs/final-integration-gates/report.md` §1; `docs/evaluation/geometry/runs/orbit-gate-v2/` (protocols, results).
+- **impact:** None left for the instrument — v3 (drag ∝ canvas height, angle-weighted axis, 0.01°/frame settle, thresholds unchanged) passed its pre-registered validation; v2 failed it and is kept on record.
+- **scope:** Gate calibration only.
+- **status:** RESOLVED (2026-10-11, v3 `scene3d-orbit-gate/3`). The red that v3 now shows on `main` is a product defect: `ISSUE-ARCH-ORBIT-P1-SECTION-SCENE-DOES-NOT-SETTLE`.
 - **owner_class:** TEST
-- **suggested_wave:** Before or alongside integration of geometry-library-expansion.
+- **suggested_wave:** —
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-ORBIT-P1-SECTION-SCENE-DOES-NOT-SETTLE
+
+- **description:** With the validated orbit gate v3, the p1 fixture (pyramid with cross-section and a distance) allocates GPU resources during orbit (111 buffers/programs/canvases; historical build: 0), its camera does not settle within 20 s, and scenes loaded after it in the same session (p6, p7) do not settle either; p6/p7 alone are DAT. Present on `main` 28ac1d61 and identical on the integration branch.
+- **evidence:** `docs/evaluation/geometry/runs/orbit-gate-v2/results-v3/` and `results-v3-isolation/`; `docs/evaluation/geometry/runs/main-integration-readiness/report.md` §1.
+- **impact:** The browser orbit gate is red on `main`; possible per-frame allocation/leak on polyhedral section scenes.
+- **scope:** Product renderer (`frontend/src/simulations/domains/geometry/`). Root cause UNKNOWN; first suspects: camera-dependent hidden-line recomputation or automatic fitting not disposed on scene change.
+- **status:** OPEN
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** Next renderer slice; reproduce with `--ca p1` on the orbit gate v3.
+- **default_switch_blocker:** NO
+
+### ISSUE-OPS-MAIN-CHECKOUT-FILES-OWNED-BY-ANOTHER-ACCOUNT
+
+- **description:** In the main checkout, `docs/evaluation/geometry/runs/` and the 31 untracked files under `hybrid-ab-pilot-readiness/` are owned by `CodexSandboxOffline`; the working account has Write but not Delete there. The 31 files are byte-identical to tracked branch files and block a fast-forward of `main`.
+- **evidence:** `docs/evaluation/geometry/runs/main-integration-readiness/report.md` §2; backup manifest `diagnostics/untracked-backup-MANIFEST.json`.
+- **impact:** The merge needs an account with Delete rights for one command; new files can still be created under `runs/`.
+- **scope:** Local file ownership, not repository content. ACLs were not changed.
+- **status:** OPEN — the merge procedure in `main-integration-readiness/handoff.md` includes the administrator step.
+- **owner_class:** OPS
+- **suggested_wave:** Before the fast-forward of `main`.
 - **default_switch_blocker:** NO
 
 ### ISSUE-EVAL-GENERIC-TIER-A-GENERATOR-INTERMITTENT

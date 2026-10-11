@@ -1,0 +1,6 @@
+  p1: KHONG_ON_DINH  vòng=450°  trục=Z[0,0,1] ‖1.000‖  cos∈[-1.00,1.00]  snap=0  cấp phát=111  yên=0.0°
+  p6: KHONG_ON_DINH  vòng=450°  trục=Z[0,0,1] ‖1.000‖  cos∈[-1.00,1.00]  snap=0  cấp phát=0  yên=0.0°
+  p7: KHONG_ON_DINH  vòng=450°  trục=Z[0,0,1] ‖1.000‖  cos∈[-1.00,1.00]  snap=0  cấp phát=0  yên=0.0°
+→ C:\Users\Bunny\AppData\Local\Temp\claude\d--Documents-projects-algo-sim\a6a232da-9691-4a98-8021-bda1cd7e43fb\scratchpad\integration\orbit-v3\ORBIT_GATE.json  KHÔNG ĐẠT
+orbit_exit=1
+status_after=0

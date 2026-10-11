@@ -1,13 +1,13 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — final-integration-gates, 2026-10-11
+## LOCAL override — main-integration-readiness, 2026-10-11
 
-Mới nhất: T3 FULL_PRODUCT_GATE_PASS trong worktree detached sạch tại `ffe7fd68` (pytest 8198/0, vitest 1050);
-candidate a8dc02fc (product `4ad89909`) verify 0; A/B 12da4768 giữ nguyên. Orbit gate đỏ cả trên main 28ac1d61:
-canvas 545→683 px + đọc sau 250 ms khi damping chưa tắt (không phải sản phẩm, không phải máy; đính chính lượt
-trước). Test chập chờn 1/9, UNKNOWN, nay tự báo. `core.longpaths=true` local. Worktree 8→2.
-ALGOSIM_FINAL_INTEGRATION_GATES_AWAITING_APPROVAL; merge CONDITIONAL GO; live pilot/default NO-GO.
-Report: [`final-integration-gates`](evaluation/geometry/runs/final-integration-gates/report.md); trước đó
+Mới nhất: nhánh `integration/geometry-functions` dựng từ main 28ac1d61 bằng fast-forward; T3 FULL_PRODUCT_GATE_PASS
+tại `49cf739e` (pytest 8198/0, vitest 1051); candidate a8dc02fc (product `74df2a78`) verify 0; A/B 12da4768 giữ nguyên.
+Orbit gate v3 đã kiểm định; đỏ y hệt trên main do cảnh p1 không lắng (lỗi sản phẩm có sẵn). 31 file untracked trùng
+nhánh đã backup, chưa xoá (chủ CodexSandboxOffline). ALGOSIM_MAIN_INTEGRATION_READY_FOR_FINAL_APPROVAL.
+Report: [`main-integration-readiness`](evaluation/geometry/runs/main-integration-readiness/report.md); trước đó
+[`final-integration-gates`](evaluation/geometry/runs/final-integration-gates/report.md) và
 [`geometry-library-important-fixes`](evaluation/geometry/runs/geometry-library-important-fixes/report.md).
 Đoạn dưới là trạng thái của lượt expansion trước đó (giữ để truy vết):
 
