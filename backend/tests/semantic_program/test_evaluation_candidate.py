@@ -375,8 +375,10 @@ def test_I2_every_historical_candidate_reproduces_under_its_recorded_rule():
     versions = fz._git("log", "--format=%H", "--", rel).split()
     checked = 0
     for v in versions:
+        # The manifest is UTF-8 Vietnamese text: decode explicitly, not with the console code page.
+        shown = subprocess.run(["git", "-C", str(ROOT), "show", f"{v}:{rel}"], capture_output=True, encoding="utf-8")
         try:
-            m = json.loads(fz._git("show", f"{v}:{rel}"))
+            m = json.loads(shown.stdout)
         except json.JSONDecodeError:
             continue
         if not m.get("product_commit_sha"):
