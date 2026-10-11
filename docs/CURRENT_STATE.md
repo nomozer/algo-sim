@@ -1,5 +1,18 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL override — geometry-library-expansion, 2026-10-11
+
+Thẩm quyền cho checkout LOCAL này (các snapshot remote/main cũ dưới đây không phải Git pre-flight):
+nhánh nghiên cứu `feat/geometry-library-expansion`, base2990d87d, product a0eb1450,
+tooling3b6104e3; original checkout vẫn `feat/text-to-geometry-functions` tại2990d87d,
+main28ac1d61 không đổi; favicon untracked của người dùng giữ nguyên. Không fetch/push/merge.
+Registry24→27; hai nhóm dựng điểm trên cùng Engine/Planner/IR/Kernel/Scene3D, không thêm solver.
+Candidate mới8ff994c6 (110 file), candidate A/B cũ12da4768 giữ nguyên;
+cache125/default LLM_ONLY không đổi.91 feature tests,74 fake calls/network0 và34 renderer tests;
+full clean regression đang kiểm chứng. Không dùng kết quả này thay pilot A/B.
+Report/run/handoff: [`geometry-library-expansion`](evaluation/geometry/runs/geometry-library-expansion/report.md).
+Human visual acceptance chưa thực hiện; real-model quality chưa đo. LIVE Gemini=0.
+
 File này chỉ giữ **trạng thái và con trỏ**: danh tính kho mã (có sync-lock), cơ sở
 mã + bằng chứng, việc kế tiếp, và bảng của wave gần nhất. Chỉ ghi việc **đã thật sự
 xong** (có commit + test). Lịch sử thuộc `STATUS_LEDGER.md`; báo cáo và artifact
@@ -60,7 +73,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > USER_DIRTY_STATE = có — `frontend/public/favicon.svg` untracked của người dùng, giữ nguyên; không stage/commit.
 > CURRENT_WAVE = HYBRID_AB_PILOT_READINESS (run hybrid-ab-pilot-readiness, LOCAL, cùng nhánh, live Gemini0): object-binding chính xác, observation ≠ proof; runner SMOKE24/FULL288 có identity riêng, shared output3072; 344 focused PASS,9 mutation killed,312 fake/network0; clean backend8068 PASS/1 skip/2 deselected tại2f1b457c. CORRECTS HYBRID_COMPILER_SELECTION: lịch sử nguyên byte, đọc cùng correction layer. Report/handoff của run là thẩm quyền; không tuyên bố safety population/visual/real-model.
 > FINAL_DECISION = HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW — offline GO có giới hạn kiểm chứng; SMOKE/FULL live NO-GO (prompt estimator chưa provider-bound, storage cause UNKNOWN, chưa phê duyệt riêng). Main giữ nguyên28ac1d61; không merge/push/default change; human visual acceptance NOT_PERFORMED.
-> CANONICAL_NEXT_ACTION = AI_FUNCTION_ROUTE_BUDGETED_PILOT_DECISION
+> CANONICAL_NEXT_ACTION = GEOMETRY_LIBRARY_EXPANSION_REVIEW
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 

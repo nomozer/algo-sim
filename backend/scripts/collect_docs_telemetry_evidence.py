@@ -503,7 +503,8 @@ def collect_candidate_cache_proof() -> dict[str, Any]:
     k_ret, k_out, _ = run_cmd([sys.executable, str(BACKEND / "scripts" / "lock_cache_identity.py"), "--verify"])
 
     candidate = json.loads(
-        (REPO / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json")
+        Path(os.environ.get("ALGOSIM_TEST_CANDIDATE",
+                            REPO / "docs" / "evaluation" / "semantic-benchmark" / "EVALUATION_CANDIDATE.json"))
         .read_text(encoding="utf-8")
     )
     candidate_hash = candidate["measured_system"]["tree_hash"]

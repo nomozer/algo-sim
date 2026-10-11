@@ -9,9 +9,16 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = AI_FUNCTION_ROUTE_BUDGETED_PILOT_DECISION
+CANONICAL_NEXT_ACTION = GEOMETRY_LIBRARY_EXPANSION_REVIEW
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **Geometry expansion (LOCAL, 2026-10-11):** hai nhóm đã được người dùng phê duyệt;
+  giao điểm đường–đường/đường–mặt và hình chiếu điểm–đường/điểm–mặt trên Registry/Engine chung.
+  Nhánh riêng `feat/geometry-library-expansion`, chưa tích hợp; báo cáo/cổng kiểm chứng ở
+  [`geometry-library-expansion/report.md`](evaluation/geometry/runs/geometry-library-expansion/report.md).
+  Candidate mới không thay candidate A/B đã khóa. Không chạy pilot, merge, push hay đổi default.
+  Sau kiểm chứng, review phạm vi đã dựng và giới hạn trước khi chọn lát kế tiếp; OCR vẫn sau mở rộng họ hình.
 
 - **Readiness correction (2026-10-10):** [`hybrid-ab-pilot-readiness/report.md`](evaluation/geometry/runs/hybrid-ab-pilot-readiness/report.md)
   tách object-binding / quan sát cấu hình khỏi chứng minh, khóa SMOKE 24 và FULL 288 riêng, certification fake/network=0.

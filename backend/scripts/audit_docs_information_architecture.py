@@ -141,6 +141,7 @@ ALLOWED_CANONICAL_ACTIONS = [
     # ai-function-route (2026-10-10): Text-to-Geometry Functions là kiến trúc đích; adapter Gemini đã kiểm offline —
     # việc kế tiếp là quyết định của người dùng về một pilot có ngân sách trên đường mới.
     "AI_FUNCTION_ROUTE_BUDGETED_PILOT_DECISION",
+    "GEOMETRY_LIBRARY_EXPANSION_REVIEW",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

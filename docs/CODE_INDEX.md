@@ -1,5 +1,25 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Geometry library expansion — LOCAL isolated branch
+
+Run: `docs/evaluation/geometry/runs/geometry-library-expansion/`; before/after and limits in report.md.
+
+| Module | Added/reused capability | Verification |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/registry.py` |27 entries; typed line-line/line-plane intersections, line projection and constructive existing plane projection; role-bound source grammar | `backend/tests/geometry/test_geometry_library_expansion.py` |
+| `backend/app/simulation/geometry_functions/engine.py` | Derived points, dependency progress, exact metric relation checks and constructive IR; inverse known-foot preserved | Same91-test oracle/negative/metamorphic/mutation suite |
+| `backend/app/simulation/geometry_functions/planner.py` | Existing TypedFact point_def/projection → correct primitive by operand type | Real B adapter in same tests, not only manual kernel calls |
+| `backend/app/ai/fact_extraction.py` | Existing B extraction contract teaches new point kinds and two-point line targets | Offline fake adapter certification |
+| `backend/scripts/verify_geometry_library_expansion.py` |74 fake calls,14 literal oracle outcomes,8 exported Scene3D scenes; refuses output overwrite | Run offline-certification/ |
+| `backend/geometry_regression_fixtures.py` | Opt-in old verified payload surface for locked runner test modules only | Full regression uses distinct branch identity; other adapters keep new payloads |
+| `backend/scripts/freeze_evaluation_candidate.py` | Read-only ALGOSIM_TEST_CANDIDATE --verify; provenance uses exact measured paths |5 new candidate tests; default still verifies historical candidate |
+| `frontend/src/simulations/domains/geometry/geometry-library-expansion.test.ts` | Actual renderer metric/objects for8 scenes; no product renderer change |34 focused frontend tests including chart/annotations |
+| `frontend/scripts/geometry-library-expansion-visual.html` | Local-only actual Scene3DWorkspace harness | diagnostics/browser.json + screenshots |
+
+Safety clarification for older index descriptions: configuration observation is not a proof from premises;
+proof-only unsupported cases remain UNVERIFIABLE, not automatic PROOF_GOAL_FALSE/global inconsistency.
+The frozen A/B correction report is unchanged. No new planner/compiler/engine authority is introduced.
+
 Mục đích: biết **cái gì đã tồn tại và ở đâu** trước khi viết mới (chống trùng
 helper, chống hard-code vòng qua abstraction sẵn có). **Không chép thân hàm.**
 Helper private nhỏ được bỏ qua có chủ ý.

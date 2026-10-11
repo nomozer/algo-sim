@@ -1,5 +1,16 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-GEOMETRY-LIBRARY-CONSTRUCTION-BOUNDARIES
+
+- **description:** Expanded shared library constructs unique intersections and orthogonal feet, but source grammar is bounded; plane operands require first3 noncollinear labels; same-name plane projection remains a legacy precondition refusal. General sections/line-object composition and new base charts were not added.
+- **evidence:** `docs/evaluation/geometry/runs/geometry-library-expansion/report.md`; `backend/tests/geometry/test_geometry_library_expansion.py`.
+- **impact:** Correctly determined mathematics may still be refused outside the registered representation/wording; no general geometry/model-quality claim.
+- **scope:** Existing Registry/Engine/Planner, not a request to build another authority.
+- **status:** OPEN — bounded limits, not a regression of the approved four operations with separate output labels.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** After human review, audit reusable line-object/section composition or base determinacy separately.
+- **default_switch_blocker:** YES — neither this offline slice nor frozen A/B readiness authorizes switching default.
+
 > **Tài liệu Canonical cho việc theo dõi các vấn đề và giới hạn kỹ thuật của hệ thống.**
 > Mọi issue đều có Stable ID theo tiền tố chuẩn: `ISSUE-ARCH-*`, `ISSUE-EVAL-*`, `ISSUE-DOCS-*`, `ISSUE-OPS-*`, `ISSUE-RESEARCH-*`.
 > Chỉ ghi nhận các vấn đề được xác nhận bởi bằng chứng thực tế từ repository.

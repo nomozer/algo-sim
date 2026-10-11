@@ -1,5 +1,12 @@
 # AI_CONTEXT_BUNDLE.md — AlgoSim Session Handoff & Quick Context
 
+## LOCAL override — 2026-10-11 (ưu tiên hơn snapshot §2)
+
+Nhánh `feat/geometry-library-expansion`, base2990d87d, product a0eb1450/tooling3b6104e3; original `feat/text-to-geometry-functions`/2990d87d, main28ac1d61 và user favicon untracked giữ nguyên.
+Hai nhóm đã duyệt: giao điểm duy nhất đường–đường/đường–mặt, hình chiếu điểm–đường/điểm–mặt; Registry27, Engine/Planner hiện có; provenance/IR/metric. Candidate mới8ff994c6; A/B12da4768 + protocol/runner/corpus/evidence không đổi.
+91 feature tests,74 fake/network0,34 renderer tests; full regression đang kiểm chứng. Report: `evaluation/geometry/runs/geometry-library-expansion/report.md`.
+LLM_ONLY/cache125; LIVE Gemini0, không merge/push; human visual approval chưa có. §2 là snapshot trước run LOCAL, không phải Git pre-flight hiện hành.
+
 > Handoff cô đọng cho session mới. Code/test thắng khi mâu thuẫn với docs.
 > Không chứa secret hoặc raw model output; giới hạn 300 dòng. Lịch sử từng wave:
 > `docs/STATUS_LEDGER.md`; bằng chứng và chuỗi đính chính: `docs/EVIDENCE_INDEX.md`.
@@ -11,7 +18,7 @@ Scene3D tương tác. LLM chỉ trích xuất/tổng hợp cấu trúc; engine t
 tọa độ, thực thi, đo lường, correctness và scene state.
 
 - `DEFAULT_MODE = LLM_ONLY`; compiler-first vẫn opt-in (20 cổng ở `docs/MIGRATION_CHECKLIST.md`).
-- `CACHE_VERSION = 118` (run docs-cleanup: envelope từ chối T8 thiếu kích thước đổi nguyên nhân `UNKNOWN` → `SOURCE`;
+- `CACHE_VERSION = 125` trên source LOCAL đã kiểm (118 là snapshot run docs-cleanup: envelope từ chối T8 thiếu kích thước đổi nguyên nhân `UNKNOWN` → `SOURCE`;
   117 ở exact-dimensions — bộ đọc độ dài không lấy vế đầu của biểu thức); provider-facing fingerprint `b1714b566e25c912…`
   không đổi. Run mobile-canvas-fit không bump (chỉ frontend).
 - Mọi wave từ w09 chạy offline: `LIVE_GEMINI_REQUESTS = 0`.
@@ -185,13 +192,14 @@ Thay đổi chưa commit của người dùng: không restore, sửa, stage ho�
 
 ## 6. Bước tiếp theo duy nhất
 
-Run hiện tại: `hybrid-ab-pilot-readiness` (LOCAL, cùng nhánh; product `cfe2ada5`, candidate `12da4768`, cache 125).
+Run hiện tại: `geometry-library-expansion` (LOCAL, nhánh riêng; product a0eb1450, candidate8ff994c6, cache125).
+Run A/B trước: `hybrid-ab-pilot-readiness` (product `cfe2ada5`, candidate `12da4768`, giữ nguyên).
 344 focused PASS, 9 mutation killed, 24+288 fake/network=0; clean backend8068 PASS/1 skip/2 deselected; report.md của run.
 Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FULL live NO-GO, không merge/push/default change. `frontend/public/favicon.svg` là của user.
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = AI_FUNCTION_ROUTE_BUDGETED_PILOT_DECISION
+CANONICAL_NEXT_ACTION = GEOMETRY_LIBRARY_EXPANSION_REVIEW
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
@@ -275,15 +283,9 @@ tên theo việc, không mã lượt; lần thứ hai của cùng việc thêm n
 
 ## 8. Thứ tự đọc
 
-1. `AGENTS.md`
-2. `docs/RULES.md`
-3. file này
-4. `docs/CURRENT_STATE.md`
-5. `docs/OPEN_ISSUES.md`
-6. `docs/ROADMAP.md`
-7. `docs/CODE_INDEX.md`
-8. `docs/EVIDENCE_INDEX.md`
-9. Code/test trực tiếp liên quan
+`AGENTS.md` → `docs/RULES.md` → file này → `docs/CURRENT_STATE.md` →
+`docs/OPEN_ISSUES.md` → `docs/ROADMAP.md` → `docs/CODE_INDEX.md` →
+`docs/EVIDENCE_INDEX.md` → code/test trực tiếp liên quan.
 
 ## 9. Git và evidence safety
 

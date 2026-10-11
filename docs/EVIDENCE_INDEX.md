@@ -1,5 +1,23 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = GEOMETRY_LIBRARY_EXPANSION
+
+REPORT = docs/evaluation/geometry/runs/geometry-library-expansion/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometry-library-expansion/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = IMPLEMENTED_VERIFYING_FULL_REGRESSION
+CODE_COMMIT = a0eb1450
+VERIFICATION_COMMIT = 3b6104e3
+MODEL_REQUEST_COUNT = 0
+
+New isolated shared-library work, not a rerun/correction of experimental A/B outcomes.
+Before matrix audit.md, execution plan.md, new identity BRANCH_CANDIDATE.json and candidate_divergence.json;
+diagnostics/ and offline-certification/ are separate new measurements. Current divergence declaration
+supersedes the prior branch declaration only; historical candidate/results remain unchanged.
+91 feature tests,74 fake calls/network0,34 renderer tests, local browser bounded visual check;
+full regression pending. No real-model, human visual acceptance or population-safety claim.
+
 ## WAVE_ID = HYBRID_COMPILER_SELECTION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-compiler-selection/report.md
