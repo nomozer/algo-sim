@@ -1,10 +1,42 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = GEOMETRY_LIBRARY_IMPORTANT_FIXES
+
+REPORT = docs/evaluation/geometry/runs/geometry-library-important-fixes/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometry-library-important-fixes/
+CORRECTED_BY = NONE
+CORRECTS = GEOMETRY_LIBRARY_EXPANSION
+CLASSIFICATION = GEOMETRY_LIBRARY_IMPORTANT_FIXES_AWAITING_REVIEW
+CODE_COMMIT = 4ad89909
+VERIFICATION_COMMIT = 811896f8
+MODEL_REQUEST_COUNT = 0
+
+Fixes review findings I1–I3 of GEOMETRY_LIBRARY_INTEGRATION_REVIEW. Corrects the expansion run on three points,
+without editing its artifacts: its scenes could re-root a tetrahedron (I1); its BRANCH_CANDIDATE product
+provenance rule is withdrawn (I2; that manifest still matches the legacy rule); its "full backend 8166 PASS"
+held only under ALGOSIM_* overrides (I3). New candidate a8dc02fc via standard refreeze; divergence declared as a
+`corrects` layer. Plain backend 8198/0 at 811896f8 (one intermittent test in another run, cause UNKNOWN); orbit
+gate red identically before the fix. No human visual acceptance, real-model or pilot claim.
+
+## WAVE_ID = GEOMETRY_LIBRARY_INTEGRATION_REVIEW
+
+REPORT = docs/evaluation/geometry/runs/geometry-library-integration-review/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometry-library-integration-review/
+CORRECTED_BY = GEOMETRY_LIBRARY_IMPORTANT_FIXES
+CORRECTS = NONE
+CLASSIFICATION = GEOMETRY_LIBRARY_INTEGRATION_READINESS_AWAITING_APPROVAL
+CODE_COMMIT = be6608a3
+VERIFICATION_COMMIT = c6a99ac6
+MODEL_REQUEST_COUNT = 0
+
+Independent review; findings I1–I3 resolved by GEOMETRY_LIBRARY_IMPORTANT_FIXES (its report and screenshots
+stay as recorded).
+
 ## WAVE_ID = GEOMETRY_LIBRARY_EXPANSION
 
 REPORT = docs/evaluation/geometry/runs/geometry-library-expansion/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometry-library-expansion/
-CORRECTED_BY = NONE
+CORRECTED_BY = GEOMETRY_LIBRARY_IMPORTANT_FIXES
 CORRECTS = NONE
 CLASSIFICATION = GEOMETRY_LIBRARY_EXPANSION_AWAITING_REVIEW
 CODE_COMMIT = a0eb1450

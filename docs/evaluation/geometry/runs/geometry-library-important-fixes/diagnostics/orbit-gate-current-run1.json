@@ -1,0 +1,119 @@
+{
+  "commit": "811896f8d79cb673b55f2b56fe69cd8c77a3a62c",
+  "chay_luc": "2026-10-11T03:45:37.733Z",
+  "tiem": null,
+  "nguong": {
+    "CHUAN_TRUC": 0.99,
+    "VONG_NGANG_DO": 360,
+    "COS_CUC": 0.9,
+    "SNAP_DO": 25
+  },
+  "ca": [
+    {
+      "tag": "p1",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 0,
+        "vong": 83,
+        "nhieuVong": 183,
+        "doc": 189
+      },
+      "yenTong": 0,
+      "vongNgangDo": 337.9418614143594,
+      "nhieuVongDo": 736.0867909285798,
+      "chuanTruc": 1,
+      "trucQuayVec": [
+        0,
+        0,
+        1
+      ],
+      "trucTen": "Z",
+      "cucMin": -1,
+      "cucMax": 1,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 93,
+      "ctxs": 1,
+      "draws": 5292,
+      "trangThai": "KHONG_DU_VONG"
+    },
+    {
+      "tag": "p6",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 41,
+        "vong": 105,
+        "nhieuVong": 188,
+        "doc": 240
+      },
+      "yenTong": 0,
+      "vongNgangDo": 347.53946285462735,
+      "nhieuVongDo": 733.1134651503885,
+      "chuanTruc": 1,
+      "trucQuayVec": [
+        0,
+        0,
+        1
+      ],
+      "trucTen": "Z",
+      "cucMin": -1,
+      "cucMax": 1,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 1470,
+      "trangThai": "KHONG_DU_VONG"
+    },
+    {
+      "tag": "p7",
+      "docDuocCamera": true,
+      "khungDo": {
+        "yen": 0,
+        "vong": 90,
+        "nhieuVong": 204,
+        "doc": 213
+      },
+      "yenTong": 0,
+      "vongNgangDo": 341.9972046217225,
+      "nhieuVongDo": 739.8960484750419,
+      "chuanTruc": 1,
+      "trucQuayVec": [
+        0,
+        0,
+        1
+      ],
+      "trucTen": "Z",
+      "cucMin": -1,
+      "cucMax": 1,
+      "huong": {
+        "truoc": true,
+        "sau": true,
+        "trai": true,
+        "phai": true,
+        "tren": true,
+        "duoi": true
+      },
+      "snap": 0,
+      "capPhat": 0,
+      "ctxs": 1,
+      "draws": 1274,
+      "trangThai": "KHONG_DU_VONG"
+    }
+  ],
+  "dat": false
+}

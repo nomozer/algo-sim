@@ -2,10 +2,10 @@
 
 ## LOCAL override — 2026-10-11 (ưu tiên hơn snapshot §2)
 
-Nhánh `feat/geometry-library-expansion`, base2990d87d, product a0eb1450/tooling3b6104e3; original `feat/text-to-geometry-functions`/2990d87d, main28ac1d61 và user favicon untracked giữ nguyên.
-Hai nhóm đã duyệt: giao điểm duy nhất đường–đường/đường–mặt, hình chiếu điểm–đường/điểm–mặt; Registry27, Engine/Planner hiện có; provenance/IR/metric. Candidate mới8ff994c6; A/B12da4768 + protocol/runner/corpus/evidence không đổi.
-91 feature tests,74 fake/network0,34 renderer focused +695 geometry frontend; clean backend8166 PASS/1 skip/2 deselected/386.64s tại815f06be. GEOMETRY_LIBRARY_EXPANSION_AWAITING_REVIEW; report: `evaluation/geometry/runs/geometry-library-expansion/report.md`. Offline GO có giới hạn; live/integration NO-GO.
-LLM_ONLY/cache125; LIVE Gemini0, không merge/push; human visual approval chưa có. §2 là snapshot trước run LOCAL, không phải Git pre-flight hiện hành.
+Nhánh `feat/geometry-library-expansion` (base2990d87d → expansion → review `c6a99ac6` → fixes I1–I3, product `4ad89909`); main28ac1d61 không đổi, mục untracked của user giữ nguyên.
+I1 tô-pô khối đã khai (`S.ABC`) vào formation + đoạn vuông góc phụ tại chân; I2 product identity tính renderer, loại test harness, luật ghi tên (61 candidate lịch sử khớp); I3 không còn override `ALGOSIM_*` — runner A/B dùng bề mặt khoá có kiểm băm, pilot live trên bề mặt hiện tại NO-GO (test).
+Candidate a8dc02fc (110 file); A/B12da4768 không đổi. Plain backend (+core.longpaths) 8198 PASS/0 fail tại811896f8 (1 test chập chờn UNKNOWN ở lượt khác); vitest1050; orbit gate đỏ y hệt trước sửa (môi trường).
+GEOMETRY_LIBRARY_IMPORTANT_FIXES_AWAITING_REVIEW; report `evaluation/geometry/runs/geometry-library-important-fixes/report.md`. LLM_ONLY/cache125; LIVE Gemini0; không merge/push; human visual chưa có.
 
 > Handoff cô đọng cho session mới. Code/test thắng khi mâu thuẫn với docs.
 > Không chứa secret hoặc raw model output; giới hạn 300 dòng. Lịch sử từng wave:
@@ -192,14 +192,14 @@ Thay đổi chưa commit của người dùng: không restore, sửa, stage ho�
 
 ## 6. Bước tiếp theo duy nhất
 
-Run hiện tại: `geometry-library-expansion` (LOCAL, nhánh riêng; product a0eb1450, candidate8ff994c6, cache125).
+Run hiện tại: `geometry-library-important-fixes` (LOCAL, nhánh riêng; product 4ad89909, candidate a8dc02fc, cache125); trước đó `geometry-library-expansion` (8ff994c6) và review `geometry-library-integration-review`.
 Run A/B trước: `hybrid-ab-pilot-readiness` (product `cfe2ada5`, candidate `12da4768`, giữ nguyên).
 344 focused PASS, 9 mutation killed, 24+288 fake/network=0; clean backend8068 PASS/1 skip/2 deselected; report.md của run.
 Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FULL live NO-GO, không merge/push/default change. `frontend/public/favicon.svg` là của user.
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = GEOMETRY_LIBRARY_EXPANSION_REVIEW
+CANONICAL_NEXT_ACTION = GEOMETRY_LIBRARY_INTEGRATION_APPROVAL_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

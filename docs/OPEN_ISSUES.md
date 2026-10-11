@@ -1,5 +1,38 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-EVAL-ORBIT-GATE-RED-IN-CURRENT-ENVIRONMENT
+
+- **description:** `frontend/scripts/scene3d-orbit-gate.mjs` reports `KHONG_DU_VONG` on p1/p6/p7 (333–348° against the historical 437°), for the current renderer AND for the pre-fix renderer `c6a99ac6` built and measured the same way on the same machine.
+- **evidence:** `docs/evaluation/geometry/runs/geometry-library-important-fixes/diagnostics/orbit-gate-*.json`.
+- **impact:** The browser gate cannot be called green; the change of this wave is not the cause (identical before/after).
+- **scope:** Measurement environment / gate calibration, not product logic.
+- **status:** OPEN — rerun where 437° was measured before any recalibration decision.
+- **owner_class:** TEST
+- **suggested_wave:** Before integration of geometry-library-expansion.
+- **default_switch_blocker:** NO — but an integration blocker until explained.
+
+### ISSUE-EVAL-GENERIC-TIER-A-GENERATOR-INTERMITTENT
+
+- **description:** `backend/tests/geometry/test_generic_tier_a_fixture_generator.py::test_cross_section_fixture_preserves_verifiable_measurement_provenance` failed in 1 of 3 full backend runs (generator subprocess exit ≠ 0, stderr discarded by the test); passes in isolation and 6/6 direct generator runs.
+- **evidence:** `docs/evaluation/geometry/runs/geometry-library-important-fixes/diagnostics/full-backend-gate.summary.txt`.
+- **impact:** A full-suite red can appear without a product change; cause UNKNOWN.
+- **scope:** Test harness; capture the subprocess stderr on failure first.
+- **status:** OPEN
+- **owner_class:** TEST
+- **suggested_wave:** Next test-hardening slice.
+- **default_switch_blocker:** NO
+
+### ISSUE-OPS-WINDOWS-LONGPATHS-GATE-PREREQUISITE
+
+- **description:** The repository holds paths over 260 characters (`docs/evaluation/geometry/worktree-recovery/…`). Without `core.longpaths=true`, `git status` lists 151 phantom changes and `test_holdout_readiness` sees a dirty tree.
+- **evidence:** `docs/evaluation/geometry/runs/geometry-library-important-fixes/report.md` §4.
+- **impact:** A plain `pytest` on Windows is red for an environment reason.
+- **scope:** Repository/environment configuration (the user's choice), not product code.
+- **status:** OPEN
+- **owner_class:** ENVIRONMENT
+- **suggested_wave:** Decide repository config or document as T3 prerequisite.
+- **default_switch_blocker:** NO
+
 ### ISSUE-ARCH-GEOMETRY-LIBRARY-CONSTRUCTION-BOUNDARIES
 
 - **description:** Expanded shared library constructs unique intersections and orthogonal feet, but source grammar is bounded; plane operands require first3 noncollinear labels; same-name plane projection remains a legacy precondition refusal. General sections/line-object composition and new base charts were not added.

@@ -142,6 +142,8 @@ ALLOWED_CANONICAL_ACTIONS = [
     # việc kế tiếp là quyết định của người dùng về một pilot có ngân sách trên đường mới.
     "AI_FUNCTION_ROUTE_BUDGETED_PILOT_DECISION",
     "GEOMETRY_LIBRARY_EXPANSION_REVIEW",
+    # geometry-library-important-fixes (2026-10-11): I1–I3 fixed; next is the user's integration decision.
+    "GEOMETRY_LIBRARY_INTEGRATION_APPROVAL_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

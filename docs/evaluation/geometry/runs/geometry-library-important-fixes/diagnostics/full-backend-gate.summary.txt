@@ -1,0 +1,2 @@
+FAILED tests/geometry/test_generic_tier_a_fixture_generator.py::test_cross_section_fixture_preserves_verifiable_measurement_provenance
+1 failed, 8197 passed, 1 skipped, 2 deselected, 1 warning in 409.43s (0:06:49)

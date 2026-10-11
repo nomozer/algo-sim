@@ -1,6 +1,13 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — geometry-library-expansion, 2026-10-11
+## LOCAL override — geometry-library-important-fixes, 2026-10-11
+
+Mới nhất: review độc lập tìm I1–I3 và cả ba đã sửa trên cùng nhánh (product `4ad89909`, candidate
+a8dc02fc, 110 file; A/B 12da4768 giữ nguyên). Plain backend (+core.longpaths) 8198 PASS/0 fail tại 811896f8;
+vitest 1050 PASS; orbit gate đỏ y hệt trước sửa (môi trường); một test chập chờn UNKNOWN.
+GEOMETRY_LIBRARY_IMPORTANT_FIXES_AWAITING_REVIEW; integration NOT_GO_YET; live pilot/default NO-GO.
+Report: [`geometry-library-important-fixes`](evaluation/geometry/runs/geometry-library-important-fixes/report.md).
+Đoạn dưới là trạng thái của lượt expansion trước đó (giữ để truy vết):
 
 Thẩm quyền cho checkout LOCAL này (các snapshot remote/main cũ dưới đây không phải Git pre-flight):
 nhánh nghiên cứu `feat/geometry-library-expansion`, base2990d87d, product a0eb1450,
@@ -75,7 +82,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > USER_DIRTY_STATE = có — `frontend/public/favicon.svg` untracked của người dùng, giữ nguyên; không stage/commit.
 > CURRENT_WAVE = HYBRID_AB_PILOT_READINESS (run hybrid-ab-pilot-readiness, LOCAL, cùng nhánh, live Gemini0): object-binding chính xác, observation ≠ proof; runner SMOKE24/FULL288 có identity riêng, shared output3072; 344 focused PASS,9 mutation killed,312 fake/network0; clean backend8068 PASS/1 skip/2 deselected tại2f1b457c. CORRECTS HYBRID_COMPILER_SELECTION: lịch sử nguyên byte, đọc cùng correction layer. Report/handoff của run là thẩm quyền; không tuyên bố safety population/visual/real-model.
 > FINAL_DECISION = HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW — offline GO có giới hạn kiểm chứng; SMOKE/FULL live NO-GO (prompt estimator chưa provider-bound, storage cause UNKNOWN, chưa phê duyệt riêng). Main giữ nguyên28ac1d61; không merge/push/default change; human visual acceptance NOT_PERFORMED.
-> CANONICAL_NEXT_ACTION = GEOMETRY_LIBRARY_EXPANSION_REVIEW
+> CANONICAL_NEXT_ACTION = GEOMETRY_LIBRARY_INTEGRATION_APPROVAL_DECISION
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 

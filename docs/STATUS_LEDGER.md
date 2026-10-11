@@ -1719,3 +1719,24 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometry-library-expansion/
 - **PRESERVATION:**48 locked artifact hashes match; original checkout2990d87d, main28ac1d61 and user favicon unchanged; cache125/default LLM_ONLY unchanged; no merge/push/rebase/branch deletion. LIVE Gemini/paid API0.
 - **LIMITS:** bounded wording; first3 plane points must be noncollinear; same-name plane output legacy precondition; existing angle/two-nonpoint ANNOTATION_UNBOUND anchors remain a display gap. No live extraction-quality/human visual acceptance/general geometry or population-safety claim.
 - **FINAL_DECISION:** GEOMETRY_LIBRARY_EXPANSION_AWAITING_REVIEW — bounded offline GO for review; live pilot/integration/default switch NO-GO without separate decision. Expanded provider surfaces exceed old accounted-token caps. Branch/worktrees retained.
+
+## WAVE_ID = GEOMETRY_LIBRARY_INTEGRATION_REVIEW
+
+REPORT = docs/evaluation/geometry/runs/geometry-library-integration-review/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometry-library-integration-review/
+
+- **DATE / BRANCH:** 2026-10-11, LOCAL, feat/geometry-library-expansion at be6608a3; review commits 0343d5ed (strict xfail), c6a99ac6 (report).
+- **RESULT:** 0 Critical, 3 Important (I1 tetrahedron re-rooting, I2 narrowed product identity, I3 full gate green only under overrides), 7 Minor; 32/32 independent probes; 12 agent-inspected screenshots.
+- **FINAL_DECISION:** GEOMETRY_LIBRARY_INTEGRATION_READINESS_AWAITING_APPROVAL; resolved by GEOMETRY_LIBRARY_IMPORTANT_FIXES.
+
+## WAVE_ID = GEOMETRY_LIBRARY_IMPORTANT_FIXES
+
+REPORT = docs/evaluation/geometry/runs/geometry-library-important-fixes/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometry-library-important-fixes/
+
+- **DATE / BRANCH:** 2026-10-11, LOCAL, feat/geometry-library-expansion; user-approved fix of I1–I3; no merge/push.
+- **COMMITS:** I1 4ad89909 · I2 b1333695 · I3 176f77f0 · divergence 66aad28f · refreeze 797138da · test 811896f8.
+- **CANDIDATE:** a8dc02fc (110 files, product 4ad89909, rule product-paths-excluding-test-only/1, frozen clean at 66aad28f, verify 0); A/B 12da4768 unchanged; 61 historical candidates re-derive their identity.
+- **TESTS:** I1 17 backend (3 mutants) + 2 frontend; I2 12; I3 readiness 7 + runner 93 without env; plain backend (+core.longpaths) 8198/0/1 skip/2 deselected at 811896f8, earlier runs disclosed in report §4; vitest 1050; build PASS.
+- **OPEN:** orbit gate red identically before the fix (environment); one intermittent test, cause UNKNOWN; Windows core.longpaths prerequisite; human visual acceptance pending.
+- **FINAL_DECISION:** GEOMETRY_LIBRARY_IMPORTANT_FIXES_AWAITING_REVIEW — integration NOT_GO_YET; live pilot/default NO-GO. LIVE Gemini 0.

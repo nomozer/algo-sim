@@ -9,9 +9,14 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = GEOMETRY_LIBRARY_EXPANSION_REVIEW
+CANONICAL_NEXT_ACTION = GEOMETRY_LIBRARY_INTEGRATION_APPROVAL_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **Important fixes (LOCAL, 2026-10-11):** review I1–I3 đã sửa trên cùng nhánh
+  ([`geometry-library-important-fixes/report.md`](evaluation/geometry/runs/geometry-library-important-fixes/report.md)).
+  Việc kế tiếp là quyết định của người dùng về nhánh integration từ main (fast-forward, kế hoạch ở §10 của report);
+  trước đó: nghiệm thu hình ảnh, cổng orbit trên môi trường đo được, nguyên nhân test chập chờn.
 
 - **Geometry expansion (LOCAL, 2026-10-11):** hai nhóm đã được người dùng phê duyệt;
   giao điểm đường–đường/đường–mặt và hình chiếu điểm–đường/điểm–mặt trên Registry/Engine chung.
