@@ -1,0 +1,630 @@
+{
+ "cases": 30,
+ "live_model_calls": 0,
+ "totals": {
+  "facts": {
+   "correct_refusal": 9,
+   "correct_served": 18,
+   "diagnosis:keyword_dependence": 1,
+   "diagnosis:missing_composition": 2,
+   "false_refusal": 3,
+   "refusal:contradictory": 2,
+   "refusal:figure_not_unique": 1,
+   "refusal:underconstrained": 3,
+   "refusal:unsupported": 3
+  },
+  "pipeline": {
+   "correct_refusal": 9,
+   "correct_served": 18,
+   "diagnosis:keyword_dependence": 1,
+   "diagnosis:missing_composition": 2,
+   "false_refusal": 3,
+   "refusal:contradictory": 2,
+   "refusal:figure_not_unique": 1,
+   "refusal:underconstrained": 3,
+   "refusal:unsupported": 3
+  }
+ },
+ "rows": [
+  {
+   "id": "B01",
+   "tier": "simple",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B01",
+   "tier": "simple",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B02",
+   "tier": "simple",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B02",
+   "tier": "simple",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B03",
+   "tier": "simple",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B03",
+   "tier": "simple",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B04",
+   "tier": "simple",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B04",
+   "tier": "simple",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B05",
+   "tier": "two_primitives",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B05",
+   "tier": "two_primitives",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B06",
+   "tier": "two_primitives",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B06",
+   "tier": "two_primitives",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B07",
+   "tier": "two_primitives",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B07",
+   "tier": "two_primitives",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B08",
+   "tier": "two_primitives",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B08",
+   "tier": "two_primitives",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B09",
+   "tier": "chain",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B09",
+   "tier": "chain",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B10",
+   "tier": "chain",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B10",
+   "tier": "chain",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B11",
+   "tier": "derived_input",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B11",
+   "tier": "derived_input",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B12",
+   "tier": "derived_input",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B12",
+   "tier": "derived_input",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B13",
+   "tier": "reordered",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B13",
+   "tier": "reordered",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B14",
+   "tier": "reordered",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B14",
+   "tier": "reordered",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B15",
+   "tier": "renamed",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B15",
+   "tier": "renamed",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B16",
+   "tier": "renamed",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B16",
+   "tier": "renamed",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B17",
+   "tier": "missing_data",
+   "arm": "facts",
+   "outcome": "correct_refusal",
+   "code": "MISSING_DIMENSION",
+   "class": "underconstrained",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B17",
+   "tier": "missing_data",
+   "arm": "pipeline",
+   "outcome": "correct_refusal",
+   "code": "MISSING_DIMENSION",
+   "class": "underconstrained",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B18",
+   "tier": "missing_data",
+   "arm": "facts",
+   "outcome": "correct_refusal",
+   "code": "MISSING_DIMENSION",
+   "class": "underconstrained",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B18",
+   "tier": "missing_data",
+   "arm": "pipeline",
+   "outcome": "correct_refusal",
+   "code": "MISSING_DIMENSION",
+   "class": "underconstrained",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B19",
+   "tier": "contradictory",
+   "arm": "facts",
+   "outcome": "correct_refusal",
+   "code": "INCONSISTENT_FACTS",
+   "class": "contradictory",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B19",
+   "tier": "contradictory",
+   "arm": "pipeline",
+   "outcome": "correct_refusal",
+   "code": "INCONSISTENT_FACTS",
+   "class": "contradictory",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B20",
+   "tier": "contradictory",
+   "arm": "facts",
+   "outcome": "correct_refusal",
+   "code": "INCONSISTENT_FACTS",
+   "class": "contradictory",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B20",
+   "tier": "contradictory",
+   "arm": "pipeline",
+   "outcome": "correct_refusal",
+   "code": "INCONSISTENT_FACTS",
+   "class": "contradictory",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B21",
+   "tier": "multi_config",
+   "arm": "facts",
+   "outcome": "correct_refusal",
+   "code": "FIGURE_NOT_UNIQUE",
+   "class": "figure_not_unique",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B21",
+   "tier": "multi_config",
+   "arm": "pipeline",
+   "outcome": "correct_refusal",
+   "code": "FIGURE_NOT_UNIQUE",
+   "class": "figure_not_unique",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B22",
+   "tier": "multi_config",
+   "arm": "facts",
+   "outcome": "correct_refusal",
+   "code": "UNDERDETERMINED_POINT",
+   "class": "underconstrained",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B22",
+   "tier": "multi_config",
+   "arm": "pipeline",
+   "outcome": "correct_refusal",
+   "code": "UNDERDETERMINED_POINT",
+   "class": "underconstrained",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B23",
+   "tier": "unsupported_goal",
+   "arm": "facts",
+   "outcome": "correct_refusal",
+   "code": "OUT_OF_SCOPE",
+   "class": "unsupported",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B23",
+   "tier": "unsupported_goal",
+   "arm": "pipeline",
+   "outcome": "correct_refusal",
+   "code": "OUT_OF_SCOPE",
+   "class": "unsupported",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B24",
+   "tier": "unsupported_goal",
+   "arm": "facts",
+   "outcome": "correct_refusal",
+   "code": "OUT_OF_SCOPE",
+   "class": "unsupported",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B24",
+   "tier": "unsupported_goal",
+   "arm": "pipeline",
+   "outcome": "correct_refusal",
+   "code": "OUT_OF_SCOPE",
+   "class": "unsupported",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B25",
+   "tier": "unsupported_goal",
+   "arm": "facts",
+   "outcome": "correct_refusal",
+   "code": "OUT_OF_SCOPE",
+   "class": "unsupported",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B25",
+   "tier": "unsupported_goal",
+   "arm": "pipeline",
+   "outcome": "correct_refusal",
+   "code": "OUT_OF_SCOPE",
+   "class": "unsupported",
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B26",
+   "tier": "composition",
+   "arm": "facts",
+   "outcome": "false_refusal",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "class": "unsupported",
+   "diagnosis": "missing_composition",
+   "gap": "distance point→line = orthogonal_projection_line + ask_length (no single ask function)"
+  },
+  {
+   "id": "B26",
+   "tier": "composition",
+   "arm": "pipeline",
+   "outcome": "false_refusal",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "class": "unsupported",
+   "diagnosis": "missing_composition",
+   "gap": "distance point→line = orthogonal_projection_line + ask_length (no single ask function)"
+  },
+  {
+   "id": "B27",
+   "tier": "composition",
+   "arm": "facts",
+   "outcome": "false_refusal",
+   "code": "OUT_OF_SCOPE",
+   "class": "unsupported",
+   "diagnosis": "missing_composition",
+   "gap": "unnamed derived operand: Typed Facts cannot name 'trung điểm của SC' inside a question"
+  },
+  {
+   "id": "B27",
+   "tier": "composition",
+   "arm": "pipeline",
+   "outcome": "false_refusal",
+   "code": "OUT_OF_SCOPE",
+   "class": "unsupported",
+   "diagnosis": "missing_composition",
+   "gap": "unnamed derived operand: Typed Facts cannot name 'trung điểm của SC' inside a question"
+  },
+  {
+   "id": "B28",
+   "tier": "composition",
+   "arm": "facts",
+   "outcome": "false_refusal",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "class": "grounding",
+   "diagnosis": "keyword_dependence",
+   "gap": "'tâm' of a square = centroid, but the centroid source keyword is only 'trọng tâm'"
+  },
+  {
+   "id": "B28",
+   "tier": "composition",
+   "arm": "pipeline",
+   "outcome": "false_refusal",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "class": "grounding",
+   "diagnosis": "keyword_dependence",
+   "gap": "'tâm' of a square = centroid, but the centroid source keyword is only 'trọng tâm'"
+  },
+  {
+   "id": "B29",
+   "tier": "two_primitives",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B29",
+   "tier": "two_primitives",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B30",
+   "tier": "two_primitives",
+   "arm": "facts",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  },
+  {
+   "id": "B30",
+   "tier": "two_primitives",
+   "arm": "pipeline",
+   "outcome": "correct_served",
+   "code": null,
+   "class": null,
+   "diagnosis": null,
+   "gap": null
+  }
+ ]
+}

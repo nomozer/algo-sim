@@ -1,5 +1,14 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Hybrid B compiler capability benchmark — research branch
+
+Run: `docs/evaluation/geometry/runs/hybrid-compiler-capability-audit/`. Test and measurement only; no product code.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/tests/geometry/hybrid_compiler_benchmark.py` | 30 Vietnamese cases B01–B30 across 11 tiers. Contents: an exact rational oracle (`oracle`) with no module-level product import; `REFUSAL_CLASS` (every route refusal code → class); `run(case, arm)`, where arm `facts` → `run_fact_route` and arm `pipeline` → `run_ai_fact_route` with a fake provider; `classify` → outcome/diagnosis; `answer_square` | `backend/tests/geometry/test_hybrid_compiler_benchmark.py` (oracle independence via AST, hand values, refusal taxonomy complete, classifier mutants, both evaluations agree, gaps as strict xfail) |
+| `backend/scripts/measure_hybrid_compiler_benchmark.py` | `--out NEW_DIR` writes `metrics.json` (per case × evaluation, totals). Refuses an existing directory. 0 model calls | Run `baseline/metrics.json` |
+
 ## Geometry library expansion — LOCAL isolated branch
 
 Run: `docs/evaluation/geometry/runs/geometry-library-expansion/`; before/after and limits in report.md.

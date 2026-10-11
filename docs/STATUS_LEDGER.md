@@ -1766,3 +1766,15 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/main-integration-readiness/
 - **CLEANUP:** worktrees 3→2 without --force, 1,732,866,048 bytes freed; branches kept.
 - **FINAL_DECISION:** ALGOSIM_MAIN_INTEGRATION_READY_FOR_FINAL_APPROVAL — GO for `git merge --ff-only integration/geometry-functions` on main after final acceptance and an administrator removal of the 31 files. LIVE Gemini 0.
 - **OUTCOME (2026-10-11):** the user accepted the visuals and the p1 orbit exception; the 31 files were removed by the user as administrator (backup kept). `main` fast-forwarded 28ac1d61 → 9e3c9789 and pushed without force (`origin/main` = 9e3c9789). On main in a clean worktree: candidate verify 0, T3 FULL_PRODUCT_GATE_PASS (pytest 8198/0, vitest 1051), orbit gate v3 red on p1 as accepted (`ISSUE-ARCH-ORBIT-P1-SECTION-SCENE-DOES-NOT-SETTLE`, P1). Merged branches `feat/geometry-library-expansion`, `integration/geometry-functions`, `feat/text-to-geometry-functions` deleted with `-d`; their worktrees removed. Default `LLM_ONLY` unchanged.
+
+## WAVE_ID = HYBRID_COMPILER_CAPABILITY_AUDIT
+
+REPORT = docs/evaluation/geometry/runs/hybrid-compiler-capability-audit/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-compiler-capability-audit/
+
+- **DATE / BRANCH:** 2026-10-11, LOCAL; research branch `research/hybrid-compiler-capability-audit` from main 548066a8; not merged, not pushed, no PR.
+- **DECISION:** ADR `docs/architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md` — Hybrid B preferred inside Text-to-Geometry Functions, A kept as baseline; offline-based, no real-Gemini evidence; `LLM_ONLY` default unchanged; no second engine.
+- **AUDIT:** the planner is a one-fact → one-call mapper; multi-step works only through the engine's fixed-point resolution of stated constructions; no goal-directed search.
+- **BENCHMARK:** 30 pre-registered Vietnamese cases, independent oracle (267eeb58). Both evaluations (verified facts; fake-provider pipeline) give 18 correct served, 9 correct refusals, 0 wrong served, 3 false refusals (B26 point→line distance, B27 unnamed derived operand, B28 "tâm" cue). The commit message of 267eeb58 says 19/8; corrected in the report.
+- **CHANGE:** none to the compiler; options compared in `design.md`, plan in `plan.md`. Candidate a8dc02fc verify 0 (no product change). LIVE Gemini 0.
+- **FINAL_DECISION:** HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_AWAITING_APPROVAL.

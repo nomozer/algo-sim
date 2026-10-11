@@ -1,5 +1,27 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-HYBRID-COMPILER-NO-GOAL-COMPOSITION
+
+- **description:** The Hybrid B planner maps one fact to one call and cannot introduce an auxiliary object to reach a goal. Benchmark B26 (distance from a point to a line = projection foot + length) is refused `UNSUPPORTED_CAPABILITY`, and B27 (distance from an unnamed midpoint, "trung điểm của SC", to a plane) is refused `OUT_OF_SCOPE`, although the Registry has every part needed.
+- **evidence:** `docs/evaluation/geometry/runs/hybrid-compiler-capability-audit/report.md` §5; strict xfail in `backend/tests/geometry/test_hybrid_compiler_benchmark.py`.
+- **impact:** Correct refusals (fail-closed, 0 wrong served), but common Grade 11–12 questions are not served.
+- **scope:** `geometry_functions/planner.py` and the source gate (B26); Typed Facts schema (B27).
+- **status:** OPEN — design option B awaiting approval (`design.md`, `plan.md` of the run).
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** after `HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION`.
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-HYBRID-SOURCE-CUE-CENTRE-OF-SQUARE
+
+- **description:** "Gọi O là tâm của hình vuông ABCD" is refused `PREDICATE_NOT_IN_QUOTE`: the centroid cue is only "trọng tâm". A bare "tâm" cue would be unsafe ("tâm đường tròn ngoại tiếp" of a triangle is not its centroid).
+- **evidence:** benchmark case B28, `hybrid-compiler-capability-audit/report.md` §5.
+- **impact:** One false refusal on a frequent wording.
+- **scope:** Source grounding (`registry.kiem_nguon` cues). It needs a context-restricted cue and negatives.
+- **status:** OPEN — not in the current design; separate grounding decision.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** —
+- **default_switch_blocker:** NO
+
 ### ISSUE-EVAL-ORBIT-GATE-CANVAS-HEIGHT-AND-DAMPING-READ
 
 - **description:** v1 of `frontend/scripts/scene3d-orbit-gate.mjs` read `KHONG_DU_VONG` on `main`: a fixed 700 px drag on a canvas that grew 545→683 px, read at 250 ms under damping.

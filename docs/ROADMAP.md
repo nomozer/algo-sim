@@ -9,9 +9,16 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = GEOMETRY_LIBRARY_INTEGRATION_APPROVAL_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **Hybrid compiler audit (LOCAL, 2026-10-11, nhánh `research/hybrid-compiler-capability-audit`, chưa merge/push):**
+  - ADR [`architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md): Hybrid B là hướng ưu tiên; A là baseline. Quyết định dựa trên offline, `LLM_ONLY` vẫn mặc định.
+  - Benchmark 30 ca: 18 phục vụ đúng, 9 từ chối đúng, 0 phục vụ sai, 3 từ chối sai.
+  - Việc kế tiếp: người dùng duyệt phương án B trong
+    [`design.md`](evaluation/geometry/runs/hybrid-compiler-capability-audit/design.md), gồm điểm phụ do compiler dựng cho khoảng cách điểm–đường và toán hạng không tên.
+  - Tích hợp `main` của expansion đã xong (2026-10-11, `9e3c9789`), nên quyết định `GEOMETRY_LIBRARY_INTEGRATION_APPROVAL_DECISION` đã đóng.
 
 - **Important fixes (LOCAL, 2026-10-11):** review I1–I3 đã sửa trên cùng nhánh
   ([`geometry-library-important-fixes/report.md`](evaluation/geometry/runs/geometry-library-important-fixes/report.md)).

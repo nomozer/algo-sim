@@ -144,6 +144,8 @@ ALLOWED_CANONICAL_ACTIONS = [
     "GEOMETRY_LIBRARY_EXPANSION_REVIEW",
     # geometry-library-important-fixes (2026-10-11): I1–I3 fixed; next is the user's integration decision.
     "GEOMETRY_LIBRARY_INTEGRATION_APPROVAL_DECISION",
+    # hybrid-compiler-capability-audit (2026-10-11): compiler gaps need a design; next is the user's approval of it.
+    "HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

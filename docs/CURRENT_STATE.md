@@ -1,5 +1,17 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL override — hybrid-compiler-capability-audit, 2026-10-11
+
+Mới nhất:
+- `main` = `origin/main` = `548066a8`, sau khi tích hợp expansion bằng fast-forward ở `9e3c9789`.
+- Nhánh nghiên cứu `research/hybrid-compiler-capability-audit` (chưa merge/push) chỉ thêm benchmark, tài liệu và ADR
+  [`HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md); không có mã sản phẩm.
+- Candidate a8dc02fc verify 0; A/B 12da4768 giữ nguyên; cache125/LLM_ONLY không đổi; LIVE Gemini0.
+- Benchmark 30 ca, oracle độc lập: 18/9/0/3 (phục vụ đúng / từ chối đúng / phục vụ sai / từ chối sai). Lỗ hổng là thiếu
+  phép kết hợp có điểm phụ (B26, B27) và từ khoá "tâm" (B28).
+- HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_AWAITING_APPROVAL. Report:
+  [`hybrid-compiler-capability-audit`](evaluation/geometry/runs/hybrid-compiler-capability-audit/report.md).
+
 ## LOCAL override — main-integration-readiness, 2026-10-11
 
 Mới nhất: nhánh `integration/geometry-functions` dựng từ main 28ac1d61 bằng fast-forward; T3 FULL_PRODUCT_GATE_PASS
@@ -84,7 +96,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > USER_DIRTY_STATE = có — `frontend/public/favicon.svg` untracked của người dùng, giữ nguyên; không stage/commit.
 > CURRENT_WAVE = HYBRID_AB_PILOT_READINESS (run hybrid-ab-pilot-readiness, LOCAL, cùng nhánh, live Gemini0): object-binding chính xác, observation ≠ proof; runner SMOKE24/FULL288 có identity riêng, shared output3072; 344 focused PASS,9 mutation killed,312 fake/network0; clean backend8068 PASS/1 skip/2 deselected tại2f1b457c. CORRECTS HYBRID_COMPILER_SELECTION: lịch sử nguyên byte, đọc cùng correction layer. Report/handoff của run là thẩm quyền; không tuyên bố safety population/visual/real-model.
 > FINAL_DECISION = HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW — offline GO có giới hạn kiểm chứng; SMOKE/FULL live NO-GO (prompt estimator chưa provider-bound, storage cause UNKNOWN, chưa phê duyệt riêng). Main giữ nguyên28ac1d61; không merge/push/default change; human visual acceptance NOT_PERFORMED.
-> CANONICAL_NEXT_ACTION = GEOMETRY_LIBRARY_INTEGRATION_APPROVAL_DECISION
+> CANONICAL_NEXT_ACTION = HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 

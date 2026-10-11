@@ -1,5 +1,22 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_COMPILER_CAPABILITY_AUDIT
+
+REPORT = docs/evaluation/geometry/runs/hybrid-compiler-capability-audit/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-compiler-capability-audit/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_AWAITING_APPROVAL
+CODE_COMMIT = 267eeb58
+VERIFICATION_COMMIT = 267eeb58
+MODEL_REQUEST_COUNT = 0
+
+30-case Hybrid B compiler benchmark with an oracle that imports nothing from the product, pre-registered before any
+compiler change. Verified facts and fake-provider pipeline agree on all 30: 18 correct served, 9 correct refusals,
+0 wrong served, 3 false refusals (missing composition ×2, keyword dependence ×1). Same author for cases and oracle; not
+a population. The commit message of 267eeb58 states 19/8 — the measured 18/9 in `baseline/metrics.json` is
+authoritative. No product change (candidate a8dc02fc verify 0).
+
 ## WAVE_ID = MAIN_INTEGRATION_READINESS
 
 REPORT = docs/evaluation/geometry/runs/main-integration-readiness/report.md
