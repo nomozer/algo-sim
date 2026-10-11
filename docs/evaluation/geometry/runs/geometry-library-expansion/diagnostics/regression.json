@@ -1,0 +1,40 @@
+{
+  "schema":"geometry_library_regression/1",
+  "date":"2026-10-11",
+  "verified_commit":"815f06be6c2945e88431de4fc83dadf0c6419607",
+  "product_commit":"a0eb1450469cf88b083bfc40b6c17361e23334b8",
+  "product_hash":"8ff994c6e20ab982abd208dd8127cd6471bcc56509fd1809433e7a8f5f3601dd",
+  "source_clean_before":true,
+  "source_clean_after":true,
+  "exit_code":0,
+  "initial_collected":8169,
+  "selected":8167,
+  "passed":8166,
+  "failed":0,
+  "errors":0,
+  "skipped":1,
+  "deselected":2,
+  "stdout_seconds":386.64,
+  "junit_seconds":386.585,
+  "warnings":1,
+  "warning_kind":"Existing Starlette TestClient deprecation",
+  "journal":"full-backend.xml",
+  "network_guard":"Root pytest offline guard; ALLOW_LIVE_AI=0; expansion tests additionally block sockets",
+  "execution":"Windows native console; faulthandler_timeout=30, no timeout dump in successful run",
+  "identity_selection":{
+    "current_product":"ALGOSIM_TEST_CANDIDATE=BRANCH_CANDIDATE.json",
+    "historical_run_declaration":"ALGOSIM_TEST_DIVERGENCE=candidate_divergence.json",
+    "locked_runner_tests_only":"ALGOSIM_FROZEN_AB_WORKTREE=clean2990d87d, verified12da4768 payload surface",
+    "current_expansion_adapters":"New Registry/Planner payloads, not patched to old surface"
+  },
+  "unsuccessful_attempts":[
+    {"commit":"ddb0ce34","result":"COLLECTION_ERROR_CHILD_CONFTEST_SHADOWED_ROOT_GUARD","completed_counts":"UNKNOWN","readiness_credit":false,"fixed_in":"1bbd0edb"},
+    {"commit":"1bbd0edb","result":"COMPLETE_FAILED","passed":8153,"failed":8,"skipped":1,"deselected":2,"seconds":576.06,"cause":"Legacy candidate verification paths on the expanded branch","readiness_credit":false,"fixed_in":"3b6104e3 and815f06be"},
+    {"commit":"3b6104e3","result":"TERMINATED_AFTER_PROGRESS_STOPPED","completed_counts":"UNKNOWN","observed_failure":"Telemetry verified selected branch manifest but read legacy identity","stall_cause":"UNKNOWN","readiness_credit":false,"guard_fixed_in":"815f06be"},
+    {"commit":"815f06be","result":"BACKGROUND_ATTEMPT_TERMINATED_AFTER_PROGRESS_STOPPED","completed_counts":"UNKNOWN","stall_cause":"UNKNOWN","readiness_credit":false}
+  ],
+  "live_gemini_calls":0,
+  "paid_api_calls":0,
+  "pilot_executed":false,
+  "interpretation":"Clean offline regression, not live provider/model-quality or population-safety evidence"
+}

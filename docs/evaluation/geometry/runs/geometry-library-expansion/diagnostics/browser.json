@@ -1,0 +1,31 @@
+{
+  "schema": "geometry_library_browser_verification/1",
+  "date": "2026-10-11",
+  "source_commit": "3b6104e3",
+  "product_hash": "8ff994c6e20ab982abd208dd8127cd6471bcc56509fd1809433e7a8f5f3601dd",
+  "url": "http://127.0.0.1:3197/scripts/geometry-library-expansion-visual.html",
+  "network_policy": "Only localhost127.0.0.1:3197 allowed; no backend/provider",
+  "desktop_viewport": [1280, 900],
+  "desktop_canvas_size": [1233, 522],
+  "scenes": [
+    {"id":"A-0","derived":"O","label_box":[615.5223132386161,299.7335879382641,20,18]},
+    {"id":"A-1","derived":"H","label_box":[688.8891971693887,411.60000000000053,20,18]},
+    {"id":"A-2","derived":"H","label_box":[615.5223132386159,299.73358793826145,20,18]},
+    {"id":"A-3","derived":"H","label_box":[712.8956759278658,310.3063849055802,20,18]},
+    {"id":"B-0","derived":"O","label_box":[615.5223132386159,299.73358793826145,20,18]},
+    {"id":"B-1","derived":"H","label_box":[688.8891971693887,411.60000000000053,20,18]},
+    {"id":"B-2","derived":"H","label_box":[615.5223132386159,299.73358793826145,20,18]},
+    {"id":"B-3","derived":"H","label_box":[712.8956759278653,310.3063849055806,20,18]}
+  ],
+  "each_scene_webgl_canvas": 1,
+  "each_scene_fallback": 0,
+  "desktop_derived_labels_in_canvas": 8,
+  "mobile": {"viewport":[390,844],"scene":"A-3","derived_label_present":true,"webgl_canvas":1,"fallback":0},
+  "console_errors":0,
+  "console_warnings":0,
+  "loop_page_errors":0,
+  "agent_visual_inspection":"Six screenshots inspected: bounded visual gate passes; target lines/planes extended by existing renderer",
+  "human_visual_acceptance":"NOT_PERFORMED",
+  "product_ui_journey":"NOT_PERFORMED",
+  "gemini_calls":0
+}

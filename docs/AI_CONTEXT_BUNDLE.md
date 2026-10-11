@@ -4,7 +4,7 @@
 
 Nhánh `feat/geometry-library-expansion`, base2990d87d, product a0eb1450/tooling3b6104e3; original `feat/text-to-geometry-functions`/2990d87d, main28ac1d61 và user favicon untracked giữ nguyên.
 Hai nhóm đã duyệt: giao điểm duy nhất đường–đường/đường–mặt, hình chiếu điểm–đường/điểm–mặt; Registry27, Engine/Planner hiện có; provenance/IR/metric. Candidate mới8ff994c6; A/B12da4768 + protocol/runner/corpus/evidence không đổi.
-91 feature tests,74 fake/network0,34 renderer tests; full regression đang kiểm chứng. Report: `evaluation/geometry/runs/geometry-library-expansion/report.md`.
+91 feature tests,74 fake/network0,34 renderer focused +695 geometry frontend; clean backend8166 PASS/1 skip/2 deselected/386.64s tại815f06be. GEOMETRY_LIBRARY_EXPANSION_AWAITING_REVIEW; report: `evaluation/geometry/runs/geometry-library-expansion/report.md`. Offline GO có giới hạn; live/integration NO-GO.
 LLM_ONLY/cache125; LIVE Gemini0, không merge/push; human visual approval chưa có. §2 là snapshot trước run LOCAL, không phải Git pre-flight hiện hành.
 
 > Handoff cô đọng cho session mới. Code/test thắng khi mâu thuẫn với docs.

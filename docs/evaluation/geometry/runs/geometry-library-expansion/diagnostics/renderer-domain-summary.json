@@ -1,0 +1,19 @@
+{
+  "schema":"geometry_library_frontend_domain_regression/1",
+  "date":"2026-10-11",
+  "source_revision":"815f06be6c2945e88431de4fc83dadf0c6419607",
+  "command":"npm run test:domain:geometry -- --reporter=default --reporter=junit --outputFile=NEW_FILE",
+  "exit_code":0,
+  "passed":695,
+  "failed":0,
+  "errors":0,
+  "test_files_passed":34,
+  "wall_seconds":6.56,
+  "summed_test_seconds":10.4674955,
+  "warnings":"Existing React server-rendering useLayoutEffect warnings; not fixed or hidden as browser acceptance",
+  "raw_journal_retained":"D:/Documents/projects/algo-sim/.superpowers/scratch/geometry-renderer-domain-raw-oct11.xml",
+  "raw_journal_sha256":"0420b78d0807831b0b651e50ab1c87360a58162a701b98e5591ba477c73b08af",
+  "raw_stacks_not_committed":true,
+  "full_frontend_suite":false,
+  "scope":"Entire geometry domain only, not unrelated frontend domains"
+}

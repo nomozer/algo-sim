@@ -1,0 +1,16 @@
+{
+  "schema":"geometry_library_certification_repeat/1",
+  "date":"2026-10-11",
+  "source_commit":"815f06be6c2945e88431de4fc83dadf0c6419607",
+  "new_output_directory":"ignored scratch/geometry-certification-final-oct11 (no old artifact overwritten)",
+  "fake_provider_calls":{"A":37,"B":37},
+  "fake_calls_in_this_repeat":74,
+  "live_gemini_calls":0,
+  "provider_network_calls":0,
+  "scenes":8,
+  "certification_lf_bytes_identical":true,
+  "scenes_lf_bytes_identical":true,
+  "certification_sha256_lf":"9bd3e2f36b4a08afe047d1f99ee8ab28a51ca4cd0fc3b1a3fbc6e426efc2584b",
+  "scenes_sha256_lf":"6cc50a74b8ef5218317c9be3bb214ad7adf9649e2eefedd93f2b6f54455550df",
+  "interpretation":"Independent repeat of the same deterministic fixtures; not pooled pilot/model-quality evidence"
+}

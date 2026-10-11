@@ -6,9 +6,9 @@ REPORT = docs/evaluation/geometry/runs/geometry-library-expansion/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometry-library-expansion/
 CORRECTED_BY = NONE
 CORRECTS = NONE
-CLASSIFICATION = IMPLEMENTED_VERIFYING_FULL_REGRESSION
+CLASSIFICATION = GEOMETRY_LIBRARY_EXPANSION_AWAITING_REVIEW
 CODE_COMMIT = a0eb1450
-VERIFICATION_COMMIT = 3b6104e3
+VERIFICATION_COMMIT = 815f06be
 MODEL_REQUEST_COUNT = 0
 
 New isolated shared-library work, not a rerun/correction of experimental A/B outcomes.
@@ -16,7 +16,9 @@ Before matrix audit.md, execution plan.md, new identity BRANCH_CANDIDATE.json an
 diagnostics/ and offline-certification/ are separate new measurements. Current divergence declaration
 supersedes the prior branch declaration only; historical candidate/results remain unchanged.
 91 feature tests,74 fake calls/network0,34 renderer tests, local browser bounded visual check;
-full regression pending. No real-model, human visual acceptance or population-safety claim.
+clean backend8166 PASS/1 skip/2 deselected,386.64s; geometry frontend695 PASS.
+diagnostics/full-backend.xml and artifact-manifest.json register fresh bounded success.
+No real-model, human visual acceptance or population-safety claim.
 
 ## WAVE_ID = HYBRID_COMPILER_SELECTION
 

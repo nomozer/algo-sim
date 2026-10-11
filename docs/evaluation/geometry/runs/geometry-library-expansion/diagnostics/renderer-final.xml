@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="8" failures="0" errors="0" time="0.0529213">
+    <testsuite name="src/simulations/domains/geometry/geometry-library-expansion.test.ts" timestamp="2026-10-11T01:11:08.430Z" hostname="DESKTOP-SCQFJL8" tests="8" failures="0" errors="0" skipped="0" time="0.0529213">
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; A-0: Euclidean point, provenance, solid faces/edges and render objects" time="0.02918">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; A-1: Euclidean point, provenance, solid faces/edges and render objects" time="0.0061765">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; A-2: Euclidean point, provenance, solid faces/edges and render objects" time="0.0029091">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; A-3: Euclidean point, provenance, solid faces/edges and render objects" time="0.0042035">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; B-0: Euclidean point, provenance, solid faces/edges and render objects" time="0.0020588">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; B-1: Euclidean point, provenance, solid faces/edges and render objects" time="0.002613">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; B-2: Euclidean point, provenance, solid faces/edges and render objects" time="0.00214">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; B-3: Euclidean point, provenance, solid faces/edges and render objects" time="0.0019253">
+        </testcase>
+    </testsuite>
+</testsuites>

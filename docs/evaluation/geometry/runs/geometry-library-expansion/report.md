@@ -1,7 +1,7 @@
 # Geometry library expansion — LOCAL verification report
 
-Status: IMPLEMENTED_VERIFYING_FULL_REGRESSION. Final decision follows the fresh
-clean regression journal; this draft does not yet claim the full gate passed.
+Status: GEOMETRY_LIBRARY_EXPANSION_AWAITING_REVIEW. GO for bounded offline review;
+NO-GO for live pilot, default switch or integration without separate approval.
 
 ## Identity and scope
 
@@ -29,7 +29,7 @@ alone did not establish a served A/B construction; this table records that bound
 | Unique line-plane point | Kernel/IR existed; no registry/B point kind | intersect_line_plane through both adapters | Exposed/composable; contained/parallel/degenerate planes refuse |
 | Point-line projection | Kernel/project_onto existed; no library entry | orthogonal_projection_line; B dispatch by two-point target | Exact Gram-aware construction; zero line refuses |
 | Point-plane projection | Existing orthogonal_projection normalized a known foot; arbitrary new image unresolved | Existing API constructs derived image once source/plane ready | Preserves inverse known-foot behavior; degenerate/noncoplanar targets refuse |
-| Midpoint → intersection → projection → measure | Missing two constructive links | Complete dependency chain in both arms | Order permutation tested; unresolved/cyclic dependencies refuse |
+| Midpoint → intersection → projection | Missing two constructive links | Complete construction chain in both arms; independent point/metric checks | Order permutation tested; unresolved/cyclic dependencies refuse |
 | Output coincides with existing point | No general projection construction | Distinct derived label may have equal coordinates | Provenance remains DERIVED; same-name plane API remains precondition refusal |
 | Existing solids/base charts/measures | Narrow capabilities in audit | Regression only; no new family claim | Rhombus/trapezoid and oblique charts not added |
 | Plane-plane output / full sections | Lower-level primitives exist | Not exposed by this task | Line-object expression/orchestration still missing |
@@ -47,7 +47,9 @@ comparisons, never coordinates passed as facts for the output point.
 - D projected onto (SBC) gives H=(9/13,1,4/13), physical DH=6√13/13,
   physical HA²=88/13. Quantity/witness annotation is separately tested.
 - Projection already on target yields a distinct derived image with zero distance.
-- Midpoint M of SA → P=SD∩(MBC) → H=P projected onto BD → derived measure.
+- Midpoint M of SA → P=SD∩(MBC) → H=P projected onto BD, with literal point/metric
+  oracles; this chain's served question is fixed-solid volume. The separate D→(SBC)
+  projection test asks and serves derived DH, including its annotation and idempotent K=H.
 - Non-diagonal Gram triangle projection, and prism projections with pending top
   vertices/source points, resolve via existing dependency progress rather than a new solver.
 
@@ -75,7 +77,21 @@ coordinate declaration impersonates a source premise. Conflicting definitions re
 - Candidate tooling:5 new tests for read-only selector, drift/missing rejection,
   write rejection and exact product-path provenance;30 candidate/diagnosis tests PASS.
   Default verification still uses the locked candidate and correctly detects divergence.
-- Full backend clean regression: PENDING; unsuccessful attempts are not readiness.
+- Full backend clean regression:8166 PASS/1 skipped/2 deselected/0 failure/error,
+  386.64s at clean815f06be (diagnostics/full-backend.xml). Clean before/after;
+  one existing Starlette deprecation warning. Unsuccessful attempts are not readiness.
+
+Regression execution disclosure: a complete run at1bbd0edb ended8153 PASS/8 FAIL/
+1 skip/2 deselected,576.06s; the failures were old-identity verification paths, not
+passed-over geometry failures. They were reproduced and fixed test-first. A subsequent
+3b6104e3 run exposed telemetry reading the old manifest after verifying the new one;
+that guard is now aligned without loosening checks. Two background runs later stopped
+making progress simultaneously and were terminated; completed counts UNKNOWN, no PASS
+or readiness credit. The final attempt uses the SAME clean815f06be code, a native
+console, fresh scratch paths and faulthandler_timeout=30 for diagnostics. Cause of the
+background stall UNKNOWN; no automatic provider retries or paid calls were involved.
+Native-console final run completed exit0; the diagnostic timer reported no stalled test.
+The later handoff commit changes documentation/evidence only, not the verified code.
 
 ## Renderer and visual verification
 
@@ -83,6 +99,13 @@ coordinate declaration impersonates a source premise. Conflicting definitions re
 chart tests and23 annotation tests; TypeScript build PASS. Checks cover Euclidean
 positions, line/plane operands,5 pyramid faces, edges, point labels and provenance,
 plane equation and HA²=88/13. Renderer product source is unchanged.
+Fresh focused journal: diagnostics/renderer-complete-final.xml; the separate
+renderer-final.xml contains8 feature-only tests, not the34-test full focused set.
+
+Additional full geometry frontend domain:695 tests PASS in34 files,6.56s wall time.
+Existing server-rendering useLayoutEffect warnings remain (not browser errors);
+raw warning stacks retained in ignored scratch, compact machine-count evidence
+registered separately. No frontend redesign or warning cleanup was attempted.
 
 Browser: actual Scene3DWorkspace on localhost, external requests blocked,8 scenes
 (A/B×4 primitives) at1280×900, point selected; derived label inside canvas,1 WebGL
@@ -92,6 +115,7 @@ Screenshots diagnostics/scene-{0,1,2,3,7}-desktop.png and plane-projection-mobil
 were inspected by the agent: intersection/foot present, solid edges/faces and labels
 visible; A/B plane images agree. Extended target lines and translucent planes can
 fill/clamp the viewport; that is the existing representation, not hidden math repair.
+Coincident original/derived point labels can overlap; selected derived labels are shown.
 The harness asks volume for these captures; derived-length annotation coverage comes
 from the backend/frontend tests, not a claimed browser witness screenshot.
 Human visual acceptance NOT_PERFORMED. No full production UI or model journey claim.
@@ -118,3 +142,18 @@ Even output2048 exceeds token caps. Do not change the locked runner/protocol to 
 this, pool smoke/full, or run either mode. Provider-bound prompt estimator is still
 unverified, historical persistence failure cause UNKNOWN; separate approval and a
 new budget/identity review would be required for any real API request.
+
+## Final preservation and next decision
+
+48 frozen A/B artifact hashes rechecked without mismatch, locked-path Git diff from
+base2990d87d empty; original HEAD/main/favicon remain unchanged (diagnostics/postflight.json).
+Old candidate independently verifies at its clean2990d87d worktree. Expanded branch
+matches its explicit8ff994c6 manifest; default verification correctly rejects against
+old12da4768 rather than silently refreezing. No historical evidence/result edits.
+Artifact hashes are registered in diagnostics/artifact-manifest.json; successful
+journals, fake certification, review and browser checks remain distinct, not pooled.
+
+Design-approved implementation is complete for these two groups. Human review is next;
+not a human visual approval or generalized model/geometry capability claim. Skills
+kept the change surgical (existing authorities), preregistered RED→GREEN and required
+fresh clean verification; branch/worktrees are retained per the user's instruction.

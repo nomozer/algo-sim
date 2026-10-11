@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="34" failures="0" errors="0" time="0.090943">
+    <testsuite name="src/simulations/domains/geometry/geometry-library-expansion.test.ts" timestamp="2026-10-10T15:46:41.389Z" hostname="DESKTOP-SCQFJL8" tests="8" failures="0" errors="0" skipped="0" time="0.0517233">
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; A-0: Euclidean point, provenance, solid faces/edges and render objects" time="0.027546">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; A-1: Euclidean point, provenance, solid faces/edges and render objects" time="0.0045219">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; A-2: Euclidean point, provenance, solid faces/edges and render objects" time="0.0036389">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; A-3: Euclidean point, provenance, solid faces/edges and render objects" time="0.0043028">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; B-0: Euclidean point, provenance, solid faces/edges and render objects" time="0.0025319">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; B-1: Euclidean point, provenance, solid faces/edges and render objects" time="0.0021452">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; B-2: Euclidean point, provenance, solid faces/edges and render objects" time="0.0026948">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/geometry-library-expansion.test.ts" name="expanded primitives cross the actual renderer metric boundary &gt; B-3: Euclidean point, provenance, solid faces/edges and render objects" time="0.0024598">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/simulations/domains/geometry/scene3d-annotations.test.ts" timestamp="2026-10-10T15:46:41.396Z" hostname="DESKTOP-SCQFJL8" tests="23" failures="0" errors="0" skipped="0" time="0.0302454">
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="số đo trên hình (§15.4) &gt; chỉ đại lượng CÓ annotation của backend mới có nhãn — không suy từ tên biến" time="0.0051141">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="số đo trên hình (§15.4) &gt; chữ nhãn = ký hiệu = giá trị của payload; đơn vị chỉ khi payload có" time="0.0005651">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="số đo trên hình (§15.4) &gt; không lộ trước: tiến rồi lùi, nhãn chỉ có từ bước đại lượng khả dụng và chủ thể có mặt" time="0.0011245">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="số đo trên hình (§15.4) &gt; dữ kiện có từ đầu nhưng chủ thể chưa dựng ⇒ chưa có nhãn (tiêm lỗi FE3, W17 Task 7)" time="0.0005741">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="số đo trên hình (§15.4) &gt; chọn chủ thể thì nhãn liên quan được ưu tiên" time="0.0006916">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="số đo trên hình (§15.4) &gt; cặp điểm–đường: neo ở ĐIỂM của cặp — không tự dựng chân đường vuông góc ở phía trình bày" time="0.0007885">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="số đo trên hình (§15.4) &gt; điểm neo: trung điểm đoạn, trọng tâm miền, trọng tâm khối — chỉ từ chủ thể backend chỉ" time="0.0004831">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="nhãn tập trung (§16.5–16.7) &gt; mặc định chỉ dữ kiện đề cho — không đáp số, không đại lượng trung gian" time="0.0010727">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="nhãn tập trung (§16.5–16.7) &gt; Hiện tất cả: mọi nhãn khả dụng; đáp số vẫn chỉ từ bước kết luận" time="0.0008115">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="nhãn tập trung (§16.5–16.7) &gt; chọn một đại lượng: nó và chuỗi số của nó (dữ kiện số, trung gian) — không hơn" time="0.0012322">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="nhãn tập trung (§16.5–16.7) &gt; chọn một vật: các đại lượng có chủ thể là vật ấy" time="0.0006384">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="nhãn tập trung (§16.5–16.7) &gt; same_as: không có nhãn thứ hai; chọn nó là đưa nhãn của dữ kiện lên" time="0.000665">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="nhãn tập trung (§16.5–16.7) &gt; envelope v109 không có `role`: suy từ category và origin (dữ kiện vẫn hiện mặc định)" time="0.0002933">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="nhãn tập trung (§16.5–16.7) &gt; nhân chứng: neo ở trung điểm đoạn từ điểm tới CHÂN backend phát" time="0.0005571">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="nhãn tập trung (§16.5–16.7) &gt; nhân chứng chỉ được vẽ khi nhãn khoảng cách của nó đang hiện" time="0.0007259">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="đặt nhãn số đo (§15.5) &gt; khung trống ⇒ nhãn nằm ngay TRÊN điểm neo" time="0.0004801">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="đặt nhãn số đo (§15.5) &gt; chỗ trên đã có nhãn điểm ⇒ xuống dưới, không đè" time="0.0001585">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="đặt nhãn số đo (§15.5) &gt; điểm neo sát mép ⇒ hộp kẹp vào trong khung mà vẫn gần neo" time="0.0007678">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="đặt nhãn số đo (§15.5) &gt; bốn phía đã kín ⇒ thử bốn góc (lượt trình duyệt T7: S(ABC) kẹp giữa AB = 3 và AC = 4 bị ẩn)" time="0.0004147">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="đặt nhãn số đo (§15.5) &gt; tám chỗ sát neo đều chạm ⇒ lùi ra vòng xa hơn, vẫn ≤ 24 px (lượt xác nhận T7: S(ABC) chạm AB = 3 nửa px)" time="0.0004282">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="đặt nhãn số đo (§15.5) &gt; không còn chỗ trong 24 px ⇒ ẩn — nhãn không bao giờ trôi xa vật nó gọi tên" time="0.0002494">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="đặt nhãn số đo (§15.5) &gt; điểm neo ngoài khung ⇒ không đặt" time="0.0091594">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-annotations.test.ts" name="đặt nhãn số đo (§15.5) &gt; ưu tiên cao đặt trước; nhãn sau tránh nhãn trước" time="0.0003846">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/simulations/domains/geometry/scene3d-chart.test.ts" timestamp="2026-10-10T15:46:41.402Z" hostname="DESKTOP-SCQFJL8" tests="3" failures="0" errors="0" skipped="0" time="0.0089743">
+        <testcase classname="src/simulations/domains/geometry/scene3d-chart.test.ts" name="khung → không gian &gt; không metric ⇒ CHÍNH cảnh ấy (mọi họ khác không đổi một byte)" time="0.0036899">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-chart.test.ts" name="khung → không gian &gt; Tᵀ·T = G và hình thế giới có đúng các độ dài của đề" time="0.0018711">
+        </testcase>
+        <testcase classname="src/simulations/domains/geometry/scene3d-chart.test.ts" name="khung → không gian &gt; pháp tuyến đi theo T⁻ᵀ: vẫn vuông góc với đáy trong không gian" time="0.0008603">
+        </testcase>
+    </testsuite>
+</testsuites>

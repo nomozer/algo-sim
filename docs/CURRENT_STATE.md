@@ -9,7 +9,9 @@ main28ac1d61 không đổi; favicon untracked của người dùng giữ nguyên
 Registry24→27; hai nhóm dựng điểm trên cùng Engine/Planner/IR/Kernel/Scene3D, không thêm solver.
 Candidate mới8ff994c6 (110 file), candidate A/B cũ12da4768 giữ nguyên;
 cache125/default LLM_ONLY không đổi.91 feature tests,74 fake calls/network0 và34 renderer tests;
-full clean regression đang kiểm chứng. Không dùng kết quả này thay pilot A/B.
+clean backend8166 PASS/1 skip/2 deselected tại815f06be; geometry frontend695 PASS.
+GEOMETRY_LIBRARY_EXPANSION_AWAITING_REVIEW; offline GO có giới hạn, live/integration NO-GO.
+Không dùng kết quả này thay pilot A/B.
 Report/run/handoff: [`geometry-library-expansion`](evaluation/geometry/runs/geometry-library-expansion/report.md).
 Human visual acceptance chưa thực hiện; real-model quality chưa đo. LIVE Gemini=0.
 

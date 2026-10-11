@@ -1,0 +1,180 @@
+{
+  "schema": "geometry_library_artifact_manifest/1",
+  "date": "2026-10-11",
+  "verified_code_commit": "815f06be6c2945e88431de4fc83dadf0c6419607",
+  "source_policy": "Individual artifact sources in metadata/report; no claim all evidence was generated at this commit",
+  "excludes": [
+    "run.json",
+    "plan.md",
+    "report.md",
+    "handoff.md",
+    "diagnostics/artifact-manifest.json"
+  ],
+  "entries": [
+    {
+      "path": "audit.md",
+      "normalization": "utf8_lf",
+      "sha256": "b1270201ad8ec24c4a33b131ed9e9b2bd77837b700ab00997f41150df8da6d38"
+    },
+    {
+      "path": "BRANCH_CANDIDATE.json",
+      "normalization": "utf8_lf",
+      "sha256": "465fb674b065905cd0fcfe779a0f8664324c962753e07c823d0459c59abd5ede"
+    },
+    {
+      "path": "candidate_divergence.json",
+      "normalization": "utf8_lf",
+      "sha256": "d511e964f4db31518997708eb4b20932d0bef0005393e549e4ffb4b20e4a17ad"
+    },
+    {
+      "path": "diagnostics/baseline.xml",
+      "normalization": "utf8_lf",
+      "sha256": "1dd621b176884281585113466c7a42229067f860e893ac23e70259d65bff9512"
+    },
+    {
+      "path": "diagnostics/browser.json",
+      "normalization": "utf8_lf",
+      "sha256": "aaef26f7eb40097613d1f2dce3d7d670a1e8513d2eb0ab3df23ac74c55d5bf3e"
+    },
+    {
+      "path": "diagnostics/capability-probe.json",
+      "normalization": "utf8_lf",
+      "sha256": "456ddc056a347a8365a5a04b92d652169ec4d30595bc1f596af65cd2b025ba0a"
+    },
+    {
+      "path": "diagnostics/certification-rerun.json",
+      "normalization": "utf8_lf",
+      "sha256": "978b420f6b04e5603da098a746a458dd168a8381e9ab2bd7144378455cfd806e"
+    },
+    {
+      "path": "diagnostics/docs-audit-final.json",
+      "normalization": "utf8_lf",
+      "sha256": "31db7d9ccd4a4ce983ab2fd9606de3f6994714b7630b84e24082be27b051bc5a"
+    },
+    {
+      "path": "diagnostics/docs-final.xml",
+      "normalization": "utf8_lf",
+      "sha256": "b042929634065afe58b039621a2740c592bb285199f77890e70658e71cfa9772"
+    },
+    {
+      "path": "diagnostics/docs-focused.xml",
+      "normalization": "utf8_lf",
+      "sha256": "1e32b860fa2ddffd5d6098ef122eb3957834ef8be07adfe113be0dcd77e9a609"
+    },
+    {
+      "path": "diagnostics/expansion.xml",
+      "normalization": "utf8_lf",
+      "sha256": "5592853b08ff1f8772e8a005b9fcf5eb6ef1bb9afbd6f65deedc655440c1a7ec"
+    },
+    {
+      "path": "diagnostics/full-backend.xml",
+      "normalization": "utf8_lf",
+      "sha256": "51d0e4ee2ad049a94ce617d6b30e705b260dd6215920bfc4772fea70cee6f5a1"
+    },
+    {
+      "path": "diagnostics/kernel-scene-baseline.xml",
+      "normalization": "utf8_lf",
+      "sha256": "0c42874d62ffae86634107dff5fd94676c5e45fa839c4a1bcf8a56d95a660d76"
+    },
+    {
+      "path": "diagnostics/plane-projection-mobile.png",
+      "normalization": "raw_binary",
+      "sha256": "d1b6e0b1e68003502e166e49300600188257046c0b47d6ae42aae399b575d6c3"
+    },
+    {
+      "path": "diagnostics/postflight.json",
+      "normalization": "utf8_lf",
+      "sha256": "59a2dcf9fb081f82ab9775466755dc38314fc27cc87a4b76470947c1da3783ee"
+    },
+    {
+      "path": "diagnostics/probe_capabilities.py",
+      "normalization": "utf8_lf",
+      "sha256": "037ccc61304c1400107e44eee6b3eaa61a7a01b2ccf538699e14ff15cce053cf"
+    },
+    {
+      "path": "diagnostics/projection-b-probe.json",
+      "normalization": "utf8_lf",
+      "sha256": "43ebe3207055ff2acb3a32ccb879381cb9f3c8c8e9821dd7c9e1e1d6c10d3c5d"
+    },
+    {
+      "path": "diagnostics/projection-plane-desktop.png",
+      "normalization": "raw_binary",
+      "sha256": "fa1dfdeab3e191dd2c8b8b2dfdee7a786c3a366df5d1eeafa2695a3810bd8906"
+    },
+    {
+      "path": "diagnostics/red.json",
+      "normalization": "utf8_lf",
+      "sha256": "40300de94080a6c8e22fdef4b3921ccd238e7499718b30329b9ba8970c6068c5"
+    },
+    {
+      "path": "diagnostics/regression.json",
+      "normalization": "utf8_lf",
+      "sha256": "e781c7351f0ef35c68ad4fde5d4f5ae17af1102c3f1bfac157992ff9640cf5a0"
+    },
+    {
+      "path": "diagnostics/renderer-complete-final.xml",
+      "normalization": "utf8_lf",
+      "sha256": "d51fb232da39464a790312398e0ff1bb30273a2dee4a3d708b0d3143f36c6332"
+    },
+    {
+      "path": "diagnostics/renderer-domain-summary.json",
+      "normalization": "utf8_lf",
+      "sha256": "1b90adb2f387ccc4f0b1bee652567ac2e353465817b3e7c1ba7582ab8589cf26"
+    },
+    {
+      "path": "diagnostics/renderer-final.xml",
+      "normalization": "utf8_lf",
+      "sha256": "34278388326f5b69c37323aaeca6c18c36ad971a202d46998c233df90341cd3d"
+    },
+    {
+      "path": "diagnostics/renderer.xml",
+      "normalization": "utf8_lf",
+      "sha256": "5669a1ebc9f2bcd48f05ac51b92a6f968920413fe305078dd2e562bc56a650bb"
+    },
+    {
+      "path": "diagnostics/review.json",
+      "normalization": "utf8_lf",
+      "sha256": "07bfa45d46e5b4f34992058e50addede8326ee782b3cee0df704b60f64e98330"
+    },
+    {
+      "path": "diagnostics/scene-0-desktop.png",
+      "normalization": "raw_binary",
+      "sha256": "f4c34effbfecf544fc62f5de1a00e7732c62692432c434d9a1bb5777a1a55ffc"
+    },
+    {
+      "path": "diagnostics/scene-1-desktop.png",
+      "normalization": "raw_binary",
+      "sha256": "de00c6e599fc021845ba78d4b095577eb20b3bda499bbcc7fbe1d4fdf9f73a88"
+    },
+    {
+      "path": "diagnostics/scene-2-desktop.png",
+      "normalization": "raw_binary",
+      "sha256": "9b066c60ae65cc040c1e037a1ac95ad72b244df58f8488086785fc1e6f0b9cf6"
+    },
+    {
+      "path": "diagnostics/scene-3-desktop.png",
+      "normalization": "raw_binary",
+      "sha256": "fa1dfdeab3e191dd2c8b8b2dfdee7a786c3a366df5d1eeafa2695a3810bd8906"
+    },
+    {
+      "path": "diagnostics/scene-7-desktop.png",
+      "normalization": "raw_binary",
+      "sha256": "94f23ef86b762d4fb5cc119382fbfcee5f93cf099bf17ae6e9c2715cd3ae73f8"
+    },
+    {
+      "path": "offline-certification/certification.json",
+      "normalization": "utf8_lf",
+      "sha256": "9bd3e2f36b4a08afe047d1f99ee8ab28a51ca4cd0fc3b1a3fbc6e426efc2584b"
+    },
+    {
+      "path": "offline-certification/scenes.json",
+      "normalization": "utf8_lf",
+      "sha256": "6cc50a74b8ef5218317c9be3bb214ad7adf9649e2eefedd93f2b6f54455550df"
+    },
+    {
+      "path": "preflight.json",
+      "normalization": "utf8_lf",
+      "sha256": "13c7a818ea0afe424530c2625897e8963c4f2e6f06292040f82983d47390dcd1"
+    }
+  ]
+}

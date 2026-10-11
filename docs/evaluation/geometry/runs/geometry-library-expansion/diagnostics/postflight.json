@@ -1,0 +1,32 @@
+{
+  "schema": "geometry_library_preservation/1",
+  "date":"2026-10-11",
+  "base_commit":"2990d87de861f03b31dd9e7310c50de59bcaf868",
+  "original_checkout_head":"2990d87de861f03b31dd9e7310c50de59bcaf868",
+  "main":"28ac1d61cbaa6b33085bb12392e5f0f5815eb787",
+  "frozen_ab_artifact_hashes_verified":48,
+  "frozen_ab_artifact_mismatches":[],
+  "locked_paths_git_diff_from_base":[],
+  "locked_paths":[
+    "docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness",
+    "docs/evaluation/geometry/runs/hybrid-compiler-selection",
+    "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+    "backend/scripts/run_hybrid_ab_pilot.py"
+  ],
+  "user_favicon_sha256":"5cd57f27376366a639370e0282456529dbdc227c6aa8a950eb6d7116f317dc62",
+  "production_changed_paths":[
+    "backend/app/ai/fact_extraction.py",
+    "backend/app/simulation/geometry_functions/engine.py",
+    "backend/app/simulation/geometry_functions/planner.py",
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "default_mode":"LLM_ONLY_UNCHANGED",
+  "main_merge":false,
+  "push":false,
+  "rebase":false,
+  "branch_deleted":false,
+  "live_gemini_calls":0,
+  "paid_api_calls":0,
+  "smoke_ab_executed":false,
+  "full_ab_executed":false
+}

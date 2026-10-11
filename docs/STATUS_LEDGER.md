@@ -1704,3 +1704,18 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/
 - **FINAL_DOCS:** clean475defaa,153 PASS/0 fail/skip,38.27s; audit PASS,48 immutable artifact hashes verified.
 - **STORAGE_DISCLOSURE:** two atomic-persistence failures retained locally without resume; cause/errno/winerror UNKNOWN.
   Fresh instrumented/current certifications each312 complete; not a reliability proof. Persistence issue remains OPEN.
+
+## WAVE_ID = GEOMETRY_LIBRARY_EXPANSION
+
+REPORT = docs/evaluation/geometry/runs/geometry-library-expansion/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometry-library-expansion/
+
+- **DATE / BRANCH:**2026-10-10/11, LOCAL, feat/geometry-library-expansion; isolated worktree from verified2990d87d, no merge/push.
+- **APPROVED SCOPE:** User approved unique line-line/line-plane point intersections and point-line/point-plane projections; no other family/section expansion or second authority.
+- **PRODUCT / VERIFICATION:** a0eb1450 / clean815f06be; Registry24→27 on shared existing Engine/Planner/IR/Kernel/Scene3D. New derived points have provenance/producer/dependencies/relation checks.
+- **CANDIDATE:** branch8ff994c6… (110 files), separately declared; locked A/B12da4768… unchanged. Provider surfaces diverge; no historical rescoring or pilot authorization.
+- **TESTS:**58 preregistered RED before production;91 feature PASS incl.5 mutants killed;74 fake37+37, repeat74 identical LF bytes;34 focused renderer PASS,695 geometry frontend PASS; TypeScript PASS;8 desktop/1 mobile browser checks, agent visual inspection only.
+- **FULL BACKEND:**8166 PASS/1 skipped/2 deselected/0 failure/error,386.64s; diagnostics/full-backend.xml, regression.json. Clean before/after; one existing Starlette deprecation warning. Failed/incomplete attempts disclosed, not readiness evidence.
+- **PRESERVATION:**48 locked artifact hashes match; original checkout2990d87d, main28ac1d61 and user favicon unchanged; cache125/default LLM_ONLY unchanged; no merge/push/rebase/branch deletion. LIVE Gemini/paid API0.
+- **LIMITS:** bounded wording; first3 plane points must be noncollinear; same-name plane output legacy precondition; existing angle/two-nonpoint ANNOTATION_UNBOUND anchors remain a display gap. No live extraction-quality/human visual acceptance/general geometry or population-safety claim.
+- **FINAL_DECISION:** GEOMETRY_LIBRARY_EXPANSION_AWAITING_REVIEW — bounded offline GO for review; live pilot/integration/default switch NO-GO without separate decision. Expanded provider surfaces exceed old accounted-token caps. Branch/worktrees retained.
