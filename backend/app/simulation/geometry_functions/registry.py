@@ -571,7 +571,7 @@ _KHOANG_CACH_DIEM_DUONG = re.compile(
     r"khoảng cách\s+từ\s+(?:điểm\s+)?([A-Z][0-9]*'?)\s+(?:đến|tới)\s+(?:đường thẳng\s+)?([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![\w'])",
     re.IGNORECASE)
 #: Câu chứa cụm phải HỎI nó (danh sách CHO PHÉP, không phải danh sách cấm): có từ hỏi trong câu …
-_TU_HOI = re.compile(r"(?<!\w)(?:tính|tìm|xác định)(?!\w)|bao\s+nhiêu|\?", re.IGNORECASE)
+_TU_HOI = re.compile(r"(?<!\w)(?:tính|tìm|xác định|hỏi)(?!\w)|bao\s+nhiêu|\?", re.IGNORECASE)
 #: … và không gán giá trị ngay sau đường thẳng ("bằng 4", "không bằng 3", "khác 3"; "bằng bao nhiêu" vẫn là câu hỏi).
 _GAN_GIA_TRI = re.compile(r"\s*(?:\w+\s+)?(?:bằng|=|là|khác|≠)\s*(?!bao\s+nhiêu|\?)\S", re.IGNORECASE)
 _CHI_SO_DUOI = str.maketrans("₀₁₂₃₄₅₆₇₈₉", "0123456789")
@@ -648,6 +648,34 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
     return da
 
 
+_NEU = re.compile(r"(?<!\w)nếu(?!\w)", re.IGNORECASE)
+
+
+def _moc_menh_de(c: LoiGoi, de: str, dau: int, cuoi: int) -> list[int]:
+    """Các mốc của lời gọi trong quote `de[dau:cuoi]`: đầu quote, mỗi chỗ có từ khoá vị từ của hàm, mỗi từ nhãn mang nhãn của
+    lời gọi, và cụm "X là giao điểm/hình chiếu" của phép dựng. Vai trò mệnh đề đọc tại MỌI mốc."""
+    doan, moc = de[dau:cuoi], [dau]
+    for nhom in c.spec.keywords:
+        for k in nhom:
+            mau, co = (k[3:], 0) if k.startswith("re:") else (re.escape(k), re.IGNORECASE)
+            moc += [dau + m.start() for m in re.finditer(mau, doan, co)]
+    nhan = nhan_cua_loi_goi(c)
+    moc += [dau + a for a, _b, phan in _tu_nhan(doan) if any(n in nhan for p in phan for n in p)]
+    if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "orthogonal_projection"):
+        moc += [dau + m.start() for m in re.finditer(r"[A-Z][0-9]*'?\s+là\s+(?:giao điểm|hình chiếu)|[Hh]ình chiếu", doan)]
+    return moc
+
+
+def _hoi_trong_cau(c: LoiGoi, de: str, vts: list[tuple[int, int]]) -> bool:
+    """Lời gọi `ask_*`: câu chứa quote (tại một mốc của nó) có từ hỏi — tính, tìm, xác định, hỏi, bao nhiêu, ?"""
+    for dau, cuoi in vts:
+        for p in _moc_menh_de(c, de, dau, cuoi):
+            het = re.search(r"[.!?](?=\s|$)", de[p:])
+            if _TU_HOI.search(de[_cau_chua(de, p):p + het.end() if het else len(de)]):
+                return True
+    return False
+
+
 def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...] = ()) -> None:
     """Cổng nguồn tất định — xem docstring module. Ném `TuChoi` ở lời gọi đầu tiên hỏng (theo thứ tự id).
     `auxiliary`: điểm phụ planner nhánh B khai (`AUXILIARY_RULES`); nhánh A không truyền ⇒ mọi nhãn phải có trong đề."""
@@ -666,19 +694,17 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
             raise TuChoi("UNKNOWN_LABEL", f"{c.id}: nhãn {lac} không có trong đề", (c.id,))
         if c.spec.kind == "escape":
             continue
+        if c.spec.kind == "ask" and not _hoi_trong_cau(c, de, vts):
+            raise TuChoi("NOT_ASKED_IN_SOURCE", f"{c.id}: câu chứa {c.quote!r} không hỏi (không có từ hỏi) — không trả lời "
+                         "điều đề không hỏi", (c.id,))
         if c.spec.kind != "ask":
             for (dau, _c), q in zip(vts, c.quotes):
-                positions = [dau]
-                if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "orthogonal_projection"):
-                    # A quote may include its own "Nếu" / "Chứng minh" prefix.
-                    # Inspect the actual predicate position in the original source,
-                    # including an antecedent BEFORE its later "thì".
-                    positions += [dau + m.start() for m in re.finditer(
-                        r"[A-Z][0-9]*'?\s+là\s+(?:giao điểm|hình chiếu)|[Hh]ình chiếu", de[dau:_c])]
+                # A quote may carry its own "Nếu" / "Chứng minh": read the role where the predicate and the call's labels
+                # are, not only at the start of the quote (ISSUE-ARCH-GATE-CLAUSE-ROLE-INSIDE-QUOTE).
+                positions = _moc_menh_de(c, de, dau, _c)
                 roles = {_vai_tro(de, pos) for pos in positions}
-                if len(positions) > 1 and any(re.search(r"(?<!\w)nếu(?!\w)", de[_cau_chua(de, pos):pos], re.IGNORECASE)
-                                              for pos in positions[1:]):
-                    roles.add("CONDITIONAL")  # a conditional consequent is not an unconditional premise either
+                if any(_NEU.search(de[_cau_chua(de, pos):pos]) for pos in positions):
+                    roles.add("CONDITIONAL")  # antecedent or consequent of "nếu … thì": not an unconditional premise
                 if "GOAL" in roles:
                     raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{c.id}: {q!r} là điều phải chứng minh, không phải dữ kiện", (c.id,))
                 if "CONDITIONAL" in roles:

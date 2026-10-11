@@ -166,21 +166,18 @@ def _clause_as_premise(quote):
     return f("f5", "perpendicular", quote, points_a=["S", "A"], points_b=list("ABCD"))
 
 
-# Known defects: SAFE behaviour asserted; strict xfail until fixed.
-@pytest.mark.xfail(strict=True, reason="CRITICAL (this audit): the shared gate reads the clause role BEFORE the quote; a "
-                                       "premise quote that carries its own 'Nếu … thì' is used as a given and served")
+# Defects found by this audit and fixed by S0 (run `hybrid-gate-clause-role-fix`; detailed tests in
+# test_source_gate_clause_role.py). Kept here as regression pins of the audit's probes.
 def test_conditional_clause_inside_the_quote_is_not_a_premise():
     r = _run(_clause_as_premise("Nếu SA vuông góc với (ABCD) thì SC = 5."), _ask_len("S", "C"), base=_no_perpendicular_base())
     assert r.status == "REFUSED", r.answers
 
 
-@pytest.mark.xfail(strict=True, reason="CRITICAL (this audit): a premise quote that carries its own 'Chứng minh' is used as a given")
 def test_proof_goal_inside_the_quote_is_not_a_premise():
     r = _run(_clause_as_premise("Chứng minh rằng SA vuông góc với (ABCD)."), _ask_len("S", "C"), base=_no_perpendicular_base())
     assert r.status == "REFUSED", r.answers
 
 
-@pytest.mark.xfail(strict=True, reason="CRITICAL (this audit): same gate in route A (shared kiem_nguon)")
 def test_route_a_conditional_clause_inside_the_quote_is_not_a_premise():
     t = "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA = 3. Nếu SA vuông góc với (ABCD) thì SC = 5. Tính độ dài SC."
     calls = [
@@ -194,7 +191,6 @@ def test_route_a_conditional_clause_inside_the_quote_is_not_a_premise():
     assert run_function_route(t, {"calls": calls}).status == "REFUSED"
 
 
-@pytest.mark.xfail(strict=True, reason="ISSUE-ARCH-ASK-GATE-NO-QUESTION-CHECK: ask_* answers a clause that does not ask it")
 def test_ask_point_plane_answers_only_a_question():
     r = _run(ask("q", "Hãy chỉ ra rằng khoảng cách từ S đến (ABCD) bằng 3.", "distance", points_a=["S"], points_b=list("ABCD")))
     assert r.status == "REFUSED", r.answers
