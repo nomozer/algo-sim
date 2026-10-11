@@ -587,6 +587,11 @@ Sở hữu **CỔNG QUAY** trên `dist/`: quay đủ 360°, chạm được sáu
 
 ⛔ `chuanTruc` **đã gỡ** (2026-09-12) — thay bằng `trucQuay`. Xem cảnh báo dưới.
 
+**Phiên bản cổng (2026-10-11):** v1 kéo cố định 700 px, đọc sau 250 ms — hụt dưới 360° khi canvas cao 683 px
+(run `final-integration-gates`). v2 (`GATE_VERSION`, `KEO`, `doDaiKeoNgang`, `KHONG_ON_DINH`, `KHUNG_HEP`, kết quả
+mặc định `scene3d-orbit-gate/v2/`) **trượt kiểm định known-good** — giữ làm hồ sơ (run `orbit-gate-v2`). Phần thuần
+khoá bởi `frontend/scripts/scene3d-orbit-gate.node-test.mjs` (`node --test`, ngoài vitest/T3).
+
 ⚠️ **`--dist <đường dẫn>` đo một bản dựng KHÁC**, thường là `dist/` của worktree
 ở commit cũ. Không có cờ này thì không ai đối chiếu được **cùng một cổng** qua
 nhiều mốc, và mỗi lần nghi ngờ cổng lại phải viết một bộ đo riêng — bộ đo riêng

@@ -45,6 +45,7 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync, statSync, readdirSy
 import { execFileSync } from "node:child_process";
 import { join, resolve, extname } from "node:path";
 import { BrowserSession, sleep } from "./browser-runner.mjs";
+import { settleCamera } from "./compiler-scene-replay-lib.mjs";
 
 const CO = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, ds) => {
   if (x.startsWith("--")) a.push([x.slice(2), ds[i + 1]?.startsWith("--") ? true : ds[i + 1] ?? true]);
@@ -65,7 +66,8 @@ const FE = join(GOC, "frontend");
 const DIST = CO.dist ? resolve(String(CO.dist)) : join(FE, "dist");
 /** Đo bản dựng ngoài ⇒ `kiemDistMoi` vô nghĩa (nó so với `src/` của kho này). */
 const DIST_NGOAI = Boolean(CO.dist);
-const RA = resolve(CO.ra ?? join(GOC, "docs", "evaluation", "geometry", "scene3d-orbit-gate"));
+/** v2 ghi vào `scene3d-orbit-gate/v2/` — kết quả v1 ở thư mục cha là lịch sử, không bị ghi đè. */
+const RA = resolve(CO.ra ?? join(GOC, "docs", "evaluation", "geometry", "scene3d-orbit-gate", "v2"));
 const TAGS = (CO.ca ?? "p1,p6,p7").split(",");
 const TIEM = CO.tiem ? String(CO.tiem) : null;
 
@@ -81,6 +83,23 @@ export const NGUONG = {
   SNAP_DO: 25,
 };
 
+/**
+ * v2 (đăng ký trước: `docs/evaluation/geometry/runs/orbit-gate-v2/protocol.md`). v1 kéo cố định 700 px và đọc sau
+ * 250 ms: OrbitControls quay `2π·dx/clientHeight`, nên canvas cao lên (545→683 px) làm cú kéo hụt dưới 360°, còn đuôi
+ * damping bị cắt. v2 chỉ đổi CÁCH KÉO và LÚC ĐỌC; `NGUONG` giữ nguyên.
+ */
+export const GATE_VERSION = "scene3d-orbit-gate/2";
+export const KEO = {
+  /** Kéo ngang = hệ số × chiều cao canvas ⇒ danh định 1,25 × 360° = 450°, biên cố định trên 360°. */
+  NGANG_THEO_CAO: 1.25,
+  /** Ngân sách chờ camera lắng sau mỗi cú kéo (`settleCamera`); hết giờ ⇒ `KHONG_ON_DINH`. */
+  CHO_ON_DINH_MS: 10_000,
+};
+
+export function doDaiKeoNgang(caoCanvas) {
+  return Math.round(KEO.NGANG_THEO_CAO * caoCanvas);
+}
+
 export const TRANG_THAI = {
   DAT: "DAT",
   TRUC_TROI: "TRUC_TROI",
@@ -92,6 +111,10 @@ export const TRANG_THAI = {
   KHONG_DOC_DUOC_CAMERA: "KHONG_DOC_DUOC_CAMERA",
   /** Không có canvas nào để đo — cảnh không dựng nổi (thường là crash vòng lặp). */
   CANH_KHONG_DUNG: "CANH_KHONG_DUNG",
+  /** v2: camera không lắng trong `KEO.CHO_ON_DINH_MS` sau một cú kéo — không góc nào đọc được là đáng tin. */
+  KHONG_ON_DINH: "KHONG_ON_DINH",
+  /** v2: cú kéo ngang theo chiều cao không nằm trọn trong canvas — không cắt bớt trong im lặng. */
+  KHUNG_HEP: "KHUNG_HEP",
 };
 
 const MIME = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css",
@@ -128,7 +151,7 @@ export function phucVu(thuMuc, thieuChunk = false) {
 /* ─── móc đo, tiêm TRƯỚC mọi script của trang ─── */
 const MOC = `
 (function () {
-  var D = { tuThe: [], draws: 0, buffers: 0, programs: 0, canvasTao: 0, ctxs: 0, moc: '' };
+  var D = { tuThe: [], draws: 0, buffers: 0, programs: 0, canvasTao: 0, ctxs: 0, moc: '', raf: 0 };
   window.__QUAY__ = D;
   D.reset = function (nhan) { D.moc = nhan; D.tuThe.length = 0; D.draws = 0;
     D.buffers = 0; D.programs = 0; D.canvasTao = 0; };
@@ -212,7 +235,7 @@ const MOC = `
 
   var raf = window.requestAnimationFrame.bind(window);
   window.requestAnimationFrame = function (fn) {
-    return raf(function (t) { chot(); return fn(t); });
+    return raf(function (t) { D.raf += 1; chot(); return fn(t); });
   };
 })();
 `;
@@ -461,6 +484,23 @@ export async function motCa(sess, fx) {
    * Quy đổi của OrbitControls: kéo ngang `dx` px quay `2π·dx/clientHeight`.
    * Với canvas ~545 px cao thì 545 px ngang ≈ 360°; ở đây lấy dư một quãng.
    */
+  /* v2: đọc tư thế chỉ khi camera đã LẮNG (đuôi damping chạy xong) — dùng chung `settleCamera` của bộ đo cảnh; ảnh
+   * chụp là ma trận view của khung cuối mà móc ghi, `frame_count` là bộ đếm rAF của móc. */
+  let khongOnDinh = false;
+  const docKhung = async () => {
+    const k = JSON.parse(await sess.eval("(function(){var D=window.__QUAY__,n=D.tuThe.length;"
+      + "return JSON.stringify({m:n?D.tuThe[n-1].m:[],raf:D.raf});})()"));
+    return { snapshot: { viewport_width: 1, viewport_height: 1, device_pixel_ratio: 1,
+      view_matrix_column_major: k.m, projection_matrix_column_major: [] }, frame_count: k.raf };
+  };
+  const choOnDinh = async () => {
+    try {
+      await settleCamera(docKhung, { timeoutMs: KEO.CHO_ON_DINH_MS });
+    } catch (e) {
+      if (!String(e?.message).startsWith("SETTLING_TIMEOUT")) throw e;
+      khongOnDinh = true;
+    }
+  };
   const keo = async (dx, dy, buoc = 60) => {
     const bienX = Math.max(40, hop.w / 2 - 20);
     const bienY = Math.max(40, hop.h / 2 - 20);
@@ -474,8 +514,10 @@ export async function motCa(sess, fx) {
       await sleep(10);
     }
     await chuot("mouseReleased", x1, y1, 0);
-    await sleep(250);
+    await choOnDinh();
   };
+  const keoNgang = doDaiKeoNgang(hop.h);
+  const khungHep = keoNgang > hop.w - 40;
 
   const doc = async () => JSON.parse(await sess.eval(
     "JSON.stringify({tuThe:window.__QUAY__.tuThe.slice(),draws:window.__QUAY__.draws,"
@@ -493,15 +535,23 @@ export async function motCa(sess, fx) {
   await sleep(900);
   const yen = await doc();
 
-  // ── ② một cú kéo ngang DÀI: phải tháo cuộn quá 360° ──
+  if (khungHep) {
+    return { tag: fx.tag, trangThai: TRANG_THAI.KHUNG_HEP, chiTiet: `kéo ${keoNgang}px > canvas ${hop.w}px − 40`,
+      docDuocCamera: true, vongNgangDo: 0, nhieuVongDo: 0, chuanTruc: 0, trucQuayVec: [0, 0, 0],
+      trucTen: "không đo", cucMin: 0, cucMax: 0, huong: {}, snap: 0, capPhat: 0, draws: 0, ctxs: 0,
+      yenTong: tongGocKhung(yen.tuThe), khungDo: {}, caoCanvas: hop.h, keoNgangPx: keoNgang,
+      khungHep: true, khongOnDinh: false };
+  }
+
+  // ── ② một cú kéo ngang DÀI: phải tháo cuộn quá 360° (v2: dài 1,25 × chiều cao canvas) ──
   await dat("vong");
-  await keo(700, 0, 70);
+  await keo(keoNgang, 0, 70);
   const vong = await doc();
 
   // ── ③ kéo tiếp hai cú cùng chiều: không được đụng tường nào ──
   await dat("nhieuvong");
-  await keo(700, 0, 70);
-  await keo(700, 0, 70);
+  await keo(keoNgang, 0, 70);
+  await keo(keoNgang, 0, 70);
   const nhieuVong = await doc();
 
   // ── ④ kéo dọc lên tới đỉnh, rồi xuống tới đáy ──
@@ -519,6 +569,10 @@ export async function motCa(sess, fx) {
 
   return {
     tag: fx.tag,
+    caoCanvas: hop.h,
+    keoNgangPx: keoNgang,
+    khungHep: false,
+    khongOnDinh,
     docDuocCamera: vong.tuThe.length > 5,
     khungDo: { yen: yen.tuThe.length, vong: vong.tuThe.length,
       nhieuVong: nhieuVong.tuThe.length, doc: doc2.tuThe.length },
@@ -555,6 +609,8 @@ export async function motCa(sess, fx) {
 
 export function phanLoai(r) {
   if (!r.docDuocCamera) return TRANG_THAI.KHONG_DOC_DUOC_CAMERA;
+  if (r.khungHep) return TRANG_THAI.KHUNG_HEP;
+  if (r.khongOnDinh) return TRANG_THAI.KHONG_ON_DINH;
   if (r.draws === 0) return TRANG_THAI.CANH_RONG;
   if (r.chuanTruc < NGUONG.CHUAN_TRUC) return TRANG_THAI.TRUC_TROI;
   if (r.vongNgangDo < NGUONG.VONG_NGANG_DO) return TRANG_THAI.KHONG_DU_VONG;
@@ -604,7 +660,8 @@ export async function chay() {
   }
   if (!DIST_NGOAI) kiemDistMoi();
   const { sv, cong } = await phucVu(DIST, TIEM === "thieu-chunk");
-  const kq = { commit, chay_luc: new Date().toISOString(), tiem: TIEM, nguong: NGUONG, ca: [] };
+  const kq = { gate_version: GATE_VERSION, keo: KEO, commit, chay_luc: new Date().toISOString(), tiem: TIEM,
+    nguong: NGUONG, ca: [] };
   try {
     const sess = new BrowserSession({ viewport: 1440, height: 900, webgl: true,
       url: `http://127.0.0.1:${cong}`, napModuleDev: false });

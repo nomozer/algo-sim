@@ -1,0 +1,32 @@
+== historical-eb6d7d5a
+  p1: TRUC_TROI  vòng=449°  trục=Z[0.014,0.006,1] ‖0.977‖  cos∈[-1.00,1.00]  snap=0  cấp phát=0  yên=0.0°
+  p6: TRUC_TROI  vòng=449°  trục=Z[0.022,0.012,1] ‖0.960‖  cos∈[-1.00,1.00]  snap=0  cấp phát=0  yên=0.4°
+  p7: TRUC_TROI  vòng=449°  trục=Z[0.022,0.005,1] ‖0.965‖  cos∈[-1.00,1.00]  snap=0  cấp phát=0  yên=0.4°
+→ D:\Documents\projects\algo-sim\.superpowers\worktrees\geometry-library-expansion\docs\evaluation\geometry\runs\orbit-gate-v2\results\historical-eb6d7d5a\ORBIT_GATE.json  KHÔNG ĐẠT
+exit=1
+== main-28ac1d61
+  p1: KHONG_ON_DINH  vòng=449°  trục=Z[-0.001,0,1] ‖0.999‖  cos∈[-1.00,1.00]  snap=0  cấp phát=111  yên=0.0°
+  p6: TRUC_TROI  vòng=450°  trục=Z[0.002,0.014,1] ‖0.980‖  cos∈[-1.00,1.00]  snap=0  cấp phát=0  yên=0.0°
+  p7: KHONG_ON_DINH  vòng=450°  trục=Z[0.003,0.007,1] ‖0.984‖  cos∈[-1.00,1.00]  snap=0  cấp phát=0  yên=0.0°
+→ D:\Documents\projects\algo-sim\.superpowers\worktrees\geometry-library-expansion\docs\evaluation\geometry\runs\orbit-gate-v2\results\main-28ac1d61\ORBIT_GATE.json  KHÔNG ĐẠT
+exit=1
+== candidate-HEAD
+(node:18592) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+  p1: KHONG_ON_DINH  vòng=450°  trục=Z[0.003,0.007,1] ‖0.985‖  cos∈[-1.00,1.00]  snap=0  cấp phát=111  yên=0.0°
+  p6: TRUC_TROI  vòng=450°  trục=Z[0.003,0.007,1] ‖0.985‖  cos∈[-1.00,1.00]  snap=0  cấp phát=0  yên=0.0°
+  p7: TRUC_TROI  vòng=450°  trục=Z[0.003,0.008,1] ‖0.986‖  cos∈[-1.00,1.00]  snap=0  cấp phát=0  yên=0.0°
+→ D:\Documents\projects\algo-sim\.superpowers\worktrees\geometry-library-expansion\docs\evaluation\geometry\runs\orbit-gate-v2\results\candidate\ORBIT_GATE.json  KHÔNG ĐẠT
+exit=1
+== inj-chan-phuong-vi
+  p1: KHONG_DU_VONG  vòng=179°  trục=Z[0,0,1] ‖1.000‖  cos∈[-1.00,1.00]  snap=0  cấp phát=45  yên=0.0°
+  p6: KHONG_DU_VONG  vòng=180°  trục=Z[0,0,1] ‖1.000‖  cos∈[-1.00,1.00]  snap=0  cấp phát=0  yên=0.0°
+  p7: KHONG_DU_VONG  vòng=179°  trục=Z[0,0,1] ‖1.000‖  cos∈[-1.00,1.00]  snap=0  cấp phát=0  yên=0.0°
+→ D:\Documents\projects\algo-sim\.superpowers\worktrees\geometry-library-expansion\docs\evaluation\geometry\runs\orbit-gate-v2\results\injection-chan-phuong-vi\ORBIT_GATE_TIEM_chan-phuong-vi.json  KHÔNG ĐẠT
+exit=1
+== inj-khong-on-dinh
+  p1: KHONG_ON_DINH  vòng=517°  trục=Z[0,0,1] ‖1.000‖  cos∈[-1.00,1.00]  snap=0  cấp phát=135  yên=6.8°
+  p6: KHONG_ON_DINH  vòng=535°  trục=Z[0,0,1] ‖1.000‖  cos∈[-1.00,1.00]  snap=0  cấp phát=0  yên=7.8°
+  p7: KHONG_ON_DINH  vòng=542°  trục=Z[0,0,1] ‖1.000‖  cos∈[-1.00,1.00]  snap=0  cấp phát=0  yên=6.8°
+→ D:\Documents\projects\algo-sim\.superpowers\worktrees\geometry-library-expansion\docs\evaluation\geometry\runs\orbit-gate-v2\results\injection-khong-on-dinh\ORBIT_GATE_TIEM_khong-on-dinh.json  KHÔNG ĐẠT
+exit=1
