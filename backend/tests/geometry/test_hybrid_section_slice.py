@@ -170,6 +170,61 @@ def test_section_area_must_be_asked():
     assert (r.status, r.code) == ("REFUSED", "NOT_ASKED_IN_SOURCE"), r.answers
 
 
+# ── independent review 2 (run `hybrid-slice-review`) ──────────────────────────────────────────────────────────
+
+@pytest.mark.parametrize("fact", [
+    # I1: the quote names a DIFFERENT plane than the one typed (a plane "qua M song song với …" is another construction)
+    _section("f6", "Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng qua M song song với đáy.", "MAB"),
+    _area("Tính diện tích thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng qua M song song với đáy.", "MAB"),
+    _section("f6", "Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng qua M và song song với (SAB).", "SAB"),
+    _line("f6", "Tìm giao tuyến của (SAB) với mặt đáy.", "SAB", "SCD"),
+    # I3: the quote names another solid
+    _section("f6", "Xác định thiết diện của hình chóp S.ABC cắt bởi mặt phẳng (MAB).", "MAB"),
+], ids=["parallel-to-base-as-MAB", "area-parallel-to-base-as-MAB", "parallel-to-SAB-as-SAB", "base-typed-as-SCD",
+        "other-solid-named"])
+def test_cutting_plane_and_solid_must_be_the_ones_the_quote_names(fact):
+    r = _run(HB._mid("f5", "M", "S", "C"), fact)
+    assert (r.status, r.code) == ("REFUSED", "SOURCE_OBJECT_MISMATCH"), (r.answers, r.reason)
+
+
+def test_base_named_as_mat_day_binds_to_the_base():
+    r = _run(_line("f5", "Tìm giao tuyến của (SAB) với mặt đáy.", "SAB", "ABCD"))
+    o = _line_obj(r)
+    assert _on_line(o, r.points["A"]) and _on_line(o, r.points["B"]), (r.code, r.reason)
+
+
+def test_section_without_a_solid_symbol_in_a_one_solid_problem():
+    r = _run(HB._mid("f5", "M", "S", "C"), _section("f6", "Xác định thiết diện cắt bởi mặt phẳng (MAB).", "MAB"))
+    assert r.status == "SERVED", (r.code, r.reason)
+
+
+def test_polygon_area_with_a_solid_is_not_a_section_area():
+    """I2. Triangle MAB, M = mid SC: AB × AM = (0,−3,2) ⇒ S² = 13/4 (not the trapezoid 117/16). SAB: legs 2, 3 ⇒ S² = 9."""
+    r = _run(HB._mid("f5", "M", "S", "C"), ask("q", "Tính diện tích tam giác MAB.", "area", solid="S.ABCD", points=list("MAB")))
+    assert HB.answer_square(r.answers["q"]) == F(13, 4), (r.code, r.reason)
+    r = _run(ask("q", "Tính diện tích tam giác SAB.", "area", solid="S.ABCD", points=list("SAB")))
+    assert HB.answer_square(r.answers["q"]) == 9, (r.code, r.reason)
+
+
+def test_plane_touching_an_edge_keeps_the_kernel_code():
+    """M1. I = AB ∩ DM, K = AD ∩ BN (M, N midpoints of BC, CD): I = (4,0,0), K = (0,4,0); plane x/4 + y/4 + z/3 = 1
+    contains S and C, so it touches the pyramid along SC only."""
+    r = _run(HB._mid("f5", "M", "B", "C"), HB._ill("f6", "I", "AB", "DM"), HB._mid("f7", "N", "C", "D"),
+             HB._ill("f8", "K", "AD", "BN"), _section("f9", "Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (SIK).", "SIK"))
+    assert (r.status, r.code) == ("REFUSED", "PLANE_TOUCHES_EDGE"), (r.code, r.reason)
+
+
+def test_one_plane_named_twice_is_one_section():
+    """M2. (MAB) and (NAB), M = mid SC, N = mid SD, are the same plane: one section object; M3: its trace lists both calls."""
+    r = _run(HB._mid("f5", "M", "S", "C"), HB._mid("f6", "N", "S", "D"),
+             _section("f7", "Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (MAB).", "MAB"),
+             _area("Tính diện tích thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (NAB).", "NAB"))
+    assert len([o for o in r.scene3d["objects"] if o["type"] == "section"]) == 1, (r.code, r.reason)
+    assert HB.answer_square(r.answers["q"]) == F(117, 16)
+    (t,) = [t for t in r.trace if t.get("step") == "construct_section"]
+    assert set(t["calls"]) == {"f7", "q"}
+
+
 # ── route A uses the same functions ───────────────────────────────────────────────────────────────────────────
 
 def test_route_a_section_area():
@@ -216,6 +271,15 @@ def _engine_mutant(monkeypatch, old, new):
     monkeypatch.setattr(FR, "dung_tu_loi_goi", _mutant(monkeypatch, EN, old, new).dung_tu_loi_goi)
 
 
+def _gate_mutant(monkeypatch, old, new):
+    from app.simulation.geometry_functions import engine as EN
+    from app.simulation.geometry_functions import registry as RG
+
+    m = _mutant(monkeypatch, RG, old, new)
+    m.TuChoi = RG.TuChoi
+    monkeypatch.setattr(EN, "kiem_nguon", m.kiem_nguon)                  # the engine holds its own reference
+
+
 def _planner_mutant(monkeypatch, old, new):
     from app.simulation.geometry_functions import planner as PL
 
@@ -225,12 +289,24 @@ def _planner_mutant(monkeypatch, old, new):
 SLICE_MUTANTS = [
     ("parallel-plane precheck dropped", _engine_mutant, "if p1.normal.cross(p2.normal).is_zero():", "if False:",
      lambda: _run(*_mid_square_case(), _line("f8", "Tìm giao tuyến của (MNP) và (ABC).", "MNP", "ABC")).code != "PARALLEL_PLANES"),
-    ("section built twice", _engine_mutant, "            if (khoa := _khoa_mat_cat(c)) in td:\n                continue\n",
-     "            khoa = _khoa_mat_cat(c)\n",
+    ("section built twice", _engine_mutant, "if (khoa := self._khoa_mat_cat(c)) in td:",
+     "if (khoa := self._khoa_mat_cat(c)) in ():",
      lambda: len([o for o in _run(*_trapezoid_case()).scene3d["objects"] if o["type"] == "section"]) != 1),
-    ("section area routed to polygon area", _planner_mutant, 'if n == "area" and f.solid and len(f.points or []) >= 3:',
+    ("section keyed by point names, not by plane", _engine_mutant,
+     "return c.args.solid, n, sum(a * Fraction(b) for a, b in zip(n, (mp.point.x, mp.point.y, mp.point.z)))",
+     "return c.args.solid, frozenset(c.args.plane)",
+     lambda: len([o for o in _run(HB._mid("f5", "M", "S", "C"), HB._mid("f6", "N", "S", "D"),
+                                  _section("f7", "Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (MAB).", "MAB"),
+                                  _area("Tính diện tích thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (NAB).", "NAB")
+                                  ).scene3d["objects"] if o["type"] == "section"]) != 1),
+    ("section area routed to polygon area", _planner_mutant,
+     'if n == "area" and f.solid and len(f.points or []) >= 3 and any("thiết diện" in x.lower() for x in q):',
      "if False:", lambda: _run(*_trapezoid_case()).answers.get("q") is None
      or HB.answer_square(_run(*_trapezoid_case()).answers["q"]) != F(117, 16)),
+    ("cutting-plane binding dropped", _gate_mutant, "        if c.fn in (\"section\", \"ask_section_area\", \"intersection_line\") "
+     "and not mat_cat_dung_nguon(c, calls):", "        if False:",
+     lambda: _run(HB._mid("f5", "M", "S", "C"), _section(
+         "f6", "Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng qua M song song với đáy.", "MAB")).status != "REFUSED"),
 ]
 
 

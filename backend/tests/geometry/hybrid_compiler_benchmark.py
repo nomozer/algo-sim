@@ -394,6 +394,7 @@ REFUSAL_CLASS = {
     # added with goal decomposition slice 1 (run `hybrid-goal-decomposition`): auxiliary-point gate
     "AUXILIARY_LABEL_COLLISION": "grounding", "AUXILIARY_RULE_MISMATCH": "malformed",
     "NOT_ASKED_IN_SOURCE": "grounding",                    # added by the slice 1 independent review (hybrid-slice1-review)
+    "QUESTION_CLAUSE_NOT_PREMISE": "grounding",            # added by the S0/section review (hybrid-slice-review)
     # added with the section / intersection-line slice (hybrid-section-slice): geometric preconditions of the request
     "PARALLEL_PLANES": "contradictory", "SECTION_EMPTY": "contradictory",
     # malformed facts / plan

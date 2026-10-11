@@ -358,7 +358,9 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
         kh = khoi_cua(f.solid, f)
         k.volume_asks[f.id] = kh.ten
         return phat(f.id, "ask_volume", {"solid": kh.ten}, q, "question(volume)")
-    if n == "area" and f.solid and len(f.points or []) >= 3:       # diện tích thiết diện của khối cắt bởi mặt phẳng
+    # Diện tích THIẾT DIỆN chỉ khi chính câu hỏi nói "thiết diện"; "diện tích tam giác MAB" có ô `solid` vẫn là đa giác
+    # (review 2, I2). Cổng nguồn kiểm lại cụm "cắt bởi (…)".
+    if n == "area" and f.solid and len(f.points or []) >= 3 and any("thiết diện" in x.lower() for x in q):
         return phat(f.id, "ask_section_area", {"solid": khoi_cua(f.solid, f).ten, "plane": f.points}, q,
                     "question(area of section)")
     if n == "area":

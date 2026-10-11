@@ -769,7 +769,7 @@ class _Dung:
                     khai.append(P.memory_declaration(d, "line3"))
                 lenh.append(P.measure_quantity(kq, "distance", d1, d2))
             elif c.fn == "ask_section_area":
-                lenh.append(P.measure_quantity(kq, "area", td[_khoa_mat_cat(c)]))
+                lenh.append(P.measure_quantity(kq, "area", td[self._khoa_mat_cat(c)]))
             else:
                 dg = f"dg_{c.id}"
                 lenh.append(P.construct_polygon(dg, tuple(map(ir_name, a.polygon))))
@@ -795,12 +795,24 @@ class _Dung:
         except GeometryError as e:
             raise TuChoi(e.code, str(e), tuple(c.id for c in self.of("section", "ask_section_area", "intersection_line")))
 
+    def _khoa_mat_cat(self, c: LoiGoi) -> tuple:
+        """Một thiết diện = (khối, MẶT PHẲNG) — mặt so bằng phương trình chuẩn hoá trên hình đã dựng, nên (MAB) và (NAB) cùng
+        một mặt là một thiết diện (review 2, M2). Pháp tuyến chia cho thành phần khác 0 đầu tiên; hệ số tự do d = n·điểm."""
+        with _metric.using(self.metric()):
+            mp = self._plane(c.args.plane)
+        n = (mp.normal.x, mp.normal.y, mp.normal.z)
+        k = next(x for x in n if x != 0)
+        n = tuple(Fraction(x) / k for x in n)
+        return c.args.solid, n, sum(a * Fraction(b) for a, b in zip(n, (mp.point.x, mp.point.y, mp.point.z)))
+
     def _bien_dich_mat_cat(self, khai: list, lenh: list) -> dict[tuple, str]:
         """Thiết diện và giao tuyến → câu lệnh IR SẴN CÓ (`construct_section`, `intersect_plane_plane`). Một thiết diện (khối,
         mặt) chỉ dựng MỘT lần dù được yêu cầu dựng và hỏi diện tích; trả {khoá: biến thiết diện}."""
         td: dict[tuple, str] = {}
+        vet: dict[tuple, dict] = {}
         for c in self.of("section", "ask_section_area"):
-            if (khoa := _khoa_mat_cat(c)) in td:
+            if (khoa := self._khoa_mat_cat(c)) in td:
+                vet[khoa]["calls"].append(c.id)                 # cùng thiết diện: một đối tượng, vết ghi mọi lời gọi (M3)
                 continue
             ten, mp = f"td_{c.id}", f"mp_td_{c.id}"
             lenh.append({"kind": "construct_plane", "target_var": mp, "through": [ir_name(x) for x in c.args.plane[:3]],
@@ -810,7 +822,8 @@ class _Dung:
             khai += [P.memory_declaration(mp, "plane3"), P.memory_declaration(ten, "section")]
             td[khoa] = ten
             self.sections.append(ten)
-            self.trace.append({"step": "construct_section", "object": ten, "rule": c.fn, "calls": [c.id], "provenance": "DERIVED"})
+            vet[khoa] = {"step": "construct_section", "object": ten, "rule": c.fn, "calls": [c.id], "provenance": "DERIVED"}
+            self.trace.append(vet[khoa])
         for c in self.of("intersection_line"):
             ten, m1, m2 = f"gt_{c.id}", f"mp1_gt_{c.id}", f"mp2_gt_{c.id}"
             for m, mp in ((m1, c.args.plane1), (m2, c.args.plane2)):
@@ -832,9 +845,8 @@ BAC_DAI_LUONG = {"ask_volume": 3, "ask_length": 1, "ask_distance_point_plane": 1
                  "ask_area": 2, "ask_angle_plane_plane": 0, "ask_distance_lines": 1, "ask_section_area": 2}
 
 
-def _khoa_mat_cat(c: LoiGoi) -> tuple:
-    """Một thiết diện = (khối, TẬP ba điểm mặt cắt) — `section` và `ask_section_area` cùng khối, cùng mặt dùng chung một đối tượng."""
-    return c.args.solid, frozenset(c.args.plane)
+#: Thiết diện suy biến do kernel phát hiện khi thực thi — từ chối bằng chính mã ấy, không gộp vào ENGINE_EXECUTION_FAILED.
+_MA_THIET_DIEN_SUY_BIEN = {"PLANE_DOES_NOT_CUT", "PLANE_TOUCHES_VERTEX", "PLANE_TOUCHES_EDGE"}
 _MU = {1: "", 2: "²", 3: "³"}
 
 
@@ -936,6 +948,8 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
             with _metric.using(G):
                 ket = SemanticProgramInterpreter().execute(spec)
         except Exception as e:  # noqa: BLE001 — kernel từ chối ⇒ từ chối có mã, không xấp xỉ
+            if getattr(e, "code", None) in _MA_THIET_DIEN_SUY_BIEN:     # giữ mã của kernel cho thiết diện suy biến (review 2, M1)
+                raise TuChoi(e.code, str(e)) from None
             raise TuChoi("ENGINE_EXECUTION_FAILED", f"{type(e).__name__}: {e}") from None
         fm = ket.final_memory
         kernel_ok = all((lambda v: v is not None and (v.x, v.y, v.z) == dung.pts[t])(fm.get(ir_name(t)))

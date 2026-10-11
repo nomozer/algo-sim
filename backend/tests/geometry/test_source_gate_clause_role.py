@@ -103,13 +103,101 @@ ASKED = [
 @pytest.mark.parametrize("question", NOT_ASKED, ids=[a["quotes"][0] for a in NOT_ASKED])
 def test_ask_answers_only_a_sentence_that_asks(question):
     r = _run(question)
-    assert (r.status, r.code) == ("REFUSED", "NOT_ASKED_IN_SOURCE"), (r.answers, r.reason)
+    # Review 2: a proof sentence is now named as such (GOAL_CLAUSE_NOT_PREMISE); both codes refuse.
+    assert r.status == "REFUSED" and r.code in ("NOT_ASKED_IN_SOURCE", "GOAL_CLAUSE_NOT_PREMISE"), (r.answers, r.reason)
 
 
 @pytest.mark.parametrize("question,sq", ASKED, ids=[a["quotes"][0] for a, _ in ASKED])
 def test_asking_sentences_are_still_answered(question, sq):
     r = _run(question)
     assert HB.answer_square(r.answers["q"]) == sq, (r.code, r.reason)
+
+
+# Independent review 2 (run `hybrid-slice-review`), C1: an ask is answered only when the sentence asks FOR THAT OBJECT —
+# not when the object is asserted, conditional, or a proof goal while something else is asked.
+def _dist_plane(quote):
+    return ask("q", quote, "distance", points_a=["S"], points_b=list("ABCD"))
+
+
+def _dist_line(quote):
+    return ask("q", quote, "distance", points_a=["S"], points_b=["B", "D"])
+
+
+def _volume(quote):
+    return ask("q", quote, "volume", solid="S.ABCD")
+
+
+ASK_NOT_FOR_THIS_OBJECT = [
+    _dist_plane("Khi khoảng cách từ S đến (ABCD) bằng 4 thì SC bằng bao nhiêu?"),      # required reproduction (b)
+    _dist_line("Khi khoảng cách từ S đến BD bằng 4 thì SC bằng bao nhiêu?"),           # required reproduction (a)
+    _dist_plane("Khoảng cách từ S đến (ABCD) bằng 3, tính SC."),
+    _dist_plane("Khoảng cách từ S đến (ABCD) là 3. Hỏi SC?"),
+    _dist_plane("Nếu khoảng cách từ S đến (ABCD) bằng 3 thì SC bằng bao nhiêu?"),
+    _dist_plane("Nếu SB = 4 thì khoảng cách từ S đến (ABCD) bằng bao nhiêu?"),
+    _dist_plane("Khi SB = 4 thì khoảng cách từ S đến (ABCD) bằng bao nhiêu?"),
+    _dist_plane("Chứng minh khoảng cách từ S đến (ABCD) bằng 3 và tính SC."),
+    _dist_plane("Khoảng cách từ S đến (ABCD) bằng 3 (xem câu hỏi 2)."),
+    _volume("Thể tích khối chóp S.ABCD bằng 4, tính SC."),
+    ask("q", "Góc giữa SC và (ABCD) có cos² bằng 9/17, tính SB.", "angle", points_a=["S", "C"], points_b=list("ABCD")),
+    ask("q", "Ta tính được SC = √17.", "length", points=["S", "C"]),
+    _dist_line("Khi khoảng cách từ S đến BD có giá trị 4 thì SC bằng bao nhiêu?"),
+    _dist_line("Biết khoảng cách từ S đến BD được cho bằng 4, tính SC."),
+]
+
+
+@pytest.mark.parametrize("question", ASK_NOT_FOR_THIS_OBJECT, ids=[a["quotes"][0] for a in ASK_NOT_FOR_THIS_OBJECT])
+def test_ask_for_an_object_that_is_not_asked_is_refused(question):
+    r = _run(question)
+    assert r.status == "REFUSED", (r.answers, question["quotes"])
+
+
+ASKED_FOR_THIS_OBJECT = [
+    (_dist_plane("Tính SC và khoảng cách từ S đến (ABCD)."), F(9)),
+    (_volume("Tính thể tích khối chóp S.ABCD biết SA = 3."), F(16)),
+    (_volume("Cho SA = 3, tính thể tích khối chóp S.ABCD."), F(16)),
+    (_dist_line("Tính khoảng cách từ S đến đường thẳng BD."), F(11)),
+    (ask("q", "Tính độ dài đoạn SC.", "length", points=["S", "C"]), F(17)),
+    (_volume("Khi đó, thể tích khối chóp S.ABCD bằng bao nhiêu?"), F(16)),
+]
+
+
+@pytest.mark.parametrize("question,sq", ASKED_FOR_THIS_OBJECT, ids=[a["quotes"][0] for a, _ in ASKED_FOR_THIS_OBJECT])
+def test_ask_for_the_asked_object_is_still_answered(question, sq):
+    r = _run(question)
+    assert r.status == "SERVED" and HB.answer_square(r.answers["q"]) == sq, (r.code, r.reason)
+
+
+# C2: clauses opened by markers other than "nếu", an antecedent marked only by "thì", and question clauses are not givens.
+NOT_A_GIVEN_2 = [
+    "Khi SA vuông góc với (ABCD) thì SC = 5.",
+    "Giả sử SA vuông góc với (ABCD), khi đó SC = 5.",
+    "Trong trường hợp SA vuông góc với (ABCD), hãy so sánh SB và SD.",
+    "Với điều kiện SA vuông góc với (ABCD), SC = 5.",
+    "Trừ khi SA vuông góc với (ABCD), SC = 5.",
+    "SA vuông góc với (ABCD) thì SC bằng bao nhiêu?",
+    "Hỏi SA có vuông góc với (ABCD) không?",
+    "Phải chăng SA vuông góc với (ABCD)?",
+    "Hãy kiểm tra xem SA vuông góc với (ABCD) hay không.",
+]
+
+
+@pytest.mark.parametrize("sentence", NOT_A_GIVEN_2)
+def test_conditional_or_question_clause_is_not_a_given(sentence):
+    q, facts = HB._with(_no_perpendicular(), SC)
+    q.insert(-1, sentence)
+    facts.insert(-1, _perp(sentence))
+    r = run_fact_route(" ".join(q), {"facts": facts})
+    assert r.status == "REFUSED", (r.answers, sentence)
+
+
+@pytest.mark.parametrize("sentence", ["Khi đó, SA vuông góc với (ABCD).", "Biết rằng SA vuông góc với (ABCD).",
+                                      "Ta có SA vuông góc với (ABCD).", "Cho biết SA vuông góc với (ABCD)."])
+def test_ordinary_premises_stay_givens(sentence):
+    q, facts = HB._with(_no_perpendicular(), SC)
+    q.insert(-1, sentence)
+    facts.insert(-1, _perp(sentence))
+    r = run_fact_route(" ".join(q), {"facts": facts})
+    assert r.answers == {"q": "√17"}, (r.code, r.reason)
 
 
 # Source mutants of the fix must be killed.
@@ -142,12 +230,20 @@ def _consequent_code():
 
 
 MUTANTS = [
-    ("anchors inside the quote ignored", "positions = _moc_menh_de(c, de, dau, _c)", "positions = [dau]",
-     lambda: _code(_perp("Nếu SA vuông góc với (ABCD) thì SC = 5."), _no_perpendicular) != "CONDITIONAL_CLAUSE"),
-    ("consequent rule dropped", "if any(_NEU.search(de[_cau_chua(de, pos):pos]) for pos in positions):",
-     "if False:", lambda: _consequent_code() != "CONDITIONAL_CLAUSE"),
-    ("ask check dropped", 'if c.spec.kind == "ask" and not _hoi_trong_cau(c, de, vts):', "if False:",
+    # Mutants re-pointed to the shared clause analyser of review 2 (`_vai_tro_tai`, `_kiem_cau_hoi`, `_duoc_hoi`).
+    ("anchors inside the quote ignored", "for pos in _moc_menh_de(c, de, dau, _c)}", "for pos in [dau]}",
+     lambda: _code(_perp("Chứng minh rằng SA vuông góc với (ABCD)."), _no_perpendicular) != "GOAL_CLAUSE_NOT_PREMISE"),
+    ("condition markers dropped", "if _DIEU_KIEN.search(truoc) or _THI.search(de[p:b]):", "if False:",
+     lambda: _consequent_code() != "CONDITIONAL_CLAUSE"),
+    ("ask check dropped", "            _kiem_cau_hoi(c, de, vts)\n", "            pass\n",
      lambda: _run(NOT_ASKED[0]).code != "NOT_ASKED_IN_SOURCE"),
+    ("question-clause role dropped", "if _HOI_QUAN_HE.search(de[ma:mb]):", "if False:",
+     lambda: _code(_perp("Phải chăng SA vuông góc với (ABCD)?"), _no_perpendicular) != "QUESTION_CLAUSE_NOT_PREMISE"),
+    ("asserted-value check dropped", "if (so := _GIA_TRI.search(gan)) and not _HOI_SAU.search(gan[:so.start()]):", "if False:",
+     lambda: _run(_dist_plane("Ta tính được khoảng cách từ S đến (ABCD) bằng 3.")).status != "REFUSED"),
+    ("label anchor by any shared label", "if frozenset(n for p in phan for n in p) in toan_hang]",
+     "if any(n in nhan_cua_loi_goi(c) for p in phan for n in p)]",
+     lambda: _run(_dist_plane("Khoảng cách từ S đến (ABCD) bằng 3, tính SC.")).status != "REFUSED"),
 ]
 
 
