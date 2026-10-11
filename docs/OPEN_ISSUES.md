@@ -17,7 +17,7 @@
 - **evidence:** `docs/evaluation/geometry/runs/orbit-gate-v2/results-v3/` and `results-v3-isolation/`; `docs/evaluation/geometry/runs/main-integration-readiness/report.md` §1.
 - **impact:** The browser orbit gate is red on `main`; possible per-frame allocation/leak on polyhedral section scenes.
 - **scope:** Product renderer (`frontend/src/simulations/domains/geometry/`). Root cause UNKNOWN; first suspects: camera-dependent hidden-line recomputation or automatic fitting not disposed on scene change.
-- **status:** OPEN
+- **status:** OPEN — **PRIORITY P1** (accepted by the user as a known exception for the 2026-10-11 fast-forward of `main` to `9e3c9789`; it keeps the validated browser orbit gate red on `main` until fixed).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** Next renderer slice; reproduce with `--ca p1` on the orbit gate v3.
 - **default_switch_blocker:** NO
