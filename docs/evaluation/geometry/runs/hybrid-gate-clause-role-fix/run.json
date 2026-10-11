@@ -1,0 +1,17 @@
+{
+  "schema": "hybrid_gate_clause_role_fix/1",
+  "run_id": "hybrid-gate-clause-role-fix",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-10-11",
+  "environment": "LOCAL (Windows)",
+  "approval": "user: S0 now, then slice 1",
+  "commits": {"fix": "8129f4ed", "candidate_refreeze": "f8b50b46"},
+  "fixes": ["ISSUE-ARCH-GATE-CLAUSE-ROLE-INSIDE-QUOTE", "ISSUE-ARCH-ASK-GATE-NO-QUESTION-CHECK"],
+  "red": {"at": "d5a963e4", "result": "11 failed, 5 passed"},
+  "tests": {"focused": "16 passed (3 mutants killed)", "cluster": "704 passed, 5 xfailed"},
+  "benchmark": "byte-identical rows (19/9/0/2)",
+  "candidate": {"tree_hash": "fd71f0b49935283ef7160ec40620b398cde56d214d109ce4f0af81483d552308", "product_commit": "8129f4ed"},
+  "provider_surfaces_changed": false,
+  "live_model_requests": 0,
+  "t3": "see the next commit of this run"
+}

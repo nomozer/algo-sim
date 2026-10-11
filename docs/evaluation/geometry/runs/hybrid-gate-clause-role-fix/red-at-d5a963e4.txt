@@ -1,0 +1,12 @@
+FAILED tests/geometry/test_source_gate_clause_role.py::test_clause_that_is_not_a_given_is_refused[conditional_antecedent_in_quote]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_clause_that_is_not_a_given_is_refused[proof_goal_in_quote]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_clause_that_is_not_a_given_is_refused[conditional_consequent]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_clause_that_is_not_a_given_is_refused[length_in_conditional]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_route_a_shares_the_fix
+FAILED tests/geometry/test_source_gate_clause_role.py::test_ask_answers_only_a_sentence_that_asks[H\xe3y ch\u1ec9 ra r\u1eb1ng kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD) b\u1eb1ng 3.]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_ask_answers_only_a_sentence_that_asks[Ch\u1ee9ng minh r\u1eb1ng th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD b\u1eb1ng 4.]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_ask_answers_only_a_sentence_that_asks[G\xf3c gi\u1eefa SC v\xe0 (ABCD) c\xf3 cos\xb2 b\u1eb1ng 9/17.]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_mutant_is_killed[anchors inside the quote ignored]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_mutant_is_killed[antecedent-anywhere rule dropped]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_mutant_is_killed[ask check dropped]
+11 failed, 5 passed in 0.97s
