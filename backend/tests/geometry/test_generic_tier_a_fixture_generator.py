@@ -17,13 +17,19 @@ def _sha256(path: Path) -> str:
 
 
 def test_cross_section_fixture_preserves_verifiable_measurement_provenance(tmp_path: Path):
-    subprocess.run(
+    # ISSUE-EVAL-GENERIC-TIER-A-GENERATOR-INTERMITTENT: one full-suite run saw a non-zero exit whose stderr
+    # `check=True` discarded. Same pass/fail rule, but a failure now reports the child's own evidence; the child
+    # writes UTF-8 (inherited PYTHONIOENCODING), so decode it as UTF-8, not with the console code page.
+    child = subprocess.run(
         [sys.executable, str(GENERATOR), "--out", str(tmp_path)],
         cwd=ROOT,
-        check=True,
         capture_output=True,
-        text=True,
+        encoding="utf-8",
+        errors="replace",
     )
+    assert child.returncode == 0, (
+        f"generator exit {child.returncode}\n--- stdout (tail) ---\n{child.stdout[-3000:]}"
+        f"\n--- stderr (tail) ---\n{child.stderr[-6000:]}")
     fixture = json.loads(
         (tmp_path / "fixtures" / "cross_section_positive.json").read_text(encoding="utf-8")
     )
