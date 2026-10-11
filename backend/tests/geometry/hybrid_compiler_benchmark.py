@@ -393,6 +393,7 @@ REFUSAL_CLASS = {
     "AMBIGUOUS_FACT": "grounding", "AMBIGUOUS_REFERENCE": "grounding",
     # added with goal decomposition slice 1 (run `hybrid-goal-decomposition`): auxiliary-point gate
     "AUXILIARY_LABEL_COLLISION": "grounding", "AUXILIARY_RULE_MISMATCH": "malformed",
+    "NOT_ASKED_IN_SOURCE": "grounding",                    # added by the slice 1 independent review (hybrid-slice1-review)
     # malformed facts / plan
     "SCHEMA_INVALID": "malformed", "FACT_INCOMPLETE": "malformed", "UNKNOWN_SOLID": "malformed", "NO_SOLID": "malformed",
     "DUPLICATE_CALL_ID": "malformed", "DEPENDENCY_CYCLE": "dependency", "DANGLING_DEPENDENCY": "dependency",

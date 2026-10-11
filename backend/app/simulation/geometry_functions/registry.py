@@ -570,6 +570,25 @@ AUXILIARY_RULES = {"distance(point,line)": ("orthogonal_projection_line", "ask_l
 _KHOANG_CACH_DIEM_DUONG = re.compile(
     r"khoảng cách\s+từ\s+(?:điểm\s+)?([A-Z][0-9]*'?)\s+(?:đến|tới)\s+(?:đường thẳng\s+)?([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![\w'])",
     re.IGNORECASE)
+#: Câu chứa cụm phải HỎI nó (danh sách CHO PHÉP, không phải danh sách cấm): có từ hỏi trong câu …
+_TU_HOI = re.compile(r"(?<!\w)(?:tính|tìm|xác định)(?!\w)|bao\s+nhiêu|\?", re.IGNORECASE)
+#: … và không gán giá trị ngay sau đường thẳng ("bằng 4", "không bằng 3", "khác 3"; "bằng bao nhiêu" vẫn là câu hỏi).
+_GAN_GIA_TRI = re.compile(r"\s*(?:\w+\s+)?(?:bằng|=|là|khác|≠)\s*(?!bao\s+nhiêu|\?)\S", re.IGNORECASE)
+_CHI_SO_DUOI = str.maketrans("₀₁₂₃₄₅₆₇₈₉", "0123456789")
+
+
+def nhan_phu_da_dung(text: str, chu: str = "H") -> set[str]:
+    """Nhãn chuỗi điểm phụ (`chu`, `chu`1, …) mà đề CÓ THỂ đang dùng — bảo thủ hơn `nhan_cua_de`: chữ `chu` đứng riêng hay
+    dính chữ khác (ΔSHD, điểmH), kèm chỉ số thường / `_1` / chỉ số dưới `₁`. Bỏ qua khi nó mở đầu một từ thường (Hình, Hai)."""
+    de, ra = chuan_hoa(text), set()
+    for m in re.finditer(re.escape(chu), de):
+        sau = de[m.end():]
+        if sau[:1].islower():
+            continue
+        ra.add(chu)
+        if n := re.match(r"_?([0-9₀-₉]+)", sau):
+            ra.add(chu + n[1].translate(_CHI_SO_DUOI))
+    return ra
 
 
 def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: set[str]) -> set[str]:
@@ -578,11 +597,16 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
     Nhãn phụ ở bất kỳ lời gọi nào KHÁC vẫn rơi vào `UNKNOWN_LABEL` của vòng thường."""
     theo_id = {c.id: c for c in calls}
     da: set[str] = set()
+    chiem = nhan | nhan_phu_da_dung(de)
+    nhan_da_khai: set = set()
     for d in phu:
         x, luat = d.get("label"), d.get("rule")
         if luat not in AUXILIARY_RULES:
             raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x}: luật {luat!r} không có trong bảng phân rã")
-        if x in nhan:
+        if x in nhan_da_khai:
+            raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x} được khai hai lần")
+        nhan_da_khai.add(x)
+        if x in chiem:
             raise TuChoi("AUXILIARY_LABEL_COLLISION", f"điểm phụ {x} trùng một nhãn của đề")
         dung, hoi = theo_id.get(d.get("construct")), theo_id.get(d.get("ask"))
         fn_dung, fn_hoi = AUXILIARY_RULES[luat]
@@ -595,21 +619,31 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
         ids = (dung.id, hoi.id)
         if lac := sorted(({p} | set(dt)) - nhan):
             raise TuChoi("UNKNOWN_LABEL", f"{hoi.id}: nhãn {lac} không có trong đề", ids)
-        vai: list[str | None] = []                       # vai trò mệnh đề TẠI cụm "khoảng cách từ P đến XY" (quote có thể tự mang "Nếu")
+        # Mỗi cụm "khoảng cách từ P đến XY" khớp: vai trò mệnh đề TẠI cụm (quote có thể tự mang "Nếu"), và câu chứa nó có HỎI.
+        vai: list[str | None] = []
+        hoi_that: list[bool] = []
         for q in qs:
             if (vt := _vi_tri(de, q)) is None:
                 raise TuChoi("QUOTE_NOT_IN_SOURCE", f"{hoi.id}: đoạn {q!r} không có nguyên văn trong đề", ids)
             if _phu_dinh(de, vt[0], q):
                 raise TuChoi("NEGATED_CLAUSE", f"{hoi.id}: {q!r} mang phủ định", ids)
             qn = chuan_hoa(q)
-            vai += [_vai_tro(de[:vt[0]] + qn[:m.start()], vt[0] + m.start()) for m in _KHOANG_CACH_DIEM_DUONG.finditer(qn)
-                    if m[1] == p and [m[2], m[3]] in (dt, dt[::-1])]
+            s = de[:vt[0]] + qn + de[vt[1]:]                     # đề với quote ở dạng chuẩn hoá — vị trí nhất quán
+            for m in _KHOANG_CACH_DIEM_DUONG.finditer(qn):
+                if m[1] == p and [m[2], m[3]] in (dt, dt[::-1]):
+                    dau, sau = vt[0] + m.start(), vt[0] + m.end()
+                    cuoi = (re.search(r"[.!?](?=\s|$)", s[sau:]) or re.search(r"$", s[sau:])).end() + sau
+                    vai.append(_vai_tro(s, dau))
+                    hoi_that.append(bool(_TU_HOI.search(s[_cau_chua(s, dau):cuoi])) and not _GAN_GIA_TRI.match(s[sau:]))
         if not vai:
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{hoi.id}: câu hỏi không nói 'khoảng cách từ {p} đến {''.join(dt)}'", ids)
         if "GOAL" in vai:
             raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{hoi.id}: câu hỏi nằm trong điều phải chứng minh", ids)
         if "CONDITIONAL" in vai:
             raise TuChoi("CONDITIONAL_CLAUSE", f"{hoi.id}: câu hỏi nằm trong mệnh đề 'nếu … thì'", ids)
+        if not all(hoi_that):
+            raise TuChoi("NOT_ASKED_IN_SOURCE", f"{hoi.id}: câu chứa 'khoảng cách từ {p} đến {''.join(dt)}' không hỏi nó "
+                         "(không có từ hỏi, hoặc đã gán giá trị) — không trả lời điều đề không hỏi", ids)
         da |= set(ids)
     return da
 

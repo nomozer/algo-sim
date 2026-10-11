@@ -229,6 +229,89 @@ def test_question_without_distance_wording_is_refused():
     _refused(_problem(_dist("Tính độ dài từ S đến BD.", "S", "BD")), "SOURCE_OBJECT_MISMATCH")
 
 
+# Independent review (run `hybrid-slice1-review`), Important 1: the gate refused listed roles only. A clause the AI mis-types
+# as a question — proof-only, hypothetical, asserted or negated value — must not be answered.
+NOT_ASKED = [
+    ("Hãy chỉ ra rằng khoảng cách từ S đến BD bằng √11.", ""),
+    ("Gọi d là khoảng cách từ S đến BD.", " Chứng minh rằng d = √11."),
+    ("Chứng minh rằng, biết khoảng cách từ S đến BD bằng √11, thì SA = 3.", ""),
+    ("Giả sử khoảng cách từ S đến BD bằng 4.", " Tính SC."),
+    ("Khi khoảng cách từ S đến BD bằng 4 thì SC bằng bao nhiêu?", ""),
+    ("Biết khoảng cách từ S đến BD bằng 4.", " Tính SC."),
+    ("Khoảng cách từ S đến BD không bằng 3.", ""),
+    ("Khoảng cách từ S đến BD chẳng bằng 3.", ""),
+    ("Khoảng cách từ S đến BD khác 3.", ""),
+]
+
+
+@pytest.mark.parametrize("sentence,tail", NOT_ASKED, ids=[s for s, _ in NOT_ASKED])
+def test_clause_that_does_not_ask_the_distance_is_refused(sentence, tail):
+    case = _problem(_dist(sentence, "S", "BD"))
+    case["text"] += tail
+    r = _both(case)
+    assert r.status == "REFUSED", (r.answers, sentence)
+
+
+ASKED = ["Tính khoảng cách từ S đến BD.", "Khoảng cách từ S đến BD bằng bao nhiêu?",
+         "Tìm khoảng cách từ S đến đường thẳng BD.", "Hãy tính khoảng cách từ điểm S tới BD.",
+         "Xác định khoảng cách từ S đến BD."]
+
+
+@pytest.mark.parametrize("sentence", ASKED)
+def test_question_wordings_are_still_served(sentence):
+    _served(_problem(_dist(sentence, "S", "BD")), F(11))
+
+
+# Important 2: labels the scanner reads differently (subscript, underscore, glued to other letters) still occupy the name.
+@pytest.mark.parametrize("sentence,expected", [
+    ("Gọi H₁ là hình chiếu của C lên BD.", "H2"), ("Gọi H_1 là hình chiếu của C lên BD.", "H2"),
+    ("Xét tam giác ΔSHD.", "H1"), ("Lấy điểmH trên SD.", "H1"), ("Hình vuông ABCD có cạnh 2.", "H")])
+def test_auxiliary_label_avoids_labels_the_scanner_misreads(sentence, expected):
+    q, f = HB._square()
+    case = _problem(_dist("Tính khoảng cách từ S đến BD.", "S", "BD"), base=(q + [sentence], f))
+    assert _served(case, F(11)).planner["auxiliary"][0]["label"] == expected
+
+
+def _subscript_collision_code() -> str | None:
+    """A declaration (tampered past the planner) whose label H1 is written H₁ in the text."""
+    text, k = _plan()
+    text += " Gọi H₁ là trung điểm SC."
+    k.auxiliary[0]["label"] = "H1"
+    for c in k.calls:
+        c["args"] = json.loads(json.dumps(c["args"]).replace('"H"', '"H1"'))
+    return run_function_route(text, {"calls": k.calls}, tuple(k.auxiliary)).code
+
+
+def test_gate_refuses_an_auxiliary_label_written_with_a_subscript_in_the_text():
+    assert _subscript_collision_code() == "AUXILIARY_LABEL_COLLISION"
+
+
+# Minor findings fixed in scope: trace attribution, construct id clash, duplicate declaration label.
+def test_trace_attributes_auxiliary_calls_to_the_question_fact():
+    r = _served(_problem(_dist("Tính khoảng cách từ S đến BD.", "S", "BD", fid="cau_2")), F(11), qid="cau_2")
+    assert {t["fact"] for t in r.planner["trace"] if "cau_2" in str(t.get("call", "")) or t.get("step")} == {"cau_2"}
+
+
+def test_construct_id_never_clashes_with_a_fact_id():
+    case = _problem(HB._mid("q_aux", "M", "S", "C"), _dist("Tính khoảng cách từ S đến BD.", "S", "BD"))
+    _served(case, F(11))
+
+
+def _duplicate_label_code() -> str | None:
+    p = _problem(_dist("Tính khoảng cách từ S đến BD.", "S", "BD", fid="q"),
+                 _dist("Tính khoảng cách từ C đến SB.", "C", "SB", fid="r"))
+    k = PL.lap_ke_hoach({"facts": p["facts"]}, p["text"])
+    k.auxiliary[1]["label"] = "H"
+    for c in k.calls:
+        if c["id"].startswith("r"):
+            c["args"] = json.loads(json.dumps(c["args"]).replace('"H1"', '"H"'))
+    return run_function_route(p["text"], {"calls": k.calls}, tuple(k.auxiliary)).code
+
+
+def test_two_declarations_cannot_share_a_label():
+    assert _duplicate_label_code() == "AUXILIARY_RULE_MISMATCH"
+
+
 # ── 4. the gate: only a planner declaration admits an auxiliary; route A cannot ─────────────────────────────────
 
 def _plan():
@@ -300,8 +383,20 @@ def _code_of(qtext, *extra) -> str | None:
 
 # (name, module, function, old source, mutated source, "killed" check — True when the mutant's behaviour is wrong)
 MUTANTS = [
-    ("gate: no collision check", RG, "_kiem_phu", "if x in nhan:", "if False:",
+    ("gate: no collision check", RG, "_kiem_phu", "if x in chiem:", "if False:",
      lambda: _tampered_code(label="S") != "AUXILIARY_LABEL_COLLISION"),
+    ("gate: scanner-only collision check", RG, "_kiem_phu", "chiem = nhan | nhan_phu_da_dung(de)", "chiem = nhan",
+     lambda: _subscript_collision_code() != "AUXILIARY_LABEL_COLLISION"),
+    ("gate: no 'is it asked' check", RG, "_kiem_phu", "if not all(hoi_that):", "if False:",
+     lambda: _code_of("Giả sử khoảng cách từ S đến BD bằng 4.") != "NOT_ASKED_IN_SOURCE"),
+    ("gate: no asserted-value check", RG, "_kiem_phu", " and not _GAN_GIA_TRI.match(s[sau:])", "",
+     lambda: _code_of("Khi khoảng cách từ S đến BD bằng 4 thì SC bằng bao nhiêu?") != "NOT_ASKED_IN_SOURCE"),
+    ("gate: duplicate labels allowed", RG, "_kiem_phu", "if x in nhan_da_khai:", "if False:",
+     lambda: _duplicate_label_code() != "AUXILIARY_RULE_MISMATCH"),
+    ("planner: scanner-only label choice", PL, "lap_ke_hoach", "| nhan_phu_da_dung(problem_text) |", "|",
+     lambda: _run(_problem(_dist("Tính khoảng cách từ S đến BD.", "S", "BD"),
+                           base=(HB._square()[0] + ["Gọi H₁ là hình chiếu của C lên BD."], HB._square()[1]))).status
+     != "SERVED"),
     ("gate: no structural match", RG, "_kiem_phu", "if not (dung and hoi and", "if False and not (dung and hoi and",
      lambda: _tampered_code(construct="f1") != "AUXILIARY_RULE_MISMATCH"),
     ("gate: no conditional check", RG, "_kiem_phu", 'if "CONDITIONAL" in vai:', "if False:",

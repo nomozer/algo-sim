@@ -24,7 +24,7 @@ from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
-from .registry import AUXILIARY_RULES, ExactNumber, Label, TuChoi, nhan_cua_de
+from .registry import AUXILIARY_RULES, ExactNumber, Label, TuChoi, nhan_cua_de, nhan_phu_da_dung
 
 PLANNER_VERSION = "geometry-fact-planner/3"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
@@ -73,6 +73,7 @@ class KeHoach:
     trace: list[dict[str, Any]] = field(default_factory=list)
     auxiliary: list[dict[str, Any]] = field(default_factory=list)  # điểm phụ do luật phân rã mục tiêu đưa vào (`_phan_ra`)
     taken: set[str] = field(default_factory=set)                    # nhãn của đề + của dữ kiện: điểm phụ không được trùng
+    fact_ids: set[str] = field(default_factory=set)                 # id lời gọi điểm phụ không được trùng id dữ kiện
     heights: dict[str, str] = field(default_factory=dict)           # khối → id dữ kiện chiều cao (chẩn đoán tính duy nhất)
     volume_asks: dict[str, str] = field(default_factory=dict)       # id câu hỏi thể tích → khối
     solids: dict[str, "_Khoi"] = field(default_factory=dict)
@@ -159,7 +160,8 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     `problem_text` chỉ dùng để chọn nhãn điểm phụ không trùng đề (cổng nguồn kiểm lại độc lập)."""
     facts = doc_du_kien(raw)
     k = KeHoach()
-    k.taken = nhan_cua_de(problem_text) | {n for f in facts for v in (f.points, f.points_a, f.points_b, [f.at, f.point],
+    k.fact_ids = {f.id for f in facts}
+    k.taken = nhan_cua_de(problem_text) | nhan_phu_da_dung(problem_text) | {n for f in facts for v in (f.points, f.points_a, f.points_b, [f.at, f.point],
                                                                        _nhan(f.solid or "")) for n in (v or []) if n}
     if mo := [f.id for f in facts if f.ambiguous]:
         raise TuChoi("AMBIGUOUS_FACT", f"AI đánh dấu mơ hồ: {mo} — không đoán cách hiểu", tuple(mo))
@@ -388,9 +390,11 @@ def _phan_ra(f: TypedFact, q: list[str], k: KeHoach, phat, p: str, dt: list[str]
         raise TuChoi("PLAN_TOO_LARGE", f"{f.id}: hết nhãn điểm phụ", (f.id,))
     k.taken.add(x)
     fn_dung, fn_hoi = AUXILIARY_RULES[luat]
-    cid = f"{f.id}_aux"
+    dung = {c["id"] for c in k.calls}
+    cid = next(i for i in (f"{f.id}_aux", *(f"{f.id}_aux{n}" for n in range(2, 1000))) if i not in k.fact_ids | dung)
     phat(cid, fn_dung, {"point": p, "line": dt, "image": x}, q, f"{luat}→{fn_dung} (điểm phụ {x})")
     c = phat(f.id, fn_hoi, {"segment": [p, x]}, q, f"{luat}→{fn_hoi}")
+    k.trace[-2]["fact"] = k.trace[-1]["fact"] = f.id                   # id có "_" (cau_2): `phat` tách sai dữ kiện nguồn
     d = {"label": x, "rule": luat, "goal": f.id, "construct": cid, "ask": f.id, "point": p, "line": list(dt),
          "quotes": list(dict.fromkeys(q)), "provenance": "DERIVED", "binding": "AUXILIARY"}
     k.auxiliary.append(d)
