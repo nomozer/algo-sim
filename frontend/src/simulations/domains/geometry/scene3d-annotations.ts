@@ -132,7 +132,9 @@ export function annotationsAt(
   return ra;
 }
 
-export interface WitnessShown { id: string; from: Vec3; foot: Vec3; u: Vec3; v: Vec3 }
+/** `vai`: nhân chứng của nhãn khoảng cách đang xét (`khoang_cach`) hay đoạn vuông góc phụ của điểm hình chiếu
+ *  (`hinh_chieu`) — renderer chọn màu theo vai (`scene3d-view.tsx::mauNhanChung`), không theo tiền tố id. */
+export interface WitnessShown { id: string; vai: "khoang_cach" | "hinh_chieu"; from: Vec3; foot: Vec3; u: Vec3; v: Vec3 }
 
 /** §16.7 — nhân chứng của các nhãn khoảng cách ĐANG HIỆN; toạ độ đều do backend phát (chân chính xác). */
 export function witnessesShown(scene: Scene3D, entries: AnnotationEntry[]): WitnessShown[] {
@@ -140,7 +142,10 @@ export function witnessesShown(scene: Scene3D, entries: AnnotationEntry[]): Witn
   return entries.flatMap((e) => {
     const w = e.anchor === "witness" ? e.witness : undefined;
     const tu = w ? theoId.get(w.from)?.xyz : undefined;
-    return w && tu ? [{ id: e.id, from: toVec3(tu), foot: toVec3(w.foot), u: toVec3(w.marker.u), v: toVec3(w.marker.v) }] : [];
+    return w && tu
+      ? [{ id: e.id, vai: "khoang_cach" as const, from: toVec3(tu), foot: toVec3(w.foot), u: toVec3(w.marker.u),
+        v: toVec3(w.marker.v) }]
+      : [];
   });
 }
 
@@ -152,7 +157,8 @@ export function projectionWitnessesAt(scene: Scene3D, present: ReadonlySet<strin
     const w = present.has(o.id) ? o.perpendicular_witness : undefined;
     const tu = w ? theoId.get(w.from)?.xyz : undefined;
     return w && tu
-      ? [{ id: `perpendicular:${o.id}`, from: toVec3(tu), foot: toVec3(w.foot), u: toVec3(w.marker.u), v: toVec3(w.marker.v) }]
+      ? [{ id: `perpendicular:${o.id}`, vai: "hinh_chieu" as const, from: toVec3(tu), foot: toVec3(w.foot),
+        u: toVec3(w.marker.u), v: toVec3(w.marker.v) }]
       : [];
   });
 }

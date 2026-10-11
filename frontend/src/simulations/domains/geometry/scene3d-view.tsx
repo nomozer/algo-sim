@@ -1343,6 +1343,12 @@ interface Props {
 /** §16.7 — cạnh góc vuông của ký hiệu tại chân, theo độ dài đoạn tới chân, có trần (đơn vị cảnh). */
 const NHAN_CHUNG_GOC = { tiLe: 0.15, toiDa: 0.5 };
 
+/** Màu nhân chứng theo VAI: nhãn khoảng cách đang xét mang xanh "đang xét" (W12); đoạn vuông góc của điểm hình chiếu
+ *  luôn hiện nên là ĐƯỜNG PHỤ — cùng màu với các đường phụ khác, không giành nghĩa "đang xét" (review, 2026-10-11). */
+export function mauNhanChung(vai: WitnessShown["vai"]): number {
+  return vai === "hinh_chieu" ? MAU.line : MAU_VAI_TRO.dich;
+}
+
 /** Nhân chứng một khoảng cách: đoạn nét đứt từ điểm tới CHÂN backend phát + ký hiệu vuông góc dựng từ
  *  hai phương backend phát (`u`, `v`) — chỉ đổi độ dài để có cỡ ký hiệu, không suy luận hình học nào. */
 function vatNhanChung(w: WitnessShown): THREE.Group {
@@ -1354,11 +1360,11 @@ function vatNhanChung(w: WitnessShown): THREE.Group {
   const u1 = new THREE.Vector3(...w.u).normalize().multiplyScalar(s);
   const v1 = v.normalize().multiplyScalar(s);
   const doan = new THREE.Line(new THREE.BufferGeometry().setFromPoints([tu, chan]),
-    new THREE.LineDashedMaterial({ color: MAU_VAI_TRO.dich, dashSize: 0.16, gapSize: 0.1, depthTest: false }));
+    new THREE.LineDashedMaterial({ color: mauNhanChung(w.vai), dashSize: 0.16, gapSize: 0.1, depthTest: false }));
   doan.computeLineDistances();
   const goc = new THREE.Line(new THREE.BufferGeometry().setFromPoints(
     [chan.clone().add(u1), chan.clone().add(u1).add(v1), chan.clone().add(v1)]),
-  new THREE.LineBasicMaterial({ color: MAU_VAI_TRO.dich, depthTest: false }));
+  new THREE.LineBasicMaterial({ color: mauNhanChung(w.vai), depthTest: false }));
   for (const x of [doan, goc]) {
     x.renderOrder = 10;
     x.raycast = () => {};                 // trình bày thuần: không bao giờ bắt cú bấm chọn vật

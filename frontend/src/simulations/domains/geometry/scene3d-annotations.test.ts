@@ -7,6 +7,8 @@
  */
 import { describe, expect, it } from "vitest";
 import type { Scene3D } from "./scene3d-model";
+import { MAU_VAI_TRO } from "./scene3d-roles";
+import { mauNhanChung } from "./scene3d-view";
 import {
   annotationsAt, annotationAnchor, DEFAULT_ANNOTATION_VIEW, NEO_TOI_DA, placeAnnotationLabels, projectionWitnessesAt,
   witnessesShown,
@@ -222,6 +224,7 @@ describe("nhãn tập trung (§16.5–16.7)", () => {
     expect(witnessesShown(s, annotationsAt(s, CUOI18, DEFAULT_ANNOTATION_VIEW, null))).toEqual([]);
     const w = witnessesShown(s, annotationsAt(s, CUOI18, DEFAULT_ANNOTATION_VIEW, "d_C_BD"));
     expect(w.map((x) => x.id)).toEqual(["d_C_BD"]);
+    expect(w[0].vai).toBe("khoang_cach");
     expect(w[0].from).toEqual([0, 4, 0]);
     [75 / 34, 0, 45 / 34].forEach((v, i) => expect(w[0].foot[i]).toBeCloseTo(v, 12));
     expect(w[0].u).toEqual([-3, 0, 5]);
@@ -296,6 +299,14 @@ describe("nhân chứng hình chiếu (review I1)", () => {
 
   it("điểm chiếu chưa có mặt ở bước này ⇒ không vẽ đoạn vuông góc", () => {
     expect(projectionWitnessesAt(canhChieu(), new Set(["A", "B", "C", "S"]))).toEqual([]);
+  });
+
+  it("đoạn vuông góc của hình chiếu là ĐƯỜNG PHỤ, không mang xanh 'đang xét' (W12) — chỉ nhân chứng khoảng cách mới mang", () => {
+    const [w] = projectionWitnessesAt(canhChieu(), new Set(["A", "B", "C", "S", "K"]));
+    expect(w.vai).toBe("hinh_chieu");
+    expect(mauNhanChung("hinh_chieu")).not.toBe(MAU_VAI_TRO.dich);
+    expect(mauNhanChung("hinh_chieu")).not.toBe(MAU_VAI_TRO.moi_dung);
+    expect(mauNhanChung("khoang_cach")).toBe(MAU_VAI_TRO.dich);
   });
 
   it("điểm chiếu có mặt ⇒ đoạn từ điểm gốc tới chân, ký hiệu dựng tại CHÍNH chân backend phát", () => {
