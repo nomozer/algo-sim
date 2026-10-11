@@ -13,5 +13,5 @@
   "candidate": {"tree_hash": "fd71f0b49935283ef7160ec40620b398cde56d214d109ce4f0af81483d552308", "product_commit": "8129f4ed"},
   "provider_surfaces_changed": false,
   "live_model_requests": 0,
-  "t3": "see the next commit of this run"
+  "t3": {"commit": "9a390c71", "worktree": "clean detached", "result": "FULL_PRODUCT_GATE_PASS", "pytest": {"passed": 8409, "failed": 0, "skipped": 1, "deselected": 2, "xfailed": 5}, "vitest": 1051, "build": "PASS", "demo_replay": "PASS", "crash_surface": "PASS"}
 }
