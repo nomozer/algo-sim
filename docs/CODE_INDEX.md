@@ -588,9 +588,12 @@ Sở hữu **CỔNG QUAY** trên `dist/`: quay đủ 360°, chạm được sáu
 ⛔ `chuanTruc` **đã gỡ** (2026-09-12) — thay bằng `trucQuay`. Xem cảnh báo dưới.
 
 **Phiên bản cổng (2026-10-11):** v1 kéo cố định 700 px, đọc sau 250 ms — hụt dưới 360° khi canvas cao 683 px
-(run `final-integration-gates`). v2 (`GATE_VERSION`, `KEO`, `doDaiKeoNgang`, `KHONG_ON_DINH`, `KHUNG_HEP`, kết quả
-mặc định `scene3d-orbit-gate/v2/`) **trượt kiểm định known-good** — giữ làm hồ sơ (run `orbit-gate-v2`). Phần thuần
-khoá bởi `frontend/scripts/scene3d-orbit-gate.node-test.mjs` (`node --test`, ngoài vitest/T3).
+(run `final-integration-gates`). v2 (`GATE_VERSION`, `KEO`, `doDaiKeoNgang`, `KHONG_ON_DINH`, `KHUNG_HEP`) **trượt
+kiểm định known-good** — giữ làm hồ sơ. **v3 hiện hành** (`scene3d-orbit-gate/3`, kết quả mặc định
+`scene3d-orbit-gate/v3/`): kéo 1,25 × chiều cao canvas; `trucQuay` trọng số theo góc; lắng = `daLang` (mọi bước < 0,01°
+trong 30 khung rAF, móc ghi `f` = số khung), ngân sách 20 s; `NGUONG` không đổi. Kiểm định đăng ký trước đạt (known-good
+DAT ×3, hai phép tiêm bị bắt) — run `orbit-gate-v2` (`protocol-v3.md`, `results-v3/`). Phần thuần khoá bởi
+`frontend/scripts/scene3d-orbit-gate.node-test.mjs` (`node --test`, ngoài vitest/T3).
 
 ⚠️ **`--dist <đường dẫn>` đo một bản dựng KHÁC**, thường là `dist/` của worktree
 ở commit cũ. Không có cờ này thì không ai đối chiếu được **cùng một cổng** qua

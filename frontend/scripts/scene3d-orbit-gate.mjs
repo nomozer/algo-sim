@@ -45,7 +45,6 @@ import { existsSync, readFileSync, writeFileSync, mkdirSync, statSync, readdirSy
 import { execFileSync } from "node:child_process";
 import { join, resolve, extname } from "node:path";
 import { BrowserSession, sleep } from "./browser-runner.mjs";
-import { settleCamera } from "./compiler-scene-replay-lib.mjs";
 
 const CO = Object.fromEntries(process.argv.slice(2).reduce((a, x, i, ds) => {
   if (x.startsWith("--")) a.push([x.slice(2), ds[i + 1]?.startsWith("--") ? true : ds[i + 1] ?? true]);
@@ -66,8 +65,8 @@ const FE = join(GOC, "frontend");
 const DIST = CO.dist ? resolve(String(CO.dist)) : join(FE, "dist");
 /** Đo bản dựng ngoài ⇒ `kiemDistMoi` vô nghĩa (nó so với `src/` của kho này). */
 const DIST_NGOAI = Boolean(CO.dist);
-/** v2 ghi vào `scene3d-orbit-gate/v2/` — kết quả v1 ở thư mục cha là lịch sử, không bị ghi đè. */
-const RA = resolve(CO.ra ?? join(GOC, "docs", "evaluation", "geometry", "scene3d-orbit-gate", "v2"));
+/** v3 ghi vào `scene3d-orbit-gate/v3/` — kết quả v1 ở thư mục cha là lịch sử, không bị ghi đè. */
+const RA = resolve(CO.ra ?? join(GOC, "docs", "evaluation", "geometry", "scene3d-orbit-gate", "v3"));
 const TAGS = (CO.ca ?? "p1,p6,p7").split(",");
 const TIEM = CO.tiem ? String(CO.tiem) : null;
 
@@ -84,16 +83,20 @@ export const NGUONG = {
 };
 
 /**
- * v2 (đăng ký trước: `docs/evaluation/geometry/runs/orbit-gate-v2/protocol.md`). v1 kéo cố định 700 px và đọc sau
- * 250 ms: OrbitControls quay `2π·dx/clientHeight`, nên canvas cao lên (545→683 px) làm cú kéo hụt dưới 360°, còn đuôi
- * damping bị cắt. v2 chỉ đổi CÁCH KÉO và LÚC ĐỌC; `NGUONG` giữ nguyên.
+ * v3 (đăng ký trước: `docs/evaluation/geometry/runs/orbit-gate-v2/protocol-v3.md`; v2 trượt kiểm định known-good và
+ * nằm trong hồ sơ ở `protocol.md`). v1 kéo cố định 700 px và đọc sau 250 ms: OrbitControls quay `2π·dx/clientHeight`,
+ * nên canvas cao lên (545→683 px) làm cú kéo hụt dưới 360°, còn đuôi damping bị cắt. Từ v2: kéo theo chiều cao, đọc
+ * sau khi lắng. v3: trục nhất quán tính theo trọng số góc, tiêu chí lắng theo độ/khung. `NGUONG` giữ nguyên.
  */
-export const GATE_VERSION = "scene3d-orbit-gate/2";
+export const GATE_VERSION = "scene3d-orbit-gate/3";
 export const KEO = {
   /** Kéo ngang = hệ số × chiều cao canvas ⇒ danh định 1,25 × 360° = 450°, biên cố định trên 360°. */
   NGANG_THEO_CAO: 1.25,
-  /** Ngân sách chờ camera lắng sau mỗi cú kéo (`settleCamera`); hết giờ ⇒ `KHONG_ON_DINH`. */
-  CHO_ON_DINH_MS: 10_000,
+  /** Ngân sách chờ camera lắng sau mỗi cú kéo; hết giờ ⇒ `KHONG_ON_DINH`. */
+  CHO_ON_DINH_MS: 20_000,
+  /** Lắng = trong `KHUNG_LANG` khung rAF gần nhất, mọi bước quay < `NGUONG_LANG_DO` độ (`daLang`). */
+  KHUNG_LANG: 30,
+  NGUONG_LANG_DO: 0.01,
 };
 
 export function doDaiKeoNgang(caoCanvas) {
@@ -202,7 +205,7 @@ const MOC = `
       var pv = Math.atan2(m[6], m[2]) * 180 / Math.PI;
       var cuc = Math.acos(Math.max(-1, Math.min(1, m[10]))) * 180 / Math.PI;
       D.tuThe.push({ pv: pv, cuc: cuc, cos: m[10], viTri: totN, t: performance.now(),
-        m: m });
+        m: m, f: D.raf });
     }
     khung = new Map();
   }
@@ -321,13 +324,16 @@ function trucGiuaHaiKhung(a, b) {
 export function trucQuay(tuThe) {
   const mats = tuThe.map((t) => t.m).filter((m) => m && m.length === 16);
   if (mats.length < 3) return { vec: [0, 0, 0], chuan: 0, soMau: 0 };
+  /* v3: TRỌNG SỐ THEO GÓC (`Σ θᵢ·uᵢ / Σ θᵢ`). v2 lấy trung bình không trọng số, và đuôi damping gần như đứng yên —
+   * trục của nó là nhiễu float32 — nặng ngang một khung quay thật, kéo `chuan` của bản known-good xuống 0,96. */
   const us = [];
   for (let i = 1; i < mats.length; i++) {
     const t = trucGiuaHaiKhung(mats[i - 1], mats[i]);
-    if (t) us.push(t);
+    if (t) us.push({ u: t, w: gocGiuaHaiKhung(mats[i - 1], mats[i]) });
   }
-  if (us.length === 0) return { vec: [0, 0, 0], chuan: 0, soMau: 0 };
-  const tb = [0, 1, 2].map((k) => us.reduce((s, u) => s + u[k], 0) / us.length);
+  const tongW = us.reduce((s, x) => s + x.w, 0);
+  if (us.length === 0 || tongW <= 0) return { vec: [0, 0, 0], chuan: 0, soMau: 0 };
+  const tb = [0, 1, 2].map((k) => us.reduce((s, x) => s + x.w * x.u[k], 0) / tongW);
   const chuan = Math.hypot(...tb);
   return {
     vec: (chuan > 1e-9 ? tb.map((x) => x / chuan) : [0, 0, 0]).map((x) => +x.toFixed(3)),
@@ -340,18 +346,33 @@ export function trucQuay(tuThe) {
  * Tổng góc quay giữa các khung liên tiếp, độ — KHÔNG phụ thuộc trục.
  * `acos((tr(Aᵀ·B) − 1)/2)`, cùng công thức với báo cáo chẩn đoán.
  */
+/** Góc quay (độ) giữa hai ma trận view: `acos((tr(Aᵀ·B) − 1)/2)`. */
+function gocGiuaHaiKhung(a, b) {
+  let s = 0;
+  for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) s += _g(a, r, c) * _g(b, r, c);
+  const na = Math.hypot(_g(a, 0, 0), _g(a, 1, 0), _g(a, 2, 0));
+  const nb = Math.hypot(_g(b, 0, 0), _g(b, 1, 0), _g(b, 2, 0));
+  return Math.acos(Math.max(-1, Math.min(1, (s / (na * nb) - 1) / 2))) * 180 / Math.PI;
+}
+
 export function tongGocKhung(tuThe) {
   const mats = tuThe.map((t) => t.m).filter((m) => m && m.length === 16);
   let tong = 0;
-  for (let i = 1; i < mats.length; i++) {
-    const a = mats[i - 1], b = mats[i];
-    let s = 0;
-    for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) s += _g(a, r, c) * _g(b, r, c);
-    const na = Math.hypot(_g(a, 0, 0), _g(a, 1, 0), _g(a, 2, 0));
-    const nb = Math.hypot(_g(b, 0, 0), _g(b, 1, 0), _g(b, 2, 0));
-    tong += Math.acos(Math.max(-1, Math.min(1, (s / (na * nb) - 1) / 2))) * 180 / Math.PI;
-  }
+  for (let i = 1; i < mats.length; i++) tong += gocGiuaHaiKhung(mats[i - 1], mats[i]);
   return tong;
+}
+
+/**
+ * v3 — camera đã LẮNG tại khung rAF `rafNay`: trong `khung` khung rAF gần nhất, mọi bước quay giữa hai tư thế liên
+ * tiếp < `nguongDo` (khung không ghi tư thế mới = 0°). Chưa quan sát đủ `khung` khung ⇒ chưa kết luận được.
+ */
+export function daLang(tuThe, rafNay, khung = KEO.KHUNG_LANG, nguongDo = KEO.NGUONG_LANG_DO) {
+  if (rafNay < khung) return false;
+  const tu = rafNay - khung;
+  for (let i = 1; i < tuThe.length; i++) {
+    if (tuThe[i].f > tu && gocGiuaHaiKhung(tuThe[i - 1].m, tuThe[i].m) >= nguongDo) return false;
+  }
+  return true;
 }
 
 /** Tên trục cho người đọc — THÔNG TIN, không phải phán quyết. */
@@ -484,22 +505,19 @@ export async function motCa(sess, fx) {
    * Quy đổi của OrbitControls: kéo ngang `dx` px quay `2π·dx/clientHeight`.
    * Với canvas ~545 px cao thì 545 px ngang ≈ 360°; ở đây lấy dư một quãng.
    */
-  /* v2: đọc tư thế chỉ khi camera đã LẮNG (đuôi damping chạy xong) — dùng chung `settleCamera` của bộ đo cảnh; ảnh
-   * chụp là ma trận view của khung cuối mà móc ghi, `frame_count` là bộ đếm rAF của móc. */
+  /* v3: đọc tư thế chỉ khi camera đã LẮNG (`daLang`: mọi bước quay < 0,01° trong 30 khung rAF gần nhất). Chỉ kéo về
+   * đuôi danh sách tư thế (tư thế cuối trước cửa sổ + trong cửa sổ), không kéo cả nghìn ma trận mỗi lần thăm dò. */
   let khongOnDinh = false;
-  const docKhung = async () => {
-    const k = JSON.parse(await sess.eval("(function(){var D=window.__QUAY__,n=D.tuThe.length;"
-      + "return JSON.stringify({m:n?D.tuThe[n-1].m:[],raf:D.raf});})()"));
-    return { snapshot: { viewport_width: 1, viewport_height: 1, device_pixel_ratio: 1,
-      view_matrix_column_major: k.m, projection_matrix_column_major: [] }, frame_count: k.raf };
-  };
   const choOnDinh = async () => {
-    try {
-      await settleCamera(docKhung, { timeoutMs: KEO.CHO_ON_DINH_MS });
-    } catch (e) {
-      if (!String(e?.message).startsWith("SETTLING_TIMEOUT")) throw e;
-      khongOnDinh = true;
+    const hetGio = Date.now() + KEO.CHO_ON_DINH_MS;
+    while (Date.now() <= hetGio) {
+      const k = JSON.parse(await sess.eval("(function(){var D=window.__QUAY__,t=D.tuThe,tu=D.raf-"
+        + `${KEO.KHUNG_LANG};var i=t.length;while(i>0&&t[i-1].f>tu)i--;`
+        + "return JSON.stringify({raf:D.raf,duoi:t.slice(Math.max(0,i-1)).map(function(x){return {m:x.m,f:x.f};})});})()"));
+      if (daLang(k.duoi, k.raf)) return;
+      await sleep(100);
     }
+    khongOnDinh = true;
   };
   const keo = async (dx, dy, buoc = 60) => {
     const bienX = Math.max(40, hop.w / 2 - 20);
