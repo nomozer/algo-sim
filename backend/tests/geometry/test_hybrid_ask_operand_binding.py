@@ -350,8 +350,8 @@ MUTANTS = [
     ("words after the phrase not checked", " and _SAU_HOP_LE.match(_bo_cum(de[b:c1])))", ")",
      ("Tính thể tích phần còn lại của khối chóp S.ABCD.", VOL, False)),
     ("section solid word not checked",
-     '    if (kw := m[n + "k"]) and bool(re.search(r"chóp|tứ diện", kw, re.IGNORECASE)) != (len(_nhan_cum(solid.split(".")[0])) == 1):\n        return False\n',
-     "", ("Tính diện tích thiết diện của khối lập phương cắt bởi (MAB).", SAREA, True)),
+     '    if (kw := m[n + "k"]) and not sym and not tu and \\\n',
+     '    if False and \\\n', ("Tính diện tích thiết diện của khối lập phương cắt bởi (MAB).", SAREA, True)),
 ]
 VALUE_MUTANTS = [
     ("equality connector not checked", "if so and _NOI_BANG.fullmatch(de[dau + b:so.start()]) and ", "if so and ",
@@ -391,6 +391,18 @@ def test_mutant_is_killed(monkeypatch, name, old, new, case):
     assert _run(*case).status == "REFUSED", "the unmutated gate must refuse the kill case"
     _mutant(monkeypatch, old, new)
     assert _run(*case).status == "SERVED", f"mutant survived: {name}"
+
+
+def test_solid_symbol_outranks_the_solid_word():
+    """T3 of run `hybrid-semantic-hardening` (test_geometry_library_expansion): "Tính thể tích hình chóp ABCD.EFGH." names
+    the prism by its exact symbol; the loose word "hình chóp" must not refuse it. The word is checked only when no symbol
+    is given ("khối lập phương" for the single pyramid stays refused — FALSE_SERVES above)."""
+    from app.simulation.geometry_functions import registry as RG
+
+    m = RG._CUM_HOI["ask_volume"][0][0].search("Tính thể tích hình chóp ABCD.EFGH.")
+    assert m and RG._khoi_khop(m, "k", "ABCD.EFGH", {"ABCD.EFGH": frozenset("ABCD")})
+    m = RG._CUM_HOI["ask_volume"][0][0].search("Tính thể tích khối lập phương.")
+    assert m and not RG._khoi_khop(m, "k", "S.ABCD", {"S.ABCD": frozenset("ABCD")})
 
 
 def test_route_a_binds_ask_operands_too():

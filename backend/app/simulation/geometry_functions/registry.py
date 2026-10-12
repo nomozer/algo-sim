@@ -1000,7 +1000,9 @@ def _khoi_khop(m: re.Match, n: str, solid: str, khoi: dict) -> bool:
         return False
     if not sym and not tu and len(khoi) != 1:
         return False
-    if (kw := m[n + "k"]) and bool(re.search(r"chóp|tứ diện", kw, re.IGNORECASE)) != (len(_nhan_cum(solid.split(".")[0])) == 1):
+    # từ loại chỉ xét khi KHÔNG có ký hiệu: ký hiệu đúng đã định danh khối ("hình chóp ABCD.EFGH" gọi đúng lăng trụ ấy)
+    if (kw := m[n + "k"]) and not sym and not tu and \
+            bool(re.search(r"chóp|tứ diện", kw, re.IGNORECASE)) != (len(_nhan_cum(solid.split(".")[0])) == 1):
         return False
     return True
 
