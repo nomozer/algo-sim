@@ -488,6 +488,31 @@ describe("(5E) thực thể con: dựng riêng và chọn riêng", () => {
     faces: [[0, 1, 2], [0, 1, 3], [1, 2, 3], [0, 2, 3]],
   };
 
+  it("I0 · ĐƯỜNG vô hạn vẽ quanh VÙNG HÌNH, không cố định ±6 (giao tuyến vô hình, run hybrid-semantic-hardening)", () => {
+    // Cảnh Hybrid cỡ ~1 đơn vị: giao tuyến (SAB) ∩ (SCD) qua S = (0,0,1), phương AB. Đoạn cố định ±6 đâm qua chỗ
+    // camera đứng; SwiftShader bỏ trắng cả nét, GPU thật vẽ một vệt loe tới mép khung.
+    const gt = {
+      id: "gt_f5", label: "Giao tuyến", type: "line3", render: "line" as const, origin: "derived" as const,
+      producer: "intersect_plane_plane", depends: [],
+      point: ["0", "0", "1"] as ExactVec3, direction: ["-1", "0", "0"] as ExactVec3,
+    };
+    const hinh: [number, number, number][] = [[0, 0, 0], [1, 0, 0], [1, 1, 0], [0, 1, 0], [0, 0, 1]];
+    const dau = (o: ReturnType<typeof buildObject3D>) => {
+      const net = o!.getObjectByName("line:gt_f5:thay") as unknown as { geometry: { getAttribute(n: string): { getX(i: number): number; getY(i: number): number; getZ(i: number): number } } };
+      const p = net.geometry.getAttribute("position");
+      return [0, 1].map((i) => [p.getX(i), p.getY(i), p.getZ(i)]);
+    };
+    const [a, b] = dau(buildObject3D(gt, false, undefined, hinh));
+    // Trong vùng hình (theo phương đường: hình chiếu [0, 1], lề `PLANE_PATCH_MARGIN`), không ra tới ±6.
+    for (const p of [a, b]) expect(Math.abs(p[0])).toBeLessThan(2);
+    expect(Math.abs(a[0] - b[0])).toBeGreaterThanOrEqual(1);
+    // Hình học giữ nguyên: hai đầu mút vẫn nằm trên ĐÚNG đường qua S, phương (±1, 0, 0).
+    for (const p of [a, b]) expect([p[1], p[2]]).toEqual([0, 1]);
+    // Không có điểm nền (nơi gọi cũ) ⇒ rơi về độ dài cố định như trước.
+    const [c, d] = dau(buildObject3D(gt, false));
+    expect(Math.abs(c[0] - d[0])).toBeCloseTo(2 * LINE_DISPLAY_HALF_LENGTH);
+  });
+
   it("I · MẶT dựng thành một Object3D mang đúng id `chop::face:n`", () => {
     const m = {
       id: "chop::face:1", label: "ABS", type: "face", render: "polygon" as const,

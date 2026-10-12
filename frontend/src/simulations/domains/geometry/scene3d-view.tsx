@@ -11,6 +11,7 @@ import {
   cauTrucGocNhin,
   dayVaDinhChop,
   diemHuuHan,
+  doanDuongThang,
   duongKinhCanh,
   geometryHighlightedAt,
   geometryNarrationAt,
@@ -793,11 +794,13 @@ export function buildObject3D(
 
   if (o.render === "line" && o.point && o.direction) {
     // Kéo dài vector chỉ phương ĐÃ CHO ra hai phía. Không tính hướng — hướng
-    // là dữ liệu từ kernel.
+    // là dữ liệu từ kernel. Phần được vẽ ôm vùng hình (`doanDuongThang`), như
+    // miếng mặt phẳng; không có điểm nền thì rơi về độ dài cố định.
     const p = new THREE.Vector3(...toVec3(o.point));
     const d = new THREE.Vector3(...toVec3(o.direction)).normalize();
-    const a = p.clone().addScaledVector(d, -LINE_DISPLAY_HALF_LENGTH);
-    const b = p.clone().addScaledVector(d, LINE_DISPLAY_HALF_LENGTH);
+    const doan = doanDuongThang(toVec3(o.point), toVec3(o.direction), diemNen);
+    const a = doan ? new THREE.Vector3(...doan[0]) : p.clone().addScaledVector(d, -LINE_DISPLAY_HALF_LENGTH);
+    const b = doan ? new THREE.Vector3(...doan[1]) : p.clone().addScaledVector(d, LINE_DISPLAY_HALF_LENGTH);
     const g = new THREE.BufferGeometry().setFromPoints([a, b]);
     const duong = duongHaiLuot(g, net(MAU.line),
       beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,

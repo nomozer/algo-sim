@@ -40,6 +40,15 @@ def _cases():
                                                  role="question", points_a=list("SAB"), points_b=list("SCD")))
     yield "aux-foot-S-to-BD", HB._with(sq, ask("q", "Tính khoảng cách từ S đến BD.", "distance", points_a=["S"],
                                                points_b=["B", "D"]))
+    # run hybrid-semantic-hardening: a second intersection line, through S and the base centre (not axis-parallel)
+    yield "intersection-SAC-SBD", HB._with(sq, f("f5", "intersection_line", "Tìm giao tuyến của (SAC) và (SBD).",
+                                                 role="question", points_a=list("SAC"), points_b=list("SBD")))
+    # unit-size pyramid: the frame metric is the identity, so payload = world — the size at which a fixed ±6 line
+    # display passed behind the camera
+    uq = [s.replace("cạnh 2", "cạnh 1").replace("= 3", "= 1") for s in sq[0]]
+    uf = [{**x, "quotes": [uq[i]], **({"value": "1"} if "value" in x else {})} for i, x in enumerate(sq[1])]
+    yield "intersection-SAB-SCD-unit", HB._with((uq, uf), f("f5", "intersection_line", "Tìm giao tuyến của (SAB) và (SCD).",
+                                                            role="question", points_a=list("SAB"), points_b=list("SCD")))
 
 
 def main() -> int:

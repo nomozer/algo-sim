@@ -907,6 +907,31 @@ export function khungMatPhang(
 }
 
 /**
+ * ĐOẠN ĐẠI DIỆN của một đường thẳng vô hạn — cùng quy tắc với `khungMatPhang`: chiếu mọi điểm có biên của cảnh lên
+ * đường, lấy khoảng hình chiếu, nới theo `PLANE_PATCH_MARGIN` (tối thiểu `PLANE_PATCH_MIN_SIZE`).
+ *
+ * ─── LỖI ĐƯỢC SỬA, ĐO ĐƯỢC (run `hybrid-semantic-hardening`) ─────────────
+ *
+ * Trước bản này đoạn là `point ± LINE_DISPLAY_HALF_LENGTH` (±6) bất kể cỡ cảnh. Cảnh Hybrid cỡ ~1 đơn vị: giao tuyến
+ * (SAB) ∩ (SCD) qua S chạy tới (6,0,1), sau lưng camera. SwiftShader bỏ trắng cả nét (0 điểm ảnh, kể cả khi tắt kiểm
+ * chiều sâu); GPU thật vẽ một vệt loe tới mép khung. Toán học vẫn đúng — sai ở chỗ chọn PHẦN NÀO của đường để vẽ.
+ *
+ * Trả `null` khi cảnh không có điểm hữu hạn hoặc phương suy biến — nơi gọi rơi về độ dài cố định.
+ */
+export function doanDuongThang(diemDuong: Vec3, huong: Vec3, diem: Vec3[]): [Vec3, Vec3] | null {
+  const n = Math.hypot(...huong);
+  if (!Number.isFinite(n) || n === 0 || diem.length === 0) return null;
+  const u: Vec3 = [huong[0] / n, huong[1] / n, huong[2] / n];
+  const t = diem.map((p) => (p[0] - diemDuong[0]) * u[0] + (p[1] - diemDuong[1]) * u[1] + (p[2] - diemDuong[2]) * u[2]);
+  if (!t.every(Number.isFinite)) return null;
+  const lo = Math.min(...t), hi = Math.max(...t);
+  const giua = (lo + hi) / 2;
+  const nua = Math.max(PLANE_PATCH_MIN_SIZE / 2, ((hi - lo) / 2) * PLANE_PATCH_MARGIN);
+  const tai = (s: number): Vec3 => [diemDuong[0] + s * u[0], diemDuong[1] + s * u[1], diemDuong[2] + s * u[2]];
+  return [tai(giua - nua), tai(giua + nua)];
+}
+
+/**
  * Số cạnh khi CHIA LƯỚI một mặt cong để vẽ.
  *
  * ⚠️ Đây là con số của TRÌNH BÀY, và nó không mang một mệnh đề toán học nào:
