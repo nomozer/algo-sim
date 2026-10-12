@@ -1863,7 +1863,7 @@ REPORT = docs/evaluation/geometry/runs/hybrid-semantic-hardening/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-semantic-hardening/
 
 - **DATE / BRIEF:** 2026-10-12, LOCAL; user brief "Hybrid semantic hardening & Scene3D rendering recovery" (S1, S2). Branch `research/hybrid-semantic-hardening`, child of the reviewed 9cfd0fca.
-- **S1:** 23481bda + review fixes fda835c3 — ask operands bound to a closed per-function phrase grammar, values must be equalities, clause-role lexicon extended. RED 54 at 9cfd0fca, 52 at 23481bda; 166 tests, 25 mutants killed; cluster 1050 passed; benchmark byte-identical; residual probes 1/79 served (the correct reading).
+- **S1:** 23481bda + review fixes fda835c3 + T3-found 624e7fc5 — ask operands bound to a closed per-function phrase grammar, values must be equalities, clause-role lexicon extended. RED 54 at 9cfd0fca, 52 at 23481bda; 166 tests, 25 mutants killed; cluster 1050 passed; benchmark byte-identical; residual probes 1/79 served (the correct reading).
 - **S2:** 33e711f9 + 2db6d64b — the infinite-line display segment sized by the scene (root cause: fixed ±6 passing behind the camera). Harness applies veKhongGian. Acceptance on SwiftShader and ANGLE D3D11: 0 failures; orbit p1 unchanged (111 allocations).
-- **GATES:** candidate d88f4afc (refreeze d5f5ab96) declared; T3 recorded in run.json. LIVE Gemini 0. Process deviation (one heredoc-script edit of backend files) declared in the report.
+- **GATES:** first T3 at 42ebf14b FAILED (4 expansion cases, solid-word check) → fixed 624e7fc5; candidate d1410731 (refreeze f44130d2) declared; final T3 recorded in run.json. LIVE Gemini 0. Process deviation (one heredoc-script edit of backend files) declared in the report.
 - **FINAL_DECISION:** HYBRID_HARDENING_AWAITING_INTEGRATION_DECISION — open ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS; Hybrid in product / live pilot NO-GO.

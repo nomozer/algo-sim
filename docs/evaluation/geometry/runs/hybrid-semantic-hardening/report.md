@@ -177,7 +177,9 @@ The research direction to separate "plane cuts the solid" from "plane is a bound
 - Every later edit used Edit or Write.
 
 **Candidate and gates:**
-- **Candidate:** `d88f4afc…` (product `2db6d64b`, refreeze `d5f5ab96`, clean detached worktree). It is declared in [`candidate_divergence.json`](candidate_divergence.json) as a correction layer of the `hybrid-slice-review` declaration.
+- **First T3, at `42ebf14b`:** FAIL, 4 cases of `test_geometry_library_expansion`. "Tính thể tích hình chóp ABCD.EFGH." names a prism by its exact symbol and was refused by the S1 solid-word check, a file outside the focused cluster.
+  - Fix: `624e7fc5` (RED → GREEN). The word is now checked only when no symbol is given.
+- **Candidate:** `d1410731…` (product `624e7fc5`, refreeze `f44130d2`, clean detached worktree). It supersedes `d88f4afc` (refreeze `d5f5ab96`) and is declared in [`candidate_divergence.json`](candidate_divergence.json) as a correction layer of the `hybrid-slice-review` declaration.
 - **Unchanged:** the locked A/B candidate `12da4768…`.
 - **Model surface:** provider surfaces unchanged; prompt, schema, grammar card and capability table untouched.
 - **T3:** see `run.json`.

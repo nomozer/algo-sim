@@ -7,8 +7,8 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-semantic-hardening/
 CORRECTED_BY = NONE
 CORRECTS = HYBRID_SLICE_REVIEW
 CLASSIFICATION = HYBRID_HARDENING_AWAITING_INTEGRATION_DECISION
-CODE_COMMIT = 2db6d64b
-VERIFICATION_COMMIT = d5f5ab96
+CODE_COMMIT = 624e7fc5
+VERIFICATION_COMMIT = f44130d2
 MODEL_REQUEST_COUNT = 0
 
 S1 closes the residual gate false serves of HYBRID_SLICE_REVIEW (operand binding, equality values, clause roles):

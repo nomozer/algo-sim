@@ -6,8 +6,8 @@
   "environment": "LOCAL (Windows)",
   "brief": "user: Hybrid semantic hardening (S1) and Scene3D intersection-line rendering recovery (S2)",
   "branch": "research/hybrid-semantic-hardening, child of the reviewed tip 9cfd0fca (research/hybrid-simulation-capability-audit kept unchanged); not merged, not pushed",
-  "commits": {"s1": ["23481bda", "fda835c3"], "s2": ["33e711f9", "2db6d64b"], "acceptance_tooling": "a7c86597",
-              "candidate_refreeze": "d5f5ab96", "docs": "the docs commit of this run + the T3 record commit"},
+  "commits": {"s1": ["23481bda", "fda835c3", "624e7fc5 (T3-found)"], "s2": ["33e711f9", "2db6d64b"], "acceptance_tooling": "a7c86597",
+              "candidate_refreeze": ["d5f5ab96 (superseded)", "f44130d2"], "docs": ["42ebf14b", "the T3 record commit"]},
   "s1": {"red_at_9cfd0fca": "54 failed, 40 passed (red/s1-red-at-9cfd0fca.txt)", "red_review_round": "52 failing at 23481bda",
          "tests": "test_hybrid_ask_operand_binding.py 166 passed", "mutants": "25 killed (S1 12, gate 7, section 6)",
          "cluster": "1050 passed, 5 xfailed (21 files)", "benchmark": "rows byte-identical to hybrid-goal-decomposition/after (19/9/0/2)",
@@ -33,6 +33,8 @@
   "HELD_OUT_CLAIM": "NO",
   "EVALUATOR_INDEPENDENCE": "PARTIAL (separate reviewer agent; same session)",
   "process_deviation": "registry.py and two test files were edited once by a Python script run through a heredoc instead of the Edit tool (against the repository rule); the result was re-read, one broken line repaired with Edit, and all later edits used Edit/Write",
-  "candidate": {"tree_hash": "d88f4afc861e522cc3beab1ace812f0707ba756cae563b34a0f4dcbf285976e8", "product_commit": "2db6d64b", "divergence": "candidate_divergence.json"},
+  "candidate": {"tree_hash": "d1410731542f4d0c04b133e2a514e1207976d2bfbdd35610bf577f73af6cd614", "product_commit": "624e7fc5", "divergence": "candidate_divergence.json"},
+  "t3_history": [{"commit": "42ebf14b", "result": "FULL_PRODUCT_GATE_FAIL", "pytest": "4 failed, 8670 passed", "vitest": 1053,
+                  "failed": "test_geometry_library_expansion::test_projection_waits_for_right_prism_top x4 — 'Tính thể tích hình chóp ABCD.EFGH.' refused by the S1 solid-word check (not in the focused cluster); fixed in 624e7fc5"}],
   "t3": "PENDING"
 }
