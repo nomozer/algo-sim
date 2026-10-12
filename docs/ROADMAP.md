@@ -9,9 +9,15 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_SLICE_REVIEW_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_HARDENING_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **S1 + S2 hardening (LOCAL, 2026-10-12, nhánh `research/hybrid-semantic-hardening` — con của tip đã review `9cfd0fca`; chưa merge/push; run [`hybrid-semantic-hardening`](evaluation/geometry/runs/hybrid-semantic-hardening/report.md)):**
+  - S1: mỗi `ask_*` phải có cụm đối tượng (văn phạm đóng theo hàm) gọi đúng toán hạng, được hỏi nguyên vẹn; giá trị neo phải là phép bằng; bộ phân tích vai trò mệnh đề nhận thêm mục tiêu / giả định / không khẳng định. Probe phần dư: 1/79 còn phục vụ (cách đọc đúng). Review độc lập: sửa 18 từ chối sai mới và 1 phục vụ sai mới.
+  - S2: giao tuyến "vô hình" là lỗi tầng trình bày — đoạn cố định ±6 đâm ra sau camera trong cảnh cỡ 1; nay `doanDuongThang` theo cỡ cảnh. Harness áp `veKhongGian` như sản phẩm.
+  - Còn mở: `ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS` (dữ kiện cục bộ trong câu hỏi) — slice riêng, cần duyệt. M4 chỉ kiểm, không đổi hợp đồng.
+  - Việc kế tiếp: người dùng quyết tích hợp A (baseline) / B (hardening) theo [`handoff.md`](evaluation/geometry/runs/hybrid-semantic-hardening/handoff.md). DSL vẫn HOLD.
 
 - **Kiểm toán độc lập S0 + lát thiết diện, kiểm Scene3D (LOCAL, 2026-10-12, cùng nhánh nghiên cứu, chưa merge/push; run [`hybrid-slice-review`](evaluation/geometry/runs/hybrid-slice-review/report.md)):**
   - Review: Critical 2, Important 3, Minor 4 cùng các phát hiện tái kiểm. Đã đóng hết bằng RED → GREEN (`5136127a` → `b3e946e9`), trừ M4. Thiết diện khớp oracle độc lập chính xác.

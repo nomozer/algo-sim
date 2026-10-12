@@ -55,21 +55,31 @@ của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cầ
      với điều kiện, trừ khi) hoặc mốc đứng trước "thì" ⇒ `CONDITIONAL_CLAUSE`;
    - mệnh đề hỏi có/không (phải chăng, có phải, hay không, "… không?") ⇒ `QUESTION_CLAUSE_NOT_PREMISE`;
    - dữ kiện sau "biết" trong câu hỏi là tiền đề.
-   **Câu hỏi** (`ask_*`): xét tại **mốc đối tượng** (danh từ đại lượng của hàm, hoặc nhãn có tập nhãn đúng bằng một toán
-   hạng). Đối tượng được hỏi khi có động từ hỏi (tính / tìm / xác định / hỏi) đứng trước nó sau dấu hiệu dữ kiện cuối, không
-   bị từ chặn tân ngữ (theo, tỉ số, tổng, sao cho, gấp, so sánh hơn/nhất…) xen giữa; hoặc "bao nhiêu / mấy / ?" sau nó. Không
-   được: bị gán giá trị ("bằng 4", "= √17"), là quan hệ có/không không kèm "bao nhiêu", nằm trong mệnh đề chứng minh/điều
-   kiện. Sai ⇒ `NOT_ASKED_IN_SOURCE` hoặc mã vai trò. Toán hạng của câu hỏi CHƯA được buộc vào cụm đối tượng — xem
-   `ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES`.
+   **Câu hỏi** (`ask_*`, S1 — run `hybrid-semantic-hardening`): đề phải có một **cụm đối tượng** thuộc văn phạm đóng của
+   hàm (`_CUM_HOI`: "khoảng cách từ P đến (Q)", "thể tích khối chóp S.ABCD", "góc giữa SC và (ABCD)", "diện tích thiết diện
+   … cắt bởi (P)" …) mà toán hạng ĐÚNG là toán hạng của lời gọi (mặt: chung ba điểm có tên; "đáy": đáy của khối duy nhất;
+   ký hiệu và loại khối phải khớp) — không có ⇒ `SOURCE_OBJECT_MISMATCH`. Cụm phải được hỏi NGUYÊN VẸN: trước nó (từ động
+   từ hỏi cuối) chỉ có từ nối và cụm hỏi khác; sau nó chỉ "bằng / là bao nhiêu", "?", "theo a / độ", ngoặc lời dặn (làm
+   tròn, đơn vị), "đã cho / đó", "của <khối>", rồi kết câu thật, lời dẫn dữ kiện (biết, với, cho, trong đó), việc kế tiếp
+   (rồi, sau đó, từ đó) hay lời dặn (làm tròn, bằng cách); không bị gán giá trị, không là câu có/không, không trong mệnh đề
+   chứng minh/điều kiện — sai ⇒ `NOT_ASKED_IN_SOURCE` hoặc mã vai trò. Dữ kiện cục bộ trong câu hỏi ("Với SA = 5, tính SC")
+   CHƯA được đối chiếu với dữ kiện đã gõ — `ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS`.
+   **Vai trò tiền đề** (S1) còn nhận: mục tiêu "chỉ ra / giải thích / kiểm chứng / kiểm tra / tìm điều kiện / suy ra / xác
+   minh / vì sao / lập luận"; giả định và tường thuật "hễ / xét trường hợp / cho rằng / cho là / coi như / giả định / muốn
+   / khẳng định / theo bạn"; điều kiện đặt SAU quan hệ ("… khi M trùng S"); mệnh đề kết bằng "?" hay "có … không.".
    **Mặt cắt** (`section`, `ask_section_area`, `intersection_line`): mặt phải là mặt mà quote gọi tên ở vị trí mặt cắt
    ("cắt bởi (P)", "thiết diện của <khối> với (P)", "(P) cắt …" khi (P) là chủ ngữ mệnh đề, "giao tuyến của (P) và (Q)"),
    khối là khối của quote hoặc khối duy nhất của đề ⇒ nếu không `SOURCE_OBJECT_MISMATCH`.
-3. **Phủ định** trong quote hoặc ngay trước nó trong cùng mệnh đề (cắt ở `, ; :`) ⇒ `NEGATED_CLAUSE`.
+3. **Phủ định** trong quote hoặc ngay trước nó trong cùng mệnh đề (cắt ở `, ; :`) ⇒ `NEGATED_CLAUSE`. S1 thêm: phủ định
+   mạnh / tình thái ("không hề", "chẳng", "chưa", "không thể", "có thể" …), tuyển "hoặc" trong mệnh đề, câu tự phủ nhận
+   ("… là sai", "vô lí").
 4. **Vị từ + tham chiếu**: từ khoá định nghĩa ⇒ `PREDICATE_NOT_IN_QUOTE`; mặt phẳng được nhắc (nhóm nhãn trùng tập
    điểm, hoặc "đáy" với mặt đáy) ⇒ `PLANE_NOT_IN_QUOTE`; đoạn/đường và điểm đóng vai riêng (ảnh hình chiếu, chân đường
    cao) được nhắc ngoài nhóm mặt phẳng ⇒ `ROLE_NOT_IN_QUOTE`.
 5. **Giá trị**: quote có nhãn đoạn ⇒ số ĐẦU TIÊN sau nhãn ấy phải bằng ô số; không có nhãn ⇒ quote đúng một số
-   (`AMBIGUOUS_VALUE_QUOTE`); lệch ⇒ `UNGROUNDED_VALUE`.
+   (`AMBIGUOUS_VALUE_QUOTE`); lệch ⇒ `UNGROUNDED_VALUE`. S1: số neo sau nhãn đoạn phải nối bằng PHÉP BẰNG ("=", "bằng",
+   "là", "dài", "có độ dài", chuỗi "SA = SB = 3") và sau số chỉ có đơn vị rồi hết mệnh đề — "SA ≥ 3", "SA ≈ 3", "SA bằng 3
+   lần AB", "SA = 3 là sai" ⇒ `UNGROUNDED_VALUE`.
 
 ## 4. Engine
 

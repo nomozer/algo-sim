@@ -1,0 +1,6 @@
+# vitest, frontend/src/simulations/domains/geometry/scene3d.test.tsx -t "I0", run on the working tree before the
+# doanDuongThang change (scene3d-model.ts / scene3d-view.tsx as at 9cfd0fca, the new test added):
+     × I0 · ĐƯỜNG vô hạn vẽ quanh VÙNG HÌNH, không cố định ±6 (giao tuyến vô hình, run hybrid-semantic-hardening) 7ms
+ FAIL  src/simulations/domains/geometry/scene3d.test.tsx > (5E) thực thể con: dựng riêng và chọn riêng > I0 · ĐƯỜNG vô hạn vẽ quanh VÙNG HÌNH, không cố định ±6 (giao tuyến vô hình, run hybrid-semantic-hardening)
+AssertionError: expected 6 to be less than 2
+      Tests  1 failed | 45 skipped (46)

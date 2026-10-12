@@ -1,0 +1,79 @@
+   PERP  Hễ SA vuông góc với (ABCD) là SC = 5.                                                                  CONDITIONAL_CLAUSE
+   PERP  Tìm điều kiện để SA vuông góc với (ABCD).                                                              GOAL_CLAUSE_NOT_PREMISE
+   PERP  Hãy chỉ ra rằng SA vuông góc với (ABCD).                                                               GOAL_CLAUSE_NOT_PREMISE
+   PERP  Ta sẽ chỉ ra SA vuông góc với (ABCD).                                                                  GOAL_CLAUSE_NOT_PREMISE
+   PERP  Giải thích vì sao SA vuông góc với (ABCD).                                                             GOAL_CLAUSE_NOT_PREMISE
+   PERP  Tại sao SA vuông góc với (ABCD)?                                                                       GOAL_CLAUSE_NOT_PREMISE
+   PERP  Liệu SA có vuông góc với (ABCD)?                                                                       QUESTION_CLAUSE_NOT_PREMISE
+   PERP  SA vuông góc với (ABCD) hoặc SB vuông góc với (ABCD).                                                  NEGATED_CLAUSE
+   PERP  SA có thể vuông góc với (ABCD).                                                                        NEGATED_CLAUSE
+   PERP  SA không hề vuông góc với (ABCD).                                                                      NEGATED_CLAUSE
+   PERP  SA không nhất thiết vuông góc với (ABCD).                                                              NEGATED_CLAUSE
+   PERP  Không đúng là SA vuông góc với (ABCD).                                                                 NEGATED_CLAUSE
+   PERP  SA chẳng vuông góc với (ABCD).                                                                         NEGATED_CLAUSE
+   PERP  Xét trường hợp SA vuông góc với (ABCD).                                                                CONDITIONAL_CLAUSE
+   PERP  Cho rằng SA vuông góc với (ABCD), tìm lỗi sai.                                                         CONDITIONAL_CLAUSE
+   PERP  Bạn An khẳng định SA vuông góc với (ABCD).                                                             CONDITIONAL_CLAUSE
+   PERP  Kiểm chứng rằng SA vuông góc với (ABCD).                                                               GOAL_CLAUSE_NOT_PREMISE
+   PERP  Muốn SA vuông góc với (ABCD) cần SA ⊥ AB.                                                              CONDITIONAL_CLAUSE
+   LEN   SA ≥ 3.                                                                                                UNGROUNDED_VALUE
+   LEN   SA > 3.                                                                                                UNGROUNDED_VALUE
+   LEN   SA ≈ 3.                                                                                                UNGROUNDED_VALUE
+   LEN   SA không bằng 4.                                                                                       UNGROUNDED_VALUE
+   LEN   SA ≠ 4.                                                                                                UNGROUNDED_VALUE
+   LEN   SA bằng 3 lần AB.                                                                                      UNGROUNDED_VALUE
+   LEN   SA lớn hơn 3.                                                                                          UNGROUNDED_VALUE
+   LEN   SA = 3 hoặc SA = 4.                                                                                    NEGATED_CLAUSE
+   LEN   SA xấp xỉ 3.                                                                                           UNGROUNDED_VALUE
+   LEN   SA tối đa bằng 3.                                                                                      UNGROUNDED_VALUE
+   LEN   SA = 3 là sai.                                                                                         NEGATED_CLAUSE
+   LEN   Độ dài SA bằng 3 khi M trùng S.                                                                        CONDITIONAL_CLAUSE
+   ASK   Thể tích khối chóp S.ABCD có vượt quá 5 không?                                                         NOT_ASKED_IN_SOURCE
+   ASK   Thể tích khối chóp S.ABCD có đúng là 4 không?                                                          NOT_ASKED_IN_SOURCE
+   ASK   Liệu thể tích khối chóp S.ABCD có thể là 5?                                                            NOT_ASKED_IN_SOURCE
+   ASK   Thể tích khối chóp S.ABCD bằng 4 phải không?                                                           NOT_ASKED_IN_SOURCE
+   ASK   Tính bình phương khoảng cách từ S đến (ABCD).                                                          NOT_ASKED_IN_SOURCE
+   ASK   Tính nửa thể tích khối chóp S.ABCD.                                                                    NOT_ASKED_IN_SOURCE
+   ASK   Tính hai lần thể tích khối chóp S.ABCD.                                                                NOT_ASKED_IN_SOURCE
+   ASK   Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bởi (MAB).                                 NOT_ASKED_IN_SOURCE
+   ASK   Tính thể tích khối chóp M.ABCD.                                                                        SOURCE_OBJECT_MISMATCH
+   ASK   Tính thể tích khối chóp S.ABC.                                                                         SOURCE_OBJECT_MISMATCH
+   ASK   Tính khoảng cách từ A đến (SBC).                                                                       SOURCE_OBJECT_MISMATCH
+   ASK   Tính khoảng cách từ trung điểm của SC đến (ABCD).                                                      SOURCE_OBJECT_MISMATCH
+   ASK   Tính khoảng cách từ M đến (ABCD).                                                                      SOURCE_OBJECT_MISMATCH
+   ASK   Tính SC rồi so sánh với khoảng cách từ S đến (ABCD).                                                   NOT_ASKED_IN_SOURCE
+   ASK   Tính SC + khoảng cách từ S đến (ABCD).                                                                 NOT_ASKED_IN_SOURCE
+   ASK   Tính độ dài SM.                                                                                        SOURCE_OBJECT_MISMATCH
+   ASK   Tính độ dài hình chiếu của SC lên (ABCD).                                                              NOT_ASKED_IN_SOURCE
+   ASK   Tính chu vi tam giác SAC.                                                                              SOURCE_OBJECT_MISMATCH
+   ASK   Tính độ dài trung tuyến SC của tam giác SBD.                                                           NOT_ASKED_IN_SOURCE
+   ASK   Tính SC, ở đây khoảng cách từ S đến (ABCD) gấp đôi SB.                                                 NOT_ASKED_IN_SOURCE
+   ASK   Tính SC theo khoảng cách từ S đến (ABCD).                                                              NOT_ASKED_IN_SOURCE
+   ASK   Tính tỉ số giữa SC và khoảng cách từ S đến (ABCD).                                                     NOT_ASKED_IN_SOURCE
+   ASK   Tìm M sao cho khoảng cách từ S đến (ABCD) nhỏ nhất?                                                    NOT_ASKED_IN_SOURCE
+   ASK   Hỏi khoảng cách từ S đến (ABCD) có bằng 3 không?                                                       NOT_ASKED_IN_SOURCE
+   ASK   Tính giá trị lớn nhất của khoảng cách từ S đến (ABCD).                                                 NOT_ASKED_IN_SOURCE
+   ASK   Tính khoảng cách từ S đến (ABCD) khi M thay đổi.                                                       NOT_ASKED_IN_SOURCE
+   ASK   Tính khoảng cách từ S đến (ABCD) sau khi tăng SA lên gấp đôi.                                          NOT_ASKED_IN_SOURCE
+   ASK   Tính SC. Biết khoảng cách từ S đến (ABCD)?                                                             NOT_ASKED_IN_SOURCE
+   ASK   Tính sin góc giữa SC và (ABCD).                                                                        NOT_ASKED_IN_SOURCE
+   SEC   Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (P) song song với (MAB).                    SOURCE_OBJECT_MISMATCH
+   SEC   Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (P) chứa AB và vuông góc với (MAB).         SOURCE_OBJECT_MISMATCH
+   SEC   Tính diện tích thiết diện của hình chóp S.ABCD cắt bởi (MAB), biết diện tích thiết diện cắt bởi (SAC   NOT_ASKED_IN_SOURCE
+   SEC   Tính diện tích thiết diện của hình chóp S.ABCD cắt bởi (SAC) rồi so sánh với thiết diện cắt bởi (MAB   SOURCE_OBJECT_MISMATCH
+   SEC   Tính tỉ số diện tích thiết diện của hình chóp S.ABCD cắt bởi (MAB) và diện tích đáy.                   AMBIGUOUS_FACT
+   SEC   Tính diện tích thiết diện lớn nhất của hình chóp S.ABCD cắt bởi (MAB) khi M chạy trên SC.              SOURCE_OBJECT_MISMATCH
+   SEC   Tính diện tích hình chiếu của thiết diện của hình chóp S.ABCD cắt bởi (MAB) lên đáy.                   SOURCE_OBJECT_MISMATCH
+   SEC   Mặt phẳng (MAB) không cắt hình chóp S.ABCD theo thiết diện nào.                                        SOURCE_OBJECT_MISMATCH
+   SEC   Giả sử mặt phẳng (MAB) cắt hình chóp S.ABCD theo một thiết diện.                                       CONDITIONAL_CLAUSE
+   SEC   Tính diện tích thiết diện của khối lập phương cắt bởi (MAB).                                           SOURCE_OBJECT_MISMATCH
+   SEC   Tính diện tích thiết diện của hình chóp S.ABCD với mặt phẳng (MAB) song song với CD.                   NOT_ASKED_IN_SOURCE
+!! SEC   Tính diện tích thiết diện với mặt phẳng (MAB) của hình chóp S.ABCD.                                    SERVED {'q': '3√13/4'}
+   SEC   Tính diện tích thiết diện của hình chóp S.ABCD cắt bởi (MAB) khi SA tăng gấp đôi.                      NOT_ASKED_IN_SOURCE
+   GT    Chứng minh giao tuyến của (SAB) và (SCD) song song với AB.                                             GOAL_CLAUSE_NOT_PREMISE
+   GT    Nếu giao tuyến của (SAB) và (SCD) song song với AB thì SA = 3.                                         CONDITIONAL_CLAUSE
+   GT    Tìm giao tuyến của (SAB) và mặt phẳng (P) song song với (SCD).                                         SOURCE_OBJECT_MISMATCH
+   GT    Tìm giao tuyến của (SAB) với mặt phẳng qua M song song với (SCD).                                      SOURCE_OBJECT_MISMATCH
+   GT    Tìm giao tuyến của (SAB) và (SCD) với (SBC).                                                           SOURCE_OBJECT_MISMATCH
+   GT    Tìm giao điểm của (SAB) và (SCD).                                                                      PREDICATE_NOT_IN_QUOTE
+   GT    Giao tuyến của (SAB) và (SCD) không song song với AB.                                                  NEGATED_CLAUSE

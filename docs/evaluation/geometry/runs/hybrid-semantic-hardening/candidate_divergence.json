@@ -1,0 +1,18 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-semantic-hardening",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-slice-review/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "d88f4afc861e522cc3beab1ace812f0707ba756cae563b34a0f4dcbf285976e8",
+  "current_candidate_source_commit": "2db6d64b",
+  "previous_candidate_hash": "451b046c534a4d33244f4d43bc663884dab842ecb25df42dc2bc40849849bbb8",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "reason": "S1 + S2 hardening on branch research/hybrid-semantic-hardening (child of the reviewed 9cfd0fca): the shared source gate binds ask operands to a closed per-function phrase grammar, requires values to be equalities and extends the clause-role lexicon (backend/app/simulation/geometry_functions/registry.py, commits 23481bda, fda835c3); Scene3D draws an infinite line over the figure's extent instead of a fixed ±6 (frontend/src/simulations/domains/geometry/scene3d-model.ts, scene3d-view.tsx, commits 33e711f9, 2db6d64b). Provider surfaces A/B unchanged; default LLM_ONLY unchanged; the Hybrid route is not reached by /api/analyze. Not authorized for a pilot; the locked A/B candidate and evidence are untouched.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring or pooling.",
+    "live_requests": 0
+  }
+}

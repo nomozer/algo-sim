@@ -161,6 +161,9 @@ ALLOWED_CANONICAL_ACTIONS = [
     # hybrid-slice-review (2026-10-12): independent review fixed, Scene3D harness check done, residual risk declared; next
     # is the user's decision on the main fast-forward.
     "HYBRID_SLICE_REVIEW_INTEGRATION_DECISION",
+    # hybrid-semantic-hardening (2026-10-12): S1 operand/source grounding + S2 intersection-line rendering on a child
+    # branch of the reviewed tip; next is the user's integration decision for A (baseline) and B (hardening).
+    "HYBRID_HARDENING_INTEGRATION_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

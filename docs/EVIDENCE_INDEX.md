@@ -1,10 +1,26 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_SEMANTIC_HARDENING
+
+REPORT = docs/evaluation/geometry/runs/hybrid-semantic-hardening/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-semantic-hardening/
+CORRECTED_BY = NONE
+CORRECTS = HYBRID_SLICE_REVIEW
+CLASSIFICATION = HYBRID_HARDENING_AWAITING_INTEGRATION_DECISION
+CODE_COMMIT = 2db6d64b
+VERIFICATION_COMMIT = d5f5ab96
+MODEL_REQUEST_COUNT = 0
+
+S1 closes the residual gate false serves of HYBRID_SLICE_REVIEW (operand binding, equality values, clause roles):
+residual probes 1/79 served (the correct reading). S2 finds the root cause of the "invisible intersection line" — a fixed
+±6 display segment behind the camera — and corrects the earlier evidence: the review harness skipped the product frame
+step veKhongGian. Browser acceptance on SwiftShader and a hardware GPU: 0 failures. Open: question-local givens.
+
 ## WAVE_ID = HYBRID_SLICE_REVIEW
 
 REPORT = docs/evaluation/geometry/runs/hybrid-slice-review/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-slice-review/
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_SEMANTIC_HARDENING
 CORRECTS = HYBRID_SECTION_SLICE
 CLASSIFICATION = HYBRID_SLICE_REVIEW_AWAITING_INTEGRATION_DECISION
 CODE_COMMIT = b3e946e9

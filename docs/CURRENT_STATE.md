@@ -1,19 +1,16 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — hybrid-slice-review, 2026-10-12
+## LOCAL override — hybrid-semantic-hardening, 2026-10-12
 
 Mới nhất:
-- Kiểm toán độc lập S0 + lát thiết diện (nhánh nghiên cứu, chưa merge/push). Critical 2 / Important 3 / Minor 4 đã đóng bằng
-  RED → GREEN (`5136127a` → `b3e946e9`), trừ M4. Thiết diện khớp oracle độc lập. Đã chạy harness Scene3D với scene Hybrid thật;
-  giao tuyến không hiện (`ISSUE-ARCH-SCENE3D-INTERSECTION-LINE-INVISIBLE`). Rủi ro còn lại: `ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES`.
-- Candidate `451b046c` (product `b3e946e9`), khai lệch ở run. Benchmark 19/9/0/2 không đổi; bề mặt provider không đổi. LLM_ONLY/cache125; LIVE Gemini0.
-- Report: [`hybrid-slice-review`](evaluation/geometry/runs/hybrid-slice-review/report.md). Fast-forward `main`: GO khi đã khai rủi ro; chờ người dùng quyết.
+- Nhánh `research/hybrid-semantic-hardening` (con của tip đã review `9cfd0fca`; chưa merge/push). S1: cổng nguồn buộc toán hạng câu
+  hỏi vào cụm được hỏi (văn phạm đóng), giá trị phải là phép bằng, mở rộng vai trò mệnh đề — probe phần dư 1/79 (cách đọc đúng).
+  S2: giao tuyến "vô hình" do đoạn hiển thị cố định ±6 đâm ra sau camera; nay theo cỡ cảnh (SwiftShader + GPU thật).
+- Mở: `ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS`. Candidate/T3 ở run. LLM_ONLY/cache125; LIVE Gemini0.
+- Report: [`hybrid-semantic-hardening`](evaluation/geometry/runs/hybrid-semantic-hardening/report.md); handoff tách A (baseline) / B (S1+S2).
 
-Trước đó (hybrid-section-slice, hybrid-simulation-capability-audit):
-- S0 sửa lỗi CRITICAL cổng nguồn chung (`ISSUE-ARCH-GATE-CLAUSE-ROLE-INSIDE-QUOTE`). Lát 1 dựng thiết diện, giao tuyến và diện tích
-  thiết diện qua IR chung có sẵn (Registry 30, bề mặt A/B đổi có chủ đích). Reports:
-  [`hybrid-section-slice`](evaluation/geometry/runs/hybrid-section-slice/report.md),
-  [`hybrid-simulation-capability-audit`](evaluation/geometry/runs/hybrid-simulation-capability-audit/report.md).
+Trước đó: [`hybrid-slice-review`](evaluation/geometry/runs/hybrid-slice-review/report.md) (kiểm toán độc lập S0 + lát thiết diện,
+candidate 451b046c); [`hybrid-section-slice`](evaluation/geometry/runs/hybrid-section-slice/report.md) (S0 + lát thiết diện).
 
 Trước đó (hybrid-slice1-main-integration):
 - Hybrid B slice 1 (B26) + hai bản sửa Important đã tích hợp `main` bằng fast-forward `548066a8` → `a246dd19`; không merge
@@ -112,7 +109,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > USER_DIRTY_STATE = có — `frontend/public/favicon.svg` untracked của người dùng, giữ nguyên; không stage/commit.
 > CURRENT_WAVE = HYBRID_AB_PILOT_READINESS (run hybrid-ab-pilot-readiness, LOCAL, cùng nhánh, live Gemini0): object-binding chính xác, observation ≠ proof; runner SMOKE24/FULL288 có identity riêng, shared output3072; 344 focused PASS,9 mutation killed,312 fake/network0; clean backend8068 PASS/1 skip/2 deselected tại2f1b457c. CORRECTS HYBRID_COMPILER_SELECTION: lịch sử nguyên byte, đọc cùng correction layer. Report/handoff của run là thẩm quyền; không tuyên bố safety population/visual/real-model.
 > FINAL_DECISION = HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW — offline GO có giới hạn kiểm chứng; SMOKE/FULL live NO-GO (prompt estimator chưa provider-bound, storage cause UNKNOWN, chưa phê duyệt riêng). Main giữ nguyên28ac1d61; không merge/push/default change; human visual acceptance NOT_PERFORMED.
-> CANONICAL_NEXT_ACTION = HYBRID_SLICE_REVIEW_INTEGRATION_DECISION
+> CANONICAL_NEXT_ACTION = HYBRID_HARDENING_INTEGRATION_DECISION
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 

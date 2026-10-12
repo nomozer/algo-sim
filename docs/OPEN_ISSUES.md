@@ -74,7 +74,13 @@
 - **evidence:** `docs/evaluation/geometry/runs/hybrid-slice-review/report.md` §5; probes and output at `b3e946e9` in `docs/evaluation/geometry/runs/hybrid-slice-review/residual/`.
 - **impact:** A confident wrong answer is possible on the Hybrid routes (A and B) when the AI mis-types a fact, with C and D the most likely. A–C exist on `main` already. The default `LLM_ONLY` route does not use this gate.
 - **scope:** `backend/app/simulation/geometry_functions/registry.py` (`kiem_nguon`, `_kiem_cau_hoi`, `_duoc_hoi`, value grounding, `mat_cat_dung_nguon`).
-- **status:** OPEN. Fix direction: bind every ask operand to the asked object phrase and accept a closed set of ask shapes; values only through "=" / "bằng" with no operator around them. Not more blockers: the regex grammar cannot be complete for adversarial wording.
+- **status:** MOSTLY RESOLVED on branch `research/hybrid-semantic-hardening` (S1, run `hybrid-semantic-hardening`, `23481bda` + review fixes `fda835c3`; not on `main`).
+  - Asks are bound to a closed per-function phrase grammar.
+  - Values must be stated as equalities.
+  - The clause-role lexicon is extended.
+  - 78 of the 79 residual probes are now refused; the one served is the correct reading.
+  - M4 is unchanged by decision.
+  - **Residual:** question-local givens that change the figure → `ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS`. The lexicon is closed but not complete for adversarial wording.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** Next Hybrid gate wave, before any product enablement or live pilot of Hybrid.
 - **default_switch_blocker:** YES
@@ -89,10 +95,31 @@
 - **evidence:** `docs/evaluation/geometry/runs/hybrid-slice-review/report.md` §4; `visual/browser-check/browser-check.json` (`own_pixel_contribution` 0).
 - **impact:** The construction step of an intersection line shows nothing. If the shared renderer path is the cause, LLM_ONLY scenes with such lines may be affected (not checked).
 - **scope:** `frontend/src/simulations/domains/geometry/` line rendering (root cause UNKNOWN).
-- **status:** OPEN — not fixed in the review run.
+- **status:** RESOLVED on branch `research/hybrid-semantic-hardening` (S2, run `hybrid-semantic-hardening`, `33e711f9` + review fix `2db6d64b`; not on `main`).
+  - **Root cause:** the drawn part of an infinite line was a fixed ±6. In a unit-size scene it passed behind the camera: SwiftShader dropped it (0 px even with the depth test off), and a hardware GPU drew a streak.
+  - **Fix:** `doanDuongThang` sizes it by the scene.
+  - **Correction of the earlier evidence:** the `hybrid-slice-review` harness skipped the product frame step `veKhongGian`; in product coordinates that scene's line was visible.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** Next renderer slice, together with `ISSUE-ARCH-ORBIT-P1-SECTION-SCENE-DOES-NOT-SETTLE`; reproduce with `frontend/scripts/hybrid-section-visual.html?i=4&hide=gt_f5`.
 - **default_switch_blocker:** NO
+
+### ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS
+
+- **description:** A given written inside the question sentence and not typed as a fact is ignored, so the answer comes from the original figure. Each of these is served:
+  - "Với SA = 5, tính SC." → √17
+  - "Tính SC với SA = 5." → √17
+  - "Cho SA = 5, tính khoảng cách từ S đến (ABCD)." → 3
+  - "Tính thể tích khối chóp S.ABCD với SA = 6." → 4
+  - "Tính SC biết SC = 5." → √17
+
+  The ask grammar accepts "với / cho / biết …" after or before the asked phrase as a given marker. Nothing checks that what follows is a typed fact consistent with the figure.
+- **evidence:** independent review of S1, `docs/evaluation/geometry/runs/hybrid-semantic-hardening/report.md` §5.
+- **impact:** A confident answer for a figure other than the one asked about, on the Hybrid routes. Pre-existing (also at `9cfd0fca`).
+- **scope:** a new check in `registry.kiem_nguon`: every value or relation inside the asked sentence must be covered by a typed fact, or the ask is refused. This is a new authority, not more phrase grammar.
+- **status:** OPEN — separate slice, needs approval.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** Next Hybrid gate slice, before product enablement or a live pilot.
+- **default_switch_blocker:** YES
 
 ### ISSUE-ARCH-ENGINE-CENTRE-LABEL-EXHAUSTION
 

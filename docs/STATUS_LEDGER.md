@@ -1856,3 +1856,14 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-slice-review/
 - **ORACLE / SCENE3D:** independent exact oracle equal on every case. Playwright harness with real Hybrid scenes: 6/6 load, 0 console errors, orbit/zoom/reset settle; intersection line invisible (ISSUE-ARCH-SCENE3D-INTERSECTION-LINE-INVISIBLE). Not the product UI; no human acceptance.
 - **GATES:** candidate 451b046c (refreeze 542e3894) declared; T3 recorded in run.json. LIVE Gemini 0.
 - **FINAL_DECISION:** HYBRID_SLICE_REVIEW_AWAITING_INTEGRATION_DECISION — main fast-forward GO with declared residual risk (ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES); Hybrid in product / live pilot NO-GO.
+
+## WAVE_ID = HYBRID_SEMANTIC_HARDENING
+
+REPORT = docs/evaluation/geometry/runs/hybrid-semantic-hardening/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-semantic-hardening/
+
+- **DATE / BRIEF:** 2026-10-12, LOCAL; user brief "Hybrid semantic hardening & Scene3D rendering recovery" (S1, S2). Branch `research/hybrid-semantic-hardening`, child of the reviewed 9cfd0fca.
+- **S1:** 23481bda + review fixes fda835c3 — ask operands bound to a closed per-function phrase grammar, values must be equalities, clause-role lexicon extended. RED 54 at 9cfd0fca, 52 at 23481bda; 166 tests, 25 mutants killed; cluster 1050 passed; benchmark byte-identical; residual probes 1/79 served (the correct reading).
+- **S2:** 33e711f9 + 2db6d64b — the infinite-line display segment sized by the scene (root cause: fixed ±6 passing behind the camera). Harness applies veKhongGian. Acceptance on SwiftShader and ANGLE D3D11: 0 failures; orbit p1 unchanged (111 allocations).
+- **GATES:** candidate d88f4afc (refreeze d5f5ab96) declared; T3 recorded in run.json. LIVE Gemini 0. Process deviation (one heredoc-script edit of backend files) declared in the report.
+- **FINAL_DECISION:** HYBRID_HARDENING_AWAITING_INTEGRATION_DECISION — open ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS; Hybrid in product / live pilot NO-GO.
