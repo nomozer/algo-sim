@@ -2,8 +2,12 @@
 
 Real routes A and B, no provider. Oracle: square base side 2, SA ⊥ base, SA = 3 ⇒ SC² = 17.
 The break caught: the ask grammar accepts a next-task connector after the asked phrase, so the text behind it was never
-covered and the old figure was served for "Tính SC, sau đó thay SA bằng 5 và tính lại SC.".
+covered and the old figure was served for "Tính SC, sau đó thay SA bằng 5 và tính lại SC.". The rule is closed: a follow-up
+is read like a given fragment, a length after the first request must match a validated call, and asking the same object
+again is refused. Open follow-up wording outside the closed vocabulary is refused too (bounded, documented false refusals).
 """
+import re
+
 import pytest
 
 from app.ai.function_route import run_fact_route, run_function_route
@@ -28,6 +32,20 @@ CHANGED = [
     "Tính SC. Sau đó thay SA bằng 5 và tính lại SC.",
     "Tính SC. Đổi SA thành 5 rồi tính lại SC.",
     "Tính SC. Tiếp theo, tăng SA lên 6 và tính lại SC.",
+    # independent review of 87118b61 — a change after "tính lại …", or written without digits
+    "Tính SC, sau đó tính lại SC với SA = 5.",
+    "Tính SC rồi tính lại SC với SA = 5.",
+    "Tính SC. Tính lại SC với SA = 5.",
+    "Tính SC, sau đó tính lại SC lúc SA = 5.",
+    "Tính SC rồi tính lại SC, lúc này SA = 5.",
+    "Tính SC, rồi tính SC lần nữa với SA = 5.",
+    "Tính SC, sau đó tính độ dài SC mới với SA = 5.",
+    "Tính SC, sau đó tăng SA gấp đôi và tính lại SC.",
+    "Tính SC, sau đó thay SA bằng năm và tính lại SC.",
+    "Tính SC, sau đó nhân đôi SA và tính lại SC.",
+    "Tính SC, sau đó thay SA bằng SB và tính lại SC.",
+    "Tính SC, sau đó bỏ giả thiết SA vuông góc với (ABCD) và tính lại SC.",
+    "Tính SC. Bây giờ tăng gấp đôi chiều cao và tính lại SC.",
 ]
 
 
@@ -40,7 +58,7 @@ def test_follow_up_hypothesis_change_never_serves_the_old_figure(arm, sentence):
 
 
 @pytest.mark.parametrize("arm", ARMS)
-@pytest.mark.parametrize("sentence", CHANGED[:4] + CHANGED[11:13])
+@pytest.mark.parametrize("sentence", CHANGED[:4] + CHANGED[11:13] + CHANGED[14:17])
 def test_short_ask_quote_does_not_hide_the_follow_up(arm, sentence):
     r = run(sentence, arm, quote="Tính SC")
     assert r.status == "REFUSED", (r.status, r.code, r.answers)
@@ -61,6 +79,8 @@ def _section(sentence: str, arm: str):
     "Vẽ thiết diện của hình chóp S.ABCD cắt bởi (MAB), sau đó SA = 5.",
     "Vẽ thiết diện của hình chóp S.ABCD cắt bởi (MAB), rồi đổi SA thành 5 và vẽ lại thiết diện.",
     "Dựng thiết diện của hình chóp S.ABCD cắt bởi (MAB), sau đó cho đáy là hình chữ nhật và dựng lại.",
+    "Vẽ thiết diện của hình chóp S.ABCD cắt bởi (MAB), sau đó di chuyển M đến D và vẽ lại thiết diện.",
+    "Vẽ thiết diện của hình chóp S.ABCD cắt bởi (MAB), sau đó tăng SA gấp đôi và vẽ lại thiết diện.",
 ])
 def test_construction_follow_up_change_is_refused(arm, sentence):
     r = _section(sentence, arm)
@@ -75,9 +95,9 @@ def test_construction_follow_up_change_is_refused(arm, sentence):
     "Tính SC rồi làm tròn kết quả.",
     "Tính SC, sau đó tính SB.",
     "Tính SC, rồi tính SB, biết SA = 3.",
-    "Tính SC, sau đó thay số và kiểm tra lại.",
     "Tính SC, tiếp theo tính SB.",
     "Tính SC. Sau đó tính SB.",
+    "Tính SC, sau đó, với SA = 3, tính SB.",
 ])
 def test_multi_step_requests_without_a_change_stay_served(arm, sentence):
     r = run(sentence, arm)
@@ -95,19 +115,24 @@ def test_construction_follow_up_task_stays_served(arm, sentence):
     assert r.status == "SERVED", (r.status, r.code, r.reason)
 
 
+@pytest.mark.parametrize("sentence", [
+    "Tính SC, sau đó gọi M là trung điểm SC.",
+    "Tính SC, sau đó so sánh SC với 4.",
+    "Tính SC, sau đó kết luận tam giác SAC vuông tại A.",
+])
+def test_open_follow_up_wording_is_a_documented_conservative_refusal(sentence):
+    # Bounded fail-closed limit: the follow-up vocabulary is closed; these are unread, so refused (served at 132e9b23).
+    assert run(sentence, "B").status == "REFUSED"
+
+
 @pytest.mark.parametrize("name, sentence", [
-    ("_VIEC_KE_TIEP_RE", "Tính SC, sau đó thay SA bằng 5 và tính lại SC."),
-    ("_SO_TU_DO", "Tính SC rồi đổi SA thành 5 và tính lại SC."),
-    ("_VI_TU_TIEN_DE", "Tính SC, rồi đổi đáy ABCD thành hình chữ nhật và tính lại SC."),
+    ("_SAU_VIEC_KE_TIEP", "Tính SC, sau đó tăng SA gấp đôi và tính lại SC."),
+    ("_VIEC_KE_TIEP_RE", "Tính SC, sau đó thay SA bằng SB."),
 ])
 def test_each_follow_up_rule_carries_its_own_refusal(monkeypatch, name, sentence):
-    import re
     from app.simulation.geometry_functions import registry as R
-    monkeypatch.setattr(R, name, re.compile(r"(?!x)x"))
-    assert run(sentence, "B").status == "SERVED"     # the fault re-opens the old false serve
-
-
-@pytest.mark.parametrize("arm", ARMS)
-def test_follow_up_restating_the_same_given_stays_served(arm):
-    r = run("Tính SC, sau đó, với SA = 3, tính lại SC.", arm)
-    assert r.status == "SERVED", (r.status, r.code, r.reason)
+    mutant = re.compile(r"[\s\S]*") if name == "_SAU_VIEC_KE_TIEP" else re.compile(r"(?!x)x")
+    monkeypatch.setattr(R, name, mutant)
+    if name == "_SAU_VIEC_KE_TIEP":                    # re-request still refuses "tính lại SC"; drop it to isolate the rule
+        sentence = sentence.replace(" và tính lại SC", "")
+    assert run(sentence, "B").status == "SERVED"      # the fault re-opens the old false serve

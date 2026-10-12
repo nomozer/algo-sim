@@ -1064,23 +1064,43 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
             if (not found and remaining.strip(" ,;:.?!")) or not _NOI_DU_KIEN_CUC_BO.fullmatch(remaining):
                 raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                              "phần dữ kiện/đổi giả thiết trong câu hỏi chưa được đọc trọn; không dùng mô hình cũ")
-        # The ask grammar accepts a next task after the asked phrase (`_VIEC_KE_TIEP`) and stops reading there. The task
-        # itself is open wording, but it may not carry an unread hypothesis: a value or a premise predicate left after
-        # covering must be refused. A method ("bằng cách …") may name constructions, never assign values.
+        # The ask grammar accepts a next task after the asked phrase (`_VIEC_KE_TIEP`) and stops reading there. The gate
+        # reads it with the same closed obligation as a given fragment: after covering assertions, only given words, a
+        # comparison of named objects or a rounding instruction may remain; a goal clause (chứng minh, suy ra …) is not a
+        # hypothesis; a method ("bằng cách") only names a formula or theorem. Anything unread is refused, not guessed.
         for m in _VIEC_KE_TIEP_RE.finditer("".join(masked)):
             a = start + m.end()
             if any(x <= start + m.start() < y for x, y in assertions):
                 continue
-            remaining, _found = cover(a, next(p for p in stops if p >= a))
-            rounding = re.search(_LAM_TRON, remaining, re.IGNORECASE)
-            if any((not rounding or n.start() < rounding.start()) and _vai_tro_tai(de, a + n.start()) not in ("GOAL", "QUESTION")
-                   for n in _SO_TU_DO.finditer(remaining)):
+            b = next(p for p in stops if p >= a)
+            if not de[a:b].strip(" ,;:.?!"):
+                continue
+            remaining, _found = cover(a, b)
+            if m.group().lower() == "bằng cách":
+                ok = _PHUONG_PHAP.fullmatch(remaining)
+            else:
+                ok = _MO_MUC_TIEU.match(de, a, b) or _SAU_VIEC_KE_TIEP.fullmatch(remaining)
+            if not ok:
                 raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
-                             "việc kế tiếp trong yêu cầu nêu một giá trị chưa khớp giả thiết; không dùng mô hình cũ")
-            if m.group().lower() != "bằng cách" and any(
-                    _vai_tro_tai(de, a + p.start()) not in ("GOAL", "QUESTION") for p in _VI_TU_TIEN_DE.finditer(remaining)):
+                             "việc kế tiếp trong yêu cầu chưa được đọc trọn (có thể đổi giả thiết); không dùng mô hình cũ")
+        # A length asserted after the first request, whatever its wording or position ("… tính lại SC với SA = 5"), is a
+        # local claim like any other: it must match a validated call.
+        for m in lengths:
+            if first < m.start() < end and _vai_tro_tai(de, m.start()) not in ("GOAL", "QUESTION"):
+                cover(m.start(), m.end())
+    # Requesting the same object again in a modified form after it was asked ("Tính SC, … tính lại SC", "SC lần nữa",
+    # "SC mới") presupposes a changed scope; the ask grammar rejects that form, so its hypothesis is unread. Refuse. A plain
+    # repeated ask ("SC bằng bao nhiêu? Tính độ dài SC.") carries no new hypothesis of its own.
+    for c in calls:
+        if c.spec.kind != "ask":
+            continue
+        occurrences = _cum_hoi(c, de, 0, len(de), calls)
+        asked = [p for p, h in occurrences if _hoi_dung_cum(de, p, h)]
+        for p, h in occurrences:
+            if asked and p > min(asked) and not _hoi_dung_cum(de, p, h) \
+                    and request_verb.search(de, _bien_menh_de(de, p)[0], p) and _vai_tro_tai(de, p) != "GOAL":
                 raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
-                             "việc kế tiếp trong yêu cầu nêu một quan hệ chưa là giả thiết đã xác thực; không dùng mô hình cũ")
+                             f"{c.id}: đối tượng được yêu cầu lại sau lần hỏi đầu — phạm vi giả thiết đã đổi; chưa hỗ trợ", (c.id,))
 
 
 def _nguon_do_dai_cuc_bo(calls: tuple[LoiGoi, ...], segment: list[str]) -> list[tuple[tuple[Fraction, bool], str]]:
@@ -1254,15 +1274,18 @@ _CUM_HOI = {
 _VIEC_KE_TIEP = r"rồi|sau đó|từ đó|tiếp theo|tiếp đó|bằng cách"
 _LAM_TRON = r"(?:kết quả\s+)?làm tròn"
 _VIEC_KE_TIEP_RE = re.compile(rf"(?<!\w)(?:{_VIEC_KE_TIEP})(?!\w)", re.IGNORECASE)
-#: A free-standing value; an operand inside a formula ("V = Bh/3") is not a value assigned to the figure.
-_SO_TU_DO = re.compile(r"(?<![\w/^*×.,])(?:\d+(?:[.,]\d+)?|√\s*\d+|π)", re.IGNORECASE)
-#: Premise predicates of the library's own fact/construct functions (first keyword group), plus parallelism, which the
-#: library cannot represent. In a follow-up task they could only state a new hypothesis unless a goal or question.
-_VI_TU_TIEN_DE = re.compile("|".join(
-    [rf"(?<!\w){re.escape(k)}(?!\w)" for name in ("regular_polygon", "rectangle", "right_angle", "perpendicular_line_plane",
-                                                    "perpendicular_lines", "face_perpendicular_base", "altitude",
-                                                    "orthogonal_projection", "midpoint", "centroid")
-     for k in REGISTRY[name].keywords[0] if not k.startswith("re:")] + [r"(?<!\w)song song(?!\w)"]), re.IGNORECASE)
+#: What a follow-up task may contain once its assertions are covered: given words, a comparison of named objects, a
+#: rounding instruction. Closed: a change written in any other words ("tăng SA gấp đôi", "thay SA bằng SB") is unread.
+_SAU_VIEC_KE_TIEP = re.compile(
+    r"[\s,;:.?!]*(?:(?:biết|rằng|với|cho|trong đó|có|và|cạnh|độ dài|đoạn thẳng|so sánh|kết quả|đó|này|nó"
+    r"|tô màu|quan sát|xoay|thiết diện|hình|từ|nhiều|góc nhìn|các"                       # trình bày cảnh, không đổi hình
+    r"|làm tròn(?:\s+kết quả)?(?:\s+đến\s+hàng\s+phần\s+(?:mười|trăm|nghìn))?|(?-i:[A-Z][0-9]*'?)+)(?![\w'])[\s,;:.?!]*)*",
+    re.IGNORECASE)
+#: A follow-up that opens with a goal word is something to show, not a hypothesis (same words as `_MUC_TIEU`).
+_MO_MUC_TIEU = re.compile(r"[\s,;:]*(?:" + "|".join(map(re.escape, _MUC_TIEU)) + r")(?!\w)", re.IGNORECASE)
+#: "bằng cách …": only a named formula / theorem followed by a symbolic expression (ASCII symbols, no words of a change).
+_PHUONG_PHAP = re.compile(r"\s*(?:dùng|áp dụng|sử dụng)\s+(?:công thức|định lí|định lý|hệ thức)[\sA-Za-z0-9=+\-*/^().,²³√]*",
+                          re.IGNORECASE)
 #: Giữa động từ hỏi và cụm (sau khi xoá các cụm hỏi khác): chỉ từ nối.
 _GIUA_HOP_LE = re.compile(r"[\s,:]*(?:(?:và|cùng|lần lượt|hãy|các)(?!\w)[\s,:]*)*", re.IGNORECASE)
 #: Sau cụm (sau khi xoá các cụm hỏi khác): chỉ những thứ này rồi kết câu / dữ kiện / việc kế tiếp.
