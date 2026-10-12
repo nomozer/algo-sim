@@ -30,5 +30,8 @@
   "EVALUATOR_INDEPENDENCE": "PARTIAL (separate reviewer agent and oracle; same session)",
   "candidate": {"tree_hash": "451b046c534a4d33244f4d43bc663884dab842ecb25df42dc2bc40849849bbb8", "product_commit": "b3e946e9", "divergence": "candidate_divergence.json"},
   "go_no_go": {"main_fast_forward": "GO with declared residual risk (user decision; not merged or pushed by this run)", "hybrid_in_product_or_live_pilot": "NO-GO"},
-  "t3": "PENDING"
+  "worktrees": {"created": ["review-verify (refreeze 65126be0, 542e3894; T3)"], "removed": ["review-verify"], "force_used": false, "freed_bytes": 1701909442,
+                "kept": ["simulation-audit (research branch, awaiting integration decision)", "dsl-spike (research/compact-geometry-dsl)"],
+                "untouched": ".superpowers/worktrees/geometry-library-expansion (unregistered leftover; needs an administrator, no ACL change)"},
+  "t3": {"commit": "91c33925", "worktree": "clean detached (node_modules junction to the main checkout)", "result": "FULL_PRODUCT_GATE_PASS", "pytest": {"passed": 8509, "failed": 0, "skipped": 1, "deselected": 2, "xfailed": 5}, "vitest": 1051, "build": "PASS", "demo_replay": "PASS", "crash_surface": "PASS"}
 }
