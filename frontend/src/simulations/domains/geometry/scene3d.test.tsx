@@ -7,6 +7,7 @@ import {
   PLANE_DISPLAY_SIZE,
   RENDER_KINDS,
   clampStep,
+  doanDuongThang,
   highlightedAt,
   narrationAt,
   objectsAt,
@@ -511,6 +512,19 @@ describe("(5E) thực thể con: dựng riêng và chọn riêng", () => {
     // Không có điểm nền (nơi gọi cũ) ⇒ rơi về độ dài cố định như trước.
     const [c, d] = dau(buildObject3D(gt, false));
     expect(Math.abs(c[0] - d[0])).toBeCloseTo(2 * LINE_DISPLAY_HALF_LENGTH);
+  });
+
+  it("I1 · độ dài tối thiểu của đoạn đường thẳng theo TỈ LỆ cảnh (review S2)", () => {
+    const d = (s: number, huong: [number, number, number], diem: [number, number, number][]) => {
+      const r = doanDuongThang([0, 0, 0], huong, diem)!;
+      return Math.hypot(r[1][0] - r[0][0], r[1][1] - r[0][1], r[1][2] - r[0][2]) / s;
+    };
+    // cảnh cỡ 0,05: đường theo chiều mỏng không được dài gấp hàng chục lần cảnh (lại đâm qua camera)
+    const nho = 0.05;
+    expect(d(nho, [0, 0, 1], [[0, 0, 0], [nho, 0, 0], [nho, nho, 0], [0, nho, 0]])).toBeLessThan(3);
+    // cảnh cỡ 100, đường thẳng đứng mà chỉ có điểm đáy: không còn là một mẩu dài 2
+    const lon = 100;
+    expect(d(lon, [0, 0, 1], [[0, 0, 0], [lon, 0, 0], [lon, lon, 0], [0, lon, 0]])).toBeGreaterThan(0.5);
   });
 
   it("I · MẶT dựng thành một Object3D mang đúng id `chop::face:n`", () => {
