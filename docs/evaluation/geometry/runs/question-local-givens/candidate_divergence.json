@@ -1,0 +1,19 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "question-local-givens-w01",
+  "task": "question-local-givens",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-semantic-hardening/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "778bc329d5e886ac81429d2d40f361fef9a1d63904cff63aa801f338c72dd827",
+  "current_candidate_source_commit": "227e1bcfcaad0c7aa83b65643ea4f7d4e24ca966",
+  "previous_candidate_hash": "d1410731542f4d0c04b133e2a514e1207976d2bfbdd35610bf577f73af6cd614",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "reason": "Bounded question-local source coverage in registry.kiem_nguon, including subsequent context, omitted original shape facts, construction-only requests and canonical polygon-side length authority. No fact overwrite, second semantic state, renderer, Typed Facts/provider/schema/cache/default change. Product commits 06cd8cdf and 227e1bcf; candidate frozen in a clean detached worktree at 227e1bcf.",
+  "historical_effect": "No rescoring, pooling or rewriting of historical candidates, locked A/B results, benchmark labels or prior receipts.",
+  "live_requests": 0,
+  "phase2_integration": "NOT_EXECUTED; separate user decision required",
+  "push": false
+}
