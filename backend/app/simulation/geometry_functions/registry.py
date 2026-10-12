@@ -947,6 +947,9 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
     Read the whole question context, including text outside the model's quote. Only closed source spans are covered;
     an unread modifier never authorizes using the old figure. No local claim overwrites a premise.
     """
+    # An explicit escape is unconditionally refused by the engine before any construction. Preserve OUT_OF_SCOPE.
+    if any(c.fn == "unsupported" for c in calls):
+        return
     from ..semantic_program.shape_constraint import doc_rang_buoc
 
     request_verb = re.compile(_DONG_TU_HOI.pattern + r"|(?<!\w)dựng(?!\w)", re.I)
