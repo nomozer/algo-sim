@@ -66,6 +66,26 @@ def test_auxiliary_short_quote_cannot_hide_later_assumption():
 
 
 @pytest.mark.parametrize('arm', ['A', 'B'])
+@pytest.mark.parametrize('given, status, code', [
+    ('SA = 3', 'SERVED', None),
+    ('SA = 5', 'REFUSED', 'QUESTION_LOCAL_GIVEN_CONFLICT'),
+])
+def test_bare_connector_biet_rang_is_a_given_lead_in(arm, given, status, code):
+    # "biết rằng" served at 232c1225; it must stay a lead-in, not hide a changed given.
+    ask = run(f'Tính SC, biết rằng {given}.', arm)
+    assert (ask.status, ask.code if code else None) == (status, code), (ask.status, ask.code, ask.reason)
+    text, facts = HB._square()
+    mid = HB._mid('mid', 'M', 'S', 'C')
+    sentence = f'Vẽ thiết diện của hình chóp S.ABCD cắt bởi (MAB), biết rằng {given}.'
+    section = HB._f('section', 'section', sentence, solid='S.ABCD', points=list('MAB'))
+    source = ' '.join(text + mid['quotes'] + [sentence])
+    payload = {'facts': facts + [mid, section]}
+    r = (run_fact_route(source, payload) if arm == 'B' else
+         run_function_route(source, {'calls': lap_ke_hoach(payload, source).calls}))
+    assert r.status == status, (r.status, r.code, bool(r.scene3d))
+
+
+@pytest.mark.parametrize('arm', ['A', 'B'])
 @pytest.mark.parametrize('sentence', ['Tính SC, biết SA = 6/2.', 'Tính SC, biết AS vuông góc với (ABC).'])
 def test_supported_matching_controls(arm, sentence):
     r = run(sentence, arm)

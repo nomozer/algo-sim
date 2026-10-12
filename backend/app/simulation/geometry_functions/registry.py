@@ -1125,7 +1125,7 @@ _P1 = r"(?-i:[A-Z][0-9]*'?)"
 
 # Same label, equality and exact-number grammars as the source gate; every segment in a chain needs coverage.
 _DO_DAI_CUC_BO = re.compile(rf"(?<![\w']){_P1}{_P1}(?![\w']){_NOI_BANG.pattern}(?P<number>{_SO.pattern})", re.IGNORECASE)
-_NOI_DU_KIEN_CUC_BO = re.compile(r"[\s,;:.?!]*(?:(?:biết|với|cho|trong đó|có|và|cạnh|độ dài|đoạn thẳng)(?!\w)[\s,;:.?!]*)*",
+_NOI_DU_KIEN_CUC_BO = re.compile(r"[\s,;:.?!]*(?:(?:biết|rằng|với|cho|trong đó|có|và|cạnh|độ dài|đoạn thẳng)(?!\w)[\s,;:.?!]*)*",
                                  re.IGNORECASE)
 
 
