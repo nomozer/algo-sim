@@ -1,0 +1,355 @@
+{
+ "harness": "scripts/hybrid-section-visual.html (Scene3D harness, not product UI)",
+ "scenes": "real Hybrid route output, backend/scripts/export_hybrid_section_scenes.py",
+ "browser": "Playwright chromium, SwiftShader WebGL",
+ "report": [
+  {
+   "id": "section-MAB-trapezoid",
+   "served": true,
+   "section_vertices_model": 4,
+   "pixels_last_step": {
+    "section": 8014,
+    "line": 0,
+    "highlight": 619,
+    "ink": [
+     364,
+     94,
+     850,
+     411
+    ]
+   },
+   "order": {
+    "target": "td_f6",
+    "own_pixel_contribution": 80102,
+    "first_step": 6,
+    "steps": 11,
+    "depends_present": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 1116
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 791
+    }
+   },
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.15679312727163497,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.19234868282719053,
+    "ink_ratio": 1.601679995397273,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "M",
+    "khoi_S_ABCD",
+    "mp_td_f6",
+    "td_f6#4cf",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "section-SAC-triangle",
+   "served": true,
+   "section_vertices_model": 3,
+   "pixels_last_step": {
+    "section": 6521,
+    "line": 0,
+    "highlight": 656,
+    "ink": [
+     472,
+     1,
+     795,
+     469
+    ]
+   },
+   "order": {
+    "target": "td_f5",
+    "own_pixel_contribution": 7024,
+    "first_step": 5,
+    "steps": 9,
+    "depends_present": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 1513
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 985
+    }
+   },
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.06819020155597609,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.10013517166801839,
+    "ink_ratio": 1.4245283018867925,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "khoi_S_ABCD",
+    "mp_td_f5",
+    "td_f5#3cf",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "section-MNP-mid-square",
+   "served": true,
+   "section_vertices_model": 4,
+   "pixels_last_step": {
+    "section": 2317,
+    "line": 0,
+    "highlight": 649,
+    "ink": [
+     276,
+     84,
+     891,
+     420
+    ]
+   },
+   "order": {
+    "target": "td_f8",
+    "own_pixel_contribution": 2602,
+    "first_step": 8,
+    "steps": 13,
+    "depends_present": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 29826
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 730
+    }
+   },
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.14084647502327957,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.21586975458832716,
+    "ink_ratio": 1.593168419835857,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "M",
+    "N",
+    "P",
+    "khoi_S_ABCD",
+    "mp_td_f8",
+    "td_f8#4cf",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "section-cube-A1BD",
+   "served": true,
+   "section_vertices_model": 3,
+   "pixels_last_step": {
+    "section": 26295,
+    "line": 0,
+    "highlight": 940,
+    "ink": [
+     315,
+     1,
+     782,
+     513
+    ]
+   },
+   "order": {
+    "target": "td_f3",
+    "own_pixel_contribution": 114031,
+    "first_step": 3,
+    "steps": 7,
+    "depends_present": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 1479
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 1236
+    }
+   },
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.23749962452314438,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.259735063530684,
+    "ink_ratio": 1.5946004908644669,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "A_prime",
+    "B_prime",
+    "C_prime",
+    "D_prime",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime",
+    "mp_td_f3",
+    "td_f3#3cf"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "intersection-SAB-SCD",
+   "served": true,
+   "section_vertices_model": 0,
+   "pixels_last_step": {
+    "section": 0,
+    "line": 0,
+    "highlight": 1000,
+    "ink": [
+     274,
+     1,
+     802,
+     520
+    ]
+   },
+   "order": {
+    "target": "gt_f5",
+    "own_pixel_contribution": 0,
+    "first_step": 6,
+    "steps": 7,
+    "depends_present": true,
+    "pixels_before": {
+     "line": 0,
+     "highlight": 1000
+    },
+    "pixels_at": {
+     "line": 0,
+     "highlight": 1000
+    }
+   },
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.19715718963083115,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.20810549397735123,
+    "ink_ratio": 1.3395061728395061,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "khoi_S_ABCD",
+    "mp1_gt_f5",
+    "mp2_gt_f5",
+    "gt_f5",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "aux-foot-S-to-BD",
+   "served": true,
+   "section_vertices_model": 0,
+   "pixels_last_step": {
+    "section": 0,
+    "line": 288,
+    "highlight": 657,
+    "ink": [
+     487,
+     65,
+     746,
+     440
+    ]
+   },
+   "order": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.02479228620347842,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.04330059175152444,
+    "ink_ratio": 1.8745840622963192,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "H",
+    "khoi_S_ABCD",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  }
+ ]
+}
