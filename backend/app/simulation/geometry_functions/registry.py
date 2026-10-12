@@ -663,6 +663,9 @@ _HOI_QUAN_HE = re.compile(r"(?<!\w)(?:phải chăng|có phải|kiểm tra xem|ha
 _DONG_TU_HOI = re.compile(r"(?<!\w)(?:tính|tìm|xác định)(?!\w)|(?<!câu )(?<!\w)hỏi(?!\w)", re.IGNORECASE)
 #: … hoặc "bao nhiêu / mấy / ?" đứng SAU nó.
 _HOI_SAU = re.compile(r"bao\s+nhiêu|(?<!\w)mấy(?!\w)|\?", re.IGNORECASE)
+#: Câu hỏi CÓ/KHÔNG về đối tượng ("V có vượt quá 5 không?") hỏi một quan hệ, không hỏi giá trị — trừ khi có "bao nhiêu / mấy".
+_CO_KHONG = re.compile(r"(?<!\w)(?:phải chăng|có phải|hay không|hay chưa|phải không)(?!\w)|(?<!\w)(?:không|chưa)\s*\?",
+                       re.IGNORECASE)
 #: Đối tượng bị GÁN giá trị: một từ nối gán theo sau là một số ("bằng 4", "= √17", "là 3", "có giá trị 4"). Một số đứng riêng
 #: ("làm tròn đến 2 chữ số") không phải phép gán.
 _GIA_TRI = re.compile(r"(?<!\w)(?:bằng|là|khác|có giá trị)(?!\w)\s*(?:\d|√|π)|[=≠]\s*(?:\d|√|π)", re.IGNORECASE)
@@ -724,6 +727,8 @@ def _duoc_hoi(de: str, p: int, het: int) -> bool:
     dung = _DUNG_GAN.search(sau)
     gan = sau[:dung.start()] if dung else sau
     if (so := _GIA_TRI.search(gan)) and not _HOI_SAU.search(gan[:so.start()]):
+        return False
+    if _CO_KHONG.search(gan) and not re.search(r"bao\s+nhiêu|(?<!\w)mấy(?!\w)", gan, re.IGNORECASE):
         return False
     truoc = de[a:p]
     moc_du_kien = [m.end() for m in _DUNG_GAN.finditer(truoc)]

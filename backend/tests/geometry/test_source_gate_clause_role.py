@@ -209,7 +209,12 @@ def test_asked_object_after_a_proof_or_with_an_unrelated_number_is_answered(ques
     _dist_plane("Tìm M sao cho khoảng cách từ S đến (ABCD) nhỏ nhất?"),
     # minor: a yes/no question is not a request for the value
     _dist_plane("Hỏi khoảng cách từ S đến (ABCD) có bằng 3 không?"),
-], ids=["o-day-gap-doi", "theo", "ti-so", "sao-cho-nho-nhat", "yes-no"])
+    # final pass: a yes/no relation with no assignment verb ("vượt quá") was still answered with the value
+    _volume("Thể tích khối chóp S.ABCD có vượt quá 5 không?"),
+    _volume("Hỏi thể tích khối chóp S.ABCD đã vượt quá 5 hay chưa?"),
+    _dist_plane("Khoảng cách từ S đến (ABCD) có đạt tới 5 không?"),
+], ids=["o-day-gap-doi", "theo", "ti-so", "sao-cho-nho-nhat", "yes-no", "yes-no-vuot-qua", "yes-no-hay-chua",
+        "yes-no-dat-toi"])
 def test_object_that_is_not_the_question_verbs_object_is_refused(question):
     r = _run(question)
     assert r.status == "REFUSED", (r.answers, question["quotes"])
@@ -272,6 +277,8 @@ MUTANTS = [
     ("label anchor by any shared label", "if frozenset(n for p in phan for n in p) in toan_hang]",
      "if any(n in nhan_cua_loi_goi(c) for p in phan for n in p)]",
      lambda: _run(_dist_plane("Khoảng cách từ S đến (ABCD) bằng 3, tính SC.")).status != "REFUSED"),
+    ("yes/no relation check dropped", "    if _CO_KHONG.search(gan) and not", "    if False and not",
+     lambda: _run(_volume("Thể tích khối chóp S.ABCD có vượt quá 5 không?")).status != "REFUSED"),
 ]
 
 
