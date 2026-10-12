@@ -373,6 +373,9 @@ def answer_square(s: str) -> F | None:
 
 #: Every refusal code of the B route, classified by meaning (complete: a code missing here is a harness bug, see the test).
 REFUSAL_CLASS = {
+    # Question-local source coverage, run question-local-givens: taxonomy only; case labels/oracle unchanged.
+    "QUESTION_LOCAL_GIVEN_CONFLICT": "contradictory",
+    "QUESTION_LOCAL_GIVEN_UNVERIFIED": "unsupported", "QUESTION_CONTEXT_UNSUPPORTED": "unsupported",
     # not enough given to fix the figure
     "UNDERDETERMINED_POINT": "underconstrained", "MISSING_DIMENSION": "underconstrained",
     "FOOT_NOT_DETERMINED": "underconstrained", "FIGURE_NOT_UNIQUE": "figure_not_unique",

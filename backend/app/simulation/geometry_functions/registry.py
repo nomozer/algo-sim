@@ -572,7 +572,7 @@ _NOI_BANG = re.compile(r"\s*(?:=\s*(?-i:[A-Z][0-9]*'?[A-Z][0-9]*'?)\s*)*"       
                        r"(?:(?:có\s+)?độ dài(?:\s+(?:=|bằng|là))?|=|bằng|là|dài)\s*", re.IGNORECASE)
 #: Sau số, tới hết mệnh đề: chỉ đơn vị, rồi kết mệnh đề hay "và" — không "lần", "hoặc", "là sai", "khi …".
 _DUOI_BANG = re.compile(r"\s*(?:(?:cm|dm|mm|m|đvđd)(?![\w'])|đơn vị(?:\s+độ dài)?(?!\w)|\((?:cm|dm|mm|m|đvđd|đơn vị[^()]*)\))?"
-                        r"\s*(?:\.(?=\s|$)|[,;:)]|$|và(?!\w))", re.IGNORECASE)
+                        r"\s*(?:[.?!](?=\s|$)|[,;:)]|$|và(?!\w))", re.IGNORECASE)
 
 
 def _gia_tri_la_phep_bang(de: str, vts: list[tuple[int, int]], seg: list[str]) -> bool:
@@ -746,7 +746,11 @@ def _vai_tro_tai(de: str, p: int) -> str | None:
     if _DIEU_KIEN.search(truoc) or _THI.search(de[p:b]) or _DIEU_KIEN_SAU.search(de[p:mb]):
         return "CONDITIONAL"
     # mệnh đề hỏi có/không, hay mọi mệnh đề kết bằng "?" ("Tại sao …?", "Liệu … ?") — S1, nhóm A
-    if (_HOI_QUAN_HE.search(de[ma:mb]) or de[ma:mb].rstrip().endswith("?")
+    intro = list(_DUNG_GAN.finditer(truoc))
+    local_given = (bool(intro) and intro[-1].group().lower() in ("biết", "với", "cho", "trong đó", "có")
+                   and bool(_DONG_TU_HOI.search(truoc[:intro[-1].start()]) or _HOI_SAU.search(truoc[:intro[-1].start()]))
+                   and not _DONG_TU_HOI.search(truoc[intro[-1].end():]))
+    if (_HOI_QUAN_HE.search(de[ma:mb]) or de[ma:mb].rstrip().endswith("?") and not local_given
             or re.search(r"(?<!\w)có(?!\w).*(?<!\w)không\s*[.?!]?\s*$", de[ma:mb], re.IGNORECASE)):
         return "QUESTION"
     return None
@@ -934,6 +938,127 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
             if gt != so[0]:
                 raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {v} không phải số trong {c.quote!r}", (c.id,))
 
+    _kiem_du_kien_cau_hoi(calls, de)
+
+
+def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
+    """Source coverage, not a second fact state: local claims must match validated calls before engine verification.
+
+    Read the whole question context, including text outside the model's quote. Only closed source spans are covered;
+    an unread modifier never authorizes using the old figure. No local claim overwrites a premise.
+    """
+    from ..semantic_program.shape_constraint import doc_rang_buoc
+
+    request_verb = re.compile(_DONG_TU_HOI.pattern + r"|(?<!\w)dựng(?!\w)", re.I)
+    if not any(c.spec.kind == "ask" for c in calls) and not request_verb.search(de):
+        return
+    rb = doc_rang_buoc(de)
+    lengths = [m for m in _DO_DAI_CUC_BO.finditer(de) if _doc(m) is not None and _DUOI_BANG.match(de[m.end():])]
+
+    def segments(m):
+        return [p for _x, _y, parts in _tu_nhan(de[m.start():m.start("number")]) for p in parts if len(p) == 2]
+
+    def unit(m):
+        tail = de[m.end():]
+        found = re.match(r"\s*\(?\s*(cm|dm|mm|m|đvđd)(?![\w'])", tail, re.I)
+        return found[1].lower() if found else ""
+
+    questions = {_bien_cau(de, m.start()) for m in request_verb.finditer(de)}
+    questions |= {_bien_cau(de, m.start()) for m in _HOI_SAU.finditer(de)}
+    first_request = min((a for a, _b in questions), default=len(de))
+    questions |= {_bien_cau(de, m.start()) for m in _DUNG_GAN.finditer(de) if m.start() > first_request
+                  and re.match(r"\s*(?:biết|với|cho|trong đó|có)(?!\w)", de[_bien_cau(de, m.start())[0]:], re.I)}
+    for start, end in sorted(questions):
+        phrases = [(m.start(), m.end()) for rules in _CUM_HOI.values() for pattern, _bind in rules
+                   for m in pattern.finditer(de, start, end) if _hoi_dung_cum(de, m.start(), m.end())]
+        phrases += [(m.start(), m.end()) for m in _KHOANG_CACH_DIEM_DUONG.finditer(de, start, end)
+                    if _hoi_dung_cum(de, m.start(), m.end())]
+        if (not phrases and not request_verb.search(de, start, end)
+                and not re.match(r"\s*(?:biết|với|cho|trong đó|có)(?!\w)", de[start:end], re.I)):
+            continue
+        masked = list(de[start:end])
+        for a, b in phrases:
+            masked[a - start:b - start] = " " * (b - a)
+        assertions = [r.span for r in rb] + [m.span() for m in lengths]
+        object_ends = [b for _a, b in phrases] + [m.end() for pattern in (*_CAT_BOI, _GIAO_TUYEN)
+                                               for m in pattern.finditer(de, start, end)]
+        markers = [start + m.end() for m in _DUNG_GAN.finditer("".join(masked))
+                   if m.group().lower() not in ("khi", "nếu")
+                   and not any(a <= start + m.start() < b for a, b in assertions)
+                   and (m.group().lower() != "với" or any(p <= start + m.start()
+                        and not de[p:start + m.start()].strip(" ,;:") for p in (start, *object_ends)))]
+        stops = sorted({a for a, _b in phrases} | {m.start() for m in request_verb.finditer(de, start, end)} | {end})
+        fragments = [(a, next(p for p in stops if p >= a)) for a in markers]
+        first = min(stops)
+        prefix = de[start:first]
+        discourse = (_GIUA_HOP_LE.fullmatch(prefix) or re.fullmatch(r"\s*khi đó\s*,?\s*", prefix, re.I)
+                     or any(word in prefix.lower() for word in _MUC_TIEU))
+        if start < first < end and not markers and not discourse and _tu_nhan(prefix):
+            fragments.append((start, first))
+        for a, b in fragments:
+            residue = list(de[a:b])
+            found = False
+            for m in _DO_DAI_CUC_BO.finditer(de, a, b):
+                value = _doc(m)
+                tail = _DUOI_BANG.match(de[m.end():])
+                if value is None or tail is None:
+                    continue
+                for segment in segments(m):
+                    candidates = [c for c in calls if c.fn == "segment_length" and set(c.args.segment) == set(segment)]
+                    for original in lengths:
+                        if (_vai_tro_tai(de, original.start()) in ("GOAL", "CONDITIONAL", "QUESTION")
+                                or not any(set(p) == set(segment) for p in segments(original))):
+                            continue
+                        if _doc(original) != value and not any(doc_so(c.args.value) == _doc(original) for c in candidates):
+                            raise TuChoi("QUESTION_LOCAL_GIVEN_CONFLICT",
+                                         "dữ kiện cục bộ khác dữ kiện gốc của đề; chưa hỗ trợ ghi đè phạm vi giả thiết")
+                        if unit(m) and unit(original) != unit(m):
+                            raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED", "đơn vị của dữ kiện cục bộ chưa khớp nguồn; chưa đổi đơn vị")
+                    if not any(doc_so(c.args.value) == value for c in candidates):
+                        code = "QUESTION_LOCAL_GIVEN_CONFLICT" if candidates else "QUESTION_LOCAL_GIVEN_UNVERIFIED"
+                        raise TuChoi(code, "dữ kiện độ dài trong câu hỏi chưa khớp giả thiết đã xác thực; không dùng mô hình cũ",
+                                     tuple(c.id for c in candidates))
+                last = min(b, m.end() + tail.end())
+                residue[m.start() - a:last - a] = " " * (last - m.start())
+                found = True
+            for r in rb:
+                if not (a <= r.span[0] < r.span[1] <= b):
+                    continue
+                if not any(_rang_buoc_cuc_bo_khop(r, c) for c in calls):
+                    raise TuChoi("QUESTION_LOCAL_GIVEN_UNVERIFIED",
+                                 f"dữ kiện {r.kind} trong câu hỏi chưa có giả thiết tương ứng đã xác thực")
+                x, y = r.span
+                residue[x - a:y - a] = " " * (y - x)
+                found = True
+            remaining = "".join(residue)
+            if (not found and remaining.strip(" ,;:.?!")) or not _NOI_DU_KIEN_CUC_BO.fullmatch(remaining):
+                raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
+                             "phần dữ kiện/đổi giả thiết trong câu hỏi chưa được đọc trọn; không dùng mô hình cũ")
+
+
+def _rang_buoc_cuc_bo_khop(r: Any, c: LoiGoi) -> bool:
+    """Reuse source-reader predicates; calls remain the only construction assumptions, engine checks them afterwards."""
+    from ..geometry.radical import display
+    from ..semantic_program.source_entities import dinh_danh_thuc_the
+
+    def ids(xs):
+        return tuple(dinh_danh_thuc_the(x)[0] for x in xs)
+    a, e = c.args, r.entities
+    if r.kind == "pyramid" and c.fn in ("pyramid", "regular_pyramid"):
+        return ids([a.apex]) == e[:1] and _cung_da_giac(list(ids(a.base)), list(e[1:]))
+    if r.kind == "line_perp_plane" and c.fn == "perpendicular_line_plane":
+        return set(ids(a.line)) == set(e[:2]) and _cung_mat(frozenset(e[2:]), list(ids(a.plane)))
+    if r.kind == "line_perp_line" and c.fn in ("perpendicular_lines", "right_angle"):
+        pair = (a.line1, a.line2) if c.fn == "perpendicular_lines" else ([a.vertex, a.rays[0]], [a.vertex, a.rays[1]])
+        return {frozenset(ids(x)) for x in pair} == {frozenset(e[:2]), frozenset(e[2:])}
+    if r.kind in ("base_square", "base_equilateral", "base_regular_hexagon") and c.fn == "regular_polygon":
+        n = {"base_square": 4, "base_equilateral": 3, "base_regular_hexagon": 6}[r.kind]
+        return (len(a.vertices) == n and _cung_da_giac(list(ids(a.vertices)), list(e))
+                and (r.value is None or a.side is not None and doc_so(display(r.value)) == doc_so(a.side)))
+    if r.kind == "base_rectangle" and c.fn == "rectangle":
+        return _cung_da_giac(list(ids(a.vertices)), list(e))
+    return False
+
 
 #: Một mặt phẳng toán hạng như đề viết: nhóm ≥ 3 nhãn (có hoặc không ngoặc, "mặt phẳng"), hay "(mặt) đáy".
 #: Nhãn phân biệt hoa thường dù cả mẫu không phân biệt: "qua" không phải một mặt phẳng.
@@ -958,6 +1083,11 @@ _GIAO_TUYEN = re.compile(r"giao tuyến\s+(?:của\s+)?" + _MAT_TOAN_HANG + r"\s
 # Văn phạm ĐÓNG: mỗi hàm `ask_*` một vài cụm danh từ, toán hạng là nhóm có tên (điểm, đoạn, mặt, khối). Cụm không khớp ⇒
 # từ chối; không đoán. Nhãn phân biệt hoa thường, phần chữ thì không.
 _P1 = r"(?-i:[A-Z][0-9]*'?)"
+
+# Same label, equality and exact-number grammars as the source gate; every segment in a chain needs coverage.
+_DO_DAI_CUC_BO = re.compile(rf"(?<![\w']){_P1}{_P1}(?![\w']){_NOI_BANG.pattern}(?P<number>{_SO.pattern})", re.IGNORECASE)
+_NOI_DU_KIEN_CUC_BO = re.compile(r"[\s,;:.?!]*(?:(?:biết|với|cho|trong đó|có|và|cạnh|độ dài|đoạn thẳng)(?!\w)[\s,;:.?!]*)*",
+                                 re.IGNORECASE)
 
 
 def _mat_cum(n: str) -> str:

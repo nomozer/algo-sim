@@ -363,7 +363,7 @@ VALUE_MUTANTS = [
 CLAUSE_MUTANTS = [
     ("new goal markers dropped", '"chứng tỏ", "chỉ ra", "giải thích", "kiểm chứng", "tìm điều kiện",', '"chứng tỏ",',
      ("Hãy chỉ ra rằng SA vuông góc với (ABCD).", PQ)),
-    ("question mark not a question clause", ' or de[ma:mb].rstrip().endswith("?")\n', "\n",
+    ("question mark not a question clause", ' or de[ma:mb].rstrip().endswith("?") and not local_given\n', "\n",
      ("Liệu SA có vuông góc với (ABCD)?", "SA có vuông góc với (ABCD)")),
     ("non-assertion markers dropped", "or bool(_KHONG_KHANG_DINH.search(duoi + q))", "or False",
      ("SA có thể vuông góc với (ABCD).", "SA có thể vuông góc với (ABCD)")),
