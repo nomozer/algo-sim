@@ -201,6 +201,20 @@ def test_asked_object_after_a_proof_or_with_an_unrelated_number_is_answered(ques
     assert r.status == "SERVED" and HB.answer_square(r.answers["q"]) == sq, (r.code, r.reason)
 
 
+@pytest.mark.parametrize("question", [
+    # Second re-verification (N2): the question verb governs ANOTHER object; the distance is only mentioned.
+    _dist_plane("Tính SC, ở đây khoảng cách từ S đến (ABCD) gấp đôi SB."),
+    _dist_plane("Tính SC theo khoảng cách từ S đến (ABCD)."),
+    _dist_plane("Tính tỉ số giữa SC và khoảng cách từ S đến (ABCD)."),
+    _dist_plane("Tìm M sao cho khoảng cách từ S đến (ABCD) nhỏ nhất?"),
+    # minor: a yes/no question is not a request for the value
+    _dist_plane("Hỏi khoảng cách từ S đến (ABCD) có bằng 3 không?"),
+], ids=["o-day-gap-doi", "theo", "ti-so", "sao-cho-nho-nhat", "yes-no"])
+def test_object_that_is_not_the_question_verbs_object_is_refused(question):
+    r = _run(question)
+    assert r.status == "REFUSED", (r.answers, question["quotes"])
+
+
 @pytest.mark.parametrize("sentence", ["Khi đó, SA vuông góc với (ABCD).", "Biết rằng SA vuông góc với (ABCD).",
                                       "Ta có SA vuông góc với (ABCD).", "Cho biết SA vuông góc với (ABCD)."])
 def test_ordinary_premises_stay_givens(sentence):
@@ -252,6 +266,9 @@ MUTANTS = [
      lambda: _code(_perp("Phải chăng SA vuông góc với (ABCD)?"), _no_perpendicular) != "QUESTION_CLAUSE_NOT_PREMISE"),
     ("asserted-value check dropped", "if (so := _GIA_TRI.search(gan)) and not _HOI_SAU.search(gan[:so.start()]):", "if False:",
      lambda: _run(_dist_plane("Ta tính được khoảng cách từ S đến (ABCD) bằng 3.")).status != "REFUSED"),
+    ("object blocker between verb and object dropped",
+     "qua_dong_tu = bool(dong_tu) and not _CHAN_TAN_NGU.search(", "qua_dong_tu = bool(dong_tu) or not _CHAN_TAN_NGU.search(",
+     lambda: _run(_dist_plane("Tính SC theo khoảng cách từ S đến (ABCD).")).status != "REFUSED"),
     ("label anchor by any shared label", "if frozenset(n for p in phan for n in p) in toan_hang]",
      "if any(n in nhan_cua_loi_goi(c) for p in phan for n in p)]",
      lambda: _run(_dist_plane("Khoảng cách từ S đến (ABCD) bằng 3, tính SC.")).status != "REFUSED"),

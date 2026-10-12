@@ -667,7 +667,12 @@ _HOI_SAU = re.compile(r"bao\s+nhiêu|(?<!\w)mấy(?!\w)|\?", re.IGNORECASE)
 #: ("làm tròn đến 2 chữ số") không phải phép gán.
 _GIA_TRI = re.compile(r"(?<!\w)(?:bằng|là|khác|có giá trị)(?!\w)\s*(?:\d|√|π)|[=≠]\s*(?:\d|√|π)", re.IGNORECASE)
 #: Phần giải thích dữ kiện đi kèm câu hỏi ("biết SA = 3", "có SA = 3", "với a = 2") không phải gán cho đối tượng hỏi.
-_DUNG_GAN = re.compile(r"(?<!\w)(?:biết|với|cho|khi|nếu|trong đó|có(?!\s+giá\s+trị))(?!\w)", re.IGNORECASE)
+_DUNG_GAN = re.compile(r"(?<!\w)(?:biết|với|cho|khi|nếu|trong đó|có(?!\s+(?:giá\s+trị|bằng|là|lớn|nhỏ|vượt|khác)))(?!\w)",
+                       re.IGNORECASE)
+#: Giữa động từ hỏi và đối tượng (hay ngay sau đối tượng): đối tượng KHÔNG còn là tân ngữ được hỏi — nó là tham chiếu
+#: ("theo", "tỉ số giữa … và …"), điều kiện cực trị ("sao cho … nhỏ nhất"), hay chú thích ("ở đây", "trong đó", "gấp").
+_CHAN_TAN_NGU = re.compile(r"(?<!\w)(?:theo|tỉ số|tỷ số|tổng|hiệu|sao cho|ở đây|trong đó|gấp|lớn hơn|nhỏ hơn|bé hơn"
+                           r"|lớn nhất|nhỏ nhất|bé nhất)(?!\w)", re.IGNORECASE)
 #: Danh từ ĐẠI LƯỢNG được hỏi theo hàm — mốc đối tượng của câu hỏi (cùng các từ nhãn của lời gọi).
 _DAI_LUONG_HOI = {"ask_volume": ("thể tích", r"re:(?<![\w'])V(?![\w'])"), "ask_length": ("độ dài",),
                   "ask_distance_point_plane": ("khoảng cách",), "ask_distance_lines": ("khoảng cách",),
@@ -722,7 +727,11 @@ def _duoc_hoi(de: str, p: int, het: int) -> bool:
         return False
     truoc = de[a:p]
     moc_du_kien = [m.end() for m in _DUNG_GAN.finditer(truoc)]
-    return bool(_DONG_TU_HOI.search(truoc[moc_du_kien[-1] if moc_du_kien else 0:]) or _HOI_SAU.search(gan))
+    dong_tu = list(_DONG_TU_HOI.finditer(truoc[moc_du_kien[-1] if moc_du_kien else 0:]))
+    # Động từ hỏi chỉ chi phối đối tượng khi giữa chúng không có từ chặn tân ngữ (second re-verification, N2).
+    qua_dong_tu = bool(dong_tu) and not _CHAN_TAN_NGU.search(truoc[(moc_du_kien[-1] if moc_du_kien else 0) + dong_tu[-1].end():])
+    qua_hoi_sau = bool(_HOI_SAU.search(gan)) and not _CHAN_TAN_NGU.search(gan) and not _CHAN_TAN_NGU.search(de[ma:p])
+    return qua_dong_tu or qua_hoi_sau
 
 
 def _moc_doi_tuong_hoi(c: LoiGoi, de: str, dau: int, cuoi: int) -> list[tuple[int, int]]:
@@ -861,11 +870,16 @@ _NHOM_NHAN = r"(?-i:[A-Z][0-9]*'?(?:[A-Z][0-9]*'?){2,})"
 _MAT_TOAN_HANG = (r"(?:(?:hai|2|các)\s+mặt phẳng\s+)?(?:(?:mặt phẳng|mp)\s*)?"
                   r"(?:\((" + _NHOM_NHAN + r")\)|(" + _NHOM_NHAN + r")|(?:mặt\s+)?(đáy))(?![\w'])")
 #: Cụm vai trò gọi tên MẶT CẮT của một thiết diện. "song song với …" / "vuông góc với …" là phép dựng khác — không gắn.
+#: Cụm danh từ khối đứng giữa "thiết diện của" và "với (P)": "hình chóp S.ABCD", "khối lăng trụ đứng ABC.A'B'C'"…
+_KHOI_NGU = (r"(?:(?:hình|khối)\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện)(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*\s+)?"
+             r"(?:(?-i:[A-Z][0-9]*'?(?:[A-Z][0-9]*'?)*(?:\.[A-Z][0-9]*'?(?:[A-Z][0-9]*'?)*)?)\s+)?")
+#: Đầu mệnh đề (đầu đề, sau . ; : ,) — "(P) cắt …" chỉ khi (P) là CHỦ NGỮ của mệnh đề (second re-verification, N1).
+_DAU_MENH_DE = r"(?:^|(?<=[.;:,])|(?<=[.;:,]\s))\s*"
 _CAT_BOI = [re.compile(p, re.IGNORECASE) for p in (
     r"(?:cắt bởi|tạo bởi)\s+" + _MAT_TOAN_HANG,
-    r"(?<!song song )(?<!vuông góc )(?<!\w)với\s+" + _MAT_TOAN_HANG,
+    r"thiết diện\s+(?:của\s+)?" + _KHOI_NGU + r"với\s+" + _MAT_TOAN_HANG,
     r"(?<!\w)do\s+" + _MAT_TOAN_HANG + r"\s+cắt(?!\w)",
-    _MAT_TOAN_HANG + r"\s+cắt\s+(?:hình|khối)(?:[^.;]|\.(?=[A-Z]))*?theo\s+(?:một\s+)?thiết diện",   # "S.ABCD" giữ dấu chấm
+    _DAU_MENH_DE + _MAT_TOAN_HANG + r"\s+cắt\s+(?:hình|khối)(?:[^.;]|\.(?=[A-Z]))*?theo\s+(?:một\s+)?thiết diện",
 )]
 _GIAO_TUYEN = re.compile(r"giao tuyến\s+(?:của\s+)?" + _MAT_TOAN_HANG + r"\s+(?:và|với)\s+" + _MAT_TOAN_HANG, re.IGNORECASE)
 

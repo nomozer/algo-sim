@@ -233,6 +233,18 @@ def test_common_section_wordings_are_served(fact):
     assert r.status == "SERVED", (r.code, r.reason)
 
 
+@pytest.mark.parametrize("quote", [
+    # Second re-verification (N1): the quote describes ANOTHER plane related to (SAB); (SAB) is not the cutting plane.
+    "Xác định thiết diện của hình chóp S.ABCD với mặt phẳng qua M tạo với (SAB) một góc 45 độ.",
+    "Xác định thiết diện của hình chóp S.ABCD với mặt phẳng qua M đối xứng với (SAB) qua SC.",
+    "Thiết diện của hình chóp S.ABCD với mặt phẳng (P) qua M có cùng diện tích với (SAB). Tìm thiết diện.",
+    "Mặt phẳng (P) qua M song song với (SAB) cắt hình chóp S.ABCD theo một thiết diện. Xác định thiết diện đó.",
+], ids=["tao-voi", "doi-xung-voi", "cung-dien-tich-voi", "P-song-song-voi-cat"])
+def test_section_plane_related_to_a_named_plane_is_not_that_plane(quote):
+    r = _run(HB._mid("f5", "M", "S", "C"), _section("f6", quote, "SAB"))
+    assert r.status == "REFUSED", (r.answers, r.code)
+
+
 @pytest.mark.parametrize("quote", ["Tìm giao tuyến của hai mặt phẳng (SAB) và (SCD).", "Tìm giao tuyến của 2 mặt phẳng (SAB) và (SCD).",
                                    "Tìm giao tuyến của các mặt phẳng (SAB) và (SCD).", "Tìm giao tuyến của mp(SAB) và mp(SCD)."])
 def test_common_intersection_line_wordings_are_served(quote):
@@ -337,6 +349,11 @@ SLICE_MUTANTS = [
      'if n == "area" and f.solid and len(f.points or []) >= 3 and hoi_td:',
      "if False:", lambda: _run(*_trapezoid_case()).answers.get("q") is None
      or HB.answer_square(_run(*_trapezoid_case()).answers["q"]) != F(117, 16)),
+    ("subject-of-clause anchoring dropped", _gate_mutant,
+     '    _DAU_MENH_DE + _MAT_TOAN_HANG + r"\\s+cắt\\s+(?:hình|khối)', '    _MAT_TOAN_HANG + r"\\s+cắt\\s+(?:hình|khối)',
+     lambda: _run(HB._mid("f5", "M", "S", "C"), _section(
+         "f6", "Mặt phẳng (P) qua M song song với (SAB) cắt hình chóp S.ABCD theo một thiết diện. Xác định thiết diện đó.",
+         "SAB")).status != "REFUSED"),
     ("cutting-plane binding dropped", _gate_mutant, "        if c.fn in (\"section\", \"ask_section_area\", \"intersection_line\") "
      "and not mat_cat_dung_nguon(c, calls):", "        if False:",
      lambda: _run(HB._mid("f5", "M", "S", "C"), _section(
