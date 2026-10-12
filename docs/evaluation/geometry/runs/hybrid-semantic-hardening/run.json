@@ -36,5 +36,11 @@
   "candidate": {"tree_hash": "d1410731542f4d0c04b133e2a514e1207976d2bfbdd35610bf577f73af6cd614", "product_commit": "624e7fc5", "divergence": "candidate_divergence.json"},
   "t3_history": [{"commit": "42ebf14b", "result": "FULL_PRODUCT_GATE_FAIL", "pytest": "4 failed, 8670 passed", "vitest": 1053,
                   "failed": "test_geometry_library_expansion::test_projection_waits_for_right_prism_top x4 — 'Tính thể tích hình chóp ABCD.EFGH.' refused by the S1 solid-word check (not in the focused cluster); fixed in 624e7fc5"}],
-  "t3": "PENDING"
+  "t3": {"commit": "f1fda803", "worktree": "clean detached (node_modules junction to the main checkout)", "result": "FULL_PRODUCT_GATE_PASS",
+         "pytest": {"passed": 8675, "failed": 0, "skipped": 1, "deselected": 2, "xfailed": 5}, "vitest": 1053, "build": "PASS",
+         "demo_replay": "PASS", "crash_surface": "PASS"},
+  "worktrees": {"created": ["s1-red (sparse backend, RED at 9cfd0fca)", "hardening-verify (refreeze d5f5ab96, f44130d2; T3 x2)"],
+                "removed": ["s1-red", "hardening-verify"], "force_used": false, "freed_bytes": {"s1-red": "about 12 MB", "hardening-verify": 1704679673},
+                "branch_switched_in_place": "simulation-audit worktree now on research/hybrid-semantic-hardening; research/hybrid-simulation-capability-audit ref unchanged at 9cfd0fca",
+                "untouched": ["dsl-spike (research/compact-geometry-dsl, HOLD)", ".superpowers/worktrees/geometry-library-expansion (unregistered leftover; administrator; no ACL change)"]}
 }

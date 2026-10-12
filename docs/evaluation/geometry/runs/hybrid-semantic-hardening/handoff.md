@@ -49,7 +49,12 @@ After each fast-forward, rerun T3 on `main` in a clean detached worktree and rec
 
 ## GO / NO-GO
 
-- **Fast-forward of B** (offline, research route): see the report §6 once T3 and the candidate are recorded.
+- **Fast-forward of B** (offline, research route): **GO, on your approval, with `ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS` declared.**
+  - Product commits: `23481bda`, `fda835c3`, `624e7fc5` (S1); `33e711f9`, `2db6d64b` (S2).
+  - Candidate `d1410731…` (refreeze `f44130d2`), declared.
+  - T3 `FULL_PRODUCT_GATE_PASS` at `f1fda803` (pytest 8 675 / 0 failed, vitest 1 053). A first T3 at `42ebf14b` failed 4 cases, now fixed and recorded.
+  - Browser acceptance passed on SwiftShader and on a hardware GPU.
+  - `main` = `a6e27a78` is an ancestor of B's tip.
 - **Hybrid in the product, or a live pilot: NO-GO.**
   - `ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS` is open.
   - There is no measurement with a real model.
