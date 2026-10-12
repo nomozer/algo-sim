@@ -1,0 +1,21 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "question-local-givens-w01",
+  "task": "question-local-givens",
+  "corrects": "docs/evaluation/geometry/runs/question-local-givens/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "d4bc2b04689d87ac4510a7cfe6471efd578f8d9ba641baeafd8ab44326032bc9",
+  "current_candidate_source_commit": "e1f288ecfe3f7b4c6b47ccf3c8789134c62eaa80",
+  "previous_candidate_hash": "778bc329d5e886ac81429d2d40f361fef9a1d63904cff63aa801f338c72dd827",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "reason": "Retain bounded question-local source coverage and preserve the engine's unconditional OUT_OF_SCOPE refusal for explicit unsupported calls (T3 regression fixed by e1f288ec). Initial candidate 778bc329 and divergence declaration remain retained; this correction also supplies the existing mandatory historical-effect field missing in the first declaration. No provider/schema/cache/default/renderer change.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "phase2_integration": "NOT_EXECUTED; separate user decision required",
+  "push": false
+}
