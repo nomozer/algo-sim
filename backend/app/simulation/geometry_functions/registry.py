@@ -950,8 +950,6 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
     from ..semantic_program.shape_constraint import doc_rang_buoc
 
     request_verb = re.compile(_DONG_TU_HOI.pattern + r"|(?<!\w)dựng(?!\w)", re.I)
-    if not any(c.spec.kind == "ask" for c in calls) and not request_verb.search(de):
-        return
     rb = doc_rang_buoc(de)
     lengths = [m for m in _DO_DAI_CUC_BO.finditer(de) if _doc(m) is not None and _DUOI_BANG.match(de[m.end():])]
 
@@ -964,18 +962,32 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
         return found[1].lower() if found else ""
 
     questions = {_bien_cau(de, m.start()) for m in request_verb.finditer(de)}
-    questions |= {_bien_cau(de, m.start()) for m in _HOI_SAU.finditer(de)}
-    first_request = min((a for a, _b in questions), default=len(de))
-    questions |= {_bien_cau(de, m.start()) for m in _DUNG_GAN.finditer(de) if m.start() > first_request
-                  and re.match(r"\s*(?:biết|với|cho|trong đó|có)(?!\w)", de[_bien_cau(de, m.start())[0]:], re.I)}
+    for c in calls:
+        if c.spec.kind == "ask":
+            for q in c.quotes:
+                if (vt := _vi_tri(de, q)) is not None:
+                    questions |= {_bien_cau(de, p) for p, h in _cum_hoi(c, de, *vt, calls) if _hoi_dung_cum(de, p, h)}
+                    questions |= {_bien_cau(de, m.start()) for m in _KHOANG_CACH_DIEM_DUONG.finditer(de, *vt)
+                                  if _hoi_dung_cum(de, m.start(), m.end())}
+    request_contexts = set(questions)
+    construction_contexts = {_bien_cau(de, vt[0]) for c in calls
+                             if (c.spec.kind == "construct" and c.fn not in ("pyramid", "regular_pyramid", "prism"))
+                             or c.fn == "orthogonal_projection" for q in c.quotes
+                             if (vt := _vi_tri(de, q)) is not None}
+    # Derived construction clauses already have their own binding gate. Context applies regardless of request wording.
+    questions |= construction_contexts
+    request_contexts |= {_bien_cau(de, vt[0]) for c in calls if c.fn in ("section", "intersection_line") for q in c.quotes
+                         if (vt := _vi_tri(de, q)) is not None}
+    first_request = min((a for a, _b in request_contexts), default=min((a for a, _b in construction_contexts), default=len(de)))
+    questions |= {_bien_cau(de, p) for p in (0, *(m.end() for m in re.finditer(r"[.!?]\s+", de)))
+                  if first_request <= p < len(de)}
     for start, end in sorted(questions):
         phrases = [(m.start(), m.end()) for rules in _CUM_HOI.values() for pattern, _bind in rules
                    for m in pattern.finditer(de, start, end) if _hoi_dung_cum(de, m.start(), m.end())]
         phrases += [(m.start(), m.end()) for m in _KHOANG_CACH_DIEM_DUONG.finditer(de, start, end)
                     if _hoi_dung_cum(de, m.start(), m.end())]
-        if (not phrases and not request_verb.search(de, start, end)
-                and not re.match(r"\s*(?:biết|với|cho|trong đó|có)(?!\w)", de[start:end], re.I)):
-            continue
+        if _DIEU_KIEN.search(de, start, end):
+            raise TuChoi("CONDITIONAL_CLAUSE", "ngữ cảnh câu hỏi có giả thiết điều kiện; chưa hỗ trợ thay phạm vi")
         masked = list(de[start:end])
         for a, b in phrases:
             masked[a - start:b - start] = " " * (b - a)
@@ -989,6 +1001,8 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
                         and not de[p:start + m.start()].strip(" ,;:") for p in (start, *object_ends)))]
         stops = sorted({a for a, _b in phrases} | {m.start() for m in request_verb.finditer(de, start, end)} | {end})
         fragments = [(a, next(p for p in stops if p >= a)) for a in markers]
+        if not phrases and not request_verb.search(de, start, end) and (start, end) not in construction_contexts and not fragments:
+            fragments.append((start, end))
         first = min(stops)
         prefix = de[start:first]
         discourse = (_GIUA_HOP_LE.fullmatch(prefix) or re.fullmatch(r"\s*khi đó\s*,?\s*", prefix, re.I)
@@ -996,6 +1010,13 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
         if start < first < end and not markers and not discourse and _tu_nhan(prefix):
             fragments.append((start, first))
         for a, b in fragments:
+            # Extraction may omit an original shape fact while keeping a local replacement. Preserve source authority.
+            for original in rb:
+                if (_vai_tro_tai(de, original.span[0]) in ("GOAL", "CONDITIONAL", "QUESTION")
+                        or _phu_dinh(de, original.span[0], de[slice(*original.span)])):
+                    continue
+                if not any(_rang_buoc_cuc_bo_khop(original, c) for c in calls):
+                    raise TuChoi("QUESTION_LOCAL_GIVEN_UNVERIFIED", "giả thiết hình dạng gốc chưa được bảo toàn; không thay mô hình")
             residue = list(de[a:b])
             found = False
             for m in _DO_DAI_CUC_BO.finditer(de, a, b):
@@ -1004,20 +1025,20 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
                 if value is None or tail is None:
                     continue
                 for segment in segments(m):
-                    candidates = [c for c in calls if c.fn == "segment_length" and set(c.args.segment) == set(segment)]
+                    candidates = _nguon_do_dai_cuc_bo(calls, segment)
                     for original in lengths:
                         if (_vai_tro_tai(de, original.start()) in ("GOAL", "CONDITIONAL", "QUESTION")
                                 or not any(set(p) == set(segment) for p in segments(original))):
                             continue
-                        if _doc(original) != value and not any(doc_so(c.args.value) == _doc(original) for c in candidates):
+                        if _doc(original) != value and not any(v == _doc(original) for v, _cid in candidates):
                             raise TuChoi("QUESTION_LOCAL_GIVEN_CONFLICT",
                                          "dữ kiện cục bộ khác dữ kiện gốc của đề; chưa hỗ trợ ghi đè phạm vi giả thiết")
                         if unit(m) and unit(original) != unit(m):
                             raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED", "đơn vị của dữ kiện cục bộ chưa khớp nguồn; chưa đổi đơn vị")
-                    if not any(doc_so(c.args.value) == value for c in candidates):
+                    if not any(v == value for v, _cid in candidates):
                         code = "QUESTION_LOCAL_GIVEN_CONFLICT" if candidates else "QUESTION_LOCAL_GIVEN_UNVERIFIED"
                         raise TuChoi(code, "dữ kiện độ dài trong câu hỏi chưa khớp giả thiết đã xác thực; không dùng mô hình cũ",
-                                     tuple(c.id for c in candidates))
+                                     tuple(cid for _v, cid in candidates))
                 last = min(b, m.end() + tail.end())
                 residue[m.start() - a:last - a] = " " * (last - m.start())
                 found = True
@@ -1036,6 +1057,19 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
                              "phần dữ kiện/đổi giả thiết trong câu hỏi chưa được đọc trọn; không dùng mô hình cũ")
 
 
+def _nguon_do_dai_cuc_bo(calls: tuple[LoiGoi, ...], segment: list[str]) -> list[tuple[tuple[Fraction, bool], str]]:
+    """Direct lengths and canonical polygon sides, the same authorities engine.do_dai uses; no layout inference."""
+    values = []
+    for c in calls:
+        if c.fn == "segment_length" and set(c.args.segment) == set(segment):
+            values.append((doc_so(c.args.value), c.id))
+        if c.fn == "regular_polygon" and c.args.side is not None:
+            vertices = c.args.vertices
+            if any(set(segment) == {v, vertices[(i + 1) % len(vertices)]} for i, v in enumerate(vertices)):
+                values.append((doc_so(c.args.side), c.id))
+    return values
+
+
 def _rang_buoc_cuc_bo_khop(r: Any, c: LoiGoi) -> bool:
     """Reuse source-reader predicates; calls remain the only construction assumptions, engine checks them afterwards."""
     from ..geometry.radical import display
@@ -1045,6 +1079,8 @@ def _rang_buoc_cuc_bo_khop(r: Any, c: LoiGoi) -> bool:
         return tuple(dinh_danh_thuc_the(x)[0] for x in xs)
     a, e = c.args, r.entities
     if r.kind == "pyramid" and c.fn in ("pyramid", "regular_pyramid"):
+        return ids([a.apex]) == e[:1] and _cung_da_giac(list(ids(a.base)), list(e[1:]))
+    if r.kind in ("regular_square_pyramid", "regular_triangular_pyramid", "regular_hexagonal_pyramid") and c.fn == "regular_pyramid":
         return ids([a.apex]) == e[:1] and _cung_da_giac(list(ids(a.base)), list(e[1:]))
     if r.kind == "line_perp_plane" and c.fn == "perpendicular_line_plane":
         return set(ids(a.line)) == set(e[:2]) and _cung_mat(frozenset(e[2:]), list(ids(a.plane)))

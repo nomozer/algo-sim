@@ -17,13 +17,13 @@ Duplicate check: no existing local-given coverage gate; existing source spans an
 - [x] Run the test file on the integrated baseline and retain RED receipt (22 failed, 20 passed after correcting a test helper signature; no product change at RED).
 - [x] Extend registry.kiem_nguon with transient source coverage checks: compare local assertions with the existing validated calls, preserve engine authority, refuse unread context. Never overwrite base facts or synthesize replacement geometry.
 - [x] Run the new file and existing Hybrid/source gate cluster: 838 passed, 4 xfailed; benchmark/provider pins unchanged. Added RED→GREEN controls for model-omitted original facts, explicit units, question punctuation, follow-up givens and construction-only requests.
-- [ ] Commit the bounded source/test change.
+- [x] Commit the bounded source/test change (`06cd8cdf`).
 
 Review focus: whole-question quotes must not cover unrelated assertions; short ask quotes must not hide surrounding givens; repeated clean asks must not authorize a later changed context; numeric notation/label/scale changes must preserve decisions; planner auxiliary skips must not bypass context verification.
 
 ## Task 2: Independent verification and handoff
 
-- [ ] Independent read-only LOCAL review against user requirements, real callers and adversarial inputs; fix Critical/Important with RED→GREEN.
+- [x] Independent read-only LOCAL review: 3 Critical, 1 Important; executor reproduced 19 failures, fixed all in one pass; 861 passed, 4 xfailed. See review.md.
 - [ ] Refreeze candidate in clean detached worktree at final product commit; declare divergence from d1410731 and locked A/B 12da4768 without rewriting their files.
 - [ ] Run benchmark 30 cases, provider pins and T3 in clean detached worktree. No model calls. Renderer unchanged: Phase 1 renderer evidence is sufficient.
 - [ ] Update active contract, issue, code index, evidence index, continuity and next action; run docs/identity gates; commit evidence separately.
