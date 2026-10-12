@@ -9,10 +9,11 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_QUESTION_LOCAL_GIVENS_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = POST_QUESTION_LOCAL_GIVENS_PRIORITY_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
+- **Question-local givens trên `main` + `origin/main` (2026-10-12):** `ebe4e463`, T3 clean PASS, run [`question-local-givens-main-integration`](evaluation/geometry/runs/question-local-givens-main-integration/report.md). Việc kế tiếp: người dùng chọn lát Hybrid tiếp theo (đề xuất bên dưới); DSL vẫn HOLD.
 - **Question-local givens (LOCAL research, 2026-10-12):** product `f56d8cb7`, candidate `25c85eed…` (review cuối: run [`question-local-givens-final-review`](evaluation/geometry/runs/question-local-givens-final-review/report.md)); cổng chung A/B fail-closed, dữ kiện cùng câu đã khớp vẫn phục vụ. Review 3 Critical + 1 Important đã đóng RED→GREEN; benchmark 30 ca không đổi. Chưa merge/push; LLM_ONLY/cache125/Gemini0. Run [`question-local-givens`](evaluation/geometry/runs/question-local-givens/report.md). Sau quyết định tích hợp, đề xuất lát nhiều bước dựng mặt phẳng qua điểm song song/vuông góc mặt phẳng đã có rồi dựng thiết diện; chưa triển khai, cần chốt tiền điều kiện bảo đảm mặt phẳng duy nhất. B27/B28/DSL/orbit P1 giữ nguyên.
 
 - **Main integration (LOCAL, 2026-10-12):** fast-forward `a6e27a78` → `22edf7ff`; candidate `d1410731…` verify; T3 PASS (backend 8675, frontend 1053); benchmark 30 ca byte-identical 19/9/0/2. Không push. Run [`hybrid-main-integration`](evaluation/geometry/runs/hybrid-main-integration/report.md). Người dùng đã giao bước kế tiếp: fail-closed question-local givens trên research branch mới, không mở scoped state/schema/provider mới; B27/B28/DSL/orbit P1 vẫn ngoài phạm vi.

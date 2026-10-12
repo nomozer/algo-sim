@@ -1,5 +1,22 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = QUESTION_LOCAL_GIVENS_MAIN_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/question-local-givens-main-integration/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/question-local-givens-main-integration/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = MAIN_INTEGRATED_PUSHED_T3_PASS
+CODE_COMMIT = f56d8cb7
+VERIFICATION_COMMIT = 5fe14001
+MODEL_REQUEST_COUNT = 0
+
+User-authorized ff-only `232c1225` → `5fe14001`, SessionStart commit `ebe4e463`, push `a6e27a78..ebe4e463`
+(main = origin/main = ls-remote). Candidate 25c85eed verify PASS; benchmark byte-identical 19/9/0/2; clean detached
+T3 at 5fe14001 PASS: backend 8764, frontend 1053, build/demo/crash PASS. Three merged Hybrid branches deleted with -d.
+Machine receipt: `runs/question-local-givens-main-integration/verification/t3.log`, SHA256
+`ca42fdda58621bc887ee0ef62130d9ed2917f5cb4cc05e3080c6c05427e9a772`.
+
 ## WAVE_ID = QUESTION_LOCAL_GIVENS_FINAL_REVIEW
 
 REPORT = docs/evaluation/geometry/runs/question-local-givens-final-review/report.md

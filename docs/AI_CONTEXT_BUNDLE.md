@@ -2,13 +2,13 @@
 
 ## LOCAL override — 2026-10-12 (ưu tiên hơn snapshot §2)
 
-Phase 2 sau review cuối: product `f56d8cb7`, candidate `25c85eed…`, T3 clean detached `8fa3ae4c` PASS (backend 8764, frontend 1053, build/demo/crash PASS); đề nghị GO fast-forward cục bộ, chờ quyết định người dùng. Run `question-local-givens-final-review` (sửa false refusal "biết rằng"; lỗ hở đổi giả thiết cùng câu sau "sau đó"/"rồi" còn mở).
+Phase 2 đã trên `main` và `origin/main` (`ebe4e463`, push fast-forward từ `a6e27a78`): product `f56d8cb7`, candidate `25c85eed…`, T3 clean detached `5fe14001` PASS (backend 8764, frontend 1053, build/demo/crash PASS). Run `question-local-givens-main-integration`; review cuối ở `question-local-givens-final-review` (lỗ hở đổi giả thiết cùng câu sau "sau đó"/"rồi" còn mở). Ba nhánh Hybrid đã merge bị xoá bằng `-d`; DSL HOLD và hai nhánh real-model giữ. Hybrid vẫn chưa nối `/api/analyze`.
 
 - Hybrid S0 + thiết diện/giao tuyến + S1/S2 đã fast-forward cục bộ lên `main`: `a6e27a78` → `22edf7ff`. Remote vẫn `a6e27a78` (ls-remote); không push. Ref Hybrid và DSL HOLD giữ nguyên.
 - Candidate `d1410731…`, product `624e7fc5`, 110 file verify khớp. T3 clean detached tại `22edf7ff`: FULL_PRODUCT_GATE_PASS (backend 8675, frontend 1053, build/demo/crash PASS). Benchmark 30 ca giữ byte: 19/9/0/2 cả hai tuyến offline. Run `hybrid-main-integration`.
 - Phase 2 ở `research/question-local-givens` từ main `232c1225`: product `e1f288ec`, candidate `d4bc2b04…` (110 file), clean verification `678f5b7b`. Cổng chung A/B phủ dữ kiện trong/sau yêu cầu, giữ dữ kiện gốc, từ chối cấu hình mới/chưa xác minh; dữ kiện cùng câu đã khớp vẫn phục vụ. Review 3 Critical + 1 Important đã đóng RED→GREEN (861 PASS/4 xfail). Benchmark vẫn 19/9/0/2. Run `question-local-givens`; chưa merge/push. Scoped replacement/vocabulary ngoài bộ đọc/chuyển đơn vị vẫn unsupported; LLM_ONLY/cache125/Gemini0.
 
-Lịch sử baseline và review: `hybrid-slice1-main-integration`, `hybrid-slice1-review`, `hybrid-slice-review`, `hybrid-semantic-hardening` trong thư mục runs; A @ 9cfd0fca và B @ 22edf7ff được giữ làm ref. B26 đã có; B27/B28 chưa được duyệt; orbit P1 vẫn là ngoại lệ có sẵn.
+Lịch sử baseline và review: `hybrid-slice1-main-integration`, `hybrid-slice1-review`, `hybrid-slice-review`, `hybrid-semantic-hardening` trong thư mục runs; A @ 9cfd0fca và B @ 22edf7ff nay nằm trong `origin/main` (ref nhánh đã xoá sau push). B26 đã có; B27/B28 chưa được duyệt; orbit P1 vẫn là ngoại lệ có sẵn.
 
 > Handoff cô đọng cho session mới. Code/test thắng khi mâu thuẫn với docs.
 > Không chứa secret hoặc raw model output; giới hạn 300 dòng. Lịch sử từng wave:
@@ -202,7 +202,7 @@ Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FU
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_QUESTION_LOCAL_GIVENS_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = POST_QUESTION_LOCAL_GIVENS_PRIORITY_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

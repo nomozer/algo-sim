@@ -167,6 +167,8 @@ ALLOWED_CANONICAL_ACTIONS = [
     # Local main integration complete; user authorized the bounded question-local givens slice.
     "HYBRID_QUESTION_LOCAL_GIVENS",
     "HYBRID_QUESTION_LOCAL_GIVENS_INTEGRATION_DECISION",
+    # question-local-givens-main-integration (2026-10-12): Phase 2 on origin/main; next is the user's choice of slice.
+    "POST_QUESTION_LOCAL_GIVENS_PRIORITY_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

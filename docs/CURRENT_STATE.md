@@ -2,15 +2,17 @@
 
 ## LOCAL override — question-local-givens, 2026-10-12
 
-CANONICAL_NEXT_ACTION = HYBRID_QUESTION_LOCAL_GIVENS_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = POST_QUESTION_LOCAL_GIVENS_PRIORITY_DECISION
 
-Nhánh `research/question-local-givens` từ main `232c1225`; product `f56d8cb7` (review cuối, run `question-local-givens-final-review`),
+Đã tích hợp: `main` = `origin/main` = `ebe4e463` (ff `232c1225` → `5fe14001` + commit SessionStart; push fast-forward;
+T3 clean `5fe14001` PASS; run [`question-local-givens-main-integration`](evaluation/geometry/runs/question-local-givens-main-integration/report.md)).
+Nhánh nguồn `research/question-local-givens` (đã xoá sau push) từ main `232c1225`; product `f56d8cb7` (review cuối, run `question-local-givens-final-review`),
 candidate commit `8fa3ae4c`, candidate `25c85eed…` (110 file), verify khớp; T3 clean `8fa3ae4c` PASS (backend 8764).
 Lỗ hở còn mở: đổi giả thiết cùng câu sau "sau đó"/"rồi" (có từ `232c1225`). Cổng chung A/B kiểm ngữ cảnh yêu cầu và dữ kiện gốc bị model bỏ sót;
 không phục vụ hình cũ cho dữ kiện thay đổi/chưa xác minh. Dữ kiện cùng câu đã khớp tiếp tục phục vụ.
 RED baseline 34 fail/28 pass (62 test); review 19 fail/4 pass → 23 pass; cluster 861 pass/4 xfail.
 Benchmark 30 ca byte-identical 19/9/0/2; provider/schema/cache125/default LLM_ONLY không đổi; Gemini0.
-Chưa merge/push. Scoped replacement, arbitrary wording, chuyển đơn vị và vị từ ngoài vocabulary vẫn unsupported.
+Đã merge/push (xem trên). Scoped replacement, arbitrary wording, chuyển đơn vị và vị từ ngoài vocabulary vẫn unsupported.
 Bằng chứng/gate cuối: [`question-local-givens`](evaluation/geometry/runs/question-local-givens/report.md).
 T3 clean detached `678f5b7b`: PASS, backend 8760 / frontend 1053, build/demo/crash PASS. Đề nghị GO tích hợp offline có giới hạn; chờ quyết định người dùng.
 

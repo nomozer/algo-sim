@@ -116,7 +116,7 @@
 - **evidence:** independent review of S1, `docs/evaluation/geometry/runs/hybrid-semantic-hardening/report.md` §5.
 - **impact:** A confident answer for a figure other than the one asked about, on the Hybrid routes. Pre-existing (also at `9cfd0fca`).
 - **scope:** a new check in `registry.kiem_nguon`: every value or relation inside the asked sentence must be covered by a typed fact, or the ask is refused. This is a new authority, not more phrase grammar.
-- **status:** BOUNDED SAFETY REPAIR on `research/question-local-givens`, product `e1f288ec`; chưa merge/push.
+- **status:** BOUNDED SAFETY REPAIR, product `f56d8cb7`, on `main` and `origin/main` since `ebe4e463` (run `question-local-givens-main-integration`). Hybrid still not wired into `/api/analyze`.
   - Cổng chung A/B đối chiếu dữ kiện trong/sau câu hỏi và yêu cầu chỉ dựng hình với cùng lời gọi đã xác minh; quote ngắn và điểm phụ không bypass.
   - Mâu thuẫn, cấu hình giả định mới hoặc ngữ cảnh chưa phủ đều từ chối có reason code. Không ghi đè dữ kiện gốc; dữ kiện gốc bị model bỏ sót cũng được đối chiếu.
   - Positive controls giữ phục vụ dữ kiện cùng câu đã khớp, gồm cạnh của đáy đều. Review độc lập: 3 Critical + 1 Important đã sửa RED→GREEN.
