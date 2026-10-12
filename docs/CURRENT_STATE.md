@@ -1,5 +1,18 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL override — question-local-givens, 2026-10-12
+
+CANONICAL_NEXT_ACTION = HYBRID_QUESTION_LOCAL_GIVENS_INTEGRATION_DECISION
+
+Nhánh `research/question-local-givens` từ main `232c1225`; product `e1f288ec`, candidate commit `03095c28`,
+candidate `d4bc2b04…` (110 file), verify khớp; clean verification `678f5b7b`. Cổng chung A/B kiểm ngữ cảnh yêu cầu và dữ kiện gốc bị model bỏ sót;
+không phục vụ hình cũ cho dữ kiện thay đổi/chưa xác minh. Dữ kiện cùng câu đã khớp tiếp tục phục vụ.
+RED baseline 34 fail/28 pass (62 test); review 19 fail/4 pass → 23 pass; cluster 861 pass/4 xfail.
+Benchmark 30 ca byte-identical 19/9/0/2; provider/schema/cache125/default LLM_ONLY không đổi; Gemini0.
+Chưa merge/push. Scoped replacement, arbitrary wording, chuyển đơn vị và vị từ ngoài vocabulary vẫn unsupported.
+Bằng chứng/gate cuối: [`question-local-givens`](evaluation/geometry/runs/question-local-givens/report.md).
+T3 clean detached `678f5b7b`: PASS, backend 8760 / frontend 1053, build/demo/crash PASS. Đề nghị GO tích hợp offline có giới hạn; chờ quyết định người dùng.
+
 ## LOCAL override — hybrid-main-integration, 2026-10-12
 
 Main đã fast-forward cục bộ `a6e27a78` → `22edf7ff` theo lệnh người dùng; remote vẫn `a6e27a78`, không push.
@@ -117,7 +130,6 @@ thuộc thư mục run trong `docs/evaluation/`.
 > USER_DIRTY_STATE = có — `frontend/public/favicon.svg` untracked của người dùng, giữ nguyên; không stage/commit.
 > CURRENT_WAVE = HYBRID_AB_PILOT_READINESS (run hybrid-ab-pilot-readiness, LOCAL, cùng nhánh, live Gemini0): object-binding chính xác, observation ≠ proof; runner SMOKE24/FULL288 có identity riêng, shared output3072; 344 focused PASS,9 mutation killed,312 fake/network0; clean backend8068 PASS/1 skip/2 deselected tại2f1b457c. CORRECTS HYBRID_COMPILER_SELECTION: lịch sử nguyên byte, đọc cùng correction layer. Report/handoff của run là thẩm quyền; không tuyên bố safety population/visual/real-model.
 > FINAL_DECISION = HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW — offline GO có giới hạn kiểm chứng; SMOKE/FULL live NO-GO (prompt estimator chưa provider-bound, storage cause UNKNOWN, chưa phê duyệt riêng). Main giữ nguyên28ac1d61; không merge/push/default change; human visual acceptance NOT_PERFORMED.
-> CANONICAL_NEXT_ACTION = HYBRID_QUESTION_LOCAL_GIVENS
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 

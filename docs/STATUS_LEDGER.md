@@ -1,5 +1,14 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+## LOCAL research — Question-local givens, 2026-10-12
+
+Nhánh `research/question-local-givens` từ main `232c1225`; product `e1f288ec`, candidate `d4bc2b04…`.
+Fail-closed có giới hạn cho ngữ cảnh yêu cầu, giữ dữ kiện gốc và positive controls cùng câu. Review độc lập
+3 Critical + 1 Important đã sửa, cluster 861 pass/4 xfail. Benchmark 30 ca byte-identical; provider pins giữ nguyên.
+Gate cuối/cleanup: [`question-local-givens`](evaluation/geometry/runs/question-local-givens/report.md).
+Clean detached T3 `678f5b7b`: FULL_PRODUCT_GATE_PASS, backend 8760 / frontend 1053, build/demo/crash PASS.
+Chưa merge/push; LLM_ONLY/cache125/Gemini0; scoped assumptions đầy đủ vẫn unsupported.
+
 ## LOCAL — Hybrid main integration, 2026-10-12
 
 Theo yêu cầu người dùng, `main` fast-forward cục bộ từ `a6e27a78` tới `22edf7ff`; không push.

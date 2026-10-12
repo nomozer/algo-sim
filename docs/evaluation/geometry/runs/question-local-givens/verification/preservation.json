@@ -1,0 +1,19 @@
+{
+  "protected_refs": {
+    "real_model_readiness": "4cfa547f0989e53b917cc020adf59e250acbf68d",
+    "dsl": "a9498fdfa55386b447e11c41ab2a584ed4179125",
+    "real_model_pilot": "471a2c796b44bf9bf8fc14ca02a5a365b440c2a7",
+    "hybrid": "22edf7ffe79db4dc9df9d1426dc62f8d2dc2e322"
+  },
+  "push": false,
+  "benchmark_labels_oracle_changed": false,
+  "main": "232c1225235b57a7ebc2229a60c8198d8ee21bd2",
+  "historical_evidence_paths_changed": [],
+  "old_scratch_databases_and_codexsandboxoffline_directory": "UNTOUCHED",
+  "schema": "preservation_receipt/1",
+  "origin_main": "a6e27a785f952142d0d30cc4604434617a62494f",
+  "phase2_product_paths_changed": [
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "favicon_sha256": "5cd57f27376366a639370e0282456529dbdc227c6aa8a950eb6d7116f317dc62"
+}

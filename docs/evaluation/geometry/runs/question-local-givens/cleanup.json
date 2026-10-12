@@ -1,0 +1,26 @@
+{
+  "acl_changed": false,
+  "git_remove_force": false,
+  "deletion_method": "git worktree remove deregistered clean trees; exact leftover directories removed with native PowerShell under creating sandbox account",
+  "schema": "cleanup/1",
+  "task_processes_remaining": 0,
+  "freed_bytes": {
+    "phase1_scratch": 49645644,
+    "red_verification": 12235241,
+    "phase1_verification": 1704684873,
+    "phase2_verification": 1705871997
+  },
+  "registered_worktrees_after": 4,
+  "junctions_detached": 2,
+  "retained_new_worktree": "question-local-givens: consumer of unmerged reviewable result",
+  "phase2_scratch_bytes": 91675488,
+  "protected_old_data": "UNTOUCHED",
+  "registered_worktrees_before": 3,
+  "removed_worktrees": [
+    "main-integration-verify",
+    "question-givens-red",
+    "question-givens-verify"
+  ],
+  "junction_targets_intact": true,
+  "total_freed_bytes": 3564113243
+}

@@ -1,0 +1,32 @@
+{
+  "algorithm": "sha256",
+  "schema": "artifact_hashes/1",
+  "files": {
+    "candidate_divergence.json": "17b1225a0273989eaa1720b2ee8a620f29c7f840f55307047dddc9773fdf9edc",
+    "cleanup.json": "eefe4fdaf2431af6d001d816c332001ee6f8ee47078378012e006c6926b18ca3",
+    "inputs/candidate_divergence.json": "7b1afd795cd4c3a9ffd3f4b52eda4defcda6f6412ff9737afd2e7c08c445845c",
+    "plan.md": "8d066874280534c185b16b777bf26e2a73d2507c3f02144c2e4a70a06bfae37e",
+    "report.md": "8a63c728ef0eed8ca0c8aa473406236d94d6124033641d63f55cd51370f64362",
+    "review.md": "e3fe06bf5614b644e5fb96865cd802c711fa68838acb56a2c9d1fd8c99a0733a",
+    "run.json": "bf39df4f880162561ebdf710da00e383c250c46625fd3cfcfc76986b1c096458",
+    "verification/baseline-red.json": "2d6ec5277791f0f85d08267face73ea4ca977cf2ee1a0ecde6f978cc4ac39e6f",
+    "verification/benchmark-before-review.json": "febb5b602fcb194c502e07ea47fe4200ed4083f0b09bac12784b2536940ab12e",
+    "verification/benchmark-final.json": "febb5b602fcb194c502e07ea47fe4200ed4083f0b09bac12784b2536940ab12e",
+    "verification/candidate-first.json": "ef32f560984fe34feac6e84ce030b618422f6bf4216fd16abfde4caaef34269c",
+    "verification/candidate-verify.log": "5b553983d97068509c6e0118d4e6c28f1c2224f4f7f75c33ec1e195939680ce6",
+    "verification/cluster-after-review.log": "74fe7115782368f4a525246f676b11f56b2626c2b8d6593af081366ea372d4a6",
+    "verification/cluster-before-review.log": "16f238b818050c4df25a039f95136c748244c635d737985cb07db1fedc3a1f38",
+    "verification/docs-audit.json": "e679d973ffa60532ae8ad257ed45b634e9bea598a7fdb3f4d143f12f91ffe058",
+    "verification/docs-tests.log": "27b7b21d3f581bae3af5a1ee2fc8b2a07d3e8b5aba8c46ef7002b19bcbfe5652",
+    "verification/freeze.log": "8ee5091dc4b537c82352214b52f8129f4ec5766e4ee11a358db0de1f6744d5ae",
+    "verification/gate-fix-clean-regression.log": "dbdd62687e7545c2e61380a40e8311592e23c66bd8d7fc159ecc107cd4277420",
+    "verification/gate-fix-green.log": "04cc92f2e139facd199e6ca0627068ab9a19547c1d9aef46a9c4f48e9dc92c43",
+    "verification/pins-candidate-final.log": "48b63ece398611e6ebeee9ad1d8e417d0e49fe2bd996ab60826cbe08bd426270",
+    "verification/pins-candidate-first.log": "8bf694353d5bcfeeaa654f376d11c2283bf7297322b8886fc4bb514c1a247881",
+    "verification/preservation.json": "deda99dfb059ab3bcb94918878eae3ec6de8d5702848d17375b757b1bf6de479",
+    "verification/review-red-green.json": "a70c54742b383bdcd2c5dfd239be9fe027a90ddb84cc8db8f8af8de54ba9ad6d",
+    "verification/t3-first-attempt.json": "739b5b5442037ed8d4a890217a9961914868331870cdfab77acee092216da77d",
+    "verification/t3.log": "d732b7347307271c137dbe5dee28c3acb132f015181858492bc9ca4c8029206b"
+  },
+  "source_verification_commit": "678f5b7b4cb29d1c6bde231f9df32d45f6de481e"
+}

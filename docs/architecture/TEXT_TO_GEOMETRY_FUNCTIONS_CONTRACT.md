@@ -62,8 +62,7 @@ của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cầ
    từ hỏi cuối) chỉ có từ nối và cụm hỏi khác; sau nó chỉ "bằng / là bao nhiêu", "?", "theo a / độ", ngoặc lời dặn (làm
    tròn, đơn vị), "đã cho / đó", "của <khối>", rồi kết câu thật, lời dẫn dữ kiện (biết, với, cho, trong đó), việc kế tiếp
    (rồi, sau đó, từ đó) hay lời dặn (làm tròn, bằng cách); không bị gán giá trị, không là câu có/không, không trong mệnh đề
-   chứng minh/điều kiện — sai ⇒ `NOT_ASKED_IN_SOURCE` hoặc mã vai trò. Dữ kiện cục bộ trong câu hỏi ("Với SA = 5, tính SC")
-   CHƯA được đối chiếu với dữ kiện đã gõ — `ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS`.
+   chứng minh/điều kiện — sai ⇒ `NOT_ASKED_IN_SOURCE` hoặc mã vai trò.
    **Vai trò tiền đề** (S1) còn nhận: mục tiêu "chỉ ra / giải thích / kiểm chứng / kiểm tra / tìm điều kiện / suy ra / xác
    minh / vì sao / lập luận"; giả định và tường thuật "hễ / xét trường hợp / cho rằng / cho là / coi như / giả định / muốn
    / khẳng định / theo bạn"; điều kiện đặt SAU quan hệ ("… khi M trùng S"); mệnh đề kết bằng "?" hay "có … không.".
@@ -80,6 +79,19 @@ của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cầ
    (`AMBIGUOUS_VALUE_QUOTE`); lệch ⇒ `UNGROUNDED_VALUE`. S1: số neo sau nhãn đoạn phải nối bằng PHÉP BẰNG ("=", "bằng",
    "là", "dài", "có độ dài", chuỗi "SA = SB = 3") và sau số chỉ có đơn vị rồi hết mệnh đề — "SA ≥ 3", "SA ≈ 3", "SA bằng 3
    lần AB", "SA = 3 là sai" ⇒ `UNGROUNDED_VALUE`.
+
+6. **Ngữ cảnh yêu cầu** (run `question-local-givens`, research branch): sau khi mọi lời gọi vượt cổng nguồn thường,
+   `_kiem_du_kien_cau_hoi` kiểm dữ kiện cục bộ trong và sau câu hỏi, cả yêu cầu chỉ dựng hình và câu tiếp theo.
+   Quote ngắn, câu hỏi sạch đứng trước hoặc lời gọi phụ của planner không miễn kiểm ngữ cảnh.
+   Dùng lại số chính xác, vai trò mệnh đề và `shape_constraint.doc_rang_buoc`; đối chiếu với cùng tập lời gọi canonical,
+   gồm dữ kiện gốc có tên bị model bỏ sót. Không tạo state ngữ nghĩa thứ hai, không thêm/sửa giả thiết.
+   - Độ dài trực tiếp và cạnh kề của đa giác đều đã khai, hình đáy và các quan hệ trong vocabulary đóng phải khớp.
+   - Dữ kiện mâu thuẫn ⇒ `QUESTION_LOCAL_GIVEN_CONFLICT`; chưa có thẩm quyền xác minh ⇒ `QUESTION_LOCAL_GIVEN_UNVERIFIED`.
+   - Ngữ cảnh giả định/thay cấu hình hoặc câu theo sau chưa được phủ ⇒ `QUESTION_CONTEXT_UNSUPPORTED`.
+   - Dữ kiện cùng câu đã xác minh vẫn phục vụ, kể cả "Tính thể tích …, biết SA = 3." và cạnh AB = 2 của đáy vuông cạnh 2.
+   Đây là cổng phủ nguồn có giới hạn; scoped replacement, arbitrary prose, chuyển đơn vị và các vị từ nguồn ngoài
+   bộ đối chiếu vẫn unsupported. Nếu có dữ kiện cục bộ mà không giữ được ràng buộc gốc thì từ chối; không dùng hình cũ.
+   Engine tiếp tục sở hữu dựng hình và kiểm ràng buộc. Hai route A/B dùng chung cổng; LLM_ONLY mặc định không đổi.
 
 ## 4. Engine
 

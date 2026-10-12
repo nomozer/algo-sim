@@ -24,9 +24,9 @@ Review focus: whole-question quotes must not cover unrelated assertions; short a
 ## Task 2: Independent verification and handoff
 
 - [x] Independent read-only LOCAL review: 3 Critical, 1 Important; executor reproduced 19 failures, fixed all in one pass; 861 passed, 4 xfailed. See review.md.
-- [ ] Refreeze candidate in clean detached worktree at final product commit; declare divergence from d1410731 and locked A/B 12da4768 without rewriting their files.
-- [ ] Run benchmark 30 cases, provider pins and T3 in clean detached worktree. No model calls. Renderer unchanged: Phase 1 renderer evidence is sufficient.
-- [ ] Update active contract, issue, code index, evidence index, continuity and next action; run docs/identity gates; commit evidence separately.
-- [ ] Remove this turn's verification/scratch/junctions/processes; keep research ref and reviewable commits, no merge/push of Phase 2.
+- [x] Refreeze candidate in clean detached worktree at final product commit e1f288ec (d4bc2b04); additive divergence correction, first candidate/failed gate retained; historical bytes unchanged.
+- [x] Benchmark 30 unchanged, candidate/provider pins 27 pass; clean detached T3 at 678f5b7b PASS (8760 backend/1053 frontend, build/demo/crash). No model calls; renderer unchanged.
+- [x] Update active contract, issue, code/evidence indexes, continuity and next action; docs audit PASS, docs/identity tests 51 pass/1 deselected. Evidence/docs staged separately from product and candidate.
+- [x] Remove this turn's verification/scratch/junctions/processes; retain unmerged research checkout and all protected original refs/data. 3,564,113,243 bytes freed; 3→4 registered worktrees; no merge/push of Phase 2.
 
 Unsupported scope changes remain refusals; supporting full scoped assumptions is a later user decision. Next proposed vertical slice: bounded multi-step construction of a plane through a point parallel/perpendicular to another plane, then section construction, using existing primitives.

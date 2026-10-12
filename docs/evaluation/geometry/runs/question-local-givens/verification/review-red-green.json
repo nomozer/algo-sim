@@ -1,0 +1,37 @@
+{
+  "raw_traceback_retained": false,
+  "regression_source_commit": "227e1bcfcaad0c7aa83b65643ea4f7d4e24ca966",
+  "schema": "review_regressions/1",
+  "red": {
+    "names": [
+      "tests/geometry/test_question_context_review.py::test_every_changed_question_context_is_refused[T\\xednh SC. T\\xednh SC khi SA = 5.-A]",
+      "tests/geometry/test_question_context_review.py::test_every_changed_question_context_is_refused[T\\xednh SC. T\\xednh SC khi SA = 5.-B]",
+      "tests/geometry/test_question_context_review.py::test_every_changed_question_context_is_refused[T\\xednh SC. T\\xednh SC n\\u1ebfu SA = 5.-A]",
+      "tests/geometry/test_question_context_review.py::test_every_changed_question_context_is_refused[T\\xednh SC. T\\xednh SC n\\u1ebfu SA = 5.-B]",
+      "tests/geometry/test_question_context_review.py::test_every_changed_question_context_is_refused[T\\xednh SC. T\\xednh SC sau khi thay SA th\\xe0nh 5.-A]",
+      "tests/geometry/test_question_context_review.py::test_every_changed_question_context_is_refused[T\\xednh SC. T\\xednh SC sau khi thay SA th\\xe0nh 5.-B]",
+      "tests/geometry/test_question_context_review.py::test_every_changed_question_context_is_refused[T\\xednh SC. SA = 5.-A]",
+      "tests/geometry/test_question_context_review.py::test_every_changed_question_context_is_refused[T\\xednh SC. SA = 5.-B]",
+      "tests/geometry/test_question_context_review.py::test_every_changed_question_context_is_refused[T\\xednh SC. SA song song v\\u1edbi (ABCD).-A]",
+      "tests/geometry/test_question_context_review.py::test_every_changed_question_context_is_refused[T\\xednh SC. SA song song v\\u1edbi (ABCD).-B]",
+      "tests/geometry/test_question_context_review.py::test_local_fact_cannot_replace_an_omitted_original_shape_fact[perpendicular-A]",
+      "tests/geometry/test_question_context_review.py::test_local_fact_cannot_replace_an_omitted_original_shape_fact[perpendicular-B]",
+      "tests/geometry/test_question_context_review.py::test_local_fact_cannot_replace_an_omitted_original_shape_fact[base_side-A]",
+      "tests/geometry/test_question_context_review.py::test_local_fact_cannot_replace_an_omitted_original_shape_fact[base_side-B]",
+      "tests/geometry/test_question_context_review.py::test_construction_request_has_the_same_context_obligation[A]",
+      "tests/geometry/test_question_context_review.py::test_construction_request_has_the_same_context_obligation[B]",
+      "tests/geometry/test_question_context_review.py::test_matching_canonical_square_side_still_serves[A]",
+      "tests/geometry/test_question_context_review.py::test_matching_canonical_square_side_still_serves[B]",
+      "tests/geometry/test_question_context_review.py::test_auxiliary_short_quote_cannot_hide_later_assumption"
+    ],
+    "failed": 19,
+    "passed": 4
+  },
+  "reviewed_commit": "06cd8cdf8c4129b19c1ba9c5139007f0a9cd9886",
+  "test_sha256": "c9eebdf83089b9d7ac5b1d8b0cc807784eb9f6538c91109bb9c1dc756ab1cf9c",
+  "green": {
+    "passed": 23,
+    "failed": 0
+  },
+  "test_file": "backend/tests/geometry/test_question_context_review.py"
+}

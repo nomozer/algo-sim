@@ -2,9 +2,11 @@
 
 ## LOCAL override — 2026-10-12 (ưu tiên hơn snapshot §2)
 
+Phase 2 T3 clean detached `678f5b7b`: PASS (backend 8760, frontend 1053, build/demo/crash PASS); đề nghị GO tích hợp offline có giới hạn, chờ quyết định người dùng.
+
 - Hybrid S0 + thiết diện/giao tuyến + S1/S2 đã fast-forward cục bộ lên `main`: `a6e27a78` → `22edf7ff`. Remote vẫn `a6e27a78` (ls-remote); không push. Ref Hybrid và DSL HOLD giữ nguyên.
 - Candidate `d1410731…`, product `624e7fc5`, 110 file verify khớp. T3 clean detached tại `22edf7ff`: FULL_PRODUCT_GATE_PASS (backend 8675, frontend 1053, build/demo/crash PASS). Benchmark 30 ca giữ byte: 19/9/0/2 cả hai tuyến offline. Run `hybrid-main-integration`.
-- Việc kế tiếp đã được người dùng giao: sửa fail-closed có giới hạn cho `ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS` trên research branch mới từ main sau integration gate; RED→GREEN + review độc lập + candidate/T3 riêng. LLM_ONLY/cache125/Gemini0; không push.
+- Phase 2 ở `research/question-local-givens` từ main `232c1225`: product `e1f288ec`, candidate `d4bc2b04…` (110 file), clean verification `678f5b7b`. Cổng chung A/B phủ dữ kiện trong/sau yêu cầu, giữ dữ kiện gốc, từ chối cấu hình mới/chưa xác minh; dữ kiện cùng câu đã khớp vẫn phục vụ. Review 3 Critical + 1 Important đã đóng RED→GREEN (861 PASS/4 xfail). Benchmark vẫn 19/9/0/2. Run `question-local-givens`; chưa merge/push. Scoped replacement/vocabulary ngoài bộ đọc/chuyển đơn vị vẫn unsupported; LLM_ONLY/cache125/Gemini0.
 
 Lịch sử baseline và review: `hybrid-slice1-main-integration`, `hybrid-slice1-review`, `hybrid-slice-review`, `hybrid-semantic-hardening` trong thư mục runs; A @ 9cfd0fca và B @ 22edf7ff được giữ làm ref. B26 đã có; B27/B28 chưa được duyệt; orbit P1 vẫn là ngoại lệ có sẵn.
 
@@ -200,7 +202,7 @@ Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FU
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_QUESTION_LOCAL_GIVENS
+CANONICAL_NEXT_ACTION = HYBRID_QUESTION_LOCAL_GIVENS_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

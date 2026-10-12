@@ -1,0 +1,27 @@
+{
+  "failures": [
+    "test_current_hybrid_behaviour[P02_draw_line_unsupported]",
+    "test_C2b_candidate_hien_tai_phai_duoc_KHAI"
+  ],
+  "backend": {
+    "passed": 8758,
+    "xfailed": 5,
+    "skipped": 1,
+    "deselected": 2,
+    "failed": 2
+  },
+  "build": "PASS",
+  "seconds": 383.9,
+  "candidate": "778bc329d5e886ac81429d2d40f361fef9a1d63904cff63aa801f338c72dd827",
+  "raw_traceback_retained": false,
+  "crash": "PASS",
+  "schema": "gate_attempt/1",
+  "result": "FULL_PRODUCT_GATE_FAIL",
+  "frontend_passed": 1053,
+  "demo": "PASS",
+  "cause": [
+    "Explicit unsupported plan was still refused, but new context gate changed OUT_OF_SCOPE to QUESTION_CONTEXT_UNSUPPORTED.",
+    "Divergence declaration omitted existing mandatory historical-effect field; hash/chain matched."
+  ],
+  "commit": "261d8eec"
+}

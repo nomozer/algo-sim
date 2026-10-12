@@ -116,7 +116,12 @@
 - **evidence:** independent review of S1, `docs/evaluation/geometry/runs/hybrid-semantic-hardening/report.md` §5.
 - **impact:** A confident answer for a figure other than the one asked about, on the Hybrid routes. Pre-existing (also at `9cfd0fca`).
 - **scope:** a new check in `registry.kiem_nguon`: every value or relation inside the asked sentence must be covered by a typed fact, or the ask is refused. This is a new authority, not more phrase grammar.
-- **status:** OPEN — separate slice, needs approval.
+- **status:** BOUNDED SAFETY REPAIR on `research/question-local-givens`, product `e1f288ec`; chưa merge/push.
+  - Cổng chung A/B đối chiếu dữ kiện trong/sau câu hỏi và yêu cầu chỉ dựng hình với cùng lời gọi đã xác minh; quote ngắn và điểm phụ không bypass.
+  - Mâu thuẫn, cấu hình giả định mới hoặc ngữ cảnh chưa phủ đều từ chối có reason code. Không ghi đè dữ kiện gốc; dữ kiện gốc bị model bỏ sót cũng được đối chiếu.
+  - Positive controls giữ phục vụ dữ kiện cùng câu đã khớp, gồm cạnh của đáy đều. Review độc lập: 3 Critical + 1 Important đã sửa RED→GREEN.
+  - Evidence/giới hạn: [`question-local-givens`](evaluation/geometry/runs/question-local-givens/report.md), test_question_local_givens.py và test_question_context_review.py.
+  - **Remaining:** full scoped assumptions, arbitrary wording/unit conversion và các vị từ ngoài vocabulary đóng chưa hỗ trợ. Bản sửa bảo đảm fail-closed trong phạm vi đo; không khẳng định hiểu mọi câu tiếng Việt.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** Next Hybrid gate slice, before product enablement or a live pilot.
 - **default_switch_blocker:** YES

@@ -1,5 +1,25 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = QUESTION_LOCAL_GIVENS
+
+REPORT = docs/evaluation/geometry/runs/question-local-givens/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/question-local-givens/
+CORRECTED_BY = NONE
+CORRECTS = HYBRID_SEMANTIC_HARDENING
+CLASSIFICATION = BOUNDED_GIVENS_REPAIR_T3_PASS_AWAITING_INTEGRATION_DECISION
+CODE_COMMIT = e1f288ec
+VERIFICATION_COMMIT = 678f5b7b
+MODEL_REQUEST_COUNT = 0
+
+Shared A/B source coverage refuses changed/unverified question-local assumptions and preserves original facts;
+positive same-sentence givens remain served. Baseline RED 34/28; independent review 3 Critical + 1 Important,
+19/4 RED → 23 GREEN; connected cluster 861/4 xfail. Candidate d4bc2b04; additive correction at
+`runs/question-local-givens/inputs/candidate_divergence.json`, retaining the first candidate and gate-failure receipt.
+Benchmark 30 cases byte-identical 19/9/0/2; provider surfaces/cache/default unchanged. No live requests, merge or push.
+Clean detached T3 at 678f5b7b PASS: backend 8760, frontend 1053, build/demo/crash PASS.
+Machine receipt: `runs/question-local-givens/verification/t3.log`, SHA256
+`d732b7347307271c137dbe5dee28c3acb132f015181858492bc9ca4c8029206b`.
+
 ## WAVE_ID = HYBRID_MAIN_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-main-integration/report.md
@@ -19,7 +39,7 @@ Historical A/B/candidates unchanged; question-local givens still open at this in
 
 REPORT = docs/evaluation/geometry/runs/hybrid-semantic-hardening/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-semantic-hardening/
-CORRECTED_BY = NONE
+CORRECTED_BY = QUESTION_LOCAL_GIVENS
 CORRECTS = HYBRID_SLICE_REVIEW
 CLASSIFICATION = HYBRID_HARDENING_AWAITING_INTEGRATION_DECISION
 CODE_COMMIT = 624e7fc5

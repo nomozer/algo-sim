@@ -2,6 +2,13 @@
 
 ## Hybrid simulation capability probes — research branch
 
+Question-local givens repair: run `docs/evaluation/geometry/runs/question-local-givens/`.
+`registry.kiem_nguon` → `_kiem_du_kien_cau_hoi` phủ ngữ cảnh yêu cầu/follow-up/construction;
+`_nguon_do_dai_cuc_bo` đọc thẩm quyền độ dài trực tiếp/cạnh đều; `_rang_buoc_cuc_bo_khop`
+đối chiếu ràng buộc nguồn với cùng canonical calls. Không thêm module/state/solver.
+Tests: `backend/tests/geometry/test_question_local_givens.py` (62 route A/B, positive/negative/metamorphic),
+`test_question_context_review.py` (23 independent-review regressions); active contract §3.6.
+
 Run: `docs/evaluation/geometry/runs/hybrid-simulation-capability-audit/`. Test only, no product code.
 
 | Module | Owns | Verification |
