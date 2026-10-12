@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_MAIN_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-main-integration/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-main-integration/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = LOCAL_MAIN_INTEGRATED_T3_PASS
+CODE_COMMIT = 624e7fc5
+VERIFICATION_COMMIT = 22edf7ff
+MODEL_REQUEST_COUNT = 0
+
+User-authorized local fast-forward a6e27a78 → 22edf7ff; no push. Candidate d1410731 verified in a clean detached worktree.
+T3 8675 backend / 1053 frontend PASS, build/demo/crash PASS. Benchmark 30 cases byte-identical to the locked after result.
+Historical A/B/candidates unchanged; question-local givens still open at this integration point.
+
 ## WAVE_ID = HYBRID_SEMANTIC_HARDENING
 
 REPORT = docs/evaluation/geometry/runs/hybrid-semantic-hardening/report.md

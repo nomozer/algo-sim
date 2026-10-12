@@ -1,14 +1,12 @@
 # AI_CONTEXT_BUNDLE.md — AlgoSim Session Handoff & Quick Context
 
-## LOCAL override — 2026-10-11 (ưu tiên hơn snapshot §2)
+## LOCAL override — 2026-10-12 (ưu tiên hơn snapshot §2)
 
-- `main` = `a246dd19` sau fast-forward Hybrid B slice 1 (run `hybrid-slice1-main-integration`; remote: tra `git log -1 origin/main`). Trước đó expansion tích hợp ở `9e3c9789`; orbit p1 là ngoại lệ được chấp nhận (P1).
-- Trên `main`: ADR Hybrid B (A là baseline, chỉ dựa trên offline), benchmark compiler 30 ca, lát 1. T3 PASS trên `main` (pytest 8362/0, vitest 1051). B27/B28 chưa được duyệt.
-- A = `research/hybrid-simulation-capability-audit` @ 9cfd0fca (S0 + lát thiết diện + kiểm toán `hybrid-slice-review`, candidate 451b046c). B = `research/hybrid-semantic-hardening` (con của A, run `hybrid-semantic-hardening`): S1 buộc toán hạng câu hỏi/giá trị phép bằng/vai trò mệnh đề (phần dư 1/79), S2 giao tuyến hiện lại (đoạn hiển thị theo cỡ cảnh). Còn mở `ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS`. Chờ quyết tích hợp A/B theo handoff của run.
-- Lát 1 (B26, đã duyệt): planner phân rã khoảng cách điểm–đường qua chân vuông góc phụ (DERIVED/AUXILIARY); cổng nguồn chỉ nhận điểm phụ qua khai báo của planner. Benchmark 19/9/0/2 (trước 18/9/0/3). B27 cần lát 2 (đổi lược đồ, chưa duyệt); B28 là vấn đề từ khoá.
-- Kiểm toán độc lập (run `hybrid-slice1-review`): không có lỗi Critical; sửa 2 lỗi Important — cổng chỉ trả lời khi câu thật sự hỏi (`NOT_ASKED_IN_SOURCE`), nhãn phụ tránh H₁/H_1/ΔSHD.
-- Product 62f0b18e, candidate dda3a884 (refreeze 9da4e853); A/B 12da4768 không đổi; bề mặt provider A/B không đổi; LLM_ONLY/cache125; LIVE Gemini0.
-- HYBRID_SLICE1_INTEGRATION_AWAITING_APPROVAL — xem `evaluation/geometry/runs/hybrid-slice1-review/` (quy trình fast-forward ở handoff.md).
+- Hybrid S0 + thiết diện/giao tuyến + S1/S2 đã fast-forward cục bộ lên `main`: `a6e27a78` → `22edf7ff`. Remote vẫn `a6e27a78` (ls-remote); không push. Ref Hybrid và DSL HOLD giữ nguyên.
+- Candidate `d1410731…`, product `624e7fc5`, 110 file verify khớp. T3 clean detached tại `22edf7ff`: FULL_PRODUCT_GATE_PASS (backend 8675, frontend 1053, build/demo/crash PASS). Benchmark 30 ca giữ byte: 19/9/0/2 cả hai tuyến offline. Run `hybrid-main-integration`.
+- Việc kế tiếp đã được người dùng giao: sửa fail-closed có giới hạn cho `ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS` trên research branch mới từ main sau integration gate; RED→GREEN + review độc lập + candidate/T3 riêng. LLM_ONLY/cache125/Gemini0; không push.
+
+Lịch sử baseline và review: `hybrid-slice1-main-integration`, `hybrid-slice1-review`, `hybrid-slice-review`, `hybrid-semantic-hardening` trong thư mục runs; A @ 9cfd0fca và B @ 22edf7ff được giữ làm ref. B26 đã có; B27/B28 chưa được duyệt; orbit P1 vẫn là ngoại lệ có sẵn.
 
 > Handoff cô đọng cho session mới. Code/test thắng khi mâu thuẫn với docs.
 > Không chứa secret hoặc raw model output; giới hạn 300 dòng. Lịch sử từng wave:
@@ -202,7 +200,7 @@ Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FU
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_HARDENING_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_QUESTION_LOCAL_GIVENS
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

@@ -1,0 +1,55 @@
+{
+  "schema": "hybrid_main_integration/1",
+  "run_id": "hybrid-main-integration",
+  "wave": "hybrid-main-integration-w01",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "date": "2026-10-12",
+  "environment": "LOCAL Windows",
+  "status": "LOCAL_MAIN_INTEGRATED_T3_PASS",
+  "authorization_source": "user request: local ff-only of research/hybrid-semantic-hardening; no push",
+  "integration": {
+    "method": "git merge --ff-only research/hybrid-semantic-hardening",
+    "main_before": "a6e27a785f952142d0d30cc4604434617a62494f",
+    "main_after": "22edf7ffe79db4dc9df9d1426dc62f8d2dc2e322",
+    "remote_verified": "a6e27a785f952142d0d30cc4604434617a62494f",
+    "push": false
+  },
+  "candidate": {
+    "tree_hash": "d1410731542f4d0c04b133e2a514e1207976d2bfbdd35610bf577f73af6cd614",
+    "files": 110,
+    "product_commit": "624e7fc5",
+    "verification_exit": 0,
+    "new_freeze": false
+  },
+  "benchmark": {
+    "cases": 30,
+    "arms": ["facts", "pipeline"],
+    "counts_each_arm": {"correct_served": 19, "correct_refusal": 9, "false_serve": 0, "false_refusal": 2},
+    "sha256": "febb5b602fcb194c502e07ea47fe4200ed4083f0b09bac12784b2536940ab12e",
+    "historical_metrics_byte_identical": true
+  },
+  "focused": {"passed": 449, "xfailed": 4, "failed": 0, "provider_surfaces_pinned": true},
+  "t3": {"result": "FULL_PRODUCT_GATE_PASS", "commit": "22edf7ff", "worktree": "clean detached", "exit": 0,
+    "backend": {"passed": 8675, "failed": 0, "skipped": 1, "deselected": 2, "xfailed": 5},
+    "frontend": {"passed": 1053, "files": 68}, "build": "PASS", "demo": "5/5", "crash_surface": "6/6", "seconds": 591.6},
+  "browser": {"result": "REPRESENTATIVE_SMOKE_PASS", "completed_cases": 7, "console_errors": 0,
+    "full_eight_scene_harness_completed": false, "optional_eighth_case": "interrupted during extra unit-scene variants",
+    "kind": "Scene3D harness, actual Hybrid scenes, SwiftShader; not product page", "receipt": "verification/browser-smoke.json"},
+  "environment_attempt": "First focused run had 3 tmp_path setup errors (Windows default temp inaccessible). First T3 interrupted; rerun uses isolated workspace TEMP/TMP and PYTEST_ADDOPTS --basetemp.",
+  "preservation": {
+    "untracked_favicon_sha256": "5cd57f27376366a639370e0282456529dbdc227c6aa8a950eb6d7116f317dc62",
+    "locked_ab_candidate": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+    "historical_candidate": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+    "existing_research_refs": "unchanged; retained until separately approved push",
+    "old_scratch_and_databases": "untouched"
+  },
+  "default_mode": "LLM_ONLY",
+  "cache_version": 125,
+  "live_model_requests": 0,
+  "documentation": {"audit": "PASS", "tests_passed": 45},
+  "receipt_hashes": {"verification/t3.log": "569894f51fd5d7660cedfc87967d20e54f7fc72d3d7f3d067c0b8cb453cb0733",
+    "verification/browser-smoke.json": "4f52ec678eec43f1b0308721ec652756a21c9c58d70f31228286d19661bb03a7"},
+  "housekeeping": {"registered_worktrees_before": 3, "registered_worktrees_after": 3, "created": ["main-integration-verify"],
+    "removed": ["main-integration-verify"], "verification_freed_bytes": 1704684873, "scratch_measured_bytes": 49645529,
+    "git_remove_force": false, "junction_target_intact": true, "task_processes_remaining": 0}
+}

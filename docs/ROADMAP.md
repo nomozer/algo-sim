@@ -9,9 +9,11 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_HARDENING_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_QUESTION_LOCAL_GIVENS
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **Main integration (LOCAL, 2026-10-12):** fast-forward `a6e27a78` → `22edf7ff`; candidate `d1410731…` verify; T3 PASS (backend 8675, frontend 1053); benchmark 30 ca byte-identical 19/9/0/2. Không push. Run [`hybrid-main-integration`](evaluation/geometry/runs/hybrid-main-integration/report.md). Người dùng đã giao bước kế tiếp: fail-closed question-local givens trên research branch mới, không mở scoped state/schema/provider mới; B27/B28/DSL/orbit P1 vẫn ngoài phạm vi.
 
 - **S1 + S2 hardening (LOCAL, 2026-10-12, nhánh `research/hybrid-semantic-hardening` — con của tip đã review `9cfd0fca`; chưa merge/push; run [`hybrid-semantic-hardening`](evaluation/geometry/runs/hybrid-semantic-hardening/report.md)):**
   - S1: mỗi `ask_*` phải có cụm đối tượng (văn phạm đóng theo hàm) gọi đúng toán hạng, được hỏi nguyên vẹn; giá trị neo phải là phép bằng; bộ phân tích vai trò mệnh đề nhận thêm mục tiêu / giả định / không khẳng định. Probe phần dư: 1/79 còn phục vụ (cách đọc đúng). Review độc lập: sửa 18 từ chối sai mới và 1 phục vụ sai mới.

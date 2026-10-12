@@ -1,5 +1,13 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+## LOCAL — Hybrid main integration, 2026-10-12
+
+Theo yêu cầu người dùng, `main` fast-forward cục bộ từ `a6e27a78` tới `22edf7ff`; không push.
+Candidate `d1410731…` verify khớp; T3 clean detached tại `22edf7ff`: backend 8675/0, frontend 1053,
+build/demo/crash PASS. Benchmark 30 ca byte-identical; locked A/B và ref nghiên cứu giữ nguyên.
+Bằng chứng: [`hybrid-main-integration`](evaluation/geometry/runs/hybrid-main-integration/report.md).
+Kế tiếp: question-local givens trên research branch mới; LLM_ONLY/cache125/Gemini0.
+
 > **Luật của file này:** mỗi dòng phải trỏ tới **bằng chứng chạy được**. Không
 > có bằng chứng ⇒ không được ghi DONE. Bằng chứng sinh từ commit khác HEAD ⇒
 > `STALE_EVIDENCE`, cũng không được ghi DONE (`evidence.mjs::assertFresh`).

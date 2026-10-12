@@ -1,5 +1,13 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL override — hybrid-main-integration, 2026-10-12
+
+Main đã fast-forward cục bộ `a6e27a78` → `22edf7ff` theo lệnh người dùng; remote vẫn `a6e27a78`, không push.
+Candidate `d1410731…` (product `624e7fc5`, 110 file) verify khớp. T3 clean detached tại `22edf7ff`: FULL_PRODUCT_GATE_PASS,
+backend 8675/0, frontend 1053; build/demo/crash PASS. Benchmark 30 ca giữ nguyên byte (19/9/0/2).
+LLM_ONLY/cache125/provider surfaces không đổi, Gemini0. Run: [`hybrid-main-integration`](evaluation/geometry/runs/hybrid-main-integration/report.md).
+Kế tiếp: question-local givens có giới hạn trên research branch mới; chưa triển khai tại mốc integration này.
+
 ## LOCAL override — hybrid-semantic-hardening, 2026-10-12
 
 Mới nhất:
@@ -109,7 +117,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > USER_DIRTY_STATE = có — `frontend/public/favicon.svg` untracked của người dùng, giữ nguyên; không stage/commit.
 > CURRENT_WAVE = HYBRID_AB_PILOT_READINESS (run hybrid-ab-pilot-readiness, LOCAL, cùng nhánh, live Gemini0): object-binding chính xác, observation ≠ proof; runner SMOKE24/FULL288 có identity riêng, shared output3072; 344 focused PASS,9 mutation killed,312 fake/network0; clean backend8068 PASS/1 skip/2 deselected tại2f1b457c. CORRECTS HYBRID_COMPILER_SELECTION: lịch sử nguyên byte, đọc cùng correction layer. Report/handoff của run là thẩm quyền; không tuyên bố safety population/visual/real-model.
 > FINAL_DECISION = HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW — offline GO có giới hạn kiểm chứng; SMOKE/FULL live NO-GO (prompt estimator chưa provider-bound, storage cause UNKNOWN, chưa phê duyệt riêng). Main giữ nguyên28ac1d61; không merge/push/default change; human visual acceptance NOT_PERFORMED.
-> CANONICAL_NEXT_ACTION = HYBRID_HARDENING_INTEGRATION_DECISION
+> CANONICAL_NEXT_ACTION = HYBRID_QUESTION_LOCAL_GIVENS
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 

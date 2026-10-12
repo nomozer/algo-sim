@@ -1,0 +1,511 @@
+{
+  "result": "REPRESENTATIVE_SMOKE_PASS",
+  "source_commit": "22edf7ff",
+  "schema": "hybrid_scene_smoke/1",
+  "limitation": "Seven completed representative scenes cover all requested categories; optional eighth unit-scene variants interrupted to bound the quick smoke check. Not a full harness PASS. Earlier eight-scene evidence at the identical product remains unchanged.",
+  "full_harness_completed": false,
+  "completed_cases": 7,
+  "failures": [],
+  "report": [
+    {
+      "id": "section-MAB-trapezoid",
+      "served": true,
+      "section_vertices_model": 4,
+      "pixels_last_step": {
+        "section": 6581,
+        "line": 0,
+        "highlight": 693,
+        "ink": [
+          436,
+          65,
+          792,
+          440
+        ]
+      },
+      "order": {
+        "target": "td_f6",
+        "own_pixels": {
+          "default_view": 52660,
+          "after_orbit": 70178
+        },
+        "first_step": 6,
+        "steps": 11,
+        "depends_present": true,
+        "pixels_before": {
+          "section": 0,
+          "highlight": 965
+        },
+        "pixels_at": {
+          "section": 0,
+          "highlight": 830
+        }
+      },
+      "variants": null,
+      "console_errors": [],
+      "orbit": {
+        "changed": 0.086414946982668,
+        "settled": true
+      },
+      "zoom": {
+        "changed": 0.12297377669640443,
+        "ink_ratio": 1.596188037835147,
+        "settled": true
+      },
+      "rendered_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "khoi_S_ABCD",
+        "mp_td_f6",
+        "td_f6#4cf",
+        "day_ABCD",
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "reset": {
+        "residual_vs_start": 0,
+        "settled": true
+      }
+    },
+    {
+      "id": "section-SAC-triangle",
+      "served": true,
+      "section_vertices_model": 3,
+      "pixels_last_step": {
+        "section": 5648,
+        "line": 0,
+        "highlight": 626,
+        "ink": [
+          504,
+          1,
+          765,
+          499
+        ]
+      },
+      "order": {
+        "target": "td_f5",
+        "own_pixels": {
+          "default_view": 6184,
+          "after_orbit": 8580
+        },
+        "first_step": 5,
+        "steps": 9,
+        "depends_present": true,
+        "pixels_before": {
+          "section": 0,
+          "highlight": 1548
+        },
+        "pixels_at": {
+          "section": 0,
+          "highlight": 934
+        }
+      },
+      "variants": null,
+      "console_errors": [],
+      "orbit": {
+        "changed": 0.04871827220570124,
+        "settled": true
+      },
+      "zoom": {
+        "changed": 0.07240515454627376,
+        "ink_ratio": 1.3488372093023255,
+        "settled": true
+      },
+      "rendered_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "khoi_S_ABCD",
+        "mp_td_f5",
+        "td_f5#3cf",
+        "day_ABCD",
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "reset": {
+        "residual_vs_start": 0,
+        "settled": true
+      }
+    },
+    {
+      "id": "section-MNP-mid-square",
+      "served": true,
+      "section_vertices_model": 4,
+      "pixels_last_step": {
+        "section": 1749,
+        "line": 0,
+        "highlight": 635,
+        "ink": [
+          395,
+          65,
+          812,
+          440
+        ]
+      },
+      "order": {
+        "target": "td_f8",
+        "own_pixels": {
+          "default_view": 34503,
+          "after_orbit": 40829
+        },
+        "first_step": 8,
+        "steps": 13,
+        "depends_present": true,
+        "pixels_before": {
+          "section": 0,
+          "highlight": 13660
+        },
+        "pixels_at": {
+          "section": 0,
+          "highlight": 703
+        }
+      },
+      "variants": null,
+      "console_errors": [],
+      "orbit": {
+        "changed": 0.06565618335285812,
+        "settled": true
+      },
+      "zoom": {
+        "changed": 0.11673305097473792,
+        "ink_ratio": 1.8795892575039495,
+        "settled": true
+      },
+      "rendered_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "N",
+        "P",
+        "khoi_S_ABCD",
+        "mp_td_f8",
+        "td_f8#4cf",
+        "day_ABCD",
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "reset": {
+        "residual_vs_start": 0,
+        "settled": true
+      }
+    },
+    {
+      "id": "section-cube-A1BD",
+      "served": true,
+      "section_vertices_model": 3,
+      "pixels_last_step": {
+        "section": 27369,
+        "line": 0,
+        "highlight": 953,
+        "ink": [
+          330,
+          1,
+          786,
+          495
+        ]
+      },
+      "order": {
+        "target": "td_f3",
+        "own_pixels": {
+          "default_view": 108024,
+          "after_orbit": 116921
+        },
+        "first_step": 3,
+        "steps": 7,
+        "depends_present": true,
+        "pixels_before": {
+          "section": 0,
+          "highlight": 1498
+        },
+        "pixels_at": {
+          "section": 0,
+          "highlight": 1256
+        }
+      },
+      "variants": null,
+      "console_errors": [],
+      "orbit": {
+        "changed": 0.21798323871316572,
+        "settled": true
+      },
+      "zoom": {
+        "changed": 0.24877113934697065,
+        "ink_ratio": 1.650503962107437,
+        "settled": true
+      },
+      "rendered_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "A_prime",
+        "B_prime",
+        "C_prime",
+        "D_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime",
+        "mp_td_f3",
+        "td_f3#3cf"
+      ],
+      "reset": {
+        "residual_vs_start": 0,
+        "settled": true
+      }
+    },
+    {
+      "id": "intersection-SAB-SCD",
+      "served": true,
+      "section_vertices_model": 0,
+      "pixels_last_step": {
+        "section": 0,
+        "line": 1,
+        "highlight": 1008,
+        "ink": [
+          306,
+          23,
+          758,
+          520
+        ]
+      },
+      "order": {
+        "target": "gt_f5",
+        "own_pixels": {
+          "default_view": 435,
+          "after_orbit": 525
+        },
+        "first_step": 6,
+        "steps": 7,
+        "depends_present": true,
+        "pixels_before": {
+          "line": 0,
+          "highlight": 979
+        },
+        "pixels_at": {
+          "line": 1,
+          "highlight": 1008
+        }
+      },
+      "variants": {
+        "dir-x": {
+          "default_view": 433,
+          "after_orbit": 531
+        },
+        "dir-y": {
+          "default_view": 602,
+          "after_orbit": 871
+        },
+        "dir-z": {
+          "default_view": 128,
+          "after_orbit": 87
+        },
+        "dir-xy": {
+          "default_view": 304,
+          "after_orbit": 542
+        },
+        "dir-xz": {
+          "default_view": 184,
+          "after_orbit": 530
+        },
+        "through-A-dir-x": {
+          "default_view": 231,
+          "after_orbit": 244
+        },
+        "interior-dir-x": {
+          "default_view": 372,
+          "after_orbit": 529
+        },
+        "aux-shown": {
+          "default_view": 435,
+          "after_orbit": 525
+        }
+      },
+      "console_errors": [],
+      "orbit": {
+        "changed": 0.15203147997957406,
+        "settled": true
+      },
+      "zoom": {
+        "changed": 0.11546183653239614,
+        "ink_ratio": 1.3002480141262407,
+        "settled": true
+      },
+      "rendered_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "khoi_S_ABCD",
+        "mp1_gt_f5",
+        "mp2_gt_f5",
+        "gt_f5",
+        "day_ABCD",
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "reset": {
+        "residual_vs_start": 0,
+        "settled": true
+      }
+    },
+    {
+      "id": "aux-foot-S-to-BD",
+      "served": true,
+      "section_vertices_model": 0,
+      "pixels_last_step": {
+        "section": 0,
+        "line": 229,
+        "highlight": 661,
+        "ink": [
+          512,
+          65,
+          721,
+          440
+        ]
+      },
+      "order": null,
+      "variants": null,
+      "console_errors": [],
+      "orbit": {
+        "changed": 0.027202547234988435,
+        "settled": true
+      },
+      "zoom": {
+        "changed": 0.02588086870325313,
+        "ink_ratio": 1.8611606530388256,
+        "settled": true
+      },
+      "rendered_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "H",
+        "khoi_S_ABCD",
+        "day_ABCD",
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "reset": {
+        "residual_vs_start": 0,
+        "settled": true
+      }
+    },
+    {
+      "id": "intersection-SAC-SBD",
+      "served": true,
+      "section_vertices_model": 0,
+      "pixels_last_step": {
+        "section": 0,
+        "line": 0,
+        "highlight": 941,
+        "ink": [
+          266,
+          1,
+          830,
+          520
+        ]
+      },
+      "order": {
+        "target": "gt_f5",
+        "own_pixels": {
+          "default_view": 268,
+          "after_orbit": 105
+        },
+        "first_step": 6,
+        "steps": 7,
+        "depends_present": true,
+        "pixels_before": {
+          "line": 0,
+          "highlight": 936
+        },
+        "pixels_at": {
+          "line": 0,
+          "highlight": 941
+        }
+      },
+      "variants": {
+        "dir-x": {
+          "default_view": 433,
+          "after_orbit": 616
+        },
+        "dir-y": {
+          "default_view": 602,
+          "after_orbit": 871
+        },
+        "dir-z": {
+          "default_view": 134,
+          "after_orbit": 94
+        },
+        "dir-xy": {
+          "default_view": 304,
+          "after_orbit": 546
+        },
+        "dir-xz": {
+          "default_view": 186,
+          "after_orbit": 643
+        },
+        "through-A-dir-x": {
+          "default_view": 238,
+          "after_orbit": 255
+        },
+        "interior-dir-x": {
+          "default_view": 365,
+          "after_orbit": 541
+        },
+        "aux-shown": {
+          "default_view": 268,
+          "after_orbit": 105
+        }
+      },
+      "console_errors": [],
+      "orbit": {
+        "changed": 0.17601994533056983,
+        "settled": true
+      },
+      "zoom": {
+        "changed": 0.16293652939232825,
+        "ink_ratio": 1.3823529411764706,
+        "settled": true
+      },
+      "rendered_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "khoi_S_ABCD",
+        "mp1_gt_f5",
+        "mp2_gt_f5",
+        "gt_f5",
+        "day_ABCD",
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D"
+      ],
+      "reset": {
+        "residual_vs_start": 0,
+        "settled": true
+      }
+    }
+  ]
+}
