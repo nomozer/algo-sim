@@ -19,6 +19,7 @@ lời gọi ⇒ `PLAN_TOO_LARGE`. Không suy ra dữ kiện từ dữ kiện; kh
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass, field
 from typing import Annotated, Any, Literal
 
@@ -352,15 +353,22 @@ def _do_dai(f: TypedFact, q: list[str], deu: dict, khoi_cua, phat) -> dict:
     raise TuChoi("FACT_INCOMPLETE", f"{f.id}: measure {m!r}", (f.id,))
 
 
+_DIEN_TICH_THIET_DIEN = re.compile(r"diện tích\s+(?:của\s+)?thiết diện", re.IGNORECASE)
+_DIEN_TICH_DA_GIAC = re.compile(r"(?i:diện tích)\s+(?:(?i:của)\s+)?(?:(?i:tam giác|tứ giác|hình|đa giác|mặt|đáy)|[A-Z])")
+
+
 def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
     n = f.quantity
     if n == "volume":
         kh = khoi_cua(f.solid, f)
         k.volume_asks[f.id] = kh.ten
         return phat(f.id, "ask_volume", {"solid": kh.ten}, q, "question(volume)")
-    # Diện tích THIẾT DIỆN chỉ khi chính câu hỏi nói "thiết diện"; "diện tích tam giác MAB" có ô `solid` vẫn là đa giác
-    # (review 2, I2). Cổng nguồn kiểm lại cụm "cắt bởi (…)".
-    if n == "area" and f.solid and len(f.points or []) >= 3 and any("thiết diện" in x.lower() for x in q):
+    # Diện tích THIẾT DIỆN chỉ khi câu hỏi gọi tên đúng đối tượng ấy ("diện tích (của) thiết diện"); "diện tích tam giác MAB"
+    # có ô `solid` vẫn là đa giác; một dữ kiện hỏi CẢ HAI là mơ hồ (review 2, I2). Cổng nguồn kiểm lại cụm mặt cắt.
+    hoi_td = any(_DIEN_TICH_THIET_DIEN.search(x) for x in q)
+    if n == "area" and hoi_td and any(_DIEN_TICH_DA_GIAC.search(x) for x in q):
+        raise TuChoi("AMBIGUOUS_FACT", f"{f.id}: một câu hỏi diện tích nêu cả thiết diện lẫn một đa giác — tách hai câu hỏi", (f.id,))
+    if n == "area" and f.solid and len(f.points or []) >= 3 and hoi_td:
         return phat(f.id, "ask_section_area", {"solid": khoi_cua(f.solid, f).ten, "plane": f.points}, q,
                     "question(area of section)")
     if n == "area":

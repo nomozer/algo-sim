@@ -206,6 +206,40 @@ def test_polygon_area_with_a_solid_is_not_a_section_area():
     assert HB.answer_square(r.answers["q"]) == 9, (r.code, r.reason)
 
 
+def test_triangle_area_next_to_a_section_sentence_is_not_the_section_area():
+    """Re-verification of review 2 (I2): the quote mentions "thiết diện" but the question asks the triangle MAB (S² = 13/4)."""
+    quote = "Thiết diện của hình chóp S.ABCD cắt bởi (MAB) là hình thang. Tính diện tích tam giác MAB."
+    r = _run(HB._mid("f5", "M", "S", "C"), ask("q", quote, "area", solid="S.ABCD", points=list("MAB")))
+    assert r.status == "SERVED" and HB.answer_square(r.answers["q"]) == F(13, 4), (r.code, r.reason, r.answers)
+
+
+def test_one_question_fact_for_two_different_areas_is_refused():
+    quote = "Tính diện tích tam giác MAB và diện tích thiết diện của hình chóp S.ABCD cắt bởi (MAB)."
+    r = _run(HB._mid("f5", "M", "S", "C"), ask("q", quote, "area", solid="S.ABCD", points=list("MAB")))
+    assert r.status == "REFUSED", r.answers
+
+
+@pytest.mark.parametrize("fact", [
+    _section("f6", "Xác định thiết diện của hình chóp S.ABCD khi cắt bởi mặt phẳng (MAB).", "MAB"),
+    _area("Tính diện tích thiết diện của hình chóp S.ABCD khi cắt bởi mặt phẳng (MAB).", "MAB"),
+    _area("Tính diện tích thiết diện của hình chóp cắt bởi mp(MAB).", "MAB"),
+    _section("f6", "Xác định thiết diện của hình chóp S.ABCD tạo bởi mặt phẳng (MAB).", "MAB"),
+    _section("f6", "Xác định thiết diện do mặt phẳng (MAB) cắt hình chóp S.ABCD.", "MAB"),
+    _section("f6", "Xác định thiết diện của hình chóp S.ABCD với mặt phẳng (MAB).", "MAB"),
+    _section("f6", "Mặt phẳng (MAB) cắt hình chóp S.ABCD theo một thiết diện. Xác định thiết diện đó.", "MAB"),
+], ids=["khi-cat-boi", "area-khi-cat-boi", "mp-no-space", "tao-boi", "do-P-cat", "voi-P", "P-cat-theo-thiet-dien"])
+def test_common_section_wordings_are_served(fact):
+    r = _run(HB._mid("f5", "M", "S", "C"), fact)
+    assert r.status == "SERVED", (r.code, r.reason)
+
+
+@pytest.mark.parametrize("quote", ["Tìm giao tuyến của hai mặt phẳng (SAB) và (SCD).", "Tìm giao tuyến của 2 mặt phẳng (SAB) và (SCD).",
+                                   "Tìm giao tuyến của các mặt phẳng (SAB) và (SCD).", "Tìm giao tuyến của mp(SAB) và mp(SCD)."])
+def test_common_intersection_line_wordings_are_served(quote):
+    r = _run(_line("f5", quote, "SAB", "SCD"))
+    assert r.status == "SERVED", (r.code, r.reason)
+
+
 def test_plane_touching_an_edge_keeps_the_kernel_code():
     """M1. I = AB ∩ DM, K = AD ∩ BN (M, N midpoints of BC, CD): I = (4,0,0), K = (0,4,0); plane x/4 + y/4 + z/3 = 1
     contains S and C, so it touches the pyramid along SC only."""
@@ -300,7 +334,7 @@ SLICE_MUTANTS = [
                                   _area("Tính diện tích thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (NAB).", "NAB")
                                   ).scene3d["objects"] if o["type"] == "section"]) != 1),
     ("section area routed to polygon area", _planner_mutant,
-     'if n == "area" and f.solid and len(f.points or []) >= 3 and any("thiết diện" in x.lower() for x in q):',
+     'if n == "area" and f.solid and len(f.points or []) >= 3 and hoi_td:',
      "if False:", lambda: _run(*_trapezoid_case()).answers.get("q") is None
      or HB.answer_square(_run(*_trapezoid_case()).answers["q"]) != F(117, 16)),
     ("cutting-plane binding dropped", _gate_mutant, "        if c.fn in (\"section\", \"ask_section_area\", \"intersection_line\") "

@@ -190,6 +190,17 @@ def test_conditional_or_question_clause_is_not_a_given(sentence):
     assert r.status == "REFUSED", (r.answers, sentence)
 
 
+@pytest.mark.parametrize("question,sq", [
+    # Re-verification of review 2: questions the stricter gate must still answer.
+    (ask("q", "Chứng minh SC vuông góc BD và tính SC.", "length", points=["S", "C"]), F(17)),
+    (ask("q", "Chứng minh BD vuông góc SC, từ đó tính SC.", "length", points=["S", "C"]), F(17)),
+    (ask("q", "Tính độ dài SC (làm tròn đến 2 chữ số thập phân).", "length", points=["S", "C"]), F(17)),
+], ids=["proof-then-ask-same-label", "proof-tu-do-ask", "rounding-number"])
+def test_asked_object_after_a_proof_or_with_an_unrelated_number_is_answered(question, sq):
+    r = _run(question)
+    assert r.status == "SERVED" and HB.answer_square(r.answers["q"]) == sq, (r.code, r.reason)
+
+
 @pytest.mark.parametrize("sentence", ["Khi đó, SA vuông góc với (ABCD).", "Biết rằng SA vuông góc với (ABCD).",
                                       "Ta có SA vuông góc với (ABCD).", "Cho biết SA vuông góc với (ABCD)."])
 def test_ordinary_premises_stay_givens(sentence):

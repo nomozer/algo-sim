@@ -652,8 +652,9 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
 
 # ── MỘT bộ phân tích mệnh đề cho tiền đề, câu hỏi thường và điểm phụ (review 2, run `hybrid-slice-review`) ────────────
 #: Mở đầu mệnh đề ĐIỀU KIỆN. "Khi đó" là tiền đề (nối câu), không phải điều kiện.
-_DIEU_KIEN = re.compile(r"(?<!\w)(?:nếu|giả sử|giả thiết rằng|trong trường hợp|với điều kiện|trừ khi|khi(?!\s+đó))(?!\w)",
-                        re.IGNORECASE)
+#: "khi" + động từ dựng ("khi cắt bởi", "khi dựng", "khi quay") là lời dẫn phép dựng, không phải điều kiện.
+_DIEU_KIEN = re.compile(r"(?<!\w)(?:nếu|giả sử|giả thiết rằng|trong trường hợp|với điều kiện|trừ khi"
+                        r"|khi(?!\s+(?:đó|cắt|dựng|quay|chiếu)))(?!\w)", re.IGNORECASE)
 _THI = re.compile(r"(?<!\w)thì(?!\w)", re.IGNORECASE)
 #: Mệnh đề HỎI một quan hệ có/không — không bao giờ là dữ kiện.
 _HOI_QUAN_HE = re.compile(r"(?<!\w)(?:phải chăng|có phải|kiểm tra xem|hay không|hay chưa)(?!\w)|(?<!câu )(?<!\w)hỏi(?!\w)"
@@ -662,15 +663,19 @@ _HOI_QUAN_HE = re.compile(r"(?<!\w)(?:phải chăng|có phải|kiểm tra xem|ha
 _DONG_TU_HOI = re.compile(r"(?<!\w)(?:tính|tìm|xác định)(?!\w)|(?<!câu )(?<!\w)hỏi(?!\w)", re.IGNORECASE)
 #: … hoặc "bao nhiêu / mấy / ?" đứng SAU nó.
 _HOI_SAU = re.compile(r"bao\s+nhiêu|(?<!\w)mấy(?!\w)|\?", re.IGNORECASE)
-#: Một giá trị số (không phải chữ số trong nhãn như A1) — đứng ngay sau đối tượng nghĩa là đối tượng bị GÁN giá trị.
-_GIA_TRI = re.compile(r"(?<![A-Za-z'\d])\d|√|π")
+#: Đối tượng bị GÁN giá trị: một từ nối gán theo sau là một số ("bằng 4", "= √17", "là 3", "có giá trị 4"). Một số đứng riêng
+#: ("làm tròn đến 2 chữ số") không phải phép gán.
+_GIA_TRI = re.compile(r"(?<!\w)(?:bằng|là|khác|có giá trị)(?!\w)\s*(?:\d|√|π)|[=≠]\s*(?:\d|√|π)", re.IGNORECASE)
 #: Phần giải thích dữ kiện đi kèm câu hỏi ("biết SA = 3", "có SA = 3", "với a = 2") không phải gán cho đối tượng hỏi.
 _DUNG_GAN = re.compile(r"(?<!\w)(?:biết|với|cho|khi|nếu|trong đó|có(?!\s+giá\s+trị))(?!\w)", re.IGNORECASE)
 #: Danh từ ĐẠI LƯỢNG được hỏi theo hàm — mốc đối tượng của câu hỏi (cùng các từ nhãn của lời gọi).
 _DAI_LUONG_HOI = {"ask_volume": ("thể tích", r"re:(?<![\w'])V(?![\w'])"), "ask_length": ("độ dài",),
                   "ask_distance_point_plane": ("khoảng cách",), "ask_distance_lines": ("khoảng cách",),
                   "ask_angle_line_plane": ("góc",), "ask_angle_plane_plane": ("góc",), "ask_area": ("diện tích",),
-                  "ask_section_area": ("diện tích",)}
+                  # đối tượng là THIẾT DIỆN, chỉ gọi tên được bằng cụm này — nhãn của mặt cắt không phải đối tượng hỏi
+                  "ask_section_area": (r"re:(?i:diện tích)\s+(?:(?i:của)\s+)?(?i:thiết diện)",)}
+#: Câu hỏi mà đối tượng chỉ được nêu bằng cụm danh từ, không bằng nhãn.
+_HOI_KHONG_NHAN = {"ask_section_area"}
 
 
 def _bien_cau(de: str, p: int) -> tuple[int, int]:
@@ -727,6 +732,8 @@ def _moc_doi_tuong_hoi(c: LoiGoi, de: str, dau: int, cuoi: int) -> list[tuple[in
     for k in _DAI_LUONG_HOI.get(c.fn, ()):
         mau, co = (k[3:], 0) if k.startswith("re:") else (re.escape(k), re.IGNORECASE)
         moc += [(dau + m.start(), dau + m.end()) for m in re.finditer(mau, doan, co)]
+    if c.fn in _HOI_KHONG_NHAN:
+        return moc
     toan_hang = [frozenset(re.findall(r"[A-Z][0-9]*'?", v if isinstance(v, str) else "".join(v)))
                  for v in c.args.model_dump().values() if isinstance(v, (str, list)) and v]
     moc += [(dau + a, dau + b) for a, b, phan in _tu_nhan(doan) if frozenset(n for p in phan for n in p) in toan_hang]
@@ -734,17 +741,20 @@ def _moc_doi_tuong_hoi(c: LoiGoi, de: str, dau: int, cuoi: int) -> list[tuple[in
 
 
 def _kiem_cau_hoi(c: LoiGoi, de: str, vts: list[tuple[int, int]]) -> None:
-    """Câu hỏi `ask_*` chỉ được trả lời khi đề HỎI đúng đối tượng ấy: không mốc nào nằm trong điều phải chứng minh hay mệnh đề
-    điều kiện, và ít nhất một mốc được hỏi (`_duoc_hoi`)."""
+    """Câu hỏi `ask_*` chỉ được trả lời khi đề HỎI đúng đối tượng ấy: có mốc được hỏi (`_duoc_hoi`), và vai trò mệnh đề đọc
+    TẠI các mốc được hỏi ấy không là điều phải chứng minh / điều kiện. Nhãn của đối tượng nhắc lại trong một vế chứng minh
+    ("Chứng minh SC ⊥ BD và tính SC") không chặn câu hỏi."""
     moc = [m for dau, cuoi in vts for m in _moc_doi_tuong_hoi(c, de, dau, cuoi)]
-    vai = {_vai_tro_tai(de, p) for p, _h in moc}
-    if "GOAL" in vai:
-        raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{c.id}: đối tượng hỏi nằm trong điều phải chứng minh", (c.id,))
-    if "CONDITIONAL" in vai:
-        raise TuChoi("CONDITIONAL_CLAUSE", f"{c.id}: đối tượng hỏi nằm trong mệnh đề điều kiện", (c.id,))
-    if not any(_duoc_hoi(de, p, h) for p, h in moc):
+    hoi = [p for p, h in moc if _duoc_hoi(de, p, h)]
+    if not hoi:
         raise TuChoi("NOT_ASKED_IN_SOURCE", f"{c.id}: {c.quote!r} không hỏi đối tượng này (không có từ hỏi gắn với nó, hoặc "
                      "nó đã được gán giá trị) — không trả lời điều đề không hỏi", (c.id,))
+    vai = {_vai_tro_tai(de, p) for p in hoi}
+    if vai & {None, "QUESTION"}:                       # mệnh đề hỏi ("Hỏi … bằng bao nhiêu?") là đúng chỗ của một câu hỏi
+        return
+    if "GOAL" in vai:
+        raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{c.id}: đối tượng hỏi nằm trong điều phải chứng minh", (c.id,))
+    raise TuChoi("CONDITIONAL_CLAUSE", f"{c.id}: đối tượng hỏi nằm trong mệnh đề điều kiện", (c.id,))
 
 
 def _moc_menh_de(c: LoiGoi, de: str, dau: int, cuoi: int) -> list[int]:
@@ -846,8 +856,17 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
 
 
 #: Một mặt phẳng toán hạng như đề viết: nhóm ≥ 3 nhãn (có hoặc không ngoặc, "mặt phẳng"), hay "(mặt) đáy".
-_MAT_TOAN_HANG = r"(?:(?:mặt phẳng|mp)\s+)?(?:\(([A-Z][0-9]*'?(?:[A-Z][0-9]*'?){2,})\)|([A-Z][0-9]*'?(?:[A-Z][0-9]*'?){2,})|(?:mặt\s+)?(đáy))(?![\w'])"
-_CAT_BOI = re.compile(r"cắt bởi\s+" + _MAT_TOAN_HANG, re.IGNORECASE)
+#: Nhãn phân biệt hoa thường dù cả mẫu không phân biệt: "qua" không phải một mặt phẳng.
+_NHOM_NHAN = r"(?-i:[A-Z][0-9]*'?(?:[A-Z][0-9]*'?){2,})"
+_MAT_TOAN_HANG = (r"(?:(?:hai|2|các)\s+mặt phẳng\s+)?(?:(?:mặt phẳng|mp)\s*)?"
+                  r"(?:\((" + _NHOM_NHAN + r")\)|(" + _NHOM_NHAN + r")|(?:mặt\s+)?(đáy))(?![\w'])")
+#: Cụm vai trò gọi tên MẶT CẮT của một thiết diện. "song song với …" / "vuông góc với …" là phép dựng khác — không gắn.
+_CAT_BOI = [re.compile(p, re.IGNORECASE) for p in (
+    r"(?:cắt bởi|tạo bởi)\s+" + _MAT_TOAN_HANG,
+    r"(?<!song song )(?<!vuông góc )(?<!\w)với\s+" + _MAT_TOAN_HANG,
+    r"(?<!\w)do\s+" + _MAT_TOAN_HANG + r"\s+cắt(?!\w)",
+    _MAT_TOAN_HANG + r"\s+cắt\s+(?:hình|khối)(?:[^.;]|\.(?=[A-Z]))*?theo\s+(?:một\s+)?thiết diện",   # "S.ABCD" giữ dấu chấm
+)]
 _GIAO_TUYEN = re.compile(r"giao tuyến\s+(?:của\s+)?" + _MAT_TOAN_HANG + r"\s+(?:và|với)\s+" + _MAT_TOAN_HANG, re.IGNORECASE)
 
 
@@ -881,7 +900,7 @@ def mat_cat_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> bool:
     if (ky_hieu and c.args.solid not in ky_hieu) or (not ky_hieu and len(khoi) != 1):
         return False
     day = khoi.get(c.args.solid)
-    return any(_tap_mat(m, 1, day) == frozenset(c.args.plane) for q in c.quotes for m in _CAT_BOI.finditer(q))
+    return any(_tap_mat(m, 1, day) == frozenset(c.args.plane) for q in c.quotes for mau in _CAT_BOI for m in mau.finditer(q))
 
 
 def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
