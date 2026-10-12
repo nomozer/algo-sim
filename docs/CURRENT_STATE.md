@@ -4,8 +4,9 @@
 
 CANONICAL_NEXT_ACTION = HYBRID_QUESTION_LOCAL_GIVENS_INTEGRATION_DECISION
 
-Nhánh `research/question-local-givens` từ main `232c1225`; product `e1f288ec`, candidate commit `03095c28`,
-candidate `d4bc2b04…` (110 file), verify khớp; clean verification `678f5b7b`. Cổng chung A/B kiểm ngữ cảnh yêu cầu và dữ kiện gốc bị model bỏ sót;
+Nhánh `research/question-local-givens` từ main `232c1225`; product `f56d8cb7` (review cuối, run `question-local-givens-final-review`),
+candidate commit `8fa3ae4c`, candidate `25c85eed…` (110 file), verify khớp; T3 clean `8fa3ae4c` PASS (backend 8764).
+Lỗ hở còn mở: đổi giả thiết cùng câu sau "sau đó"/"rồi" (có từ `232c1225`). Cổng chung A/B kiểm ngữ cảnh yêu cầu và dữ kiện gốc bị model bỏ sót;
 không phục vụ hình cũ cho dữ kiện thay đổi/chưa xác minh. Dữ kiện cùng câu đã khớp tiếp tục phục vụ.
 RED baseline 34 fail/28 pass (62 test); review 19 fail/4 pass → 23 pass; cluster 861 pass/4 xfail.
 Benchmark 30 ca byte-identical 19/9/0/2; provider/schema/cache125/default LLM_ONLY không đổi; Gemini0.

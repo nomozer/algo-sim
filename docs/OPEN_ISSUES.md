@@ -122,6 +122,7 @@
   - Positive controls giữ phục vụ dữ kiện cùng câu đã khớp, gồm cạnh của đáy đều. Review độc lập: 3 Critical + 1 Important đã sửa RED→GREEN.
   - Evidence/giới hạn: [`question-local-givens`](evaluation/geometry/runs/question-local-givens/report.md), test_question_local_givens.py và test_question_context_review.py.
   - **Remaining:** full scoped assumptions, arbitrary wording/unit conversion và các vị từ ngoài vocabulary đóng chưa hỗ trợ. Bản sửa bảo đảm fail-closed trong phạm vi đo; không khẳng định hiểu mọi câu tiếng Việt.
+  - **Final review 2026-10-12** (run [`question-local-givens-final-review`](evaluation/geometry/runs/question-local-givens-final-review/report.md)): false refusal mới "biết rằng" đã sửa ở `f56d8cb7`. **Lỗ hở còn mở (có từ `232c1225`, không phải regression):** đổi giả thiết **cùng câu** sau "sau đó"/"rồi" không có từ nối dữ kiện vẫn được phục vụ bằng hình cũ ở cả A/B, ví dụ "Tính SC, sau đó thay SA bằng 5 và tính lại SC.", "Tính SC rồi đổi SA thành 5 …", "Tính SC, rồi SA = 5.", "Vẽ thiết diện … cắt bởi (MAB), sau đó SA = 5.". Hướng sửa: kiểm phần dư từ cuối cụm hỏi/đối tượng tới dấu ngắt kế tiếp. Từ chối thận trọng mới (an toàn): "biết ABCD là hình vuông" không có cạnh, "SA = 3 cm" với đề không đơn vị; `_nguon_do_dai_cuc_bo` chưa đọc lớp `equal_length`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** Next Hybrid gate slice, before product enablement or a live pilot.
 - **default_switch_blocker:** YES

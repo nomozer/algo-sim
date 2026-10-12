@@ -2,7 +2,8 @@
 
 ## LOCAL research — Question-local givens, 2026-10-12
 
-Nhánh `research/question-local-givens` từ main `232c1225`; product `e1f288ec`, candidate `d4bc2b04…`.
+Nhánh `research/question-local-givens` từ main `232c1225`; product `f56d8cb7`, candidate `25c85eed…`
+(review cuối, run [`question-local-givens-final-review`](evaluation/geometry/runs/question-local-givens-final-review/report.md)).
 Fail-closed có giới hạn cho ngữ cảnh yêu cầu, giữ dữ kiện gốc và positive controls cùng câu. Review độc lập
 3 Critical + 1 Important đã sửa, cluster 861 pass/4 xfail. Benchmark 30 ca byte-identical; provider pins giữ nguyên.
 Gate cuối/cleanup: [`question-local-givens`](evaluation/geometry/runs/question-local-givens/report.md).

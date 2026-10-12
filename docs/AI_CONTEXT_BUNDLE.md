@@ -2,7 +2,7 @@
 
 ## LOCAL override — 2026-10-12 (ưu tiên hơn snapshot §2)
 
-Phase 2 T3 clean detached `678f5b7b`: PASS (backend 8760, frontend 1053, build/demo/crash PASS); đề nghị GO tích hợp offline có giới hạn, chờ quyết định người dùng.
+Phase 2 sau review cuối: product `f56d8cb7`, candidate `25c85eed…`, T3 clean detached `8fa3ae4c` PASS (backend 8764, frontend 1053, build/demo/crash PASS); đề nghị GO fast-forward cục bộ, chờ quyết định người dùng. Run `question-local-givens-final-review` (sửa false refusal "biết rằng"; lỗ hở đổi giả thiết cùng câu sau "sau đó"/"rồi" còn mở).
 
 - Hybrid S0 + thiết diện/giao tuyến + S1/S2 đã fast-forward cục bộ lên `main`: `a6e27a78` → `22edf7ff`. Remote vẫn `a6e27a78` (ls-remote); không push. Ref Hybrid và DSL HOLD giữ nguyên.
 - Candidate `d1410731…`, product `624e7fc5`, 110 file verify khớp. T3 clean detached tại `22edf7ff`: FULL_PRODUCT_GATE_PASS (backend 8675, frontend 1053, build/demo/crash PASS). Benchmark 30 ca giữ byte: 19/9/0/2 cả hai tuyến offline. Run `hybrid-main-integration`.

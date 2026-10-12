@@ -1,10 +1,28 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = QUESTION_LOCAL_GIVENS_FINAL_REVIEW
+
+REPORT = docs/evaluation/geometry/runs/question-local-givens-final-review/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/question-local-givens-final-review/
+CORRECTED_BY = NONE
+CORRECTS = QUESTION_LOCAL_GIVENS
+CLASSIFICATION = FINAL_REVIEW_FIX_T3_PASS_AWAITING_INTEGRATION_DECISION
+CODE_COMMIT = f56d8cb7
+VERIFICATION_COMMIT = 8fa3ae4c
+MODEL_REQUEST_COUNT = 0
+
+Fresh LOCAL review of `232c1225..98852c8f`: no new false serve, arms identical. New false refusal "biết rằng" fixed
+RED 2/2 → GREEN 256. Narrows the prior claim: an unmarked same-sentence change after "sau đó"/"rồi" is still served
+(pre-existing, open). Candidate 25c85eed (110 files), divergence chain extended in this run's `inputs/`.
+Benchmark byte-identical 19/9/0/2. Clean detached T3 at 8fa3ae4c PASS: backend 8764, frontend 1053, build/demo/crash PASS.
+Machine receipt: `runs/question-local-givens-final-review/verification/t3.log`, SHA256
+`89d1d99e4b9c6ef2c36a3298bd2d5ea668811ea9b1e409e3df7644c069a1fe41`.
+
 ## WAVE_ID = QUESTION_LOCAL_GIVENS
 
 REPORT = docs/evaluation/geometry/runs/question-local-givens/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/question-local-givens/
-CORRECTED_BY = NONE
+CORRECTED_BY = QUESTION_LOCAL_GIVENS_FINAL_REVIEW
 CORRECTS = HYBRID_SEMANTIC_HARDENING
 CLASSIFICATION = BOUNDED_GIVENS_REPAIR_T3_PASS_AWAITING_INTEGRATION_DECISION
 CODE_COMMIT = e1f288ec
