@@ -964,6 +964,53 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
         found = re.match(r"\s*\(?\s*(cm|dm|mm|m|đvđd)(?![\w'])", tail, re.I)
         return found[1].lower() if found else ""
 
+    def cover(a: int, b: int) -> tuple[str, bool]:
+        """Check every length / shape assertion in `de[a:b]` against validated calls; return the span with them blanked."""
+        if de[a:b].strip(" ,;:.?!"):
+            # Extraction may omit an original shape fact while keeping a local replacement. Preserve source authority.
+            for original in rb:
+                if (_vai_tro_tai(de, original.span[0]) in ("GOAL", "CONDITIONAL", "QUESTION")
+                        or _phu_dinh(de, original.span[0], de[slice(*original.span)])):
+                    continue
+                if not any(_rang_buoc_cuc_bo_khop(original, c) for c in calls):
+                    raise TuChoi("QUESTION_LOCAL_GIVEN_UNVERIFIED", "giả thiết hình dạng gốc chưa được bảo toàn; không thay mô hình")
+        residue = list(de[a:b])
+        found = False
+        for m in _DO_DAI_CUC_BO.finditer(de, a, b):
+            value = _doc(m)
+            tail = _DUOI_BANG.match(de[m.end():])
+            # What a goal or question states is to be shown, never a hypothesis; it stays uncovered.
+            if value is None or tail is None or _vai_tro_tai(de, m.start()) in ("GOAL", "QUESTION"):
+                continue
+            for segment in segments(m):
+                candidates = _nguon_do_dai_cuc_bo(calls, segment)
+                for original in lengths:
+                    if (_vai_tro_tai(de, original.start()) in ("GOAL", "CONDITIONAL", "QUESTION")
+                            or not any(set(p) == set(segment) for p in segments(original))):
+                        continue
+                    if _doc(original) != value and not any(v == _doc(original) for v, _cid in candidates):
+                        raise TuChoi("QUESTION_LOCAL_GIVEN_CONFLICT",
+                                     "dữ kiện cục bộ khác dữ kiện gốc của đề; chưa hỗ trợ ghi đè phạm vi giả thiết")
+                    if unit(m) and unit(original) != unit(m):
+                        raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED", "đơn vị của dữ kiện cục bộ chưa khớp nguồn; chưa đổi đơn vị")
+                if not any(v == value for v, _cid in candidates):
+                    code = "QUESTION_LOCAL_GIVEN_CONFLICT" if candidates else "QUESTION_LOCAL_GIVEN_UNVERIFIED"
+                    raise TuChoi(code, "dữ kiện độ dài trong câu hỏi chưa khớp giả thiết đã xác thực; không dùng mô hình cũ",
+                                 tuple(cid for _v, cid in candidates))
+            last = min(b, m.end() + tail.end())
+            residue[m.start() - a:last - a] = " " * (last - m.start())
+            found = True
+        for r in rb:
+            if not (a <= r.span[0] < r.span[1] <= b) or _vai_tro_tai(de, r.span[0]) in ("GOAL", "QUESTION"):
+                continue
+            if not any(_rang_buoc_cuc_bo_khop(r, c) for c in calls):
+                raise TuChoi("QUESTION_LOCAL_GIVEN_UNVERIFIED",
+                             f"dữ kiện {r.kind} trong câu hỏi chưa có giả thiết tương ứng đã xác thực")
+            x, y = r.span
+            residue[x - a:y - a] = " " * (y - x)
+            found = True
+        return "".join(residue), found
+
     questions = {_bien_cau(de, m.start()) for m in request_verb.finditer(de)}
     for c in calls:
         if c.spec.kind == "ask":
@@ -1013,51 +1060,27 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
         if start < first < end and not markers and not discourse and _tu_nhan(prefix):
             fragments.append((start, first))
         for a, b in fragments:
-            # Extraction may omit an original shape fact while keeping a local replacement. Preserve source authority.
-            for original in rb:
-                if (_vai_tro_tai(de, original.span[0]) in ("GOAL", "CONDITIONAL", "QUESTION")
-                        or _phu_dinh(de, original.span[0], de[slice(*original.span)])):
-                    continue
-                if not any(_rang_buoc_cuc_bo_khop(original, c) for c in calls):
-                    raise TuChoi("QUESTION_LOCAL_GIVEN_UNVERIFIED", "giả thiết hình dạng gốc chưa được bảo toàn; không thay mô hình")
-            residue = list(de[a:b])
-            found = False
-            for m in _DO_DAI_CUC_BO.finditer(de, a, b):
-                value = _doc(m)
-                tail = _DUOI_BANG.match(de[m.end():])
-                if value is None or tail is None:
-                    continue
-                for segment in segments(m):
-                    candidates = _nguon_do_dai_cuc_bo(calls, segment)
-                    for original in lengths:
-                        if (_vai_tro_tai(de, original.start()) in ("GOAL", "CONDITIONAL", "QUESTION")
-                                or not any(set(p) == set(segment) for p in segments(original))):
-                            continue
-                        if _doc(original) != value and not any(v == _doc(original) for v, _cid in candidates):
-                            raise TuChoi("QUESTION_LOCAL_GIVEN_CONFLICT",
-                                         "dữ kiện cục bộ khác dữ kiện gốc của đề; chưa hỗ trợ ghi đè phạm vi giả thiết")
-                        if unit(m) and unit(original) != unit(m):
-                            raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED", "đơn vị của dữ kiện cục bộ chưa khớp nguồn; chưa đổi đơn vị")
-                    if not any(v == value for v, _cid in candidates):
-                        code = "QUESTION_LOCAL_GIVEN_CONFLICT" if candidates else "QUESTION_LOCAL_GIVEN_UNVERIFIED"
-                        raise TuChoi(code, "dữ kiện độ dài trong câu hỏi chưa khớp giả thiết đã xác thực; không dùng mô hình cũ",
-                                     tuple(cid for _v, cid in candidates))
-                last = min(b, m.end() + tail.end())
-                residue[m.start() - a:last - a] = " " * (last - m.start())
-                found = True
-            for r in rb:
-                if not (a <= r.span[0] < r.span[1] <= b):
-                    continue
-                if not any(_rang_buoc_cuc_bo_khop(r, c) for c in calls):
-                    raise TuChoi("QUESTION_LOCAL_GIVEN_UNVERIFIED",
-                                 f"dữ kiện {r.kind} trong câu hỏi chưa có giả thiết tương ứng đã xác thực")
-                x, y = r.span
-                residue[x - a:y - a] = " " * (y - x)
-                found = True
-            remaining = "".join(residue)
+            remaining, found = cover(a, b)
             if (not found and remaining.strip(" ,;:.?!")) or not _NOI_DU_KIEN_CUC_BO.fullmatch(remaining):
                 raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                              "phần dữ kiện/đổi giả thiết trong câu hỏi chưa được đọc trọn; không dùng mô hình cũ")
+        # The ask grammar accepts a next task after the asked phrase (`_VIEC_KE_TIEP`) and stops reading there. The task
+        # itself is open wording, but it may not carry an unread hypothesis: a value or a premise predicate left after
+        # covering must be refused. A method ("bằng cách …") may name constructions, never assign values.
+        for m in _VIEC_KE_TIEP_RE.finditer("".join(masked)):
+            a = start + m.end()
+            if any(x <= start + m.start() < y for x, y in assertions):
+                continue
+            remaining, _found = cover(a, next(p for p in stops if p >= a))
+            rounding = re.search(_LAM_TRON, remaining, re.IGNORECASE)
+            if any((not rounding or n.start() < rounding.start()) and _vai_tro_tai(de, a + n.start()) not in ("GOAL", "QUESTION")
+                   for n in _SO_TU_DO.finditer(remaining)):
+                raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
+                             "việc kế tiếp trong yêu cầu nêu một giá trị chưa khớp giả thiết; không dùng mô hình cũ")
+            if m.group().lower() != "bằng cách" and any(
+                    _vai_tro_tai(de, a + p.start()) not in ("GOAL", "QUESTION") for p in _VI_TU_TIEN_DE.finditer(remaining)):
+                raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
+                             "việc kế tiếp trong yêu cầu nêu một quan hệ chưa là giả thiết đã xác thực; không dùng mô hình cũ")
 
 
 def _nguon_do_dai_cuc_bo(calls: tuple[LoiGoi, ...], segment: list[str]) -> list[tuple[tuple[Fraction, bool], str]]:
@@ -1226,6 +1249,20 @@ _CUM_HOI = {
          lambda m, a, k: {frozenset(_nhan_cum(x[1] or x[2])) for mau in _CAT_BOI for x in mau.finditer(m.string)
                           if x[1] or x[2]} == {frozenset(a.plane)})],
 }
+#: Next task / method after an asked phrase. The ask grammar stops reading here, so the source-coverage gate must read what
+#: follows (`_kiem_du_kien_cau_hoi`): one constant, two consumers.
+_VIEC_KE_TIEP = r"rồi|sau đó|từ đó|tiếp theo|tiếp đó|bằng cách"
+_LAM_TRON = r"(?:kết quả\s+)?làm tròn"
+_VIEC_KE_TIEP_RE = re.compile(rf"(?<!\w)(?:{_VIEC_KE_TIEP})(?!\w)", re.IGNORECASE)
+#: A free-standing value; an operand inside a formula ("V = Bh/3") is not a value assigned to the figure.
+_SO_TU_DO = re.compile(r"(?<![\w/^*×.,])(?:\d+(?:[.,]\d+)?|√\s*\d+|π)", re.IGNORECASE)
+#: Premise predicates of the library's own fact/construct functions (first keyword group), plus parallelism, which the
+#: library cannot represent. In a follow-up task they could only state a new hypothesis unless a goal or question.
+_VI_TU_TIEN_DE = re.compile("|".join(
+    [rf"(?<!\w){re.escape(k)}(?!\w)" for name in ("regular_polygon", "rectangle", "right_angle", "perpendicular_line_plane",
+                                                    "perpendicular_lines", "face_perpendicular_base", "altitude",
+                                                    "orthogonal_projection", "midpoint", "centroid")
+     for k in REGISTRY[name].keywords[0] if not k.startswith("re:")] + [r"(?<!\w)song song(?!\w)"]), re.IGNORECASE)
 #: Giữa động từ hỏi và cụm (sau khi xoá các cụm hỏi khác): chỉ từ nối.
 _GIUA_HOP_LE = re.compile(r"[\s,:]*(?:(?:và|cùng|lần lượt|hãy|các)(?!\w)[\s,:]*)*", re.IGNORECASE)
 #: Sau cụm (sau khi xoá các cụm hỏi khác): chỉ những thứ này rồi kết câu / dữ kiện / việc kế tiếp.
@@ -1237,7 +1274,7 @@ _SAU_HOP_LE = re.compile(
     r"|(?:đã cho|đó|này|trên)(?!\w)"
     r"|của\s+(?:hình|khối)\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện)(?:\s+(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?)?)*"
     # kết: dấu câu THẬT (sau nó là khoảng trắng / hết đề — "SC.SA" không kết), dữ kiện, việc kế tiếp, lời dặn làm tròn
-    r"(?:[.?!](?=\s|$)|$|(?:biết|với|cho|trong đó|rồi|sau đó|từ đó|bằng cách|(?:kết quả\s+)?làm tròn)(?!\w))", re.IGNORECASE)
+    rf"(?:[.?!](?=\s|$)|$|(?:biết|với|cho|trong đó|{_VIEC_KE_TIEP}|{_LAM_TRON})(?!\w))", re.IGNORECASE)
 #: "V" đã được đề định nghĩa ("Gọi V là …", "V = …", "V(S.MAB)") — không buộc mặc nhiên vào khối duy nhất (review S1, I4).
 _V_DINH_NGHIA = re.compile(r"(?<![\w'])(?-i:V)\s*(?:là|=|\()", re.IGNORECASE)
 
