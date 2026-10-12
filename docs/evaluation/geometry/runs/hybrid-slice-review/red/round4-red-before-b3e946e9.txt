@@ -1,0 +1,6 @@
+
+tests\geometry\test_source_gate_clause_role.py:220: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_source_gate_clause_role.py::test_object_that_is_not_the_question_verbs_object_is_refused[yes-no-vuot-qua]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_object_that_is_not_the_question_verbs_object_is_refused[yes-no-hay-chua]
+2 failed, 6 passed, 56 deselected in 0.88s

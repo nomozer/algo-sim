@@ -1,0 +1,17 @@
+FAILED tests/geometry/test_source_gate_clause_role.py::test_asked_object_after_a_proof_or_with_an_unrelated_number_is_answered[proof-then-ask-same-label]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_asked_object_after_a_proof_or_with_an_unrelated_number_is_answered[proof-tu-do-ask]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_asked_object_after_a_proof_or_with_an_unrelated_number_is_answered[rounding-number]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_triangle_area_next_to_a_section_sentence_is_not_the_section_area
+FAILED tests/geometry/test_hybrid_section_slice.py::test_one_question_fact_for_two_different_areas_is_refused
+FAILED tests/geometry/test_hybrid_section_slice.py::test_common_section_wordings_are_served[khi-cat-boi]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_common_section_wordings_are_served[area-khi-cat-boi]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_common_section_wordings_are_served[mp-no-space]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_common_section_wordings_are_served[tao-boi]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_common_section_wordings_are_served[do-P-cat]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_common_section_wordings_are_served[voi-P]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_common_section_wordings_are_served[P-cat-theo-thiet-dien]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_common_intersection_line_wordings_are_served[T\xecm giao tuy\~n c\~a hai m\~t ph\~ng (SAB) v\xe0 (SCD).]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_common_intersection_line_wordings_are_served[T\xecm giao tuy\~n c\~a 2 m\~t ph\~ng (SAB) v\xe0 (SCD).]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_common_intersection_line_wordings_are_served[T\xecm giao tuy\~n c\~a c\xe1c m\~t ph\~ng (SAB) v\xe0 (SCD).]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_common_intersection_line_wordings_are_served[T\xecm giao tuy\~n c\~a mp(SAB) v\xe0 mp(SCD).]
+16 failed, 83 passed in 2.07s

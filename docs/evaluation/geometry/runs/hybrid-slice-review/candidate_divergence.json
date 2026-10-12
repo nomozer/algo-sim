@@ -1,0 +1,19 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-slice-review",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-section-slice/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "451b046c534a4d33244f4d43bc663884dab842ecb25df42dc2bc40849849bbb8",
+  "current_candidate_source_commit": "b3e946e9",
+  "previous_candidate_hash": "5a8e0ff619193f436f752435dda50e9f53bced6e73efd26dc7b85bdc6de419b0",
+  "superseded_same_day": {"hash": "46455b583ea090704ceb9ba01d43d90643a7c01af464bc134445b486f8b4045f", "product_commit": "b2e980a6", "refreeze_commit": "65126be0"},
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "reason": "Independent review of S0 + the section slice: the shared source gate reads clause roles and asks with one analyser, binds sections to the plane the quote names, and does not answer yes/no questions with a value; engine keeps kernel codes for degenerate sections, keys sections by plane equation and traces merged calls — backend/app/simulation/geometry_functions/{registry,planner,engine}.py (commits 5136127a, e2af448e, b2e980a6, b3e946e9). Provider surfaces A/B unchanged; default LLM_ONLY unchanged; the Hybrid route is not reached by /api/analyze. Not authorized for a pilot; the locked A/B candidate and evidence are untouched.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring or pooling.",
+    "live_requests": 0
+  }
+}

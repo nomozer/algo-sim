@@ -1,10 +1,27 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_SLICE_REVIEW
+
+REPORT = docs/evaluation/geometry/runs/hybrid-slice-review/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-slice-review/
+CORRECTED_BY = NONE
+CORRECTS = HYBRID_SECTION_SLICE
+CLASSIFICATION = HYBRID_SLICE_REVIEW_AWAITING_INTEGRATION_DECISION
+CODE_COMMIT = b3e946e9
+VERIFICATION_COMMIT = 542e3894
+MODEL_REQUEST_COUNT = 0
+
+Independent review of S0 and the section slice. Critical 2 (C1 ask answered when not asked, C2 conditional / question
+clauses as givens), Important 3, Minor 4, re-verification false refusals, N1, N2 and the yes/no false serve: all closed
+RED → GREEN except M4. Independent exact oracle (no product import) equal on every area and edge topology. Scene3D
+harness with real Hybrid scenes: sections visible, orbit/zoom/reset settle, the intersection line draws 0 pixels.
+Residual gate false serves (A–D) declared, not fixed. Also corrects HYBRID_GATE_CLAUSE_ROLE_FIX (ask residual closed).
+
 ## WAVE_ID = HYBRID_SECTION_SLICE
 
 REPORT = docs/evaluation/geometry/runs/hybrid-section-slice/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-section-slice/
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_SLICE_REVIEW
 CORRECTS = NONE
 CLASSIFICATION = HYBRID_S0_AND_SECTION_SLICE_AWAITING_REVIEW
 CODE_COMMIT = eeceefbc
@@ -19,7 +36,7 @@ A and B change by design. Offline typed facts and route-A calls only; no real mo
 
 REPORT = docs/evaluation/geometry/runs/hybrid-gate-clause-role-fix/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-gate-clause-role-fix/
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_SLICE_REVIEW
 CORRECTS = NONE
 CLASSIFICATION = HYBRID_GATE_CLAUSE_ROLE_FIXED_ON_RESEARCH_BRANCH
 CODE_COMMIT = 8129f4ed

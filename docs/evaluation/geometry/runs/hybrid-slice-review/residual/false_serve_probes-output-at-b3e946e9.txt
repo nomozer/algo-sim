@@ -1,0 +1,79 @@
+!! PERP  Hễ SA vuông góc với (ABCD) là SC = 5.                                                                  SERVED {'q': '√17'}
+!! PERP  Tìm điều kiện để SA vuông góc với (ABCD).                                                              SERVED {'q': '√17'}
+!! PERP  Hãy chỉ ra rằng SA vuông góc với (ABCD).                                                               SERVED {'q': '√17'}
+!! PERP  Ta sẽ chỉ ra SA vuông góc với (ABCD).                                                                  SERVED {'q': '√17'}
+!! PERP  Giải thích vì sao SA vuông góc với (ABCD).                                                             SERVED {'q': '√17'}
+!! PERP  Tại sao SA vuông góc với (ABCD)?                                                                       SERVED {'q': '√17'}
+!! PERP  Liệu SA có vuông góc với (ABCD)?                                                                       SERVED {'q': '√17'}
+!! PERP  SA vuông góc với (ABCD) hoặc SB vuông góc với (ABCD).                                                  SERVED {'q': '√17'}
+!! PERP  SA có thể vuông góc với (ABCD).                                                                        SERVED {'q': '√17'}
+!! PERP  SA không hề vuông góc với (ABCD).                                                                      SERVED {'q': '√17'}
+!! PERP  SA không nhất thiết vuông góc với (ABCD).                                                              SERVED {'q': '√17'}
+!! PERP  Không đúng là SA vuông góc với (ABCD).                                                                 SERVED {'q': '√17'}
+!! PERP  SA chẳng vuông góc với (ABCD).                                                                         SERVED {'q': '√17'}
+!! PERP  Xét trường hợp SA vuông góc với (ABCD).                                                                SERVED {'q': '√17'}
+!! PERP  Cho rằng SA vuông góc với (ABCD), tìm lỗi sai.                                                         SERVED {'q': '√17'}
+!! PERP  Bạn An khẳng định SA vuông góc với (ABCD).                                                             SERVED {'q': '√17'}
+!! PERP  Kiểm chứng rằng SA vuông góc với (ABCD).                                                               SERVED {'q': '√17'}
+!! PERP  Muốn SA vuông góc với (ABCD) cần SA ⊥ AB.                                                              SERVED {'q': '√17'}
+!! LEN   SA ≥ 3.                                                                                                SERVED {'q': '√17'}
+!! LEN   SA > 3.                                                                                                SERVED {'q': '√17'}
+!! LEN   SA ≈ 3.                                                                                                SERVED {'q': '√17'}
+!! LEN   SA không bằng 4.                                                                                       SERVED {'q': '2√6'}
+!! LEN   SA ≠ 4.                                                                                                SERVED {'q': '2√6'}
+!! LEN   SA bằng 3 lần AB.                                                                                      SERVED {'q': '√17'}
+!! LEN   SA lớn hơn 3.                                                                                          SERVED {'q': '√17'}
+!! LEN   SA = 3 hoặc SA = 4.                                                                                    SERVED {'q': '√17'}
+!! LEN   SA xấp xỉ 3.                                                                                           SERVED {'q': '√17'}
+!! LEN   SA tối đa bằng 3.                                                                                      SERVED {'q': '√17'}
+!! LEN   SA = 3 là sai.                                                                                         SERVED {'q': '√17'}
+!! LEN   Độ dài SA bằng 3 khi M trùng S.                                                                        SERVED {'q': '√17'}
+   ASK   Thể tích khối chóp S.ABCD có vượt quá 5 không?                                                         NOT_ASKED_IN_SOURCE
+   ASK   Thể tích khối chóp S.ABCD có đúng là 4 không?                                                          NOT_ASKED_IN_SOURCE
+   ASK   Liệu thể tích khối chóp S.ABCD có thể là 5?                                                            NOT_ASKED_IN_SOURCE
+   ASK   Thể tích khối chóp S.ABCD bằng 4 phải không?                                                           NOT_ASKED_IN_SOURCE
+!! ASK   Tính bình phương khoảng cách từ S đến (ABCD).                                                          SERVED {'q': '3'}
+!! ASK   Tính nửa thể tích khối chóp S.ABCD.                                                                    SERVED {'q': '4'}
+!! ASK   Tính hai lần thể tích khối chóp S.ABCD.                                                                SERVED {'q': '4'}
+!! ASK   Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bởi (MAB).                                 SERVED {'q': '4'}
+!! ASK   Tính thể tích khối chóp M.ABCD.                                                                        SERVED {'q': '4'}
+!! ASK   Tính thể tích khối chóp S.ABC.                                                                         SERVED {'q': '4'}
+!! ASK   Tính khoảng cách từ A đến (SBC).                                                                       SERVED {'q': '3'}
+!! ASK   Tính khoảng cách từ trung điểm của SC đến (ABCD).                                                      SERVED {'q': '3'}
+!! ASK   Tính khoảng cách từ M đến (ABCD).                                                                      SERVED {'q': '3'}
+   ASK   Tính SC rồi so sánh với khoảng cách từ S đến (ABCD).                                                   NOT_ASKED_IN_SOURCE
+!! ASK   Tính SC + khoảng cách từ S đến (ABCD).                                                                 SERVED {'q': '3'}
+!! ASK   Tính độ dài SM.                                                                                        SERVED {'q': '√17'}
+!! ASK   Tính độ dài hình chiếu của SC lên (ABCD).                                                              SERVED {'q': '√17'}
+   ASK   Tính chu vi tam giác SAC.                                                                              NOT_ASKED_IN_SOURCE
+!! ASK   Tính độ dài trung tuyến SC của tam giác SBD.                                                           SERVED {'q': '√17'}
+   ASK   Tính SC, ở đây khoảng cách từ S đến (ABCD) gấp đôi SB.                                                 NOT_ASKED_IN_SOURCE
+   ASK   Tính SC theo khoảng cách từ S đến (ABCD).                                                              NOT_ASKED_IN_SOURCE
+   ASK   Tính tỉ số giữa SC và khoảng cách từ S đến (ABCD).                                                     NOT_ASKED_IN_SOURCE
+   ASK   Tìm M sao cho khoảng cách từ S đến (ABCD) nhỏ nhất?                                                    NOT_ASKED_IN_SOURCE
+   ASK   Hỏi khoảng cách từ S đến (ABCD) có bằng 3 không?                                                       NOT_ASKED_IN_SOURCE
+   ASK   Tính giá trị lớn nhất của khoảng cách từ S đến (ABCD).                                                 NOT_ASKED_IN_SOURCE
+!! ASK   Tính khoảng cách từ S đến (ABCD) khi M thay đổi.                                                       SERVED {'q': '3'}
+!! ASK   Tính khoảng cách từ S đến (ABCD) sau khi tăng SA lên gấp đôi.                                          SERVED {'q': '3'}
+!! ASK   Tính SC. Biết khoảng cách từ S đến (ABCD)?                                                             SERVED {'q': '3'}
+!! ASK   Tính sin góc giữa SC và (ABCD).                                                                        SERVED {'q': 'cos²=8/17'}
+   SEC   Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (P) song song với (MAB).                    SOURCE_OBJECT_MISMATCH
+   SEC   Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (P) chứa AB và vuông góc với (MAB).         SOURCE_OBJECT_MISMATCH
+!! SEC   Tính diện tích thiết diện của hình chóp S.ABCD cắt bởi (MAB), biết diện tích thiết diện cắt bởi (SAC   SERVED {'q': '3√2'}
+!! SEC   Tính diện tích thiết diện của hình chóp S.ABCD cắt bởi (SAC) rồi so sánh với thiết diện cắt bởi (MAB   SERVED {'q': '3√13/4'}
+   SEC   Tính tỉ số diện tích thiết diện của hình chóp S.ABCD cắt bởi (MAB) và diện tích đáy.                   AMBIGUOUS_FACT
+!! SEC   Tính diện tích thiết diện lớn nhất của hình chóp S.ABCD cắt bởi (MAB) khi M chạy trên SC.              SERVED {'q': '3√13/4'}
+!! SEC   Tính diện tích hình chiếu của thiết diện của hình chóp S.ABCD cắt bởi (MAB) lên đáy.                   SERVED {'q': '√13/2'}
+   SEC   Mặt phẳng (MAB) không cắt hình chóp S.ABCD theo thiết diện nào.                                        SOURCE_OBJECT_MISMATCH
+   SEC   Giả sử mặt phẳng (MAB) cắt hình chóp S.ABCD theo một thiết diện.                                       CONDITIONAL_CLAUSE
+!! SEC   Tính diện tích thiết diện của khối lập phương cắt bởi (MAB).                                           SERVED {'q': '3√13/4'}
+!! SEC   Tính diện tích thiết diện của hình chóp S.ABCD với mặt phẳng (MAB) song song với CD.                   SERVED {'q': '3√13/4'}
+!! SEC   Tính diện tích thiết diện với mặt phẳng (MAB) của hình chóp S.ABCD.                                    SERVED {'q': '3√13/4'}
+!! SEC   Tính diện tích thiết diện của hình chóp S.ABCD cắt bởi (MAB) khi SA tăng gấp đôi.                      SERVED {'q': '3√13/4'}
+   GT    Chứng minh giao tuyến của (SAB) và (SCD) song song với AB.                                             GOAL_CLAUSE_NOT_PREMISE
+   GT    Nếu giao tuyến của (SAB) và (SCD) song song với AB thì SA = 3.                                         CONDITIONAL_CLAUSE
+   GT    Tìm giao tuyến của (SAB) và mặt phẳng (P) song song với (SCD).                                         SOURCE_OBJECT_MISMATCH
+   GT    Tìm giao tuyến của (SAB) với mặt phẳng qua M song song với (SCD).                                      SOURCE_OBJECT_MISMATCH
+   GT    Tìm giao tuyến của (SAB) và (SCD) với (SBC).                                                           SOURCE_OBJECT_MISMATCH
+   GT    Tìm giao điểm của (SAB) và (SCD).                                                                      PREDICATE_NOT_IN_QUOTE
+   GT    Giao tuyến của (SAB) và (SCD) không song song với AB.                                                  NEGATED_CLAUSE

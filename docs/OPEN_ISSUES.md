@@ -57,9 +57,41 @@
 - **status:** MOSTLY RESOLVED on the research branch (S0, run `hybrid-gate-clause-role-fix`, `8129f4ed`).
   - Every `ask_*` now needs a sentence that asks (tính / tìm / xác định / hỏi / bao nhiêu / ?), otherwise `NOT_ASKED_IN_SOURCE`.
   - **Residual:** a sentence that asks something else while asserting a value of the asked quantity ("Khi khoảng cách … bằng 4 thì SC bằng bao nhiêu?" typed as `ask_distance`) is still answered by the generic `ask_*` path. Only the point–line path has the phrase-bound asserted-value check.
+  - **Update 2026-10-12 (run `hybrid-slice-review`, `5136127a`–`b3e946e9`):** that residual is closed. One clause analyser reads every ask at its object anchors: asked by a question verb with no object-blocker or by "bao nhiêu / mấy / ?", no value assigned, not a yes/no relation, not in a proof or conditional clause. What remains is in `ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES`.
   - Not yet on `main`.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** Its own wave. It changes refusals in both routes, so A/B evidence must be re-read.
+- **default_switch_blocker:** NO
+
+### ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES
+
+- **description:** After the review fixes, the independent reviewer's final pass still found inputs where the source gate serves an answer the source does not license (about 80 probes, `!!` = served):
+  - **A** — non-premise clauses typed as premises: goal verbs other than "chứng minh" ("Hãy chỉ ra rằng …", "Giải thích vì sao …", "Tìm điều kiện để …"), questions without "không" ("Tại sao …?"), reported claims, and negation, modality or disjunction outside the `PHU_DINH` list ("không hề", "chẳng", "có thể", "… hoặc …").
+  - **B** — a length value taken from a non-equality ("SA ≠ 4", "SA ≥ 3", "SA xấp xỉ 3", "SA bằng 3 lần AB", "SA = 3 hoặc SA = 4").
+  - **C** — ask operands not bound to the quote: "Tính khoảng cách từ A đến (SBC)" typed as S → (ABCD) is served. Quantity modifiers are ignored: "bình phương", "nửa", "hình chiếu của SC", "khi M thay đổi".
+  - **D** (new surface of the section slice) — one quote naming two sections binds the wrong one, so a given area can be served as the answer. Also: "diện tích hình chiếu của thiết diện" falls back to `ask_area` of a triangle; optimisation or change wordings are served; the solid word is not checked when the problem has one solid.
+  - **M4** — a plane equal to a face or the base is served as a section.
+- **evidence:** `docs/evaluation/geometry/runs/hybrid-slice-review/report.md` §5; probes and output at `b3e946e9` in `docs/evaluation/geometry/runs/hybrid-slice-review/residual/`.
+- **impact:** A confident wrong answer is possible on the Hybrid routes (A and B) when the AI mis-types a fact, with C and D the most likely. A–C exist on `main` already. The default `LLM_ONLY` route does not use this gate.
+- **scope:** `backend/app/simulation/geometry_functions/registry.py` (`kiem_nguon`, `_kiem_cau_hoi`, `_duoc_hoi`, value grounding, `mat_cat_dung_nguon`).
+- **status:** OPEN. Fix direction: bind every ask operand to the asked object phrase and accept a closed set of ask shapes; values only through "=" / "bằng" with no operator around them. Not more blockers: the regex grammar cannot be complete for adversarial wording.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** Next Hybrid gate wave, before any product enablement or live pilot of Hybrid.
+- **default_switch_blocker:** YES
+
+### ISSUE-ARCH-SCENE3D-INTERSECTION-LINE-INVISIBLE
+
+- **description:** In the Scene3D harness, the Hybrid intersection line of (SAB) and (SCD) (`gt_f5`, a line through S parallel to AB) is listed in `__geo3d_rendered_object_ids` but contributes 0 pixels. The result is the same with the planes hidden and the auxiliary layer shown.
+  - Lines at S with direction (−1,1,0) or (0,1,0) render.
+  - Directions (1,0,0), (1,1,0) and (1,0,1) do not render, and neither does a line at the interior point (½,½,½).
+  - An auxiliary line renders (1 754 pixels).
+  - The scene data is correct; the independent oracle gives direction (−24,0,0).
+- **evidence:** `docs/evaluation/geometry/runs/hybrid-slice-review/report.md` §4; `visual/browser-check/browser-check.json` (`own_pixel_contribution` 0).
+- **impact:** The construction step of an intersection line shows nothing. If the shared renderer path is the cause, LLM_ONLY scenes with such lines may be affected (not checked).
+- **scope:** `frontend/src/simulations/domains/geometry/` line rendering (root cause UNKNOWN).
+- **status:** OPEN — not fixed in the review run.
+- **owner_class:** ARCHITECTURE
+- **suggested_wave:** Next renderer slice, together with `ISSUE-ARCH-ORBIT-P1-SECTION-SCENE-DOES-NOT-SETTLE`; reproduce with `frontend/scripts/hybrid-section-visual.html?i=4&hide=gt_f5`.
 - **default_switch_blocker:** NO
 
 ### ISSUE-ARCH-ENGINE-CENTRE-LABEL-EXHAUSTION

@@ -1,0 +1,10 @@
+FAILED tests/geometry/test_source_gate_clause_role.py::test_object_that_is_not_the_question_verbs_object_is_refused[o-day-gap-doi]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_object_that_is_not_the_question_verbs_object_is_refused[theo]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_object_that_is_not_the_question_verbs_object_is_refused[ti-so]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_object_that_is_not_the_question_verbs_object_is_refused[sao-cho-nho-nhat]
+FAILED tests/geometry/test_source_gate_clause_role.py::test_object_that_is_not_the_question_verbs_object_is_refused[yes-no]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_section_plane_related_to_a_named_plane_is_not_that_plane[tao-voi]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_section_plane_related_to_a_named_plane_is_not_that_plane[doi-xung-voi]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_section_plane_related_to_a_named_plane_is_not_that_plane[cung-dien-tich-voi]
+FAILED tests/geometry/test_hybrid_section_slice.py::test_section_plane_related_to_a_named_plane_is_not_that_plane[P-song-song-voi-cat]
+9 failed, 99 passed in 2.45s

@@ -158,6 +158,9 @@ ALLOWED_CANONICAL_ACTIONS = [
     # hybrid-section-slice (2026-10-11): S0 + section slice done on the research branch; next is the user's review and
     # integration decision.
     "HYBRID_S0_AND_SECTION_SLICE_INTEGRATION_DECISION",
+    # hybrid-slice-review (2026-10-12): independent review fixed, Scene3D harness check done, residual risk declared; next
+    # is the user's decision on the main fast-forward.
+    "HYBRID_SLICE_REVIEW_INTEGRATION_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

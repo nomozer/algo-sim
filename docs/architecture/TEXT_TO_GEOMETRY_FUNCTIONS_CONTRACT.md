@@ -35,10 +35,11 @@ Danh sách đúng theo mã tại run `hybrid-section-slice`, 2026-10-11. Hằng 
 | thoát | `unsupported` ⇒ `OUT_OF_SCOPE` |
 
 Thiết diện và giao tuyến dùng **IR chung đã có**: `construct_section`, `assign` với `intersect_plane_plane`, `measure area`.
-Hybrid không có engine thứ hai. Mỗi cặp (khối, mặt cắt) chỉ dựng một thiết diện. Các mã từ chối:
+Hybrid không có engine thứ hai. Mỗi (khối, phương trình mặt cắt) chỉ dựng một thiết diện, dù mặt được gọi bằng các bộ
+điểm khác nhau. Các mã từ chối:
 - `PARALLEL_PLANES`: hai mặt song song hoặc trùng nhau;
 - `SECTION_EMPTY`: mặt cắt không cắt khối;
-- mã của kernel: mặt qua ba điểm thẳng hàng.
+- mã của kernel: mặt qua ba điểm thẳng hàng; `PLANE_TOUCHES_VERTEX`, `PLANE_TOUCHES_EDGE`, `PLANE_DOES_NOT_CUT`.
 
 Mỗi **cấu trúc câu** là một hàm riêng (đường cao, hình chiếu, hai đường vuông góc…), không phải danh sách đồng nghĩa
 của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cần** (§3.4), không phải bộ hiểu câu.
@@ -47,12 +48,22 @@ của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cầ
 
 1. **Vị trí**: mọi quote nằm trong đề, so sau khi bỏ khoảng trắng (`QUOTE_NOT_IN_SOURCE`); nhãn là nhãn của đề (`UNKNOWN_LABEL`).
 2. **Vai trò mệnh đề** (mọi hàm trừ `ask_*`/`unsupported`), đọc tại **mọi mốc** của lời gọi trong quote: đầu quote, từ
-   khoá vị từ, nhãn của lời gọi, cụm "X là giao điểm/hình chiếu". Quy tắc từ run `hybrid-gate-clause-role-fix`:
-   - sau "chứng minh/CMR/chứng tỏ" mà chưa có "biết" ⇒ `GOAL_CLAUSE_NOT_PREMISE`;
-   - có "nếu" ở trước mốc trong cùng câu ⇒ `CONDITIONAL_CLAUSE`, kể cả khi mốc ở vế sau "thì";
+   khoá vị từ, nhãn của lời gọi, cụm "X là giao điểm/hình chiếu". Một bộ phân tích chung (`_vai_tro_tai`, run
+   `hybrid-gate-clause-role-fix`, sửa ở run `hybrid-slice-review`):
+   - sau "chứng minh/CMR/chứng tỏ" mà chưa có "biết" (và không có động từ hỏi riêng sau đó) ⇒ `GOAL_CLAUSE_NOT_PREMISE`;
+   - có từ mở điều kiện ở trước mốc trong cùng câu (nếu, khi — trừ "khi đó/cắt/dựng/quay/chiếu", giả sử, trong trường hợp,
+     với điều kiện, trừ khi) hoặc mốc đứng trước "thì" ⇒ `CONDITIONAL_CLAUSE`;
+   - mệnh đề hỏi có/không (phải chăng, có phải, hay không, "… không?") ⇒ `QUESTION_CLAUSE_NOT_PREMISE`;
    - dữ kiện sau "biết" trong câu hỏi là tiền đề.
-   **Câu hỏi** (`ask_*`): câu chứa quote phải hỏi (tính / tìm / xác định / hỏi / bao nhiêu / ?), nếu không ⇒
-   `NOT_ASKED_IN_SOURCE`.
+   **Câu hỏi** (`ask_*`): xét tại **mốc đối tượng** (danh từ đại lượng của hàm, hoặc nhãn có tập nhãn đúng bằng một toán
+   hạng). Đối tượng được hỏi khi có động từ hỏi (tính / tìm / xác định / hỏi) đứng trước nó sau dấu hiệu dữ kiện cuối, không
+   bị từ chặn tân ngữ (theo, tỉ số, tổng, sao cho, gấp, so sánh hơn/nhất…) xen giữa; hoặc "bao nhiêu / mấy / ?" sau nó. Không
+   được: bị gán giá trị ("bằng 4", "= √17"), là quan hệ có/không không kèm "bao nhiêu", nằm trong mệnh đề chứng minh/điều
+   kiện. Sai ⇒ `NOT_ASKED_IN_SOURCE` hoặc mã vai trò. Toán hạng của câu hỏi CHƯA được buộc vào cụm đối tượng — xem
+   `ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES`.
+   **Mặt cắt** (`section`, `ask_section_area`, `intersection_line`): mặt phải là mặt mà quote gọi tên ở vị trí mặt cắt
+   ("cắt bởi (P)", "thiết diện của <khối> với (P)", "(P) cắt …" khi (P) là chủ ngữ mệnh đề, "giao tuyến của (P) và (Q)"),
+   khối là khối của quote hoặc khối duy nhất của đề ⇒ nếu không `SOURCE_OBJECT_MISMATCH`.
 3. **Phủ định** trong quote hoặc ngay trước nó trong cùng mệnh đề (cắt ở `, ; :`) ⇒ `NEGATED_CLAUSE`.
 4. **Vị từ + tham chiếu**: từ khoá định nghĩa ⇒ `PREDICATE_NOT_IN_QUOTE`; mặt phẳng được nhắc (nhóm nhãn trùng tập
    điểm, hoặc "đáy" với mặt đáy) ⇒ `PLANE_NOT_IN_QUOTE`; đoạn/đường và điểm đóng vai riêng (ảnh hình chiếu, chân đường

@@ -1,21 +1,18 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — hybrid-section-slice, 2026-10-11
+## LOCAL override — hybrid-slice-review, 2026-10-12
 
 Mới nhất:
-- Trên nhánh nghiên cứu (chưa merge/push), được người dùng duyệt:
-  - **S0** sửa lỗi CRITICAL của cổng nguồn chung (vai trò mệnh đề trong quote; `ask_*` phải là câu hỏi), T3 PASS;
-  - **lát 1:** Hybrid dựng thiết diện, giao tuyến, diện tích thiết diện qua IR chung có sẵn. Registry 30 hàm; bề mặt
-    provider A/B đổi có chủ đích.
-- Candidate `5a8e0ff6` (product `eeceefbc`), khai lệch ở run. Benchmark 19/9/0/2 không đổi. LLM_ONLY/cache125; LIVE Gemini0.
-- Report: [`hybrid-section-slice`](evaluation/geometry/runs/hybrid-section-slice/report.md).
+- Kiểm toán độc lập S0 + lát thiết diện (nhánh nghiên cứu, chưa merge/push). Critical 2 / Important 3 / Minor 4 đã đóng bằng
+  RED → GREEN (`5136127a` → `b3e946e9`), trừ M4. Thiết diện khớp oracle độc lập. Đã chạy harness Scene3D với scene Hybrid thật;
+  giao tuyến không hiện (`ISSUE-ARCH-SCENE3D-INTERSECTION-LINE-INVISIBLE`). Rủi ro còn lại: `ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES`.
+- Candidate `451b046c` (product `b3e946e9`), khai lệch ở run. Benchmark 19/9/0/2 không đổi; bề mặt provider không đổi. LLM_ONLY/cache125; LIVE Gemini0.
+- Report: [`hybrid-slice-review`](evaluation/geometry/runs/hybrid-slice-review/report.md). Fast-forward `main`: GO khi đã khai rủi ro; chờ người dùng quyết.
 
-Trước đó (hybrid-simulation-capability-audit):
-- Kiểm toán năng lực mô phỏng (nhánh nghiên cứu, không đổi mã sản phẩm, LIVE Gemini 0). Phần lớn thứ còn thiếu (thiết diện,
-  giao tuyến, mặt ⊥ đường, khối cong) engine/IR chung ĐÃ dựng được; Hybrid thiếu cửa vào (Registry, Typed Facts, planner).
-- **Lỗi CRITICAL mới:** cổng nguồn chung nhận mệnh đề "Nếu … thì" / "Chứng minh" nằm trong quote làm giả thiết
-  (`ISSUE-ARCH-GATE-CLAUSE-ROLE-INSIDE-QUOTE`). `LLM_ONLY` mặc định không dùng cổng này.
-- Đề xuất: S0 sửa cổng, rồi lát "thiết diện + giao tuyến". Report:
+Trước đó (hybrid-section-slice, hybrid-simulation-capability-audit):
+- S0 sửa lỗi CRITICAL cổng nguồn chung (`ISSUE-ARCH-GATE-CLAUSE-ROLE-INSIDE-QUOTE`). Lát 1 dựng thiết diện, giao tuyến và diện tích
+  thiết diện qua IR chung có sẵn (Registry 30, bề mặt A/B đổi có chủ đích). Reports:
+  [`hybrid-section-slice`](evaluation/geometry/runs/hybrid-section-slice/report.md),
   [`hybrid-simulation-capability-audit`](evaluation/geometry/runs/hybrid-simulation-capability-audit/report.md).
 
 Trước đó (hybrid-slice1-main-integration):
@@ -115,7 +112,7 @@ thuộc thư mục run trong `docs/evaluation/`.
 > USER_DIRTY_STATE = có — `frontend/public/favicon.svg` untracked của người dùng, giữ nguyên; không stage/commit.
 > CURRENT_WAVE = HYBRID_AB_PILOT_READINESS (run hybrid-ab-pilot-readiness, LOCAL, cùng nhánh, live Gemini0): object-binding chính xác, observation ≠ proof; runner SMOKE24/FULL288 có identity riêng, shared output3072; 344 focused PASS,9 mutation killed,312 fake/network0; clean backend8068 PASS/1 skip/2 deselected tại2f1b457c. CORRECTS HYBRID_COMPILER_SELECTION: lịch sử nguyên byte, đọc cùng correction layer. Report/handoff của run là thẩm quyền; không tuyên bố safety population/visual/real-model.
 > FINAL_DECISION = HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW — offline GO có giới hạn kiểm chứng; SMOKE/FULL live NO-GO (prompt estimator chưa provider-bound, storage cause UNKNOWN, chưa phê duyệt riêng). Main giữ nguyên28ac1d61; không merge/push/default change; human visual acceptance NOT_PERFORMED.
-> CANONICAL_NEXT_ACTION = HYBRID_S0_AND_SECTION_SLICE_INTEGRATION_DECISION
+> CANONICAL_NEXT_ACTION = HYBRID_SLICE_REVIEW_INTEGRATION_DECISION
 > TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION (sau giai đoạn mở rộng họ hình; ROADMAP §0.4 P4)
 > ```
 

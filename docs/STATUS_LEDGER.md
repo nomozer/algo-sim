@@ -1844,3 +1844,15 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-section-slice/
 - **TESTS:** RED 14 failing at f261e9e7; 19 focused with an independent oracle and 3 mutants; cluster 720 passed, 5 xfailed; benchmark byte-identical.
 - **GATES:** candidate 5a8e0ff6 (refreeze 3e0eebc8) declared; T3 recorded in run.json. LIVE Gemini 0.
 - **FINAL_DECISION:** HYBRID_S0_AND_SECTION_SLICE_AWAITING_REVIEW.
+
+## WAVE_ID = HYBRID_SLICE_REVIEW
+
+REPORT = docs/evaluation/geometry/runs/hybrid-slice-review/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-slice-review/
+
+- **DATE / BRIEF:** 2026-10-12, LOCAL; user brief "Hybrid independent review, Scene3D validation and compact DSL research spike", workstream A.
+- **REVIEW:** independent read-only reviewer agent, four passes. Critical 2, Important 3, Minor 4, plus re-verification findings; all closed except M4.
+- **FIXES:** 5136127a, e2af448e, b2e980a6, b3e946e9 — one clause analyser for premises and asks; sections bound to the plane the quote names; kernel codes kept; sections keyed by plane equation; yes/no relations not answered. RED before each round (22+8, 16, 9, 2 failing); 14 mutants killed; cluster 885 passed, 5 xfailed; benchmark byte-identical; provider surfaces unchanged.
+- **ORACLE / SCENE3D:** independent exact oracle equal on every case. Playwright harness with real Hybrid scenes: 6/6 load, 0 console errors, orbit/zoom/reset settle; intersection line invisible (ISSUE-ARCH-SCENE3D-INTERSECTION-LINE-INVISIBLE). Not the product UI; no human acceptance.
+- **GATES:** candidate 451b046c (refreeze 542e3894) declared; T3 recorded in run.json. LIVE Gemini 0.
+- **FINAL_DECISION:** HYBRID_SLICE_REVIEW_AWAITING_INTEGRATION_DECISION — main fast-forward GO with declared residual risk (ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES); Hybrid in product / live pilot NO-GO.

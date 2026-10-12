@@ -9,9 +9,17 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_S0_AND_SECTION_SLICE_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_SLICE_REVIEW_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **Kiểm toán độc lập S0 + lát thiết diện, kiểm Scene3D (LOCAL, 2026-10-12, cùng nhánh nghiên cứu, chưa merge/push; run [`hybrid-slice-review`](evaluation/geometry/runs/hybrid-slice-review/report.md)):**
+  - Review: Critical 2, Important 3, Minor 4 cùng các phát hiện tái kiểm. Đã đóng hết bằng RED → GREEN (`5136127a` → `b3e946e9`), trừ M4. Thiết diện khớp oracle độc lập chính xác.
+  - Scene3D: harness dùng scene Hybrid thật, không phải UI sản phẩm. Thiết diện hiện đúng; orbit/zoom/reset ổn định. Giao tuyến không hiện pixel nào (`ISSUE-ARCH-SCENE3D-INTERSECTION-LINE-INVISIBLE`).
+  - Rủi ro còn lại đã khai: cổng nguồn còn phục vụ sai ở nhóm A–D (`ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES`). A–C có sẵn trên `main`; D là bề mặt mới.
+  - GO/NO-GO: GO cho fast-forward `main` khi đã khai rủi ro còn lại; NO-GO cho việc bật Hybrid trong sản phẩm hoặc chạy pilot live.
+  - Việc kế tiếp: người dùng quyết tích hợp theo [`handoff.md`](evaluation/geometry/runs/hybrid-slice-review/handoff.md). Wave đề xuất sau đó: buộc toán hạng câu hỏi vào quote (đóng nhóm C, D).
+  - Spike DSL gọn (nhánh `research/compact-geometry-dsl`, run `compact-geometry-dsl-spike`, không thuộc nhánh này): kết luận nằm ở báo cáo của nhánh đó; không đổi lược đồ hay bề mặt provider.
 
 - **S0 + lát thiết diện (LOCAL, 2026-10-11, nhánh nghiên cứu, chưa merge/push):**
   - **S0** ([`hybrid-gate-clause-role-fix`](evaluation/geometry/runs/hybrid-gate-clause-role-fix/report.md)) sửa lỗi CRITICAL của cổng chung A/B:

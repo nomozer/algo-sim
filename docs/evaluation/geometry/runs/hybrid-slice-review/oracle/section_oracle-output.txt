@@ -1,0 +1,20 @@
+pyr (MAB) M=mid SC                            area²=117/16  ["('E', ('S', 'C', Fraction(1, 2)))", "('E', ('S', 'D', Fraction(1, 2)))", "('V', 'A')", "('V', 'B')"]
+pyr (SAC)                                     area²=18  ["('V', 'A')", "('V', 'C')", "('V', 'S')"]
+pyr (mid SA,SB,SC)                            area²=1  ["('E', ('S', 'A', Fraction(1, 2)))", "('E', ('S', 'B', Fraction(1, 2)))", "('E', ('S', 'C', Fraction(1, 2)))", "('E', ('S', 'D', Fraction(1, 2)))"]
+pyr (C, mid SA, mid SB)                       area²=225/16  ["('E', ('S', 'A', Fraction(1, 2)))", "('E', ('S', 'B', Fraction(1, 2)))", "('V', 'C')", "('V', 'D')"]
+pyr (M=mid SC, I, K)                          area²=125/144  ["('E', ('S', 'A', Fraction(1, 3)))", "('E', ('S', 'B', Fraction(1, 3)))", "('E', ('S', 'C', Fraction(1, 2)))", "('E', ('S', 'D', Fraction(1, 2)))"]
+pyr (S,I,K) touches vertex                    area²=REFUSE degenerate (1 pts)  ["('V', 'S')"]
+pyr (S,C,I) touches edge                      area²=REFUSE degenerate (2 pts)  ["('V', 'C')", "('V', 'S')"]
+pyr (SAB) face                                area²=9  ["('V', 'A')", "('V', 'B')", "('V', 'S')"]
+pyr (ABC) base                                area²=16  ["('V', 'A')", "('V', 'B')", "('V', 'C')", "('V', 'D')"]
+pyr plane through M=midSC parallel to base    area²=1  ["('E', ('S', 'A', Fraction(1, 2)))", "('E', ('S', 'B', Fraction(1, 2)))", "('E', ('S', 'C', Fraction(1, 2)))", "('E', ('S', 'D', Fraction(1, 2)))"]
+pyr collinear (mid AB, A, B)                  area²=REFUSE collinear  
+cube (A'BD)                                   area²=12  ['(\'V\', "A\'")', "('V', 'B')", "('V', 'D')"]
+cube hexagon (mid AB, mid BC, mid CC')        area²=27  ['(\'E\', ("A\'", "D\'", Fraction(1, 2)))', '(\'E\', ("C\'", "D\'", Fraction(1, 2)))', '(\'E\', (\'A\', "A\'", Fraction(1, 2)))', "('E', ('A', 'B', Fraction(1, 2)))", "('E', ('B', 'C', Fraction(1, 2)))", '(\'E\', (\'C\', "C\'", Fraction(1, 2)))']
+tet (mid DA,DB,DC) edge2                      area²=3/16  ["('E', ('A', 'D', Fraction(1, 2)))", "('E', ('B', 'D', Fraction(1, 2)))", "('E', ('C', 'D', Fraction(1, 2)))"]
+tet (mid AB,AC,DB) edge2                      area²=1  ["('E', ('A', 'B', Fraction(1, 2)))", "('E', ('A', 'C', Fraction(1, 2)))", "('E', ('B', 'D', Fraction(1, 2)))", "('E', ('C', 'D', Fraction(1, 2)))"]
+(SAB)∩(SCD) dir (Fraction(-24, 1), Fraction(0, 1), Fraction(0, 1)) ∥AB: True S on both: True
+(SAC)∩(SBD) dir (Fraction(-24, 1), Fraction(-24, 1), Fraction(72, 1)) ∥SO: True
+(MNP mid SA,SB,SC) vs (ABC) parallel: True
+(SAB) vs (SCD) via đáy: (SAB)∩(ABCD) dir (Fraction(-24, 1), Fraction(0, 1), Fraction(0, 1)) vs (SAB)∩(SCD) (Fraction(-24, 1), Fraction(0, 1), Fraction(0, 1))
+tri MAB area² 13/4
