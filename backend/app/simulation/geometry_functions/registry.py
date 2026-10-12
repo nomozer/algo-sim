@@ -316,12 +316,19 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
 #: Dấu phủ định — xét trong quote VÀ phần mệnh đề đứng ngay trước nó.
 PHU_DINH = ("không phải", "không là", "không vuông góc", "không ⊥", "không đều", "không song song", "chưa chắc")
 #: Mở đầu điều PHẢI CHỨNG MINH / PHẢI LÀM (S1 thêm: chỉ ra, giải thích, kiểm chứng, tìm điều kiện — nhóm A phần dư).
-_MUC_TIEU = ("chứng minh", "cmr", "chứng tỏ", "chỉ ra", "giải thích", "kiểm chứng", "tìm điều kiện")
+_MUC_TIEU = ("chứng minh", "cmr", "chứng tỏ", "chỉ ra", "giải thích", "kiểm chứng", "tìm điều kiện",
+             # review S1, I5
+             "kiểm tra", "suy ra", "xác minh", "vì sao", "tại sao", "lập luận")
 #: Không khẳng định (S1, nhóm A): phủ định mạnh, tình thái, phủ định mệnh đề — đọc trong quote và phần trước nó của mệnh đề.
-_KHONG_KHANG_DINH = re.compile(r"(?<!\w)(?:không hề|chẳng|không nhất thiết|không đúng là|có thể(?!\s+tích))(?!\w)",
+_KHONG_KHANG_DINH = re.compile(r"(?<!\w)(?:không hề|chẳng|không nhất thiết|không đúng là|có thể(?!\s+tích)"
+                               r"|không bao giờ|không thể|chưa|không còn|đâu có)(?!\w)",
                                re.IGNORECASE)
 #: Tuyển ("… hoặc …"): một vế của phép tuyển không phải dữ kiện — đọc trong CẢ mệnh đề.
 _TUYEN = re.compile(r"(?<!\w)hoặc(?!\w)", re.IGNORECASE)
+#: Câu tự phủ nhận điều nó nêu ("… là sai", "… vô lí") — đọc trong CẢ câu (review S1, I5).
+_SAI = re.compile(r"(?<!\w)(?:là\s+(?:điều\s+)?(?:sai|không đúng)|vô lí|vô lý)(?!\w)", re.IGNORECASE)
+#: Điều kiện đặt SAU điều được nêu, trong cùng mệnh đề ("SA ⊥ (ABCD) khi M trùng S") — review S1, I5.
+_DIEU_KIEN_SAU = re.compile(r"(?<!\w)(?:khi(?!\s+(?:đó|cắt|dựng|quay|chiếu))|nếu|với điều kiện|trừ khi)(?!\w)", re.IGNORECASE)
 
 
 class Source(BaseModel):
@@ -464,8 +471,9 @@ def _phu_dinh(de: str, vt: int, q: str) -> bool:
     truoc = de[_cau_chua(de, vt):vt]
     duoi = re.split(r"[,;:]", truoc)[-1]
     ma, mb = _bien_menh_de(de, vt)
+    ca, cb = _bien_cau(de, vt)
     return (any(p in (duoi + q).lower() for p in PHU_DINH) or bool(_KHONG_KHANG_DINH.search(duoi + q))
-            or bool(_TUYEN.search(de[ma:mb])))
+            or bool(_TUYEN.search(de[ma:mb])) or bool(_SAI.search(de[ca:cb])))
 
 
 def _co_tu(quotes: tuple[str, ...], nhom: tuple[str, ...]) -> bool:
@@ -563,7 +571,8 @@ def _co_diem_rieng(quotes: tuple[str, ...], ten: str, mp: list[str] | None) -> b
 _NOI_BANG = re.compile(r"\s*(?:=\s*(?-i:[A-Z][0-9]*'?[A-Z][0-9]*'?)\s*)*"           # chuỗi bằng "SA = SB = 3"
                        r"(?:(?:có\s+)?độ dài(?:\s+(?:=|bằng|là))?|=|bằng|là|dài)\s*", re.IGNORECASE)
 #: Sau số, tới hết mệnh đề: chỉ đơn vị, rồi kết mệnh đề hay "và" — không "lần", "hoặc", "là sai", "khi …".
-_DUOI_BANG = re.compile(r"\s*(?:(?:cm|dm|mm|m|đvđd)(?![\w']))?\s*(?:[.,;:)]|$|và(?!\w))", re.IGNORECASE)
+_DUOI_BANG = re.compile(r"\s*(?:(?:cm|dm|mm|m|đvđd)(?![\w'])|đơn vị(?:\s+độ dài)?(?!\w)|\((?:cm|dm|mm|m|đvđd|đơn vị[^()]*)\))?"
+                        r"\s*(?:\.(?=\s|$)|[,;:)]|$|và(?!\w))", re.IGNORECASE)
 
 
 def _gia_tri_la_phep_bang(de: str, vts: list[tuple[int, int]], seg: list[str]) -> bool:
@@ -685,7 +694,8 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
 _DIEU_KIEN = re.compile(r"(?<!\w)(?:nếu|giả sử|giả thiết rằng|trong trường hợp|với điều kiện|trừ khi"
                         r"|khi(?!\s+(?:đó|cắt|dựng|quay|chiếu))"
                         # S1, nhóm A: giả định / tường thuật — không phải dữ kiện của đề
-                        r"|hễ|xét trường hợp|cho rằng|muốn|khẳng định|nói rằng|nghĩ rằng)(?!\w)", re.IGNORECASE)
+                        r"|hễ|xét trường hợp|cho rằng|muốn|khẳng định|nói rằng|nghĩ rằng"
+                        r"|giả định|coi như|cho là|theo bạn)(?!\w)", re.IGNORECASE)
 _THI = re.compile(r"(?<!\w)thì(?!\w)", re.IGNORECASE)
 #: Mệnh đề HỎI một quan hệ có/không — không bao giờ là dữ kiện.
 _HOI_QUAN_HE = re.compile(r"(?<!\w)(?:phải chăng|có phải|kiểm tra xem|hay không|hay chưa)(?!\w)|(?<!câu )(?<!\w)hỏi(?!\w)"
@@ -732,11 +742,12 @@ def _vai_tro_tai(de: str, p: int) -> str | None:
     # "Chứng minh X và tính Y": Y đứng sau một động từ hỏi riêng — một vế hỏi, không phải điều phải chứng minh.
     if muc >= 0 and "biết" not in truoc[muc:] and not _DONG_TU_HOI.search(truoc[muc:]):
         return "GOAL"
-    if _DIEU_KIEN.search(truoc) or _THI.search(de[p:b]):
-        return "CONDITIONAL"
     ma, mb = _bien_menh_de(de, p)
+    if _DIEU_KIEN.search(truoc) or _THI.search(de[p:b]) or _DIEU_KIEN_SAU.search(de[p:mb]):
+        return "CONDITIONAL"
     # mệnh đề hỏi có/không, hay mọi mệnh đề kết bằng "?" ("Tại sao …?", "Liệu … ?") — S1, nhóm A
-    if _HOI_QUAN_HE.search(de[ma:mb]) or de[ma:mb].rstrip().endswith("?"):
+    if (_HOI_QUAN_HE.search(de[ma:mb]) or de[ma:mb].rstrip().endswith("?")
+            or re.search(r"(?<!\w)có(?!\w).*(?<!\w)không\s*[.?!]?\s*$", de[ma:mb], re.IGNORECASE)):
         return "QUESTION"
     return None
 
@@ -950,12 +961,12 @@ _P1 = r"(?-i:[A-Z][0-9]*'?)"
 
 
 def _mat_cum(n: str) -> str:
-    return (rf"(?:(?:hai|2|các)\s+mặt phẳng\s+)?(?:(?:mặt phẳng|mp)\s*)?"
+    return (rf"(?:(?:hai|2|các)\s+mặt phẳng\s+)?(?:(?:mặt phẳng|mp|mặt bên|mặt đáy)\s*)?"
             rf"(?:\((?P<{n}p>{_NHOM_NHAN})\)|(?<![\w'.])(?P<{n}b>{_NHOM_NHAN})|(?:mặt\s+)?(?P<{n}d>đáy))(?![\w'])")
 
 
 def _doan_cum(n: str) -> str:
-    return rf"(?:(?:đường thẳng|đoạn thẳng|đoạn|cạnh bên|cạnh đáy|cạnh|đường chéo)\s+)?(?<![\w'.])(?P<{n}>{_P1}{_P1})(?![\w'])"
+    return rf"(?:(?:các\s+)?(?:đường thẳng|đoạn thẳng|đoạn|cạnh bên|cạnh đáy|cạnh|đường chéo)\s+)?(?<![\w'.])(?P<{n}>{_P1}{_P1})(?![\w'])"
 
 
 def _khoi_cum(n: str) -> str:
@@ -1012,37 +1023,52 @@ def _khoi_thiet_dien(m, a, khoi):
 _CUM_HOI = {
     "ask_volume": [
         (_cum(rf"thể tích(?:\s+của)?(?:\s+(?-i:V)(?:\s+của)?)?{_khoi_cum('k')}"), lambda m, a, k: _khoi_khop(m, "k", a.solid, k)),
-        (_cum(r"(?<![\w'])(?-i:V)(?![\w'])"), lambda m, a, k: len(k) == 1 and a.solid in k)],
+        (_cum(r"(?<![\w'])(?-i:V)(?![\w'])"), lambda m, a, k: len(k) == 1 and a.solid in k and not _V_DINH_NGHIA.search(m.string)
+         and not m.string[m.end():].lstrip().startswith("("))],
     "ask_length": [
         (_cum(rf"(?:độ dài(?:\s+của)?\s+)?{_doan_cum('s')}"), lambda m, a, k: set(_nhan_cum(m["s"])) == set(a.segment))],
     "ask_distance_point_plane": [
-        (_cum(rf"khoảng cách\s+(?:từ\s+)?(?:điểm\s+)?(?<![\w'.])(?P<p>{_P1})(?![\w'])\s+(?:đến|tới)\s+{_mat_cum('m')}"),
+        (_cum(rf"khoảng cách\s+(?:từ\s+)?(?:(?:điểm|đỉnh)\s+)?(?<![\w'.])(?P<p>{_P1})(?![\w'])\s+(?:đến|tới)\s+{_mat_cum('m')}"),
          lambda m, a, k: m["p"] == a.point and _cung_mat(_mat_cua(m, "m", k), a.plane))],
     "ask_distance_lines": [
-        (_cum(rf"khoảng cách\s+giữa\s+(?:hai\s+đường thẳng\s+)?{_doan_cum('a')}\s+(?:và|với)\s+{_doan_cum('b')}"),
+        (_cum(rf"khoảng cách\s+giữa\s+(?:hai\s+đường thẳng(?:\s+chéo nhau)?\s+)?{_doan_cum('a')}\s+(?:và|với)\s+{_doan_cum('b')}"),
          lambda m, a, k: {frozenset(_nhan_cum(m["a"])), frozenset(_nhan_cum(m["b"]))} == {frozenset(a.line1), frozenset(a.line2)})],
     "ask_angle_line_plane": [
-        (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi)\s+{_doan_cum('l')}\s+(?:và|với)\s+{_mat_cum('m')}"),
+        (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+{_doan_cum('l')}\s+(?:và|với)\s+{_mat_cum('m')}"),
          lambda m, a, k: set(_nhan_cum(m["l"])) == set(a.line) and _cung_mat(_mat_cua(m, "m", k), a.plane))],
     "ask_angle_plane_plane": [
-        (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi)\s+{_mat_cum('a')}\s+(?:và|với)\s+{_mat_cum('b')}"), _hai_mat)],
+        (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+{_mat_cum('a')}\s+(?:và|với)\s+{_mat_cum('b')}"), _hai_mat)],
     "ask_area": [
         (_cum(rf"diện tích(?:\s+của)?\s+(?:(?:tam giác|tứ giác|hình vuông|hình chữ nhật|hình thoi|hình bình hành|hình thang"
-              rf"|đa giác|mặt bên|mặt)\s+)?(?:\((?P<gp>{_NHOM_NHAN})\)|(?<![\w'.])(?P<gb>{_NHOM_NHAN}))(?![\w'])"),
-         lambda m, a, k: set(_nhan_cum(m["gp"] or m["gb"])) == set(a.polygon)),
+              rf"|đa giác|mặt bên|mặt đáy|đáy|mặt)\s+)?(?:\((?P<gp>{_NHOM_NHAN})\)|(?<![\w'.])(?P<gb>{_NHOM_NHAN})"
+              rf"|Δ\s*(?P<gd>{_NHOM_NHAN}))(?![\w'])"),                    # "ΔSAC": Δ là chữ, nên nhánh riêng
+         lambda m, a, k: set(_nhan_cum(m["gp"] or m["gb"] or m["gd"])) == set(a.polygon)),
         (_cum(r"diện tích(?:\s+của)?\s+(?:mặt\s+)?đáy(?![\w'])"),
          lambda m, a, k: len(k) == 1 and set(next(iter(k.values()))) == set(a.polygon))],
     "ask_section_area": [
-        (_cum(rf"diện tích(?:\s+của)?\s+thiết diện(?:\s+của{_khoi_cum('k')})?\s+(?:(?:khi\s+)?(?:cắt bởi|tạo bởi)|với)\s+{_mat_cum('m')}"
-              rf"(?:\s+của{_khoi_cum('j')})?"),
-         lambda m, a, k: _cung_mat(_mat_cua(m, "m", k), a.plane) and _khoi_thiet_dien(m, a, k))],
+        (_cum(rf"diện tích(?:\s+của)?\s+thiết diện(?:\s+của{_khoi_cum('k')})?\s+(?:(?:khi\s+|bị\s+)?(?:cắt bởi|tạo bởi)|với|do)\s+{_mat_cum('m')}"
+              rf"(?:\s+(?:của|và|cắt){_khoi_cum('j')})?"),
+         lambda m, a, k: _cung_mat(_mat_cua(m, "m", k), a.plane) and _khoi_thiet_dien(m, a, k)),
+        # "Mặt phẳng (P) cắt hình chóp … theo một thiết diện. Tính diện tích thiết diện đó.": thiết diện đã được gọi tên
+        # trước trong đề, và đề chỉ gọi tên ĐÚNG MỘT mặt cắt — chính mặt của lời gọi (review S1, I1).
+        (_cum(r"diện tích(?:\s+của)?\s+thiết diện\s+(?:đó|này|trên)(?!\w)"),
+         lambda m, a, k: {frozenset(_nhan_cum(x[1] or x[2])) for mau in _CAT_BOI for x in mau.finditer(m.string)
+                          if x[1] or x[2]} == {frozenset(a.plane)})],
 }
 #: Giữa động từ hỏi và cụm (sau khi xoá các cụm hỏi khác): chỉ từ nối.
-_GIUA_HOP_LE = re.compile(r"[\s,]*(?:(?:và|cùng|lần lượt|hãy|các)(?!\w)[\s,]*)*", re.IGNORECASE)
+_GIUA_HOP_LE = re.compile(r"[\s,:]*(?:(?:và|cùng|lần lượt|hãy|các)(?!\w)[\s,:]*)*", re.IGNORECASE)
 #: Sau cụm (sau khi xoá các cụm hỏi khác): chỉ những thứ này rồi kết câu / dữ kiện / việc kế tiếp.
 _SAU_HOP_LE = re.compile(
-    r"(?:[\s,]+|(?:và|cùng)(?!\w)|(?:có\s+)?(?:độ dài\s+)?(?:bằng|là)\s+bao\s+nhiêu|dài\s+bao\s+nhiêu|bao\s+nhiêu"
-    r"|theo\s+[a-z](?![\w'])|\([^()]*\))*(?:[.?!;:]|$|(?:biết|với|cho|trong đó|rồi|sau đó)(?!\w))", re.IGNORECASE)
+    r"(?:[\s,;:]+|(?:và|cùng)(?!\w)|(?:có\s+)?(?:độ dài\s+)?(?:bằng|là)\s+bao\s+nhiêu|dài\s+bao\s+nhiêu|bao\s+nhiêu"
+    r"|(?:bằng|là)\s*[?:]"                                                     # đề trắc nghiệm "… bằng?"
+    # ngoặc chỉ là LỜI DẶN (làm tròn, đơn vị) — "(sau khi cắt bỏ …)" / "(tính theo đơn vị mới …)" không lọt (review S1)
+    r"|theo\s+(?:[a-z](?![\w'])|độ|radian|đơn vị\s+\w+)|\((?:làm tròn|kết quả|đơn vị|đvđd|cm|dm|mm|m|độ)(?![\w'])[^()]*\)"
+    r"|(?:đã cho|đó|này|trên)(?!\w)"
+    r"|của\s+(?:hình|khối)\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện)(?:\s+(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?)?)*"
+    # kết: dấu câu THẬT (sau nó là khoảng trắng / hết đề — "SC.SA" không kết), dữ kiện, việc kế tiếp, lời dặn làm tròn
+    r"(?:[.?!](?=\s|$)|$|(?:biết|với|cho|trong đó|rồi|sau đó|từ đó|bằng cách|(?:kết quả\s+)?làm tròn)(?!\w))", re.IGNORECASE)
+#: "V" đã được đề định nghĩa ("Gọi V là …", "V = …", "V(S.MAB)") — không buộc mặc nhiên vào khối duy nhất (review S1, I4).
+_V_DINH_NGHIA = re.compile(r"(?<![\w'])(?-i:V)\s*(?:là|=|\()", re.IGNORECASE)
 
 
 def _khoi_cua_loi_goi(calls: tuple[LoiGoi, ...]) -> dict[str, frozenset]:

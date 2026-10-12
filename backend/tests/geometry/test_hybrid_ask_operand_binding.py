@@ -158,8 +158,8 @@ EQUALITY = [("SA = 3.", "SA = 3."), ("SA bằng 3.", "SA bằng 3."), ("Độ d�
 @pytest.mark.parametrize("sentence,quote,v", NOT_AN_EQUALITY, ids=[s for s, *_r in NOT_AN_EQUALITY])
 def test_value_not_stated_as_an_equality_is_not_a_given(sentence, quote, v):
     r = _len_run(sentence, quote, v)
-    # a disjunction is caught one layer earlier by the clause analyser (NEGATED_CLAUSE); both refuse
-    assert r.status == "REFUSED" and r.code in ("UNGROUNDED_VALUE", "NEGATED_CLAUSE"), (r.answers, sentence)
+    # a disjunction / a condition after the value is caught one layer earlier by the clause analyser; all refuse
+    assert r.status == "REFUSED" and r.code in ("UNGROUNDED_VALUE", "NEGATED_CLAUSE", "CONDITIONAL_CLAUSE"), (r.answers, sentence)
 
 
 @pytest.mark.parametrize("sentence,quote", EQUALITY, ids=[s for s, _q in EQUALITY])
@@ -211,6 +211,115 @@ def test_assertions_stay_givens(sentence, quote):
     assert r.answers == {"q": "√17"}, (r.code, r.reason, sentence)
 
 
+# ── independent review of S1 (run `hybrid-semantic-hardening`): new false refusals I1, new false serve I2, open I4 / I5 ─
+def SAREA_PL(s):
+    return SAREA(s)
+
+
+def DPP_D(s):
+    return DPP(s, "D", "SBC")
+
+
+def ANGPP(s):
+    return ask("q", s, "angle", points_a=list("SBC"), points_b=list("ABCD"))
+
+
+REVIEW_ASKED = [
+    ("Tính khoảng cách từ đỉnh S đến mặt đáy.", DPP, False, F(9)),
+    ("Tính khoảng cách từ đỉnh S đến mặt phẳng (ABCD).", DPP, False, F(9)),
+    ("Tính góc giữa mặt bên (SBC) và mặt đáy.", ANGPP, False, None),
+    ("Tính góc hợp bởi SC và mặt đáy.", ANG, False, F(8, 17)),
+    ("Tính khoảng cách giữa hai đường thẳng chéo nhau SC và BD.", DLL, False, F(18, 17)),
+    ("Tính thể tích khối chóp đã cho.", VOL, False, F(16)),
+    ("Tính thể tích khối chóp đó.", VOL, False, F(16)),
+    ("Tính độ dài các cạnh SB, SC.", LEN, False, F(17)),
+    ("Tính độ dài các cạnh bên SB, SC, SD.", LEN, False, F(17)),
+    ("Tính độ dài cạnh bên SC của hình chóp.", LEN, False, F(17)),
+    ("Tính SC, làm tròn kết quả đến hàng phần trăm.", LEN, False, F(17)),
+    ("Tính thể tích khối chóp S.ABCD, kết quả làm tròn đến hàng phần mười.", VOL, False, F(16)),
+    ("Tính khoảng cách từ S đến (ABCD), từ đó suy ra thể tích khối chóp.", DPP, False, F(9)),
+    ("Tính diện tích đáy ABCD.", lambda s: AREA(s, "ABCD"), False, F(16)),
+    ("Tính diện tích ΔSAC.", lambda s: AREA(s, "SAC"), False, F(18)),
+    ("Tính góc giữa hai mặt phẳng (SBC) và (ABCD) theo độ.", ANGPP, False, None),
+    ("Tính SC theo đơn vị cm.", LEN, False, F(17)),
+    ("Tính: SC.", LEN, False, F(17)),
+    ("Thể tích khối chóp S.ABCD bằng?", VOL, False, F(16)),
+    ("Tính diện tích thiết diện tạo bởi mặt phẳng (MAB) và hình chóp S.ABCD.", SAREA_PL, True, F(117, 16)),
+    ("Tính diện tích thiết diện của hình chóp S.ABCD bị cắt bởi mặt phẳng (MAB).", SAREA_PL, True, F(117, 16)),
+    ("Tính diện tích thiết diện do mặt phẳng (MAB) cắt hình chóp S.ABCD.", SAREA_PL, True, F(117, 16)),
+    ("Mặt phẳng (MAB) cắt hình chóp S.ABCD theo một thiết diện. Tính diện tích thiết diện đó.", SAREA_PL, True, F(117, 16)),
+    ("Tính thể tích khối chóp S.ABCD bằng cách dùng công thức V = Bh/3.", VOL, False, F(16)),
+    ("Tính SC (làm tròn đến hàng phần trăm).", LEN, False, F(17)),
+]
+
+
+@pytest.mark.parametrize("sentence,qf,mid,sq", REVIEW_ASKED, ids=[f"{s}|{i}" for i, (s, *_r) in enumerate(REVIEW_ASKED)])
+def test_review_common_wordings_are_served(sentence, qf, mid, sq):
+    r = _run(sentence, qf, mid)
+    assert r.status == "SERVED", (r.code, r.reason, sentence)
+    if sq is not None:
+        assert HB.answer_square(r.answers["q"]) == sq, r.answers
+
+
+REVIEW_REFUSED = [
+    ("Tính SC.SA.", LEN, False),                                       # I2: "." glued to the next label is not an end
+    ("Tính SC: lấy hai lần kết quả.", LEN, False),
+    ("Tính thể tích khối chóp S.ABCD; kết quả chia đôi.", VOL, False),
+    ("Gọi V là thể tích khối chóp S.ABC. Tính V.", VOL, False),        # I4: V defined as another solid's volume
+    ("Tính V(S.MAB).", VOL, True),
+    ("Tính V (thể tích khối chóp M.ABCD).", VOL, True),
+    ("Tính thể tích khối chóp S.ABCD (sau khi cắt bỏ khối chóp S.MAB).", VOL, True),   # a parenthesis that changes the figure
+    ("Tính diện tích tam giác SAC (tính theo đơn vị mới gấp đôi).", lambda s: AREA(s, "SAC"), False),
+]
+
+
+@pytest.mark.parametrize("sentence,qf,mid", REVIEW_REFUSED, ids=[s for s, *_r in REVIEW_REFUSED])
+def test_review_false_serves_are_refused(sentence, qf, mid):
+    r = _run(sentence, qf, mid)
+    assert r.status == "REFUSED", (r.answers, sentence)
+
+
+REVIEW_NOT_ASSERTION = [
+    ("SA không bao giờ vuông góc với (ABCD).", "SA không bao giờ vuông góc với (ABCD)"),
+    ("SA không thể vuông góc với (ABCD).", "SA không thể vuông góc với (ABCD)"),
+    ("SA chưa vuông góc với (ABCD).", "SA chưa vuông góc với (ABCD)"),
+    ("SA không còn vuông góc với (ABCD).", "SA không còn vuông góc với (ABCD)"),
+    ("Hãy kiểm tra rằng SA vuông góc với (ABCD).", PQ), ("Từ đó suy ra SA vuông góc với (ABCD).", PQ),
+    ("Hãy suy ra SA vuông góc với (ABCD).", PQ), ("Xác minh SA vuông góc với (ABCD).", PQ),
+    ("Vì sao SA vuông góc với (ABCD).", PQ), ("Giả định SA vuông góc với (ABCD).", PQ),
+    ("Coi như SA vuông góc với (ABCD).", PQ), ("Bạn Bình cho là SA vuông góc với (ABCD).", PQ),
+    ("Theo bạn An, SA vuông góc với (ABCD).", PQ),
+    ("Cho biết SA có vuông góc với (ABCD) không.", "SA có vuông góc với (ABCD)"),
+    ("SA vuông góc với (ABCD) khi M trùng S.", PQ), ("SA vuông góc với (ABCD) nếu M trùng S.", PQ),
+    ("SA vuông góc với (ABCD) là sai.", PQ), ("SA vuông góc với (ABCD) khi và chỉ khi M trùng S.", PQ),
+    ("SA vuông góc với (ABCD) là điều không đúng.", PQ), ("Hãy kiểm tra SA có vuông góc với (ABCD).", PQ),
+    ("Hãy lập luận rằng SA vuông góc với (ABCD).", PQ),
+]
+
+
+@pytest.mark.parametrize("sentence,quote", REVIEW_NOT_ASSERTION, ids=[s for s, _q in REVIEW_NOT_ASSERTION])
+def test_review_non_assertions_are_not_givens(sentence, quote):
+    r = _perp_run(sentence, quote)
+    assert r.status == "REFUSED", (r.answers, sentence)
+
+
+REVIEW_VALUES_REFUSED = [("SA = 3 và SB = 3 là sai.", "SA = 3", "3"), ("SA = 3 và điều đó vô lí.", "SA = 3", "3"),
+                         ("SA = 3.SB.", "SA = 3", "3")]
+REVIEW_VALUES_SERVED = [("SA = 3 (cm).", "SA = 3 (cm)."), ("SA = 3 đơn vị.", "SA = 3 đơn vị."),
+                        ("SA = 3 (đơn vị độ dài).", "SA = 3 (đơn vị độ dài).")]
+
+
+@pytest.mark.parametrize("sentence,quote,v", REVIEW_VALUES_REFUSED, ids=[s for s, *_r in REVIEW_VALUES_REFUSED])
+def test_review_values_that_are_not_givens(sentence, quote, v):
+    assert _len_run(sentence, quote, v).status == "REFUSED"
+
+
+@pytest.mark.parametrize("sentence,quote", REVIEW_VALUES_SERVED, ids=[s for s, _q in REVIEW_VALUES_SERVED])
+def test_review_values_with_units_are_givens(sentence, quote):
+    r = _len_run(sentence, quote, "3")
+    assert r.answers == {"q": "√17"}, (r.code, r.reason)
+
+
 def _mutant(monkeypatch, old, new):
     import sys
     import types
@@ -239,7 +348,7 @@ MUTANTS = [
     ("words before the phrase not checked", "return bool(_GIUA_HOP_LE.fullmatch(_bo_cum(giua)) and ", "return bool(True and ",
      ("Tính nửa thể tích khối chóp S.ABCD.", VOL, False)),
     ("words after the phrase not checked", " and _SAU_HOP_LE.match(_bo_cum(de[b:c1])))", ")",
-     ("Tính khoảng cách từ S đến (ABCD) khi M thay đổi.", DPP, True)),
+     ("Tính thể tích phần còn lại của khối chóp S.ABCD.", VOL, False)),
     ("section solid word not checked",
      '    if (kw := m[n + "k"]) and bool(re.search(r"chóp|tứ diện", kw, re.IGNORECASE)) != (len(_nhan_cum(solid.split(".")[0])) == 1):\n        return False\n',
      "", ("Tính diện tích thiết diện của khối lập phương cắt bởi (MAB).", SAREA, True)),
@@ -247,18 +356,18 @@ MUTANTS = [
 VALUE_MUTANTS = [
     ("equality connector not checked", "if so and _NOI_BANG.fullmatch(de[dau + b:so.start()]) and ", "if so and ",
      ("SA ≥ 3.", "SA ≥ 3.", "3")),
-    ("text after the value not checked", " and _DUOI_BANG.match(de[so.end():]):", ":", ("SA = 3 là sai.", "SA = 3", "3")),
+    ("text after the value not checked", " and _DUOI_BANG.match(de[so.end():]):", ":", ("SA bằng 3 lần AB.", "SA bằng 3 lần AB.", "3")),
 ]
 
 
 CLAUSE_MUTANTS = [
-    ("new goal markers dropped", '"chứng tỏ", "chỉ ra", "giải thích", "kiểm chứng", "tìm điều kiện")', '"chứng tỏ")',
+    ("new goal markers dropped", '"chứng tỏ", "chỉ ra", "giải thích", "kiểm chứng", "tìm điều kiện",', '"chứng tỏ",',
      ("Hãy chỉ ra rằng SA vuông góc với (ABCD).", PQ)),
-    ("question mark not a question clause", ' or de[ma:mb].rstrip().endswith("?"):', ":",
-     ("Tại sao SA vuông góc với (ABCD)?", PQ)),
+    ("question mark not a question clause", ' or de[ma:mb].rstrip().endswith("?")\n', "\n",
+     ("Liệu SA có vuông góc với (ABCD)?", "SA có vuông góc với (ABCD)")),
     ("non-assertion markers dropped", "or bool(_KHONG_KHANG_DINH.search(duoi + q))", "or False",
      ("SA có thể vuông góc với (ABCD).", "SA có thể vuông góc với (ABCD)")),
-    ("disjunction not checked", "or bool(_TUYEN.search(de[ma:mb])))", "or False)",
+    ("disjunction not checked", "or bool(_TUYEN.search(de[ma:mb]))", "or False",
      ("SA vuông góc với (ABCD) hoặc SB vuông góc với (ABCD).", PQ)),
 ]
 
