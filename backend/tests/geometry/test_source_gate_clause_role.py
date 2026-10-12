@@ -265,20 +265,21 @@ MUTANTS = [
      lambda: _code(_perp("Chứng minh rằng SA vuông góc với (ABCD)."), _no_perpendicular) != "GOAL_CLAUSE_NOT_PREMISE"),
     ("condition markers dropped", "if _DIEU_KIEN.search(truoc) or _THI.search(de[p:b]):", "if False:",
      lambda: _consequent_code() != "CONDITIONAL_CLAUSE"),
-    ("ask check dropped", "            _kiem_cau_hoi(c, de, vts)\n", "            pass\n",
+    ("ask check dropped", "            _kiem_cau_hoi(c, de, vts, calls)\n", "            pass\n",
      lambda: _run(NOT_ASKED[0]).code != "NOT_ASKED_IN_SOURCE"),
-    ("question-clause role dropped", "if _HOI_QUAN_HE.search(de[ma:mb]):", "if False:",
+    ("question-clause role dropped", 'if _HOI_QUAN_HE.search(de[ma:mb]) or de[ma:mb].rstrip().endswith("?"):', "if False:",
      lambda: _code(_perp("Phải chăng SA vuông góc với (ABCD)?"), _no_perpendicular) != "QUESTION_CLAUSE_NOT_PREMISE"),
+    # Since S1 (run `hybrid-semantic-hardening`) ordinary asks are also refused by the closed phrase grammar, so these
+    # `_duoc_hoi` mutants are killed through the auxiliary point–line path, where `_duoc_hoi` is the only guard.
     ("asserted-value check dropped", "if (so := _GIA_TRI.search(gan)) and not _HOI_SAU.search(gan[:so.start()]):", "if False:",
-     lambda: _run(_dist_plane("Ta tính được khoảng cách từ S đến (ABCD) bằng 3.")).status != "REFUSED"),
+     lambda: _run(_dist_line("Ta tính được khoảng cách từ S đến BD có giá trị 3.")).status != "REFUSED"),
     ("object blocker between verb and object dropped",
      "qua_dong_tu = bool(dong_tu) and not _CHAN_TAN_NGU.search(", "qua_dong_tu = bool(dong_tu) or not _CHAN_TAN_NGU.search(",
-     lambda: _run(_dist_plane("Tính SC theo khoảng cách từ S đến (ABCD).")).status != "REFUSED"),
-    ("label anchor by any shared label", "if frozenset(n for p in phan for n in p) in toan_hang]",
-     "if any(n in nhan_cua_loi_goi(c) for p in phan for n in p)]",
-     lambda: _run(_dist_plane("Khoảng cách từ S đến (ABCD) bằng 3, tính SC.")).status != "REFUSED"),
+     lambda: _run(_dist_line("Tính SC theo khoảng cách từ S đến BD.")).status != "REFUSED"),
+    # The label-anchor mutant of review 2 targeted `_moc_doi_tuong_hoi`, replaced by operand-bound phrases in S1 (run
+    # `hybrid-semantic-hardening`); its mutants live in `test_hybrid_ask_operand_binding.py`.
     ("yes/no relation check dropped", "    if _CO_KHONG.search(gan) and not", "    if False and not",
-     lambda: _run(_volume("Thể tích khối chóp S.ABCD có vượt quá 5 không?")).status != "REFUSED"),
+     lambda: _run(_dist_line("Khoảng cách từ S đến BD có vượt quá 5 không?")).status != "REFUSED"),
 ]
 
 
