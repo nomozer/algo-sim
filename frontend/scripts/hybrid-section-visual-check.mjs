@@ -90,6 +90,8 @@ const goto = async (qs) => {
     try {
       await page.goto(u);
       await page.waitForSelector("canvas", { state: "attached", timeout: 90000 });
+      // A denied sub-resource (e.g. the stylesheet) still lets the canvas appear but changes the layout — a failed load.
+      if (errors.slice(e0).some((x) => /ERR_NETWORK_ACCESS_DENIED|ERR_CONNECTION_REFUSED/.test(x))) throw new Error("denied sub-resource");
       break;
     } catch (e) {
       const net = /ERR_NETWORK_ACCESS_DENIED|ERR_CONNECTION_REFUSED/.test(String(e) + errors.slice(e0).join(" "));

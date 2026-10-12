@@ -1,0 +1,658 @@
+{
+ "harness": "scripts/hybrid-section-visual.html (Scene3D harness, not product UI)",
+ "scenes": "real Hybrid route output, backend/scripts/export_hybrid_section_scenes.py; product frame step veKhongGian applied",
+ "browser": "Playwright chromium, ANGLE D3D11 (hardware GPU)",
+ "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "failures": [],
+ "net_retries": [
+  {
+   "url": "http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=2&hide=td_f8",
+   "error": "Error: page.goto: net::ERR_NETWORK_ACCESS_DENIED at http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=2&hide=td_f8"
+  },
+  {
+   "url": "http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=4&hide=gt_f5",
+   "error": "Error: page.goto: net::ERR_NETWORK_ACCESS_DENIED at http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=4&hide=gt_f5"
+  },
+  {
+   "url": "http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=4&hide=gt_f5",
+   "error": "Error: denied sub-resource"
+  },
+  {
+   "url": "http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=4&set=gt_f5.direction=%5B%220%22%2C%221%22%2C%220%22%5D&hide=gt_f5",
+   "error": "Error: denied sub-resource"
+  },
+  {
+   "url": "http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=4&set=gt_f5.direction=%5B%221%22%2C%221%22%2C%220%22%5D&hide=gt_f5",
+   "error": "Error: page.goto: net::ERR_NETWORK_ACCESS_DENIED at http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=4&set=gt_f5.direction=%5B%221%22%2C%221%22%2C%220%22%5D&hide=gt_f5"
+  },
+  {
+   "url": "http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=4&aux=1&hide=gt_f5",
+   "error": "Error: page.goto: net::ERR_NETWORK_ACCESS_DENIED at http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=4&aux=1&hide=gt_f5"
+  },
+  {
+   "url": "http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=4",
+   "error": "Error: page.goto: net::ERR_NETWORK_ACCESS_DENIED at http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=4"
+  },
+  {
+   "url": "http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=6&set=gt_f5.direction=%5B%221%22%2C%220%22%2C%221%22%5D",
+   "error": "Error: denied sub-resource"
+  },
+  {
+   "url": "http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=6&set=gt_f5.point=%5B%221%2F2%22%2C%221%2F2%22%2C%221%2F2%22%5D&set=gt_f5.direction=%5B%221%22%2C%220%22%2C%220%22%5D&hide=gt_f5",
+   "error": "Error: denied sub-resource"
+  },
+  {
+   "url": "http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=7&aux=1&hide=gt_f5",
+   "error": "Error: denied sub-resource"
+  },
+  {
+   "url": "http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=7&aux=1&hide=gt_f5",
+   "error": "Error: denied sub-resource"
+  },
+  {
+   "url": "http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=7",
+   "error": "Error: page.goto: net::ERR_NETWORK_ACCESS_DENIED at http://127.0.0.1:3101/scripts/hybrid-section-visual.html?i=7"
+  }
+ ],
+ "dev_server_noise": 0,
+ "report": [
+  {
+   "id": "section-MAB-trapezoid",
+   "served": true,
+   "section_vertices_model": 4,
+   "pixels_last_step": {
+    "section": 6603,
+    "line": 0,
+    "highlight": 1102,
+    "ink": [
+     436,
+     65,
+     792,
+     440
+    ]
+   },
+   "order": {
+    "target": "td_f6",
+    "own_pixels": {
+     "default_view": 53122,
+     "after_orbit": 70418
+    },
+    "first_step": 6,
+    "steps": 11,
+    "depends_present": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 1438
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 1285
+    }
+   },
+   "variants": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.08684148869063711,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.12354089693911267,
+    "ink_ratio": 1.596188037835147,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "M",
+    "khoi_S_ABCD",
+    "mp_td_f6",
+    "td_f6#4cf",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "section-SAC-triangle",
+   "served": true,
+   "section_vertices_model": 3,
+   "pixels_last_step": {
+    "section": 5592,
+    "line": 0,
+    "highlight": 1133,
+    "ink": [
+     504,
+     1,
+     765,
+     499
+    ]
+   },
+   "order": {
+    "target": "td_f5",
+    "own_pixels": {
+     "default_view": 6170,
+     "after_orbit": 8511
+    },
+    "first_step": 5,
+    "steps": 9,
+    "depends_present": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 3274
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 1476
+    }
+   },
+   "variants": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.049258958877774775,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.07288936949926407,
+    "ink_ratio": 1.3488372093023255,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "khoi_S_ABCD",
+    "mp_td_f5",
+    "td_f5#3cf",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "section-MNP-mid-square",
+   "served": true,
+   "section_vertices_model": 4,
+   "pixels_last_step": {
+    "section": 1788,
+    "line": 0,
+    "highlight": 1152,
+    "ink": [
+     395,
+     65,
+     812,
+     440
+    ]
+   },
+   "order": {
+    "target": "td_f8",
+    "own_pixels": {
+     "default_view": 35085,
+     "after_orbit": 41322
+    },
+    "first_step": 8,
+    "steps": 13,
+    "depends_present": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 14091
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 1236
+    }
+   },
+   "variants": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.06610795710552402,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.1174936168934547,
+    "ink_ratio": 1.8795892575039495,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "M",
+    "N",
+    "P",
+    "khoi_S_ABCD",
+    "mp_td_f8",
+    "td_f8#4cf",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "section-cube-A1BD",
+   "served": true,
+   "section_vertices_model": 3,
+   "pixels_last_step": {
+    "section": 27314,
+    "line": 0,
+    "highlight": 1514,
+    "ink": [
+     330,
+     1,
+     786,
+     495
+    ]
+   },
+   "order": {
+    "target": "td_f3",
+    "own_pixels": {
+     "default_view": 108920,
+     "after_orbit": 117645
+    },
+    "first_step": 3,
+    "steps": 7,
+    "depends_present": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 2112
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 1902
+    }
+   },
+   "variants": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.2185167162296116,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.25009281787870596,
+    "ink_ratio": 1.650503962107437,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "A_prime",
+    "B_prime",
+    "C_prime",
+    "D_prime",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime",
+    "mp_td_f3",
+    "td_f3#3cf"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "intersection-SAB-SCD",
+   "served": true,
+   "section_vertices_model": 0,
+   "pixels_last_step": {
+    "section": 0,
+    "line": 2,
+    "highlight": 1490,
+    "ink": [
+     306,
+     23,
+     758,
+     520
+    ]
+   },
+   "order": {
+    "target": "gt_f5",
+    "own_pixels": {
+     "default_view": 531,
+     "after_orbit": 659
+    },
+    "first_step": 6,
+    "steps": 7,
+    "depends_present": true,
+    "pixels_before": {
+     "line": 0,
+     "highlight": 1456
+    },
+    "pixels_at": {
+     "line": 2,
+     "highlight": 1490
+    }
+   },
+   "variants": {
+    "dir-x": {
+     "default_view": 530,
+     "after_orbit": 659
+    },
+    "dir-y": {
+     "default_view": 742,
+     "after_orbit": 1042
+    },
+    "dir-z": {
+     "default_view": 155,
+     "after_orbit": 110
+    },
+    "dir-xy": {
+     "default_view": 360,
+     "after_orbit": 670
+    },
+    "dir-xz": {
+     "default_view": 240,
+     "after_orbit": 658
+    },
+    "through-A-dir-x": {
+     "default_view": 300,
+     "after_orbit": 304
+    },
+    "interior-dir-x": {
+     "default_view": 482,
+     "after_orbit": 685
+    },
+    "aux-shown": {
+     "default_view": 531,
+     "after_orbit": 664
+    }
+   },
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.15234748130125259,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.11576221801688144,
+    "ink_ratio": 1.3002480141262407,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "khoi_S_ABCD",
+    "mp1_gt_f5",
+    "mp2_gt_f5",
+    "gt_f5",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "aux-foot-S-to-BD",
+   "served": true,
+   "section_vertices_model": 0,
+   "pixels_last_step": {
+    "section": 0,
+    "line": 289,
+    "highlight": 1088,
+    "ink": [
+     512,
+     65,
+     721,
+     440
+    ]
+   },
+   "order": null,
+   "variants": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.027709591180799617,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.026351866870926076,
+    "ink_ratio": 1.8611606530388256,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "H",
+    "khoi_S_ABCD",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "intersection-SAC-SBD",
+   "served": true,
+   "section_vertices_model": 0,
+   "pixels_last_step": {
+    "section": 0,
+    "line": 0,
+    "highlight": 1362,
+    "ink": [
+     266,
+     1,
+     830,
+     520
+    ]
+   },
+   "order": {
+    "target": "gt_f5",
+    "own_pixels": {
+     "default_view": 343,
+     "after_orbit": 139
+    },
+    "first_step": 6,
+    "steps": 7,
+    "depends_present": true,
+    "pixels_before": {
+     "line": 0,
+     "highlight": 1358
+    },
+    "pixels_at": {
+     "line": 0,
+     "highlight": 1362
+    }
+   },
+   "variants": {
+    "dir-x": {
+     "default_view": 530,
+     "after_orbit": 750
+    },
+    "dir-y": {
+     "default_view": 742,
+     "after_orbit": 1040
+    },
+    "dir-z": {
+     "default_view": 157,
+     "after_orbit": 110
+    },
+    "dir-xy": {
+     "default_view": 360,
+     "after_orbit": 673
+    },
+    "dir-xz": {
+     "default_view": 244,
+     "after_orbit": 772
+    },
+    "through-A-dir-x": {
+     "default_view": 305,
+     "after_orbit": 316
+    },
+    "interior-dir-x": {
+     "default_view": 472,
+     "after_orbit": 684
+    },
+    "aux-shown": {
+     "default_view": 343,
+     "after_orbit": 139
+    }
+   },
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.17637079090444865,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.16350485116097443,
+    "ink_ratio": 1.3823529411764706,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "khoi_S_ABCD",
+    "mp1_gt_f5",
+    "mp2_gt_f5",
+    "gt_f5",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "intersection-SAB-SCD-unit",
+   "served": true,
+   "section_vertices_model": 0,
+   "pixels_last_step": {
+    "section": 0,
+    "line": 1,
+    "highlight": 1596,
+    "ink": [
+     274,
+     1,
+     802,
+     520
+    ]
+   },
+   "order": {
+    "target": "gt_f5",
+    "own_pixels": {
+     "default_view": 541,
+     "after_orbit": 666
+    },
+    "first_step": 6,
+    "steps": 7,
+    "depends_present": true,
+    "pixels_before": {
+     "line": 0,
+     "highlight": 1536
+    },
+    "pixels_at": {
+     "line": 1,
+     "highlight": 1596
+    }
+   },
+   "variants": {
+    "dir-x": {
+     "default_view": 539,
+     "after_orbit": 666
+    },
+    "dir-y": {
+     "default_view": 725,
+     "after_orbit": 1097
+    },
+    "dir-z": {
+     "default_view": 267,
+     "after_orbit": 506
+    },
+    "dir-xy": {
+     "default_view": 335,
+     "after_orbit": 654
+    },
+    "dir-xz": {
+     "default_view": 275,
+     "after_orbit": 790
+    },
+    "through-A-dir-x": {
+     "default_view": 287,
+     "after_orbit": 214
+    },
+    "interior-dir-x": {
+     "default_view": 455,
+     "after_orbit": 700
+    },
+    "aux-shown": {
+     "default_view": 541,
+     "after_orbit": 666
+    }
+   },
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.19760415727974528,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.20850920669249948,
+    "ink_ratio": 1.3395061728395061,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "khoi_S_ABCD",
+    "mp1_gt_f5",
+    "mp2_gt_f5",
+    "gt_f5",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  }
+ ]
+}
