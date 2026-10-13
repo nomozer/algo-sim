@@ -1380,6 +1380,9 @@ def _het_dinh_nghia(s: str, cuoi: int, m: re.Match) -> bool:
         rf"\s*[,;]?\s*(?:(?:và|rồi|sau đó)\s+)?(?:hãy\s+)?(?:xác định|tìm|tính)(?:\s+diện tích(?:\s+của)?)?\s+{_DAN_THIET_DIEN}"
         rf"(?:(?:mặt phẳng|mp)\s*)?\({re.escape(m['ten'])}\)\s*", con, re.IGNORECASE) is not None
 _HOI_DIEN_TICH_THIET_DIEN = re.compile(r"diện tích\s+(?:của\s+)?thiết diện", re.IGNORECASE)
+#: "thiết diện đó / này / trên" closing the asked object (matched right after the word "thiết diện").
+_DAI_TU_THIET_DIEN = re.compile(r"\s+(?:đó|này|trên)(?![\w'])\s*(?:(?:có\s+)?(?:bằng|là)\s+bao\s+nhiêu\s*)?(?:[.?!,;](?=\s|$)|\?|$)",
+                                re.IGNORECASE)
 
 
 def _khoi_trong_quote(c: LoiGoi, khoi: dict[str, frozenset]) -> bool:
@@ -1447,8 +1450,9 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
             # "thiết diện đó / này / trên" refers to the nearest section mentioned before it in the source text: it must be
             # the section bound to (P) — a section the extraction left out of the quotes is still seen here
             truoc = [t for t in moi_td if t < b - _TU_THIET_DIEN]
-            return (bool(re.match(r"\s+(?:đó|này|trên)(?![\w'])", de[b:], re.IGNORECASE)) and bool(truoc)
-                    and truoc[-1] in gan)
+            # … and the anaphor ENDS the asked object: only "bằng / là bao nhiêu" or punctuation may follow it in the clause
+            # ("thiết diện đó của hình chóp … với (SBD)" names another section)
+            return (bool(_DAI_TU_THIET_DIEN.match(de, b)) and bool(truoc) and truoc[-1] in gan)
 
         if not any(_duoc_hoi(de, a, b) and _vai_tro_tai(de, a) not in ("GOAL", "CONDITIONAL") and la_cua_p(b)
                    for a, b in hoi):

@@ -321,6 +321,34 @@ def test_anaphor_is_read_from_the_source_not_from_the_quotes(between, anaphor_qu
     assert r.status == "REFUSED", (r.code, r.answers)
 
 
+@pytest.mark.parametrize("ask", [
+    # verification of 39896b6e: the anaphor must END the asked object — a plane named after it is another section
+    "Tính diện tích thiết diện đó của hình chóp S.ABCD với (SBD).",
+    "Tính diện tích thiết diện trên (MAB).",
+    "Tính diện tích thiết diện này của hình chóp S.ABCD cắt bởi (MAB).",
+])
+def test_anaphor_followed_by_another_plane_is_not_the_bound_section(ask):
+    text, payload = _pyramid_problem(construct=False)
+    text = text.replace("Tính diện tích thiết diện của hình chóp S.ABCD với (P).", _CUT + " " + ask)
+    for f in payload["facts"]:
+        if f["id"] == "q":
+            f["quotes"] = [_DEF, _CUT, ask]
+    r = run_fact_route(text, payload)
+    assert r.status == "REFUSED", (r.code, r.answers)
+
+
+@pytest.mark.parametrize("ask", ["Tính diện tích thiết diện đó.", "Diện tích thiết diện này bằng bao nhiêu?"])
+def test_anaphor_ending_the_object_stays_served(ask):
+    text, payload = _pyramid_problem(construct=False)
+    text = text.replace("Tính diện tích thiết diện của hình chóp S.ABCD với (P).", _CUT + " " + ask)
+    for f in payload["facts"]:
+        if f["id"] == "q":
+            f["quotes"] = [_DEF, _CUT, ask]
+    r = run_fact_route(text, payload)
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert HB.answer_square(r.answers["q"]) == 1
+
+
 @pytest.mark.parametrize("rest", [" và song song với (SBC).", "; (P) vuông góc với SC."])
 def test_definition_is_read_to_the_end_of_the_source_sentence(rest):
     # final re-review I1: a quote cut right after "(ABCD)" must not hide the rest of the SOURCE sentence
