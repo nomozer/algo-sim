@@ -1,5 +1,15 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+## Compact DSL research closure — 2026-10-13
+
+User-approved `COMPACT_DSL = NO-GO_ARCHIVED`: Typed Facts structured JSON stays the AI → Hybrid format. Evaluation on the
+research branch: 59 cases (35 dev + 24 held-out), 59/59 equivalence after fixes, held-out 21/24 before; proxy full request
+C −15 %, B +1.6 %; modelled saving ≈ $0.00037/request; Gemini cost/retries NOT_MEASURED; `plane_relation` drift.
+Branch `research/compact-geometry-dsl` @ `3db08a1e` archived without worktree (`-d` refused, no `-D`); new incremental
+bundle verified by isolated recovery (same tree). `dsl-spike` worktree removed without force, physical directory gone;
+task scratch/cache removed, protected data kept. Docs/receipts only, LLM_ONLY/cache125/Gemini0, no product change.
+Run [`compact-dsl-closure`](evaluation/geometry/runs/compact-dsl-closure/report.md).
+
 ## Source grounding integration and research closure — 2026-10-13
 
 User-authorized ff-only main `7767c7e1` → `27b81c51`; final review closes a previously undeclared, preexisting

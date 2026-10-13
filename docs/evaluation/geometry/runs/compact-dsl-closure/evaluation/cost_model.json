@@ -1,0 +1,100 @@
+{
+ "tokenizer": "gemma3",
+ "price_usd_per_1M": {
+  "input": 0.3,
+  "output_incl_thinking": 2.5
+ },
+ "mean_tokens": {
+  "problem_turn": 58.0,
+  "instructions": {
+   "A": 1328,
+   "B": 1381,
+   "C": 1207
+  },
+  "output": {
+   "A": 250.6,
+   "A_spaced": 535.9,
+   "A_nulls": 664.9,
+   "B": 222.7,
+   "B_spaced": 445.9,
+   "C": 115.7
+  }
+ },
+ "scenarios": [
+  {
+   "thinking_tokens": 0,
+   "A": {
+    "A_usd": 0.001042,
+    "C_usd": 0.000669,
+    "C_saving": 0.359,
+    "C_saving_usd": 0.000374,
+    "C_break_even_repair_rate": 0.522
+   },
+   "A_spaced": {
+    "A_usd": 0.001756,
+    "C_usd": 0.000669,
+    "C_saving": 0.619,
+    "C_saving_usd": 0.001087,
+    "C_break_even_repair_rate": 1.52
+   },
+   "A_nulls": {
+    "A_usd": 0.002078,
+    "C_usd": 0.000669,
+    "C_saving": 0.678,
+    "C_saving_usd": 0.001409,
+    "C_break_even_repair_rate": 1.97
+   },
+   "B_vs_A_usd": 0.948
+  },
+  {
+   "thinking_tokens": 418,
+   "A": {
+    "A_usd": 0.002087,
+    "C_usd": 0.001714,
+    "C_saving": 0.179,
+    "C_saving_usd": 0.000374,
+    "C_break_even_repair_rate": 0.212
+   },
+   "A_spaced": {
+    "A_usd": 0.002801,
+    "C_usd": 0.001714,
+    "C_saving": 0.388,
+    "C_saving_usd": 0.001087,
+    "C_break_even_repair_rate": 0.618
+   },
+   "A_nulls": {
+    "A_usd": 0.003123,
+    "C_usd": 0.001714,
+    "C_saving": 0.451,
+    "C_saving_usd": 0.001409,
+    "C_break_even_repair_rate": 0.801
+   },
+   "B_vs_A_usd": 0.974
+  },
+  {
+   "thinking_tokens": 1043,
+   "A": {
+    "A_usd": 0.00365,
+    "C_usd": 0.003276,
+    "C_saving": 0.102,
+    "C_saving_usd": 0.000374,
+    "C_break_even_repair_rate": 0.112
+   },
+   "A_spaced": {
+    "A_usd": 0.004363,
+    "C_usd": 0.003276,
+    "C_saving": 0.249,
+    "C_saving_usd": 0.001087,
+    "C_break_even_repair_rate": 0.327
+   },
+   "A_nulls": {
+    "A_usd": 0.004686,
+    "C_usd": 0.003276,
+    "C_saving": 0.301,
+    "C_saving_usd": 0.001409,
+    "C_break_even_repair_rate": 0.424
+   },
+   "B_vs_A_usd": 0.985
+  }
+ ]
+}

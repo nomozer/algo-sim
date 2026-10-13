@@ -1,5 +1,23 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = COMPACT_DSL_CLOSURE
+
+REPORT = docs/evaluation/geometry/runs/compact-dsl-closure/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/compact-dsl-closure/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = COMPACT_DSL_NO_GO_ARCHIVED
+CODE_COMMIT = NONE
+VERIFICATION_COMMIT = NONE
+MODEL_REQUEST_COUNT = 0
+
+User-approved NO-GO for the Compact Geometry DSL and compact JSON as the AI → Hybrid wire format; Typed Facts JSON stays.
+The research (runs `compact-geometry-dsl-spike` HOLD, corrected by `compact-dsl-format-evaluation` NO-GO) lives on the
+archived local branch `research/compact-geometry-dsl` @ `3db08a1e` and in the verified incremental bundle
+`.superpowers/preserved/compact-geometry-dsl-3db08a1e.bundle` (prerequisites on origin/main; local only, no off-machine
+copy). Byte copies of the evaluation run.json, metrics and cost model are in `evaluation/`; SHA-256 of every research file
+and the reopen trigger are in the report. Proxy tokens and a cost model only; Gemini usage NOT_MEASURED.
+
 ## WAVE_ID = SOURCE_GROUNDING_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/source-grounding-integration/report.md

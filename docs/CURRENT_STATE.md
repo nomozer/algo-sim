@@ -1,8 +1,17 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — source-grounding-integration, 2026-10-13
+## LOCAL override — compact-dsl-closure, 2026-10-13
 
 CANONICAL_NEXT_ACTION = HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION
+
+`COMPACT_DSL = NO-GO_ARCHIVED` (quyết định của người dùng): Typed Facts structured JSON giữ làm định dạng AI → Hybrid;
+DSL gọn và JSON gọn không thay thế. Lý do: Hybrid chưa có consumer sản phẩm; văn phạm viết tay đã lệch `TypedFact`
+(`plane_relation`) mà 95 test cũ vẫn xanh; tiết kiệm mô hình ≈ $0.00037/request (proxy, chi phí Gemini thật NOT_MEASURED).
+Nhánh `research/compact-geometry-dsl` lưu trữ (`ARCHIVED_NO_ACTIVE_WORKTREE`, chỉ local), bundle đã kiểm khôi phục;
+worktree `dsl-spike` đã gỡ. Điều kiện mở lại, danh tính và receipt: run
+[`compact-dsl-closure`](evaluation/geometry/runs/compact-dsl-closure/report.md). LLM_ONLY/cache125/Gemini0; Hybrid off.
+
+## LOCAL — source-grounding-integration, 2026-10-13 (đã tích hợp)
 
 Main đã fast-forward `7767c7e1` → `27b81c51`, theo yêu cầu người dùng.
 Push đến `6e053b41` đã xác minh main/origin/ls-remote trùng nhau; nhánh nguồn đã xoá sau xác nhận remote.
@@ -14,7 +23,7 @@ benchmark byte-identical 19/9/0/2. T3 clean `27b81c51` PASS backend 9161 / front
 [`source-grounding-integration`](evaluation/geometry/runs/source-grounding-integration/report.md).
 LLM_ONLY/cache125/provider/IR/renderer giữ nguyên; Gemini 0. Các residual đã khai vẫn OPEN, Hybrid product enablement NO-GO.
 Kế tiếp chỉ đề xuất người dùng duyệt thiết kế một lát Planner hướng mục tiêu trên kiến trúc sẵn có; chưa triển khai.
-DSL `HOLD_WITH_NEXT_EXPERIMENT`, không là dependency của Planner; hai nhánh real-model giữ, `471a2c79` chỉ được bảo toàn local.
+DSL lúc ấy `HOLD_WITH_NEXT_EXPERIMENT` (nay `NO-GO_ARCHIVED`, mục trên); hai nhánh real-model giữ, `471a2c79` chỉ được bảo toàn local.
 
 ## LOCAL — goal-directed-section-planning, 2026-10-13 (đã tích hợp)
 
