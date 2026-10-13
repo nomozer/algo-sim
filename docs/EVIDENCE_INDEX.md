@@ -1,10 +1,28 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = GOAL_DIRECTED_SECTION_PLANNING_MAIN_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/goal-directed-section-planning-main-integration/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/goal-directed-section-planning-main-integration/
+CORRECTED_BY = NONE
+CORRECTS = GOAL_DIRECTED_SECTION_PLANNING
+CLASSIFICATION = MAIN_INTEGRATED_PUSHED_T3_PASS
+CODE_COMMIT = 4a4f065b
+VERIFICATION_COMMIT = b653d381
+MODEL_REQUEST_COUNT = 0
+
+Final re-review before integration: BLOCKING C1 (anaphor bound from quotes) + I1 (definition rest read in the quote)
+fixed 39896b6e; a verifier found one more Important (anaphor not closing the object) fixed 4a4f065b; RED → GREEN.
+Candidate fd80c8c9 (divergence chain extended in `inputs/`). ff 132e9b23 → b653d381, push verified three ways.
+Clean detached T3 at b653d381 PASS: backend 8934, frontend 1053, build/demo/crash PASS. Benchmark byte-identical.
+Machine receipt: `runs/goal-directed-section-planning-main-integration/verification/t3.log`, SHA256
+`abc3e3810f40a8097b49e371684ca779f6ccc2e252663542513cb732e6864ac3`.
+
 ## WAVE_ID = GOAL_DIRECTED_SECTION_PLANNING
 
 REPORT = docs/evaluation/geometry/runs/goal-directed-section-planning/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/goal-directed-section-planning/
-CORRECTED_BY = NONE
+CORRECTED_BY = GOAL_DIRECTED_SECTION_PLANNING_MAIN_INTEGRATION
 CORRECTS = NONE
 CLASSIFICATION = PHASE_A_B_T3_PASS_AWAITING_INTEGRATION_DECISION
 CODE_COMMIT = 68fbc844

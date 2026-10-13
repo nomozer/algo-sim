@@ -2,9 +2,12 @@
 
 ## LOCAL override — goal-directed-section-planning, 2026-10-13
 
-CANONICAL_NEXT_ACTION = GOAL_DIRECTED_SECTION_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_SOURCE_GROUNDING_COMPLETENESS
 
-Nhánh nghiên cứu `research/goal-directed-section-planning` từ `main` = `origin/main` = `132e9b23`; chưa merge/push.
+Đã tích hợp: `main` = `origin/main` = `b653d381` (ff `132e9b23` → `b653d381`, push fast-forward; review cuối sửa
+anaphor/định nghĩa đọc từ nguồn; candidate `fd80c8c9…`; T3 clean `b653d381` PASS backend 8934, frontend 1053; run
+[`goal-directed-section-planning-main-integration`](evaluation/geometry/runs/goal-directed-section-planning-main-integration/report.md)).
+Nhánh nguồn `research/goal-directed-section-planning` (đã xoá sau push) từ `132e9b23`.
 Phase A: lỗ hở đổi giả thiết sau "sau đó"/"rồi" đóng bằng luật đóng (A/B, hỏi và dựng). Phase B: planner tuyến B tự
 phân rã thiết diện với mặt qua điểm đã xác minh song song mặt có tên (`MAT_SONG_SONG`, `translate_point` chỉ cho
 planner), bề mặt B `4a20601f…`. Product `68fbc844`, candidate `6110cd67…` (`a443d2a2`), T3 clean PASS (backend 8925,

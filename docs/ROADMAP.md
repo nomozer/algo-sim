@@ -9,9 +9,11 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = GOAL_DIRECTED_SECTION_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_SOURCE_GROUNDING_COMPLETENESS
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **Goal-directed section planning trên `main` + `origin/main` (2026-10-13):** `b653d381`, T3 clean PASS, run [`goal-directed-section-planning-main-integration`](evaluation/geometry/runs/goal-directed-section-planning-main-integration/report.md). Việc kế tiếp: wave nghiên cứu phủ nguồn cho câu tiền đề ngoài mọi quote (`ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS`, phần còn mở).
 
 - **Goal-directed section planning (LOCAL research, 2026-10-13):** nhánh `research/goal-directed-section-planning`, chưa merge/push. Phase A đóng lỗ hở follow-up "sau đó/rồi" (luật đóng); Phase B: thiết diện với mặt qua điểm đã xác minh song song mặt có tên, planner tự phân rã (`MAT_SONG_SONG`). Candidate `6110cd67…`, T3 clean PASS, Scene3D harness SwiftShader+GPU PASS. Run [`goal-directed-section-planning`](evaluation/geometry/runs/goal-directed-section-planning/report.md). Việc kế tiếp: quyết định tích hợp của người dùng.
 

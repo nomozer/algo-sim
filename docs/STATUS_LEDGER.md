@@ -2,7 +2,8 @@
 
 ## LOCAL research — Goal-directed section planning, 2026-10-13
 
-Nhánh `research/goal-directed-section-planning` từ `132e9b23`; product `68fbc844`, candidate `6110cd67…`.
+Trên `main` = `origin/main` = `b653d381` sau review cuối (candidate `fd80c8c9…`, T3 clean PASS; run
+`goal-directed-section-planning-main-integration`). Nhánh nguồn từ `132e9b23`; product slice `68fbc844` → `4a4f065b`.
 Follow-up đổi giả thiết bị từ chối bằng luật đóng; planner tuyến B tự phân rã thiết diện với mặt qua điểm ∥ mặt có tên.
 Ba vòng review độc lập (một BLOCKING) đóng RED→GREEN; T3 clean PASS; benchmark byte-identical; bề mặt B đổi, A giữ.
 Chi tiết: [`goal-directed-section-planning`](evaluation/geometry/runs/goal-directed-section-planning/report.md).
