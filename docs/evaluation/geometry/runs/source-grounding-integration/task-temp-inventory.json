@@ -1,0 +1,44 @@
+{
+  "roots": [
+    {
+      "path": ".superpowers\\worktrees\\source-grounding-verify",
+      "bytes": 1706670257,
+      "files": 13717,
+      "errors": [],
+      "junctions": [
+        {
+          "path": ".superpowers\\worktrees\\source-grounding-verify\\frontend\\node_modules",
+          "target": "D:\\Documents\\projects\\algo-sim\\frontend\\node_modules"
+        }
+      ]
+    },
+    {
+      "path": ".superpowers\\source-closure",
+      "bytes": 13178810,
+      "files": 493,
+      "errors": [],
+      "junctions": []
+    },
+    {
+      "path": ".superpowers\\source-closure-review",
+      "bytes": 7716,
+      "files": 1,
+      "errors": [],
+      "junctions": []
+    },
+    {
+      "path": ".superpowers\\sgtmp",
+      "bytes": 50275395,
+      "files": 5382,
+      "errors": [],
+      "junctions": []
+    }
+  ],
+  "content_bytes": 1770132178,
+  "drive_free_before": 72954351616,
+  "drive_free_after": 74780545024,
+  "free_volume_delta": 1826193408,
+  "deletion_verified": true,
+  "task_readonly_git_blobs_cleared": 226,
+  "task_hidden_git_dirs_cleared": 10
+}

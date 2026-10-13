@@ -9,11 +9,11 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = SOURCE_GROUNDING_COMPLETENESS_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
-- **Premise source coverage (LOCAL research, 2026-10-13):** nhánh `research/source-grounding-completeness` từ `7767c7e1`, chưa merge/push. Mọi câu tiền đề trước yêu cầu đầu tiên phải được lời gọi đã xác minh đọc (`SOURCE_PREMISE_UNREAD`), tuyến A/B, hỏi/dựng/phụ trợ/mặt dẫn xuất. Bốn vòng review độc lập, Critical/Important đóng RED→GREEN. Product `b264828f`, candidate `46ca75a2…` (`046ab48a`), T3 clean PASS (backend 9143, frontend 1053), benchmark byte-identical, bề mặt provider giữ nguyên. Run [`source-grounding-completeness`](evaluation/geometry/runs/source-grounding-completeness/report.md). Việc kế tiếp: quyết định tích hợp của người dùng; đề xuất sau đó: mở rộng planner hướng mục tiêu sang một họ dựng mới.
+- **Source grounding đã tích hợp local (2026-10-13):** ff `7767c7e1` → `27b81c51`; review cuối sửa lỗ hở cũ chưa khai do quote chồng (`c30049fd`, RED → GREEN, review lại NON-BLOCKING). Candidate `736613f6…` (110 file), benchmark byte-identical; cổng T3/push/cleanup cuối ở [`source-grounding-integration`](evaluation/geometry/runs/source-grounding-integration/report.md). Giới hạn grounding vẫn OPEN; Hybrid product enablement NO-GO. **Việc kế tiếp duy nhất đề xuất:** người dùng duyệt thiết kế một lát Planner hướng mục tiêu sang một họ dựng mới trên kiến trúc sẵn có. Chưa có phê duyệt triển khai; DSL tiếp tục HOLD có điều kiện, không là dependency của Planner.
 
 - **Goal-directed section planning trên `main` + `origin/main` (2026-10-13):** `b653d381`, T3 clean PASS, run [`goal-directed-section-planning-main-integration`](evaluation/geometry/runs/goal-directed-section-planning-main-integration/report.md). Việc kế tiếp: wave nghiên cứu phủ nguồn cho câu tiền đề ngoài mọi quote (`ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS`, phần còn mở).
 

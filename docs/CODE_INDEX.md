@@ -1,8 +1,10 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
-## Premise source coverage — research branch
+## Premise source coverage — integrated research code, Hybrid off
 
-Run: `docs/evaluation/geometry/runs/source-grounding-completeness/`. No new module, parser or fact state; the gate only refuses.
+Runs: `docs/evaluation/geometry/runs/source-grounding-completeness/` + `docs/evaluation/geometry/runs/source-grounding-integration/`.
+Final review fixes overlapping quotes: one numeric budget per validated call field across all its quotes (`c30049fd`).
+No new module, parser or fact state; the gate only refuses.
 
 | Module | Owns | Verification |
 |---|---|---|

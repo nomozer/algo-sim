@@ -6,13 +6,18 @@ REPORT = docs/evaluation/geometry/runs/source-grounding-integration/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-grounding-integration/
 CORRECTED_BY = NONE
 CORRECTS = SOURCE_GROUNDING_COMPLETENESS
-CLASSIFICATION = FINAL_REVIEW_FIXED_AWAITING_AUTHORITATIVE_GATES
+CLASSIFICATION = MAIN_INTEGRATED_T3_PASS_READY_FOR_AUTHORIZED_PUSH
 CODE_COMMIT = c30049fd
+VERIFICATION_COMMIT = 27b81c51
 MODEL_REQUEST_COUNT = 0
 
 Independent final review uncovered a previously undeclared, preexisting numeric quote-overlap bypass; fixed in the
 same semantic authority, RED 4 fail / 14 pass → GREEN 227 pass / 1 xfail. Focused independent follow-up NON-BLOCKING.
 Candidate refrozen at c30049fd; additive divergence layer extends source-grounding-completeness. Historical bytes kept.
+Clean detached T3 at integrated 27b81c51 PASS: backend 9161 / frontend 1053, build/demo/crash PASS. Provider pins unchanged,
+benchmark byte-identical. Physical old worktrees removed; DSL/real-model refs kept and incrementally bundled local.
+Receipt: `runs/source-grounding-integration/verification/t3.log`, SHA256
+`76a0e91659c7cd5237d2d743523ac6344d84868129dae3ff65d4f17c1cd9f17a`.
 
 ## WAVE_ID = SOURCE_GROUNDING_COMPLETENESS
 

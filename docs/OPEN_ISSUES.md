@@ -129,6 +129,12 @@
 - **suggested_wave:** Next Hybrid gate slice, before product enablement or a live pilot.
 - **default_switch_blocker:** YES
 
+  Integration correction 2026-10-13 ([`source-grounding-integration`](evaluation/geometry/runs/source-grounding-integration/report.md)):
+  Source grounding is on local main (`27b81c51`). Independent final review found a preexisting, previously undeclared
+  numeric bypass with overlapping quotes; fixed `c30049fd`, one budget per call field (RED 4 fail → GREEN 227 pass/1 xfail,
+  independent follow-up NON-BLOCKING). Prior numeric completeness wording is corrected by this new layer. The three
+  declared residual groups remain OPEN, and this issue remains a Hybrid product enablement blocker.
+
 ### ISSUE-ARCH-HYBRID-DERIVED-PLANE-LIMITS
 
 - **description:** Goal-directed decomposition `MAT_SONG_SONG` (run `goal-directed-section-planning`) builds the section with the plane through a verified point parallel to a named plane, route B only. Limits: Q whose first three labels are collinear is refused (`COLLINEAR_POINTS`) although another triple would work; "(P) … song song với (Q) tại M" and any continuation of the definition sentence are refused; a conflicting second definition of (P) in another grammar ("(P) là mặt phẳng (SBD)") is not detected; the section caption names the plane by its construction points ("cắt bởi (MHH1)") because the shared display layer prefers the point symbol — the plane object itself is labelled "(P)"/"(α)"; route A (provider-chosen functions) cannot express it (`AUXILIARY_ONLY_FUNCTION`) by design; perpendicular or other relational planes are not supported (perpendicular to a plane ⇒ `PLANE_NOT_UNIQUE`).

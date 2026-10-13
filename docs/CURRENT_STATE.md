@@ -1,15 +1,17 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — source-grounding-completeness, 2026-10-13
+## LOCAL override — source-grounding-integration, 2026-10-13
 
-CANONICAL_NEXT_ACTION = SOURCE_GROUNDING_COMPLETENESS_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION
 
-Nhánh nghiên cứu `research/source-grounding-completeness` từ `main` = `origin/main` = `7767c7e1`; chưa merge/push.
-Cổng chung A/B nay đọc mọi câu tiền đề trước yêu cầu đầu tiên (`registry._kiem_vung_tien_de`, mã `SOURCE_PREMISE_UNREAD`):
-câu tiền đề đổi giả thiết nằm ngoài mọi quote không còn được phục vụ bằng hình cũ. Product `b264828f`, candidate
-`46ca75a2…` (`046ab48a`), T3 clean `046ab48a` PASS (backend 9143, frontend 1053); benchmark byte-identical; bề mặt
-provider, IR, renderer, LLM_ONLY/cache125 giữ; Gemini 0. Giới hạn đã khai ở run
-[`source-grounding-completeness`](evaluation/geometry/runs/source-grounding-completeness/report.md) §5.
+Main đã fast-forward `7767c7e1` → `27b81c51`, theo yêu cầu người dùng. Review cuối phát hiện lỗ hở cũ chưa khai:
+quote chồng nhân đôi quyền xác nhận số của một call. Sửa tối thiểu `c30049fd`, RED 4 fail/14 pass → GREEN 227 pass/1 xfail;
+review lại NON-BLOCKING. Candidate `736613f6…` (110 file) đóng băng clean tại `c30049fd`, commit `27b81c51`;
+benchmark byte-identical 19/9/0/2. T3 clean `27b81c51` PASS backend 9161 / frontend 1053; push cuối và cleanup: run
+[`source-grounding-integration`](evaluation/geometry/runs/source-grounding-integration/report.md).
+LLM_ONLY/cache125/provider/IR/renderer giữ nguyên; Gemini 0. Các residual đã khai vẫn OPEN, Hybrid product enablement NO-GO.
+Kế tiếp chỉ đề xuất người dùng duyệt thiết kế một lát Planner hướng mục tiêu trên kiến trúc sẵn có; chưa triển khai.
+DSL `HOLD_WITH_NEXT_EXPERIMENT`, không là dependency của Planner; hai nhánh real-model giữ, `471a2c79` chỉ được bảo toàn local.
 
 ## LOCAL — goal-directed-section-planning, 2026-10-13 (đã tích hợp)
 

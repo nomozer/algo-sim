@@ -1,0 +1,197 @@
+{
+  "roots": [
+    {
+      "path": ".superpowers\\worktrees\\question-local-givens",
+      "exists": true,
+      "files": 13234,
+      "bytes": 1687454380,
+      "errors": [],
+      "links": [],
+      "groups": {
+        "DESIGN.md": 27387,
+        "docker-compose.dev.yml": 1033,
+        "docker-compose.yml": 6058,
+        "Makefile": 2263,
+        "README.md": 5214,
+        "backend/alembic.ini": 5218,
+        "backend/algosim.db": 159744,
+        "backend/cache_identity.lock.json": 782,
+        "backend/conftest.py": 8956,
+        "backend/Dockerfile": 3067,
+        "backend/geometry_regression_fixtures.py": 3762,
+        "backend/pytest.ini": 616,
+        "backend/requirements-dev.txt": 106,
+        "backend/requirements.txt": 109,
+        "backend/.pytest_cache": 120463,
+        "backend/alembic": 21148,
+        "backend/app": 4230337,
+        "backend/scripts": 3339774,
+        "backend/tests": 5614714,
+        "backend/__pycache__": 16063,
+        "docs/AI_CONTEXT_BUNDLE.md": 36612,
+        "docs/ARCHITECTURE_MAP.md": 82219,
+        "docs/CLASSROOM_AUTH_CONTRACT.md": 5242,
+        "docs/CODE_INDEX.md": 615045,
+        "docs/CORRECTNESS.md": 17344,
+        "docs/COVERAGE.md": 6247,
+        "docs/CURRENT_STATE.md": 65291,
+        "docs/CURVED_GEOMETRY_FOUNDATION_DESIGN.md": 28532,
+        "docs/CURVED_SCALAR_AXIS_INTERSECTION_FIX.md": 18608,
+        "docs/CURVED_SECTION_RADIUS_PATH_ADJUDICATION.md": 19918,
+        "docs/CURVED_V3_RESEAL_PREFLIGHT.md": 13683,
+        "docs/DEMO_RUNBOOK.md": 10579,
+        "docs/DESIGN_BRIEF.md": 13066,
+        "docs/EVIDENCE_INDEX.md": 127609,
+        "docs/GEOMETRIC_DEPENDENCY_VISIBILITY_BRIDGE.md": 12673,
+        "docs/MIGRATION_CHECKLIST.md": 12022,
+        "docs/MINIMAL_CARD_CONSOLIDATION_AND_FRESH_CONFIRMATION.md": 24819,
+        "docs/MODEL_FACING_OPERATION_AFFORDANCE_ALIGNMENT.md": 19220,
+        "docs/OBLIGATION_BINDING_CONTRACT.md": 13414,
+        "docs/OPEN_ISSUES.md": 189059,
+        "docs/OPERATIONS.md": 14784,
+        "docs/POINT_INITIALIZATION_CONTRACT_ALIGNMENT.md": 17931,
+        "docs/POST_THESIS_BACKLOG.md": 7718,
+        "docs/REACT_ERROR_BOUNDARY_HARDENING.md": 9737,
+        "docs/README.md": 9309,
+        "docs/ROADMAP.md": 46254,
+        "docs/RULES.md": 11691,
+        "docs/STATUS_LEDGER.md": 171796,
+        "docs/TEST_TIERS.md": 8302,
+        "docs/architecture": 317001,
+        "docs/evaluation": 1660634216,
+        "docs/legacy": 1197787,
+        "docs/research": 6669244,
+        "docs/schemas": 206419,
+        "frontend/index.html": 503,
+        "frontend/package-lock.json": 83096,
+        "frontend/package.json": 1167,
+        "frontend/tsconfig.app.json": 625,
+        "frontend/tsconfig.json": 111,
+        "frontend/tsconfig.node.json": 448,
+        "frontend/vite.config.ts": 1502,
+        "frontend/scripts": 1145880,
+        "frontend/src": 2000843
+      }
+    },
+    {
+      "path": ".superpowers\\worktrees\\geometry-library-expansion",
+      "exists": true,
+      "files": 26,
+      "bytes": 426067,
+      "errors": [],
+      "links": [],
+      "groups": {
+        "backend/.pytest_cache": 56564,
+        "docs/evaluation": 369503
+      }
+    }
+  ],
+  "physical_before": [
+    "dsl-spike",
+    "geometry-library-expansion",
+    "question-local-givens"
+  ],
+  "registered_before": [
+    "main checkout on research/source-grounding-completeness",
+    "dsl-spike"
+  ],
+  "retained": [
+    {
+      "path": ".superpowers\\scratch",
+      "exists": true,
+      "files": 6,
+      "bytes": 2912680,
+      "errors": [
+        {
+          "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\scratch\\candidate-verifier-green-oct11",
+          "error": "[WinError 5] Access is denied: 'D:\\\\Documents\\\\projects\\\\algo-sim\\\\.superpowers\\\\scratch\\\\candidate-verifier-green-oct11'"
+        },
+        {
+          "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\scratch\\candidate-verifier-red-oct11",
+          "error": "[WinError 5] Access is denied: 'D:\\\\Documents\\\\projects\\\\algo-sim\\\\.superpowers\\\\scratch\\\\candidate-verifier-red-oct11'"
+        },
+        {
+          "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\scratch\\docs-final-oct11",
+          "error": "[WinError 5] Access is denied: 'D:\\\\Documents\\\\projects\\\\algo-sim\\\\.superpowers\\\\scratch\\\\docs-final-oct11'"
+        },
+        {
+          "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\scratch\\docs-green-oct11",
+          "error": "[WinError 5] Access is denied: 'D:\\\\Documents\\\\projects\\\\algo-sim\\\\.superpowers\\\\scratch\\\\docs-green-oct11'"
+        },
+        {
+          "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\scratch\\geometry-full-1bbd0edb",
+          "error": "[WinError 5] Access is denied: 'D:\\\\Documents\\\\projects\\\\algo-sim\\\\.superpowers\\\\scratch\\\\geometry-full-1bbd0edb'"
+        },
+        {
+          "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\scratch\\geometry-full-3b6104e3",
+          "error": "[WinError 5] Access is denied: 'D:\\\\Documents\\\\projects\\\\algo-sim\\\\.superpowers\\\\scratch\\\\geometry-full-3b6104e3'"
+        },
+        {
+          "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\scratch\\geometry-full-815f06be",
+          "error": "[WinError 5] Access is denied: 'D:\\\\Documents\\\\projects\\\\algo-sim\\\\.superpowers\\\\scratch\\\\geometry-full-815f06be'"
+        },
+        {
+          "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\scratch\\geometry-full-815f06be-console",
+          "error": "[WinError 5] Access is denied: 'D:\\\\Documents\\\\projects\\\\algo-sim\\\\.superpowers\\\\scratch\\\\geometry-full-815f06be-console'"
+        },
+        {
+          "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\scratch\\geometry-runner-regression-2",
+          "error": "[WinError 5] Access is denied: 'D:\\\\Documents\\\\projects\\\\algo-sim\\\\.superpowers\\\\scratch\\\\geometry-runner-regression-2'"
+        },
+        {
+          "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\scratch\\provenance-green-oct11",
+          "error": "[WinError 5] Access is denied: 'D:\\\\Documents\\\\projects\\\\algo-sim\\\\.superpowers\\\\scratch\\\\provenance-green-oct11'"
+        }
+      ],
+      "links": []
+    },
+    {
+      "path": ".superpowers\\builds",
+      "exists": true,
+      "files": 4,
+      "bytes": 1023580,
+      "errors": [],
+      "links": []
+    },
+    {
+      "path": ".superpowers\\brainstorm",
+      "exists": true,
+      "files": 14,
+      "bytes": 90550,
+      "errors": [],
+      "links": []
+    },
+    {
+      "path": ".superpowers\\sdd",
+      "exists": true,
+      "files": 147,
+      "bytes": 10955587,
+      "errors": [],
+      "links": []
+    },
+    {
+      "path": "backend\\.tmp",
+      "exists": true,
+      "files": 0,
+      "bytes": 0,
+      "errors": [],
+      "links": []
+    },
+    {
+      "path": "frontend\\public",
+      "exists": true,
+      "files": 1,
+      "bytes": 5569,
+      "errors": [],
+      "links": []
+    },
+    {
+      "path": ".superpowers\\worktrees\\dsl-spike",
+      "exists": true,
+      "files": 13154,
+      "bytes": 1683016400,
+      "errors": [],
+      "links": []
+    }
+  ]
+}

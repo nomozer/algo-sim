@@ -1,5 +1,16 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+## Source grounding integration and research closure — 2026-10-13
+
+User-authorized ff-only main `7767c7e1` → `27b81c51`; final review closes a previously undeclared, preexisting
+overlapping-quote numeric bypass (`c30049fd`, RED → GREEN, focused independent follow-up NON-BLOCKING).
+Candidate `736613f6…`, 110 files; clean detached T3 at `27b81c51` PASS backend 9161 / frontend 1053, build/demo/crash.
+Benchmark byte-identical; provider pins/LLM_ONLY/cache125 unchanged, Gemini0. Declared residuals still OPEN; Hybrid off.
+Physical question-local-givens and geometry-library-expansion leftovers and temporary JUnit removed by legal operations;
+only DSL remains under physical worktrees. Old user-protected scratch/DB/public preserved; DSL and real-model refs kept.
+Run [`source-grounding-integration`](evaluation/geometry/runs/source-grounding-integration/report.md) owns review,
+correction layer, verification receipts, inventories, cleanup and push results; no new research starts here.
+
 ## LOCAL research — Premise source coverage, 2026-10-13
 
 Nhánh `research/source-grounding-completeness` từ `7767c7e1`; chưa merge/push. Product `ea18d62f` → `b264828f`,
