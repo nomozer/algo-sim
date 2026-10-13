@@ -144,7 +144,7 @@ def test_scene3d_co_khoi_dung_cau_truc_va_metric(cid):
 # ── hợp đồng: registry đóng, không toạ độ, có nguồn ─────────────────────────
 def test_registry_dong_va_khai_bao_ham_khong_co_toa_do():
     decl = GF.function_declarations()
-    assert {d["name"] for d in decl} == set(GF.REGISTRY)
+    assert {d["name"] for d in decl} == set(GF.REGISTRY) - {"translate_point"}      # planner-only, never declared
     txt = json.dumps(decl, ensure_ascii=False).lower()
     for cam in ("xyz", "coord", "toạ độ", "tọa độ", "\"x\"", "position"):
         assert cam not in txt, cam
@@ -154,7 +154,8 @@ def test_registry_dong_va_khai_bao_ham_khong_co_toa_do():
 
 def test_moi_ham_co_tu_khoa_vi_tu_hoac_la_ham_so_lieu():
     for ten, spec in GF.REGISTRY.items():
-        assert spec.keywords or spec.value_fields or ten == "unsupported", ten
+        # a planner-only auxiliary is bound by its declared decomposition (`_kiem_phu`), not by a predicate keyword
+        assert spec.keywords or spec.value_fields or ten == "unsupported" or spec.auxiliary_only, ten
 
 
 # ── không lùi ngầm về LLM_ONLY, không gọi provider ─────────────────────────

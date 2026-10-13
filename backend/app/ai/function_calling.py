@@ -33,7 +33,7 @@ import os
 from typing import Any, Callable
 
 from app.ai.function_route import run_function_route
-from app.simulation.geometry_functions import REGISTRY, KetQuaTuyen, function_declarations
+from app.simulation.geometry_functions import PROVIDER_FUNCTIONS, KetQuaTuyen, function_declarations
 
 MODES = ("ANY", "VALIDATED")
 #: Trần output gồm cả thinking (tài liệu Gemini) — trần TOKEN CỨNG mỗi lượt, bài học R1 của pilot G05. Cần đo lại.
@@ -111,7 +111,7 @@ def build_request(problem_text: str, mode: str = "ANY") -> dict[str, Any]:
         "systemInstruction": {"parts": [{"text": SYSTEM_PROMPT}]},
         "contents": [{"role": "user", "parts": [{"text": f'Đề bài:\n"""\n{problem_text}\n"""'}]}],
         "tools": [{"functionDeclarations": gemini_function_declarations()}],
-        "toolConfig": {"functionCallingConfig": {"mode": mode, "allowedFunctionNames": sorted(REGISTRY)}},
+        "toolConfig": {"functionCallingConfig": {"mode": mode, "allowedFunctionNames": sorted(PROVIDER_FUNCTIONS)}},
         "generationConfig": {"temperature": TEMPERATURE, "maxOutputTokens": MAX_OUTPUT_TOKENS},
     }
 

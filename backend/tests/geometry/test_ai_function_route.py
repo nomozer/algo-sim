@@ -162,7 +162,8 @@ class _Gia:
 
 def test_khai_bao_ham_gemini_dung_tap_con_openapi():
     decl = FC.gemini_function_declarations()
-    assert {d["name"] for d in decl} == set(GF.REGISTRY)
+    # the provider sees the library minus planner-only auxiliaries — and exactly these (a new one is a decision)
+    assert {d["name"] for d in decl} == set(GF.PROVIDER_FUNCTIONS) == set(GF.REGISTRY) - {"translate_point"}
     txt = json.dumps(decl)
     for cam in ('"$ref"', '"$defs"', '"anyOf"', '"title"', '"additionalProperties"', '"xyz"', '"coord'):
         assert cam not in txt, cam
@@ -176,7 +177,8 @@ def test_khai_bao_ham_gemini_dung_tap_con_openapi():
 def test_payload_ep_goi_ham_trong_registry_mot_luot_goi():
     p = FC.build_request("đề", mode="ANY")
     cfg = p["toolConfig"]["functionCallingConfig"]
-    assert cfg["mode"] == "ANY" and sorted(cfg["allowedFunctionNames"]) == sorted(GF.REGISTRY)
+    assert cfg["mode"] == "ANY" and sorted(cfg["allowedFunctionNames"]) == sorted(GF.PROVIDER_FUNCTIONS)
+    assert "translate_point" not in cfg["allowedFunctionNames"]
     assert p["generationConfig"]["maxOutputTokens"] == FC.MAX_OUTPUT_TOKENS
     assert len(p["tools"]) == 1 and p["tools"][0]["functionDeclarations"]
     assert FC.build_request("đề", mode="VALIDATED")["toolConfig"]["functionCallingConfig"]["mode"] == "VALIDATED"

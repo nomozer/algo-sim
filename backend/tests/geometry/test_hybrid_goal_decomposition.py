@@ -350,14 +350,16 @@ def test_provider_surfaces_are_pinned():
 
     History: goal decomposition slice 1 changed nothing (A 1e3f71ea…, B a4f368cb…, declarations 41e090cd…). The
     user-approved section / intersection-line slice (run `hybrid-section-slice`) added `section`, `intersection_line`,
-    `ask_section_area` (A declarations) and two Typed Fact kinds + one prompt rule (B) — values below."""
+    `ask_section_area` (A declarations) and two Typed Fact kinds + one prompt rule (B). The goal-directed section slice
+    (run `goal-directed-section-planning`) left A and the declarations byte-identical (its `translate_point` is planner-only)
+    and added one optional Typed Fact field `plane_relation` + prompt rule 8 (B: 396f1c9c… → value below)."""
     import hashlib
 
     from app.ai import fact_extraction as FE
     from app.ai import function_calling as FC
 
     assert FC.surface_fingerprint() == "912b22ef7f89851412b8ff026012454d1f9aa225bdd5bd00eb0d8f2dbd53fa3e"
-    assert FE.surface_fingerprint() == "396f1c9c23779a9f5fdfd1b9979a22cab80ed8dc91c94191799379cd4ce12917"
+    assert FE.surface_fingerprint() == "4a20601fb398da4f5a1d72fb2b430616a5dd26cbe1ba08d97c3a0f815917d31e"
     decl = json.dumps(RG.function_declarations(), ensure_ascii=False, sort_keys=True).encode()
     assert hashlib.sha256(decl).hexdigest() == "f2ec9698a4ee8af86448790f83d9af340eb6afcfce0a8f258ea67e46bf7504b1"
 

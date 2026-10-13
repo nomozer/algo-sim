@@ -8,4 +8,4 @@ tầng trên: `app/ai/function_route.py::run_function_route` (điểm vào). Kh�
 đường của `run_pipeline`.
 """
 from .engine import ENGINE_VERSION, KetQuaTuyen, dung_tu_loi_goi  # noqa: F401
-from .registry import REGISTRY, REGISTRY_VERSION, TuChoi, function_declarations  # noqa: F401
+from .registry import PROVIDER_FUNCTIONS, REGISTRY, REGISTRY_VERSION, TuChoi, function_declarations  # noqa: F401

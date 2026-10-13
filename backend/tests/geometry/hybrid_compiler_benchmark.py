@@ -400,6 +400,9 @@ REFUSAL_CLASS = {
     "QUESTION_CLAUSE_NOT_PREMISE": "grounding",            # added by the S0/section review (hybrid-slice-review)
     # added with the section / intersection-line slice (hybrid-section-slice): geometric preconditions of the request
     "PARALLEL_PLANES": "contradictory", "SECTION_EMPTY": "contradictory",
+    # goal-directed section slice (goal-directed-section-planning): taxonomy only; case labels/oracle unchanged
+    "PLANE_NOT_UNIQUE": "figure_not_unique", "DERIVED_PLANE_IS_REFERENCE": "contradictory",
+    "SECTION_PLANE_IS_FACE": "contradictory", "AUXILIARY_ONLY_FUNCTION": "malformed",
     # malformed facts / plan
     "SCHEMA_INVALID": "malformed", "FACT_INCOMPLETE": "malformed", "UNKNOWN_SOLID": "malformed", "NO_SOLID": "malformed",
     "DUPLICATE_CALL_ID": "malformed", "DEPENDENCY_CYCLE": "dependency", "DANGLING_DEPENDENCY": "dependency",

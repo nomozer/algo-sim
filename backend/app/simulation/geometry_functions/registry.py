@@ -238,6 +238,12 @@ class UnsupportedArgs(_Args):
     reason: str = Field(..., min_length=1, description="vì sao mệnh đề không ánh xạ được vào thư viện")
 
 
+class TranslatePointArgs(_Args):
+    point: Label = Field(..., description="điểm gốc")
+    vector: Seg = Field(..., description="vectơ tịnh tiến: từ điểm thứ nhất tới điểm thứ hai")
+    image: Label = Field(..., description="ảnh (điểm phụ)")
+
+
 @dataclass(frozen=True)
 class FunctionSpec:
     name: str
@@ -254,6 +260,9 @@ class FunctionSpec:
     segment_fields: tuple[str, ...] = ()
     #: Ô là ĐIỂM đóng vai riêng phải được nhắc ngoài nhóm mặt phẳng.
     point_fields: tuple[str, ...] = ()
+    #: Only the deterministic planner may emit it, inside a declared decomposition (`AUXILIARY_RULES`); never offered to
+    #: the provider (route A), refused anywhere else.
+    auxiliary_only: bool = False
 
 
 _VUONG = ("vuông", "⊥")
@@ -311,7 +320,13 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("ask_section_area", SectionArgs, "ask", "Đề hỏi diện tích thiết diện của một khối cắt bởi một mặt phẳng.",
        (("diện tích",), ("thiết diện",)), plane_fields=("plane",)),
     _F("unsupported", UnsupportedArgs, "escape", "Mệnh đề không ánh xạ được vào thư viện — engine sẽ từ chối trung thực."),
+    # Goal-directed slice (run `goal-directed-section-planning`): the plane through M parallel to (Q) is the plane through M
+    # and two translates of M along directions of (Q) — the IR's own expression (`PlanePerpendicularToLineExpr` note).
+    _F("translate_point", TranslatePointArgs, "construct", "Điểm phụ: ảnh của một điểm qua phép tịnh tiến theo vectơ hai "
+       "điểm đã có.", auxiliary_only=True),
 )}
+#: The functions offered to the provider of route A — the library minus planner-only auxiliaries.
+PROVIDER_FUNCTIONS = tuple(n for n, s in REGISTRY.items() if not s.auxiliary_only)
 
 #: Dấu phủ định — xét trong quote VÀ phần mệnh đề đứng ngay trước nó.
 PHU_DINH = ("không phải", "không là", "không vuông góc", "không ⊥", "không đều", "không song song", "chưa chắc")
@@ -608,7 +623,11 @@ def _so_neo(quotes: tuple[str, ...], seg: list[str] | None) -> list[tuple[Fracti
 #: Luật PHÂN RÃ MỤC TIÊU của planner nhánh B (run `hybrid-goal-decomposition`, design option B slice 1): mục tiêu không có hàm
 #: `ask_*` riêng → (hàm dựng ĐIỂM PHỤ, hàm hỏi) SẴN CÓ. Điểm phụ không có trong đề và không bao giờ là giả thiết: nguồn của
 #: nó là chính câu hỏi; cổng chỉ nhận nó khi planner khai báo đúng luật (`_kiem_phu`). Nhánh A không khai báo được gì.
-AUXILIARY_RULES = {"distance(point,line)": ("orthogonal_projection_line", "ask_length")}
+#: Plane through a verified point parallel to a named plane, then the section by it (`planner._mat_qua_diem`): two translates
+#: of the point along two directions of the reference plane span the plane; the section takes the three points.
+MAT_SONG_SONG = "section(plane through point ∥ plane)"
+AUXILIARY_RULES = {"distance(point,line)": ("orthogonal_projection_line", "ask_length"),
+                   MAT_SONG_SONG: ("translate_point", "section")}
 #: "khoảng cách từ S đến (đường thẳng) BD": điểm và đường gắn vai trong CÙNG một cụm; cách nói khác ⇒ từ chối, không đoán.
 _KHOANG_CACH_DIEM_DUONG = re.compile(
     r"khoảng cách\s+từ\s+(?:điểm\s+)?([A-Z][0-9]*'?)\s+(?:đến|tới)\s+(?:đường thẳng\s+)?([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![\w'])",
@@ -644,6 +663,9 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
         x, luat = d.get("label"), d.get("rule")
         if luat not in AUXILIARY_RULES:
             raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x}: luật {luat!r} không có trong bảng phân rã")
+        if luat == MAT_SONG_SONG:
+            da |= _kiem_mat_song_song(d, theo_id, de, nhan, chiem, nhan_da_khai, calls)
+            continue
         if x in nhan_da_khai:
             raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x} được khai hai lần")
         nhan_da_khai.add(x)
@@ -859,6 +881,8 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
     de = chuan_hoa(text)
     nhan = nhan_cua_de(de)
     phu = _kiem_phu(tuple(auxiliary), calls, de, nhan)
+    if lac := sorted(c.id for c in calls if c.spec.auxiliary_only and c.id not in phu):
+        raise TuChoi("AUXILIARY_ONLY_FUNCTION", f"{lac}: chỉ planner sinh hàm này, trong một phân rã đã khai", tuple(lac))
     for c in sorted(calls, key=lambda c: c.id):
         if c.id in phu:
             continue
@@ -1318,6 +1342,107 @@ def _tap_mat(m: re.Match, i: int, day: frozenset | None) -> frozenset | None:
     return frozenset(re.findall(r"[A-Z][0-9]*'?", nhom)) if nhom else day
 
 
+#: "(P) đi qua M và song song với (ABCD)" — a plane defined by a verified point and a reference plane, possibly unnamed when
+#: written inside the section phrase. Groups: ten, diem, then the three operand groups of `_MAT_TOAN_HANG` (3, 4, 5).
+_QUA_SONG_SONG = re.compile(
+    rf"(?:(?:mặt phẳng|mp)\s*)?(?:\((?P<ten>{_P1}|[α-ω])\)\s*)?(?:là\s+mặt phẳng\s+)?(?:đi\s+)?qua\s+(?:điểm\s+)?"
+    rf"(?P<diem>{_P1})(?![\w'])\s*,?\s*(?:và\s+)?song song\s+(?:với\s+)?" + _MAT_TOAN_HANG, re.IGNORECASE)
+_DAN_THIET_DIEN = rf"thiết diện\s+(?:của\s+)?{_KHOI_NGU}(?:với|cắt bởi|tạo bởi|bởi)\s+"
+_HOI_DIEN_TICH_THIET_DIEN = re.compile(r"diện tích\s+(?:của\s+)?thiết diện", re.IGNORECASE)
+
+
+def _khoi_trong_quote(c: LoiGoi, khoi: dict[str, frozenset]) -> bool:
+    """Solid symbol written in the quote is the call's solid; with no symbol the problem has exactly one solid."""
+    ky_hieu = {"".join(phan[0]) + "." + "".join(phan[1]) for q in c.quotes for _a, _b, phan in _tu_nhan(chuan_hoa(q))
+               if len(phan) == 2}
+    return c.args.solid in ky_hieu if ky_hieu else len(khoi) == 1
+
+
+def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tuple[LoiGoi, ...],
+                             ten_ra: set[str] | None = None) -> bool:
+    """Bounded grammar binding a section to a derived plane: the plane through `p` parallel to (q) is defined in the quotes
+    (named "(P)" and referred to by a section phrase, or written inside the section phrase), as a premise, not negated.
+    Unknown wording is refused, not guessed. `ten_ra` receives the plane names the source gave, once bound."""
+    khoi = _khoi_cua_loi_goi(calls)
+    if not _khoi_trong_quote(c, khoi):
+        return False
+    day = khoi.get(c.args.solid)
+    doan = []                                            # (quote chuẩn hoá, vị trí trong đề, đề với quote chuẩn hoá)
+    for quote in c.quotes:
+        if (vt := _vi_tri(de, quote)) is None:
+            return False
+        qn = chuan_hoa(quote)
+        doan.append((qn, vt[0], de[:vt[0]] + qn + de[vt[1]:]))
+
+    def vai_tro_ok(s: str, pos: int, text: str) -> bool:
+        return _vai_tro_tai(s, pos) not in ("GOAL", "CONDITIONAL") and not _phu_dinh(s, pos, text)
+
+    ten_mat, thiet_dien = set(), False
+    for qn, goc, s in doan:
+        for m in _QUA_SONG_SONG.finditer(qn):
+            if m["diem"] != p or _tap_mat(m, 3, day) != frozenset(q):
+                continue
+            if not vai_tro_ok(s, goc + m.start(), m[0]):
+                return False
+            if m["ten"]:
+                ten_mat.add(m["ten"])
+            if re.search(_DAN_THIET_DIEN + r"$", qn[:m.start()], re.IGNORECASE):      # nói gộp trong cụm thiết diện
+                thiet_dien = True
+            elif not m["ten"]:
+                return False                                 # mặt không tên, không nằm trong cụm thiết diện: không gắn được
+    for ten in ten_mat:
+        mau = [rf"{_DAN_THIET_DIEN}(?:(?:mặt phẳng|mp)\s*)?\({re.escape(ten)}\)",
+               rf"\({re.escape(ten)}\)\s+cắt\s+(?:hình|khối)(?:[^.;]|\.(?=[A-Z]))*?theo\s+(?:một\s+)?thiết diện"]
+        for qn, goc, s in doan:
+            for r in (r for x in mau for r in re.finditer(x, qn, re.IGNORECASE)):
+                if not vai_tro_ok(s, goc + r.start(), r[0]):
+                    return False
+                thiet_dien = True
+    if c.fn == "ask_section_area":
+        hoi = [(vt[0] + h.start(), vt[0] + h.end()) for quote in c.quotes if (vt := _vi_tri(de, quote))
+               for h in _HOI_DIEN_TICH_THIET_DIEN.finditer(chuan_hoa(quote))]
+        if not any(_duoc_hoi(de, a, b) and _vai_tro_tai(de, a) not in ("GOAL", "CONDITIONAL") for a, b in hoi):
+            return False
+    if thiet_dien and ten_ra is not None:
+        ten_ra |= ten_mat
+    return thiet_dien                                    # chỉ đặt True từ một mệnh đề định nghĩa đã khớp (p, q)
+
+
+def _kiem_mat_song_song(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: set[str], nhan_da_khai: set,
+                        calls: tuple[LoiGoi, ...]) -> set[str]:
+    """Declared decomposition `MAT_SONG_SONG`: two fresh labels, two translates of the point along two directions of the
+    reference plane, every target section on exactly (point, label₁, label₂), shared quotes, and a source binding."""
+    xs, p, q = list(d.get("labels") or []), d.get("point"), list(d.get("parallel_to") or [])
+    qs = tuple(d.get("quotes") or ())
+    ids = tuple(i for i in (*(d.get("constructs") or ()), *(d.get("targets") or ())) if i)
+    dung = [theo_id.get(i) for i in d.get("constructs") or ()]
+    dich = [theo_id.get(i) for i in d.get("targets") or ()]
+    if len(xs) != 2 or len(set(xs)) != 2 or len(q) < 3 or len(dung) != 2 or not dich or not qs:
+        raise TuChoi("AUXILIARY_RULE_MISMATCH", f"mặt phụ qua {p}: khai báo không đủ cho luật {MAT_SONG_SONG}", ids)
+    for nhan_moi in xs:
+        if nhan_moi in nhan_da_khai:
+            raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {nhan_moi} được khai hai lần", ids)
+        nhan_da_khai.add(nhan_moi)
+        if nhan_moi in chiem:
+            raise TuChoi("AUXILIARY_LABEL_COLLISION", f"điểm phụ {nhan_moi} trùng một nhãn của đề", ids)
+    huong = ([q[0], q[1]], [q[0], q[2]])
+    if not (all(c is not None and c.fn == "translate_point" and c.args.point == p and c.args.vector == v
+                and c.args.image == x and c.quotes == qs for c, v, x in zip(dung, huong, xs))
+            and all(c is not None and c.fn in ("section", "ask_section_area") and c.args.plane == [p, *xs]
+                    and c.quotes == qs for c in dich)):
+        raise TuChoi("AUXILIARY_RULE_MISMATCH", f"mặt phụ qua {p}: lời gọi không khớp luật {MAT_SONG_SONG}", ids)
+    if lac := sorted(({p} | set(q)) - nhan):
+        raise TuChoi("UNKNOWN_LABEL", f"nhãn {lac} không có trong đề", ids)
+    ten_nguon: set[str] = set()
+    for c in dich:
+        if not mat_song_song_dung_nguon(c, p, q, de, calls, ten_nguon):
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: đề không nói thiết diện của {c.args.solid} với mặt phẳng qua {p} "
+                         f"song song ({''.join(q)})", ids)
+    # The engine names the plane by what the source called it, bound here — never by the auxiliary labels.
+    d["source_plane_name"] = next(iter(ten_nguon)) if len(ten_nguon) == 1 else None
+    return set(ids)
+
+
 def mat_cat_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> bool:
     """Thiết diện / diện tích thiết diện / giao tuyến (review 2, run `hybrid-slice-review`): mặt phẳng toán hạng phải đúng là
     mặt mà CỤM vai trò của quote gọi tên — "cắt bởi (MAB)", "giao tuyến của (SAB) và (SCD)". "Đáy" chỉ là đáy của khối đang
@@ -1383,7 +1508,7 @@ def function_declarations() -> list[dict[str, Any]]:
     """Khai báo hàm (JSON Schema) — một mục mỗi hàm: đối số + `call_id`, `quotes`, `depends_on`. Bản Gemini (tập con
     OpenAPI) dẫn xuất từ đây ở `app/ai/function_calling.py`."""
     ra = []
-    for s in REGISTRY.values():
+    for s in (REGISTRY[n] for n in PROVIDER_FUNCTIONS):
         sch = s.args.model_json_schema()
         props = {**sch.get("properties", {}),
                  "call_id": {"type": "string", "description": "id ngắn, duy nhất trong bài, vd c1"},

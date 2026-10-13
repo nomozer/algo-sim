@@ -25,13 +25,15 @@ from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
-from .registry import AUXILIARY_RULES, ExactNumber, Label, TuChoi, nhan_cua_de, nhan_phu_da_dung
+from .registry import AUXILIARY_RULES, MAT_SONG_SONG, ExactNumber, Label, TuChoi, nhan_cua_de, nhan_phu_da_dung
 
 PLANNER_VERSION = "geometry-fact-planner/3"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
 _NHAN_PHU = ("H", *(f"H{i}" for i in range(1, 100)))
 MAX_CALLS = 64
+#: Bound of the goal-directed decomposition `MAT_SONG_SONG`: derived planes per problem (each costs two auxiliary points).
+MAX_DERIVED_PLANES = 4
 
 FactKind = Literal["solid", "polygon_shape", "right_angle", "length", "equal_lengths", "perpendicular", "altitude",
                    "projection", "point_def", "section", "intersection_line", "question", "unsupported"]
@@ -63,6 +65,9 @@ class TypedFact(BaseModel):
     points_a: list[Label] | None = Field(None, description="toán hạng 1: 1 điểm, 2 điểm = đường thẳng, ≥3 = mặt phẳng")
     points_b: list[Label] | None = Field(None, description="toán hạng 2")
     quantity: Literal["volume", "area", "length", "distance", "angle"] | None = None
+    plane_relation: Literal["parallel", "perpendicular"] | None = Field(
+        None, description="thiết diện / diện tích thiết diện với mặt cắt cho bằng QUAN HỆ: mặt qua `point`, song song "
+        "(parallel) hay vuông góc (perpendicular) với mặt `points_b`; khi đó không có `points`")
     reason: str | None = None
 
 
@@ -78,6 +83,7 @@ class KeHoach:
     heights: dict[str, str] = field(default_factory=dict)           # khối → id dữ kiện chiều cao (chẩn đoán tính duy nhất)
     volume_asks: dict[str, str] = field(default_factory=dict)       # id câu hỏi thể tích → khối
     solids: dict[str, "_Khoi"] = field(default_factory=dict)
+    derived_planes: dict[tuple, dict] = field(default_factory=dict)  # (khối, điểm, mặt tham chiếu) → khai báo `MAT_SONG_SONG`
 
 
 @dataclass
@@ -152,6 +158,10 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
         required = _CAN[f.kind]
         if f.kind == "point_def" and f.point_kind in ("intersect_line_line", "intersect_line_plane"):
             required = ("point", "point_kind", "points_a", "points_b")
+        if f.plane_relation is not None:                # mặt cắt cho bằng quan hệ: điểm đi qua + mặt tham chiếu, không ba điểm
+            if f.kind not in ("section", "question") or f.points:
+                raise TuChoi("SCHEMA_INVALID", f"{f.id}: plane_relation chỉ cho thiết diện, và thay cho `points`", (f.id,))
+            required = ("solid", "point", "points_b") + (("quantity",) if f.kind == "question" else ())
         if thieu := [k for k in required if getattr(f, k) in (None, [])]:
             raise TuChoi("FACT_INCOMPLETE", f"{f.id} ({f.kind}) thiếu {thieu}", (f.id,))
     return facts
@@ -303,6 +313,8 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
         fn = "midpoint" if f.point_kind == "midpoint" else "centroid"
         args = {"point": f.point, ("segment" if fn == "midpoint" else "polygon"): f.points}
         return phat(f.id, fn, args, q, f"point_def({f.point_kind})")
+    if f.kind == "section" and f.plane_relation:                     # mục tiêu: thiết diện với một mặt DỰNG từ quan hệ
+        return _mat_qua_diem(f, q, k, phat, khoi_cua(f.solid, f).ten, "section")
     if f.kind == "section":                                         # dựng thiết diện: khối × mặt phẳng qua ba điểm có tên
         return phat(f.id, "section", {"solid": khoi_cua(f.solid, f).ten, "plane": f.points}, q, "section(solid, plane)")
     if f.kind == "intersection_line":
@@ -368,6 +380,11 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
     hoi_td = any(_DIEN_TICH_THIET_DIEN.search(x) for x in q)
     if n == "area" and hoi_td and any(_DIEN_TICH_DA_GIAC.search(x) for x in q):
         raise TuChoi("AMBIGUOUS_FACT", f"{f.id}: một câu hỏi diện tích nêu cả thiết diện lẫn một đa giác — tách hai câu hỏi", (f.id,))
+    if n == "area" and f.plane_relation and hoi_td and not f.negated and f.role == "question":
+        return _mat_qua_diem(f, q, k, phat, khoi_cua(f.solid, f).ten, "ask_section_area")
+    if f.plane_relation:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt cho bằng quan hệ chỉ dùng cho thiết diện / diện tích thiết diện",
+                     (f.id,))
     if n == "area" and f.solid and len(f.points or []) >= 3 and hoi_td:
         return phat(f.id, "ask_section_area", {"solid": khoi_cua(f.solid, f).ten, "plane": f.points}, q,
                     "question(area of section)")
@@ -396,6 +413,63 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
         if loai == ("plane", "plane"):
             return phat(f.id, "ask_angle_plane_plane", {"plane1": a, "plane2": b}, q, "question(angle plane–plane)")
     raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: câu hỏi {n} giữa {loai} chưa có hàm", (f.id,))
+
+
+def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: str) -> dict:
+    """PHÂN RÃ MỤC TIÊU, độ sâu 1 (`MAT_SONG_SONG`): Section(khối, mặt qua M ∥ (Q)).
+
+    Kiểu: Point M × Plane Q (≥ 3 nhãn) → Plane → Section. Phụ thuộc: M và Q đã có tên (cổng nguồn kiểm nhãn và mệnh đề
+    định nghĩa) → hai điểm phụ = M tịnh tiến theo hai vectơ chỉ phương của (Q) → thiết diện qua (M, X₁, X₂). Engine kiểm
+    hậu điều kiện độc lập (qua M, song song (Q), không trùng (Q), không phải mặt biên). Một mặt dẫn xuất chỉ dựng MỘT lần
+    dù được dùng để dựng và để hỏi diện tích. Mặt qua một điểm VUÔNG GÓC với một mặt phẳng không duy nhất ⇒ từ chối."""
+    if f.plane_relation == "perpendicular":
+        raise TuChoi("PLANE_NOT_UNIQUE", f"{f.id}: mặt qua {f.point} vuông góc với ({''.join(f.points_b)}) có vô số — cần "
+                     "thêm một ràng buộc để xác định duy nhất", (f.id,))
+    if f.role not in ("premise", "question") or f.negated:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt dựng từ quan hệ chỉ cho thiết diện được yêu cầu", (f.id,))
+    m, ref = f.point, list(dict.fromkeys(f.points_b))
+    if len(ref) < 3:
+        raise TuChoi("FACT_INCOMPLETE", f"{f.id}: mặt tham chiếu cần ít nhất ba điểm", (f.id,))
+    if m in ref:
+        raise TuChoi("DERIVED_PLANE_IS_REFERENCE", f"{f.id}: {m} thuộc ({''.join(ref)}) — mặt qua {m} song song với nó là chính nó",
+                     (f.id,))
+    khoa = (khoi, m, frozenset(ref))
+    d = k.derived_planes.get(khoa)
+    if d is None:
+        if len(k.derived_planes) >= MAX_DERIVED_PLANES:
+            raise TuChoi("PLAN_TOO_LARGE", f"{f.id}: quá {MAX_DERIVED_PLANES} mặt dẫn xuất", (f.id,))
+        xs = [ten for ten in _NHAN_PHU if ten not in k.taken][:2]
+        if len(xs) < 2:
+            raise TuChoi("PLAN_TOO_LARGE", f"{f.id}: hết nhãn điểm phụ", (f.id,))
+        k.taken |= set(xs)
+        dung, cids = {c["id"] for c in k.calls}, []
+        for i, (x, v) in enumerate(zip(xs, ([ref[0], ref[1]], [ref[0], ref[2]])), 1):
+            cid = next(j for j in (f"{f.id}_plane{i}", *(f"{f.id}_plane{i}_{n}" for n in range(2, 1000)))
+                       if j not in k.fact_ids | dung)
+            phat(cid, "translate_point", {"point": m, "vector": v, "image": x}, q,
+                 f"{MAT_SONG_SONG}→translate_point (điểm phụ {x} = {m} + {v[0]}{v[1]}→)")
+            k.trace[-1]["fact"] = f.id
+            cids.append(cid)
+        d = {"labels": xs, "rule": MAT_SONG_SONG, "goal": f.id, "constructs": cids, "targets": [], "point": m,
+             "parallel_to": ref, "solid": khoi, "quotes": list(dict.fromkeys(q)), "provenance": "DERIVED",
+             "binding": "AUXILIARY"}
+        k.derived_planes[khoa] = d
+        k.auxiliary.append(d)
+    d["quotes"] = list(dict.fromkeys(d["quotes"] + q))
+    c = phat(f.id, fn, {"solid": khoi, "plane": [m, *d["labels"]]}, d["quotes"], f"{MAT_SONG_SONG}→{fn}")
+    k.trace[-1]["fact"] = f.id
+    d["targets"].append(f.id)
+    for call in k.calls:                                  # một khai báo, một tập quote cho mọi lời gọi của nó
+        if call["id"] in d["constructs"] + d["targets"]:
+            call["source"]["quotes"] = list(d["quotes"])
+    k.trace.append({"fact": f.id, "step": "decompose_goal", "rule": MAT_SONG_SONG,
+                    "goal": f"Section({khoi}, Plane({m} ∥ ({''.join(ref)})))",
+                    "dependencies": [f"VerifiedPoint {m}", f"ParallelPlane({m}, {''.join(ref)})", f"{fn}({khoi})"],
+                    "calls": d["constructs"] + [f.id], "auxiliary": d["labels"],
+                    "reason": f"mặt qua {m} song song ({''.join(ref)}) = mặt qua {m} và hai ảnh tịnh tiến của {m} theo "
+                              f"{ref[0]}{ref[1]}→, {ref[0]}{ref[2]}→ (biểu thức IR sẵn có, không primitive mới)",
+                    "provenance": "DERIVED", "binding": "AUXILIARY"})
+    return c
 
 
 def _phan_ra(f: TypedFact, q: list[str], k: KeHoach, phat, p: str, dt: list[str]) -> dict:

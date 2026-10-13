@@ -32,10 +32,10 @@ from typing import Any
 from app.simulation.geometry import metric as _metric
 from app.simulation.geometry.exact import GeometryError, Line3, Plane3, Vec3
 from app.simulation.geometry import kernel as K
-from app.simulation.geometry.predicates import point_on_line
+from app.simulation.geometry.predicates import parallel_planes, point_on_line
 from app.simulation.semantic_program import ir_builders as P
 
-from .registry import LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de
+from .registry import MAT_SONG_SONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de
 
 ENGINE_VERSION = "geometry-function-engine/2"
 Z = Fraction(0)
@@ -158,6 +158,7 @@ class _Dung:
         self.midpoints: dict[str, tuple[str, str]] = {}
         self.constructions: dict[str, LoiGoi] = {}
         self.sections: list[str] = []           # biến IR của thiết diện đã dựng (kiểm khép kín sau khi thực thi)
+        self.mat_phu: list[dict] = []           # mặt phẳng dẫn xuất đã khai (`MAT_SONG_SONG`), kiểm ở `kiem_mat_cat`
 
     def of(self, *fns: str) -> list[LoiGoi]:
         return [c for c in self.calls if c.fn in fns]
@@ -363,10 +364,11 @@ class _Dung:
                          data={"points": thieu})
 
     def _mot_buoc(self) -> bool:
-        for c in self.of("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "orthogonal_projection"):
+        for c in self.of("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "orthogonal_projection",
+                         "translate_point"):
             a = c.args
             p = a.point if c.fn.startswith("intersect") else a.image
-            if c.fn == "orthogonal_projection" and a.point == a.image:
+            if c.fn in ("orthogonal_projection", "translate_point") and a.point == a.image:
                 raise TuChoi("PRECONDITION_FAILED", f"{c.id}: ảnh trùng tên điểm đầu vào", (c.id,))
             if p not in self.pts and all(v in self.pts for v in self._construction_dependencies(c)):
                 xyz = self._construct(c)
@@ -540,6 +542,8 @@ class _Dung:
             pts = a.line + a.plane
         elif c.fn == "orthogonal_projection_line":
             pts = [a.point] + a.line
+        elif c.fn == "translate_point":
+            pts = [a.point] + a.vector
         else:
             pts = [a.point] + a.plane
         return tuple(dict.fromkeys(pts))
@@ -563,6 +567,8 @@ class _Dung:
             return x, y
         if c.fn == "intersect_line_plane":
             return self._line(a.line), self._plane(a.plane)
+        if c.fn == "translate_point":
+            return Vec3(*self.pts[a.point]), Vec3(*self.pts[a.vector[1]]) - Vec3(*self.pts[a.vector[0]])
         return Vec3(*self.pts[a.point]), (self._line(a.line) if c.fn.endswith("_line") else self._plane(a.plane))
 
     def _construct(self, c: LoiGoi) -> V3:
@@ -571,7 +577,7 @@ class _Dung:
                 x, y = self._construction_objects(c)
                 fn = {"intersect_line_line": K.intersect_line_line, "intersect_line_plane": K.intersect_line_plane,
                       "orthogonal_projection_line": K.project_point_onto_line,
-                      "orthogonal_projection": K.project_point_onto_plane}[c.fn]
+                      "orthogonal_projection": K.project_point_onto_plane, "translate_point": K.translate}[c.fn]
                 p = fn(x, y)
                 return p.x, p.y, p.z
         except GeometryError as e:
@@ -584,6 +590,9 @@ class _Dung:
                 x, y = self._construction_objects(c)
                 a = c.args
                 p = Vec3(*self.pts[a.point if c.fn.startswith("intersect") else a.image])
+                if c.fn == "translate_point":               # hình bình hành: X + B = M + A (không lặp lại phép cộng vectơ)
+                    m, u, v = (self.pts[a.point], self.pts[a.vector[0]], self.pts[a.vector[1]])
+                    return all(self.pts[a.image][i] + u[i] == m[i] + v[i] for i in range(3))
                 if c.fn == "intersect_line_line":
                     return (not x.direction.cross(y.direction).is_zero() and point_on_line(p, x) and point_on_line(p, y))
                 if c.fn == "intersect_line_plane":
@@ -618,7 +627,7 @@ class _Dung:
 
     def _dung_khong(self, c: LoiGoi) -> bool:
         a = c.args
-        if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line"):
+        if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "translate_point"):
             return self._construction_relation(c)
         if c.fn == "orthogonal_projection" and c.args.point in self.pts:
             return self._construction_relation(c)
@@ -707,6 +716,12 @@ class _Dung:
                     expr = {"kind": c.fn, "line_a": line("_line1", a.line1), "line_b": line("_line2", a.line2)}
                 elif c.fn == "intersect_line_plane":
                     expr = {"kind": c.fn, "line": line("_line", a.line), "plane": plane(a.plane)}
+                elif c.fn == "translate_point":               # IR's own expression: vector_from_points, then translate
+                    vec = prefix + "_vec"
+                    lenh.append({"kind": "assign", "target_var": vec, "expr": {
+                        "kind": "vector_from_points", "from_point": ir_name(a.vector[0]), "to_point": ir_name(a.vector[1])}})
+                    khai.append(P.memory_declaration(vec, "vector3"))
+                    expr = {"kind": "translate", "point": ir_name(a.point), "vector": vec}
                 else:
                     target = line("_line", a.line) if c.fn.endswith("_line") else plane(a.plane)
                     expr = {"kind": "project_onto", "point": ir_name(a.point), "target": target}
@@ -785,6 +800,8 @@ class _Dung:
         mặt cắt qua ba điểm thẳng hàng hay không cùng mặt ⇒ mã của kernel; hai mặt song song (hay trùng) ⇒ PARALLEL_PLANES."""
         try:
             with _metric.using(self.metric()):
+                for d in self.mat_phu:
+                    self._kiem_mat_phu(d)
                 for c in self.of("section", "ask_section_area"):
                     self._plane(c.args.plane)
                 for c in self.of("intersection_line"):
@@ -794,6 +811,30 @@ class _Dung:
                                      (c.id,))
         except GeometryError as e:
             raise TuChoi(e.code, str(e), tuple(c.id for c in self.of("section", "ask_section_area", "intersection_line")))
+
+    def _kiem_mat_phu(self, d: dict) -> None:
+        """Postconditions of a derived plane, independent of how the planner built it: it passes through the point, it is
+        parallel to the reference plane (normals, `predicates.parallel_planes`), it is not that plane, and it is not a face of
+        the solid it cuts (a boundary plane is not a cutting section — no silent M4)."""
+        p, q, (x1, x2), ids = d["point"], d["parallel_to"], d["labels"], tuple(d["constructs"]) + tuple(d["targets"])
+        mat, goc = self._plane([p, x1, x2]), self._plane(q)
+        if mat.signed_eval(Vec3(*self.pts[p])) != 0 or not parallel_planes(mat, goc):
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"mặt dẫn xuất qua {p} không song song ({''.join(q)})", ids)
+        if goc.signed_eval(Vec3(*self.pts[p])) == 0:
+            raise TuChoi("DERIVED_PLANE_IS_REFERENCE", f"{p} nằm trên ({''.join(q)}): mặt qua {p} song song với nó là chính "
+                         "nó — không có mặt cắt mới", ids)
+        for c in self.of(*{"section", "ask_section_area"}):
+            if c.id not in ids:
+                continue
+            k = self.khoi[c.args.solid]
+            dinh = list(dict.fromkeys([*k.base, *k.top, *([k.apex] if k.apex else [])]))
+            dau = [mat.signed_eval(Vec3(*self.pts[v])) for v in dinh]
+            if sum(x == 0 for x in dau) >= 3 and not ({x > 0 for x in dau if x != 0} == {True, False}):
+                raise TuChoi("SECTION_PLANE_IS_FACE", f"{c.id}: mặt dẫn xuất chứa một mặt biên của {k.name} — mặt biên không "
+                             "phải thiết diện cắt xuyên", ids)
+        self.trace.append({"step": "construct_plane", "object": f"({p} ∥ {''.join(q)})", "rule": MAT_SONG_SONG,
+                           "calls": list(d["constructs"]), "dependencies": [p, x1, x2], "relation_verified": True,
+                           "provenance": "DERIVED", "binding": "AUXILIARY"})
 
     def _khoa_mat_cat(self, c: LoiGoi) -> tuple:
         """Một thiết diện = (khối, MẶT PHẲNG) — mặt so bằng phương trình chuẩn hoá trên hình đã dựng, nên (MAB) và (NAB) cùng
@@ -815,8 +856,11 @@ class _Dung:
                 vet[khoa]["calls"].append(c.id)                 # cùng thiết diện: một đối tượng, vết ghi mọi lời gọi (M3)
                 continue
             ten, mp = f"td_{c.id}", f"mp_td_{c.id}"
+            # A derived plane is named by its verified relation, never by the planner's auxiliary labels.
+            dan = next((d for d in self.mat_phu if c.id in d["targets"]), None)
+            nhan_mat = (f"({dan.get('source_plane_name') or 'α'})" if dan else "(" + "".join(c.args.plane) + ")")
             lenh.append({"kind": "construct_plane", "target_var": mp, "through": [ir_name(x) for x in c.args.plane[:3]],
-                         "label": "(" + "".join(c.args.plane) + ")"})
+                         "label": nhan_mat})
             lenh.append({"kind": "construct_section", "target_var": ten, "solid": "khoi_" + ir_name(c.args.solid.replace(".", "_")),
                          "plane": mp, "label": "thiết diện"})
             khai += [P.memory_declaration(mp, "plane3"), P.memory_declaration(ten, "section")]
@@ -931,10 +975,11 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         dung.thu_khoi()
         dung.bo_cuc_day()
         dung.giai_phu_thuoc()
-        phu = {d["label"]: d for d in auxiliary}
+        phu = {x: d for d in auxiliary for x in (d.get("labels") or [d["label"]])}
         for s in dung.trace:                             # điểm phụ: DẪN XUẤT, không phải nhãn của đề — ghi rõ ràng buộc
             if s["step"] == "place_point" and s["object"] in phu:
                 s.update(binding="AUXILIARY", auxiliary_rule=phu[s["object"]]["rule"], goal=phu[s["object"]]["goal"])
+        dung.mat_phu = [d for d in auxiliary if d.get("rule") == MAT_SONG_SONG]
         dung.kiem()
         dung.kiem_mat_cat()
         program, hoi = dung.bien_dich()

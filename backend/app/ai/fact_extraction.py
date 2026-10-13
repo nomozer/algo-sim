@@ -31,7 +31,10 @@ SYSTEM_PROMPT = (
     "intersect_line_plane, point = tên giao điểm, points_a = hai điểm đường thẳng, points_b = đường hoặc mặt. "
     "Hình chiếu: projection, point = điểm gốc, at = ảnh, points = hai điểm đường hoặc ít nhất ba điểm mặt.\n"
     "7. Thiết diện: section, solid = khối, points = ba điểm của mặt cắt. Giao tuyến: intersection_line, points_a / points_b = "
-    "ba điểm của mỗi mặt. Diện tích thiết diện: question, quantity = area, solid + points = ba điểm mặt cắt."
+    "ba điểm của mỗi mặt. Diện tích thiết diện: question, quantity = area, solid + points = ba điểm mặt cắt.\n"
+    "8. Mặt cắt cho bằng quan hệ ('(P) đi qua M và song song với (ABCD)'): KHÔNG có points; point = điểm đi qua, "
+    "points_b = các điểm của mặt kia, plane_relation = parallel (vuông góc ⇒ perpendicular); quotes gồm cả mệnh đề định "
+    "nghĩa mặt và mệnh đề thiết diện. Không tự đặt tên điểm cho mặt ấy."
 )
 
 
