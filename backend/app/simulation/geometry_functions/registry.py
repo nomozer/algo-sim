@@ -1473,10 +1473,12 @@ _VIEC_KE_TIEP_RE = re.compile(rf"(?<!\w)(?:{_VIEC_KE_TIEP})(?!\w)", re.IGNORECAS
 #: Where a goal clause ends (premise coverage): the gate's own given / condition / next-task markers (`_DUNG_GAN`,
 #: `_DIEU_KIEN`, `_VIEC_KE_TIEP`), contrast and joining words, and the clause boundary — no separate vocabulary.
 _KET_MUC_TIEU = re.compile("|".join((_DUNG_GAN.pattern, _DIEU_KIEN.pattern, _VIEC_KE_TIEP_RE.pattern,
-                                     r"(?<!\w)(?:đồng thời|trường hợp|lúc|sau khi|mà|nhưng|tuy nhiên)(?!\w)", r"[,;]")),
+                                     r"(?<!\w)(?:đồng thời|trường hợp|lúc|sau khi|mà|nhưng|tuy nhiên"
+                                     r"|do|vì|bởi vì|nhờ|còn|ngoài ra)(?!\w)", r"[,;]")),
                            re.IGNORECASE)
 #: Between one goal and the next ("… rồi suy ra …", ", từ đó suy ra …") and before a goal ("Hãy / Em hãy / Từ đó …").
-_NOI_MUC_TIEU = re.compile(r"[\s,;:]*(?:(?:và|rồi|từ đó|sau đó|tiếp theo|tiếp đó|đồng thời|ta|hãy|em|vậy)(?!\w)[\s,:]*)*",
+_NOI_MUC_TIEU = re.compile(r"[\s,;:]*(?:(?:và|rồi|từ đó|sau đó|tiếp theo|tiếp đó|đồng thời|do đó|vì vậy|vì thế|nên|ta|hãy"
+                           r"|em|vậy)(?!\w)[\s,:]*)*",
                            re.IGNORECASE)
 
 

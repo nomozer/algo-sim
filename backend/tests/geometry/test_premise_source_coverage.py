@@ -281,7 +281,8 @@ def test_exam_layouts_and_verified_role_nouns_stay_served(arm, text, f4quote):
 # ── final verification of 90ce6497: chained goals and solid heights were refused (Important), lead-ins before a goal ──
 CHAINED = ["Chứng minh BD ⊥ (SAC) rồi suy ra BD ⊥ SC.", "Chứng minh SC ⊥ BD rồi suy ra BD ⊥ SC.",
            "Chứng minh BD ⊥ (SAC), từ đó suy ra BD ⊥ SC.", "Hãy chứng minh SC ⊥ BD.", "Em hãy chứng minh SC ⊥ BD.",
-           "Từ đó suy ra SC ⊥ BD."]
+           "Từ đó suy ra SC ⊥ BD.", "Chứng minh BD ⊥ (SAC), do đó suy ra BD ⊥ SC.", "Giải thích vì sao SC ⊥ BD.",
+           "Chứng minh BC song song với (SAD)."]
 
 
 @pytest.mark.parametrize("arm", ARMS)
@@ -305,6 +306,10 @@ def test_chained_goal_with_a_prove_fact_stays_served(extra):
 @pytest.mark.parametrize("extra", [
     "Chứng minh SC ⊥ BD rồi suy ra SA = 5.", "Chứng minh SC ⊥ BD, từ đó đổi SA thành 5.", "Hãy đổi SA thành 5.",
     "Chứng minh SC ⊥ BD rồi chứng minh BD ⊥ SA với SA = 5.", "Chứng minh SC ⊥ BD rồi suy ra đáy là hình chữ nhật, SA = 5.",
+    # causal / contrast continuations carried a hypothesis (pre-existing at 7767c7e1; final verification of 90ce6497)
+    "Chứng minh SC ⊥ BD do SB ⊥ (ABCD).", "Chứng minh SC ⊥ BD vì SB ⊥ (ABCD).",
+    "Chứng minh SC ⊥ BD bởi vì SB ⊥ (ABCD).", "Chứng minh SC ⊥ BD còn đáy là hình chữ nhật.",
+    "Chứng minh SC ⊥ BD, ngoài ra đáy là hình chữ nhật.", "Chứng minh SC ⊥ BD nhờ SB ⊥ (ABCD).",
 ])
 def test_a_chained_goal_does_not_carry_a_change(arm, extra):
     assert _with_premise(extra, arm).status == "REFUSED"
