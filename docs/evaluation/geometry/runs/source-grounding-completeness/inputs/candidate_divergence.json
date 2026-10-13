@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "source-grounding-completeness-w01",
+  "task": "source-grounding-completeness",
+  "corrects": "docs/evaluation/geometry/runs/goal-directed-section-planning-main-integration/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "d84cd3737e5b56c92d91c0f9718e6780163971bb48939613bb0e1328073fe821",
+  "current_candidate_source_commit": "f8ac9f4b2747ad49655fe9f16182d41771b729cf",
+  "previous_candidate_hash": "fd80c8c9400882822e31008c6e839bd1750a47074f9b543164cf3f14f2f2c128",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "reason": "Premise source coverage on the Hybrid research route: every premise sentence before the first request must be read by a validated call (registry._kiem_vung_tien_de inside _kiem_du_kien_cau_hoi, code SOURCE_PREMISE_UNREAD); route B passes goal / negated quotes as read quotes (kiem_nguon / engine.dung_tu_loi_goi / function_route read_quotes). Gate-only: no provider surface, IR schema, CACHE_VERSION, default-mode or renderer change.",
+  "historical_effect": "No rescoring, pooling or rewriting of historical candidates, locked A/B results, benchmark labels or prior receipts; fd80c8c9 and its receipts remain retained.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "none: research branch, no merge or push authorised for this task",
+  "push": "none"
+}
