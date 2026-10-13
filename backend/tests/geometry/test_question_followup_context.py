@@ -150,6 +150,15 @@ def test_goal_clause_does_not_cover_a_later_change(arm, sentence):
     assert run(sentence, arm).status == "REFUSED"
 
 
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("sentence", ["Tính SC, sau đó chứng minh SC lớn hơn SA; sau đó tính SB.",
+                                      "Tính SC, sau đó chứng minh SC lớn hơn SA; rồi tính SB."])
+def test_next_task_after_a_goal_clause_stays_served(arm, sentence):
+    # verification of 16ac524a: a next-task connector after ";" is itself read as a follow-up, not an unread change
+    r = run(sentence, arm)
+    assert r.status == "SERVED", (r.code, r.reason)
+
+
 @pytest.mark.parametrize("sentence", [
     "Tính SC, sau đó gọi M là trung điểm SC.",
     "Tính SC, sau đó so sánh SC với 4.",

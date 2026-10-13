@@ -1316,6 +1316,7 @@ _VIEC_KE_TIEP_RE = re.compile(rf"(?<!\w)(?:{_VIEC_KE_TIEP})(?!\w)", re.IGNORECAS
 _SAU_VIEC_KE_TIEP = re.compile(
     r"[\s,;:.?!]*(?:(?:biết|rằng|với|cho|trong đó|có|và|cạnh|độ dài|đoạn thẳng|so sánh|kết quả|đó|này|nó"
     r"|tô màu|quan sát|xoay|thiết diện|hình|từ|nhiều|góc nhìn|các"                       # trình bày cảnh, không đổi hình
+    rf"|{_VIEC_KE_TIEP.replace('|bằng cách', '')}"          # a further connector opens its own follow-up span, read there
     r"|làm tròn(?:\s+kết quả)?(?:\s+đến\s+hàng\s+phần\s+(?:mười|trăm|nghìn))?|(?-i:[A-Z][0-9]*'?)+)(?![\w'])[\s,;:.?!]*)*",
     re.IGNORECASE)
 #: A follow-up that opens with a goal word is something to show, not a hypothesis (same words as `_MUC_TIEU`).
