@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "source-grounding-integration-w01",
+  "task": "source-grounding-integration",
+  "corrects": "docs/evaluation/geometry/runs/source-grounding-completeness/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "736613f67d6e3a1a7459b8af4562c5000768989ddb8ef09a1d5b9a14a12706e2",
+  "current_candidate_source_commit": "c30049fd3d52f236dc10fa2ae15ee4d097d3482e",
+  "previous_candidate_hash": "46ca75a2f1a60dd4e554936cf918b310c49fc4c694039f86bd3d3cbeaaf559af",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "reason": "Final independent review uncovered a preexisting numeric coverage bypass: overlapping quotes multiplied one call value. Bind the one-use budget to the validated call field across all quotes; same semantic authority. RED 4 fail/14 pass; GREEN 227 pass/1 xfail. No schema/provider/cache/default/renderer change.",
+  "historical_effect": "Historical candidates, receipts and locked A/B remain byte-identical; no rescoring or pooling. Completeness report numeric one-use claim is corrected in this run.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "user-authorized ff-only main integration after final review and authoritative gates",
+  "push": "user-authorized fast-forward origin/main after T3 PASS"
+}

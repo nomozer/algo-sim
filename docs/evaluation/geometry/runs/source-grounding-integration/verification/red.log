@@ -1,0 +1,96 @@
+FFFF..............                                                       [100%]
+================================== FAILURES ===================================
+_ test_overlapping_quotes_do_not_multiply_a_call_value[short_first-SA = 3 v\xe0 SB = 3.-A] _
+
+arm = 'A', sentence = 'SA = 3 và SB = 3.', quote_order = 'short_first'
+
+    @pytest.mark.parametrize("arm", ARMS)
+    @pytest.mark.parametrize("sentence", ["SA = 3 và SB = 3.", "SA = 3, đổi AB thành 3."])
+    @pytest.mark.parametrize("quote_order", ["short_first", "long_first", "duplicate"])
+    def test_overlapping_quotes_do_not_multiply_a_call_value(arm, sentence, quote_order):
+        base, facts = HB._square()
+        base[3] = sentence
+        quotes = {"short_first": ["SA = 3", sentence], "long_first": [sentence, "SA = 3"],
+                  "duplicate": [sentence, sentence]}[quote_order]
+        facts[3] = {**facts[3], "quotes": quotes}
+        r = _route(" ".join(base) + " " + ASK, facts + [HB._ask("q", ASK, "length", points=["S", "C"])], arm)
+>       assert r.status == "REFUSED", (r.code, r.answers)
+E       AssertionError: (None, {'q': '√17'})
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_premise_source_coverage.py:268: AssertionError
+_ test_overlapping_quotes_do_not_multiply_a_call_value[short_first-SA = 3 v\xe0 SB = 3.-B] _
+
+arm = 'B', sentence = 'SA = 3 và SB = 3.', quote_order = 'short_first'
+
+    @pytest.mark.parametrize("arm", ARMS)
+    @pytest.mark.parametrize("sentence", ["SA = 3 và SB = 3.", "SA = 3, đổi AB thành 3."])
+    @pytest.mark.parametrize("quote_order", ["short_first", "long_first", "duplicate"])
+    def test_overlapping_quotes_do_not_multiply_a_call_value(arm, sentence, quote_order):
+        base, facts = HB._square()
+        base[3] = sentence
+        quotes = {"short_first": ["SA = 3", sentence], "long_first": [sentence, "SA = 3"],
+                  "duplicate": [sentence, sentence]}[quote_order]
+        facts[3] = {**facts[3], "quotes": quotes}
+        r = _route(" ".join(base) + " " + ASK, facts + [HB._ask("q", ASK, "length", points=["S", "C"])], arm)
+>       assert r.status == "REFUSED", (r.code, r.answers)
+E       AssertionError: (None, {'q': '√17'})
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_premise_source_coverage.py:268: AssertionError
+_ test_overlapping_quotes_do_not_multiply_a_call_value[short_first-SA = 3, \u0111\u1ed5i AB th\xe0nh 3.-A] _
+
+arm = 'A', sentence = 'SA = 3, đổi AB thành 3.', quote_order = 'short_first'
+
+    @pytest.mark.parametrize("arm", ARMS)
+    @pytest.mark.parametrize("sentence", ["SA = 3 và SB = 3.", "SA = 3, đổi AB thành 3."])
+    @pytest.mark.parametrize("quote_order", ["short_first", "long_first", "duplicate"])
+    def test_overlapping_quotes_do_not_multiply_a_call_value(arm, sentence, quote_order):
+        base, facts = HB._square()
+        base[3] = sentence
+        quotes = {"short_first": ["SA = 3", sentence], "long_first": [sentence, "SA = 3"],
+                  "duplicate": [sentence, sentence]}[quote_order]
+        facts[3] = {**facts[3], "quotes": quotes}
+        r = _route(" ".join(base) + " " + ASK, facts + [HB._ask("q", ASK, "length", points=["S", "C"])], arm)
+>       assert r.status == "REFUSED", (r.code, r.answers)
+E       AssertionError: (None, {'q': '√17'})
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_premise_source_coverage.py:268: AssertionError
+_ test_overlapping_quotes_do_not_multiply_a_call_value[short_first-SA = 3, \u0111\u1ed5i AB th\xe0nh 3.-B] _
+
+arm = 'B', sentence = 'SA = 3, đổi AB thành 3.', quote_order = 'short_first'
+
+    @pytest.mark.parametrize("arm", ARMS)
+    @pytest.mark.parametrize("sentence", ["SA = 3 và SB = 3.", "SA = 3, đổi AB thành 3."])
+    @pytest.mark.parametrize("quote_order", ["short_first", "long_first", "duplicate"])
+    def test_overlapping_quotes_do_not_multiply_a_call_value(arm, sentence, quote_order):
+        base, facts = HB._square()
+        base[3] = sentence
+        quotes = {"short_first": ["SA = 3", sentence], "long_first": [sentence, "SA = 3"],
+                  "duplicate": [sentence, sentence]}[quote_order]
+        facts[3] = {**facts[3], "quotes": quotes}
+        r = _route(" ".join(base) + " " + ASK, facts + [HB._ask("q", ASK, "length", points=["S", "C"])], arm)
+>       assert r.status == "REFUSED", (r.code, r.answers)
+E       AssertionError: (None, {'q': '√17'})
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_premise_source_coverage.py:268: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_premise_source_coverage.py::test_overlapping_quotes_do_not_multiply_a_call_value[short_first-SA = 3 v\xe0 SB = 3.-A]
+FAILED tests/geometry/test_premise_source_coverage.py::test_overlapping_quotes_do_not_multiply_a_call_value[short_first-SA = 3 v\xe0 SB = 3.-B]
+FAILED tests/geometry/test_premise_source_coverage.py::test_overlapping_quotes_do_not_multiply_a_call_value[short_first-SA = 3, \u0111\u1ed5i AB th\xe0nh 3.-A]
+FAILED tests/geometry/test_premise_source_coverage.py::test_overlapping_quotes_do_not_multiply_a_call_value[short_first-SA = 3, \u0111\u1ed5i AB th\xe0nh 3.-B]
+4 failed, 14 passed, 210 deselected in 1.16s

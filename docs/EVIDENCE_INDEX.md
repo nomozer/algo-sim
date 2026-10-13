@@ -1,10 +1,24 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SOURCE_GROUNDING_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/source-grounding-integration/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-grounding-integration/
+CORRECTED_BY = NONE
+CORRECTS = SOURCE_GROUNDING_COMPLETENESS
+CLASSIFICATION = FINAL_REVIEW_FIXED_AWAITING_AUTHORITATIVE_GATES
+CODE_COMMIT = c30049fd
+MODEL_REQUEST_COUNT = 0
+
+Independent final review uncovered a previously undeclared, preexisting numeric quote-overlap bypass; fixed in the
+same semantic authority, RED 4 fail / 14 pass → GREEN 227 pass / 1 xfail. Focused independent follow-up NON-BLOCKING.
+Candidate refrozen at c30049fd; additive divergence layer extends source-grounding-completeness. Historical bytes kept.
+
 ## WAVE_ID = SOURCE_GROUNDING_COMPLETENESS
 
 REPORT = docs/evaluation/geometry/runs/source-grounding-completeness/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-grounding-completeness/
-CORRECTED_BY = NONE
+CORRECTED_BY = SOURCE_GROUNDING_INTEGRATION
 CORRECTS = NONE
 CLASSIFICATION = RESEARCH_BRANCH_T3_PASS_AWAITING_INTEGRATION_DECISION
 CODE_COMMIT = b264828f
