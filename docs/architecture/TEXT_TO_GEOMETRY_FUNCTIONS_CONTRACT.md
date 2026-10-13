@@ -34,6 +34,15 @@ Danh sách đúng theo mã tại run `hybrid-section-slice`, 2026-10-11. Hằng 
 | hỏi | `ask_volume` · `ask_area` · `ask_section_area` · `ask_length` · `ask_distance_point_plane` · `ask_distance_lines` · `ask_angle_line_plane` · `ask_angle_plane_plane` (góc trả `cos²`) |
 | thoát | `unsupported` ⇒ `OUT_OF_SCOPE` |
 
+**Hàm chỉ dành cho planner** (run `goal-directed-section-planning`): `translate_point` (`auxiliary_only`) — ảnh của
+một điểm qua phép tịnh tiến theo vectơ hai điểm đã có. Không khai cho provider (tuyến A vẫn đúng 30 hàm trên,
+`PROVIDER_FUNCTIONS`; băm khai báo `f2ec9698…` không đổi), chỉ hợp lệ trong một phân rã đã khai `MAT_SONG_SONG`:
+thiết diện / diện tích thiết diện với mặt (P) qua điểm đã xác minh M song song mặt có tên (Q) = mặt qua M và hai
+ảnh tịnh tiến của M theo Q₀Q₁→, Q₀Q₂→ (biểu thức IR `vector_from_points` + `translate`, không primitive mới).
+Typed Facts: `section` / `question(area)` mang `point` + `points_b` + `plane_relation` thay cho `points`;
+`perpendicular` ⇒ `PLANE_NOT_UNIQUE`. Engine kiểm: song song (Q), không trùng (Q) (`DERIVED_PLANE_IS_REFERENCE`),
+không là mặt biên (`SECTION_PLANE_IS_FACE`); hàm phụ ngoài phân rã ⇒ `AUXILIARY_ONLY_FUNCTION`.
+
 Thiết diện và giao tuyến dùng **IR chung đã có**: `construct_section`, `assign` với `intersect_plane_plane`, `measure area`.
 Hybrid không có engine thứ hai. Mỗi (khối, phương trình mặt cắt) chỉ dựng một thiết diện, dù mặt được gọi bằng các bộ
 điểm khác nhau. Các mã từ chối:

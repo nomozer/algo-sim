@@ -169,6 +169,8 @@ ALLOWED_CANONICAL_ACTIONS = [
     "HYBRID_QUESTION_LOCAL_GIVENS_INTEGRATION_DECISION",
     # question-local-givens-main-integration (2026-10-12): Phase 2 on origin/main; next is the user's choice of slice.
     "POST_QUESTION_LOCAL_GIVENS_PRIORITY_DECISION",
+    # goal-directed-section-planning (2026-10-13): Phase A + B on a research branch; next is the user's integration decision.
+    "GOAL_DIRECTED_SECTION_INTEGRATION_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

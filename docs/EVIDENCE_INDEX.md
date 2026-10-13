@@ -1,5 +1,24 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = GOAL_DIRECTED_SECTION_PLANNING
+
+REPORT = docs/evaluation/geometry/runs/goal-directed-section-planning/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/goal-directed-section-planning/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = PHASE_A_B_T3_PASS_AWAITING_INTEGRATION_DECISION
+CODE_COMMIT = 68fbc844
+VERIFICATION_COMMIT = a443d2a2
+MODEL_REQUEST_COUNT = 0
+
+Phase A: closed follow-up coverage in `registry._kiem_du_kien_cau_hoi` (125 tests, routes A/B). Phase B: route-B goal
+decomposition `MAT_SONG_SONG` with planner-only `translate_point`; exact independent oracle; Scene3D harness
+SwiftShader + GPU (`visual/`). Independent reviews ×3 (`review.md`). Candidate 6110cd67 (divergence chain extended in
+`inputs/`); route B surface 396f1c9c → 4a20601f, route A unchanged. Benchmark byte-identical 19/9/0/2.
+Clean detached T3 at a443d2a2 PASS: backend 8925, frontend 1053, build/demo/crash PASS.
+Machine receipt: `runs/goal-directed-section-planning/verification/t3.log`, SHA256
+`1845f98054c9e3bb31f63136d903c3f428d37d268ae8cdfee010291d0d12dc86`.
+
 ## WAVE_ID = QUESTION_LOCAL_GIVENS_MAIN_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/question-local-givens-main-integration/report.md

@@ -2,7 +2,7 @@
 
 ## LOCAL override — 2026-10-12 (ưu tiên hơn snapshot §2)
 
-Phase 2 đã trên `main` và `origin/main` (`ebe4e463`, push fast-forward từ `a6e27a78`): product `f56d8cb7`, candidate `25c85eed…`, T3 clean detached `5fe14001` PASS (backend 8764, frontend 1053, build/demo/crash PASS). Run `question-local-givens-main-integration`; review cuối ở `question-local-givens-final-review` (lỗ hở đổi giả thiết cùng câu sau "sau đó"/"rồi" còn mở). Ba nhánh Hybrid đã merge bị xoá bằng `-d`; DSL HOLD và hai nhánh real-model giữ. Hybrid vẫn chưa nối `/api/analyze`.
+Nhánh nghiên cứu `research/goal-directed-section-planning` (từ `132e9b23` = `origin/main`; chưa merge/push): Phase A đóng lỗ hở đổi giả thiết sau "sau đó"/"rồi" bằng luật đóng; Phase B planner tuyến B tự phân rã thiết diện với mặt qua điểm đã xác minh song song mặt có tên (`MAT_SONG_SONG`). Candidate `6110cd67…`, T3 clean `a443d2a2` PASS (backend 8925, frontend 1053), benchmark 19/9/0/2, Scene3D harness SwiftShader+GPU PASS, bề mặt B `4a20601f…`. Run `goal-directed-section-planning`. Trước đó: Phase 2 question-local givens trên `main`/`origin/main` (`ebe4e463`, run `question-local-givens-main-integration`). DSL HOLD, hai nhánh real-model giữ; Hybrid chưa nối `/api/analyze`.
 
 - Hybrid S0 + thiết diện/giao tuyến + S1/S2 đã fast-forward cục bộ lên `main`: `a6e27a78` → `22edf7ff`. Remote vẫn `a6e27a78` (ls-remote); không push. Ref Hybrid và DSL HOLD giữ nguyên.
 - Candidate `d1410731…`, product `624e7fc5`, 110 file verify khớp. T3 clean detached tại `22edf7ff`: FULL_PRODUCT_GATE_PASS (backend 8675, frontend 1053, build/demo/crash PASS). Benchmark 30 ca giữ byte: 19/9/0/2 cả hai tuyến offline. Run `hybrid-main-integration`.
@@ -202,7 +202,7 @@ Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FU
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = POST_QUESTION_LOCAL_GIVENS_PRIORITY_DECISION
+CANONICAL_NEXT_ACTION = GOAL_DIRECTED_SECTION_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

@@ -1,8 +1,17 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — question-local-givens, 2026-10-12
+## LOCAL override — goal-directed-section-planning, 2026-10-13
 
-CANONICAL_NEXT_ACTION = POST_QUESTION_LOCAL_GIVENS_PRIORITY_DECISION
+CANONICAL_NEXT_ACTION = GOAL_DIRECTED_SECTION_INTEGRATION_DECISION
+
+Nhánh nghiên cứu `research/goal-directed-section-planning` từ `main` = `origin/main` = `132e9b23`; chưa merge/push.
+Phase A: lỗ hở đổi giả thiết sau "sau đó"/"rồi" đóng bằng luật đóng (A/B, hỏi và dựng). Phase B: planner tuyến B tự
+phân rã thiết diện với mặt qua điểm đã xác minh song song mặt có tên (`MAT_SONG_SONG`, `translate_point` chỉ cho
+planner), bề mặt B `4a20601f…`. Product `68fbc844`, candidate `6110cd67…` (`a443d2a2`), T3 clean PASS (backend 8925,
+frontend 1053); benchmark 19/9/0/2 byte-identical; Scene3D harness SwiftShader + GPU PASS; LLM_ONLY/cache125/Gemini0.
+Run [`goal-directed-section-planning`](evaluation/geometry/runs/goal-directed-section-planning/report.md).
+
+## LOCAL — question-local-givens, 2026-10-12 (đã tích hợp)
 
 Đã tích hợp: `main` = `origin/main` = `ebe4e463` (ff `232c1225` → `5fe14001` + commit SessionStart; push fast-forward;
 T3 clean `5fe14001` PASS; run [`question-local-givens-main-integration`](evaluation/geometry/runs/question-local-givens-main-integration/report.md)).

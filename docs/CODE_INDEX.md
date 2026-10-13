@@ -1,5 +1,18 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Goal-directed section planning — research branch
+
+Run: `docs/evaluation/geometry/runs/goal-directed-section-planning/`. No new module, engine, compiler or fact store.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/registry.py` — `_kiem_du_kien_cau_hoi` follow-up rule (`_VIEC_KE_TIEP`, `_SAU_VIEC_KE_TIEP`, `_MO_MUC_TIEU`, `_PHUONG_PHAP`) | ONE constant feeds the ask grammar `_SAU_HOP_LE` and the coverage gate. A follow-up span is read with a closed vocabulary (goal clause exempt up to ";"; "bằng cách" only a named formula/theorem); a length after the first request must match a validated call; a modified re-request (direct object of the request verb) is refused | `backend/tests/geometry/test_question_followup_context.py` (route A/B, RED at `132e9b23`, fault injection, documented conservative refusals) |
+| `registry.py` — `translate_point` (`TranslatePointArgs`, `FunctionSpec.auxiliary_only`), `PROVIDER_FUNCTIONS`, `MAT_SONG_SONG` in `AUXILIARY_RULES`, `_kiem_mat_song_song`, `mat_song_song_dung_nguon`, `_QUA_SONG_SONG`, `_het_dinh_nghia`; `kiem_nguon(...)` now RETURNS the source names of bound derived planes | Planner-only auxiliary: never declared to the provider (route A surface unchanged), refused outside a declared decomposition (`AUXILIARY_ONLY_FUNCTION`). The gate binds a derived plane to "(P) [đi] qua M [và] song song với (Q)" ending the sentence (or followed only by the section request on (P)), referred to by the section phrase / inline in it; the asked area must be that section | `backend/tests/geometry/test_goal_directed_section_planning.py` |
+| `backend/app/simulation/geometry_functions/planner.py` — `TypedFact.plane_relation`, `_mat_qua_diem`, `MAX_DERIVED_PLANES`, `KeHoach.derived_planes` | Goal decomposition depth 1: Section(solid, Plane(M ∥ Q)) → two `translate_point` (M along Q₀Q₁, Q₀Q₂) → `section` / `ask_section_area` on (M, X₁, X₂); one derived plane per (solid, M, Q); perpendicular ⇒ `PLANE_NOT_UNIQUE` | same; exact brute-force oracle in the test file |
+| `backend/app/simulation/geometry_functions/engine.py` — `translate_point` construction, `_kiem_mat_phu`, derived-plane label | Places translates in dependency order (kernel `translate`), checks them by a parallelogram relation, checks the plane: parallel to Q (`predicates.parallel_planes`), not Q (`DERIVED_PLANE_IS_REFERENCE`), not a face (`SECTION_PLANE_IS_FACE`); labels it by the source name "(P)" else "(α)" | same; fault injection on `parallel_planes` and `K.translate` |
+| `backend/app/ai/fact_extraction.py` prompt rule 8 · `backend/app/ai/function_calling.py` `allowedFunctionNames = PROVIDER_FUNCTIONS` | Route B surface `4a20601f…` (was `396f1c9c…`); route A `912b22ef…` and declarations `f2ec9698…` unchanged | `test_hybrid_goal_decomposition.py::test_provider_surfaces_are_pinned` |
+| `backend/scripts/export_hybrid_section_scenes.py` (+3 derived-plane cases) · `frontend/scripts/hybrid-section-visual.tsx` (`src=goal`) · `frontend/scripts/hybrid-section-visual-check.mjs` (`--scenes goal`, `--only <id prefix>`) | Real-route scenes of this run into the Scene3D harness; defaults unchanged | `visual/swiftshader`, `visual/gpu` browser-check receipts of the run |
+
 ## Hybrid simulation capability probes — research branch
 
 Question-local givens repair: run `docs/evaluation/geometry/runs/question-local-givens/`.

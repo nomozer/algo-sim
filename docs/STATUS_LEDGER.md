@@ -1,5 +1,12 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+## LOCAL research — Goal-directed section planning, 2026-10-13
+
+Nhánh `research/goal-directed-section-planning` từ `132e9b23`; product `68fbc844`, candidate `6110cd67…`.
+Follow-up đổi giả thiết bị từ chối bằng luật đóng; planner tuyến B tự phân rã thiết diện với mặt qua điểm ∥ mặt có tên.
+Ba vòng review độc lập (một BLOCKING) đóng RED→GREEN; T3 clean PASS; benchmark byte-identical; bề mặt B đổi, A giữ.
+Chi tiết: [`goal-directed-section-planning`](evaluation/geometry/runs/goal-directed-section-planning/report.md).
+
 ## LOCAL research — Question-local givens, 2026-10-12
 
 Nhánh `research/question-local-givens` từ main `232c1225`; product `f56d8cb7`, candidate `25c85eed…`
