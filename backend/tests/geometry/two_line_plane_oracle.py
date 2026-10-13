@@ -7,6 +7,23 @@ from fractions import Fraction as F
 from itertools import combinations
 
 
+def fixture_model(family):
+    """Independent chart and Gram contracts of the preregistered source fixtures, not Engine output."""
+    if family in ('pyramid','triangular_pyramid'):
+        base=list('ABCD' if family=='pyramid' else 'ABC')
+        pts={'A':(0,0,0),'B':(1,0,0),'C':(1,1,0) if family=='pyramid' else (0,1,0),'S':(0,0,1)}
+        if family=='pyramid': pts['D']=(0,1,0)
+        faces=[base]+[['S',a,b] for a,b in zip(base,base[1:]+base[:1])]
+    else:
+        base=list('ABCD' if family=='cuboid' else 'ABC')
+        pts={'A':(0,0,0),'B':(1,0,0),'C':(1,1,0) if family=='cuboid' else (0,1,0)}
+        if family=='cuboid': pts['D']=(0,1,0)
+        pts.update({k+"'":(p[0],p[1],1) for k,p in list(pts.items())})
+        faces=[base,[k+"'" for k in base]]+[[a,b,b+"'",a+"'"] for a,b in zip(base,base[1:]+base[:1])]
+    gram=((4,0,0),(0,16 if family=='cuboid' else 4,0),(0,0,9)) if family in ('pyramid','cuboid') else ((4,2,0),(2,4,0),(0,0,9))
+    return pts,faces,gram
+
+
 def sub(a, b):
     return tuple(F(x) - F(y) for x, y in zip(a, b))
 

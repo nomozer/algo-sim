@@ -362,7 +362,8 @@ def test_provider_surfaces_are_pinned():
     from app.ai import function_calling as FC
 
     assert FC.surface_fingerprint() == "912b22ef7f89851412b8ff026012454d1f9aa225bdd5bd00eb0d8f2dbd53fa3e"
-    assert FE.surface_fingerprint() == "4a20601fb398da4f5a1d72fb2b430616a5dd26cbe1ba08d97c3a0f815917d31e"
+    # two-line-plane-section: deliberate minimal TypedFact extension + extraction prompt; no live measurement.
+    assert FE.surface_fingerprint() == "145feb1873eac91fab1336f3f6aded7b792d82a9d3599e446087fe6b33a489b5"
     decl = json.dumps(RG.function_declarations(), ensure_ascii=False, sort_keys=True).encode()
     assert hashlib.sha256(decl).hexdigest() == "f2ec9698a4ee8af86448790f83d9af340eb6afcfce0a8f258ea67e46bf7504b1"
 

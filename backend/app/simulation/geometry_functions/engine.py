@@ -32,10 +32,10 @@ from typing import Any
 from app.simulation.geometry import metric as _metric
 from app.simulation.geometry.exact import GeometryError, Line3, Plane3, Vec3
 from app.simulation.geometry import kernel as K
-from app.simulation.geometry.predicates import parallel_planes, point_on_line
+from app.simulation.geometry.predicates import parallel_planes, point_on_line, point_on_plane, parallel_line_plane, line_in_plane
 from app.simulation.semantic_program import ir_builders as P
 
-from .registry import MAT_SONG_SONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de
+from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de
 
 ENGINE_VERSION = "geometry-function-engine/2"
 Z = Fraction(0)
@@ -818,12 +818,29 @@ class _Dung:
         construction (built through it); checked here: parallel to the reference plane (normals, `predicates.parallel_planes`),
         not that plane, and not a face of the solid it cuts (a boundary plane is not a cutting section — no silent M4)."""
         p, q, (x1, x2), ids = d["point"], d["parallel_to"], d["labels"], tuple(d["constructs"]) + tuple(d["targets"])
-        mat, goc = self._plane([p, x1, x2]), self._plane(q)
-        if not parallel_planes(mat, goc):
-            raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"mặt dẫn xuất qua {p} không song song ({''.join(q)})", ids)
-        if goc.signed_eval(Vec3(*self.pts[p])) == 0:
-            raise TuChoi("DERIVED_PLANE_IS_REFERENCE", f"{p} nằm trên ({''.join(q)}): mặt qua {p} song song với nó là chính "
-                         "nó — không có mặt cắt mới", ids)
+        two = d['rule'] == MAT_HAI_DUONG
+        if two:
+            if any(self.pts[a] == self.pts[b] for a,b in d['lines']):
+                raise TuChoi('DEGENERATE_LINE', 'hai đầu mút của đường trùng tọa độ đã xác minh', ids)
+            lines = [self._line(v) for v in d['lines']]
+            if lines[0].direction.cross(lines[1].direction).is_zero():
+                raise TuChoi('PLANE_NOT_UNIQUE', 'hai đường có phương phụ thuộc; mặt qua điểm không duy nhất', ids)
+        mat = self._plane([p, x1, x2])
+        if not point_on_plane(Vec3(*self.pts[p]),mat):
+            raise TuChoi('ENGINE_SELF_CHECK_FAILED','mặt dẫn xuất không qua điểm đã xác minh',ids)
+        if two:
+            for line in lines:
+                if line_in_plane(line,mat):
+                    raise TuChoi('LINE_CONTAINED_IN_PLANE','đường nằm trong mặt phẳng, không song song nghiêm ngặt',ids)
+                if not parallel_line_plane(line,mat):
+                    raise TuChoi('ENGINE_SELF_CHECK_FAILED','mặt dẫn xuất không song song với cả hai đường',ids)
+        else:
+            goc=self._plane(q)
+            if not parallel_planes(mat, goc):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"mặt dẫn xuất qua {p} không song song ({''.join(q)})", ids)
+            if goc.signed_eval(Vec3(*self.pts[p])) == 0:
+                raise TuChoi("DERIVED_PLANE_IS_REFERENCE", f"{p} nằm trên ({''.join(q)}): mặt qua {p} song song với nó là chính "
+                             "nó — không có mặt cắt mới", ids)
         for c in self.of(*{"section", "ask_section_area"}):
             if c.id not in ids:
                 continue
@@ -833,7 +850,7 @@ class _Dung:
             if sum(x == 0 for x in dau) >= 3 and not ({x > 0 for x in dau if x != 0} == {True, False}):
                 raise TuChoi("SECTION_PLANE_IS_FACE", f"{c.id}: mặt dẫn xuất chứa một mặt biên của {k.name} — mặt biên không "
                              "phải thiết diện cắt xuyên", ids)
-        self.trace.append({"step": "construct_plane", "object": f"({p} ∥ {''.join(q)})", "rule": MAT_SONG_SONG,
+        self.trace.append({"step": "construct_plane", "object": f"({d['plane_name']})" if two else f"({p} ∥ {''.join(q)})", "rule": d['rule'],
                            "calls": list(d["constructs"]), "dependencies": [p, x1, x2], "relation_verified": True,
                            "provenance": "DERIVED", "binding": "AUXILIARY"})
 
@@ -982,7 +999,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         for s in dung.trace:                             # điểm phụ: DẪN XUẤT, không phải nhãn của đề — ghi rõ ràng buộc
             if s["step"] == "place_point" and s["object"] in phu:
                 s.update(binding="AUXILIARY", auxiliary_rule=phu[s["object"]]["rule"], goal=phu[s["object"]]["goal"])
-        dung.mat_phu = [d for d in auxiliary if d.get("rule") == MAT_SONG_SONG]
+        dung.mat_phu = [d for d in auxiliary if d.get("rule") in (MAT_SONG_SONG, MAT_HAI_DUONG)]
         dung.ten_mat_phu = ten_mat_phu
         dung.kiem()
         dung.kiem_mat_cat()

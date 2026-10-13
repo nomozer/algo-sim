@@ -47,8 +47,19 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
     if r.status != "SERVED":
         return r
     try:
+        from app.simulation.geometry_functions.registry import MAT_HAI_DUONG
+        from app.simulation.geometry_functions.engine import ir_name
+        two_line = [d for d in auxiliary if d.get('rule') == MAT_HAI_DUONG]
         with _metric.using(r.chart_metric):
-            canh = build_scene3d(build_simulation_state(r.spec, r.exec_result, r.declared_topology))
+            state = build_simulation_state(r.spec, r.exec_result, r.declared_topology,
+                                           prefer_declared_plane_names=bool(two_line))
+            # Presentation of the certified auxiliary binding; no new geometry or semantic authority.
+            aux_ids = {ir_name(p) for d in two_line for p in d['labels']}
+            for obj in state['scene']['objects']:
+                if obj['id'] in aux_ids:
+                    obj['role'] = 'Điểm dựng phụ'
+                    state['provenance'].setdefault(obj['id'], {})['binding'] = 'AUXILIARY'
+            canh = build_scene3d(state)
             _gan_nhan_chung_hinh_chieu(canh, r.spec, r.exec_result.final_memory)
     except Exception as e:  # noqa: BLE001 — cảnh hỏng ⇒ từ chối có mã, không phục vụ nửa vời
         return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", f"{type(e).__name__}: {e}", trace=r.trace)

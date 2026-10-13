@@ -34,7 +34,11 @@ SYSTEM_PROMPT = (
     "ba điểm của mỗi mặt. Diện tích thiết diện: question, quantity = area, solid + points = ba điểm mặt cắt.\n"
     "8. Mặt cắt cho bằng quan hệ ('(P) đi qua M và song song với (ABCD)'): KHÔNG có points; point = điểm đi qua, "
     "points_b = các điểm của mặt kia, plane_relation = parallel (vuông góc ⇒ perpendicular); quotes gồm cả mệnh đề định "
-    "nghĩa mặt và mệnh đề thiết diện. Không tự đặt tên điểm cho mặt ấy."
+    "nghĩa mặt và mệnh đề thiết diện. Không tự đặt tên điểm cho mặt ấy.\n"
+    "9. Mặt phẳng (P) qua M song song với hai ĐƯỜNG THẲNG AB và CD: plane_relation = parallel_two_lines, "
+    "plane_name = P, point = M, points_a = [A,B], points_b = [C,D]. Hai đường là toán hạng vô hạn, không phải đoạn. "
+    "Chép cả định nghĩa và yêu cầu thiết diện/diện tích vào quotes, không tự suy ra giao điểm hay phương. "
+    "Mặt chứa một đường rồi song song đường khác chưa hỗ trợ: unsupported, không đổi thành quan hệ hai đường."
 )
 
 

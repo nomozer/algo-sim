@@ -554,7 +554,7 @@ def _than_hinh_hoc(gt: Any) -> tuple[str, dict[str, Any]] | None:
 
 
 def build_scene(
-    spec: SemanticProgramSpec, memory: dict[str, Any]
+    spec: SemanticProgramSpec, memory: dict[str, Any], *, prefer_declared_plane_names: bool = False,
 ) -> dict[str, Any]:
     """Bộ nhớ + chương trình → cảnh hình học JSON.
 
@@ -620,7 +620,7 @@ def build_scene(
               "sources": prov.get(ten, {}).get("sources", []),
               "label": prov.get(ten, {}).get("label"), **_hinh(ten, loai)}
         for ten, loai, _ in tho
-    })
+    }, prefer_declared_plane_names=prefer_declared_plane_names)
 
     objects: list[dict[str, Any]] = []
     for ten, loai, noi_dung in tho:
@@ -754,7 +754,7 @@ def _nhan_du_kien_tu_fact(objects: list[dict[str, Any]], spec: SemanticProgramSp
 
 # ══ 4. SIMULATION STATE ══════════════════════════════════════════════════
 def build_simulation_state(
-    spec: SemanticProgramSpec, exec_result: Any, contract: Any = None
+    spec: SemanticProgramSpec, exec_result: Any, contract: Any = None, *, prefer_declared_plane_names: bool = False,
 ) -> dict[str, Any]:
     """Cảnh + đồ thị phụ thuộc + timeline. Đầu vào DUY NHẤT của renderer.
 
@@ -763,7 +763,7 @@ def build_simulation_state(
     từ chối vì M sinh ra từ A, B"* rơi ra từ dữ liệu, không phải từ một danh
     sách ai đó phải nhớ cập nhật.
     """
-    scene = build_scene(spec, exec_result.final_memory)
+    scene = build_scene(spec, exec_result.final_memory, prefer_declared_plane_names=prefer_declared_plane_names)
     _nhan_du_kien_tu_fact(scene["objects"], spec, contract)
     # Vai trò dựng hình gắn ở PRODUCER (W14): tô-pô + quan hệ có kiểu, một thẩm
     # quyền với bước bổ sung. `scene3d` chỉ chở và hợp theo bước.

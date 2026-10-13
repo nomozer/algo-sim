@@ -347,7 +347,7 @@ def _la_ten_that(nhan: Any, ten: str) -> bool:
 
 
 def ten_hien_thi(
-    thong_tin: dict[str, dict[str, Any]]
+    thong_tin: dict[str, dict[str, Any]], *, prefer_declared_plane_names: bool = False,
 ) -> dict[str, dict[str, Optional[str]]]:
     """`{tên: {type, producer, sources, label}}` → bốn trường hiển thị mỗi vật.
 
@@ -407,6 +407,10 @@ def ten_hien_thi(
         nhan_khai = o.get("label")
         if isinstance(nhan_khai, str):
             kh = ky_hieu_toan(nhan_khai.strip())
+            # A declared one-letter plane name cannot be reconstructed from its three construction points.
+            # Keep that explicit alias in references too; (ABC) still follows ordinary operand notation.
+            if prefer_declared_plane_names and kh is None and loai == 'plane3' and re.fullmatch(r"\([A-Z][0-9]*'?\)|\([α-ω]\)",nhan_khai.strip()):
+                kh=nhan_khai.strip()
         # ② Tên vật, cho những kiểu mà ký hiệu CHÍNH LÀ tên.
         if kh is None and loai in _KIEU_KY_HIEU_LA_TEN:
             kh = ky_hieu_toan(ten)

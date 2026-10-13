@@ -25,9 +25,9 @@ from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
-from .registry import AUXILIARY_RULES, MAT_SONG_SONG, ExactNumber, Label, TuChoi, nhan_cua_de, nhan_phu_da_dung
+from .registry import AUXILIARY_RULES, MAT_SONG_SONG, MAT_HAI_DUONG, ExactNumber, Label, TuChoi, nhan_cua_de, nhan_phu_da_dung
 
-PLANNER_VERSION = "geometry-fact-planner/3"
+PLANNER_VERSION = "geometry-fact-planner/4"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
 _NHAN_PHU = ("H", *(f"H{i}" for i in range(1, 100)))
@@ -65,9 +65,10 @@ class TypedFact(BaseModel):
     points_a: list[Label] | None = Field(None, description="toán hạng 1: 1 điểm, 2 điểm = đường thẳng, ≥3 = mặt phẳng")
     points_b: list[Label] | None = Field(None, description="toán hạng 2")
     quantity: Literal["volume", "area", "length", "distance", "angle"] | None = None
-    plane_relation: Literal["parallel", "perpendicular"] | None = Field(
+    plane_relation: Literal["parallel", "perpendicular", "parallel_two_lines"] | None = Field(
         None, description="thiết diện / diện tích thiết diện với mặt cắt cho bằng QUAN HỆ: mặt qua `point`, song song "
         "(parallel) hay vuông góc (perpendicular) với mặt `points_b`; khi đó không có `points`")
+    plane_name: Label | None = Field(None, description="tên mặt phẳng cắt trong đề; bắt buộc cho parallel_two_lines")
     reason: str | None = None
 
 
@@ -162,6 +163,13 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
             if f.kind not in ("section", "question") or f.points:
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: plane_relation chỉ cho thiết diện, và thay cho `points`", (f.id,))
             required = ("solid", "point", "points_b") + (("quantity",) if f.kind == "question" else ())
+            if f.plane_relation == "parallel_two_lines":
+                required += ("points_a", "plane_name")
+                for line in (f.points_a, f.points_b):
+                    if line is None or len(line) != 2:
+                        raise TuChoi("FACT_INCOMPLETE", f"{f.id}: mỗi đường cần đúng hai điểm đã định danh", (f.id,))
+                    if len(set(line)) != 2:
+                        raise TuChoi("DEGENERATE_LINE", f"{f.id}: hai đầu mút đường trùng nhau", (f.id,))
         if thieu := [k for k in required if getattr(f, k) in (None, [])]:
             raise TuChoi("FACT_INCOMPLETE", f"{f.id} ({f.kind}) thiếu {thieu}", (f.id,))
     return facts
@@ -427,13 +435,16 @@ def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: s
                      "thêm một ràng buộc để xác định duy nhất", (f.id,))
     if f.role not in ("premise", "question") or f.negated:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt dựng từ quan hệ chỉ cho thiết diện được yêu cầu", (f.id,))
+    two = f.plane_relation == "parallel_two_lines"
+    rule = MAT_HAI_DUONG if two else MAT_SONG_SONG
     m, ref = f.point, list(dict.fromkeys(f.points_b))
-    if len(ref) < 3:
+    directions = [list(f.points_a), list(f.points_b)] if two else [[ref[0], ref[1]], [ref[0], ref[2]]] if len(ref) >= 3 else []
+    if not two and len(ref) < 3:
         raise TuChoi("FACT_INCOMPLETE", f"{f.id}: mặt tham chiếu cần ít nhất ba điểm", (f.id,))
-    if m in ref:
+    if not two and m in ref:
         raise TuChoi("DERIVED_PLANE_IS_REFERENCE", f"{f.id}: {m} thuộc ({''.join(ref)}) — mặt qua {m} song song với nó là chính nó",
                      (f.id,))
-    khoa = (khoi, m, frozenset(ref))
+    khoa = ((khoi, m, f.plane_name, frozenset(frozenset(v) for v in directions)) if two else (khoi, m, frozenset(ref)))
     d = k.derived_planes.get(khoa)
     if d is None:
         if len(k.derived_planes) >= MAX_DERIVED_PLANES:
@@ -443,31 +454,34 @@ def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: s
             raise TuChoi("PLAN_TOO_LARGE", f"{f.id}: hết nhãn điểm phụ", (f.id,))
         k.taken |= set(xs)
         dung, cids = {c["id"] for c in k.calls}, []
-        for i, (x, v) in enumerate(zip(xs, ([ref[0], ref[1]], [ref[0], ref[2]])), 1):
+        for i, (x, v) in enumerate(zip(xs, directions), 1):
             cid = next(j for j in (f"{f.id}_plane{i}", *(f"{f.id}_plane{i}_{n}" for n in range(2, 1000)))
                        if j not in k.fact_ids | dung)
             phat(cid, "translate_point", {"point": m, "vector": v, "image": x}, q,
-                 f"{MAT_SONG_SONG}→translate_point (điểm phụ {x} = {m} + {v[0]}{v[1]}→)")
+                 f"{rule}→translate_point (điểm phụ {x} = {m} + {v[0]}{v[1]}→)")
             k.trace[-1]["fact"] = f.id
             cids.append(cid)
-        d = {"labels": xs, "rule": MAT_SONG_SONG, "goal": f.id, "constructs": cids, "targets": [], "point": m,
+        d = {"labels": xs, "rule": rule, "goal": f.id, "constructs": cids, "targets": [], "point": m,
              "parallel_to": ref, "solid": khoi, "quotes": list(dict.fromkeys(q)), "provenance": "DERIVED",
              "binding": "AUXILIARY"}
+        if two:
+            d.update(lines=directions, plane_name=f.plane_name)
         k.derived_planes[khoa] = d
         k.auxiliary.append(d)
     d["quotes"] = list(dict.fromkeys(d["quotes"] + q))
-    c = phat(f.id, fn, {"solid": khoi, "plane": [m, *d["labels"]]}, d["quotes"], f"{MAT_SONG_SONG}→{fn}")
+    c = phat(f.id, fn, {"solid": khoi, "plane": [m, *d["labels"]]}, d["quotes"], f"{rule}→{fn}")
     k.trace[-1]["fact"] = f.id
     d["targets"].append(f.id)
     for call in k.calls:                                  # một khai báo, một tập quote cho mọi lời gọi của nó
         if call["id"] in d["constructs"] + d["targets"]:
             call["source"]["quotes"] = list(d["quotes"])
-    k.trace.append({"fact": f.id, "step": "decompose_goal", "rule": MAT_SONG_SONG,
+    k.trace.append({"fact": f.id, "step": "decompose_goal", "rule": rule,
                     "goal": f"Section({khoi}, Plane({m} ∥ ({''.join(ref)})))",
-                    "dependencies": [f"VerifiedPoint {m}", f"ParallelPlane({m}, {''.join(ref)})", f"{fn}({khoi})"],
+                    "dependencies": ([f"VerifiedPoint {m}", *[f"VerifiedLine {''.join(v)}" for v in directions]] if two else
+                                     [f"VerifiedPoint {m}", f"ParallelPlane({m}, {''.join(ref)})", f"{fn}({khoi})"]),
                     "calls": d["constructs"] + [f.id], "auxiliary": d["labels"],
-                    "reason": f"mặt qua {m} song song ({''.join(ref)}) = mặt qua {m} và hai ảnh tịnh tiến của {m} theo "
-                              f"{ref[0]}{ref[1]}→, {ref[0]}{ref[2]}→ (biểu thức IR sẵn có, không primitive mới)",
+                    "reason": f"mặt qua {m} và hai ảnh tịnh tiến theo " + ', '.join(''.join(v)+'→' for v in directions)
+                              + " (IR sẵn có; engine kiểm các quan hệ trên hình đã dựng)",
                     "provenance": "DERIVED", "binding": "AUXILIARY"})
     return c
 

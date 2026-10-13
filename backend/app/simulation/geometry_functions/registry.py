@@ -626,8 +626,9 @@ def _so_neo(quotes: tuple[str, ...], seg: list[str] | None) -> list[tuple[Fracti
 #: Plane through a verified point parallel to a named plane, then the section by it (`planner._mat_qua_diem`): two translates
 #: of the point along two directions of the reference plane span the plane; the section takes the three points.
 MAT_SONG_SONG = "section(plane through point ∥ plane)"
+MAT_HAI_DUONG = "section(plane through point strictly parallel to two lines)"
 AUXILIARY_RULES = {"distance(point,line)": ("orthogonal_projection_line", "ask_length"),
-                   MAT_SONG_SONG: ("translate_point", "section")}
+                   MAT_SONG_SONG: ("translate_point", "section"), MAT_HAI_DUONG: ("translate_point", "section")}
 #: "khoảng cách từ S đến (đường thẳng) BD": điểm và đường gắn vai trong CÙNG một cụm; cách nói khác ⇒ từ chối, không đoán.
 _KHOANG_CACH_DIEM_DUONG = re.compile(
     r"khoảng cách\s+từ\s+(?:điểm\s+)?([A-Z][0-9]*'?)\s+(?:đến|tới)\s+(?:đường thẳng\s+)?([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![\w'])",
@@ -664,7 +665,7 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
         x, luat = d.get("label"), d.get("rule")
         if luat not in AUXILIARY_RULES:
             raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x}: luật {luat!r} không có trong bảng phân rã")
-        if luat == MAT_SONG_SONG:
+        if luat in (MAT_SONG_SONG, MAT_HAI_DUONG):
             da |= _kiem_mat_song_song(d, theo_id, de, nhan, chiem, nhan_da_khai, calls, ten_mat_phu)
             continue
         if x in nhan_da_khai:
@@ -885,6 +886,59 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
     nhan = nhan_cua_de(de)
     ten_mat_phu: dict[str, str | None] = {}              # derived plane (first construct id) → name the source gave it
     phu = _kiem_phu(tuple(auxiliary), calls, de, nhan, ten_mat_phu)
+    if any(d.get('rule') == MAT_HAI_DUONG for d in auxiliary):
+        # New-rule source subset: no proof/inference exemption and no compound quote may hide a second hypothesis.
+        # This is a refusal in the SAME source authority, not an inferred fact or another semantic state.
+        if read_quotes or _MO_MUC_TIEU.search(de):
+            raise TuChoi('SOURCE_PREMISE_UNREAD','lát hai đường chưa nhận mệnh đề chứng minh/suy ra trong nguồn')
+        for c in calls:
+            if c.id in phu:
+                continue
+            for q in c.quotes:
+                atomic = re.sub(r'(?<!\w)song\s+song(?!\w)',' ',q,flags=re.I)
+                if re.search(r'[,;]|(?<!\w)(?:và|song|đổi|thay|gấp|nhân đôi)(?!\w)',atomic,re.I):
+                    raise TuChoi('SOURCE_PREMISE_UNREAD','quote tiền đề ghép chưa được đọc độc lập trên lát hai đường',(c.id,))
+                # Read the complete accepted span, not just its first keyword/object. These two premise forms carry
+                # the geometry/length anchors of this slice; unparsed suffixes never acquire authority from a quote.
+                if c.fn == 'perpendicular_line_plane' and not re.fullmatch(
+                    rf"(?:cho\s+|biết\s+)?(?:đường thẳng\s+|cạnh bên\s+)?{_P1}\s*{_P1}\s*"
+                    rf"(?:vuông góc\s+(?:với\s+)?|⊥\s*){_MAT_TOAN_HANG}[.\s]*",q,re.I):
+                    raise TuChoi('SOURCE_PREMISE_UNREAD','quote vuông góc có phần chưa được đọc trên lát hai đường',(c.id,))
+                if c.fn == 'segment_length':
+                    length=_DO_DAI_CUC_BO.search(q)
+                    prefix=q[:length.start()] if length else q
+                    if (length is None or not re.fullmatch(r'(?:cho|biết|độ dài|cạnh bên|chiều cao|cạnh|\s)*',prefix,re.I)
+                            or not re.fullmatch(r'\s*(?:cm|dm|mm|m|đvđd)?[.\s]*',q[length.end():],re.I)):
+                        raise TuChoi('SOURCE_PREMISE_UNREAD','quote độ dài có phần chưa được đọc trên lát hai đường',(c.id,))
+                if c.spec.kind != 'ask' and c.fn not in ('perpendicular_line_plane','segment_length'):
+                    # Closed syntax only: existing source checks below still bind every operand/value and role.
+                    # This guard grants no fact authority; it refuses tails the existing quote anchor cannot read.
+                    labels = rf'(?:{_P1})+'
+                    solid = rf'{labels}\.{labels}'
+                    number = _SO.pattern
+                    shape = rf'(?:tam giác đều|hình vuông|lục giác đều)\s*(?:{labels}\s*)?(?:cạnh\s*{number})?'
+                    prism = rf'(?:cho\s+)?(?:hình\s+)?lăng trụ đứng\s+{solid}\s+có đáy là\s+{shape}[.\s]*'
+                    atomic_forms = {
+                        'pyramid': rf'(?:cho\s+)?(?:hình|khối) chóp\s+{solid}[.\s]*',
+                        'prism': rf'(?:cho\s+)?(?:hình\s+)?(?:lăng trụ đứng|hình hộp chữ nhật)\s+{solid}[.\s]*',
+                        'regular_polygon': rf'(?:đáy\s+{labels}\s+là\s+)?{shape}[.\s]*',
+                        'rectangle': rf'(?:cho\s+)?(?:hình hộp chữ nhật\s+{solid}|(?:đáy\s+{labels}\s+là\s+)?hình chữ nhật\s*(?:{labels})?)[.\s]*',
+                        'midpoint': rf'(?:gọi\s+)?{_P1}\s+là trung điểm\s+(?:của\s+)?{_P1}{_P1}[.\s]*',
+                    }
+                    form = atomic_forms.get(c.fn)
+                    if not ((form and re.fullmatch(form,q,re.I))
+                            or c.fn in ('prism','regular_polygon') and re.fullmatch(prism,q,re.I)):
+                        raise TuChoi('SOURCE_PREMISE_UNREAD','quote tiền đề chưa nằm trọn trong văn phạm lát hai đường',(c.id,))
+        from ..semantic_program.shape_constraint import doc_rang_buoc
+        from ..semantic_program.source_entities import dinh_danh_thuc_the
+        for assertion in doc_rang_buoc(de):
+            prism = assertion.kind == 'cuboid' and any(
+                c.fn == 'prism' and c.args.right
+                and tuple(dinh_danh_thuc_the(n)[0] for n in c.args.base+c.args.top)==assertion.entities
+                and any(d.fn == 'rectangle' and d.args.vertices == c.args.base for d in calls)
+                for c in calls)
+            if not prism and not any(_rang_buoc_cuc_bo_khop(assertion,c) for c in calls):
+                raise TuChoi('SOURCE_PREMISE_UNREAD','quan hệ nguồn chưa khớp lời gọi đã xác thực trên lát hai đường')
     if lac := sorted(c.id for c in calls if c.spec.auxiliary_only and c.id not in phu):
         raise TuChoi("AUXILIARY_ONLY_FUNCTION", f"{lac}: chỉ planner sinh hàm này, trong một phân rã đã khai", tuple(lac))
     for c in sorted(calls, key=lambda c: c.id):
@@ -1322,6 +1376,8 @@ def _rang_buoc_cuc_bo_khop(r: Any, c: LoiGoi) -> bool:
     a, e = c.args, r.entities
     if r.kind == "pyramid" and c.fn in ("pyramid", "regular_pyramid"):
         return ids([a.apex]) == e[:1] and _cung_da_giac(list(ids(a.base)), list(e[1:]))
+    if r.kind in ('prism','right_prism') and c.fn == 'prism':
+        return ids(a.base+a.top) == e and (r.kind == 'prism' or a.right)
     if r.kind in ("regular_square_pyramid", "regular_triangular_pyramid", "regular_hexagonal_pyramid") and c.fn == "regular_pyramid":
         return ids([a.apex]) == e[:1] and _cung_da_giac(list(ids(a.base)), list(e[1:]))
     if r.kind == "line_perp_plane" and c.fn == "perpendicular_line_plane":
@@ -1657,7 +1713,10 @@ def _kiem_mat_song_song(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: 
     ids = tuple(i for i in (*(d.get("constructs") or ()), *(d.get("targets") or ())) if i)
     dung = [theo_id.get(i) for i in d.get("constructs") or ()]
     dich = [theo_id.get(i) for i in d.get("targets") or ()]
-    if len(xs) != 2 or len(set(xs)) != 2 or len(q) < 3 or len(dung) != 2 or not dich or not qs:
+    two = d.get("rule") == MAT_HAI_DUONG
+    lines = d.get("lines") or []
+    if (len(xs) != 2 or len(set(xs)) != 2 or (not two and len(q) < 3) or len(dung) != 2 or not dich or not qs
+            or two and (len(lines) != 2 or any(len(v) != 2 or len(set(v)) != 2 for v in lines) or not d.get("plane_name"))):
         raise TuChoi("AUXILIARY_RULE_MISMATCH", f"mặt phụ qua {p}: khai báo không đủ cho luật {MAT_SONG_SONG}", ids)
     for nhan_moi in xs:
         if nhan_moi in nhan_da_khai:
@@ -1665,23 +1724,81 @@ def _kiem_mat_song_song(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: 
         nhan_da_khai.add(nhan_moi)
         if nhan_moi in chiem:
             raise TuChoi("AUXILIARY_LABEL_COLLISION", f"điểm phụ {nhan_moi} trùng một nhãn của đề", ids)
-    huong = ([q[0], q[1]], [q[0], q[2]])
+    huong = lines if two else ([q[0], q[1]], [q[0], q[2]])
     if not (all(c is not None and c.fn == "translate_point" and c.args.point == p and c.args.vector == v
                 and c.args.image == x and c.quotes == qs for c, v, x in zip(dung, huong, xs))
             and all(c is not None and c.fn in ("section", "ask_section_area") and c.args.plane == [p, *xs]
                     and c.quotes == qs for c in dich)):
         raise TuChoi("AUXILIARY_RULE_MISMATCH", f"mặt phụ qua {p}: lời gọi không khớp luật {MAT_SONG_SONG}", ids)
-    if lac := sorted(({p} | set(q)) - nhan):
+    if lac := sorted(({p} | {v for line in huong for v in line}) - nhan):
         raise TuChoi("UNKNOWN_LABEL", f"nhãn {lac} không có trong đề", ids)
     ten_nguon: set[str] = set()
     for c in dich:
-        if not mat_song_song_dung_nguon(c, p, q, de, calls, ten_nguon):
+        bound = (_mat_hai_duong_dung_nguon(c, p, lines, d["plane_name"], de, calls) if two else
+                 mat_song_song_dung_nguon(c, p, q, de, calls, ten_nguon))
+        if not bound:
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: đề không nói thiết diện của {c.args.solid} với mặt phẳng qua {p} "
                          f"song song ({''.join(q)})", ids)
+    if two:
+        ten_nguon.add(d['plane_name'])
     # The engine names the plane by what the source called it, bound here — never by the auxiliary labels.
     if ten_mat_phu is not None:
         ten_mat_phu[ids[0]] = next(iter(ten_nguon)) if len(ten_nguon) == 1 else None
     return set(ids)
+
+
+_QUA_HAI_DUONG = re.compile(
+    rf"(?:mặt phẳng|mp)\s*\((?P<ten>{_P1})\)\s*(?:đi\s+)?qua\s+(?:điểm\s+)?(?P<diem>{_P1})(?![\w'])"
+    rf"\s*,?\s*(?:và\s+)?song song\s+với\s+(?:hai\s+đường thẳng\s+)?"
+    rf"(?P<a>{_P1})\s*(?P<b>{_P1})(?![\w'])\s+và\s+(?P<c>{_P1})\s*(?P<d>{_P1})(?![\w'])", re.I)
+
+
+def _mat_hai_duong_dung_nguon(c: LoiGoi, point: str, lines: list[list[str]], name: str, de: str,
+                            calls: tuple[LoiGoi, ...]) -> bool:
+    """Closed named definition and direct section reference; no quote/anaphor may rebind another goal."""
+    if not _khoi_trong_quote(c, _khoi_cua_loi_goi(calls)):
+        return False
+    expected = {frozenset(x) for x in lines}
+    definitions = [m for m in _QUA_HAI_DUONG.finditer(de) if m['ten'] == name]
+    if not definitions:
+        return False
+    for m in definitions:
+        if (m['diem'] != point or {frozenset((m['a'], m['b'])),frozenset((m['c'],m['d']))} != expected
+                or _vai_tro_tai(de,m.start()) in ('GOAL','CONDITIONAL') or _phu_dinh(de,m.start(),m[0])
+                or not _het_dinh_nghia(de,m.end(),m)
+                or not any((vt:=_vi_tri(de,q)) and vt[0]<=m.start() and vt[1]>=m.end() for q in c.quotes)):
+            return False
+    pattern = re.compile(_DAN_THIET_DIEN + rf"(?:mặt phẳng\s*)?\({re.escape(name)}\)(?!\w)", re.I)
+    references=list(pattern.finditer(de))
+    allowed=[m.span() for m in definitions+references]
+    if any(not any(a<=m.start()<b for a,b in allowed) for m in re.finditer(rf'\({re.escape(name)}\)',de)):
+        return False  # every use/definition of the name belongs to this closed construction or section grammar
+    request_ok = False
+    for q in c.quotes:
+        vt = _vi_tri(de,q)
+        if vt is None:
+            return False
+        definition_form = rf'(?:hãy\s+)?(?:(?:dựng|gọi|cho)\s+)?{_QUA_HAI_DUONG.pattern}[.\s]*'
+        request_form = rf'(?:hãy\s+)?(?:xác định|tìm|tính)\s+(?:diện tích\s+(?:của\s+)?)?{pattern.pattern}[.\s]*'
+        defined = re.fullmatch(definition_form,q,re.I)
+        if defined and (defined['ten'] != name or defined['diem'] != point
+                        or {frozenset((defined['a'],defined['b'])),frozenset((defined['c'],defined['d']))} != expected):
+            return False
+        if not (defined or re.fullmatch(request_form,q,re.I)):
+            return False  # auxiliary quotes cannot license a hidden premise either
+        for m in pattern.finditer(de,*vt):
+            if _vai_tro_tai(de,m.start()) in ('GOAL','CONDITIONAL') or _phu_dinh(de,m.start(),m[0]):
+                continue
+            symbols={''.join(parts[0])+'.'+''.join(parts[1]) for _a,_b,parts in _tu_nhan(m[0]) if len(parts)==2}
+            if symbols and symbols != {c.args.solid}:
+                continue
+            tail=_HET_CAU.search(de,m.end())
+            if de[m.end():tail.start() if tail else len(de)].strip():
+                continue
+            if c.fn == 'section' or (_HOI_DIEN_TICH_THIET_DIEN.search(de,*_bien_cau(de,m.start()))
+                                    and _duoc_hoi(de,m.start(),m.end())):
+                request_ok = True
+    return request_ok
 
 
 def mat_cat_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> bool:
