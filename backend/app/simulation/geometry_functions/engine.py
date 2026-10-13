@@ -951,7 +951,8 @@ def _hien_thi_ky_hieu(x: Any, bac: int, ky_hieu: str) -> str:
     return f"{tu}{ky_hieu}{_MU[bac]}" + (f"√{can}" if can != 1 else "") + (f"/{he.denominator}" if he.denominator != 1 else "")
 
 
-def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = ()) -> KetQuaTuyen:
+def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = (),
+                    read_quotes: tuple[str, ...] = ()) -> KetQuaTuyen:
     """Dựng + kiểm + thực thi từ lời gọi hàm. Trả `KetQuaTuyen` CHƯA có cảnh (`scene3d=None`) nhưng có `spec` và
     `exec_result` — bày cảnh là việc của tầng trên (`app/ai/function_route.py`), cùng hướng phụ thuộc với
     `ai/pipeline._dung_scene3d`: không module nào trong `app/simulation` nhập `scene3d`/`simulation_state`."""
@@ -962,7 +963,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
     dung: _Dung | None = None
     try:
         calls = doc_ke_hoach(plan)
-        ten_mat_phu = kiem_nguon(calls, problem_text, auxiliary)
+        ten_mat_phu = kiem_nguon(calls, problem_text, auxiliary, read_quotes)
         if esc := [c for c in calls if c.fn == "unsupported"]:
             raise TuChoi("OUT_OF_SCOPE", "; ".join(f"{c.id}: {c.args.reason} ({c.quote!r})" for c in esc),
                          tuple(c.id for c in esc))

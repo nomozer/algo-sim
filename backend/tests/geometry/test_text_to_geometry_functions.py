@@ -48,6 +48,11 @@ def _len_sq(scene: dict, a: str, b: str) -> F:
     return sum(d[i] * G[i][j] * d[j] for i in range(3) for j in range(3))
 
 
+#: The fixture's labels are historical evidence and stay as recorded. Run source-grounding-completeness refuses NEG2
+#: one layer earlier: its "có cạnh đáy bằng 2" is a premise no call reads. Same verdict (REFUSED), another code.
+MA_HIEN_HANH = {"NEG2": "SOURCE_PREMISE_UNREAD"}
+
+
 # ── mọi ca fixture: kết cục + mã + đáp số chính xác ─────────────────────────
 @pytest.mark.parametrize("cid", sorted(BY_ID))
 def test_ket_cuc_dung_nhan(cid):
@@ -55,7 +60,7 @@ def test_ket_cuc_dung_nhan(cid):
     r = _chay(c)
     assert r.status == c["expect"]["status"], (r.code, r.reason)
     if r.status == "REFUSED":
-        assert r.code == c["expect"]["code"], r.reason
+        assert r.code == MA_HIEN_HANH.get(cid, c["expect"]["code"]), r.reason
         assert r.scene3d is None and not r.answers
         return
     for call_id, nhan in c["expect"]["answers"].items():

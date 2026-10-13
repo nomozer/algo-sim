@@ -876,7 +876,8 @@ def _moc_menh_de(c: LoiGoi, de: str, dau: int, cuoi: int) -> list[int]:
     return moc
 
 
-def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...] = ()) -> dict[str, str | None]:
+def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...] = (),
+               read_quotes: tuple[str, ...] = ()) -> dict[str, str | None]:
     """Cổng nguồn tất định — xem docstring module. Ném `TuChoi` ở lời gọi đầu tiên hỏng (theo thứ tự id).
     `auxiliary`: điểm phụ planner nhánh B khai (`AUXILIARY_RULES`); nhánh A không truyền ⇒ mọi nhãn phải có trong đề.
     Returns the name the source gave each bound derived plane (first construct id → "P", or None when unnamed)."""
@@ -965,11 +966,11 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
             if gt != so[0]:
                 raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {v} không phải số trong {c.quote!r}", (c.id,))
 
-    _kiem_du_kien_cau_hoi(calls, de)
+    _kiem_du_kien_cau_hoi(calls, de, read_quotes)
     return ten_mat_phu
 
 
-def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
+def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple[str, ...] = ()) -> None:
     """Source coverage, not a second fact state: local claims must match validated calls before engine verification.
 
     Read the whole question context, including text outside the model's quote. Only closed source spans are covered;
@@ -1057,8 +1058,12 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
     request_contexts |= {_bien_cau(de, vt[0]) for c in calls if c.fn in ("section", "intersection_line") for q in c.quotes
                          if (vt := _vi_tri(de, q)) is not None}
     first_request = min((a for a, _b in request_contexts), default=min((a for a, _b in construction_contexts), default=len(de)))
+    # A sentence that asks ("?", "bao nhiêu", "mấy") opens the request region even without a request verb.
+    first_request = min([first_request, *(_bien_cau(de, m.start())[0] for m in _HOI_SAU.finditer(de))])
     questions |= {_bien_cau(de, p) for p in (0, *(m.end() for m in re.finditer(r"[.!?]\s+", de)))
                   if first_request <= p < len(de)}
+    # Everything before the first request is premise text: it must be read too (run `source-grounding-completeness`).
+    _kiem_vung_tien_de(calls, de, first_request, read_quotes)
     for start, end in sorted(questions):
         phrases = [(m.start(), m.end()) for rules in _CUM_HOI.values() for pattern, _bind in rules
                    for m in pattern.finditer(de, start, end) if _hoi_dung_cum(de, m.start(), m.end())]
@@ -1138,6 +1143,82 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
                                                        flags=re.IGNORECASE)):
                 raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                              f"{c.id}: đối tượng được yêu cầu lại sau lần hỏi đầu — phạm vi giả thiết đã đổi; chưa hỗ trợ", (c.id,))
+
+
+#: Premise text a call need not quote: lead-ins and connectors between quoted claims (closed).
+_NOI_TIEN_DE = re.compile(r"[\s,;:.()\-–]*(?:(?:cho|gọi|biết|rằng|có|và|với|trong đó|là|của|hãy|xét|ta|đồng thời|lần lượt"
+                          r"|theo thứ tự|tại|thì)(?!\w)[\s,;:.()\-–]*)*", re.IGNORECASE)
+#: Exam scaffolding at the start of a premise segment ("Bài 3.", "Câu 2:", "(1 điểm)") — not a claim about the figure.
+_GIAN_DAN = re.compile(r"\s*(?:(?:bài|câu|ví dụ)\s*\d+\s*[.:)]|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*", re.IGNORECASE)
+#: Nouns that only NAME an object (never a shape predicate such as "hình vuông", "tam giác").
+_DANH_TU_DOI_TUONG = (r"mặt phẳng|mặt đáy|mặt bên|mặt|đáy|đường thẳng|đoạn thẳng|đoạn|cạnh bên|cạnh đáy|cạnh|điểm|đỉnh"
+                      r"|hình chóp|khối chóp|hình lăng trụ|khối lăng trụ|hình hộp|khối hộp|tứ diện|khối")
+#: A segment naming none of these, no label and no number is a note, not a hypothesis (classification only: anything that
+#: names geometry and is not read is refused).
+_TU_HINH_HOC = re.compile(r"(?<!\w)(?:đáy|cạnh|mặt|góc|đường|điểm|đoạn|độ dài|cao|thể tích|diện tích|song song|vuông|thiết diện"
+                          r"|giao|tâm|bán kính|hình|khối|trung điểm|trọng tâm|chiếu|đều|chữ nhật|tam giác|tứ giác|lục giác"
+                          r"|chóp|lăng trụ|hộp|lập phương|tứ diện|cầu|trụ|nón)(?!\w)", re.IGNORECASE)
+
+
+def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes: tuple[str, ...] = ()) -> None:
+    """Premise source coverage over `de[:het]` (the text before the first request), one obligation per sentence / ";"
+    clause: what no sentence-local quote of a validated call covers may only be closed connectors, names of objects the
+    calls already use, a goal clause or a non-geometric note; every number must be a value some validated call carries.
+    A shape claim hidden inside a long quote of another call is not detected here (bounded). A quote spanning sentences
+    covers none of them here
+    (a long quote must not excuse a second sentence). `read_quotes`: route-B goals / negated clauses, read and checked
+    on the figure by the route. Reuses the gate's number, label and shape readers; no second fact state — a premise is
+    never added, only refused when unread."""
+    if het <= 0:
+        return
+    phu = [False] * het                                  # covered by a validated call (its values count)
+    doc = [False] * het                                  # read as a goal / negated clause (not a hypothesis)
+    gia_tri = {doc_so(v) for c in calls for f in c.spec.value_fields if (v := getattr(c.args, f, None))}
+    for co, quotes in ((phu, [(c, q) for c in calls for q in c.quotes]), (doc, [(None, q) for q in read_quotes])):
+        for c, q in quotes:
+            if (vt := _vi_tri(de, q)) is None or vt[0] >= het:
+                continue
+            nhip = [(vt[0], vt[1])]
+            if re.search(r"[.!?;]\s", de[vt[0]:vt[1]].rstrip()):
+                # a quote spanning sentences covers only what its call's own binding grammar reads in it
+                # ("(MAB) cắt hình chóp … theo một thiết diện. Tính diện tích thiết diện đó.")
+                nhip = ([(m.start(), m.end()) for mau in (*_CAT_BOI, _GIAO_TUYEN) for m in mau.finditer(de, *vt)]
+                        if c is not None and c.fn in ("section", "ask_section_area", "intersection_line") else [])
+            for x, y in nhip:
+                co[x:min(y, het)] = [True] * max(0, min(y, het) - x)
+    nhan = nhan_cua_de(de)
+    dung = {n for c in calls for n in nhan_cua_loi_goi(c)}
+    dau = 0
+    for m in [*re.finditer(r"(?<=[.!?;])\s+", de[:het]), None]:
+        cuoi = m.start() if m else het
+        a, b = dau, cuoi
+        dau = m.end() if m else het
+        doan = de[a:b]
+        if not doan.strip():
+            continue
+        gd = _GIAN_DAN.match(doan)
+        a0 = a + (gd.end() if gd else 0)
+        if _MO_MUC_TIEU.match(doan):
+            # a goal is something to show, never a hypothesis — but a given introduced inside it ("…, biết SA = 5") is
+            # read from its marker on
+            dan = re.search(r"(?<!\w)(?:biết|cho|với|trong đó|khi|nếu|giả sử)(?!\w)", de[a0:b], re.IGNORECASE)
+            if not dan:
+                continue
+            a0 += dan.start()
+        con = "".join(" " if phu[i] or doc[i] else de[i] for i in range(a0, b))
+        # naming an object the calls already use ("đáy ABC", "(SBC)", "hình chóp S.ABC") asserts nothing about it
+        ten_dt = re.sub(rf"(?<![\w'])(?:(?:{_DANH_TU_DOI_TUONG})\s*)?\(?(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?\)?(?![\w'])",
+                        lambda m: " " if {n for _x, _y, phan in _tu_nhan(m[0]) for p in phan for n in p} <= dung else m[0],
+                        con, flags=re.IGNORECASE)
+        mang_hinh = (_TU_HINH_HOC.search(con) or any(n in nhan for _x, _y, phan in _tu_nhan(con) for p in phan for n in p)
+                     or re.search(r"\d|√|π", con))
+        if not _NOI_TIEN_DE.fullmatch(ten_dt) and mang_hinh:
+            raise TuChoi("SOURCE_PREMISE_UNREAD", f"tiền đề {de[a0:b].strip()!r} chưa được lời gọi nào đọc — có thể đổi "
+                         "hình; không dùng mô hình cũ")
+        chua_doc = "".join(" " if doc[i] else de[i] for i in range(a0, b))
+        if lac := [v for _p, *v in so_trong(chua_doc) if tuple(v) not in gia_tri]:
+            raise TuChoi("SOURCE_PREMISE_UNREAD", f"giá trị trong tiền đề {de[a0:b].strip()!r} không là giá trị của lời gọi "
+                         f"nào đã xác thực ({len(lac)}) — không dùng mô hình cũ")
 
 
 def _nguon_do_dai_cuc_bo(calls: tuple[LoiGoi, ...], segment: list[str]) -> list[tuple[tuple[Fraction, bool], str]]:

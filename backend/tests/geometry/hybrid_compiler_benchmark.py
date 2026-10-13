@@ -403,6 +403,8 @@ REFUSAL_CLASS = {
     # goal-directed section slice (goal-directed-section-planning): taxonomy only; case labels/oracle unchanged
     "PLANE_NOT_UNIQUE": "figure_not_unique", "DERIVED_PLANE_IS_REFERENCE": "contradictory",
     "SECTION_PLANE_IS_FACE": "contradictory", "AUXILIARY_ONLY_FUNCTION": "malformed",
+    # source-grounding-completeness: a premise no validated call read (taxonomy only; labels/oracle unchanged)
+    "SOURCE_PREMISE_UNREAD": "grounding",
     # malformed facts / plan
     "SCHEMA_INVALID": "malformed", "FACT_INCOMPLETE": "malformed", "UNKNOWN_SOLID": "malformed", "NO_SOLID": "malformed",
     "DUPLICATE_CALL_ID": "malformed", "DEPENDENCY_CYCLE": "dependency", "DANGLING_DEPENDENCY": "dependency",

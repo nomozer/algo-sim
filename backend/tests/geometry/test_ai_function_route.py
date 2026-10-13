@@ -132,9 +132,12 @@ def test_mau_thuan_do_dai_neu_du_hai_menh_de():
 
 
 def test_cu_27_fixture_van_dung_nguyen():
+    # labels stay historical; NEG2 is now refused one layer earlier (unread premise) — see test_text_to_geometry_functions
+    ma_hien_hanh = {"NEG2": "SOURCE_PREMISE_UNREAD"}
     for c in OLD.values():
         r = _chay(c)
-        assert r.status == c["expect"]["status"] and (r.code == c["expect"].get("code") if r.status == "REFUSED" else True), c["id"]
+        ma = ma_hien_hanh.get(c["id"], c["expect"].get("code"))
+        assert r.status == c["expect"]["status"] and (r.code == ma if r.status == "REFUSED" else True), c["id"]
 
 
 # ── D · adapter Gemini function calling (provider giả) ───────────────────────
@@ -259,7 +262,9 @@ def test_adapter_trung_va_phu_thuoc():
 
 def test_adapter_khong_du_du_kien_va_ngoai_pham_vi_la_tu_choi_co_ma():
     c = _ca()
-    assert _ma(_phan_hoi(c["calls"][:1] + c["calls"][3:])).code == "UNDERDETERMINED_POINT"
+    # the provider dropped two facts: their premise text is now caught as unread before the engine runs
+    # (run source-grounding-completeness; was UNDERDETERMINED_POINT from the engine)
+    assert _ma(_phan_hoi(c["calls"][:1] + c["calls"][3:])).code == "SOURCE_PREMISE_UNREAD"
     oos = OLD["OOS1"]
     assert FC.run_ai_function_route(oos["text"], _Gia(_phan_hoi(oos["calls"]))).code == "OUT_OF_SCOPE"
 

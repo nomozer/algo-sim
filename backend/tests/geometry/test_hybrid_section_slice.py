@@ -210,6 +210,12 @@ def test_triangle_area_next_to_a_section_sentence_is_not_the_section_area():
     """Re-verification of review 2 (I2): the quote mentions "thiết diện" but the question asks the triangle MAB (S² = 13/4)."""
     quote = "Thiết diện của hình chóp S.ABCD cắt bởi (MAB) là hình thang. Tính diện tích tam giác MAB."
     r = _run(HB._mid("f5", "M", "S", "C"), ask("q", quote, "area", solid="S.ABCD", points=list("MAB")))
+    # run source-grounding-completeness: "… là hình thang" is a premise no call reads, so the request is refused as a
+    # whole — the I2 property (never serving the section area for the triangle) still holds: nothing is served.
+    assert (r.status, r.code) == ("REFUSED", "SOURCE_PREMISE_UNREAD"), (r.code, r.reason, r.answers)
+    # without the unread claim the triangle question is bound to the triangle, not the section
+    quote = "Tính diện tích tam giác MAB."
+    r = _run(HB._mid("f5", "M", "S", "C"), ask("q", quote, "area", solid="S.ABCD", points=list("MAB")))
     assert r.status == "SERVED" and HB.answer_square(r.answers["q"]) == F(13, 4), (r.code, r.reason, r.answers)
 
 

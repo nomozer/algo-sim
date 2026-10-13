@@ -38,9 +38,12 @@ def _gan_nhan_chung_hinh_chieu(canh: dict[str, Any], spec: Any, mem: dict[str, A
         o["perpendicular_witness"] = w
 
 
-def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = ()) -> KetQuaTuyen:
-    """`auxiliary` chỉ do `run_fact_route` truyền (điểm phụ của planner); nhánh A không có đường nào đặt nó."""
-    r = dung_tu_loi_goi(problem_text, plan, auxiliary)
+def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = (),
+                       read_quotes: tuple[str, ...] = ()) -> KetQuaTuyen:
+    """`auxiliary` chỉ do `run_fact_route` truyền (điểm phụ của planner); nhánh A không có đường nào đặt nó.
+    `read_quotes` cũng vậy: quote của goal / mệnh đề phủ định mà planner giữ và route kiểm trên hình — đã đọc, không là
+    giả thiết (cổng phủ tiền đề tính chúng là đã đọc)."""
+    r = dung_tu_loi_goi(problem_text, plan, auxiliary, read_quotes)
     if r.status != "SERVED":
         return r
     try:
@@ -70,7 +73,8 @@ def run_fact_route(problem_text: str, facts: Any) -> KetQuaTuyen:
         k = lap_ke_hoach(facts, problem_text)
     except TuChoi as e:
         return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, details=e.data, planner={"version": PLANNER_VERSION})
-    r = run_function_route(problem_text, {"calls": k.calls}, tuple(k.auxiliary))
+    doc = tuple(q for g in (*k.goals, *k.negated) if g.get("call") for q in g["call"]["source"]["quotes"])
+    r = run_function_route(problem_text, {"calls": k.calls}, tuple(k.auxiliary), doc)
     r.planner = {"version": PLANNER_VERSION, "calls": k.calls, "trace": k.trace, "auxiliary": k.auxiliary,
                  "goal_checks": {}, "negated_checks": {}}
     if r.status != "SERVED":

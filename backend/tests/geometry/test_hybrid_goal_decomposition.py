@@ -269,7 +269,10 @@ def test_question_wordings_are_still_served(sentence):
 def test_auxiliary_label_avoids_labels_the_scanner_misreads(sentence, expected):
     q, f = HB._square()
     case = _problem(_dist("Tính khoảng cách từ S đến BD.", "S", "BD"), base=(q + [sentence], f))
-    assert _served(case, F(11)).planner["auxiliary"][0]["label"] == expected
+    # the planner's label choice is the property under test
+    assert PL.lap_ke_hoach({"facts": case["facts"]}, case["text"]).auxiliary[0]["label"] == expected
+    # run source-grounding-completeness: the sentence is a premise no fact reads, so the route refuses it as a whole
+    assert _run(case).code == "SOURCE_PREMISE_UNREAD"
 
 
 def _subscript_collision_code() -> str | None:
@@ -402,9 +405,9 @@ MUTANTS = [
     ("gate: duplicate labels allowed", RG, "_kiem_phu", "if x in nhan_da_khai:", "if False:",
      lambda: _duplicate_label_code() != "AUXILIARY_RULE_MISMATCH"),
     ("planner: scanner-only label choice", PL, "lap_ke_hoach", "| nhan_phu_da_dung(problem_text) |", "|",
-     lambda: _run(_problem(_dist("Tính khoảng cách từ S đến BD.", "S", "BD"),
-                           base=(HB._square()[0] + ["Gọi H₁ là hình chiếu của C lên BD."], HB._square()[1]))).status
-     != "SERVED"),
+     lambda: (lambda c: PL.lap_ke_hoach({"facts": c["facts"]}, c["text"]).auxiliary[0]["label"])(
+         _problem(_dist("Tính khoảng cách từ S đến BD.", "S", "BD"),
+                  base=(HB._square()[0] + ["Gọi H₁ là hình chiếu của C lên BD."], HB._square()[1]))) != "H2"),
     ("gate: no structural match", RG, "_kiem_phu", "if not (dung and hoi and", "if False and not (dung and hoi and",
      lambda: _tampered_code(construct="f1") != "AUXILIARY_RULE_MISMATCH"),
     ("gate: no conditional check", RG, "_kiem_phu",

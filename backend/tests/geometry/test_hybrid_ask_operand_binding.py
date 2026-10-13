@@ -151,8 +151,12 @@ NOT_AN_EQUALITY = [("SA ≥ 3.", "SA ≥ 3.", "3"), ("SA > 3.", "SA > 3.", "3"),
                    ("SA tối đa bằng 3.", "SA tối đa bằng 3.", "3"), ("SA = 3 là sai.", "SA = 3", "3"),
                    ("Độ dài SA bằng 3 khi M trùng S.", "Độ dài SA bằng 3", "3")]
 EQUALITY = [("SA = 3.", "SA = 3."), ("SA bằng 3.", "SA bằng 3."), ("Độ dài SA bằng 3.", "Độ dài SA bằng 3."),
-            ("SA có độ dài 3 cm.", "SA có độ dài 3 cm."), ("SA = 3 và SA vuông góc với AB.", "SA = 3"),
+            ("SA có độ dài 3 cm.", "SA có độ dài 3 cm."),
             ("Cạnh SA dài 3.", "Cạnh SA dài 3."), ("SA = SB = 3.", "SA = SB = 3.")]
+# run source-grounding-completeness: a second clause no call read ("… và SA vuông góc với AB", "… và khối chóp có thể tích
+# bằng 4") is an unread premise — refused as a whole, even when it happens to be true on the figure.
+UNREAD_SECOND_CLAUSE = [("len", "SA = 3 và SA vuông góc với AB.", "SA = 3"),
+                        ("perp", "Cạnh bên SA vuông góc với (ABCD) và khối chóp có thể tích bằng 4.", None)]
 
 
 @pytest.mark.parametrize("sentence,quote,v", NOT_AN_EQUALITY, ids=[s for s, *_r in NOT_AN_EQUALITY])
@@ -194,9 +198,14 @@ NOT_AN_ASSERTION = [
 ASSERTIONS = [
     ("SA vuông góc với (ABCD).", PQ), ("Biết SA vuông góc với (ABCD).", PQ),
     ("Biết SA vuông góc với (ABCD), SC bằng bao nhiêu?", PQ), ("Ta có SA vuông góc với (ABCD).", PQ),
-    ("Cạnh bên SA vuông góc với (ABCD) và khối chóp có thể tích bằng 4.", PQ),
     ("Chứng minh rằng SC = √17, biết SA vuông góc với (ABCD).", PQ),
 ]
+
+
+@pytest.mark.parametrize("kind,sentence,quote", UNREAD_SECOND_CLAUSE, ids=[s for _k, s, _q in UNREAD_SECOND_CLAUSE])
+def test_unread_second_clause_beside_a_given_is_refused(kind, sentence, quote):
+    r = _len_run(sentence, quote, "3") if kind == "len" else _perp_run(sentence, PQ)
+    assert (r.status, r.code) == ("REFUSED", "SOURCE_PREMISE_UNREAD"), (r.code, r.answers)
 
 
 @pytest.mark.parametrize("sentence,quote", NOT_AN_ASSERTION, ids=[s for s, _q in NOT_AN_ASSERTION])
@@ -363,13 +372,34 @@ VALUE_MUTANTS = [
 CLAUSE_MUTANTS = [
     ("new goal markers dropped", '"chứng tỏ", "chỉ ra", "giải thích", "kiểm chứng", "tìm điều kiện",', '"chứng tỏ",',
      ("Hãy chỉ ra rằng SA vuông góc với (ABCD).", PQ)),
-    ("question mark not a question clause", ' or de[ma:mb].rstrip().endswith("?") and not local_given\n', "\n",
-     ("Liệu SA có vuông góc với (ABCD)?", "SA có vuông góc với (ABCD)")),
     ("non-assertion markers dropped", "or bool(_KHONG_KHANG_DINH.search(duoi + q))", "or False",
      ("SA có thể vuông góc với (ABCD).", "SA có thể vuông góc với (ABCD)")),
+    # the whole sentence is quoted so that premise coverage (source-grounding-completeness) is met and only the
+    # disjunction gate decides
     ("disjunction not checked", "or bool(_TUYEN.search(de[ma:mb]))", "or False",
-     ("SA vuông góc với (ABCD) hoặc SB vuông góc với (ABCD).", PQ)),
+     ("SA vuông góc với (ABCD) hoặc SB vuông góc với (ABCD).", "SA vuông góc với (ABCD) hoặc SB vuông góc với (ABCD)")),
 ]
+
+
+def test_question_mark_clause_mutant_is_killed(monkeypatch):
+    """Every sentence with "?" is now also read as a request context (two layers refuse "Liệu SA có vuông góc với
+    (ABCD)?"), so the clause-role line is killed at its own level: the role read inside the "?" clause."""
+    from app.simulation.geometry_functions import registry as RG
+
+    de = "Liệu SA có vuông góc với (ABCD)?"
+    assert RG._vai_tro_tai(de, de.index("vuông")) == "QUESTION"
+    import sys
+    import types
+    from pathlib import Path
+
+    src = Path(RG.__file__).read_text(encoding="utf-8")
+    old = ' or de[ma:mb].rstrip().endswith("?") and not local_given\n'
+    assert src.count(old) == 1
+    m = types.ModuleType(RG.__name__ + "_mutant_q")
+    m.__package__ = RG.__package__
+    monkeypatch.setitem(sys.modules, m.__name__, m)
+    exec(compile(src.replace(old, "\n"), RG.__file__, "exec"), m.__dict__)
+    assert m._vai_tro_tai(de, de.index("vuông")) != "QUESTION", "mutant survived: question mark not a question clause"
 
 
 @pytest.mark.parametrize("name,old,new,case", CLAUSE_MUTANTS, ids=[m[0] for m in CLAUSE_MUTANTS])
