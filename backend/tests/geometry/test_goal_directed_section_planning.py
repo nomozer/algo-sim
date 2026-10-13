@@ -301,6 +301,39 @@ def test_bound_wordings_of_the_derived_section_stay_served(old, new):
     assert HB.answer_square(r.answers["q"]) == 1
 
 
+_DEF = "Dựng mặt phẳng (P) đi qua M và song song với (ABCD)."
+_CUT = "(P) cắt hình chóp S.ABCD theo thiết diện."
+
+
+@pytest.mark.parametrize("between, anaphor_quote", [
+    # final re-review C1: "đó/trên" refers to the NEAREST section in the source, here (MAB)/(SBD), not to (P)
+    ("Xác định thiết diện của hình chóp S.ABCD với (MAB). ", "Tính diện tích thiết diện đó."),
+    ("Xác định thiết diện của hình chóp S.ABCD với (SBD). ", "Tính diện tích thiết diện trên."),
+])
+def test_anaphor_is_read_from_the_source_not_from_the_quotes(between, anaphor_quote):
+    text, payload = _pyramid_problem(construct=False)
+    old_ask = "Tính diện tích thiết diện của hình chóp S.ABCD với (P)."
+    text = text.replace(old_ask, _CUT + " " + between + anaphor_quote)
+    for f in payload["facts"]:
+        if f["id"] == "q":
+            f["quotes"] = [_DEF, _CUT, anaphor_quote]     # the extraction omits the sentence about the other section
+    r = run_fact_route(text, payload)
+    assert r.status == "REFUSED", (r.code, r.answers)
+
+
+@pytest.mark.parametrize("rest", [" và song song với (SBC).", "; (P) vuông góc với SC."])
+def test_definition_is_read_to_the_end_of_the_source_sentence(rest):
+    # final re-review I1: a quote cut right after "(ABCD)" must not hide the rest of the SOURCE sentence
+    text, payload = _pyramid_problem(construct=False)
+    text = text.replace("song song với (ABCD).", "song song với (ABCD)" + rest)
+    short = "Dựng mặt phẳng (P) đi qua M và song song với (ABCD)"
+    for f in payload["facts"]:
+        if f["id"] == "q":
+            f["quotes"] = [short, f["quotes"][1]]
+    r = run_fact_route(text, payload)
+    assert r.status == "REFUSED", (r.code, r.answers)
+
+
 def test_plane_name_defined_twice_is_ambiguous():
     # review minor 5: two definitions of (P) in the source — refuse rather than pick the quoted one
     text, payload = _pyramid_problem()
