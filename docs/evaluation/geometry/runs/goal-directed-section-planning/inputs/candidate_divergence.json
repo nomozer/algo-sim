@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "goal-directed-section-planning-w01",
+  "task": "goal-directed-section-planning",
+  "corrects": "docs/evaluation/geometry/runs/question-local-givens-final-review/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "6110cd67d51838375cc3500f0833bd1c26ef4028dd6cf0c17f042266c0e5ddb5",
+  "current_candidate_source_commit": "68fbc84450c4d9676a9e03612086f29939dc2296",
+  "previous_candidate_hash": "25c85eed5e7433b0f44efdbc2b623cfc416eaf614a411defd547156194bcd438",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "reason": "Research branch research/goal-directed-section-planning. Phase A: closed coverage of follow-up tasks after an asked phrase in registry._kiem_du_kien_cau_hoi (refuses an unread hypothesis change; lengths after the first request must match; modified re-request refused). Phase B: route-B planner decomposition MAT_SONG_SONG (section with the plane through a verified point parallel to a named plane) via planner-only translate_point, engine postconditions, source binding; Typed Facts field plane_relation + fact-extraction prompt rule 8 (route B surface 4a20601f). Route A surface and declarations unchanged. No IR schema, CACHE_VERSION, default-mode or renderer change.",
+  "historical_effect": "No rescoring, pooling or rewriting of historical candidates, locked A/B results, benchmark labels or prior receipts; 25c85eed and its receipts remain retained.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "NOT_EXECUTED; no merge or push in this task",
+  "push": false
+}
