@@ -1,0 +1,860 @@
+{
+  "schema": "two_line_corpus/1",
+  "cases": [
+    {
+      "family": "pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "S"
+        ]
+      ],
+      "expected": "SERVED",
+      "area_sq": "81/16"
+    },
+    {
+      "family": "pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "S"
+        ]
+      ],
+      "expected": "SERVED",
+      "area_sq": "117/16"
+    },
+    {
+      "family": "pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "S"
+        ]
+      ],
+      "expected": "SERVED",
+      "area_sq": "117/16"
+    },
+    {
+      "family": "pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "C",
+          "D"
+        ]
+      ],
+      "expected": "PLANE_NOT_UNIQUE",
+      "area_sq": null
+    },
+    {
+      "family": "pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "D"
+        ]
+      ],
+      "expected": "PLANE_NOT_UNIQUE",
+      "area_sq": null
+    },
+    {
+      "family": "pyramid",
+      "mid": [
+        "B",
+        "C"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "C",
+          "D"
+        ]
+      ],
+      "expected": "PLANE_NOT_UNIQUE",
+      "area_sq": null
+    },
+    {
+      "family": "pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ],
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "area_sq": null
+    },
+    {
+      "family": "pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "D"
+        ]
+      ],
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "area_sq": null
+    },
+    {
+      "family": "pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "S"
+        ]
+      ],
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "area_sq": null
+    },
+    {
+      "family": "pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "S"
+        ]
+      ],
+      "expected": "NO_POLYGON",
+      "area_sq": null
+    },
+    {
+      "family": "pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "S"
+        ]
+      ],
+      "expected": "NO_POLYGON",
+      "area_sq": null
+    },
+    {
+      "family": "pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "C",
+          "S"
+        ],
+        [
+          "D",
+          "S"
+        ]
+      ],
+      "expected": "NO_POLYGON",
+      "area_sq": null
+    },
+    {
+      "family": "triangular_pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "S"
+        ]
+      ],
+      "expected": "SERVED",
+      "area_sq": "9/4"
+    },
+    {
+      "family": "triangular_pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "S"
+        ]
+      ],
+      "expected": "SERVED",
+      "area_sq": "3/4"
+    },
+    {
+      "family": "triangular_pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "S"
+        ]
+      ],
+      "expected": "SERVED",
+      "area_sq": "3/4"
+    },
+    {
+      "family": "triangular_pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ],
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "area_sq": null
+    },
+    {
+      "family": "triangular_pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ]
+      ],
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "area_sq": null
+    },
+    {
+      "family": "triangular_pyramid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "S"
+        ]
+      ],
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "area_sq": null
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "B'"
+        ]
+      ],
+      "expected": "SERVED",
+      "area_sq": "9"
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "A'"
+        ]
+      ],
+      "expected": "SERVED",
+      "area_sq": "9"
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ],
+      "expected": "SERVED",
+      "area_sq": "9"
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A'",
+          "B'"
+        ]
+      ],
+      "expected": "PLANE_NOT_UNIQUE",
+      "area_sq": null
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B'",
+          "C'"
+        ]
+      ],
+      "expected": "PLANE_NOT_UNIQUE",
+      "area_sq": null
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A'",
+          "C'"
+        ]
+      ],
+      "expected": "PLANE_NOT_UNIQUE",
+      "area_sq": null
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ],
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "area_sq": null
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "C"
+        ]
+      ],
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "area_sq": null
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B'",
+          "C'"
+        ]
+      ],
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "area_sq": null
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ]
+      ],
+      "expected": "SECTION_PLANE_IS_FACE",
+      "area_sq": null
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "A'",
+          "C'"
+        ]
+      ],
+      "expected": "SECTION_PLANE_IS_FACE",
+      "area_sq": null
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B'",
+          "C'"
+        ],
+        [
+          "A'",
+          "C'"
+        ]
+      ],
+      "expected": "SECTION_PLANE_IS_FACE",
+      "area_sq": null
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "B",
+        "B'"
+      ],
+      "lines": [
+        [
+          "A",
+          "C"
+        ],
+        [
+          "A",
+          "A'"
+        ]
+      ],
+      "expected": "NO_POLYGON",
+      "area_sq": null
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "B",
+        "B'"
+      ],
+      "lines": [
+        [
+          "A",
+          "C"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ],
+      "expected": "NO_POLYGON",
+      "area_sq": null
+    },
+    {
+      "family": "prism",
+      "mid": [
+        "B",
+        "B'"
+      ],
+      "lines": [
+        [
+          "A'",
+          "C'"
+        ],
+        [
+          "A",
+          "A'"
+        ]
+      ],
+      "expected": "NO_POLYGON",
+      "area_sq": null
+    },
+    {
+      "family": "cuboid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "B",
+          "B'"
+        ]
+      ],
+      "expected": "SERVED",
+      "area_sq": "144"
+    },
+    {
+      "family": "cuboid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "A",
+          "A'"
+        ]
+      ],
+      "expected": "SERVED",
+      "area_sq": "144"
+    },
+    {
+      "family": "cuboid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "B",
+          "C"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ],
+      "expected": "SERVED",
+      "area_sq": "144"
+    },
+    {
+      "family": "cuboid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "C",
+          "D"
+        ]
+      ],
+      "expected": "PLANE_NOT_UNIQUE",
+      "area_sq": null
+    },
+    {
+      "family": "cuboid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A'",
+          "B'"
+        ]
+      ],
+      "expected": "PLANE_NOT_UNIQUE",
+      "area_sq": null
+    },
+    {
+      "family": "cuboid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "C'",
+          "D'"
+        ]
+      ],
+      "expected": "PLANE_NOT_UNIQUE",
+      "area_sq": null
+    },
+    {
+      "family": "cuboid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B",
+          "C"
+        ]
+      ],
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "area_sq": null
+    },
+    {
+      "family": "cuboid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "A",
+          "D"
+        ]
+      ],
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "area_sq": null
+    },
+    {
+      "family": "cuboid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A",
+          "B"
+        ],
+        [
+          "B'",
+          "C'"
+        ]
+      ],
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "area_sq": null
+    },
+    {
+      "family": "cuboid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "C",
+          "D"
+        ],
+        [
+          "C",
+          "C'"
+        ]
+      ],
+      "expected": "SECTION_PLANE_IS_FACE",
+      "area_sq": null
+    },
+    {
+      "family": "cuboid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "C",
+          "D"
+        ],
+        [
+          "D",
+          "D'"
+        ]
+      ],
+      "expected": "SECTION_PLANE_IS_FACE",
+      "area_sq": null
+    },
+    {
+      "family": "cuboid",
+      "mid": [
+        "A",
+        "B"
+      ],
+      "lines": [
+        [
+          "A'",
+          "B'"
+        ],
+        [
+          "B'",
+          "C'"
+        ]
+      ],
+      "expected": "SECTION_PLANE_IS_FACE",
+      "area_sq": null
+    }
+  ]
+}
