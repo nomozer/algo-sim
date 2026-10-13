@@ -1,0 +1,5 @@
+{
+  "raw_sha256_before_cleanup": "87f96e364b61a655f365f05d4f5c7e8c9e40307573293a7a422bed271dfa3bed",
+  "raw_exact_byte_recovery": "NOT_RECOVERABLE after task scratch cleanup; aggregate/failure identity preserved; reproducible from commit1ede4ba3",
+  "receipt": "t3-second-failure.json"
+}

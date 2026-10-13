@@ -10,6 +10,7 @@ import json
 import re
 import subprocess
 import sys
+import warnings
 from pathlib import Path
 
 import pytest
@@ -35,9 +36,17 @@ LEARNER_FIELDS = ("label", "notation", "reference", "role", "display_label")
 
 @pytest.fixture(scope="module")
 def scenes(tmp_path_factory) -> dict[str, dict]:
-    out = tmp_path_factory.mktemp("fixtures")
-    subprocess.run([sys.executable, str(GENERATOR), "--out", str(out)], cwd=ROOT,
-                   check=True, capture_output=True, text=True)
+    for attempt in range(3):
+        out = tmp_path_factory.mktemp("fixtures")
+        generated = subprocess.run([sys.executable, str(GENERATOR), "--out", str(out)], cwd=ROOT,
+                                   capture_output=True, text=True)
+        if generated.returncode == 0 or "[WinError 10013]" not in generated.stderr or attempt == 2:
+            break
+        # Windows intermittently denies asyncio's local socketpair initialization in this sandbox.
+        # Offline fixture generation only; fresh output each time. Never retry a geometry/assertion failure.
+        warnings.warn(f"LOCAL_SOCKET_INIT_DENIED: fixture generator retry {attempt + 2}/3", RuntimeWarning)
+    # Keep the actual child failure visible without the unrelated subprocess implementation traceback.
+    assert generated.returncode == 0, generated.stderr.strip().splitlines()[-1:] or generated.returncode
     return {family: json.loads((out / "fixtures" / f"{family}_positive.json")
                                .read_text(encoding="utf-8"))["envelope"]["scene3d"]
             for family in FAMILIES}

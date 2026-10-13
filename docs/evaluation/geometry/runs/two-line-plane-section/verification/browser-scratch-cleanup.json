@@ -1,0 +1,8 @@
+{
+  "sha256": "6e8281883f7dff27e63f8b6e2bd84dd970209e326a0d613ad89b48a801c267e3",
+  "path": "frontend/debug.log",
+  "bytes": 1920,
+  "action": "delete using native current permissions",
+  "exact_byte_recovery": "NOT_RECOVERABLE after cleanup",
+  "classification": "owned Chromium socket diagnostic; browser/server stopped; no active consumer; retries preserved in browser receipts"
+}

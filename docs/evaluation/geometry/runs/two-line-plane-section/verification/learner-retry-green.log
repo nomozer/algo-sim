@@ -1,0 +1,12 @@
+...............................                                          [100%]
+============================== warnings summary ===============================
+tests/geometry/test_scene3d_learner_surface.py::test_no_machine_or_generic_text_on_the_learner_surface[triangular_pyramid]
+  D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_learner_surface.py:47: RuntimeWarning: LOCAL_SOCKET_INIT_DENIED: fixture generator retry 2/3
+    warnings.warn(f"LOCAL_SOCKET_INIT_DENIED: fixture generator retry {attempt + 2}/3", RuntimeWarning)
+
+tests/geometry/test_scene3d_learner_surface.py::test_no_machine_or_generic_text_on_the_learner_surface[triangular_pyramid]
+  D:\Documents\projects\algo-sim\backend\tests\geometry\test_scene3d_learner_surface.py:47: RuntimeWarning: LOCAL_SOCKET_INIT_DENIED: fixture generator retry 3/3
+    warnings.warn(f"LOCAL_SOCKET_INIT_DENIED: fixture generator retry {attempt + 2}/3", RuntimeWarning)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+31 passed, 2 warnings in 3.96s

@@ -29,3 +29,8 @@ Authoritative T3 later exposed missing benchmark classification `DEGENERATE_LINE
 single-quoted new codes. Guard now reads both quote forms, RED exposes `LINE_CONTAINED_IN_PLANE` too. Added only these
 new request-precondition classes, leaving historical30case labels/oracle unchanged. GREEN205PASS/4xfail;
 no product change, same frozen candidate. Initial full failure is recorded; full T3 rerun required.
+
+Second T3 attempt had31 fixture setup errors from Windows local asyncio socket initialization. The offline generator
+fixture has a bounded retry for exact WinError10013 only;3 attempts, fresh directories, real success required;
+no retry for a geometric assertion. Focused GREEN31PASS with2 reported retry warnings. External policy/ACL untouched,
+no default/provider/product change; full authoritative rerun required, no partial T3 claim.
