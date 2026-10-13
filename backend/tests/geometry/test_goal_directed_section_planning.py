@@ -254,6 +254,11 @@ def test_boundary_face_is_not_a_cutting_section():
     ("song song với (ABCD).", "song song với hai mặt phẳng (ABCD) và (SBC)."),
     ("song song với (ABCD).", "song song với (ABCD) và song song với SB."),
     ("song song với (ABCD).", "song song với (ABCD), (P) cắt SB tại N."),   # unread continuation: conservative refusal
+    # verification of 16ac524a: ";" does not end the definition sentence; a request verb does not license a new condition
+    ("song song với (ABCD).", "song song với (ABCD); (P) song song với (SBC)."),
+    ("song song với (ABCD).", "song song với (ABCD); (P) vuông góc với SC."),
+    ("song song với (ABCD).", "song song với (ABCD) và dựng (P) song song với (SBC)."),
+    ("song song với (ABCD).", "song song với (ABCD), tính chất (P) chứa SB."),
 ])
 def test_derived_plane_must_be_bound_to_its_source_clause(old, new):
     text, payload = _pyramid_problem()
@@ -275,6 +280,25 @@ def test_asked_area_must_name_the_derived_plane(asked):
         f["quotes"] = [x.replace(old, new) for x in f["quotes"]]
     r = run_fact_route(text, payload)
     assert r.status == "REFUSED", (r.code, r.answers)
+
+
+@pytest.mark.parametrize("old, new", [
+    # "the section" by anaphora after "(P) cắt … theo thiết diện" (served at 926c0bf9; refused by 16ac524a, fixed)
+    ("Tính diện tích thiết diện của hình chóp S.ABCD với (P).",
+     "(P) cắt hình chóp S.ABCD theo thiết diện. Tính diện tích thiết diện đó."),
+    # the section request continuing the definition sentence
+    ("song song với (ABCD).", "song song với (ABCD), xác định thiết diện của hình chóp S.ABCD với (P)."),
+])
+def test_bound_wordings_of_the_derived_section_stay_served(old, new):
+    text, payload = _pyramid_problem()
+    text = text.replace(old, new)
+    for f in payload["facts"]:
+        f["quotes"] = [x.replace(old, new) for x in f["quotes"]]
+        if f["id"] == "q" and "(P) cắt" in new:
+            f["quotes"] = [f["quotes"][0], *new.split(". ")[:1], new.split(". ")[1]]
+    r = run_fact_route(text, payload)
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert HB.answer_square(r.answers["q"]) == 1
 
 
 def test_plane_name_defined_twice_is_ambiguous():

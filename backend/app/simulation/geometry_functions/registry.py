@@ -1362,11 +1362,21 @@ _QUA_SONG_SONG = re.compile(
     rf"(?:(?:mặt phẳng|mp)\s*)?(?:\((?P<ten>{_P1}|[α-ω])\)\s*)?(?:là\s+mặt phẳng\s+)?(?:đi\s+)?qua\s+(?:điểm\s+)?"
     rf"(?P<diem>{_P1})(?![\w'])\s*,?\s*(?:và\s+)?song song\s+(?:với\s+)?" + _MAT_TOAN_HANG, re.IGNORECASE)
 _DAN_THIET_DIEN = rf"thiết diện\s+(?:của\s+)?{_KHOI_NGU}(?:với|cắt bởi|tạo bởi|bởi)\s+"
-#: The definition clause ends right after the reference plane: a sentence end, or a new request. Anything else ("… và song
-#: song với (SBC)", "(P) cắt SB tại N") is an unread condition on the plane — refused, not ignored.
-_HET_DINH_NGHIA = re.compile(r"\s*(?:[.;?!](?=\s|$)|$|,?\s*(?:(?:rồi|sau đó|và)\s+)?(?:hãy\s+)?(?=(?:xác định|dựng|vẽ|tìm|tính)(?!\w)))",
-                             re.IGNORECASE)
+#: The definition sentence ends right after the reference plane (a real sentence end — ";" is not one), or its rest is
+#: exactly the section request on the named plane. Anything else ("… và song song với (SBC)", "; (P) vuông góc với SC",
+#: "(P) cắt SB tại N") is an unread condition on the plane — refused, not ignored.
+_HET_CAU = re.compile(r"[.?!](?=\s|$)")
 _TU_THIET_DIEN = len("thiết diện")
+
+
+def _het_dinh_nghia(qn: str, m: re.Match) -> bool:
+    het = _HET_CAU.search(qn, m.end())
+    con = qn[m.end():het.start() if het else len(qn)]
+    if not con.strip():
+        return True
+    return bool(m["ten"]) and re.fullmatch(
+        rf"\s*[,;]?\s*(?:(?:và|rồi|sau đó)\s+)?(?:hãy\s+)?(?:xác định|tìm|tính)(?:\s+diện tích(?:\s+của)?)?\s+{_DAN_THIET_DIEN}"
+        rf"(?:(?:mặt phẳng|mp)\s*)?\({re.escape(m['ten'])}\)\s*", con, re.IGNORECASE) is not None
 _HOI_DIEN_TICH_THIET_DIEN = re.compile(r"diện tích\s+(?:của\s+)?thiết diện", re.IGNORECASE)
 
 
@@ -1402,7 +1412,7 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
         for m in _QUA_SONG_SONG.finditer(qn):
             if m["diem"] != p or _tap_mat(m, 3, day) != frozenset(q):
                 continue
-            if not vai_tro_ok(s, goc + m.start(), m[0]) or not _HET_DINH_NGHIA.match(qn, m.end()):
+            if not vai_tro_ok(s, goc + m.start(), m[0]) or not _het_dinh_nghia(qn, m):
                 return False
             if m["ten"]:
                 ten_mat.add(m["ten"])
@@ -1427,7 +1437,16 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
         # the asked "diện tích thiết diện" must be the section of (P) itself, not some other section in the quotes
         hoi = [(vt[0] + h.start(), vt[0] + h.end()) for quote in c.quotes if (vt := _vi_tri(de, quote))
                for h in _HOI_DIEN_TICH_THIET_DIEN.finditer(chuan_hoa(quote))]
-        if not any(_duoc_hoi(de, a, b) and _vai_tro_tai(de, a) not in ("GOAL", "CONDITIONAL") and b - _TU_THIET_DIEN in gan
+        moi_td = {goc + t.start() for qn, goc, _s in doan for t in re.finditer("thiết diện", qn, re.IGNORECASE)}
+
+        def la_cua_p(b: int) -> bool:
+            if b - _TU_THIET_DIEN in gan:
+                return True
+            # "thiết diện đó / này / trên": only when every other section mentioned in the quotes is the bound one
+            khac = moi_td - {b - _TU_THIET_DIEN}
+            return bool(re.match(r"\s+(?:đó|này|trên)(?![\w'])", de[b:], re.IGNORECASE)) and bool(khac) and khac <= gan
+
+        if not any(_duoc_hoi(de, a, b) and _vai_tro_tai(de, a) not in ("GOAL", "CONDITIONAL") and la_cua_p(b)
                    for a, b in hoi):
             return False
     if thiet_dien and ten_ra is not None:
