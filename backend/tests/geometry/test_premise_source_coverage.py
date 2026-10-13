@@ -278,6 +278,91 @@ def test_exam_layouts_and_verified_role_nouns_stay_served(arm, text, f4quote):
     assert HB.answer_square(r.answers["q"]) == 17
 
 
+# ── final verification of 90ce6497: chained goals and solid heights were refused (Important), lead-ins before a goal ──
+CHAINED = ["Chứng minh BD ⊥ (SAC) rồi suy ra BD ⊥ SC.", "Chứng minh SC ⊥ BD rồi suy ra BD ⊥ SC.",
+           "Chứng minh BD ⊥ (SAC), từ đó suy ra BD ⊥ SC.", "Hãy chứng minh SC ⊥ BD.", "Em hãy chứng minh SC ⊥ BD.",
+           "Từ đó suy ra SC ⊥ BD."]
+
+
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("extra", CHAINED)
+def test_chained_goals_and_goal_lead_ins_stay_served(arm, extra):
+    r = _with_premise(extra, arm)
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert HB.answer_square(r.answers["q"]) == 17
+
+
+@pytest.mark.parametrize("extra", CHAINED)
+def test_chained_goal_with_a_prove_fact_stays_served(extra):
+    base, facts = HB._square()
+    goal = HB._f("g", "perpendicular", extra.rstrip("."), role="prove", points_a=["S", "C"], points_b=["B", "D"])
+    r = run_fact_route(" ".join(base) + " " + extra + " " + ASK, {"facts": facts + [goal, HB._ask("q", ASK, "length",
+                                                                                                   points=["S", "C"])]})
+    assert r.status == "SERVED", (r.code, r.reason)
+
+
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("extra", [
+    "Chứng minh SC ⊥ BD rồi suy ra SA = 5.", "Chứng minh SC ⊥ BD, từ đó đổi SA thành 5.", "Hãy đổi SA thành 5.",
+    "Chứng minh SC ⊥ BD rồi chứng minh BD ⊥ SA với SA = 5.", "Chứng minh SC ⊥ BD rồi suy ra đáy là hình chữ nhật, SA = 5.",
+])
+def test_a_chained_goal_does_not_carry_a_change(arm, extra):
+    assert _with_premise(extra, arm).status == "REFUSED"
+
+
+def _bench(cid: str, sentence: str, before: str, quote_of: tuple[str, str] | None = None):
+    c = next(x for x in HB.cases() if x["id"] == cid)
+    assert before in c["text"]
+    facts = [dict(f) for f in c["facts"]]
+    if quote_of:
+        facts = [{**f, "quotes": [quote_of[1]]} if f["id"] == quote_of[0] else f for f in facts]
+    return c["text"].replace(before, sentence + " " + before), facts
+
+
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("cid, text, before, quote_of", [
+    ("B04", "Chiều cao AA' = 3.", "AA' = 3.", ("f3", "AA' = 3")),          # right prism: lateral edge is the height
+    ("B04", "Đường cao AA'.", "Tính thể tích", None),
+    ("B30", "Đường cao SO.", "Tính độ dài SO.", None),                       # regular pyramid: apex → base centre
+    ("B30", "Chiều cao SO.", "Tính độ dài SO.", None),
+])
+def test_heights_of_right_prisms_and_regular_pyramids_stay_served(arm, cid, text, before, quote_of):
+    t, facts = _bench(cid, text, before, quote_of)
+    if quote_of:
+        t = t.replace(text + " " + before, text)
+    r = _route(t, facts, arm)
+    assert r.status == "SERVED", (r.code, r.reason)
+
+
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("cid, text, before", [
+    ("B04", "Đường cao AB'.", "Tính thể tích"), ("B30", "Đường cao SA.", "Tính độ dài SO."),
+    ("B30", "Chiều cao AO.", "Tính độ dài SO."),
+])
+def test_a_wrong_height_of_a_solid_is_refused(arm, cid, text, before):
+    t, facts = _bench(cid, text, before)
+    assert _route(t, facts, arm).status == "REFUSED"
+
+
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("extra, status", [
+    ("Làm tròn đến 2 chữ số thập phân.", "SERVED"), ("Ghi kết quả đến 2 chữ số sau dấu phẩy.", "SERVED"),
+    ("Làm tròn kết quả, độ dài là 5.", "REFUSED"), ("Làm tròn đến hàng phần mười, đơn vị độ dài là 5 cm.", "REFUSED"),
+])
+def test_a_note_holds_a_number_only_as_a_digit_count(arm, extra, status):
+    assert _with_premise(extra, arm).status == status
+
+
+@pytest.mark.parametrize("arm", ARMS)
+def test_lateral_edge_of_an_oblique_prism_is_not_a_height(arm):
+    # the engine would refuse the layout anyway (UNDERDETERMINED_POINT); the premise gate must refuse the claim first
+    t, facts = _bench("B04", "Đường cao AA'.", "Tính thể tích")
+    t = t.replace("lăng trụ đứng", "lăng trụ")
+    facts = [{**f, "quotes": [q.replace("lăng trụ đứng", "lăng trụ") for q in f["quotes"]],
+              **({"right": False} if f["id"] == "f1" else {})} for f in facts]
+    assert _route(t, facts, arm).code == "SOURCE_PREMISE_UNREAD"
+
+
 @pytest.mark.parametrize("arm", ARMS)
 def test_relabelling_keeps_both_verdicts(arm):
     assert _with_premise("", arm, names="TEFGK").status == "SERVED"

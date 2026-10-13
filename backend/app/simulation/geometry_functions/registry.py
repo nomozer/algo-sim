@@ -1183,18 +1183,36 @@ def _vai_tro_doi_tuong_khop(danh: str, nhan: list[str], calls: tuple[LoiGoi, ...
                 s == {day[i], day[(i + 1) % len(day)], tren[i], tren[(i + 1) % len(tren)]}
                 for _d, day, tren in khoi if tren for i in range(len(day)))
         elif r in ("chiều cao", "đường cao"):
+            # a height is stated by a call: line ⊥ base, altitude / projection of the apex, lateral edge of a RIGHT prism,
+            # apex → base centre of a REGULAR pyramid (centre named by a centroid or by two long diagonals of the base)
             ok = any(c.fn == "perpendicular_line_plane" and set(c.args.line) == s
                      and any(set(c.args.plane) <= set(day) for _d, day, _t in khoi) for c in calls) or any(
-                c.fn == "altitude" and {c.args.apex, c.args.foot} == s for c in calls)
+                c.fn == "altitude" and {c.args.apex, c.args.foot} == s for c in calls) or any(
+                c.fn == "orthogonal_projection" and {c.args.point, c.args.image} == s and any(
+                    d == c.args.point and set(c.args.plane) <= set(day) for d, day, _t in khoi) for c in calls) or any(
+                c.fn == "prism" and c.args.right and s in [{b, t} for b, t in zip(c.args.base, c.args.top)]
+                for c in calls) or any(
+                c.fn == "regular_pyramid" and s in [{c.args.apex, o} for o in _tam_day(c.args.base, calls)] for c in calls)
         else:                                            # đỉnh
             ok = len(s) == 1 and any(s <= ({d} if d else set()) | set(day) | set(tren) for d, day, tren in khoi)
         if not ok:
             return False
     return True
+
+
+def _tam_day(day: list[str], calls: tuple[LoiGoi, ...]) -> set[str]:
+    """Points a call names as the centre of a regular base: its centroid, or the meet of two long diagonals."""
+    n = len(day)
+    cheo = [{day[i], day[i + n // 2]} for i in range(n // 2)] if n % 2 == 0 else []
+    return {c.args.point for c in calls if c.fn == "centroid" and set(c.args.polygon) == set(day)} | {
+        c.args.point for c in calls if c.fn == "intersect_line_line" and set(c.args.line1) in cheo
+        and set(c.args.line2) in cheo and set(c.args.line1) != set(c.args.line2)}
+
+
 #: A note is a premise segment made ONLY of these words (instructions about the answer, never about the figure); closed.
 _GHI_CHU = re.compile(r"[\s,;:.()!\-–]*(?:(?:lưu ý|chú ý|ghi chú|gợi ý|hãy|trình bày|giải|làm tròn|làm|viết|ghi|nêu|lời giải"
                       r"|bài toán|kết quả|đáp số|ngắn gọn|đầy đủ|chi tiết|rõ ràng|để|ở|dưới|dạng|căn thức|phân số"
-                      r"|số thập phân|đến|hàng|phần|mười|trăm|nghìn|chữ số|sau|dấu phẩy|đơn vị|độ dài|là|cm|dm|mm|m|đvđd"
+                      r"|số thập phân|thập phân|đến|hàng|phần|mười|trăm|nghìn|chữ số|sau|dấu phẩy|đơn vị|độ dài|là|cm|dm|mm|m|đvđd"
                       r"|vẽ hình|minh hoạ|minh họa|\d+)(?!\w)[\s,;:.()!\-–]*)*", re.IGNORECASE)
 
 
@@ -1234,8 +1252,8 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             x = mo.start()                               # read only from the goal opener on, never what precedes it
         if not (_vai_tro_tai(de, max(x, y - 1)) == "GOAL" or _phu_dinh(de, x, q)):
             continue                                     # a "prove" label on a plain premise reads nothing
-        if k := _KET_MUC_TIEU.search(de, x, y):
-            y = k.start()                                # read only up to its first given / condition
+        if (k := _ket_muc_tieu(de, x, y)) is not None:
+            y = k                                        # read only up to its first given / condition
         doc[x:min(y, het)] = [True] * max(0, min(y, het) - x)
     dung = {n for c in calls for n in nhan_cua_loi_goi(c)}
     da_dung: set[int] = set()                            # call values already backing a number
@@ -1248,20 +1266,20 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             continue
         gd = _GIAN_DAN.match(de, a, b)
         a0 = gd.end() if gd else a
-        if _GHI_CHU.fullmatch(de, a0, b) and (not re.search(r"\d", de[a0:b]) or re.search(r"làm tròn", de[a0:b], re.I)):
-            continue                                     # a note in closed words only (a number only in a rounding note)
-        if _MO_MUC_TIEU.match(de, a0, b):
+        if _GHI_CHU.fullmatch(de, a0, b) and not re.search(r"\d+(?![\d\s]*chữ số)", de[a0:b], re.I):
+            continue                                     # a note in closed words only (a number only as "N chữ số")
+        if _mo_muc_tieu(de, a0, b):
             # a goal is something to show, never a hypothesis — up to the first given / condition marker or clause
-            # boundary; a length it states may not contradict a validated value of the same segment ("Suy ra SA = 5")
-            k = _KET_MUC_TIEU.search(de, a0, b)
-            for d in _DO_DAI_CUC_BO.finditer(de, a0, k.start() if k else b):
+            # boundary not opening a chained goal; a length it states may not contradict a validated value ("Suy ra SA = 5")
+            k = _ket_muc_tieu(de, a0, b)
+            for d in _DO_DAI_CUC_BO.finditer(de, a0, b if k is None else k):
                 v = _doc(d)
                 for seg in [p for _x, _y, parts in _tu_nhan(de[d.start():d.start("number")]) for p in parts if len(p) == 2]:
                     if v is not None and (cand := _nguon_do_dai_cuc_bo(calls, seg)) and all(w != v for w, _i in cand):
                         raise TuChoi("INCONSISTENT_FACTS", "điều phải chứng minh nêu một độ dài khác giá trị đã xác thực")
-            if not k:
+            if k is None:
                 continue
-            a0 = k.start()
+            a0 = k
         ten = set()
         for t in _TEN_DOI_TUONG.finditer(de, a0, b):
             nh = [n for _x, _y, phan in _tu_nhan(t["nhan"]) for p in phan for n in p]
@@ -1457,6 +1475,26 @@ _VIEC_KE_TIEP_RE = re.compile(rf"(?<!\w)(?:{_VIEC_KE_TIEP})(?!\w)", re.IGNORECAS
 _KET_MUC_TIEU = re.compile("|".join((_DUNG_GAN.pattern, _DIEU_KIEN.pattern, _VIEC_KE_TIEP_RE.pattern,
                                      r"(?<!\w)(?:đồng thời|trường hợp|lúc|sau khi|mà|nhưng|tuy nhiên)(?!\w)", r"[,;]")),
                            re.IGNORECASE)
+#: Between one goal and the next ("… rồi suy ra …", ", từ đó suy ra …") and before a goal ("Hãy / Em hãy / Từ đó …").
+_NOI_MUC_TIEU = re.compile(r"[\s,;:]*(?:(?:và|rồi|từ đó|sau đó|tiếp theo|tiếp đó|đồng thời|ta|hãy|em|vậy)(?!\w)[\s,:]*)*",
+                           re.IGNORECASE)
+
+
+def _mo_muc_tieu(de: str, a: int, b: int) -> re.Match | None:
+    """The goal opener of `de[a:b]`, after closed lead-in words only."""
+    return _MO_MUC_TIEU.match(de, _NOI_MUC_TIEU.match(de, a, b).end(), b)
+
+
+def _ket_muc_tieu(de: str, a: int, b: int) -> int | None:
+    """Where the goal clause starting at `a` ends: its first `_KET_MUC_TIEU` marker NOT followed by another goal
+    (a chained goal is a goal too, read the same way); None when it runs to `b`."""
+    while k := _KET_MUC_TIEU.search(de, a, b):
+        if not (mo := _mo_muc_tieu(de, k.start(), b)):
+            return k.start()
+        a = mo.end()
+    return None
+
+
 #: What a follow-up task may contain once its assertions are covered: given words, a comparison of named objects, a
 #: rounding instruction. Closed: a change written in any other words ("tăng SA gấp đôi", "thay SA bằng SB") is unread.
 _SAU_VIEC_KE_TIEP = re.compile(

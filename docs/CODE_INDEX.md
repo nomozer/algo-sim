@@ -1,5 +1,14 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Premise source coverage — research branch
+
+Run: `docs/evaluation/geometry/runs/source-grounding-completeness/`. No new module, parser or fact state; the gate only refuses.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/registry.py` — `_kiem_vung_tien_de` (called by `_kiem_du_kien_cau_hoi`), `_NOI_TIEN_DE`, `_GIAN_DAN`, `_GHI_CHU`, `_TEN_DOI_TUONG`, `_vai_tro_doi_tuong_khop`, `_tam_day`, `_KET_MUC_TIEU`, `_NOI_MUC_TIEU`, `_mo_muc_tieu`, `_ket_muc_tieu`; code `SOURCE_PREMISE_UNREAD` | Every premise sentence before the first request is read: outside sentence-local quotes of validated calls only closed connectors, exam scaffolding, closed notes, names of used objects (role nouns verified against calls) and goal clauses (chained goals included; a length they state must match) may remain; each number is bound once to the quote of a call carrying that value | `backend/tests/geometry/test_premise_source_coverage.py` (route A/B, RED at `7767c7e1`, review regressions, positive controls, relabelling) |
+| `registry.kiem_nguon(..., read_quotes)` · `engine.dung_tu_loi_goi(..., read_quotes)` · `app/ai/function_route.py` `run_function_route(..., read_quotes)` | Route B passes the quotes of goal / negated facts; they count only where the gate itself reads a goal or a negation, from the goal opener on | same |
+
 ## Goal-directed section planning — research branch
 
 Run: `docs/evaluation/geometry/runs/goal-directed-section-planning/`. No new module, engine, compiler or fact store.
