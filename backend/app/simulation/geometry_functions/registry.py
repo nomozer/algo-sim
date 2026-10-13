@@ -1153,8 +1153,13 @@ _GIAN_DAN = re.compile(r"\s*(?:(?:bài|câu|ví dụ)\s*\d+\s*[.:)]|\(\s*\d+(?:[
 #: Nouns that only NAME an object (never a shape predicate such as "hình vuông", "tam giác").
 _DANH_TU_DOI_TUONG = (r"mặt phẳng|mặt đáy|mặt bên|mặt|đáy|đường thẳng|đoạn thẳng|đoạn|cạnh bên|cạnh đáy|cạnh|điểm|đỉnh"
                       r"|hình chóp|khối chóp|hình lăng trụ|khối lăng trụ|hình hộp|khối hộp|tứ diện|khối")
-#: A segment naming none of these, no label and no number is a note, not a hypothesis (classification only: anything that
-#: names geometry and is not read is refused).
+#: Closed note forms: a premise segment may be exempt as a note only if it opens with one of these AND names no geometry.
+_GHI_CHU = re.compile(r"\s*(?:lưu ý|chú ý|ghi chú|gợi ý|hãy\s+(?:trình bày|giải|làm|viết|ghi|nêu))(?!\w)", re.IGNORECASE)
+_YEU_CAU_HIEN_THI = re.compile(r"\s*(?:hãy\s+)?vẽ\s+hình(?:\s+minh\s+ho[ạa])?\s*[.!]?\s*", re.IGNORECASE)
+#: Where a goal clause ends: the first given / condition marker or clause boundary — what follows can be a hypothesis.
+_MO_GIA_THIET = re.compile(r"(?<!\w)(?:biết|cho|trong đó|khi|nếu|giả sử|trường hợp|lúc|sau khi|mà)(?!\w)|[,;]",
+                           re.IGNORECASE)
+#: Classification for notes: a segment naming any of these, a label or a number is never a note.
 _TU_HINH_HOC = re.compile(r"(?<!\w)(?:đáy|cạnh|mặt|góc|đường|điểm|đoạn|độ dài|cao|thể tích|diện tích|song song|vuông|thiết diện"
                           r"|giao|tâm|bán kính|hình|khối|trung điểm|trọng tâm|chiếu|đều|chữ nhật|tam giác|tứ giác|lục giác"
                           r"|chóp|lăng trụ|hộp|lập phương|tứ diện|cầu|trụ|nón)(?!\w)", re.IGNORECASE)
@@ -1185,6 +1190,8 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
                 nhip = ([(m.start(), m.end()) for mau in (*_CAT_BOI, _GIAO_TUYEN) for m in mau.finditer(de, *vt)]
                         if c is not None and c.fn in ("section", "ask_section_area", "intersection_line") else [])
             for x, y in nhip:
+                if c is None and (gt := _MO_GIA_THIET.search(de, x, y)):
+                    y = gt.start()                       # a goal / negated quote is read only up to its first given
                 co[x:min(y, het)] = [True] * max(0, min(y, het) - x)
     nhan = nhan_cua_de(de)
     dung = {n for c in calls for n in nhan_cua_loi_goi(c)}
@@ -1199,12 +1206,11 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
         gd = _GIAN_DAN.match(doan)
         a0 = a + (gd.end() if gd else 0)
         if _MO_MUC_TIEU.match(doan):
-            # a goal is something to show, never a hypothesis — but a given introduced inside it ("…, biết SA = 5") is
-            # read from its marker on
-            dan = re.search(r"(?<!\w)(?:biết|cho|với|trong đó|khi|nếu|giả sử)(?!\w)", de[a0:b], re.IGNORECASE)
-            if not dan:
+            # a goal is something to show, never a hypothesis — but only up to its first given / condition marker or
+            # clause boundary ("…, biết SA = 5", "… lúc SA = 5", "…, đáy ABCD là hình chữ nhật"): the rest is read
+            if not (dan := _MO_GIA_THIET.search(de, a0, b)):
                 continue
-            a0 += dan.start()
+            a0 = dan.start()
         con = "".join(" " if phu[i] or doc[i] else de[i] for i in range(a0, b))
         # naming an object the calls already use ("đáy ABC", "(SBC)", "hình chóp S.ABC") asserts nothing about it
         ten_dt = re.sub(rf"(?<![\w'])(?:(?:{_DANH_TU_DOI_TUONG})\s*)?\(?(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?\)?(?![\w'])",
@@ -1212,7 +1218,9 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
                         con, flags=re.IGNORECASE)
         mang_hinh = (_TU_HINH_HOC.search(con) or any(n in nhan for _x, _y, phan in _tu_nhan(con) for p in phan for n in p)
                      or re.search(r"\d|√|π", con))
-        if not _NOI_TIEN_DE.fullmatch(ten_dt) and mang_hinh:
+        # a note is exempt only in a closed note form AND naming no geometry; a display request is a closed form too
+        ghi_chu = (_GHI_CHU.match(de, a0, b) and not mang_hinh) or _YEU_CAU_HIEN_THI.fullmatch(de[a0:b])
+        if not _NOI_TIEN_DE.fullmatch(ten_dt) and not ghi_chu:
             raise TuChoi("SOURCE_PREMISE_UNREAD", f"tiền đề {de[a0:b].strip()!r} chưa được lời gọi nào đọc — có thể đổi "
                          "hình; không dùng mô hình cũ")
         chua_doc = "".join(" " if doc[i] else de[i] for i in range(a0, b))

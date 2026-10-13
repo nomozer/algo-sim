@@ -41,7 +41,30 @@ CHANGES = [
     "Biết thêm SB = 7.",
     "Giả sử SA = 5.",
     "Chứng minh SC vuông góc với BD, biết SA = 5.",          # a given hidden inside a goal sentence
+    # interrupted independent review (partial probes): changes with no label, number or listed geometry word, and
+    # hypotheses after a goal clause, were served
+    "Nhân đôi mọi kích thước.",
+    "Bỏ giả thiết thứ ba.",
+    "Phóng to gấp ba lần.",
+    "Đỉnh được nâng lên gấp đôi.",
+    "Chứng minh SC ⊥ BD trường hợp SA = 5.",
+    "Chứng minh SC ⊥ BD lúc SA = 5.",
+    "Chứng minh SC ⊥ BD, đáy ABCD là hình chữ nhật.",
 ]
+
+
+@pytest.mark.parametrize("sentence", ["Chứng minh SC vuông góc với BD, biết SA = 5.",
+                                      "Chứng minh SC vuông góc với BD trong khi SA = 5.",
+                                      "Chứng minh SC vuông góc với BD và đáy là hình chữ nhật."])
+def test_goal_fact_quote_does_not_cover_a_hypothesis(sentence):
+    # route B: the whole sentence extracted as ONE prove fact must not make its given part "read"
+    base, facts = HB._square()
+    goal = HB._f("g", "perpendicular", sentence, role="prove", points_a=["S", "C"], points_b=["B", "D"])
+    q = HB._ask("q", ASK, "length", points=["S", "C"])
+    r = run_fact_route(" ".join(base) + " " + sentence + " " + ASK, {"facts": facts + [goal, q]})
+    if "và đáy" in sentence:
+        pytest.xfail("bounded: a hypothesis joined to a goal by 'và' with no marker stays inside the goal clause")
+    assert r.status == "REFUSED", (r.code, r.answers)
 
 
 @pytest.mark.parametrize("arm", ARMS)
@@ -109,6 +132,8 @@ def test_goal_directed_decomposition_reads_its_premises():
     "Chứng minh SC vuông góc với BD.",                    # a goal: something to show, never a hypothesis
     "Hãy trình bày lời giải ngắn gọn.",                   # a note with no geometry
     "Lưu ý: kết quả để ở dạng căn thức.",
+    "Hãy vẽ hình minh hoạ.",                               # a display request
+    "Bài 5.",                                             # scaffolding
 ])
 def test_non_hypothesis_premise_text_stays_served(arm, extra):
     r = _with_premise(extra, arm)
