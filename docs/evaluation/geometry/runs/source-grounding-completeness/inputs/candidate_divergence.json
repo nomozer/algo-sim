@@ -6,9 +6,12 @@
   "run_id": "thesis-final-20260908T160224Z",
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
-  "current_candidate_hash": "d84cd3737e5b56c92d91c0f9718e6780163971bb48939613bb0e1328073fe821",
-  "current_candidate_source_commit": "f8ac9f4b2747ad49655fe9f16182d41771b729cf",
+  "current_candidate_hash": "46ca75a2f1a60dd4e554936cf918b310c49fc4c694039f86bd3d3cbeaaf559af",
+  "current_candidate_source_commit": "b264828f7e058ece54aee13d91731e80b7341a4a",
   "previous_candidate_hash": "fd80c8c9400882822e31008c6e839bd1750a47074f9b543164cf3f14f2f2c128",
+  "superseded_within_run": {
+    "d84cd3737e5b56c92d91c0f9718e6780163971bb48939613bb0e1328073fe821": "frozen at product f8ac9f4b (commit 63ec673f); superseded by b264828f before any measurement or receipt (its T3 was stopped and discarded)"
+  },
   "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
   "diverged": true,
   "reason": "Premise source coverage on the Hybrid research route: every premise sentence before the first request must be read by a validated call (registry._kiem_vung_tien_de inside _kiem_du_kien_cau_hoi, code SOURCE_PREMISE_UNREAD); route B passes goal / negated quotes as read quotes (kiem_nguon / engine.dung_tu_loi_goi / function_route read_quotes). Gate-only: no provider surface, IR schema, CACHE_VERSION, default-mode or renderer change.",
