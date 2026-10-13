@@ -9,9 +9,11 @@
 ## 0. Canonical Next Action
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_SOURCE_GROUNDING_COMPLETENESS
+CANONICAL_NEXT_ACTION = SOURCE_GROUNDING_COMPLETENESS_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
+
+- **Premise source coverage (LOCAL research, 2026-10-13):** nhánh `research/source-grounding-completeness` từ `7767c7e1`, chưa merge/push. Mọi câu tiền đề trước yêu cầu đầu tiên phải được lời gọi đã xác minh đọc (`SOURCE_PREMISE_UNREAD`), tuyến A/B, hỏi/dựng/phụ trợ/mặt dẫn xuất. Bốn vòng review độc lập, Critical/Important đóng RED→GREEN. Product `b264828f`, candidate `46ca75a2…` (`046ab48a`), T3 clean PASS (backend 9143, frontend 1053), benchmark byte-identical, bề mặt provider giữ nguyên. Run [`source-grounding-completeness`](evaluation/geometry/runs/source-grounding-completeness/report.md). Việc kế tiếp: quyết định tích hợp của người dùng; đề xuất sau đó: mở rộng planner hướng mục tiêu sang một họ dựng mới.
 
 - **Goal-directed section planning trên `main` + `origin/main` (2026-10-13):** `b653d381`, T3 clean PASS, run [`goal-directed-section-planning-main-integration`](evaluation/geometry/runs/goal-directed-section-planning-main-integration/report.md). Việc kế tiếp: wave nghiên cứu phủ nguồn cho câu tiền đề ngoài mọi quote (`ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS`, phần còn mở).
 

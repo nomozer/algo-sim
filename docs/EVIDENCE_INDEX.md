@@ -1,5 +1,23 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SOURCE_GROUNDING_COMPLETENESS
+
+REPORT = docs/evaluation/geometry/runs/source-grounding-completeness/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-grounding-completeness/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = RESEARCH_BRANCH_T3_PASS_AWAITING_INTEGRATION_DECISION
+CODE_COMMIT = b264828f
+VERIFICATION_COMMIT = 046ab48a
+MODEL_REQUEST_COUNT = 0
+
+Premise source coverage in the shared A/B gate (`SOURCE_PREMISE_UNREAD`). RED at 7767c7e1: 130 failed / 79 passed.
+Four independent LOCAL reviews (two BLOCKING), Critical/Important closed RED → GREEN. Candidate 46ca75a2 (divergence
+layer in `inputs/` extends the goal-directed main-integration layer; d84cd373 superseded before any measurement).
+Clean detached T3 at 046ab48a PASS: backend 9143, frontend 1053, build/demo/crash PASS. Benchmark byte-identical.
+Machine receipt: `runs/source-grounding-completeness/verification/t3.log`, SHA256
+`e4813748ed1b5c99223685a9e3f4aa92ac13ba77ccae3a6e79a2ba5841efafe4`.
+
 ## WAVE_ID = GOAL_DIRECTED_SECTION_PLANNING_MAIN_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/goal-directed-section-planning-main-integration/report.md

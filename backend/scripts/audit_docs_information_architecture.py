@@ -173,6 +173,8 @@ ALLOWED_CANONICAL_ACTIONS = [
     "GOAL_DIRECTED_SECTION_INTEGRATION_DECISION",
     # goal-directed-section-planning-main-integration (2026-10-13): on origin/main; next is the source-grounding wave.
     "HYBRID_SOURCE_GROUNDING_COMPLETENESS",
+    # source-grounding-completeness (2026-10-13): premise coverage on a research branch; next is the user's integration decision.
+    "SOURCE_GROUNDING_COMPLETENESS_INTEGRATION_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

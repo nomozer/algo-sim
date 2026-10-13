@@ -2,7 +2,7 @@
 
 ## LOCAL override — 2026-10-12 (ưu tiên hơn snapshot §2)
 
-Goal-directed section planning đã trên `main` = `origin/main` = `b653d381` (run `goal-directed-section-planning-main-integration`: review cuối, candidate `fd80c8c9…`, T3 clean `b653d381` PASS backend 8934); nhánh đã xoá. Nội dung lát: Phase A đóng lỗ hở đổi giả thiết sau "sau đó"/"rồi" bằng luật đóng; Phase B planner tuyến B tự phân rã thiết diện với mặt qua điểm đã xác minh song song mặt có tên (`MAT_SONG_SONG`). Candidate `6110cd67…`, T3 clean `a443d2a2` PASS (backend 8925, frontend 1053), benchmark 19/9/0/2, Scene3D harness SwiftShader+GPU PASS, bề mặt B `4a20601f…`. Run `goal-directed-section-planning`. Trước đó: Phase 2 question-local givens trên `main`/`origin/main` (`ebe4e463`, run `question-local-givens-main-integration`). DSL HOLD, hai nhánh real-model giữ; Hybrid chưa nối `/api/analyze`.
+**2026-10-13, nhánh `research/source-grounding-completeness` (chưa merge/push, từ `7767c7e1`):** cổng chung A/B đọc mọi câu tiền đề trước yêu cầu đầu tiên (`SOURCE_PREMISE_UNREAD`); product `b264828f`, candidate `46ca75a2…` (`046ab48a`), T3 clean PASS backend 9143 / frontend 1053, benchmark byte-identical; bề mặt provider giữ; run `source-grounding-completeness`; việc kế tiếp: quyết định tích hợp của người dùng. Goal-directed section planning đã trên `main` = `origin/main` = `7767c7e1` (code `b653d381`, run `goal-directed-section-planning-main-integration`: review cuối, candidate `fd80c8c9…`, T3 clean `b653d381` PASS backend 8934); nhánh đã xoá. Nội dung lát: Phase A đóng lỗ hở đổi giả thiết sau "sau đó"/"rồi" bằng luật đóng; Phase B planner tuyến B tự phân rã thiết diện với mặt qua điểm đã xác minh song song mặt có tên (`MAT_SONG_SONG`). Candidate `6110cd67…`, T3 clean `a443d2a2` PASS (backend 8925, frontend 1053), benchmark 19/9/0/2, Scene3D harness SwiftShader+GPU PASS, bề mặt B `4a20601f…`. Run `goal-directed-section-planning`. Trước đó: Phase 2 question-local givens trên `main`/`origin/main` (`ebe4e463`, run `question-local-givens-main-integration`). DSL HOLD, hai nhánh real-model giữ; Hybrid chưa nối `/api/analyze`.
 
 - Hybrid S0 + thiết diện/giao tuyến + S1/S2 đã fast-forward cục bộ lên `main`: `a6e27a78` → `22edf7ff`. Remote vẫn `a6e27a78` (ls-remote); không push. Ref Hybrid và DSL HOLD giữ nguyên.
 - Candidate `d1410731…`, product `624e7fc5`, 110 file verify khớp. T3 clean detached tại `22edf7ff`: FULL_PRODUCT_GATE_PASS (backend 8675, frontend 1053, build/demo/crash PASS). Benchmark 30 ca giữ byte: 19/9/0/2 cả hai tuyến offline. Run `hybrid-main-integration`.
@@ -202,7 +202,7 @@ Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FU
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_SOURCE_GROUNDING_COMPLETENESS
+CANONICAL_NEXT_ACTION = SOURCE_GROUNDING_COMPLETENESS_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

@@ -1,8 +1,17 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — goal-directed-section-planning, 2026-10-13
+## LOCAL override — source-grounding-completeness, 2026-10-13
 
-CANONICAL_NEXT_ACTION = HYBRID_SOURCE_GROUNDING_COMPLETENESS
+CANONICAL_NEXT_ACTION = SOURCE_GROUNDING_COMPLETENESS_INTEGRATION_DECISION
+
+Nhánh nghiên cứu `research/source-grounding-completeness` từ `main` = `origin/main` = `7767c7e1`; chưa merge/push.
+Cổng chung A/B nay đọc mọi câu tiền đề trước yêu cầu đầu tiên (`registry._kiem_vung_tien_de`, mã `SOURCE_PREMISE_UNREAD`):
+câu tiền đề đổi giả thiết nằm ngoài mọi quote không còn được phục vụ bằng hình cũ. Product `b264828f`, candidate
+`46ca75a2…` (`046ab48a`), T3 clean `046ab48a` PASS (backend 9143, frontend 1053); benchmark byte-identical; bề mặt
+provider, IR, renderer, LLM_ONLY/cache125 giữ; Gemini 0. Giới hạn đã khai ở run
+[`source-grounding-completeness`](evaluation/geometry/runs/source-grounding-completeness/report.md) §5.
+
+## LOCAL — goal-directed-section-planning, 2026-10-13 (đã tích hợp)
 
 Đã tích hợp: `main` = `origin/main` = `b653d381` (ff `132e9b23` → `b653d381`, push fast-forward; review cuối sửa
 anaphor/định nghĩa đọc từ nguồn; candidate `fd80c8c9…`; T3 clean `b653d381` PASS backend 8934, frontend 1053; run

@@ -1,5 +1,12 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+## LOCAL research — Premise source coverage, 2026-10-13
+
+Nhánh `research/source-grounding-completeness` từ `7767c7e1`; chưa merge/push. Product `ea18d62f` → `b264828f`,
+candidate `46ca75a2…` (`046ab48a`), T3 clean PASS. Câu tiền đề ngoài mọi quote phải được đọc (`SOURCE_PREMISE_UNREAD`).
+Bốn vòng review độc lập (hai BLOCKING) đóng RED→GREEN; benchmark byte-identical; bề mặt provider không đổi.
+Chi tiết: [`source-grounding-completeness`](evaluation/geometry/runs/source-grounding-completeness/report.md).
+
 ## LOCAL research — Goal-directed section planning, 2026-10-13
 
 Trên `main` = `origin/main` = `b653d381` sau review cuối (candidate `fd80c8c9…`, T3 clean PASS; run
