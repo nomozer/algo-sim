@@ -49,6 +49,14 @@ def _cases():
     uf = [{**x, "quotes": [uq[i]], **({"value": "1"} if "value" in x else {})} for i, x in enumerate(sq[1])]
     yield "intersection-SAB-SCD-unit", HB._with((uq, uf), f("f5", "intersection_line", "Tìm giao tuyến của (SAB) và (SCD).",
                                                             role="question", points_a=list("SAB"), points_b=list("SCD")))
+    # run goal-directed-section-planning: the plane through a verified point parallel to a named plane, planned by the
+    # route-B decomposition (same problems as test_goal_directed_section_planning.py, checked there by an exact oracle)
+    from tests.geometry.test_goal_directed_section_planning import _prism_problem, _pyramid_problem
+
+    for cid, (text, payload) in (("derived-plane-M-parallel-ABCD", _pyramid_problem()),
+                                 ("derived-plane-M-parallel-SAB", _pyramid_problem(ref="SAB")),
+                                 ("derived-plane-prism-M-parallel-ABC", _prism_problem())):
+        yield cid, ([text], payload["facts"])
 
 
 def main() -> int:

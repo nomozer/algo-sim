@@ -17,6 +17,8 @@
  * Exit 1 when any target or variant draws 0 own pixels, a console error appears, or a camera move does not settle.
  * Needs a Vite dev server of this checkout (default :3000; `--port`). `--gpu` uses ANGLE D3D11 (hardware) instead of
  * SwiftShader. Run: node scripts/hybrid-section-visual-check.mjs --out <dir> [--port 3100] [--gpu] (refuses to overwrite).
+ * `--scenes goal` reads the export of run `goal-directed-section-planning` (harness `src=goal`); `--only <id prefix>`
+ * measures a subset (e.g. `--only derived-plane`).
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -31,7 +33,10 @@ if (existsSync(out)) { console.error(`refusing to overwrite ${out}`); process.ex
 // browser sometimes made — the intermittent "canvas never attached" of `hybrid-slice-review`.
 const URL0 = `http://${arg("--host", "localhost")}:${arg("--port", "3000")}/scripts/hybrid-section-visual.html`;
 const gpu = process.argv.includes("--gpu");
-const rows = JSON.parse(readFileSync(new URL("../../docs/evaluation/geometry/runs/hybrid-semantic-hardening/visual/scenes.json", import.meta.url), "utf-8"));
+// `--scenes goal`: scenes of run goal-directed-section-planning (harness `src=goal`); default: the hardening export.
+const goal = arg("--scenes", "hardening") === "goal";
+const SCENES_RUN = goal ? "goal-directed-section-planning" : "hybrid-semantic-hardening";
+const rows = JSON.parse(readFileSync(new URL(`../../docs/evaluation/geometry/runs/${SCENES_RUN}/visual/scenes.json`, import.meta.url), "utf-8"));
 
 // Hues mirrored from `scene3d-view.tsx` MAU / `scene3d-roles.ts`: polygon/section amber, construction line teal, and the
 // "just built at this step" blue (MAU_VAI_TRO.moi_dung 0x2563eb) that replaces an object's own colour at its own step.
@@ -84,7 +89,7 @@ const settle = async () => { let a = await shot(); for (let i = 0; i < 40; i++) 
 // Windows machine between page loads; a load is retried at most 6 times (growing pause) and every retry is reported, never hidden.
 const netRetries = [];
 const goto = async (qs) => {
-  const u = `${URL0}?${qs}`;
+  const u = `${URL0}?${qs}${goal ? "&src=goal" : ""}`;
   for (let k = 0; ; k++) {
     const e0 = errors.length;
     try {
@@ -137,7 +142,10 @@ const setQs = (id, sets) => sets.map(([f, v]) => `&set=${id}.${f}=${encodeURICom
 mkdirSync(out, { recursive: true });
 const report = [];
 const failures = [];
+// `--only <id prefix>`: measure those cases only; the harness index `i` stays the case's position in scenes.json.
+const only = arg("--only");
 for (const [i, row] of rows.entries()) {
+  if (only && !row.id.startsWith(only)) continue;
   const e0 = errors.length;
   const last = await goto(`i=${i}`);
   const m = measure(last);

@@ -1,0 +1,245 @@
+{
+ "harness": "scripts/hybrid-section-visual.html (Scene3D harness, not product UI)",
+ "scenes": "real Hybrid route output, backend/scripts/export_hybrid_section_scenes.py; product frame step veKhongGian applied",
+ "browser": "Playwright chromium, ANGLE D3D11 (hardware GPU)",
+ "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "failures": [],
+ "net_retries": [
+  {
+   "url": "http://127.0.0.1:3100/scripts/hybrid-section-visual.html?i=0&src=goal",
+   "error": "TimeoutError: page.waitForSelector: Timeout 90000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3100/scripts/hybrid-section-visual.html?i=8&hide=td_q&src=goal",
+   "error": "TimeoutError: page.waitForSelector: Timeout 90000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3100/scripts/hybrid-section-visual.html?i=8&hide=td_q&src=goal",
+   "error": "TimeoutError: page.waitForSelector: Timeout 90000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3100/scripts/hybrid-section-visual.html?i=8&src=goal",
+   "error": "TimeoutError: page.waitForSelector: Timeout 90000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3100/scripts/hybrid-section-visual.html?i=8&src=goal",
+   "error": "TimeoutError: page.waitForSelector: Timeout 90000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3100/scripts/hybrid-section-visual.html?i=8&src=goal",
+   "error": "Error: page.goto: net::ERR_NETWORK_ACCESS_DENIED at http://127.0.0.1:3100/scripts/hybrid-section-visual.html?i=8&src=goal"
+  },
+  {
+   "url": "http://127.0.0.1:3100/scripts/hybrid-section-visual.html?i=9&hide=td_q&src=goal",
+   "error": "TimeoutError: page.waitForSelector: Timeout 90000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3100/scripts/hybrid-section-visual.html?i=10&hide=td_q&src=goal",
+   "error": "TimeoutError: page.waitForSelector: Timeout 90000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3100/scripts/hybrid-section-visual.html?i=10&hide=td_q&src=goal",
+   "error": "TimeoutError: page.waitForSelector: Timeout 90000ms exceeded."
+  }
+ ],
+ "dev_server_noise": 1,
+ "report": [
+  {
+   "id": "derived-plane-M-parallel-ABCD",
+   "served": true,
+   "section_vertices_model": 4,
+   "pixels_last_step": {
+    "section": 2651,
+    "line": 0,
+    "highlight": 1239,
+    "ink": [
+     342,
+     65,
+     1014,
+     520
+    ]
+   },
+   "order": {
+    "target": "td_q",
+    "own_pixels": {
+     "default_view": 132155,
+     "after_orbit": 72990
+    },
+    "first_step": 10,
+    "steps": 16,
+    "depends_present": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 31122
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 1362
+    }
+   },
+   "variants": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.10921029707728816,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.17333333333333334,
+    "ink_ratio": 1.477215691917827,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "M",
+    "H",
+    "H1",
+    "khoi_S_ABCD",
+    "mp_td_q",
+    "td_q#4cf",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "derived-plane-M-parallel-SAB",
+   "served": true,
+   "section_vertices_model": 4,
+   "pixels_last_step": {
+    "section": 7447,
+    "line": 0,
+    "highlight": 1039,
+    "ink": [
+     209,
+     23,
+     820,
+     520
+    ]
+   },
+   "order": {
+    "target": "td_q",
+    "own_pixels": {
+     "default_view": 42618,
+     "after_orbit": 41310
+    },
+    "first_step": 10,
+    "steps": 16,
+    "depends_present": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 1781
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 1274
+    }
+   },
+   "variants": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.1356102249857319,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.20503319215403562,
+    "ink_ratio": 1.590290559404405,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "M",
+    "H",
+    "H1",
+    "khoi_S_ABCD",
+    "mp_td_q",
+    "td_q#4cf",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "derived-plane-prism-M-parallel-ABC",
+   "served": true,
+   "section_vertices_model": 3,
+   "pixels_last_step": {
+    "section": 9363,
+    "line": 0,
+    "highlight": 1410,
+    "ink": [
+     392,
+     65,
+     847,
+     440
+    ]
+   },
+   "order": {
+    "target": "td_q",
+    "own_pixels": {
+     "default_view": 9457,
+     "after_orbit": 15903
+    },
+    "first_step": 8,
+    "steps": 13,
+    "depends_present": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 21097
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 1669
+    }
+   },
+   "variants": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.07515184284040732,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.15696374395482263,
+    "ink_ratio": 1.72219348448162,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "A_prime",
+    "B_prime",
+    "C_prime",
+    "M",
+    "H",
+    "H1",
+    "khoi_ABC_A_primeB_primeC_prime",
+    "mp_td_q",
+    "td_q#3cf"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  }
+ ]
+}

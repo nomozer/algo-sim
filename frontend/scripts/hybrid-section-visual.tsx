@@ -11,12 +11,14 @@ import { Scene3DWorkspace } from "../src/simulations/domains/geometry/scene3d-vi
 import { TRANG_THAI_DAU } from "../src/simulations/domains/geometry/interaction-state";
 import { objectsAt, stepCount } from "../src/simulations/domains/geometry/scene3d-model";
 import { veKhongGian } from "../src/simulations/domains/geometry/scene3d-chart";
-import rows from "../../docs/evaluation/geometry/runs/hybrid-semantic-hardening/visual/scenes.json";
+import rowsHardening from "../../docs/evaluation/geometry/runs/hybrid-semantic-hardening/visual/scenes.json";
+import rowsGoal from "../../docs/evaluation/geometry/runs/goal-directed-section-planning/visual/scenes.json";
 import "../src/styles/global.css";
 
 const q = new URLSearchParams(location.search);
 const index = Number(q.get("i") ?? 0);
-const row = (rows as any[])[index];
+// `src=goal`: scenes of run goal-directed-section-planning; default stays the frozen hardening export.
+const row = ((q.get("src") === "goal" ? rowsGoal : rowsHardening) as any[])[index];
 // Diagnostic only: `hide=<id>` drops one object, so a frame diff shows exactly the pixels that object contributes.
 const hide = new Set((q.get("hide") ?? "").split(",").filter(Boolean));
 // Diagnostic only: `set=<id>.<field>=<json>` overrides one field of one object (e.g. a line direction).
