@@ -1147,86 +1147,96 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
 
 #: Premise text a call need not quote: lead-ins and connectors between quoted claims (closed).
 _NOI_TIEN_DE = re.compile(r"[\s,;:.()\-–]*(?:(?:cho|gọi|biết|rằng|có|và|với|trong đó|là|của|hãy|xét|ta|đồng thời|lần lượt"
-                          r"|theo thứ tự|tại|thì)(?!\w)[\s,;:.()\-–]*)*", re.IGNORECASE)
+                          r"|theo thứ tự|tại|thì|cm|dm|mm|m|đvđd)(?!\w)[\s,;:.()\-–]*)*", re.IGNORECASE)
 #: Exam scaffolding at the start of a premise segment ("Bài 3.", "Câu 2:", "(1 điểm)") — not a claim about the figure.
-_GIAN_DAN = re.compile(r"\s*(?:(?:bài|câu|ví dụ)\s*\d+\s*[.:)]|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*", re.IGNORECASE)
-#: Nouns that only NAME an object (never a shape predicate such as "hình vuông", "tam giác").
+_GIAN_DAN = re.compile(r"\s*(?:(?:bài tập|bài|câu|ví dụ)\s*\d+\s*[.:)]|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*", re.IGNORECASE)
+#: Nouns that only NAME an object next to its label (never a shape or solid-type predicate such as "hình vuông", "tứ diện").
 _DANH_TU_DOI_TUONG = (r"mặt phẳng|mặt đáy|mặt bên|mặt|đáy|đường thẳng|đoạn thẳng|đoạn|cạnh bên|cạnh đáy|cạnh|điểm|đỉnh"
-                      r"|hình chóp|khối chóp|hình lăng trụ|khối lăng trụ|hình hộp|khối hộp|tứ diện|khối")
-#: Closed note forms: a premise segment may be exempt as a note only if it opens with one of these AND names no geometry.
-_GHI_CHU = re.compile(r"\s*(?:lưu ý|chú ý|ghi chú|gợi ý|hãy\s+(?:trình bày|giải|làm|viết|ghi|nêu))(?!\w)", re.IGNORECASE)
-_YEU_CAU_HIEN_THI = re.compile(r"\s*(?:hãy\s+)?vẽ\s+hình(?:\s+minh\s+ho[ạa])?\s*[.!]?\s*", re.IGNORECASE)
-#: Where a goal clause ends: the first given / condition marker or clause boundary — what follows can be a hypothesis.
-_MO_GIA_THIET = re.compile(r"(?<!\w)(?:biết|cho|trong đó|khi|nếu|giả sử|trường hợp|lúc|sau khi|mà)(?!\w)|[,;]",
-                           re.IGNORECASE)
-#: Classification for notes: a segment naming any of these, a label or a number is never a note.
-_TU_HINH_HOC = re.compile(r"(?<!\w)(?:đáy|cạnh|mặt|góc|đường|điểm|đoạn|độ dài|cao|thể tích|diện tích|song song|vuông|thiết diện"
-                          r"|giao|tâm|bán kính|hình|khối|trung điểm|trọng tâm|chiếu|đều|chữ nhật|tam giác|tứ giác|lục giác"
-                          r"|chóp|lăng trụ|hộp|lập phương|tứ diện|cầu|trụ|nón)(?!\w)", re.IGNORECASE)
+                      r"|độ dài|chiều cao|đường cao|hình chóp|khối chóp")
+_TEN_DOI_TUONG = re.compile(rf"(?<![\w'])(?:(?:{_DANH_TU_DOI_TUONG})\s*)?\(?(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?\)?"
+                            rf"(?![\w'])", re.IGNORECASE)
+#: A note is a premise segment made ONLY of these words (instructions about the answer, never about the figure); closed.
+_GHI_CHU = re.compile(r"[\s,;:.()!\-–]*(?:(?:lưu ý|chú ý|ghi chú|gợi ý|hãy|trình bày|giải|làm tròn|làm|viết|ghi|nêu|lời giải"
+                      r"|bài toán|kết quả|đáp số|ngắn gọn|đầy đủ|chi tiết|rõ ràng|để|ở|dưới|dạng|căn thức|phân số"
+                      r"|số thập phân|đến|hàng|phần|mười|trăm|nghìn|chữ số|sau|dấu phẩy|đơn vị|độ dài|là|cm|dm|mm|m|đvđd"
+                      r"|vẽ hình|minh hoạ|minh họa|\d+)(?!\w)[\s,;:.()!\-–]*)*", re.IGNORECASE)
+#: Where a goal clause ends: the gate's own given and condition markers (`_DUNG_GAN`, `_DIEU_KIEN`), a few joining words
+#: and the clause boundary — no separate vocabulary.
+_KET_MUC_TIEU = re.compile("|".join((_DUNG_GAN.pattern, _DIEU_KIEN.pattern,
+                                     r"(?<!\w)(?:đồng thời|trường hợp|lúc|sau khi|mà)(?!\w)", r"[,;]")), re.IGNORECASE)
 
 
 def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes: tuple[str, ...] = ()) -> None:
     """Premise source coverage over `de[:het]` (the text before the first request), one obligation per sentence / ";"
-    clause: what no sentence-local quote of a validated call covers may only be closed connectors, names of objects the
-    calls already use, a goal clause or a non-geometric note; every number must be a value some validated call carries.
-    A shape claim hidden inside a long quote of another call is not detected here (bounded). A quote spanning sentences
-    covers none of them here
-    (a long quote must not excuse a second sentence). `read_quotes`: route-B goals / negated clauses, read and checked
-    on the figure by the route. Reuses the gate's number, label and shape readers; no second fact state — a premise is
-    never added, only refused when unread."""
+    clause. Outside sentence-local quotes of validated calls, only closed connectors and names of objects the calls use
+    may remain (a note made only of closed note words and exam scaffolding are exempt); a goal clause is exempt up to
+    the gate's own given / condition markers, and a length it asserts may not contradict a validated value; every number
+    must sit inside the quote of a call that carries that value. A quote spanning sentences covers only what its call's
+    binding grammar reads. `read_quotes` (route-B goals / negated clauses) count only where the gate itself reads a goal
+    or a negation — never on the AI's role label. Bounded: a shape / scale claim with no number hidden inside a long
+    quote of another call is not detected. Reuses the gate's readers; no second fact state — only refuses."""
     if het <= 0:
         return
-    phu = [False] * het                                  # covered by a validated call (its values count)
-    doc = [False] * het                                  # read as a goal / negated clause (not a hypothesis)
-    gia_tri = {doc_so(v) for c in calls for f in c.spec.value_fields if (v := getattr(c.args, f, None))}
-    for co, quotes in ((phu, [(c, q) for c in calls for q in c.quotes]), (doc, [(None, q) for q in read_quotes])):
-        for c, q in quotes:
+    phu = [False] * het                                  # covered by a validated call
+    doc = [False] * het                                  # read by the gate as a goal / negated clause
+    rang: list[tuple[int, int, tuple]] = []              # (start, end, value): a value counts only inside its own quote
+    for c in calls:
+        gt = [doc_so(v) for f in c.spec.value_fields if (v := getattr(c.args, f, None))]
+        for q in c.quotes:
             if (vt := _vi_tri(de, q)) is None or vt[0] >= het:
                 continue
-            nhip = [(vt[0], vt[1])]
+            rang += [(vt[0], vt[1], v) for v in gt]
+            nhip = [vt]
             if re.search(r"[.!?;]\s", de[vt[0]:vt[1]].rstrip()):
                 # a quote spanning sentences covers only what its call's own binding grammar reads in it
                 # ("(MAB) cắt hình chóp … theo một thiết diện. Tính diện tích thiết diện đó.")
                 nhip = ([(m.start(), m.end()) for mau in (*_CAT_BOI, _GIAO_TUYEN) for m in mau.finditer(de, *vt)]
-                        if c is not None and c.fn in ("section", "ask_section_area", "intersection_line") else [])
+                        if c.fn in ("section", "ask_section_area", "intersection_line") else [])
             for x, y in nhip:
-                if c is None and (gt := _MO_GIA_THIET.search(de, x, y)):
-                    y = gt.start()                       # a goal / negated quote is read only up to its first given
-                co[x:min(y, het)] = [True] * max(0, min(y, het) - x)
-    nhan = nhan_cua_de(de)
+                phu[x:min(y, het)] = [True] * max(0, min(y, het) - x)
+    for q in read_quotes:
+        if (vt := _vi_tri(de, q)) is None or vt[0] >= het or re.search(r"[.!?;]\s", de[vt[0]:vt[1]].rstrip()):
+            continue
+        x, y = vt
+        if not (_vai_tro_tai(de, max(x, y - 1)) == "GOAL" or _phu_dinh(de, x, q)):
+            continue                                     # a "prove" label on a plain premise reads nothing
+        if k := _KET_MUC_TIEU.search(de, x, y):
+            y = k.start()                                # read only up to its first given / condition
+        doc[x:min(y, het)] = [True] * max(0, min(y, het) - x)
     dung = {n for c in calls for n in nhan_cua_loi_goi(c)}
     dau = 0
     for m in [*re.finditer(r"(?<=[.!?;])\s+", de[:het]), None]:
         cuoi = m.start() if m else het
         a, b = dau, cuoi
         dau = m.end() if m else het
-        doan = de[a:b]
-        if not doan.strip():
+        if not de[a:b].strip():
             continue
-        gd = _GIAN_DAN.match(doan)
-        a0 = a + (gd.end() if gd else 0)
-        if _MO_MUC_TIEU.match(doan):
-            # a goal is something to show, never a hypothesis — but only up to its first given / condition marker or
-            # clause boundary ("…, biết SA = 5", "… lúc SA = 5", "…, đáy ABCD là hình chữ nhật"): the rest is read
-            if not (dan := _MO_GIA_THIET.search(de, a0, b)):
+        gd = _GIAN_DAN.match(de, a, b)
+        a0 = gd.end() if gd else a
+        if _GHI_CHU.fullmatch(de, a0, b):
+            continue                                     # a note in closed words only
+        if _MO_MUC_TIEU.match(de, a0, b):
+            # a goal is something to show, never a hypothesis — up to the first given / condition marker or clause
+            # boundary; a length it states may not contradict a validated value of the same segment ("Suy ra SA = 5")
+            k = _KET_MUC_TIEU.search(de, a0, b)
+            for d in _DO_DAI_CUC_BO.finditer(de, a0, k.start() if k else b):
+                v = _doc(d)
+                for seg in [p for _x, _y, parts in _tu_nhan(de[d.start():d.start("number")]) for p in parts if len(p) == 2]:
+                    if v is not None and (cand := _nguon_do_dai_cuc_bo(calls, seg)) and all(w != v for w, _i in cand):
+                        raise TuChoi("INCONSISTENT_FACTS", "điều phải chứng minh nêu một độ dài khác giá trị đã xác thực")
+            if not k:
                 continue
-            a0 = dan.start()
-        con = "".join(" " if phu[i] or doc[i] else de[i] for i in range(a0, b))
-        # naming an object the calls already use ("đáy ABC", "(SBC)", "hình chóp S.ABC") asserts nothing about it
-        ten_dt = re.sub(rf"(?<![\w'])(?:(?:{_DANH_TU_DOI_TUONG})\s*)?\(?(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?\)?(?![\w'])",
-                        lambda m: " " if {n for _x, _y, phan in _tu_nhan(m[0]) for p in phan for n in p} <= dung else m[0],
-                        con, flags=re.IGNORECASE)
-        mang_hinh = (_TU_HINH_HOC.search(con) or any(n in nhan for _x, _y, phan in _tu_nhan(con) for p in phan for n in p)
-                     or re.search(r"\d|√|π", con))
-        # a note is exempt only in a closed note form AND naming no geometry; a display request is a closed form too
-        ghi_chu = (_GHI_CHU.match(de, a0, b) and not mang_hinh) or _YEU_CAU_HIEN_THI.fullmatch(de[a0:b])
-        if not _NOI_TIEN_DE.fullmatch(ten_dt) and not ghi_chu:
+            a0 = k.start()
+        ten = {i for t in _TEN_DOI_TUONG.finditer(de, a0, b)
+               if {n for _x, _y, phan in _tu_nhan(t[0]) for p in phan for n in p} <= dung for i in range(t.start(), t.end())}
+        con = "".join(" " if phu[i] or doc[i] or i in ten else de[i] for i in range(a0, b))
+        if not _NOI_TIEN_DE.fullmatch(con):
             raise TuChoi("SOURCE_PREMISE_UNREAD", f"tiền đề {de[a0:b].strip()!r} chưa được lời gọi nào đọc — có thể đổi "
                          "hình; không dùng mô hình cũ")
-        chua_doc = "".join(" " if doc[i] else de[i] for i in range(a0, b))
-        if lac := [v for _p, *v in so_trong(chua_doc) if tuple(v) not in gia_tri]:
-            raise TuChoi("SOURCE_PREMISE_UNREAD", f"giá trị trong tiền đề {de[a0:b].strip()!r} không là giá trị của lời gọi "
-                         f"nào đã xác thực ({len(lac)}) — không dùng mô hình cũ")
+        for p, *v in so_trong(de[a0:b]):
+            if not doc[a0 + p] and not any(s <= a0 + p < e and w == tuple(v) for s, e, w in rang):
+                raise TuChoi("SOURCE_PREMISE_UNREAD", f"giá trị trong tiền đề {de[a0:b].strip()!r} không nằm trong quote của "
+                             "lời gọi mang giá trị ấy — không dùng mô hình cũ")
 
 
 def _nguon_do_dai_cuc_bo(calls: tuple[LoiGoi, ...], segment: list[str]) -> list[tuple[tuple[Fraction, bool], str]]:

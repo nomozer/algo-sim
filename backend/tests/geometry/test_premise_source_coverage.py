@@ -154,6 +154,74 @@ def test_one_sentence_quoted_by_several_facts_stays_served(arm):
     assert HB.answer_square(r.answers["q"]) == 17
 
 
+# ── independent review of 996f9bc8 (BLOCKING): I1 note body, I2 goal markers, I3 role trust, I4 object names, I5 binding
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("extra", [
+    "Lưu ý: bỏ giả thiết thứ ba.", "Lưu ý: mọi kích thước nhân đôi.", "Chú ý: phóng to gấp ba lần.",
+    "Hãy giải khi mọi kích thước gấp đôi.", "Hãy làm lại với dữ kiện khác.",                       # I1
+    "Chứng minh SC vuông góc BD với SA = 5.", "Chứng minh SC vuông góc BD với điều kiện SA = 5.",
+    "Chứng minh SC vuông góc BD, coi như SA = 5.", "Chứng minh SC vuông góc BD đồng thời SB vuông góc (ABCD).",
+    "Suy ra SA = 5.",                                                                                # I2
+])
+def test_review_996f9bc8_false_serves_are_refused(arm, extra):
+    r = _with_premise(extra, arm)
+    assert r.status == "REFUSED", (r.code, r.answers)
+
+
+@pytest.mark.parametrize("extra, fact", [
+    ("SA = 5.", HB._f("g", "length", "SA = 5.", role="prove", points=["S", "A"], measure="segment", value="5")),
+    ("SB vuông góc với (ABCD).", HB._f("g", "perpendicular", "SB vuông góc với (ABCD).", role="prove",
+                                        points_a=["S", "B"], points_b=list("ABCD"))),
+])
+def test_prove_label_does_not_make_a_premise_read(extra, fact):
+    # I3: the gate reads the clause role itself; an AI "prove" label on a plain premise does not cover it
+    base, facts = HB._square()
+    q = HB._ask("q", ASK, "length", points=["S", "C"])
+    r = run_fact_route(" ".join(base) + " " + extra + " " + ASK, {"facts": facts + [fact, q]})
+    assert r.status == "REFUSED", (r.code, r.answers)
+
+
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("sentence, quote3", [
+    ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, cạnh bên SA vuông góc với mặt phẳng đáy và SA = 3.",
+     "SA vuông góc với mặt phẳng đáy"),
+    ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, đường thẳng SA vuông góc với mặt phẳng (ABCD), độ dài SA = 3.",
+     "SA vuông góc với mặt phẳng (ABCD)"),
+    ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2 cm, SA vuông góc với mặt phẳng đáy. Chiều cao SA = 3.",
+     "SA vuông góc với mặt phẳng đáy"),
+])
+def test_canonical_premise_wording_stays_served(arm, sentence, quote3):
+    # I4: object nouns next to quoted labels ("cạnh bên SA", "độ dài SA", "chiều cao SA") and units name, never assert
+    facts = [HB._f("f1", "solid", "Cho hình chóp S.ABCD", solid="S.ABCD", solid_type="pyramid"),
+             HB._f("f2", "polygon_shape", "đáy ABCD là hình vuông cạnh 2", points=list("ABCD"), shape="square", value="2"),
+             HB._f("f3", "perpendicular", quote3, points_a=["S", "A"], points_b=list("ABCD")),
+             HB._f("f4", "length", "SA = 3", points=["S", "A"], measure="segment", value="3"),
+             HB._ask("q", ASK, "length", points=["S", "C"])]
+    r = _route(sentence + " " + ASK, facts, arm)
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert HB.answer_square(r.answers["q"]) == 17
+
+
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("idx, quote", [
+    (2, "SA vuông góc với (ABCD) và SB = 3."),        # a length hidden in another call's quote, value coincides with SA
+])
+def test_number_must_be_bound_to_its_own_call(arm, idx, quote):
+    # I5: a number must sit inside the quote of a call that carries that value, not merely equal some call's value
+    base, facts = HB._square()
+    base[idx] = quote
+    facts[idx] = {**facts[idx], "quotes": [quote]}
+    r = _route(" ".join(base) + " " + ASK, facts + [HB._ask("q", ASK, "length", points=["S", "C"])], arm)
+    assert r.status == "REFUSED", (r.code, r.answers)
+
+
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("extra", ["Làm tròn kết quả đến hàng phần mười.", "Đơn vị độ dài là cm.", "Bài tập 3."])
+def test_closed_notes_stay_served(arm, extra):
+    r = _with_premise(extra, arm)
+    assert r.status == "SERVED", (r.code, r.reason)
+
+
 @pytest.mark.parametrize("arm", ARMS)
 def test_relabelling_keeps_both_verdicts(arm):
     assert _with_premise("", arm, names="TEFGK").status == "SERVED"
