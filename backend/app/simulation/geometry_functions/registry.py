@@ -1229,13 +1229,13 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
         return
     phu = [False] * het                                  # covered by a validated call
     doc = [False] * het                                  # read by the gate as a goal / negated clause
-    rang: list[tuple[int, int, tuple]] = []              # (start, end, value): a value counts only inside its own quote
-    for c in calls:
-        gt = [doc_so(v) for f in c.spec.value_fields if (v := getattr(c.args, f, None))]
+    rang: list[tuple[int, int, tuple, tuple[int, str]]] = []  # range, value, owning call field
+    for ci, c in enumerate(calls):
+        gt = [(f, doc_so(v)) for f in c.spec.value_fields if (v := getattr(c.args, f, None))]
         for q in c.quotes:
             if (vt := _vi_tri(de, q)) is None or vt[0] >= het:
                 continue
-            rang += [(vt[0], vt[1], v) for v in gt]
+            rang += [(vt[0], vt[1], v, (ci, f)) for f, v in gt]
             nhip = [vt]
             if re.search(r"[.!?;]\s", de[vt[0]:vt[1]].rstrip()):
                 # a quote spanning sentences covers only what its call's own binding grammar reads in it
@@ -1256,7 +1256,7 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             y = k                                        # read only up to its first given / condition
         doc[x:min(y, het)] = [True] * max(0, min(y, het) - x)
     dung = {n for c in calls for n in nhan_cua_loi_goi(c)}
-    da_dung: set[int] = set()                            # call values already backing a number
+    da_dung: set[tuple[int, str]] = set()                 # call fields already backing a number, across all their quotes
     dau = 0
     for m in [*re.finditer(r"(?<=[.!?;])\s+", de[:het]), None]:
         cuoi = m.start() if m else het
@@ -1291,12 +1291,12 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
                          "hình; không dùng mô hình cũ")
         for p, *v in so_trong(de[a0:b]):
             # each call value backs ONE occurrence inside its own quote ("SA = 3, đổi AB thành 3" has one too many)
-            hop = next((r for r in rang if r[0] <= a0 + p < r[1] and r[2] == tuple(v) and id(r) not in da_dung), None)
+            hop = next((r for r in rang if r[0] <= a0 + p < r[1] and r[2] == tuple(v) and r[3] not in da_dung), None)
             if not doc[a0 + p] and hop is None:
                 raise TuChoi("SOURCE_PREMISE_UNREAD", f"giá trị trong tiền đề {de[a0:b].strip()!r} không nằm trong quote của "
                              "lời gọi mang giá trị ấy — không dùng mô hình cũ")
             if hop is not None:
-                da_dung.add(id(hop))
+                da_dung.add(hop[3])
 
 
 def _nguon_do_dai_cuc_bo(calls: tuple[LoiGoi, ...], segment: list[str]) -> list[tuple[tuple[Fraction, bool], str]]:

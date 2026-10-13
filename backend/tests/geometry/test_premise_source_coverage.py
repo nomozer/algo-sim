@@ -255,6 +255,31 @@ def test_a_call_value_backs_one_occurrence_only(arm, sentence):
     assert r.status == "REFUSED", (r.code, r.answers)
 
 
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("sentence", ["SA = 3 và SB = 3.", "SA = 3, đổi AB thành 3."])
+@pytest.mark.parametrize("quote_order", ["short_first", "long_first", "duplicate"])
+def test_overlapping_quotes_do_not_multiply_a_call_value(arm, sentence, quote_order):
+    base, facts = HB._square()
+    base[3] = sentence
+    quotes = {"short_first": ["SA = 3", sentence], "long_first": [sentence, "SA = 3"],
+              "duplicate": [sentence, sentence]}[quote_order]
+    facts[3] = {**facts[3], "quotes": quotes}
+    r = _route(" ".join(base) + " " + ASK, facts + [HB._ask("q", ASK, "length", points=["S", "C"])], arm)
+    assert r.status == "REFUSED", (r.code, r.answers)
+    assert r.code == "SOURCE_PREMISE_UNREAD"
+    assert not r.answers and not r.scene3d
+
+
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("quotes", [["SA = 3", "SA = 3."], ["SA = 3.", "SA = 3"], ["SA = 3.", "SA = 3."]])
+def test_overlapping_quotes_of_one_verified_occurrence_stay_served(arm, quotes):
+    base, facts = HB._square()
+    facts[3] = {**facts[3], "quotes": quotes}
+    r = _route(" ".join(base) + " " + ASK, facts + [HB._ask("q", ASK, "length", points=["S", "C"])], arm)
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert HB.answer_square(r.answers["q"]) == 17
+
+
 P_ = "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy, SA = 3."
 F_ = [HB._f("f1", "solid", "Cho hình chóp S.ABCD", solid="S.ABCD", solid_type="pyramid"),
       HB._f("f2", "polygon_shape", "đáy ABCD là hình vuông cạnh 2", points=list("ABCD"), shape="square", value="2"),
