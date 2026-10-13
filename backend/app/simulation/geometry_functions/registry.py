@@ -651,7 +651,8 @@ def nhan_phu_da_dung(text: str, chu: str = "H") -> set[str]:
     return ra
 
 
-def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: set[str]) -> set[str]:
+def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: set[str],
+              ten_mat_phu: dict | None = None) -> set[str]:
     """Điểm phụ do planner khai: đúng luật, nhãn không trùng đề, hai lời gọi đúng hình dạng luật, câu hỏi nguồn có thật,
     không điều kiện/chứng minh/phủ định, và gắn đúng điểm + đường. Trả id các lời gọi đã kiểm (bỏ qua ở vòng thường).
     Nhãn phụ ở bất kỳ lời gọi nào KHÁC vẫn rơi vào `UNKNOWN_LABEL` của vòng thường."""
@@ -664,7 +665,7 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
         if luat not in AUXILIARY_RULES:
             raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x}: luật {luat!r} không có trong bảng phân rã")
         if luat == MAT_SONG_SONG:
-            da |= _kiem_mat_song_song(d, theo_id, de, nhan, chiem, nhan_da_khai, calls)
+            da |= _kiem_mat_song_song(d, theo_id, de, nhan, chiem, nhan_da_khai, calls, ten_mat_phu)
             continue
         if x in nhan_da_khai:
             raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x} được khai hai lần")
@@ -875,12 +876,14 @@ def _moc_menh_de(c: LoiGoi, de: str, dau: int, cuoi: int) -> list[int]:
     return moc
 
 
-def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...] = ()) -> None:
+def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...] = ()) -> dict[str, str | None]:
     """Cổng nguồn tất định — xem docstring module. Ném `TuChoi` ở lời gọi đầu tiên hỏng (theo thứ tự id).
-    `auxiliary`: điểm phụ planner nhánh B khai (`AUXILIARY_RULES`); nhánh A không truyền ⇒ mọi nhãn phải có trong đề."""
+    `auxiliary`: điểm phụ planner nhánh B khai (`AUXILIARY_RULES`); nhánh A không truyền ⇒ mọi nhãn phải có trong đề.
+    Returns the name the source gave each bound derived plane (first construct id → "P", or None when unnamed)."""
     de = chuan_hoa(text)
     nhan = nhan_cua_de(de)
-    phu = _kiem_phu(tuple(auxiliary), calls, de, nhan)
+    ten_mat_phu: dict[str, str | None] = {}              # derived plane (first construct id) → name the source gave it
+    phu = _kiem_phu(tuple(auxiliary), calls, de, nhan, ten_mat_phu)
     if lac := sorted(c.id for c in calls if c.spec.auxiliary_only and c.id not in phu):
         raise TuChoi("AUXILIARY_ONLY_FUNCTION", f"{lac}: chỉ planner sinh hàm này, trong một phân rã đã khai", tuple(lac))
     for c in sorted(calls, key=lambda c: c.id):
@@ -963,6 +966,7 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
                 raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {v} không phải số trong {c.quote!r}", (c.id,))
 
     _kiem_du_kien_cau_hoi(calls, de)
+    return ten_mat_phu
 
 
 def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
@@ -1357,6 +1361,11 @@ _QUA_SONG_SONG = re.compile(
     rf"(?:(?:mặt phẳng|mp)\s*)?(?:\((?P<ten>{_P1}|[α-ω])\)\s*)?(?:là\s+mặt phẳng\s+)?(?:đi\s+)?qua\s+(?:điểm\s+)?"
     rf"(?P<diem>{_P1})(?![\w'])\s*,?\s*(?:và\s+)?song song\s+(?:với\s+)?" + _MAT_TOAN_HANG, re.IGNORECASE)
 _DAN_THIET_DIEN = rf"thiết diện\s+(?:của\s+)?{_KHOI_NGU}(?:với|cắt bởi|tạo bởi|bởi)\s+"
+#: The definition clause ends right after the reference plane: a sentence end, or a new request. Anything else ("… và song
+#: song với (SBC)", "(P) cắt SB tại N") is an unread condition on the plane — refused, not ignored.
+_HET_DINH_NGHIA = re.compile(r"\s*(?:[.;?!](?=\s|$)|$|,?\s*(?:(?:rồi|sau đó|và)\s+)?(?:hãy\s+)?(?=(?:xác định|dựng|vẽ|tìm|tính)(?!\w)))",
+                             re.IGNORECASE)
+_TU_THIET_DIEN = len("thiết diện")
 _HOI_DIEN_TICH_THIET_DIEN = re.compile(r"diện tích\s+(?:của\s+)?thiết diện", re.IGNORECASE)
 
 
@@ -1386,31 +1395,39 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
     def vai_tro_ok(s: str, pos: int, text: str) -> bool:
         return _vai_tro_tai(s, pos) not in ("GOAL", "CONDITIONAL") and not _phu_dinh(s, pos, text)
 
-    ten_mat, thiet_dien = set(), False
+    ten_mat = set()
+    gan = set()                                          # vị trí (trong đề) của từ "thiết diện" ở mỗi cụm gọi đúng (P)
     for qn, goc, s in doan:
         for m in _QUA_SONG_SONG.finditer(qn):
             if m["diem"] != p or _tap_mat(m, 3, day) != frozenset(q):
                 continue
-            if not vai_tro_ok(s, goc + m.start(), m[0]):
+            if not vai_tro_ok(s, goc + m.start(), m[0]) or not _HET_DINH_NGHIA.match(qn, m.end()):
                 return False
             if m["ten"]:
                 ten_mat.add(m["ten"])
-            if re.search(_DAN_THIET_DIEN + r"$", qn[:m.start()], re.IGNORECASE):      # nói gộp trong cụm thiết diện
-                thiet_dien = True
+            if noi_gop := re.search(_DAN_THIET_DIEN + r"$", qn[:m.start()], re.IGNORECASE):  # nói gộp trong cụm thiết diện
+                gan.add(goc + noi_gop.start())
             elif not m["ten"]:
                 return False                                 # mặt không tên, không nằm trong cụm thiết diện: không gắn được
+    # A name defined anywhere in the problem for another point or plane makes "(P)" ambiguous.
+    for m in _QUA_SONG_SONG.finditer(de):
+        if m["ten"] in ten_mat and (m["diem"] != p or _tap_mat(m, 3, day) != frozenset(q)):
+            return False
     for ten in ten_mat:
-        mau = [rf"{_DAN_THIET_DIEN}(?:(?:mặt phẳng|mp)\s*)?\({re.escape(ten)}\)",
-               rf"\({re.escape(ten)}\)\s+cắt\s+(?:hình|khối)(?:[^.;]|\.(?=[A-Z]))*?theo\s+(?:một\s+)?thiết diện"]
+        mau = [(rf"{_DAN_THIET_DIEN}(?:(?:mặt phẳng|mp)\s*)?\({re.escape(ten)}\)", False),
+               (rf"\({re.escape(ten)}\)\s+cắt\s+(?:hình|khối)(?:[^.;]|\.(?=[A-Z]))*?theo\s+(?:một\s+)?thiết diện", True)]
         for qn, goc, s in doan:
-            for r in (r for x in mau for r in re.finditer(x, qn, re.IGNORECASE)):
+            for r, o_cuoi in ((r, o) for x, o in mau for r in re.finditer(x, qn, re.IGNORECASE)):
                 if not vai_tro_ok(s, goc + r.start(), r[0]):
                     return False
-                thiet_dien = True
+                gan.add(goc + (r.end() - _TU_THIET_DIEN if o_cuoi else r.start()))
+    thiet_dien = bool(gan)
     if c.fn == "ask_section_area":
+        # the asked "diện tích thiết diện" must be the section of (P) itself, not some other section in the quotes
         hoi = [(vt[0] + h.start(), vt[0] + h.end()) for quote in c.quotes if (vt := _vi_tri(de, quote))
                for h in _HOI_DIEN_TICH_THIET_DIEN.finditer(chuan_hoa(quote))]
-        if not any(_duoc_hoi(de, a, b) and _vai_tro_tai(de, a) not in ("GOAL", "CONDITIONAL") for a, b in hoi):
+        if not any(_duoc_hoi(de, a, b) and _vai_tro_tai(de, a) not in ("GOAL", "CONDITIONAL") and b - _TU_THIET_DIEN in gan
+                   for a, b in hoi):
             return False
     if thiet_dien and ten_ra is not None:
         ten_ra |= ten_mat
@@ -1418,7 +1435,7 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
 
 
 def _kiem_mat_song_song(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: set[str], nhan_da_khai: set,
-                        calls: tuple[LoiGoi, ...]) -> set[str]:
+                        calls: tuple[LoiGoi, ...], ten_mat_phu: dict | None = None) -> set[str]:
     """Declared decomposition `MAT_SONG_SONG`: two fresh labels, two translates of the point along two directions of the
     reference plane, every target section on exactly (point, label₁, label₂), shared quotes, and a source binding."""
     xs, p, q = list(d.get("labels") or []), d.get("point"), list(d.get("parallel_to") or [])
@@ -1448,7 +1465,8 @@ def _kiem_mat_song_song(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: 
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: đề không nói thiết diện của {c.args.solid} với mặt phẳng qua {p} "
                          f"song song ({''.join(q)})", ids)
     # The engine names the plane by what the source called it, bound here — never by the auxiliary labels.
-    d["source_plane_name"] = next(iter(ten_nguon)) if len(ten_nguon) == 1 else None
+    if ten_mat_phu is not None:
+        ten_mat_phu[ids[0]] = next(iter(ten_nguon)) if len(ten_nguon) == 1 else None
     return set(ids)
 
 

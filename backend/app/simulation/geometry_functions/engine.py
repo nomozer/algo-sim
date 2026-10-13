@@ -159,6 +159,7 @@ class _Dung:
         self.constructions: dict[str, LoiGoi] = {}
         self.sections: list[str] = []           # biến IR của thiết diện đã dựng (kiểm khép kín sau khi thực thi)
         self.mat_phu: list[dict] = []           # mặt phẳng dẫn xuất đã khai (`MAT_SONG_SONG`), kiểm ở `kiem_mat_cat`
+        self.ten_mat_phu: dict[str, str | None] = {}   # tên đề đặt cho mỗi mặt dẫn xuất — do `kiem_nguon` trả về
 
     def of(self, *fns: str) -> list[LoiGoi]:
         return [c for c in self.calls if c.fn in fns]
@@ -813,12 +814,12 @@ class _Dung:
             raise TuChoi(e.code, str(e), tuple(c.id for c in self.of("section", "ask_section_area", "intersection_line")))
 
     def _kiem_mat_phu(self, d: dict) -> None:
-        """Postconditions of a derived plane, independent of how the planner built it: it passes through the point, it is
-        parallel to the reference plane (normals, `predicates.parallel_planes`), it is not that plane, and it is not a face of
-        the solid it cuts (a boundary plane is not a cutting section — no silent M4)."""
+        """Postconditions of a derived plane, independent of how the planner built it. It passes through the point by
+        construction (built through it); checked here: parallel to the reference plane (normals, `predicates.parallel_planes`),
+        not that plane, and not a face of the solid it cuts (a boundary plane is not a cutting section — no silent M4)."""
         p, q, (x1, x2), ids = d["point"], d["parallel_to"], d["labels"], tuple(d["constructs"]) + tuple(d["targets"])
         mat, goc = self._plane([p, x1, x2]), self._plane(q)
-        if mat.signed_eval(Vec3(*self.pts[p])) != 0 or not parallel_planes(mat, goc):
+        if not parallel_planes(mat, goc):
             raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"mặt dẫn xuất qua {p} không song song ({''.join(q)})", ids)
         if goc.signed_eval(Vec3(*self.pts[p])) == 0:
             raise TuChoi("DERIVED_PLANE_IS_REFERENCE", f"{p} nằm trên ({''.join(q)}): mặt qua {p} song song với nó là chính "
@@ -858,7 +859,8 @@ class _Dung:
             ten, mp = f"td_{c.id}", f"mp_td_{c.id}"
             # A derived plane is named by its verified relation, never by the planner's auxiliary labels.
             dan = next((d for d in self.mat_phu if c.id in d["targets"]), None)
-            nhan_mat = (f"({dan.get('source_plane_name') or 'α'})" if dan else "(" + "".join(c.args.plane) + ")")
+            nhan_mat = (f"({self.ten_mat_phu.get(dan['constructs'][0]) or 'α'})" if dan
+                        else "(" + "".join(c.args.plane) + ")")
             lenh.append({"kind": "construct_plane", "target_var": mp, "through": [ir_name(x) for x in c.args.plane[:3]],
                          "label": nhan_mat})
             lenh.append({"kind": "construct_section", "target_var": ten, "solid": "khoi_" + ir_name(c.args.solid.replace(".", "_")),
@@ -960,7 +962,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
     dung: _Dung | None = None
     try:
         calls = doc_ke_hoach(plan)
-        kiem_nguon(calls, problem_text, auxiliary)
+        ten_mat_phu = kiem_nguon(calls, problem_text, auxiliary)
         if esc := [c for c in calls if c.fn == "unsupported"]:
             raise TuChoi("OUT_OF_SCOPE", "; ".join(f"{c.id}: {c.args.reason} ({c.quote!r})" for c in esc),
                          tuple(c.id for c in esc))
@@ -980,6 +982,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
             if s["step"] == "place_point" and s["object"] in phu:
                 s.update(binding="AUXILIARY", auxiliary_rule=phu[s["object"]]["rule"], goal=phu[s["object"]]["goal"])
         dung.mat_phu = [d for d in auxiliary if d.get("rule") == MAT_SONG_SONG]
+        dung.ten_mat_phu = ten_mat_phu
         dung.kiem()
         dung.kiem_mat_cat()
         program, hoi = dung.bien_dich()

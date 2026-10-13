@@ -120,8 +120,7 @@ def _prism_problem(m_seg="AA'", ref="ABC"):
     mid = HB._mid("fm", "M", a, b)
     define = f"Dựng mặt phẳng (P) đi qua M và song song với ({ref})."
     ask_q = "Tính diện tích thiết diện của hình lăng trụ ABC.A'B'C' với (P)."
-    common = {"solid": "ABC.A'B'C'", "point": "M", "points_b": RG.nhan_cua_de(ref) and _labels(ref),
-              "plane_relation": "parallel"}
+    common = {"solid": "ABC.A'B'C'", "point": "M", "points_b": _labels(ref), "plane_relation": "parallel"}
     extra = [{"id": "q", "kind": "question", "role": "question", "quantity": "area", "quotes": [define, ask_q], **common}]
     return " ".join(q + mid["quotes"] + [define, ask_q]), {"facts": facts + [mid] + extra}
 
@@ -131,13 +130,14 @@ def _labels(s):
     return re.findall(r"[A-Z][0-9]*'?", s)
 
 
-S3 = F(3) ** F(1, 2) if False else None   # (unused: the oracle stays exact by working with area²)
-PRISM = {"A": (F(0), F(0), F(0)), "B": (F(2), F(0), F(0)), "C": (F(1), None, F(0))}
+def _triangle_area_sq(a2, b2, c2) -> F:
+    """Heron in squared form from squared sides — exact, no coordinates (the equilateral base needs √3 in coordinates)."""
+    return F(4 * a2 * b2 - (a2 + b2 - c2) ** 2, 16)
 
 
 def _prism_area_sq_oracle():
-    # Equilateral side 2 has area √3: area² = 3, independent of the height; a parallel cut is congruent to the base.
-    return F(3)
+    # A plane through M parallel to (ABC) cuts a right prism in a translate of the base: area² of a triangle of side² 4.
+    return _triangle_area_sq(4, 4, 4)
 
 
 # ── tests ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -249,12 +249,40 @@ def test_boundary_face_is_not_a_cutting_section():
     ("đi qua M và song song với (ABCD)", "đi qua M"),                      # the relation is not in the source
     ("đi qua M và song song với (ABCD)", "đi qua M và song song với (SAB)"),  # another reference plane
     ("Dựng mặt phẳng (P)", "Nếu dựng được mặt phẳng (P)"),                # a condition, not a construction
+    # independent review of 926c0bf9, I2: the definition clause must be read to its end — these are contradictory
+    ("song song với (ABCD).", "song song với (ABCD) và song song với (SBC)."),
+    ("song song với (ABCD).", "song song với hai mặt phẳng (ABCD) và (SBC)."),
+    ("song song với (ABCD).", "song song với (ABCD) và song song với SB."),
+    ("song song với (ABCD).", "song song với (ABCD), (P) cắt SB tại N."),   # unread continuation: conservative refusal
 ])
 def test_derived_plane_must_be_bound_to_its_source_clause(old, new):
     text, payload = _pyramid_problem()
     text = text.replace(old, new)
     for f in payload["facts"]:
         f["quotes"] = [x.replace(old, new) for x in f["quotes"]]
+    r = run_fact_route(text, payload)
+    assert r.status == "REFUSED", (r.code, r.answers)
+
+
+@pytest.mark.parametrize("asked", ["(MAB)", "(SBD)"])
+def test_asked_area_must_name_the_derived_plane(asked):
+    # review I1: the area asked is of another section; serving the (P) area would be a wrong answer
+    text, payload = _pyramid_problem()
+    old = "Tính diện tích thiết diện của hình chóp S.ABCD với (P)."
+    new = f"Tính diện tích thiết diện của hình chóp S.ABCD với {asked}."
+    text = text.replace(old, new)
+    for f in payload["facts"]:
+        f["quotes"] = [x.replace(old, new) for x in f["quotes"]]
+    r = run_fact_route(text, payload)
+    assert r.status == "REFUSED", (r.code, r.answers)
+
+
+def test_plane_name_defined_twice_is_ambiguous():
+    # review minor 5: two definitions of (P) in the source — refuse rather than pick the quoted one
+    text, payload = _pyramid_problem()
+    text = text.replace("Dựng mặt phẳng (P)", "Gọi N là trung điểm SB. Dựng mặt phẳng (P) đi qua N và song song với (SAD). "
+                        "Dựng mặt phẳng (P)", 1)
+    payload["facts"].append(HB._mid("fn", "N", "S", "B"))
     r = run_fact_route(text, payload)
     assert r.status == "REFUSED", (r.code, r.answers)
 
