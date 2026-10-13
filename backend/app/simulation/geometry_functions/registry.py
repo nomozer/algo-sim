@@ -1102,8 +1102,12 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
             remaining, _found = cover(a, b)
             if m.group().lower() == "bằng cách":
                 ok = _PHUONG_PHAP.fullmatch(remaining)
+            elif _MO_MUC_TIEU.match(de, a, b):
+                # a goal clause covers itself only: what follows a ";" is another clause and is read like a follow-up
+                cham = de.find(";", a, b)
+                ok = cham < 0 or _SAU_VIEC_KE_TIEP.fullmatch(remaining[cham - a + 1:])
             else:
-                ok = _MO_MUC_TIEU.match(de, a, b) or _SAU_VIEC_KE_TIEP.fullmatch(remaining)
+                ok = _SAU_VIEC_KE_TIEP.fullmatch(remaining)
             if not ok:
                 raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                              "việc kế tiếp trong yêu cầu chưa được đọc trọn (có thể đổi giả thiết); không dùng mô hình cũ")
@@ -1121,8 +1125,13 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str) -> None:
         occurrences = _cum_hoi(c, de, 0, len(de), calls)
         asked = [p for p, h in occurrences if _hoi_dung_cum(de, p, h)]
         for p, h in occurrences:
-            if asked and p > min(asked) and not _hoi_dung_cum(de, p, h) \
-                    and request_verb.search(de, _bien_menh_de(de, p)[0], p) and _vai_tro_tai(de, p) != "GOAL":
+            if not asked or p <= min(asked) or _hoi_dung_cum(de, p, h) or _vai_tro_tai(de, p) == "GOAL":
+                continue
+            verbs = list(request_verb.finditer(de, _bien_menh_de(de, p)[0], p))
+            # a re-request only when the object is the verb's DIRECT object ("tính lại SC"), not named inside another
+            # object ("tính góc giữa SC và (ABCD)", "khoảng cách từ A đến SC") — same connector grammar as the ask gate
+            if verbs and _GIUA_HOP_LE.fullmatch(re.sub(r"(?<!\w)lại(?!\w)", " ", _bo_cum(de[verbs[-1].end():p]),
+                                                       flags=re.IGNORECASE)):
                 raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                              f"{c.id}: đối tượng được yêu cầu lại sau lần hỏi đầu — phạm vi giả thiết đã đổi; chưa hỗ trợ", (c.id,))
 

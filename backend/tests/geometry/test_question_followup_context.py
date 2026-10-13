@@ -115,6 +115,41 @@ def test_construction_follow_up_task_stays_served(arm, sentence):
     assert r.status == "SERVED", (r.status, r.code, r.reason)
 
 
+ANGLE = HB._ask("q2", "Tính góc giữa SC và (ABCD).", "angle", points_a=["S", "C"], points_b=list("ABCD"))
+
+
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("sentence, extra", [
+    # independent review of 926c0bf9, I3: the asked object named inside another object is not a re-request
+    ("Tính SC. Tính góc giữa SC và (ABCD).", [ANGLE]),
+    ("a) Tính SC. b) Tính góc giữa SC và (ABCD).", [ANGLE]),
+    ("Tính SC rồi so sánh SC với SB.", []),
+])
+def test_multi_part_requests_naming_the_object_again_stay_served(arm, sentence, extra):
+    r = run(sentence, arm, extra=extra, quote="Tính SC")
+    assert r.status == "SERVED", (r.status, r.code, r.reason)
+    assert HB.answer_square(r.answers["q"]) == 17
+
+
+@pytest.mark.parametrize("sentence", ["Tính SC. Tính khoảng cách từ A đến SC.",
+                                      "Tính SC, sau đó tính khoảng cách từ A đến SC."])
+def test_distance_to_the_asked_segment_is_not_a_re_request(sentence):
+    q2 = HB._ask("q2", sentence.split(". ")[-1] if ". " in sentence else sentence, "distance", points_a=["A"],
+                 points_b=["S", "C"])
+    r = run(sentence, "B", extra=[q2], quote="Tính SC")
+    assert r.status == "SERVED", (r.status, r.code, r.reason)
+
+
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("sentence", [
+    # review minor 4: a goal clause does not cover a change written after ";"
+    "Tính SC, sau đó chứng minh SC lớn hơn SA; đổi đáy thành hình chữ nhật.",
+    "Tính SC, từ đó suy ra SC lớn hơn SA; tăng SA gấp đôi.",
+])
+def test_goal_clause_does_not_cover_a_later_change(arm, sentence):
+    assert run(sentence, arm).status == "REFUSED"
+
+
 @pytest.mark.parametrize("sentence", [
     "Tính SC, sau đó gọi M là trung điểm SC.",
     "Tính SC, sau đó so sánh SC với 4.",
