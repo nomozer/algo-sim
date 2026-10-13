@@ -8,8 +8,12 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-14:** bounded two-line plane research is authorized and implemented on its research branch.
+Finish clean verification, then user's integration decision; do not start another construction slice.
+Run [`two-line-plane-section`](evaluation/geometry/runs/two-line-plane-section/report.md). Hybrid stays off.
+
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION
+CANONICAL_NEXT_ACTION = TWO_LINE_PLANE_SECTION_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

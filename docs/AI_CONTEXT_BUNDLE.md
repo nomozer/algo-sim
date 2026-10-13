@@ -1,8 +1,8 @@
 # AI_CONTEXT_BUNDLE.md — AlgoSim Session Handoff & Quick Context
 
-## LOCAL override — 2026-10-13 (ưu tiên hơn snapshot §2)
+## LOCAL override — 2026-10-14 (ưu tiên hơn snapshot §2)
 
-**2026-10-13, Source Grounding đã ff và push lên `main` (`7767c7e1` → `27b81c51`):** review cuối sửa lỗ hở cũ chưa khai: quote chồng nhân đôi quyền xác nhận số (`c30049fd`, RED→GREEN 227 pass/1 xfail, review lại NON-BLOCKING). Candidate `736613f6…`, 110 file, benchmark byte-identical 19/9/0/2, provider giữ; T3 clean `27b81c51` PASS backend 9161 / frontend 1053; push/cleanup cuối ở run `source-grounding-integration`. Ba residual đã khai vẫn OPEN; Hybrid chưa nối `/api/analyze`, LLM_ONLY/cache125/Gemini0. Thư mục vật lý `question-local-givens` và `geometry-library-expansion` đã dọn bằng quyền hợp lệ, nguồn/bằng chứng khớp main/Git; XML JUnit tạm đã dọn. Compact DSL **`NO-GO_ARCHIVED`** (người dùng duyệt; Typed Facts JSON giữ; nhánh `research/compact-geometry-dsl` lưu trữ local không worktree, bundle đã kiểm khôi phục; run `compact-dsl-closure`), hai nhánh real-model giữ; pilot `471a2c79` chưa có trên remote, đã thêm bundle local có kiểm. Kế tiếp chỉ đề xuất duyệt thiết kế một lát Planner hướng mục tiêu trên kiến trúc sẵn có, không bắt đầu trong lượt này.
+**2026-10-14, two-line-plane-section LOCAL research:** branch `research/goal-directed-two-line-plane-section`, product `2b42eb40`, candidate `c2ac6dbe…`/110files; main=origin/main `5270f3dd`, push NONE. Group A through verified M strictly parallel to two independent lines; existing two translates/plane/section IR, exact contains/disjoint postconditions. Closed atomic premise/aux quotes; independent LOCAL review nonblocking,111 focused PASS, development12served/33refused wrong0; final detached/heldout/browser receipts in run `two-line-plane-section`. B provider intentionally `145feb18…`, A/declarations stable; named-plane display opt-in only new route, LLM_ONLY/cache125/Gemini0/Hybrid off. Group B deferred with separate source/contains certificate missing. Three older Grounding residuals remain OPEN; new-rule adversaries refuse. Compact DSL `NO-GO_ARCHIVED`, archival branch/no worktree/bundles preserved; both real-model refs/pilot `471a2c79` and all protected data preserved. Next only user research integration decision after gates; no new slice.
 
 - Hybrid S0 + thiết diện/giao tuyến + S1/S2 đã fast-forward cục bộ lên `main`: `a6e27a78` → `22edf7ff`. Remote vẫn `a6e27a78` (ls-remote); không push. Ref Hybrid và DSL giữ nguyên (DSL nay `NO-GO_ARCHIVED`).
 - Candidate `d1410731…`, product `624e7fc5`, 110 file verify khớp. T3 clean detached tại `22edf7ff`: FULL_PRODUCT_GATE_PASS (backend 8675, frontend 1053, build/demo/crash PASS). Benchmark 30 ca giữ byte: 19/9/0/2 cả hai tuyến offline. Run `hybrid-main-integration`.
@@ -202,7 +202,7 @@ Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FU
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION
+CANONICAL_NEXT_ACTION = TWO_LINE_PLANE_SECTION_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

@@ -1,0 +1,10 @@
+{
+  "cache_version": 125,
+  "decision": "UNCHANGED",
+  "reason": "New rule reachable only via experimental run_fact_route. /api/analyze and LLM_ONLY untouched. Named-plane preference defaults false; only new verified research route opts in. Existing default display control preserves previous notation and section reference. No product cache consumer.",
+  "controls": [
+    "test_default_display_path_keeps_its_previous_names",
+    "test_provider_surfaces_are_pinned"
+  ],
+  "live_calls": 0
+}

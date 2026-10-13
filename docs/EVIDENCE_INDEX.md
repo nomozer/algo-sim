@@ -1,5 +1,21 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = TWO_LINE_PLANE_SECTION
+
+REPORT = docs/evaluation/geometry/runs/two-line-plane-section/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/two-line-plane-section/
+CORRECTED_BY = NONE
+CORRECTS = SOURCE_GROUNDING_INTEGRATION
+CLASSIFICATION = LOCAL_RESEARCH_GROUP_A_PRODUCT_FROZEN
+CODE_COMMIT = 2b42eb40
+VERIFICATION_COMMIT = PENDING
+MODEL_REQUEST_COUNT = 0
+
+New strict two-line plane/section composition, no second authority; intentional additive B surface change.
+Candidate correction extends source-grounding-integration; historical bytes/labels stay unchanged.
+Preregistered45 development +32 sealed heldout, independent algorithm/Gram oracle (same author).
+Review receipt `review.md`; authoritative gates and final decision tracked in `run.json`/`report.md`.
+
 ## WAVE_ID = COMPACT_DSL_CLOSURE
 
 REPORT = docs/evaluation/geometry/runs/compact-dsl-closure/report.md
@@ -22,7 +38,7 @@ and the reopen trigger are in the report. Proxy tokens and a cost model only; Ge
 
 REPORT = docs/evaluation/geometry/runs/source-grounding-integration/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-grounding-integration/
-CORRECTED_BY = NONE
+CORRECTED_BY = TWO_LINE_PLANE_SECTION
 CORRECTS = SOURCE_GROUNDING_COMPLETENESS
 CLASSIFICATION = MAIN_INTEGRATED_PUSHED_T3_PASS_RESEARCH_CLOSURE
 CODE_COMMIT = c30049fd

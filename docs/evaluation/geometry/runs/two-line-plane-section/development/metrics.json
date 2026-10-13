@@ -1,0 +1,544 @@
+{
+  "schema": "two_line_measurement/1",
+  "split": "development",
+  "cases": 45,
+  "input_sha256": "0d31e49ea982f9378054dafc192b31ffd8bfdb8f8651424ec4ff2a9607138793",
+  "product_commit": "2b42eb40eda7479ad088846be44f9757501e7047",
+  "candidate": "c2ac6dbe1cc65170e75db6a0d6d7e4e8e0a1c544db5961fcd16120a89606c5d4",
+  "live_calls": 0,
+  "oracle": "exact facet-pair halfspace intersections + projected convex hull + Gram area; same author, different algorithm",
+  "counts": {
+    "correct_served": 12,
+    "correct_refusal": 33
+  },
+  "groups": {
+    "positive": {
+      "correct_served": 12
+    },
+    "boundary": {
+      "correct_refusal": 33
+    }
+  },
+  "failures": [],
+  "rows": [
+    {
+      "index": 0,
+      "family": "pyramid",
+      "stratum": "positive",
+      "expected": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "outcome": "correct_served",
+      "oracle": "PASS",
+      "answers": {
+        "q": "9/4"
+      }
+    },
+    {
+      "index": 1,
+      "family": "pyramid",
+      "stratum": "positive",
+      "expected": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "outcome": "correct_served",
+      "oracle": "PASS",
+      "answers": {
+        "q": "3√13/4"
+      }
+    },
+    {
+      "index": 2,
+      "family": "pyramid",
+      "stratum": "positive",
+      "expected": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "outcome": "correct_served",
+      "oracle": "PASS",
+      "answers": {
+        "q": "3√13/4"
+      }
+    },
+    {
+      "index": 3,
+      "family": "pyramid",
+      "stratum": "boundary",
+      "expected": "PLANE_NOT_UNIQUE",
+      "status": "REFUSED",
+      "code": "PLANE_NOT_UNIQUE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 4,
+      "family": "pyramid",
+      "stratum": "boundary",
+      "expected": "PLANE_NOT_UNIQUE",
+      "status": "REFUSED",
+      "code": "PLANE_NOT_UNIQUE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 5,
+      "family": "pyramid",
+      "stratum": "boundary",
+      "expected": "PLANE_NOT_UNIQUE",
+      "status": "REFUSED",
+      "code": "PLANE_NOT_UNIQUE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 6,
+      "family": "pyramid",
+      "stratum": "boundary",
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "status": "REFUSED",
+      "code": "LINE_CONTAINED_IN_PLANE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 7,
+      "family": "pyramid",
+      "stratum": "boundary",
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "status": "REFUSED",
+      "code": "LINE_CONTAINED_IN_PLANE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 8,
+      "family": "pyramid",
+      "stratum": "boundary",
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "status": "REFUSED",
+      "code": "LINE_CONTAINED_IN_PLANE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 9,
+      "family": "pyramid",
+      "stratum": "boundary",
+      "expected": "NO_POLYGON",
+      "status": "REFUSED",
+      "code": "PLANE_TOUCHES_EDGE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 10,
+      "family": "pyramid",
+      "stratum": "boundary",
+      "expected": "NO_POLYGON",
+      "status": "REFUSED",
+      "code": "PLANE_TOUCHES_EDGE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 11,
+      "family": "pyramid",
+      "stratum": "boundary",
+      "expected": "NO_POLYGON",
+      "status": "REFUSED",
+      "code": "PLANE_TOUCHES_EDGE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 12,
+      "family": "triangular_pyramid",
+      "stratum": "positive",
+      "expected": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "outcome": "correct_served",
+      "oracle": "PASS",
+      "answers": {
+        "q": "3/2"
+      }
+    },
+    {
+      "index": 13,
+      "family": "triangular_pyramid",
+      "stratum": "positive",
+      "expected": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "outcome": "correct_served",
+      "oracle": "PASS",
+      "answers": {
+        "q": "√3/2"
+      }
+    },
+    {
+      "index": 14,
+      "family": "triangular_pyramid",
+      "stratum": "positive",
+      "expected": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "outcome": "correct_served",
+      "oracle": "PASS",
+      "answers": {
+        "q": "√3/2"
+      }
+    },
+    {
+      "index": 15,
+      "family": "triangular_pyramid",
+      "stratum": "boundary",
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "status": "REFUSED",
+      "code": "LINE_CONTAINED_IN_PLANE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 16,
+      "family": "triangular_pyramid",
+      "stratum": "boundary",
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "status": "REFUSED",
+      "code": "LINE_CONTAINED_IN_PLANE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 17,
+      "family": "triangular_pyramid",
+      "stratum": "boundary",
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "status": "REFUSED",
+      "code": "LINE_CONTAINED_IN_PLANE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 18,
+      "family": "prism",
+      "stratum": "positive",
+      "expected": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "outcome": "correct_served",
+      "oracle": "PASS",
+      "answers": {
+        "q": "3"
+      }
+    },
+    {
+      "index": 19,
+      "family": "prism",
+      "stratum": "positive",
+      "expected": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "outcome": "correct_served",
+      "oracle": "PASS",
+      "answers": {
+        "q": "3"
+      }
+    },
+    {
+      "index": 20,
+      "family": "prism",
+      "stratum": "positive",
+      "expected": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "outcome": "correct_served",
+      "oracle": "PASS",
+      "answers": {
+        "q": "3"
+      }
+    },
+    {
+      "index": 21,
+      "family": "prism",
+      "stratum": "boundary",
+      "expected": "PLANE_NOT_UNIQUE",
+      "status": "REFUSED",
+      "code": "PLANE_NOT_UNIQUE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 22,
+      "family": "prism",
+      "stratum": "boundary",
+      "expected": "PLANE_NOT_UNIQUE",
+      "status": "REFUSED",
+      "code": "PLANE_NOT_UNIQUE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 23,
+      "family": "prism",
+      "stratum": "boundary",
+      "expected": "PLANE_NOT_UNIQUE",
+      "status": "REFUSED",
+      "code": "PLANE_NOT_UNIQUE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 24,
+      "family": "prism",
+      "stratum": "boundary",
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "status": "REFUSED",
+      "code": "LINE_CONTAINED_IN_PLANE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 25,
+      "family": "prism",
+      "stratum": "boundary",
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "status": "REFUSED",
+      "code": "LINE_CONTAINED_IN_PLANE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 26,
+      "family": "prism",
+      "stratum": "boundary",
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "status": "REFUSED",
+      "code": "LINE_CONTAINED_IN_PLANE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 27,
+      "family": "prism",
+      "stratum": "boundary",
+      "expected": "SECTION_PLANE_IS_FACE",
+      "status": "REFUSED",
+      "code": "SECTION_PLANE_IS_FACE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 28,
+      "family": "prism",
+      "stratum": "boundary",
+      "expected": "SECTION_PLANE_IS_FACE",
+      "status": "REFUSED",
+      "code": "SECTION_PLANE_IS_FACE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 29,
+      "family": "prism",
+      "stratum": "boundary",
+      "expected": "SECTION_PLANE_IS_FACE",
+      "status": "REFUSED",
+      "code": "SECTION_PLANE_IS_FACE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 30,
+      "family": "prism",
+      "stratum": "boundary",
+      "expected": "NO_POLYGON",
+      "status": "REFUSED",
+      "code": "PLANE_TOUCHES_EDGE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 31,
+      "family": "prism",
+      "stratum": "boundary",
+      "expected": "NO_POLYGON",
+      "status": "REFUSED",
+      "code": "PLANE_TOUCHES_EDGE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 32,
+      "family": "prism",
+      "stratum": "boundary",
+      "expected": "NO_POLYGON",
+      "status": "REFUSED",
+      "code": "PLANE_TOUCHES_EDGE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 33,
+      "family": "cuboid",
+      "stratum": "positive",
+      "expected": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "outcome": "correct_served",
+      "oracle": "PASS",
+      "answers": {
+        "q": "12"
+      }
+    },
+    {
+      "index": 34,
+      "family": "cuboid",
+      "stratum": "positive",
+      "expected": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "outcome": "correct_served",
+      "oracle": "PASS",
+      "answers": {
+        "q": "12"
+      }
+    },
+    {
+      "index": 35,
+      "family": "cuboid",
+      "stratum": "positive",
+      "expected": "SERVED",
+      "status": "SERVED",
+      "code": null,
+      "outcome": "correct_served",
+      "oracle": "PASS",
+      "answers": {
+        "q": "12"
+      }
+    },
+    {
+      "index": 36,
+      "family": "cuboid",
+      "stratum": "boundary",
+      "expected": "PLANE_NOT_UNIQUE",
+      "status": "REFUSED",
+      "code": "PLANE_NOT_UNIQUE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 37,
+      "family": "cuboid",
+      "stratum": "boundary",
+      "expected": "PLANE_NOT_UNIQUE",
+      "status": "REFUSED",
+      "code": "PLANE_NOT_UNIQUE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 38,
+      "family": "cuboid",
+      "stratum": "boundary",
+      "expected": "PLANE_NOT_UNIQUE",
+      "status": "REFUSED",
+      "code": "PLANE_NOT_UNIQUE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 39,
+      "family": "cuboid",
+      "stratum": "boundary",
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "status": "REFUSED",
+      "code": "LINE_CONTAINED_IN_PLANE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 40,
+      "family": "cuboid",
+      "stratum": "boundary",
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "status": "REFUSED",
+      "code": "LINE_CONTAINED_IN_PLANE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 41,
+      "family": "cuboid",
+      "stratum": "boundary",
+      "expected": "LINE_CONTAINED_IN_PLANE",
+      "status": "REFUSED",
+      "code": "LINE_CONTAINED_IN_PLANE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 42,
+      "family": "cuboid",
+      "stratum": "boundary",
+      "expected": "SECTION_PLANE_IS_FACE",
+      "status": "REFUSED",
+      "code": "SECTION_PLANE_IS_FACE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 43,
+      "family": "cuboid",
+      "stratum": "boundary",
+      "expected": "SECTION_PLANE_IS_FACE",
+      "status": "REFUSED",
+      "code": "SECTION_PLANE_IS_FACE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    },
+    {
+      "index": 44,
+      "family": "cuboid",
+      "stratum": "boundary",
+      "expected": "SECTION_PLANE_IS_FACE",
+      "status": "REFUSED",
+      "code": "SECTION_PLANE_IS_FACE",
+      "outcome": "correct_refusal",
+      "oracle": null,
+      "answers": {}
+    }
+  ]
+}

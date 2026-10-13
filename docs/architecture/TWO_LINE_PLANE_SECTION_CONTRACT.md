@@ -27,7 +27,7 @@ Finite-segment nouns do not bind an infinite line. Definition rest, conflicting 
 quote omission and wrong objects refuse. No source quote licenses a second unverified hypothesis.
 For this new rule, proof/inference source clauses are refused conservatively; therefore the known bare và/song
 hypothesis-in-goal and unverified goal-value residuals cannot serve through it. Compound/open premise quotes are also
-refused unless their extra assertion is independently read by the existing source authority. Long-quote numberless
+refused by the atomic quote subset; a quote never exempts an unread extra assertion. Long-quote numberless
 claims remain a general old-route issue, but new-rule adversarial controls must refuse. No full Vietnamese claim.
 
 ## B: conditional follow-up

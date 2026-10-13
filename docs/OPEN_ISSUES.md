@@ -1,5 +1,15 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-TWO-LINE-SOURCE-SUBSET
+
+- **status:** OPEN bounded research limitation, run `two-line-plane-section`.
+- **description:** New Group A accepts separate atomic source definitions/requests and a closed premise subset;
+  compound/unknown quotes, proof/inference and intersection-defined anchors refuse conservatively. No general Vietnamese claim.
+- **impact:** Legitimate wordings outside this subset may be false refusals. Three historical Grounding residuals remain OPEN
+  on older routes; new-rule controls refuse them. B contains-line semantics not extracted or served by this slice.
+- **owner_class:** ARCHITECTURE
+- **default_switch_blocker:** YES — no live Gemini/new-fact extraction or API Hybrid end-to-end acceptance.
+
 ### ISSUE-ARCH-GATE-CLAUSE-ROLE-INSIDE-QUOTE
 
 - **description:** **CRITICAL.** The shared source gate (`registry.kiem_nguon`) reads the clause role only before the quote of a premise call. Fact functions such as `perpendicular_line_plane` lack the special case that constructions have, so a premise quote that carries its own "Nếu … thì" or "Chứng minh" is accepted as a given.

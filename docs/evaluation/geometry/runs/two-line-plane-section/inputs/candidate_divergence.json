@@ -1,0 +1,22 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "two-line-plane-section-w01",
+  "task": "two-line-plane-section",
+  "corrects": "docs/evaluation/geometry/runs/source-grounding-integration/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "c2ac6dbe1cc65170e75db6a0d6d7e4e8e0a1c544db5961fcd16120a89606c5d4",
+  "current_candidate_source_commit": "2b42eb40eda7479ad088846be44f9757501e7047",
+  "previous_candidate_hash": "736613f67d6e3a1a7459b8af4562c5000768989ddb8ef09a1d5b9a14a12706e2",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "reason": "Bounded Group A: same Planner/Registry/Engine compose two existing translates, plane and section. New strict line-plane checks; closed source subset and opt-in verified plane display. B provider schema/prompt intentionally extended. No default consumer.",
+  "historical_effect": "Historical A/B, corpus labels and correction layers unchanged; historical results retain their candidate. New corpus reported separately.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "NONE: research only; user decision required",
+  "push": "NONE: not authorized"
+}

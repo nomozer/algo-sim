@@ -1,0 +1,39 @@
+{
+  "schema": "two_line_plane_section/1",
+  "run_id": "two-line-plane-section",
+  "wave": "two-line-plane-section-w01",
+  "date": "2026-10-14",
+  "environment": "LOCAL Windows",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "status": "PRODUCT_FROZEN_FINAL_GATES_PENDING",
+  "branch": "research/goal-directed-two-line-plane-section",
+  "main_before": "5270f3ddf63050efca14dab403912d8ed30e1113",
+  "main_after": "5270f3ddf63050efca14dab403912d8ed30e1113",
+  "push": "NONE",
+  "product_commit": "2b42eb40eda7479ad088846be44f9757501e7047",
+  "candidate": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 110,
+    "tree_hash": "c2ac6dbe1cc65170e75db6a0d6d7e4e8e0a1c544db5961fcd16120a89606c5d4",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "clean_detached_freeze": true,
+  "group_A": "IMPLEMENTED_BOUNDED",
+  "group_B": "DEFERRED_WITH_REASON: no audited contains-line source variant or acceptance corpus in this preregistered A freeze; strict A cannot be used for containment. B requires a distinct extraction/source/goal certificate. Do not expand a frozen A product after its heldout.",
+  "review": "NONBLOCKING_LOCAL_INDEPENDENT",
+  "live_calls": 0,
+  "Hybrid_product_enablement": "NO_GO",
+  "verification": {
+    "focused": {
+      "passed": 111
+    },
+    "T3": "NOT_MEASURED",
+    "heldout": "SEALED_UNUSED",
+    "browser": "IN_PROGRESS"
+  },
+  "freeze_failed_attempt": "Initial command started before worktree checkout completed: missing schema, no manifest written; retried only after checkout exit0 and clean git status."
+}

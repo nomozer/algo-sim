@@ -2,7 +2,17 @@
 
 ## LOCAL override — compact-dsl-closure, 2026-10-13
 
-CANONICAL_NEXT_ACTION = HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION
+CANONICAL_NEXT_ACTION = TWO_LINE_PLANE_SECTION_INTEGRATION_DECISION
+
+**LOCAL research two-line-plane-section, 2026-10-14:** user-authorized bounded Group A composition on
+`research/goal-directed-two-line-plane-section`, product `2b42eb40`; main/origin remain `5270f3dd`, push NONE.
+Plane through M strictly parallel to two independent infinite lines; two translates → existing plane/section IR.
+Exact contains/disjoint checks; complete closed premise/auxiliary quotes; no second fact state or semantic authority.
+Candidate `c2ac6dbe…` (110 files), B surface intentionally `145feb18…`, A/declarations unchanged. Cache125/default
+LLM_ONLY unchanged; named-plane display opt-in on the new research route. 111 focused tests PASS; independent review
+nonblocking. Development corpus 12 correct served /33 correct refusals, wrong served0; historical30 remain19/9/0/2.
+Final clean gates/heldout/browser receipts: [`two-line-plane-section`](evaluation/geometry/runs/two-line-plane-section/report.md).
+Hybrid product enablement remains NO-GO; next is user's research integration decision after those gates.
 
 `COMPACT_DSL = NO-GO_ARCHIVED` (quyết định của người dùng): Typed Facts structured JSON giữ làm định dạng AI → Hybrid;
 DSL gọn và JSON gọn không thay thế. Lý do: Hybrid chưa có consumer sản phẩm; văn phạm viết tay đã lệch `TypedFact`

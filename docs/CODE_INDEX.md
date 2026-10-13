@@ -1,5 +1,16 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Two-line plane section — LOCAL research, main unchanged
+
+Run `docs/evaluation/geometry/runs/two-line-plane-section/`; contract `docs/architecture/TWO_LINE_PLANE_SECTION_CONTRACT.md`.
+Existing Planner `_mat_qua_diem`/TypedFact `parallel_two_lines`, Registry `MAT_HAI_DUONG`/complete source spans,
+Engine `_kiem_mat_phu` strict line-plane predicates and existing translate/vector/plane/section IR are reused.
+`display_names.ten_hien_thi` explicit plane alias is opt-in via `simulation_state`; only new `function_route` enables it.
+No new product module or semantic store. Research oracle: `backend/tests/geometry/two_line_plane_oracle.py`;
+acceptance: `backend/tests/geometry/test_two_line_plane_section.py`; replay: `backend/scripts/measure_two_line_plane_sections.py`.
+Existing `export_hybrid_section_scenes.py`, `frontend/scripts/hybrid-section-visual.tsx`/`hybrid-section-visual-check.mjs`
+support `two-line` sources, refusal, real selection/step scrubber; Scene3DWorkspace harness only.
+
 ## Premise source coverage — integrated research code, Hybrid off
 
 Runs: `docs/evaluation/geometry/runs/source-grounding-completeness/` + `docs/evaluation/geometry/runs/source-grounding-integration/`.
