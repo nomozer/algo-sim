@@ -5,7 +5,7 @@
   "date": "2026-10-13",
   "environment": "LOCAL Windows",
   "naming_policy": "docs/evaluation/RUN_NAMING.md",
-  "status": "MAIN_INTEGRATED_T3_PASS_READY_FOR_AUTHORIZED_PUSH",
+  "status": "MAIN_INTEGRATED_PUSHED_T3_PASS",
   "authorization_source": "user task: ff-only main integration, integration records, fast-forward push origin/main, preserved merged branch deletion, safe physical cleanup and read-only research closure",
   "integration": {
     "main_before": "7767c7e15ad8a4b475db514dd7b788c091f75890",
@@ -14,46 +14,236 @@
     "product_after_review": "c30049fd3d52f236dc10fa2ae15ee4d097d3482e",
     "main_after_ff": "27b81c51bfb8a19ddb22b486965fe18d3cf21311",
     "method": "git merge --ff-only research/source-grounding-completeness",
-    "push": {"status": "PENDING", "force": false}
+    "push": {
+      "status": "REMOTE_SYNC_PASS",
+      "force": false,
+      "verified_commit": "6e053b41962444f0dbbe2f6ef73e775ef63d3442",
+      "main": "6e053b41962444f0dbbe2f6ef73e775ef63d3442",
+      "origin_main": "6e053b41962444f0dbbe2f6ef73e775ef63d3442",
+      "ls_remote": "6e053b41962444f0dbbe2f6ef73e775ef63d3442",
+      "final_record_commit_role": "SELF: documentation-only closure record follows verified push; push and verify its actual HEAD after commit"
+    }
   },
-  "review": {"independent_local": true, "first_verdict": "BLOCKING_UNDECLARED_PREEXISTING_IMPORTANT", "finding": "overlapping quotes duplicated one call value numeric budget", "red": {"failed": 4, "passed": 14}, "green": {"passed": 227, "xfailed": 1}, "followup_verdict": "NON_BLOCKING", "followup_focused": {"passed": 415, "xfailed": 1, "extra_route_probes": 12}, "declared_residuals": "OPEN", "receipt": "review.md"},
-  "candidate": {"tree_hash": "736613f67d6e3a1a7459b8af4562c5000768989ddb8ef09a1d5b9a14a12706e2", "files": 110, "product_commit": "c30049fd", "freeze_commit": "27b81c51", "clean_detached_freeze": true, "verify": "PASS", "previous": "46ca75a2f1a60dd4e554936cf918b310c49fc4c694039f86bd3d3cbeaaf559af", "divergence": "inputs/candidate_divergence.json"},
+  "review": {
+    "independent_local": true,
+    "first_verdict": "BLOCKING_UNDECLARED_PREEXISTING_IMPORTANT",
+    "finding": "overlapping quotes duplicated one call value numeric budget",
+    "red": {
+      "failed": 4,
+      "passed": 14
+    },
+    "green": {
+      "passed": 227,
+      "xfailed": 1
+    },
+    "followup_verdict": "NON_BLOCKING",
+    "followup_focused": {
+      "passed": 415,
+      "xfailed": 1,
+      "extra_route_probes": 12
+    },
+    "declared_residuals": "OPEN",
+    "receipt": "review.md"
+  },
+  "candidate": {
+    "tree_hash": "736613f67d6e3a1a7459b8af4562c5000768989ddb8ef09a1d5b9a14a12706e2",
+    "files": 110,
+    "product_commit": "c30049fd",
+    "freeze_commit": "27b81c51",
+    "clean_detached_freeze": true,
+    "verify": "PASS",
+    "previous": "46ca75a2f1a60dd4e554936cf918b310c49fc4c694039f86bd3d3cbeaaf559af",
+    "divergence": "inputs/candidate_divergence.json"
+  },
   "verification": {
-    "grounding_hybrid_geometry_provider_docs_identity": {"passed": 1224, "xfailed": 5, "commit": "27b81c51", "receipt": "verification/cluster.log"},
-    "living_docs_identity_correction": {"passed": 97, "receipt": "verification/docs-final.log"},
-    "t3": {"status": "FULL_PRODUCT_GATE_PASS", "commit": "27b81c51", "clean_detached": true, "exit": 0, "backend": {"passed": 9161, "skipped": 1, "deselected": 2, "xfailed": 6}, "frontend": {"passed": 1053, "files": 68}, "build": "PASS", "demo": "5/5", "crash_surface": "6/6", "receipt": "verification/t3.log", "sha256": "76a0e91659c7cd5237d2d743523ac6344d84868129dae3ff65d4f17c1cd9f17a", "seconds": 358.5},
-    "aborted_attempts": ["before verifier checkout completed: stopped, no credit", "session Git safe-directory config overwritten by longpaths-only env: stopped, no credit; exact reproduction 1 fail/98 pass, fixed by preserving session config"],
-    "scene3d": "not rerun: source gate only, renderer and served payload construction unchanged"
+    "grounding_hybrid_geometry_provider_docs_identity": {
+      "passed": 1224,
+      "xfailed": 5,
+      "commit": "27b81c51",
+      "receipt": "verification/cluster.log"
+    },
+    "living_docs_identity_correction": {
+      "passed": 97,
+      "receipt": "verification/docs-final.log"
+    },
+    "t3": {
+      "status": "FULL_PRODUCT_GATE_PASS",
+      "commit": "27b81c51",
+      "clean_detached": true,
+      "exit": 0,
+      "backend": {
+        "passed": 9161,
+        "skipped": 1,
+        "deselected": 2,
+        "xfailed": 6
+      },
+      "frontend": {
+        "passed": 1053,
+        "files": 68
+      },
+      "build": "PASS",
+      "demo": "5/5",
+      "crash_surface": "6/6",
+      "receipt": "verification/t3.log",
+      "sha256": "76a0e91659c7cd5237d2d743523ac6344d84868129dae3ff65d4f17c1cd9f17a",
+      "seconds": 358.5
+    },
+    "aborted_attempts": [
+      "before verifier checkout completed: stopped, no credit",
+      "session Git safe-directory config overwritten by longpaths-only env: stopped, no credit; exact reproduction 1 fail/98 pass, fixed by preserving session config"
+    ],
+    "scene3d": "not rerun: source gate only, renderer and served payload construction unchanged",
+    "final_docs_audit": {
+      "status": "PASS",
+      "failure_receipt": "verification/docs-closure-audit.json",
+      "handoff_lines": 300,
+      "receipt": "verification/docs-closure-pass.json",
+      "correction": "closure note exceeded 300-line handoff; compacted without new content or scope",
+      "secret_leaks": 0
+    }
   },
-  "benchmark": {"cases": 30, "counts_each_evaluation": [19,9,0,2], "byte_identical": true, "sha256": "febb5b602fcb194c502e07ea47fe4200ed4083f0b09bac12784b2536940ab12e", "receipt": "benchmark/metrics.json"},
-  "provider_surfaces": {"A": "912b22ef", "B": "4a20601f", "declarations": "f2ec9698", "changed": false},
+  "benchmark": {
+    "cases": 30,
+    "counts_each_evaluation": [
+      19,
+      9,
+      0,
+      2
+    ],
+    "byte_identical": true,
+    "sha256": "febb5b602fcb194c502e07ea47fe4200ed4083f0b09bac12784b2536940ab12e",
+    "receipt": "benchmark/metrics.json"
+  },
+  "provider_surfaces": {
+    "A": "912b22ef",
+    "B": "4a20601f",
+    "declarations": "f2ec9698",
+    "changed": false
+  },
   "cleanup": {
-    "registered_before": 2, "registered_peak": 3, "registered_after": 2,
-    "physical_before": ["dsl-spike", "question-local-givens", "geometry-library-expansion"],
-    "physical_after": ["dsl-spike"],
-    "removed_old": [{"path": ".superpowers/worktrees/question-local-givens", "files": 13234, "bytes": 1687454380, "preserved_source_evidence_files": 13126, "remaining_db": "test-only SQLite, all ten tables empty"}, {"path": ".superpowers/worktrees/geometry-library-expansion", "files": 26, "bytes": 426067, "preserved_source_evidence_files": 21}, {"path": ".superpowers/hybrid-ab-handoff-final.xml", "bytes": 20425, "classification": "untracked temporary JUnit, no active consumer", "summary": "153 tests, failures/errors/skips 0", "sha256": "37d677bbfd23f1377e339d3be14fc73cd8c9462b6cc2ef834dc8121732ab029a", "exact_byte_recovery": "NOT_RECOVERABLE"}],
+    "registered_before": 2,
+    "registered_peak": 3,
+    "registered_after": 2,
+    "physical_before": [
+      "dsl-spike",
+      "question-local-givens",
+      "geometry-library-expansion"
+    ],
+    "physical_after": [
+      "dsl-spike"
+    ],
+    "removed_old": [
+      {
+        "path": ".superpowers/worktrees/question-local-givens",
+        "files": 13234,
+        "bytes": 1687454380,
+        "preserved_source_evidence_files": 13126,
+        "remaining_db": "test-only SQLite, all ten tables empty"
+      },
+      {
+        "path": ".superpowers/worktrees/geometry-library-expansion",
+        "files": 26,
+        "bytes": 426067,
+        "preserved_source_evidence_files": 21
+      },
+      {
+        "path": ".superpowers/hybrid-ab-handoff-final.xml",
+        "bytes": 20425,
+        "classification": "untracked temporary JUnit, no active consumer",
+        "summary": "153 tests, failures/errors/skips 0",
+        "sha256": "37d677bbfd23f1377e339d3be14fc73cd8c9462b6cc2ef834dc8121732ab029a",
+        "exact_byte_recovery": "NOT_RECOVERABLE"
+      }
+    ],
     "old_content_bytes_removed": 1687900872,
     "old_allocation_delta": "UNKNOWN: no immediate pre-delete volume snapshot",
     "current_task_content_bytes_removed": 1770132178,
     "current_task_observed_free_volume_delta": 1826193408,
     "task_temp_inventory": "task-temp-inventory.json",
-    "current_task_temp_paths_absent": [".superpowers/worktrees/source-grounding-verify", ".superpowers/source-closure", ".superpowers/source-closure-review", ".superpowers/sgtmp"],
-    "junctions_detached": 1, "junction_target_preserved": "frontend/node_modules",
-    "task_test_file_attributes_cleared": {"readonly_git_blobs": 226, "hidden_git_directories": 10},
-    "branch_deleted": false,
-    "kept": ["dsl-spike + research/compact-geometry-dsl HOLD", "docs/real-model-e2e-readiness", "feat/real-model-pilot-tooling", ".superpowers/preserved local bundles", "frontend/public/", "old scratch/builds/agent drafts", "backend/algosim.db", "backend/.tmp/pytest-05045731f8a046b9ba317bc970ecca11", "locked A/B and historical candidates/correction layers"],
+    "current_task_temp_paths_absent": [
+      ".superpowers/worktrees/source-grounding-verify",
+      ".superpowers/source-closure",
+      ".superpowers/source-closure-review",
+      ".superpowers/sgtmp"
+    ],
+    "junctions_detached": 1,
+    "junction_target_preserved": "frontend/node_modules",
+    "task_test_file_attributes_cleared": {
+      "readonly_git_blobs": 226,
+      "hidden_git_directories": 10
+    },
+    "branch_deleted": true,
+    "kept": [
+      "dsl-spike + research/compact-geometry-dsl HOLD",
+      "docs/real-model-e2e-readiness",
+      "feat/real-model-pilot-tooling",
+      ".superpowers/preserved local bundles",
+      "frontend/public/",
+      "old scratch/builds/agent drafts",
+      "backend/algosim.db",
+      "backend/.tmp/pytest-05045731f8a046b9ba317bc970ecca11",
+      "locked A/B and historical candidates/correction layers"
+    ],
     "preexisting_access_limits": "ten old scratch dirs and backend/.pytest_cache; kept, full sizes UNKNOWN",
     "task_processes_remaining": 0,
-    "force_used": false, "acl_or_owner_changed": false,
-    "inventory": "inventory.json", "preservation": "preservation.json"
+    "force_used": false,
+    "acl_or_owner_changed": false,
+    "inventory": "inventory.json",
+    "preservation": "preservation.json",
+    "deleted_branch": {
+      "method": "git branch -d",
+      "name": "research/source-grounding-completeness",
+      "tip": "27b81c51",
+      "remote_preserved_before_delete": true
+    }
   },
   "research": {
-    "compact_dsl": {"status": "HOLD_WITH_NEXT_EXPERIMENT", "tip": "a9498fdf", "clean": true, "fresh_tests": 95, "proxy_tokens_only": true, "gemini_measured": false, "planner_dependency": false},
-    "real_model_readiness": {"tip": "4cfa547f", "remote_matches": true, "contained_in_pilot": true, "contained_in_main": false, "decision": "KEEP_UNTIL_PILOT_DISPOSITION"},
-    "real_model_pilot": {"local_tip": "471a2c796b44bf9bf8fc14ca02a5a365b440c2a7", "remote_tip": "24a9a5577a604df6568d18e348d62feea27a7ed9", "unpushed_commits": 1, "remote_contains_471a2c79": false, "live_measurement_complete": true, "product_e2e_pass": false, "decision": "KEEP_LOCAL_EVIDENCE_AND_BUNDLE; separate review/preservation decision; no branch push authorised"},
-    "local_bundles": [{"path": ".superpowers/preserved/compact-geometry-dsl-a9498fdf.bundle", "bytes": 31472, "sha256": "cb97d1320fe6279844d03b6ede01320e13dd81ab965d2b87484d1474de8309a1", "prerequisite": "9cfd0fca", "verify": "PASS"}, {"path": ".superpowers/preserved/real-model-pilot-471a2c79.bundle", "bytes": 43140, "sha256": "11eb7ba52fc846e20bb086e5fa6676dc50f58cb3c3ccafa6f1831aa117f95812", "prerequisite": "24a9a557", "verify": "PASS"}]
+    "compact_dsl": {
+      "status": "HOLD_WITH_NEXT_EXPERIMENT",
+      "tip": "a9498fdf",
+      "clean": true,
+      "fresh_tests": 95,
+      "proxy_tokens_only": true,
+      "gemini_measured": false,
+      "planner_dependency": false
+    },
+    "real_model_readiness": {
+      "tip": "4cfa547f",
+      "remote_matches": true,
+      "contained_in_pilot": true,
+      "contained_in_main": false,
+      "decision": "KEEP_UNTIL_PILOT_DISPOSITION"
+    },
+    "real_model_pilot": {
+      "local_tip": "471a2c796b44bf9bf8fc14ca02a5a365b440c2a7",
+      "remote_tip": "24a9a5577a604df6568d18e348d62feea27a7ed9",
+      "unpushed_commits": 1,
+      "remote_contains_471a2c79": false,
+      "live_measurement_complete": true,
+      "product_e2e_pass": false,
+      "decision": "KEEP_LOCAL_EVIDENCE_AND_BUNDLE; separate review/preservation decision; no branch push authorised"
+    },
+    "local_bundles": [
+      {
+        "path": ".superpowers/preserved/compact-geometry-dsl-a9498fdf.bundle",
+        "bytes": 31472,
+        "sha256": "cb97d1320fe6279844d03b6ede01320e13dd81ab965d2b87484d1474de8309a1",
+        "prerequisite": "9cfd0fca",
+        "verify": "PASS"
+      },
+      {
+        "path": ".superpowers/preserved/real-model-pilot-471a2c79.bundle",
+        "bytes": 43140,
+        "sha256": "11eb7ba52fc846e20bb086e5fa6676dc50f58cb3c3ccafa6f1831aa117f95812",
+        "prerequisite": "24a9a557",
+        "verify": "PASS"
+      }
+    ]
   },
   "next_action": "user approval of one bounded next goal-directed Planner slice, existing architecture; not started",
-  "default_mode": "LLM_ONLY", "cache_version": 125, "live_model_requests": 0,
-  "hybrid_product_enablement": "NO_GO", "renderer_changed": false
+  "default_mode": "LLM_ONLY",
+  "cache_version": 125,
+  "live_model_requests": 0,
+  "hybrid_product_enablement": "NO_GO",
+  "renderer_changed": false
 }

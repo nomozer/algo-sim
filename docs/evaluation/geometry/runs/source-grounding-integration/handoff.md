@@ -9,6 +9,8 @@ build/demo/crash PASS. Receipt SHA256 `76a0e91659c7cd5237d2d743523ac6344d8486812
 Benchmark byte-identical 19/9/0/2, provider A `912b22ef`, B `4a20601f`, declarations `f2ec9698`.
 LLM_ONLY/cache125/Gemini0; Hybrid product enablement NO-GO. No new Scene3D run needed (source gate only).
 Push/branch deletion final result is recorded in [run.json](run.json).
+Push verified three ways at `6e053b41`; Source Grounding branch deleted afterwards with -d. The final
+documentation-only closure commit (SELF) follows that verified push; check current Git refs for its actual SHA.
 
 Physical worktrees now only `dsl-spike`; registered main + DSL. Question-local-givens and geometry-library-expansion
 removed after per-file preservation check; XML was temporary JUnit at `.superpowers/`, removed. Old deleted contents

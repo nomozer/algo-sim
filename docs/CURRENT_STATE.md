@@ -4,8 +4,11 @@
 
 CANONICAL_NEXT_ACTION = HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_APPROVAL_DECISION
 
-Main đã fast-forward `7767c7e1` → `27b81c51`, theo yêu cầu người dùng. Review cuối phát hiện lỗ hở cũ chưa khai:
-quote chồng nhân đôi quyền xác nhận số của một call. Sửa tối thiểu `c30049fd`, RED 4 fail/14 pass → GREEN 227 pass/1 xfail;
+Main đã fast-forward `7767c7e1` → `27b81c51`, theo yêu cầu người dùng.
+Push đến `6e053b41` đã xác minh main/origin/ls-remote trùng nhau; nhánh nguồn đã xoá sau xác nhận remote.
+Commit hồ sơ đóng phiên đi sau (vai trò SELF), không đổi product/candidate.
+Review cuối phát hiện lỗ hở cũ chưa khai: quote chồng nhân đôi quyền xác nhận số của một call.
+Sửa tối thiểu `c30049fd`, RED 4 fail/14 pass → GREEN 227 pass/1 xfail;
 review lại NON-BLOCKING. Candidate `736613f6…` (110 file) đóng băng clean tại `c30049fd`, commit `27b81c51`;
 benchmark byte-identical 19/9/0/2. T3 clean `27b81c51` PASS backend 9161 / frontend 1053; push cuối và cleanup: run
 [`source-grounding-integration`](evaluation/geometry/runs/source-grounding-integration/report.md).

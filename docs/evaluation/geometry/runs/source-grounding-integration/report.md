@@ -42,6 +42,12 @@ typecheck/build PASS, demo 5/5, crash boundary 6/6. Receipt `verification/t3.log
 `76a0e91659c7cd5237d2d743523ac6344d84868129dae3ff65d4f17c1cd9f17a`.
 Living docs/identity/correction gates after documentation updates: 97 passed (`verification/docs-final.log`).
 
+Push `7767c7e1..6e053b41` succeeded after a fresh fetch and fast-forward ancestry check. Main, origin/main and
+ls-remote all matched `6e053b41962444f0dbbe2f6ef73e775ef63d3442`: **REMOTE_SYNC_PASS**. Only afterwards was
+`research/source-grounding-completeness` deleted with `git branch -d` (tip `27b81c51`, contained in remote main,
+no executable consumer). The documentation-only commit closing this record follows that verified push; its identity
+is **SELF**, and its final remote SHA is checked from Git after commit/push, without a self-referential commit hash.
+
 ## Physical cleanup
 
 Before: two registered worktrees (root, DSL); three physical directories (DSL, question-local-givens, geometry-library-expansion).
@@ -107,7 +113,7 @@ Recover after prerequisites exist with `git fetch <bundle-path> <refs/heads/bran
 
 | Công việc | Trạng thái | Việc còn thiếu | Quyết định |
 |---|---|---|---|
-| Source Grounding | Product repair complete; local main integrated, fresh T3 PASS | Push receipt in run.json; declared safety residuals still OPEN | Keep Hybrid off; historical correction preserved |
+| Source Grounding | Product repair complete; main integrated/pushed, fresh T3 PASS; branch retired | Declared safety residuals still OPEN | Keep Hybrid off; historical correction preserved |
 | Question-Local Givens | Product/Git integration complete; physical cleanup complete | Broader grounding limits tracked separately | Old worktree retired; evidence retained on main/remote |
 | Geometry Library Expansion | Approved code already integrated (ancestor of main); physical cleanup complete | Human visual / live quality limits remain separate | Retire leftover directory, no new integration |
 | Compact DSL | HOLD_WITH_NEXT_EXPERIMENT | Real model comparison could change HOLD | Keep research branch/worktree + local bundle |

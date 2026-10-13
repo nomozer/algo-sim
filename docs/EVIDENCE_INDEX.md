@@ -6,7 +6,7 @@ REPORT = docs/evaluation/geometry/runs/source-grounding-integration/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-grounding-integration/
 CORRECTED_BY = NONE
 CORRECTS = SOURCE_GROUNDING_COMPLETENESS
-CLASSIFICATION = MAIN_INTEGRATED_T3_PASS_READY_FOR_AUTHORIZED_PUSH
+CLASSIFICATION = MAIN_INTEGRATED_PUSHED_T3_PASS_RESEARCH_CLOSURE
 CODE_COMMIT = c30049fd
 VERIFICATION_COMMIT = 27b81c51
 MODEL_REQUEST_COUNT = 0
@@ -16,6 +16,8 @@ same semantic authority, RED 4 fail / 14 pass → GREEN 227 pass / 1 xfail. Focu
 Candidate refrozen at c30049fd; additive divergence layer extends source-grounding-completeness. Historical bytes kept.
 Clean detached T3 at integrated 27b81c51 PASS: backend 9161 / frontend 1053, build/demo/crash PASS. Provider pins unchanged,
 benchmark byte-identical. Physical old worktrees removed; DSL/real-model refs kept and incrementally bundled local.
+Push 7767c7e1..6e053b41 verified main = origin/main = ls-remote; Source Grounding branch deleted afterwards with -d.
+The final documentation-only closure commit follows that verified push (role SELF); product/candidate unchanged.
 Receipt: `runs/source-grounding-integration/verification/t3.log`, SHA256
 `76a0e91659c7cd5237d2d743523ac6344d84868129dae3ff65d4f17c1cd9f17a`.
 

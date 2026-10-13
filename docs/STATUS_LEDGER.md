@@ -10,6 +10,7 @@ Physical question-local-givens and geometry-library-expansion leftovers and temp
 only DSL remains under physical worktrees. Old user-protected scratch/DB/public preserved; DSL and real-model refs kept.
 Run [`source-grounding-integration`](evaluation/geometry/runs/source-grounding-integration/report.md) owns review,
 correction layer, verification receipts, inventories, cleanup and push results; no new research starts here.
+Push to `6e053b41` confirmed main/origin/ls-remote identical, branch retired with -d afterwards; closure record follows (SELF).
 
 ## LOCAL research — Premise source coverage, 2026-10-13
 
