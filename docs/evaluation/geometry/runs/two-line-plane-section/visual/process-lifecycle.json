@@ -1,0 +1,12 @@
+{
+  "remaining_owned_pids": [],
+  "all_owned_processes_stopped": true,
+  "initial_browser_pid": 2404,
+  "observed_utc": "2026-10-13T18:39:33.7577058Z",
+  "final_swiftshader_browser_pid": 14964,
+  "vite_server_pid": 4712,
+  "final_intel_browser_pid": 6244,
+  "npm_server_pid": 26984,
+  "server_exec_session": 82094,
+  "server_stop": "write_stdin Ctrl+C; session exited 1"
+}

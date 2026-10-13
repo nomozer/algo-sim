@@ -1,0 +1,461 @@
+{
+ "harness": "scripts/hybrid-section-visual.html (Scene3D harness, not product UI)",
+ "scenes": "real Hybrid route output, backend/scripts/export_hybrid_section_scenes.py; product frame step veKhongGian applied",
+ "browser": "Playwright chromium, SwiftShader WebGL requested",
+ "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+ "browser_version": "151.0.7922.34",
+ "browser_pid": 14964,
+ "browser_stopped": true,
+ "scenes_sha256": "a4efde63f7cbb14f04c8a168cba3a35d839741edba77e1b61b27811f366565b8",
+ "failures": [],
+ "console_errors": [],
+ "net_retries": [
+  {
+   "url": "http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=0&src=two-line",
+   "error": "TimeoutError: page.waitForSelector: Timeout 30000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=0&hide=td_q&src=two-line",
+   "error": "Error: page.goto: net::ERR_NETWORK_ACCESS_DENIED at http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=0&hide=td_q&src=two-line"
+  },
+  {
+   "url": "http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=0&hide=td_q&src=two-line",
+   "error": "TimeoutError: page.waitForSelector: Timeout 30000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=0&hide=td_q&src=two-line",
+   "error": "Error: page.goto: net::ERR_NETWORK_ACCESS_DENIED at http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=0&hide=td_q&src=two-line"
+  },
+  {
+   "url": "http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=0&hide=td_q&src=two-line",
+   "error": "TimeoutError: page.waitForSelector: Timeout 30000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=0&hide=td_q&src=two-line",
+   "error": "TimeoutError: page.waitForSelector: Timeout 30000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=0&src=two-line",
+   "error": "TimeoutError: page.waitForSelector: Timeout 30000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=1&src=two-line",
+   "error": "TimeoutError: page.waitForSelector: Timeout 30000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=1&src=two-line",
+   "error": "TimeoutError: page.waitForSelector: Timeout 30000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=1&src=two-line",
+   "error": "TimeoutError: page.waitForSelector: Timeout 30000ms exceeded."
+  },
+  {
+   "url": "http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=1&src=two-line",
+   "error": "Error: page.goto: net::ERR_NETWORK_ACCESS_DENIED at http://127.0.0.1:3107/scripts/hybrid-section-visual.html?i=1&src=two-line"
+  }
+ ],
+ "dev_server_noise": 2,
+ "report": [
+  {
+   "id": "two-line-pyramid",
+   "served": true,
+   "section_vertices_model": 4,
+   "pixels_last_step": {
+    "section": 10293,
+    "line": 0,
+    "highlight": 748,
+    "ink": [
+     459,
+     38,
+     855,
+     449
+    ]
+   },
+   "order": {
+    "target": "td_q",
+    "own_pixels": {
+     "default_view": 85859,
+     "after_orbit": 73381
+    },
+    "first_step": 10,
+    "steps": 16,
+    "depends_present": true,
+    "depends_before": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 16854
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 917
+    }
+   },
+   "variants": null,
+   "scrubber": {
+    "first": {
+     "step": 0,
+     "ids": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+     ]
+    },
+    "last": {
+     "step": 15,
+     "ids": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "M",
+      "H",
+      "S",
+      "H1",
+      "khoi_S_ABCD",
+      "mp_td_q",
+      "td_q#4cf",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ]
+    },
+    "passed": true
+   },
+   "selection": {
+    "selected_id": "td_q",
+    "changed": 0.045796161124628275,
+    "highlighted_ids": [],
+    "cleared_id": null
+   },
+   "naming": {
+    "plane": "(P)",
+    "section": "Thiết diện của S.ABCD cắt bởi (P)",
+    "plane_option": "(P)",
+    "auxiliaries": [
+     {
+      "id": "H",
+      "role": "Điểm dựng phụ",
+      "binding": "AUXILIARY",
+      "option": "H · Điểm dựng phụ",
+      "distinct_section_identity": true
+     },
+     {
+      "id": "H1",
+      "role": "Điểm dựng phụ",
+      "binding": "AUXILIARY",
+      "option": "H1 · Điểm dựng phụ",
+      "distinct_section_identity": true
+     }
+    ],
+    "selected_auxiliary": {
+     "id": "H",
+     "details": "H · Điểm dựng phụ"
+    }
+   },
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.07797182421675528,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.15367396593673965,
+    "ink_ratio": 1.9622536865457392,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "M",
+    "H",
+    "S",
+    "H1",
+    "khoi_S_ABCD",
+    "mp_td_q",
+    "td_q#4cf",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "two-line-prism",
+   "served": true,
+   "section_vertices_model": 4,
+   "pixels_last_step": {
+    "section": 25501,
+    "line": 0,
+    "highlight": 584,
+    "ink": [
+     347,
+     1,
+     1053,
+     456
+    ]
+   },
+   "order": {
+    "target": "td_q",
+    "own_pixels": {
+     "default_view": 61484,
+     "after_orbit": 65025
+    },
+    "first_step": 8,
+    "steps": 14,
+    "depends_present": true,
+    "depends_before": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 1289
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 692
+    }
+   },
+   "variants": null,
+   "scrubber": {
+    "first": {
+     "step": 0,
+     "ids": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime"
+     ]
+    },
+    "last": {
+     "step": 13,
+     "ids": [
+      "A",
+      "B",
+      "C",
+      "M",
+      "H",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "H1",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "mp_td_q",
+      "td_q#4cf"
+     ]
+    },
+    "passed": true
+   },
+   "selection": {
+    "selected_id": "td_q",
+    "changed": 0.08999188969991889,
+    "highlighted_ids": [],
+    "cleared_id": null
+   },
+   "naming": {
+    "plane": "(P)",
+    "section": "Thiết diện của ABC.A′B′C′ cắt bởi (P)",
+    "plane_option": "(P)",
+    "auxiliaries": [
+     {
+      "id": "H",
+      "role": "Điểm dựng phụ",
+      "binding": "AUXILIARY",
+      "option": "H · Điểm dựng phụ",
+      "distinct_section_identity": true
+     },
+     {
+      "id": "H1",
+      "role": "Điểm dựng phụ",
+      "binding": "AUXILIARY",
+      "option": "H1 · Điểm dựng phụ",
+      "distinct_section_identity": true
+     }
+    ],
+    "selected_auxiliary": {
+     "id": "H",
+     "details": "H · Điểm dựng phụ"
+    }
+   },
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.18032381124027516,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.21870175122405455,
+    "ink_ratio": 1.4291603821015586,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "M",
+    "H",
+    "A_prime",
+    "B_prime",
+    "C_prime",
+    "H1",
+    "khoi_ABC_A_primeB_primeC_prime",
+    "mp_td_q",
+    "td_q#4cf"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "two-line-cuboid",
+   "served": true,
+   "section_vertices_model": 4,
+   "pixels_last_step": {
+    "section": 42196,
+    "line": 0,
+    "highlight": 1021,
+    "ink": [
+     433,
+     1,
+     875,
+     487
+    ]
+   },
+   "order": {
+    "target": "td_q",
+    "own_pixels": {
+     "default_view": 44016,
+     "after_orbit": 36275
+    },
+    "first_step": 8,
+    "steps": 14,
+    "depends_present": true,
+    "depends_before": true,
+    "pixels_before": {
+     "section": 0,
+     "highlight": 17208
+    },
+    "pixels_at": {
+     "section": 0,
+     "highlight": 1323
+    }
+   },
+   "variants": null,
+   "scrubber": {
+    "first": {
+     "step": 0,
+     "ids": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime"
+     ]
+    },
+    "last": {
+     "step": 13,
+     "ids": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "M",
+      "H",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "H1",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "mp_td_q",
+      "td_q#4cf"
+     ]
+    },
+    "passed": true
+   },
+   "selection": {
+    "selected_id": "td_q",
+    "changed": 0.09675287615271394,
+    "highlighted_ids": [],
+    "cleared_id": null
+   },
+   "naming": {
+    "plane": "(P)",
+    "section": "Thiết diện của ABCD.A′B′C′D′ cắt bởi (P)",
+    "plane_option": "(P)",
+    "auxiliaries": [
+     {
+      "id": "H",
+      "role": "Điểm dựng phụ",
+      "binding": "AUXILIARY",
+      "option": "H · Điểm dựng phụ",
+      "distinct_section_identity": true
+     },
+     {
+      "id": "H1",
+      "role": "Điểm dựng phụ",
+      "binding": "AUXILIARY",
+      "option": "H1 · Điểm dựng phụ",
+      "distinct_section_identity": true
+     }
+    ],
+    "selected_auxiliary": {
+     "id": "H",
+     "details": "H · Điểm dựng phụ"
+    }
+   },
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.10529212099366195,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.27534769156829175,
+    "ink_ratio": 1.8433343618558877,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "M",
+    "H",
+    "A_prime",
+    "B_prime",
+    "C_prime",
+    "D_prime",
+    "H1",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime",
+    "mp_td_q",
+    "td_q#4cf"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "two-line-refused",
+   "served": false,
+   "code": "PLANE_NOT_UNIQUE",
+   "canvas_count": 0,
+   "scene_objects": 0,
+   "text": "PLANE_NOT_UNIQUE: hai đường có phương phụ thuộc; mặt qua điểm không duy nhất",
+   "console_errors": []
+  }
+ ]
+}

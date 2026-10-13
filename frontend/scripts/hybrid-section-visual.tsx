@@ -8,39 +8,57 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Scene3DWorkspace } from "../src/simulations/domains/geometry/scene3d-view";
-import { TRANG_THAI_DAU } from "../src/simulations/domains/geometry/interaction-state";
+import { TRANG_THAI_DAU, select } from "../src/simulations/domains/geometry/interaction-state";
 import { objectsAt, stepCount } from "../src/simulations/domains/geometry/scene3d-model";
 import { veKhongGian } from "../src/simulations/domains/geometry/scene3d-chart";
 import rowsHardening from "../../docs/evaluation/geometry/runs/hybrid-semantic-hardening/visual/scenes.json";
 import rowsGoal from "../../docs/evaluation/geometry/runs/goal-directed-section-planning/visual/scenes.json";
+import rowsTwoLine from "../../docs/evaluation/geometry/runs/two-line-plane-section/visual/scenes.json";
 import "../src/styles/global.css";
 
 const q = new URLSearchParams(location.search);
 const index = Number(q.get("i") ?? 0);
 // `src=goal`: scenes of run goal-directed-section-planning; default stays the frozen hardening export.
-const row = ((q.get("src") === "goal" ? rowsGoal : rowsHardening) as any[])[index];
+const row = ((q.get("src") === "two-line" ? rowsTwoLine : q.get("src") === "goal" ? rowsGoal : rowsHardening) as any[])[index];
 // Diagnostic only: `hide=<id>` drops one object, so a frame diff shows exactly the pixels that object contributes.
 const hide = new Set((q.get("hide") ?? "").split(",").filter(Boolean));
 // Diagnostic only: `set=<id>.<field>=<json>` overrides one field of one object (e.g. a line direction).
 const sets = q.getAll("set").map((s) => { const [k, v] = s.split("="); const [id, f] = k.split("."); return { id, f, v: JSON.parse(v) }; });
-const khung = { ...row.scene, objects: row.scene.objects.filter((o: any) => !hide.has(o.id))
+const khung = row.scene && { ...row.scene, objects: row.scene.objects.filter((o: any) => !hide.has(o.id))
   .map((o: any) => sets.filter((s) => s.id === o.id).reduce((a: any, s) => ({ ...a, [s.f]: s.v }), o)) } as any;
-const scene = q.get("frame") === "payload" ? khung : veKhongGian(khung);
-const n = stepCount(scene);
-const step = q.has("step") ? Number(q.get("step")) : n - 1;
-(window as any).__hybrid = {
-  id: row.id, stepCount: n, step,
-  presentAt: (k: number) => objectsAt(scene, k).map((o: any) => o.id),
-  objects: scene.objects.map((o: any) => ({ id: o.id, type: o.type, origin: o.origin, depends: o.depends ?? [] })),
-};
+const scene = khung && (q.get("frame") === "payload" ? khung : veKhongGian(khung));
+const n = scene ? stepCount(scene) : 0;
 
 function Harness() {
   const [fit, setFit] = useState(0);
+  const [step, setStep] = useState(q.has("step") ? Number(q.get("step")) : n - 1);
+  const [interaction, setInteraction] = useState(TRANG_THAI_DAU);
+  (window as any).__hybrid = {
+    id: row.id, served: row.served, stepCount: n, step, selected_id: interaction.selected_id,
+    presentAt: (k: number) => scene ? objectsAt(scene, k).map((o: any) => o.id) : [],
+    objects: scene ? scene.objects.map((o: any) => ({ id: o.id, type: o.type, origin: o.origin, depends: o.depends ?? [],
+      label: o.label, role: o.role, source: o.source, endpoint_entities: o.endpoint_entities })) : [],
+  };
+  if (!row.served || !scene) return <main style={{ padding: 16 }}>
+    <h1>Scene3D harness / Hybrid IR / {row.id}</h1>
+    <p data-testid="refusal">{row.code}: {row.reason ?? "Từ chối an toàn"}</p>
+  </main>;
   return <main style={{ padding: 16, height: "100vh" }}>
     <h1>Scene3D harness / Hybrid IR / {row.id} / bước {step + 1}/{n}</h1>
     <button onClick={() => setFit(x => x + 1)}>Đặt lại khung nhìn</button>
+    <label>Bước dựng <input aria-label="Bước dựng" type="range" min={0} max={n - 1} value={step}
+      onChange={e => setStep(Number(e.target.value))} /></label>
+    <label>Chọn đối tượng <select aria-label="Chọn đối tượng" value={interaction.selected_id ?? ""}
+      onChange={e => setInteraction(s => select(s, e.target.value || null))}>
+      <option value="">Bỏ chọn</option>
+      {objectsAt(scene, step).filter((o: any) => o.render !== "non_visual").map((o: any) =>
+        <option key={o.id} value={o.id}>{o.label || o.id}{o.source?.binding === "AUXILIARY" ? ` · ${o.role}` : ""}</option>)}
+    </select></label>
+    {interaction.selected_id && <p data-testid="selection-details">{scene.objects.filter((o: any) =>
+      o.id === interaction.selected_id).map((o: any) => `${o.label} · ${o.role}`).join("")}</p>}
     <div data-testid="khung" style={{ height: "75vh", minHeight: 440 }}>
-      <Scene3DWorkspace scene={scene} step={step} interaction={TRANG_THAI_DAU} onSelect={() => undefined}
+      <Scene3DWorkspace scene={scene} step={step} interaction={{ ...interaction, current_step: step }}
+        onSelect={id => setInteraction(s => select(s, id))}
         fitToken={fit} auxiliaryShown={q.get("aux") === "1"} />
     </div>
   </main>;

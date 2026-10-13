@@ -1,0 +1,77 @@
+{
+  "status": "LOCAL_HARNESS_CHECKS_PASS",
+  "harness_only": true,
+  "api_product_e2e": false,
+  "human_visual_acceptance": "NOT_APPROVED",
+  "provider_requests": 0,
+  "fixture_source": "inputs/math-corpus.json; tests.geometry.test_two_line_plane_section.problem",
+  "preregistered_corpus_indexes": [
+    0,
+    18,
+    33,
+    3
+  ],
+  "current_route_export_match": "all four scene3d, answers and served statuses equal in-memory current run_fact_route",
+  "initial_receipt_preserved": true,
+  "process_lifecycle": {
+    "remaining_owned_pids": [],
+    "all_owned_processes_stopped": true,
+    "initial_browser_pid": 2404,
+    "observed_utc": "2026-10-13T18:39:33.7577058Z",
+    "final_swiftshader_browser_pid": 14964,
+    "vite_server_pid": 4712,
+    "final_intel_browser_pid": 6244,
+    "npm_server_pid": 26984,
+    "server_exec_session": 82094,
+    "server_stop": "write_stdin Ctrl+C; session exited 1"
+  },
+  "runs": {
+    "swiftshader-final": {
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "browser_version": "151.0.7922.34",
+      "browser_pid": 14964,
+      "failures": [],
+      "console_errors": [],
+      "network_retries": 11
+    },
+    "intel-d3d11-final": {
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "browser_version": "151.0.7922.34",
+      "browser_pid": 6244,
+      "failures": [],
+      "console_errors": [],
+      "network_retries": 4
+    }
+  },
+  "limitations": [
+    "Named plane and auxiliary role verified in harness picker/details; canvas has no plane name label.",
+    "Default pyramid view suppresses apex S text while its point marker is present.",
+    "Auxiliary point may coincide geometrically with section vertex; semantic identities remain distinct.",
+    "Bounded local loopback retries are preserved in browser receipts."
+  ],
+  "sha256": {
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/browser-check.json": "00fd757aea021578a3d883f1b128db5ceea7bac557e45dbefe11afed4b9b7544",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-cuboid-selected-auxiliary.png": "4d76ec7db326a6c7e4467830d0888e313175e5c87021293dcdd154abf6e45bf7",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-cuboid.png": "3314330671c6f314bdff7ec7a82917245878f97bc324ce8b33f7f1985c8c8560",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-prism-selected-auxiliary.png": "ac114403bd63fa794d854952ad937ffd6139d44c29d7711a3273130688c7792e",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-prism.png": "37579fd0a8d665715839517adf4d09b773d41efcaa14e3008482a87b340b8061",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-pyramid-selected-auxiliary.png": "bb8a48b97b1de492a5336c45cb72cbafafa11b4238f7d63a1379c9d7a473f7b8",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-pyramid.png": "b2e9af47c6cdb8b914a108da42502f6ee859062ddb7d54486ecfcaf9a6e978a5",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-refused.png": "2d808d0d8e31ec989b034629055f196c00048017a6e4bed4a74e3faf0db1321f",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/process-lifecycle.json": "769076e227d824923fd3c650b9fca7d015903bc7cb707e6ba407204b03166c19",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/scenes.json": "a4efde63f7cbb14f04c8a168cba3a35d839741edba77e1b61b27811f366565b8",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader/browser-check.json": "f4f9115a1f03a519a3f79f791284d10495741ac65db772b68a6d46c1136a683e",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader/two-line-cuboid.png": "2cd5912b5bc34de22906234cc4886285b77c9d50068cf94db7388062034d9ae3",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader/two-line-prism.png": "be54785c1475c66d9e21a32a6c43e34f3403b6f26673abaaa49cff2a7283b7e7",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader/two-line-pyramid.png": "05a3e910810b1018822f8bc5b1da4130b066d2571f2887dc6474af1c48150f7e",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader/two-line-refused.png": "b9e6958d4f3de3a3072cd0062bd72f94489ff3026014aaa1b78567fff05416bd",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/browser-check.json": "c187163f1a9fabd7f8d875b8348af67f00027268b0505f49b2206d15aac6c97b",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-cuboid-selected-auxiliary.png": "e42d087a3ed17940c4268ad7097e0fc60b397bb1a03d4e6a7af2137228d9e965",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-cuboid.png": "2cd5912b5bc34de22906234cc4886285b77c9d50068cf94db7388062034d9ae3",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-prism-selected-auxiliary.png": "f378ed5e03901c3817682c19b713ecfd0e5149c8c11b16e8ceedd19f1278ec6f",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-prism.png": "be54785c1475c66d9e21a32a6c43e34f3403b6f26673abaaa49cff2a7283b7e7",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-pyramid-selected-auxiliary.png": "fbed8841af0c45c56c393bafba5bb582fda62b5749c0721ce156c2b6b7db5ff9",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-pyramid.png": "05a3e910810b1018822f8bc5b1da4130b066d2571f2887dc6474af1c48150f7e",
+    "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-refused.png": "b9e6958d4f3de3a3072cd0062bd72f94489ff3026014aaa1b78567fff05416bd"
+  }
+}

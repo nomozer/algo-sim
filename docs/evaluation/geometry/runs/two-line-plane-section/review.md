@@ -24,3 +24,8 @@ The visual agent later hit quota; its initial receipt was preserved and resumed 
 
 Intentional limitation: closed atomic quote subset may refuse valid alternative/combined phrasing; proof/inference
 clauses and unsupported anchor constructions refuse on the new rule. Three historical old-route residuals remain open.
+
+Authoritative T3 later exposed missing benchmark classification `DEGENERATE_LINE`; its completeness guard also ignored
+single-quoted new codes. Guard now reads both quote forms, RED exposes `LINE_CONTAINED_IN_PLANE` too. Added only these
+new request-precondition classes, leaving historical30case labels/oracle unchanged. GREEN205PASS/4xfail;
+no product change, same frozen candidate. Initial full failure is recorded; full T3 rerun required.

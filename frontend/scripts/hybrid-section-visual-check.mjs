@@ -19,9 +19,12 @@
  * SwiftShader. Run: node scripts/hybrid-section-visual-check.mjs --out <dir> [--port 3100] [--gpu] (refuses to overwrite).
  * `--scenes goal` reads the export of run `goal-directed-section-planning` (harness `src=goal`); `--only <id prefix>`
  * measures a subset (e.g. `--only derived-plane`).
+ * `--scenes two-line` reads `two-line-plane-section` (harness `src=two-line`) and also checks refusal, the real
+ * step slider and selection, the named plane and auxiliary roles. This is LOCAL harness acceptance, not API/product E2E.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { createHash } from "node:crypto";
 import { chromium } from "playwright";
 import { docPNG } from "./png-pixels.mjs";
 
@@ -34,9 +37,11 @@ if (existsSync(out)) { console.error(`refusing to overwrite ${out}`); process.ex
 const URL0 = `http://${arg("--host", "localhost")}:${arg("--port", "3000")}/scripts/hybrid-section-visual.html`;
 const gpu = process.argv.includes("--gpu");
 // `--scenes goal`: scenes of run goal-directed-section-planning (harness `src=goal`); default: the hardening export.
-const goal = arg("--scenes", "hardening") === "goal";
-const SCENES_RUN = goal ? "goal-directed-section-planning" : "hybrid-semantic-hardening";
-const rows = JSON.parse(readFileSync(new URL(`../../docs/evaluation/geometry/runs/${SCENES_RUN}/visual/scenes.json`, import.meta.url), "utf-8"));
+const source = arg("--scenes", "hardening");
+if (!["hardening", "goal", "two-line"].includes(source)) throw new Error("unknown --scenes");
+const SCENES_RUN = source === "two-line" ? "two-line-plane-section" : source === "goal" ? "goal-directed-section-planning" : "hybrid-semantic-hardening";
+const scenesBytes = readFileSync(new URL(`../../docs/evaluation/geometry/runs/${SCENES_RUN}/visual/scenes.json`, import.meta.url));
+const rows = JSON.parse(scenesBytes.toString("utf-8"));
 
 // Hues mirrored from `scene3d-view.tsx` MAU / `scene3d-roles.ts`: polygon/section amber, construction line teal, and the
 // "just built at this step" blue (MAU_VAI_TRO.moi_dung 0x2563eb) that replaces an object's own colour at its own step.
@@ -74,8 +79,14 @@ function diff(a, b) {
 }
 const pixels = (a, b) => Math.round(diff(a, b) * docPNG(a).w * docPNG(a).h);
 
-const browser = await chromium.launch({ args: gpu ? ["--use-angle=d3d11", "--enable-gpu", "--ignore-gpu-blocklist"]
+// Launch explicitly so the receipt can name the owned browser PID. Playwright closes its whole process tree.
+const server = await chromium.launchServer({ args: gpu ? ["--use-angle=d3d11", "--enable-gpu", "--ignore-gpu-blocklist"]
   : ["--use-angle=swiftshader", "--enable-unsafe-swiftshader", "--ignore-gpu-blocklist"] });
+const browserPid = server.process().pid;
+const browser = await chromium.connect(server.wsEndpoint());
+mkdirSync(out, { recursive: true });
+let completed = false;
+try {
 const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
 const errors = [];
 // Vite dev-client HMR socket messages are dev-server infrastructure, not the page under test: counted, not failed on.
@@ -88,13 +99,13 @@ const settle = async () => { let a = await shot(); for (let i = 0; i < 40; i++) 
 // Transient local-network failures (`net::ERR_NETWORK_ACCESS_DENIED`, a refused dev-server socket) were seen on this
 // Windows machine between page loads; a load is retried at most 6 times (growing pause) and every retry is reported, never hidden.
 const netRetries = [];
-const goto = async (qs) => {
-  const u = `${URL0}?${qs}${goal ? "&src=goal" : ""}`;
+const goto = async (qs, refused = false) => {
+  const u = `${URL0}?${qs}${source !== "hardening" ? `&src=${source}` : ""}`;
   for (let k = 0; ; k++) {
     const e0 = errors.length;
     try {
       await page.goto(u);
-      await page.waitForSelector("canvas", { state: "attached", timeout: 90000 });
+      await page.waitForSelector(refused ? '[data-testid="refusal"]' : "canvas", { state: "attached", timeout: 30000 });
       // A denied sub-resource (e.g. the stylesheet) still lets the canvas appear but changes the layout — a failed load.
       if (errors.slice(e0).some((x) => /ERR_NETWORK_ACCESS_DENIED|ERR_CONNECTION_REFUSED/.test(x))) throw new Error("denied sub-resource");
       break;
@@ -106,7 +117,10 @@ const goto = async (qs) => {
       await page.waitForTimeout(2000 * (k + 1));
     }
   }
-  return (await settle()).b;
+  if (refused) return null;
+  const frame = await settle();
+  if (!frame.settled) throw new Error(`initial frame did not settle: ${u}`);
+  return frame.b;
 };
 const orbitGesture = async () => {
   const box = await page.getByTestId("khung").boundingBox();
@@ -128,7 +142,6 @@ const renderer = await page.evaluate(() => {
   const e = gl && gl.getExtension("WEBGL_debug_renderer_info");
   return e ? gl.getParameter(e.UNMASKED_RENDERER_WEBGL) : "unknown";
 });
-errors.length = 0;
 
 // Directions / points in PAYLOAD coordinates (before the frame step), all through scene points or the interior.
 const VARIANTS = [
@@ -139,7 +152,6 @@ const VARIANTS = [
 ];
 const setQs = (id, sets) => sets.map(([f, v]) => `&set=${id}.${f}=${encodeURIComponent(JSON.stringify(v))}`).join("");
 
-mkdirSync(out, { recursive: true });
 const report = [];
 const failures = [];
 // `--only <id prefix>`: measure those cases only; the harness index `i` stays the case's position in scenes.json.
@@ -147,11 +159,23 @@ const only = arg("--only");
 for (const [i, row] of rows.entries()) {
   if (only && !row.id.startsWith(only)) continue;
   const e0 = errors.length;
+  if (!row.served) {
+    await goto(`i=${i}`, true);
+    const refusal = { id: row.id, served: false, code: row.code, canvas_count: await page.locator("canvas").count(),
+      scene_objects: await page.evaluate(() => window.__hybrid.objects.length), text: await page.getByTestId("refusal").innerText(),
+      console_errors: errors.slice(e0) };
+    await page.screenshot({ path: join(out, `${row.id}.png`) });
+    if (row.scene || refusal.canvas_count || refusal.scene_objects || !refusal.text.includes(row.code) || refusal.console_errors.length)
+      failures.push(`${row.id}: refusal has a scene/canvas, missing reason or console error`);
+    report.push(refusal);
+    continue;
+  }
   const last = await goto(`i=${i}`);
   const m = measure(last);
   const h = await page.evaluate(() => window.__hybrid);
   writeFileSync(join(out, `${row.id}.png`), last);
   const target = h.objects.find((o) => o.type === "section") ?? h.objects.find((o) => o.id.startsWith("gt_"));
+  if (source === "two-line" && !target) failures.push(`${row.id}: served scene missing section target`);
   let order = null, variants = null;
   if (target) {
     const steps = await page.evaluate((n) => Array.from({ length: n }, (_, k) => window.__hybrid.presentAt(k)), h.stepCount);
@@ -161,10 +185,12 @@ for (const [i, row] of rows.entries()) {
     const mb = first > 0 ? measure(await goto(`i=${i}&step=${first - 1}`)) : null;
     const ma = measure(await goto(`i=${i}&step=${first}`));
     order = { target: target.id, own_pixels: await own(`i=${i}`, target.id), first_step: first, steps: h.stepCount,
-              depends_present: target.depends.every((d) => steps[first].includes(d)),
+              depends_present: first >= 0 && target.depends.every((d) => steps[first].includes(d)),
+              depends_before: first > 0 && target.depends.every((d) => steps[first - 1].includes(d)),
               pixels_before: mb && { [kind]: mb[kind], highlight: mb.highlight }, pixels_at: { [kind]: ma[kind], highlight: ma.highlight } };
     if (order.own_pixels.default_view === 0 || order.own_pixels.after_orbit === 0) failures.push(`${row.id}: ${target.id} draws 0 own pixels`);
     if (!order.depends_present) failures.push(`${row.id}: ${target.id} appears before its dependencies`);
+    if (source === "two-line" && !order.depends_before) failures.push(`${row.id}: section dependencies not built earlier`);
     if (kind === "line") {
       variants = {};
       for (const [tag, ...sets] of [...VARIANTS, ["aux-shown"]]) {
@@ -181,10 +207,51 @@ for (const [i, row] of rows.entries()) {
   const zoom = await settle();
   await page.getByRole("button", { name: "Đặt lại khung nhìn" }).click();
   const reset = await settle();
+  let scrubber = null, selection = null, naming = null;
+  if (source === "two-line" && target) {
+    const slider = page.getByRole("slider", { name: "Bước dựng" });
+    await slider.focus(); await page.keyboard.press("Home"); await settle();
+    const first = await page.evaluate(() => ({ step: window.__hybrid.step, ids: window.__geo3d_rendered_object_ids }));
+    await page.keyboard.press("End"); await settle();
+    const last = await page.evaluate(() => ({ step: window.__hybrid.step, ids: window.__geo3d_rendered_object_ids }));
+    const rendersTarget = ids => ids.some(id => id === target.id || id.startsWith(`${target.id}#`));
+    scrubber = { first, last, passed: first.step === 0 && !rendersTarget(first.ids) && last.step === h.stepCount - 1 && rendersTarget(last.ids) };
+    const before = await shot();
+    await page.getByRole("combobox", { name: "Chọn đối tượng" }).selectOption(target.id);
+    const selected = await settle();
+    selection = { selected_id: await page.evaluate(() => window.__geo3d_selected_id), changed: diff(before, selected.b),
+      highlighted_ids: await page.evaluate(() => window.__geo3d_highlighted_render_owner_ids) };
+    await page.getByRole("combobox", { name: "Chọn đối tượng" }).selectOption(""); await settle();
+    selection.cleared_id = await page.evaluate(() => window.__geo3d_selected_id);
+    if (!scrubber.passed) failures.push(`${row.id}: step scrubber failed`);
+    if (selection.selected_id !== target.id || selection.changed === 0 || selection.cleared_id !== null || !selected.settled)
+      failures.push(`${row.id}: section selection failed`);
+    const plane = h.objects.find(o => o.type === "plane3");
+    const aux = h.objects.filter(o => o.type === "point3" && o.source?.instruction === "construct_point.translate");
+    const options = await page.getByRole("combobox", { name: "Chọn đối tượng" }).locator("option").evaluateAll(nodes =>
+      nodes.map(o => ({ id: o.value, text: o.textContent })));
+    naming = { plane: plane?.label, section: target.label,
+      plane_option: options.find(o => o.id === plane?.id)?.text,
+      auxiliaries: aux.map(o => ({ id: o.id, role: o.role, binding: o.source?.binding,
+        option: options.find(p => p.id === o.id)?.text,
+        distinct_section_identity: !(target.endpoint_entities ?? []).some(e => e.entity_id === o.id) })) };
+    if (naming.plane !== "(P)" || naming.plane_option !== "(P)" || !naming.section?.includes("(P)") ||
+      aux.length !== 2 || naming.auxiliaries.some(o => o.role !== "Điểm dựng phụ" || o.binding !== "AUXILIARY" ||
+        !o.option?.includes("Điểm dựng phụ") || !o.distinct_section_identity)) failures.push(`${row.id}: plane/auxiliary naming failed`);
+    if (aux.length) {
+      await page.getByRole("combobox", { name: "Chọn đối tượng" }).selectOption(aux[0].id); await settle();
+      naming.selected_auxiliary = { id: await page.evaluate(() => window.__geo3d_selected_id),
+        details: await page.getByTestId("selection-details").innerText() };
+      await page.screenshot({ path: join(out, `${row.id}-selected-auxiliary.png`) });
+      if (naming.selected_auxiliary.id !== aux[0].id || !naming.selected_auxiliary.details.includes("Điểm dựng phụ"))
+        failures.push(`${row.id}: auxiliary selection classification failed`);
+      await page.getByRole("combobox", { name: "Chọn đối tượng" }).selectOption(""); await settle();
+    }
+  }
   const ink = (p) => { const k = measure(p).ink; return k ? (k[2] - k[0]) * (k[3] - k[1]) : 0; };
   const r = {
     id: row.id, served: row.served, section_vertices_model: row.section_vertices, pixels_last_step: m,
-    order, variants, console_errors: errors.slice(e0),
+    order, variants, scrubber, selection, naming, console_errors: errors.slice(e0),
     orbit: { changed: diff(start, orbit.b), settled: orbit.settled },
     zoom: { changed: diff(orbit.b, zoom.b), ink_ratio: ink(zoom.b) / Math.max(1, ink(orbit.b)), settled: zoom.settled },
     rendered_ids: await page.evaluate(() => window.__geo3d_rendered_object_ids),
@@ -192,12 +259,30 @@ for (const [i, row] of rows.entries()) {
   };
   if (r.console_errors.length) failures.push(`${row.id}: console errors`);
   if (!r.orbit.settled || !r.zoom.settled || !r.reset.settled || r.orbit.changed === 0) failures.push(`${row.id}: camera move did not change or settle`);
+  if (r.zoom.changed === 0 || !Number.isFinite(r.zoom.ink_ratio) || Math.abs(r.zoom.ink_ratio - 1) < 0.01) failures.push(`${row.id}: zoom did not change ink extent`);
+  if (r.reset.residual_vs_start > 0.005) failures.push(`${row.id}: reset did not restore initial view`);
   report.push(r);
   console.log(JSON.stringify(r));
 }
 await browser.close();
+await server.close();
+if (errors.length && !failures.some(f => f.includes("console errors"))) failures.push("browser console errors");
+if (gpu && !/Intel.*Direct3D11|Intel.*D3D11/i.test(renderer)) failures.push("Intel D3D11 renderer unavailable");
 writeFileSync(join(out, "browser-check.json"), JSON.stringify({ harness: "scripts/hybrid-section-visual.html (Scene3D harness, not product UI)",
   scenes: "real Hybrid route output, backend/scripts/export_hybrid_section_scenes.py; product frame step veKhongGian applied",
-  browser: `Playwright chromium, ${gpu ? "ANGLE D3D11 (hardware GPU)" : "SwiftShader WebGL"}`, renderer, failures, net_retries: netRetries, dev_server_noise: devServerNoise.length, report }, null, 1));
+  browser: `Playwright chromium, ${gpu ? "ANGLE D3D11 requested" : "SwiftShader WebGL requested"}`, renderer,
+  browser_version: browser.version(), browser_pid: browserPid, browser_stopped: server.process().exitCode !== null,
+  scenes_sha256: createHash("sha256").update(scenesBytes).digest("hex"),
+  failures, console_errors: errors, net_retries: netRetries, dev_server_noise: devServerNoise.length, report }, null, 1));
 console.log(JSON.stringify({ renderer, failures, net_retries: netRetries.length }));
-process.exit(failures.length ? 1 : 0);
+completed = true;
+process.exitCode = failures.length ? 1 : 0;
+} catch (error) {
+  writeFileSync(join(out, "browser-failure.json"), JSON.stringify({ error: String(error).split("\n")[0], browser_pid: browserPid }, null, 2));
+  process.exitCode = 1;
+  console.error(String(error).split("\n")[0]);
+} finally {
+  await browser.close().catch(() => undefined);
+  await server.close().catch(() => undefined);
+  if (!completed) console.error(`Browser ${browserPid} stopped: ${server.process().exitCode !== null}`);
+}

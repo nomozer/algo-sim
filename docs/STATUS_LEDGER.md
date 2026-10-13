@@ -1,5 +1,17 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+## Two-line plane section — LOCAL research, 2026-10-14
+
+User authorized Group A bounded Planner slice on `research/goal-directed-two-line-plane-section` from main5270f3dd;
+no merge/push. Product2b42eb40, clean candidatec2ac6dbe…/110files; main unchanged. Two exact independent directions,
+strict line-plane containment/disjointness, existing IR/Kernel section; source authority remains Registry.
+Independent read-only review NONBLOCKING after complete premise/aux quote closure RED→GREEN;111 feature tests PASS.
+Development45=12correct served/33correct refusals; postfreeze heldout32=11/21; no wrong served/false refusal in these strata.
+Algorithm-independent halfspace/Gram oracle, same author disclosed. Historical30 byte-identical19/9/0/2.
+B schema/prompt intentionally changed, fake adapter only; Gemini0. Default/cache125/Hybrid off; B containment deferred.
+Final gates/cleanup: run [`two-line-plane-section`](evaluation/geometry/runs/two-line-plane-section/report.md).
+Only next action is user's research integration decision after final gates, no additional slice authorized here.
+
 ## Compact DSL research closure — 2026-10-13
 
 User-approved `COMPACT_DSL = NO-GO_ARCHIVED`: Typed Facts structured JSON stays the AI → Hybrid format. Evaluation on the

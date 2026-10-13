@@ -52,7 +52,8 @@ def test_every_refusal_code_of_the_route_is_classified():
     root = Path(__file__).resolve().parents[2] / "app"
     src = "".join(p.read_text(encoding="utf-8") for p in [*(root / "simulation" / "geometry_functions").glob("*.py"),
                                                            root / "ai" / "function_route.py", root / "ai" / "fact_extraction.py"])
-    codes = set(re.findall(r'TuChoi\("([A-Z_]+)"', src)) | set(re.findall(r'KetQuaTuyen\("REFUSED", "([A-Z_]+)"', src))
+    codes = set(re.findall(r'''TuChoi\(\s*["']([A-Z_]+)["']''', src)) | set(re.findall(
+        r'''KetQuaTuyen\(\s*["']REFUSED["'],\s*["']([A-Z_]+)["']''', src))
     assert codes and codes <= set(HB.REFUSAL_CLASS), sorted(codes - set(HB.REFUSAL_CLASS))
 
 

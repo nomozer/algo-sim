@@ -60,22 +60,47 @@ def _cases():
 
 
 def main() -> int:
+    sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", required=True)
-    out = Path(ap.parse_args().out)
+    ap.add_argument("--scenes", choices=("hardening", "two-line"), default="hardening")
+    args = ap.parse_args()
+    out = Path(args.out)
     if out.exists():
         print(f"refusing to overwrite {out}")
         return 2
     from app.ai.function_route import run_fact_route
 
+    cases = _cases()
+    expected = {}
+    if args.scenes == "two-line":
+        from tests.geometry.test_two_line_plane_section import CASES, problem
+
+        selected = [(family, next((i, c) for i, c in enumerate(CASES)
+                                  if c["family"] == family and c["expected"] == "SERVED"))
+                    for family in ("pyramid", "prism", "cuboid")]
+        selected.append(("refused", next((i, c) for i, c in enumerate(CASES)
+                                         if c["expected"] == "PLANE_NOT_UNIQUE")))
+        cases = []
+        for family, (index, case) in selected:
+            cid = f"two-line-{family}"
+            text, payload = problem(case["family"], case["mid"], case["lines"])
+            cases.append((cid, ([text], payload["facts"])))
+            expected[cid] = {"corpus_index": index, "family": case["family"], "expected": case["expected"]}
+
     rows = []
-    for cid, (sentences, facts) in _cases():
+    for cid, (sentences, facts) in cases:
         text = " ".join(sentences)
         r = run_fact_route(text, {"facts": facts})
+        if cid in expected:
+            wanted = expected[cid]["expected"]
+            assert (r.status == "SERVED" if wanted == "SERVED" else r.status == "REFUSED" and r.code == wanted), (cid, r.status, r.code)
+            assert wanted == "SERVED" or not r.scene3d, cid
         sections = [o for o in (r.scene3d or {}).get("objects", []) if o.get("type") == "section"]
         n = len(r.exec_result.final_memory[sections[0]["id"]].polygon) if sections else 0
         rows.append({"id": cid, "text": text, "served": r.status == "SERVED", "code": r.code, "answers": r.answers,
-                     "section_vertices": n, "scene": r.scene3d})
+                     "section_vertices": n, "scene": r.scene3d,
+                     **({**expected[cid], "reason": r.reason} if cid in expected else {})})
     out.mkdir(parents=True)
     (out / "scenes.json").write_text(json.dumps(rows, ensure_ascii=False), encoding="utf-8")
     print(json.dumps([{k: v for k, v in x.items() if k != "scene"} for x in rows], ensure_ascii=False))
