@@ -1147,23 +1147,55 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
 
 #: Premise text a call need not quote: lead-ins and connectors between quoted claims (closed).
 _NOI_TIEN_DE = re.compile(r"[\s,;:.()\-–]*(?:(?:cho|gọi|biết|rằng|có|và|với|trong đó|là|của|hãy|xét|ta|đồng thời|lần lượt"
-                          r"|theo thứ tự|tại|thì|cm|dm|mm|m|đvđd)(?!\w)[\s,;:.()\-–]*)*", re.IGNORECASE)
-#: Exam scaffolding at the start of a premise segment ("Bài 3.", "Câu 2:", "(1 điểm)") — not a claim about the figure.
-_GIAN_DAN = re.compile(r"\s*(?:(?:bài tập|bài|câu|ví dụ)\s*\d+\s*[.:)]|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*", re.IGNORECASE)
-#: Nouns that only NAME an object next to its label (never a shape or solid-type predicate such as "hình vuông", "tứ diện").
-_DANH_TU_DOI_TUONG = (r"mặt phẳng|mặt đáy|mặt bên|mặt|đáy|đường thẳng|đoạn thẳng|đoạn|cạnh bên|cạnh đáy|cạnh|điểm|đỉnh"
-                      r"|độ dài|chiều cao|đường cao|hình chóp|khối chóp")
-_TEN_DOI_TUONG = re.compile(rf"(?<![\w'])(?:(?:{_DANH_TU_DOI_TUONG})\s*)?\(?(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?\)?"
-                            rf"(?![\w'])", re.IGNORECASE)
+                          r"|theo thứ tự|tại|thì|đơn vị|cm|dm|mm|m|đvđd)(?!\w)[\s,;:.()\-–]*)*", re.IGNORECASE)
+#: Exam scaffolding at the start of a premise segment ("Bài 3.", "Câu 2:", "a)", "1)", "Câu a:", "(1 điểm)").
+_GIAN_DAN = re.compile(r"\s*(?:(?:bài tập|bài|câu|ví dụ)\s*(?:\d+|[a-d])\s*[.:)]|(?:\d+|[a-d])\s*\)"
+                       r"|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*", re.IGNORECASE)
+#: Nouns that only NAME an object next to its label; ROLE nouns also state a role and are accepted only when that role
+#: matches a validated call (`_vai_tro_doi_tuong_khop`) — "đường cao SB" is a claim, not a name.
+_DANH_TU_TRUNG_TINH = r"mặt phẳng|đường thẳng|đoạn thẳng|đoạn|cạnh|mặt|điểm|độ dài|hình chóp|khối chóp"
+_DANH_TU_VAI_TRO = r"cạnh bên|cạnh đáy|mặt đáy|mặt bên|đáy|chiều cao|đường cao|đỉnh"
+_TEN_DOI_TUONG = re.compile(rf"(?<![\w'])(?P<danh>(?:(?:{_DANH_TU_VAI_TRO}|{_DANH_TU_TRUNG_TINH})\s+)*)"
+                            rf"\(?(?P<nhan>(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?)\)?(?![\w'])", re.IGNORECASE)
+
+
+def _vai_tro_doi_tuong_khop(danh: str, nhan: list[str], calls: tuple[LoiGoi, ...]) -> bool:
+    """A role noun next to labels is a claim; accept it only when a validated call already gives that role."""
+    vai_tro = [m.group().lower() for m in re.finditer(_DANH_TU_VAI_TRO, danh, re.IGNORECASE)]
+    if not vai_tro:
+        return True
+    khoi = [(c.args.apex, list(c.args.base), []) for c in calls if c.fn in ("pyramid", "regular_pyramid")]
+    khoi += [(None, list(c.args.base), list(c.args.top)) for c in calls if c.fn == "prism"]
+    s = set(nhan)
+
+    def chu_trinh(v):
+        return [{v[i], v[(i + 1) % len(v)]} for i in range(len(v))]
+    for r in vai_tro:
+        if r == "cạnh bên":
+            ok = any(s == {d, b} for d, day, _t in khoi if d for b in day) or any(
+                s == {b, t} for _d, day, tren in khoi for b, t in zip(day, tren))
+        elif r == "cạnh đáy":
+            ok = any(s in chu_trinh(day) for _d, day, _t in khoi)
+        elif r in ("đáy", "mặt đáy"):
+            ok = any(s == set(day) or (tren and s == set(tren)) for _d, day, tren in khoi)
+        elif r == "mặt bên":
+            ok = any(d and s == {d} | e for d, day, _t in khoi for e in chu_trinh(day)) or any(
+                s == {day[i], day[(i + 1) % len(day)], tren[i], tren[(i + 1) % len(tren)]}
+                for _d, day, tren in khoi if tren for i in range(len(day)))
+        elif r in ("chiều cao", "đường cao"):
+            ok = any(c.fn == "perpendicular_line_plane" and set(c.args.line) == s
+                     and any(set(c.args.plane) <= set(day) for _d, day, _t in khoi) for c in calls) or any(
+                c.fn == "altitude" and {c.args.apex, c.args.foot} == s for c in calls)
+        else:                                            # đỉnh
+            ok = len(s) == 1 and any(s <= ({d} if d else set()) | set(day) | set(tren) for d, day, tren in khoi)
+        if not ok:
+            return False
+    return True
 #: A note is a premise segment made ONLY of these words (instructions about the answer, never about the figure); closed.
 _GHI_CHU = re.compile(r"[\s,;:.()!\-–]*(?:(?:lưu ý|chú ý|ghi chú|gợi ý|hãy|trình bày|giải|làm tròn|làm|viết|ghi|nêu|lời giải"
                       r"|bài toán|kết quả|đáp số|ngắn gọn|đầy đủ|chi tiết|rõ ràng|để|ở|dưới|dạng|căn thức|phân số"
                       r"|số thập phân|đến|hàng|phần|mười|trăm|nghìn|chữ số|sau|dấu phẩy|đơn vị|độ dài|là|cm|dm|mm|m|đvđd"
                       r"|vẽ hình|minh hoạ|minh họa|\d+)(?!\w)[\s,;:.()!\-–]*)*", re.IGNORECASE)
-#: Where a goal clause ends: the gate's own given and condition markers (`_DUNG_GAN`, `_DIEU_KIEN`), a few joining words
-#: and the clause boundary — no separate vocabulary.
-_KET_MUC_TIEU = re.compile("|".join((_DUNG_GAN.pattern, _DIEU_KIEN.pattern,
-                                     r"(?<!\w)(?:đồng thời|trường hợp|lúc|sau khi|mà)(?!\w)", r"[,;]")), re.IGNORECASE)
 
 
 def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes: tuple[str, ...] = ()) -> None:
@@ -1198,12 +1230,15 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
         if (vt := _vi_tri(de, q)) is None or vt[0] >= het or re.search(r"[.!?;]\s", de[vt[0]:vt[1]].rstrip()):
             continue
         x, y = vt
+        if (mo := _MO_MUC_TIEU.search(de, x, y)) and de[x:mo.start()].strip(" ,;:"):
+            x = mo.start()                               # read only from the goal opener on, never what precedes it
         if not (_vai_tro_tai(de, max(x, y - 1)) == "GOAL" or _phu_dinh(de, x, q)):
             continue                                     # a "prove" label on a plain premise reads nothing
         if k := _KET_MUC_TIEU.search(de, x, y):
             y = k.start()                                # read only up to its first given / condition
         doc[x:min(y, het)] = [True] * max(0, min(y, het) - x)
     dung = {n for c in calls for n in nhan_cua_loi_goi(c)}
+    da_dung: set[int] = set()                            # call values already backing a number
     dau = 0
     for m in [*re.finditer(r"(?<=[.!?;])\s+", de[:het]), None]:
         cuoi = m.start() if m else het
@@ -1213,8 +1248,8 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             continue
         gd = _GIAN_DAN.match(de, a, b)
         a0 = gd.end() if gd else a
-        if _GHI_CHU.fullmatch(de, a0, b):
-            continue                                     # a note in closed words only
+        if _GHI_CHU.fullmatch(de, a0, b) and (not re.search(r"\d", de[a0:b]) or re.search(r"làm tròn", de[a0:b], re.I)):
+            continue                                     # a note in closed words only (a number only in a rounding note)
         if _MO_MUC_TIEU.match(de, a0, b):
             # a goal is something to show, never a hypothesis — up to the first given / condition marker or clause
             # boundary; a length it states may not contradict a validated value of the same segment ("Suy ra SA = 5")
@@ -1227,16 +1262,23 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             if not k:
                 continue
             a0 = k.start()
-        ten = {i for t in _TEN_DOI_TUONG.finditer(de, a0, b)
-               if {n for _x, _y, phan in _tu_nhan(t[0]) for p in phan for n in p} <= dung for i in range(t.start(), t.end())}
+        ten = set()
+        for t in _TEN_DOI_TUONG.finditer(de, a0, b):
+            nh = [n for _x, _y, phan in _tu_nhan(t["nhan"]) for p in phan for n in p]
+            if set(nh) <= dung and _vai_tro_doi_tuong_khop(t["danh"], nh, calls):
+                ten |= set(range(t.start(), t.end()))
         con = "".join(" " if phu[i] or doc[i] or i in ten else de[i] for i in range(a0, b))
         if not _NOI_TIEN_DE.fullmatch(con):
             raise TuChoi("SOURCE_PREMISE_UNREAD", f"tiền đề {de[a0:b].strip()!r} chưa được lời gọi nào đọc — có thể đổi "
                          "hình; không dùng mô hình cũ")
         for p, *v in so_trong(de[a0:b]):
-            if not doc[a0 + p] and not any(s <= a0 + p < e and w == tuple(v) for s, e, w in rang):
+            # each call value backs ONE occurrence inside its own quote ("SA = 3, đổi AB thành 3" has one too many)
+            hop = next((r for r in rang if r[0] <= a0 + p < r[1] and r[2] == tuple(v) and id(r) not in da_dung), None)
+            if not doc[a0 + p] and hop is None:
                 raise TuChoi("SOURCE_PREMISE_UNREAD", f"giá trị trong tiền đề {de[a0:b].strip()!r} không nằm trong quote của "
                              "lời gọi mang giá trị ấy — không dùng mô hình cũ")
+            if hop is not None:
+                da_dung.add(id(hop))
 
 
 def _nguon_do_dai_cuc_bo(calls: tuple[LoiGoi, ...], segment: list[str]) -> list[tuple[tuple[Fraction, bool], str]]:
@@ -1410,6 +1452,11 @@ _CUM_HOI = {
 _VIEC_KE_TIEP = r"rồi|sau đó|từ đó|tiếp theo|tiếp đó|bằng cách"
 _LAM_TRON = r"(?:kết quả\s+)?làm tròn"
 _VIEC_KE_TIEP_RE = re.compile(rf"(?<!\w)(?:{_VIEC_KE_TIEP})(?!\w)", re.IGNORECASE)
+#: Where a goal clause ends (premise coverage): the gate's own given / condition / next-task markers (`_DUNG_GAN`,
+#: `_DIEU_KIEN`, `_VIEC_KE_TIEP`), contrast and joining words, and the clause boundary — no separate vocabulary.
+_KET_MUC_TIEU = re.compile("|".join((_DUNG_GAN.pattern, _DIEU_KIEN.pattern, _VIEC_KE_TIEP_RE.pattern,
+                                     r"(?<!\w)(?:đồng thời|trường hợp|lúc|sau khi|mà|nhưng|tuy nhiên)(?!\w)", r"[,;]")),
+                           re.IGNORECASE)
 #: What a follow-up task may contain once its assertions are covered: given words, a comparison of named objects, a
 #: rounding instruction. Closed: a change written in any other words ("tăng SA gấp đôi", "thay SA bằng SB") is unread.
 _SAU_VIEC_KE_TIEP = re.compile(

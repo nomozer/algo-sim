@@ -222,6 +222,62 @@ def test_closed_notes_stay_served(arm, extra):
     assert r.status == "SERVED", (r.code, r.reason)
 
 
+# ── verification of c56ccc67 (BLOCKING): goal continuations, read-range start, same-call coincidence, role nouns ──────
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("extra", [
+    "Chứng minh SC ⊥ BD rồi đổi SA thành 5.", "Chứng minh SC ⊥ BD nhưng đáy là hình chữ nhật.",
+    "Chứng minh SC ⊥ BD sau đó SB ⊥ (ABCD).",
+    "Hình chóp S.ABCD có đường cao SB.", "Chiều cao SB.", "Đường cao SC.", "Hình chóp S.ABCD có mặt đáy SBC.",
+    "Cạnh đáy SA.", "Lưu ý: độ dài là 5.",
+])
+def test_verification_c56ccc67_false_serves_are_refused(arm, extra):
+    r = _with_premise(extra, arm)
+    assert r.status == "REFUSED", (r.code, r.answers)
+
+
+@pytest.mark.parametrize("sentence", ["SA = 5 và chứng minh SC ⊥ BD.", "Đổi SA thành 5 rồi chứng minh SC ⊥ BD."])
+def test_read_range_starts_at_the_goal_opener(sentence):
+    base, facts = HB._square()
+    quote = sentence.rstrip(".")
+    goal = HB._f("g", "perpendicular", quote, role="prove", points_a=["S", "C"], points_b=["B", "D"])
+    q = HB._ask("q", ASK, "length", points=["S", "C"])
+    r = run_fact_route(" ".join(base) + " " + sentence + " " + ASK, {"facts": facts + [goal, q]})
+    assert r.status == "REFUSED", (r.code, r.answers)
+
+
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("sentence", ["SA = 3, đổi AB thành 3.", "SA = 3 và SB = 3."])
+def test_a_call_value_backs_one_occurrence_only(arm, sentence):
+    base, facts = HB._square()
+    base[3] = sentence
+    facts[3] = {**facts[3], "quotes": [sentence]}
+    r = _route(" ".join(base) + " " + ASK, facts + [HB._ask("q", ASK, "length", points=["S", "C"])], arm)
+    assert r.status == "REFUSED", (r.code, r.answers)
+
+
+P_ = "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy, SA = 3."
+F_ = [HB._f("f1", "solid", "Cho hình chóp S.ABCD", solid="S.ABCD", solid_type="pyramid"),
+      HB._f("f2", "polygon_shape", "đáy ABCD là hình vuông cạnh 2", points=list("ABCD"), shape="square", value="2"),
+      HB._f("f3", "perpendicular", "SA vuông góc với đáy", points_a=["S", "A"], points_b=list("ABCD")),
+      HB._f("f4", "length", "SA = 3", points=["S", "A"], measure="segment", value="3")]
+
+
+@pytest.mark.parametrize("arm", ARMS)
+@pytest.mark.parametrize("text, f4quote", [
+    (P_ + " a) Chứng minh SC vuông góc với BD. b) Tính SC.", "SA = 3"),
+    (P_ + " 1) Chứng minh SC vuông góc với BD. 2) Tính SC.", "SA = 3"),
+    (P_ + " Câu a: Chứng minh SC vuông góc với BD. Câu b: Tính SC.", "SA = 3"),
+    (P_.replace("SA = 3.", "độ dài cạnh SA bằng 3.") + " Tính SC.", "SA bằng 3"),
+    (P_.replace("SA = 3.", "SA = 3 (đơn vị: cm).") + " Tính SC.", "SA = 3"),
+    (P_.replace("SA vuông góc với đáy", "cạnh bên SA vuông góc với đáy") + " Đường cao SA. Tính SC.", "SA = 3"),
+])
+def test_exam_layouts_and_verified_role_nouns_stay_served(arm, text, f4quote):
+    facts = [*F_[:3], {**F_[3], "quotes": [f4quote]}, HB._ask("q", "Tính SC.", "length", points=["S", "C"])]
+    r = _route(text, facts, arm)
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert HB.answer_square(r.answers["q"]) == 17
+
+
 @pytest.mark.parametrize("arm", ARMS)
 def test_relabelling_keeps_both_verdicts(arm):
     assert _with_premise("", arm, names="TEFGK").status == "SERVED"
