@@ -74,8 +74,8 @@ export function uuTienNhan(
   return o.origin === "derived" ? 2 : 1;
 }
 
-/** Nửa chiều rộng/cao (điểm ảnh) coi là "chồng nhau" giữa hai nhãn. */
-export const NGUONG_CHONG_NHAN = { x: 34, y: 11 } as const;
+/** Khe tối thiểu (điểm ảnh) giữa hai hộp nhãn điểm đang hiện. */
+export const KHE_NHAN_PX = 2;
 
 /**
  * Chọn nhãn nào được hiện khi một số nhãn chồng nhau.
@@ -83,19 +83,24 @@ export const NGUONG_CHONG_NHAN = { x: 34, y: 11 } as const;
  * Thuật toán cố ý đơn giản và tất định: xếp theo ưu tiên giảm dần, giữ nhãn
  * nào không đè lên một nhãn đã giữ. Không tìm cách xê dịch nhãn — xê dịch làm
  * nhãn rời khỏi vật nó gọi tên, và lúc ấy hình sai theo một kiểu khác.
+ *
+ * "Đè" là hộp THẬT `w × h` của nhãn chạm nhau (cộng khe `KHE_NHAN_PX`); hộp đặt như `scene3d-view` đặt nhãn:
+ * `translate(-50%,-140%)` từ neo (x, y). Bản trước dùng một cửa sổ cố định 68×22 px, cỡ cho câu mô tả dài thời
+ * trước; với ký hiệu ngắn nó giấu oan đỉnh S cạnh H1 và A′, B′ cạnh H1 (run `scene3d-construction-audit`).
  */
 export function locNhanChongNhau(
-  nhan: { id: string; x: number; y: number; uuTien: number }[],
+  nhan: { id: string; x: number; y: number; uuTien: number; w: number; h: number }[],
 ): Set<string> {
-  const giu: { x: number; y: number }[] = [];
+  const hop = (n: { x: number; y: number; w: number; h: number }) =>
+    [n.x - n.w / 2, n.y - 1.4 * n.h, n.x + n.w / 2, n.y - 0.4 * n.h];
+  const giu: number[][] = [];
   const ket = new Set<string>();
   for (const n of [...nhan].sort((a, b) => b.uuTien - a.uuTien || a.id.localeCompare(b.id))) {
-    const dung = giu.some(
-      (g) => Math.abs(g.x - n.x) < NGUONG_CHONG_NHAN.x * 2
-        && Math.abs(g.y - n.y) < NGUONG_CHONG_NHAN.y * 2,
-    );
+    const [l, t, r, b] = hop(n);
+    const dung = giu.some(([gl, gt, gr, gb]) =>
+      l < gr + KHE_NHAN_PX && gl < r + KHE_NHAN_PX && t < gb + KHE_NHAN_PX && gt < b + KHE_NHAN_PX);
     if (dung) continue;
-    giu.push({ x: n.x, y: n.y });
+    giu.push([l, t, r, b]);
     ket.add(n.id);
   }
   return ket;

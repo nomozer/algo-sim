@@ -83,8 +83,8 @@ describe("nhãn chồng nhau: giữ cái ưu tiên cao", () => {
 
   it("hai nhãn trùng chỗ ⇒ chỉ giữ một, và giữ cái ưu tiên cao", () => {
     const giu = locNhanChongNhau([
-      { id: "thap", x: 100, y: 100, uuTien: 1 },
-      { id: "cao", x: 103, y: 101, uuTien: 3 },
+      { id: "thap", x: 100, y: 100, uuTien: 1, w: 20, h: 17 },
+      { id: "cao", x: 103, y: 101, uuTien: 3, w: 20, h: 17 },
     ]);
     expect(giu.has("cao")).toBe(true);
     expect(giu.has("thap")).toBe(false);
@@ -92,9 +92,9 @@ describe("nhãn chồng nhau: giữ cái ưu tiên cao", () => {
 
   it("nhãn cách xa nhau thì giữ hết — không ẩn oan", () => {
     const giu = locNhanChongNhau([
-      { id: "a", x: 40, y: 40, uuTien: 1 },
-      { id: "b", x: 400, y: 300, uuTien: 1 },
-      { id: "c", x: 40, y: 300, uuTien: 1 },
+      { id: "a", x: 40, y: 40, uuTien: 1, w: 20, h: 17 },
+      { id: "b", x: 400, y: 300, uuTien: 1, w: 20, h: 17 },
+      { id: "c", x: 40, y: 300, uuTien: 1, w: 20, h: 17 },
     ]);
     expect(giu.size).toBe(3);
   });
@@ -119,8 +119,8 @@ describe("nhãn chồng nhau: giữ cái ưu tiên cao", () => {
 
   it("tất định: cùng đầu vào cho cùng kết quả bất kể thứ tự truyền vào", () => {
     const a = [
-      { id: "x", x: 10, y: 10, uuTien: 1 },
-      { id: "y", x: 12, y: 11, uuTien: 1 },
+      { id: "x", x: 10, y: 10, uuTien: 1, w: 20, h: 17 },
+      { id: "y", x: 12, y: 11, uuTien: 1, w: 20, h: 17 },
     ];
     expect([...locNhanChongNhau(a)]).toEqual([...locNhanChongNhau([...a].reverse())]);
   });

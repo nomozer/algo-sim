@@ -1600,7 +1600,10 @@ export function Scene3DWorkspace({
       // cho thấy bốn câu mô tả đè lên nhau ngay giữa hình. Lọc ở đây chứ
       // không ở lúc dựng cảnh, vì hai nhãn có chồng nhau hay không phụ thuộc
       // GÓC NHÌN — thứ chỉ biết được sau phép chiếu.
-      const dat: { el: HTMLElement; id: string; x: number; y: number; uuTien: number }[] = [];
+      const dat: { el: HTMLElement; id: string; x: number; y: number; uuTien: number; w: number; h: number }[] = [];
+      // Cỡ hộp nhãn cho phép lọc chồng: ĐỌC hết trước khi GHI style nào — đọc xen giữa các lần ghi ép trình duyệt
+      // tính lại bố cục cho từng nhãn ở mỗi khung (transform/opacity không đổi offsetWidth/Height).
+      const co = new Map((Array.from(lop.children) as HTMLElement[]).map((el) => [el, [el.offsetWidth, el.offsetHeight]]));
       for (const el of Array.from(lop.children) as HTMLElement[]) {
         const id = el.dataset.id;
         const v = id ? viTriNhan.current.get(id) : undefined;
@@ -1613,7 +1616,8 @@ export function Scene3DWorkspace({
         const x = ((p3.x + 1) / 2) * w;
         const y = ((1 - p3.y) / 2) * h;
         el.style.transform = `translate(-50%,-140%) translate(${x}px,${y}px)`;
-        dat.push({ el, id, x, y, uuTien: Number(el.dataset.uuTien ?? "1") });
+        const [cw, ch] = co.get(el)!;
+        dat.push({ el, id, x, y, uuTien: Number(el.dataset.uuTien ?? "1"), w: cw, h: ch });
       }
       const giu = locNhanChongNhau(dat);
       for (const d of dat) d.el.style.opacity = giu.has(d.id) ? "1" : "0";
