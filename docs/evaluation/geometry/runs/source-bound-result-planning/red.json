@@ -1,0 +1,15 @@
+{
+  "baseline": "19140e2fee97e58ef3abb24de039b6a4b5991db3",
+  "product_candidate": "266983387152cfe91ddeb841ef85d4ee0da221bbbc94a650131e7575db4e39fa",
+  "preregistration_sha256": "14303fa0d80f5a55e5f0fd87f7cc6d15f23fdf80e118668c02007019ed297db7",
+  "corpus_sha256": "6587fabf084029bf7aa787df291b27bbf83fde95212ca9a8f1bd4c4ce9cbda84",
+  "command": "pytest tests/geometry/test_result_binding_planning.py -q -p no:cacheprovider",
+  "tests": 18,
+  "failures": 18,
+  "errors": 0,
+  "first_stop": "SCHEMA_INVALID: line_ref is forbidden on TypedFact",
+  "positive": 6,
+  "negative": 12,
+  "negative_safety": "all refused, but specific reference/source/domain/cycle gates not reached",
+  "live_calls": 0
+}
