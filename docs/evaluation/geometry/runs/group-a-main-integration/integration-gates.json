@@ -1,0 +1,52 @@
+{
+  "schema": "GROUP_A_MAIN_INTEGRATION_GATES/1",
+  "main_before": "5270f3ddf63050efca14dab403912d8ed30e1113",
+  "integrated_commit": "5d73f7c2213e9879ccfb93fb23a004ee64cc68a7",
+  "main_tree": "e851495be6d22fbfe062c77296c13bfc8ea7bcf9",
+  "merge": "FAST_FORWARD",
+  "verification_worktree": "clean detached .superpowers/worktrees/group-a-main-verify at integrated commit",
+  "candidate": "266983387152cfe91ddeb841ef85d4ee0da221bbbc94a650131e7575db4e39fa",
+  "candidate_files": 110,
+  "candidate_verify": "PASS",
+  "product_commit": "a5a0797ce600734d52eb92c3e763e52a85365b5e",
+  "cache_version": 125,
+  "default": "LLM_ONLY",
+  "provider_pins": {
+    "A": "912b22ef7f89851412b8ff026012454d1f9aa225bdd5bd00eb0d8f2dbd53fa3e",
+    "B": "145feb1873eac91fab1336f3f6aded7b792d82a9d3599e446087fe6b33a489b5",
+    "declarations": "f2ec9698a4ee8af86448790f83d9af340eb6afcfce0a8f258ea67e46bf7504b1"
+  },
+  "targeted": {
+    "tests": 265,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "targeted_receipt_sha256": "1fdfb2f8538023a855b04c13635552bc94a2374b44d19a8a55bdded72215cb57",
+  "targeted_command": "existing backend venv python -m pytest sequencing/two_line/structured_relations/source_grounding_closure/docs_information_architecture/current_state_identity -q -p no:cacheprovider --basetemp=<owned task tmp> --junitxml=<run>/integration-targeted.xml; cwd clean detached backend",
+  "inherited_t3": {
+    "commit": "f227dd72",
+    "product_commit": "a5a0797c",
+    "worktree": "clean detached D:/tmp/algo-seq-verify",
+    "verdict": "FULL_PRODUCT_GATE_PASS",
+    "pytest": "9329 passed, 1 skipped, 2 deselected, 6 xfailed",
+    "vitest": "1055 passed / 68 files",
+    "build": "PASS",
+    "demo_cases": "PASS",
+    "demo_crash_surface": "PASS",
+    "local_socket_retries": 0,
+    "log": "t3-authoritative.log",
+    "log_sha256": "e41f2c73efe42c23b715880b0e17b1e99f916347e9de900698179fde68b38b21",
+    "earlier_pass": "t3-38c304ce-pass.json (before the review fixes; superseded)"
+  },
+  "t3_raw_log_hash_verified": true,
+  "t3_reuse_basis": "Entire executed product/tests/harness unchanged from f227dd72 through integrated5d73f7c2; main fast-forward exactly reviewed research tree. No product changes in integration. Supporting docs metadata gates verified separately.",
+  "frontend_targeted_inherited": "163 PASS clean d3c7381a; same frontend tree",
+  "browser_inherited": "SwiftShader/IntelD3D11; final scene export byte-identical; no Chrome rerun",
+  "benchmark30": "byte-identical19/9/0/2",
+  "benchmark_sha256": "febb5b602fcb194c502e07ea47fe4200ed4083f0b09bac12784b2536940ab12e",
+  "existing_evidence_hash_matches": 385,
+  "protected_files_refs_scripts_bundles_equal": true,
+  "hybrid_product_enablement": "NO-GO",
+  "live_calls": 0
+}

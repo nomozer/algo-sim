@@ -1,5 +1,13 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+## Group A main integration — LOCAL, 2026-10-14
+
+User-authorized research integration with visual/orbit/source limits accepted and still OPEN. Main fast-forward
+`5270f3dd` → `5d73f7c2`, first push verified local/origin/ls-remote all5d73f7c2; publication documentation follows (SELF).
+Candidate26698338…/110files, producta5a0797c, cache125/LLM_ONLY/Hybrid off. Clean integration265PASS; inherited T3
+f227dd72 backend9329/frontend1055/build/demo/crash PASS; review NONBLOCKING. Research branch retained; protected assets
+preserved; no live call or next feature. [`Group A integration`](evaluation/geometry/runs/group-a-main-integration/report.md).
+
 ## Pedagogical construction sequencing — LOCAL, 2026-10-14
 
 Same research branch. Hybrid learner order: solid (base, top face, lateral edges, close) before auxiliary points;

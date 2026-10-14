@@ -1,0 +1,24 @@
+{
+  "registered_before": [
+    "D:/Documents/projects/algo-sim"
+  ],
+  "peak": [
+    "D:/Documents/projects/algo-sim",
+    "D:/Documents/projects/algo-sim/.superpowers/worktrees/group-a-main-verify"
+  ],
+  "owned_worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/group-a-main-verify",
+  "logical_file_bytes": 1720204946,
+  "files": 13596,
+  "shared_junctions_created": 0,
+  "task_server_browser_created": false,
+  "old_data_removed_bytes": 0,
+  "acl_owner_changes": 0,
+  "registered_after": [
+    "D:/Documents/projects/algo-sim"
+  ],
+  "physical_worktree_directories_after": [],
+  "physical_verifier_removed": true,
+  "logical_bytes_removed": 1720204946,
+  "temporary_test_path_exists_after": false,
+  "forced_removal": false
+}

@@ -1,10 +1,25 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = GROUP_A_MAIN_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/group-a-main-integration/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/group-a-main-integration/
+CORRECTED_BY = NONE
+CORRECTS = GROUP_A_INTEGRATION_READINESS
+CLASSIFICATION = USER_AUTHORIZED_RESEARCH_INTEGRATION_MAIN_REMOTE_VERIFIED
+CODE_COMMIT = a5a0797c
+VERIFICATION_COMMIT = 5d73f7c2 (integration targeted); f227dd72 (inherited T3)
+MODEL_REQUEST_COUNT = 0
+
+User accepts disclosed limits for research integration only (`APPROVAL.md`). Main fast-forward and first push verified
+at5d73f7c2; documentation publication commit has role SELF. Research branch retained, Hybrid off. Additive gzip archives
+preserve three historical raw T3 logs' exact original bytes across Git text newline conversion; historical blobs/receipts unchanged.
+
 ## WAVE_ID = GROUP_A_INTEGRATION_READINESS
 
 REPORT = docs/evaluation/geometry/runs/group-a-integration-readiness/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/group-a-integration-readiness/
-CORRECTED_BY = NONE
+CORRECTED_BY = GROUP_A_MAIN_INTEGRATION
 CORRECTS = PEDAGOGICAL_CONSTRUCTION_SEQUENCING
 CLASSIFICATION = GROUP_A_CONDITIONAL_GO_NO_MERGE_NO_PUSH
 CODE_COMMIT = a5a0797c

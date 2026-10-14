@@ -1,0 +1,332 @@
+{
+  "initial_checkout_issue": "57 already-versioned incoming evidence files survived switch due unlink permission; exact matching blobs staged, then normal ff-only succeeded; no file deletion/owner/ACL change",
+  "newline_recovery": "54 checkout text conversions restored to pinned original bytes; 51 from exact Git blobs, 3 T3 mixed-newline logs from hash-matched protected scratch (source untouched)",
+  "restored": [
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/browser-check.json",
+      "checkout_hash": "15ed034d9ddd32a99f65cb5f52c465df3f51dc2d26b620f427db69aecb75b6dd",
+      "restored_original_hash": "3c3d2177a517b52c67e70f7165e049f2feee0cf92971c8da2ce1b6d75843f9cb",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/contact-sheet.html",
+      "checkout_hash": "cf4febdfa1518ee9e8394c2bdbcf3ff2e3317c9bac1965bcaefa3e3e117a5f77",
+      "restored_original_hash": "128b2f28f9d1bc307a532c895f22c149ddda5c69979b4d1c7194e557242369f9",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/contact-sheet.html",
+      "checkout_hash": "1c91397d44806881b197be18fac7e5062b9503f395978e31d67df03f636df457",
+      "restored_original_hash": "8d7a0baece8f8c878fe651a4f1f658ef2d3a5c52c1b81189cfd57fd1a82fb8a1",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/contact-sheet.html",
+      "checkout_hash": "fb29b53c0b24eb634f18be4c4e7230d050e2386fd6332da8f0fb382dd27c385d",
+      "restored_original_hash": "44d4152aeeb88411a03083a38e347004e71f00beacf7995f13bf626c53bf06fc",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/browser-check.json",
+      "checkout_hash": "a4c9e079c82a7652963ce6b94a85a6ade569a38d8c447d01f8e33c6d9c13bd49",
+      "restored_original_hash": "686a323f119411c0209c3448bba347a0630e6ba997643081b30c0043b7b7afba",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/contact-sheet.html",
+      "checkout_hash": "cf4febdfa1518ee9e8394c2bdbcf3ff2e3317c9bac1965bcaefa3e3e117a5f77",
+      "restored_original_hash": "128b2f28f9d1bc307a532c895f22c149ddda5c69979b4d1c7194e557242369f9",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/contact-sheet.html",
+      "checkout_hash": "1c91397d44806881b197be18fac7e5062b9503f395978e31d67df03f636df457",
+      "restored_original_hash": "8d7a0baece8f8c878fe651a4f1f658ef2d3a5c52c1b81189cfd57fd1a82fb8a1",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/contact-sheet.html",
+      "checkout_hash": "fb29b53c0b24eb634f18be4c4e7230d050e2386fd6332da8f0fb382dd27c385d",
+      "restored_original_hash": "44d4152aeeb88411a03083a38e347004e71f00beacf7995f13bf626c53bf06fc",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/cache/decision.json",
+      "checkout_hash": "9a1630f7b679926d92eae0fa382080424616b791defb1acfa80a3982f116d160",
+      "restored_original_hash": "8aa25c65744e6e1de47d730edb3ddf9d45012978f573c66caa9d0f8747af2859",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/cleanup.json",
+      "checkout_hash": "d3c5d861345d2a78db4bf81a9b8049e5d883e1fa5dbad7544a6cbbf92dd8e87b",
+      "restored_original_hash": "45534efdf06f2f3ba84ee13d449c3be5f22402b2c6ac4a37b4dedf04c683922c",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/handoff.md",
+      "checkout_hash": "ab2b1647dbe9b688f913818c143a1d28432740247803c436b707bc7c853e75cc",
+      "restored_original_hash": "10d13f3ca0d5ac8bc0bdb70773714e978debe884ba0a4e65293745555bbf88fe",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/inputs/candidate_divergence.json",
+      "checkout_hash": "af2efa24e9ebc86778edd0024ad3328fcd659739ba9c0498f601739a8102035b",
+      "restored_original_hash": "b0f13a73596a9ea189655dffd07f16fadd649bfe64b0c0293e4f45d3751c6fae",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/plan.md",
+      "checkout_hash": "c9faf0c21152f2fff97526872e39c7727c49b77871ff0d960accd9a6be9749f1",
+      "restored_original_hash": "7c38d7427bc7cc4dbe6f4e0348c99d3802777db790b6f7a3d42c868bc9156f9b",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/report.md",
+      "checkout_hash": "3c15b06a959f8f78bee3a954835a927763ac420b19f6a438c36e3546cc638287",
+      "restored_original_hash": "2c680842de94468c14796cf244f656609f678d2a4a3c1740d41a862f01c609c1",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/review.md",
+      "checkout_hash": "7e6e92eae0013dc2f6faaecfc8bc471f32d7b44dc715da6ff5d84a473611ef85",
+      "restored_original_hash": "73a04b627124d69defcf0049ceb652e7e14fd50f1fa3257a33d9777cc2c7346f",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/run.json",
+      "checkout_hash": "b5b35b736caf838ad86907d2b8934228520274b4088e9b85c8f3ee161b9f5a29",
+      "restored_original_hash": "965bf98bf3896c15af481de5aeea4efabeacd92de775b17196937fff1714d365",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/steps.md",
+      "checkout_hash": "ceb570de464b9aa5e421248975451922e79d87e17111e83ec39327aca0a21198",
+      "restored_original_hash": "45d6f7bacf30c73ae205de600c9af8ab10b03e661a2f6778819fc91f4a6e7830",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/t3-38c304ce-pass.json",
+      "checkout_hash": "d05f750c13a2f36fa51a63628c177a65405b84e7445532b3666db8ca79584af9",
+      "restored_original_hash": "d44483eaaf9bb4b47058091c3dc585947e2f59b7a66381c74700d522ac206548",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/t3-38c304ce.log",
+      "checkout_hash": "f67ea6e9ae8982bf4bd3438c1ddf1a3f1cdc7b3e155215863f05c607843c3318",
+      "restored_original_hash": "e96b7746fcfb62e908227340e1f131deccf7de57e0facbf1a3e82123fcd4a2ea",
+      "source": "preserved Claude scratch t3-seq.log"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/t3-authoritative.log",
+      "checkout_hash": "95eed19a0e0e4f56d6e5e79f696dd3b11211fb74ffda62aa8135c27aa22a4220",
+      "restored_original_hash": "e41f2c73efe42c23b715880b0e17b1e99f916347e9de900698179fde68b38b21",
+      "source": "preserved Claude scratch t3-final.log"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/t3-pass.json",
+      "checkout_hash": "77e79ffad749871071ffb2cdda2050db9057399f52e32f03057fe20922a730e7",
+      "restored_original_hash": "017cc8712b96e0485eb0d05a7dd578dc274d3b481382ab057fdae47481ed7b7a",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/takeover-closure.json",
+      "checkout_hash": "0b1f09cb5ea9363258919ecb283b2433aceb3192a2aacb92535b5115cdec0c61",
+      "restored_original_hash": "b8218eb05f94fb9c2e1b24c21b07d0911141b16bb161796604d83a0460435055",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/browser-check.json",
+      "checkout_hash": "17cafff4ae3fffba5a12d155ee2f07f2e3c0a88acd6a2b2b8283495027049c5d",
+      "restored_original_hash": "7c657ea2e317b79856e28c214289b6f5dc0a36428743589eeb4a2ddf5a704510",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/contact-sheet.html",
+      "checkout_hash": "200866f3be94a14882d8bb2eb7a03eaeac72d39d7dd3d6373b1eb2ab35fa7c85",
+      "restored_original_hash": "48ce8ee9a3c1fb091b294f0f961db9c9cb1415aef8401f26185be92a151ff54e",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/contact-sheet.html",
+      "checkout_hash": "8d8ac8eddcabb242b1c332d96ba37611180e1c4ceeb6fce04b31f61c198757b9",
+      "restored_original_hash": "c4953397fe59025a5913e9c6291ef6a1f23fc1e36ad0f373447322941a2656d7",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/contact-sheet.html",
+      "checkout_hash": "d9a60e1710577d9797f651dc5bb3e895560d7b07a3247e0f5929ab8dc66da8e7",
+      "restored_original_hash": "402576606172df8681f84ea1a855d460002abc3a0c416f407dea1f34c080e062",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/browser-check.json",
+      "checkout_hash": "ade2cc2cecb44bbcb247ede3fa6d60098689fdc00082c4aa39ed0df520524095",
+      "restored_original_hash": "ea3a3015105686b5ad2db7b51bf9b2709d0deddb42cddb33ce09746bb54c43be",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/contact-sheet.html",
+      "checkout_hash": "200866f3be94a14882d8bb2eb7a03eaeac72d39d7dd3d6373b1eb2ab35fa7c85",
+      "restored_original_hash": "48ce8ee9a3c1fb091b294f0f961db9c9cb1415aef8401f26185be92a151ff54e",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/contact-sheet.html",
+      "checkout_hash": "8d8ac8eddcabb242b1c332d96ba37611180e1c4ceeb6fce04b31f61c198757b9",
+      "restored_original_hash": "c4953397fe59025a5913e9c6291ef6a1f23fc1e36ad0f373447322941a2656d7",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/contact-sheet.html",
+      "checkout_hash": "d9a60e1710577d9797f651dc5bb3e895560d7b07a3247e0f5929ab8dc66da8e7",
+      "restored_original_hash": "402576606172df8681f84ea1a855d460002abc3a0c416f407dea1f34c080e062",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/browser-check.json",
+      "checkout_hash": "31417826d337937e3097a29d1302156d30bd4d5d95464479ed5606af6d9a3c33",
+      "restored_original_hash": "bc043a925ed776df6cee7f9a02f312a5e68e527933c3ad6d5c97fc6c740dc68c",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/contact-sheet.html",
+      "checkout_hash": "200866f3be94a14882d8bb2eb7a03eaeac72d39d7dd3d6373b1eb2ab35fa7c85",
+      "restored_original_hash": "48ce8ee9a3c1fb091b294f0f961db9c9cb1415aef8401f26185be92a151ff54e",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/contact-sheet.html",
+      "checkout_hash": "8d8ac8eddcabb242b1c332d96ba37611180e1c4ceeb6fce04b31f61c198757b9",
+      "restored_original_hash": "c4953397fe59025a5913e9c6291ef6a1f23fc1e36ad0f373447322941a2656d7",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/contact-sheet.html",
+      "checkout_hash": "d9a60e1710577d9797f651dc5bb3e895560d7b07a3247e0f5929ab8dc66da8e7",
+      "restored_original_hash": "402576606172df8681f84ea1a855d460002abc3a0c416f407dea1f34c080e062",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/cache/decision.json",
+      "checkout_hash": "f1301f64cb704cfc8beb70238c778285e17ec0d2016f2d12090e1eb030df84fe",
+      "restored_original_hash": "9ce6dc44da907db92084b4e73bb5804c371cf18f91a3f1c6c5e49a358292e5c2",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/cleanup.json",
+      "checkout_hash": "8aa90d3e7b127c21c3670e1f2f7574054784b9ca0f7b78e041f1ae65de8b64cf",
+      "restored_original_hash": "a7ebdfb0c64d31982f3cae1e48271d886c75aac94baa088d0f5206757131b3e4",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/handoff.md",
+      "checkout_hash": "5c3f01a5d4e7616e1cb911d01b964d2ca1cf5f5e1c9271c28d2303b245da6b4b",
+      "restored_original_hash": "8223cd8a6185abe2b6f8860253890f7a2aa545356e8c642daed2c9fb45fe3de1",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/inputs/candidate_divergence.json",
+      "checkout_hash": "3341f99d2dac42070ec93b1dbb0f6e77fcd89baad34158428b95f000cda5a80a",
+      "restored_original_hash": "128f45037b092630a574947a37d561c4788494d828469110e4e258e7e0aa57c2",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/plan.md",
+      "checkout_hash": "5d7ca3afb081160b7d365fccb4cb716c595966e257d17a92033cd7206a49abbf",
+      "restored_original_hash": "ddc19b7149c36e969db5721569c73af81cb8a4c08e06168f2bfa20fef4670bc7",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/playwright-audit.md",
+      "checkout_hash": "9b2098069abc2431a1fa8828ff4c079fd88ed2665ff1a018ef7fc6dbfb056357",
+      "restored_original_hash": "a512658d863f7d86d889b5cb662928b4b36d6bb4935f9b963b8263385d4ad451",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/report.md",
+      "checkout_hash": "61d37344494d2aeb8cf18c8807843c2ac23af62677980b4d002087647bb9920d",
+      "restored_original_hash": "9a9b8893f59b4aebb41cdef58dfa8d1ec94c8dee090177cc4f3fcb5fe0a909d2",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/review.md",
+      "checkout_hash": "304f8253a00a6a5211be49fe853c6aa8536c36c1775d803ccc83d0011e95192e",
+      "restored_original_hash": "7ba3b0efcff293885a7b46bd3de781b659f322b25e4a7f56b57a5941703133ca",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/run.json",
+      "checkout_hash": "35cf91fcf5ef1e8eae817301f7b02b965a3f7c56293c7c66c6294e9c3badfa2b",
+      "restored_original_hash": "b23342de4b35de55dbe4d512e1789f7fa480ede6fe78edef88c3679f5e695c57",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/steps.md",
+      "checkout_hash": "877f44c4c036b7e759f280e73f6a39a17af564681b98fd6dc06a786aed440e30",
+      "restored_original_hash": "28bad9cf9f19ed70de509fcbd786d8c920f7052f44ca9971cd39d970156e9865",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/bundles.json",
+      "checkout_hash": "72b95652d7d266ff38fc68cea0183405a83a051632ff62a286ed5d30d9f81f30",
+      "restored_original_hash": "00706fe88e6639de1bf741787a512fb58ccb13cf3b88bafc4a1769a2067ad67a",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/layout-probe-after/MOBILE_LAYOUT_PROBE.json",
+      "checkout_hash": "1a73314f6446a5ff7ec711bae8ee98fcb86c6a43fc17ed3466a379edb92c155c",
+      "restored_original_hash": "91355768d22c3c06a185977d23ec5eadf3c785591bb2c1437fbee9123d681209",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/layout-probe-before/MOBILE_LAYOUT_PROBE.json",
+      "checkout_hash": "14585c6ca8b77162671ae1abed0b44df5ca685a747b92c316c170da84e301f0d",
+      "restored_original_hash": "4efc7e8ebf72710e2472fc0723e8048b4cb5adf89d056dc3d6222406c6181ac2",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/orbit-gate-before.json",
+      "checkout_hash": "92c1858e57843f3754ef659027c2ea97e8cbc9444893c7f2d22cbd6f520c0c4d",
+      "restored_original_hash": "e59bff4ab9fcb037f985d52d9e5dff5f2581cc9d73757e99717a62a01bee6e12",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/orbit-gate/ORBIT_GATE.json",
+      "checkout_hash": "5012dd9d754439b05696c2850461747ecdea3e72b38355f10256a449cfa0d818",
+      "restored_original_hash": "2dde017630c02d162c6de0ddd6d8aa7b4375071fe51b0299659e4ede279afa10",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/t3-authoritative.log",
+      "checkout_hash": "6c15e5fdbbd052d7a0b468bd5df987c1ee374f770a182f8ee97944fa6c099dbc",
+      "restored_original_hash": "5b6570be15140b3364c55b77d062b43865d374231114027d93b4083fc74555ac",
+      "source": "preserved Claude scratch t3b.log"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/t3-first-failure.json",
+      "checkout_hash": "e4e9131d7fa8e9fb2c329bc21cde1b36d9c57321b72091c0dfbb1f6c7c420f2a",
+      "restored_original_hash": "0c1c321cfd323687d130a730a5c1456be3f70e6287357c7bfab6c890d5292f5e",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/t3-pass.json",
+      "checkout_hash": "d332c872dd5184d0e194d34627a15e7447ff9466ae4631b1bf76b2b885f10ad9",
+      "restored_original_hash": "5104cf2a21e035afa05d577069b4404ba874f2be550741fa02d2e2421ed09d70",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/browser-check.json",
+      "checkout_hash": "2ac219c63e9f49af9c0f00c3955a6c11b338b7a24e8aa05f4a7c48a23b1f0c2d",
+      "restored_original_hash": "00fd757aea021578a3d883f1b128db5ceea7bac557e45dbefe11afed4b9b7544",
+      "source": "exact Git blob"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/browser-check.json",
+      "checkout_hash": "f4d275a974247b0cd2fa15356a52bcec1ebec3bc44637deb8c67027887087b94",
+      "restored_original_hash": "c187163f1a9fabd7f8d875b8348af67f00027268b0505f49b2206d15aac6c97b",
+      "source": "exact Git blob"
+    }
+  ],
+  "all_385_original_hashes_match": true,
+  "acl_owner_changes": 0
+}

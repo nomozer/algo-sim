@@ -3,6 +3,7 @@
 ### ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY
 
 - **status:** DEFERRED — user-requested presentation scope recorded 2026-10-14; no implementation authorized in this run.
+  Group A integration accepts this limitation; it remains OPEN/DEFERRED, not a completed presentation slice.
 - **description:** Prefer an oblique view from above while preserving free orbit/reset; choose defaults by verified scene
   families rather than one fixed angle. Optional reference background: sparse, very faint diagonal lines, not a dense
   square grid or a mathematical entity. The reference image is not in this review's evidence package, so its exact visual
@@ -19,7 +20,7 @@
 
 ### ISSUE-RESEARCH-HYBRID-AUXILIARY-BEFORE-SOLID
 
-- **status:** RESOLVED on the research branch (run `pedagogical-construction-sequencing`, product `a5a0797c`; not on `main`).
+- **status:** RESOLVED on `main` after Group A integration (run `group-a-main-integration`, product `a5a0797c`).
   Solid-first learner order + prism/regular-pyramid formation steps + grounded narration; math unchanged. Remaining:
   solids without source-declared topology still form in one step; prism keeps base → top face → lateral (shared contract).
 - **description:** In all three served two-line scenes the Hybrid Planner emits M, the two direction vectors and H, H1

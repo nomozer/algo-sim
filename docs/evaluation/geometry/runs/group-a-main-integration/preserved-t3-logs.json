@@ -1,0 +1,29 @@
+{
+  "reason": "Historical raw Windows mixed-newline logs differ from Git text normalization. Additive gzip copies preserve exact original byte hashes without changing historical logs/receipts. Decompress then SHA256 to verify; original protected scratch retained.",
+  "logs": [
+    {
+      "historical_log": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/t3-38c304ce.log",
+      "archive": "sequencing-previous-t3.log.gz",
+      "original_bytes": 15974,
+      "original_sha256": "e96b7746fcfb62e908227340e1f131deccf7de57e0facbf1a3e82123fcd4a2ea",
+      "archive_sha256": "bdd1c57bde350fa8e23fe552e2d9479bec1d6167c9455630e241971e45f2c83d",
+      "canonical_git_blob_sha256": "d961feb8d73cf6f2713eeee6ba26f52f9a7a4a576011b28dab2cfc1d8b6b942b"
+    },
+    {
+      "historical_log": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/t3-authoritative.log",
+      "archive": "sequencing-final-t3.log.gz",
+      "original_bytes": 15977,
+      "original_sha256": "e41f2c73efe42c23b715880b0e17b1e99f916347e9de900698179fde68b38b21",
+      "archive_sha256": "06face10e44b9170cf4d0cd6b3eeef2486672a37e2f2516ffafe6be6f579587d",
+      "canonical_git_blob_sha256": "4cc331da2ed83a19a1e6503204d68e14938f2f088fba26376367a60e7bc1f8e7"
+    },
+    {
+      "historical_log": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/t3-authoritative.log",
+      "archive": "construction-audit-final-t3.log.gz",
+      "original_bytes": 15974,
+      "original_sha256": "5b6570be15140b3364c55b77d062b43865d374231114027d93b4083fc74555ac",
+      "archive_sha256": "fd614581d46e5900c81f39588b73cc10dce6891e5dc671d1500c9cf7ca264e7c",
+      "canonical_git_blob_sha256": "a705d93637c18c863af11702f5a1a995cca0195e7278fc2cc1beb8fb195f9637"
+    }
+  ]
+}

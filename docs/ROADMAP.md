@@ -8,19 +8,15 @@
 
 ## 0. Canonical Next Action
 
-**2026-10-14:** bounded two-line plane research is authorized and implemented on its research branch.
-Finish clean verification, then user's integration decision; do not start another construction slice.
-Run [`two-line-plane-section`](evaluation/geometry/runs/two-line-plane-section/report.md). Hybrid stays off.
-Construction/playback audit done (run [`scene3d-construction-audit`](evaluation/geometry/runs/scene3d-construction-audit/report.md)):
-human visual review of its contact sheets precedes the integration decision.
-Learner construction order fixed in run [`pedagogical-construction-sequencing`](evaluation/geometry/runs/pedagogical-construction-sequencing/report.md); review its contact sheets too.
-Final targeted re-review is NONBLOCKING; technical gates complete, user's visual/scope acceptance and integration
-authorization pending (`GROUP_A_CONDITIONAL_GO`, run [`group-a-integration-readiness`](evaluation/geometry/runs/group-a-integration-readiness/report.md)).
-Suggested subsequent architecture scope: bounded Scene3D Presentation for construction readability, recorded in
-`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY`; requires a separate decision, does not start a new task or alter the next-action token.
+**2026-10-14:** Group A research integration authorized with the disclosed limits. Main fast-forward5270f3dd→5d73f7c2,
+first ordinary push and three SHA equality verified. Integration documentation publication follows (SELF). Hybrid stays off.
+Run [`group-a-main-integration`](evaluation/geometry/runs/group-a-main-integration/report.md); original readiness/review/
+sequencing evidence preserved. Accepted visual/orbit/source limits remain OPEN; B/live extraction/E2E not implemented/measured.
+One proposed next decision: scope of a bounded Scene3D Presentation slice for construction readability from
+`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY`. No implementation is authorized or started; no Group B/Gap Audit/new family.
 
 ```text
-CANONICAL_NEXT_ACTION = TWO_LINE_PLANE_SECTION_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = SCENE3D_PRESENTATION_SCOPE_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

@@ -1,9 +1,10 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
-## Pedagogical construction sequencing — Hybrid learner order (LOCAL research)
+## Pedagogical construction sequencing — Hybrid learner order (integrated research capability, Hybrid off)
 
 Run `docs/evaluation/geometry/runs/pedagogical-construction-sequencing/`. Hybrid-only; shared `formation`, `scene3d`, kernel
 and the LLM_ONLY route unchanged.
+Integrated into main by run `docs/evaluation/geometry/runs/group-a-main-integration/`; no API Hybrid consumer enabled.
 
 | Module | Owns | Verification |
 |---|---|---|

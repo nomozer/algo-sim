@@ -1,0 +1,19 @@
+{
+  "schema": "DOCS_IDENTITY_GATES/1",
+  "docs_identity_passed": 45,
+  "docs_identity_receipt": "docs-identity.xml",
+  "docs_identity_sha256": "5407171e0a01f46896b6507993ba0c64c1df4ab25d3bd666bdf911511136974c",
+  "audit": "PASS",
+  "audit_receipt": "docs-audit.json",
+  "audit_sha256": "7d30ecfb1e24578bc32decd7eebd4aa8119da621aac2b49e122975b9a090fbb4",
+  "secret_leak_count": 0,
+  "links_valid": true,
+  "correction_chain_valid": true,
+  "canonical_next_action": "SCENE3D_PRESENTATION_SCOPE_DECISION",
+  "candidate_verify": "PASS",
+  "production_tree_changed": false,
+  "supporting_metadata_change": "One next-action whitelist entry in existing docs audit, exercised by docs gate; not product/model schema or cache change",
+  "original_evidence_hash_matches": 385,
+  "portable_raw_log_archives_verified": 3,
+  "protected_files_refs_spot_checks_bundles_hash_equal": true
+}

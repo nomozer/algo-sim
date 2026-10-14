@@ -1,33 +1,19 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — two-line-plane-section, 2026-10-14
+## LOCAL — Group A research integrated on main, 2026-10-14
 
-CANONICAL_NEXT_ACTION = TWO_LINE_PLANE_SECTION_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = SCENE3D_PRESENTATION_SCOPE_DECISION
 
-**LOCAL research two-line-plane-section, 2026-10-14:** user-authorized bounded Group A composition on
-`research/goal-directed-two-line-plane-section`, product `2b42eb40`; main/origin remain `5270f3dd`, push NONE.
-Plane through M strictly parallel to two independent infinite lines; two translates → existing plane/section IR.
-Exact contains/disjoint checks; complete closed premise/auxiliary quotes; no second fact state or semantic authority.
-Candidate `c2ac6dbe…` (110 files), B surface intentionally `145feb18…`, A/declarations unchanged. Cache125/default
-LLM_ONLY unchanged; named-plane display opt-in on the new research route. 111 focused tests PASS; independent review
-nonblocking. Development corpus 12 correct served /33 correct refusals, wrong served0; historical30 remain19/9/0/2.
-T3 clean69ff3a16 PASS backend9274/frontend1053; heldout11/21 wrong0; SwiftShader+Intel D3D11 PASS. Receipts: [`two-line-plane-section`](evaluation/geometry/runs/two-line-plane-section/report.md).
-Hybrid product enablement remains NO-GO; next is user's research integration decision after those gates.
-
-**Scene3D construction audit, 2026-10-14 (same branch):** all 35 learner steps / 28 points of the three served scenes
-verified (math + browser projection); label-overlap renderer fix → product `eea6f3df`, freeze `bfda732c` (tree hash
-unchanged), T3 clean `b8e96a86` PASS. Verdict `READY_FOR_HUMAN_VISUAL_REVIEW`; human visual acceptance comes before the
-integration decision. Receipts: [`scene3d-construction-audit`](evaluation/geometry/runs/scene3d-construction-audit/report.md).
-
-**Pedagogical construction sequencing, 2026-10-14 (same branch):** Hybrid scenes now build the solid before M/H/H1 and
-form prisms/cuboids in steps; math unchanged; product `a5a0797c`, freeze `f227dd72`. Verdict `READY_FOR_HUMAN_VISUAL_REVIEW`.
-Receipts: [`pedagogical-construction-sequencing`](evaluation/geometry/runs/pedagogical-construction-sequencing/report.md).
-
-**Final Group A readiness, 2026-10-14:** independent targeted review after `a5a0797c` is NONBLOCKING (no Critical/Important).
-Clean detached `d3c7381a`: 220 backend + 163 frontend targeted PASS; valid T3 `f227dd72` reused, candidate unchanged.
-`GROUP_A_CONDITIONAL_GO`: technical checks complete; user acceptance of the disclosed visual/scope limits and integration
-authorization remain pending. Main unchanged, merge/push NONE; Hybrid production NO-GO. Receipt:
-[`group-a-integration-readiness`](evaluation/geometry/runs/group-a-integration-readiness/report.md).
+User-authorized fast-forward `5270f3dd` → `5d73f7c2`, first main/origin/ls-remote sync verified. Integration documentation
+publication commit follows (SELF); research branch retained. Product `a5a0797c`, freeze `f227dd72`, candidate
+`266983387152cfe91ddeb841ef85d4ee0da221bbbc94a650131e7575db4e39fa` (110 files), cache125/defaultLLM_ONLY.
+Group A verified strict two-line plane/section composition and solid-first learner sequencing now on main, Hybrid OFF.
+Clean integration265PASS; valid authoritative T3 f227dd72 inherited9329backend/1055frontend/build/demo/crash PASS.
+Independent final review NONBLOCKING. User accepts research integration limits; UX/orbit/source gaps remain OPEN,
+Group B deferred, Gemini extraction/Hybrid product E2E NOT_MEASURED, no general Vietnamese claim. No new task starts.
+Receipt and publication identity: [`group-a-main-integration`](evaluation/geometry/runs/group-a-main-integration/report.md).
+Earlier research/candidate/browser decisions retained in two-line-plane-section, scene3d-construction-audit,
+pedagogical-construction-sequencing and group-a-integration-readiness runs; their bytes unchanged.
 
 `COMPACT_DSL = NO-GO_ARCHIVED` (quyết định của người dùng): Typed Facts structured JSON giữ làm định dạng AI → Hybrid;
 DSL gọn và JSON gọn không thay thế. Lý do: Hybrid chưa có consumer sản phẩm; văn phạm viết tay đã lệch `TypedFact`
