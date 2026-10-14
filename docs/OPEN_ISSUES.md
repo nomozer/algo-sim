@@ -1,5 +1,20 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-PLANNER-RESULT-BINDING-AND-EFFECT-DISCOVERY
+
+- **status:** OPEN — next slice designed/preregistered, product not implemented.
+- **description:** Current TypedFact/functions encode lines as point pairs; an intersection_line output line3 cannot
+  become a projection/distance operand. FunctionSpec has no planning effects; Planner maps kinds/goals with fixed expansions,
+  so a new Registry function is not automatically discovered. Valid supplied dependencies are scheduled by Engine.
+- **evidence:** `docs/evaluation/geometry/runs/goal-directed-planner-generalization-audit/report.md`; proposed-reference
+  probes fail schema, while3 existing IR chains PASS. Those schema probes alone are not Planner-level search measurements.
+- **impact:** Mathematical function composition available below the Planner cannot serve these source-defined derived-line
+  distance requests. Separate grounding wording false refusal remains in this audit; no claim of universal goal support.
+- **scope:** One proposed bounded result-reference/effect-driven point–line distance slice in existing Planner/Registry/Engine;
+  source certificates/transport must remain fail-closed. No new Planner/FactGraph/DSL/Geometry Function or frontend rebuild.
+- **owner_class:** ARCHITECTURE
+- **default_switch_blocker:** YES — no Hybrid product enablement or live extraction acceptance implied by the design.
+
 ### ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY
 
 - **status:** DEFERRED — user-requested presentation scope recorded 2026-10-14; no implementation authorized in this run.

@@ -1,5 +1,14 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+## Planner generalization audit/design — LOCAL, 2026-10-14
+
+User prioritizes Planner architecture before Scene3D Presentation. Main remains2a3c0787; new research branch from that
+baseline. Diagnostic14 inputs committeda3907cc3 before execution;6correct serves/4safe negatives/1grounding false refusal,
+3 separate schema-boundary refusals with IR witnesses PASS. No new production code or general-planning claim. One
+source-bound result-reference/effect-driven distance slice designed with6new positive/12negative development fixtures.
+NEXT_PLANNER_SLICE_DESIGN_READY; implementation requires separate decision. Cache125/LLM_ONLY/Hybrid off/Gemini0,
+no merge/push. Run `docs/evaluation/geometry/runs/goal-directed-planner-generalization-audit/`.
+
 ## Group A main integration — LOCAL, 2026-10-14
 
 User-authorized research integration with visual/orbit/source limits accepted and still OPEN. Main fast-forward

@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = GOAL_DIRECTED_PLANNER_GENERALIZATION_AUDIT
+
+REPORT = docs/evaluation/geometry/runs/goal-directed-planner-generalization-audit/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/goal-directed-planner-generalization-audit/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = NEXT_PLANNER_SLICE_DESIGN_READY_NO_PRODUCT_CHANGE
+CODE_COMMIT = NONE (existing producta5a0797c)
+VERIFICATION_COMMIT = 2a3c0787 (source baseline); a3907cc3 (diagnostic inputs before execution)
+MODEL_REQUEST_COUNT = 0
+
+14 diagnostic probes, not held-out; current-transport6correct serves/4correct refusals/1grounding false refusal;
+3 separate proposed-field schema refusals with lower IR capability witnesses PASS. No general-search claim.
+One next result-binding/effect-resolution slice design,6new positive/12negative development fixtures; not implemented.
+
 ## WAVE_ID = GROUP_A_MAIN_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/group-a-main-integration/report.md

@@ -8,15 +8,15 @@
 
 ## 0. Canonical Next Action
 
-**2026-10-14:** Group A research integration authorized with the disclosed limits. Main fast-forward5270f3dd→5d73f7c2,
-first ordinary push and three SHA equality verified. Integration documentation publication follows (SELF). Hybrid stays off.
-Run [`group-a-main-integration`](evaluation/geometry/runs/group-a-main-integration/report.md); original readiness/review/
-sequencing evidence preserved. Accepted visual/orbit/source limits remain OPEN; B/live extraction/E2E not implemented/measured.
-One proposed next decision: scope of a bounded Scene3D Presentation slice for construction readability from
-`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY`. No implementation is authorized or started; no Group B/Gap Audit/new family.
+**2026-10-14, user's priority decision:** Planner generalization audit precedes Scene3D Presentation implementation.
+Audit complete on a research branch from main2a3c0787: source/14diagnostic probes identify result-binding/effect-discovery
+contract gaps; one bounded distance-to-derived-line slice designed/preregistered, not implemented. Next only user's
+implementation decision for that slice: [`audit/design`](evaluation/geometry/runs/goal-directed-planner-generalization-audit/report.md).
+Group A remains integrated on main; Hybrid stays off. Presentation backlog, orbit/source gaps and Gemini/E2E limits stay OPEN.
+No Group B, new family, new Planner/FactGraph/DSL or product enablement. No additional task starts without that decision.
 
 ```text
-CANONICAL_NEXT_ACTION = SCENE3D_PRESENTATION_SCOPE_DECISION
+CANONICAL_NEXT_ACTION = GOAL_DIRECTED_RESULT_BINDING_SLICE_IMPLEMENTATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

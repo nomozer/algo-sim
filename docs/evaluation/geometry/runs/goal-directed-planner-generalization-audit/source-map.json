@@ -1,0 +1,1206 @@
+{
+  "baseline_commit": "2a3c0787cc35d2e5530d77658225039ab4c5991e",
+  "files": {
+    "backend/app/ai/fact_extraction.py": {
+      "sha256": "4b9900a805d763e7dad35e1adbbc719ae9533baef4f5cfeaabaea17c7bd4da09",
+      "symbols": {
+        "_TuChoiAI": {
+          "line": 45,
+          "end": 48
+        },
+        "facts_response_schema": {
+          "line": 51,
+          "end": 54
+        },
+        "build_request": {
+          "line": 57,
+          "end": 63
+        },
+        "surface_fingerprint": {
+          "line": 66,
+          "end": 69
+        },
+        "parse_response": {
+          "line": 72,
+          "end": 104
+        },
+        "run_ai_fact_route": {
+          "line": 107,
+          "end": 123
+        },
+        "__init__": {
+          "line": 46,
+          "end": 48
+        }
+      }
+    },
+    "backend/app/ai/function_route.py": {
+      "sha256": "42ebd0825eb5b0b22534ac9fd789799ac8ba233707f5d3792a6f8f1fd55e5859",
+      "symbols": {
+        "_gan_nhan_chung_hinh_chieu": {
+          "line": 24,
+          "end": 38
+        },
+        "_ke_diem_dung": {
+          "line": 41,
+          "end": 62
+        },
+        "run_function_route": {
+          "line": 65,
+          "end": 99
+        },
+        "run_fact_route": {
+          "line": 102,
+          "end": 136
+        },
+        "_quan_sat_cau_hinh": {
+          "line": 139,
+          "end": 145
+        },
+        "_hinh_khong_duy_nhat": {
+          "line": 148,
+          "end": 157
+        }
+      }
+    },
+    "backend/app/simulation/geometry_functions/planner.py": {
+      "sha256": "e0450515690fd93920ae459ca446641084e7d16cc2959c0ec1b042ae17431c52",
+      "symbols": {
+        "TypedFact": {
+          "line": 42,
+          "end": 72
+        },
+        "KeHoach": {
+          "line": 76,
+          "end": 87
+        },
+        "_Khoi": {
+          "line": 91,
+          "end": 102
+        },
+        "_nhan": {
+          "line": 105,
+          "end": 108
+        },
+        "_doc_khoi": {
+          "line": 111,
+          "end": 116
+        },
+        "_doc_khoi_tho": {
+          "line": 119,
+          "end": 138
+        },
+        "doc_du_kien": {
+          "line": 149,
+          "end": 175
+        },
+        "lap_ke_hoach": {
+          "line": 178,
+          "end": 255
+        },
+        "_toan_hang": {
+          "line": 258,
+          "end": 259
+        },
+        "_anh_xa": {
+          "line": 262,
+          "end": 332
+        },
+        "_do_dai": {
+          "line": 335,
+          "end": 373
+        },
+        "_cau_hoi": {
+          "line": 380,
+          "end": 423
+        },
+        "_mat_qua_diem": {
+          "line": 426,
+          "end": 486
+        },
+        "_phan_ra": {
+          "line": 489,
+          "end": 509
+        },
+        "phat": {
+          "line": 197,
+          "end": 201
+        },
+        "khoi_cua": {
+          "line": 203,
+          "end": 207
+        },
+        "canh_day": {
+          "line": 345,
+          "end": 351
+        },
+        "canh_ben": {
+          "line": 353,
+          "end": 359
+        }
+      }
+    },
+    "backend/app/simulation/geometry_functions/registry.py": {
+      "sha256": "7ef3d31e9792204061c085efc21727416c988f7c46dfc53761f57b0f877a2733",
+      "symbols": {
+        "TuChoi": {
+          "line": 39,
+          "end": 44
+        },
+        "chuan_hoa": {
+          "line": 48,
+          "end": 50
+        },
+        "_nhan": {
+          "line": 53,
+          "end": 54
+        },
+        "_doc": {
+          "line": 70,
+          "end": 74
+        },
+        "doc_so": {
+          "line": 77,
+          "end": 82
+        },
+        "binh_phuong": {
+          "line": 85,
+          "end": 87
+        },
+        "so_trong": {
+          "line": 90,
+          "end": 92
+        },
+        "_Args": {
+          "line": 96,
+          "end": 97
+        },
+        "RegularPolygonArgs": {
+          "line": 100,
+          "end": 102
+        },
+        "RectangleArgs": {
+          "line": 105,
+          "end": 106
+        },
+        "RightAngleArgs": {
+          "line": 109,
+          "end": 111
+        },
+        "SegmentLengthArgs": {
+          "line": 114,
+          "end": 116
+        },
+        "PerpendicularLinePlaneArgs": {
+          "line": 119,
+          "end": 121
+        },
+        "AltitudeArgs": {
+          "line": 124,
+          "end": 127
+        },
+        "OrthogonalProjectionArgs": {
+          "line": 130,
+          "end": 133
+        },
+        "ProjectionLineArgs": {
+          "line": 136,
+          "end": 139
+        },
+        "IntersectionLinesArgs": {
+          "line": 142,
+          "end": 145
+        },
+        "IntersectionPlaneArgs": {
+          "line": 148,
+          "end": 151
+        },
+        "PerpendicularLinesArgs": {
+          "line": 154,
+          "end": 156
+        },
+        "EqualLengthArgs": {
+          "line": 159,
+          "end": 161
+        },
+        "MidpointArgs": {
+          "line": 164,
+          "end": 166
+        },
+        "CentroidArgs": {
+          "line": 169,
+          "end": 171
+        },
+        "PyramidArgs": {
+          "line": 174,
+          "end": 176
+        },
+        "PrismArgs": {
+          "line": 179,
+          "end": 182
+        },
+        "FacePerpendicularBaseArgs": {
+          "line": 185,
+          "end": 187
+        },
+        "HeightArgs": {
+          "line": 190,
+          "end": 192
+        },
+        "AskVolumeArgs": {
+          "line": 195,
+          "end": 196
+        },
+        "AskLengthArgs": {
+          "line": 199,
+          "end": 200
+        },
+        "AskDistancePointPlaneArgs": {
+          "line": 203,
+          "end": 205
+        },
+        "AskDistanceLinesArgs": {
+          "line": 208,
+          "end": 210
+        },
+        "AskAngleLinePlaneArgs": {
+          "line": 213,
+          "end": 215
+        },
+        "AskAnglePlanePlaneArgs": {
+          "line": 218,
+          "end": 220
+        },
+        "AskAreaArgs": {
+          "line": 223,
+          "end": 224
+        },
+        "SectionArgs": {
+          "line": 227,
+          "end": 229
+        },
+        "IntersectionLineArgs": {
+          "line": 232,
+          "end": 234
+        },
+        "UnsupportedArgs": {
+          "line": 237,
+          "end": 238
+        },
+        "TranslatePointArgs": {
+          "line": 241,
+          "end": 244
+        },
+        "FunctionSpec": {
+          "line": 248,
+          "end": 265
+        },
+        "Source": {
+          "line": 349,
+          "end": 361
+        },
+        "FunctionCall": {
+          "line": 364,
+          "end": 370
+        },
+        "LoiGoi": {
+          "line": 374,
+          "end": 389
+        },
+        "doc_ke_hoach": {
+          "line": 392,
+          "end": 412
+        },
+        "_kiem_phu_thuoc": {
+          "line": 415,
+          "end": 434
+        },
+        "_tu_nhan": {
+          "line": 441,
+          "end": 448
+        },
+        "nhan_cua_de": {
+          "line": 451,
+          "end": 453
+        },
+        "nhan_cua_loi_goi": {
+          "line": 456,
+          "end": 462
+        },
+        "_vi_tri": {
+          "line": 466,
+          "end": 472
+        },
+        "_cau_chua": {
+          "line": 475,
+          "end": 481
+        },
+        "_phu_dinh": {
+          "line": 484,
+          "end": 491
+        },
+        "_co_tu": {
+          "line": 494,
+          "end": 501
+        },
+        "_cung_da_giac": {
+          "line": 509,
+          "end": 511
+        },
+        "_mat_cua_khoi_sau_cum": {
+          "line": 514,
+          "end": 521
+        },
+        "_co_doi_tuong_hinh": {
+          "line": 524,
+          "end": 563
+        },
+        "_co_mat": {
+          "line": 566,
+          "end": 570
+        },
+        "_co_doan": {
+          "line": 573,
+          "end": 576
+        },
+        "_co_diem_rieng": {
+          "line": 579,
+          "end": 581
+        },
+        "_gia_tri_la_phep_bang": {
+          "line": 593,
+          "end": 603
+        },
+        "_so_neo": {
+          "line": 606,
+          "end": 620
+        },
+        "nhan_phu_da_dung": {
+          "line": 641,
+          "end": 652
+        },
+        "_kiem_phu": {
+          "line": 655,
+          "end": 712
+        },
+        "_bien_cau": {
+          "line": 746,
+          "end": 748
+        },
+        "_bien_menh_de": {
+          "line": 751,
+          "end": 756
+        },
+        "_vai_tro_tai": {
+          "line": 759,
+          "end": 780
+        },
+        "_duoc_hoi": {
+          "line": 783,
+          "end": 803
+        },
+        "_cum_hoi": {
+          "line": 806,
+          "end": 812
+        },
+        "_bo_cum": {
+          "line": 815,
+          "end": 824
+        },
+        "_hoi_dung_cum": {
+          "line": 827,
+          "end": 842
+        },
+        "_kiem_cau_hoi": {
+          "line": 845,
+          "end": 862
+        },
+        "_moc_menh_de": {
+          "line": 865,
+          "end": 877
+        },
+        "kiem_nguon": {
+          "line": 880,
+          "end": 1024
+        },
+        "_kiem_du_kien_cau_hoi": {
+          "line": 1027,
+          "end": 1199
+        },
+        "_vai_tro_doi_tuong_khop": {
+          "line": 1216,
+          "end": 1254
+        },
+        "_tam_day": {
+          "line": 1257,
+          "end": 1263
+        },
+        "_kiem_vung_tien_de": {
+          "line": 1273,
+          "end": 1353
+        },
+        "_nguon_do_dai_cuc_bo": {
+          "line": 1356,
+          "end": 1366
+        },
+        "_rang_buoc_cuc_bo_khop": {
+          "line": 1369,
+          "end": 1394
+        },
+        "_mat_cum": {
+          "line": 1427,
+          "end": 1429
+        },
+        "_doan_cum": {
+          "line": 1432,
+          "end": 1433
+        },
+        "_khoi_cum": {
+          "line": 1436,
+          "end": 1440
+        },
+        "_nhan_cum": {
+          "line": 1443,
+          "end": 1444
+        },
+        "_mat_cua": {
+          "line": 1447,
+          "end": 1450
+        },
+        "_cung_mat": {
+          "line": 1453,
+          "end": 1455
+        },
+        "_khoi_khop": {
+          "line": 1458,
+          "end": 1471
+        },
+        "_cum": {
+          "line": 1474,
+          "end": 1475
+        },
+        "_hai_mat": {
+          "line": 1478,
+          "end": 1480
+        },
+        "_khoi_thiet_dien": {
+          "line": 1483,
+          "end": 1485
+        },
+        "_mo_muc_tieu": {
+          "line": 1541,
+          "end": 1543
+        },
+        "_ket_muc_tieu": {
+          "line": 1546,
+          "end": 1553
+        },
+        "_khoi_cua_loi_goi": {
+          "line": 1585,
+          "end": 1593
+        },
+        "_tap_mat": {
+          "line": 1596,
+          "end": 1598
+        },
+        "_het_dinh_nghia": {
+          "line": 1614,
+          "end": 1623
+        },
+        "_khoi_trong_quote": {
+          "line": 1630,
+          "end": 1634
+        },
+        "mat_song_song_dung_nguon": {
+          "line": 1637,
+          "end": 1704
+        },
+        "_kiem_mat_song_song": {
+          "line": 1707,
+          "end": 1747
+        },
+        "_mat_hai_duong_dung_nguon": {
+          "line": 1756,
+          "end": 1801
+        },
+        "mat_cat_dung_nguon": {
+          "line": 1804,
+          "end": 1818
+        },
+        "construction_source_bound": {
+          "line": 1821,
+          "end": 1862
+        },
+        "function_declarations": {
+          "line": 1865,
+          "end": 1881
+        },
+        "__init__": {
+          "line": 42,
+          "end": 44
+        },
+        "_co_quote": {
+          "line": 355,
+          "end": 358
+        },
+        "tat_ca": {
+          "line": 360,
+          "end": 361
+        },
+        "spec": {
+          "line": 384,
+          "end": 385
+        },
+        "quote": {
+          "line": 388,
+          "end": 389
+        },
+        "tham": {
+          "line": 423,
+          "end": 430
+        },
+        "segments": {
+          "line": 1042,
+          "end": 1043
+        },
+        "unit": {
+          "line": 1045,
+          "end": 1048
+        },
+        "cover": {
+          "line": 1050,
+          "end": 1095
+        },
+        "chu_trinh": {
+          "line": 1225,
+          "end": 1226
+        },
+        "ids": {
+          "line": 1374,
+          "end": 1375
+        },
+        "vai_tro_ok": {
+          "line": 1653,
+          "end": 1654
+        },
+        "labels": {
+          "line": 1831,
+          "end": 1832
+        },
+        "la_cua_p": {
+          "line": 1689,
+          "end": 1697
+        }
+      }
+    },
+    "backend/app/simulation/geometry_functions/engine.py": {
+      "sha256": "7812600fae465559d215da66d14233d2ce496b4c9d6f7c9270ab32ea0ca82c2b",
+      "symbols": {
+        "ir_name": {
+          "line": 45,
+          "end": 47
+        },
+        "regular_polygon_chart": {
+          "line": 51,
+          "end": 63
+        },
+        "_sqrt_q": {
+          "line": 66,
+          "end": 70
+        },
+        "KetQuaTuyen": {
+          "line": 74,
+          "end": 106
+        },
+        "hop_dong_to_po_da_khai": {
+          "line": 109,
+          "end": 135
+        },
+        "thu_tu_su_pham": {
+          "line": 138,
+          "end": 158
+        },
+        "_Khoi": {
+          "line": 162,
+          "end": 170
+        },
+        "_key": {
+          "line": 173,
+          "end": 175
+        },
+        "_Dung": {
+          "line": 178,
+          "end": 954
+        },
+        "_labels": {
+          "line": 967,
+          "end": 970
+        },
+        "dinh_dang": {
+          "line": 973,
+          "end": 986
+        },
+        "_kiem_tren_hinh": {
+          "line": 989,
+          "end": 1000
+        },
+        "_don_vi": {
+          "line": 1003,
+          "end": 1010
+        },
+        "_hien_thi_ky_hieu": {
+          "line": 1013,
+          "end": 1019
+        },
+        "dung_tu_loi_goi": {
+          "line": 1022,
+          "end": 1091
+        },
+        "doc": {
+          "line": 145,
+          "end": 152
+        },
+        "__init__": {
+          "line": 179,
+          "end": 195
+        },
+        "of": {
+          "line": 197,
+          "end": 198
+        },
+        "thu_khoi": {
+          "line": 201,
+          "end": 223
+        },
+        "_lop_bang": {
+          "line": 226,
+          "end": 237
+        },
+        "do_dai": {
+          "line": 239,
+          "end": 264
+        },
+        "bo_cuc_day": {
+          "line": 267,
+          "end": 304
+        },
+        "_tam_giac": {
+          "line": 306,
+          "end": 335
+        },
+        "_dat": {
+          "line": 338,
+          "end": 341
+        },
+        "g": {
+          "line": 343,
+          "end": 346
+        },
+        "d2": {
+          "line": 348,
+          "end": 350
+        },
+        "trong_day": {
+          "line": 352,
+          "end": 353
+        },
+        "_chieu_cao": {
+          "line": 355,
+          "end": 370
+        },
+        "_dat_ngoai_day": {
+          "line": 372,
+          "end": 381
+        },
+        "giai_phu_thuoc": {
+          "line": 383,
+          "end": 398
+        },
+        "_mot_buoc": {
+          "line": 400,
+          "end": 489
+        },
+        "_rang_buoc_vuong": {
+          "line": 491,
+          "end": 509
+        },
+        "_hai_duong_cat_nhau": {
+          "line": 511,
+          "end": 531
+        },
+        "_mat_ben_vuong_goc_day": {
+          "line": 533,
+          "end": 560
+        },
+        "_chieu_cao_lang_tru": {
+          "line": 562,
+          "end": 568
+        },
+        "_construction_dependencies": {
+          "line": 571,
+          "end": 583
+        },
+        "_line": {
+          "line": 585,
+          "end": 586
+        },
+        "_plane": {
+          "line": 588,
+          "end": 592
+        },
+        "_construction_objects": {
+          "line": 594,
+          "end": 606
+        },
+        "_construct": {
+          "line": 608,
+          "end": 618
+        },
+        "_construction_relation": {
+          "line": 620,
+          "end": 639
+        },
+        "kiem": {
+          "line": 992,
+          "end": 999
+        },
+        "_vec": {
+          "line": 651,
+          "end": 652
+        },
+        "_kc2_mat": {
+          "line": 654,
+          "end": 660
+        },
+        "_dung_khong": {
+          "line": 662,
+          "end": 725
+        },
+        "bien_dich": {
+          "line": 728,
+          "end": 848
+        },
+        "kiem_mat_cat": {
+          "line": 850,
+          "end": 865
+        },
+        "_kiem_mat_phu": {
+          "line": 867,
+          "end": 906
+        },
+        "_khoa_mat_cat": {
+          "line": 908,
+          "end": 916
+        },
+        "_bien_dich_mat_cat": {
+          "line": 918,
+          "end": 950
+        },
+        "metric": {
+          "line": 952,
+          "end": 954
+        },
+        "phap": {
+          "line": 703,
+          "end": 705
+        },
+        "line": {
+          "line": 742,
+          "end": 746
+        },
+        "plane": {
+          "line": 747,
+          "end": 751
+        }
+      }
+    },
+    "backend/app/simulation/semantic_program/formation.py": {
+      "sha256": "2954355045aac68abe03b75dab059df490a5d0e815436f7e772b4d97a7544df6",
+      "symbols": {
+        "KetQuaHoanThien": {
+          "line": 60,
+          "end": 71
+        },
+        "_sha": {
+          "line": 74,
+          "end": 76
+        },
+        "_id": {
+          "line": 79,
+          "end": 81
+        },
+        "_ky": {
+          "line": 84,
+          "end": 86
+        },
+        "_dinh_nghia": {
+          "line": 89,
+          "end": 105
+        },
+        "_la": {
+          "line": 108,
+          "end": 113
+        },
+        "_da_co": {
+          "line": 116,
+          "end": 121
+        },
+        "_ten_trong": {
+          "line": 124,
+          "end": 125
+        },
+        "_hop_le": {
+          "line": 130,
+          "end": 135
+        },
+        "_chan_ung_vien": {
+          "line": 138,
+          "end": 158
+        },
+        "_tam_day_deu": {
+          "line": 161,
+          "end": 193
+        },
+        "_ti_so": {
+          "line": 196,
+          "end": 200
+        },
+        "phep_trong_tam": {
+          "line": 203,
+          "end": 245
+        },
+        "chan_duong_cao": {
+          "line": 248,
+          "end": 252
+        },
+        "_quan_he_day_lang_tru": {
+          "line": 255,
+          "end": 263
+        },
+        "_khop_hop_dong": {
+          "line": 266,
+          "end": 279
+        },
+        "_chuan_vong": {
+          "line": 282,
+          "end": 293
+        },
+        "lop_khoi": {
+          "line": 296,
+          "end": 334
+        },
+        "ke_hoach": {
+          "line": 337,
+          "end": 350
+        },
+        "yeu_cau": {
+          "line": 353,
+          "end": 357
+        },
+        "_vi_tri": {
+          "line": 362,
+          "end": 364
+        },
+        "_co_vat": {
+          "line": 367,
+          "end": 375
+        },
+        "_doi_duoc": {
+          "line": 378,
+          "end": 388
+        },
+        "_ten_moi": {
+          "line": 391,
+          "end": 397
+        },
+        "_phat": {
+          "line": 400,
+          "end": 429
+        },
+        "_canh_da_dung": {
+          "line": 432,
+          "end": 444
+        },
+        "_doan_duoc_hoi": {
+          "line": 447,
+          "end": 472
+        },
+        "hoan_thien_dung_hinh": {
+          "line": 475,
+          "end": 533
+        },
+        "gan_vai_tro_dung": {
+          "line": 538,
+          "end": 566
+        },
+        "_vai_cua": {
+          "line": 569,
+          "end": 593
+        },
+        "hong": {
+          "line": 69,
+          "end": 71
+        },
+        "bieu_thuc": {
+          "line": 210,
+          "end": 212
+        },
+        "tam_giac": {
+          "line": 218,
+          "end": 220
+        }
+      }
+    },
+    "backend/app/simulation/semantic_program/scene3d.py": {
+      "sha256": "9e2d037f8ef8dedc3ba0025149801fb1da75e7251823b5789705e32be52aca16",
+      "symbols": {
+        "_canonical_edge_id": {
+          "line": 140,
+          "end": 145
+        },
+        "_coordinate_hash": {
+          "line": 148,
+          "end": 154
+        },
+        "_attach_topology": {
+          "line": 157,
+          "end": 307
+        },
+        "_cha": {
+          "line": 310,
+          "end": 344
+        },
+        "_nhom": {
+          "line": 347,
+          "end": 377
+        },
+        "build_scene3d": {
+          "line": 380,
+          "end": 489
+        },
+        "build_scene_events": {
+          "line": 509,
+          "end": 559
+        },
+        "_contains_identifier": {
+          "line": 562,
+          "end": 578
+        },
+        "_learner_text": {
+          "line": 581,
+          "end": 606
+        },
+        "_formula_symbol": {
+          "line": 609,
+          "end": 617
+        },
+        "_attach_formulas": {
+          "line": 620,
+          "end": 682
+        },
+        "_giua_cau": {
+          "line": 688,
+          "end": 693
+        },
+        "_sua_cau": {
+          "line": 696,
+          "end": 707
+        },
+        "_danh_dau_bi_danh": {
+          "line": 710,
+          "end": 726
+        },
+        "_gan_so_do": {
+          "line": 729,
+          "end": 744
+        },
+        "_ten_diem_khoi": {
+          "line": 747,
+          "end": 749
+        },
+        "_nhan_canh_thiet_dien": {
+          "line": 752,
+          "end": 770
+        },
+        "_cau_canh_thiet_dien": {
+          "line": 773,
+          "end": 798
+        },
+        "_cau_thiet_dien": {
+          "line": 801,
+          "end": 809
+        },
+        "_cau_do": {
+          "line": 812,
+          "end": 822
+        },
+        "_ke_lai": {
+          "line": 825,
+          "end": 874
+        },
+        "_build_formation": {
+          "line": 877,
+          "end": 962
+        },
+        "ref": {
+          "line": 632,
+          "end": 634
+        },
+        "diem": {
+          "line": 786,
+          "end": 792
+        }
+      }
+    },
+    "backend/app/simulation/geometry/kernel.py": {
+      "sha256": "f80d22eacb89e136a282f71193c257f323ecbbb362ba096d53080275aa4b93a2",
+      "symbols": {
+        "midpoint": {
+          "line": 37,
+          "end": 38
+        },
+        "translate": {
+          "line": 41,
+          "end": 71
+        },
+        "divide_segment": {
+          "line": 74,
+          "end": 81
+        },
+        "intersect_line_plane": {
+          "line": 84,
+          "end": 106
+        },
+        "intersect_plane_plane": {
+          "line": 109,
+          "end": 130
+        },
+        "intersect_line_line": {
+          "line": 133,
+          "end": 153
+        },
+        "project_point_onto_plane": {
+          "line": 156,
+          "end": 160
+        },
+        "project_point_onto_line": {
+          "line": 163,
+          "end": 166
+        },
+        "plane_through_point_perpendicular_to": {
+          "line": 169,
+          "end": 172
+        },
+        "plane_through_point_parallel_to": {
+          "line": 175,
+          "end": 176
+        },
+        "line_through_point_parallel_to": {
+          "line": 179,
+          "end": 180
+        },
+        "perpendicular_foot_line": {
+          "line": 183,
+          "end": 193
+        },
+        "right_angle_chain_start": {
+          "line": 200,
+          "end": 205
+        },
+        "polygon_from_right_angle_chain": {
+          "line": 208,
+          "end": 220
+        }
+      }
+    },
+    "backend/app/simulation/geometry/measure.py": {
+      "sha256": "7ddb906ab3f344d070e0c7f09c9d85219e8a8b9d9069b8282e7297030436ad6d",
+      "symbols": {
+        "distance_sq": {
+          "line": 46,
+          "end": 47
+        },
+        "distance_sq_point_plane": {
+          "line": 50,
+          "end": 53
+        },
+        "distance_sq_point_line": {
+          "line": 56,
+          "end": 58
+        },
+        "distance_sq_parallel_lines": {
+          "line": 61,
+          "end": 68
+        },
+        "distance_sq_skew_lines": {
+          "line": 71,
+          "end": 83
+        },
+        "distance_sq_lines": {
+          "line": 86,
+          "end": 111
+        },
+        "distance_sq_line_plane": {
+          "line": 114,
+          "end": 126
+        },
+        "distance_sq_planes": {
+          "line": 129,
+          "end": 141
+        },
+        "length": {
+          "line": 144,
+          "end": 150
+        },
+        "cos_sq_between_vectors": {
+          "line": 154,
+          "end": 163
+        },
+        "cos_sq_between_lines": {
+          "line": 166,
+          "end": 167
+        },
+        "cos_between_vectors": {
+          "line": 170,
+          "end": 197
+        },
+        "sin_sq_line_plane": {
+          "line": 200,
+          "end": 206
+        },
+        "cos_sq_line_plane": {
+          "line": 209,
+          "end": 217
+        },
+        "cos_sq_between_planes": {
+          "line": 220,
+          "end": 221
+        },
+        "cos_sq_giua": {
+          "line": 224,
+          "end": 254
+        },
+        "degrees": {
+          "line": 257,
+          "end": 261
+        },
+        "area_polygon": {
+          "line": 265,
+          "end": 313
+        },
+        "area_section": {
+          "line": 316,
+          "end": 327
+        },
+        "volume_tetrahedron": {
+          "line": 331,
+          "end": 339
+        },
+        "volume_pyramid_fan": {
+          "line": 342,
+          "end": 382
+        }
+      }
+    }
+  }
+}

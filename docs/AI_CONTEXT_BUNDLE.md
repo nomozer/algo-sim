@@ -2,7 +2,7 @@
 
 ## LOCAL override — 2026-10-14 (ưu tiên hơn snapshot §2)
 
-**2026-10-14, Group A research integrated on main:** user-authorized ff5270f3dd→5d73f7c2 and ordinary push with main/origin/ls-remote equality; documentation publication SELF follows. Producta5a0797c/freezef227dd72/candidate26698338…110files, cache125/LLM_ONLY/Hybrid off. Clean integrated265PASS; inherited T3f227dd72 backend9329/frontend1055/build/demo/crash PASS; final independent review NONBLOCKING. Research branch retained, protected public/DB/DSL/bundles/real-model471a2c79/spot-check/old scratch preserved. User accepts declared research limits; camera/background/vector/(P)/dimming/orbit/source gaps OPEN, B deferred, Gemini extraction/Hybrid product E2E NOT_MEASURED. Approval, receipts, portable historical log bytes and cleanup in run group-a-main-integration. Next only proposed Scene3D Presentation scope decision; no new implementation.
+**2026-10-14, Group A research integrated on main:** user-authorized ff5270f3dd→5d73f7c2 and ordinary push with main/origin/ls-remote equality; documentation publication SELF follows. Producta5a0797c/freezef227dd72/candidate26698338…110files, cache125/LLM_ONLY/Hybrid off. Clean integrated265PASS; inherited T3f227dd72 backend9329/frontend1055/build/demo/crash PASS; final independent review NONBLOCKING. Research branch retained, protected public/DB/DSL/bundles/real-model471a2c79/spot-check/old scratch preserved. User accepts declared research limits; camera/background/vector/(P)/dimming/orbit/source gaps OPEN, B deferred, Gemini extraction/Hybrid product E2E NOT_MEASURED. Approval, receipts, portable historical log bytes and cleanup in run group-a-main-integration. Next only proposed Scene3D Presentation scope decision; no new implementation. User now prioritizes Planner generalization audit before presentation: branch research/goal-directed-planner-generalization-audit,14preregistered diagnostic probes and3IR capability witnesses; one source-bound result-reference/effect-resolution slice DESIGN_READY, not implemented; run goal-directed-planner-generalization-audit. Main/origin remain2a3c0787, no push/merge/product change.
 
 - Hybrid S0 + thiết diện/giao tuyến + S1/S2 đã fast-forward cục bộ lên `main`: `a6e27a78` → `22edf7ff`. Remote vẫn `a6e27a78` (ls-remote); không push. Ref Hybrid và DSL giữ nguyên (DSL nay `NO-GO_ARCHIVED`).
 - Candidate `d1410731…`, product `624e7fc5`, 110 file verify khớp. T3 clean detached tại `22edf7ff`: FULL_PRODUCT_GATE_PASS (backend 8675, frontend 1053, build/demo/crash PASS). Benchmark 30 ca giữ byte: 19/9/0/2 cả hai tuyến offline. Run `hybrid-main-integration`.
@@ -202,7 +202,7 @@ Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FU
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = SCENE3D_PRESENTATION_SCOPE_DECISION
+CANONICAL_NEXT_ACTION = GOAL_DIRECTED_RESULT_BINDING_SLICE_IMPLEMENTATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

@@ -1,0 +1,2144 @@
+{
+  "schema": "NEXT_SLICE_CORPUS/1",
+  "status": "DESIGN_ONLY_NOT_IMPLEMENTED",
+  "measurement_class": "development acceptance; diagnostic-derived, NOT_HELD_OUT",
+  "positive": [
+    {
+      "id": "derived-line-pyramid",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Tìm giao tuyến của (SAC) và (SBD). Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "expected_squared": "10/11",
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "derived-line-cuboid",
+      "group": 3,
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. AB = 2. AD = 4. AA' = 3. Gọi M là trung điểm AC. Tìm giao tuyến của (ABB') và (BCC'). Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC').",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+            ],
+            "solid": "ABCD.A'B'C'D'",
+            "solid_type": "cuboid"
+          },
+          {
+            "id": "f2",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 2."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "value": "2",
+            "measure": "segment"
+          },
+          {
+            "id": "f3",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AD = 4."
+            ],
+            "points": [
+              "A",
+              "D"
+            ],
+            "value": "4",
+            "measure": "segment"
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 3."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "value": "3",
+            "measure": "segment"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AC."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (ABB') và (BCC')."
+            ],
+            "points_a": [
+              "A",
+              "B",
+              "B'"
+            ],
+            "points_b": [
+              "B",
+              "C",
+              "C'"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC')."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "expected_squared": "5",
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "derived-line-prism",
+      "group": 3,
+      "text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2. AA' = 3. Gọi M là trung điểm AC. Tìm giao tuyến của (ABB') và (BCC'). Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC').",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 3."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "value": "3",
+            "measure": "segment"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AC."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (ABB') và (BCC')."
+            ],
+            "points_a": [
+              "A",
+              "B",
+              "B'"
+            ],
+            "points_b": [
+              "B",
+              "C",
+              "C'"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC')."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "expected_squared": "3",
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "different-direction-decomposition",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm của AC. Tìm giao tuyến của (SAB) và (SCD). Tính khoảng cách từ M đến giao tuyến của (SAB) và (SCD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của AC."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (SAB) và (SCD)."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "B"
+            ],
+            "points_b": [
+              "S",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAB) và (SCD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "expected_squared": "10",
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Schema boundary by source; not measured in diagnostic corpus"
+    },
+    {
+      "id": "zero-distance",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tìm giao tuyến của (SAC) và (SBD). Tính khoảng cách từ S đến giao tuyến của (SAC) và (SBD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ S đến giao tuyến của (SAC) và (SBD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "S"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "expected_squared": "0",
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "shared-line-foot-two-goals",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Tìm giao tuyến của (SAC) và (SBD). Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          },
+          {
+            "id": "q2",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "expected_squared": "10/11",
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS",
+      "assertions": {
+        "intersection_constructs": 1,
+        "projection_constructs": 1,
+        "answer_ids": [
+          "q",
+          "q2"
+        ],
+        "answers_squared": "10/11"
+      }
+    }
+  ],
+  "negative": [
+    {
+      "id": "unknown-reference",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Tìm giao tuyến của (SAC) và (SBD). Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "absent"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "UNKNOWN_DERIVED_REFERENCE",
+      "expected_squared": null,
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "wrong-reference-type",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Tìm giao tuyến của (SAC) và (SBD). Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "fm"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "DERIVED_REFERENCE_TYPE_MISMATCH",
+      "expected_squared": null,
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "producer-source-mismatch",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Tìm giao tuyến của (SAC) và (SBD). Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "B"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "SOURCE_OBJECT_MISMATCH",
+      "expected_squared": null,
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "conditional-producer",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Nếu giao tuyến của (SAC) và (SBD) tồn tại. Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "condition",
+            "quotes": [
+              "Nếu giao tuyến của (SAC) và (SBD) tồn tại."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "CONDITIONAL_CLAUSE",
+      "expected_squared": null,
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "proof-producer",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Chứng minh rằng (SAC) và (SBD) có giao tuyến. Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "prove",
+            "quotes": [
+              "Chứng minh rằng (SAC) và (SBD) có giao tuyến."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "GOAL_CLAUSE_NOT_PREMISE",
+      "expected_squared": null,
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "negated-producer",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Không tồn tại giao tuyến của (SAC) và (SBD). Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Không tồn tại giao tuyến của (SAC) và (SBD)."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ],
+            "negated": true
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "NEGATED_CLAUSE",
+      "expected_squared": null,
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "parallel-planes",
+      "group": 3,
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. AB = 2. AD = 4. AA' = 3. Gọi M là trung điểm AC. Tìm giao tuyến của (ABC) và (A'B'C'). Tính khoảng cách từ M đến giao tuyến của (ABC) và (A'B'C').",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+            ],
+            "solid": "ABCD.A'B'C'D'",
+            "solid_type": "cuboid"
+          },
+          {
+            "id": "f2",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 2."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "value": "2",
+            "measure": "segment"
+          },
+          {
+            "id": "f3",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AD = 4."
+            ],
+            "points": [
+              "A",
+              "D"
+            ],
+            "value": "4",
+            "measure": "segment"
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 3."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "value": "3",
+            "measure": "segment"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AC."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (ABC) và (A'B'C')."
+            ],
+            "points_a": [
+              "A",
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A'",
+              "B'",
+              "C'"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABC) và (A'B'C')."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "PARALLEL_NO_INTERSECTION",
+      "expected_squared": null,
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "coincident-planes",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Tìm giao tuyến của (ABC) và (BCD). Tính khoảng cách từ M đến giao tuyến của (ABC) và (BCD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (ABC) và (BCD)."
+            ],
+            "points_a": [
+              "A",
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABC) và (BCD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "CONTAINED_INFINITE_INTERSECTION",
+      "expected_squared": null,
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "long-quote-nonnumeric",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SB vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Tìm giao tuyến của (SAC) và (SBD). Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD). SB vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "closed source refusal",
+      "expected_squared": null,
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "and-song-unread-premise",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Tìm giao tuyến của (SAC) và (SBD). Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD). AD = 9 song tính lại khoảng cách đó.",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD). AD = 9 song tính lại khoảng cách đó."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "closed source refusal",
+      "expected_squared": null,
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "unverified-goal-value",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Tìm giao tuyến của (SAC) và (SBD). Khoảng cách từ M đến giao tuyến của (SAC) và (SBD) bằng 7 thì AM bằng bao nhiêu?",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Khoảng cách từ M đến giao tuyến của (SAC) và (SBD) bằng 7 thì AM bằng bao nhiêu?"
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "NOT_ASKED_IN_SOURCE",
+      "expected_squared": null,
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    },
+    {
+      "id": "cycle",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là hình chiếu vuông góc của S lên giao tuyến của (MAC) và (SBD). Tìm giao tuyến của (MAC) và (SBD). Tính khoảng cách từ M đến giao tuyến của (MAC) và (SBD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "projection",
+            "role": "premise",
+            "point": "S",
+            "at": "M",
+            "line_ref": "g",
+            "quotes": [
+              "Gọi M là hình chiếu vuông góc của S lên giao tuyến của (MAC) và (SBD)."
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (MAC) và (SBD)."
+            ],
+            "points_a": [
+              "M",
+              "A",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (MAC) và (SBD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "dependency cycle refusal",
+      "expected_squared": null,
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true,
+      "baseline_red": "Measured SCHEMA_INVALID, separate IR witness PASS"
+    }
+  ],
+  "additional_required_controls": [
+    "existing named-line B26, including supplied projection reused",
+    "swap planes/endpoints, rename, reordered facts",
+    "translation/scale with Gram, H/H1 collision",
+    "catalog iteration order invariance, select by effects rather than fn recipe",
+    "candidate/source/effect spoofing refused",
+    "budget exhaustion refuses, never drops givens"
+  ],
+  "existing_regressions": [
+    "two-line45/32",
+    "historical30 unchanged labels",
+    "source_grounding_closure",
+    "structured_geometry_relations",
+    "pedagogical_sequencing"
+  ],
+  "future_gate": "6new positive correct;12negative fail-closed;wrong served0; existing supplied Foot reused; DAG/Scene3D and determinism pass; no per-family/per-case recipes",
+  "no_future_pass_claim": true
+}

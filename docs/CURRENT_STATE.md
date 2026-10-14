@@ -1,8 +1,20 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL — Planner generalization audit/design, 2026-10-14
+
+CANONICAL_NEXT_ACTION = GOAL_DIRECTED_RESULT_BINDING_SLICE_IMPLEMENTATION_DECISION
+
+Research branch `research/goal-directed-planner-generalization-audit` from synchronized main/origin/remote2a3c0787.
+Product/candidate/cache125/LLM_ONLY unchanged; Hybrid off/Gemini0, no merge/push. Current Planner uses fixed goal
+expansions, not generic search. Diagnostic14 registered before run:6correct serves/4safe negatives/1grounding false refusal;
+3 proposed-schema refusals with working lower IR chains. One result-binding/effect-resolution slice designed/preregistered,
+not implemented. NEXT_PLANNER_SLICE_DESIGN_READY; user implementation decision next, before presentation work.
+Receipt: [`planner generalization audit`](evaluation/geometry/runs/goal-directed-planner-generalization-audit/report.md).
+Scene3D backlog/Hybrid blockers stay OPEN. The following integration snapshot remains the product baseline.
+
 ## LOCAL — Group A research integrated on main, 2026-10-14
 
-CANONICAL_NEXT_ACTION = SCENE3D_PRESENTATION_SCOPE_DECISION
+CANONICAL_NEXT_ACTION = GOAL_DIRECTED_RESULT_BINDING_SLICE_IMPLEMENTATION_DECISION
 
 User-authorized fast-forward `5270f3dd` → `5d73f7c2`, first main/origin/ls-remote sync verified. Integration documentation
 publication commit follows (SELF); research branch retained. Product `a5a0797c`, freeze `f227dd72`, candidate

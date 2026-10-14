@@ -1,0 +1,40 @@
+{
+  "schema": "PRESERVATION_CLEANUP/1",
+  "refs_before_after": {
+    "main": "2a3c0787cc35d2e5530d77658225039ab4c5991e",
+    "origin/main": "2a3c0787cc35d2e5530d77658225039ab4c5991e",
+    "research/goal-directed-two-line-plane-section": "5d73f7c2213e9879ccfb93fb23a004ee64cc68a7",
+    "research/compact-geometry-dsl": "3db08a1e3c8a47a7284b7dbdfaac112640106593",
+    "docs/real-model-e2e-readiness": "4cfa547f0989e53b917cc020adf59e250acbf68d",
+    "feat/real-model-pilot-tooling": "471a2c796b44bf9bf8fc14ca02a5a365b440c2a7"
+  },
+  "protected_file_hashes_equal": {
+    "backend/algosim.db": "1fcbdce56c8911af28775e6a89986927e3bc40183d35e5cd80145ea7c5c1ec93",
+    "frontend/public/favicon.svg": "c5172af1ced0ad43d18e8d66d4270870fe60cf02cb175c3d0f0287ef7f52439b"
+  },
+  "existing_evidence_files_hash_equal": 385,
+  "spot_check_scripts_hash_equal": {
+    "frontend/scripts/spot-check-baseline-v2.mjs": "76aed10dec0323fd42f36b094cbd43a99da2b80b7e53a29cc38cbba20d49d9cf",
+    "frontend/scripts/spot-check-baseline.mjs": "07cfbf37e64d133990a8ac49a24e3ce468672c0883801400b18c857466dcfc2c",
+    "frontend/scripts/spot-check-demo.mjs": "04041958c84368b0583297a22c7dbaa05c9c63dc51d01a85ae22f24d4bd61611",
+    "frontend/scripts/spot-check-matrix.mjs": "2ff5c72599f904380dfafef908768716e77ce82078ac97cea0654f8e7bbd0d6b",
+    "frontend/scripts/spot-check-translation.mjs": "57634d582f72d019dd41cde9f1f416ae222dbcbac6dcc94642738152f6addbdd"
+  },
+  "preserved_bundles_hash_equal": {
+    ".superpowers/preserved/compact-geometry-dsl-3db08a1e.bundle": "01e918b87ce1cdbc16ba6940e70273151d523b6b86ce7cff27d3187610943aae",
+    ".superpowers/preserved/compact-geometry-dsl-a9498fdf.bundle": "cb97d1320fe6279844d03b6ede01320e13dd81ab965d2b87484d1474de8309a1",
+    ".superpowers/preserved/real-model-pilot-471a2c79.bundle": "11eb7ba52fc846e20bb086e5fa6676dc50f58cb3c3ccafa6f1831aa117f95812"
+  },
+  "main_DB_public_preserved": true,
+  "registered_worktrees_before_after": [
+    "D:/Documents/projects/algo-sim"
+  ],
+  "worktrees_created": 0,
+  "browser_server_created": 0,
+  "scratch_DB_created": 0,
+  "old_data_removed_bytes": 0,
+  "owned_logical_temp_bytes_removed": 0,
+  "docs_tmp": "only empty task-owned basetemp, removed if created",
+  "ACL_owner_changes": 0,
+  "full_T3_run": false
+}

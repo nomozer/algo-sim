@@ -1,0 +1,308 @@
+{
+  "input_sha256": "ada7dea3dc6b69173d592c966040658a656d283a5447f21f5cb5b72986fdf65c",
+  "measurement_class": "OFFLINE_FIXTURE_DIAGNOSTIC",
+  "held_out": false,
+  "live_calls": 0,
+  "cases": [
+    {
+      "id": "same-structure",
+      "group": 1,
+      "status": "SERVED",
+      "code": null,
+      "first_stop": "served",
+      "matches_preregistered_current_expectation": true,
+      "squared": "81/16",
+      "served_mathematically_correct": true,
+      "calls": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "midpoint",
+        "translate_point",
+        "translate_point",
+        "section",
+        "ask_section_area"
+      ],
+      "witness": null
+    },
+    {
+      "id": "reverse-operands",
+      "group": 1,
+      "status": "SERVED",
+      "code": null,
+      "first_stop": "served",
+      "matches_preregistered_current_expectation": true,
+      "squared": "81/16",
+      "served_mathematically_correct": true,
+      "calls": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "midpoint",
+        "translate_point",
+        "translate_point",
+        "section",
+        "ask_section_area"
+      ],
+      "witness": null
+    },
+    {
+      "id": "wording-control",
+      "group": 1,
+      "status": "REFUSED",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "first_stop": "grounding",
+      "matches_preregistered_current_expectation": false,
+      "squared": null,
+      "served_mathematically_correct": null,
+      "calls": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "midpoint",
+        "translate_point",
+        "translate_point",
+        "section",
+        "ask_section_area"
+      ],
+      "witness": null
+    },
+    {
+      "id": "reordered-source-facts",
+      "group": 2,
+      "status": "SERVED",
+      "code": null,
+      "first_stop": "served",
+      "matches_preregistered_current_expectation": true,
+      "squared": "81/16",
+      "served_mathematically_correct": true,
+      "calls": [
+        "pyramid",
+        "translate_point",
+        "translate_point",
+        "ask_section_area",
+        "section",
+        "midpoint",
+        "segment_length",
+        "perpendicular_line_plane",
+        "regular_polygon"
+      ],
+      "witness": null
+    },
+    {
+      "id": "nested-midpoints",
+      "group": 2,
+      "status": "SERVED",
+      "code": null,
+      "first_stop": "served",
+      "matches_preregistered_current_expectation": true,
+      "squared": "441/256",
+      "served_mathematically_correct": true,
+      "calls": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "midpoint",
+        "midpoint",
+        "translate_point",
+        "translate_point",
+        "section",
+        "ask_section_area"
+      ],
+      "witness": null
+    },
+    {
+      "id": "family-prism",
+      "group": 3,
+      "status": "SERVED",
+      "code": null,
+      "first_stop": "served",
+      "matches_preregistered_current_expectation": true,
+      "squared": "9",
+      "served_mathematically_correct": true,
+      "calls": [
+        "prism",
+        "regular_polygon",
+        "segment_length",
+        "midpoint",
+        "translate_point",
+        "translate_point",
+        "section",
+        "ask_section_area"
+      ],
+      "witness": null
+    },
+    {
+      "id": "family-cuboid",
+      "group": 3,
+      "status": "SERVED",
+      "code": null,
+      "first_stop": "served",
+      "matches_preregistered_current_expectation": true,
+      "squared": "144",
+      "served_mathematically_correct": true,
+      "calls": [
+        "prism",
+        "rectangle",
+        "segment_length",
+        "segment_length",
+        "segment_length",
+        "midpoint",
+        "translate_point",
+        "translate_point",
+        "section",
+        "ask_section_area"
+      ],
+      "witness": null
+    },
+    {
+      "id": "derived-line-pyramid",
+      "group": 2,
+      "status": "REFUSED",
+      "code": "SCHEMA_INVALID",
+      "first_stop": "typed_fact_schema",
+      "matches_preregistered_current_expectation": true,
+      "squared": null,
+      "served_mathematically_correct": null,
+      "calls": [],
+      "witness": {
+        "classification": "IR_ONLY_CAPABILITY_WITNESS_NOT_FULL_SOURCE_GROUNDED_SERVE",
+        "existing_producer": "intersection_line→intersect_plane_plane(gt_g)",
+        "existing_consumers": [
+          "project_onto",
+          "measure_quantity(distance)"
+        ],
+        "distance_squared": "10/11",
+        "oracle": "independent analytic result for source dimensions; Gram context retained",
+        "source_route_control": "SERVED on a separate supported length question"
+      }
+    },
+    {
+      "id": "derived-line-cuboid",
+      "group": 3,
+      "status": "REFUSED",
+      "code": "SCHEMA_INVALID",
+      "first_stop": "typed_fact_schema",
+      "matches_preregistered_current_expectation": true,
+      "squared": null,
+      "served_mathematically_correct": null,
+      "calls": [],
+      "witness": {
+        "classification": "IR_ONLY_CAPABILITY_WITNESS_NOT_FULL_SOURCE_GROUNDED_SERVE",
+        "existing_producer": "intersection_line→intersect_plane_plane(gt_g)",
+        "existing_consumers": [
+          "project_onto",
+          "measure_quantity(distance)"
+        ],
+        "distance_squared": "5",
+        "oracle": "independent analytic result for source dimensions; Gram context retained",
+        "source_route_control": "SERVED on a separate supported length question"
+      }
+    },
+    {
+      "id": "derived-line-prism",
+      "group": 3,
+      "status": "REFUSED",
+      "code": "SCHEMA_INVALID",
+      "first_stop": "typed_fact_schema",
+      "matches_preregistered_current_expectation": true,
+      "squared": null,
+      "served_mathematically_correct": null,
+      "calls": [],
+      "witness": {
+        "classification": "IR_ONLY_CAPABILITY_WITNESS_NOT_FULL_SOURCE_GROUNDED_SERVE",
+        "existing_producer": "intersection_line→intersect_plane_plane(gt_g)",
+        "existing_consumers": [
+          "project_onto",
+          "measure_quantity(distance)"
+        ],
+        "distance_squared": "3",
+        "oracle": "independent analytic result for source dimensions; Gram context retained",
+        "source_route_control": "SERVED on a separate supported length question"
+      }
+    },
+    {
+      "id": "dependent-directions",
+      "group": 4,
+      "status": "REFUSED",
+      "code": "PLANE_NOT_UNIQUE",
+      "first_stop": "engine_or_kernel",
+      "matches_preregistered_current_expectation": true,
+      "squared": null,
+      "served_mathematically_correct": null,
+      "calls": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "midpoint",
+        "translate_point",
+        "translate_point",
+        "section",
+        "ask_section_area"
+      ],
+      "witness": null
+    },
+    {
+      "id": "missing-source-quote",
+      "group": 4,
+      "status": "REFUSED",
+      "code": "QUOTE_NOT_IN_SOURCE",
+      "first_stop": "grounding",
+      "matches_preregistered_current_expectation": true,
+      "squared": null,
+      "served_mathematically_correct": null,
+      "calls": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "midpoint",
+        "translate_point",
+        "translate_point",
+        "section",
+        "ask_section_area"
+      ],
+      "witness": null
+    },
+    {
+      "id": "conditional-anchor",
+      "group": 4,
+      "status": "REFUSED",
+      "code": "CONDITIONAL_CLAUSE",
+      "first_stop": "planner",
+      "matches_preregistered_current_expectation": false,
+      "squared": null,
+      "served_mathematically_correct": null,
+      "calls": [],
+      "witness": null
+    },
+    {
+      "id": "contradictory-height",
+      "group": 4,
+      "status": "REFUSED",
+      "code": "INCONSISTENT_FACTS",
+      "first_stop": "engine_or_kernel",
+      "matches_preregistered_current_expectation": true,
+      "squared": null,
+      "served_mathematically_correct": null,
+      "calls": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "segment_length",
+        "midpoint",
+        "translate_point",
+        "translate_point",
+        "section",
+        "ask_section_area",
+        "segment_length"
+      ],
+      "witness": null
+    }
+  ]
+}

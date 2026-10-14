@@ -1,0 +1,30 @@
+{
+  "schema": "AUDIT_GATES/1",
+  "source_baseline_commit": "2a3c0787cc35d2e5530d77658225039ab4c5991e",
+  "preregistration_commit": "a3907cc3",
+  "probe_input_sha256": "ada7dea3dc6b69173d592c966040658a656d283a5447f21f5cb5b72986fdf65c",
+  "baseline_sha256": "e2f87d5d352d0e480e7c1015ce10b8956c6a571f3c2b87d0e2c06d599536de07",
+  "next_slice_corpus_sha256": "6587fabf084029bf7aa787df291b27bbf83fde95212ca9a8f1bd4c4ce9cbda84",
+  "design_sha256": "14303fa0d80f5a55e5f0fd87f7cc6d15f23fdf80e118668c02007019ed297db7",
+  "source_map_sha256": "9706eb54a0158ccdf2580c3c3009b5c34b4c8f0f92feb089c1e140930ebcfdcf",
+  "docs_identity_passed": 45,
+  "docs_identity_sha256": "f19c64c9b35feda03d770fa68637d1488f6bea624e273aa95569a6c0f5298eae",
+  "docs_audit": "PASS",
+  "docs_audit_sha256": "3a361c7e145ef3e111c4e50e2e6c511b077d8911000f093bf4ee851811fb2c39",
+  "secret_leak_count": 0,
+  "candidate_verify": "MATCH",
+  "candidate": "266983387152cfe91ddeb841ef85d4ee0da221bbbc94a650131e7575db4e39fa",
+  "provider_pins": {
+    "A": "912b22ef7f89851412b8ff026012454d1f9aa225bdd5bd00eb0d8f2dbd53fa3e",
+    "B": "145feb1873eac91fab1336f3f6aded7b792d82a9d3599e446087fe6b33a489b5",
+    "declarations": "f2ec9698a4ee8af86448790f83d9af340eb6afcfce0a8f258ea67e46bf7504b1"
+  },
+  "product_changed": false,
+  "t3_rerun": false,
+  "browser_rerun": false,
+  "Gemini_live_calls": 0,
+  "measurement": "OFFLINE_FIXTURE_DIAGNOSTIC and separate IR-only witnesses, NOT_HELD_OUT",
+  "baseline_current_transport": "6 correct serves/4 correct negatives/1false refusal",
+  "separate_schema_diagnostics": "3 rejected proposed transports,3IR witnesses PASS",
+  "expected_mismatches_retained": 2
+}
