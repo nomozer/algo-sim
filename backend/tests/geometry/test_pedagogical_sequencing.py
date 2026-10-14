@@ -50,6 +50,16 @@ def test_reorder_keeps_points_a_solid_needs_before_it():
     assert [t for t, _ in truoc] == ['A', 'N', 'X'] and [t for t, _ in sau] == ['M']
 
 
+@pytest.mark.parametrize('fn', ['pyramid', 'regular_pyramid'])
+def test_every_pyramid_call_declares_its_source_topology(fn):
+    # found by the ordering-check split (benchmark-B02): `regular_pyramid` also builds a solid (`thu_khoi`)
+    from types import SimpleNamespace as N
+    from app.simulation.geometry_functions.engine import hop_dong_to_po_da_khai
+    topo = hop_dong_to_po_da_khai((N(fn=fn, args=N(apex='S', base=['A', 'B', 'C']),
+                                     quotes=('Cho hình chóp tam giác đều S.ABC',)),))
+    assert topo is not None and topo.solid_topology.apex == 'S'
+
+
 @pytest.mark.parametrize('quote,declared', [("Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều.", True),
                                             ("Cho hình hộp chữ nhật ABCD.A′B′C′D′.", True),
                                             ("Cho lăng trụ đứng có đáy là tam giác đều ABC.", False),
