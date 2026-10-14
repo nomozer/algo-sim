@@ -13,6 +13,7 @@ Finish clean verification, then user's integration decision; do not start anothe
 Run [`two-line-plane-section`](evaluation/geometry/runs/two-line-plane-section/report.md). Hybrid stays off.
 Construction/playback audit done (run [`scene3d-construction-audit`](evaluation/geometry/runs/scene3d-construction-audit/report.md)):
 human visual review of its contact sheets precedes the integration decision.
+Learner construction order fixed in run [`pedagogical-construction-sequencing`](evaluation/geometry/runs/pedagogical-construction-sequencing/report.md); review its contact sheets too.
 
 ```text
 CANONICAL_NEXT_ACTION = TWO_LINE_PLANE_SECTION_INTEGRATION_DECISION

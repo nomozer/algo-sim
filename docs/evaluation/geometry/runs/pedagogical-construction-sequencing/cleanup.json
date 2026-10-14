@@ -1,0 +1,15 @@
+{
+  "schema": "CLEANUP/1",
+  "run": "pedagogical-construction-sequencing",
+  "worktrees": {"before": ["D:/Documents/projects/algo-sim"], "peak": ["D:/Documents/projects/algo-sim", "D:/tmp/algo-seq-verify (detached)"],
+                "after": ["D:/Documents/projects/algo-sim"],
+                "removal": "node_modules junction unlinked non-recursively (target intact); temporary copied files removed; git worktree remove"},
+  "processes": "harness preview server 127.0.0.1:3113 stopped, port free; Playwright browsers closed by the check script",
+  "moved_out_of_evidence": "intermediate verification at c217aade and an output of the wrong benchmark script, both uncommitted, moved to session scratch",
+  "left_in_session_scratch": {"path": "C:/Users/Bunny/AppData/Local/Temp/claude/d--Documents-projects-algo-sim/1610d81e-2ed9-447d-b1eb-18f5daf0f4aa/scratchpad",
+                              "bytes_observed": 32310672,
+                              "reason": "recursive delete in scratch was declined at a permission prompt earlier in this session; not retried"},
+  "not_touched": ["frontend/public/", "backend/algosim.db", "backend/.tmp/pytest-05045731f8a046b9ba317bc970ecca11 (pre-existing)", "frontend/dist (pre-existing, EPERM)",
+                  "DSL archive and bundles", "real-model refs and 471a2c79", "historical A/B, candidates, correction layers"],
+  "acl_owner_force_changes": "NONE"
+}

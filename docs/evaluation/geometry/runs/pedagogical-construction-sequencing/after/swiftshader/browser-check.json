@@ -1,0 +1,5314 @@
+{
+ "harness": "scripts/hybrid-section-visual.html (Scene3D harness, not product UI)",
+ "scenes": "real Hybrid route output, backend/scripts/export_hybrid_section_scenes.py; product frame step veKhongGian applied",
+ "browser": "Playwright chromium, SwiftShader WebGL requested",
+ "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+ "browser_version": "151.0.7922.34",
+ "browser_pid": 1956,
+ "git_head": "38c304ce464a7a5d3294067e2948e6e4370fbe3e",
+ "git_dirty_paths": 3,
+ "browser_stopped": true,
+ "scenes_sha256": "09ca4b4e434d3c11036c0bf2f132459c94a6e73387bae219782e2778140f3d35",
+ "failures": [],
+ "console_errors": [],
+ "net_retries": [
+  {
+   "url": "http://127.0.0.1:3113/scripts/hybrid-section-visual.html?i=1&src=sequencing",
+   "error": "Error: page.goto: net::ERR_NETWORK_ACCESS_DENIED at http://127.0.0.1:3113/scripts/hybrid-section-visual.html?i=1&src=sequencing"
+  }
+ ],
+ "dev_server_noise": 0,
+ "report": [],
+ "playback": [
+  {
+   "id": "two-line-pyramid",
+   "served": true,
+   "learner_steps": 13,
+   "trace_steps": 16,
+   "steps": [
+    {
+     "index": 0,
+     "start": 0,
+     "end": 0,
+     "anchor": 0,
+     "screenshot": "two-line-pyramid/step-01.png",
+     "settled": true,
+     "learner_text": [
+      "Đặt các điểm đề cho vào không gian."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+     ],
+     "highlighted": [],
+     "aux_hidden": [],
+     "hidden_edges": [],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       594.699,
+       292.646
+      ],
+      "B": [
+       506.632,
+       372.197
+      ],
+      "C": [
+       656.381,
+       436.8
+      ],
+      "D": [
+       724.18,
+       334.597
+      ],
+      "S": [
+       590.032,
+       83.2899
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.00046283108883926616,
+      "marker_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "S"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 1,
+     "start": 1,
+     "end": 1,
+     "anchor": 1,
+     "screenshot": "two-line-pyramid/step-02.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng đáy ABCD."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "day_ABCD"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "day_ABCD"
+     ],
+     "highlighted": [
+      "day_ABCD"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       594.699,
+       292.646
+      ],
+      "B": [
+       506.632,
+       372.197
+      ],
+      "C": [
+       656.381,
+       436.8
+      ],
+      "D": [
+       724.18,
+       334.597
+      ],
+      "S": [
+       590.032,
+       83.2899
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.00046283108997613464,
+      "marker_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "S"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 2,
+     "start": 2,
+     "end": 2,
+     "anchor": 2,
+     "screenshot": "two-line-pyramid/step-03.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng các cạnh bên SA, SB, SC, SD."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "highlighted": [
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       594.699,
+       292.646
+      ],
+      "B": [
+       506.632,
+       372.197
+      ],
+      "C": [
+       656.381,
+       436.8
+      ],
+      "D": [
+       724.18,
+       334.597
+      ],
+      "S": [
+       590.032,
+       83.2899
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.00046283109122668986,
+      "marker_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "S"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 3,
+     "start": 3,
+     "end": 3,
+     "anchor": 3,
+     "screenshot": "two-line-pyramid/step-04.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt)."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "highlighted": [
+      "khoi_S_ABCD"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_S_ABCD::edge:A-B",
+      "khoi_S_ABCD::edge:A-D",
+      "khoi_S_ABCD::edge:S-A"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       594.699,
+       292.646
+      ],
+      "B": [
+       506.632,
+       372.197
+      ],
+      "C": [
+       656.381,
+       436.8
+      ],
+      "D": [
+       724.18,
+       334.597
+      ],
+      "S": [
+       590.032,
+       83.2899
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0004628310922498714,
+      "marker_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "S"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 4,
+     "start": 4,
+     "end": 5,
+     "anchor": 5,
+     "screenshot": "two-line-pyramid/step-05.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng M là trung điểm của đoạn AB.",
+      "Lấy vectơ BC."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "derived_H_vec",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "highlighted": [
+      "M"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_S_ABCD::edge:A-B",
+      "khoi_S_ABCD::edge:A-D",
+      "khoi_S_ABCD::edge:S-A"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "M"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       594.699,
+       292.646
+      ],
+      "B": [
+       506.632,
+       372.197
+      ],
+      "C": [
+       656.381,
+       436.8
+      ],
+      "D": [
+       724.18,
+       334.597
+      ],
+      "S": [
+       590.032,
+       83.2899
+      ],
+      "M": [
+       555.107,
+       328.41
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005039339983161695,
+      "marker_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "M",
+       "S"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 5,
+     "start": 6,
+     "end": 7,
+     "anchor": 7,
+     "screenshot": "two-line-pyramid/step-06.png",
+     "settled": true,
+     "learner_text": [
+      "Qua M dựng điểm H sao cho vectơ MH bằng vectơ BC.",
+      "Lấy vectơ AS."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "H",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "highlighted": [
+      "H"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_S_ABCD::edge:A-B",
+      "khoi_S_ABCD::edge:A-D",
+      "khoi_S_ABCD::edge:S-A"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "M",
+      "H"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       594.699,
+       292.646
+      ],
+      "B": [
+       506.632,
+       372.197
+      ],
+      "C": [
+       656.381,
+       436.8
+      ],
+      "D": [
+       724.18,
+       334.597
+      ],
+      "S": [
+       590.032,
+       83.2899
+      ],
+      "M": [
+       555.107,
+       328.41
+      ],
+      "H": [
+       694.151,
+       379.864
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005039339983161695,
+      "marker_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "H",
+       "M",
+       "S"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 6,
+     "start": 8,
+     "end": 8,
+     "anchor": 8,
+     "screenshot": "two-line-pyramid/step-07.png",
+     "settled": true,
+     "learner_text": [
+      "Qua M dựng điểm H1 sao cho vectơ MH1 bằng vectơ AS."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "H",
+      "H1",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "highlighted": [
+      "H1"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_S_ABCD::edge:A-B",
+      "khoi_S_ABCD::edge:A-D",
+      "khoi_S_ABCD::edge:S-A"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       594.699,
+       292.646
+      ],
+      "B": [
+       506.632,
+       372.197
+      ],
+      "C": [
+       656.381,
+       436.8
+      ],
+      "D": [
+       724.18,
+       334.597
+      ],
+      "S": [
+       590.032,
+       83.2899
+      ],
+      "M": [
+       555.107,
+       328.41
+      ],
+      "H": [
+       694.151,
+       379.864
+      ],
+      "H1": [
+       539.845,
+       101.638
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005039339983161695,
+      "marker_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "H",
+       "H1",
+       "M",
+       "S"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 7,
+     "start": 9,
+     "end": 9,
+     "anchor": 9,
+     "screenshot": "two-line-pyramid/step-08.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng (P)."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "highlighted": [
+      "mp_td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_S_ABCD::edge:A-B",
+      "khoi_S_ABCD::edge:A-D",
+      "khoi_S_ABCD::edge:S-A"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       594.699,
+       292.646
+      ],
+      "B": [
+       506.632,
+       372.197
+      ],
+      "C": [
+       656.381,
+       436.8
+      ],
+      "D": [
+       724.18,
+       334.597
+      ],
+      "S": [
+       590.032,
+       83.2899
+      ],
+      "M": [
+       555.107,
+       328.41
+      ],
+      "H": [
+       694.151,
+       379.864
+      ],
+      "H1": [
+       539.845,
+       101.638
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005039339983161695,
+      "marker_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "H",
+       "H1",
+       "M",
+       "S"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 8,
+     "start": 10,
+     "end": 10,
+     "anchor": 10,
+     "screenshot": "two-line-pyramid/step-09.png",
+     "settled": true,
+     "learner_text": [
+      "Trên mặt ABCD, nối giao điểm thuộc cạnh AB với giao điểm thuộc cạnh CD."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#2",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "highlighted": [
+      "td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_S_ABCD::edge:A-B",
+      "khoi_S_ABCD::edge:A-D",
+      "khoi_S_ABCD::edge:S-A"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       594.699,
+       292.646
+      ],
+      "B": [
+       506.632,
+       372.197
+      ],
+      "C": [
+       656.381,
+       436.8
+      ],
+      "D": [
+       724.18,
+       334.597
+      ],
+      "S": [
+       590.032,
+       83.2899
+      ],
+      "M": [
+       555.107,
+       328.41
+      ],
+      "H": [
+       694.151,
+       379.864
+      ],
+      "H1": [
+       539.845,
+       101.638
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005039339983161695,
+      "marker_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "H",
+       "H1",
+       "M",
+       "S"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 9,
+     "start": 11,
+     "end": 11,
+     "anchor": 11,
+     "screenshot": "two-line-pyramid/step-10.png",
+     "settled": true,
+     "learner_text": [
+      "Trên mặt SCD, nối giao điểm thuộc cạnh CD với giao điểm thuộc cạnh SC."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#3",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "highlighted": [
+      "td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_S_ABCD::edge:A-B",
+      "khoi_S_ABCD::edge:A-D",
+      "khoi_S_ABCD::edge:S-A"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       594.699,
+       292.646
+      ],
+      "B": [
+       506.632,
+       372.197
+      ],
+      "C": [
+       656.381,
+       436.8
+      ],
+      "D": [
+       724.18,
+       334.597
+      ],
+      "S": [
+       590.032,
+       83.2899
+      ],
+      "M": [
+       555.107,
+       328.41
+      ],
+      "H": [
+       694.151,
+       379.864
+      ],
+      "H1": [
+       539.845,
+       101.638
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005039339983161695,
+      "marker_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "H",
+       "H1",
+       "M",
+       "S"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 10,
+     "start": 12,
+     "end": 12,
+     "anchor": 12,
+     "screenshot": "two-line-pyramid/step-11.png",
+     "settled": true,
+     "learner_text": [
+      "Trên mặt SBC, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SB."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#4",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "highlighted": [
+      "td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_S_ABCD::edge:A-B",
+      "khoi_S_ABCD::edge:A-D",
+      "khoi_S_ABCD::edge:S-A"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       594.699,
+       292.646
+      ],
+      "B": [
+       506.632,
+       372.197
+      ],
+      "C": [
+       656.381,
+       436.8
+      ],
+      "D": [
+       724.18,
+       334.597
+      ],
+      "S": [
+       590.032,
+       83.2899
+      ],
+      "M": [
+       555.107,
+       328.41
+      ],
+      "H": [
+       694.151,
+       379.864
+      ],
+      "H1": [
+       539.845,
+       101.638
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005039339983161695,
+      "marker_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "H",
+       "H1",
+       "M",
+       "S"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 11,
+     "start": 13,
+     "end": 13,
+     "anchor": 13,
+     "screenshot": "two-line-pyramid/step-12.png",
+     "settled": true,
+     "learner_text": [
+      "Trên mặt SAB, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh AB."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#4c",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "highlighted": [
+      "td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_S_ABCD::edge:A-B",
+      "khoi_S_ABCD::edge:A-D",
+      "khoi_S_ABCD::edge:S-A"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       594.699,
+       292.646
+      ],
+      "B": [
+       506.632,
+       372.197
+      ],
+      "C": [
+       656.381,
+       436.8
+      ],
+      "D": [
+       724.18,
+       334.597
+      ],
+      "S": [
+       590.032,
+       83.2899
+      ],
+      "M": [
+       555.107,
+       328.41
+      ],
+      "H": [
+       694.151,
+       379.864
+      ],
+      "H1": [
+       539.845,
+       101.638
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005039339983161695,
+      "marker_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "H",
+       "H1",
+       "M",
+       "S"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 12,
+     "start": 14,
+     "end": 15,
+     "anchor": 15,
+     "screenshot": "two-line-pyramid/step-13.png",
+     "settled": true,
+     "learner_text": [
+      "Thiết diện khép lại thành tứ giác: (P) cắt hình chóp S.ABCD.",
+      "Diện tích thiết diện bằng 9/4."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "kq_q",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "khoi_S_ABCD",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#4cf",
+      "day_ABCD",
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "highlighted": [],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_S_ABCD::edge:A-B",
+      "khoi_S_ABCD::edge:A-D",
+      "khoi_S_ABCD::edge:S-A"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       594.699,
+       292.646
+      ],
+      "B": [
+       506.632,
+       372.197
+      ],
+      "C": [
+       656.381,
+       436.8
+      ],
+      "D": [
+       724.18,
+       334.597
+      ],
+      "S": [
+       590.032,
+       83.2899
+      ],
+      "M": [
+       555.107,
+       328.41
+      ],
+      "H": [
+       694.151,
+       379.864
+      ],
+      "H1": [
+       539.845,
+       101.638
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005039339983161695,
+      "marker_ids": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "H",
+       "H1",
+       "M",
+       "S"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    }
+   ],
+   "world_points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     2,
+     0
+    ],
+    "D": [
+     0,
+     2,
+     0
+    ],
+    "S": [
+     0,
+     0,
+     3
+    ],
+    "M": [
+     1,
+     0,
+     0
+    ],
+    "H": [
+     1,
+     2,
+     0
+    ],
+    "H1": [
+     1,
+     0,
+     3
+    ]
+   },
+   "label_drift_px": {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "D": 0,
+    "S": 0,
+    "M": 0,
+    "H": 0,
+    "H1": 0
+   },
+   "occlusion": {
+    "stable": true,
+    "hidden_solid_edges": [
+     "khoi_S_ABCD::edge:A-B",
+     "khoi_S_ABCD::edge:A-D",
+     "khoi_S_ABCD::edge:S-A"
+    ]
+   },
+   "revisit": {
+    "step": 7,
+    "changed_pixels": 0
+   },
+   "second_view": {
+    "screenshot": "two-line-pyramid/final-orbit.png",
+    "settled": true,
+    "projection": {
+     "max_chart_error": 0,
+     "max_marker_px": 0,
+     "max_label_px": 0.0005640208527572062,
+     "marker_ids": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "H",
+      "H1",
+      "M",
+      "S"
+     ],
+     "labels_hidden_without_overlap": [],
+     "failures": []
+    },
+    "labels_shown": [
+     "A",
+     "B",
+     "C",
+     "D",
+     "S",
+     "M",
+     "H",
+     "H1"
+    ],
+    "labels_suppressed": []
+   },
+   "selected": [
+    {
+     "id": "H",
+     "screenshot": "two-line-pyramid/selected-H.png",
+     "details": "H · Điểm dựng phụ",
+     "selected_id": "H",
+     "highlighted": [
+      "A",
+      "B",
+      "C",
+      "H",
+      "M",
+      "derived_H_vec"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "M",
+      "H",
+      "H1"
+     ]
+    },
+    {
+     "id": "H1",
+     "screenshot": "two-line-pyramid/selected-H1.png",
+     "details": "H1 · Điểm dựng phụ",
+     "selected_id": "H1",
+     "highlighted": [
+      "A",
+      "B",
+      "H1",
+      "M",
+      "S",
+      "derived_H1_vec"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S",
+      "M",
+      "H",
+      "H1"
+     ]
+    }
+   ],
+   "final_neutral": "two-line-pyramid/step-13.png",
+   "plane_name_on_canvas": false,
+   "console_errors": []
+  },
+  {
+   "id": "two-line-prism",
+   "served": true,
+   "learner_steps": 14,
+   "trace_steps": 17,
+   "steps": [
+    {
+     "index": 0,
+     "start": 0,
+     "end": 0,
+     "anchor": 0,
+     "screenshot": "two-line-prism/step-01.png",
+     "settled": true,
+     "learner_text": [
+      "Đặt các điểm đề cho vào không gian."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime"
+     ],
+     "highlighted": [],
+     "aux_hidden": [],
+     "hidden_edges": [],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 1,
+     "start": 1,
+     "end": 1,
+     "anchor": 1,
+     "screenshot": "two-line-prism/step-02.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng đáy dưới ABC."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "day_ABC"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "day_ABC"
+     ],
+     "highlighted": [
+      "day_ABC"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 2,
+     "start": 2,
+     "end": 2,
+     "anchor": 2,
+     "screenshot": "two-line-prism/step-03.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng đáy trên A′B′C′."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "day_ABC",
+      "day_A_primeB_primeC_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "day_ABC",
+      "day_A_primeB_primeC_prime"
+     ],
+     "highlighted": [
+      "day_A_primeB_primeC_prime"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 3,
+     "start": 3,
+     "end": 3,
+     "anchor": 3,
+     "screenshot": "two-line-prism/step-04.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng các cạnh bên AA′, BB′, CC′."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "highlighted": [
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 4,
+     "start": 4,
+     "end": 4,
+     "anchor": 4,
+     "screenshot": "two-line-prism/step-05.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng lăng trụ đứng ABC.A′B′C′ (6 đỉnh, 5 mặt)."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "highlighted": [
+      "khoi_ABC_A_primeB_primeC_prime"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-C"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 5,
+     "start": 5,
+     "end": 6,
+     "anchor": 6,
+     "screenshot": "two-line-prism/step-06.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng M là trung điểm của đoạn AB.",
+      "Lấy vectơ BC."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "derived_H_vec",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "highlighted": [
+      "M"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-C"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "M"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ],
+      "M": [
+       567.251,
+       369.345
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 6,
+     "start": 7,
+     "end": 8,
+     "anchor": 8,
+     "screenshot": "two-line-prism/step-07.png",
+     "settled": true,
+     "learner_text": [
+      "Qua M dựng điểm H sao cho vectơ MH bằng vectơ BC.",
+      "Lấy vectơ BB′."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "H",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "highlighted": [
+      "H"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-C"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "M",
+      "H"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ],
+      "M": [
+       567.251,
+       369.345
+      ],
+      "H": [
+       743.021,
+       369.345
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "H",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 7,
+     "start": 9,
+     "end": 9,
+     "anchor": 9,
+     "screenshot": "two-line-prism/step-08.png",
+     "settled": true,
+     "learner_text": [
+      "Qua M dựng điểm H1 sao cho vectơ MH1 bằng vectơ BB′."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "H",
+      "H1",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "highlighted": [
+      "H1"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-C"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ],
+      "M": [
+       567.251,
+       369.345
+      ],
+      "H": [
+       743.021,
+       369.345
+      ],
+      "H1": [
+       546.182,
+       126.926
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 8,
+     "start": 10,
+     "end": 10,
+     "anchor": 10,
+     "screenshot": "two-line-prism/step-09.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng (P)."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "highlighted": [
+      "mp_td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-C"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ],
+      "M": [
+       567.251,
+       369.345
+      ],
+      "H": [
+       743.021,
+       369.345
+      ],
+      "H1": [
+       546.182,
+       126.926
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 9,
+     "start": 11,
+     "end": 11,
+     "anchor": 11,
+     "screenshot": "two-line-prism/step-10.png",
+     "settled": true,
+     "learner_text": [
+      "Trên mặt ABC, nối giao điểm thuộc cạnh AB với giao điểm thuộc cạnh AC."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#2",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "highlighted": [
+      "td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-C"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ],
+      "M": [
+       567.251,
+       369.345
+      ],
+      "H": [
+       743.021,
+       369.345
+      ],
+      "H1": [
+       546.182,
+       126.926
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 10,
+     "start": 12,
+     "end": 12,
+     "anchor": 12,
+     "screenshot": "two-line-prism/step-11.png",
+     "settled": true,
+     "learner_text": [
+      "Trên mặt CAA′C′, nối giao điểm thuộc cạnh AC với giao điểm thuộc cạnh A′C′."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#3",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "highlighted": [
+      "td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-C"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ],
+      "M": [
+       567.251,
+       369.345
+      ],
+      "H": [
+       743.021,
+       369.345
+      ],
+      "H1": [
+       546.182,
+       126.926
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 11,
+     "start": 13,
+     "end": 13,
+     "anchor": 13,
+     "screenshot": "two-line-prism/step-12.png",
+     "settled": true,
+     "learner_text": [
+      "Trên mặt A′B′C′, nối giao điểm thuộc cạnh A′C′ với giao điểm thuộc cạnh A′B′."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#4",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "highlighted": [
+      "td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-C"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ],
+      "M": [
+       567.251,
+       369.345
+      ],
+      "H": [
+       743.021,
+       369.345
+      ],
+      "H1": [
+       546.182,
+       126.926
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 12,
+     "start": 14,
+     "end": 14,
+     "anchor": 14,
+     "screenshot": "two-line-prism/step-13.png",
+     "settled": true,
+     "learner_text": [
+      "Trên mặt ABB′A′, nối giao điểm thuộc cạnh A′B′ với giao điểm thuộc cạnh AB."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#4c",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "highlighted": [
+      "td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-C"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ],
+      "M": [
+       567.251,
+       369.345
+      ],
+      "H": [
+       743.021,
+       369.345
+      ],
+      "H1": [
+       546.182,
+       126.926
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 13,
+     "start": 15,
+     "end": 16,
+     "anchor": 16,
+     "screenshot": "two-line-prism/step-14.png",
+     "settled": true,
+     "learner_text": [
+      "Thiết diện khép lại thành tứ giác: (P) cắt lăng trụ đứng ABC.A′B′C′.",
+      "Diện tích thiết diện bằng 3."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "kq_q",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "khoi_ABC_A_primeB_primeC_prime",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#4cf",
+      "day_ABC",
+      "day_A_primeB_primeC_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime"
+     ],
+     "highlighted": [],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+      "khoi_ABC_A_primeB_primeC_prime::edge:A-C"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       611.601,
+       314.702
+      ],
+      "B": [
+       512.543,
+       436.75
+      ],
+      "C": [
+       708.839,
+       436.75
+      ],
+      "A_prime": [
+       610.121,
+       83.2
+      ],
+      "B_prime": [
+       459.635,
+       186.112
+      ],
+      "C_prime": [
+       756.804,
+       186.112
+      ],
+      "M": [
+       567.251,
+       369.345
+      ],
+      "H": [
+       743.021,
+       369.345
+      ],
+      "H1": [
+       546.182,
+       126.926
+      ]
+     },
+     "projection": {
+      "max_chart_error": 2.7828860303120475e-10,
+      "max_marker_px": 6.40834277783838e-8,
+      "max_label_px": 0.0003871398003488235,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    }
+   ],
+   "world_points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     1,
+     1.732050808,
+     0
+    ],
+    "A_prime": [
+     0,
+     0,
+     3
+    ],
+    "B_prime": [
+     2,
+     0,
+     3
+    ],
+    "C_prime": [
+     1,
+     1.732050808,
+     3
+    ],
+    "M": [
+     1,
+     0,
+     0
+    ],
+    "H": [
+     0,
+     1.732050808,
+     0
+    ],
+    "H1": [
+     1,
+     0,
+     3
+    ]
+   },
+   "label_drift_px": {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "A_prime": 0,
+    "B_prime": 0,
+    "C_prime": 0,
+    "M": 0,
+    "H": 0,
+    "H1": 0
+   },
+   "occlusion": {
+    "stable": true,
+    "hidden_solid_edges": [
+     "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+     "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+     "khoi_ABC_A_primeB_primeC_prime::edge:A-C"
+    ]
+   },
+   "revisit": {
+    "step": 8,
+    "changed_pixels": 0
+   },
+   "second_view": {
+    "screenshot": "two-line-prism/final-orbit.png",
+    "settled": true,
+    "projection": {
+     "max_chart_error": 2.7828860303120475e-10,
+     "max_marker_px": 4.883407698633041e-8,
+     "max_label_px": 0.0005373193771064745,
+     "marker_ids": [
+      "A",
+      "A_prime",
+      "B",
+      "B_prime",
+      "C",
+      "C_prime",
+      "H",
+      "H1",
+      "M"
+     ],
+     "labels_hidden_without_overlap": [],
+     "failures": []
+    },
+    "labels_shown": [
+     "A",
+     "B",
+     "C",
+     "A_prime",
+     "B_prime",
+     "C_prime",
+     "M",
+     "H",
+     "H1"
+    ],
+    "labels_suppressed": []
+   },
+   "selected": [
+    {
+     "id": "H",
+     "screenshot": "two-line-prism/selected-H.png",
+     "details": "H · Điểm dựng phụ",
+     "selected_id": "H",
+     "highlighted": [
+      "A",
+      "B",
+      "C",
+      "H",
+      "M",
+      "derived_H_vec"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "M",
+      "H",
+      "H1"
+     ]
+    },
+    {
+     "id": "H1",
+     "screenshot": "two-line-prism/selected-H1.png",
+     "details": "H1 · Điểm dựng phụ",
+     "selected_id": "H1",
+     "highlighted": [
+      "A",
+      "B",
+      "B_prime",
+      "H1",
+      "M",
+      "derived_H1_vec"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "M",
+      "H",
+      "H1"
+     ]
+    }
+   ],
+   "final_neutral": "two-line-prism/step-14.png",
+   "plane_name_on_canvas": false,
+   "console_errors": []
+  },
+  {
+   "id": "two-line-cuboid",
+   "served": true,
+   "learner_steps": 14,
+   "trace_steps": 17,
+   "steps": [
+    {
+     "index": 0,
+     "start": 0,
+     "end": 0,
+     "anchor": 0,
+     "screenshot": "two-line-cuboid/step-01.png",
+     "settled": true,
+     "learner_text": [
+      "Đặt các điểm đề cho vào không gian."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime"
+     ],
+     "highlighted": [],
+     "aux_hidden": [],
+     "hidden_edges": [],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005081823782844987,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 1,
+     "start": 1,
+     "end": 1,
+     "anchor": 1,
+     "screenshot": "two-line-cuboid/step-02.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng đáy dưới ABCD."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "day_ABCD"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "day_ABCD"
+     ],
+     "highlighted": [
+      "day_ABCD"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005081823799602597,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 2,
+     "start": 2,
+     "end": 2,
+     "anchor": 2,
+     "screenshot": "two-line-cuboid/step-03.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng đáy trên A′B′C′D′."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime"
+     ],
+     "highlighted": [
+      "day_A_primeB_primeC_primeD_prime"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005081823811851793,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 3,
+     "start": 3,
+     "end": 3,
+     "anchor": 3,
+     "screenshot": "two-line-cuboid/step-04.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng các cạnh bên AA′, BB′, CC′, DD′."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "highlighted": [
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005081823831413334,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 4,
+     "start": 4,
+     "end": 4,
+     "anchor": 4,
+     "screenshot": "two-line-cuboid/step-05.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng hình hộp chữ nhật ABCD.A′B′C′D′ (8 đỉnh, 6 mặt)."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "highlighted": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005081823855982757,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 5,
+     "start": 5,
+     "end": 6,
+     "anchor": 6,
+     "screenshot": "two-line-cuboid/step-06.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng M là trung điểm của đoạn AB.",
+      "Lấy vectơ BC."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "derived_H_vec",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "highlighted": [
+      "M"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "M"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ],
+      "M": [
+       517.665,
+       273.695
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005395891937858921,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 6,
+     "start": 7,
+     "end": 8,
+     "anchor": 8,
+     "screenshot": "two-line-cuboid/step-07.png",
+     "settled": true,
+     "learner_text": [
+      "Qua M dựng điểm H sao cho vectơ MH bằng vectơ BC.",
+      "Lấy vectơ BB′."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "H",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "highlighted": [
+      "H"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "M",
+      "H"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ],
+      "M": [
+       517.665,
+       273.695
+      ],
+      "H": [
+       720.684,
+       388.704
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005395891952629888,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime",
+       "H",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 7,
+     "start": 9,
+     "end": 9,
+     "anchor": 9,
+     "screenshot": "two-line-cuboid/step-08.png",
+     "settled": true,
+     "learner_text": [
+      "Qua M dựng điểm H1 sao cho vectơ MH1 bằng vectơ BB′."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "H",
+      "H1",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "highlighted": [
+      "H1"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ],
+      "M": [
+       517.665,
+       273.695
+      ],
+      "H": [
+       720.684,
+       388.704
+      ],
+      "H1": [
+       496.042,
+       100.737
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005395891998945854,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 8,
+     "start": 10,
+     "end": 10,
+     "anchor": 10,
+     "screenshot": "two-line-cuboid/step-09.png",
+     "settled": true,
+     "learner_text": [
+      "Dựng (P)."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "highlighted": [
+      "mp_td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ],
+      "M": [
+       517.665,
+       273.695
+      ],
+      "H": [
+       720.684,
+       388.704
+      ],
+      "H1": [
+       496.042,
+       100.737
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005395892036020485,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 9,
+     "start": 11,
+     "end": 11,
+     "anchor": 11,
+     "screenshot": "two-line-cuboid/step-10.png",
+     "settled": true,
+     "learner_text": [
+      "Trên mặt ABCD, nối giao điểm thuộc cạnh AB với giao điểm thuộc cạnh CD."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#2",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "highlighted": [
+      "td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ],
+      "M": [
+       517.665,
+       273.695
+      ],
+      "H": [
+       720.684,
+       388.704
+      ],
+      "H1": [
+       496.042,
+       100.737
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005395892069287499,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 10,
+     "start": 12,
+     "end": 12,
+     "anchor": 12,
+     "screenshot": "two-line-cuboid/step-11.png",
+     "settled": true,
+     "learner_text": [
+      "Trên mặt CDD′C′, nối giao điểm thuộc cạnh CD với giao điểm thuộc cạnh C′D′."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#3",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "highlighted": [
+      "td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ],
+      "M": [
+       517.665,
+       273.695
+      ],
+      "H": [
+       720.684,
+       388.704
+      ],
+      "H1": [
+       496.042,
+       100.737
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.000539589210876336,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 11,
+     "start": 13,
+     "end": 13,
+     "anchor": 13,
+     "screenshot": "two-line-cuboid/step-12.png",
+     "settled": true,
+     "learner_text": [
+      "Trên mặt A′B′C′D′, nối giao điểm thuộc cạnh C′D′ với giao điểm thuộc cạnh A′B′."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#4",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "highlighted": [
+      "td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ],
+      "M": [
+       517.665,
+       273.695
+      ],
+      "H": [
+       720.684,
+       388.704
+      ],
+      "H1": [
+       496.042,
+       100.737
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005395892140623988,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 12,
+     "start": 14,
+     "end": 14,
+     "anchor": 14,
+     "screenshot": "two-line-cuboid/step-13.png",
+     "settled": true,
+     "learner_text": [
+      "Trên mặt ABB′A′, nối giao điểm thuộc cạnh A′B′ với giao điểm thuộc cạnh AB."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#4c",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "highlighted": [
+      "td_q"
+     ],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ],
+      "M": [
+       517.665,
+       273.695
+      ],
+      "H": [
+       720.684,
+       388.704
+      ],
+      "H1": [
+       496.042,
+       100.737
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005395892177108628,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    },
+    {
+     "index": 13,
+     "start": 15,
+     "end": 16,
+     "anchor": 16,
+     "screenshot": "two-line-cuboid/step-14.png",
+     "settled": true,
+     "learner_text": [
+      "Thiết diện khép lại thành tứ giác: (P) cắt hình hộp chữ nhật ABCD.A′B′C′D′.",
+      "Diện tích thiết diện bằng 12."
+     ],
+     "present": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "derived_H_vec",
+      "H",
+      "derived_H1_vec",
+      "H1",
+      "mp_td_q",
+      "td_q",
+      "kq_q",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "rendered": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "M",
+      "H",
+      "H1",
+      "mp_td_q",
+      "td_q#4cf",
+      "day_ABCD",
+      "day_A_primeB_primeC_primeD_prime",
+      "canh_ben_A_A_prime",
+      "canh_ben_B_B_prime",
+      "canh_ben_C_C_prime",
+      "canh_ben_D_D_prime"
+     ],
+     "highlighted": [],
+     "aux_hidden": [],
+     "hidden_edges": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+      "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "M",
+      "H",
+      "H1"
+     ],
+     "labels_suppressed": [],
+     "label_anchors": {
+      "A": [
+       559.088,
+       248.673
+      ],
+      "B": [
+       470.386,
+       302.255
+      ],
+      "C": [
+       677.513,
+       436.8
+      ],
+      "D": [
+       757.106,
+       348.127
+      ],
+      "A_prime": [
+       547.551,
+       83.4964
+      ],
+      "B_prime": [
+       435.504,
+       121
+      ],
+      "C_prime": [
+       698.633,
+       225.809
+      ],
+      "D_prime": [
+       795.738,
+       154.927
+      ],
+      "M": [
+       517.665,
+       273.695
+      ],
+      "H": [
+       720.684,
+       388.704
+      ],
+      "H1": [
+       496.042,
+       100.737
+      ]
+     },
+     "projection": {
+      "max_chart_error": 0,
+      "max_marker_px": 0,
+      "max_label_px": 0.0005395892210828453,
+      "marker_ids": [
+       "A",
+       "A_prime",
+       "B",
+       "B_prime",
+       "C",
+       "C_prime",
+       "D",
+       "D_prime",
+       "H",
+       "H1",
+       "M"
+      ],
+      "labels_hidden_without_overlap": [],
+      "failures": []
+     },
+     "failures": []
+    }
+   ],
+   "world_points": {
+    "A": [
+     0,
+     0,
+     0
+    ],
+    "B": [
+     2,
+     0,
+     0
+    ],
+    "C": [
+     2,
+     4,
+     0
+    ],
+    "D": [
+     0,
+     4,
+     0
+    ],
+    "A_prime": [
+     0,
+     0,
+     3
+    ],
+    "B_prime": [
+     2,
+     0,
+     3
+    ],
+    "C_prime": [
+     2,
+     4,
+     3
+    ],
+    "D_prime": [
+     0,
+     4,
+     3
+    ],
+    "M": [
+     1,
+     0,
+     0
+    ],
+    "H": [
+     1,
+     4,
+     0
+    ],
+    "H1": [
+     1,
+     0,
+     3
+    ]
+   },
+   "label_drift_px": {
+    "A": 0,
+    "B": 0,
+    "C": 0,
+    "D": 0,
+    "A_prime": 0,
+    "B_prime": 0,
+    "C_prime": 0,
+    "D_prime": 0,
+    "M": 0,
+    "H": 0,
+    "H1": 0
+   },
+   "occlusion": {
+    "stable": true,
+    "hidden_solid_edges": [
+     "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+     "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+     "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+    ]
+   },
+   "revisit": {
+    "step": 8,
+    "changed_pixels": 0
+   },
+   "second_view": {
+    "screenshot": "two-line-cuboid/final-orbit.png",
+    "settled": true,
+    "projection": {
+     "max_chart_error": 0,
+     "max_marker_px": 0,
+     "max_label_px": 0.0005764381259550277,
+     "marker_ids": [
+      "A",
+      "A_prime",
+      "B",
+      "B_prime",
+      "C",
+      "C_prime",
+      "D",
+      "D_prime",
+      "H",
+      "H1",
+      "M"
+     ],
+     "labels_hidden_without_overlap": [],
+     "failures": []
+    },
+    "labels_shown": [
+     "A",
+     "C",
+     "D",
+     "A_prime",
+     "B_prime",
+     "C_prime",
+     "D_prime",
+     "M",
+     "H",
+     "H1"
+    ],
+    "labels_suppressed": [
+     "B"
+    ]
+   },
+   "selected": [
+    {
+     "id": "H",
+     "screenshot": "two-line-cuboid/selected-H.png",
+     "details": "H · Điểm dựng phụ",
+     "selected_id": "H",
+     "highlighted": [
+      "A",
+      "B",
+      "C",
+      "H",
+      "M",
+      "derived_H_vec"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "M",
+      "H",
+      "H1"
+     ]
+    },
+    {
+     "id": "H1",
+     "screenshot": "two-line-cuboid/selected-H1.png",
+     "details": "H1 · Điểm dựng phụ",
+     "selected_id": "H1",
+     "highlighted": [
+      "A",
+      "B",
+      "B_prime",
+      "H1",
+      "M",
+      "derived_H1_vec"
+     ],
+     "labels_shown": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "M",
+      "H",
+      "H1"
+     ]
+    }
+   ],
+   "final_neutral": "two-line-cuboid/step-14.png",
+   "plane_name_on_canvas": false,
+   "console_errors": []
+  },
+  {
+   "id": "two-line-refused",
+   "served": false,
+   "screenshot": "two-line-refused/refused.png",
+   "text": "PLANE_NOT_UNIQUE: hai đường có phương phụ thuộc; mặt qua điểm không duy nhất",
+   "canvas_count": 0,
+   "console_errors": []
+  }
+ ]
+}

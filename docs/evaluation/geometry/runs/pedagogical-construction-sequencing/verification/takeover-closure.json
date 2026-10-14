@@ -1,0 +1,87 @@
+{
+  "schema": "LIMITED_TAKEOVER_CLOSURE/1",
+  "run_id": "pedagogical-construction-sequencing",
+  "date": "2026-10-14",
+  "head_before": "f227dd7249d09ee877e024b3fdb1821d7c581b9c",
+  "branch": "research/goal-directed-two-line-plane-section",
+  "main_before": "5270f3ddf63050efca14dab403912d8ed30e1113",
+  "origin_main_before": "5270f3ddf63050efca14dab403912d8ed30e1113",
+  "claude_last_operation": "Report section 6 already present; 138 task paths staged; final documentation commit absent",
+  "product_changes_by_takeover": "NONE",
+  "candidate": {
+    "product_commit": "a5a0797ce600734d52eb92c3e763e52a85365b5e",
+    "tree_sha256": "266983387152cfe91ddeb841ef85d4ee0da221bbbc94a650131e7575db4e39fa",
+    "files": 110,
+    "command": "backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py --verify (cwd backend)",
+    "exit_code": 0,
+    "result": "MATCH"
+  },
+  "short_gates": {
+    "command": "backend/.venv/Scripts/python.exe -m pytest tests/geometry/test_docs_information_architecture.py tests/test_current_state_identity.py -q -p no:cacheprovider (cwd backend)",
+    "exit_code": 0,
+    "passed": 45,
+    "audit_command": "backend/.venv/Scripts/python.exe scripts/audit_docs_information_architecture.py --json (cwd backend)",
+    "audit_exit_code": 0,
+    "audit_status": "PASS",
+    "canonical_docs_secret_leak_count": 0
+  },
+  "reused_t3": {
+    "receipt": "t3-pass.json",
+    "verified_commit": "f227dd72",
+    "log": "t3-authoritative.log",
+    "log_sha256": "e41f2c73efe42c23b715880b0e17b1e99f916347e9de900698179fde68b38b21",
+    "hash_matches_receipt": true,
+    "footer": "FULL_PRODUCT_GATE_PASS",
+    "backend_passed": 9329,
+    "frontend_passed": 1055,
+    "rerun_by_takeover": false
+  },
+  "browser_receipts": {
+    "scope": "Scene3DWorkspace harness; not production API/UI or human acceptance",
+    "measured_source_commit": "38c304ce464a7a5d3294067e2948e6e4370fbe3e",
+    "swiftshader_receipt_sha256": "686a323f119411c0209c3448bba347a0630e6ba997643081b30c0043b7b7afba",
+    "intel_d3d11_receipt_sha256": "3c3d2177a517b52c67e70f7165e049f2feee0cf92971c8da2ce1b6d75843f9cb",
+    "failures_each": 0,
+    "console_errors_each": 0,
+    "input_scenes_sha256": "09ca4b4e434d3c11036c0bf2f132459c94a6e73387bae219782e2778140f3d35",
+    "fresh_export_command": "backend/.venv/Scripts/python.exe scripts/export_hybrid_section_scenes.py --scenes two-line --out .tmp/codex-sequencing-closure (cwd backend, ALLOW_LIVE_AI=0)",
+    "fresh_export_exit_code": 0,
+    "fresh_export_identical_bytes": true,
+    "before_after_contact_sheets_verified": 12,
+    "rerun_browser_by_takeover": false
+  },
+  "independent_review": {
+    "receipt": "../review.md",
+    "reviewed_range": "09b29d48..38c304ce",
+    "reported_verdict": "NONBLOCKING",
+    "final_fix_commit": "a5a0797c",
+    "post_fix_targeted_review_receipt": "NOT_VERIFIED"
+  },
+  "staging_review": {
+    "initial_paths": 138,
+    "allowlist": "Seven explicitly named living docs plus this task run only",
+    "deleted_paths": 0,
+    "diff_check": "PASS",
+    "known_secret_patterns_in_initial_staged_text": 0,
+    "secret_scan_scope": "Key/private-key patterns in staged text, plus canonical docs audit; not an exhaustive security claim"
+  },
+  "cleanup": {
+    "registered_worktrees_before_after": ["D:/Documents/projects/algo-sim"],
+    "physical_superpowers_worktrees": [],
+    "claude_verification_worktree_exists": false,
+    "task_port_3113_listening": false,
+    "node_chrome_task_processes_found": false,
+    "claude_processes_preserved": [4716, 17756],
+    "takeover_temp_path": "backend/.tmp/codex-sequencing-closure",
+    "takeover_temp_file_bytes": 135382,
+    "takeover_temp_file_sha256": "09ca4b4e434d3c11036c0bf2f132459c94a6e73387bae219782e2778140f3d35",
+    "claude_mixed_scratch": "RETAINED: prior permission prompt declined deletion; mixed older research wave content; current total NOT_MEASURED",
+    "acl_owner_changes": "NONE"
+  },
+  "push": "NONE",
+  "merge": "NONE",
+  "live_model_calls": 0,
+  "human_visual_approval": "PENDING",
+  "hybrid_product_enablement": "NO-GO",
+  "next_action": "User visual review and separate Group A integration decision; no new task automatically authorized"
+}

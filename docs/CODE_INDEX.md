@@ -1,5 +1,18 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Pedagogical construction sequencing — Hybrid learner order (LOCAL research)
+
+Run `docs/evaluation/geometry/runs/pedagogical-construction-sequencing/`. Hybrid-only; shared `formation`, `scene3d`, kernel
+and the LLM_ONLY route unchanged.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/engine.py` — `thu_tu_su_pham`, `bien_dich` | Point blocks a solid needs (vertex or transitively read) → solids → remaining auxiliary points; a topological split of the same statements, values unchanged | `backend/tests/geometry/test_pedagogical_sequencing.py` |
+| `engine.py` — `hop_dong_to_po_da_khai` | Declared topology for `pyramid`, `regular_pyramid` (`S.ABC`) and now `prism` (`ABC.A'B'C'`, ′ ≡ ') only from the source quote; feeds the existing formation completion (base / top face / lateral edges) | same |
+| `backend/app/ai/function_route.py` — `_ke_diem_dung` | Step text of a constructed point from producer + operand notation (midpoint, translate; other producers: `display_names` role); event and formation step updated together | same |
+| `backend/tests/geometry/construction_sequencing.py` · `backend/scripts/measure_construction_sequencing.py` | Ordering contract O1–O4 over a scene; per-case status/answers/exact math fingerprint (O5) and object identity (O6) with `--compare` | `inputs/corpus.json` (6 development + 30 ordering check) |
+| `frontend/scripts/hybrid-section-visual*.{tsx,mjs}` — source `sequencing` | Playback of the learner-ordered scenes (`visual/scenes.json` of the run) | `after/{swiftshader,intel-d3d11}/browser-check.json` |
+
 ## Scene3D construction audit — LOCAL, two-line scenes
 
 Run `docs/evaluation/geometry/runs/scene3d-construction-audit/`. No new product module.

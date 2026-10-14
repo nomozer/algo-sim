@@ -1,0 +1,15 @@
+{
+ "commit": "38c304ce",
+ "product_commit": "c217aade",
+ "freeze_commit": "ea02ae64",
+ "worktree": "clean detached D:/tmp/algo-seq-verify",
+ "verdict": "FULL_PRODUCT_GATE_PASS",
+ "pytest": "9327 passed, 1 skipped, 2 deselected, 6 xfailed",
+ "vitest": "1055 passed / 68 files",
+ "build": "PASS",
+ "demo_cases": "PASS",
+ "demo_crash_surface": "PASS",
+ "local_socket_retries": 0,
+ "log": "t3-authoritative.log",
+ "log_sha256": "e96b7746fcfb62e908227340e1f131deccf7de57e0facbf1a3e82123fcd4a2ea"
+}

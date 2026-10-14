@@ -1,10 +1,25 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = PEDAGOGICAL_CONSTRUCTION_SEQUENCING
+
+REPORT = docs/evaluation/geometry/runs/pedagogical-construction-sequencing/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/pedagogical-construction-sequencing/
+CORRECTED_BY = NONE
+CORRECTS = SCENE3D_CONSTRUCTION_AUDIT
+CLASSIFICATION = LOCAL_READY_FOR_HUMAN_VISUAL_REVIEW_NO_PUSH
+CODE_COMMIT = a5a0797c
+VERIFICATION_COMMIT = f227dd72
+MODEL_REQUEST_COUNT = 0
+
+Learner construction order of Hybrid scenes; resolves the auxiliary-before-solid limitation of `scene3d-construction-audit`.
+Preregistered corpus 6 + 30; held-out ordering result is the first evaluation at `b0a853a0` (27/28 served), later runs are not
+held-out. Candidate chain extended; review receipt `review.md`.
+
 ## WAVE_ID = SCENE3D_CONSTRUCTION_AUDIT
 
 REPORT = docs/evaluation/geometry/runs/scene3d-construction-audit/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-construction-audit/
-CORRECTED_BY = NONE
+CORRECTED_BY = PEDAGOGICAL_CONSTRUCTION_SEQUENCING
 CORRECTS = TWO_LINE_PLANE_SECTION
 CLASSIFICATION = LOCAL_READY_FOR_HUMAN_VISUAL_REVIEW_NO_PUSH
 CODE_COMMIT = eea6f3df

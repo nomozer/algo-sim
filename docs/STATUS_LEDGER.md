@@ -1,5 +1,14 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+## Pedagogical construction sequencing — LOCAL, 2026-10-14
+
+Same research branch. Hybrid learner order: solid (base, top face, lateral edges, close) before auxiliary points;
+prism/regular-pyramid topology from source notation; constructed points narrated from producer + operands. Product
+`a5a0797c`, freeze `f227dd72` (tree hash `26698338…`), cache 125. Math identical on 36 preregistered cases; held-out ordering
+27/28 served before a disclosed fix; two-line 45/32 and benchmark 30 invariant. Review NONBLOCKING (height-step regression
+found and fixed). Verdict `READY_FOR_HUMAN_VISUAL_REVIEW`; push NONE. Run
+[`pedagogical-construction-sequencing`](evaluation/geometry/runs/pedagogical-construction-sequencing/report.md).
+
 ## Scene3D construction audit of the two-line scenes — LOCAL, 2026-10-14
 
 Same research branch; every learner step and every point of the three served scenes audited (math oracle + browser

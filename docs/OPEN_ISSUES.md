@@ -2,12 +2,14 @@
 
 ### ISSUE-RESEARCH-HYBRID-AUXILIARY-BEFORE-SOLID
 
-- **status:** OPEN representation limitation (class E: geometry correct, hard to read), run `scene3d-construction-audit`.
+- **status:** RESOLVED on the research branch (run `pedagogical-construction-sequencing`, product `a5a0797c`; not on `main`).
+  Solid-first learner order + prism/regular-pyramid formation steps + grounded narration; math unchanged. Remaining:
+  solids without source-declared topology still form in one step; prism keeps base → top face → lateral (shared contract).
 - **description:** In all three served two-line scenes the Hybrid Planner emits M, the two direction vectors and H, H1
   before the base/edges/solid: the learner step "Dựng M" (midpoint of AB) shows M with no segment AB drawn, and H/H1
   appear before the solid they relate to. Every step is mathematically correct and appears after its dependencies.
 - **impact:** Learner comprehension of the first steps; no wrong value or position.
-- **scope:** call order of `backend/app/simulation/geometry_functions/planner.py` (`_mat_qua_diem`). Changing it changes
+- **scope:** statement order of `geometry_functions/engine.py::bien_dich` (originally attributed to `planner.py::_mat_qua_diem`). Changing it changes
   measured paths ⇒ development 45 / heldout 32 rerun, candidate re-freeze. User decision 2026-10-14: record, do not fix here.
 - **owner_class:** UX
 - **default_switch_blocker:** NO

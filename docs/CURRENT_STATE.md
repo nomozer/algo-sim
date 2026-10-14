@@ -19,6 +19,10 @@ verified (math + browser projection); label-overlap renderer fix → product `ee
 unchanged), T3 clean `b8e96a86` PASS. Verdict `READY_FOR_HUMAN_VISUAL_REVIEW`; human visual acceptance comes before the
 integration decision. Receipts: [`scene3d-construction-audit`](evaluation/geometry/runs/scene3d-construction-audit/report.md).
 
+**Pedagogical construction sequencing, 2026-10-14 (same branch):** Hybrid scenes now build the solid before M/H/H1 and
+form prisms/cuboids in steps; math unchanged; product `a5a0797c`, freeze `f227dd72`. Verdict `READY_FOR_HUMAN_VISUAL_REVIEW`.
+Receipts: [`pedagogical-construction-sequencing`](evaluation/geometry/runs/pedagogical-construction-sequencing/report.md).
+
 `COMPACT_DSL = NO-GO_ARCHIVED` (quyết định của người dùng): Typed Facts structured JSON giữ làm định dạng AI → Hybrid;
 DSL gọn và JSON gọn không thay thế. Lý do: Hybrid chưa có consumer sản phẩm; văn phạm viết tay đã lệch `TypedFact`
 (`plane_relation`) mà 95 test cũ vẫn xanh; tiết kiệm mô hình ≈ $0.00037/request (proxy, chi phí Gemini thật NOT_MEASURED).
