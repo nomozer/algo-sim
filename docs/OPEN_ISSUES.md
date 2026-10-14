@@ -1,5 +1,22 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY
+
+- **status:** DEFERRED — user-requested presentation scope recorded 2026-10-14; no implementation authorized in this run.
+- **description:** Prefer an oblique view from above while preserving free orbit/reset; choose defaults by verified scene
+  families rather than one fixed angle. Optional reference background: sparse, very faint diagonal lines, not a dense
+  square grid or a mathematical entity. The reference image is not in this review's evidence package, so its exact visual
+  specification remains to be confirmed when that work is authorized. Show auxiliary construction vectors/current step
+  clearly; reduce selection dimming; balance auxiliary plane, section edges and hidden lines; make `(P)` readable.
+- **evidence:** User request for final Group A integration readiness; `docs/evaluation/geometry/runs/group-a-integration-readiness/report.md`.
+- **impact:** Learner readability and visual acceptance. No new wrong geometry identified in the reviewed three scenes;
+  a presentation that changes perceived incidence or construction meaning must be treated as a semantic clarity blocker.
+- **scope:** One bounded Scene3D Presentation slice after an explicit scope decision; no Kernel/coordinate changes.
+  Keep step contact sheets. Existing orbit findings remain in `ISSUE-OPS-ORBIT-GATE-UNSETTLED-LOCAL` and
+  `ISSUE-ARCH-ORBIT-P1-SECTION-SCENE-DOES-NOT-SETTLE`; this issue does not duplicate their diagnosis.
+- **owner_class:** UX
+- **default_switch_blocker:** NO — not an authorization to enable Hybrid; its independent production blockers remain.
+
 ### ISSUE-RESEARCH-HYBRID-AUXILIARY-BEFORE-SOLID
 
 - **status:** RESOLVED on the research branch (run `pedagogical-construction-sequencing`, product `a5a0797c`; not on `main`).

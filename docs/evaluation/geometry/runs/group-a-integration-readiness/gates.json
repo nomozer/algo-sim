@@ -1,0 +1,92 @@
+{
+  "schema": "GROUP_A_READINESS_GATES/1",
+  "verified_commit": "d3c7381adbbf46be91382ffa8a38edeae13b2e4b",
+  "worktree_role": "clean detached targeted verification, removed after evidence preservation",
+  "product_commit": "a5a0797ce600734d52eb92c3e763e52a85365b5e",
+  "candidate_sha256": "266983387152cfe91ddeb841ef85d4ee0da221bbbc94a650131e7575db4e39fa",
+  "candidate_files": 110,
+  "candidate_verify": "PASS",
+  "backend": {
+    "file": "backend-targeted.xml",
+    "sha256": "16c16edc2424b3c7ae0c71934a7891f549226e07a4f0b8cb990c296518ec4124",
+    "tests": 220,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "backend_command": "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -m pytest tests/geometry/test_pedagogical_sequencing.py tests/geometry/test_two_line_plane_section.py tests/geometry/test_structured_geometry_relations.py tests/geometry/test_source_grounding_closure.py -q -p no:cacheprovider --basetemp=D:/Documents/projects/algo-sim/.superpowers/group-a-readiness-tmp --junitxml=<run>/backend-targeted.xml (cwd detached backend)",
+  "frontend": {
+    "file": "frontend-targeted.json",
+    "sha256": "75cf066e59b877d8ba291d6f8aa5674ba343fdc3362f781a89e585a1d16a3ef3",
+    "passed": 163,
+    "files": 7,
+    "failed": 0,
+    "exit_code": 0,
+    "unit_test_warning": "Existing React SSR useLayoutEffect warning; no browser rerun"
+  },
+  "frontend_command": "node node_modules/vitest/vitest.mjs run scene3d-presentation.test.ts scene3d-geometry-timeline.test.tsx scene3d-playback.test.tsx scene3d-causal-selection.test.ts scene3d-hidden-lines.test.tsx scene3d-learner-formation.test.ts scene3d-section.test.ts --reporter=default --reporter=json --outputFile=<run>/frontend-targeted.json (full paths under src/simulations/domains/geometry/, cwd detached frontend)",
+  "docs_identity": {
+    "file": "docs-identity.xml",
+    "sha256": "593b465a1ae1ff4a9c9af5835c8f66b9f96d23f40939665e5b9b238dcd750957",
+    "tests": 45,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "docs_identity_command": "backend/.venv/Scripts/python.exe -m pytest tests/geometry/test_docs_information_architecture.py tests/test_current_state_identity.py -q -p no:cacheprovider --basetemp=<task-owned docs tmp> --junitxml=<run>/docs-identity.xml (cwd backend)",
+  "docs_initial_red": {
+    "failed": 1,
+    "passed": 44,
+    "cause": "ISSUE-UX prefix invalid in repository issue grammar",
+    "correction": "Rename new issue to ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY; product untouched"
+  },
+  "docs_audit": {
+    "file": "docs-audit.json",
+    "sha256": "eb9baf3d91cb41b6f537bb1693405a0b611450c17889a4871f3d13e4d7712df5",
+    "status": "PASS",
+    "secret_leaks": 0,
+    "links_valid": true,
+    "correction_chain_valid": true
+  },
+  "provider_surfaces": {
+    "A": "912b22ef7f89851412b8ff026012454d1f9aa225bdd5bd00eb0d8f2dbd53fa3e",
+    "B": "145feb1873eac91fab1336f3f6aded7b792d82a9d3599e446087fe6b33a489b5",
+    "declarations": "f2ec9698a4ee8af86448790f83d9af340eb6afcfce0a8f258ea67e46bf7504b1",
+    "gemini_adapted_declarations": "1b4fb814028a3b853f8693767a8e0673a38d02573838bbafbfeb232177e7c02c"
+  },
+  "provider_pin_match": true,
+  "provider_changed_this_run": false,
+  "declaration_serialization": "Registry function_declarations and Gemini-adapted declarations are separate representations; json.dumps(ensure_ascii=False,sort_keys=True), UTF-8",
+  "reused_t3": {
+    "commit": "f227dd72",
+    "product_commit": "a5a0797c",
+    "worktree": "clean detached D:/tmp/algo-seq-verify",
+    "verdict": "FULL_PRODUCT_GATE_PASS",
+    "pytest": "9329 passed, 1 skipped, 2 deselected, 6 xfailed",
+    "vitest": "1055 passed / 68 files",
+    "build": "PASS",
+    "demo_cases": "PASS",
+    "demo_crash_surface": "PASS",
+    "local_socket_retries": 0,
+    "log": "t3-authoritative.log",
+    "log_sha256": "e41f2c73efe42c23b715880b0e17b1e99f916347e9de900698179fde68b38b21",
+    "earlier_pass": "t3-38c304ce-pass.json (before the review fixes; superseded)"
+  },
+  "reused_t3_log_hash_verified": true,
+  "product_tests_harness_unchanged_since_t3": true,
+  "re_review": {
+    "file": "review.md",
+    "sha256": "4c8d2a9cde0d6ccddfe390c7cce1d87a035f107638ba2fbad0c6898b88aff87e",
+    "reviewer": "/root/final_independent_review",
+    "context": "fresh, read-only",
+    "verdict": "NONBLOCKING",
+    "critical": 0,
+    "important": 0,
+    "human_approval": "PENDING"
+  },
+  "original_evidence_files_hash_verified": 385,
+  "protected_files_refs_spot_checks_bundles_hash_equal": true,
+  "live_calls": 0,
+  "merge": "NONE",
+  "push": "NONE"
+}

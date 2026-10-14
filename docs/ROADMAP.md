@@ -14,6 +14,10 @@ Run [`two-line-plane-section`](evaluation/geometry/runs/two-line-plane-section/r
 Construction/playback audit done (run [`scene3d-construction-audit`](evaluation/geometry/runs/scene3d-construction-audit/report.md)):
 human visual review of its contact sheets precedes the integration decision.
 Learner construction order fixed in run [`pedagogical-construction-sequencing`](evaluation/geometry/runs/pedagogical-construction-sequencing/report.md); review its contact sheets too.
+Final targeted re-review is NONBLOCKING; technical gates complete, user's visual/scope acceptance and integration
+authorization pending (`GROUP_A_CONDITIONAL_GO`, run [`group-a-integration-readiness`](evaluation/geometry/runs/group-a-integration-readiness/report.md)).
+Suggested subsequent architecture scope: bounded Scene3D Presentation for construction readability, recorded in
+`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY`; requires a separate decision, does not start a new task or alter the next-action token.
 
 ```text
 CANONICAL_NEXT_ACTION = TWO_LINE_PLANE_SECTION_INTEGRATION_DECISION

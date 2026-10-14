@@ -1,0 +1,30 @@
+{
+  "registered_before": [
+    "D:/Documents/projects/algo-sim"
+  ],
+  "temporary_worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/group-a-readiness-verify",
+  "worktree_contents": {
+    "files": 13583,
+    "bytes": 1726021882,
+    "exists": true
+  },
+  "temporary_pytest_path": "D:/Documents/projects/algo-sim/.superpowers/group-a-readiness-tmp",
+  "pytest_contents": {
+    "files": 0,
+    "bytes": 0,
+    "exists": false
+  },
+  "excluded_shared_junction_target": "D:/Documents/projects/algo-sim/frontend/node_modules",
+  "old_data_removed_bytes": 0,
+  "acl_owner_changes": "NONE",
+  "task_server_browser_created": false,
+  "registered_after": [
+    "D:/Documents/projects/algo-sim"
+  ],
+  "physical_worktree_directories_after": [],
+  "temporary_worktree_removed": true,
+  "junction_removed_without_following_target": true,
+  "shared_target_preserved": true,
+  "worktree_logical_content_bytes_removed": 1726021882,
+  "protected_file_ref_and_evidence_hashes_equal": true
+}

@@ -23,6 +23,12 @@ integration decision. Receipts: [`scene3d-construction-audit`](evaluation/geomet
 form prisms/cuboids in steps; math unchanged; product `a5a0797c`, freeze `f227dd72`. Verdict `READY_FOR_HUMAN_VISUAL_REVIEW`.
 Receipts: [`pedagogical-construction-sequencing`](evaluation/geometry/runs/pedagogical-construction-sequencing/report.md).
 
+**Final Group A readiness, 2026-10-14:** independent targeted review after `a5a0797c` is NONBLOCKING (no Critical/Important).
+Clean detached `d3c7381a`: 220 backend + 163 frontend targeted PASS; valid T3 `f227dd72` reused, candidate unchanged.
+`GROUP_A_CONDITIONAL_GO`: technical checks complete; user acceptance of the disclosed visual/scope limits and integration
+authorization remain pending. Main unchanged, merge/push NONE; Hybrid production NO-GO. Receipt:
+[`group-a-integration-readiness`](evaluation/geometry/runs/group-a-integration-readiness/report.md).
+
 `COMPACT_DSL = NO-GO_ARCHIVED` (quyết định của người dùng): Typed Facts structured JSON giữ làm định dạng AI → Hybrid;
 DSL gọn và JSON gọn không thay thế. Lý do: Hybrid chưa có consumer sản phẩm; văn phạm viết tay đã lệch `TypedFact`
 (`plane_relation`) mà 95 test cũ vẫn xanh; tiết kiệm mô hình ≈ $0.00037/request (proxy, chi phí Gemini thật NOT_MEASURED).

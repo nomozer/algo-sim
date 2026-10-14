@@ -1,0 +1,2547 @@
+{
+  "baseline_commit": "d3c7381adbbf46be91382ffa8a38edeae13b2e4b",
+  "main": "5270f3ddf63050efca14dab403912d8ed30e1113",
+  "remote_main": "5270f3ddf63050efca14dab403912d8ed30e1113",
+  "ancestry": "main is ancestor; fast-forward preview equals research tree; no merge executed",
+  "summary": {
+    "product": 9,
+    "research_harness": 7,
+    "tests": 10,
+    "documentation": 8,
+    "evaluation_receipts": 385,
+    "candidate_identity": 1
+  },
+  "files": [
+    {
+      "status": "M",
+      "path": "backend/app/ai/fact_extraction.py",
+      "category": "product",
+      "sha256": "4b9900a805d763e7dad35e1adbbc719ae9533baef4f5cfeaabaea17c7bd4da09"
+    },
+    {
+      "status": "M",
+      "path": "backend/app/ai/function_route.py",
+      "category": "product",
+      "sha256": "1787fe0505f66942a3aeba3312184901d6d40355bcb041e3a066f5de5717c8e3"
+    },
+    {
+      "status": "M",
+      "path": "backend/app/simulation/geometry_functions/engine.py",
+      "category": "product",
+      "sha256": "f31acd11eb8dd3353dd4e000565e4c2882adc599453856f9e8caa7dc912bd1ed"
+    },
+    {
+      "status": "M",
+      "path": "backend/app/simulation/geometry_functions/planner.py",
+      "category": "product",
+      "sha256": "e0450515690fd93920ae459ca446641084e7d16cc2959c0ec1b042ae17431c52"
+    },
+    {
+      "status": "M",
+      "path": "backend/app/simulation/geometry_functions/registry.py",
+      "category": "product",
+      "sha256": "7ef3d31e9792204061c085efc21727416c988f7c46dfc53761f57b0f877a2733"
+    },
+    {
+      "status": "M",
+      "path": "backend/app/simulation/semantic_program/display_names.py",
+      "category": "product",
+      "sha256": "1452abdbb2ddd65c1cb13902e0d678104bbb2fa07c238de71b154a6375012c2d"
+    },
+    {
+      "status": "M",
+      "path": "backend/app/simulation/semantic_program/simulation_state.py",
+      "category": "product",
+      "sha256": "3d789108821286f6dd5e37a49b45cfd56e70dead486a8707447bf96f3c453179"
+    },
+    {
+      "status": "M",
+      "path": "backend/scripts/audit_docs_information_architecture.py",
+      "category": "research_harness",
+      "sha256": "ffc32277bf28a1fc3b782806fe048381a30466d1423046b3ea4d93fa900bfb9e"
+    },
+    {
+      "status": "A",
+      "path": "backend/scripts/audit_scene3d_construction.py",
+      "category": "research_harness",
+      "sha256": "cd8767d6bd3d0308d4e06c31af5177a1e590a6bd778f687832d4f82bf2653978"
+    },
+    {
+      "status": "M",
+      "path": "backend/scripts/export_hybrid_section_scenes.py",
+      "category": "research_harness",
+      "sha256": "a8b483c50cb765cd375d092bc5f848f557a17700f218addae14c6d056332b2e8"
+    },
+    {
+      "status": "A",
+      "path": "backend/scripts/measure_construction_sequencing.py",
+      "category": "research_harness",
+      "sha256": "62ebd75f7b2ecfa9ad05167b9b8b1321ddd52b742945527bfcbde0a53927e1c4"
+    },
+    {
+      "status": "A",
+      "path": "backend/scripts/measure_two_line_plane_sections.py",
+      "category": "research_harness",
+      "sha256": "f182dc184af0eb56b91efba98d0ee6e210dd50eef4aaffb9e79b0f4efadd586d"
+    },
+    {
+      "status": "A",
+      "path": "backend/tests/geometry/construction_sequencing.py",
+      "category": "tests",
+      "sha256": "b7e215f8e4db60c8a6247bd5d3cfb50f7f0174c93e9510b5722e4e6c4819dc1d"
+    },
+    {
+      "status": "M",
+      "path": "backend/tests/geometry/hybrid_compiler_benchmark.py",
+      "category": "tests",
+      "sha256": "e572a93181fbd555e0f0ddcf14c8e8a9cc3e0e000c7b33ed488c1fe227d45618"
+    },
+    {
+      "status": "M",
+      "path": "backend/tests/geometry/test_hybrid_compiler_benchmark.py",
+      "category": "tests",
+      "sha256": "9081737b3a3cb54621bdcd919f8e6553e6dac362bd6a202844a527243d2d2e4d"
+    },
+    {
+      "status": "M",
+      "path": "backend/tests/geometry/test_hybrid_goal_decomposition.py",
+      "category": "tests",
+      "sha256": "d540e3169cb8b1a7f1ece841386df0369f472e6baa22bb9d5bc9b0e5c35be82d"
+    },
+    {
+      "status": "A",
+      "path": "backend/tests/geometry/test_pedagogical_sequencing.py",
+      "category": "tests",
+      "sha256": "07182de67266d822ade8e1b9976c8c23dbe286f1feb8f50bf0671abe57f04aaa"
+    },
+    {
+      "status": "A",
+      "path": "backend/tests/geometry/test_scene3d_construction_audit.py",
+      "category": "tests",
+      "sha256": "df69b4a75e44dfda0f3a0c488781162e06a0795da5b0db00fde09ebf6afdee5d"
+    },
+    {
+      "status": "M",
+      "path": "backend/tests/geometry/test_scene3d_learner_surface.py",
+      "category": "tests",
+      "sha256": "92a90e62827af00e4debbb08ddf2a5a02c1620926343f8076b8092f5127cc47f"
+    },
+    {
+      "status": "A",
+      "path": "backend/tests/geometry/test_two_line_plane_section.py",
+      "category": "tests",
+      "sha256": "a5d542face11c0fb912ba582bacb42936cfe7f612bc99903ad3668198659326a"
+    },
+    {
+      "status": "A",
+      "path": "backend/tests/geometry/two_line_plane_oracle.py",
+      "category": "tests",
+      "sha256": "1e9ca90ec1655597bb80da1b926d46003b833d2a4dd9750684aced30324a5fd4"
+    },
+    {
+      "status": "M",
+      "path": "docs/AI_CONTEXT_BUNDLE.md",
+      "category": "documentation",
+      "sha256": "46f42973847bd044a2fbea999c23a2a2ba9dba8255db4138d291e61c34aa0f5a"
+    },
+    {
+      "status": "M",
+      "path": "docs/CODE_INDEX.md",
+      "category": "documentation",
+      "sha256": "511a3207d68a8fee0b04bb8e60f5405f084231d5c6aa994a6b6002c369a371ca"
+    },
+    {
+      "status": "M",
+      "path": "docs/CURRENT_STATE.md",
+      "category": "documentation",
+      "sha256": "6b147ac1ecd3dd7692566eb5b3094a8ddb849d34f80c8fbdcaa385b55057d75d"
+    },
+    {
+      "status": "M",
+      "path": "docs/EVIDENCE_INDEX.md",
+      "category": "documentation",
+      "sha256": "d3b1f9f39f550388305cdc874f4b66fc67f8677b6519270ec6be41a77f9a737f"
+    },
+    {
+      "status": "M",
+      "path": "docs/OPEN_ISSUES.md",
+      "category": "documentation",
+      "sha256": "4661d0755838ed729eb585415063f5698b58ec38bc1551d5b55073dd78955dee"
+    },
+    {
+      "status": "M",
+      "path": "docs/ROADMAP.md",
+      "category": "documentation",
+      "sha256": "281f7c6cc643c3cfc321bee91bdf284eb518ecdcf90a2fe0a9772c15d16df82b"
+    },
+    {
+      "status": "M",
+      "path": "docs/STATUS_LEDGER.md",
+      "category": "documentation",
+      "sha256": "dbc17183825baf32f80f40c9b69cd5de971e91a706c27f63502506f7678f84c7"
+    },
+    {
+      "status": "A",
+      "path": "docs/architecture/TWO_LINE_PLANE_SECTION_CONTRACT.md",
+      "category": "documentation",
+      "sha256": "eab9a69ede9283f7daada9fa2e4f4a695b9ac6aced23334e3346813446def827"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after-final/development.json",
+      "category": "evaluation_receipts",
+      "sha256": "e0da68777fd06eeb29065c500abb7bc24e72ecf5c08f0351f11536b9b1e106f1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after-final/ordering_check.json",
+      "category": "evaluation_receipts",
+      "sha256": "f7caeb28ddfc11106f257b4570781c002751bb384cc0e6f94da73b5056e723f5"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after-regular-pyramid/development.json",
+      "category": "evaluation_receipts",
+      "sha256": "5143435e312f6f76ec6d83520998e9b9281f09769d07a5a8b6653e8aa9fbf37b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after-regular-pyramid/ordering_check.json",
+      "category": "evaluation_receipts",
+      "sha256": "62ed69e1261683eb62791d15b70c014ce0f3c3255bda42a691f71f3b148efa79"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/development.json",
+      "category": "evaluation_receipts",
+      "sha256": "5143435e312f6f76ec6d83520998e9b9281f09769d07a5a8b6653e8aa9fbf37b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/browser-check.json",
+      "category": "evaluation_receipts",
+      "sha256": "3c3d2177a517b52c67e70f7165e049f2feee0cf92971c8da2ce1b6d75843f9cb"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "128b2f28f9d1bc307a532c895f22c149ddda5c69979b4d1c7194e557242369f9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "0bd1fcd1205f2dbc810a01cb6995d71f6b531ec7f2cd6ee9627b12971d108b3c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "06f50d69cdf9882aed16357e78e1cb1244aa17cc09f2857f2fe44d17c85461c0"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "b84228a3fdab3f051b88f7065df628fd44cab1c423a83cb3b5f6874d573bc0b8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "a6650c9902f8879398da0acdc152fbbbe6018ec81965e2b6a5a790dc763e216f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "60b902a833634f66bc86cef114ebfd2ecfc3377110e5699b45e3a41c8f34dab5"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "1accf1e30ca20f514443e29a213d503db9990ae648d6b0864c284eef8b39f448"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "29f9833abe1f77661d00fed652d45b749e7e592ebf0f30ba60a9b8e7d540cb15"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "33100e8f93d2df9d8809186c3cc9fa1875d99f1d9cc003321876141c0d40e5a2"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "0278e983c1c17bd17f1bae5a1c23ef3ad6a6789e11eceea23bf71cb8e098df67"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "c7aeca2579225a9e418d5ae538f3963f91f41d71a3ba68d209538d827bbc9803"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "a434890d552f9f649d46e931968249cf4f344b363cc73dd5e38ad92bf88b8ad9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "d7febabc6260d1a7fc93cb034b1099d7ef2fb03ce145e21644463f5755abe9e1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "4fc436fdcbc47cf859e5572b0b80948c8f40f87af8e34b17e85f41850009fbaa"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "bd019b6159dcc423ffaeacab3f97150adfaa1f4a3f14eb63dc8cb222bbe1c716"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "8cec0bb00f496dc8f4d6e66be752a3a77868ee723ea7f67019968c0321ee4b2f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-12.png",
+      "category": "evaluation_receipts",
+      "sha256": "9e1be6f0c8a676e88565cccc22548902cadd8b84ccf706d21f916cb3015aca66"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-13.png",
+      "category": "evaluation_receipts",
+      "sha256": "e4eb67f93b16b3719dfad2d053a404f539bf196539ca4b341bf1e7e5046b298b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-cuboid/step-14.png",
+      "category": "evaluation_receipts",
+      "sha256": "148aa0724ce7f2e137808326d51116af02d18170441d7a8bbe1528e192509c18"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "8d7a0baece8f8c878fe651a4f1f658ef2d3a5c52c1b81189cfd57fd1a82fb8a1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "b1220a463a4a1ad56fe0dfd03239d64bbd050a4132faf6aeb656b12206d6ea16"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "c827d25c26e5ff25fa95b14fa4436b3dc306df0aea7ef777d1a4ef6079b1cd1f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "d1ecf072b1a8df571a404daeeca08f8d9568f9e3adfda9c7b1ead846a650252f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "81bf6cb8dad8cdd767528fb6be1bd608c13adccbca2dfca5651aba444a68243b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "dcc1be21454168b4a6c17215bf2bd38d0907c55bad1b7809bc7aba1b90f54408"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "ac2faeece3a3aaf754913a4959cb6070f7dd52c1865e2b384eedcd60e2b215cc"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "090d262bf44eb89fea444e0f17a58b2748249285ec12aceaff5e07162a64eacf"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "56c092c5b0aa9232c4ac6b4375ac151e2ee972a1d3755b58016d9731f200fdc1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "79a5482a1ebb64418355254119d5509493a473f327528849bcb52da47ca42fbd"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "93b4a03bcc765e16c27a9f51799cd24c2facc79061db1e3f43eb2dbe02d6f856"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "0c36dad61482336e26b075fd02c7a75397aa0d81410a72807f2732101a2ac45b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "ecadae6446645318065bc3d0bb6eafc48a0ac7bf7209d54a96b3edd08744d626"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "38ee56ff6d5cbbca87a3dab4a1e01ccbcf3c589ca4e727b9896fbd4db18c1ae9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "3214b833feafc7cdc2aa1c0492f751e3d26995178ad3b130900e4566012460f7"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "2d81a797fb81a0bf374501b76d1b786cc69ea4d96d71b49373abbdc1415bf53c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-12.png",
+      "category": "evaluation_receipts",
+      "sha256": "706993db6bcd931309552ddd2a809af4ce9a9c9d534d9853b829ab80b1084255"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-13.png",
+      "category": "evaluation_receipts",
+      "sha256": "c964f1b0f95a797d53001f687c0ce8abd30cae18a8c69362e5af9ff287465225"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-prism/step-14.png",
+      "category": "evaluation_receipts",
+      "sha256": "02bdd0f89948457beec0aef1e6f54617ab3e6489dc66f27b72a41800b7f3ad9b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "44d4152aeeb88411a03083a38e347004e71f00beacf7995f13bf626c53bf06fc"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "c1f6ae3b2c892742b0f0f78c7e8b84e9529268a2e508b32ffc775dff932c3d5f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "b9ab704b8f0b5df32556e51620d5bf2bb26c0daab457a6f7375a0d24d157c973"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "f61d656629419ef48def9e819fe51e850a544ed38f9f1a5283b57e3d0ee29894"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "4485edbfe85f106f9637c0e113d458f245ce52c9c4a4fde9c9fa3f03598314c2"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "38af5ebfc9c4f817e39b2f5bd4583356f591e0d0c25c3aa26482652cb02309d6"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "6bf7b9d6ed8b11d953286de7976c2731192a8f59da85390aa550b01e200d3eeb"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "20769a45d52cc330dfd83da41ad08bd602508489f1a716e413bea559afed7227"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "3df428bba02db603ca11ec42a7dab20c6c4ac52ce6de019f132f190eb9cfecd5"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "4ab944c5236b801379855120dffd061b0780942bc630663318f063c1e89761e9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "64c3709fa3d1ec0efbb9f0a41d249427ca67802b037f57e3aff822e239df8f6f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "c8f25623056dd0f88cb9297df5c65a8d745386e509be16eb9e9a50ba4590d12b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "60d3da7e2c4dbedb9c868ae146209e8ebc38e172c9bd788ec6001fde707477dc"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "015c64ca2de278d7182e80b8fce3a802041c7d0494b1dd167b587291452efd62"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "fecb1d20760f15a811817682d01a55fcaa0de90eee944dbd6387d4fe339774d3"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "21bb7ea99e24e8cdea7dcc07f1e926bdeb6d8ca9836a19eaabd71699782d4626"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/step-12.png",
+      "category": "evaluation_receipts",
+      "sha256": "bfed22c7d3b389833c6f53d43ac41bb938af9c8f1fdea606b31ca336ba222fc1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-pyramid/step-13.png",
+      "category": "evaluation_receipts",
+      "sha256": "26cf2b3305ec85a2956325736d1d87f5015bbc571df90c4f8602ef7131ab1d47"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/intel-d3d11/two-line-refused/refused.png",
+      "category": "evaluation_receipts",
+      "sha256": "2d808d0d8e31ec989b034629055f196c00048017a6e4bed4a74e3faf0db1321f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/ordering_check.json",
+      "category": "evaluation_receipts",
+      "sha256": "89fe543693338eedf9dec04e7afcbf16077206c239e3ef43c3431f02c13b11b6"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/browser-check.json",
+      "category": "evaluation_receipts",
+      "sha256": "686a323f119411c0209c3448bba347a0630e6ba997643081b30c0043b7b7afba"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "128b2f28f9d1bc307a532c895f22c149ddda5c69979b4d1c7194e557242369f9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "99165b0c5f5c2e5f8ed173e19c35b5f83e6345fc08cf2d38e0d1f7c916cdcccb"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "0801d3ddb2bc2ac61e2b274149d5c8af43c033586e730613c4fe7e008cdceb27"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "f311620fe514d0587396f5381d534a0758c70d9a643f9f0533bc72893d892287"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "94e8240da7dc6adbd444264ea977914ac244cfab2889f71b91bd1d3e4041afbe"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "6a234923e1552708b61915791912643f79963311d2167c0387fab8eac3a2748a"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "89108dc91f2d4c35c29abbe62446e3336e7343d73064635adee03406c0043795"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "6933140c9dcea3ed31ade46305610fad70704f20ed438365afac484ddf1917b8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "8cedba3f449676015518b127a9d85145e09585a6ab868a8071dc80f40a2f37ce"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "597b81c80130994947a7768d704fd20f08d9f6893ab4f0584fce79b436f3305e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "5daa452bb8d9eb3dff9c6e9ba8bd3fa17a1da9ce6493c339a31d2df053479cc5"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "99ac7e19460b07b3561d7c1b4ddcb20db9064a71a04f586c4a15bbc06472d24d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "6c5a5a9c5b468006d74434d6c67e5e9e43503b14457d4cd8d25cdb553494a95d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "5e4bdf248db426dc89eb628ae0a39ecb69579ae349c244eebf1a43bce7d87f01"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "681ee9a0b1de4d5c4aaf94afb288de4b3bdd50d2a916b052c8c3f252eeb4473d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "7f4da34e6665a6ab64edfd40bbf275a7b12cb81431d6555247d0885f6acc8771"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-12.png",
+      "category": "evaluation_receipts",
+      "sha256": "b2f73c2e6a0db829d9a3528754a1e7fdbff19f0cfc1779c1f288810de81bba88"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-13.png",
+      "category": "evaluation_receipts",
+      "sha256": "59edc1c7e8ce1e3f3febbd9b9e22446f09d606e10fa436c59eb19c6cf946ee85"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-cuboid/step-14.png",
+      "category": "evaluation_receipts",
+      "sha256": "1812ff88b2f55e8e376d5008789226482e4602ba525aff76e562e981b92f44a8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "8d7a0baece8f8c878fe651a4f1f658ef2d3a5c52c1b81189cfd57fd1a82fb8a1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "8e8a37d3f95be65ac6a0ae0d4b80c231abbb7b38a87a30d7285c7e96f70323e9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "3d3524b4318ae09aa9d284abae03e5edf6b4fbf964077263a52a2d36c8e2f82c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "6db2212995d628f6dfc8a9e7ee3fab7f0de8187bb9c954b776cc65b443c35af8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "df8355154da5735fd336c00c38b6344d27635ad2a71ddba378620077b0fb19b5"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "090314436caae27b89388501808d595c5c57bcd6d75ab8dc7a6f1d0d99663bbe"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "d1ce2de2b7910061e98128cb5c2d0542700e1c0024f7fb4d8de796e50de284d8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "ed6f6d110cac6d1de76f651aeb9d1055ada05c4b8cd095e5328bf8374810f5c5"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "ee76131df4e721fc8d7b875ef5fa356a31537d6f731e18a8de5c646620169d0b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "a72f24b6df35c84aa6bd8557901b0975f980d15c40a45469b55acf980423895b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "6fbe1bd26737c8645ac4043d28ae500c6211a73f916ba46d5132f35fe991dd7d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "7d1bca386985f1ba99e75eea661052f872c9726ac96add14e78d6498e2f05fd0"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "033116390484df44c53af845f8c8711030abcd1ab6f3d99587a9f7c6ba915c8c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "e439a44552b9c784531148f466f9d49e47db58888084cd8a8e5e259527f5e1e0"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "6919f8a24abb2a5a6156ad59eb05fdc3441f6094596e48e356384928e3f70450"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "dde7fd6bf4913062e0dd895724d125fccf80e58a30d9aabdb362187b62595f46"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-12.png",
+      "category": "evaluation_receipts",
+      "sha256": "32c7df7b362537cf3c702933cc98ce7f1cc80082a04c767170bce2386eb1f130"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-13.png",
+      "category": "evaluation_receipts",
+      "sha256": "f7f3a89b1862cdfde64c4eff0fb86e7e0d2407b31a0f74078a92f80af23bba7b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-prism/step-14.png",
+      "category": "evaluation_receipts",
+      "sha256": "11cff089ef3639785661e29892fee8ac7301009303ddebed925f8248e81a69fa"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "44d4152aeeb88411a03083a38e347004e71f00beacf7995f13bf626c53bf06fc"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "2b494277732e16d30b9d0996f5be3cdcaf6e94d9cf1a312fd100595fe7a5e520"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "d679f861443b32b60cc8ca8399e71dbdd56f2d7ca52d62ff87bfb6a655d0b098"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "b376f32cde0c20474a788e9f1eaf1f0369249aa124588024932695b785caf46b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "4a0a44ff14d317ba3730108d1d8c9888961718987588513a603650afb2b2b173"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "0e3104bed2b6573692e280f9054a15e0e7224e42e0fd477250c59fac0e3c5bbe"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "53a1354c991cb73421f0382cbaf0a5874469617458e080ed357bb48cbc1dcf62"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "49416d180e228c9687f594f3a5b02ee2fefedda0d055c4409ddd78b5c21f49f9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "76be0b799b3b751dae9c9ee7746d18c75ff7142dffc8d07b65ebc3b9e9b79243"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "555386520c4d202ac377148eca55435ad4f35064d48b8a73f7b331258c5de154"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "7c3d0ca4127f55b04a8aa2c6d1d8c173449d72a3c2655c2093ba75a668c039a2"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "8bcda0d59caabeed1cb9875bf21254edd70f2c5462fc02522930c5b947f48dd6"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "fba0f45ead5dcb7a97df3f17e7d0675b489ea6bca0ee4f15069a6dc50292954d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "58793da4ebd58cfb9f461118125ce1f5687a9e235e4af1a66bfa44c8b6f8e043"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "8b35d5263eaa270881bbb54c9156b6aef7f753140b4ee376720d5ab2f2332662"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "535f58eab1c7a2dd586b4101f70fb239a2c3390900ca54eec42e88e625f245dd"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/step-12.png",
+      "category": "evaluation_receipts",
+      "sha256": "df3ab2d9454ac0d6f55a738956b91782af07fd6c768070fb3cb2ce618eb8b62e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-pyramid/step-13.png",
+      "category": "evaluation_receipts",
+      "sha256": "0ebe44e03db389de1d6cff54258d030dcc91d550e325bea7c44c584942dd123c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/after/swiftshader/two-line-refused/refused.png",
+      "category": "evaluation_receipts",
+      "sha256": "b9e6958d4f3de3a3072cd0062bd72f94489ff3026014aaa1b78567fff05416bd"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/before/development.json",
+      "category": "evaluation_receipts",
+      "sha256": "8b301c57cea4eae719df74a93cd6c1e738735145994e3f03b7bb4ba14444814f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/before/ordering_check_math_only.json",
+      "category": "evaluation_receipts",
+      "sha256": "ca9e9fd2ace40c6712d00e2e9edb6029fcf9daffaaf3673694b3e6401045ce29"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/before/roles-5bd28d73-development.json",
+      "category": "evaluation_receipts",
+      "sha256": "4feb0d6b77f1c3a37b7537fd3998f78476eed0ddc94b1eb3ae4cc81add7a369f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/before/roles-5bd28d73-ordering_check.json",
+      "category": "evaluation_receipts",
+      "sha256": "db5786ea4e61d12b810bab825d66435b99a6c2523fa0206e6b3c29dd34b6ec9b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/cache/decision.json",
+      "category": "evaluation_receipts",
+      "sha256": "8aa25c65744e6e1de47d730edb3ddf9d45012978f573c66caa9d0f8747af2859"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/cleanup.json",
+      "category": "evaluation_receipts",
+      "sha256": "45534efdf06f2f3ba84ee13d449c3be5f22402b2c6ac4a37b4dedf04c683922c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/handoff.md",
+      "category": "evaluation_receipts",
+      "sha256": "10d13f3ca0d5ac8bc0bdb70773714e978debe884ba0a4e65293745555bbf88fe"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/inputs/candidate_divergence.json",
+      "category": "evaluation_receipts",
+      "sha256": "b0f13a73596a9ea189655dffd07f16fadd649bfe64b0c0293e4f45d3751c6fae"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/inputs/corpus.json",
+      "category": "evaluation_receipts",
+      "sha256": "7b6eb0b9c2795c11a10dce8ac250028561a5d392589b557236b2bef6cd6bb0c9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/plan.md",
+      "category": "evaluation_receipts",
+      "sha256": "7c38d7427bc7cc4dbe6f4e0348c99d3802777db790b6f7a3d42c868bc9156f9b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/report.md",
+      "category": "evaluation_receipts",
+      "sha256": "2c680842de94468c14796cf244f656609f678d2a4a3c1740d41a862f01c609c1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/review.md",
+      "category": "evaluation_receipts",
+      "sha256": "73a04b627124d69defcf0049ceb652e7e14fd50f1fa3257a33d9777cc2c7346f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/run.json",
+      "category": "evaluation_receipts",
+      "sha256": "965bf98bf3896c15af481de5aeea4efabeacd92de775b17196937fff1714d365"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/steps.md",
+      "category": "evaluation_receipts",
+      "sha256": "45d6f7bacf30c73ae205de600c9af8ab10b03e661a2f6778819fc91f4a6e7830"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/benchmark30/metrics.json",
+      "category": "evaluation_receipts",
+      "sha256": "febb5b602fcb194c502e07ea47fe4200ed4083f0b09bac12784b2536940ab12e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/t3-38c304ce-pass.json",
+      "category": "evaluation_receipts",
+      "sha256": "d44483eaaf9bb4b47058091c3dc585947e2f59b7a66381c74700d522ac206548"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/t3-38c304ce.log",
+      "category": "evaluation_receipts",
+      "sha256": "e96b7746fcfb62e908227340e1f131deccf7de57e0facbf1a3e82123fcd4a2ea"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/t3-authoritative.log",
+      "category": "evaluation_receipts",
+      "sha256": "e41f2c73efe42c23b715880b0e17b1e99f916347e9de900698179fde68b38b21"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/t3-pass.json",
+      "category": "evaluation_receipts",
+      "sha256": "017cc8712b96e0485eb0d05a7dd578dc274d3b481382ab057fdae47481ed7b7a"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/takeover-closure.json",
+      "category": "evaluation_receipts",
+      "sha256": "b8218eb05f94fb9c2e1b24c21b07d0911141b16bb161796604d83a0460435055"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/two-line-development/metrics.json",
+      "category": "evaluation_receipts",
+      "sha256": "db7e9d14665e8f8dbadba04b4c33162ba5ac4bdbb5fb1b2da277daef5980cd7d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/verification/two-line-heldout/metrics.json",
+      "category": "evaluation_receipts",
+      "sha256": "7a9b25f8625bb0b107d40c429872858e87d4626c7f3a9b1277984b917ea07be5"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/visual/scenes.json",
+      "category": "evaluation_receipts",
+      "sha256": "09ca4b4e434d3c11036c0bf2f132459c94a6e73387bae219782e2778140f3d35"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/audit-intel-d3d11/construction-audit.json",
+      "category": "evaluation_receipts",
+      "sha256": "273895c8927f4145b1c0da8cfed0b83b096df74a43e9a7b529818ed1f01ffe4e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/audit-swiftshader/construction-audit.json",
+      "category": "evaluation_receipts",
+      "sha256": "777beded98e77589d2c70ebb1cc6110af89e8428a0714bd638885d42f6d55f63"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/browser-check.json",
+      "category": "evaluation_receipts",
+      "sha256": "7c657ea2e317b79856e28c214289b6f5dc0a36428743589eeb4a2ddf5a704510"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "48ce8ee9a3c1fb091b294f0f961db9c9cb1415aef8401f26185be92a151ff54e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "42c53dc7be518b9d2284434adbedc71151b55acff857a8e3880a4fb1b7ffff37"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "333466711a1ccc10f21acb74be8fb2f3913b3e3ce030aa01964caa3880ccfc95"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "1ac77a97e938f0a29e4414749752d0fb44836ceddabfab8a79208b9bea7b8501"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "791c90c2ac62ca6d06b51a70c4185e306563a4f173bdd5188766c044e1d07708"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "60b902a833634f66bc86cef114ebfd2ecfc3377110e5699b45e3a41c8f34dab5"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "993077b2cc60cf1692ee0ed27f57b1827c9210fb101dee40aa44b578ff220870"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "c25e10f6e12b8cedb91c1ed6441704068c1e1d7464fad338afa902fa11174d43"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "c93f264a467023f6b747a50625ce56caad681dd6d1d9b300e8fcb91fd62ec66a"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "53a8bf7deb761dfe11c85797c26be8745b42330d37e5d0c61bbb2d18af70d2c1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "71d59fcf50754bca7d67f30d1297c6ccbaf6f5c5cfe499b62645af77f02defbe"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "f30ab9489e172c97eb792ddca8de2519281a561accb437de27875d4019a918cd"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "5e84cddabbdac9476ebac107927777f7516509ee3698079c264e9872604a8168"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "a94b14ce189a832b4395fbcf82ffe3d68f20bd187b320491b500309842732fc4"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "9d2346c588d88c9978fd920cf1deef581e22558874132481350870c181cee7bb"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-cuboid/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "e70a2dfd0f4d93484b405fd9b6a2d6f67895b62e739b006ec21b45408e85b0f0"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "c4953397fe59025a5913e9c6291ef6a1f23fc1e36ad0f373447322941a2656d7"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "2f6b41e661724715c0e15621e7bc199abb50daa007e6c45ba08abb0e3879f8cf"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "449e865e23d616a4e2aa2d9ffac4fded3b3d26237e7a73c80913417521dc4fdc"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "3df7cfb965254300b2541a81735e4d28dbfac107bfa1ddda8f9812961fab0dcb"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "fdf91bfafb35a8278427cc04611aaa71c019a67069d997eb0dbac97c14c022ec"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "dcc1be21454168b4a6c17215bf2bd38d0907c55bad1b7809bc7aba1b90f54408"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "73f20e6412763bafea68a7e045d2f572c3edddbbfed990c9570cc9a3dfcbd651"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "7e1ee0d23ce0f559324c3a0a9eb3ff71d54394f2057ca557273787c2989ac5bf"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "ee4f895e43099b26a471b3e992300b3244fdd9febb58e37c506e85f0809589f8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "6aeda4fb7bda00bfa553972459662ee958d129569701f082fe0d7743b8be2bf9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "9075463d67d64c210bae0db44dc27d07239183d1e495e8bc14b75f9a35b9985d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "a40a6c8911d07d41b0a42c794d52bd4cba20ed013f878fec1229054f259faed2"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "642222cb72b798c1dad021adca824664ebfe9aa840dae69476408398d366a1db"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "e51483eb8ab7692de2bc58b3ae15ff5ea09c77f9286f2ca0fc34fea2b493a0e9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "87b08946c4eb1e7c99f79873c9fdb9b0dfc56f2615139d9173f04dec917ac270"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-prism/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "7d33dc89fe181ade4714561c39694c7f40a9c1c27fd371c20ebe2c1bc6afe397"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "402576606172df8681f84ea1a855d460002abc3a0c416f407dea1f34c080e062"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "9bb6d2b7539c7a5a05ec553312f617d81517cdc42572d07416b858892a972fcb"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "fda93d9318dc7c60eea17e2b91d48cbc0bf65815995ff14dd931299f0df8e2f8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "f61d656629419ef48def9e819fe51e850a544ed38f9f1a5283b57e3d0ee29894"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "4485edbfe85f106f9637c0e113d458f245ce52c9c4a4fde9c9fa3f03598314c2"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "38af5ebfc9c4f817e39b2f5bd4583356f591e0d0c25c3aa26482652cb02309d6"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "b8b9103522389cbb9299a261c0f5469730899e617f1021e9aa9270ade36055d6"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "726ed8715a3d3c56f12e7390a8decd4c1f1853caf140bf8cac342fbf89564ca6"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "0bf6adacfee05a38d788912f2a6b91d3936c7ceb3046b8c6c31a06b9a5ea75dd"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "9054b3048f8cdc5a76abd2d270f10a80f124b7839878ca4e4e78ea79f8843dc3"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "ac13dbe7ced9307f0c5f809d0e112c4b805f8f4990b4c6d86b062a18adf0a64b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "01d43b9cd7579b9a86fe7eeedffb6eb385efb3845c04fc99fbba5ff092f9c41d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "60d3da7e2c4dbedb9c868ae146209e8ebc38e172c9bd788ec6001fde707477dc"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "015c64ca2de278d7182e80b8fce3a802041c7d0494b1dd167b587291452efd62"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "fecb1d20760f15a811817682d01a55fcaa0de90eee944dbd6387d4fe339774d3"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "21bb7ea99e24e8cdea7dcc07f1e926bdeb6d8ca9836a19eaabd71699782d4626"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/step-12.png",
+      "category": "evaluation_receipts",
+      "sha256": "bfed22c7d3b389833c6f53d43ac41bb938af9c8f1fdea606b31ca336ba222fc1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-pyramid/step-13.png",
+      "category": "evaluation_receipts",
+      "sha256": "26cf2b3305ec85a2956325736d1d87f5015bbc571df90c4f8602ef7131ab1d47"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/intel-d3d11/two-line-refused/refused.png",
+      "category": "evaluation_receipts",
+      "sha256": "2d808d0d8e31ec989b034629055f196c00048017a6e4bed4a74e3faf0db1321f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/browser-check.json",
+      "category": "evaluation_receipts",
+      "sha256": "ea3a3015105686b5ad2db7b51bf9b2709d0deddb42cddb33ce09746bb54c43be"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "48ce8ee9a3c1fb091b294f0f961db9c9cb1415aef8401f26185be92a151ff54e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "fcb23084e81147e72a22a16a60e083138ca89dfe1d6302a3fa346e094c86fad8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "1958dc4b03bd0a5398d304eaa493dbaf580a91cee597156500c69ae7a80240d5"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "3aed6bf0b120ff9df8dbc7dbd0e5459c138076147b4d8b6bc698c246357bf378"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "f12a2c95a02207d36e2f3bc27e6a48acb7c8688498a645931f66a041576d5c08"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "6a234923e1552708b61915791912643f79963311d2167c0387fab8eac3a2748a"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "8a55fba97c0788d38b06b46c4b996cb63d71af1156c3a28ddf4e818ecf8ff6f6"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "143d05b549af420563d1e5d9f9e0854fbfb9b2944a79c59232fcfed0e72e428a"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "98fb888ba31955b92cbc3c310b29afbb9e52bbdf444d46f3adb9bf11ab016d7e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "952765791bf028b111a6c4734303f2e43097e8e45dc0e1881cdfa84991e7b9c9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "4f326555fa04e85a5c7bd7ef3c53b451c7d47bdcae462a0d7b531aa6e644d424"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "192d6a766bc8c1b6bc50a2122050415a22b4076b2e41ec73e4f1d3ca13349b16"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "fa5b462911d78fbcc1f73965b430f5bb37299709efd879009299fc9517d1fa26"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "e2156a674d6bfd146faa479caf72f91dda7561bc3eeb791cda9995d51a354595"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "9d3eddc1e28c57278336af6c5bcb6cbb86de5b5d1bd3aa4bd3c174893fd3f7c9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-cuboid/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "1a9ae621924834eb88ed075687e9d7a118513496b61aff0b0ebdb33f77573380"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "c4953397fe59025a5913e9c6291ef6a1f23fc1e36ad0f373447322941a2656d7"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "42e5667c68c9aac812252ae19eb8e1990453c4b85a67bdece0b4bfe8250c085b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "df1921491df9a8bd4d2a5f7fc848d4ea84660e89e328cf56721caa05fb961579"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "fe00bd8f67ac92e0e27473a970110bc8e86d584bb85b6fe430b379be480a12b0"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "8084fc85a386ff8cff316e1d6950db3578e9f1fddd15489de6e710d3d25bc73b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "090314436caae27b89388501808d595c5c57bcd6d75ab8dc7a6f1d0d99663bbe"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "e97cb6d583494bd93096166f3cc5269e0776d87ae08f641e3616dde5ef28e3bb"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "4e8af71b4c42b2be103e01f2e5de00e082bf22d50a20447d8f5954d3d177e23c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "b80ce648369546ca6cd49b7063135ce848efb51a925ddfc808b1fb1f1c936fef"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "0dc8beede331e96a19dce46521ac71812dd5801d29805187579f5f535004a452"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "25011e4db98ad561ca66d608e7fb6707925623dcd1aa8f099034ee23c6a352ea"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "af384576f4413fef1c663217b209dd5093f476c122cc38f56d24bbe384e4c6d0"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "e8044ade28f75f5249bcb9454daab0fae7becce68f9bd7aad15f449b37f60dc8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "890b119e09d3832bf23a25fba8323d19df243c7fa1af65901c5355da3973dd76"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "4fe645cc3bf21576dac1235192b40ed4503d8fd64fa3ebc352f2655f7d05ec2d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-prism/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "25f052f63519810bb530be904d3d08af09181fd089b096f0af534e786bf04acc"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "402576606172df8681f84ea1a855d460002abc3a0c416f407dea1f34c080e062"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "a34144e957ff120ce3a23d49ead30bc55e0e93c6b00ea68418a31aca6a32a127"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "59a3d70c3e9edae9a2a14e82503eca20f30d9adf1c1a4c98f1085bd9f1f83242"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "b376f32cde0c20474a788e9f1eaf1f0369249aa124588024932695b785caf46b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "4a0a44ff14d317ba3730108d1d8c9888961718987588513a603650afb2b2b173"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "0e3104bed2b6573692e280f9054a15e0e7224e42e0fd477250c59fac0e3c5bbe"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "2d44abbd37eef2dc67e542d28f60fa62b9b3b79aa21cf7fbab3c74919d7f9f0d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "973f4c5947bc2c78ff4c77e7e77bd3f4f3a6b4d4d882b0da6fb7b4ebfc787c9b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "ea29104afda25f544cc683ef41db74220f1629d99a7e7c1f637abbfb1350a54f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "c0bd9af19a2377d5b1588993378a48cb1964d202800d58a8fb36230cc84139b8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "5916f016fd0fe2a6f14e1efe886bdd18643f858e7518e677166a26baee1a4cbe"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "eff7497bf0dacc2164315abfc0ae07cda19cf3217f8978348e3d350f41db7c1f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "fba0f45ead5dcb7a97df3f17e7d0675b489ea6bca0ee4f15069a6dc50292954d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "58793da4ebd58cfb9f461118125ce1f5687a9e235e4af1a66bfa44c8b6f8e043"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "8b35d5263eaa270881bbb54c9156b6aef7f753140b4ee376720d5ab2f2332662"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "535f58eab1c7a2dd586b4101f70fb239a2c3390900ca54eec42e88e625f245dd"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/step-12.png",
+      "category": "evaluation_receipts",
+      "sha256": "df3ab2d9454ac0d6f55a738956b91782af07fd6c768070fb3cb2ce618eb8b62e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-pyramid/step-13.png",
+      "category": "evaluation_receipts",
+      "sha256": "31afc95567cc987f3b31bb36e12f6144a4ae45eaa70fbae916af6dde4e99cf95"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/two-line-refused/refused.png",
+      "category": "evaluation_receipts",
+      "sha256": "b9e6958d4f3de3a3072cd0062bd72f94489ff3026014aaa1b78567fff05416bd"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/audit/construction-audit.json",
+      "category": "evaluation_receipts",
+      "sha256": "d311d28dd628465ac57df43bf9f2ad01cfa08d988766248124f866dff18b5919"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/browser-check.json",
+      "category": "evaluation_receipts",
+      "sha256": "bc043a925ed776df6cee7f9a02f312a5e68e527933c3ad6d5c97fc6c740dc68c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "48ce8ee9a3c1fb091b294f0f961db9c9cb1415aef8401f26185be92a151ff54e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "7f2e375cb2dea06f08b398b3d91f1d34690a40778fb89f0de9c046ce8b5ca1df"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "1958dc4b03bd0a5398d304eaa493dbaf580a91cee597156500c69ae7a80240d5"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "fb5056073a710ec7f53405e565ff9a060433a41e829227f3b84215fcbe203813"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "646f6fce125a9e537505d19a4db6a7d339d0b6a808c3ff25e4afa8aed8e78da7"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "6a234923e1552708b61915791912643f79963311d2167c0387fab8eac3a2748a"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "8a55fba97c0788d38b06b46c4b996cb63d71af1156c3a28ddf4e818ecf8ff6f6"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "143d05b549af420563d1e5d9f9e0854fbfb9b2944a79c59232fcfed0e72e428a"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "3c4579c9537f887e06049d1bdf6e11600137152121ea504ef37edfb84fec93d9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "1753b4b6c0a1e5735e987a93a1f3e11ad1d0e28ac51eea70a5a4cd78ac1b7a7a"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "3abb994b805a4d6db58d0d2beecb3f7b54efd4242deafdd5995de053085c0615"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "e0713374a8aef2a4229d245e61acbdbefee6c843d0985022a6baec7174817a22"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "b26cabbd5bf83a10d15ed37a6b66ad063ea134fbd8fdf56555f4b5e5b8c952ec"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "cdb26b102efb58996416da6851a2571e675fd9b8f8696bdc465074530daa3301"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "b884e89be43d0b9a5022c0596fefe0871f00e0e18fe6c6196425d7e067a1db9c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-cuboid/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "25d26ab52cdef35ee9f209141b6e574d17db3bc9d87499b8220f8bc48cea11f2"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "c4953397fe59025a5913e9c6291ef6a1f23fc1e36ad0f373447322941a2656d7"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "42e5667c68c9aac812252ae19eb8e1990453c4b85a67bdece0b4bfe8250c085b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "71561d8d9650da845cf73072cfe1b611fe101dde8f023501b1ca0a4b43447435"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "fe00bd8f67ac92e0e27473a970110bc8e86d584bb85b6fe430b379be480a12b0"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "5e8b5339be0bdd59934fd99eb23f0813565e830b7b9e323a9957b28df6b724bc"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "090314436caae27b89388501808d595c5c57bcd6d75ab8dc7a6f1d0d99663bbe"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "e97cb6d583494bd93096166f3cc5269e0776d87ae08f641e3616dde5ef28e3bb"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "4e8af71b4c42b2be103e01f2e5de00e082bf22d50a20447d8f5954d3d177e23c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "b80ce648369546ca6cd49b7063135ce848efb51a925ddfc808b1fb1f1c936fef"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "0dc8beede331e96a19dce46521ac71812dd5801d29805187579f5f535004a452"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "25011e4db98ad561ca66d608e7fb6707925623dcd1aa8f099034ee23c6a352ea"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "af384576f4413fef1c663217b209dd5093f476c122cc38f56d24bbe384e4c6d0"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "e8044ade28f75f5249bcb9454daab0fae7becce68f9bd7aad15f449b37f60dc8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "890b119e09d3832bf23a25fba8323d19df243c7fa1af65901c5355da3973dd76"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "4fe645cc3bf21576dac1235192b40ed4503d8fd64fa3ebc352f2655f7d05ec2d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-prism/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "25f052f63519810bb530be904d3d08af09181fd089b096f0af534e786bf04acc"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/contact-sheet.html",
+      "category": "evaluation_receipts",
+      "sha256": "402576606172df8681f84ea1a855d460002abc3a0c416f407dea1f34c080e062"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/contact-sheet.png",
+      "category": "evaluation_receipts",
+      "sha256": "8c90b56995ed7fd227f9f76b1d27cfeb4c1528502ebd503172e87938ded797a8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/final-orbit.png",
+      "category": "evaluation_receipts",
+      "sha256": "48a5cacda859a65aac664977dc08268f2ca67113c5257a8685b4ec7a1be23c67"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/selected-H.png",
+      "category": "evaluation_receipts",
+      "sha256": "1bfd3adcd7f4c0ffb5069eaf72e80c0802b51b1cad0a1c0b3d0bb86a0093dbc9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/selected-H1.png",
+      "category": "evaluation_receipts",
+      "sha256": "c105cb6fbc3089c2f28805b861148e68355da5a3c6fb93aaa50d7a460cfeb620"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/step-01.png",
+      "category": "evaluation_receipts",
+      "sha256": "0e3104bed2b6573692e280f9054a15e0e7224e42e0fd477250c59fac0e3c5bbe"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/step-02.png",
+      "category": "evaluation_receipts",
+      "sha256": "2d44abbd37eef2dc67e542d28f60fa62b9b3b79aa21cf7fbab3c74919d7f9f0d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/step-03.png",
+      "category": "evaluation_receipts",
+      "sha256": "973f4c5947bc2c78ff4c77e7e77bd3f4f3a6b4d4d882b0da6fb7b4ebfc787c9b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/step-04.png",
+      "category": "evaluation_receipts",
+      "sha256": "44e2b85a2adf4b942138ef5cc852047e9da0b379c9b61c88cb2df3945bc2200e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/step-05.png",
+      "category": "evaluation_receipts",
+      "sha256": "0372f4dca2db23ee05a51ac4ebb33128daf723df6e864efbbeaeb7fb42de9b95"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/step-06.png",
+      "category": "evaluation_receipts",
+      "sha256": "a149df7609aca84049152c58e8f8e88bd9047cc13ecec0ace469c85b18e90880"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/step-07.png",
+      "category": "evaluation_receipts",
+      "sha256": "7ff4355c97a0ce35f14f58fef27bbb8b07ab99d2fe279aa86d9d4b09755cea9c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/step-08.png",
+      "category": "evaluation_receipts",
+      "sha256": "67740988a57a6bbc75d53ab4cd7a967c20d6c33fd9f7251e7d19153fc8abc659"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/step-09.png",
+      "category": "evaluation_receipts",
+      "sha256": "3bda78d8656ecf76da0e301fcd0ad39ac21a97951de4ee5c47d686858aa8324f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/step-10.png",
+      "category": "evaluation_receipts",
+      "sha256": "c7e93c22c545f1a1675389471dac9dcc8348565e568ff7eb657240f551ad08fa"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/step-11.png",
+      "category": "evaluation_receipts",
+      "sha256": "e327e23fa7a50611389fee34509c88ba596fa75a7bb947f35e0b34cbad824b9d"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/step-12.png",
+      "category": "evaluation_receipts",
+      "sha256": "c80d660b76b1c4ec322378b84cc857341f477b5d0d9f28a5db5aea81b2a08907"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-pyramid/step-13.png",
+      "category": "evaluation_receipts",
+      "sha256": "1822c6d419e5a721aa1773937c6cbab91858f0e96c2b1f024c6704aa65ec73b8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/before/swiftshader/two-line-refused/refused.png",
+      "category": "evaluation_receipts",
+      "sha256": "b9e6958d4f3de3a3072cd0062bd72f94489ff3026014aaa1b78567fff05416bd"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/cache/decision.json",
+      "category": "evaluation_receipts",
+      "sha256": "9ce6dc44da907db92084b4e73bb5804c371cf18f91a3f1c6c5e49a358292e5c2"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/cleanup.json",
+      "category": "evaluation_receipts",
+      "sha256": "a7ebdfb0c64d31982f3cae1e48271d886c75aac94baa088d0f5206757131b3e4"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/handoff.md",
+      "category": "evaluation_receipts",
+      "sha256": "8223cd8a6185abe2b6f8860253890f7a2aa545356e8c642daed2c9fb45fe3de1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/inputs/candidate_divergence.json",
+      "category": "evaluation_receipts",
+      "sha256": "128f45037b092630a574947a37d561c4788494d828469110e4e258e7e0aa57c2"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/plan.md",
+      "category": "evaluation_receipts",
+      "sha256": "ddc19b7149c36e969db5721569c73af81cb8a4c08e06168f2bfa20fef4670bc7"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/playwright-audit.md",
+      "category": "evaluation_receipts",
+      "sha256": "a512658d863f7d86d889b5cb662928b4b36d6bb4935f9b963b8263385d4ad451"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/report.md",
+      "category": "evaluation_receipts",
+      "sha256": "9a9b8893f59b4aebb41cdef58dfa8d1ec94c8dee090177cc4f3fcb5fe0a909d2"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/review.md",
+      "category": "evaluation_receipts",
+      "sha256": "7ba3b0efcff293885a7b46bd3de781b659f322b25e4a7f56b57a5941703133ca"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/run.json",
+      "category": "evaluation_receipts",
+      "sha256": "b23342de4b35de55dbe4d512e1789f7fa480ede6fe78edef88c3679f5e695c57"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/steps.md",
+      "category": "evaluation_receipts",
+      "sha256": "28bad9cf9f19ed70de509fcbd786d8c920f7052f44ca9971cd39d970156e9865"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/bundles.json",
+      "category": "evaluation_receipts",
+      "sha256": "00706fe88e6639de1bf741787a512fb58ccb13cf3b88bafc4a1769a2067ad67a"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/layout-probe-after/MOBILE_LAYOUT_PROBE.json",
+      "category": "evaluation_receipts",
+      "sha256": "91355768d22c3c06a185977d23ec5eadf3c785591bb2c1437fbee9123d681209"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/layout-probe-before/MOBILE_LAYOUT_PROBE.json",
+      "category": "evaluation_receipts",
+      "sha256": "4efc7e8ebf72710e2472fc0723e8048b4cb5adf89d056dc3d6222406c6181ac2"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/orbit-gate-before.json",
+      "category": "evaluation_receipts",
+      "sha256": "e59bff4ab9fcb037f985d52d9e5dff5f2581cc9d73757e99717a62a01bee6e12"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/orbit-gate/ORBIT_GATE.json",
+      "category": "evaluation_receipts",
+      "sha256": "2dde017630c02d162c6de0ddd6d8aa7b4375071fe51b0299659e4ede279afa10"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/t3-authoritative.log",
+      "category": "evaluation_receipts",
+      "sha256": "5b6570be15140b3364c55b77d062b43865d374231114027d93b4083fc74555ac"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/t3-first-failure.json",
+      "category": "evaluation_receipts",
+      "sha256": "0c1c321cfd323687d130a730a5c1456be3f70e6287357c7bfab6c890d5292f5e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/scene3d-construction-audit/verification/t3-pass.json",
+      "category": "evaluation_receipts",
+      "sha256": "5104cf2a21e035afa05d577069b4404ba874f2be550741fa02d2e2421ed09d70"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/benchmark/metrics.json",
+      "category": "evaluation_receipts",
+      "sha256": "febb5b602fcb194c502e07ea47fe4200ed4083f0b09bac12784b2536940ab12e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/cache/decision.json",
+      "category": "evaluation_receipts",
+      "sha256": "233695e54d05fa0e8e7992bf4920a0c279aae6f56995c67b099b6a56f8fd82df"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/cleanup-actions.json",
+      "category": "evaluation_receipts",
+      "sha256": "06f6936ad232cc3c12fac81a00c278781ba9630ca3f8af3f7be8fe3251263ffc"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/cleanup-after.json",
+      "category": "evaluation_receipts",
+      "sha256": "224640e2e8695758bfc5dbdcca86debb5e27cdaf93cfd1f6465ee72b6b7f0e40"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/cleanup-before.json",
+      "category": "evaluation_receipts",
+      "sha256": "50ed511a0f5b9a6200237c018ab3d7f5425c8682c3346617902b2694e49de85b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/cleanup-docs-followup.json",
+      "category": "evaluation_receipts",
+      "sha256": "bb1f435f0f1406c953fad8a22b7c705bbbc92a881a4175304500d5d037c42e45"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/cleanup.json",
+      "category": "evaluation_receipts",
+      "sha256": "287d309691d63ced309e723c7662bd67381ad8e045181ad6f920746a45bc6d7f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/development/metrics.json",
+      "category": "evaluation_receipts",
+      "sha256": "69c9b1301ad99016f1385d3cf326e0afa9a1cd97db7ed3494998af3499f7e21a"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/handoff.md",
+      "category": "evaluation_receipts",
+      "sha256": "7de0f7291ceedb73e13247c788a10ee3066b12b9b7573a5c820dfb30104a21cb"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/heldout/metrics.json",
+      "category": "evaluation_receipts",
+      "sha256": "5b3b0d8d8c3a8a458ad7e42b66e18af61c13a5df4185859454ec9e165dc25430"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/inputs/candidate_divergence.json",
+      "category": "evaluation_receipts",
+      "sha256": "225536e22410330df287a39d6be17bd5fdb0481a35c74d4aead703ece585cc58"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/inputs/heldout.json",
+      "category": "evaluation_receipts",
+      "sha256": "e988f2cae27cc486ee653403828cd5d487891c68ff20135b4589bf4dc0f0fa3c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/inputs/math-corpus.json",
+      "category": "evaluation_receipts",
+      "sha256": "0d31e49ea982f9378054dafc192b31ffd8bfdb8f8651424ec4ff2a9607138793"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/plan.md",
+      "category": "evaluation_receipts",
+      "sha256": "648ef16d21ffdfc3ea8c3d369b7249d1f5a1fa7e752e72593a970d8db3e8ab8f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/provider-surfaces.json",
+      "category": "evaluation_receipts",
+      "sha256": "f3ee1b1237cad463133ad0b5ac0adbc3fe1c915403a9f393c427870685e8a228"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/report.md",
+      "category": "evaluation_receipts",
+      "sha256": "e9a588913ef3b00503f426d99391da10fad2b04fa8908744a49d2976fd85add0"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/review.md",
+      "category": "evaluation_receipts",
+      "sha256": "481845ac1349600ae3d6e1365861c0ce27458f5b5b9f8e771ad29e6742620cb6"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/run.json",
+      "category": "evaluation_receipts",
+      "sha256": "5a08b087b0b7723359c8f67c6ed1a4040fba5b70b2c6a4c805c5ba5c8fbbc138"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/browser-scratch-cleanup.json",
+      "category": "evaluation_receipts",
+      "sha256": "1f473f6b2c84745bd9caba2e946fdfe496a624b86f9fe27f85acd8ae80e39af1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/candidate-verify.log",
+      "category": "evaluation_receipts",
+      "sha256": "293e29df99f9d60ae0b4c7a0335a231d8896600a55cafb25f051ee4910cb5f6c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/docs-before-final.json",
+      "category": "evaluation_receipts",
+      "sha256": "7f2249a6815557590b7a3a4d13e719118bfd973f154543394a9b40e107a7d4db"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/docs-final.json",
+      "category": "evaluation_receipts",
+      "sha256": "6df64c86c369c1aa7456d70f65f4b4bc8be4e499600755736d6be2fad1fa170b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/docs-handoff-final.json",
+      "category": "evaluation_receipts",
+      "sha256": "6df64c86c369c1aa7456d70f65f4b4bc8be4e499600755736d6be2fad1fa170b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/docs-identity-final.log",
+      "category": "evaluation_receipts",
+      "sha256": "f918a924e5c80b51ad01a884e46e416549fe79cfd8c5d7b4b07ec70584af0832"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/focused.log",
+      "category": "evaluation_receipts",
+      "sha256": "4bea6e0e0973d3fbb165ed47632a82c989adfea0654e441174bfb6f69f029a8b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/learner-retry-green.log",
+      "category": "evaluation_receipts",
+      "sha256": "b96ee2487871fb58b48a89abc52639095c6c9c34eddf4264e82c15863bcc827e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/red-green-summary.json",
+      "category": "evaluation_receipts",
+      "sha256": "36384a31c314a8b1df4b8d1ccd9537912f497f425f9fa9dc78fc936ac6461eb1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/reviewer-scratch-cleanup.json",
+      "category": "evaluation_receipts",
+      "sha256": "d6b38a8f13ea57270bb238770f6d6b79b954b2d21c637e8798450c7d4dcc588b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/t3-authoritative.log",
+      "category": "evaluation_receipts",
+      "sha256": "4065563f3736d86ce710e115f742d582b8c4878d4993b951808763909deebbff"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/t3-authoritative.stderr.log",
+      "category": "evaluation_receipts",
+      "sha256": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/t3-first-failure-retention.json",
+      "category": "evaluation_receipts",
+      "sha256": "571887de0d9cff207ac8355b678d486b5a363e0499879d944d33e8d0a687c455"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/t3-first-failure.json",
+      "category": "evaluation_receipts",
+      "sha256": "be008ae28df06fa5d1b05a4dc205999141d3a14ac217452cb853fbfd31011dae"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/t3-interrupted.json",
+      "category": "evaluation_receipts",
+      "sha256": "de6295214cfb5a948de5a153a42c9a89ee27c3669805cd050ec73841d9c55dde"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/t3-pass.json",
+      "category": "evaluation_receipts",
+      "sha256": "a0482403573858c9b8268d4714c2387b9261d52f50428e2f66c9346836867cf5"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/t3-process-exit.json",
+      "category": "evaluation_receipts",
+      "sha256": "5f74a1a3d842b799e1c15cfee8a816b49cbb953cb5c67c542f530c0cf0416fee"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/t3-process.json",
+      "category": "evaluation_receipts",
+      "sha256": "80b15ed9b1da7d2fea36119a2f659c1265e80e0e29b3262a2445a6bb3fca9ec1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/t3-second-failure-retention.json",
+      "category": "evaluation_receipts",
+      "sha256": "f6cccc847293bbd94b61657179f2f99f9409ea697c342c1e563bc778d332f62a"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/t3-second-failure.json",
+      "category": "evaluation_receipts",
+      "sha256": "fb6883a284fae08fef2eefe6eb8c70f6cd6950686c135e17b58e2ca2335816ca"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/verification/taxonomy-green.log",
+      "category": "evaluation_receipts",
+      "sha256": "8e770d279bee541daae569cfeeb8f403e0502a60e8a067746709d96954ae1255"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/acceptance-summary.json",
+      "category": "evaluation_receipts",
+      "sha256": "41ac28e26a94d15b6cf4898a4110491fd0b442a24f0fbe3c25b521adb997b4a1"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/browser-check.json",
+      "category": "evaluation_receipts",
+      "sha256": "00fd757aea021578a3d883f1b128db5ceea7bac557e45dbefe11afed4b9b7544"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-cuboid-selected-auxiliary.png",
+      "category": "evaluation_receipts",
+      "sha256": "4d76ec7db326a6c7e4467830d0888e313175e5c87021293dcdd154abf6e45bf7"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-cuboid.png",
+      "category": "evaluation_receipts",
+      "sha256": "3314330671c6f314bdff7ec7a82917245878f97bc324ce8b33f7f1985c8c8560"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-prism-selected-auxiliary.png",
+      "category": "evaluation_receipts",
+      "sha256": "ac114403bd63fa794d854952ad937ffd6139d44c29d7711a3273130688c7792e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-prism.png",
+      "category": "evaluation_receipts",
+      "sha256": "37579fd0a8d665715839517adf4d09b773d41efcaa14e3008482a87b340b8061"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-pyramid-selected-auxiliary.png",
+      "category": "evaluation_receipts",
+      "sha256": "bb8a48b97b1de492a5336c45cb72cbafafa11b4238f7d63a1379c9d7a473f7b8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-pyramid.png",
+      "category": "evaluation_receipts",
+      "sha256": "b2e9af47c6cdb8b914a108da42502f6ee859062ddb7d54486ecfcaf9a6e978a5"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/intel-d3d11-final/two-line-refused.png",
+      "category": "evaluation_receipts",
+      "sha256": "2d808d0d8e31ec989b034629055f196c00048017a6e4bed4a74e3faf0db1321f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/process-lifecycle.json",
+      "category": "evaluation_receipts",
+      "sha256": "769076e227d824923fd3c650b9fca7d015903bc7cb707e6ba407204b03166c19"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/scenes.json",
+      "category": "evaluation_receipts",
+      "sha256": "a4efde63f7cbb14f04c8a168cba3a35d839741edba77e1b61b27811f366565b8"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/browser-check.json",
+      "category": "evaluation_receipts",
+      "sha256": "c187163f1a9fabd7f8d875b8348af67f00027268b0505f49b2206d15aac6c97b"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-cuboid-selected-auxiliary.png",
+      "category": "evaluation_receipts",
+      "sha256": "e42d087a3ed17940c4268ad7097e0fc60b397bb1a03d4e6a7af2137228d9e965"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-cuboid.png",
+      "category": "evaluation_receipts",
+      "sha256": "2cd5912b5bc34de22906234cc4886285b77c9d50068cf94db7388062034d9ae3"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-prism-selected-auxiliary.png",
+      "category": "evaluation_receipts",
+      "sha256": "f378ed5e03901c3817682c19b713ecfd0e5149c8c11b16e8ceedd19f1278ec6f"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-prism.png",
+      "category": "evaluation_receipts",
+      "sha256": "be54785c1475c66d9e21a32a6c43e34f3403b6f26673abaaa49cff2a7283b7e7"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-pyramid-selected-auxiliary.png",
+      "category": "evaluation_receipts",
+      "sha256": "fbed8841af0c45c56c393bafba5bb582fda62b5749c0721ce156c2b6b7db5ff9"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-pyramid.png",
+      "category": "evaluation_receipts",
+      "sha256": "05a3e910810b1018822f8bc5b1da4130b066d2571f2887dc6474af1c48150f7e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader-final/two-line-refused.png",
+      "category": "evaluation_receipts",
+      "sha256": "b9e6958d4f3de3a3072cd0062bd72f94489ff3026014aaa1b78567fff05416bd"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader/browser-check.json",
+      "category": "evaluation_receipts",
+      "sha256": "f4f9115a1f03a519a3f79f791284d10495741ac65db772b68a6d46c1136a683e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader/two-line-cuboid.png",
+      "category": "evaluation_receipts",
+      "sha256": "2cd5912b5bc34de22906234cc4886285b77c9d50068cf94db7388062034d9ae3"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader/two-line-prism.png",
+      "category": "evaluation_receipts",
+      "sha256": "be54785c1475c66d9e21a32a6c43e34f3403b6f26673abaaa49cff2a7283b7e7"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader/two-line-pyramid.png",
+      "category": "evaluation_receipts",
+      "sha256": "05a3e910810b1018822f8bc5b1da4130b066d2571f2887dc6474af1c48150f7e"
+    },
+    {
+      "status": "A",
+      "path": "docs/evaluation/geometry/runs/two-line-plane-section/visual/swiftshader/two-line-refused.png",
+      "category": "evaluation_receipts",
+      "sha256": "b9e6958d4f3de3a3072cd0062bd72f94489ff3026014aaa1b78567fff05416bd"
+    },
+    {
+      "status": "M",
+      "path": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+      "category": "candidate_identity",
+      "sha256": "98b4cd8eac04b5d5f119026ea1f22c8f787769b0cb4cd4573439289f7ed7c179"
+    },
+    {
+      "status": "M",
+      "path": "frontend/scripts/hybrid-section-visual-check.mjs",
+      "category": "research_harness",
+      "sha256": "ff67ae1cd23b3837d81857fc4b6c98badd3fc99104e5e418afb84bfcea574019"
+    },
+    {
+      "status": "M",
+      "path": "frontend/scripts/hybrid-section-visual.tsx",
+      "category": "research_harness",
+      "sha256": "0bcbcc4e0e785689fb2f0886a705422d85cda0a032baf3d3d6f07cb50e623efb"
+    },
+    {
+      "status": "M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d-presentation.test.ts",
+      "category": "tests",
+      "sha256": "4b25685dc348ce021b092d36490c8f77fd83e010c61259218a725cf5647a239c"
+    },
+    {
+      "status": "M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d-presentation.ts",
+      "category": "product",
+      "sha256": "810ee1be866d37010c4479e936455bcc29b7d73a550746a837440a17ef2f6f6d"
+    },
+    {
+      "status": "M",
+      "path": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "category": "product",
+      "sha256": "1a773a0883edc71ef137c4fe2a0639451ff6aa867afc70d113cf91ec9917a790"
+    }
+  ],
+  "protected_files": {
+    "backend/algosim.db": "1fcbdce56c8911af28775e6a89986927e3bc40183d35e5cd80145ea7c5c1ec93",
+    "frontend/public/favicon.svg": "c5172af1ced0ad43d18e8d66d4270870fe60cf02cb175c3d0f0287ef7f52439b"
+  },
+  "protected_refs": {
+    "main": "5270f3ddf63050efca14dab403912d8ed30e1113",
+    "origin/main": "5270f3ddf63050efca14dab403912d8ed30e1113",
+    "research/compact-geometry-dsl": "3db08a1e3c8a47a7284b7dbdfaac112640106593",
+    "docs/real-model-e2e-readiness": "4cfa547f0989e53b917cc020adf59e250acbf68d",
+    "feat/real-model-pilot-tooling": "471a2c796b44bf9bf8fc14ca02a5a365b440c2a7"
+  }
+}

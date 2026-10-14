@@ -1,10 +1,24 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = GROUP_A_INTEGRATION_READINESS
+
+REPORT = docs/evaluation/geometry/runs/group-a-integration-readiness/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/group-a-integration-readiness/
+CORRECTED_BY = NONE
+CORRECTS = PEDAGOGICAL_CONSTRUCTION_SEQUENCING
+CLASSIFICATION = GROUP_A_CONDITIONAL_GO_NO_MERGE_NO_PUSH
+CODE_COMMIT = a5a0797c
+VERIFICATION_COMMIT = d3c7381a (targeted clean detached); f227dd72 (reused authoritative T3)
+MODEL_REQUEST_COUNT = 0
+
+Fresh independent LOCAL re-review closes the missing final-fix review receipt. Technical gates PASS; human visual/scope
+acceptance remains pending. Historical receipts keep their bytes; integration delta and preservation snapshots recorded.
+
 ## WAVE_ID = PEDAGOGICAL_CONSTRUCTION_SEQUENCING
 
 REPORT = docs/evaluation/geometry/runs/pedagogical-construction-sequencing/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/pedagogical-construction-sequencing/
-CORRECTED_BY = NONE
+CORRECTED_BY = GROUP_A_INTEGRATION_READINESS
 CORRECTS = SCENE3D_CONSTRUCTION_AUDIT
 CLASSIFICATION = LOCAL_READY_FOR_HUMAN_VISUAL_REVIEW_NO_PUSH
 CODE_COMMIT = a5a0797c
