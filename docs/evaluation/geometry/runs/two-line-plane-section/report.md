@@ -1,6 +1,6 @@
 # Mặt phẳng theo hai đường thẳng và thiết diện — LOCAL research
 
-Trạng thái hiện tại: product `2b42eb40` đã đóng băng sạch; final gates đang chạy, chưa tuyên bố nghiệm thu.
+**GO trong phạm vi Group A nghiên cứu đã đăng ký.** Product `2b42eb40`, candidate freeze sạch; T3 tại clean69ff3a16 PASS backend9274 /frontend1053. Group B chưa triển khai; Hybrid product enablement NO-GO.
 Nhánh `research/goal-directed-two-line-plane-section`; main/origin `5270f3dd` giữ nguyên; push NONE.
 
 Planner trước chỉ dựng mặt qua điểm song song một mặt có tên. Nay cùng `_mat_qua_diem` nhận mục tiêu
@@ -38,7 +38,20 @@ Candidate `c2ac6dbe1cc65170e75db6a0d6d7e4e8e0a1c544db5961fcd16120a89606c5d4`,110
 measured paths backend/app +frontend semantic domain/schema. Freeze tại clean detached2b42eb40;
 additive `inputs/candidate_divergence.json` extends source-grounding-integration; historical evidence giữ nguyên.
 
-T3/heldout/Playwright/docs receipts và cleanup cuối cập nhật sau khi kết thúc, `run.json` là trạng thái máy.
+T3 authoritative: backend9274 PASS, skipped1/deselected2/xfail6; frontend1053/68files, build/demo5/5/crash6/6 PASS.
+Heldout32 chỉ mở sau freeze:11correct served/21correct refusals, wrong0/false refusal0. Hai lần T3 trước FAIL
+được giữ dưới dạng receipt tổng hợp, không ghi công PASS; taxonomy rồi lỗi Windows asyncio socketpair LOCAL được xử lý
+trong bộ đo. Retry chỉWinError10013, tối đa3/freshoutputs, không retry lỗi hình học; independent harness follow-up NONBLOCKING.
+SwiftShader và Intel UHD Graphics D3D11 (Chromium151.0.7922.34) PASS cả3served+1refused, no product console errors;
+11/4 local network retries được báo rõ. Initial scrubber receipt FAIL do ownerid progressive suffix, giữ nguyên byte;
+final checks nhận đúng semantic owner và dùng slider/selection thật. Oracle quyết định toán học, ảnh chỉ thể hiện.
+Giới hạn: canvas chưa vẽ tên mặt(P), một số nhãn đỉnh như S bị che trong view mặc định; picker/details dùng đúng(P) và
+Điểm dựng phụ. Điểm phụ có thể trùng tọa độ đỉnh section, semantic identity riêng. Không gọi đây là product/API E2E.
+Cleanup cuối: `cleanup.json`; `run.json` là trạng thái máy; final docs/identity receipts trong `verification/`.
 Scene3D chỉ harness Workspace qua Hybrid IR, không API/trang sản phẩm. Không gọi Gemini; Hybrid product enablement NO-GO.
 Giữ DSL archived/bundles, real-model branches/pilot471a2c79, preserved/, frontend/public và old scratch/database.
 Next action duy nhất sau gates: người dùng quyết định nghiệm thu/tích hợp nhánh nghiên cứu ở lượt riêng.
+
+Cleanup thực tế: registered1→peak2→1, physical[]→[two-line-verify]→[]; verifier, junction và hai task scratch/temp đều đã mất trên ổ đĩa. Nội dung đã xóa 1857181926bytes (gồm review temp 871871bytes trên C); tồn đọng cũ0bytes. D free-volume observed delta 1916272640bytes; không gán toàn bộ chênh lệch này là nhân quả của task. Không còn deletion blocker; old permission-warning caches, old scratch/DB và dữ liệu được bảo vệ giữ nguyên.
+Third full attempt interrupted at94percent, no footer/no credit; final fresh runnerPID22624 exited0, T3 all gatesPASS. Final LOCAL harness follow-up31PASS plus taxonomy completenessPASS, ordinary failures stop1, exact WinError10013 exhaustion stops3 and missing last-attempt fixtures fail; no partial credit.
+Final docs/identity94PASS, docs auditPASS/secret0; candidateverify vẫn khớp. Temp của doc tests 45.0bytes đã dọn; tổng nội dung task đã xóa 1857181971.0bytes.

@@ -6,9 +6,9 @@ REPORT = docs/evaluation/geometry/runs/two-line-plane-section/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/two-line-plane-section/
 CORRECTED_BY = NONE
 CORRECTS = SOURCE_GROUNDING_INTEGRATION
-CLASSIFICATION = LOCAL_RESEARCH_GROUP_A_PRODUCT_FROZEN
+CLASSIFICATION = LOCAL_RESEARCH_GROUP_A_GO_NO_PUSH
 CODE_COMMIT = 2b42eb40
-VERIFICATION_COMMIT = PENDING
+VERIFICATION_COMMIT = 69ff3a16
 MODEL_REQUEST_COUNT = 0
 
 New strict two-line plane/section composition, no second authority; intentional additive B surface change.

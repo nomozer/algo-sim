@@ -1,0 +1,61 @@
+{
+  "status": "CLEANUP_COMPLETE_WITHIN_TASK_SCOPE",
+  "registered_before": 1,
+  "registered_peak": 2,
+  "registered_after": 1,
+  "physical_before": [],
+  "physical_peak": [
+    "two-line-verify"
+  ],
+  "physical_after": [],
+  "removed": [
+    ".superpowers\\worktrees\\two-line-verify",
+    ".superpowers\\two-line-temp",
+    ".superpowers\\two-line-section"
+  ],
+  "old_content_bytes_removed": 0,
+  "task_main_drive_content_bytes_removed": 1856310100.0,
+  "task_review_temp_content_bytes_removed": 871871,
+  "task_total_content_bytes_removed": 1857181971.0,
+  "observed_D_free_volume_delta": 1916272640,
+  "allocation_delta_attribution": "Observed free-volume delta is not assigned as causal byte-for-byte attribution; file sizes are logical contents actually removed, excluding the node_modules junction/shared target.",
+  "junction_shared_target_preserved": true,
+  "attribute_normalization": {
+    "readonly_owned_files": 678,
+    "hidden_owned_git_directories": 30,
+    "ACL_changes": 0,
+    "owner_changes": 0,
+    "force_used": false
+  },
+  "protected_snapshots_equal_before_after": true,
+  "deletion_blockers": [],
+  "permission_notes": [
+    "git worktree remove deregistered but physical deletion returned Invalid argument; native current-permission deletion removed remaining owned directory.",
+    "Old backend/.pytest_cache and backend/.tmp/pytest-05045731f8a046b9ba317bc970ecca11 warning paths preserved; no ACL changes."
+  ],
+  "all_owned_server_browser_processes_stopped": true,
+  "t3_process": {
+    "pid": 22624,
+    "finished_utc": "2026-10-14T01:56:53.2341458Z",
+    "exit": 0
+  },
+  "protected": [
+    "frontend/public/",
+    "backend/algosim.db",
+    "old scratch/.superpowers/preserved/",
+    "DSL archival ref and bundles",
+    "real-model readiness/pilot refs incl471a2c79",
+    "historical A/B/candidates/correction layers"
+  ],
+  "docs_followup": {
+    "readonly_owned_files_cleared": 0,
+    "owner_changes": 0,
+    "path": ".superpowers/two-line-docs-final",
+    "exists_after": false,
+    "observed_D_free_delta": 0,
+    "bytes": 45.0,
+    "files": 1,
+    "ACL_changes": 0,
+    "force_used": false
+  }
+}

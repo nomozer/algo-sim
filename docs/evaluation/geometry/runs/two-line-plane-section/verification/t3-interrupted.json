@@ -1,0 +1,12 @@
+{
+  "status": "INTERRUPTED_NO_T3_CREDIT",
+  "commit": "69ff3a16",
+  "clean_detached": true,
+  "product_commit": "2b42eb40",
+  "last_observed_backend_progress_percent": 94,
+  "full_backend_result": "UNKNOWN",
+  "frontend_result": "NOT_MEASURED",
+  "footer": "NONE",
+  "reason": "Prior exec session became unavailable across continuation; log stopped at94percent without a gate footer. Full PASS cannot be inferred.",
+  "next": "Fresh authoritative full gate at same clean commit, with explicit owned process receipt; no product change."
+}

@@ -1,0 +1,52 @@
+{
+  "registered": [
+    "worktree D:/Documents/projects/algo-sim",
+    "HEAD 69ff3a1634f8bd5b79ff4f853b8da6dc4e11e2c2",
+    "branch refs/heads/research/goal-directed-two-line-plane-section",
+    ""
+  ],
+  "trees": [
+    {
+      "exists": false,
+      "path": ".superpowers/worktrees/two-line-verify",
+      "files": 0,
+      "links": [],
+      "bytes": 0
+    },
+    {
+      "exists": false,
+      "path": ".superpowers/two-line-section",
+      "files": 0,
+      "links": [],
+      "bytes": 0
+    },
+    {
+      "exists": false,
+      "path": ".superpowers/two-line-temp",
+      "files": 0,
+      "links": [],
+      "bytes": 0
+    }
+  ],
+  "protected": [
+    {
+      "sha256": "1fcbdce56c8911af28775e6a89986927e3bc40183d35e5cd80145ea7c5c1ec93",
+      "bytes": 286720,
+      "path": "backend/algosim.db"
+    },
+    {
+      "sha256": "c5172af1ced0ad43d18e8d66d4270870fe60cf02cb175c3d0f0287ef7f52439b",
+      "bytes": 5470,
+      "path": "frontend/public/favicon.svg"
+    }
+  ],
+  "physical_worktrees": [],
+  "protected_refs": [
+    "refs/heads/docs/real-model-e2e-readiness 4cfa547f0989e53b917cc020adf59e250acbf68d",
+    "refs/heads/feat/real-model-pilot-tooling 471a2c796b44bf9bf8fc14ca02a5a365b440c2a7",
+    "refs/heads/main 5270f3ddf63050efca14dab403912d8ed30e1113",
+    "refs/heads/research/compact-geometry-dsl 3db08a1e3c8a47a7284b7dbdfaac112640106593"
+  ],
+  "schema": "task_cleanup_inventory/1",
+  "free_volume_bytes": 76475416576
+}

@@ -1,0 +1,23 @@
+{
+  "status": "FULL_PRODUCT_GATE_PASS",
+  "commit": "69ff3a16",
+  "product_commit": "2b42eb40eda7479ad088846be44f9757501e7047",
+  "clean_detached": true,
+  "backend": {
+    "passed": 9274,
+    "skipped": 1,
+    "deselected": 2,
+    "xfailed": 6
+  },
+  "frontend": {
+    "passed": 1053,
+    "files": 68
+  },
+  "build": "PASS",
+  "demo": "5/5",
+  "crash_surface": "6/6",
+  "seconds": 466.0,
+  "receipt": "verification/t3-authoritative.log",
+  "sha256": "4065563f3736d86ce710e115f742d582b8c4878d4993b951808763909deebbff",
+  "local_socket_retry_warnings": 0
+}

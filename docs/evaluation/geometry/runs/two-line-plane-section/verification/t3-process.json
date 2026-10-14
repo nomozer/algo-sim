@@ -1,0 +1,8 @@
+{
+  "command": "node scripts/full-gate.mjs",
+  "started_utc": "2026-10-14T01:49:05.7349408Z",
+  "stderr": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\runs\\two-line-plane-section\\verification\\t3-authoritative.stderr.log",
+  "stdout": "D:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\runs\\two-line-plane-section\\verification\\t3-authoritative.log",
+  "pid": 22624,
+  "commit": "69ff3a16"
+}

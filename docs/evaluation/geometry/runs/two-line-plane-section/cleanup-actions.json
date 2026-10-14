@@ -1,0 +1,13 @@
+{
+  "removed": [
+    ".superpowers\\worktrees\\two-line-verify",
+    ".superpowers\\two-line-temp",
+    ".superpowers\\two-line-section"
+  ],
+  "hidden_owned_git_directories_cleared": 30,
+  "owner_changes": 0,
+  "readonly_attributes_cleared": 678,
+  "ACL_changes": 0,
+  "force_used": false,
+  "junction_shared_target_preserved": true
+}

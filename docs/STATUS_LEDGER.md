@@ -9,7 +9,7 @@ Independent read-only review NONBLOCKING after complete premise/aux quote closur
 Development45=12correct served/33correct refusals; postfreeze heldout32=11/21; no wrong served/false refusal in these strata.
 Algorithm-independent halfspace/Gram oracle, same author disclosed. Historical30 byte-identical19/9/0/2.
 B schema/prompt intentionally changed, fake adapter only; Gemini0. Default/cache125/Hybrid off; B containment deferred.
-Final gates/cleanup: run [`two-line-plane-section`](evaluation/geometry/runs/two-line-plane-section/report.md).
+T3 clean69ff3a16 PASS backend9274/frontend1053; SwiftShader+Intel D3D11 PASS. Final gates/cleanup: run [`two-line-plane-section`](evaluation/geometry/runs/two-line-plane-section/report.md).
 Only next action is user's research integration decision after final gates, no additional slice authorized here.
 
 ## Compact DSL research closure — 2026-10-13

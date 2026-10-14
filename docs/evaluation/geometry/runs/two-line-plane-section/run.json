@@ -5,7 +5,7 @@
   "date": "2026-10-14",
   "environment": "LOCAL Windows",
   "naming_policy": "docs/evaluation/RUN_NAMING.md",
-  "status": "PRODUCT_FROZEN_FINAL_GATES_PENDING",
+  "status": "GROUP_A_GO_RESEARCH_ONLY_NO_PUSH_CLEANUP_COMPLETE",
   "branch": "research/goal-directed-two-line-plane-section",
   "main_before": "5270f3ddf63050efca14dab403912d8ed30e1113",
   "main_after": "5270f3ddf63050efca14dab403912d8ed30e1113",
@@ -24,16 +24,190 @@
   "clean_detached_freeze": true,
   "group_A": "IMPLEMENTED_BOUNDED",
   "group_B": "DEFERRED_WITH_REASON: no audited contains-line source variant or acceptance corpus in this preregistered A freeze; strict A cannot be used for containment. B requires a distinct extraction/source/goal certificate. Do not expand a frozen A product after its heldout.",
-  "review": "NONBLOCKING_LOCAL_INDEPENDENT",
+  "review": {
+    "verdict": "NONBLOCKING",
+    "independent_local": true,
+    "remaining_critical_important": 0,
+    "focused": 212,
+    "final_tiny_check": 3,
+    "harness_followup": 31,
+    "receipt": "review.md"
+  },
   "live_calls": 0,
   "Hybrid_product_enablement": "NO_GO",
   "verification": {
     "focused": {
-      "passed": 111
+      "passed": 111,
+      "receipt": "verification/focused.log"
     },
-    "T3": "NOT_MEASURED",
-    "heldout": "SEALED_UNUSED",
-    "browser": "IN_PROGRESS"
+    "taxonomy_connected": {
+      "passed": 205,
+      "xfailed": 4,
+      "receipt": "verification/taxonomy-green.log"
+    },
+    "t3": {
+      "status": "FULL_PRODUCT_GATE_PASS",
+      "commit": "69ff3a16",
+      "product_commit": "2b42eb40eda7479ad088846be44f9757501e7047",
+      "clean_detached": true,
+      "backend": {
+        "passed": 9274,
+        "skipped": 1,
+        "deselected": 2,
+        "xfailed": 6
+      },
+      "frontend": {
+        "passed": 1053,
+        "files": 68
+      },
+      "build": "PASS",
+      "demo": "5/5",
+      "crash_surface": "6/6",
+      "seconds": 466.0,
+      "receipt": "verification/t3-authoritative.log",
+      "sha256": "4065563f3736d86ce710e115f742d582b8c4878d4993b951808763909deebbff",
+      "local_socket_retry_warnings": 0,
+      "process_exit": 0,
+      "interrupted_receipt": "verification/t3-interrupted.json"
+    },
+    "heldout": {
+      "cases": 32,
+      "counts": {
+        "correct_served": 11,
+        "correct_refusal": 21
+      },
+      "opened_after_product_freeze": true,
+      "receipt": "heldout/metrics.json"
+    },
+    "development": {
+      "cases": 45,
+      "counts": {
+        "correct_served": 12,
+        "correct_refusal": 33
+      },
+      "receipt": "development/metrics.json"
+    },
+    "browser": {
+      "status": "LOCAL_HARNESS_PASS",
+      "SwiftShader": "PASS",
+      "Intel_UHD_D3D11": "PASS",
+      "API_product_e2e": "NOT_MEASURED",
+      "human_visual_acceptance": "NOT_APPROVED",
+      "receipt": "visual/acceptance-summary.json"
+    },
+    "earlier_t3_attempts": [
+      "verification/t3-first-failure.json",
+      "verification/t3-second-failure.json",
+      "verification/t3-interrupted.json"
+    ],
+    "docs_final": {
+      "status": "PASS",
+      "secret_leaks": 0,
+      "receipt": "verification/docs-handoff-final.json"
+    },
+    "candidate_verify": {
+      "status": "PASS",
+      "receipt": "verification/candidate-verify.log"
+    },
+    "docs_identity_final": {
+      "passed": 94,
+      "receipt": "verification/docs-identity-final.log"
+    }
   },
-  "freeze_failed_attempt": "Initial command started before worktree checkout completed: missing schema, no manifest written; retried only after checkout exit0 and clean git status."
+  "freeze_failed_attempt": "Initial command started before worktree checkout completed: missing schema, no manifest written; retried only after checkout exit0 and clean git status.",
+  "freeze_commit": "8ede808e",
+  "verification_commit": "69ff3a16",
+  "provider_surfaces": {
+    "A": "912b22ef7f89851412b8ff026012454d1f9aa225bdd5bd00eb0d8f2dbd53fa3e",
+    "B": "145feb1873eac91fab1336f3f6aded7b792d82a9d3599e446087fe6b33a489b5",
+    "declarations": "f2ec9698a4ee8af86448790f83d9af340eb6afcfce0a8f258ea67e46bf7504b1",
+    "declarations_hash_serialization": "json.dumps(ensure_ascii=False,sort_keys=True), UTF-8 (default separators)",
+    "B_previous": "4a20601fb398da4f5a1d72fb2b430616a5dd26cbe1ba08d97c3a0f815917d31e",
+    "changed": [
+      "TypedFact.plane_relation adds parallel_two_lines",
+      "TypedFact.plane_name optional globally, required by this variant",
+      "fact_extraction instruction9"
+    ],
+    "compatibility": "Additive optional field/enum; existing fixtures valid. Old provider pin deliberately replaced, not byte-identical B; new model-facing extraction path exercised with fake provider through actual run_ai_fact_route.",
+    "Gemini_new_fact_extraction": "NOT_MEASURED",
+    "live_calls": 0
+  },
+  "benchmark": {
+    "cases": 30,
+    "counts_each_arm": [
+      19,
+      9,
+      0,
+      2
+    ],
+    "byte_identical": true,
+    "sha256": "febb5b602fcb194c502e07ea47fe4200ed4083f0b09bac12784b2536940ab12e"
+  },
+  "remote_main_readback": "5270f3ddf63050efca14dab403912d8ed30e1113",
+  "default": "LLM_ONLY",
+  "cache_version": 125,
+  "next_action": "TWO_LINE_PLANE_SECTION_INTEGRATION_DECISION",
+  "cleanup": {
+    "status": "CLEANUP_COMPLETE_WITHIN_TASK_SCOPE",
+    "registered_before": 1,
+    "registered_peak": 2,
+    "registered_after": 1,
+    "physical_before": [],
+    "physical_peak": [
+      "two-line-verify"
+    ],
+    "physical_after": [],
+    "removed": [
+      ".superpowers\\worktrees\\two-line-verify",
+      ".superpowers\\two-line-temp",
+      ".superpowers\\two-line-section"
+    ],
+    "old_content_bytes_removed": 0,
+    "task_main_drive_content_bytes_removed": 1856310100.0,
+    "task_review_temp_content_bytes_removed": 871871,
+    "task_total_content_bytes_removed": 1857181971.0,
+    "observed_D_free_volume_delta": 1916272640,
+    "allocation_delta_attribution": "Observed free-volume delta is not assigned as causal byte-for-byte attribution; file sizes are logical contents actually removed, excluding the node_modules junction/shared target.",
+    "junction_shared_target_preserved": true,
+    "attribute_normalization": {
+      "readonly_owned_files": 678,
+      "hidden_owned_git_directories": 30,
+      "ACL_changes": 0,
+      "owner_changes": 0,
+      "force_used": false
+    },
+    "protected_snapshots_equal_before_after": true,
+    "deletion_blockers": [],
+    "permission_notes": [
+      "git worktree remove deregistered but physical deletion returned Invalid argument; native current-permission deletion removed remaining owned directory.",
+      "Old backend/.pytest_cache and backend/.tmp/pytest-05045731f8a046b9ba317bc970ecca11 warning paths preserved; no ACL changes."
+    ],
+    "all_owned_server_browser_processes_stopped": true,
+    "t3_process": {
+      "pid": 22624,
+      "finished_utc": "2026-10-14T01:56:53.2341458Z",
+      "exit": 0
+    },
+    "protected": [
+      "frontend/public/",
+      "backend/algosim.db",
+      "old scratch/.superpowers/preserved/",
+      "DSL archival ref and bundles",
+      "real-model readiness/pilot refs incl471a2c79",
+      "historical A/B/candidates/correction layers"
+    ],
+    "docs_followup": {
+      "readonly_owned_files_cleared": 0,
+      "owner_changes": 0,
+      "path": ".superpowers/two-line-docs-final",
+      "exists_after": false,
+      "observed_D_free_delta": 0,
+      "bytes": 45.0,
+      "files": 1,
+      "ACL_changes": 0,
+      "force_used": false
+    }
+  },
+  "handoff": "handoff.md",
+  "handoff_commit_role": "SELF: documentation-only final record after clean69ff3a16 full gate; measured product unchanged"
 }

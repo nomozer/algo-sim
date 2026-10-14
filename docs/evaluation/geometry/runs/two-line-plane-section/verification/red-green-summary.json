@@ -1,0 +1,67 @@
+{
+  "initial_product_baseline": "5270f3dd",
+  "preregistered_RED_commit": "fb8fbc8e",
+  "initial_RED": {
+    "failed": 46,
+    "passed": 23,
+    "caveat": "Many negative controls only refused because the old schema did not support the new variant; positive absence is the capability RED."
+  },
+  "final_product": "2b42eb40",
+  "feature_GREEN": {
+    "passed": 111
+  },
+  "source_fixes": {
+    "perpendicular_length": {
+      "RED_failed": 4,
+      "RED_passed": 5
+    },
+    "all_premise_quotes": {
+      "RED_failed": 9,
+      "RED_passed": 3
+    },
+    "auxiliary_quote_prefix": {
+      "RED_failed": 3
+    },
+    "independent_final": "NONBLOCKING"
+  },
+  "taxonomy_GREEN": {
+    "passed": 205,
+    "xfailed": 4
+  },
+  "socket_fixture_GREEN": {
+    "passed": 31,
+    "retry_warnings": 2
+  },
+  "raw_log_hashes_before_cleanup": {
+    "aux-closure-green.log": "4fc3b2b9fac02006b01dbd4bddc1e9dd731222174ebb733445256c748ee4eabc",
+    "aux-closure-red.log": "6aefe89d6849b6c8778e5f54517039cdd1b553f4a9d3da5923e11c0c52a97828",
+    "aux-order-green.log": "343dc2b45a08ad009c4f872a21f549f176f8e0f78dc8656cbc1099496be1b4c3",
+    "aux-order-red.log": "0406e05fab82a183074780491b111f8057f2fc5e813c88c173ca9ad6f8943f0e",
+    "closure-green.log": "f6d945abef0891556b9f19e32142d96a525cbc792f7954c5d325f69b6f19ff06",
+    "closure-red.log": "07aa9266c0936f475fc8fdcaacba925304efdcc0a48890dbf845c33801455f6f",
+    "cluster.log": "859baf50d52afcd3cba0facbae753526c003bf25a287f31f40b7bd99bc5cdad7",
+    "extended.log": "6041cd1e5c26849fab653fefa3a86ad55d28a122e484b35cdca173af0b1b82ae",
+    "final-feature-green.log": "4bea6e0e0973d3fbb165ed47632a82c989adfea0654e441174bfb6f69f029a8b",
+    "final-feature.log": "b7038320177bd4f66d07529799d5e18944f8d8507afa5eea75d570cfeff7a67f",
+    "green.log": "4c151a9eb013aa03772996c276cbb0adf5cbf95d70f1470ab92a4df7c6a7ce7f",
+    "green2.log": "cbf12ac512698e1ca63fc3123d47736bbbb60b67838b600c9b6f54669fde5850",
+    "green3.log": "4cf13b3661a8de5d2d8c369ceb211313af4c77be60c0f492f7f754adb5c20012",
+    "green4.log": "7e37a9cf86d362e093a3a1b8801cceb642eb11769cc8e8441b2745317b3af104",
+    "independent-green.log": "63ee8624f79c8e35ebf9db8157db20a25e71cadfa6074fd49b3813b2b4532bd1",
+    "independent-red.log": "a9b364e0883a401b1bac7bd9515957347a0f859ed448e3e57674fbb98a5af1fd",
+    "learner-repro.log": "9a25ba7ea6b3bd0719a0358dbb91273a08e9cbc02e5f2a6cd58b6da7aeeb378f",
+    "learner-retry-green.log": "b96ee2487871fb58b48a89abc52639095c6c9c34eddf4264e82c15863bcc827e",
+    "learner-root-repro.log": "5a785009c93156c395593e49108449d8616d6032f9acdb7ecb9706d217b46e21",
+    "names-green.log": "1e53f04dd9fab79c04d7c8048b31ac5049c395c0889624b90fe44a6f40df5946",
+    "names-red.log": "1f25c65d9ab1758167a71e3e4adafcd78c0de5b239a70d6e23f5fd701f87449c",
+    "naming-green.log": "48457b2c160e43e87a24609fee2c72d648bd41771b7dbcfe89c178036ceea6ae",
+    "oracle-green.log": "359cf4fb13cbf316e1f2bb0d3236c3af956ec002e4b159a436d5dc9590ed90fc",
+    "red.log": "1fda374f4d7589c2f26a250c2d20ef2043e810efd023f14aa415757775c816c9",
+    "review-red.log": "17ba600e19186140a1d922c451a091d3cfa81b4872b5d7c51281822c6f4af7e0",
+    "t3-first-failure.log": "d4bc922067544e0351b022c9721f07e8f169a919e9a7a4389da6079f83002fc2",
+    "t3-interrupted.log": "765bf24562b34a27d4993de0562a0d506ba9a9009e23d500b2879707931b1e3c",
+    "t3-second-failure.log": "87f96e364b61a655f365f05d4f5c7e8c9e40307573293a7a422bed271dfa3bed",
+    "taxonomy-green.log": "8e770d279bee541daae569cfeeb8f403e0502a60e8a067746709d96954ae1255",
+    "taxonomy-red.log": "7e64167eca4efd8efc2b8b3fec810f8570323e94800062de589d7f5ee1f6917d"
+  }
+}

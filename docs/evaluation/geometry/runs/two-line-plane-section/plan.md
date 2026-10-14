@@ -14,12 +14,16 @@ Schema B changes intentional; A/IR/default/cache unchanged. Duplicate/cycle risk
 depth1/MAX_CALLS64/MAX_DERIVED_PLANES4. Exclude general parser/search, DSL, new engine, live/default/merge/push.
 Stop if architecture must expand, wrong served remains or mandatory review unavailable. Preserve all protected data.
 
-- [ ] Preregister corpus and independent math oracle, seal heldout; commit before Planner edits.
-- [ ] RED minimal positive/strict-contained/parallel-direction/source/adversarial controls at base.
-- [ ] Extend schema and SAME rule plumbing: point + two lines, fresh translates, shared plane, strict postconditions.
-- [ ] GREEN exact oracle and mutation/metamorphic/adapter/dependency checks; baseline 30 cases separately.
-- [ ] A acceptance before deciding B; B deferred if reuse/gates insufficient.
-- [ ] Independent LOCAL read-only review; fixes RED→GREEN plus final rereview.
-- [ ] Real Hybrid Scene3D exports; existing harness, SwiftShader + available GPU; no API/product-page claim.
-- [ ] Product commit, clean refreeze + additive candidate divergence; clean detached T3/doc/identity gates.
-- [ ] Commit receipts/handoff; clean only this task's verification worktrees/junction/temp/processes; main remains base.
+- [x] Preregister corpus and independent math oracle, seal heldout; commit before Planner edits.
+- [x] RED minimal positive/strict-contained/parallel-direction/source/adversarial controls at base.
+- [x] Extend schema and SAME rule plumbing: point + two lines, fresh translates, shared plane, strict postconditions.
+- [x] GREEN exact oracle and mutation/metamorphic/adapter/dependency checks; baseline 30 cases separately.
+- [x] A acceptance before deciding B; B deferred if reuse/gates insufficient.
+- [x] Independent LOCAL read-only review; fixes RED→GREEN plus final rereview.
+- [x] Real Hybrid Scene3D exports; existing harness, SwiftShader + available GPU; no API/product-page claim.
+- [x] Product commit, clean refreeze + additive candidate divergence; clean detached T3/doc/identity gates.
+- [x] Commit receipts/handoff; clean only this task's verification worktrees/junction/temp/processes; main remains base.
+
+Ruling: A is the frozen accepted scope; B remains a separate unaudited containment/source variant, not an A alias. Math reuse is available; this is not a claim that architecture must grow. Cost: B questions still refuse.
+Ruling: exact local WinError10013 fixture retries are bounded3 and reported; all geometry/assertion failures stop. Cost: local infrastructure can still block the gate after three tries.
+Verification: T3 clean69ff3a16 PASS backend9274/frontend1053; initial taxonomy FAIL, fixture ERROR and interrupted run retained as receipts, never credited. Native physical cleanup removed all three owned trees; shared node_modules protected.

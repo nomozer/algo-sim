@@ -1,6 +1,6 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL override — compact-dsl-closure, 2026-10-13
+## LOCAL override — two-line-plane-section, 2026-10-14
 
 CANONICAL_NEXT_ACTION = TWO_LINE_PLANE_SECTION_INTEGRATION_DECISION
 
@@ -11,7 +11,7 @@ Exact contains/disjoint checks; complete closed premise/auxiliary quotes; no sec
 Candidate `c2ac6dbe…` (110 files), B surface intentionally `145feb18…`, A/declarations unchanged. Cache125/default
 LLM_ONLY unchanged; named-plane display opt-in on the new research route. 111 focused tests PASS; independent review
 nonblocking. Development corpus 12 correct served /33 correct refusals, wrong served0; historical30 remain19/9/0/2.
-Final clean gates/heldout/browser receipts: [`two-line-plane-section`](evaluation/geometry/runs/two-line-plane-section/report.md).
+T3 clean69ff3a16 PASS backend9274/frontend1053; heldout11/21 wrong0; SwiftShader+Intel D3D11 PASS. Receipts: [`two-line-plane-section`](evaluation/geometry/runs/two-line-plane-section/report.md).
 Hybrid product enablement remains NO-GO; next is user's research integration decision after those gates.
 
 `COMPACT_DSL = NO-GO_ARCHIVED` (quyết định của người dùng): Typed Facts structured JSON giữ làm định dạng AI → Hybrid;

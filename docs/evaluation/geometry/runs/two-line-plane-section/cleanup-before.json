@@ -1,0 +1,71 @@
+{
+  "registered": [
+    "worktree D:/Documents/projects/algo-sim",
+    "HEAD 69ff3a1634f8bd5b79ff4f853b8da6dc4e11e2c2",
+    "branch refs/heads/research/goal-directed-two-line-plane-section",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/two-line-verify",
+    "HEAD 69ff3a1634f8bd5b79ff4f853b8da6dc4e11e2c2",
+    "detached",
+    ""
+  ],
+  "physical_worktrees": [
+    {
+      "target": null,
+      "name": "two-line-verify",
+      "link": null
+    }
+  ],
+  "protected": [
+    {
+      "sha256": "1fcbdce56c8911af28775e6a89986927e3bc40183d35e5cd80145ea7c5c1ec93",
+      "path": "backend/algosim.db",
+      "bytes": 286720
+    },
+    {
+      "sha256": "c5172af1ced0ad43d18e8d66d4270870fe60cf02cb175c3d0f0287ef7f52439b",
+      "path": "frontend/public/favicon.svg",
+      "bytes": 5470
+    }
+  ],
+  "protected_refs": [
+    "refs/heads/docs/real-model-e2e-readiness 4cfa547f0989e53b917cc020adf59e250acbf68d",
+    "refs/heads/feat/real-model-pilot-tooling 471a2c796b44bf9bf8fc14ca02a5a365b440c2a7",
+    "refs/heads/main 5270f3ddf63050efca14dab403912d8ed30e1113",
+    "refs/heads/research/compact-geometry-dsl 3db08a1e3c8a47a7284b7dbdfaac112640106593"
+  ],
+  "free_volume_bytes": 74559143936,
+  "schema": "task_cleanup_inventory/1",
+  "trees": [
+    {
+      "exists": true,
+      "bytes": 1712238364,
+      "links": [
+        {
+          "target": "D:\\Documents\\projects\\algo-sim\\frontend\\node_modules",
+          "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\two-line-verify\\frontend\\node_modules",
+          "type": "Junction"
+        }
+      ],
+      "unreadable": [],
+      "files": 13786,
+      "path": ".superpowers/worktrees/two-line-verify"
+    },
+    {
+      "exists": true,
+      "bytes": 5774487,
+      "links": [],
+      "unreadable": [],
+      "files": 337,
+      "path": ".superpowers/two-line-section"
+    },
+    {
+      "exists": true,
+      "bytes": 138295284,
+      "links": [],
+      "unreadable": [],
+      "files": 12671,
+      "path": ".superpowers/two-line-temp"
+    }
+  ]
+}
