@@ -117,13 +117,13 @@ def hop_dong_to_po_da_khai(calls: tuple[LoiGoi, ...]) -> Any:
 
     from app.simulation.semantic_program.request_contract import PrismTopologySpec
 
-    khoi = [c for c in calls if c.fn in ("pyramid", "prism")]
+    khoi = [c for c in calls if c.fn in ("pyramid", "regular_pyramid", "prism")]   # the calls `thu_khoi` builds solids from
     if len(khoi) != 1:
         return None
     a, nhan = khoi[0].args, r"A-Za-z0-9'′"
     phay = lambda s: s.replace("′", "'")            # A′ and A' are the same source name
-    dau = [a.apex] if khoi[0].fn == "pyramid" else list(a.base)
-    sau = list(a.base) if khoi[0].fn == "pyramid" else list(a.top)
+    dau = list(a.base) if khoi[0].fn == "prism" else [a.apex]
+    sau = list(a.top) if khoi[0].fn == "prism" else list(a.base)
     ky_hieu = "".join(map(re.escape, map(phay, dau))) + r"\s*\.\s*" + "".join(map(re.escape, map(phay, sau)))
     if not any(re.search(rf"(?<![{nhan}]){ky_hieu}(?![{nhan}])", phay(q)) for q in khoi[0].quotes):
         return None
