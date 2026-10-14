@@ -1,0 +1,27 @@
+{
+  "schema": "PROVIDER_SURFACE_CHANGE/1",
+  "baseline_commit": "19140e2f",
+  "old": {
+    "A": "912b22ef7f89851412b8ff026012454d1f9aa225bdd5bd00eb0d8f2dbd53fa3e",
+    "B": "145feb1873eac91fab1336f3f6aded7b792d82a9d3599e446087fe6b33a489b5",
+    "declarations": "f2ec9698a4ee8af86448790f83d9af340eb6afcfce0a8f258ea67e46bf7504b1"
+  },
+  "current": {
+    "A": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+    "B": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "declarations": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"
+  },
+  "intentional": true,
+  "changes": [
+    "TypedFact: optional line_ref with source fact ID, exactly-one operand validation",
+    "ProjectionLineArgs: nullable Seg line + nullable producer line_ref, exactly one at runtime",
+    "Fact extraction prompt rule 10: source-bound references, preserve roles",
+    "Internal planning metadata excluded from function declarations"
+  ],
+  "old_fixtures_compatible": true,
+  "Gemini_extraction": "NOT_MEASURED",
+  "live_calls": 0,
+  "default_route": "LLM_ONLY unchanged; research modules not in API import closure",
+  "cache_version": 125,
+  "metadata_exposed_to_provider": false
+}

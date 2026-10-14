@@ -37,7 +37,7 @@ from app.simulation.semantic_program import ir_builders as P
 
 from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de
 
-ENGINE_VERSION = "geometry-function-engine/2"
+ENGINE_VERSION = "geometry-function-engine/3"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -190,6 +190,8 @@ class _Dung:
         self.tam: str | None = None
         self.midpoints: dict[str, tuple[str, str]] = {}
         self.constructions: dict[str, LoiGoi] = {}
+        self.lines: dict[str, Line3] = {}       # existing entity store: verified source-bound line results
+        self.line_refs = {c.args.line_ref for c in calls if c.fn=='orthogonal_projection_line' and c.args.line_ref}
         self.sections: list[str] = []           # biến IR của thiết diện đã dựng (kiểm khép kín sau khi thực thi)
         self.mat_phu: list[dict] = []           # mặt phẳng dẫn xuất đã khai (`MAT_SONG_SONG`), kiểm ở `kiem_mat_cat`
         self.ten_mat_phu: dict[str, str | None] = {}   # tên đề đặt cho mỗi mặt dẫn xuất — do `kiem_nguon` trả về
@@ -398,18 +400,38 @@ class _Dung:
                          data={"points": thieu})
 
     def _mot_buoc(self) -> bool:
+        for c in self.of('intersection_line'):
+            if c.id in self.line_refs and c.id not in self.lines and set(c.args.plane1+c.args.plane2) <= self.pts.keys():
+                try:
+                    with _metric.using(self.metric()):
+                        planes = (self._plane(c.args.plane1),self._plane(c.args.plane2))
+                        line = K.intersect_plane_plane(*planes)
+                        verified = all(p.signed_eval(line.point)==0 and p.normal.dot(line.direction)==0 for p in planes)
+                        if not verified:
+                            raise TuChoi('ENGINE_SELF_CHECK_FAILED','giao tuyến không thuộc hai mặt',(c.id,))
+                        self.lines[c.id]=line
+                except GeometryError as e:
+                    raise TuChoi(e.code,str(e),(c.id,)) from None
+                self.trace.append({'step':'resolve_line','object':f'gt_{c.id}','producer':c.fn,'calls':[c.id],
+                                   'dependencies':list(dict.fromkeys(c.args.plane1+c.args.plane2)),
+                                   'provenance':'DERIVED','relation_verified':verified})
+                return True
         for c in self.of("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "orthogonal_projection",
                          "translate_point"):
             a = c.args
             p = a.point if c.fn.startswith("intersect") else a.image
             if c.fn in ("orthogonal_projection", "translate_point") and a.point == a.image:
                 raise TuChoi("PRECONDITION_FAILED", f"{c.id}: ảnh trùng tên điểm đầu vào", (c.id,))
-            if p not in self.pts and all(v in self.pts for v in self._construction_dependencies(c)):
+            if (p not in self.pts and all(v in self.pts for v in self._construction_dependencies(c))
+                    and (not getattr(a,'line_ref',None) or a.line_ref in self.lines)):
                 xyz = self._construct(c)
                 self.constructions[p] = c
                 self._dat(p, xyz, c.fn, {c.id}, "DERIVED")
                 self.trace[-1].update(producer=c.fn, dependencies=list(self._construction_dependencies(c)),
                                       relation_verified=self._construction_relation(c))
+                if getattr(a,'line_ref',None):
+                    self.trace[-1]['dependencies'].append(f'gt_{a.line_ref}')
+                    self.trace[-1]['result_binding'] = a.line_ref
                 if not self.trace[-1]["relation_verified"]:
                     raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{c.id}: quan hệ dựng không được thỏa", (c.id,))
                 self.dung.add(c.id)
@@ -575,7 +597,7 @@ class _Dung:
         elif c.fn == "intersect_line_plane":
             pts = a.line + a.plane
         elif c.fn == "orthogonal_projection_line":
-            pts = [a.point] + a.line
+            pts = [a.point] + (a.line or [])
         elif c.fn == "translate_point":
             pts = [a.point] + a.vector
         else:
@@ -603,7 +625,8 @@ class _Dung:
             return self._line(a.line), self._plane(a.plane)
         if c.fn == "translate_point":
             return Vec3(*self.pts[a.point]), Vec3(*self.pts[a.vector[1]]) - Vec3(*self.pts[a.vector[0]])
-        return Vec3(*self.pts[a.point]), (self._line(a.line) if c.fn.endswith("_line") else self._plane(a.plane))
+        return Vec3(*self.pts[a.point]), ((self.lines[a.line_ref] if a.line_ref else self._line(a.line))
+                                        if c.fn.endswith("_line") else self._plane(a.plane))
 
     def _construct(self, c: LoiGoi) -> V3:
         try:
@@ -726,6 +749,7 @@ class _Dung:
 
     # ── IR ──────────────────────────────────────────────────────────────────
     def bien_dich(self) -> tuple[dict[str, Any], dict[str, str]]:
+        self.emitted_lines: set[str] = set()
         khai: list[dict[str, Any]] = []
         lenh: list[dict[str, Any]] = []
         khoi_diem: list[tuple[str, list[dict[str, Any]], list[dict[str, Any]]]] = []
@@ -760,7 +784,11 @@ class _Dung:
                     khai.append(P.memory_declaration(vec, "vector3"))
                     expr = {"kind": "translate", "point": ir_name(a.point), "vector": vec}
                 else:
-                    target = line("_line", a.line) if c.fn.endswith("_line") else plane(a.plane)
+                    if c.fn.endswith('_line') and a.line_ref:
+                        producer = next(c for c in self.calls if c.id==a.line_ref)
+                        target = self._emit_intersection(producer,khai,lenh)
+                    else:
+                        target = line("_line", a.line) if c.fn.endswith("_line") else plane(a.plane)
                     expr = {"kind": "project_onto", "point": ir_name(a.point), "target": target}
                 lenh.append({"kind": "construct_point", "target_var": ir_name(t), "label": t, "expr": expr})
                 khai.append(P.memory_declaration(ir_name(t), "point3"))
@@ -939,15 +967,25 @@ class _Dung:
             vet[khoa] = {"step": "construct_section", "object": ten, "rule": c.fn, "calls": [c.id], "provenance": "DERIVED"}
             self.trace.append(vet[khoa])
         for c in self.of("intersection_line"):
-            ten, m1, m2 = f"gt_{c.id}", f"mp1_gt_{c.id}", f"mp2_gt_{c.id}"
-            for m, mp in ((m1, c.args.plane1), (m2, c.args.plane2)):
-                lenh.append({"kind": "construct_plane", "target_var": m, "through": [ir_name(x) for x in mp[:3]],
-                             "label": "(" + "".join(mp) + ")"})
-                khai.append(P.memory_declaration(m, "plane3"))
-            lenh.append({"kind": "assign", "target_var": ten, "expr": {"kind": "intersect_plane_plane", "plane_a": m1, "plane_b": m2}})
-            khai.append(P.memory_declaration(ten, "line3"))
-            self.trace.append({"step": "construct_line", "object": ten, "rule": c.fn, "calls": [c.id], "provenance": "DERIVED"})
+            self._emit_intersection(c,khai,lenh)
         return td
+
+    def _emit_intersection(self, c, declarations, statements):
+        """Emit the existing line IR once, inside the first consumer's dependency block."""
+        name = f'gt_{c.id}'
+        if c.id in self.emitted_lines:
+            return name
+        self.emitted_lines.add(c.id)
+        m1, m2 = f'mp1_gt_{c.id}', f'mp2_gt_{c.id}'
+        for m, labels in ((m1,c.args.plane1),(m2,c.args.plane2)):
+            statements.append({'kind':'construct_plane','target_var':m,'through':[ir_name(p) for p in labels[:3]],
+                               'label':'('+''.join(labels)+')'})
+            declarations.append(P.memory_declaration(m,'plane3'))
+        statements.append({'kind':'assign','target_var':name,'expr':{'kind':'intersect_plane_plane','plane_a':m1,'plane_b':m2}})
+        declarations.append(P.memory_declaration(name,'line3'))
+        if c.id not in self.lines:
+            self.trace.append({'step':'construct_line','object':name,'rule':c.fn,'calls':[c.id],'provenance':'DERIVED'})
+        return name
 
     def metric(self) -> _metric.Metric:
         G2, h2 = self.G2, self.h2 or Fraction(1)
@@ -1046,7 +1084,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         dung.thu_khoi()
         dung.bo_cuc_day()
         dung.giai_phu_thuoc()
-        phu = {x: d for d in auxiliary for x in (d.get("labels") or [d["label"]])}
+        phu = {x: d for d in auxiliary for x in (d.get("labels") or ([d['label']] if d.get('label') else []))}
         for s in dung.trace:                             # điểm phụ: DẪN XUẤT, không phải nhãn của đề — ghi rõ ràng buộc
             if s["step"] == "place_point" and s["object"] in phu:
                 s.update(binding="AUXILIARY", auxiliary_rule=phu[s["object"]]["rule"], goal=phu[s["object"]]["goal"])
@@ -1071,6 +1109,11 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         fm = ket.final_memory
         kernel_ok = all((lambda v: v is not None and (v.x, v.y, v.z) == dung.pts[t])(fm.get(ir_name(t)))
                         for t in dung.pts)
+        kernel_ok = kernel_ok and all(isinstance(fm.get(f'gt_{ref}'),Line3)
+                                     and point_on_line(fm[f'gt_{ref}'].point,line)
+                                     and not fm[f'gt_{ref}'].direction.is_zero()
+                                     and fm[f'gt_{ref}'].direction.cross(line.direction).is_zero()
+                                     for ref,line in dung.lines.items())
         if not kernel_ok:
             raise TuChoi("ENGINE_SELF_CHECK_FAILED", "điểm kernel thực thi khác bố cục engine")
         if hong := [t for t in dung.sections if not fm[t].is_closed]:

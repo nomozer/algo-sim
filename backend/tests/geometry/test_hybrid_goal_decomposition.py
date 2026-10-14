@@ -361,11 +361,14 @@ def test_provider_surfaces_are_pinned():
     from app.ai import fact_extraction as FE
     from app.ai import function_calling as FC
 
-    assert FC.surface_fingerprint() == "912b22ef7f89851412b8ff026012454d1f9aa225bdd5bd00eb0d8f2dbd53fa3e"
-    # two-line-plane-section: deliberate minimal TypedFact extension + extraction prompt; no live measurement.
-    assert FE.surface_fingerprint() == "145feb1873eac91fab1336f3f6aded7b792d82a9d3599e446087fe6b33a489b5"
+    # source-bound-result-planning: intentional optional reference transport, approved preregistration.
+    # The previous measured pins remain immutable in their historical runs; this receipt is a new correction layer.
+    receipt = Path(__file__).resolve().parents[3] / 'docs/evaluation/geometry/runs/source-bound-result-planning/provider-surfaces.json'
+    pins = json.loads(receipt.read_text(encoding='utf-8'))['current']
+    assert FC.surface_fingerprint() == pins['A']
+    assert FE.surface_fingerprint() == pins['B']
     decl = json.dumps(RG.function_declarations(), ensure_ascii=False, sort_keys=True).encode()
-    assert hashlib.sha256(decl).hexdigest() == "f2ec9698a4ee8af86448790f83d9af340eb6afcfce0a8f258ea67e46bf7504b1"
+    assert hashlib.sha256(decl).hexdigest() == pins['declarations']
 
 
 # ── 5. source mutants of the new code must be killed ───────────────────────────────────────────────────────────
@@ -426,9 +429,9 @@ MUTANTS = [
     ("planner: decomposes negated goals", PL, "_cau_hoi", ' and f.role == "question" and not f.negated', "",
      lambda: _raises_code(lambda: PL.lap_ke_hoach({"facts": _problem(_dist(
          "Tính khoảng cách từ S đến BD.", "S", "BD", negated=True))["facts"]})) != "UNSUPPORTED_CAPABILITY"),
-    ("planner: ignores taken labels", PL, "_phan_ra", "if n not in k.taken", "if True",
+    ("planner: ignores taken labels", PL, "_EffectResolver", "if n not in self.plan.taken", "if True",
      lambda: _code_of("Tính khoảng cách từ S đến BD.", HB._mid("f5", "H", "S", "C")) is not None),
-    ("planner: asks the wrong segment", PL, "_phan_ra", '{"segment": [p, x]}', '{"segment": [dt[0], x]}',
+    ("planner: asks the wrong segment", PL, "_EffectResolver", "{'segment':[env['P'],env['F']]}", "{'segment':[env['L'][1][0],env['F']]}",
      lambda: _run(_problem(_dist("Tính khoảng cách từ S đến BD.", "S", "BD"))).answers != {"q": "√11"}),
 ]
 

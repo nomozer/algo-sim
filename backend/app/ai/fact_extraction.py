@@ -38,7 +38,12 @@ SYSTEM_PROMPT = (
     "9. Mặt phẳng (P) qua M song song với hai ĐƯỜNG THẲNG AB và CD: plane_relation = parallel_two_lines, "
     "plane_name = P, point = M, points_a = [A,B], points_b = [C,D]. Hai đường là toán hạng vô hạn, không phải đoạn. "
     "Chép cả định nghĩa và yêu cầu thiết diện/diện tích vào quotes, không tự suy ra giao điểm hay phương. "
-    "Mặt chứa một đường rồi song song đường khác chưa hỗ trợ: unsupported, không đổi thành quan hệ hai đường."
+    "Mặt chứa một đường rồi song song đường khác chưa hỗ trợ: unsupported, không đổi thành quan hệ hai đường.\n"
+    "10. Khoảng cách từ điểm đến giao tuyến của hai mặt: khai intersection_line với ID riêng và đúng ba nhãn mỗi mặt; "
+    "question quantity=distance, points_a=[điểm], line_ref=ID ấy, không points/points_b. Hình chiếu lên giao tuyến: "
+    "projection, point=điểm gốc, at=ảnh, line_ref=ID ấy, không points. line_ref chỉ tham chiếu dữ kiện có nguồn, không "
+    "phải nhãn điểm, toạ độ hay chương trình. Producer có thể đứng trước/sau consumer. Giữ nguyên prove/condition/negated; "
+    "yêu cầu dựng giao tuyến là question, không tự biến mục tiêu chứng minh thành premise."
 )
 
 

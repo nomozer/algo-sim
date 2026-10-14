@@ -78,13 +78,23 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
             state = build_simulation_state(r.spec, r.exec_result, r.declared_topology,
                                            prefer_declared_plane_names=bool(two_line))
             # Presentation of the certified auxiliary binding; no new geometry or semantic authority.
-            aux_ids = {ir_name(p) for d in two_line for p in d['labels']}
+            aux_ids = ({ir_name(p) for d in two_line for p in d['labels']}
+                       | {ir_name(d['label']) for d in auxiliary if d.get('effect_binding') and d.get('fresh')})
             vai = {o['id']: o.get('role') for o in state['scene']['objects'] if (o.get('producer') or '').startswith('construct_point.')}
             for obj in state['scene']['objects']:
                 if obj['id'] in aux_ids:
                     obj['role'] = 'Điểm dựng phụ'
                     state['provenance'].setdefault(obj['id'], {})['binding'] = 'AUXILIARY'
             canh = build_scene3d(state)
+            # Existing assign IR returns a geometric line. Its verified construction is not a scalar measurement.
+            bound_lines = {s['object'] for s in r.trace if s.get('step')=='resolve_line' and s.get('relation_verified')}
+            for event in canh['events']:
+                if event.get('object') in bound_lines:
+                    label = event['display_label']
+                    text = f'Dựng {label[:1].lower()}{label[1:]}.'
+                    event.update(action='CREATE',semantic_kind='GEOMETRY_CONSTRUCTION',learner_text=text,explanation=text)
+                    canh['formation']['steps'][event['step_index']].update(
+                        semantic_kind='GEOMETRY_CONSTRUCTION',learner_text=text)
             _ke_diem_dung(canh, vai)
             _gan_nhan_chung_hinh_chieu(canh, r.spec, r.exec_result.final_memory)
     except Exception as e:  # noqa: BLE001 — cảnh hỏng ⇒ từ chối có mã, không phục vụ nửa vời
