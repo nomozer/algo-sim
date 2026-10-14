@@ -58,7 +58,8 @@ def test_prism_topology_is_declared_only_from_source_notation(quote, declared):
     from types import SimpleNamespace as N
     from app.simulation.geometry_functions.engine import hop_dong_to_po_da_khai
     base, top = (['A', 'B', 'C', 'D'], ["A'", "B'", "C'", "D'"]) if 'ABCD' in quote else (['A', 'B', 'C'], ["A'", "B'", "C'"])
-    topo = hop_dong_to_po_da_khai((N(fn='prism', args=N(base=base, top=top), quotes=(quote,)),))
+    topo = getattr(hop_dong_to_po_da_khai((N(fn='prism', args=N(base=base, top=top), quotes=(quote,)),)),
+                   'solid_topology', None)
     assert (getattr(topo, 'solid_kind', None) == 'prism') is declared
     if declared:
         assert topo.base_cycle == tuple(base) and topo.correspondence == tuple(zip(base, top))

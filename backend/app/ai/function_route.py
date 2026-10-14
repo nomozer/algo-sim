@@ -38,6 +38,29 @@ def _gan_nhan_chung_hinh_chieu(canh: dict[str, Any], spec: Any, mem: dict[str, A
         o["perpendicular_witness"] = w
 
 
+def _ke_diem_dung(canh: dict[str, Any], vai: dict[str, str]) -> None:
+    """Lời kể bước dựng một điểm: nói PHÉP DỰNG từ producer + ký hiệu toán hạng, thay "Dựng M." (run
+    `pedagogical-construction-sequencing`). Producer khác dùng vai do `display_names` đã phát; thiếu ký hiệu ⇒ giữ lời cũ.
+    Sửa cả sự kiện lẫn bước hình thành cùng chỉ số (frame k ⇔ trace[k])."""
+    theo_id = {o["id"]: o for o in canh["objects"]}
+    ky = lambda i: (theo_id.get(i) or {}).get("notation")
+    for e in canh["events"]:
+        o = theo_id.get(e.get("object") or "")
+        if e.get("action") != "CREATE" or not o or o["type"] != "point3" or not ky(o["id"]):
+            continue
+        n, nguon = ky(o["id"]), [ky(d) for d in o.get("depends") or ()]
+        if o.get("producer") == "construct_point.midpoint" and len(nguon) == 2 and all(nguon):
+            cau = f"Dựng {n} là trung điểm của đoạn {nguon[0]}{nguon[1]}."
+        elif o.get("producer") == "construct_point.translate" and len(nguon) == 2 and all(nguon):
+            cau = f"Qua {nguon[0]} dựng điểm {n} sao cho vectơ {nguon[0]}{n} bằng vectơ {nguon[1]}."
+        elif vai.get(o["id"]):
+            cau = f"Dựng {n}: {vai[o['id']][:1].lower()}{vai[o['id']][1:]}."
+        else:
+            continue
+        e["learner_text"] = cau
+        canh["formation"]["steps"][e["step_index"]]["learner_text"] = cau
+
+
 def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = (),
                        read_quotes: tuple[str, ...] = ()) -> KetQuaTuyen:
     """`auxiliary` chỉ do `run_fact_route` truyền (điểm phụ của planner); nhánh A không có đường nào đặt nó.
@@ -55,11 +78,13 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
                                            prefer_declared_plane_names=bool(two_line))
             # Presentation of the certified auxiliary binding; no new geometry or semantic authority.
             aux_ids = {ir_name(p) for d in two_line for p in d['labels']}
+            vai = {o['id']: o.get('role') for o in state['scene']['objects'] if (o.get('producer') or '').startswith('construct_point.')}
             for obj in state['scene']['objects']:
                 if obj['id'] in aux_ids:
                     obj['role'] = 'Điểm dựng phụ'
                     state['provenance'].setdefault(obj['id'], {})['binding'] = 'AUXILIARY'
             canh = build_scene3d(state)
+            _ke_diem_dung(canh, vai)
             _gan_nhan_chung_hinh_chieu(canh, r.spec, r.exec_result.final_memory)
     except Exception as e:  # noqa: BLE001 — cảnh hỏng ⇒ từ chối có mã, không phục vụ nửa vời
         return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", f"{type(e).__name__}: {e}", trace=r.trace)

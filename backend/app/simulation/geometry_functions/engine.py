@@ -115,14 +115,45 @@ def hop_dong_to_po_da_khai(calls: tuple[LoiGoi, ...]) -> Any:
     """
     from app.simulation.semantic_program.request_contract import PyramidTopologySpec, RequestContract
 
+    from app.simulation.semantic_program.request_contract import PrismTopologySpec
+
     khoi = [c for c in calls if c.fn in ("pyramid", "prism")]
-    if len(khoi) != 1 or khoi[0].fn != "pyramid":
+    if len(khoi) != 1:
         return None
     a, nhan = khoi[0].args, r"A-Za-z0-9'′"
-    ky_hieu = re.escape(a.apex) + r"\s*\.\s*" + "".join(map(re.escape, a.base))
-    if not any(re.search(rf"(?<![{nhan}]){ky_hieu}(?![{nhan}])", q) for q in khoi[0].quotes):
+    phay = lambda s: s.replace("′", "'")            # A′ and A' are the same source name
+    dau = [a.apex] if khoi[0].fn == "pyramid" else list(a.base)
+    sau = list(a.base) if khoi[0].fn == "pyramid" else list(a.top)
+    ky_hieu = "".join(map(re.escape, map(phay, dau))) + r"\s*\.\s*" + "".join(map(re.escape, map(phay, sau)))
+    if not any(re.search(rf"(?<![{nhan}]){ky_hieu}(?![{nhan}])", phay(q)) for q in khoi[0].quotes):
         return None
+    if khoi[0].fn == "prism":     # pedagogical-construction-sequencing: base / top face / lateral edges, source-declared
+        return RequestContract(solid_topology=PrismTopologySpec(base_cycle=tuple(a.base), top_cycle=tuple(a.top),
+                                                                correspondence=tuple(zip(a.base, a.top))))
     return RequestContract(solid_topology=PyramidTopologySpec(apex=a.apex, base_cycle=tuple(a.base)))
+
+
+def thu_tu_su_pham(khoi_diem: list[tuple[str, list[dict[str, Any]]]], dinh_khoi: set[str]
+                   ) -> tuple[list[tuple[str, list[dict[str, Any]]]], list[tuple[str, list[dict[str, Any]]]]]:
+    """Point blocks `(name, statements)` in dependency order → (blocks the solids need, the rest), each in its original
+    order. A block is needed when it is a solid vertex or (transitively) read by a needed block — a topological split, no
+    statement is changed, so the kernel computes the same values (run `pedagogical-construction-sequencing`)."""
+    ten = {t for t, _ in khoi_diem}
+
+    def doc(x: Any) -> set[str]:
+        if isinstance(x, str):
+            return {x} & ten
+        if isinstance(x, dict):
+            return set().union(*map(doc, x.values())) if x else set()
+        if isinstance(x, list):
+            return set().union(*map(doc, x)) if x else set()
+        return set()
+
+    can = set(dinh_khoi) & ten
+    for t, l in reversed(khoi_diem):               # reads only point to earlier blocks ⇒ one backward pass closes
+        if t in can:
+            can |= doc(l) - {t}
+    return [b for b in khoi_diem if b[0] in can], [b for b in khoi_diem if b[0] not in can]
 
 
 @dataclass
@@ -695,10 +726,13 @@ class _Dung:
     def bien_dich(self) -> tuple[dict[str, Any], dict[str, str]]:
         khai: list[dict[str, Any]] = []
         lenh: list[dict[str, Any]] = []
+        khoi_diem: list[tuple[str, list[dict[str, Any]], list[dict[str, Any]]]] = []
         for s in self.trace:
             if s["step"] != "place_point":
                 continue
             t = s["object"]
+            lenh, khai = [], []          # one block per point: its statements + declarations (moved as a unit)
+            khoi_diem.append((ir_name(t), lenh, khai))
             if t in self.constructions:
                 c = self.constructions[t]
                 a = c.args
@@ -744,6 +778,13 @@ class _Dung:
             else:
                 lenh.append(P.declare_point(ir_name(t), self.pts[t], t))
                 khai.append(P.memory_declaration(ir_name(t), "point3", provenance="LAYOUT_DERIVED"))
+        # Learner order (run `pedagogical-construction-sequencing`): the points a solid needs, then the solid, then the
+        # auxiliary points — a topological split of the same statements, values unchanged.
+        dinh = {ir_name(x) for k in self.khoi.values() for x in (*k.base, *k.top, *([k.apex] if k.apex else []))}
+        truoc, sau = thu_tu_su_pham([(t, l) for t, l, _ in khoi_diem], dinh)
+        khai_cua = {t: k for t, _, k in khoi_diem}
+        lenh = [st for _, l in truoc for st in l]
+        khai = [d for t, _ in truoc for d in khai_cua[t]]
         for k in sorted(self.khoi.values(), key=lambda k: k.name):
             ten = "khoi_" + ir_name(k.name.replace(".", "_"))
             st = (P.construct_pyramid(ten, ir_name(k.apex), tuple(map(ir_name, k.base)), k.name) if k.kind == "pyramid"
@@ -753,6 +794,8 @@ class _Dung:
             khai.append(P.memory_declaration(ten, "solid"))
             self.trace.append({"step": "construct_solid", "object": k.name, "rule": k.kind, "calls": [k.call],
                                "provenance": "DERIVED"})
+        lenh += [st for _, l in sau for st in l]
+        khai += [d for t, _ in sau for d in khai_cua[t]]
         td = self._bien_dich_mat_cat(khai, lenh)
         hoi: dict[str, str] = {}
         for c in self.of(*BAC_DAI_LUONG):
