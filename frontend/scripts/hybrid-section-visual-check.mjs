@@ -21,10 +21,14 @@
  * measures a subset (e.g. `--only derived-plane`).
  * `--scenes two-line` reads `two-line-plane-section` (harness `src=two-line`) and also checks refusal, the real
  * step slider and selection, the named plane and auxiliary roles. This is LOCAL harness acceptance, not API/product E2E.
+ * `--scenes two-line --playback` replaces those checks with the per-step construction audit (run `scene3d-construction-audit`):
+ * every learner step screenshotted and projection-checked, revisit, second view, H/H1 selection, contact sheet per scene;
+ * its receipt feeds `backend/scripts/audit_scene3d_construction.py --browser`.
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
+import { pathToFileURL } from "node:url";
 import { chromium } from "playwright";
 import { docPNG } from "./png-pixels.mjs";
 
@@ -154,9 +158,183 @@ const setQs = (id, sets) => sets.map(([f, v]) => `&set=${id}.${f}=${encodeURICom
 
 const report = [];
 const failures = [];
+// `--playback` (two-line only): walk EVERY learner step of the product scrubber with the real slider (camera fixed, as in
+// the product), one neutral screenshot per step, and check each frame against the payload: rendered ids ⊆ objects present
+// at that step, every drawable present object drawn, vertex markers and point labels at the projection of the EXACT payload
+// coordinates through the live camera (`__geo3d_camera_snapshot` is view × model, model = display rotation · chart T).
+// Then: revisit a step (pixel-identical), a second view (orbit) with the same projection checks, H/H1 selection, contact sheet.
+const playback = process.argv.includes("--playback");
+const playbackReport = [];
+const num = (s) => { const [a, b] = String(s).split("/"); return b === undefined ? Number(a) : Number(a) / Number(b); };
+const project = (cam, p) => {
+  const mul = (M, v) => [0, 1, 2, 3].map((r) => M[r] * v[0] + M[4 + r] * v[1] + M[8 + r] * v[2] + M[12 + r] * v[3]);
+  const c = mul(cam.projection_matrix_column_major, mul(cam.view_matrix_column_major, [...p, 1]));
+  return [((c[0] / c[3] + 1) / 2) * cam.viewport_width, ((1 - c[1] / c[3]) / 2) * cam.viewport_height];
+};
+const probe = () => page.evaluate(() => ({
+  step: window.__hybrid.step, rendered: window.__geo3d_rendered_object_ids ?? [], highlighted: window.__geo3d_highlighted_ids ?? [],
+  aux_hidden: window.__geo3d_auxiliary_hidden_ids ?? [], hidden_edges: (window.__geo3d_hidden_edge_ids ?? []).slice().sort(),
+  markers: window.__geo3d_vertex_markers ?? [], camera: window.__geo3d_camera_snapshot,
+  labels: [...document.querySelectorAll(".geo3d-label")].map((e) => {
+    const m = /translate\(([-\d.e]+)px,\s*([-\d.e]+)px\)\s*$/.exec(e.style.transform);
+    return { id: e.dataset.id, text: e.textContent, shown: e.style.opacity === "1", anchor: m ? [Number(m[1]), Number(m[2])] : null,
+      w: e.offsetWidth, h: e.offsetHeight };
+  }),
+}));
+function projectionCheck(row, f) {
+  const xyz = Object.fromEntries(row.scene.objects.filter((o) => o.type === "point3").map((o) => [o.id, o.xyz.map(num)]));
+  let chart = 0, marker = 0, label = 0;
+  const bad = [];
+  const markerIds = new Set();
+  for (const mk of f.markers) {
+    if (!mk.id || !xyz[mk.id]) continue;
+    markerIds.add(mk.id);
+    chart = Math.max(chart, Math.hypot(...mk.center.map((v, j) => v - xyz[mk.id][j])));
+    const a = project(f.camera, mk.center), b = project(f.camera, xyz[mk.id]);
+    marker = Math.max(marker, Math.hypot(a[0] - b[0], a[1] - b[1]));
+  }
+  for (const l of f.labels) {
+    if (!l.shown) continue;
+    if (!l.anchor || !xyz[l.id]) { bad.push(`label ${l.id} without anchor/payload point`); continue; }
+    const b = project(f.camera, xyz[l.id]);
+    label = Math.max(label, Math.hypot(l.anchor[0] - b[0], l.anchor[1] - b[1]));
+  }
+  // A label hidden by the overlap filter must really overlap a shown label: its box is `translate(-50%,-140%)` from the anchor.
+  const box = (l) => [l.anchor[0] - l.w / 2, l.anchor[1] - 1.4 * l.h, l.anchor[0] + l.w / 2, l.anchor[1] - 0.4 * l.h];
+  const meets = (a, b) => a[0] < b[2] && b[0] < a[2] && a[1] < b[3] && b[1] < a[3];
+  const shown = f.labels.filter((l) => l.shown && l.anchor).map(box);
+  const hiddenFree = f.labels.filter((l) => !l.shown && l.anchor && l.w > 0 && !shown.some((b) => meets(box(l), b))).map((l) => l.id);
+  if (hiddenFree.length) bad.push(`labels hidden without overlapping a shown label: ${hiddenFree}`);
+  if (chart > 1e-6) bad.push(`marker chart coordinates off by ${chart}`);
+  if (marker > 0.5) bad.push(`marker projection off by ${marker}px`);
+  if (label > 1) bad.push(`label anchor off by ${label}px`);
+  return { max_chart_error: chart, max_marker_px: marker, max_label_px: label, marker_ids: [...markerIds].sort(),
+    labels_hidden_without_overlap: hiddenFree, failures: bad };
+}
+async function playbackAudit() {
+  if (source !== "two-line") throw new Error("--playback needs --scenes two-line");
+  for (const [i, row] of rows.entries()) {
+    const dir = join(out, row.id);
+    mkdirSync(dir);
+    const e0 = errors.length;
+    if (!row.served) {
+      await goto(`i=${i}`, true);
+      await page.screenshot({ path: join(dir, "refused.png") });
+      const text = await page.getByTestId("refusal").innerText();
+      const r = { id: row.id, served: false, screenshot: `${row.id}/refused.png`, text, canvas_count: await page.locator("canvas").count(),
+        console_errors: errors.slice(e0) };
+      if (r.canvas_count || !text.includes(row.code) || r.console_errors.length) failures.push(`${row.id}: refusal surface`);
+      playbackReport.push(r);
+      continue;
+    }
+    await goto(`i=${i}`);
+    const h = await page.evaluate(() => window.__hybrid);
+    const objs = new Map(row.scene.objects.map((o) => [o.id, o]));
+    const slider = page.getByRole("slider", { name: "Bước dựng" });
+    await slider.focus(); await page.keyboard.press("Home");
+    let cur = 0;
+    const toStep = async (k) => {
+      await slider.focus();
+      if (k < cur) { await page.keyboard.press("Home"); cur = 0; }
+      while (cur < k) { await page.keyboard.press("ArrowRight"); cur++; }
+      return settle();
+    };
+    const steps = [];
+    const shots = new Map();
+    for (const g of h.timeline) {
+      const s = await toStep(g.anchor);
+      const f = await probe();
+      const present = await page.evaluate((k) => window.__hybrid.presentAt(k), g.anchor);
+      const name = `step-${String(g.index + 1).padStart(2, "0")}.png`;
+      writeFileSync(join(dir, name), s.b);
+      shots.set(g.index, s.b);
+      const base = f.rendered.map((x) => x.split("#")[0]);
+      const drawable = present.filter((id) => !["non_visual", "readout"].includes(objs.get(id).render) && !f.aux_hidden.includes(id));
+      const proj = projectionCheck(row, f);
+      const pointsDrawn = drawable.filter((id) => objs.get(id).type === "point3");
+      const st = {
+        index: g.index, start: g.start, end: g.end, anchor: g.anchor, screenshot: `${row.id}/${name}`, settled: s.settled,
+        learner_text: row.scene.formation.steps.slice(g.start, g.end + 1).map((x) => x.learner_text),
+        present, rendered: f.rendered, highlighted: f.highlighted, aux_hidden: f.aux_hidden, hidden_edges: f.hidden_edges,
+        labels_shown: f.labels.filter((l) => l.shown).map((l) => l.id), labels_suppressed: f.labels.filter((l) => !l.shown).map((l) => l.id),
+        label_anchors: Object.fromEntries(f.labels.filter((l) => l.shown).map((l) => [l.id, l.anchor])),
+        projection: proj,
+        failures: [
+          ...(f.step === g.anchor ? [] : [`harness step ${f.step} != anchor ${g.anchor}`]),
+          ...base.filter((id) => !present.includes(id)).map((id) => `${id} rendered before it exists`),
+          ...drawable.filter((id) => !base.includes(id)).map((id) => `${id} present but not drawn`),
+          ...pointsDrawn.filter((id) => !proj.marker_ids.includes(id)).map((id) => `${id} drawn without a vertex marker`),
+          ...proj.failures, ...(s.settled ? [] : ["frame did not settle"]),
+        ],
+      };
+      steps.push(st);
+      failures.push(...st.failures.map((x) => `${row.id} step ${g.index + 1}: ${x}`));
+    }
+    // camera is fixed while stepping ⇒ a label keeps its pixel anchor, and the solid's hidden-edge set does not change
+    const drift = {};
+    for (const st of steps) for (const [id, a] of Object.entries(st.label_anchors)) {
+      const first = steps.find((x) => x.label_anchors[id]).label_anchors[id];
+      drift[id] = Math.max(drift[id] ?? 0, Math.hypot(a[0] - first[0], a[1] - first[1]));
+    }
+    const solidId = row.scene.objects.find((o) => o.type === "solid").id;
+    const solidEdges = (st) => st.hidden_edges.filter((e) => e.startsWith(`${solidId}::edge:`)).join(",");
+    const withSolid = steps.filter((st) => st.present.includes(solidId));
+    const occlusion = { stable: withSolid.every((st) => solidEdges(st) === solidEdges(withSolid[0])),
+      hidden_solid_edges: withSolid[0] ? solidEdges(withSolid[0]).split(",").filter(Boolean) : [] };
+    if (Object.values(drift).some((d) => d > 0.5)) failures.push(`${row.id}: label moved between steps ${JSON.stringify(drift)}`);
+    if (!occlusion.stable) failures.push(`${row.id}: hidden solid edges change between steps at a fixed camera`);
+    // revisit: leave the middle step, come back with the slider ⇒ identical pixels
+    const mid = h.timeline[Math.floor(h.timeline.length / 2)];
+    await page.keyboard.press("End"); cur = h.stepCount - 1; await settle();
+    const back = await toStep(mid.anchor);
+    const revisit = { step: mid.index + 1, changed_pixels: pixels(shots.get(mid.index), back.b) };
+    if (revisit.changed_pixels !== 0) failures.push(`${row.id}: revisiting step ${mid.index + 1} changed ${revisit.changed_pixels} px`);
+    // second view at the last step: same projection checks under an orbited camera
+    await toStep(h.stepCount - 1);
+    const orbit = await orbitGesture();
+    writeFileSync(join(dir, "final-orbit.png"), orbit.b);
+    const fo = await probe();
+    const second = { screenshot: `${row.id}/final-orbit.png`, settled: orbit.settled, projection: projectionCheck(row, fo),
+      labels_shown: fo.labels.filter((l) => l.shown).map((l) => l.id), labels_suppressed: fo.labels.filter((l) => !l.shown).map((l) => l.id) };
+    failures.push(...second.projection.failures.map((x) => `${row.id} orbit: ${x}`));
+    await page.getByRole("button", { name: "Đặt lại khung nhìn" }).click();
+    await settle();
+    // selection of each auxiliary point (H, H1) at the last step
+    const selected = [];
+    for (const o of row.scene.objects.filter((x) => x.source?.binding === "AUXILIARY")) {
+      await page.getByRole("combobox", { name: "Chọn đối tượng" }).selectOption(o.id);
+      const s = await settle();
+      writeFileSync(join(dir, `selected-${o.id}.png`), s.b);
+      const fs = await probe();
+      selected.push({ id: o.id, screenshot: `${row.id}/selected-${o.id}.png`, details: await page.getByTestId("selection-details").innerText(),
+        selected_id: await page.evaluate(() => window.__geo3d_selected_id), highlighted: fs.highlighted, labels_shown: fs.labels.filter((l) => l.shown).map((l) => l.id) });
+      if (selected.at(-1).selected_id !== o.id) failures.push(`${row.id}: selecting ${o.id} failed`);
+      await page.getByRole("combobox", { name: "Chọn đối tượng" }).selectOption(""); await settle();
+    }
+    // contact sheet: the step screenshots in order, captions from the trace (no image editing)
+    const esc = (t) => String(t).replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c]);
+    writeFileSync(join(dir, "contact-sheet.html"), `<!doctype html><meta charset="utf-8"><title>${row.id}</title>
+<style>body{font:13px system-ui;margin:12px;background:#fff}div.g{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+figure{margin:0;border:1px solid #ccc;padding:4px}img{width:100%}figcaption{padding-top:4px}</style>
+<h1 style="font-size:16px">${esc(row.id)} — ${h.timeline.length} learner steps / ${h.stepCount} trace steps</h1><div class="g">
+${steps.map((st) => `<figure><img src="${st.screenshot.split("/")[1]}"><figcaption><b>Bước ${st.index + 1}/${steps.length}</b> · trace ${st.start}${st.end > st.start ? `–${st.end}` : ""}<br>${esc(st.learner_text.join(" · "))}</figcaption></figure>`).join("\n")}
+</div>`);
+    const sheet = await browser.newPage({ viewport: { width: 1600, height: 900 } });
+    await sheet.goto(pathToFileURL(join(dir, "contact-sheet.html")).href);
+    await sheet.screenshot({ path: join(dir, "contact-sheet.png"), fullPage: true });
+    await sheet.close();
+    const r = { id: row.id, served: true, learner_steps: h.timeline.length, trace_steps: h.stepCount, steps, world_points: h.world,
+      label_drift_px: drift, occlusion, revisit, second_view: second, selected, final_neutral: steps.at(-1).screenshot,
+      plane_name_on_canvas: steps.at(-1).labels_shown.includes("mp_td_q"), console_errors: errors.slice(e0) };
+    if (r.console_errors.length) failures.push(`${row.id}: console errors`);
+    playbackReport.push(r);
+    console.log(JSON.stringify({ id: row.id, steps: steps.length, failures: failures.filter((x) => x.startsWith(row.id)) }));
+  }
+}
 // `--only <id prefix>`: measure those cases only; the harness index `i` stays the case's position in scenes.json.
 const only = arg("--only");
-for (const [i, row] of rows.entries()) {
+if (playback) await playbackAudit();
+else for (const [i, row] of rows.entries()) {
   if (only && !row.id.startsWith(only)) continue;
   const e0 = errors.length;
   if (!row.served) {
@@ -273,7 +451,8 @@ writeFileSync(join(out, "browser-check.json"), JSON.stringify({ harness: "script
   browser: `Playwright chromium, ${gpu ? "ANGLE D3D11 requested" : "SwiftShader WebGL requested"}`, renderer,
   browser_version: browser.version(), browser_pid: browserPid, browser_stopped: server.process().exitCode !== null,
   scenes_sha256: createHash("sha256").update(scenesBytes).digest("hex"),
-  failures, console_errors: errors, net_retries: netRetries, dev_server_noise: devServerNoise.length, report }, null, 1));
+  failures, console_errors: errors, net_retries: netRetries, dev_server_noise: devServerNoise.length, report,
+  ...(playback ? { playback: playbackReport } : {}) }, null, 1));
 console.log(JSON.stringify({ renderer, failures, net_retries: netRetries.length }));
 completed = true;
 process.exitCode = failures.length ? 1 : 0;

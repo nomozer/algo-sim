@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Scene3DWorkspace } from "../src/simulations/domains/geometry/scene3d-view";
 import { TRANG_THAI_DAU, select } from "../src/simulations/domains/geometry/interaction-state";
-import { objectsAt, stepCount } from "../src/simulations/domains/geometry/scene3d-model";
+import { geometryTimeline, objectsAt, stepCount, toVec3 } from "../src/simulations/domains/geometry/scene3d-model";
 import { veKhongGian } from "../src/simulations/domains/geometry/scene3d-chart";
 import rowsHardening from "../../docs/evaluation/geometry/runs/hybrid-semantic-hardening/visual/scenes.json";
 import rowsGoal from "../../docs/evaluation/geometry/runs/goal-directed-section-planning/visual/scenes.json";
@@ -37,7 +37,11 @@ function Harness() {
     id: row.id, served: row.served, stepCount: n, step, selected_id: interaction.selected_id,
     presentAt: (k: number) => scene ? objectsAt(scene, k).map((o: any) => o.id) : [],
     objects: scene ? scene.objects.map((o: any) => ({ id: o.id, type: o.type, origin: o.origin, depends: o.depends ?? [],
-      label: o.label, role: o.role, source: o.source, endpoint_entities: o.endpoint_entities })) : [],
+      label: o.label, role: o.role, source: o.source, endpoint_entities: o.endpoint_entities, render: o.render })) : [],
+    // Learner steps of the product scrubber (`Scene3DExplorer` shows frame `anchor` of each) and the WORLD coordinates
+    // the renderer receives after `veKhongGian` — for the playback audit (`hybrid-section-visual-check.mjs --playback`).
+    timeline: scene ? geometryTimeline(scene).map(({ index, start, end, anchor }) => ({ index, start, end, anchor })) : [],
+    world: scene ? Object.fromEntries(scene.objects.filter((o: any) => o.type === "point3").map((o: any) => [o.id, toVec3(o.xyz)])) : {},
   };
   if (!row.served || !scene) return <main style={{ padding: 16 }}>
     <h1>Scene3D harness / Hybrid IR / {row.id}</h1>
@@ -45,6 +49,7 @@ function Harness() {
   </main>;
   return <main style={{ padding: 16, height: "100vh" }}>
     <h1>Scene3D harness / Hybrid IR / {row.id} / bước {step + 1}/{n}</h1>
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center", marginBottom: 8 }}>
     <button onClick={() => setFit(x => x + 1)}>Đặt lại khung nhìn</button>
     <label>Bước dựng <input aria-label="Bước dựng" type="range" min={0} max={n - 1} value={step}
       onChange={e => setStep(Number(e.target.value))} /></label>
@@ -54,6 +59,7 @@ function Harness() {
       {objectsAt(scene, step).filter((o: any) => o.render !== "non_visual").map((o: any) =>
         <option key={o.id} value={o.id}>{o.label || o.id}{o.source?.binding === "AUXILIARY" ? ` · ${o.role}` : ""}</option>)}
     </select></label>
+    </div>
     {interaction.selected_id && <p data-testid="selection-details">{scene.objects.filter((o: any) =>
       o.id === interaction.selected_id).map((o: any) => `${o.label} · ${o.role}`).join("")}</p>}
     <div data-testid="khung" style={{ height: "75vh", minHeight: 440 }}>
