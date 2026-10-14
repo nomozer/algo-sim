@@ -1,0 +1,1737 @@
+{
+  "class": "DIAGNOSTIC_NOT_HELD_OUT",
+  "live_calls": 0,
+  "cases": [
+    {
+      "id": "same-structure",
+      "group": 1,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Dựng mặt phẳng (P) đi qua M và song song với BC và AS. Xác định thiết diện của hình chóp S.ABCD với (P). Tính diện tích thiết diện của hình chóp S.ABCD với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "premise",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Xác định thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Tính diện tích thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "quantity": "area",
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          }
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "expected_squared": "81/16"
+    },
+    {
+      "id": "reverse-operands",
+      "group": 1,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm BA. Dựng mặt phẳng (P) đi qua M và song song với SA và CB. Xác định thiết diện của hình chóp S.ABCD với (P). Tính diện tích thiết diện của hình chóp S.ABCD với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm BA."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "A"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "premise",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với SA và CB.",
+              "Xác định thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "C",
+              "B"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với SA và CB.",
+              "Tính diện tích thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "quantity": "area",
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "C",
+              "B"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          }
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "expected_squared": "81/16"
+    },
+    {
+      "id": "wording-control",
+      "group": 1,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. M là trung điểm của đoạn AB. Dựng mặt phẳng (P) đi qua M và song song với BC và AS. Xác định thiết diện của hình chóp S.ABCD với (P). Tính diện tích thiết diện của hình chóp S.ABCD với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "M là trung điểm của đoạn AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "premise",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Xác định thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Tính diện tích thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "quantity": "area",
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          }
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "expected_squared": "81/16"
+    },
+    {
+      "id": "reordered-source-facts",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Dựng mặt phẳng (P) đi qua M và song song với BC và AS. Xác định thiết diện của hình chóp S.ABCD với (P). Tính diện tích thiết diện của hình chóp S.ABCD với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Tính diện tích thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "quantity": "area",
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "premise",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Xác định thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          }
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "expected_squared": "81/16"
+    },
+    {
+      "id": "nested-midpoints",
+      "group": 2,
+      "text": "Gọi T là trung điểm SB. Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm TB. Dựng mặt phẳng (P) đi qua M và song song với BC và AS. Xác định thiết diện của hình chóp S.ABCD với (P). Tính diện tích thiết diện của hình chóp S.ABCD với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "ft",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi T là trung điểm SB."
+            ],
+            "point": "T",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "B"
+            ]
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm TB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "T",
+              "B"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "premise",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Xác định thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Tính diện tích thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "quantity": "area",
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          }
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "expected_squared": "441/256"
+    },
+    {
+      "id": "family-prism",
+      "group": 3,
+      "text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2. AA' = 3. Gọi M là trung điểm AB. Dựng mặt phẳng (P) đi qua M và song song với BC và BB'. Xác định thiết diện của hình lăng trụ ABC.A'B'C' với (P). Tính diện tích thiết diện của hình lăng trụ ABC.A'B'C' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 3."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "value": "3",
+            "measure": "segment"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "premise",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và BB'.",
+              "Xác định thiết diện của hình lăng trụ ABC.A'B'C' với (P)."
+            ],
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "B",
+              "B'"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và BB'.",
+              "Tính diện tích thiết diện của hình lăng trụ ABC.A'B'C' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABC.A'B'C'",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "B",
+              "B'"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          }
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "expected_squared": "9"
+    },
+    {
+      "id": "family-cuboid",
+      "group": 3,
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. AB = 2. AD = 4. AA' = 3. Gọi M là trung điểm AB. Dựng mặt phẳng (P) đi qua M và song song với BC và BB'. Xác định thiết diện của hình hộp ABCD.A'B'C'D' với (P). Tính diện tích thiết diện của hình hộp ABCD.A'B'C'D' với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+            ],
+            "solid": "ABCD.A'B'C'D'",
+            "solid_type": "cuboid"
+          },
+          {
+            "id": "f2",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 2."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "value": "2",
+            "measure": "segment"
+          },
+          {
+            "id": "f3",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AD = 4."
+            ],
+            "points": [
+              "A",
+              "D"
+            ],
+            "value": "4",
+            "measure": "segment"
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 3."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "value": "3",
+            "measure": "segment"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "premise",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và BB'.",
+              "Xác định thiết diện của hình hộp ABCD.A'B'C'D' với (P)."
+            ],
+            "solid": "ABCD.A'B'C'D'",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "B",
+              "B'"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và BB'.",
+              "Tính diện tích thiết diện của hình hộp ABCD.A'B'C'D' với (P)."
+            ],
+            "quantity": "area",
+            "solid": "ABCD.A'B'C'D'",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "B",
+              "B'"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          }
+        ]
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "expected_squared": "144"
+    },
+    {
+      "id": "derived-line-pyramid",
+      "group": 2,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Tìm giao tuyến của (SAC) và (SBD). Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ],
+            "points_a": [
+              "S",
+              "A",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "SCHEMA_INVALID",
+      "expected_squared": "10/11",
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true
+    },
+    {
+      "id": "derived-line-cuboid",
+      "group": 3,
+      "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. AB = 2. AD = 4. AA' = 3. Gọi M là trung điểm AC. Tìm giao tuyến của (ABB') và (BCC'). Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC').",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+            ],
+            "solid": "ABCD.A'B'C'D'",
+            "solid_type": "cuboid"
+          },
+          {
+            "id": "f2",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 2."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "value": "2",
+            "measure": "segment"
+          },
+          {
+            "id": "f3",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AD = 4."
+            ],
+            "points": [
+              "A",
+              "D"
+            ],
+            "value": "4",
+            "measure": "segment"
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 3."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "value": "3",
+            "measure": "segment"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AC."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (ABB') và (BCC')."
+            ],
+            "points_a": [
+              "A",
+              "B",
+              "B'"
+            ],
+            "points_b": [
+              "B",
+              "C",
+              "C'"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC')."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "SCHEMA_INVALID",
+      "expected_squared": "5",
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true
+    },
+    {
+      "id": "derived-line-prism",
+      "group": 3,
+      "text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2. AA' = 3. Gọi M là trung điểm AC. Tìm giao tuyến của (ABB') và (BCC'). Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC').",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+            ],
+            "solid": "ABC.A'B'C'",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AA' = 3."
+            ],
+            "points": [
+              "A",
+              "A'"
+            ],
+            "value": "3",
+            "measure": "segment"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AC."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "C"
+            ]
+          },
+          {
+            "id": "g",
+            "kind": "intersection_line",
+            "role": "premise",
+            "quotes": [
+              "Tìm giao tuyến của (ABB') và (BCC')."
+            ],
+            "points_a": [
+              "A",
+              "B",
+              "B'"
+            ],
+            "points_b": [
+              "B",
+              "C",
+              "C'"
+            ]
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC')."
+            ],
+            "quantity": "distance",
+            "points_a": [
+              "M"
+            ],
+            "line_ref": "g"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "SCHEMA_INVALID",
+      "expected_squared": "3",
+      "transport": "PROPOSED_FIELD_SCHEMA_DIAGNOSTIC",
+      "mathematical_goal": "SERVED",
+      "witness": true
+    },
+    {
+      "id": "dependent-directions",
+      "group": 4,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm SB. Dựng mặt phẳng (P) đi qua M và song song với AB và CD. Xác định thiết diện của hình chóp S.ABCD với (P). Tính diện tích thiết diện của hình chóp S.ABCD với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm SB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "B"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "premise",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với AB và CD.",
+              "Xác định thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "A",
+              "B"
+            ],
+            "points_b": [
+              "C",
+              "D"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với AB và CD.",
+              "Tính diện tích thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "quantity": "area",
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "A",
+              "B"
+            ],
+            "points_b": [
+              "C",
+              "D"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "PLANE_NOT_UNIQUE",
+      "expected_squared": null
+    },
+    {
+      "id": "missing-source-quote",
+      "group": 4,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Dựng mặt phẳng (P) đi qua M và song song với BC và AS. Xác định thiết diện của hình chóp S.ABCD với (P). Tính diện tích thiết diện của hình chóp S.ABCD với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm SD."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "premise",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Xác định thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Tính diện tích thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "quantity": "area",
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "QUOTE_NOT_IN_SOURCE",
+      "expected_squared": null
+    },
+    {
+      "id": "conditional-anchor",
+      "group": 4,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Dựng mặt phẳng (P) đi qua M và song song với BC và AS. Xác định thiết diện của hình chóp S.ABCD với (P). Tính diện tích thiết diện của hình chóp S.ABCD với (P).",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "condition",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "premise",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Xác định thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Tính diện tích thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "quantity": "area",
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "CONDITIONAL_FACT",
+      "expected_squared": null
+    },
+    {
+      "id": "contradictory-height",
+      "group": 4,
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm AB. Dựng mặt phẳng (P) đi qua M và song song với BC và AS. Xác định thiết diện của hình chóp S.ABCD với (P). Tính diện tích thiết diện của hình chóp S.ABCD với (P). SA = 4.",
+      "payload": {
+        "facts": [
+          {
+            "id": "f1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "f2",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "2"
+          },
+          {
+            "id": "f3",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "f4",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 3."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "fm",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ]
+          },
+          {
+            "id": "sec",
+            "kind": "section",
+            "role": "premise",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Xác định thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          },
+          {
+            "id": "q",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Dựng mặt phẳng (P) đi qua M và song song với BC và AS.",
+              "Tính diện tích thiết diện của hình chóp S.ABCD với (P)."
+            ],
+            "quantity": "area",
+            "solid": "S.ABCD",
+            "point": "M",
+            "points_a": [
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "S"
+            ],
+            "plane_relation": "parallel_two_lines",
+            "plane_name": "P"
+          },
+          {
+            "id": "contradiction",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 4."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "4"
+          }
+        ]
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "INCONSISTENT_FACTS",
+      "expected_squared": null
+    }
+  ]
+}

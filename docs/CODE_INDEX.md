@@ -1,5 +1,12 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Planner generalization audit — offline diagnostic adapter, no product change
+
+`backend/scripts/audit_planner_generalization.py` registers then runs the small four-group fixture corpus in
+`docs/evaluation/geometry/runs/goal-directed-planner-generalization-audit/`; reuses existing Group A fixtures and Hybrid
+route. Proposed-field schema probes are separated from valid current Typed Facts. IR-only producer/consumer witnesses
+demonstrate geometry availability without claiming source-grounded serving or implementing the proposed resolver.
+
 ## Pedagogical construction sequencing — Hybrid learner order (integrated research capability, Hybrid off)
 
 Run `docs/evaluation/geometry/runs/pedagogical-construction-sequencing/`. Hybrid-only; shared `formation`, `scene3d`, kernel
