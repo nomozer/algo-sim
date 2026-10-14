@@ -1,16 +1,24 @@
 {
   "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "scene3d-construction-audit-w01",
   "task": "scene3d-construction-audit",
   "corrects": "docs/evaluation/geometry/runs/two-line-plane-section/inputs/candidate_divergence.json",
-  "previous_product_commit": "2b42eb40eda7479ad088846be44f9757501e7047",
-  "current_product_commit": "eea6f3dfc4bc834fa7ea284999ba95a2e801409e",
-  "previous_candidate_hash": "c2ac6dbe1cc65170e75db6a0d6d7e4e8e0a1c544db5961fcd16120a89606c5d4",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
   "current_candidate_hash": "c2ac6dbe1cc65170e75db6a0d6d7e4e8e0a1c544db5961fcd16120a89606c5d4",
+  "current_candidate_source_commit": "eea6f3dfc4bc834fa7ea284999ba95a2e801409e",
+  "previous_candidate_hash": "c2ac6dbe1cc65170e75db6a0d6d7e4e8e0a1c544db5961fcd16120a89606c5d4",
+  "previous_product_commit": "2b42eb40eda7479ad088846be44f9757501e7047",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
   "diverged": true,
   "measured_system_paths_changed": false,
-  "reason": "Renderer-only fix outside MEASURED_SYSTEM_PATHS: point labels hide by real box overlap instead of a fixed 68x22 px window (frontend/src/simulations/domains/geometry/scene3d-presentation.ts, scene3d-view.tsx). tree_hash unchanged; product commit moves, so the manifest is re-frozen.",
-  "historical_effect": "No backend, prompt, schema or route change: development 45 / heldout 32 / historical 30 results keep their candidate and are not rescored.",
-  "live_requests": 0,
+  "reason": "Renderer-only fix outside MEASURED_SYSTEM_PATHS: point labels hide by real box overlap instead of a fixed 68x22 px window (frontend/src/simulations/domains/geometry/scene3d-presentation.ts, scene3d-view.tsx). Measured tree hash unchanged; the product commit moves, so the manifest is re-frozen at eea6f3df.",
+  "historical_effect": "No backend, prompt, schema or route change: development 45 / heldout 32 / historical 30 keep their candidate and are not rescored.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
   "integration": "NONE: research branch only; user decision required",
   "push": "NONE: not authorized"
 }
