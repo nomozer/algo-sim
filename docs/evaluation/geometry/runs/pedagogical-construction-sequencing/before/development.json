@@ -1,0 +1,1208 @@
+{
+ "split": "development",
+ "corpus_sha256": "7b6eb0b9c2795c11a10dce8ac250028561a5d392589b557236b2bef6cd6bb0c9",
+ "ordering_computed": true,
+ "compared_with": null,
+ "served": 5,
+ "refused": 1,
+ "model_calls": 0,
+ "failures": [
+  "two-line-0: {'O1': [], 'O2': ['M@1 before solid khoi_S_ABCD@8', 'derived_H_vec@2 before solid khoi_S_ABCD@8', 'H@3 before solid khoi_S_ABCD@8', 'derived_H1_vec@4 before solid khoi_S_ABCD@8', 'H1@5 before solid khoi_S_ABCD@8'], 'O3': [], 'O4': [\"M: 'Dựng M.' lacks 'trung điểm' or operands ['M', 'A', 'B']\", \"H: 'Dựng H.' lacks 'vectơ' or operands ['H', 'M', 'BC']\", \"H1: 'Dựng H1.' lacks 'vectơ' or operands ['H1', 'M', 'AS']\"]}",
+  "two-line-18: {'O1': [], 'O2': ['M@1 before solid khoi_ABC_A_primeB_primeC_prime@6', 'derived_H_vec@2 before solid khoi_ABC_A_primeB_primeC_prime@6', 'H@3 before solid khoi_ABC_A_primeB_primeC_prime@6', 'derived_H1_vec@4 before solid khoi_ABC_A_primeB_primeC_prime@6', 'H1@5 before solid khoi_ABC_A_primeB_primeC_prime@6'], 'O3': ['khoi_ABC_A_primeB_primeC_prime: solid not classified (None)'], 'O4': [\"M: 'Dựng M.' lacks 'trung điểm' or operands ['M', 'A', 'B']\", \"H: 'Dựng H.' lacks 'vectơ' or operands ['H', 'M', 'BC']\", \"H1: 'Dựng H1.' lacks 'vectơ' or operands ['H1', 'M', 'BB′']\"]}",
+  "two-line-33: {'O1': [], 'O2': ['M@1 before solid khoi_ABCD_A_primeB_primeC_primeD_prime@6', 'derived_H_vec@2 before solid khoi_ABCD_A_primeB_primeC_primeD_prime@6', 'H@3 before solid khoi_ABCD_A_primeB_primeC_primeD_prime@6', 'derived_H1_vec@4 before solid khoi_ABCD_A_primeB_primeC_primeD_prime@6', 'H1@5 before solid khoi_ABCD_A_primeB_primeC_primeD_prime@6'], 'O3': ['khoi_ABCD_A_primeB_primeC_primeD_prime: solid not classified (None)'], 'O4': [\"M: 'Dựng M.' lacks 'trung điểm' or operands ['M', 'A', 'B']\", \"H: 'Dựng H.' lacks 'vectơ' or operands ['H', 'M', 'BC']\", \"H1: 'Dựng H1.' lacks 'vectơ' or operands ['H1', 'M', 'BB′']\"]}",
+  "two-line-0-rename: {'O1': [], 'O2': ['N@1 before solid khoi_T_EFGK@8', 'derived_H_vec@2 before solid khoi_T_EFGK@8', 'H@3 before solid khoi_T_EFGK@8', 'derived_H1_vec@4 before solid khoi_T_EFGK@8', 'H1@5 before solid khoi_T_EFGK@8'], 'O3': [], 'O4': [\"N: 'Dựng N.' lacks 'trung điểm' or operands ['N', 'E', 'F']\", \"H: 'Dựng H.' lacks 'vectơ' or operands ['H', 'N', 'FG']\", \"H1: 'Dựng H1.' lacks 'vectơ' or operands ['H1', 'N', 'ET']\"]}",
+  "two-line-0-midpoint-named-H: {'O1': [], 'O2': ['H@1 before solid khoi_S_ABCD@8', 'derived_H1_vec@2 before solid khoi_S_ABCD@8', 'H1@3 before solid khoi_S_ABCD@8', 'derived_H2_vec@4 before solid khoi_S_ABCD@8', 'H2@5 before solid khoi_S_ABCD@8'], 'O3': [], 'O4': [\"H: 'Dựng H.' lacks 'trung điểm' or operands ['H', 'A', 'B']\", \"H1: 'Dựng H1.' lacks 'vectơ' or operands ['H1', 'H', 'BC']\", \"H2: 'Dựng H2.' lacks 'vectơ' or operands ['H2', 'H', 'AS']\"]}"
+ ],
+ "cases": [
+  {
+   "id": "two-line-0",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "9/4"
+   },
+   "math_sha256": "5e77fea95fab17fe4a78a2e927f3b75f1e72c5b019e6abf4c0583fe54169456c",
+   "math": {
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "H": [
+      "1/2",
+      "1",
+      "0"
+     ],
+     "H1": [
+      "1/2",
+      "0",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "0",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "memory": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "H": [
+      "1/2",
+      "1",
+      "0"
+     ],
+     "H1": [
+      "1/2",
+      "0",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "0",
+      "0"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "derived_H1_vec": [
+      "0",
+      "0",
+      "1"
+     ],
+     "derived_H_vec": [
+      "0",
+      "1",
+      "0"
+     ],
+     "td_q": [
+      [
+       "1/2",
+       "0",
+       "0"
+      ],
+      [
+       "1/2",
+       "0",
+       "1/2"
+      ],
+      [
+       "1/2",
+       "1",
+       "0"
+      ],
+      [
+       "1/2",
+       "1/2",
+       "1/2"
+      ]
+     ]
+    }
+   },
+   "scene_points": {
+    "A": [
+     "0",
+     "0",
+     "0"
+    ],
+    "B": [
+     "1",
+     "0",
+     "0"
+    ],
+    "C": [
+     "1",
+     "1",
+     "0"
+    ],
+    "D": [
+     "0",
+     "1",
+     "0"
+    ],
+    "M": [
+     "1/2",
+     "0",
+     "0"
+    ],
+    "H": [
+     "1/2",
+     "1",
+     "0"
+    ],
+    "S": [
+     "0",
+     "0",
+     "1"
+    ],
+    "H1": [
+     "1/2",
+     "0",
+     "1"
+    ]
+   },
+   "scene_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "H",
+    "H1",
+    "M",
+    "S",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D",
+    "day_ABCD",
+    "derived_H1_vec",
+    "derived_H_vec",
+    "khoi_S_ABCD",
+    "kq_q",
+    "mp_td_q",
+    "td_q"
+   ],
+   "trace_steps": 16,
+   "ordering": {
+    "O1": [],
+    "O2": [
+     "M@1 before solid khoi_S_ABCD@8",
+     "derived_H_vec@2 before solid khoi_S_ABCD@8",
+     "H@3 before solid khoi_S_ABCD@8",
+     "derived_H1_vec@4 before solid khoi_S_ABCD@8",
+     "H1@5 before solid khoi_S_ABCD@8"
+    ],
+    "O3": [],
+    "O4": [
+     "M: 'Dựng M.' lacks 'trung điểm' or operands ['M', 'A', 'B']",
+     "H: 'Dựng H.' lacks 'vectơ' or operands ['H', 'M', 'BC']",
+     "H1: 'Dựng H1.' lacks 'vectơ' or operands ['H1', 'M', 'AS']"
+    ]
+   },
+   "ordering_pass": false,
+   "learner_text": [
+    "Đặt các điểm đề cho vào không gian.",
+    "Dựng M.",
+    "Lấy vectơ BC.",
+    "Dựng H.",
+    "Lấy vectơ AS.",
+    "Dựng H1.",
+    "Dựng đáy ABCD.",
+    "Dựng các cạnh bên SA, SB, SC, SD.",
+    "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt).",
+    "Dựng (P).",
+    "Trên mặt ABCD, nối giao điểm thuộc cạnh AB với giao điểm thuộc cạnh CD.",
+    "Trên mặt SCD, nối giao điểm thuộc cạnh CD với giao điểm thuộc cạnh SC.",
+    "Trên mặt SBC, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SB.",
+    "Trên mặt SAB, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh AB.",
+    "Thiết diện khép lại thành tứ giác: (P) cắt hình chóp S.ABCD.",
+    "Diện tích thiết diện bằng 9/4."
+   ]
+  },
+  {
+   "id": "two-line-18",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "math_sha256": "7e95135c0edf666dc1bd1ef1240a74a7339ddbf93c5bd060727fecef6518a890",
+   "math": {
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "A'": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "B'": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "C'": [
+      "0",
+      "1",
+      "1"
+     ],
+     "H": [
+      "-1/2",
+      "1",
+      "0"
+     ],
+     "H1": [
+      "1/2",
+      "0",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "0",
+      "0"
+     ]
+    },
+    "memory": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C": [
+      "0",
+      "1",
+      "0"
+     ],
+     "C_prime": [
+      "0",
+      "1",
+      "1"
+     ],
+     "H": [
+      "-1/2",
+      "1",
+      "0"
+     ],
+     "H1": [
+      "1/2",
+      "0",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "0",
+      "0"
+     ],
+     "derived_H1_vec": [
+      "0",
+      "0",
+      "1"
+     ],
+     "derived_H_vec": [
+      "-1",
+      "1",
+      "0"
+     ],
+     "td_q": [
+      [
+       "0",
+       "1/2",
+       "0"
+      ],
+      [
+       "0",
+       "1/2",
+       "1"
+      ],
+      [
+       "1/2",
+       "0",
+       "0"
+      ],
+      [
+       "1/2",
+       "0",
+       "1"
+      ]
+     ]
+    }
+   },
+   "scene_points": {
+    "A": [
+     "0",
+     "0",
+     "0"
+    ],
+    "B": [
+     "1",
+     "0",
+     "0"
+    ],
+    "C": [
+     "0",
+     "1",
+     "0"
+    ],
+    "M": [
+     "1/2",
+     "0",
+     "0"
+    ],
+    "H": [
+     "-1/2",
+     "1",
+     "0"
+    ],
+    "A_prime": [
+     "0",
+     "0",
+     "1"
+    ],
+    "B_prime": [
+     "1",
+     "0",
+     "1"
+    ],
+    "C_prime": [
+     "0",
+     "1",
+     "1"
+    ],
+    "H1": [
+     "1/2",
+     "0",
+     "1"
+    ]
+   },
+   "scene_ids": [
+    "A",
+    "A_prime",
+    "B",
+    "B_prime",
+    "C",
+    "C_prime",
+    "H",
+    "H1",
+    "M",
+    "derived_H1_vec",
+    "derived_H_vec",
+    "khoi_ABC_A_primeB_primeC_prime",
+    "kq_q",
+    "mp_td_q",
+    "td_q"
+   ],
+   "trace_steps": 14,
+   "ordering": {
+    "O1": [],
+    "O2": [
+     "M@1 before solid khoi_ABC_A_primeB_primeC_prime@6",
+     "derived_H_vec@2 before solid khoi_ABC_A_primeB_primeC_prime@6",
+     "H@3 before solid khoi_ABC_A_primeB_primeC_prime@6",
+     "derived_H1_vec@4 before solid khoi_ABC_A_primeB_primeC_prime@6",
+     "H1@5 before solid khoi_ABC_A_primeB_primeC_prime@6"
+    ],
+    "O3": [
+     "khoi_ABC_A_primeB_primeC_prime: solid not classified (None)"
+    ],
+    "O4": [
+     "M: 'Dựng M.' lacks 'trung điểm' or operands ['M', 'A', 'B']",
+     "H: 'Dựng H.' lacks 'vectơ' or operands ['H', 'M', 'BC']",
+     "H1: 'Dựng H1.' lacks 'vectơ' or operands ['H1', 'M', 'BB′']"
+    ]
+   },
+   "ordering_pass": false,
+   "learner_text": [
+    "Đặt các điểm đề cho vào không gian.",
+    "Dựng M.",
+    "Lấy vectơ BC.",
+    "Dựng H.",
+    "Lấy vectơ BB′.",
+    "Dựng H1.",
+    "Dựng lăng trụ đứng ABC.A′B′C′ (6 đỉnh, 5 mặt).",
+    "Dựng (P).",
+    "Trên mặt ABC, nối giao điểm thuộc cạnh AB với giao điểm thuộc cạnh AC.",
+    "Trên mặt CAA′C′, nối giao điểm thuộc cạnh AC với giao điểm thuộc cạnh A′C′.",
+    "Trên mặt A′B′C′, nối giao điểm thuộc cạnh A′C′ với giao điểm thuộc cạnh A′B′.",
+    "Trên mặt ABB′A′, nối giao điểm thuộc cạnh A′B′ với giao điểm thuộc cạnh AB.",
+    "Thiết diện khép lại thành tứ giác: (P) cắt lăng trụ đứng ABC.A′B′C′.",
+    "Diện tích thiết diện bằng 3."
+   ]
+  },
+  {
+   "id": "two-line-33",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "12"
+   },
+   "math_sha256": "dc4228055169c55999e3682483a93eda661d07f7c7fee3ac690617c2b60a44db",
+   "math": {
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "A'": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "B'": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "C'": [
+      "1",
+      "1",
+      "1"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "D'": [
+      "0",
+      "1",
+      "1"
+     ],
+     "H": [
+      "1/2",
+      "1",
+      "0"
+     ],
+     "H1": [
+      "1/2",
+      "0",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "0",
+      "0"
+     ]
+    },
+    "memory": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "A_prime": [
+      "0",
+      "0",
+      "1"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "B_prime": [
+      "1",
+      "0",
+      "1"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "C_prime": [
+      "1",
+      "1",
+      "1"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "D_prime": [
+      "0",
+      "1",
+      "1"
+     ],
+     "H": [
+      "1/2",
+      "1",
+      "0"
+     ],
+     "H1": [
+      "1/2",
+      "0",
+      "1"
+     ],
+     "M": [
+      "1/2",
+      "0",
+      "0"
+     ],
+     "derived_H1_vec": [
+      "0",
+      "0",
+      "1"
+     ],
+     "derived_H_vec": [
+      "0",
+      "1",
+      "0"
+     ],
+     "td_q": [
+      [
+       "1/2",
+       "0",
+       "0"
+      ],
+      [
+       "1/2",
+       "0",
+       "1"
+      ],
+      [
+       "1/2",
+       "1",
+       "0"
+      ],
+      [
+       "1/2",
+       "1",
+       "1"
+      ]
+     ]
+    }
+   },
+   "scene_points": {
+    "A": [
+     "0",
+     "0",
+     "0"
+    ],
+    "B": [
+     "1",
+     "0",
+     "0"
+    ],
+    "C": [
+     "1",
+     "1",
+     "0"
+    ],
+    "D": [
+     "0",
+     "1",
+     "0"
+    ],
+    "M": [
+     "1/2",
+     "0",
+     "0"
+    ],
+    "H": [
+     "1/2",
+     "1",
+     "0"
+    ],
+    "A_prime": [
+     "0",
+     "0",
+     "1"
+    ],
+    "B_prime": [
+     "1",
+     "0",
+     "1"
+    ],
+    "C_prime": [
+     "1",
+     "1",
+     "1"
+    ],
+    "D_prime": [
+     "0",
+     "1",
+     "1"
+    ],
+    "H1": [
+     "1/2",
+     "0",
+     "1"
+    ]
+   },
+   "scene_ids": [
+    "A",
+    "A_prime",
+    "B",
+    "B_prime",
+    "C",
+    "C_prime",
+    "D",
+    "D_prime",
+    "H",
+    "H1",
+    "M",
+    "derived_H1_vec",
+    "derived_H_vec",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime",
+    "kq_q",
+    "mp_td_q",
+    "td_q"
+   ],
+   "trace_steps": 14,
+   "ordering": {
+    "O1": [],
+    "O2": [
+     "M@1 before solid khoi_ABCD_A_primeB_primeC_primeD_prime@6",
+     "derived_H_vec@2 before solid khoi_ABCD_A_primeB_primeC_primeD_prime@6",
+     "H@3 before solid khoi_ABCD_A_primeB_primeC_primeD_prime@6",
+     "derived_H1_vec@4 before solid khoi_ABCD_A_primeB_primeC_primeD_prime@6",
+     "H1@5 before solid khoi_ABCD_A_primeB_primeC_primeD_prime@6"
+    ],
+    "O3": [
+     "khoi_ABCD_A_primeB_primeC_primeD_prime: solid not classified (None)"
+    ],
+    "O4": [
+     "M: 'Dựng M.' lacks 'trung điểm' or operands ['M', 'A', 'B']",
+     "H: 'Dựng H.' lacks 'vectơ' or operands ['H', 'M', 'BC']",
+     "H1: 'Dựng H1.' lacks 'vectơ' or operands ['H1', 'M', 'BB′']"
+    ]
+   },
+   "ordering_pass": false,
+   "learner_text": [
+    "Đặt các điểm đề cho vào không gian.",
+    "Dựng M.",
+    "Lấy vectơ BC.",
+    "Dựng H.",
+    "Lấy vectơ BB′.",
+    "Dựng H1.",
+    "Dựng hình hộp chữ nhật ABCD.A′B′C′D′ (8 đỉnh, 6 mặt).",
+    "Dựng (P).",
+    "Trên mặt ABCD, nối giao điểm thuộc cạnh AB với giao điểm thuộc cạnh CD.",
+    "Trên mặt CDD′C′, nối giao điểm thuộc cạnh CD với giao điểm thuộc cạnh C′D′.",
+    "Trên mặt A′B′C′D′, nối giao điểm thuộc cạnh C′D′ với giao điểm thuộc cạnh A′B′.",
+    "Trên mặt ABB′A′, nối giao điểm thuộc cạnh A′B′ với giao điểm thuộc cạnh AB.",
+    "Thiết diện khép lại thành tứ giác: (P) cắt hình hộp chữ nhật ABCD.A′B′C′D′.",
+    "Diện tích thiết diện bằng 12."
+   ]
+  },
+  {
+   "id": "two-line-3",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "answers": {}
+  },
+  {
+   "id": "two-line-0-rename",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "9/4"
+   },
+   "math_sha256": "9f5455a2c21645fcdca764c8e28dbafcd9c111fd1efe76568209839a946d9505",
+   "math": {
+    "points": {
+     "E": [
+      "0",
+      "0",
+      "0"
+     ],
+     "F": [
+      "1",
+      "0",
+      "0"
+     ],
+     "G": [
+      "1",
+      "1",
+      "0"
+     ],
+     "H": [
+      "1/2",
+      "1",
+      "0"
+     ],
+     "H1": [
+      "1/2",
+      "0",
+      "1"
+     ],
+     "K": [
+      "0",
+      "1",
+      "0"
+     ],
+     "N": [
+      "1/2",
+      "0",
+      "0"
+     ],
+     "T": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "memory": {
+     "E": [
+      "0",
+      "0",
+      "0"
+     ],
+     "F": [
+      "1",
+      "0",
+      "0"
+     ],
+     "G": [
+      "1",
+      "1",
+      "0"
+     ],
+     "H": [
+      "1/2",
+      "1",
+      "0"
+     ],
+     "H1": [
+      "1/2",
+      "0",
+      "1"
+     ],
+     "K": [
+      "0",
+      "1",
+      "0"
+     ],
+     "N": [
+      "1/2",
+      "0",
+      "0"
+     ],
+     "T": [
+      "0",
+      "0",
+      "1"
+     ],
+     "derived_H1_vec": [
+      "0",
+      "0",
+      "1"
+     ],
+     "derived_H_vec": [
+      "0",
+      "1",
+      "0"
+     ],
+     "td_q": [
+      [
+       "1/2",
+       "0",
+       "0"
+      ],
+      [
+       "1/2",
+       "0",
+       "1/2"
+      ],
+      [
+       "1/2",
+       "1",
+       "0"
+      ],
+      [
+       "1/2",
+       "1/2",
+       "1/2"
+      ]
+     ]
+    }
+   },
+   "scene_points": {
+    "E": [
+     "0",
+     "0",
+     "0"
+    ],
+    "F": [
+     "1",
+     "0",
+     "0"
+    ],
+    "G": [
+     "1",
+     "1",
+     "0"
+    ],
+    "K": [
+     "0",
+     "1",
+     "0"
+    ],
+    "N": [
+     "1/2",
+     "0",
+     "0"
+    ],
+    "H": [
+     "1/2",
+     "1",
+     "0"
+    ],
+    "T": [
+     "0",
+     "0",
+     "1"
+    ],
+    "H1": [
+     "1/2",
+     "0",
+     "1"
+    ]
+   },
+   "scene_ids": [
+    "E",
+    "F",
+    "G",
+    "H",
+    "H1",
+    "K",
+    "N",
+    "T",
+    "canh_ben_T_E",
+    "canh_ben_T_F",
+    "canh_ben_T_G",
+    "canh_ben_T_K",
+    "day_EFGK",
+    "derived_H1_vec",
+    "derived_H_vec",
+    "khoi_T_EFGK",
+    "kq_q",
+    "mp_td_q",
+    "td_q"
+   ],
+   "trace_steps": 16,
+   "ordering": {
+    "O1": [],
+    "O2": [
+     "N@1 before solid khoi_T_EFGK@8",
+     "derived_H_vec@2 before solid khoi_T_EFGK@8",
+     "H@3 before solid khoi_T_EFGK@8",
+     "derived_H1_vec@4 before solid khoi_T_EFGK@8",
+     "H1@5 before solid khoi_T_EFGK@8"
+    ],
+    "O3": [],
+    "O4": [
+     "N: 'Dựng N.' lacks 'trung điểm' or operands ['N', 'E', 'F']",
+     "H: 'Dựng H.' lacks 'vectơ' or operands ['H', 'N', 'FG']",
+     "H1: 'Dựng H1.' lacks 'vectơ' or operands ['H1', 'N', 'ET']"
+    ]
+   },
+   "ordering_pass": false,
+   "learner_text": [
+    "Đặt các điểm đề cho vào không gian.",
+    "Dựng N.",
+    "Lấy vectơ FG.",
+    "Dựng H.",
+    "Lấy vectơ ET.",
+    "Dựng H1.",
+    "Dựng đáy EFGK.",
+    "Dựng các cạnh bên TE, TF, TG, TK.",
+    "Dựng hình chóp T.EFGK (5 đỉnh, 5 mặt).",
+    "Dựng (Q).",
+    "Trên mặt EFGK, nối giao điểm thuộc cạnh EF với giao điểm thuộc cạnh GK.",
+    "Trên mặt TGK, nối giao điểm thuộc cạnh GK với giao điểm thuộc cạnh TG.",
+    "Trên mặt TFG, nối giao điểm thuộc cạnh TG với giao điểm thuộc cạnh TF.",
+    "Trên mặt TEF, nối giao điểm thuộc cạnh TF với giao điểm thuộc cạnh EF.",
+    "Thiết diện khép lại thành tứ giác: (Q) cắt hình chóp T.EFGK.",
+    "Diện tích thiết diện bằng 9/4."
+   ]
+  },
+  {
+   "id": "two-line-0-midpoint-named-H",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "9/4"
+   },
+   "math_sha256": "5960dd81a6ca2b1653230501062ef44c2256a04f11f7b7b73dd4660601509c38",
+   "math": {
+    "points": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "H": [
+      "1/2",
+      "0",
+      "0"
+     ],
+     "H1": [
+      "1/2",
+      "1",
+      "0"
+     ],
+     "H2": [
+      "1/2",
+      "0",
+      "1"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ]
+    },
+    "memory": {
+     "A": [
+      "0",
+      "0",
+      "0"
+     ],
+     "B": [
+      "1",
+      "0",
+      "0"
+     ],
+     "C": [
+      "1",
+      "1",
+      "0"
+     ],
+     "D": [
+      "0",
+      "1",
+      "0"
+     ],
+     "H": [
+      "1/2",
+      "0",
+      "0"
+     ],
+     "H1": [
+      "1/2",
+      "1",
+      "0"
+     ],
+     "H2": [
+      "1/2",
+      "0",
+      "1"
+     ],
+     "S": [
+      "0",
+      "0",
+      "1"
+     ],
+     "derived_H1_vec": [
+      "0",
+      "1",
+      "0"
+     ],
+     "derived_H2_vec": [
+      "0",
+      "0",
+      "1"
+     ],
+     "td_q": [
+      [
+       "1/2",
+       "0",
+       "0"
+      ],
+      [
+       "1/2",
+       "0",
+       "1/2"
+      ],
+      [
+       "1/2",
+       "1",
+       "0"
+      ],
+      [
+       "1/2",
+       "1/2",
+       "1/2"
+      ]
+     ]
+    }
+   },
+   "scene_points": {
+    "A": [
+     "0",
+     "0",
+     "0"
+    ],
+    "B": [
+     "1",
+     "0",
+     "0"
+    ],
+    "C": [
+     "1",
+     "1",
+     "0"
+    ],
+    "D": [
+     "0",
+     "1",
+     "0"
+    ],
+    "H": [
+     "1/2",
+     "0",
+     "0"
+    ],
+    "H1": [
+     "1/2",
+     "1",
+     "0"
+    ],
+    "S": [
+     "0",
+     "0",
+     "1"
+    ],
+    "H2": [
+     "1/2",
+     "0",
+     "1"
+    ]
+   },
+   "scene_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "H",
+    "H1",
+    "H2",
+    "S",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D",
+    "day_ABCD",
+    "derived_H1_vec",
+    "derived_H2_vec",
+    "khoi_S_ABCD",
+    "kq_q",
+    "mp_td_q",
+    "td_q"
+   ],
+   "trace_steps": 16,
+   "ordering": {
+    "O1": [],
+    "O2": [
+     "H@1 before solid khoi_S_ABCD@8",
+     "derived_H1_vec@2 before solid khoi_S_ABCD@8",
+     "H1@3 before solid khoi_S_ABCD@8",
+     "derived_H2_vec@4 before solid khoi_S_ABCD@8",
+     "H2@5 before solid khoi_S_ABCD@8"
+    ],
+    "O3": [],
+    "O4": [
+     "H: 'Dựng H.' lacks 'trung điểm' or operands ['H', 'A', 'B']",
+     "H1: 'Dựng H1.' lacks 'vectơ' or operands ['H1', 'H', 'BC']",
+     "H2: 'Dựng H2.' lacks 'vectơ' or operands ['H2', 'H', 'AS']"
+    ]
+   },
+   "ordering_pass": false,
+   "learner_text": [
+    "Đặt các điểm đề cho vào không gian.",
+    "Dựng H.",
+    "Lấy vectơ BC.",
+    "Dựng H1.",
+    "Lấy vectơ AS.",
+    "Dựng H2.",
+    "Dựng đáy ABCD.",
+    "Dựng các cạnh bên SA, SB, SC, SD.",
+    "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt).",
+    "Dựng (P).",
+    "Trên mặt ABCD, nối giao điểm thuộc cạnh AB với giao điểm thuộc cạnh CD.",
+    "Trên mặt SCD, nối giao điểm thuộc cạnh CD với giao điểm thuộc cạnh SC.",
+    "Trên mặt SBC, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SB.",
+    "Trên mặt SAB, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh AB.",
+    "Thiết diện khép lại thành tứ giác: (P) cắt hình chóp S.ABCD.",
+    "Diện tích thiết diện bằng 9/4."
+   ]
+  }
+ ]
+}

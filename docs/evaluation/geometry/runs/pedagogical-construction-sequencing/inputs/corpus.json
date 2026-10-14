@@ -1,0 +1,251 @@
+{
+ "schema": "SEQUENCING_CORPUS/1",
+ "run": "pedagogical-construction-sequencing",
+ "registered_before_fix": true,
+ "base_commit": "5bd28d73",
+ "excluded": "docs/evaluation/geometry/runs/two-line-plane-section/inputs/heldout.json (32 sealed two-line heldout) — not reused",
+ "development": [
+  {
+   "id": "two-line-0",
+   "source": "two-line math-corpus",
+   "corpus_index": 0,
+   "family": "pyramid",
+   "expected_status": "SERVED",
+   "sha256": "616e77197ac149a062937b17ea0a20c6ec54a41b99f80c3e9c4ac289904fd512"
+  },
+  {
+   "id": "two-line-18",
+   "source": "two-line math-corpus",
+   "corpus_index": 18,
+   "family": "prism",
+   "expected_status": "SERVED",
+   "sha256": "4b7364f1eb3e3bd8c8f7373f31c99b7697b576642234bfdcbb5540dd3920d241"
+  },
+  {
+   "id": "two-line-33",
+   "source": "two-line math-corpus",
+   "corpus_index": 33,
+   "family": "cuboid",
+   "expected_status": "SERVED",
+   "sha256": "64bfa6e4847857b1b4878988a5d87009f9dc336d0eb37d12a754979bfa051d82"
+  },
+  {
+   "id": "two-line-3",
+   "source": "two-line math-corpus",
+   "corpus_index": 3,
+   "family": "pyramid",
+   "expected_status": "PLANE_NOT_UNIQUE",
+   "sha256": "0e426e738a34bfad21d2cfcebb6a07bad982b3ddbcdece1d3cb4a1fe04fa8d05"
+  },
+  {
+   "id": "two-line-0-rename",
+   "source": "two-line math-corpus idx 0 + rename SABCDMP->TEFGKNQ (test_metamorphic_goal_controls)",
+   "variant": "rename"
+  },
+  {
+   "id": "two-line-0-midpoint-named-H",
+   "source": "two-line math-corpus idx 0 + midpoint named H",
+   "variant": "collision"
+  }
+ ],
+ "ordering_check": [
+  {
+   "id": "two-line-1",
+   "source": "two-line math-corpus",
+   "corpus_index": 1,
+   "family": "pyramid",
+   "sha256": "b9f13630c944d67704d41016e9bf05b032aaf86e2e9e068eee60940585abd37c"
+  },
+  {
+   "id": "two-line-2",
+   "source": "two-line math-corpus",
+   "corpus_index": 2,
+   "family": "pyramid",
+   "sha256": "a9498126432b2f7b08a504c571caf2bfe697ddfa5fd3b2d6d0783ac7c08f14ba"
+  },
+  {
+   "id": "two-line-12",
+   "source": "two-line math-corpus",
+   "corpus_index": 12,
+   "family": "triangular_pyramid",
+   "sha256": "fdce1e32fe3965e95b835196c7a78bf8dc0754ad6e9ba80d16b64203779dde13"
+  },
+  {
+   "id": "two-line-13",
+   "source": "two-line math-corpus",
+   "corpus_index": 13,
+   "family": "triangular_pyramid",
+   "sha256": "2c5682b4934dca9ab83d40cf906c970407896f6102ee331e4afc38832f93a4e4"
+  },
+  {
+   "id": "two-line-14",
+   "source": "two-line math-corpus",
+   "corpus_index": 14,
+   "family": "triangular_pyramid",
+   "sha256": "586fa9d07d655ade199c26b50578b52bd555f7d0ba63efa17cd33464bb2dd565"
+  },
+  {
+   "id": "two-line-19",
+   "source": "two-line math-corpus",
+   "corpus_index": 19,
+   "family": "prism",
+   "sha256": "f770b80d8f4e7042ba3157453538bba68d364477cb7ba0a4695992e4d060dc80"
+  },
+  {
+   "id": "two-line-20",
+   "source": "two-line math-corpus",
+   "corpus_index": 20,
+   "family": "prism",
+   "sha256": "901cf94808081e14362dc3fc7bae55229fc2af610c205dd89e5017bdd3296e8a"
+  },
+  {
+   "id": "two-line-34",
+   "source": "two-line math-corpus",
+   "corpus_index": 34,
+   "family": "cuboid",
+   "sha256": "274ddadb6fdf8596e443f3efb9f6cfac91aea2bca74453a27f9466d4e8d6caae"
+  },
+  {
+   "id": "two-line-35",
+   "source": "two-line math-corpus",
+   "corpus_index": 35,
+   "family": "cuboid",
+   "sha256": "a8a307394eb62e3f50cf6ea814fa83b38e1424d6010f5ea65a3e5c9ef119968b"
+  },
+  {
+   "id": "benchmark-B01",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "simple",
+   "sha256": "c54e3ab4748415d164e940cbff2bed3fd56c2d2ea184749ecc2005970a3f622d"
+  },
+  {
+   "id": "benchmark-B02",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "simple",
+   "sha256": "e430187321214fa710b7c0ab1b56d4c6e8f13b2c8b8bd6b59b9a02741bebc1a7"
+  },
+  {
+   "id": "benchmark-B03",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "simple",
+   "sha256": "58cf1101f8dd256bfc4498c8cec1cfb55215f0cf38b2f3cc71c7039211a04481"
+  },
+  {
+   "id": "benchmark-B04",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "simple",
+   "sha256": "782ac59e83415945f61e2bf99822723a1d18b3c4b95ac97fb180e0f1a3c1ed99"
+  },
+  {
+   "id": "benchmark-B05",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "two_primitives",
+   "sha256": "7976e443aead40722bdcc4a52912998e3af3af788dec9ac67d81531f49328eb7"
+  },
+  {
+   "id": "benchmark-B06",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "two_primitives",
+   "sha256": "c7a6e8c26cd09d72a5ce82c3631b22b1f943f29ff66ec19ebd319542ad1dea54"
+  },
+  {
+   "id": "benchmark-B07",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "two_primitives",
+   "sha256": "3bb2f26136b15a6c0114a910071842f0d47229cf328d22d8ebd698c31a58bd83"
+  },
+  {
+   "id": "benchmark-B08",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "two_primitives",
+   "sha256": "c0a4cd1f7502d247a40bc1b18b51c6b2254ae1dfad225736c7acc00c3fcf5c74"
+  },
+  {
+   "id": "benchmark-B09",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "chain",
+   "sha256": "05e8454913580d9b093d7db330ee0c7d1553e5bd1405c14a7615ddc0e0a8b5d4"
+  },
+  {
+   "id": "benchmark-B10",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "chain",
+   "sha256": "4d12367e49f80fcb9a0a182da81d717189d61f02a71a13513e38e9431cd960e8"
+  },
+  {
+   "id": "benchmark-B11",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "derived_input",
+   "sha256": "b65fe47d5996460eb15d7b645db785e06a16c803130f399192c3fa92cfcb857b"
+  },
+  {
+   "id": "benchmark-B12",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "derived_input",
+   "sha256": "bee46a1a37d84a904cea1d86b1e935fcbf61ff6020a38c5b2534b3a68c1b41f5"
+  },
+  {
+   "id": "benchmark-B13",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "reordered",
+   "sha256": "efa248b7570d6f323a4be3d3b33ec356103a3523d066a885cb573bd34a63db9b"
+  },
+  {
+   "id": "benchmark-B14",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "reordered",
+   "sha256": "943accfcdc8261fe81aff9c53569f4695aee9c3b8ea2d0ad23d62238e4c23596"
+  },
+  {
+   "id": "benchmark-B15",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "renamed",
+   "sha256": "8218811a680cf25d667fe71490d4e8d42b64a05ec76c73c9f2323da400f0d917"
+  },
+  {
+   "id": "benchmark-B16",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "renamed",
+   "sha256": "663fc11804182758c01b9f681e24877fe3087c3fb5ea5fdc103dc86cc1fc843e"
+  },
+  {
+   "id": "benchmark-B26",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "composition",
+   "sha256": "bd040adda9b5dee56220c349047645652d9efe53cb518e69c5738bfb90cc4d9c"
+  },
+  {
+   "id": "benchmark-B27",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "composition",
+   "sha256": "3dd1a91ad7737483c5b99249b583ed77291b424c1a561182ea08f896eff14faa"
+  },
+  {
+   "id": "benchmark-B28",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "composition",
+   "sha256": "91f4682588bc98fb582afbc26610104ecf2dc6104e80ff7cbe40287ac7eeae8f"
+  },
+  {
+   "id": "benchmark-B29",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "two_primitives",
+   "sha256": "dbc273bf9cf049ec8feb53b7d8e09da6ec304528005fd7fcc9fb25b50bbb07a9"
+  },
+  {
+   "id": "benchmark-B30",
+   "source": "hybrid_compiler_benchmark.cases",
+   "tier": "two_primitives",
+   "sha256": "1f4228fa9d757bf1044a5d30179c7f72a42425968f7c34c864d2b0e7fab3fc6b"
+  }
+ ],
+ "ordering_check_rule": "every SERVED row of the two-line development math corpus not in development + every SERVED-expected case of hybrid_compiler_benchmark.cases(); ordering verdicts not computed on this split before the fix (math baseline only)",
+ "contract": {
+  "O1_dependencies": "every object first appears strictly after each of its dependencies (INIT excepted)",
+  "O2_base_solid_first": "every derived point/vector/line/plane that is not in the dependency closure of a solid or of its formation objects (base, height, top face, lateral edges) first appears after that solid closes",
+  "O3_solid_formation_split": "a pyramid-like solid shows base, lateral boundary, close; a prism-like solid shows base, top face, lateral boundary, close — at distinct steps in that order (existing formation contract TOI_THIEU), when the solid topology is declared by the source",
+  "O4_grounded_narration": "the step that creates a constructed point names its construction from producer and operand notation (midpoint: 'trung điểm' + both endpoints; translate: 'vectơ' + base point + direction)",
+  "O5_math_invariance": "status, refusal code, answers and every exact point/section value identical before and after",
+  "O6_identity": "every object id present before is present after with the same coordinates; new objects only from the existing formation completion (base/top polygons, lateral segments)"
+ }
+}
