@@ -1,0 +1,24 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "pedagogical-construction-sequencing-w01",
+  "task": "pedagogical-construction-sequencing",
+  "corrects": "docs/evaluation/geometry/runs/scene3d-construction-audit/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "21ed6faa26750b4b0b05792b85109f5a8d12e38657d3f9a120e23b678fe62937",
+  "current_candidate_source_commit": "0dd7f4ccb05fd1c8c6be8a4a0ea4921291aeb8b2",
+  "previous_candidate_hash": "c2ac6dbe1cc65170e75db6a0d6d7e4e8e0a1c544db5961fcd16120a89606c5d4",
+  "previous_product_commit": "eea6f3dfc4bc834fa7ea284999ba95a2e801409e",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "measured_system_paths_changed": true,
+  "reason": "Hybrid-only learner construction order: engine.bien_dich emits solid-needed point blocks, solids, then auxiliary points (topological split of the same statements); hop_dong_to_po_da_khai declares prism topology from source notation ABC.A'B'C'; function_route narrates constructed points from producer and operands. No change to the shared formation, scene3d, kernel, interpreter, LLM_ONLY route or prompts.",
+  "historical_effect": "Exact math fingerprint, answers, status and refusal codes identical before/after on the preregistered corpus (development 6, ordering check 30); two-line development 45 / heldout 32 / historical benchmark 30 rerun for identical outcomes. Historical results keep their candidates.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "NONE: research branch only; user decision required",
+  "push": "NONE: not authorized"
+}
