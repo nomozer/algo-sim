@@ -1,5 +1,6 @@
 """The construction audit (`scripts/audit_scene3d_construction.py`) must go red on injected scene faults."""
 import copy
+from fractions import Fraction as F
 import importlib.util
 import json
 from pathlib import Path
@@ -39,10 +40,22 @@ def section_early(s):
     for st in s['formation']['steps'][:3]:
         st['visible_ids'].append('td_q')
 def point_disappears(s): s['formation']['steps'][-1]['visible_ids'].remove('M')
+def segment_past_edge(s):
+    # same plane, same face, but the endpoint runs beyond the section edge: in_face alone would pass
+    st = obj(s, 'td_q')['steps'][0]
+    st['b'] = [str(2 * F(b) - F(a)) for a, b in zip(st['a'], st['b'])]
+def same_line_twice(s):
+    # both auxiliary points built from the first declared direction (H1 := M + vector of H)
+    h1, h = obj(s, 'H1'), obj(s, 'H')
+    h1['depends'] = h['depends']
+    h1['xyz'] = list(h['xyz'])
+def unknown_producer(s): obj(s, 'H')['producer'] = 'construct_point.intersection'
+def unknown_step_kind(s): s['formation']['steps'][1]['semantic_kind'] = 'SOMETHING_ELSE'
 
 
 @pytest.mark.parametrize('fault', [shift_h, euclid_metric, euclid_normal, section_vertex_off_edge, wrong_face_narration,
-                                   plane_before_h1, section_early, point_disappears])
+                                   plane_before_h1, section_early, point_disappears, segment_past_edge,
+                                   same_line_twice, unknown_producer, unknown_step_kind])
 @pytest.mark.parametrize('row', [r for r in ROWS if r['served']], ids=lambda r: r['id'])
 def test_audit_is_red_on_injected_fault(row, fault):
     case = CASES[row['corpus_index']]

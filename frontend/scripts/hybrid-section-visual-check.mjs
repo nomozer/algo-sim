@@ -29,6 +29,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 import { pathToFileURL } from "node:url";
+import { execFileSync } from "node:child_process";
 import { chromium } from "playwright";
 import { docPNG } from "./png-pixels.mjs";
 
@@ -205,6 +206,9 @@ function projectionCheck(row, f) {
   const shown = f.labels.filter((l) => l.shown && l.anchor).map(box);
   const hiddenFree = f.labels.filter((l) => !l.shown && l.anchor && l.w > 0 && !shown.some((b) => meets(box(l), b))).map((l) => l.id);
   if (hiddenFree.length) bad.push(`labels hidden without overlapping a shown label: ${hiddenFree}`);
+  // ... and the reverse: shown labels never overlap each other (a filter that hides nothing would pass the check above)
+  const overlapping = shown.flatMap((a, i) => shown.slice(i + 1).filter((b) => meets(a, b)).map(() => i));
+  if (overlapping.length) bad.push(`${overlapping.length} pairs of shown labels overlap`);
   if (chart > 1e-6) bad.push(`marker chart coordinates off by ${chart}`);
   if (marker > 0.5) bad.push(`marker projection off by ${marker}px`);
   if (label > 1) bad.push(`label anchor off by ${label}px`);
@@ -261,6 +265,9 @@ async function playbackAudit() {
         projection: proj,
         failures: [
           ...(f.step === g.anchor ? [] : [`harness step ${f.step} != anchor ${g.anchor}`]),
+          // frontend step model (objectsAt) = backend formation snapshot at this frame
+          ...(JSON.stringify([...present].sort()) === JSON.stringify([...row.scene.formation.steps[g.anchor].visible_ids].sort())
+            ? [] : ["objectsAt differs from formation visible_ids"]),
           ...base.filter((id) => !present.includes(id)).map((id) => `${id} rendered before it exists`),
           ...drawable.filter((id) => !base.includes(id)).map((id) => `${id} present but not drawn`),
           ...pointsDrawn.filter((id) => !proj.marker_ids.includes(id)).map((id) => `${id} drawn without a vertex marker`),
@@ -449,7 +456,10 @@ if (gpu && !/Intel.*Direct3D11|Intel.*D3D11/i.test(renderer)) failures.push("Int
 writeFileSync(join(out, "browser-check.json"), JSON.stringify({ harness: "scripts/hybrid-section-visual.html (Scene3D harness, not product UI)",
   scenes: "real Hybrid route output, backend/scripts/export_hybrid_section_scenes.py; product frame step veKhongGian applied",
   browser: `Playwright chromium, ${gpu ? "ANGLE D3D11 requested" : "SwiftShader WebGL requested"}`, renderer,
-  browser_version: browser.version(), browser_pid: browserPid, browser_stopped: server.process().exitCode !== null,
+  browser_version: browser.version(), browser_pid: browserPid,
+  git_head: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf-8" }).trim(),
+  git_dirty_paths: execFileSync("git", ["status", "--porcelain"], { encoding: "utf-8" }).split(/\r?\n/).filter(Boolean).length,
+  browser_stopped: server.process().exitCode !== null,
   scenes_sha256: createHash("sha256").update(scenesBytes).digest("hex"),
   failures, console_errors: errors, net_retries: netRetries, dev_server_noise: devServerNoise.length, report,
   ...(playback ? { playback: playbackReport } : {}) }, null, 1));

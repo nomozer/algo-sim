@@ -4,7 +4,7 @@ Harness, not product. Reads `scenes.json` exported by `export_hybrid_section_sce
 each object against its producer with exact fractions in the CHART frame, and the section against the independent
 research oracle `tests/geometry/two_line_plane_oracle.py` (facet halfspaces, Gram area). Incidence uses covectors only;
 no Euclidean dot product is applied to chart coordinates. Metamorphic variants re-run the real Hybrid route (fake
-facts, 0 model calls) and go through the same checks. `--browser <browser-check.json>` (from
+facts, 0 model calls) and go through the same point, section and step checks. `--browser <browser-check.json>` (from
 `frontend/scripts/hybrid-section-visual-check.mjs --playback`) adds world-space metric checks and the per-step visual
 verdicts to the step table.
 
@@ -113,10 +113,19 @@ def audit_scene(scene, case):
             c["translate"] = P[o["id"]] == tuple(P[base][i] + P[v][i] for i in range(3))
             c["base_is_midpoint"] = base == m["id"]
             c["auxiliary_role"] = o.get("source", {}).get("binding") == "AUXILIARY" and o["role"] == "Điểm dựng phụ"
+            row["line"] = frozenset((p, q))
+        else:
+            c["producer_has_a_check"] = False  # review: an unknown producer must not pass with no check
         row["solid"] = side(halfspaces, P[o["id"]])
         if not all(c.values()):
             fails.append(f"point {o['id']}: {[k for k, v in c.items() if not v]}")
         points.append(row)
+    # the two auxiliary points use the two DIFFERENT declared lines, and M, H, H1 are not collinear
+    aux = [r for r in points if "line" in r]
+    if len({r.pop("line") for r in aux}) != 2:
+        fails.append("auxiliary points do not use two different declared lines")
+    if len(aux) == 2 and not any(cross(sub(P[aux[0]["id"]], P[m["id"]]), sub(P[aux[1]["id"]], P[m["id"]]))):
+        fails.append("M and the auxiliary points are collinear")
     # plane: covector through the three defining points, strict parallel to both declared lines
     n, pt = vec(plane["normal"]), vec(plane["point"])
     d = dot(n, pt)
@@ -160,6 +169,9 @@ def audit_scene(scene, case):
                     "a": s["a"], "b": s["b"]})
     if not all(x["in_face"] for x in seg):
         fails.append("section segment not in its face")
+    # review: the progressive segments are exactly the ring edges, each once (a segment past an edge would pass in_face)
+    if sorted(map(sorted, ({vec(s["a"]), vec(s["b"])} for s in sec["steps"]))) != sorted(map(sorted, edges(ring))):
+        fails.append("progressive section segments are not exactly the ring edges")
     # coincident coordinates with distinct identity (point3 objects and section vertex entities)
     by = {}
     for o in scene["objects"]:
@@ -185,6 +197,8 @@ def audit_steps(scene, seg):
     """Raw trace steps: what appears, from which inputs, whether its dependencies already exist."""
     objs = {o["id"]: o for o in scene["objects"]}
     steps, fails, prev = [], [], set()
+    if len(scene["formation"]["steps"]) != len(scene["events"]):
+        fails.append("formation steps and events differ in count")
     for st, ev in zip(scene["formation"]["steps"], scene["events"]):
         k = st["step_index"]
         vis = set(st["visible_ids"])
@@ -209,6 +223,8 @@ def audit_steps(scene, seg):
             issues.append(f"appears before its dependencies {late}")
         if row["kind"] == "INIT_GIVEN" and set(new) != set(scene["free_objects"]):
             issues.append(f"INIT shows {new}, not exactly the given points")
+        if row["kind"] == "?":
+            issues.append(f"unknown step kind {st['semantic_kind']}")
         if row["kind"] == "CONSTRUCTION" and not geometry_change:
             issues.append("construction step without a constructed object")
         if row["kind"] == "INTERPRETIVE" and [i for i in new if objs[i]["render"] not in ("non_visual", "readout")]:
@@ -247,6 +263,8 @@ def metamorphic(case_index):
         text, payload = problem(c["family"], tuple(c["mid"]), tuple(tuple(x) for x in c["lines"]))
         r = run_fact_route(text, payload)
         a = audit_scene(r.scene3d, c) if r.status == "SERVED" else {"fails": [f"refused {r.code}"]}
+        if r.status == "SERVED":
+            a["fails"] += audit_steps(r.scene3d, a["section_segments"])[1]
         out.append({"variant": name, "status": r.status, "answer": r.answers.get("q"), "fails": a["fails"],
                     "aux_ids": [o["id"] for o in (r.scene3d or {}).get("objects", [])
                                 if o.get("source", {}).get("binding") == "AUXILIARY"]})
@@ -257,6 +275,8 @@ def metamorphic(case_index):
                          .replace("Gọi M", "Gọi H").replace("qua M", "qua H"))
     r = run_fact_route(text, payload)
     a = audit_scene(r.scene3d, case) if r.status == "SERVED" else {"fails": [f"refused {r.code}"], "coincident": []}
+    if r.status == "SERVED":
+        a["fails"] += audit_steps(r.scene3d, a["section_segments"])[1]
     ids = [o["id"] for o in (r.scene3d or {}).get("objects", []) if o["type"] == "point3"]
     out.append({"variant": "midpoint_named_H", "status": r.status, "answer": r.answers.get("q"), "fails": a["fails"]
                 + ([] if len(ids) == len(set(ids)) else ["duplicate point id"]),
@@ -313,6 +333,8 @@ def main() -> int:
                 s["learner_step"] = g and g["index"]
                 s["screenshot"] = g and g["screenshot"]
                 s["visual_verdict"] = g and ("PASS" if not g["failures"] else "FAIL")
+                if s["visual_verdict"] == "FAIL":  # review: visual FAILs count as audit failures
+                    sf.append(f"step {s['step']} visual: {g['failures']}")
             a["world"] = world_checks(row["scene"], b["world_points"], row["scene"]["chart_metric"])
             if not a["world"]["passed"]:
                 a["fails"].append("world-space metric mismatch")
