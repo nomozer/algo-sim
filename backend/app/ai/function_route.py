@@ -51,7 +51,8 @@ def _ke_diem_dung(canh: dict[str, Any], vai: dict[str, str]) -> None:
         n, nguon = ky(o["id"]), [ky(d) for d in o.get("depends") or ()]
         if o.get("producer") == "construct_point.midpoint" and len(nguon) == 2 and all(nguon):
             cau = f"Dựng {n} là trung điểm của đoạn {nguon[0]}{nguon[1]}."
-        elif o.get("producer") == "construct_point.translate" and len(nguon) == 2 and all(nguon):
+        elif (o.get("producer") == "construct_point.translate" and len(nguon) == 2 and all(nguon)
+              and [theo_id[d]["type"] for d in o["depends"]] == ["point3", "vector3"]):   # review C4: point, then vector
             cau = f"Qua {nguon[0]} dựng điểm {n} sao cho vectơ {nguon[0]}{n} bằng vectơ {nguon[1]}."
         elif vai.get(o["id"]):
             cau = f"Dựng {n}: {vai[o['id']][:1].lower()}{vai[o['id']][1:]}."

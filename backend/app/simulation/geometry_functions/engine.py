@@ -109,7 +109,8 @@ class KetQuaTuyen:
 def hop_dong_to_po_da_khai(calls: tuple[LoiGoi, ...]) -> Any:
     """Tô-pô khối ĐỀ ĐÃ KHAI → `RequestContract(solid_topology=…)`, thẩm quyền ① của `formation.lop_khoi`.
 
-    Chỉ khi có đúng một khối, là chóp, và câu nguồn của nó viết ký hiệu chấm `S.ABC` khớp đỉnh + đáy của lời gọi.
+    Chỉ khi có đúng một khối và câu nguồn của nó viết ký hiệu chấm khớp lời gọi: chóp `S.ABC` (đỉnh + đáy), lăng trụ
+    `ABC.A'B'C'` (đáy + đáy trên, ′ ’ ≡ ').
     "Tứ diện ABCD" không nêu đỉnh — đỉnh trong lời gọi là lựa chọn của mô hình/planner ⇒ None, không bịa tô-pô.
     Thiếu tô-pô, formation đọc khối từ quan hệ có kiểu, và phép chiếu `project_onto` A→(SBC) từng đổi gốc S.ABC thành A.SBC.
     """
@@ -121,15 +122,16 @@ def hop_dong_to_po_da_khai(calls: tuple[LoiGoi, ...]) -> Any:
     if len(khoi) != 1:
         return None
     a, nhan = khoi[0].args, r"A-Za-z0-9'′"
-    phay = lambda s: s.replace("′", "'")            # A′ and A' are the same source name
+    phay = lambda s: s.replace("′", "'").replace("’", "'")    # A′, A’ and A' are the same source name
     dau = list(a.base) if khoi[0].fn == "prism" else [a.apex]
     sau = list(a.top) if khoi[0].fn == "prism" else list(a.base)
     ky_hieu = "".join(map(re.escape, map(phay, dau))) + r"\s*\.\s*" + "".join(map(re.escape, map(phay, sau)))
     if not any(re.search(rf"(?<![{nhan}]){ky_hieu}(?![{nhan}])", phay(q)) for q in khoi[0].quotes):
         return None
     if khoi[0].fn == "prism":     # pedagogical-construction-sequencing: base / top face / lateral edges, source-declared
-        return RequestContract(solid_topology=PrismTopologySpec(base_cycle=tuple(a.base), top_cycle=tuple(a.top),
-                                                                correspondence=tuple(zip(a.base, a.top))))
+        return RequestContract(solid_topology=PrismTopologySpec(
+            base_cycle=tuple(a.base), top_cycle=tuple(a.top), correspondence=tuple(zip(a.base, a.top)),
+            lateral_structure="right" if a.right else None))           # review C3: an oblique prism is not declared right
     return RequestContract(solid_topology=PyramidTopologySpec(apex=a.apex, base_cycle=tuple(a.base)))
 
 
@@ -781,6 +783,12 @@ class _Dung:
         # Learner order (run `pedagogical-construction-sequencing`): the points a solid needs, then the solid, then the
         # auxiliary points — a topological split of the same statements, values unchanged.
         dinh = {ir_name(x) for k in self.khoi.values() for x in (*k.base, *k.top, *([k.apex] if k.apex else []))}
+        # The height foot of a pyramid belongs to the solid's formation (base → height → lateral edges): ask the formation
+        # authority itself which points it would accept as the foot, with the same declared topology it receives.
+        from app.simulation.semantic_program.formation import _chan_ung_vien
+        tat_ca, to_po = [st for _, l, _ in khoi_diem for st in l], hop_dong_to_po_da_khai(self.calls)
+        dinh |= {f for k in self.khoi.values() if k.apex
+                 for f in _chan_ung_vien(tat_ca, to_po, ir_name(k.apex), tuple(map(ir_name, k.base)))}
         truoc, sau = thu_tu_su_pham([(t, l) for t, l, _ in khoi_diem], dinh)
         khai_cua = {t: k for t, _, k in khoi_diem}
         lenh = [st for _, l in truoc for st in l]
