@@ -1,0 +1,16 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "task": "scene3d-construction-audit",
+  "corrects": "docs/evaluation/geometry/runs/two-line-plane-section/inputs/candidate_divergence.json",
+  "previous_product_commit": "2b42eb40eda7479ad088846be44f9757501e7047",
+  "current_product_commit": "eea6f3dfc4bc834fa7ea284999ba95a2e801409e",
+  "previous_candidate_hash": "c2ac6dbe1cc65170e75db6a0d6d7e4e8e0a1c544db5961fcd16120a89606c5d4",
+  "current_candidate_hash": "c2ac6dbe1cc65170e75db6a0d6d7e4e8e0a1c544db5961fcd16120a89606c5d4",
+  "diverged": true,
+  "measured_system_paths_changed": false,
+  "reason": "Renderer-only fix outside MEASURED_SYSTEM_PATHS: point labels hide by real box overlap instead of a fixed 68x22 px window (frontend/src/simulations/domains/geometry/scene3d-presentation.ts, scene3d-view.tsx). tree_hash unchanged; product commit moves, so the manifest is re-frozen.",
+  "historical_effect": "No backend, prompt, schema or route change: development 45 / heldout 32 / historical 30 results keep their candidate and are not rescored.",
+  "live_requests": 0,
+  "integration": "NONE: research branch only; user decision required",
+  "push": "NONE: not authorized"
+}

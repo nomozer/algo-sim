@@ -1,0 +1,6 @@
+{
+  "cache_version": 125,
+  "decision": "UNCHANGED",
+  "reason": "Frontend label-overlap presentation only. No prompt, routing policy, schema or backend change; cached analyze payloads are unaffected.",
+  "live_calls": 0
+}
