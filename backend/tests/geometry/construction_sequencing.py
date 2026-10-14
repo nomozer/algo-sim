@@ -50,12 +50,14 @@ def check(scene):
             if (o.get("producer") and o["type"] in ("point3", "vector3", "line3", "plane3") and o["id"] not in allowed
                     and o["id"] in first and first[o["id"]] <= k_close):
                 v["O2"].append(f"{o['id']}@{first[o['id']]} before solid {s['id']}@{k_close}")
-        roles = [r for st in scene["formation"]["steps"] if st["step_index"] <= k_close for r in st["formation_roles"]]
         want = ORDER.get(s.get("shape_class") or "")
+        # each required role at its OWN step, in order (review K1: a step carrying two roles does not count)
+        seen = [(st["step_index"], r) for st in scene["formation"]["steps"] if st["step_index"] <= k_close
+                for r in st["formation_roles"] if want and r in want]
         if want is None:
             v["O3"].append(f"{s['id']}: solid not classified ({s.get('shape_class')})")
-        elif [r for r in roles if r in want] != list(want):
-            v["O3"].append(f"{s['id']}: formation roles {[r for r in roles if r in want]} != {list(want)}")
+        elif [r for _, r in seen] != list(want) or len({k for k, _ in seen}) != len(seen):
+            v["O3"].append(f"{s['id']}: formation roles {seen} != {list(want)} at distinct steps")
     events = {e["step_index"]: e for e in scene["events"]}
     for o in scene["objects"]:
         kw = KEYWORD.get(o.get("producer") or "")
@@ -63,6 +65,8 @@ def check(scene):
             continue
         text = events[first[o["id"]]]["learner_text"]
         names = [o.get("notation")] + [objs[d].get("notation") for d in o["depends"] if d in objs]
-        if kw not in text.lower() or any(n and n not in text for n in names):
-            v["O4"].append(f"{o['id']}: {text!r} lacks {kw!r} or operands {names}")
+        direction = (o.get("producer") != "construct_point.translate"
+                     or f"vectơ {names[1]}{names[0]}" in text)           # review K2: vectơ (base → new point)
+        if kw not in text.lower() or any(n and n not in text for n in names) or not direction:
+            v["O4"].append(f"{o['id']}: {text!r} lacks {kw!r}, operands {names} or direction")
     return v

@@ -35,6 +35,17 @@ def test_learner_order_builds_the_solid_before_auxiliary_points(case):
     assert v == {'O1': [], 'O2': [], 'O3': [], 'O4': []}, v
 
 
+def test_apex_projection_keeps_the_height_step():
+    # review C1: the foot of the apex on the base is part of the solid's formation, not an auxiliary point after it
+    from tests.geometry import hybrid_compiler_benchmark as HB
+    q, f = HB._with(HB._square(), HB._proj('f5', 'H', 'S', 'ABCD'), HB._ask('q', 'Tính độ dài SH.', 'length', points=['S', 'H']))
+    r = run_fact_route(' '.join(q), {'facts': f})
+    assert r.status == 'SERVED' and r.answers == {'q': '3'}
+    roles = [x for st in r.scene3d['formation']['steps'] for x in st['formation_roles']]
+    assert roles.index('CONSTRUCT_BASE') < roles.index('CONSTRUCT_HEIGHT') < roles.index('CLOSE_SOLID')
+    assert check(r.scene3d) == {'O1': [], 'O2': [], 'O3': [], 'O4': []}
+
+
 def test_refusal_is_unchanged():
     c = CASES[3]
     r = run_fact_route(*problem(c['family'], c['mid'], c['lines']))
@@ -68,8 +79,15 @@ def test_prism_topology_is_declared_only_from_source_notation(quote, declared):
     from types import SimpleNamespace as N
     from app.simulation.geometry_functions.engine import hop_dong_to_po_da_khai
     base, top = (['A', 'B', 'C', 'D'], ["A'", "B'", "C'", "D'"]) if 'ABCD' in quote else (['A', 'B', 'C'], ["A'", "B'", "C'"])
-    topo = getattr(hop_dong_to_po_da_khai((N(fn='prism', args=N(base=base, top=top), quotes=(quote,)),)),
+    topo = getattr(hop_dong_to_po_da_khai((N(fn='prism', args=N(base=base, top=top, right=True), quotes=(quote,)),)),
                    'solid_topology', None)
     assert (getattr(topo, 'solid_kind', None) == 'prism') is declared
     if declared:
         assert topo.base_cycle == tuple(base) and topo.correspondence == tuple(zip(base, top))
+
+
+def test_an_oblique_prism_is_not_declared_right():
+    from types import SimpleNamespace as N
+    from app.simulation.geometry_functions.engine import hop_dong_to_po_da_khai
+    c = N(fn='prism', args=N(base=['A', 'B', 'C'], top=["A'", "B'", "C'"], right=False), quotes=("Cho lăng trụ ABC.A’B’C’.",))
+    assert hop_dong_to_po_da_khai((c,)).solid_topology.lateral_structure is None

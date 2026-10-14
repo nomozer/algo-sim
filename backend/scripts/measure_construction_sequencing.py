@@ -63,6 +63,7 @@ def measure(row, ordering):
         out["scene_points"] = {o["id"]: o["xyz"] for o in r.scene3d["objects"] if o["type"] == "point3"}
         out["scene_ids"] = sorted(o["id"] for o in r.scene3d["objects"])
         out["trace_steps"] = len(r.scene3d["events"])
+        out["formation_roles"] = sorted({x for st in r.scene3d["formation"]["steps"] for x in st["formation_roles"]})
         if ordering:
             out["ordering"] = check(r.scene3d)
             out["ordering_pass"] = not any(out["ordering"].values())
@@ -91,6 +92,9 @@ def main() -> int:
             for k in ("status", "code", "answers", "math_sha256", "scene_points"):
                 if x.get(k) != b.get(k):
                     fails.append(f"{x['id']}: O5/O6 {k} changed")
+            lost = set(b.get("formation_roles") or []) - set(x.get("formation_roles") or [])
+            if b.get("formation_roles") is not None and lost:
+                fails.append(f"{x['id']}: formation roles lost {sorted(lost)}")
             gone = set(b.get("scene_ids", [])) - set(x.get("scene_ids", []))
             if gone:
                 fails.append(f"{x['id']}: O6 objects removed {sorted(gone)}")
@@ -98,7 +102,12 @@ def main() -> int:
         fails += [f"{x['id']}: {x['ordering']}" for x in rows if x.get("ordering_pass") is False]
     served = sum(x["status"] == "SERVED" for x in rows)
     a.out.parent.mkdir(parents=True, exist_ok=True)
-    a.out.write_text(json.dumps({"split": a.split, "corpus_sha256": hashlib.sha256(CORPUS.read_bytes()).hexdigest(),
+    import subprocess
+    git = lambda *c: subprocess.run(["git", *c], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+    cand = json.loads((ROOT / "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json").read_text(encoding="utf-8"))
+    a.out.write_text(json.dumps({"split": a.split, "git_head": git("rev-parse", "HEAD"),
+                                 "git_dirty_paths": len(git("status", "--porcelain").splitlines()),
+                                 "candidate_tree_hash": cand["measured_system"]["tree_hash"], "corpus_sha256": hashlib.sha256(CORPUS.read_bytes()).hexdigest(),
                                  "ordering_computed": a.ordering, "compared_with": str(a.compare) if a.compare else None,
                                  "served": served, "refused": len(rows) - served, "model_calls": 0,
                                  "failures": fails, "cases": rows}, ensure_ascii=False, indent=1), encoding="utf-8")
