@@ -99,6 +99,24 @@ describe("nhãn chồng nhau: giữ cái ưu tiên cao", () => {
     expect(giu.size).toBe(3);
   });
 
+  it("nhãn ngắn gần nhau nhưng hộp THẬT không chạm ⇒ giữ cả hai (S và H1 của chóp, run scene3d-construction-audit)", () => {
+    // Đo ở khung cuối chóp S.ABCD: neo S (590.5, 84), H1 (539.8, 101.6); viên nhãn ~15×17 và ~25×17 px.
+    // Hộp cố định 68×22 cũ coi chúng chồng nhau và giấu S — đỉnh khối mất tên trong khi lời kể gọi SB, SC.
+    const giu = locNhanChongNhau([
+      { id: "S", x: 590.5, y: 84, uuTien: 1, w: 15, h: 17 },
+      { id: "H1", x: 539.8, y: 101.6, uuTien: 2, w: 25, h: 17 },
+    ]);
+    expect([...giu].sort()).toEqual(["H1", "S"]);
+  });
+
+  it("hộp thật chạm nhau ⇒ vẫn giấu nhãn ưu tiên thấp", () => {
+    const giu = locNhanChongNhau([
+      { id: "S", x: 560, y: 90, uuTien: 1, w: 15, h: 17 },
+      { id: "H1", x: 545, y: 95, uuTien: 2, w: 25, h: 17 },
+    ]);
+    expect([...giu]).toEqual(["H1"]);
+  });
+
   it("tất định: cùng đầu vào cho cùng kết quả bất kể thứ tự truyền vào", () => {
     const a = [
       { id: "x", x: 10, y: 10, uuTien: 1 },
