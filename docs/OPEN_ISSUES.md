@@ -1,5 +1,26 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-RESEARCH-HYBRID-AUXILIARY-BEFORE-SOLID
+
+- **status:** OPEN representation limitation (class E: geometry correct, hard to read), run `scene3d-construction-audit`.
+- **description:** In all three served two-line scenes the Hybrid Planner emits M, the two direction vectors and H, H1
+  before the base/edges/solid: the learner step "Dựng M" (midpoint of AB) shows M with no segment AB drawn, and H/H1
+  appear before the solid they relate to. Every step is mathematically correct and appears after its dependencies.
+- **impact:** Learner comprehension of the first steps; no wrong value or position.
+- **scope:** call order of `backend/app/simulation/geometry_functions/planner.py` (`_mat_qua_diem`). Changing it changes
+  measured paths ⇒ development 45 / heldout 32 rerun, candidate re-freeze. User decision 2026-10-14: record, do not fix here.
+- **owner_class:** UX
+- **default_switch_blocker:** NO
+
+### ISSUE-OPS-ORBIT-GATE-UNSETTLED-LOCAL
+
+- **status:** OPEN environment/harness finding, run `scene3d-construction-audit`.
+- **description:** `frontend/scripts/scene3d-orbit-gate.mjs` reports `KHONG_ON_DINH` (camera not settled within 20 s)
+  for p1/p6/p7 on this machine, identically on the pre-fix build (`632d7e15`) and the fixed build (`eea6f3df`).
+- **impact:** The orbit gate gives no signal here; not part of T3. Not attributed to the label fix.
+- **owner_class:** TOOLING
+- **default_switch_blocker:** NO
+
 ### ISSUE-ARCH-TWO-LINE-SOURCE-SUBSET
 
 - **status:** OPEN bounded research limitation, run `two-line-plane-section`.

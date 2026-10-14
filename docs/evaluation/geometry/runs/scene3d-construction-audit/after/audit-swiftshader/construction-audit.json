@@ -1,0 +1,2623 @@
+{
+ "scenes": "../docs/evaluation/geometry/runs/two-line-plane-section/visual/scenes.json",
+ "browser": "../docs/evaluation/geometry/runs/scene3d-construction-audit/after/swiftshader/browser-check.json",
+ "oracle": "tests/geometry/two_line_plane_oracle.py",
+ "model_calls": 0,
+ "failures": [],
+ "report": [
+  {
+   "id": "two-line-pyramid",
+   "served": true,
+   "answer": "9/4",
+   "raw_steps": 16,
+   "points_checked": 8,
+   "audit": {
+    "fails": [],
+    "points": [
+     {
+      "id": "A",
+      "label": "Điểm A",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "0",
+       "0",
+       "0"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "B",
+      "label": "Điểm B",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "1",
+       "0",
+       "0"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "C",
+      "label": "Điểm C",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "1",
+       "1",
+       "0"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "D",
+      "label": "Điểm D",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "0",
+       "1",
+       "0"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "M",
+      "label": "M",
+      "producer": "construct_point.midpoint",
+      "depends": [
+       "A",
+       "B"
+      ],
+      "binding": null,
+      "chart_xyz": [
+       "1/2",
+       "0",
+       "0"
+      ],
+      "checks": {
+       "midpoint": true,
+       "source_pair_is_declared": true,
+       "equals_oracle_anchor": true
+      },
+      "definition": "midpoint of AB",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "H",
+      "label": "H",
+      "producer": "construct_point.translate",
+      "depends": [
+       "M",
+       "derived_H_vec"
+      ],
+      "binding": "AUXILIARY",
+      "chart_xyz": [
+       "1/2",
+       "1",
+       "0"
+      ],
+      "checks": {
+       "vector_is_endpoint_difference": true,
+       "vector_line_is_declared": true,
+       "translate": true,
+       "base_is_midpoint": true,
+       "auxiliary_role": true
+      },
+      "definition": "M + vector BC",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "S",
+      "label": "Điểm S",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "0",
+       "0",
+       "1"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "H1",
+      "label": "H1",
+      "producer": "construct_point.translate",
+      "depends": [
+       "M",
+       "derived_H1_vec"
+      ],
+      "binding": "AUXILIARY",
+      "chart_xyz": [
+       "1/2",
+       "0",
+       "1"
+      ],
+      "checks": {
+       "vector_is_endpoint_difference": true,
+       "vector_line_is_declared": true,
+       "translate": true,
+       "base_is_midpoint": true,
+       "auxiliary_role": true
+      },
+      "definition": "M + vector AS",
+      "solid": "OUTSIDE"
+     }
+    ],
+    "plane": {
+     "defining_points_on_plane": true,
+     "normal_nonzero": true,
+     "strict_parallel": [
+      {
+       "line": "BC",
+       "direction_in_plane": true,
+       "not_contained": true
+      },
+      {
+       "line": "AS",
+       "direction_in_plane": true,
+       "not_contained": true
+      }
+     ],
+     "named": true
+    },
+    "section": {
+     "oracle_status": "SERVED",
+     "vertex_set_equals_oracle": true,
+     "edge_set_equals_oracle": true,
+     "vertices_on_named_solid_edges": true,
+     "area_squared_equals_oracle": true,
+     "area_readout": "9/4",
+     "oracle_area_sq": "81/16"
+    },
+    "section_vertices": [
+     {
+      "entity": "section:td_q:point:on:khoi_S_ABCD::edge:A-B",
+      "on_edge": true,
+      "on_plane": true
+     },
+     {
+      "entity": "section:td_q:point:on:khoi_S_ABCD::edge:C-D",
+      "on_edge": true,
+      "on_plane": true
+     },
+     {
+      "entity": "section:td_q:point:on:khoi_S_ABCD::edge:S-C",
+      "on_edge": true,
+      "on_plane": true
+     },
+     {
+      "entity": "section:td_q:point:on:khoi_S_ABCD::edge:S-B",
+      "on_edge": true,
+      "on_plane": true
+     }
+    ],
+    "section_segments": [
+     {
+      "k": 0,
+      "face": "ABCD",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "0",
+       "0"
+      ],
+      "b": [
+       "1/2",
+       "1",
+       "0"
+      ]
+     },
+     {
+      "k": 1,
+      "face": "SCD",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "1",
+       "0"
+      ],
+      "b": [
+       "1/2",
+       "1/2",
+       "1/2"
+      ]
+     },
+     {
+      "k": 2,
+      "face": "SBC",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "1/2",
+       "1/2"
+      ],
+      "b": [
+       "1/2",
+       "0",
+       "1/2"
+      ]
+     },
+     {
+      "k": 3,
+      "face": "SAB",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "0",
+       "1/2"
+      ],
+      "b": [
+       "1/2",
+       "0",
+       "0"
+      ]
+     }
+    ],
+    "coincident": [
+     {
+      "chart_xyz": [
+       "1/2",
+       "0",
+       "0"
+      ],
+      "ids": [
+       "M",
+       "section:td_q:point:on:khoi_S_ABCD::edge:A-B"
+      ]
+     },
+     {
+      "chart_xyz": [
+       "1/2",
+       "1",
+       "0"
+      ],
+      "ids": [
+       "H",
+       "section:td_q:point:on:khoi_S_ABCD::edge:C-D"
+      ]
+     }
+    ],
+    "world": {
+     "pairs": 28,
+     "max_abs_error": 0.0,
+     "passed": true
+    }
+   },
+   "steps": [
+    {
+     "step": 0,
+     "event": "INIT",
+     "semantic_kind": "EXPLANATION",
+     "object": null,
+     "inputs": [],
+     "new_outputs": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "S"
+     ],
+     "removed": [],
+     "focus": [],
+     "learner_text": "Đặt các điểm đề cho vào không gian.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "INIT_GIVEN",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 0,
+     "screenshot": "two-line-pyramid/step-01.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 1,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "M",
+     "inputs": [
+      "A",
+      "B"
+     ],
+     "new_outputs": [
+      "M"
+     ],
+     "removed": [],
+     "focus": [
+      "M"
+     ],
+     "learner_text": "Dựng M.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 1,
+     "screenshot": "two-line-pyramid/step-02.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 2,
+     "event": "MEASURE",
+     "semantic_kind": "MEASUREMENT",
+     "object": "derived_H_vec",
+     "inputs": [
+      "B",
+      "C"
+     ],
+     "new_outputs": [
+      "derived_H_vec"
+     ],
+     "removed": [],
+     "focus": [
+      "derived_H_vec"
+     ],
+     "learner_text": "Lấy vectơ BC.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": false,
+     "kind": "INTERPRETIVE",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 1,
+     "screenshot": "two-line-pyramid/step-02.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 3,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "H",
+     "inputs": [
+      "M",
+      "derived_H_vec"
+     ],
+     "new_outputs": [
+      "H"
+     ],
+     "removed": [],
+     "focus": [
+      "H"
+     ],
+     "learner_text": "Dựng H.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 2,
+     "screenshot": "two-line-pyramid/step-03.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 4,
+     "event": "MEASURE",
+     "semantic_kind": "MEASUREMENT",
+     "object": "derived_H1_vec",
+     "inputs": [
+      "A",
+      "S"
+     ],
+     "new_outputs": [
+      "derived_H1_vec"
+     ],
+     "removed": [],
+     "focus": [
+      "derived_H1_vec"
+     ],
+     "learner_text": "Lấy vectơ AS.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": false,
+     "kind": "INTERPRETIVE",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 2,
+     "screenshot": "two-line-pyramid/step-03.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 5,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "H1",
+     "inputs": [
+      "M",
+      "derived_H1_vec"
+     ],
+     "new_outputs": [
+      "H1"
+     ],
+     "removed": [],
+     "focus": [
+      "H1"
+     ],
+     "learner_text": "Dựng H1.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 3,
+     "screenshot": "two-line-pyramid/step-04.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 6,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "day_ABCD",
+     "inputs": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "new_outputs": [
+      "day_ABCD"
+     ],
+     "removed": [],
+     "focus": [
+      "day_ABCD"
+     ],
+     "learner_text": "Dựng đáy ABCD.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 4,
+     "screenshot": "two-line-pyramid/step-05.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 7,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "canh_ben",
+     "inputs": [
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "new_outputs": [
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "removed": [],
+     "focus": [
+      "canh_ben_S_A",
+      "canh_ben_S_B",
+      "canh_ben_S_C",
+      "canh_ben_S_D"
+     ],
+     "learner_text": "Dựng các cạnh bên SA, SB, SC, SD.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 5,
+     "screenshot": "two-line-pyramid/step-06.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 8,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "khoi_S_ABCD",
+     "inputs": [
+      "S",
+      "A",
+      "B",
+      "C",
+      "D"
+     ],
+     "new_outputs": [
+      "khoi_S_ABCD"
+     ],
+     "removed": [],
+     "focus": [
+      "khoi_S_ABCD"
+     ],
+     "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt).",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 6,
+     "screenshot": "two-line-pyramid/step-07.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 9,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "mp_td_q",
+     "inputs": [
+      "M",
+      "H",
+      "H1"
+     ],
+     "new_outputs": [
+      "mp_td_q"
+     ],
+     "removed": [],
+     "focus": [
+      "mp_td_q"
+     ],
+     "learner_text": "Dựng (P).",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 7,
+     "screenshot": "two-line-pyramid/step-08.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 10,
+     "event": "EXTEND",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_S_ABCD",
+      "mp_td_q"
+     ],
+     "new_outputs": [
+      "td_q"
+     ],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Trên mặt ABCD, nối giao điểm thuộc cạnh AB với giao điểm thuộc cạnh CD.",
+     "section_edges": 1,
+     "closed": false,
+     "fill": false,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "section_segment": {
+      "k": 0,
+      "face": "ABCD",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "0",
+       "0"
+      ],
+      "b": [
+       "1/2",
+       "1",
+       "0"
+      ]
+     },
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 8,
+     "screenshot": "two-line-pyramid/step-09.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 11,
+     "event": "EXTEND",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_S_ABCD",
+      "mp_td_q"
+     ],
+     "new_outputs": [],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh CD với giao điểm thuộc cạnh SC.",
+     "section_edges": 2,
+     "closed": false,
+     "fill": false,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "section_segment": {
+      "k": 1,
+      "face": "SCD",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "1",
+       "0"
+      ],
+      "b": [
+       "1/2",
+       "1/2",
+       "1/2"
+      ]
+     },
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 9,
+     "screenshot": "two-line-pyramid/step-10.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 12,
+     "event": "EXTEND",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_S_ABCD",
+      "mp_td_q"
+     ],
+     "new_outputs": [],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SB.",
+     "section_edges": 3,
+     "closed": false,
+     "fill": false,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "section_segment": {
+      "k": 2,
+      "face": "SBC",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "1/2",
+       "1/2"
+      ],
+      "b": [
+       "1/2",
+       "0",
+       "1/2"
+      ]
+     },
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 10,
+     "screenshot": "two-line-pyramid/step-11.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 13,
+     "event": "EXTEND",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_S_ABCD",
+      "mp_td_q"
+     ],
+     "new_outputs": [],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh AB.",
+     "section_edges": 4,
+     "closed": true,
+     "fill": false,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "section_segment": {
+      "k": 3,
+      "face": "SAB",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "0",
+       "1/2"
+      ],
+      "b": [
+       "1/2",
+       "0",
+       "0"
+      ]
+     },
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 11,
+     "screenshot": "two-line-pyramid/step-12.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 14,
+     "event": "STEP",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_S_ABCD",
+      "mp_td_q"
+     ],
+     "new_outputs": [],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Thiết diện khép lại thành tứ giác: (P) cắt hình chóp S.ABCD.",
+     "section_edges": 4,
+     "closed": true,
+     "fill": true,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 12,
+     "screenshot": "two-line-pyramid/step-13.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 15,
+     "event": "MEASURE",
+     "semantic_kind": "FINAL_RESULT",
+     "object": "kq_q",
+     "inputs": [
+      "td_q"
+     ],
+     "new_outputs": [
+      "kq_q"
+     ],
+     "removed": [],
+     "focus": [
+      "kq_q"
+     ],
+     "learner_text": "Diện tích thiết diện bằng 9/4.",
+     "section_edges": 4,
+     "closed": true,
+     "fill": true,
+     "geometry_change": false,
+     "kind": "INTERPRETIVE",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 12,
+     "screenshot": "two-line-pyramid/step-13.png",
+     "visual_verdict": "PASS"
+    }
+   ],
+   "metamorphic": [
+    {
+     "variant": "swap_lines",
+     "status": "SERVED",
+     "answer": "9/4",
+     "fails": [],
+     "aux_ids": [
+      "H1",
+      "H"
+     ]
+    },
+    {
+     "variant": "reverse_first",
+     "status": "SERVED",
+     "answer": "9/4",
+     "fails": [],
+     "aux_ids": [
+      "H",
+      "H1"
+     ]
+    },
+    {
+     "variant": "reverse_second",
+     "status": "SERVED",
+     "answer": "9/4",
+     "fails": [],
+     "aux_ids": [
+      "H",
+      "H1"
+     ]
+    },
+    {
+     "variant": "reverse_midpoint",
+     "status": "SERVED",
+     "answer": "9/4",
+     "fails": [],
+     "aux_ids": [
+      "H",
+      "H1"
+     ]
+    },
+    {
+     "variant": "midpoint_named_H",
+     "status": "SERVED",
+     "answer": "9/4",
+     "fails": [],
+     "aux_ids": [
+      "H1",
+      "H2"
+     ],
+     "point_ids": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "H",
+      "H1",
+      "S",
+      "H2"
+     ]
+    }
+   ],
+   "passed": true
+  },
+  {
+   "id": "two-line-prism",
+   "served": true,
+   "answer": "3",
+   "raw_steps": 14,
+   "points_checked": 9,
+   "audit": {
+    "fails": [],
+    "points": [
+     {
+      "id": "A",
+      "label": "Điểm A",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "0",
+       "0",
+       "0"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "B",
+      "label": "Điểm B",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "1",
+       "0",
+       "0"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "C",
+      "label": "Điểm C",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "0",
+       "1",
+       "0"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "M",
+      "label": "M",
+      "producer": "construct_point.midpoint",
+      "depends": [
+       "A",
+       "B"
+      ],
+      "binding": null,
+      "chart_xyz": [
+       "1/2",
+       "0",
+       "0"
+      ],
+      "checks": {
+       "midpoint": true,
+       "source_pair_is_declared": true,
+       "equals_oracle_anchor": true
+      },
+      "definition": "midpoint of AB",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "H",
+      "label": "H",
+      "producer": "construct_point.translate",
+      "depends": [
+       "M",
+       "derived_H_vec"
+      ],
+      "binding": "AUXILIARY",
+      "chart_xyz": [
+       "-1/2",
+       "1",
+       "0"
+      ],
+      "checks": {
+       "vector_is_endpoint_difference": true,
+       "vector_line_is_declared": true,
+       "translate": true,
+       "base_is_midpoint": true,
+       "auxiliary_role": true
+      },
+      "definition": "M + vector BC",
+      "solid": "OUTSIDE"
+     },
+     {
+      "id": "A_prime",
+      "label": "Điểm A′",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "0",
+       "0",
+       "1"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "B_prime",
+      "label": "Điểm B′",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "1",
+       "0",
+       "1"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "C_prime",
+      "label": "Điểm C′",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "0",
+       "1",
+       "1"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "H1",
+      "label": "H1",
+      "producer": "construct_point.translate",
+      "depends": [
+       "M",
+       "derived_H1_vec"
+      ],
+      "binding": "AUXILIARY",
+      "chart_xyz": [
+       "1/2",
+       "0",
+       "1"
+      ],
+      "checks": {
+       "vector_is_endpoint_difference": true,
+       "vector_line_is_declared": true,
+       "translate": true,
+       "base_is_midpoint": true,
+       "auxiliary_role": true
+      },
+      "definition": "M + vector BB′",
+      "solid": "BOUNDARY"
+     }
+    ],
+    "plane": {
+     "defining_points_on_plane": true,
+     "normal_nonzero": true,
+     "strict_parallel": [
+      {
+       "line": "BC",
+       "direction_in_plane": true,
+       "not_contained": true
+      },
+      {
+       "line": "BB_prime",
+       "direction_in_plane": true,
+       "not_contained": true
+      }
+     ],
+     "named": true
+    },
+    "section": {
+     "oracle_status": "SERVED",
+     "vertex_set_equals_oracle": true,
+     "edge_set_equals_oracle": true,
+     "vertices_on_named_solid_edges": true,
+     "area_squared_equals_oracle": true,
+     "area_readout": "3",
+     "oracle_area_sq": "9"
+    },
+    "section_vertices": [
+     {
+      "entity": "section:td_q:point:on:khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+      "on_edge": true,
+      "on_plane": true
+     },
+     {
+      "entity": "section:td_q:point:on:khoi_ABC_A_primeB_primeC_prime::edge:A-C",
+      "on_edge": true,
+      "on_plane": true
+     },
+     {
+      "entity": "section:td_q:point:on:khoi_ABC_A_primeB_primeC_prime::edge:A_prime-C_prime",
+      "on_edge": true,
+      "on_plane": true
+     },
+     {
+      "entity": "section:td_q:point:on:khoi_ABC_A_primeB_primeC_prime::edge:A_prime-B_prime",
+      "on_edge": true,
+      "on_plane": true
+     }
+    ],
+    "section_segments": [
+     {
+      "k": 0,
+      "face": "ABC",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "0",
+       "0"
+      ],
+      "b": [
+       "0",
+       "1/2",
+       "0"
+      ]
+     },
+     {
+      "k": 1,
+      "face": "CAA′C′",
+      "in_face": true,
+      "a": [
+       "0",
+       "1/2",
+       "0"
+      ],
+      "b": [
+       "0",
+       "1/2",
+       "1"
+      ]
+     },
+     {
+      "k": 2,
+      "face": "A′B′C′",
+      "in_face": true,
+      "a": [
+       "0",
+       "1/2",
+       "1"
+      ],
+      "b": [
+       "1/2",
+       "0",
+       "1"
+      ]
+     },
+     {
+      "k": 3,
+      "face": "ABB′A′",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "0",
+       "1"
+      ],
+      "b": [
+       "1/2",
+       "0",
+       "0"
+      ]
+     }
+    ],
+    "coincident": [
+     {
+      "chart_xyz": [
+       "1/2",
+       "0",
+       "0"
+      ],
+      "ids": [
+       "M",
+       "section:td_q:point:on:khoi_ABC_A_primeB_primeC_prime::edge:A-B"
+      ]
+     },
+     {
+      "chart_xyz": [
+       "1/2",
+       "0",
+       "1"
+      ],
+      "ids": [
+       "H1",
+       "section:td_q:point:on:khoi_ABC_A_primeB_primeC_prime::edge:A_prime-B_prime"
+      ]
+     }
+    ],
+    "world": {
+     "pairs": 36,
+     "max_abs_error": 1.4934542491573666e-09,
+     "passed": true
+    }
+   },
+   "steps": [
+    {
+     "step": 0,
+     "event": "INIT",
+     "semantic_kind": "EXPLANATION",
+     "object": null,
+     "inputs": [],
+     "new_outputs": [
+      "A",
+      "A_prime",
+      "B",
+      "B_prime",
+      "C",
+      "C_prime"
+     ],
+     "removed": [],
+     "focus": [],
+     "learner_text": "Đặt các điểm đề cho vào không gian.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "INIT_GIVEN",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 0,
+     "screenshot": "two-line-prism/step-01.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 1,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "M",
+     "inputs": [
+      "A",
+      "B"
+     ],
+     "new_outputs": [
+      "M"
+     ],
+     "removed": [],
+     "focus": [
+      "M"
+     ],
+     "learner_text": "Dựng M.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 1,
+     "screenshot": "two-line-prism/step-02.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 2,
+     "event": "MEASURE",
+     "semantic_kind": "MEASUREMENT",
+     "object": "derived_H_vec",
+     "inputs": [
+      "B",
+      "C"
+     ],
+     "new_outputs": [
+      "derived_H_vec"
+     ],
+     "removed": [],
+     "focus": [
+      "derived_H_vec"
+     ],
+     "learner_text": "Lấy vectơ BC.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": false,
+     "kind": "INTERPRETIVE",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 1,
+     "screenshot": "two-line-prism/step-02.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 3,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "H",
+     "inputs": [
+      "M",
+      "derived_H_vec"
+     ],
+     "new_outputs": [
+      "H"
+     ],
+     "removed": [],
+     "focus": [
+      "H"
+     ],
+     "learner_text": "Dựng H.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 2,
+     "screenshot": "two-line-prism/step-03.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 4,
+     "event": "MEASURE",
+     "semantic_kind": "MEASUREMENT",
+     "object": "derived_H1_vec",
+     "inputs": [
+      "B",
+      "B_prime"
+     ],
+     "new_outputs": [
+      "derived_H1_vec"
+     ],
+     "removed": [],
+     "focus": [
+      "derived_H1_vec"
+     ],
+     "learner_text": "Lấy vectơ BB′.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": false,
+     "kind": "INTERPRETIVE",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 2,
+     "screenshot": "two-line-prism/step-03.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 5,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "H1",
+     "inputs": [
+      "M",
+      "derived_H1_vec"
+     ],
+     "new_outputs": [
+      "H1"
+     ],
+     "removed": [],
+     "focus": [
+      "H1"
+     ],
+     "learner_text": "Dựng H1.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 3,
+     "screenshot": "two-line-prism/step-04.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 6,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "khoi_ABC_A_primeB_primeC_prime",
+     "inputs": [
+      "A",
+      "B",
+      "C",
+      "A_prime",
+      "B_prime",
+      "C_prime"
+     ],
+     "new_outputs": [
+      "khoi_ABC_A_primeB_primeC_prime"
+     ],
+     "removed": [],
+     "focus": [
+      "khoi_ABC_A_primeB_primeC_prime"
+     ],
+     "learner_text": "Dựng lăng trụ đứng ABC.A′B′C′ (6 đỉnh, 5 mặt).",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 4,
+     "screenshot": "two-line-prism/step-05.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 7,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "mp_td_q",
+     "inputs": [
+      "M",
+      "H",
+      "H1"
+     ],
+     "new_outputs": [
+      "mp_td_q"
+     ],
+     "removed": [],
+     "focus": [
+      "mp_td_q"
+     ],
+     "learner_text": "Dựng (P).",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 5,
+     "screenshot": "two-line-prism/step-06.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 8,
+     "event": "EXTEND",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_ABC_A_primeB_primeC_prime",
+      "mp_td_q"
+     ],
+     "new_outputs": [
+      "td_q"
+     ],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Trên mặt ABC, nối giao điểm thuộc cạnh AB với giao điểm thuộc cạnh AC.",
+     "section_edges": 1,
+     "closed": false,
+     "fill": false,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "section_segment": {
+      "k": 0,
+      "face": "ABC",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "0",
+       "0"
+      ],
+      "b": [
+       "0",
+       "1/2",
+       "0"
+      ]
+     },
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 6,
+     "screenshot": "two-line-prism/step-07.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 9,
+     "event": "EXTEND",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_ABC_A_primeB_primeC_prime",
+      "mp_td_q"
+     ],
+     "new_outputs": [],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Trên mặt CAA′C′, nối giao điểm thuộc cạnh AC với giao điểm thuộc cạnh A′C′.",
+     "section_edges": 2,
+     "closed": false,
+     "fill": false,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "section_segment": {
+      "k": 1,
+      "face": "CAA′C′",
+      "in_face": true,
+      "a": [
+       "0",
+       "1/2",
+       "0"
+      ],
+      "b": [
+       "0",
+       "1/2",
+       "1"
+      ]
+     },
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 7,
+     "screenshot": "two-line-prism/step-08.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 10,
+     "event": "EXTEND",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_ABC_A_primeB_primeC_prime",
+      "mp_td_q"
+     ],
+     "new_outputs": [],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Trên mặt A′B′C′, nối giao điểm thuộc cạnh A′C′ với giao điểm thuộc cạnh A′B′.",
+     "section_edges": 3,
+     "closed": false,
+     "fill": false,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "section_segment": {
+      "k": 2,
+      "face": "A′B′C′",
+      "in_face": true,
+      "a": [
+       "0",
+       "1/2",
+       "1"
+      ],
+      "b": [
+       "1/2",
+       "0",
+       "1"
+      ]
+     },
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 8,
+     "screenshot": "two-line-prism/step-09.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 11,
+     "event": "EXTEND",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_ABC_A_primeB_primeC_prime",
+      "mp_td_q"
+     ],
+     "new_outputs": [],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Trên mặt ABB′A′, nối giao điểm thuộc cạnh A′B′ với giao điểm thuộc cạnh AB.",
+     "section_edges": 4,
+     "closed": true,
+     "fill": false,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "section_segment": {
+      "k": 3,
+      "face": "ABB′A′",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "0",
+       "1"
+      ],
+      "b": [
+       "1/2",
+       "0",
+       "0"
+      ]
+     },
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 9,
+     "screenshot": "two-line-prism/step-10.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 12,
+     "event": "STEP",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_ABC_A_primeB_primeC_prime",
+      "mp_td_q"
+     ],
+     "new_outputs": [],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Thiết diện khép lại thành tứ giác: (P) cắt lăng trụ đứng ABC.A′B′C′.",
+     "section_edges": 4,
+     "closed": true,
+     "fill": true,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 10,
+     "screenshot": "two-line-prism/step-11.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 13,
+     "event": "MEASURE",
+     "semantic_kind": "FINAL_RESULT",
+     "object": "kq_q",
+     "inputs": [
+      "td_q"
+     ],
+     "new_outputs": [
+      "kq_q"
+     ],
+     "removed": [],
+     "focus": [
+      "kq_q"
+     ],
+     "learner_text": "Diện tích thiết diện bằng 3.",
+     "section_edges": 4,
+     "closed": true,
+     "fill": true,
+     "geometry_change": false,
+     "kind": "INTERPRETIVE",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 10,
+     "screenshot": "two-line-prism/step-11.png",
+     "visual_verdict": "PASS"
+    }
+   ],
+   "metamorphic": [
+    {
+     "variant": "swap_lines",
+     "status": "SERVED",
+     "answer": "3",
+     "fails": [],
+     "aux_ids": [
+      "H1",
+      "H"
+     ]
+    },
+    {
+     "variant": "reverse_first",
+     "status": "SERVED",
+     "answer": "3",
+     "fails": [],
+     "aux_ids": [
+      "H",
+      "H1"
+     ]
+    },
+    {
+     "variant": "reverse_second",
+     "status": "SERVED",
+     "answer": "3",
+     "fails": [],
+     "aux_ids": [
+      "H",
+      "H1"
+     ]
+    },
+    {
+     "variant": "reverse_midpoint",
+     "status": "SERVED",
+     "answer": "3",
+     "fails": [],
+     "aux_ids": [
+      "H",
+      "H1"
+     ]
+    },
+    {
+     "variant": "midpoint_named_H",
+     "status": "SERVED",
+     "answer": "3",
+     "fails": [],
+     "aux_ids": [
+      "H1",
+      "H2"
+     ],
+     "point_ids": [
+      "A",
+      "B",
+      "C",
+      "H",
+      "H1",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "H2"
+     ]
+    }
+   ],
+   "passed": true
+  },
+  {
+   "id": "two-line-cuboid",
+   "served": true,
+   "answer": "12",
+   "raw_steps": 14,
+   "points_checked": 11,
+   "audit": {
+    "fails": [],
+    "points": [
+     {
+      "id": "A",
+      "label": "Điểm A",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "0",
+       "0",
+       "0"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "B",
+      "label": "Điểm B",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "1",
+       "0",
+       "0"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "C",
+      "label": "Điểm C",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "1",
+       "1",
+       "0"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "D",
+      "label": "Điểm D",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "0",
+       "1",
+       "0"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "M",
+      "label": "M",
+      "producer": "construct_point.midpoint",
+      "depends": [
+       "A",
+       "B"
+      ],
+      "binding": null,
+      "chart_xyz": [
+       "1/2",
+       "0",
+       "0"
+      ],
+      "checks": {
+       "midpoint": true,
+       "source_pair_is_declared": true,
+       "equals_oracle_anchor": true
+      },
+      "definition": "midpoint of AB",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "H",
+      "label": "H",
+      "producer": "construct_point.translate",
+      "depends": [
+       "M",
+       "derived_H_vec"
+      ],
+      "binding": "AUXILIARY",
+      "chart_xyz": [
+       "1/2",
+       "1",
+       "0"
+      ],
+      "checks": {
+       "vector_is_endpoint_difference": true,
+       "vector_line_is_declared": true,
+       "translate": true,
+       "base_is_midpoint": true,
+       "auxiliary_role": true
+      },
+      "definition": "M + vector BC",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "A_prime",
+      "label": "Điểm A′",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "0",
+       "0",
+       "1"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "B_prime",
+      "label": "Điểm B′",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "1",
+       "0",
+       "1"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "C_prime",
+      "label": "Điểm C′",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "1",
+       "1",
+       "1"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "D_prime",
+      "label": "Điểm D′",
+      "producer": null,
+      "depends": [],
+      "binding": null,
+      "chart_xyz": [
+       "0",
+       "1",
+       "1"
+      ],
+      "checks": {
+       "fixture": true
+      },
+      "definition": "given vertex (fixture chart)",
+      "solid": "BOUNDARY"
+     },
+     {
+      "id": "H1",
+      "label": "H1",
+      "producer": "construct_point.translate",
+      "depends": [
+       "M",
+       "derived_H1_vec"
+      ],
+      "binding": "AUXILIARY",
+      "chart_xyz": [
+       "1/2",
+       "0",
+       "1"
+      ],
+      "checks": {
+       "vector_is_endpoint_difference": true,
+       "vector_line_is_declared": true,
+       "translate": true,
+       "base_is_midpoint": true,
+       "auxiliary_role": true
+      },
+      "definition": "M + vector BB′",
+      "solid": "BOUNDARY"
+     }
+    ],
+    "plane": {
+     "defining_points_on_plane": true,
+     "normal_nonzero": true,
+     "strict_parallel": [
+      {
+       "line": "BC",
+       "direction_in_plane": true,
+       "not_contained": true
+      },
+      {
+       "line": "BB_prime",
+       "direction_in_plane": true,
+       "not_contained": true
+      }
+     ],
+     "named": true
+    },
+    "section": {
+     "oracle_status": "SERVED",
+     "vertex_set_equals_oracle": true,
+     "edge_set_equals_oracle": true,
+     "vertices_on_named_solid_edges": true,
+     "area_squared_equals_oracle": true,
+     "area_readout": "12",
+     "oracle_area_sq": "144"
+    },
+    "section_vertices": [
+     {
+      "entity": "section:td_q:point:on:khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+      "on_edge": true,
+      "on_plane": true
+     },
+     {
+      "entity": "section:td_q:point:on:khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-D",
+      "on_edge": true,
+      "on_plane": true
+     },
+     {
+      "entity": "section:td_q:point:on:khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C_prime-D_prime",
+      "on_edge": true,
+      "on_plane": true
+     },
+     {
+      "entity": "section:td_q:point:on:khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-B_prime",
+      "on_edge": true,
+      "on_plane": true
+     }
+    ],
+    "section_segments": [
+     {
+      "k": 0,
+      "face": "ABCD",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "0",
+       "0"
+      ],
+      "b": [
+       "1/2",
+       "1",
+       "0"
+      ]
+     },
+     {
+      "k": 1,
+      "face": "CDD′C′",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "1",
+       "0"
+      ],
+      "b": [
+       "1/2",
+       "1",
+       "1"
+      ]
+     },
+     {
+      "k": 2,
+      "face": "A′B′C′D′",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "1",
+       "1"
+      ],
+      "b": [
+       "1/2",
+       "0",
+       "1"
+      ]
+     },
+     {
+      "k": 3,
+      "face": "ABB′A′",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "0",
+       "1"
+      ],
+      "b": [
+       "1/2",
+       "0",
+       "0"
+      ]
+     }
+    ],
+    "coincident": [
+     {
+      "chart_xyz": [
+       "1/2",
+       "0",
+       "0"
+      ],
+      "ids": [
+       "M",
+       "section:td_q:point:on:khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B"
+      ]
+     },
+     {
+      "chart_xyz": [
+       "1/2",
+       "1",
+       "0"
+      ],
+      "ids": [
+       "H",
+       "section:td_q:point:on:khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-D"
+      ]
+     },
+     {
+      "chart_xyz": [
+       "1/2",
+       "0",
+       "1"
+      ],
+      "ids": [
+       "H1",
+       "section:td_q:point:on:khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-B_prime"
+      ]
+     }
+    ],
+    "world": {
+     "pairs": 55,
+     "max_abs_error": 0.0,
+     "passed": true
+    }
+   },
+   "steps": [
+    {
+     "step": 0,
+     "event": "INIT",
+     "semantic_kind": "EXPLANATION",
+     "object": null,
+     "inputs": [],
+     "new_outputs": [
+      "A",
+      "A_prime",
+      "B",
+      "B_prime",
+      "C",
+      "C_prime",
+      "D",
+      "D_prime"
+     ],
+     "removed": [],
+     "focus": [],
+     "learner_text": "Đặt các điểm đề cho vào không gian.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "INIT_GIVEN",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 0,
+     "screenshot": "two-line-cuboid/step-01.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 1,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "M",
+     "inputs": [
+      "A",
+      "B"
+     ],
+     "new_outputs": [
+      "M"
+     ],
+     "removed": [],
+     "focus": [
+      "M"
+     ],
+     "learner_text": "Dựng M.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 1,
+     "screenshot": "two-line-cuboid/step-02.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 2,
+     "event": "MEASURE",
+     "semantic_kind": "MEASUREMENT",
+     "object": "derived_H_vec",
+     "inputs": [
+      "B",
+      "C"
+     ],
+     "new_outputs": [
+      "derived_H_vec"
+     ],
+     "removed": [],
+     "focus": [
+      "derived_H_vec"
+     ],
+     "learner_text": "Lấy vectơ BC.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": false,
+     "kind": "INTERPRETIVE",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 1,
+     "screenshot": "two-line-cuboid/step-02.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 3,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "H",
+     "inputs": [
+      "M",
+      "derived_H_vec"
+     ],
+     "new_outputs": [
+      "H"
+     ],
+     "removed": [],
+     "focus": [
+      "H"
+     ],
+     "learner_text": "Dựng H.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 2,
+     "screenshot": "two-line-cuboid/step-03.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 4,
+     "event": "MEASURE",
+     "semantic_kind": "MEASUREMENT",
+     "object": "derived_H1_vec",
+     "inputs": [
+      "B",
+      "B_prime"
+     ],
+     "new_outputs": [
+      "derived_H1_vec"
+     ],
+     "removed": [],
+     "focus": [
+      "derived_H1_vec"
+     ],
+     "learner_text": "Lấy vectơ BB′.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": false,
+     "kind": "INTERPRETIVE",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 2,
+     "screenshot": "two-line-cuboid/step-03.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 5,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "H1",
+     "inputs": [
+      "M",
+      "derived_H1_vec"
+     ],
+     "new_outputs": [
+      "H1"
+     ],
+     "removed": [],
+     "focus": [
+      "H1"
+     ],
+     "learner_text": "Dựng H1.",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 3,
+     "screenshot": "two-line-cuboid/step-04.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 6,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "khoi_ABCD_A_primeB_primeC_primeD_prime",
+     "inputs": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime"
+     ],
+     "new_outputs": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime"
+     ],
+     "removed": [],
+     "focus": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime"
+     ],
+     "learner_text": "Dựng hình hộp chữ nhật ABCD.A′B′C′D′ (8 đỉnh, 6 mặt).",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 4,
+     "screenshot": "two-line-cuboid/step-05.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 7,
+     "event": "CREATE",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "mp_td_q",
+     "inputs": [
+      "M",
+      "H",
+      "H1"
+     ],
+     "new_outputs": [
+      "mp_td_q"
+     ],
+     "removed": [],
+     "focus": [
+      "mp_td_q"
+     ],
+     "learner_text": "Dựng (P).",
+     "section_edges": 0,
+     "closed": null,
+     "fill": null,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 5,
+     "screenshot": "two-line-cuboid/step-06.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 8,
+     "event": "EXTEND",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "mp_td_q"
+     ],
+     "new_outputs": [
+      "td_q"
+     ],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Trên mặt ABCD, nối giao điểm thuộc cạnh AB với giao điểm thuộc cạnh CD.",
+     "section_edges": 1,
+     "closed": false,
+     "fill": false,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "section_segment": {
+      "k": 0,
+      "face": "ABCD",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "0",
+       "0"
+      ],
+      "b": [
+       "1/2",
+       "1",
+       "0"
+      ]
+     },
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 6,
+     "screenshot": "two-line-cuboid/step-07.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 9,
+     "event": "EXTEND",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "mp_td_q"
+     ],
+     "new_outputs": [],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Trên mặt CDD′C′, nối giao điểm thuộc cạnh CD với giao điểm thuộc cạnh C′D′.",
+     "section_edges": 2,
+     "closed": false,
+     "fill": false,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "section_segment": {
+      "k": 1,
+      "face": "CDD′C′",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "1",
+       "0"
+      ],
+      "b": [
+       "1/2",
+       "1",
+       "1"
+      ]
+     },
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 7,
+     "screenshot": "two-line-cuboid/step-08.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 10,
+     "event": "EXTEND",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "mp_td_q"
+     ],
+     "new_outputs": [],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Trên mặt A′B′C′D′, nối giao điểm thuộc cạnh C′D′ với giao điểm thuộc cạnh A′B′.",
+     "section_edges": 3,
+     "closed": false,
+     "fill": false,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "section_segment": {
+      "k": 2,
+      "face": "A′B′C′D′",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "1",
+       "1"
+      ],
+      "b": [
+       "1/2",
+       "0",
+       "1"
+      ]
+     },
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 8,
+     "screenshot": "two-line-cuboid/step-09.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 11,
+     "event": "EXTEND",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "mp_td_q"
+     ],
+     "new_outputs": [],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Trên mặt ABB′A′, nối giao điểm thuộc cạnh A′B′ với giao điểm thuộc cạnh AB.",
+     "section_edges": 4,
+     "closed": true,
+     "fill": false,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "section_segment": {
+      "k": 3,
+      "face": "ABB′A′",
+      "in_face": true,
+      "a": [
+       "1/2",
+       "0",
+       "1"
+      ],
+      "b": [
+       "1/2",
+       "0",
+       "0"
+      ]
+     },
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 9,
+     "screenshot": "two-line-cuboid/step-10.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 12,
+     "event": "STEP",
+     "semantic_kind": "GEOMETRY_CONSTRUCTION",
+     "object": "td_q",
+     "inputs": [
+      "khoi_ABCD_A_primeB_primeC_primeD_prime",
+      "mp_td_q"
+     ],
+     "new_outputs": [],
+     "removed": [],
+     "focus": [
+      "td_q"
+     ],
+     "learner_text": "Thiết diện khép lại thành tứ giác: (P) cắt hình hộp chữ nhật ABCD.A′B′C′D′.",
+     "section_edges": 4,
+     "closed": true,
+     "fill": true,
+     "geometry_change": true,
+     "kind": "CONSTRUCTION",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 10,
+     "screenshot": "two-line-cuboid/step-11.png",
+     "visual_verdict": "PASS"
+    },
+    {
+     "step": 13,
+     "event": "MEASURE",
+     "semantic_kind": "FINAL_RESULT",
+     "object": "kq_q",
+     "inputs": [
+      "td_q"
+     ],
+     "new_outputs": [
+      "kq_q"
+     ],
+     "removed": [],
+     "focus": [
+      "kq_q"
+     ],
+     "learner_text": "Diện tích thiết diện bằng 12.",
+     "section_edges": 4,
+     "closed": true,
+     "fill": true,
+     "geometry_change": false,
+     "kind": "INTERPRETIVE",
+     "math_verdict": "PASS",
+     "issues": [],
+     "learner_step": 10,
+     "screenshot": "two-line-cuboid/step-11.png",
+     "visual_verdict": "PASS"
+    }
+   ],
+   "metamorphic": [
+    {
+     "variant": "swap_lines",
+     "status": "SERVED",
+     "answer": "12",
+     "fails": [],
+     "aux_ids": [
+      "H1",
+      "H"
+     ]
+    },
+    {
+     "variant": "reverse_first",
+     "status": "SERVED",
+     "answer": "12",
+     "fails": [],
+     "aux_ids": [
+      "H",
+      "H1"
+     ]
+    },
+    {
+     "variant": "reverse_second",
+     "status": "SERVED",
+     "answer": "12",
+     "fails": [],
+     "aux_ids": [
+      "H",
+      "H1"
+     ]
+    },
+    {
+     "variant": "reverse_midpoint",
+     "status": "SERVED",
+     "answer": "12",
+     "fails": [],
+     "aux_ids": [
+      "H",
+      "H1"
+     ]
+    },
+    {
+     "variant": "midpoint_named_H",
+     "status": "SERVED",
+     "answer": "12",
+     "fails": [],
+     "aux_ids": [
+      "H1",
+      "H2"
+     ],
+     "point_ids": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "H",
+      "H1",
+      "A_prime",
+      "B_prime",
+      "C_prime",
+      "D_prime",
+      "H2"
+     ]
+    }
+   ],
+   "passed": true
+  },
+  {
+   "id": "two-line-refused",
+   "served": false,
+   "code": "PLANE_NOT_UNIQUE",
+   "passed": true
+  }
+ ]
+}

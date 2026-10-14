@@ -1,0 +1,12 @@
+{
+ "commit": "bfda732c",
+ "worktree": "clean detached",
+ "verdict": "FULL_PRODUCT_GATE_FAIL",
+ "credited": false,
+ "pytest": "1 failed, 9299 passed, 1 skipped, 2 deselected, 6 xfailed, 2 warnings in 557.93s (0:09:17)",
+ "failed": [
+  "tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI"
+ ],
+ "cause": "new divergence layer lacked run_candidate_hash/wave/hieu_luc fields required by the corrects-chain guard; harness evidence only",
+ "fixed_in": "b8e96a86; vitest 1055/68, build, demo, crash surface PASS in this attempt"
+}

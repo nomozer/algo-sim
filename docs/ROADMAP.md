@@ -11,6 +11,8 @@
 **2026-10-14:** bounded two-line plane research is authorized and implemented on its research branch.
 Finish clean verification, then user's integration decision; do not start another construction slice.
 Run [`two-line-plane-section`](evaluation/geometry/runs/two-line-plane-section/report.md). Hybrid stays off.
+Construction/playback audit done (run [`scene3d-construction-audit`](evaluation/geometry/runs/scene3d-construction-audit/report.md)):
+human visual review of its contact sheets precedes the integration decision.
 
 ```text
 CANONICAL_NEXT_ACTION = TWO_LINE_PLANE_SECTION_INTEGRATION_DECISION

@@ -1,5 +1,14 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+## Scene3D construction audit of the two-line scenes — LOCAL, 2026-10-14
+
+Same research branch; every learner step and every point of the three served scenes audited (math oracle + browser
+projection, SwiftShader + Intel D3D11): 0 coordinate/transform/projection errors. One class-D defect fixed: the label
+overlap filter's fixed 68×22 px window hid S, A′, B′; now real label boxes (product `eea6f3df`, freeze `bfda732c`, tree
+hash `c2ac6dbe…` unchanged, cache 125). T3 clean `b8e96a86` PASS backend 9300 / frontend 1055. Independent review
+NONBLOCKING. Auxiliary-before-solid order recorded OPEN. Verdict `READY_FOR_HUMAN_VISUAL_REVIEW`; push NONE. Run
+[`scene3d-construction-audit`](evaluation/geometry/runs/scene3d-construction-audit/report.md).
+
 ## Two-line plane section — LOCAL research, 2026-10-14
 
 User authorized Group A bounded Planner slice on `research/goal-directed-two-line-plane-section` from main5270f3dd;

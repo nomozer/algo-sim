@@ -14,6 +14,11 @@ nonblocking. Development corpus 12 correct served /33 correct refusals, wrong se
 T3 clean69ff3a16 PASS backend9274/frontend1053; heldout11/21 wrong0; SwiftShader+Intel D3D11 PASS. Receipts: [`two-line-plane-section`](evaluation/geometry/runs/two-line-plane-section/report.md).
 Hybrid product enablement remains NO-GO; next is user's research integration decision after those gates.
 
+**Scene3D construction audit, 2026-10-14 (same branch):** all 35 learner steps / 28 points of the three served scenes
+verified (math + browser projection); label-overlap renderer fix → product `eea6f3df`, freeze `bfda732c` (tree hash
+unchanged), T3 clean `b8e96a86` PASS. Verdict `READY_FOR_HUMAN_VISUAL_REVIEW`; human visual acceptance comes before the
+integration decision. Receipts: [`scene3d-construction-audit`](evaluation/geometry/runs/scene3d-construction-audit/report.md).
+
 `COMPACT_DSL = NO-GO_ARCHIVED` (quyết định của người dùng): Typed Facts structured JSON giữ làm định dạng AI → Hybrid;
 DSL gọn và JSON gọn không thay thế. Lý do: Hybrid chưa có consumer sản phẩm; văn phạm viết tay đã lệch `TypedFact`
 (`plane_relation`) mà 95 test cũ vẫn xanh; tiết kiệm mô hình ≈ $0.00037/request (proxy, chi phí Gemini thật NOT_MEASURED).

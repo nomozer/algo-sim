@@ -1,0 +1,20 @@
+{
+  "schema": "CLEANUP/1",
+  "run": "scene3d-construction-audit",
+  "worktrees": {
+    "before": ["D:/Documents/projects/algo-sim (main checkout)"],
+    "peak": ["D:/Documents/projects/algo-sim", "D:/tmp/algo-orbit-base (detached; 632d7e15 → eea6f3df → bfda732c → b8e96a86)"],
+    "after": ["D:/Documents/projects/algo-sim"],
+    "removal": "node_modules junction unlinked non-recursively (target intact), then git worktree remove; directory gone"
+  },
+  "processes": "two harness preview servers (127.0.0.1:3111, :3112) stopped; ports free; Playwright browsers closed by the check script (browser_stopped in receipts)",
+  "moved_out_of_evidence": "first-pass playback receipts produced before the review fixes (never committed) moved to the session scratch directory; final receipts regenerated with d4327342",
+  "left_in_session_scratch": {
+    "path": "C:/Users/Bunny/AppData/Local/Temp/claude/d--Documents-projects-algo-sim/1610d81e-2ed9-447d-b1eb-18f5daf0f4aa/scratchpad",
+    "bytes_observed": 30111596,
+    "content": "harness and product builds, layout/orbit probe outputs, superseded first-pass receipts, T3 logs (copies kept in verification/)",
+    "reason": "a recursive delete in scratch was declined at the permission prompt during the run; not retried or worked around"
+  },
+  "not_touched": ["frontend/public/", "backend/algosim.db at root", "backend/.tmp/pytest-05045731f8a046b9ba317bc970ecca11 (pre-existing, permission denied)", "frontend/dist (pre-existing, EPERM on assets)", "DSL archive and bundles", "real-model refs and 471a2c79", "historical A/B, candidates, correction layers"],
+  "acl_owner_force_changes": "NONE"
+}

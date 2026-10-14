@@ -1,0 +1,19 @@
+{
+  "khai": "Which harness bundle each browser receipt measured. browser-check.json git_head is the checkout running the CHECK SCRIPT (d4327342); the page under test is the static harness bundle served by hybrid-section-visual-serve.mjs preview.",
+  "before": {
+    "receipt": "before/swiftshader/browser-check.json",
+    "bundle_built_from": "working tree at 3db3a50f (product = 2b42eb40, pre-fix renderer)",
+    "assets_js_sha256": "8418908ff92389db49ca6bdb309e104986be8c7914a0805b63449fbd3911937e",
+    "rule_in_bundle": "old fixed window: const Cg={x:34,y:11}; |dx|<Cg.x*2 && |dy|<Cg.y*2",
+    "port": 3111
+  },
+  "after": {
+    "receipts": ["after/swiftshader/browser-check.json", "after/intel-d3d11/browser-check.json"],
+    "bundle_built_from": "working tree with eea6f3df renderer (identical product source to eea6f3df)",
+    "assets_js_sha256": "1247db061b48165f627361b1a53068cb6b0b1d1cd3094e4e3b46d1130bd184cd",
+    "rule_in_bundle": "real label boxes: [x-w/2, y-1.4h, x+w/2, y-0.4h] + KHE_NHAN_PX",
+    "port": 3112
+  },
+  "scenes_sha256": "a4efde63f7cbb14f04c8a168cba3a35d839741edba77e1b61b27811f366565b8",
+  "model_calls": 0
+}

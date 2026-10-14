@@ -1,5 +1,15 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Scene3D construction audit — LOCAL, two-line scenes
+
+Run `docs/evaluation/geometry/runs/scene3d-construction-audit/`. No new product module.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/scripts/audit_scene3d_construction.py` | Every point of a served two-line scene against its producer (midpoint, vector from points, translate, given fixture), covector plane through its points with strict parallel to the declared lines, section vs `two_line_plane_oracle.py` (vertices, edges, Gram area), section vertices on named solid edges, each progressive segment in its narrated face, coincident coordinates with distinct identity, every raw trace step (inputs, outputs, dependencies already present, interpretive vs construction), metamorphic variants re-run through `run_fact_route` (swap/reverse lines, reverse midpoint, midpoint named H); `--browser` adds world-space Gram distances and per-step visual verdicts. 0 model calls, refuses overwrite | `backend/tests/geometry/test_scene3d_construction_audit.py` (12 injected faults × 3 scenes) |
+| `frontend/scripts/hybrid-section-visual-check.mjs --scenes two-line --playback` · harness `__hybrid.timeline`/`__hybrid.world` in `hybrid-section-visual.tsx` | Every learner step of `geometryTimeline` through the real slider: screenshot, rendered ⊆ present, drawable present ⊆ rendered, vertex markers and point labels at the projection of the exact payload through `__geo3d_camera_snapshot`, hidden labels must overlap a shown label box, fixed label anchors and hidden solid edges across steps, revisit pixel-identical, orbit second view, H/H1 selection, contact sheet | `runs/scene3d-construction-audit/before|after/*/browser-check.json` |
+| `frontend/src/simulations/domains/geometry/scene3d-presentation.ts` `locNhanChongNhau` (`KHE_NHAN_PX`; `NGUONG_CHONG_NHAN` removed) | Point labels overlap by their real `w × h` boxes (anchor `translate(-50%,-140%)`) plus a 2 px gap; `scene3d-view.tsx` reads sizes once per frame before style writes | `scene3d-presentation.test.ts` (RED at `632d7e15`) |
+
 ## Two-line plane section — LOCAL research, main unchanged
 
 Run `docs/evaluation/geometry/runs/two-line-plane-section/`; contract `docs/architecture/TWO_LINE_PLANE_SECTION_CONTRACT.md`.
@@ -3741,7 +3751,7 @@ tạo"*) để guard không thoái hoá thành bộ lọc chính tả.
 
 Sở hữu **ba quyết định TRÌNH BÀY** của khung 3D, tách khỏi `scene3d-view` để
 kiểm được bằng test thuần. Exports: `kyHieuNgan` · `laVectoDangDiem` ·
-`veTrenKhung` · `uuTienNhan` · `NGUONG_CHONG_NHAN` · `locNhanChongNhau`.
+`veTrenKhung` · `uuTienNhan` · `KHE_NHAN_PX` · `locNhanChongNhau`.
 
 **① Nhãn mặc định là KÝ HIỆU, không phải câu.** `label` do tầng sinh cảnh viết
 là câu mô tả (*"Hình chiếu vuông góc H của I lên mặt phẳng (SBC)"*); in nó cạnh
@@ -3760,7 +3770,8 @@ bộ hai chiều với backend (`test_scene3d_ts_sync.py`); còn dựng mũi tê
 
 **③ Nhãn chồng nhau thì ẩn cái ưu tiên thấp hơn.** `locNhanChongNhau` xếp theo
 `uuTienNhan` (đang chọn > dẫn xuất > gốc) rồi giữ nhãn nào không đè lên nhãn đã
-giữ. **Không xê dịch nhãn** — xê dịch làm nhãn rời khỏi vật nó gọi tên.
+giữ. "Đè" = hộp nhãn THẬT chạm nhau (+`KHE_NHAN_PX`), không còn cửa sổ cố định 68×22 px
+(run `scene3d-construction-audit`). **Không xê dịch nhãn** — xê dịch làm nhãn rời khỏi vật nó gọi tên.
 Lọc chạy trong vòng vẽ vì hai nhãn có chồng nhau hay không phụ thuộc GÓC NHÌN.
 
 Test: `scene3d.test.tsx` (5D) — khoá nó không nhập `three` và không nhắc một

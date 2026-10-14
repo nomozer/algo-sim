@@ -1,0 +1,14 @@
+{
+ "commit": "b8e96a86",
+ "worktree": "clean detached D:/tmp/algo-orbit-base",
+ "verdict": "FULL_PRODUCT_GATE_PASS",
+ "pytest": "9300 passed, 1 skipped, 2 deselected, 6 xfailed",
+ "vitest": "1055 passed / 68 files",
+ "build": "PASS",
+ "demo_cases": "PASS",
+ "demo_crash_surface": "PASS (6/6)",
+ "local_socket_retries": 0,
+ "log": "t3-authoritative.log",
+ "log_sha256": "5b6570be15140b3364c55b77d062b43865d374231114027d93b4083fc74555ac",
+ "previous_attempt": "t3-first-failure.json (bfda732c, not credited)"
+}

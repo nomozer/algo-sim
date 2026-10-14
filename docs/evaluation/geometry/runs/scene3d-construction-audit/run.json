@@ -1,0 +1,67 @@
+{
+  "schema": "RUN/1",
+  "run_id": "scene3d-construction-audit",
+  "wave": "scene3d-construction-audit-w01",
+  "date": "2026-10-14",
+  "environment": "LOCAL Windows 11, Node 24.13.0, Chromium 151 via Playwright (SwiftShader, Intel UHD D3D11)",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "status": "READY_FOR_HUMAN_VISUAL_REVIEW",
+  "branch": "research/goal-directed-two-line-plane-section",
+  "base_commit": "41e02a55",
+  "main_before": "5270f3dd",
+  "main_after": "5270f3dd",
+  "push": "NONE",
+  "commits": {
+    "audit_and_harness": "3db3a50f",
+    "red_test": "632d7e15",
+    "product_fix": "eea6f3df",
+    "freeze": "bfda732c",
+    "divergence_schema": "b8e96a86",
+    "review_gap_fixes": "d4327342"
+  },
+  "product_commit": "eea6f3df",
+  "candidate": {
+    "tree_hash": "c2ac6dbe1cc65170e75db6a0d6d7e4e8e0a1c544db5961fcd16120a89606c5d4",
+    "files": 110,
+    "frozen_in": "clean detached worktree at eea6f3df",
+    "measured_system_paths_changed": false
+  },
+  "cache_version": 125,
+  "default": "LLM_ONLY",
+  "live_calls": 0,
+  "Hybrid_product_enablement": "NO-GO (unchanged)",
+  "scenes": {
+    "source": "docs/evaluation/geometry/runs/two-line-plane-section/visual/scenes.json",
+    "sha256": "a4efde63f7cbb14f04c8a168cba3a35d839741edba77e1b61b27811f366565b8",
+    "reexport_byte_identical": true
+  },
+  "construction": {
+    "trace_steps": 44,
+    "learner_steps": 35,
+    "named_points": 28,
+    "section_vertices": 12,
+    "math_errors": 0,
+    "transform_or_projection_errors": 0,
+    "label_defects_fixed": "class D: S (pyramid steps 4-13), A_prime/B_prime (cuboid steps 4-11), B (prism orbit)",
+    "open_representation_limit": "ISSUE-RESEARCH-HYBRID-AUXILIARY-BEFORE-SOLID"
+  },
+  "browser": {
+    "before": "before/swiftshader (19 label failures)",
+    "after": ["after/swiftshader (0)", "after/intel-d3d11 (0)"],
+    "bundles": "verification/bundles.json",
+    "harness": "Scene3DWorkspace harness via Hybrid IR; not product page/API E2E"
+  },
+  "verification": {
+    "fault_injection": "backend/tests/geometry/test_scene3d_construction_audit.py 36/36",
+    "vitest_related": "581/581",
+    "layout_probe_8_families": "16/16 before and after, label counts/fill unchanged",
+    "orbit_gate": "KHONG_ON_DINH before and after (environment, ISSUE-OPS-ORBIT-GATE-UNSETTLED-LOCAL)",
+    "t3_first_attempt": "bfda732c FAIL 1 (divergence schema), not credited",
+    "t3": "b8e96a86 FULL_PRODUCT_GATE_PASS backend 9300 / frontend 1055 (68 files)"
+  },
+  "review": "review.md — read-only subagent, NONBLOCKING",
+  "benchmark_historical_30": "not rerun (no backend change); unchanged 19/9/0/2",
+  "next_action": "user human visual review, then Group A integration decision (separate task)",
+  "cleanup": "cleanup.json",
+  "handoff": "handoff.md"
+}

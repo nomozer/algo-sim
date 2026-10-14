@@ -1,5 +1,20 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SCENE3D_CONSTRUCTION_AUDIT
+
+REPORT = docs/evaluation/geometry/runs/scene3d-construction-audit/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-construction-audit/
+CORRECTED_BY = NONE
+CORRECTS = TWO_LINE_PLANE_SECTION
+CLASSIFICATION = LOCAL_READY_FOR_HUMAN_VISUAL_REVIEW_NO_PUSH
+CODE_COMMIT = eea6f3df
+VERIFICATION_COMMIT = b8e96a86
+MODEL_REQUEST_COUNT = 0
+
+Every learner step and point of the three served two-line scenes: math oracle + browser projection, before/after receipts.
+Corrects the two-line visual limitation "some vertex labels suppressed" (renderer fix) and extends its candidate
+divergence chain; two-line receipts stay unchanged. Review receipt `review.md`; T3 receipts in `verification/`.
+
 ## WAVE_ID = TWO_LINE_PLANE_SECTION
 
 REPORT = docs/evaluation/geometry/runs/two-line-plane-section/report.md
