@@ -43,8 +43,10 @@ const URL0 = `http://${arg("--host", "localhost")}:${arg("--port", "3000")}/scri
 const gpu = process.argv.includes("--gpu");
 // `--scenes goal`: scenes of run goal-directed-section-planning (harness `src=goal`); default: the hardening export.
 const source = arg("--scenes", "hardening");
-if (!["hardening", "goal", "two-line"].includes(source)) throw new Error("unknown --scenes");
-const SCENES_RUN = source === "two-line" ? "two-line-plane-section" : source === "goal" ? "goal-directed-section-planning" : "hybrid-semantic-hardening";
+// `sequencing` = the two-line problems re-exported after the learner construction order; checked like `two-line`.
+const twoLine = source === "two-line" || source === "sequencing";
+if (!["hardening", "goal", "two-line", "sequencing"].includes(source)) throw new Error("unknown --scenes");
+const SCENES_RUN = source === "sequencing" ? "pedagogical-construction-sequencing" : source === "two-line" ? "two-line-plane-section" : source === "goal" ? "goal-directed-section-planning" : "hybrid-semantic-hardening";
 const scenesBytes = readFileSync(new URL(`../../docs/evaluation/geometry/runs/${SCENES_RUN}/visual/scenes.json`, import.meta.url));
 const rows = JSON.parse(scenesBytes.toString("utf-8"));
 
@@ -216,7 +218,7 @@ function projectionCheck(row, f) {
     labels_hidden_without_overlap: hiddenFree, failures: bad };
 }
 async function playbackAudit() {
-  if (source !== "two-line") throw new Error("--playback needs --scenes two-line");
+  if (!twoLine) throw new Error("--playback needs --scenes two-line or sequencing");
   for (const [i, row] of rows.entries()) {
     const dir = join(out, row.id);
     mkdirSync(dir);
@@ -360,7 +362,7 @@ else for (const [i, row] of rows.entries()) {
   const h = await page.evaluate(() => window.__hybrid);
   writeFileSync(join(out, `${row.id}.png`), last);
   const target = h.objects.find((o) => o.type === "section") ?? h.objects.find((o) => o.id.startsWith("gt_"));
-  if (source === "two-line" && !target) failures.push(`${row.id}: served scene missing section target`);
+  if (twoLine && !target) failures.push(`${row.id}: served scene missing section target`);
   let order = null, variants = null;
   if (target) {
     const steps = await page.evaluate((n) => Array.from({ length: n }, (_, k) => window.__hybrid.presentAt(k)), h.stepCount);
@@ -375,7 +377,7 @@ else for (const [i, row] of rows.entries()) {
               pixels_before: mb && { [kind]: mb[kind], highlight: mb.highlight }, pixels_at: { [kind]: ma[kind], highlight: ma.highlight } };
     if (order.own_pixels.default_view === 0 || order.own_pixels.after_orbit === 0) failures.push(`${row.id}: ${target.id} draws 0 own pixels`);
     if (!order.depends_present) failures.push(`${row.id}: ${target.id} appears before its dependencies`);
-    if (source === "two-line" && !order.depends_before) failures.push(`${row.id}: section dependencies not built earlier`);
+    if (twoLine && !order.depends_before) failures.push(`${row.id}: section dependencies not built earlier`);
     if (kind === "line") {
       variants = {};
       for (const [tag, ...sets] of [...VARIANTS, ["aux-shown"]]) {
@@ -393,7 +395,7 @@ else for (const [i, row] of rows.entries()) {
   await page.getByRole("button", { name: "Đặt lại khung nhìn" }).click();
   const reset = await settle();
   let scrubber = null, selection = null, naming = null;
-  if (source === "two-line" && target) {
+  if (twoLine && target) {
     const slider = page.getByRole("slider", { name: "Bước dựng" });
     await slider.focus(); await page.keyboard.press("Home"); await settle();
     const first = await page.evaluate(() => ({ step: window.__hybrid.step, ids: window.__geo3d_rendered_object_ids }));
