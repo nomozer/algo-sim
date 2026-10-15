@@ -194,11 +194,18 @@ def test_conditional_or_question_clause_is_not_a_given(sentence):
     # Re-verification of review 2: questions the stricter gate must still answer.
     (ask("q", "Chứng minh SC vuông góc BD và tính SC.", "length", points=["S", "C"]), F(17)),
     (ask("q", "Chứng minh BD vuông góc SC, từ đó tính SC.", "length", points=["S", "C"]), F(17)),
-    (ask("q", "Tính độ dài SC (làm tròn đến 2 chữ số thập phân).", "length", points=["S", "C"]), F(17)),
-], ids=["proof-then-ask-same-label", "proof-tu-do-ask", "rounding-number"])
+    (ask("q", "Câu 2: Tính độ dài SC.", "length", points=["S", "C"]), F(17)),
+], ids=["proof-then-ask-same-label", "proof-tu-do-ask", "scaffolding-number"])
 def test_asked_object_after_a_proof_or_with_an_unrelated_number_is_answered(question, sq):
     r = _run(question)
     assert r.status == "SERVED" and HB.answer_square(r.answers["q"]) == sq, (r.code, r.reason)
+
+
+def test_rounding_note_in_ask_fails_closed_at_context_gate_not_value_assignment():
+    # Policy override (run `shared-ask-grammar-safety`, §6): "2 chữ số" is not misread by `_GIA_TRI` as an assigned
+    # value (`NOT_ASKED_IN_SOURCE`), but rounding requests fail closed with `QUESTION_CONTEXT_UNSUPPORTED`.
+    r = _run(ask("q", "Tính độ dài SC (làm tròn đến 2 chữ số thập phân).", "length", points=["S", "C"]))
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (r.status, r.code, r.reason)
 
 
 @pytest.mark.parametrize("question", [

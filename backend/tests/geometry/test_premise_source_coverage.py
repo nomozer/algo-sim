@@ -216,7 +216,7 @@ def test_number_must_be_bound_to_its_own_call(arm, idx, quote):
 
 
 @pytest.mark.parametrize("arm", ARMS)
-@pytest.mark.parametrize("extra", ["Làm tròn kết quả đến hàng phần mười.", "Đơn vị độ dài là cm.", "Bài tập 3."])
+@pytest.mark.parametrize("extra", ["Hãy trình bày lời giải ngắn gọn.", "Đơn vị độ dài là cm.", "Bài tập 3."])
 def test_closed_notes_stay_served(arm, extra):
     r = _with_premise(extra, arm)
     assert r.status == "SERVED", (r.code, r.reason)
@@ -375,12 +375,19 @@ def test_a_wrong_height_of_a_solid_is_refused(arm, cid, text, before):
 
 
 @pytest.mark.parametrize("arm", ARMS)
-@pytest.mark.parametrize("extra, status", [
-    ("Làm tròn đến 2 chữ số thập phân.", "SERVED"), ("Ghi kết quả đến 2 chữ số sau dấu phẩy.", "SERVED"),
-    ("Làm tròn kết quả, độ dài là 5.", "REFUSED"), ("Làm tròn đến hàng phần mười, đơn vị độ dài là 5 cm.", "REFUSED"),
+@pytest.mark.parametrize("extra, code", [
+    # Policy override (run `shared-ask-grammar-safety`, §6): a digit-count rounding note passes the premise number gate
+    # (not `SOURCE_PREMISE_UNREAD`) and is refused by the formatting policy gate (`QUESTION_CONTEXT_UNSUPPORTED`),
+    # whereas a length claim hidden inside a note still fails at the premise gate (`SOURCE_PREMISE_UNREAD`).
+    ("Làm tròn kết quả đến hàng phần mười.", "QUESTION_CONTEXT_UNSUPPORTED"),
+    ("Làm tròn đến 2 chữ số thập phân.", "QUESTION_CONTEXT_UNSUPPORTED"),
+    ("Ghi kết quả đến 2 chữ số sau dấu phẩy.", "QUESTION_CONTEXT_UNSUPPORTED"),
+    ("Làm tròn kết quả, độ dài là 5.", "SOURCE_PREMISE_UNREAD"),
+    ("Làm tròn đến hàng phần mười, đơn vị độ dài là 5 cm.", "SOURCE_PREMISE_UNREAD"),
 ])
-def test_a_note_holds_a_number_only_as_a_digit_count(arm, extra, status):
-    assert _with_premise(extra, arm).status == status
+def test_a_note_holds_a_number_only_as_a_digit_count(arm, extra, code):
+    r = _with_premise(extra, arm)
+    assert r.status == "REFUSED" and r.code == code, (r.status, r.code, r.reason)
 
 
 @pytest.mark.parametrize("arm", ARMS)

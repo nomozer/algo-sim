@@ -1,0 +1,1430 @@
+COMMAND: backend\.venv\Scripts\python.exe -X utf8 -m pytest backend/tests/geometry/test_shared_ask_grammar.py -q --tb=short
+EXIT_CODE: 1
+COMMIT: 4acfc7316179e4ec7a9039dc654ea95fee8a9550
+TIMESTAMP: 2026-10-15T23:59:38+07:00
+--- OUTPUT ---........................................................................ [ 16%]
+........................................................................ [ 33%]
+.....................................................FFFFFFFFFFFFFFFFFFF [ 49%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF............................... [ 66%]
+........F..........F......FF..FFFFFF..FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 83%]
+FFFFFF......FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.............FFFFFFFFFFF [ 99%]
+F                                                                        [100%]
+================================== FAILURES ===================================
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n h├áng phß║ºn tr─âm).', 'line', 'SERVED', None, {'q': 'ΓêÜ11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (k\u1ebft qu\u1ea3 l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (kß║┐t quß║ú l├ám tr├▓n ─æß║┐n h├áng phß║ºn m╞░ß╗¥i).', 'line', 'SERVED', None, {'q': 'ΓêÜ11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O}, l\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n kß║┐t quß║ú ─æß║┐n h├áng phß║ºn tr─âm.', 'line', 'SERVED', None, {'q': 'ΓêÜ11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (\u0111\u01a1n v\u1ecb: cm; l\xe0m tr\xf2n \u0111\u1ebfn 2 ch\u1eef s\u1ed1 th\u1eadp ph\xe2n).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (─æ╞ín vß╗ï: cm; l├ám tr├▓n ─æß║┐n 2 chß╗» sß╗æ thß║¡p ph├ón).', 'line', 'SERVED', None, {'q': 'ΓêÜ11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,01).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n 0,01).', 'line', 'SERVED', None, {'q': 'ΓêÜ11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,1).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n 0,1).', 'line', 'SERVED', None, {'q': 'ΓêÜ11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ hai).', 'line', 'SERVED', None, {'q': 'ΓêÜ11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 nh\u1ea5t).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ nhß║Ñt).', 'line', 'SERVED', None, {'q': 'ΓêÜ11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn 0,01.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n ─æß║┐n 0,01.', 'line', 'SERVED', None, {'q': 'ΓêÜ11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ hai.', 'line', 'SERVED', None, {'q': 'ΓêÜ11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-L\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('L├ám tr├▓n kß║┐t quß║ú ─æß║┐n h├áng phß║ºn m╞░ß╗¥i. T├¡nh {O}.', 'line', 'SERVED', None, {'q': 'ΓêÜ11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} r\u1ed3i l\xe0m tr\xf2n k\u1ebft qu\u1ea3.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} rß╗ôi l├ám tr├▓n kß║┐t quß║ú.', 'line', 'REFUSED', 'NOT_ASKED_IN_SOURCE', {})
+E   assert ('REFUSED' == 'REFUSED'
+E     
+E       REFUSED and 'NOT_ASKED_IN_SOURCE' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + NOT_ASKED_IN_SOURCE)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n h├áng phß║ºn tr─âm).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (k\u1ebft qu\u1ea3 l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (kß║┐t quß║ú l├ám tr├▓n ─æß║┐n h├áng phß║ºn m╞░ß╗¥i).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O}, l\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n kß║┐t quß║ú ─æß║┐n h├áng phß║ºn tr─âm.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (\u0111\u01a1n v\u1ecb: cm; l\xe0m tr\xf2n \u0111\u1ebfn 2 ch\u1eef s\u1ed1 th\u1eadp ph\xe2n).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (─æ╞ín vß╗ï: cm; l├ám tr├▓n ─æß║┐n 2 chß╗» sß╗æ thß║¡p ph├ón).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,01).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n 0,01).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,1).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n 0,1).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ hai).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 nh\u1ea5t).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ nhß║Ñt).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn 0,01.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n ─æß║┐n 0,01.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ hai.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-L\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('L├ám tr├▓n kß║┐t quß║ú ─æß║┐n h├áng phß║ºn m╞░ß╗¥i. T├¡nh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} r\u1ed3i l\xe0m tr\xf2n k\u1ebft qu\u1ea3.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} rß╗ôi l├ám tr├▓n kß║┐t quß║ú.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n h├áng phß║ºn tr─âm).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (k\u1ebft qu\u1ea3 l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (kß║┐t quß║ú l├ám tr├▓n ─æß║┐n h├áng phß║ºn m╞░ß╗¥i).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O}, l\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n kß║┐t quß║ú ─æß║┐n h├áng phß║ºn tr─âm.', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (\u0111\u01a1n v\u1ecb: cm; l\xe0m tr\xf2n \u0111\u1ebfn 2 ch\u1eef s\u1ed1 th\u1eadp ph\xe2n).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (─æ╞ín vß╗ï: cm; l├ám tr├▓n ─æß║┐n 2 chß╗» sß╗æ thß║¡p ph├ón).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,01).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n 0,01).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,1).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n 0,1).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ hai).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 nh\u1ea5t).] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ nhß║Ñt).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn 0,01.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n ─æß║┐n 0,01.', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ hai.', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-L\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('L├ám tr├▓n kß║┐t quß║ú ─æß║┐n h├áng phß║ºn m╞░ß╗¥i. T├¡nh {O}.', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} r\u1ed3i l\xe0m tr\xf2n k\u1ebft qu\u1ea3.] _
+backend\tests\geometry\test_shared_ask_grammar.py:269: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} rß╗ôi l├ám tr├▓n kß║┐t quß║ú.', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n h├áng phß║ºn tr─âm).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (k\u1ebft qu\u1ea3 l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (kß║┐t quß║ú l├ám tr├▓n ─æß║┐n h├áng phß║ºn m╞░ß╗¥i).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O}, l\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n kß║┐t quß║ú ─æß║┐n h├áng phß║ºn tr─âm.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (\u0111\u01a1n v\u1ecb: cm; l\xe0m tr\xf2n \u0111\u1ebfn 2 ch\u1eef s\u1ed1 th\u1eadp ph\xe2n).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (─æ╞ín vß╗ï: cm; l├ám tr├▓n ─æß║┐n 2 chß╗» sß╗æ thß║¡p ph├ón).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,01).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n 0,01).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,1).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n 0,1).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ hai).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 nh\u1ea5t).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ nhß║Ñt).', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn 0,01.] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n ─æß║┐n 0,01.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai.] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ hai.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-L\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('L├ám tr├▓n kß║┐t quß║ú ─æß║┐n h├áng phß║ºn m╞░ß╗¥i. T├¡nh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} r\u1ed3i l\xe0m tr\xf2n k\u1ebft qu\u1ea3.] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} rß╗ôi l├ám tr├▓n kß║┐t quß║ú.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n h├áng phß║ºn tr─âm).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (k\u1ebft qu\u1ea3 l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (kß║┐t quß║ú l├ám tr├▓n ─æß║┐n h├áng phß║ºn m╞░ß╗¥i).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O}, l\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n kß║┐t quß║ú ─æß║┐n h├áng phß║ºn tr─âm.', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (\u0111\u01a1n v\u1ecb: cm; l\xe0m tr\xf2n \u0111\u1ebfn 2 ch\u1eef s\u1ed1 th\u1eadp ph\xe2n).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (─æ╞ín vß╗ï: cm; l├ám tr├▓n ─æß║┐n 2 chß╗» sß╗æ thß║¡p ph├ón).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,01).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n 0,01).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,1).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n 0,1).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ hai).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 nh\u1ea5t).] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} (l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ nhß║Ñt).', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn 0,01.] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n ─æß║┐n 0,01.', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai.] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O}, l├ám tr├▓n ─æß║┐n chß╗» sß╗æ thß║¡p ph├ón thß╗⌐ hai.', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-L\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('L├ám tr├▓n kß║┐t quß║ú ─æß║┐n h├áng phß║ºn m╞░ß╗¥i. T├¡nh {O}.', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} r\u1ed3i l\xe0m tr\xf2n k\u1ebft qu\u1ea3.] _
+backend\tests\geometry\test_shared_ask_grammar.py:276: in test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh {O} rß╗ôi l├ám tr├▓n kß║┐t quß║ú.', 'length', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_stage_b_c3_mat_song_song_ask_section_area_shared_grammar[a) T\xednh di\u1ec7n t\xedch thi\u1ebft di\u1ec7n c\u1ee7a h\xecnh ch\xf3p S.ABCD v\u1edbi (P) (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).-REFUSED] _
+backend\tests\geometry\test_shared_ask_grammar.py:359: in test_stage_b_c3_mat_song_song_ask_section_area_shared_grammar
+    assert r.status == expected, (new_ask, r.status, r.code, r.answers)
+E   AssertionError: ('a) T├¡nh diß╗çn t├¡ch thiß║┐t diß╗çn cß╗ºa h├¼nh ch├│p S.ABCD vß╗¢i (P) (l├ám tr├▓n ─æß║┐n h├áng phß║ºn tr─âm).', 'SERVED', None, {'q': '1'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_stage_b_c3_mat_hai_duong_ask_section_area_shared_grammar[T\xednh di\u1ec7n t\xedch thi\u1ebft di\u1ec7n c\u1ee7a h\xecnh ch\xf3p S.ABCD v\u1edbi (P) (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).-REFUSED] _
+backend\tests\geometry\test_shared_ask_grammar.py:383: in test_stage_b_c3_mat_hai_duong_ask_section_area_shared_grammar
+    assert r.status == expected, (new_ask, r.status, r.code, r.answers)
+E   AssertionError: ('T├¡nh diß╗çn t├¡ch thiß║┐t diß╗çn cß╗ºa h├¼nh ch├│p S.ABCD vß╗¢i (P) (l├ám tr├▓n ─æß║┐n h├áng phß║ºn tr─âm).', 'SERVED', None, {'q': '3ΓêÜ13/4'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb mm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw0-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. Kß║┐t quß║ú ghi ß╗ƒ ─æ╞ín vß╗ï mm. T├¡nh ─æß╗Ö d├ái SC.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb mm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw0-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. Kß║┐t quß║ú ghi ß╗ƒ ─æ╞ín vß╗ï mm. T├¡nh ─æß╗Ö d├ái SC.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf \u0111\u01a1n v\u1ecb m.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw2-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. L╞░u ├╜: kß║┐t quß║ú ─æß╗â ß╗ƒ ─æ╞ín vß╗ï m. T├¡nh ─æß╗Ö d├ái SC.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf \u0111\u01a1n v\u1ecb m.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw2-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. L╞░u ├╜: kß║┐t quß║ú ─æß╗â ß╗ƒ ─æ╞ín vß╗ï m. T├¡nh ─æß╗Ö d├ái SC.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[\u0110\xe1p s\u1ed1 ghi \u1edf \u0111\u01a1n v\u1ecb dm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw3-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. ─É├íp sß╗æ ghi ß╗ƒ ─æ╞ín vß╗ï dm. T├¡nh ─æß╗Ö d├ái SC.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[\u0110\xe1p s\u1ed1 ghi \u1edf \u0111\u01a1n v\u1ecb dm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw3-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. ─É├íp sß╗æ ghi ß╗ƒ ─æ╞ín vß╗ï dm. T├¡nh ─æß╗Ö d├ái SC.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[\u0110\u01a1n v\u1ecb c\u1ee7a k\u1ebft qu\u1ea3 l\xe0 mm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw4-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:423: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+E   AssertionError: assert 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[\u0110\u01a1n v\u1ecb c\u1ee7a k\u1ebft qu\u1ea3 l\xe0 mm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw4-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:423: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+E   AssertionError: assert 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb mm\xb2.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw6-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:423: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+E   AssertionError: assert 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb mm\xb2.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw6-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:423: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+E   AssertionError: assert 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw7-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. Kß║┐t quß║ú ghi ß╗ƒ ─æ╞ín vß╗ï cm. T├¡nh diß╗çn t├¡ch tam gi├íc SAC.', 'SERVED', None, {'q': '3ΓêÜ2'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw7-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. Kß║┐t quß║ú ghi ß╗ƒ ─æ╞ín vß╗ï cm. T├¡nh diß╗çn t├¡ch tam gi├íc SAC.', 'SERVED', None, {'q': '3ΓêÜ2'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb \u0111\u1ed9 d\xe0i.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw8-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. Kß║┐t quß║ú ghi ß╗ƒ ─æ╞ín vß╗ï ─æß╗Ö d├ái. T├¡nh diß╗çn t├¡ch tam gi├íc SAC.', 'SERVED', None, {'q': '3ΓêÜ2'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb \u0111\u1ed9 d\xe0i.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw8-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. Kß║┐t quß║ú ghi ß╗ƒ ─æ╞ín vß╗ï ─æß╗Ö d├ái. T├¡nh diß╗çn t├¡ch tam gi├íc SAC.', 'SERVED', None, {'q': '3ΓêÜ2'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb mm\xb3.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw9-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:423: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+E   AssertionError: assert 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb mm\xb3.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw9-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:423: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+E   AssertionError: assert 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm\xb2.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw10-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:423: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+E   AssertionError: assert 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm\xb2.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw10-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:423: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+E   AssertionError: assert 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb di\u1ec7n t\xedch.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw11-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:423: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+E   AssertionError: assert 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb di\u1ec7n t\xedch.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw11-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:423: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+E   AssertionError: assert 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb di\u1ec7n t\xedch.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw12-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:423: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+E   AssertionError: assert 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb di\u1ec7n t\xedch.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw12-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:423: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+E   AssertionError: assert 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw13-SERVED-\u221a17-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC. Kß║┐t quß║ú ghi ß╗ƒ ─æ╞ín vß╗ï cm.', 'REFUSED', 'QUESTION_CONTEXT_UNSUPPORTED', {})
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw13-SERVED-\u221a17-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC. Kß║┐t quß║ú ghi ß╗ƒ ─æ╞ín vß╗ï cm.', 'REFUSED', 'QUESTION_CONTEXT_UNSUPPORTED', {})
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm\xb2.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw14-SERVED-3\u221a2-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. Kß║┐t quß║ú ghi ß╗ƒ ─æ╞ín vß╗ï cm┬▓. T├¡nh diß╗çn t├¡ch tam gi├íc SAC.', 'REFUSED', 'SOURCE_PREMISE_UNREAD', {})
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm\xb2.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw14-SERVED-3\u221a2-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. Kß║┐t quß║ú ghi ß╗ƒ ─æ╞ín vß╗ï cm┬▓. T├¡nh diß╗çn t├¡ch tam gi├íc SAC.', 'REFUSED', 'SOURCE_PREMISE_UNREAD', {})
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm\xb3.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw15-SERVED-4-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. Kß║┐t quß║ú ghi ß╗ƒ ─æ╞ín vß╗ï cm┬│. T├¡nh thß╗â t├¡ch khß╗æi ch├│p S.ABCD.', 'REFUSED', 'SOURCE_PREMISE_UNREAD', {})
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm\xb3.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw15-SERVED-4-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. Kß║┐t quß║ú ghi ß╗ƒ ─æ╞ín vß╗ï cm┬│. T├¡nh thß╗â t├¡ch khß╗æi ch├│p S.ABCD.', 'REFUSED', 'SOURCE_PREMISE_UNREAD', {})
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[\u0110\u01a1n v\u1ecb \u0111\u1ed9 d\xe0i l\xe0 cm.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw16-SERVED-3\u221a2-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh diß╗çn t├¡ch tam gi├íc SAC. ─É╞ín vß╗ï ─æß╗Ö d├ái l├á cm.', 'REFUSED', 'QUESTION_CONTEXT_UNSUPPORTED', {})
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[\u0110\u01a1n v\u1ecb \u0111\u1ed9 d\xe0i l\xe0 cm.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw16-SERVED-3\u221a2-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh diß╗çn t├¡ch tam gi├íc SAC. ─É╞ín vß╗ï ─æß╗Ö d├ái l├á cm.', 'REFUSED', 'QUESTION_CONTEXT_UNSUPPORTED', {})
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[H\xe3y tr\xecnh b\xe0y l\u1eddi gi\u1ea3i ng\u1eafn g\u1ecdn.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw17-SERVED-\u221a17-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC. H├úy tr├¼nh b├áy lß╗¥i giß║úi ngß║»n gß╗ìn.', 'REFUSED', 'QUESTION_CONTEXT_UNSUPPORTED', {})
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[H\xe3y tr\xecnh b\xe0y l\u1eddi gi\u1ea3i ng\u1eafn g\u1ecdn.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw17-SERVED-\u221a17-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC. H├úy tr├¼nh b├áy lß╗¥i giß║úi ngß║»n gß╗ìn.', 'REFUSED', 'QUESTION_CONTEXT_UNSUPPORTED', {})
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw18-SERVED-\u221a17-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC. L╞░u ├╜: kß║┐t quß║ú ─æß╗â ß╗ƒ dß║íng c─ân thß╗⌐c.', 'REFUSED', 'QUESTION_CONTEXT_UNSUPPORTED', {})
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw18-SERVED-\u221a17-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:419: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC. L╞░u ├╜: kß║┐t quß║ú ─æß╗â ß╗ƒ dß║íng c─ân thß╗⌐c.', 'REFUSED', 'QUESTION_CONTEXT_UNSUPPORTED', {})
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo m.-kw0-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC theo m.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo m.-kw0-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC theo m.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo mm.-kw1-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC theo mm.', 'REFUSED', 'NOT_ASKED_IN_SOURCE', {})
+E   assert ('REFUSED' == 'REFUSED'
+E     
+E       REFUSED and 'NOT_ASKED_IN_SOURCE' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + NOT_ASKED_IN_SOURCE)
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo mm.-kw1-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC theo mm.', 'REFUSED', 'NOT_ASKED_IN_SOURCE', {})
+E   assert ('REFUSED' == 'REFUSED'
+E     
+E       REFUSED and 'NOT_ASKED_IN_SOURCE' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + NOT_ASKED_IN_SOURCE)
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo x.-kw2-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC theo x.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo x.-kw2-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC theo x.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo b.-kw3-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC theo b.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo b.-kw3-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC theo b.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo a.-kw4-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC theo a.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo a.-kw4-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh ─æß╗Ö d├ái SC theo a.', 'SERVED', None, {'q': 'ΓêÜ17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC theo a.-kw5-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh diß╗çn t├¡ch tam gi├íc SAC theo a.', 'SERVED', None, {'q': '3ΓêÜ2'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC theo a.-kw5-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh diß╗çn t├¡ch tam gi├íc SAC theo a.', 'SERVED', None, {'q': '3ΓêÜ2'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD theo a.-kw6-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh thß╗â t├¡ch khß╗æi ch├│p S.ABCD theo a.', 'SERVED', None, {'q': '4'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD theo a.-kw6-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:443: in test_cr2_theo_unit_or_undeclared_parameter_is_refused
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2 cm. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3 cm. T├¡nh thß╗â t├¡ch khß╗æi ch├│p S.ABCD theo a.', 'SERVED', None, {'q': '4'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise[T\xednh \u0111\u1ed9 d\xe0i SC theo m.-kw3-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:471: in test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T├¡nh ─æß╗Ö d├ái SC theo m.', 'SERVED', None, {'q': 'aΓêÜ17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise[T\xednh \u0111\u1ed9 d\xe0i SC theo m.-kw3-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:471: in test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T├¡nh ─æß╗Ö d├ái SC theo m.', 'SERVED', None, {'q': 'aΓêÜ17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise[T\xednh \u0111\u1ed9 d\xe0i SC theo x.-kw4-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:471: in test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T├¡nh ─æß╗Ö d├ái SC theo x.', 'SERVED', None, {'q': 'aΓêÜ17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise[T\xednh \u0111\u1ed9 d\xe0i SC theo x.-kw4-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:471: in test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T├¡nh ─æß╗Ö d├ái SC theo x.', 'SERVED', None, {'q': 'aΓêÜ17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) theo a.-kw5-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:471: in test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T├¡nh g├│c giß╗»a SC v├á (ABCD) theo a.', 'SERVED', None, {'q': 'cos┬▓=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) theo a.-kw5-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:471: in test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T├¡nh g├│c giß╗»a SC v├á (ABCD) theo a.', 'SERVED', None, {'q': 'cos┬▓=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_im1_valid_goal_clause_structures_are_served_route_b[line:Ch\u1ee9ng minh SB v\xe0 SD b\u1eb1ng nhau v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh SB v├á SD bß║▒ng nhau v├á t├¡nh {O}.', 'line', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[plane:Ch\u1ee9ng minh SB v\xe0 SD b\u1eb1ng nhau v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh SB v├á SD bß║▒ng nhau v├á t├¡nh {O}.', 'plane', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[length:Ch\u1ee9ng minh SB v\xe0 SD b\u1eb1ng nhau v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh SB v├á SD bß║▒ng nhau v├á t├¡nh {O}.', 'length', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[line:Ch\u1ee9ng minh AC v\xe0 BD c\u1eaft nhau v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh AC v├á BD cß║»t nhau v├á t├¡nh {O}.', 'line', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[plane:Ch\u1ee9ng minh AC v\xe0 BD c\u1eaft nhau v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh AC v├á BD cß║»t nhau v├á t├¡nh {O}.', 'plane', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[length:Ch\u1ee9ng minh AC v\xe0 BD c\u1eaft nhau v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh AC v├á BD cß║»t nhau v├á t├¡nh {O}.', 'length', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[line:Ch\u1ee9ng minh BD vu\xf4ng g\xf3c SC b\u1eb1ng hai c\xe1ch v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh BD vu├┤ng g├│c SC bß║▒ng hai c├ích v├á t├¡nh {O}.', 'line', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[plane:Ch\u1ee9ng minh BD vu\xf4ng g\xf3c SC b\u1eb1ng hai c\xe1ch v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh BD vu├┤ng g├│c SC bß║▒ng hai c├ích v├á t├¡nh {O}.', 'plane', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[length:Ch\u1ee9ng minh BD vu\xf4ng g\xf3c SC b\u1eb1ng hai c\xe1ch v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh BD vu├┤ng g├│c SC bß║▒ng hai c├ích v├á t├¡nh {O}.', 'length', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[line:Ch\u1ee9ng minh SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh SC bß║▒ng hai lß║ºn SA, t├¡nh {O}.', 'line', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[plane:Ch\u1ee9ng minh SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh SC bß║▒ng hai lß║ºn SA, t├¡nh {O}.', 'plane', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[length:Ch\u1ee9ng minh SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh SC bß║▒ng hai lß║ºn SA, t├¡nh {O}.', 'length', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[line:Ch\u1ee9ng minh tam gi\xe1c SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh tam gi├íc SAB vu├┤ng, SC bß║▒ng hai lß║ºn SA, t├¡nh {O}.', 'line', 'QUESTION_CONTEXT_UNSUPPORTED', "c├óu hß╗Åi c├│ phß║ºn ch╞░a ─æ╞░ß╗úc ─æß╗ìc (', SC bß║▒ng hai lß║ºn SA,') ΓÇö c├│ thß╗â ─æß╗òi ─æß║íi l╞░ß╗úng ─æ╞░ß╗úc hß╗Åi; kh├┤ng trß║ú lß╗¥i mß╗Öt ─æß║íi l╞░ß╗úng kh├íc")
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[plane:Ch\u1ee9ng minh tam gi\xe1c SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh tam gi├íc SAB vu├┤ng, SC bß║▒ng hai lß║ºn SA, t├¡nh {O}.', 'plane', 'QUESTION_CONTEXT_UNSUPPORTED', "c├óu hß╗Åi c├│ phß║ºn ch╞░a ─æ╞░ß╗úc ─æß╗ìc (', SC bß║▒ng hai lß║ºn SA,') ΓÇö c├│ thß╗â ─æß╗òi ─æß║íi l╞░ß╗úng ─æ╞░ß╗úc hß╗Åi; kh├┤ng trß║ú lß╗¥i mß╗Öt ─æß║íi l╞░ß╗úng kh├íc")
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[length:Ch\u1ee9ng minh tam gi\xe1c SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh tam gi├íc SAB vu├┤ng, SC bß║▒ng hai lß║ºn SA, t├¡nh {O}.', 'length', 'QUESTION_CONTEXT_UNSUPPORTED', "c├óu hß╗Åi c├│ phß║ºn ch╞░a ─æ╞░ß╗úc ─æß╗ìc (', SC bß║▒ng hai lß║ºn SA,') ΓÇö c├│ thß╗â ─æß╗òi ─æß║íi l╞░ß╗úng ─æ╞░ß╗úc hß╗Åi; kh├┤ng trß║ú lß╗¥i mß╗Öt ─æß║íi l╞░ß╗úng kh├íc")
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[line:Ch\u1ee9ng minh \u0394SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh ╬öSAB vu├┤ng, SC bß║▒ng hai lß║ºn SA v├á t├¡nh {O}.', 'line', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[plane:Ch\u1ee9ng minh \u0394SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh ╬öSAB vu├┤ng, SC bß║▒ng hai lß║ºn SA v├á t├¡nh {O}.', 'plane', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_b[length:Ch\u1ee9ng minh \u0394SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:497: in test_im1_valid_goal_clause_structures_are_served_route_b
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh ╬öSAB vu├┤ng, SC bß║▒ng hai lß║ºn SA v├á t├¡nh {O}.', 'length', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_a[plane:Ch\u1ee9ng minh SB v\xe0 SD b\u1eb1ng nhau v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:504: in test_im1_valid_goal_clause_structures_are_served_route_a
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh SB v├á SD bß║▒ng nhau v├á t├¡nh {O}.', 'plane', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_a[length:Ch\u1ee9ng minh SB v\xe0 SD b\u1eb1ng nhau v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:504: in test_im1_valid_goal_clause_structures_are_served_route_a
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh SB v├á SD bß║▒ng nhau v├á t├¡nh {O}.', 'length', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_a[plane:Ch\u1ee9ng minh AC v\xe0 BD c\u1eaft nhau v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:504: in test_im1_valid_goal_clause_structures_are_served_route_a
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh AC v├á BD cß║»t nhau v├á t├¡nh {O}.', 'plane', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_a[length:Ch\u1ee9ng minh AC v\xe0 BD c\u1eaft nhau v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:504: in test_im1_valid_goal_clause_structures_are_served_route_a
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh AC v├á BD cß║»t nhau v├á t├¡nh {O}.', 'length', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_a[plane:Ch\u1ee9ng minh BD vu\xf4ng g\xf3c SC b\u1eb1ng hai c\xe1ch v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:504: in test_im1_valid_goal_clause_structures_are_served_route_a
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh BD vu├┤ng g├│c SC bß║▒ng hai c├ích v├á t├¡nh {O}.', 'plane', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_a[length:Ch\u1ee9ng minh BD vu\xf4ng g\xf3c SC b\u1eb1ng hai c\xe1ch v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:504: in test_im1_valid_goal_clause_structures_are_served_route_a
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh BD vu├┤ng g├│c SC bß║▒ng hai c├ích v├á t├¡nh {O}.', 'length', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_a[plane:Ch\u1ee9ng minh SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:504: in test_im1_valid_goal_clause_structures_are_served_route_a
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh SC bß║▒ng hai lß║ºn SA, t├¡nh {O}.', 'plane', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_a[length:Ch\u1ee9ng minh SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:504: in test_im1_valid_goal_clause_structures_are_served_route_a
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh SC bß║▒ng hai lß║ºn SA, t├¡nh {O}.', 'length', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_a[plane:Ch\u1ee9ng minh tam gi\xe1c SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:504: in test_im1_valid_goal_clause_structures_are_served_route_a
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh tam gi├íc SAB vu├┤ng, SC bß║▒ng hai lß║ºn SA, t├¡nh {O}.', 'plane', 'QUESTION_CONTEXT_UNSUPPORTED', "c├óu hß╗Åi c├│ phß║ºn ch╞░a ─æ╞░ß╗úc ─æß╗ìc (', SC bß║▒ng hai lß║ºn SA,') ΓÇö c├│ thß╗â ─æß╗òi ─æß║íi l╞░ß╗úng ─æ╞░ß╗úc hß╗Åi; kh├┤ng trß║ú lß╗¥i mß╗Öt ─æß║íi l╞░ß╗úng kh├íc")
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_a[length:Ch\u1ee9ng minh tam gi\xe1c SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:504: in test_im1_valid_goal_clause_structures_are_served_route_a
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh tam gi├íc SAB vu├┤ng, SC bß║▒ng hai lß║ºn SA, t├¡nh {O}.', 'length', 'QUESTION_CONTEXT_UNSUPPORTED', "c├óu hß╗Åi c├│ phß║ºn ch╞░a ─æ╞░ß╗úc ─æß╗ìc (', SC bß║▒ng hai lß║ºn SA,') ΓÇö c├│ thß╗â ─æß╗òi ─æß║íi l╞░ß╗úng ─æ╞░ß╗úc hß╗Åi; kh├┤ng trß║ú lß╗¥i mß╗Öt ─æß║íi l╞░ß╗úng kh├íc")
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_a[plane:Ch\u1ee9ng minh \u0394SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:504: in test_im1_valid_goal_clause_structures_are_served_route_a
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh ╬öSAB vu├┤ng, SC bß║▒ng hai lß║ºn SA v├á t├¡nh {O}.', 'plane', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_im1_valid_goal_clause_structures_are_served_route_a[length:Ch\u1ee9ng minh \u0394SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA v\xe0 t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:504: in test_im1_valid_goal_clause_structures_are_served_route_a
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+E   AssertionError: ('Chß╗⌐ng minh ╬öSAB vu├┤ng, SC bß║▒ng hai lß║ºn SA v├á t├¡nh {O}.', 'length', 'QUESTION_CONTEXT_UNSUPPORTED', 'phß║ºn dß╗» kiß╗çn/─æß╗òi giß║ú thiß║┐t trong c├óu hß╗Åi ch╞░a ─æ╞░ß╗úc ─æß╗ìc trß╗ìn; kh├┤ng d├╣ng m├┤ h├¼nh c┼⌐')
+E   assert ('REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED)
+_ test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) theo \u0111\u1ed9.-kw2-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:531: in test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T├¡nh g├│c giß╗»a SC v├á (ABCD) theo ─æß╗Ö.', 'SERVED', None, {'q': 'cos┬▓=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) theo \u0111\u1ed9.-kw2-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:531: in test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T├¡nh g├│c giß╗»a SC v├á (ABCD) theo ─æß╗Ö.', 'SERVED', None, {'q': 'cos┬▓=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) theo radian.-kw3-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:531: in test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T├¡nh g├│c giß╗»a SC v├á (ABCD) theo radian.', 'SERVED', None, {'q': 'cos┬▓=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) theo radian.-kw3-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:531: in test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T├¡nh g├│c giß╗»a SC v├á (ABCD) theo radian.', 'SERVED', None, {'q': 'cos┬▓=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) (\u0111\u1ed9).-kw4-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:531: in test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T├¡nh g├│c giß╗»a SC v├á (ABCD) (─æß╗Ö).', 'SERVED', None, {'q': 'cos┬▓=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) (\u0111\u1ed9).-kw4-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:531: in test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T├¡nh g├│c giß╗»a SC v├á (ABCD) (─æß╗Ö).', 'SERVED', None, {'q': 'cos┬▓=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) (radian).-kw5-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:531: in test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T├¡nh g├│c giß╗»a SC v├á (ABCD) (radian).', 'SERVED', None, {'q': 'cos┬▓=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) (radian).-kw5-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:531: in test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T├¡nh g├│c giß╗»a SC v├á (ABCD) (radian).', 'SERVED', None, {'q': 'cos┬▓=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) (\u0111\u01a1n v\u1ecb: \u0111\u1ed9).-kw6-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:531: in test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T├¡nh g├│c giß╗»a SC v├á (ABCD) (─æ╞ín vß╗ï: ─æß╗Ö).', 'SERVED', None, {'q': 'cos┬▓=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) (\u0111\u01a1n v\u1ecb: \u0111\u1ed9).-kw6-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:531: in test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T├¡nh g├│c giß╗»a SC v├á (ABCD) (─æ╞ín vß╗ï: ─æß╗Ö).', 'SERVED', None, {'q': 'cos┬▓=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa hai m\u1eb7t ph\u1eb3ng (SBC) v\xe0 (ABCD) theo \u0111\u1ed9.-kw7-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:531: in test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T├¡nh g├│c giß╗»a hai mß║╖t phß║│ng (SBC) v├á (ABCD) theo ─æß╗Ö.', 'SERVED', None, {'q': 'cos┬▓=4/13'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa hai m\u1eb7t ph\u1eb3ng (SBC) v\xe0 (ABCD) theo \u0111\u1ed9.-kw7-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:531: in test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T├¡nh g├│c giß╗»a hai mß║╖t phß║│ng (SBC) v├á (ABCD) theo ─æß╗Ö.', 'SERVED', None, {'q': 'cos┬▓=4/13'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (k\u1ebft qu\u1ea3 l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O}, l\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (\u0111\u01a1n v\u1ecb: cm; l\xe0m tr\xf2n \u0111\u1ebfn 2 ch\u1eef s\u1ed1 th\u1eadp ph\xe2n).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,01).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,1).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 nh\u1ea5t).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn 0,01.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-L\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[line-T\xednh {O} r\u1ed3i l\xe0m tr\xf2n k\u1ebft qu\u1ea3.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (k\u1ebft qu\u1ea3 l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O}, l\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (\u0111\u01a1n v\u1ecb: cm; l\xe0m tr\xf2n \u0111\u1ebfn 2 ch\u1eef s\u1ed1 th\u1eadp ph\xe2n).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,01).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,1).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 nh\u1ea5t).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn 0,01.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-L\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[plane-T\xednh {O} r\u1ed3i l\xe0m tr\xf2n k\u1ebft qu\u1ea3.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (k\u1ebft qu\u1ea3 l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O}, l\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (\u0111\u01a1n v\u1ecb: cm; l\xe0m tr\xf2n \u0111\u1ebfn 2 ch\u1eef s\u1ed1 th\u1eadp ph\xe2n).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,01).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,1).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 nh\u1ea5t).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn 0,01.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-L\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b[length-T\xednh {O} r\u1ed3i l\xe0m tr\xf2n k\u1ebft qu\u1ea3.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (k\u1ebft qu\u1ea3 l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O}, l\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (\u0111\u01a1n v\u1ecb: cm; l\xe0m tr\xf2n \u0111\u1ebfn 2 ch\u1eef s\u1ed1 th\u1eadp ph\xe2n).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,01).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,1).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 nh\u1ea5t).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn 0,01.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-L\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[plane-T\xednh {O} r\u1ed3i l\xe0m tr\xf2n k\u1ebft qu\u1ea3.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (k\u1ebft qu\u1ea3 l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O}, l\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (\u0111\u01a1n v\u1ecb: cm; l\xe0m tr\xf2n \u0111\u1ebfn 2 ch\u1eef s\u1ed1 th\u1eadp ph\xe2n).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,01).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn 0,1).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 nh\u1ea5t).]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn 0,01.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O}, l\xe0m tr\xf2n \u0111\u1ebfn ch\u1eef s\u1ed1 th\u1eadp ph\xe2n th\u1ee9 hai.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-L\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a[length-T\xednh {O} r\u1ed3i l\xe0m tr\xf2n k\u1ebft qu\u1ea3.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_stage_b_c3_mat_song_song_ask_section_area_shared_grammar[a) T\xednh di\u1ec7n t\xedch thi\u1ebft di\u1ec7n c\u1ee7a h\xecnh ch\xf3p S.ABCD v\u1edbi (P) (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).-REFUSED]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_stage_b_c3_mat_hai_duong_ask_section_area_shared_grammar[T\xednh di\u1ec7n t\xedch thi\u1ebft di\u1ec7n c\u1ee7a h\xecnh ch\xf3p S.ABCD v\u1edbi (P) (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).-REFUSED]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb mm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw0-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb mm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw0-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf \u0111\u01a1n v\u1ecb m.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw2-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf \u0111\u01a1n v\u1ecb m.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw2-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[\u0110\xe1p s\u1ed1 ghi \u1edf \u0111\u01a1n v\u1ecb dm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw3-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[\u0110\xe1p s\u1ed1 ghi \u1edf \u0111\u01a1n v\u1ecb dm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw3-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[\u0110\u01a1n v\u1ecb c\u1ee7a k\u1ebft qu\u1ea3 l\xe0 mm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw4-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[\u0110\u01a1n v\u1ecb c\u1ee7a k\u1ebft qu\u1ea3 l\xe0 mm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw4-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb mm\xb2.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw6-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb mm\xb2.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw6-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw7-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw7-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb \u0111\u1ed9 d\xe0i.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw8-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb \u0111\u1ed9 d\xe0i.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw8-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb mm\xb3.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw9-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb mm\xb3.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw9-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm\xb2.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw10-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm\xb2.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw10-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb di\u1ec7n t\xedch.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw11-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb di\u1ec7n t\xedch.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw11-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb di\u1ec7n t\xedch.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw12-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb di\u1ec7n t\xedch.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw12-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw13-SERVED-\u221a17-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw13-SERVED-\u221a17-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm\xb2.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw14-SERVED-3\u221a2-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm\xb2.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw14-SERVED-3\u221a2-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm\xb3.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw15-SERVED-4-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[K\u1ebft qu\u1ea3 ghi \u1edf \u0111\u01a1n v\u1ecb cm\xb3.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw15-SERVED-4-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[\u0110\u01a1n v\u1ecb \u0111\u1ed9 d\xe0i l\xe0 cm.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw16-SERVED-3\u221a2-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[\u0110\u01a1n v\u1ecb \u0111\u1ed9 d\xe0i l\xe0 cm.-T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC.-kw16-SERVED-3\u221a2-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[H\xe3y tr\xecnh b\xe0y l\u1eddi gi\u1ea3i ng\u1eafn g\u1ecdn.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw17-SERVED-\u221a17-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[H\xe3y tr\xecnh b\xe0y l\u1eddi gi\u1ea3i ng\u1eafn g\u1ecdn.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw17-SERVED-\u221a17-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw18-SERVED-\u221a17-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw18-SERVED-\u221a17-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo m.-kw0-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo m.-kw0-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo mm.-kw1-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo mm.-kw1-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo x.-kw2-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo x.-kw2-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo b.-kw3-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo b.-kw3-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo a.-kw4-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh \u0111\u1ed9 d\xe0i SC theo a.-kw4-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC theo a.-kw5-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh di\u1ec7n t\xedch tam gi\xe1c SAC theo a.-kw5-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD theo a.-kw6-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_unit_or_undeclared_parameter_is_refused[T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD theo a.-kw6-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise[T\xednh \u0111\u1ed9 d\xe0i SC theo m.-kw3-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise[T\xednh \u0111\u1ed9 d\xe0i SC theo m.-kw3-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise[T\xednh \u0111\u1ed9 d\xe0i SC theo x.-kw4-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise[T\xednh \u0111\u1ed9 d\xe0i SC theo x.-kw4-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) theo a.-kw5-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) theo a.-kw5-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[line:Ch\u1ee9ng minh SB v\xe0 SD b\u1eb1ng nhau v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[plane:Ch\u1ee9ng minh SB v\xe0 SD b\u1eb1ng nhau v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[length:Ch\u1ee9ng minh SB v\xe0 SD b\u1eb1ng nhau v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[line:Ch\u1ee9ng minh AC v\xe0 BD c\u1eaft nhau v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[plane:Ch\u1ee9ng minh AC v\xe0 BD c\u1eaft nhau v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[length:Ch\u1ee9ng minh AC v\xe0 BD c\u1eaft nhau v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[line:Ch\u1ee9ng minh BD vu\xf4ng g\xf3c SC b\u1eb1ng hai c\xe1ch v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[plane:Ch\u1ee9ng minh BD vu\xf4ng g\xf3c SC b\u1eb1ng hai c\xe1ch v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[length:Ch\u1ee9ng minh BD vu\xf4ng g\xf3c SC b\u1eb1ng hai c\xe1ch v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[line:Ch\u1ee9ng minh SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[plane:Ch\u1ee9ng minh SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[length:Ch\u1ee9ng minh SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[line:Ch\u1ee9ng minh tam gi\xe1c SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[plane:Ch\u1ee9ng minh tam gi\xe1c SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[length:Ch\u1ee9ng minh tam gi\xe1c SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[line:Ch\u1ee9ng minh \u0394SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[plane:Ch\u1ee9ng minh \u0394SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_b[length:Ch\u1ee9ng minh \u0394SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_a[plane:Ch\u1ee9ng minh SB v\xe0 SD b\u1eb1ng nhau v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_a[length:Ch\u1ee9ng minh SB v\xe0 SD b\u1eb1ng nhau v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_a[plane:Ch\u1ee9ng minh AC v\xe0 BD c\u1eaft nhau v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_a[length:Ch\u1ee9ng minh AC v\xe0 BD c\u1eaft nhau v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_a[plane:Ch\u1ee9ng minh BD vu\xf4ng g\xf3c SC b\u1eb1ng hai c\xe1ch v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_a[length:Ch\u1ee9ng minh BD vu\xf4ng g\xf3c SC b\u1eb1ng hai c\xe1ch v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_a[plane:Ch\u1ee9ng minh SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_a[length:Ch\u1ee9ng minh SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_a[plane:Ch\u1ee9ng minh tam gi\xe1c SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_a[length:Ch\u1ee9ng minh tam gi\xe1c SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_a[plane:Ch\u1ee9ng minh \u0394SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_im1_valid_goal_clause_structures_are_served_route_a[length:Ch\u1ee9ng minh \u0394SAB vu\xf4ng, SC b\u1eb1ng hai l\u1ea7n SA v\xe0 t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) theo \u0111\u1ed9.-kw2-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) theo \u0111\u1ed9.-kw2-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) theo radian.-kw3-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) theo radian.-kw3-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) (\u0111\u1ed9).-kw4-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) (\u0111\u1ed9).-kw4-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) (radian).-kw5-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) (radian).-kw5-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) (\u0111\u01a1n v\u1ecb: \u0111\u1ed9).-kw6-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa SC v\xe0 (ABCD) (\u0111\u01a1n v\u1ecb: \u0111\u1ed9).-kw6-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa hai m\u1eb7t ph\u1eb3ng (SBC) v\xe0 (ABCD) theo \u0111\u1ed9.-kw7-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served[T\xednh g\xf3c gi\u1eefa hai m\u1eb7t ph\u1eb3ng (SBC) v\xe0 (ABCD) theo \u0111\u1ed9.-kw7-REFUSED-None-B]
+158 failed, 275 passed in 7.97s

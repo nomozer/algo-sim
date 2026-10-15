@@ -28,9 +28,24 @@ ALTERED = ["Nhân đôi kết quả, tính {O}.", "Hai lần của đại lượ
            "Tính {O} (đơn vị: cm, kết quả bình phương).", "Tính {O} (kết quả 3).", "Tính {O} (kết quả có lớn hơn 3 không).",
            "Tính {O}, làm tròn sau khi nhân đôi."]
 ASKED = ["Tính {O}.", "Hơn nữa, tính {O}.", "{O} bằng bao nhiêu?", "Hãy tính {O}.", "Tìm {O}.", "Hỏi {O} bằng bao nhiêu?",
-         "Khi đó, tính {O}.", "Tính {O} (làm tròn đến hàng phần trăm).", "Tính {O} (đơn vị: cm).",
-         "Tính {O} (kết quả làm tròn đến hàng phần mười).", "Tính {O}, làm tròn kết quả đến hàng phần trăm.",
-         "Tính {O} (đơn vị: cm; làm tròn đến 2 chữ số thập phân)."]
+         "Khi đó, tính {O}.", "Tính {O} (đơn vị: cm)."]
+# §6 policy override (correction wave of `shared-ask-grammar-safety`, closing review of 4acfc731): the deterministic
+# engine returns exact radical/rational expressions and never rounds; requests for rounding (including historical
+# positive probe templates P5 and P7 of `grammar_probe.py`) must fail closed (`QUESTION_CONTEXT_UNSUPPORTED`).
+ROUNDING_REFUSED = [
+    "Tính {O} (làm tròn đến hàng phần trăm).",
+    "Tính {O} (kết quả làm tròn đến hàng phần mười).",
+    "Tính {O}, làm tròn kết quả đến hàng phần trăm.",
+    "Tính {O} (đơn vị: cm; làm tròn đến 2 chữ số thập phân).",
+    "Tính {O} (làm tròn đến 0,01).",
+    "Tính {O} (làm tròn đến 0,1).",
+    "Tính {O} (làm tròn đến chữ số thập phân thứ hai).",
+    "Tính {O} (làm tròn đến chữ số thập phân thứ nhất).",
+    "Tính {O}, làm tròn đến 0,01.",
+    "Tính {O}, làm tròn đến chữ số thập phân thứ hai.",
+    "Làm tròn kết quả đến hàng phần mười. Tính {O}.",
+    "Tính {O} rồi làm tròn kết quả.",
+]
 
 
 def _cap(s: str) -> str:
@@ -247,18 +262,18 @@ def test_stage_a_i2_same_sentence_midpoint_premise_before_ask_is_served(kind):
     assert r.status == "SERVED" and r.answers == {"q": value}, (kind, r.code, r.reason)
 
 
-@pytest.mark.parametrize("tpl", [
-    "Tính {O} (làm tròn đến 0,01).",
-    "Tính {O} (làm tròn đến 0,1).",
-    "Tính {O} (làm tròn đến chữ số thập phân thứ hai).",
-    "Tính {O} (làm tròn đến chữ số thập phân thứ nhất).",
-    "Tính {O}, làm tròn đến 0,01.",
-    "Tính {O}, làm tròn đến chữ số thập phân thứ hai.",
-])
+@pytest.mark.parametrize("tpl", ROUNDING_REFUSED)
 @pytest.mark.parametrize("kind", list(OBJ))
-def test_stage_a_i3_valid_rounding_notes_are_served(tpl, kind):
+def test_policy_rounding_requests_on_quantitative_asks_are_refused_route_b(tpl, kind):
     r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
-    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+
+
+@pytest.mark.parametrize("tpl", ROUNDING_REFUSED)
+@pytest.mark.parametrize("kind", ["plane", "length"])
+def test_policy_rounding_requests_on_quantitative_asks_are_refused_route_a(tpl, kind):
+    r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
 
 
 # ── STAGE B: C2 (multi-sentence question semantics) and C3 (derived-plane section-area ask) ──────────────────────────
@@ -321,7 +336,7 @@ def test_stage_b_c2_line_ref_multi_sentence_modifier(tpl, quote_tpl, expected):
     ("Xác định thiết diện của hình chóp S.ABCD với (P) và tính diện tích thiết diện đó.", "SERVED"),
     ("Xác định thiết diện của hình chóp S.ABCD với (P), rồi tính diện tích thiết diện của hình chóp S.ABCD với (P).", "SERVED"),
     ("Xác định thiết diện của hình chóp S.ABCD với (P). Tính diện tích thiết diện của hình chóp S.ABCD với (P).", "SERVED"),
-    ("a) Tính diện tích thiết diện của hình chóp S.ABCD với (P) (làm tròn đến hàng phần trăm).", "SERVED"),
+    ("a) Tính diện tích thiết diện của hình chóp S.ABCD với (P) (làm tròn đến hàng phần trăm).", "REFUSED"),
     ("Tính diện tích thiết diện của hình chóp S.ABCD với (P) (đơn vị diện tích).", "SERVED"),
     ("Nhân đôi kết quả, tính diện tích thiết diện của hình chóp S.ABCD với (P).", "REFUSED"),
     ("Tính nửa diện tích thiết diện của hình chóp S.ABCD với (P).", "REFUSED"),
@@ -348,7 +363,7 @@ def test_stage_b_c3_mat_song_song_ask_section_area_shared_grammar(new_ask, expec
 
 @pytest.mark.parametrize("new_ask,expected", [
     ("Tính diện tích thiết diện của hình chóp S.ABCD với (P).", "SERVED"),
-    ("Tính diện tích thiết diện của hình chóp S.ABCD với (P) (làm tròn đến hàng phần trăm).", "SERVED"),
+    ("Tính diện tích thiết diện của hình chóp S.ABCD với (P) (làm tròn đến hàng phần trăm).", "REFUSED"),
     ("Tính diện tích thiết diện của hình chóp S.ABCD với (P) (đơn vị diện tích).", "SERVED"),
     ("Nhân đôi kết quả, tính diện tích thiết diện của hình chóp S.ABCD với (P).", "REFUSED"),
     ("Tính hai lần diện tích thiết diện của hình chóp S.ABCD với (P).", "REFUSED"),
@@ -366,5 +381,158 @@ def test_stage_b_c3_mat_hai_duong_ask_section_area_shared_grammar(new_ask, expec
         f["quotes"] = [quote_ask if x == old else x for x in f["quotes"]]
     r = run_fact_route(text, payload)
     assert r.status == expected, (new_ask, r.status, r.code, r.answers)
+
+
+# ── Review of 4acfc731 closure: CR-1 (unit note sentences), CR-2 (theo X), IM-1 (goal relations), §6 (angle/rounding) ──
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+@pytest.mark.parametrize("note,ask_sent,kw,expected,ans", [
+    # CR-1: Unit conversion in note sentence before/after/beside the question must fail closed.
+    ("Kết quả ghi ở đơn vị mm.", "Tính độ dài SC.", dict(quantity="length", points=["S", "C"]), "REFUSED", None),
+    ("Kết quả tính theo đơn vị mm.", "Tính độ dài SC.", dict(quantity="length", points=["S", "C"]), "REFUSED", None),
+    ("Lưu ý: kết quả để ở đơn vị m.", "Tính độ dài SC.", dict(quantity="length", points=["S", "C"]), "REFUSED", None),
+    ("Đáp số ghi ở đơn vị dm.", "Tính độ dài SC.", dict(quantity="length", points=["S", "C"]), "REFUSED", None),
+    ("Đơn vị của kết quả là mm.", "Tính độ dài SC.", dict(quantity="length", points=["S", "C"]), "REFUSED", None),
+    ("Đơn vị độ dài là mm.", "Tính độ dài SC.", dict(quantity="length", points=["S", "C"]), "REFUSED", None),
+    ("Kết quả ghi ở đơn vị mm².", "Tính diện tích tam giác SAC.", dict(quantity="area", points=list("SAC")), "REFUSED", None),
+    ("Kết quả ghi ở đơn vị cm.", "Tính diện tích tam giác SAC.", dict(quantity="area", points=list("SAC")), "REFUSED", None),
+    ("Kết quả ghi ở đơn vị độ dài.", "Tính diện tích tam giác SAC.", dict(quantity="area", points=list("SAC")), "REFUSED", None),
+    ("Kết quả ghi ở đơn vị mm³.", "Tính thể tích khối chóp S.ABCD.", dict(quantity="volume", solid="S.ABCD"), "REFUSED", None),
+    ("Kết quả ghi ở đơn vị cm².", "Tính thể tích khối chóp S.ABCD.", dict(quantity="volume", solid="S.ABCD"), "REFUSED", None),
+    ("Kết quả ghi ở đơn vị diện tích.", "Tính thể tích khối chóp S.ABCD.", dict(quantity="volume", solid="S.ABCD"), "REFUSED", None),
+    ("Kết quả ghi ở đơn vị diện tích.", "Tính độ dài SC.", dict(quantity="length", points=["S", "C"]), "REFUSED", None),
+    # Valid note sentences matching given scale and asked dimension stay SERVED.
+    ("Kết quả ghi ở đơn vị cm.", "Tính độ dài SC.", dict(quantity="length", points=["S", "C"]), "SERVED", "√17"),
+    ("Kết quả ghi ở đơn vị cm².", "Tính diện tích tam giác SAC.", dict(quantity="area", points=list("SAC")), "SERVED", "3√2"),
+    ("Kết quả ghi ở đơn vị cm³.", "Tính thể tích khối chóp S.ABCD.", dict(quantity="volume", solid="S.ABCD"), "SERVED", "4"),
+    ("Đơn vị độ dài là cm.", "Tính diện tích tam giác SAC.", dict(quantity="area", points=list("SAC")), "SERVED", "3√2"),
+    ("Hãy trình bày lời giải ngắn gọn.", "Tính độ dài SC.", dict(quantity="length", points=["S", "C"]), "SERVED", "√17"),
+    ("Lưu ý: kết quả để ở dạng căn thức.", "Tính độ dài SC.", dict(quantity="length", points=["S", "C"]), "SERVED", "√17"),
+])
+def test_cr1_unit_in_note_sentence_before_or_after_ask(arm, note, ask_sent, kw, expected, ans):
+    from app.simulation.geometry_functions.planner import lap_ke_hoach
+    base, facts = _cm_base()
+    q = HB._f("q", "question", ask_sent, role="question", **kw)
+    payload = {"facts": facts + [q]}
+    for text in (" ".join(base + [note, ask_sent]), " ".join(base + [ask_sent, note])):
+        r = run_fact_route(text, payload) if arm == "B" else run_function_route(text, {"calls": lap_ke_hoach(payload, text).calls})
+        assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+        if expected == "SERVED":
+            assert r.answers == {"q": ans}
+        else:
+            assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+@pytest.mark.parametrize("sentence,kw", [
+    ("Tính độ dài SC theo m.", dict(quantity="length", points=["S", "C"])),
+    ("Tính độ dài SC theo mm.", dict(quantity="length", points=["S", "C"])),
+    ("Tính độ dài SC theo x.", dict(quantity="length", points=["S", "C"])),
+    ("Tính độ dài SC theo b.", dict(quantity="length", points=["S", "C"])),
+    ("Tính độ dài SC theo a.", dict(quantity="length", points=["S", "C"])),
+    ("Tính diện tích tam giác SAC theo a.", dict(quantity="area", points=list("SAC"))),
+    ("Tính thể tích khối chóp S.ABCD theo a.", dict(quantity="volume", solid="S.ABCD")),
+])
+def test_cr2_theo_unit_or_undeclared_parameter_is_refused(arm, sentence, kw):
+    from app.simulation.geometry_functions.planner import lap_ke_hoach
+    for base, facts in (_cm_base(), HB._square()):
+        q = HB._f("q", "question", sentence, role="question", **kw)
+        text = " ".join(base + [sentence])
+        payload = {"facts": facts + [q]}
+        r = run_fact_route(text, payload) if arm == "B" else run_function_route(text, {"calls": lap_ke_hoach(payload, text).calls})
+        assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+
+
+def _symbolic_a_base():
+    base = ["Cho hình chóp S.ABCD.", "Đáy ABCD là hình vuông cạnh 2a.", "SA vuông góc với (ABCD).", "SA = 3a."]
+    facts = [HB._f("f1", "solid", base[0], solid="S.ABCD", solid_type="pyramid"),
+             HB._f("f2", "polygon_shape", base[1], points=list("ABCD"), shape="square", value="2a"),
+             HB._f("f3", "perpendicular", base[2], points_a=["S", "A"], points_b=list("ABCD")),
+             HB._f("f4", "length", base[3], points=["S", "A"], measure="segment", value="3a")]
+    return base, facts
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+@pytest.mark.parametrize("sentence,kw,expected,ans", [
+    ("Tính độ dài SC theo a.", dict(quantity="length", points=["S", "C"]), "SERVED", "a√17"),
+    ("Tính diện tích tam giác SAC theo a.", dict(quantity="area", points=list("SAC")), "SERVED", "3a²√2"),
+    ("Tính thể tích khối chóp S.ABCD theo a.", dict(quantity="volume", solid="S.ABCD"), "SERVED", "4a³"),
+    ("Tính độ dài SC theo m.", dict(quantity="length", points=["S", "C"]), "REFUSED", None),
+    ("Tính độ dài SC theo x.", dict(quantity="length", points=["S", "C"]), "REFUSED", None),
+    ("Tính góc giữa SC và (ABCD) theo a.", dict(quantity="angle", points_a=["S", "C"], points_b=list("ABCD")), "REFUSED", None),
+])
+def test_cr2_theo_a_served_when_declared_in_givens_and_refused_otherwise(arm, sentence, kw, expected, ans):
+    from app.simulation.geometry_functions.planner import lap_ke_hoach
+    base, facts = _symbolic_a_base()
+    q = HB._f("q", "question", sentence, role="question", **kw)
+    text = " ".join(base + [sentence])
+    payload = {"facts": facts + [q]}
+    r = run_fact_route(text, payload) if arm == "B" else run_function_route(text, {"calls": lap_ke_hoach(payload, text).calls})
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+    if expected == "SERVED":
+        assert r.answers == {"q": ans}
+    else:
+        assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+
+
+IM1_SERVED = [
+    "Chứng minh SB và SD bằng nhau và tính {O}.",
+    "Chứng minh AC và BD cắt nhau và tính {O}.",
+    "Chứng minh BD vuông góc SC bằng hai cách và tính {O}.",
+    "Chứng minh SC bằng hai lần SA, tính {O}.",
+    "Chứng minh tam giác SAB vuông, SC bằng hai lần SA, tính {O}.",
+    "Chứng minh ΔSAB vuông, SC bằng hai lần SA và tính {O}.",
+]
+
+IM1_REFUSED = [
+    "Chứng minh SB và SD bằng nhau, nhân đôi kết quả và tính {O}.",
+    "Chứng minh AC và BD cắt nhau, lấy bình phương kết quả và tính {O}.",
+    "Chứng minh BD vuông góc SC bằng hai cách; nhân đôi kết quả; tính {O}.",
+]
+
+
+@pytest.mark.parametrize("tpl,kind", [(t, k) for t in IM1_SERVED for k in OBJ], ids=[f"{k}:{t}" for t in IM1_SERVED for k in OBJ])
+def test_im1_valid_goal_clause_structures_are_served_route_b(tpl, kind):
+    r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+
+
+@pytest.mark.parametrize("tpl,kind", [(t, k) for t in IM1_SERVED for k in ("plane", "length")],
+                         ids=[f"{k}:{t}" for t in IM1_SERVED for k in ("plane", "length")])
+def test_im1_valid_goal_clause_structures_are_served_route_a(tpl, kind):
+    r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+    assert r.status == "SERVED" and r.answers == {"q": OBJ[kind][2]}, (tpl, kind, r.code, r.reason)
+
+
+@pytest.mark.parametrize("tpl,kind", [(t, k) for t in IM1_REFUSED for k in OBJ], ids=[f"{k}:{t}" for t in IM1_REFUSED for k in OBJ])
+def test_im1_goal_clause_with_modifier_stays_refused(tpl, kind):
+    r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+@pytest.mark.parametrize("sentence,kw,expected,ans", [
+    ("Tính góc giữa SC và (ABCD).", dict(quantity="angle", points_a=["S", "C"], points_b=list("ABCD")), "SERVED", "cos²=8/17"),
+    ("Tính góc giữa hai mặt phẳng (SBC) và (ABCD).", dict(quantity="angle", points_a=list("SBC"), points_b=list("ABCD")), "SERVED", "cos²=4/13"),
+    ("Tính góc giữa SC và (ABCD) theo độ.", dict(quantity="angle", points_a=["S", "C"], points_b=list("ABCD")), "REFUSED", None),
+    ("Tính góc giữa SC và (ABCD) theo radian.", dict(quantity="angle", points_a=["S", "C"], points_b=list("ABCD")), "REFUSED", None),
+    ("Tính góc giữa SC và (ABCD) (độ).", dict(quantity="angle", points_a=["S", "C"], points_b=list("ABCD")), "REFUSED", None),
+    ("Tính góc giữa SC và (ABCD) (radian).", dict(quantity="angle", points_a=["S", "C"], points_b=list("ABCD")), "REFUSED", None),
+    ("Tính góc giữa SC và (ABCD) (đơn vị: độ).", dict(quantity="angle", points_a=["S", "C"], points_b=list("ABCD")), "REFUSED", None),
+    ("Tính góc giữa hai mặt phẳng (SBC) và (ABCD) theo độ.", dict(quantity="angle", points_a=list("SBC"), points_b=list("ABCD")), "REFUSED", None),
+])
+def test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos2_is_served(arm, sentence, kw, expected, ans):
+    from app.simulation.geometry_functions.planner import lap_ke_hoach
+    base, facts = HB._square()
+    q = HB._f("q", "question", sentence, role="question", **kw)
+    text = " ".join(base + [sentence])
+    payload = {"facts": facts + [q]}
+    r = run_fact_route(text, payload) if arm == "B" else run_function_route(text, {"calls": lap_ke_hoach(payload, text).calls})
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+    if expected == "SERVED":
+        assert r.answers == {"q": ans}
+    else:
+        assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+
 
 

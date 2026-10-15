@@ -1,40 +1,29 @@
-# CLAUDE_RESUME_HANDOFF — shared-ask-grammar-safety (2026-10-15)
+# CLAUDE_RESUME_HANDOFF — shared-ask-grammar-safety (2026-10-16)
 
-**Status:** `SHARED_ASK_GRAMMAR_SAFETY_BLOCKED`. Không merge, không push.
+**Status:** `SHARED_ASK_GRAMMAR_REVIEW_FINDINGS_CLOSED_PENDING_INDEPENDENT_REVIEW`. Không merge, không push, không refreeze candidate trước khi review độc lập đạt.
 
 ## Kiểm lại trước khi tin
 
 ```bash
-git rev-parse HEAD main origin/main          # research tip ≥ 5fc1645c; main = origin/main = 2a3c0787
-git diff --stat 5f1b576c HEAD -- backend/app frontend/src     # rỗng nếu chưa có sửa sản phẩm mới
-cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py --verify   # 4b95dcc6…
+git rev-parse HEAD main origin/main          # research/source-bound-result-planning; main = origin/main = 2a3c0787
+cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest tests/geometry/test_shared_ask_grammar.py -q
+cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest tests/geometry/test_result_binding_planning.py -q
 cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe ../docs/evaluation/geometry/runs/shared-ask-grammar-safety/grammar_probe.py <out.json>
 ```
 
 ## Trạng thái
 
-- Product `5f1b576c` đọc trọn câu hỏi, đóng ngoặc/làm tròn/đơn vị, và reused-foot đọc nguồn. Harness probe đăng ký
-  trước: 0 WRONG_SERVED trên A/B (trước đó B 47, A 32).
-- Bất biến giữ nguyên. Candidate `4b95dcc6…` (freeze `5fc1645c`). T3 chưa chạy.
+- Đã đóng toàn bộ phát hiện trong review độc lập `9ce1298f` (`C1`–`C4`, `I2`, `I3` tại `4acfc731`) **và** toàn bộ phát hiện trong kiểm toán độc lập đối với `4acfc731` (`CR-1`, `CR-2`, `IM-1`, `IM-2`) cùng chính sách fail-closed đối với yêu cầu làm tròn số thập phân và biểu diễn góc theo độ/radian (xem [`report.md`](report.md) §8):
+  - **CR-1:** `_kiem_ghi_chu` kiểm tra đơn vị trong câu ghi chú ở cả trước câu hỏi (`_kiem_vung_tien_de`) và từ câu hỏi trở đi (`_kiem_du_kien_cau_hoi`) đối chiếu với chiều đại lượng và `don_vi_de`.
+  - **CR-2:** `_SAU_HOP_LE` và `_kiem_don_vi_hoi` phân biệt tham số đã khai báo (`theo a` chỉ khi `_co_tham_so_a(calls)` và không dùng đơn vị mét) với đơn vị trần (`theo m`, `theo mm`, `theo cm`, ... phải khớp `chieu` và `don_vi_de`).
+  - **IM-1:** Khôi phục các mệnh đề mục tiêu hợp lệ (`nhau`, `bằng hai cách` — phục hồi `P11-line`/`P11-plane`/`P11-length` trong `grammar_probe.py`, `gấp đôi`/`hai lần`/`một nửa`, `ΔSAB`, mục tiêu nối bằng dấu phẩy, và kiểm `_DUOI_BANG` trong `_muc_tieu_mau_thuan`) mà không mở lại mệnh đề mục tiêu chứa bổ ngữ đổi đại lượng.
+  - **Chính sách làm tròn / góc (§6):** Từ chối fail-closed (`QUESTION_CONTEXT_UNSUPPORTED`) mọi yêu cầu làm tròn kết quả (`_LAM_TRON` khi đề có lệnh `ask_*`) và mọi yêu cầu đổi biểu diễn góc sang độ/radian (`theo độ`, `theo radian`, `(độ)`, `(radian)`). Trong `grammar_probe.py` (không sửa file lịch sử), 10 ca `P5-*` và `P7-*` bị báo `FALSE_REFUSAL` là do nhãn cũ `expected = "SERVED"` trước khi đổi chính sách.
+  - **IM-2:** Đính chính số liệu `benchmark-30-metrics.json` thực tế là **19 `correct_served` (`SERVED`), 9 `correct_refusal` (`REFUSED`), 0 `wrong_served`, 2 `false_refusal` (`REFUSED` strict xfail `B27`, `B28`)** (tổng `19 SERVED, 11 REFUSED`) và `test_hybrid_compiler_benchmark.py` có **98 pytest items = 94 passed, 4 xfailed**.
+- Biên lai RED (`158 failed, 275 passed` tại `4acfc731`) lưu ở [`red/red-review-4acfc731.txt`](red/red-review-4acfc731.txt) và 6 biên lai GREEN lưu ở [`verification/`](verification/).
 
-## Blocker — cần người dùng quyết phạm vi
+## Bước tiếp theo
 
-Theo [`review-9ce1298f.md`](review-9ce1298f.md), xem [`report.md`](report.md) §5.
+1. Chạy **Independent Code Review** đối với commit đóng lỗi hiện tại.
+2. Sau khi review độc lập đạt (`PASS`), mới thực hiện refreeze `EVALUATION_CANDIDATE.json`, cập nhật `inputs/candidate_divergence.json` và chạy authoritative T3 trên detached worktree sạch.
+3. Scene3D product–Playwright parity audit (`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY` OPEN).
 
-- **Trong phạm vi đã duyệt, chưa đúng:**
-  - **C1:** đọc mệnh đề mục tiêu bằng `_ket_muc_tieu` (kết ở `,`/`;`), không đánh dấu tới điểm dừng đầu tiên. Có hồi
-    quy G1/G7-line so với `8da9ae31`.
-  - **C4:** đơn vị được hỏi phải khớp đơn vị của dữ kiện (`unit()` của `cover()` đã có chính sách này).
-  - **I2/I3:** cụm dựng ("Xác định thiết diện … và tính …", "Dựng hình chiếu … và tính …") và vài dạng làm tròn
-    ("đến 0,01", "chữ số thập phân thứ hai", "(đơn vị diện tích)") phải được đọc.
-- **Ngoài phạm vi, cần duyệt mới:**
-  - **C2:** đọc các câu sau yêu cầu đầu tiên, kể cả câu có động từ hỏi hay từ dẫn dữ kiện nhưng không có cụm được hỏi.
-  - **C3:** đưa `ask_section_area` của mặt suy dẫn (`mat_song_song_dung_nguon`, `_mat_hai_duong_dung_nguon`) qua
-    `_vung_hoi` và cổng đọc câu.
-
-Mọi sửa tiếp theo đều chạm `MEASURED_SYSTEM_PATHS`, nên phải đóng băng lại candidate, chạy T3 sạch và review độc lập
-lại. Mở rộng harness probe theo các dạng của reviewer (`probes/`).
-
-## Chưa làm
-
-T3 · Scene3D product–Playwright parity audit (`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY` OPEN).

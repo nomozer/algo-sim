@@ -1,0 +1,7 @@
+COMMAND: backend\.venv\Scripts\python.exe -X utf8 -m pytest backend/tests/geometry/test_result_binding_planning.py -q
+EXIT_CODE: 0
+BASE_COMMIT: 4acfc7316179e4ec7a9039dc654ea95fee8a9550
+TIMESTAMP: 2026-10-16T00:26:27+07:00
+--- OUTPUT ---
+........................................................................ [100%]
+72 passed in 1.57s

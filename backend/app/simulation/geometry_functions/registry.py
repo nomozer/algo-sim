@@ -665,7 +665,7 @@ _KHOANG_CACH_DIEM_DUONG = re.compile(
     r"khoảng cách\s+từ\s+(?:điểm\s+)?([A-Z][0-9]*'?)\s+(?:đến|tới)\s+(?:đường thẳng\s+)?([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![\w'])",
     re.IGNORECASE)
 #: Câu hỏi khoảng cách điểm–đường: không gán giá trị ngay sau đường thẳng ("bằng 4", "không bằng 3", "khác 3"; "bằng bao nhiêu" vẫn là câu hỏi).
-_GAN_GIA_TRI = re.compile(r"\s*(?:(?:\w+\s+)?(?:bằng|=|là|khác|≠)\s*(?!bao\s+nhiêu|\?)\S|(?:đổi|thay|cộng|trừ|nhân|chia|[+\-*/])\b)", re.IGNORECASE)
+_GAN_GIA_TRI = re.compile(r"\s*(?:(?:\w+\s+)?(?:(?:bằng|là|khác)(?!\w)|[=≠])\s*(?!bao\s+nhiêu|\?)\S|(?:đổi|thay|cộng|trừ|nhân|chia|[+\-*/])\b)", re.IGNORECASE)
 _CHI_SO_DUOI = str.maketrans("₀₁₂₃₄₅₆₇₈₉", "0123456789")
 
 
@@ -732,7 +732,7 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
                     vai.append(_vai_tro_tai(de, m.start()))
                     # The rest of the sentence (before the governing verb) is read by the question-context gate.
                     hoi_that.append(_hoi_dung_cum(de, m.start(), m.end()) and not _GAN_GIA_TRI.match(de[m.end():]))
-                    if _hoi_dung_cum(de, m.start(), m.end()) and not _kiem_don_vi_hoi("ask_length", de, m.start(), m.end(), don_vi_de):
+                    if _hoi_dung_cum(de, m.start(), m.end()) and not _kiem_don_vi_hoi("ask_length", de, m.start(), m.end(), don_vi_de, calls):
                         raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                                      f"{hoi.id}: đơn vị yêu cầu không khớp chính sách đơn vị của dữ kiện hoặc loại đại lượng", ids)
         if not vai:
@@ -888,7 +888,7 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                     source_role(ask,q,m.start()-span[0])
                     if not _hoi_dung_cum(de,m.start(),m.end()) or _GAN_GIA_TRI.match(de[m.end():]):
                         raise TuChoi('NOT_ASKED_IN_SOURCE','nguồn không hỏi khoảng cách này',(ask.id,))
-                    if not _kiem_don_vi_hoi("ask_length", de, m.start(), m.end(), don_vi_de):
+                    if not _kiem_don_vi_hoi("ask_length", de, m.start(), m.end(), don_vi_de, calls):
                         raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                                      f"{ask.id}: đơn vị yêu cầu không khớp chính sách đơn vị của dữ kiện hoặc loại đại lượng",
                                      (ask.id,))
@@ -1049,7 +1049,7 @@ def _kiem_cau_hoi(c: LoiGoi, de: str, vts: list[tuple[int, int]], calls: tuple[L
     if not hoi:
         raise TuChoi("NOT_ASKED_IN_SOURCE", f"{c.id}: {c.quote!r} không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với "
                      "nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không hỏi", (c.id,))
-    if not all(_kiem_don_vi_hoi(c.fn, de, p, h, don_vi_de) for p, h in hoi):
+    if not all(_kiem_don_vi_hoi(c.fn, de, p, h, don_vi_de, calls) for p, h in hoi):
         raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                      f"{c.id}: đơn vị yêu cầu trong câu hỏi không khớp chính sách đơn vị của dữ kiện hoặc loại đại lượng", (c.id,))
     vai = {_vai_tro_tai(de, p) for p, _h in hoi}
@@ -1107,7 +1107,7 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
             _kiem_cau_hoi(c, de, vts, calls)
             for dau, cuoi in vts:
                 for p, h in _cum_hoi(c, de, dau, cuoi, calls):
-                    if _hoi_dung_cum(de, p, h) and not _kiem_don_vi_hoi(c.fn, de, p, h, don_vi_de):
+                    if _hoi_dung_cum(de, p, h) and not _kiem_don_vi_hoi(c.fn, de, p, h, don_vi_de, calls):
                         raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                                      f"{c.id}: đơn vị yêu cầu trong câu hỏi không khớp chính sách đơn vị của dữ kiện hoặc loại đại lượng",
                                      (c.id,))
@@ -1176,12 +1176,12 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
             if gt != so[0]:
                 raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {v} không phải số trong {c.quote!r}", (c.id,))
 
-    _kiem_du_kien_cau_hoi(calls, de, read_quotes, phu)
+    _kiem_du_kien_cau_hoi(calls, de, read_quotes, phu, don_vi_de)
     return ten_mat_phu
 
 
 def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple[str, ...] = (),
-                          phu: set[str] = frozenset()) -> None:
+                          phu: set[str] = frozenset(), don_vi_de: set[str] | None = None) -> None:
     """Source coverage, not a second fact state: local claims must match validated calls before engine verification.
 
     Read the whole question context, including text outside the model's quote. Only closed source spans are covered;
@@ -1190,6 +1190,8 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
     # An explicit escape is unconditionally refused by the engine before any construction. Preserve OUT_OF_SCOPE.
     if any(c.fn == "unsupported" for c in calls):
         return
+    if don_vi_de is None:
+        don_vi_de = _don_vi_met_cua_de(de)
     from ..semantic_program.shape_constraint import doc_rang_buoc
 
     request_verb = re.compile(_DONG_TU_HOI.pattern + r"|(?<!\w)dựng(?!\w)", re.I)
@@ -1280,7 +1282,7 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
     questions |= {_bien_cau(de, p) for p in (0, *(m.end() for m in re.finditer(r"[.!?]\s+", de)))
                   if first_request <= p < len(de)}
     # Everything before the first request is premise text: it must be read too (run `source-grounding-completeness`).
-    _kiem_vung_tien_de(calls, de, first_request, read_quotes)
+    _kiem_vung_tien_de(calls, de, first_request, read_quotes, don_vi_de)
     dung = {n for c in calls for n in nhan_cua_loi_goi(c)}
     khoi = _khoi_cua_loi_goi(calls)
     for start, end in sorted(questions):
@@ -1305,22 +1307,27 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         markers = [start + m.end() for m in dan]
         stops = sorted({a for a, _b in phrases} | {m.start() for m in request_verb.finditer(de, start, end)} | {end})
         fragments = [(start + m.start(), a, next(p for p in stops if p >= a)) for m, a in zip(dan, markers)]
-        if not phrases and not request_verb.search(de, start, end) and (start, end) not in construction_contexts and not fragments:
-            fragments.append((start, start, end))
         first = min(stops)
         prefix = de[start:first]
         gd = _GIAN_DAN.match(de, start, first)
         a0 = gd.end() if gd else start
+        is_note = bool(_GHI_CHU.fullmatch(de, a0, end)
+                       and not re.search(r"(?<![a-zA-Z\^])\d+(?![\d\s]*chữ số)", de[a0:end], re.I))
+        if (not is_note and not phrases and not request_verb.search(de, start, end)
+                and (start, end) not in construction_contexts and not fragments):
+            fragments.append((start, start, end))
         muc_spans = _doc_muc_tieu_cau_hoi(de, a0, first, dung)
         for x, y in muc_spans:
             for d in _DO_DAI_CUC_BO.finditer(de, x, y):
+                if not _DUOI_BANG.match(de[d.end():]):
+                    continue
                 v = _doc(d)
                 for seg in [p for _x, _y, parts in _tu_nhan(de[d.start():d.start("number")]) for p in parts if len(p) == 2]:
                     if v is not None and (cand := _nguon_do_dai_cuc_bo(calls, seg)) and all(w != v for w, _i in cand):
                         raise TuChoi("INCONSISTENT_FACTS", "điều phải chứng minh nêu một độ dài khác giá trị đã xác thực")
         phep_dung_spans = _doc_phep_dung_cau_hoi(de, start, end, calls, dung, khoi, phu)
         discourse = (_GIUA_HOP_LE.fullmatch(prefix) or re.fullmatch(r"\s*khi đó\s*,?\s*", prefix, re.I) or bool(muc_spans))
-        if start < first < end and not markers and not discourse and _tu_nhan(prefix):
+        if not is_note and start < first < end and not markers and not discourse and _tu_nhan(prefix):
             fragments.append((start, start, first))
         # Sentence-level reading (run `shared-ask-grammar-safety`): in a sentence that asks an object, every word must be
         # read by something — the asked phrase with its governing verb and closed tail, a covered given fragment, a
@@ -1333,7 +1340,10 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
 
         if gd:
             doc(start, a0)
-        if _GHI_CHU.fullmatch(de, a0, end) and not re.search(r"\d+(?![\d\s]*chữ số)", de[a0:end], re.I):
+        if is_note:
+            if not _kiem_ghi_chu(de[a0:end], calls, don_vi_de):
+                raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
+                             "ghi chú về kết quả/đơn vị không khớp chính sách đơn vị hoặc làm tròn")
             doc(a0, end)
         for a, b in phrases:
             doc(*_vung_hoi(de, a, b))
@@ -1362,6 +1372,9 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
             if not de[a:b].strip(" ,;:.?!"):
                 continue
             remaining, _found = cover(a, b)
+            if any(c.spec.kind == "ask" for c in calls) and re.search(_LAM_TRON, remaining, re.IGNORECASE):
+                raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
+                             "yêu cầu làm tròn kết quả chưa được hỗ trợ; hệ thống chỉ trả biểu thức chính xác")
             if m.group().lower() == "bằng cách":
                 ok = _PHUONG_PHAP.fullmatch(remaining)
             elif _MO_MUC_TIEU.match(de, a, b):
@@ -1416,7 +1429,7 @@ _GIAN_DAN = re.compile(r"\s*(?:(?:bài tập|bài|câu|ví dụ)\s*(?:\d+|[a-d])
 #: matches a validated call (`_vai_tro_doi_tuong_khop`) — "đường cao SB" is a claim, not a name.
 _DANH_TU_TRUNG_TINH = r"mặt phẳng|đường thẳng|đoạn thẳng|đoạn|cạnh|mặt|điểm|độ dài|hình chóp|khối chóp"
 _DANH_TU_VAI_TRO = r"cạnh bên|cạnh đáy|mặt đáy|mặt bên|đáy|chiều cao|đường cao|đỉnh"
-_TEN_DOI_TUONG = re.compile(rf"(?<![\w'])(?P<danh>(?:(?:{_DANH_TU_VAI_TRO}|{_DANH_TU_TRUNG_TINH})\s+)*)"
+_TEN_DOI_TUONG = re.compile(rf"(?:(?<![\w'])|(?<=Δ))(?P<danh>(?:(?:{_DANH_TU_VAI_TRO}|{_DANH_TU_TRUNG_TINH})\s+)*)"
                             rf"\(?(?P<nhan>(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?)\)?(?![\w'])", re.IGNORECASE)
 
 
@@ -1471,13 +1484,19 @@ def _tam_day(day: list[str], calls: tuple[LoiGoi, ...]) -> set[str]:
 
 
 #: A note is a premise segment made ONLY of these words (instructions about the answer, never about the figure); closed.
-_GHI_CHU = re.compile(r"[\s,;:.()!\-–]*(?:(?:lưu ý|chú ý|ghi chú|gợi ý|hãy|trình bày|giải|làm tròn|làm|viết|ghi|nêu|lời giải"
-                      r"|bài toán|kết quả|đáp số|ngắn gọn|đầy đủ|chi tiết|rõ ràng|để|ở|dưới|dạng|căn thức|phân số"
-                      r"|số thập phân|thập phân|đến|hàng|phần|mười|trăm|nghìn|chữ số|sau|dấu phẩy|đơn vị|độ dài|là|cm|dm|mm|m|đvđd"
-                      r"|vẽ hình|minh hoạ|minh họa|\d+)(?!\w)[\s,;:.()!\-–]*)*", re.IGNORECASE)
+_GHI_CHU = re.compile(
+    r"[\s,;:.()!\-–]*(?:(?:lưu ý|chú ý|ghi chú|gợi ý|hãy|trình bày|giải|làm tròn|làm|viết|ghi|nêu|lời giải"
+    r"|bài toán|kết quả|đáp số|ngắn gọn|đầy đủ|chi tiết|rõ ràng|để|ở|dưới|dạng|căn thức|phân số"
+    r"|số thập phân|thập phân|đến|hàng|phần|mười|trăm|nghìn|chữ số|sau|dấu phẩy|là|của|theo"
+    r"|tính\s+theo\s+đơn\s+vị|đơn\s+vị(?:\s+(?:độ dài|diện tích|thể tích|góc))?"
+    r"|(?:cm|dm|mm|(?-i:m))(?:2|\^2|²|3|\^3|³)?|đvđd|đvdt|đvtt|độ|radian"
+    r"|vẽ hình|minh hoạ|minh họa|\d+)(?!\w)[\s,;:.()!\-–]*)*",
+    re.IGNORECASE,
+)
 
 
-def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes: tuple[str, ...] = ()) -> None:
+def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes: tuple[str, ...] = (),
+                       don_vi_de: set[str] | None = None) -> None:
     """Premise source coverage over `de[:het]` (the text before the first request), one obligation per sentence / ";"
     clause. Outside sentence-local quotes of validated calls, only closed connectors and names of objects the calls use
     may remain (a note made only of closed note words and exam scaffolding are exempt); a goal clause is exempt up to
@@ -1488,6 +1507,8 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
     quote of another call is not detected. Reuses the gate's readers; no second fact state — only refuses."""
     if het <= 0:
         return
+    if don_vi_de is None:
+        don_vi_de = _don_vi_met_cua_de(de)
     phu = [False] * het                                  # covered by a validated call
     doc = [False] * het                                  # read by the gate as a goal / negated clause
     rang: list[tuple[int, int, tuple, tuple[int, str]]] = []  # range, value, owning call field
@@ -1527,13 +1548,18 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             continue
         gd = _GIAN_DAN.match(de, a, b)
         a0 = gd.end() if gd else a
-        if _GHI_CHU.fullmatch(de, a0, b) and not re.search(r"\d+(?![\d\s]*chữ số)", de[a0:b], re.I):
-            continue                                     # a note in closed words only (a number only as "N chữ số")
+        if _GHI_CHU.fullmatch(de, a0, b) and not re.search(r"(?<![a-zA-Z\^])\d+(?![\d\s]*chữ số)", de[a0:b], re.I):
+            if not _kiem_ghi_chu(de[a0:b], calls, don_vi_de):
+                raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
+                             "ghi chú về kết quả/đơn vị không khớp chính sách đơn vị hoặc làm tròn")
+            continue                                     # a validated note in closed words only
         if _mo_muc_tieu(de, a0, b):
             # a goal is something to show, never a hypothesis — up to the first given / condition marker or clause
             # boundary not opening a chained goal; a length it states may not contradict a validated value ("Suy ra SA = 5")
             k = _ket_muc_tieu(de, a0, b)
             for d in _DO_DAI_CUC_BO.finditer(de, a0, b if k is None else k):
+                if not _DUOI_BANG.match(de[d.end():]):
+                    continue
                 v = _doc(d)
                 for seg in [p for _x, _y, parts in _tu_nhan(de[d.start():d.start("number")]) for p in parts if len(p) == 2]:
                     if v is not None and (cand := _nguon_do_dai_cuc_bo(calls, seg)) and all(w != v for w, _i in cand):
@@ -1797,7 +1823,7 @@ _SAU_HOP_LE = re.compile(
     r"(?:[\s,;:]+|(?:và|cùng)(?!\w)|(?:có\s+)?(?:độ dài\s+)?(?:bằng|là)\s+bao\s+nhiêu|dài\s+bao\s+nhiêu|bao\s+nhiêu"
     r"|(?:bằng|là)\s*[?:]"                                                     # đề trắc nghiệm "… bằng?"
     # ngoặc chỉ là LỜI DẶN (làm tròn, đơn vị) — "(sau khi cắt bỏ …)" / "(tính theo đơn vị mới …)" không lọt (review S1)
-    rf"|theo\s+(?:[a-z](?![\w'])|độ|radian|đơn vị(?:\s+{_LOAI_DON_VI})?\s+{_DON_VI}(?![\w']))|{_GHI_CHU_NGOAC}|{_LAM_TRON}(?![\w'])"
+    rf"|theo\s+(?:{_DON_VI}(?![\w'])|[a-z](?![\w'])|đơn vị(?:\s+{_LOAI_DON_VI})?\s+{_DON_VI}(?![\w']))|{_GHI_CHU_NGOAC}|{_LAM_TRON}(?![\w'])"
     r"|(?:đã cho|đó|này|trên)(?!\w)"
     r"|của\s+(?:hình|khối)\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện)(?:\s+(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?)?)*"
     # kết: dấu câu THẬT (sau nó là khoảng trắng / hết đề — "SC.SA" không kết), dữ kiện, việc kế tiếp, lời dặn làm tròn
@@ -1823,7 +1849,7 @@ _LOAI_DON_VI_MAP = {
 }
 _DON_VI_MET_GIVEN_RE = re.compile(
     rf"(?:{_SO.pattern}\s*(?:\(\s*(?:đơn vị(?:\s+độ dài)?\s*:?\s*)?)?(?P<u1>{_DON_VI_MET})"
-    rf"|đơn vị(?:\s+độ dài)?\s+là\s+(?P<u2>{_DON_VI_MET}))(?![\w'²³23^])",
+    rf"|đơn vị\s+độ dài\s+là\s+(?P<u2>{_DON_VI_MET}))(?![\w'²³23^])",
     re.IGNORECASE,
 )
 
@@ -1831,6 +1857,12 @@ _DON_VI_MET_GIVEN_RE = re.compile(
 def _don_vi_met_cua_de(de: str) -> set[str]:
     """Explicit metric length base scales (`cm`, `dm`, `mm`, `m`) stated on given quantities in `de`."""
     return {(m["u1"] or m["u2"]).lower() for m in _DON_VI_MET_GIVEN_RE.finditer(de)}
+
+
+def _co_tham_so_a(calls: tuple[LoiGoi, ...]) -> bool:
+    """True when all value-carrying calls declare symbolic parameter `a` (same authority as `engine._don_vi`)."""
+    co_a = [doc_so(v)[1] for c in calls for f in c.spec.value_fields if (v := getattr(c.args, f, None)) is not None]
+    return bool(co_a) and all(co_a)
 
 
 def _phan_loai_don_vi(u: str) -> tuple[str, str | None]:
@@ -1853,8 +1885,43 @@ def _phan_loai_don_vi(u: str) -> tuple[str, str | None]:
     return "length", m[1]
 
 
-def _kiem_don_vi_hoi(fn: str, de: str, a: int, b: int, don_vi_de: set[str]) -> bool:
-    """Validate unit annotations in the closed tail of asked object `de[a:b]` against `fn`'s dimension and `don_vi_de`."""
+def _kiem_ghi_chu(note: str, calls: tuple[LoiGoi, ...], don_vi_de: set[str]) -> bool:
+    """Validate a note sentence matched by `_GHI_CHU` against unit-consistency and rounding policies."""
+    ask_calls = [c for c in calls if c.spec.kind == "ask"]
+    if ask_calls and re.search(r"(?<!\w)(?:làm\s+tròn|thập\s+phân|chữ\s+số|dấu\s+phẩy)(?!\w)", note, re.IGNORECASE):
+        return False
+    if not re.search(rf"(?<![\w'])(?:đơn\s+vị|{_LOAI_DON_VI}|{_DON_VI})(?![\w'²³23^])", note, re.IGNORECASE):
+        return True
+    m_scale = re.fullmatch(
+        rf"[\s,;:.()!\-–]*(?:(?:lưu ý|chú ý|ghi chú)\s*[:,-]?\s*)?đơn\s+vị\s+độ\s+dài\s+là\s+(?P<u>{_DON_VI_MET})[\s,;:.()!\-–]*",
+        note,
+        re.IGNORECASE,
+    )
+    if m_scale:
+        return not bool(don_vi_de - {m_scale["u"].lower()})
+    if not ask_calls or not re.search(r"(?<![\w'])đơn\s+vị(?![\w'])", note, re.IGNORECASE):
+        return False
+    dims = {_CHIEU_HAM_HOI.get(c.fn) for c in ask_calls}
+    if len(dims) != 1:
+        return False
+    chieu = next(iter(dims))
+    if chieu not in ("length", "area", "volume"):
+        return False
+    kinds = [_LOAI_DON_VI_MAP[re.sub(r"\s+", " ", m.group().lower())] for m in re.finditer(_LOAI_DON_VI, note, re.IGNORECASE)]
+    units = [_phan_loai_don_vi(m.group()) for m in re.finditer(rf"(?<![\w']){_DON_VI}(?![\w'²³23^])", note, re.IGNORECASE)]
+    if not (kinds or units):
+        return False
+    if any(k != chieu for k in kinds):
+        return False
+    for dim, base in units:
+        if dim != chieu or (base is not None and don_vi_de != {base}):
+            return False
+    return True
+
+
+def _kiem_don_vi_hoi(fn: str, de: str, a: int, b: int, don_vi_de: set[str],
+                     calls: tuple[LoiGoi, ...] = ()) -> bool:
+    """Validate unit, parameter, and formatting annotations in the closed tail of asked object `de[a:b]`."""
     chieu = _CHIEU_HAM_HOI.get(fn)
     vung = _vung_hoi(de, a, b)
     if chieu is None or vung is None:
@@ -1865,29 +1932,44 @@ def _kiem_don_vi_hoi(fn: str, de: str, a: int, b: int, don_vi_de: set[str]) -> b
     other = sorted((m.start(), m.end()) for mau in patterns for m in mau.finditer(duoi_raw) if m.end() > m.start())
     before_next = duoi_raw[:other[0][0]] if other else duoi_raw
     after_last = duoi_raw[max(y for _x, y in other):] if other else ""
-    has_unit_re = re.compile(rf"theo\s+(?:độ|radian|đơn vị\b)|\(\s*(?:[^()]*\bđơn vị\b|[^()]*\b{_DON_VI}(?![\w']))", re.IGNORECASE)
+    has_unit_re = re.compile(
+        rf"theo\s+(?:{_DON_VI}|[a-z]|đơn vị)\b|{_LAM_TRON}|\(\s*(?:[^()]*\bđơn vị\b|[^()]*\b{_DON_VI}(?![\w']))",
+        re.IGNORECASE,
+    )
     seg = before_next if (not other or has_unit_re.search(before_next)) else after_last
+    if re.search(_LAM_TRON, seg, re.IGNORECASE):
+        return False
     bases: set[str] = set()
-    for m in re.finditer(rf"theo\s+(?:(?P<ang>độ|radian)|đơn vị(?:\s+(?P<kind>{_LOAI_DON_VI}))?\s+(?P<u>{_DON_VI}))(?![\w'])",
-                         seg, re.IGNORECASE):
-        if m["ang"]:
-            if chieu != "angle":
+    for m in re.finditer(
+        rf"theo\s+(?:đơn vị(?:\s+(?P<kind>{_LOAI_DON_VI}))?\s+(?P<u>{_DON_VI})|(?P<ub>{_DON_VI})|(?P<sym>[a-z]))(?![\w'])",
+        seg,
+        re.IGNORECASE,
+    ):
+        if m["u"]:
+            if m["kind"] and _LOAI_DON_VI_MAP.get(re.sub(r"\s+", " ", m["kind"].lower())) != chieu:
                 return False
-            continue
-        if m["kind"] and _LOAI_DON_VI_MAP.get(re.sub(r"\s+", " ", m["kind"].lower())) != chieu:
-            return False
-        dim, base = _phan_loai_don_vi(m["u"])
-        if dim != chieu or (base and (don_vi_de - {base})):
-            return False
-        if base:
+            dim, base = _phan_loai_don_vi(m["u"])
+            if dim == "angle" or dim != chieu or (base and (don_vi_de - {base})):
+                return False
+            if base:
+                bases.add(base)
+        elif m["ub"]:
+            dim, base = _phan_loai_don_vi(m["ub"])
+            if dim == "angle" or dim != chieu or not (base and don_vi_de == {base}):
+                return False
             bases.add(base)
+        elif m["sym"]:
+            if m["sym"].lower() != "a" or not _co_tham_so_a(calls) or chieu not in ("length", "area", "volume"):
+                return False
     for ngoac in re.finditer(r"\(([^()]*)\)", seg):
         for muc in re.split(r"\s*(?:;|,(?!\d))\s*", ngoac[1].strip()):
-            if not muc or re.fullmatch(_LAM_TRON, muc, re.IGNORECASE):
+            if not muc:
                 continue
+            if re.fullmatch(_LAM_TRON, muc, re.IGNORECASE):
+                return False
             mm = re.fullmatch(rf"đơn vị(?:\s+(?P<kind>{_LOAI_DON_VI}))?(?:\s*:?\s*(?P<u>{_DON_VI}))?|(?P<ub>{_DON_VI})",
                               muc, re.IGNORECASE)
-            if not mm:
+            if not mm or chieu == "angle":
                 return False
             if mm["kind"]:
                 if _LOAI_DON_VI_MAP.get(re.sub(r"\s+", " ", mm["kind"].lower())) != chieu:
@@ -1897,7 +1979,7 @@ def _kiem_don_vi_hoi(fn: str, de: str, a: int, b: int, don_vi_de: set[str]) -> b
                     return False
             if tok := (mm["u"] or mm["ub"]):
                 dim, base = _phan_loai_don_vi(tok)
-                if dim != chieu or (base and (don_vi_de - {base})):
+                if dim == "angle" or dim != chieu or (base and (don_vi_de - {base})):
                     return False
                 if base:
                     bases.add(base)
@@ -1905,16 +1987,18 @@ def _kiem_don_vi_hoi(fn: str, de: str, a: int, b: int, don_vi_de: set[str]) -> b
 
 
 _THAN_MUC_TIEU_CON = re.compile(
-    rf"[\s,.:()⊥∥=<>≥≤]*(?:(?:rằng|là|vuông góc|song song|cắt|trùng|thuộc|nằm trên|đi qua|cách đều|đồng phẳng|chéo nhau"
+    rf"[\s,.:()⊥∥=<>≥≤Δ]*(?:(?:rằng|là|vuông góc|song song|cắt|trùng|thuộc|nằm trên|đi qua|cách đều|đồng phẳng|chéo nhau"
+    rf"|nhau|(?:một|hai|ba|bốn|\d+)\s+cách|(?:(?:một|hai|ba|bốn|năm|sáu|\d+)\s+)?lần|gấp\s+(?:đôi|ba)|một\s+nửa|nửa"
     rf"|cân|đều|vuông|nhọn|tù|tại|với|và|hoặc|của|hai|các|mặt phẳng|mp|đường thẳng|đoạn thẳng|tam giác|tứ giác"
     rf"|hình|khối|chóp|lăng trụ|lập phương|hộp|tứ diện|đáy|cạnh|bên|độ dài|khoảng cách|diện tích|thể tích|góc"
-    rf"|bằng|lớn hơn|nhỏ hơn|bé hơn|{_SO.pattern})(?![\w'])[\s,.:()⊥∥=<>≥≤]*)*",
+    rf"|bằng|lớn hơn|nhỏ hơn|bé hơn|{_SO.pattern})(?![\w'])[\s,.:()⊥∥=<>≥≤Δ]*)*",
     re.IGNORECASE,
 )
 
 
 def _than_muc_tieu_hop_le(body: str, dung: set[str]) -> bool:
     """Closed geometric goal body: must name at least one geometric object and contain only geometric relations/connectors."""
+    body = body.replace("Δ", " ")
     if not (_tu_nhan(body) or _bo_cum(body) != body):
         return False
     con = list(_bo_cum(body))
@@ -1941,9 +2025,14 @@ def _doc_muc_tieu_cau_hoi(de: str, a: int, b: int, dung: set[str]) -> list[tuple
         if not _than_muc_tieu_hop_le(de[cur:end_clause], dung):
             return spans
         spans.append((cur_start, end_clause))
-        if not k or not (mo_next := _mo_muc_tieu(de, k.start(), b)):
+        if not k:
             return spans
-        cur_start, cur = k.start(), mo_next.end()
+        if mo_next := _mo_muc_tieu(de, k.start(), b):
+            cur_start, cur = k.start(), mo_next.end()
+        elif k.group() == ",":
+            cur_start, cur = k.start(), k.end()
+        else:
+            return spans
 
 
 _CUM_DINH_NGHIA_DIEM = re.compile(
@@ -2126,7 +2215,7 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
                  and _hoi_dung_cum(de, a, b_obj) and _vai_tro_tai(de, a) not in ("GOAL", "CONDITIONAL")]
         if not hoi_p:
             return False
-        if not all(_kiem_don_vi_hoi("ask_section_area", de, a, b_obj, don_vi_de) for a, b_obj in hoi_p):
+        if not all(_kiem_don_vi_hoi("ask_section_area", de, a, b_obj, don_vi_de, calls) for a, b_obj in hoi_p):
             raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                          f"{c.id}: đơn vị yêu cầu trong câu hỏi không khớp chính sách đơn vị của dữ kiện hoặc loại đại lượng",
                          (c.id,))
@@ -2259,7 +2348,7 @@ def _mat_hai_duong_dung_nguon(c: LoiGoi, point: str, lines: list[list[str]], nam
                 if not de[m.end():tail.start() if tail else len(de)].strip() or asked:
                     request_ok = True
             elif asked and ask_m:
-                if not _kiem_don_vi_hoi("ask_section_area", de, ask_m.start(), ask_m.end(), don_vi_de):
+                if not _kiem_don_vi_hoi("ask_section_area", de, ask_m.start(), ask_m.end(), don_vi_de, calls):
                     raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                                  f"{c.id}: đơn vị yêu cầu trong câu hỏi không khớp chính sách đơn vị của dữ kiện hoặc loại đại lượng",
                                  (c.id,))

@@ -92,7 +92,6 @@ def test_construction_follow_up_change_is_refused(arm, sentence):
     "Tính SC rồi so sánh với SB.",
     "Tính SC, sau đó chứng minh SC vuông góc với BD.",
     "Tính SC, từ đó suy ra SC lớn hơn SA.",
-    "Tính SC rồi làm tròn kết quả.",
     "Tính SC, sau đó tính SB.",
     "Tính SC, rồi tính SB, biết SA = 3.",
     "Tính SC, tiếp theo tính SB.",
@@ -103,6 +102,13 @@ def test_multi_step_requests_without_a_change_stay_served(arm, sentence):
     r = run(sentence, arm)
     assert r.status == "SERVED", (r.status, r.code, r.reason)
     assert HB.answer_square(r.answers["q"]) == 17
+
+
+@pytest.mark.parametrize("arm", ARMS)
+def test_follow_up_rounding_request_is_refused_by_formatting_policy(arm):
+    # Policy override (run `shared-ask-grammar-safety`, §6): rounding requests on quantitative asks fail closed.
+    r = run("Tính SC rồi làm tròn kết quả.", arm)
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (r.status, r.code, r.reason)
 
 
 @pytest.mark.parametrize("arm", ARMS)

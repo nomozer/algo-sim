@@ -109,7 +109,6 @@ ASKED = [
     ("Tính thể tích của khối chóp S.ABCD.", VOL, False, F(16)),
     ("Tính thể tích khối chóp.", VOL, False, F(16)),
     ("Thể tích khối chóp S.ABCD bằng bao nhiêu?", VOL, False, F(16)),
-    ("Tính thể tích khối chóp S.ABCD theo a.", VOL, False, F(16)),
     ("Tính độ dài SC.", LEN, False, F(17)),
     ("Tính SC.", LEN, False, F(17)),
     ("Tính độ dài đoạn thẳng SC.", LEN, False, F(17)),
@@ -244,12 +243,9 @@ REVIEW_ASKED = [
     ("Tính độ dài các cạnh SB, SC.", LEN, False, F(17)),
     ("Tính độ dài các cạnh bên SB, SC, SD.", LEN, False, F(17)),
     ("Tính độ dài cạnh bên SC của hình chóp.", LEN, False, F(17)),
-    ("Tính SC, làm tròn kết quả đến hàng phần trăm.", LEN, False, F(17)),
-    ("Tính thể tích khối chóp S.ABCD, kết quả làm tròn đến hàng phần mười.", VOL, False, F(16)),
     ("Tính khoảng cách từ S đến (ABCD), từ đó suy ra thể tích khối chóp.", DPP, False, F(9)),
     ("Tính diện tích đáy ABCD.", lambda s: AREA(s, "ABCD"), False, F(16)),
     ("Tính diện tích ΔSAC.", lambda s: AREA(s, "SAC"), False, F(18)),
-    ("Tính góc giữa hai mặt phẳng (SBC) và (ABCD) theo độ.", ANGPP, False, None),
     ("Tính SC theo đơn vị cm.", LEN, False, F(17)),
     ("Tính: SC.", LEN, False, F(17)),
     ("Thể tích khối chóp S.ABCD bằng?", VOL, False, F(16)),
@@ -258,7 +254,6 @@ REVIEW_ASKED = [
     ("Tính diện tích thiết diện do mặt phẳng (MAB) cắt hình chóp S.ABCD.", SAREA_PL, True, F(117, 16)),
     ("Mặt phẳng (MAB) cắt hình chóp S.ABCD theo một thiết diện. Tính diện tích thiết diện đó.", SAREA_PL, True, F(117, 16)),
     ("Tính thể tích khối chóp S.ABCD bằng cách dùng công thức V = Bh/3.", VOL, False, F(16)),
-    ("Tính SC (làm tròn đến hàng phần trăm).", LEN, False, F(17)),
 ]
 
 
@@ -268,6 +263,25 @@ def test_review_common_wordings_are_served(sentence, qf, mid, sq):
     assert r.status == "SERVED", (r.code, r.reason, sentence)
     if sq is not None:
         assert HB.answer_square(r.answers["q"]) == sq, r.answers
+
+
+# Policy override (run `shared-ask-grammar-safety`, closing review of 4acfc731, CR-2 & §6):
+# - `theo a` requires `a` to be declared in the problem givens (`_co_tham_so_a(calls)`); on numeric `HB._square()` it is refused.
+# - Requests for decimal rounding or angle representation in degrees/radians fail closed (`QUESTION_CONTEXT_UNSUPPORTED`)
+#   because the deterministic engine only returns exact radical/rational expressions and `cos²=...` for angles.
+POLICY_OVERRIDE_REFUSED = [
+    ("Tính thể tích khối chóp S.ABCD theo a.", VOL, False),
+    ("Tính SC, làm tròn kết quả đến hàng phần trăm.", LEN, False),
+    ("Tính thể tích khối chóp S.ABCD, kết quả làm tròn đến hàng phần mười.", VOL, False),
+    ("Tính góc giữa hai mặt phẳng (SBC) và (ABCD) theo độ.", ANGPP, False),
+    ("Tính SC (làm tròn đến hàng phần trăm).", LEN, False),
+]
+
+
+@pytest.mark.parametrize("sentence,qf,mid", POLICY_OVERRIDE_REFUSED, ids=[s for s, *_r in POLICY_OVERRIDE_REFUSED])
+def test_policy_override_undeclared_parameter_or_unsupported_format_is_refused(sentence, qf, mid):
+    r = _run(sentence, qf, mid)
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (r.status, r.code, r.answers, sentence)
 
 
 REVIEW_REFUSED = [
