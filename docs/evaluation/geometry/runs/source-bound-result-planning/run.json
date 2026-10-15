@@ -1,0 +1,41 @@
+{
+  "schema": "RUN/1",
+  "run_id": "source-bound-result-planning",
+  "wave": "source-bound-result-planning",
+  "date": "2026-10-15",
+  "environment": "LOCAL Windows 11, Python 3.12, Node, Chromium (SwiftShader, Intel UHD D3D11)",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "status": "LOCAL_RESEARCH_SLICE_VERIFIED_NO_PUSH",
+  "branch": "research/source-bound-result-planning",
+  "base_commit": "19140e2f",
+  "main_before": "2a3c0787",
+  "main_after": "2a3c0787",
+  "push": "NONE",
+  "preregistration": "docs/evaluation/geometry/runs/goal-directed-planner-generalization-audit/next-slice-preregistration.md",
+  "corpus": "docs/evaluation/geometry/runs/goal-directed-planner-generalization-audit/next-slice-corpus.json",
+  "commits": {
+    "red_baseline": "de5ea1a7",
+    "initial_implementation": "fb7024ac",
+    "product_final": "b8112f35"
+  },
+  "product_commit": "b8112f35",
+  "candidate": {
+    "tree_hash": "92bd1a6bcf736ac2e70a3b6687abb482a7170a60fd8b2773173ee99dee16a3b0",
+    "files": 110,
+    "divergence": "inputs/candidate_divergence.json"
+  },
+  "cache_version": 125,
+  "cache_decision": "cache/decision.json",
+  "default": "LLM_ONLY",
+  "live_calls": 0,
+  "Hybrid_product_enablement": "NO-GO (unchanged)",
+  "results": {
+    "red": "red.json — 18/18 SCHEMA_INVALID at de5ea1a7",
+    "locked_corpus": "visual/corpus-results.json — 6/6 positive SERVED, 12/12 negative REFUSED, 64/64 tests in test_result_binding_planning.py PASS",
+    "invariance": "verification/two-line-development (12/33), verification/two-line-heldout (11/21), verification/benchmark-30 (19/9/0/2) unchanged",
+    "browser": "visual/{swiftshader,gpu}/receipt.json — PASS_CORE_CAUSAL_RENDERING, 4 scenes, 0 errors; image-policy.json records 14 kept + 88 pruned SHA-256 hashes",
+    "t3": "NOT_RUN_DETACHED — focused geometry cluster (872 passed, 5 xfailed), docs/identity/candidate (123 passed), frontend Vitest (1055 passed / 68 files), and Vite build PASS"
+  },
+  "report": "report.md",
+  "handoff": "handoff.md"
+}

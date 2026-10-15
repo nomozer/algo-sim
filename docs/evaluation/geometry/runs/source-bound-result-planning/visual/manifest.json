@@ -1,0 +1,8 @@
+{
+  "input_sha256": "6587fabf084029bf7aa787df291b27bbf83fde95212ca9a8f1bd4c4ce9cbda84",
+  "measurement": "OFFLINE_REAL_FACT_ROUTE; development, NOT_HELD_OUT; no direct-IR shortcut",
+  "live_calls": 0,
+  "positive": 6,
+  "negative": 12,
+  "exported_scenes": 4
+}

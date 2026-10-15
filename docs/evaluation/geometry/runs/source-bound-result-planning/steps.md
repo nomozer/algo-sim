@@ -1,0 +1,9 @@
+# Steps — `source-bound-result-planning`
+
+1. Read `AGENTS.md`, `CLAUDE.md`, `docs/RULES.md`, `docs/AI_CONTEXT_BUNDLE.md`, `docs/CURRENT_STATE.md`, `docs/OPEN_ISSUES.md`, `docs/ROADMAP.md`, `docs/CODE_INDEX.md`, `docs/EVIDENCE_INDEX.md`, and `goal-directed-planner-generalization-audit/{next-slice-preregistration.md,next-slice-corpus.json,report.md,handoff.md}`.
+2. Verified clean baseline (`19140e2f`) and created branch `research/source-bound-result-planning`.
+3. Captured RED baseline (`de5ea1a7`, `red.json`): 18/18 locked corpus cases failed with `SCHEMA_INVALID`.
+4. Implemented `TypedFact.line_ref`, `ProjectionLineArgs.line_ref`, `PlanningTerm`/`PlanningContract` on `REGISTRY`, bounded `_EffectResolver` in `planner.py`, `_kiem_result_binding` in `registry.py`, and `_Dung.lines` / `_emit_intersection` in `engine.py` (`fb7024ac`).
+5. Completed working-tree refinements (`b8112f35`): coalesced equivalent `intersection_line` producers (`result-line-alias`), memoized repeated goals, deduplicated identical explicit `projection` calls, enforced 3 distinct labels per plane before `frozenset`, and added `export_result_binding_scenes.py` + `result-binding-visual-check.mjs` + `hybrid-section-visual.tsx` (`src=result-binding`).
+6. Exported 18 real-route outcomes and 4 browser fixtures (`visual/{scenes.json,corpus-results.json,manifest.json}`) and ran Playwright visual checks on SwiftShader and Intel UHD D3D11 GPU (`visual/{swiftshader,gpu}/receipt.json` — `PASS_CORE_CAUSAL_RENDERING`, 0 errors; `visual/image-policy.json`).
+7. Froze evaluation candidate (`92bd1a6bcf736ac2…`, 110 files), extended `inputs/candidate_divergence.json`, recorded `cache/decision.json`, reran invariance checks (`verification/two-line-development`, `verification/two-line-heldout`, `verification/benchmark-30`), and updated living docs.

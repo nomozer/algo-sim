@@ -1,5 +1,18 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SOURCE_BOUND_RESULT_PLANNING
+
+REPORT = docs/evaluation/geometry/runs/source-bound-result-planning/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-bound-result-planning/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = LOCAL_RESEARCH_SLICE_VERIFIED_NO_PUSH
+CODE_COMMIT = b8112f35
+VERIFICATION_COMMIT = b8112f35
+MODEL_REQUEST_COUNT = 0
+
+Source-bound result binding (`line_ref`) and bounded effect-driven point–line distance planning over `REGISTRY` effects (`PlanningContract` on `intersection_line`, `orthogonal_projection_line`, `ask_length`). RED `de5ea1a7` 18/18 `SCHEMA_INVALID` → GREEN 6/6 positive `SERVED`, 12/12 negative `REFUSED` (`test_result_binding_planning.py` 64 passed). Browser harness (`visual/{swiftshader,gpu}/receipt.json`) 4 scenes `PASS_CORE_CAUSAL_RENDERING`, 0 errors. Historical two-line 45/32 and benchmark 30 invariant. Candidate `92bd1a6bcf736ac2…` (110 files). Detached T3 not run.
+
 ## WAVE_ID = GOAL_DIRECTED_PLANNER_GENERALIZATION_AUDIT
 
 REPORT = docs/evaluation/geometry/runs/goal-directed-planner-generalization-audit/report.md

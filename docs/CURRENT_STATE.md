@@ -1,5 +1,11 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL — Source-bound result binding & bounded effect planning, 2026-10-15
+
+CANONICAL_NEXT_ACTION = GOAL_DIRECTED_RESULT_BINDING_SLICE_IMPLEMENTATION_DECISION
+
+Research branch `research/source-bound-result-planning` from `19140e2f` (`main`/`origin/main` remain `2a3c0787`; no merge/push). Product `b8112f35`, candidate `92bd1a6bcf736ac2e70a3b6687abb482a7170a60fd8b2773173ee99dee16a3b0` (110 files), `CACHE_VERSION = 125`, `DEFAULT_MODE = LLM_ONLY`, Hybrid off, `LIVE_GEMINI_REQUESTS = 0`. Implements preregistered `line_ref` transport, `PlanningContract` effects on `intersection_line` / `orthogonal_projection_line` / `ask_length`, bounded `_EffectResolver` (`MAX_EFFECT_DEPTH = 3`, `MAX_EFFECT_NEEDS = 32`, `MAX_EFFECT_CANDIDATES = 8`, `MAX_RESULT_LINES = 4`, `MAX_RESULT_FEET = 8`), `_kiem_result_binding` source certificate verification, and Engine/IR line result binding (`_Dung.lines`, `_emit_intersection`). Locked development corpus (`NOT_HELD_OUT`): RED `de5ea1a7` 18/18 `SCHEMA_INVALID` → GREEN 6/6 positive `SERVED`, 12/12 negative `REFUSED` (`test_result_binding_planning.py` 64 passed). Historical two-line (45 dev / 32 heldout) and benchmark 30 (19/9/0/2) invariant; focused geometry cluster 872 passed / 5 xfailed; frontend Vitest 1055 passed (68 files) and Vite build PASS; Playwright Scene3D harness SwiftShader + Intel UHD D3D11 `PASS_CORE_CAUSAL_RENDERING` (4 scenes, 0 errors). Detached worktree T3 not yet run. Receipt: [`source-bound-result-planning`](evaluation/geometry/runs/source-bound-result-planning/report.md).
+
 ## LOCAL — Planner generalization audit/design, 2026-10-14
 
 CANONICAL_NEXT_ACTION = GOAL_DIRECTED_RESULT_BINDING_SLICE_IMPLEMENTATION_DECISION

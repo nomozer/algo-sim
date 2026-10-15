@@ -1,0 +1,7 @@
+{
+  "cache_version": 125,
+  "decision": "UNCHANGED",
+  "reason": "Changed modules (geometry_functions/{engine,planner,registry}.py, ai/{fact_extraction,function_route}.py) are reachable only from the research Hybrid route; /api/analyze and pipeline.py do not import them (verified by test_structured_geometry_relations.py import-closure lock). Production LLM_ONLY route, prompts, routing policy, schema, shared formation and scene3d are unchanged; no cached payload is produced by this route.",
+  "controls": ["test_structured_geometry_relations.py import-closure lock", "grep of main.py / pipeline.py"],
+  "live_calls": 0
+}

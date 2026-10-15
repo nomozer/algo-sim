@@ -1,0 +1,4109 @@
+[
+  {
+    "id": "derived-line-pyramid",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+      "q": "√110/11"
+    },
+    "kernel_check": true,
+    "functions": [
+      "pyramid",
+      "regular_polygon",
+      "perpendicular_line_plane",
+      "segment_length",
+      "midpoint",
+      "intersection_line",
+      "orthogonal_projection_line",
+      "ask_length"
+    ],
+    "planner": {
+      "version": "geometry-fact-planner/5",
+      "calls": [
+        {
+          "id": "f1",
+          "fn": "pyramid",
+          "args": {
+            "apex": "S",
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f2",
+          "fn": "regular_polygon",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "2"
+          },
+          "source": {
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f3",
+          "fn": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f4",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "source": {
+            "quotes": [
+              "SA = 3."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "fm",
+          "fn": "midpoint",
+          "args": {
+            "point": "M",
+            "segment": [
+              "A",
+              "B"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "g",
+          "fn": "intersection_line",
+          "args": {
+            "plane1": [
+              "S",
+              "A",
+              "C"
+            ],
+            "plane2": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "q_aux",
+          "fn": "orthogonal_projection_line",
+          "args": {
+            "point": "M",
+            "image": "H",
+            "line_ref": "g"
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "g"
+          ]
+        },
+        {
+          "id": "q",
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "M",
+              "H"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "q_aux"
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "fact": "f1",
+          "rule": "solid→pyramid",
+          "fn": "pyramid",
+          "call": "f1"
+        },
+        {
+          "fact": "f2",
+          "rule": "polygon_shape(square)→regular_polygon",
+          "fn": "regular_polygon",
+          "call": "f2"
+        },
+        {
+          "fact": "f3",
+          "rule": "perpendicular(line, plane)",
+          "fn": "perpendicular_line_plane",
+          "call": "f3"
+        },
+        {
+          "fact": "f4",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f4"
+        },
+        {
+          "fact": "fm",
+          "rule": "point_def(midpoint)",
+          "fn": "midpoint",
+          "call": "fm"
+        },
+        {
+          "fact": "g",
+          "rule": "intersection_line(plane, plane)",
+          "fn": "intersection_line",
+          "call": "g"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(Foot)→orthogonal_projection_line",
+          "fn": "orthogonal_projection_line",
+          "call": "q_aux"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(AnswerDistance)→ask_length",
+          "fn": "ask_length",
+          "call": "q"
+        },
+        {
+          "fact": "q",
+          "step": "decompose_goal",
+          "rule": "distance(point,line)",
+          "calls": [
+            "q_aux",
+            "q"
+          ],
+          "auxiliary": "H",
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        },
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1
+        }
+      ],
+      "auxiliary": [
+        {
+          "label": "H",
+          "rule": "distance(point,line)",
+          "goal": "q",
+          "construct": "q_aux",
+          "ask": "q",
+          "point": "M",
+          "line": [],
+          "quotes": [
+            "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY",
+          "line_ref": "g",
+          "fresh": true,
+          "effect_binding": true
+        }
+      ],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "engine_trace": [
+      {
+        "step": "place_point",
+        "object": "A",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "B",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "C",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "D",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "M",
+        "rule": "midpoint",
+        "calls": [
+          "fm"
+        ],
+        "provenance": "DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "S",
+        "rule": "perpendicular_foot_at_A",
+        "calls": [
+          "f3",
+          "f4"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "resolve_line",
+        "object": "gt_g",
+        "producer": "intersection_line",
+        "calls": [
+          "g"
+        ],
+        "dependencies": [
+          "S",
+          "A",
+          "C",
+          "B",
+          "D"
+        ],
+        "provenance": "DERIVED",
+        "relation_verified": true
+      },
+      {
+        "step": "place_point",
+        "object": "H",
+        "rule": "orthogonal_projection_line",
+        "calls": [
+          "q_aux"
+        ],
+        "provenance": "DERIVED",
+        "producer": "orthogonal_projection_line",
+        "dependencies": [
+          "M",
+          "gt_g"
+        ],
+        "relation_verified": true,
+        "result_binding": "g",
+        "binding": "AUXILIARY",
+        "auxiliary_rule": "distance(point,line)",
+        "goal": "q"
+      },
+      {
+        "step": "construct_solid",
+        "object": "S.ABCD",
+        "rule": "pyramid",
+        "calls": [
+          "f1"
+        ],
+        "provenance": "DERIVED"
+      },
+      {
+        "step": "measure",
+        "object": "ask_length",
+        "rule": "ask_length",
+        "calls": [
+          "q"
+        ],
+        "provenance": "DERIVED"
+      }
+    ]
+  },
+  {
+    "id": "derived-line-cuboid",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+      "q": "√5"
+    },
+    "kernel_check": true,
+    "functions": [
+      "prism",
+      "rectangle",
+      "segment_length",
+      "segment_length",
+      "segment_length",
+      "midpoint",
+      "intersection_line",
+      "orthogonal_projection_line",
+      "ask_length"
+    ],
+    "planner": {
+      "version": "geometry-fact-planner/5",
+      "calls": [
+        {
+          "id": "f1",
+          "fn": "prism",
+          "args": {
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "top": [
+              "A'",
+              "B'",
+              "C'",
+              "D'"
+            ],
+            "right": true
+          },
+          "source": {
+            "quotes": [
+              "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f1_day",
+          "fn": "rectangle",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f2",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "value": "2"
+          },
+          "source": {
+            "quotes": [
+              "AB = 2."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f3",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "D"
+            ],
+            "value": "4"
+          },
+          "source": {
+            "quotes": [
+              "AD = 4."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f4",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "A'"
+            ],
+            "value": "3"
+          },
+          "source": {
+            "quotes": [
+              "AA' = 3."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "fm",
+          "fn": "midpoint",
+          "args": {
+            "point": "M",
+            "segment": [
+              "A",
+              "C"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Gọi M là trung điểm AC."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "g",
+          "fn": "intersection_line",
+          "args": {
+            "plane1": [
+              "A",
+              "B",
+              "B'"
+            ],
+            "plane2": [
+              "B",
+              "C",
+              "C'"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tìm giao tuyến của (ABB') và (BCC')."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "q_aux",
+          "fn": "orthogonal_projection_line",
+          "args": {
+            "point": "M",
+            "image": "H",
+            "line_ref": "g"
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC')."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "g"
+          ]
+        },
+        {
+          "id": "q",
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "M",
+              "H"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC')."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "q_aux"
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "fact": "f1",
+          "rule": "solid(cuboid)→prism (right=True)",
+          "fn": "prism",
+          "call": "f1"
+        },
+        {
+          "fact": "f1",
+          "rule": "hình hộp chữ nhật ⇒ đáy hình chữ nhật",
+          "fn": "rectangle",
+          "call": "f1_day"
+        },
+        {
+          "fact": "f2",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f2"
+        },
+        {
+          "fact": "f3",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f3"
+        },
+        {
+          "fact": "f4",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f4"
+        },
+        {
+          "fact": "fm",
+          "rule": "point_def(midpoint)",
+          "fn": "midpoint",
+          "call": "fm"
+        },
+        {
+          "fact": "g",
+          "rule": "intersection_line(plane, plane)",
+          "fn": "intersection_line",
+          "call": "g"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(Foot)→orthogonal_projection_line",
+          "fn": "orthogonal_projection_line",
+          "call": "q_aux"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(AnswerDistance)→ask_length",
+          "fn": "ask_length",
+          "call": "q"
+        },
+        {
+          "fact": "q",
+          "step": "decompose_goal",
+          "rule": "distance(point,line)",
+          "calls": [
+            "q_aux",
+            "q"
+          ],
+          "auxiliary": "H",
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        },
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1
+        }
+      ],
+      "auxiliary": [
+        {
+          "label": "H",
+          "rule": "distance(point,line)",
+          "goal": "q",
+          "construct": "q_aux",
+          "ask": "q",
+          "point": "M",
+          "line": [],
+          "quotes": [
+            "Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC')."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY",
+          "line_ref": "g",
+          "fresh": true,
+          "effect_binding": true
+        }
+      ],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "engine_trace": [
+      {
+        "step": "place_point",
+        "object": "A",
+        "rule": "rectangle_chart",
+        "calls": [
+          "f1_day",
+          "f2",
+          "f3"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "B",
+        "rule": "rectangle_chart",
+        "calls": [
+          "f1_day",
+          "f2",
+          "f3"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "C",
+        "rule": "rectangle_chart",
+        "calls": [
+          "f1_day",
+          "f2",
+          "f3"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "D",
+        "rule": "rectangle_chart",
+        "calls": [
+          "f1_day",
+          "f2",
+          "f3"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "M",
+        "rule": "midpoint",
+        "calls": [
+          "fm"
+        ],
+        "provenance": "DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "A'",
+        "rule": "right_prism_translate",
+        "calls": [
+          "f1",
+          "f4"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "B'",
+        "rule": "right_prism_translate",
+        "calls": [
+          "f1",
+          "f4"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "C'",
+        "rule": "right_prism_translate",
+        "calls": [
+          "f1",
+          "f4"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "D'",
+        "rule": "right_prism_translate",
+        "calls": [
+          "f1",
+          "f4"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "resolve_line",
+        "object": "gt_g",
+        "producer": "intersection_line",
+        "calls": [
+          "g"
+        ],
+        "dependencies": [
+          "A",
+          "B",
+          "B'",
+          "C",
+          "C'"
+        ],
+        "provenance": "DERIVED",
+        "relation_verified": true
+      },
+      {
+        "step": "place_point",
+        "object": "H",
+        "rule": "orthogonal_projection_line",
+        "calls": [
+          "q_aux"
+        ],
+        "provenance": "DERIVED",
+        "producer": "orthogonal_projection_line",
+        "dependencies": [
+          "M",
+          "gt_g"
+        ],
+        "relation_verified": true,
+        "result_binding": "g",
+        "binding": "AUXILIARY",
+        "auxiliary_rule": "distance(point,line)",
+        "goal": "q"
+      },
+      {
+        "step": "construct_solid",
+        "object": "ABCD.A'B'C'D'",
+        "rule": "prism",
+        "calls": [
+          "f1"
+        ],
+        "provenance": "DERIVED"
+      },
+      {
+        "step": "measure",
+        "object": "ask_length",
+        "rule": "ask_length",
+        "calls": [
+          "q"
+        ],
+        "provenance": "DERIVED"
+      }
+    ]
+  },
+  {
+    "id": "derived-line-prism",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+      "q": "√3"
+    },
+    "kernel_check": true,
+    "functions": [
+      "prism",
+      "regular_polygon",
+      "segment_length",
+      "midpoint",
+      "intersection_line",
+      "orthogonal_projection_line",
+      "ask_length"
+    ],
+    "planner": {
+      "version": "geometry-fact-planner/5",
+      "calls": [
+        {
+          "id": "f1",
+          "fn": "prism",
+          "args": {
+            "base": [
+              "A",
+              "B",
+              "C"
+            ],
+            "top": [
+              "A'",
+              "B'",
+              "C'"
+            ],
+            "right": true
+          },
+          "source": {
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f2",
+          "fn": "regular_polygon",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C"
+            ],
+            "side": "2"
+          },
+          "source": {
+            "quotes": [
+              "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f3",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "A'"
+            ],
+            "value": "3"
+          },
+          "source": {
+            "quotes": [
+              "AA' = 3."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "fm",
+          "fn": "midpoint",
+          "args": {
+            "point": "M",
+            "segment": [
+              "A",
+              "C"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Gọi M là trung điểm AC."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "g",
+          "fn": "intersection_line",
+          "args": {
+            "plane1": [
+              "A",
+              "B",
+              "B'"
+            ],
+            "plane2": [
+              "B",
+              "C",
+              "C'"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tìm giao tuyến của (ABB') và (BCC')."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "q_aux",
+          "fn": "orthogonal_projection_line",
+          "args": {
+            "point": "M",
+            "image": "H",
+            "line_ref": "g"
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC')."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "g"
+          ]
+        },
+        {
+          "id": "q",
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "M",
+              "H"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC')."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "q_aux"
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "fact": "f1",
+          "rule": "solid(prism)→prism (right=True)",
+          "fn": "prism",
+          "call": "f1"
+        },
+        {
+          "fact": "f2",
+          "rule": "polygon_shape(equilateral_triangle)→regular_polygon",
+          "fn": "regular_polygon",
+          "call": "f2"
+        },
+        {
+          "fact": "f3",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f3"
+        },
+        {
+          "fact": "fm",
+          "rule": "point_def(midpoint)",
+          "fn": "midpoint",
+          "call": "fm"
+        },
+        {
+          "fact": "g",
+          "rule": "intersection_line(plane, plane)",
+          "fn": "intersection_line",
+          "call": "g"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(Foot)→orthogonal_projection_line",
+          "fn": "orthogonal_projection_line",
+          "call": "q_aux"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(AnswerDistance)→ask_length",
+          "fn": "ask_length",
+          "call": "q"
+        },
+        {
+          "fact": "q",
+          "step": "decompose_goal",
+          "rule": "distance(point,line)",
+          "calls": [
+            "q_aux",
+            "q"
+          ],
+          "auxiliary": "H",
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        },
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1
+        }
+      ],
+      "auxiliary": [
+        {
+          "label": "H",
+          "rule": "distance(point,line)",
+          "goal": "q",
+          "construct": "q_aux",
+          "ask": "q",
+          "point": "M",
+          "line": [],
+          "quotes": [
+            "Tính khoảng cách từ M đến giao tuyến của (ABB') và (BCC')."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY",
+          "line_ref": "g",
+          "fresh": true,
+          "effect_binding": true
+        }
+      ],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "engine_trace": [
+      {
+        "step": "place_point",
+        "object": "A",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "B",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "C",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "M",
+        "rule": "midpoint",
+        "calls": [
+          "fm"
+        ],
+        "provenance": "DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "A'",
+        "rule": "right_prism_translate",
+        "calls": [
+          "f1",
+          "f3"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "B'",
+        "rule": "right_prism_translate",
+        "calls": [
+          "f1",
+          "f3"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "C'",
+        "rule": "right_prism_translate",
+        "calls": [
+          "f1",
+          "f3"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "resolve_line",
+        "object": "gt_g",
+        "producer": "intersection_line",
+        "calls": [
+          "g"
+        ],
+        "dependencies": [
+          "A",
+          "B",
+          "B'",
+          "C",
+          "C'"
+        ],
+        "provenance": "DERIVED",
+        "relation_verified": true
+      },
+      {
+        "step": "place_point",
+        "object": "H",
+        "rule": "orthogonal_projection_line",
+        "calls": [
+          "q_aux"
+        ],
+        "provenance": "DERIVED",
+        "producer": "orthogonal_projection_line",
+        "dependencies": [
+          "M",
+          "gt_g"
+        ],
+        "relation_verified": true,
+        "result_binding": "g",
+        "binding": "AUXILIARY",
+        "auxiliary_rule": "distance(point,line)",
+        "goal": "q"
+      },
+      {
+        "step": "construct_solid",
+        "object": "ABC.A'B'C'",
+        "rule": "prism",
+        "calls": [
+          "f1"
+        ],
+        "provenance": "DERIVED"
+      },
+      {
+        "step": "measure",
+        "object": "ask_length",
+        "rule": "ask_length",
+        "calls": [
+          "q"
+        ],
+        "provenance": "DERIVED"
+      }
+    ]
+  },
+  {
+    "id": "different-direction-decomposition",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+      "q": "√10"
+    },
+    "kernel_check": true,
+    "functions": [
+      "pyramid",
+      "regular_polygon",
+      "perpendicular_line_plane",
+      "segment_length",
+      "midpoint",
+      "intersection_line",
+      "orthogonal_projection_line",
+      "ask_length"
+    ],
+    "planner": {
+      "version": "geometry-fact-planner/5",
+      "calls": [
+        {
+          "id": "f1",
+          "fn": "pyramid",
+          "args": {
+            "apex": "S",
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f2",
+          "fn": "regular_polygon",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "2"
+          },
+          "source": {
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f3",
+          "fn": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f4",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "source": {
+            "quotes": [
+              "SA = 3."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "fm",
+          "fn": "midpoint",
+          "args": {
+            "point": "M",
+            "segment": [
+              "A",
+              "C"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Gọi M là trung điểm của AC."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "g",
+          "fn": "intersection_line",
+          "args": {
+            "plane1": [
+              "S",
+              "A",
+              "B"
+            ],
+            "plane2": [
+              "S",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tìm giao tuyến của (SAB) và (SCD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "q_aux",
+          "fn": "orthogonal_projection_line",
+          "args": {
+            "point": "M",
+            "image": "H",
+            "line_ref": "g"
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAB) và (SCD)."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "g"
+          ]
+        },
+        {
+          "id": "q",
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "M",
+              "H"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAB) và (SCD)."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "q_aux"
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "fact": "f1",
+          "rule": "solid→pyramid",
+          "fn": "pyramid",
+          "call": "f1"
+        },
+        {
+          "fact": "f2",
+          "rule": "polygon_shape(square)→regular_polygon",
+          "fn": "regular_polygon",
+          "call": "f2"
+        },
+        {
+          "fact": "f3",
+          "rule": "perpendicular(line, plane)",
+          "fn": "perpendicular_line_plane",
+          "call": "f3"
+        },
+        {
+          "fact": "f4",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f4"
+        },
+        {
+          "fact": "fm",
+          "rule": "point_def(midpoint)",
+          "fn": "midpoint",
+          "call": "fm"
+        },
+        {
+          "fact": "g",
+          "rule": "intersection_line(plane, plane)",
+          "fn": "intersection_line",
+          "call": "g"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(Foot)→orthogonal_projection_line",
+          "fn": "orthogonal_projection_line",
+          "call": "q_aux"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(AnswerDistance)→ask_length",
+          "fn": "ask_length",
+          "call": "q"
+        },
+        {
+          "fact": "q",
+          "step": "decompose_goal",
+          "rule": "distance(point,line)",
+          "calls": [
+            "q_aux",
+            "q"
+          ],
+          "auxiliary": "H",
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        },
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1
+        }
+      ],
+      "auxiliary": [
+        {
+          "label": "H",
+          "rule": "distance(point,line)",
+          "goal": "q",
+          "construct": "q_aux",
+          "ask": "q",
+          "point": "M",
+          "line": [],
+          "quotes": [
+            "Tính khoảng cách từ M đến giao tuyến của (SAB) và (SCD)."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY",
+          "line_ref": "g",
+          "fresh": true,
+          "effect_binding": true
+        }
+      ],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "engine_trace": [
+      {
+        "step": "place_point",
+        "object": "A",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "B",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "C",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "D",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "M",
+        "rule": "midpoint",
+        "calls": [
+          "fm"
+        ],
+        "provenance": "DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "S",
+        "rule": "perpendicular_foot_at_A",
+        "calls": [
+          "f3",
+          "f4"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "resolve_line",
+        "object": "gt_g",
+        "producer": "intersection_line",
+        "calls": [
+          "g"
+        ],
+        "dependencies": [
+          "S",
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "provenance": "DERIVED",
+        "relation_verified": true
+      },
+      {
+        "step": "place_point",
+        "object": "H",
+        "rule": "orthogonal_projection_line",
+        "calls": [
+          "q_aux"
+        ],
+        "provenance": "DERIVED",
+        "producer": "orthogonal_projection_line",
+        "dependencies": [
+          "M",
+          "gt_g"
+        ],
+        "relation_verified": true,
+        "result_binding": "g",
+        "binding": "AUXILIARY",
+        "auxiliary_rule": "distance(point,line)",
+        "goal": "q"
+      },
+      {
+        "step": "construct_solid",
+        "object": "S.ABCD",
+        "rule": "pyramid",
+        "calls": [
+          "f1"
+        ],
+        "provenance": "DERIVED"
+      },
+      {
+        "step": "measure",
+        "object": "ask_length",
+        "rule": "ask_length",
+        "calls": [
+          "q"
+        ],
+        "provenance": "DERIVED"
+      }
+    ]
+  },
+  {
+    "id": "zero-distance",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+      "q": "0"
+    },
+    "kernel_check": true,
+    "functions": [
+      "pyramid",
+      "regular_polygon",
+      "perpendicular_line_plane",
+      "segment_length",
+      "intersection_line",
+      "orthogonal_projection_line",
+      "ask_length"
+    ],
+    "planner": {
+      "version": "geometry-fact-planner/5",
+      "calls": [
+        {
+          "id": "f1",
+          "fn": "pyramid",
+          "args": {
+            "apex": "S",
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f2",
+          "fn": "regular_polygon",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "2"
+          },
+          "source": {
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f3",
+          "fn": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f4",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "source": {
+            "quotes": [
+              "SA = 3."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "g",
+          "fn": "intersection_line",
+          "args": {
+            "plane1": [
+              "S",
+              "A",
+              "C"
+            ],
+            "plane2": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "q_aux",
+          "fn": "orthogonal_projection_line",
+          "args": {
+            "point": "S",
+            "image": "H",
+            "line_ref": "g"
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ S đến giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": [
+            "g"
+          ]
+        },
+        {
+          "id": "q",
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "S",
+              "H"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ S đến giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": [
+            "q_aux"
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "fact": "f1",
+          "rule": "solid→pyramid",
+          "fn": "pyramid",
+          "call": "f1"
+        },
+        {
+          "fact": "f2",
+          "rule": "polygon_shape(square)→regular_polygon",
+          "fn": "regular_polygon",
+          "call": "f2"
+        },
+        {
+          "fact": "f3",
+          "rule": "perpendicular(line, plane)",
+          "fn": "perpendicular_line_plane",
+          "call": "f3"
+        },
+        {
+          "fact": "f4",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f4"
+        },
+        {
+          "fact": "g",
+          "rule": "intersection_line(plane, plane)",
+          "fn": "intersection_line",
+          "call": "g"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(Foot)→orthogonal_projection_line",
+          "fn": "orthogonal_projection_line",
+          "call": "q_aux"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(AnswerDistance)→ask_length",
+          "fn": "ask_length",
+          "call": "q"
+        },
+        {
+          "fact": "q",
+          "step": "decompose_goal",
+          "rule": "distance(point,line)",
+          "calls": [
+            "q_aux",
+            "q"
+          ],
+          "auxiliary": "H",
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        },
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1
+        }
+      ],
+      "auxiliary": [
+        {
+          "label": "H",
+          "rule": "distance(point,line)",
+          "goal": "q",
+          "construct": "q_aux",
+          "ask": "q",
+          "point": "S",
+          "line": [],
+          "quotes": [
+            "Tính khoảng cách từ S đến giao tuyến của (SAC) và (SBD)."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY",
+          "line_ref": "g",
+          "fresh": true,
+          "effect_binding": true
+        }
+      ],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "engine_trace": [
+      {
+        "step": "place_point",
+        "object": "A",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "B",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "C",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "D",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "S",
+        "rule": "perpendicular_foot_at_A",
+        "calls": [
+          "f3",
+          "f4"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "resolve_line",
+        "object": "gt_g",
+        "producer": "intersection_line",
+        "calls": [
+          "g"
+        ],
+        "dependencies": [
+          "S",
+          "A",
+          "C",
+          "B",
+          "D"
+        ],
+        "provenance": "DERIVED",
+        "relation_verified": true
+      },
+      {
+        "step": "place_point",
+        "object": "H",
+        "rule": "orthogonal_projection_line",
+        "calls": [
+          "q_aux"
+        ],
+        "provenance": "DERIVED",
+        "producer": "orthogonal_projection_line",
+        "dependencies": [
+          "S",
+          "gt_g"
+        ],
+        "relation_verified": true,
+        "result_binding": "g",
+        "binding": "AUXILIARY",
+        "auxiliary_rule": "distance(point,line)",
+        "goal": "q"
+      },
+      {
+        "step": "construct_solid",
+        "object": "S.ABCD",
+        "rule": "pyramid",
+        "calls": [
+          "f1"
+        ],
+        "provenance": "DERIVED"
+      },
+      {
+        "step": "measure",
+        "object": "ask_length",
+        "rule": "ask_length",
+        "calls": [
+          "q"
+        ],
+        "provenance": "DERIVED"
+      }
+    ]
+  },
+  {
+    "id": "shared-line-foot-two-goals",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+      "q": "√110/11",
+      "q2": "√110/11"
+    },
+    "kernel_check": true,
+    "functions": [
+      "pyramid",
+      "regular_polygon",
+      "perpendicular_line_plane",
+      "segment_length",
+      "midpoint",
+      "intersection_line",
+      "orthogonal_projection_line",
+      "ask_length",
+      "ask_length"
+    ],
+    "planner": {
+      "version": "geometry-fact-planner/5",
+      "calls": [
+        {
+          "id": "f1",
+          "fn": "pyramid",
+          "args": {
+            "apex": "S",
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f2",
+          "fn": "regular_polygon",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "2"
+          },
+          "source": {
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f3",
+          "fn": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f4",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "source": {
+            "quotes": [
+              "SA = 3."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "fm",
+          "fn": "midpoint",
+          "args": {
+            "point": "M",
+            "segment": [
+              "A",
+              "B"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "g",
+          "fn": "intersection_line",
+          "args": {
+            "plane1": [
+              "S",
+              "A",
+              "C"
+            ],
+            "plane2": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "q_aux",
+          "fn": "orthogonal_projection_line",
+          "args": {
+            "point": "M",
+            "image": "H",
+            "line_ref": "g"
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "g"
+          ]
+        },
+        {
+          "id": "q",
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "M",
+              "H"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "q_aux"
+          ]
+        },
+        {
+          "id": "q2",
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "M",
+              "H"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "q_aux"
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "fact": "f1",
+          "rule": "solid→pyramid",
+          "fn": "pyramid",
+          "call": "f1"
+        },
+        {
+          "fact": "f2",
+          "rule": "polygon_shape(square)→regular_polygon",
+          "fn": "regular_polygon",
+          "call": "f2"
+        },
+        {
+          "fact": "f3",
+          "rule": "perpendicular(line, plane)",
+          "fn": "perpendicular_line_plane",
+          "call": "f3"
+        },
+        {
+          "fact": "f4",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f4"
+        },
+        {
+          "fact": "fm",
+          "rule": "point_def(midpoint)",
+          "fn": "midpoint",
+          "call": "fm"
+        },
+        {
+          "fact": "g",
+          "rule": "intersection_line(plane, plane)",
+          "fn": "intersection_line",
+          "call": "g"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(Foot)→orthogonal_projection_line",
+          "fn": "orthogonal_projection_line",
+          "call": "q_aux"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(AnswerDistance)→ask_length",
+          "fn": "ask_length",
+          "call": "q"
+        },
+        {
+          "fact": "q",
+          "step": "decompose_goal",
+          "rule": "distance(point,line)",
+          "calls": [
+            "q_aux",
+            "q"
+          ],
+          "auxiliary": "H",
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        },
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1
+        },
+        {
+          "fact": "q2",
+          "rule": "effect(AnswerDistance)→ask_length",
+          "fn": "ask_length",
+          "call": "q2"
+        },
+        {
+          "fact": "q2",
+          "step": "decompose_goal",
+          "rule": "distance(point,line)",
+          "calls": [
+            "q_aux",
+            "q2"
+          ],
+          "auxiliary": "H",
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        },
+        {
+          "fact": "q2",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 0
+        }
+      ],
+      "auxiliary": [
+        {
+          "label": "H",
+          "rule": "distance(point,line)",
+          "goal": "q",
+          "construct": "q_aux",
+          "ask": "q",
+          "point": "M",
+          "line": [],
+          "quotes": [
+            "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY",
+          "line_ref": "g",
+          "fresh": true,
+          "effect_binding": true
+        },
+        {
+          "label": "H",
+          "rule": "distance(point,line)",
+          "goal": "q2",
+          "construct": "q_aux",
+          "ask": "q2",
+          "point": "M",
+          "line": [],
+          "quotes": [
+            "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY",
+          "line_ref": "g",
+          "fresh": true,
+          "effect_binding": true
+        }
+      ],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "engine_trace": [
+      {
+        "step": "place_point",
+        "object": "A",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "B",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "C",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "D",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "M",
+        "rule": "midpoint",
+        "calls": [
+          "fm"
+        ],
+        "provenance": "DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "S",
+        "rule": "perpendicular_foot_at_A",
+        "calls": [
+          "f3",
+          "f4"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "resolve_line",
+        "object": "gt_g",
+        "producer": "intersection_line",
+        "calls": [
+          "g"
+        ],
+        "dependencies": [
+          "S",
+          "A",
+          "C",
+          "B",
+          "D"
+        ],
+        "provenance": "DERIVED",
+        "relation_verified": true
+      },
+      {
+        "step": "place_point",
+        "object": "H",
+        "rule": "orthogonal_projection_line",
+        "calls": [
+          "q_aux"
+        ],
+        "provenance": "DERIVED",
+        "producer": "orthogonal_projection_line",
+        "dependencies": [
+          "M",
+          "gt_g"
+        ],
+        "relation_verified": true,
+        "result_binding": "g",
+        "binding": "AUXILIARY",
+        "auxiliary_rule": "distance(point,line)",
+        "goal": "q2"
+      },
+      {
+        "step": "construct_solid",
+        "object": "S.ABCD",
+        "rule": "pyramid",
+        "calls": [
+          "f1"
+        ],
+        "provenance": "DERIVED"
+      },
+      {
+        "step": "measure",
+        "object": "ask_length",
+        "rule": "ask_length",
+        "calls": [
+          "q"
+        ],
+        "provenance": "DERIVED"
+      },
+      {
+        "step": "measure",
+        "object": "ask_length",
+        "rule": "ask_length",
+        "calls": [
+          "q2"
+        ],
+        "provenance": "DERIVED"
+      }
+    ]
+  },
+  {
+    "id": "unknown-reference",
+    "status": "REFUSED",
+    "code": "UNKNOWN_DERIVED_REFERENCE",
+    "answers": {},
+    "kernel_check": null,
+    "functions": [],
+    "planner": {
+      "version": "geometry-fact-planner/5"
+    },
+    "engine_trace": []
+  },
+  {
+    "id": "wrong-reference-type",
+    "status": "REFUSED",
+    "code": "DERIVED_REFERENCE_TYPE_MISMATCH",
+    "answers": {},
+    "kernel_check": null,
+    "functions": [],
+    "planner": {
+      "version": "geometry-fact-planner/5"
+    },
+    "engine_trace": []
+  },
+  {
+    "id": "producer-source-mismatch",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "answers": {},
+    "kernel_check": null,
+    "functions": [],
+    "planner": {
+      "version": "geometry-fact-planner/5",
+      "calls": [
+        {
+          "id": "f1",
+          "fn": "pyramid",
+          "args": {
+            "apex": "S",
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f2",
+          "fn": "regular_polygon",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "2"
+          },
+          "source": {
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f3",
+          "fn": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f4",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "source": {
+            "quotes": [
+              "SA = 3."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "fm",
+          "fn": "midpoint",
+          "args": {
+            "point": "M",
+            "segment": [
+              "A",
+              "B"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "g",
+          "fn": "intersection_line",
+          "args": {
+            "plane1": [
+              "S",
+              "A",
+              "B"
+            ],
+            "plane2": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "q_aux",
+          "fn": "orthogonal_projection_line",
+          "args": {
+            "point": "M",
+            "image": "H",
+            "line_ref": "g"
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "g"
+          ]
+        },
+        {
+          "id": "q",
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "M",
+              "H"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "q_aux"
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "fact": "f1",
+          "rule": "solid→pyramid",
+          "fn": "pyramid",
+          "call": "f1"
+        },
+        {
+          "fact": "f2",
+          "rule": "polygon_shape(square)→regular_polygon",
+          "fn": "regular_polygon",
+          "call": "f2"
+        },
+        {
+          "fact": "f3",
+          "rule": "perpendicular(line, plane)",
+          "fn": "perpendicular_line_plane",
+          "call": "f3"
+        },
+        {
+          "fact": "f4",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f4"
+        },
+        {
+          "fact": "fm",
+          "rule": "point_def(midpoint)",
+          "fn": "midpoint",
+          "call": "fm"
+        },
+        {
+          "fact": "g",
+          "rule": "intersection_line(plane, plane)",
+          "fn": "intersection_line",
+          "call": "g"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(Foot)→orthogonal_projection_line",
+          "fn": "orthogonal_projection_line",
+          "call": "q_aux"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(AnswerDistance)→ask_length",
+          "fn": "ask_length",
+          "call": "q"
+        },
+        {
+          "fact": "q",
+          "step": "decompose_goal",
+          "rule": "distance(point,line)",
+          "calls": [
+            "q_aux",
+            "q"
+          ],
+          "auxiliary": "H",
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        },
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1
+        }
+      ],
+      "auxiliary": [
+        {
+          "label": "H",
+          "rule": "distance(point,line)",
+          "goal": "q",
+          "construct": "q_aux",
+          "ask": "q",
+          "point": "M",
+          "line": [],
+          "quotes": [
+            "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY",
+          "line_ref": "g",
+          "fresh": true,
+          "effect_binding": true
+        }
+      ],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "engine_trace": []
+  },
+  {
+    "id": "conditional-producer",
+    "status": "REFUSED",
+    "code": "CONDITIONAL_CLAUSE",
+    "answers": {},
+    "kernel_check": null,
+    "functions": [],
+    "planner": {
+      "version": "geometry-fact-planner/5"
+    },
+    "engine_trace": []
+  },
+  {
+    "id": "proof-producer",
+    "status": "REFUSED",
+    "code": "GOAL_CLAUSE_NOT_PREMISE",
+    "answers": {},
+    "kernel_check": null,
+    "functions": [],
+    "planner": {
+      "version": "geometry-fact-planner/5"
+    },
+    "engine_trace": []
+  },
+  {
+    "id": "negated-producer",
+    "status": "REFUSED",
+    "code": "NEGATED_CLAUSE",
+    "answers": {},
+    "kernel_check": null,
+    "functions": [],
+    "planner": {
+      "version": "geometry-fact-planner/5"
+    },
+    "engine_trace": []
+  },
+  {
+    "id": "parallel-planes",
+    "status": "REFUSED",
+    "code": "PARALLEL_NO_INTERSECTION",
+    "answers": {},
+    "kernel_check": null,
+    "functions": [],
+    "planner": {
+      "version": "geometry-fact-planner/5",
+      "calls": [
+        {
+          "id": "f1",
+          "fn": "prism",
+          "args": {
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "top": [
+              "A'",
+              "B'",
+              "C'",
+              "D'"
+            ],
+            "right": true
+          },
+          "source": {
+            "quotes": [
+              "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f1_day",
+          "fn": "rectangle",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f2",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "B"
+            ],
+            "value": "2"
+          },
+          "source": {
+            "quotes": [
+              "AB = 2."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f3",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "D"
+            ],
+            "value": "4"
+          },
+          "source": {
+            "quotes": [
+              "AD = 4."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f4",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "A",
+              "A'"
+            ],
+            "value": "3"
+          },
+          "source": {
+            "quotes": [
+              "AA' = 3."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "fm",
+          "fn": "midpoint",
+          "args": {
+            "point": "M",
+            "segment": [
+              "A",
+              "C"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Gọi M là trung điểm AC."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "g",
+          "fn": "intersection_line",
+          "args": {
+            "plane1": [
+              "A",
+              "B",
+              "C"
+            ],
+            "plane2": [
+              "A'",
+              "B'",
+              "C'"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tìm giao tuyến của (ABC) và (A'B'C')."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "q_aux",
+          "fn": "orthogonal_projection_line",
+          "args": {
+            "point": "M",
+            "image": "H",
+            "line_ref": "g"
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABC) và (A'B'C')."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "g"
+          ]
+        },
+        {
+          "id": "q",
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "M",
+              "H"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABC) và (A'B'C')."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "q_aux"
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "fact": "f1",
+          "rule": "solid(cuboid)→prism (right=True)",
+          "fn": "prism",
+          "call": "f1"
+        },
+        {
+          "fact": "f1",
+          "rule": "hình hộp chữ nhật ⇒ đáy hình chữ nhật",
+          "fn": "rectangle",
+          "call": "f1_day"
+        },
+        {
+          "fact": "f2",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f2"
+        },
+        {
+          "fact": "f3",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f3"
+        },
+        {
+          "fact": "f4",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f4"
+        },
+        {
+          "fact": "fm",
+          "rule": "point_def(midpoint)",
+          "fn": "midpoint",
+          "call": "fm"
+        },
+        {
+          "fact": "g",
+          "rule": "intersection_line(plane, plane)",
+          "fn": "intersection_line",
+          "call": "g"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(Foot)→orthogonal_projection_line",
+          "fn": "orthogonal_projection_line",
+          "call": "q_aux"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(AnswerDistance)→ask_length",
+          "fn": "ask_length",
+          "call": "q"
+        },
+        {
+          "fact": "q",
+          "step": "decompose_goal",
+          "rule": "distance(point,line)",
+          "calls": [
+            "q_aux",
+            "q"
+          ],
+          "auxiliary": "H",
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        },
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1
+        }
+      ],
+      "auxiliary": [
+        {
+          "label": "H",
+          "rule": "distance(point,line)",
+          "goal": "q",
+          "construct": "q_aux",
+          "ask": "q",
+          "point": "M",
+          "line": [],
+          "quotes": [
+            "Tính khoảng cách từ M đến giao tuyến của (ABC) và (A'B'C')."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY",
+          "line_ref": "g",
+          "fresh": true,
+          "effect_binding": true
+        }
+      ],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "engine_trace": [
+      {
+        "step": "place_point",
+        "object": "A",
+        "rule": "rectangle_chart",
+        "calls": [
+          "f1_day",
+          "f2",
+          "f3"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "B",
+        "rule": "rectangle_chart",
+        "calls": [
+          "f1_day",
+          "f2",
+          "f3"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "C",
+        "rule": "rectangle_chart",
+        "calls": [
+          "f1_day",
+          "f2",
+          "f3"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "D",
+        "rule": "rectangle_chart",
+        "calls": [
+          "f1_day",
+          "f2",
+          "f3"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "M",
+        "rule": "midpoint",
+        "calls": [
+          "fm"
+        ],
+        "provenance": "DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "A'",
+        "rule": "right_prism_translate",
+        "calls": [
+          "f1",
+          "f4"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "B'",
+        "rule": "right_prism_translate",
+        "calls": [
+          "f1",
+          "f4"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "C'",
+        "rule": "right_prism_translate",
+        "calls": [
+          "f1",
+          "f4"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "D'",
+        "rule": "right_prism_translate",
+        "calls": [
+          "f1",
+          "f4"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      }
+    ]
+  },
+  {
+    "id": "coincident-planes",
+    "status": "REFUSED",
+    "code": "CONTAINED_INFINITE_INTERSECTION",
+    "answers": {},
+    "kernel_check": null,
+    "functions": [],
+    "planner": {
+      "version": "geometry-fact-planner/5",
+      "calls": [
+        {
+          "id": "f1",
+          "fn": "pyramid",
+          "args": {
+            "apex": "S",
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f2",
+          "fn": "regular_polygon",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "2"
+          },
+          "source": {
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f3",
+          "fn": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f4",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "source": {
+            "quotes": [
+              "SA = 3."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "fm",
+          "fn": "midpoint",
+          "args": {
+            "point": "M",
+            "segment": [
+              "A",
+              "B"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "g",
+          "fn": "intersection_line",
+          "args": {
+            "plane1": [
+              "A",
+              "B",
+              "C"
+            ],
+            "plane2": [
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tìm giao tuyến của (ABC) và (BCD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "q_aux",
+          "fn": "orthogonal_projection_line",
+          "args": {
+            "point": "M",
+            "image": "H",
+            "line_ref": "g"
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABC) và (BCD)."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "g"
+          ]
+        },
+        {
+          "id": "q",
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "M",
+              "H"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (ABC) và (BCD)."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "q_aux"
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "fact": "f1",
+          "rule": "solid→pyramid",
+          "fn": "pyramid",
+          "call": "f1"
+        },
+        {
+          "fact": "f2",
+          "rule": "polygon_shape(square)→regular_polygon",
+          "fn": "regular_polygon",
+          "call": "f2"
+        },
+        {
+          "fact": "f3",
+          "rule": "perpendicular(line, plane)",
+          "fn": "perpendicular_line_plane",
+          "call": "f3"
+        },
+        {
+          "fact": "f4",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f4"
+        },
+        {
+          "fact": "fm",
+          "rule": "point_def(midpoint)",
+          "fn": "midpoint",
+          "call": "fm"
+        },
+        {
+          "fact": "g",
+          "rule": "intersection_line(plane, plane)",
+          "fn": "intersection_line",
+          "call": "g"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(Foot)→orthogonal_projection_line",
+          "fn": "orthogonal_projection_line",
+          "call": "q_aux"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(AnswerDistance)→ask_length",
+          "fn": "ask_length",
+          "call": "q"
+        },
+        {
+          "fact": "q",
+          "step": "decompose_goal",
+          "rule": "distance(point,line)",
+          "calls": [
+            "q_aux",
+            "q"
+          ],
+          "auxiliary": "H",
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        },
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1
+        }
+      ],
+      "auxiliary": [
+        {
+          "label": "H",
+          "rule": "distance(point,line)",
+          "goal": "q",
+          "construct": "q_aux",
+          "ask": "q",
+          "point": "M",
+          "line": [],
+          "quotes": [
+            "Tính khoảng cách từ M đến giao tuyến của (ABC) và (BCD)."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY",
+          "line_ref": "g",
+          "fresh": true,
+          "effect_binding": true
+        }
+      ],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "engine_trace": [
+      {
+        "step": "place_point",
+        "object": "A",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "B",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "C",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      },
+      {
+        "step": "place_point",
+        "object": "D",
+        "rule": "regular_polygon_chart",
+        "calls": [
+          "f2"
+        ],
+        "provenance": "LAYOUT_DERIVED"
+      }
+    ]
+  },
+  {
+    "id": "long-quote-nonnumeric",
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "answers": {},
+    "kernel_check": null,
+    "functions": [],
+    "planner": {
+      "version": "geometry-fact-planner/5",
+      "calls": [
+        {
+          "id": "f1",
+          "fn": "pyramid",
+          "args": {
+            "apex": "S",
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f2",
+          "fn": "regular_polygon",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "2"
+          },
+          "source": {
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f3",
+          "fn": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "SA vuông góc với (ABCD). SB vuông góc với (ABCD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f4",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "source": {
+            "quotes": [
+              "SA = 3."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "fm",
+          "fn": "midpoint",
+          "args": {
+            "point": "M",
+            "segment": [
+              "A",
+              "B"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "g",
+          "fn": "intersection_line",
+          "args": {
+            "plane1": [
+              "S",
+              "A",
+              "C"
+            ],
+            "plane2": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "q_aux",
+          "fn": "orthogonal_projection_line",
+          "args": {
+            "point": "M",
+            "image": "H",
+            "line_ref": "g"
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "g"
+          ]
+        },
+        {
+          "id": "q",
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "M",
+              "H"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "q_aux"
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "fact": "f1",
+          "rule": "solid→pyramid",
+          "fn": "pyramid",
+          "call": "f1"
+        },
+        {
+          "fact": "f2",
+          "rule": "polygon_shape(square)→regular_polygon",
+          "fn": "regular_polygon",
+          "call": "f2"
+        },
+        {
+          "fact": "f3",
+          "rule": "perpendicular(line, plane)",
+          "fn": "perpendicular_line_plane",
+          "call": "f3"
+        },
+        {
+          "fact": "f4",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f4"
+        },
+        {
+          "fact": "fm",
+          "rule": "point_def(midpoint)",
+          "fn": "midpoint",
+          "call": "fm"
+        },
+        {
+          "fact": "g",
+          "rule": "intersection_line(plane, plane)",
+          "fn": "intersection_line",
+          "call": "g"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(Foot)→orthogonal_projection_line",
+          "fn": "orthogonal_projection_line",
+          "call": "q_aux"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(AnswerDistance)→ask_length",
+          "fn": "ask_length",
+          "call": "q"
+        },
+        {
+          "fact": "q",
+          "step": "decompose_goal",
+          "rule": "distance(point,line)",
+          "calls": [
+            "q_aux",
+            "q"
+          ],
+          "auxiliary": "H",
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        },
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1
+        }
+      ],
+      "auxiliary": [
+        {
+          "label": "H",
+          "rule": "distance(point,line)",
+          "goal": "q",
+          "construct": "q_aux",
+          "ask": "q",
+          "point": "M",
+          "line": [],
+          "quotes": [
+            "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY",
+          "line_ref": "g",
+          "fresh": true,
+          "effect_binding": true
+        }
+      ],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "engine_trace": []
+  },
+  {
+    "id": "and-song-unread-premise",
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "answers": {},
+    "kernel_check": null,
+    "functions": [],
+    "planner": {
+      "version": "geometry-fact-planner/5",
+      "calls": [
+        {
+          "id": "f1",
+          "fn": "pyramid",
+          "args": {
+            "apex": "S",
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f2",
+          "fn": "regular_polygon",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "2"
+          },
+          "source": {
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f3",
+          "fn": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f4",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "source": {
+            "quotes": [
+              "SA = 3."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "fm",
+          "fn": "midpoint",
+          "args": {
+            "point": "M",
+            "segment": [
+              "A",
+              "B"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "g",
+          "fn": "intersection_line",
+          "args": {
+            "plane1": [
+              "S",
+              "A",
+              "C"
+            ],
+            "plane2": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "q_aux",
+          "fn": "orthogonal_projection_line",
+          "args": {
+            "point": "M",
+            "image": "H",
+            "line_ref": "g"
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD). AD = 9 song tính lại khoảng cách đó."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "g"
+          ]
+        },
+        {
+          "id": "q",
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "M",
+              "H"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD). AD = 9 song tính lại khoảng cách đó."
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "q_aux"
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "fact": "f1",
+          "rule": "solid→pyramid",
+          "fn": "pyramid",
+          "call": "f1"
+        },
+        {
+          "fact": "f2",
+          "rule": "polygon_shape(square)→regular_polygon",
+          "fn": "regular_polygon",
+          "call": "f2"
+        },
+        {
+          "fact": "f3",
+          "rule": "perpendicular(line, plane)",
+          "fn": "perpendicular_line_plane",
+          "call": "f3"
+        },
+        {
+          "fact": "f4",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f4"
+        },
+        {
+          "fact": "fm",
+          "rule": "point_def(midpoint)",
+          "fn": "midpoint",
+          "call": "fm"
+        },
+        {
+          "fact": "g",
+          "rule": "intersection_line(plane, plane)",
+          "fn": "intersection_line",
+          "call": "g"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(Foot)→orthogonal_projection_line",
+          "fn": "orthogonal_projection_line",
+          "call": "q_aux"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(AnswerDistance)→ask_length",
+          "fn": "ask_length",
+          "call": "q"
+        },
+        {
+          "fact": "q",
+          "step": "decompose_goal",
+          "rule": "distance(point,line)",
+          "calls": [
+            "q_aux",
+            "q"
+          ],
+          "auxiliary": "H",
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        },
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1
+        }
+      ],
+      "auxiliary": [
+        {
+          "label": "H",
+          "rule": "distance(point,line)",
+          "goal": "q",
+          "construct": "q_aux",
+          "ask": "q",
+          "point": "M",
+          "line": [],
+          "quotes": [
+            "Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD). AD = 9 song tính lại khoảng cách đó."
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY",
+          "line_ref": "g",
+          "fresh": true,
+          "effect_binding": true
+        }
+      ],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "engine_trace": []
+  },
+  {
+    "id": "unverified-goal-value",
+    "status": "REFUSED",
+    "code": "NOT_ASKED_IN_SOURCE",
+    "answers": {},
+    "kernel_check": null,
+    "functions": [],
+    "planner": {
+      "version": "geometry-fact-planner/5",
+      "calls": [
+        {
+          "id": "f1",
+          "fn": "pyramid",
+          "args": {
+            "apex": "S",
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f2",
+          "fn": "regular_polygon",
+          "args": {
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "side": "2"
+          },
+          "source": {
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 2."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f3",
+          "fn": "perpendicular_line_plane",
+          "args": {
+            "line": [
+              "S",
+              "A"
+            ],
+            "plane": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "f4",
+          "fn": "segment_length",
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "3"
+          },
+          "source": {
+            "quotes": [
+              "SA = 3."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "fm",
+          "fn": "midpoint",
+          "args": {
+            "point": "M",
+            "segment": [
+              "A",
+              "B"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Gọi M là trung điểm AB."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "g",
+          "fn": "intersection_line",
+          "args": {
+            "plane1": [
+              "S",
+              "A",
+              "C"
+            ],
+            "plane2": [
+              "S",
+              "B",
+              "D"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Tìm giao tuyến của (SAC) và (SBD)."
+            ]
+          },
+          "depends_on": []
+        },
+        {
+          "id": "q_aux",
+          "fn": "orthogonal_projection_line",
+          "args": {
+            "point": "M",
+            "image": "H",
+            "line_ref": "g"
+          },
+          "source": {
+            "quotes": [
+              "Khoảng cách từ M đến giao tuyến của (SAC) và (SBD) bằng 7 thì AM bằng bao nhiêu?"
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "g"
+          ]
+        },
+        {
+          "id": "q",
+          "fn": "ask_length",
+          "args": {
+            "segment": [
+              "M",
+              "H"
+            ]
+          },
+          "source": {
+            "quotes": [
+              "Khoảng cách từ M đến giao tuyến của (SAC) và (SBD) bằng 7 thì AM bằng bao nhiêu?"
+            ]
+          },
+          "depends_on": [
+            "fm",
+            "q_aux"
+          ]
+        }
+      ],
+      "trace": [
+        {
+          "fact": "f1",
+          "rule": "solid→pyramid",
+          "fn": "pyramid",
+          "call": "f1"
+        },
+        {
+          "fact": "f2",
+          "rule": "polygon_shape(square)→regular_polygon",
+          "fn": "regular_polygon",
+          "call": "f2"
+        },
+        {
+          "fact": "f3",
+          "rule": "perpendicular(line, plane)",
+          "fn": "perpendicular_line_plane",
+          "call": "f3"
+        },
+        {
+          "fact": "f4",
+          "rule": "length(segment)",
+          "fn": "segment_length",
+          "call": "f4"
+        },
+        {
+          "fact": "fm",
+          "rule": "point_def(midpoint)",
+          "fn": "midpoint",
+          "call": "fm"
+        },
+        {
+          "fact": "g",
+          "rule": "intersection_line(plane, plane)",
+          "fn": "intersection_line",
+          "call": "g"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(Foot)→orthogonal_projection_line",
+          "fn": "orthogonal_projection_line",
+          "call": "q_aux"
+        },
+        {
+          "fact": "q",
+          "rule": "effect(AnswerDistance)→ask_length",
+          "fn": "ask_length",
+          "call": "q"
+        },
+        {
+          "fact": "q",
+          "step": "decompose_goal",
+          "rule": "distance(point,line)",
+          "calls": [
+            "q_aux",
+            "q"
+          ],
+          "auxiliary": "H",
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY"
+        },
+        {
+          "fact": "q",
+          "step": "effect_resolution",
+          "selection": "registry-effects",
+          "new_constructions": 1
+        }
+      ],
+      "auxiliary": [
+        {
+          "label": "H",
+          "rule": "distance(point,line)",
+          "goal": "q",
+          "construct": "q_aux",
+          "ask": "q",
+          "point": "M",
+          "line": [],
+          "quotes": [
+            "Khoảng cách từ M đến giao tuyến của (SAC) và (SBD) bằng 7 thì AM bằng bao nhiêu?"
+          ],
+          "provenance": "DERIVED",
+          "binding": "AUXILIARY",
+          "line_ref": "g",
+          "fresh": true,
+          "effect_binding": true
+        }
+      ],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "engine_trace": []
+  },
+  {
+    "id": "cycle",
+    "status": "REFUSED",
+    "code": "DEPENDENCY_CYCLE",
+    "answers": {},
+    "kernel_check": null,
+    "functions": [],
+    "planner": {
+      "version": "geometry-fact-planner/5"
+    },
+    "engine_trace": []
+  }
+]
