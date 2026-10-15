@@ -1,10 +1,24 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SOURCE_BOUND_RESULT_PLANNING_INTEGRATION_READINESS
+
+REPORT = docs/evaluation/geometry/runs/source-bound-result-planning-integration-readiness/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-bound-result-planning-integration-readiness/
+CORRECTED_BY = NONE
+CORRECTS = SOURCE_BOUND_RESULT_PLANNING
+CLASSIFICATION = RESULT_BINDING_MAIN_INTEGRATION_GO_AWAITING_APPROVAL
+CODE_COMMIT = NONE (product efb756aa unchanged)
+VERIFICATION_COMMIT = 11db61a1 (start); targeted gates on the readiness documentation commit (gates.json); reused T3 7b14fe04
+DOCUMENTATION_COMMIT_ROLE = SELF
+MODEL_REQUEST_COUNT = 0
+
+Provider fingerprints recomputed in clean detached worktrees at `19140e2f`, `efb756aa`, `7b14fe04` and HEAD: A/B/declarations all INTENTIONALLY_CHANGED, backward compatible, `PlanningContract` absent from declarations (`provider-fingerprints.json`). Corrections (`corrections.json`): C1 draft hashes `442d1a0b…`/`be38f55f…` were not two-line-plane-section hashes (origin NOT_RECOVERABLE); C2 independent re-review covered `10dd6d6e`, the 3-line `efb756aa` delta reviewed here (session, not independent) NONBLOCKING; C3 stale `TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md` §2 hash/version. Fast-forward eligible; scene/corpus re-export byte-identical at final product; no merge/push.
+
 ## WAVE_ID = SOURCE_BOUND_RESULT_PLANNING
 
 REPORT = docs/evaluation/geometry/runs/source-bound-result-planning/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-bound-result-planning/
-CORRECTED_BY = NONE
+CORRECTED_BY = SOURCE_BOUND_RESULT_PLANNING_INTEGRATION_READINESS
 CORRECTS = NONE
 CLASSIFICATION = RESULT_BINDING_INTEGRATION_REVIEW_READY
 CODE_COMMIT = efb756aa

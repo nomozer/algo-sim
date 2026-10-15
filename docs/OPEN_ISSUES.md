@@ -24,7 +24,13 @@
   square grid or a mathematical entity. The reference image is not in this review's evidence package, so its exact visual
   specification remains to be confirmed when that work is authorized. Show auxiliary construction vectors/current step
   clearly; reduce selection dimming; balance auxiliary plane, section edges and hidden lines; make `(P)` readable.
-- **evidence:** User request for final Group A integration readiness; `docs/evaluation/geometry/runs/group-a-integration-readiness/report.md`.
+- **2026-10-15 addendum (user review of result-binding screenshots: pyramid, cuboid, prism):** hidden/visible strokes
+  not verified per camera angle; auxiliary lines, intersection lines and solid edges overlap; large planes cover the
+  solid; the role of the perpendicular segment and foot H is unclear; default view, point labels and visual hierarchy
+  below teaching expectations. Not evidence of a Kernel error; `PASS_CORE_CAUSAL_RENDERING` (run
+  `source-bound-result-planning`) checks causal order/selection/pixels only, not visual quality. Not implemented.
+- **evidence:** User request for final Group A integration readiness; `docs/evaluation/geometry/runs/group-a-integration-readiness/report.md`;
+  addendum: `docs/evaluation/geometry/runs/source-bound-result-planning-integration-readiness/report.md` §9.
 - **impact:** Learner readability and visual acceptance. No new wrong geometry identified in the reviewed three scenes;
   a presentation that changes perceived incidence or construction meaning must be treated as a semantic clarity blocker.
 - **scope:** One bounded Scene3D Presentation slice after an explicit scope decision; no Kernel/coordinate changes.

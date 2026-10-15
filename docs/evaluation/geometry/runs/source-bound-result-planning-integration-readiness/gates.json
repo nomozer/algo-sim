@@ -1,0 +1,64 @@
+{
+  "schema": "RESULT_BINDING_READINESS_GATES/1",
+  "date": "2026-10-15",
+  "git": {
+    "branch": "research/source-bound-result-planning",
+    "head_at_start": "11db61a14ae42fe2868882224170758d6a25a73c",
+    "main": "2a3c0787cc35d2e5530d77658225039ab4c5991e",
+    "origin_main": "2a3c0787cc35d2e5530d77658225039ab4c5991e",
+    "fetch_dry_run": "no remote ref updates",
+    "merge_base_equals_main": true,
+    "research_ahead": 12,
+    "main_ahead_divergent": 0,
+    "fast_forward_eligible": true,
+    "user_dirty_state": "?? frontend/public/ (protected, untouched, not staged)"
+  },
+  "delta_main_to_head_11db61a1": {
+    "paths": 73,
+    "deletions": 0,
+    "modified_or_renamed_historical_evidence": 0,
+    "categories": {
+      "product (backend/app)": 5,
+      "tests": 3,
+      "research harness (backend/scripts, frontend/scripts)": 5,
+      "new evidence (two new run folders)": 52,
+      "living docs": 7,
+      "candidate manifest (EVALUATION_CANDIDATE.json, refreeze)": 1
+    },
+    "dependency_manifests_changed": false,
+    "frontend_src_changed": false,
+    "test_skip_or_xfail_added": false,
+    "product_after_efb756aa": "git diff efb756aa 11db61a1 -- backend frontend/src = empty"
+  },
+  "identity": {
+    "candidate_verify": "PASS — 'Candidate khớp bản đã đóng băng (mã sản phẩm: 110 file, c0a8792f1c491ae4…)' in clean detached worktree 7b14fe04; EVALUATION_CANDIDATE.json identical 7b14fe04..11db61a1",
+    "candidate_sha256": "c0a8792f1c491ae40b41c6af5bbb00ed372e1bbc3b6b39c1093e14572b02b79e",
+    "cache_version_source": "backend/app/main.py CACHE_VERSION = \"125\"",
+    "default_mode": "LLM_ONLY (routing.py CHE_DO_MAC_DINH; main.py, ai/pipeline.py, geometry_compiler/, semantic_program/ have no main→research delta; import-closure test_Y_duong_mac_dinh_VAN_khong_tham_chieu_compiler PASS)",
+    "corpus_sha256": "6587fabf084029bf7aa787df291b27bbf83fde95212ca9a8f1bd4c4ce9cbda84 (only commit 19140e2f)",
+    "preregistration_sha256": "14303fa0d80f5a55e5f0fd87f7cc6d15f23fdf80e118668c02007019ed297db7 (only commit 19140e2f)",
+    "t3": "verification/t3-pass.json of run source-bound-result-planning: verified_commit 7b14fe04, product efb756aa, log sha256 29b09bf5… recomputed MATCH; measured tree unchanged since ⇒ reused, not rerun",
+    "browser": "export_result_binding_scenes.py re-run at 7b14fe04 (product efb756aa) into a fresh directory: scenes.json 177665cc…, corpus-results.json 1ceed3f0…, manifest.json 84e439e4… byte-identical to committed files; receipts bind backendSceneSha256 177665cc…; frontend/src identical to main and frontend/scripts unchanged since capture (f7ae5421)",
+    "provider": "provider-fingerprints.json"
+  },
+  "backend_targeted": {
+    "file": "backend-targeted.xml",
+    "sha256": "4b479ae542ce8f6b0d88402224cc2e69e250e91e4d16cd2c1bb6f00e0320e23e",
+    "verified_commit": "11db61a14ae42fe2868882224170758d6a25a73c (clean detached worktree, removed after run)",
+    "tests": 616,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "command": "backend/.venv/Scripts/python.exe -m pytest tests/geometry/test_result_binding_planning.py tests/geometry/test_hybrid_goal_decomposition.py tests/geometry/test_hybrid_ask_operand_binding.py tests/geometry/test_source_gate_clause_role.py tests/geometry/test_structured_geometry_relations.py tests/geometry/test_two_line_plane_section.py tests/geometry/test_source_grounding_closure.py tests/semantic_program/test_evaluation_candidate.py tests/test_api.py -q -p no:cacheprovider --basetemp=<scratchpad> --junitxml=<scratchpad>/backend-targeted.xml (cwd worktree backend)"
+  },
+  "frontend": "NOT_RERUN — frontend/src has no main→research delta; T3 7b14fe04 Vitest 68 files / 1055 passed + build PASS inherited",
+  "docs_identity": {
+    "file": "docs-identity.xml",
+    "sha256": "fb3da35367c624d6f94525abdce78bd706a29453aba0329065179aec9c2f827d",
+    "tests": 45,
+    "failures": 0,
+    "verified_tree": "working tree of the readiness documentation commit before staging (all files of that commit except docs-identity.xml and this field)",
+    "command": "backend/.venv/Scripts/python.exe -m pytest tests/geometry/test_docs_information_architecture.py tests/test_current_state_identity.py -q -p no:cacheprovider --basetemp=<scratchpad> --junitxml=<scratchpad>/docs-identity.xml (cwd backend)"
+  },
+  "model_request_count": 0
+}

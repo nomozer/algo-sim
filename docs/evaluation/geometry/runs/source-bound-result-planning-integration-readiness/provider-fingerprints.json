@@ -1,0 +1,73 @@
+{
+  "schema": "PROVIDER_FINGERPRINT_RECOMPUTATION/1",
+  "date": "2026-10-15",
+  "method": "Each commit checked out in its own clean detached worktree; backend/.venv Python run from that worktree's backend/; worktrees removed after measurement. 0 model calls.",
+  "serializer": {
+    "route_a": "app.ai.function_calling.surface_fingerprint()",
+    "route_b": "app.ai.fact_extraction.surface_fingerprint()",
+    "declarations": "sha256(json.dumps(app.simulation.geometry_functions.registry.function_declarations(), ensure_ascii=False, sort_keys=True).encode())"
+  },
+  "measurements": {
+    "19140e2f5b4214b6e98967bc1b79d6fc45ffca01": {
+      "role": "branch baseline (preregistration commit; product tree = main 2a3c0787)",
+      "A": "912b22ef7f89851412b8ff026012454d1f9aa225bdd5bd00eb0d8f2dbd53fa3e",
+      "B": "145feb1873eac91fab1336f3f6aded7b792d82a9d3599e446087fe6b33a489b5",
+      "declarations": "f2ec9698a4ee8af86448790f83d9af340eb6afcfce0a8f258ea67e46bf7504b1",
+      "line_ref_in_declarations": false,
+      "planning_metadata_in_declarations": false
+    },
+    "efb756aa166e8da18b20971338fece8adf80bc89": {
+      "role": "final product commit",
+      "A": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+      "B": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+      "declarations": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169",
+      "line_ref_in_declarations": true,
+      "planning_metadata_in_declarations": false
+    },
+    "7b14fe0453b45a3c87e2414ae44f6dc4058c9213": {
+      "role": "T3 verification commit",
+      "A": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+      "B": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+      "declarations": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"
+    },
+    "11db61a14ae42fe2868882224170758d6a25a73c": {
+      "role": "research HEAD at start of this run (working tree; backend/ and frontend/src identical to efb756aa)",
+      "A": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+      "B": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+      "declarations": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"
+    }
+  },
+  "classification": {
+    "A": {
+      "baseline_vs_final": "CHANGED",
+      "intent": "INTENTIONALLY_CHANGED",
+      "compatibility": "BACKWARD_COMPATIBLE",
+      "cause": "Route A fingerprint covers the provider function declarations; orthogonal_projection_line gained optional line_ref (line xor line_ref). Existing explicit-line calls are unchanged.",
+      "safety": "Route A cannot obtain a verified result reference: _kiem_result_binding refuses line_ref calls from Route A with RESULT_BINDING_UNVERIFIED (test_result_binding_planning.py::test_route_a_cannot_claim_a_result_reference_certificate)."
+    },
+    "B": {
+      "baseline_vs_final": "CHANGED",
+      "intent": "INTENTIONALLY_CHANGED",
+      "compatibility": "BACKWARD_COMPATIBLE",
+      "cause": "TypedFact.line_ref (optional, default None) + fact-extraction prompt rule 10."
+    },
+    "declarations": {
+      "baseline_vs_final": "CHANGED",
+      "intent": "INTENTIONALLY_CHANGED",
+      "compatibility": "BACKWARD_COMPATIBLE",
+      "cause": "Same optional line_ref parameter on orthogonal_projection_line.",
+      "planning_contract": "PlanningContract / PlanningTerm are internal registry metadata; not present in function_declarations() at any measured commit."
+    },
+    "post_product_commits": "UNCHANGED (efb756aa = 7b14fe04 = 11db61a1 for all three surfaces)"
+  },
+  "agreement": {
+    "provider-surfaces.json old": "MATCH baseline 19140e2f",
+    "provider-surfaces.json current": "MATCH final efb756aa",
+    "reconciliation.json baseline_sha256/actual_sha256": "MATCH",
+    "test_hybrid_goal_decomposition.py::test_provider_surfaces_are_pinned": "reads provider-surfaces.json current; PASS in targeted gate",
+    "report.md (current text)": "MATCH (lists the three current hashes; does not claim unchanged)",
+    "report.md at f7ae5421 (superseded draft)": "MISMATCH — see corrections.json C1"
+  },
+  "schema_changed_to_force_match": false,
+  "live_calls": 0
+}

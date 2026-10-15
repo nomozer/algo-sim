@@ -1,0 +1,43 @@
+{
+  "schema": "EVIDENCE_CORRECTION/1",
+  "corrects_run": "source-bound-result-planning",
+  "date": "2026-10-15",
+  "policy": "Original receipts stay byte-identical; this file is the correction layer (EVIDENCE_INDEX CORRECTED_BY). Living documents that state current contract values are minimally updated.",
+  "corrections": [
+    {
+      "id": "C1",
+      "class": "TEXT_ONLY — provenance of a superseded draft",
+      "target": "source-bound-result-planning/reconciliation.json provider_surfaces.surfaces[*].report_discrepancy_cause",
+      "finding": "The draft report.md at f7ae5421 (line 13) said Route A 912b22ef… 'giữ nguyên' and cited declarations be38f55f… and Route B 442d1a0b…. reconciliation.json explains the latter two as 'historical two-line-plane-section' hashes. They are not: two-line-plane-section/provider-surfaces.json pins A 912b22ef…, B 145feb18…, declarations f2ec9698… (= baseline 19140e2f), and the strings 442d1a0b / be38f55f occur nowhere in repository history except the f7ae5421 draft and the correction prose that quotes it (c00a5462 onward; git log --all -S). Their origin is NOT_RECOVERABLE; they are not the output of the canonical serializer at any measured commit.",
+      "also": "The draft claim 'Route A giữ nguyên' was false: Route A changed 912b22ef… → 7ea511a6… because the declarations it covers gained line_ref.",
+      "current_state": "report.md was already corrected in c00a5462 and now lists 7ea511a6… / 485d3834… / 5ceb0f99…. provider-surfaces.json, reconciliation.json hashes, the pin test and the recomputation agree.",
+      "impact": "None on product or measurement; narrative provenance only.",
+      "action": "No rewrite of reconciliation.json; read provider-fingerprints.json for the recomputed values and classification."
+    },
+    {
+      "id": "C2",
+      "class": "REVIEW_SCOPE — receipt rebound in place",
+      "target": "source-bound-result-planning/review.md (lines 5 and CRITICAL-1 resolution), reconciliation.json current_commit",
+      "finding": "The fresh-context independent re-verification recorded in review.md was performed on 10dd6d6e (committed c00a5462, 12:14). efb756aa (12:34) changed 3 lines of registry.py afterwards; 7b14fe04 then edited review.md in place to name efb756aa as 'Final Re-Verified Product Commit'. The efb756aa delta itself was not independently re-reviewed.",
+      "delta_reviewed_here": {
+        "reviewer": "this Claude Code LOCAL session (same session that writes this correction; NOT fresh-context independent)",
+        "diff": "10dd6d6e..efb756aa -- backend/app/simulation/geometry_functions/registry.py (+3/-3)",
+        "content": "Removes 'bình phương|nửa' from the shared _CHAN_TAN_NGU (used by _duoc_hoi/_hoi_dung_cum on every source-gated path), restoring it byte-identical to main 2a3c0787; re-adds the same modifier refusal locally in _kiem_phu (named-line auxiliary foot) and _kiem_result_binding (line_ref goal), scoped to the enclosing sentence prefix.",
+        "verdict": "NONBLOCKING — no Critical/Important. Narrows the shared-surface change back to main; both local paths covered by test_enclosing_sentence_outside_truncated_quote_or_modifier_is_refused ('bình phương' cases); mutant suite of test_source_gate_clause_role.py / test_hybrid_goal_decomposition.py PASS in this run's targeted gate.",
+        "nonblocking_notes": [
+          "'nửa' is tested on the shared ask-operand path but not on the two result-binding paths.",
+          "A sentence containing 'nửa mặt phẳng' before the asked distance would be refused (fail-closed false refusal, not a false serve)."
+        ]
+      },
+      "impact": "Review receipt overstated its scope by one 3-line commit; no product defect found.",
+      "action": "review.md kept byte-identical; this entry is the authority for the efb756aa delta review."
+    },
+    {
+      "id": "C3",
+      "class": "LIVING_DOC_STALE",
+      "target": "docs/architecture/TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md §2",
+      "finding": "Stated REGISTRY_VERSION geometry-functions/3 and declarations hash f2ec9698… as current; source at efb756aa is geometry-functions/4 and 5ceb0f99….",
+      "action": "Minimal update of the current-value sentence; historical sentence about goal-directed-section-planning annotated, not removed."
+    }
+  ]
+}

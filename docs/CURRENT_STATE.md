@@ -1,14 +1,25 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL — Result binding main-integration readiness, 2026-10-15
+
+CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
+
+`research/source-bound-result-planning` is a fast-forward of `main`/`origin/main` `2a3c0787` (0 divergent commits); not
+merged, not pushed. Product `efb756aa` unchanged; candidate `c0a8792f…` (110 files) verify MATCH; T3 `7b14fe04` reused
+(measured tree identical). Provider surfaces A/B/declarations recomputed at `19140e2f` and `efb756aa`: all three
+INTENTIONALLY_CHANGED, backward compatible; draft-provenance and review-scope corrections in the run's `corrections.json`.
+`LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid product enablement NO-GO, 0 Gemini calls. Receipt:
+[`source-bound-result-planning-integration-readiness`](evaluation/geometry/runs/source-bound-result-planning-integration-readiness/report.md).
+
 ## LOCAL — Source-bound result binding & bounded effect planning, 2026-10-15
 
-CANONICAL_NEXT_ACTION = GOAL_DIRECTED_RESULT_BINDING_SLICE_IMPLEMENTATION_DECISION
+CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
 
 Research branch `research/source-bound-result-planning` from `19140e2f` (`main`/`origin/main` remain `2a3c0787`; no merge/push). Product `efb756aa`, candidate `c0a8792f1c491ae40b41c6af5bbb00ed372e1bbc3b6b39c1093e14572b02b79e` (110 files), `CACHE_VERSION = 125`, `DEFAULT_MODE = LLM_ONLY`, Hybrid off, `LIVE_GEMINI_REQUESTS = 0`. Implements preregistered `line_ref` transport, `PlanningContract` effects on `intersection_line` / `orthogonal_projection_line` / `ask_length`, bounded `_EffectResolver` (`MAX_EFFECT_DEPTH = 3`, `MAX_EFFECT_NEEDS = 32`, `MAX_EFFECT_CANDIDATES = 8`, `MAX_RESULT_LINES = 4`, `MAX_RESULT_FEET = 8`), `_kiem_result_binding` enclosing-sentence source certificate verification, and Engine/IR line result binding (`_Dung.lines`, `_emit_intersection`). Locked development corpus (`NOT_HELD_OUT`): RED `de5ea1a7` 18/18 `SCHEMA_INVALID` → GREEN 6/6 positive `SERVED` ($10/11, 5, 3, 10, 0, 10/11$), 12/12 negative `REFUSED` (`test_result_binding_planning.py` 72 passed; 18/18 `EXACT_MATCH` in `reconciliation.json`). Independent 11-dimension review (`review.md`) PASS (`efb756aa`). Historical two-line (45 dev / 32 heldout) and benchmark 30 (19/9/0/2) invariant; Playwright Scene3D harness SwiftShader + Intel UHD D3D11 `PASS_CORE_CAUSAL_RENDERING` (4 scenes, 0 errors); authoritative clean detached T3 `FULL_PRODUCT_GATE_PASS` at `7b14fe04` (`verification/t3-pass.json`, `verification/t3-authoritative.log` `29b09bf5…`: backend `9405 passed`, frontend `1055 passed`, build PASS, demo `5/5`, crash surface `6/6`). Receipt: [`source-bound-result-planning`](evaluation/geometry/runs/source-bound-result-planning/report.md).
 
 ## LOCAL — Planner generalization audit/design, 2026-10-14
 
-CANONICAL_NEXT_ACTION = GOAL_DIRECTED_RESULT_BINDING_SLICE_IMPLEMENTATION_DECISION
+CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
 
 Research branch `research/goal-directed-planner-generalization-audit` from synchronized main/origin/remote2a3c0787.
 Product/candidate/cache125/LLM_ONLY unchanged; Hybrid off/Gemini0, no merge/push. Current Planner uses fixed goal
@@ -20,7 +31,7 @@ Scene3D backlog/Hybrid blockers stay OPEN. The following integration snapshot re
 
 ## LOCAL — Group A research integrated on main, 2026-10-14
 
-CANONICAL_NEXT_ACTION = GOAL_DIRECTED_RESULT_BINDING_SLICE_IMPLEMENTATION_DECISION
+CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
 
 User-authorized fast-forward `5270f3dd` → `5d73f7c2`, first main/origin/ls-remote sync verified. Integration documentation
 publication commit follows (SELF); research branch retained. Product `a5a0797c`, freeze `f227dd72`, candidate

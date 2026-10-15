@@ -8,6 +8,13 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-15, result-binding slice implemented and integration-checked (LOCAL, not merged):** branch
+`research/source-bound-result-planning` (product `efb756aa`, candidate `c0a8792f…`, T3 `7b14fe04`) is a fast-forward of
+main `2a3c0787`. Readiness + provider-fingerprint correction: run
+[`source-bound-result-planning-integration-readiness`](evaluation/geometry/runs/source-bound-result-planning-integration-readiness/report.md).
+Next only: the user's GO/NO-GO for that fast-forward. Integration ≠ Hybrid enablement (stays NO-GO, LLM_ONLY, cache125).
+Scene3D presentation findings recorded in `ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY`, not implemented.
+
 **2026-10-14, user's priority decision:** Planner generalization audit precedes Scene3D Presentation implementation.
 Audit complete on a research branch from main2a3c0787: source/14diagnostic probes identify result-binding/effect-discovery
 contract gaps; one bounded distance-to-derived-line slice designed/preregistered, not implemented. Next only user's
@@ -16,7 +23,7 @@ Group A remains integrated on main; Hybrid stays off. Presentation backlog, orbi
 No Group B, new family, new Planner/FactGraph/DSL or product enablement. No additional task starts without that decision.
 
 ```text
-CANONICAL_NEXT_ACTION = GOAL_DIRECTED_RESULT_BINDING_SLICE_IMPLEMENTATION_DECISION
+CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

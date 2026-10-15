@@ -23,9 +23,12 @@ engine tự tính thứ tự dựng, không tin khai báo ấy.
 
 ## 2. Thư viện hàm (30)
 
-Danh sách đúng theo mã tại run `hybrid-section-slice`, 2026-10-11. Hằng `REGISTRY_VERSION` trong mã vẫn là
-`geometry-functions/3`; bộ hàm được định danh bằng băm khai báo hàm `f2ec9698…`, ghim trong
-`test_hybrid_goal_decomposition.py::test_provider_surfaces_are_pinned`.
+Danh sách đúng theo mã tại run `hybrid-section-slice`, 2026-10-11. Từ run `source-bound-result-planning`
+(product `efb756aa`): `REGISTRY_VERSION = geometry-functions/4`, `orthogonal_projection_line` nhận thêm `line_ref`
+tuỳ chọn (`line` xor `line_ref`; tuyến A gửi `line_ref` ⇒ `RESULT_BINDING_UNVERIFIED`); băm khai báo hàm `5ceb0f99…`
+(trước đó `f2ec9698…`), ghim qua `runs/source-bound-result-planning/provider-surfaces.json` trong
+`test_hybrid_goal_decomposition.py::test_provider_surfaces_are_pinned`. `PlanningContract` chỉ là metadata nội bộ,
+không vào khai báo hàm.
 
 | nhóm | hàm |
 |---|---|
@@ -36,7 +39,7 @@ Danh sách đúng theo mã tại run `hybrid-section-slice`, 2026-10-11. Hằng 
 
 **Hàm chỉ dành cho planner** (run `goal-directed-section-planning`): `translate_point` (`auxiliary_only`) — ảnh của
 một điểm qua phép tịnh tiến theo vectơ hai điểm đã có. Không khai cho provider (tuyến A vẫn đúng 30 hàm trên,
-`PROVIDER_FUNCTIONS`; băm khai báo `f2ec9698…` không đổi), chỉ hợp lệ trong một phân rã đã khai `MAT_SONG_SONG`:
+`PROVIDER_FUNCTIONS`; băm khai báo `f2ec9698…` không đổi ở run đó), chỉ hợp lệ trong một phân rã đã khai `MAT_SONG_SONG`:
 thiết diện / diện tích thiết diện với mặt (P) qua điểm đã xác minh M song song mặt có tên (Q) = mặt qua M và hai
 ảnh tịnh tiến của M theo Q₀Q₁→, Q₀Q₂→ (biểu thức IR `vector_from_points` + `translate`, không primitive mới).
 Typed Facts: `section` / `question(area)` mang `point` + `points_b` + `plane_relation` thay cho `points`;
