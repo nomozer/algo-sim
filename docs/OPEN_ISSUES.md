@@ -159,6 +159,14 @@
     "… BD bình phương.". On top of that, its `bình phương|nửa` guard reads the source with the AI quote spliced in, so a
     space-squeezed quote ("bìnhphương") bypasses it. Evidence: `docs/evaluation/geometry/runs/source-bound-result-planning-main-integration/review-efb756aa-delta.md`
     (IMPORTANT-1/2). This blocks the result-binding main integration until the user decides.
+    **Update (run `source-bound-result-planning-false-serve-fix`, product `8da9ae31`):** IMPORTANT-1/2 closed. The
+    auxiliary ask is now read on the source under `_hoi_dung_cum`. Its independent review found the remaining gaps in
+    the **shared** ask grammar, which also hit ordinary asks and Route A: (CRITICAL-1) `_hoi_dung_cum` reads only from the
+    last question verb ("Nhân đôi kết quả, tính …", "Hai lần của đại lượng sau bằng bao nhiêu: …" are served);
+    (CRITICAL-2) `_SAU_HOP_LE` admits any text in a "(kết quả …)/(đơn vị …)" note; (IMPORTANT) the reused-foot branch of
+    `_kiem_result_binding` still reads quote-spliced text. 8 false serves remain on the auxiliary path
+    (`docs/evaluation/geometry/runs/source-bound-result-planning-false-serve-fix/report.md` §6). Closing them needs a
+    separately approved shared-grammar wave.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** Next Hybrid gate wave, before any product enablement or live pilot of Hybrid.
 - **default_switch_blocker:** YES

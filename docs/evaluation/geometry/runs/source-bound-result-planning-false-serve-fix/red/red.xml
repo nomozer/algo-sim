@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="13" skipped="0" tests="20" time="1.416" timestamp="2026-10-15T13:56:04.013915+07:00" hostname="DESKTOP-SCQFJL8"><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance[T\xednh b\xecnh ph\u01b0\u01a1ng kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.344" /><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance[T\xednh n\u1eeda kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.005" /><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance[T\xednh m\u1ed9t n\u1eeda kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.005" /><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance[T\xednh hai l\u1ea7n kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.019"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">sentence = 'Tính hai lần khoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("sentence", ALTERED)
+    def test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance(sentence):
+&gt;       _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:286: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính hai lầ..., ...}, {'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['Tính hai lần khoảng cách từ S đến BD.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance[T\xednh c\u0103n b\u1eadc hai c\u1ee7a kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.020"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">sentence = 'Tính căn bậc hai của khoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("sentence", ALTERED)
+    def test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance(sentence):
+&gt;       _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:286: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính căn bậ...{'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['Tính căn bậc hai của khoảng cách từ S đến BD.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance[T\xednh l\u1eadp ph\u01b0\u01a1ng kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.017"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">sentence = 'Tính lập phương khoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("sentence", ALTERED)
+    def test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance(sentence):
+&gt;       _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:286: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính lập ph.....}, {'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['Tính lập phương khoảng cách từ S đến BD.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance[T\xednh ngh\u1ecbch \u0111\u1ea3o kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.019"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">sentence = 'Tính nghịch đảo khoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("sentence", ALTERED)
+    def test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance(sentence):
+&gt;       _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:286: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính nghịch.....}, {'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['Tính nghịch đảo khoảng cách từ S đến BD.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance[T\xednh m\u1ed9t ph\u1ea7n ba kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.050"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">sentence = 'Tính một phần ba khoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("sentence", ALTERED)
+    def test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance(sentence):
+&gt;       _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:286: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính một ph....}, {'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['Tính một phần ba khoảng cách từ S đến BD.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance[T\xednh 1/2 kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.018"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">sentence = 'Tính 1/2 khoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("sentence", ALTERED)
+    def test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance(sentence):
+&gt;       _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:286: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính 1/2 kh...3.'], ...}, {'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['Tính 1/2 khoảng cách từ S đến BD.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance[T\xednh gi\xe1 tr\u1ecb b\xecnh ph\u01b0\u01a1ng kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.005" /><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance[T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD b\xecnh ph\u01b0\u01a1ng.]" time="0.017"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">sentence = 'Tính khoảng cách từ S đến BD bình phương.'
+
+    @pytest.mark.parametrize("sentence", ALTERED)
+    def test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance(sentence):
+&gt;       _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:286: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng....}, {'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['Tính khoảng cách từ S đến BD bình phương.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance[T\xcdNH B\xccNH PH\u01af\u01a0NG KHO\u1ea2NG C\xc1CH T\u1eea S \u0110\u1ebeN BD.]" time="0.007" /><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_the_source_not_the_quote_decides_what_is_asked[T\xednh b\xecnhph\u01b0\u01a1ng kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.022"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">source = 'Tính bình phương khoảng cách từ S đến BD.'
+quote = 'Tính bìnhphương khoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("source,quote", SUBSTITUTED, ids=[q for _, q in SUBSTITUTED])
+    def test_the_source_not_the_quote_decides_what_is_asked(source, quote):
+&gt;       _refused(_source_vs_quote(source, quote), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:301: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính bình p.....}, {'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['Tính bìnhphương khoảng cách từ S đến BD.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_the_source_not_the_quote_decides_what_is_asked[b\xecnhph\u01b0\u01a1ngkho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.021"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">source = 'Tính bình phương khoảng cách từ S đến BD.'
+quote = 'bìnhphươngkhoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("source,quote", SUBSTITUTED, ids=[q for _, q in SUBSTITUTED])
+    def test_the_source_not_the_quote_decides_what_is_asked(source, quote):
+&gt;       _refused(_source_vs_quote(source, quote), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:301: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính bình p....'], ...}, {'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['bìnhphươngkhoảng cách từ S đến BD.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_the_source_not_the_quote_decides_what_is_asked[kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.0]" time="0.009" /><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_the_source_not_the_quote_decides_what_is_asked[kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.1]" time="0.031"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">source = 'Tính hai lần khoảng cách từ S đến BD.'
+quote = 'khoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("source,quote", SUBSTITUTED, ids=[q for _, q in SUBSTITUTED])
+    def test_the_source_not_the_quote_decides_what_is_asked(source, quote):
+&gt;       _refused(_source_vs_quote(source, quote), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:301: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính hai lầ...: ['SA = 3.'], ...}, {'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['khoảng cách từ S đến BD.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_the_source_not_the_quote_decides_what_is_asked[T\xednh hail\u1ea7n kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.019"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">source = 'Tính hai lần khoảng cách từ S đến BD.'
+quote = 'Tính hailần khoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("source,quote", SUBSTITUTED, ids=[q for _, q in SUBSTITUTED])
+    def test_the_source_not_the_quote_decides_what_is_asked(source, quote):
+&gt;       _refused(_source_vs_quote(source, quote), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:301: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính hai lầ...], ...}, {'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['Tính hailần khoảng cách từ S đến BD.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_the_source_not_the_quote_decides_what_is_asked[T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BDb\xecnh ph\u01b0\u01a1ng.]" time="0.006"><failure message="AssertionError: ('REFUSED', 'SOURCE_OBJECT_MISMATCH', &quot;q: câu hỏi không nói 'khoảng cách từ S đến BD'&quot;, {})&#10;assert ('REFUSED' == 'REFUSED'&#10;  &#10;    REFUSED and 'SOURCE_OBJECT_MISMATCH' in ('NOT_ASKED_IN_SOURCE',))&#10; +  where 'SOURCE_OBJECT_MISMATCH' = KetQuaTuyen(status='REFUSED', code='SOURCE_OBJECT_MISMATCH', reason=&quot;q: câu hỏi không nói 'khoảng cách từ S đến BD'&quot;, ...], 'provenance': 'DERIVED', 'binding': 'AUXILIARY'}], 'goal_checks': {}, 'negated_checks': {}}, declared_topology=None).code">source = 'Tính khoảng cách từ S đến BD bình phương.'
+quote = 'Tính khoảng cách từ S đến BDbình phương.'
+
+    @pytest.mark.parametrize("source,quote", SUBSTITUTED, ids=[q for _, q in SUBSTITUTED])
+    def test_the_source_not_the_quote_decides_what_is_asked(source, quote):
+&gt;       _refused(_source_vs_quote(source, quote), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:301: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng.....}, {'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['Tính khoảng cách từ S đến BDbình phương.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('REFUSED', 'SOURCE_OBJECT_MISMATCH', "q: câu hỏi không nói 'khoảng cách từ S đến BD'", {})
+E       assert ('REFUSED' == 'REFUSED'
+E         
+E           REFUSED and 'SOURCE_OBJECT_MISMATCH' in ('NOT_ASKED_IN_SOURCE',))
+E        +  where 'SOURCE_OBJECT_MISMATCH' = KetQuaTuyen(status='REFUSED', code='SOURCE_OBJECT_MISMATCH', reason="q: câu hỏi không nói 'khoảng cách từ S đến BD'", ...], 'provenance': 'DERIVED', 'binding': 'AUXILIARY'}], 'goal_checks': {}, 'negated_checks': {}}, declared_topology=None).code
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_hon_nua_is_not_nua_and_a_whitespace_variant_quote_of_a_plain_question_is_served" time="0.022"><failure message="AssertionError: ('SOURCE_OBJECT_MISMATCH', &quot;q: câu hỏi không nói 'khoảng cách từ S đến BD'&quot;)&#10;assert 'REFUSED' == 'SERVED'&#10;  &#10;  - SERVED&#10;  + REFUSED">def test_hon_nua_is_not_nua_and_a_whitespace_variant_quote_of_a_plain_question_is_served():
+        _served(_problem(_dist("Hơn nữa, tính khoảng cách từ S đến BD.", "S", "BD")), F(11))
+&gt;       _served(_source_vs_quote("Tính khoảng cách từ S đến BD.", "Tính khoảngcách từ S đến BD."), F(11))
+
+tests\geometry\test_hybrid_goal_decomposition.py:307: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng...SA = 3.'], ...}, {'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['Tính khoảngcách từ S đến BD.'], ...}]}
+expected_sq = Fraction(11, 1), qid = 'q'
+
+    def _served(case, expected_sq, qid="q"):
+        r = _both(case)
+&gt;       assert r.status == "SERVED", (r.code, r.reason)
+E       AssertionError: ('SOURCE_OBJECT_MISMATCH', "q: câu hỏi không nói 'khoảng cách từ S đến BD'")
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+tests\geometry\test_hybrid_goal_decomposition.py:50: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_nua_mat_phang_in_an_earlier_sentence_does_not_reach_the_question_gate" time="0.008" /></testsuite></testsuites>

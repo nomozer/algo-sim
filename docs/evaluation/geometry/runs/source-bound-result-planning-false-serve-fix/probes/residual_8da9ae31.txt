@@ -1,0 +1,13 @@
+C1 'Đáp số là bình phương của kết quả; tính khoảng cách từ S đến BD.' REFUSED NOT_ASKED_IN_SOURCE {}
+C1 'Lấy bình phương, tính khoảng cách từ S đến BD.' REFUSED NOT_ASKED_IN_SOURCE {}
+C1 'Bình phương của đại lượng sau bằng bao nhiêu: khoảng cách từ S đến BD?' REFUSED NOT_ASKED_IN_SOURCE {}
+C1 'Một nửa của đại lượng sau là bao nhiêu: khoảng cách từ S đến BD?' REFUSED NOT_ASKED_IN_SOURCE {}
+C1 'Đề hỏi bình phương; hãy tính khoảng cách từ S đến BD.' REFUSED NOT_ASKED_IN_SOURCE {}
+C1 'Hai lần của đại lượng sau bằng bao nhiêu: khoảng cách từ S đến BD?' SERVED None {'q': '√11'}
+C1 'Nhân đôi kết quả, tính khoảng cách từ S đến BD.' SERVED None {'q': '√11'}
+C2 'Tính khoảng cách từ S đến BD (kết quả nhân đôi).' SERVED None {'q': '√11'}
+C2 'Tính khoảng cách từ S đến BD (kết quả lấy bình phương).' SERVED None {'q': '√11'}
+C2 'Tính khoảng cách từ S đến BD (kết quả gấp đôi).' SERVED None {'q': '√11'}
+C2 'Tính khoảng cách từ S đến BD (kết quả ghi dưới dạng bình phương).' SERVED None {'q': '√11'}
+C2 'Tính khoảng cách từ S đến BD (đơn vị: một nửa cm).' SERVED None {'q': '√11'}
+C2 'Tính khoảng cách từ S đến BD (đơn vị: cm, kết quả bình phương).' SERVED None {'q': '√11'}

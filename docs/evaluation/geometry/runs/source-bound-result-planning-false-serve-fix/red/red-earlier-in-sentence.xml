@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="5" skipped="0" tests="7" time="1.854" timestamp="2026-10-15T14:26:15.398412+07:00" hostname="DESKTOP-SCQFJL8"><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_modifier_earlier_in_the_sentence_is_still_read[\u0110\xe1p s\u1ed1 l\xe0 b\xecnh ph\u01b0\u01a1ng c\u1ee7a k\u1ebft qu\u1ea3; t\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.338"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">sentence = 'Đáp số là bình phương của kết quả; tính khoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("sentence", EARLIER_IN_SENTENCE)
+    def test_a_modifier_earlier_in_the_sentence_is_still_read(sentence):
+&gt;       _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:315: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Đáp số là b... 'question', 'role': 'question', 'quotes': ['Đáp số là bình phương của kết quả; tính khoảng cách từ S đến BD.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_modifier_earlier_in_the_sentence_is_still_read[L\u1ea5y b\xecnh ph\u01b0\u01a1ng, t\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.019"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">sentence = 'Lấy bình phương, tính khoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("sentence", EARLIER_IN_SENTENCE)
+    def test_a_modifier_earlier_in_the_sentence_is_still_read(sentence):
+&gt;       _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:315: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Lấy bình ph...'id': 'q', 'kind': 'question', 'role': 'question', 'quotes': ['Lấy bình phương, tính khoảng cách từ S đến BD.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_modifier_earlier_in_the_sentence_is_still_read[B\xecnh ph\u01b0\u01a1ng c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau b\u1eb1ng bao nhi\xeau: kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD?]" time="0.018"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">sentence = 'Bình phương của đại lượng sau bằng bao nhiêu: khoảng cách từ S đến BD?'
+
+    @pytest.mark.parametrize("sentence", EARLIER_IN_SENTENCE)
+    def test_a_modifier_earlier_in_the_sentence_is_still_read(sentence):
+&gt;       _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:315: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Bình phương...tion', 'role': 'question', 'quotes': ['Bình phương của đại lượng sau bằng bao nhiêu: khoảng cách từ S đến BD?'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_modifier_earlier_in_the_sentence_is_still_read[M\u1ed9t n\u1eeda c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau l\xe0 bao nhi\xeau: kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD?]" time="0.042"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">sentence = 'Một nửa của đại lượng sau là bao nhiêu: khoảng cách từ S đến BD?'
+
+    @pytest.mark.parametrize("sentence", EARLIER_IN_SENTENCE)
+    def test_a_modifier_earlier_in_the_sentence_is_still_read(sentence):
+&gt;       _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:315: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Một nửa của... 'question', 'role': 'question', 'quotes': ['Một nửa của đại lượng sau là bao nhiêu: khoảng cách từ S đến BD?'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_a_modifier_earlier_in_the_sentence_is_still_read[\u0110\u1ec1 h\u1ecfi b\xecnh ph\u01b0\u01a1ng; h\xe3y t\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.018"><failure message="AssertionError: ('SERVED', None, None, {'q': '√11'})&#10;assert ('SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED)">sentence = 'Đề hỏi bình phương; hãy tính khoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("sentence", EARLIER_IN_SENTENCE)
+    def test_a_modifier_earlier_in_the_sentence_is_still_read(sentence):
+&gt;       _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+tests\geometry\test_hybrid_goal_decomposition.py:315: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+case = {'id': 'q', 'text': 'Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Đề hỏi bình...q', 'kind': 'question', 'role': 'question', 'quotes': ['Đề hỏi bình phương; hãy tính khoảng cách từ S đến BD.'], ...}]}
+codes = ('NOT_ASKED_IN_SOURCE',)
+
+    def _refused(case, *codes):
+        r = _both(case)
+&gt;       assert r.status == "REFUSED" and r.code in codes, (r.status, r.code, r.reason, r.answers)
+E       AssertionError: ('SERVED', None, None, {'q': '√11'})
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+tests\geometry\test_hybrid_goal_decomposition.py:57: AssertionError</failure></testcase><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_the_asked_phrase_must_lie_inside_the_quoted_span[T\xednh]" time="0.005" /><testcase classname="tests.geometry.test_hybrid_goal_decomposition" name="test_the_asked_phrase_must_lie_inside_the_quoted_span[kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn B]" time="0.005" /></testsuite></testsuites>

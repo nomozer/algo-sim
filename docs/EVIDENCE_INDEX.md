@@ -1,5 +1,19 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SOURCE_BOUND_RESULT_PLANNING_FALSE_SERVE_FIX
+
+REPORT = docs/evaluation/geometry/runs/source-bound-result-planning-false-serve-fix/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-bound-result-planning-false-serve-fix/
+CORRECTED_BY = NONE
+CORRECTS = SOURCE_BOUND_RESULT_PLANNING
+CLASSIFICATION = RESULT_BINDING_FALSE_SERVE_FIX_BLOCKED
+CODE_COMMIT = 2427289a; 8da9ae31
+VERIFICATION_COMMIT = 55fa87e7 (freeze a6ba6f32…); f25f2deb (freeze 7e993f8d…); T3 NOT_RUN
+DOCUMENTATION_COMMIT_ROLE = SELF
+MODEL_REQUEST_COUNT = 0
+
+`_kiem_phu` now reads the auxiliary distance(point, line) ask on the source under the shared closed ask grammar, which closes IMPORTANT-1/2 of the `efb756aa` review. RED: 13/20 and 5/7. GREEN: 605 targeted tests. Locked corpus 18/18 and benchmark 30 are byte-identical; two-line 45/32 unchanged; provider surfaces unchanged. The independent review of `2427289a` returned BLOCK, with CRITICAL-1/2 in the shared grammar (also ordinary asks and Route A) and IMPORTANT-1 on the reused-foot splice. The `8da9ae31` delta is not independently reviewed. 8 pre-existing false serves remain. No merge, no push.
+
 ## WAVE_ID = SOURCE_BOUND_RESULT_PLANNING_MAIN_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/source-bound-result-planning-main-integration/report.md

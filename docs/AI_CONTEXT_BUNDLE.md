@@ -2,6 +2,8 @@
 
 ## LOCAL override — 2026-10-15 (ưu tiên hơn snapshot §2)
 
+**2026-10-15, false-serve fix BLOCKED (`source-bound-result-planning-false-serve-fix`):** product `8da9ae31`, candidate `7e993f8d…` (freeze `f25f2deb`), T3 not run. IMPORTANT-1/2 are closed. The independent review returned BLOCK on gaps in the shared ask grammar (CRITICAL-1 read window, CRITICAL-2 bracketed note, IMPORTANT reused-foot splice), which also affect ordinary asks and Route A. The next step needs the user to approve a shared-grammar wave. `main` is still `2a3c0787`; nothing pushed.
+
 **2026-10-15, main integration BLOCKED (`source-bound-result-planning-main-integration`):** the independent review of `efb756aa` passes, but it found 2 IMPORTANT false serves on `_kiem_phu` that already exist on `main`. Under the task rule there was no fast-forward and no push; `main` is still `2a3c0787`. The user chooses between accepting the limit and fixing it first. After that, the planned next step is the Scene3D product–Playwright parity audit (not started).
 
 **2026-10-15, integration readiness (`source-bound-result-planning-integration-readiness`):** research branch is a fast-forward of `main` `2a3c0787`; verdict `RESULT_BINDING_MAIN_INTEGRATION_GO_AWAITING_APPROVAL` — no merge/push until the user says GO. Provider fingerprints recomputed (A `912b22ef…`→`7ea511a6…`, B `145feb18…`→`485d3834…`, declarations `f2ec9698…`→`5ceb0f99…`, all intentional/backward compatible); corrections C1–C3 in the run's `corrections.json`. Integration ≠ Hybrid enablement.
