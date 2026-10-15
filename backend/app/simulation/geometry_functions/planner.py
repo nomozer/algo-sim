@@ -284,16 +284,21 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     # độ dài giữ quote của lời gọi đầu (gộp có thể đưa hai số vào cùng một lời gọi). Câu hỏi không bao giờ gộp.
     gon: dict[str, dict] = {}
     for c in k.calls:
-        khoa = c["id"] if c["fn"].startswith("ask_") else c["fn"] + json.dumps(c["args"], sort_keys=True, ensure_ascii=False)
+        # Referenced line declarations retain their IDs/quotes for Registry validation; Engine coalesces verified aliases.
+        khoa = (c['id'] if c['fn'].startswith('ask_') or c['fn']=='intersection_line' and k.resolver.used else
+                c['fn'] + json.dumps(c['args'],sort_keys=True,ensure_ascii=False))
         if khoa not in gon:
             gon[khoa] = c
         elif c["fn"] not in ("segment_length", "height"):
             gon[khoa]["source"]["quotes"] = list(dict.fromkeys(gon[khoa]["source"]["quotes"] + c["source"]["quotes"]))
     k.calls = list(gon.values())
-    for f in facts:
-        if f.kind == 'projection' and f.line_ref:
-            k.auxiliary.append({'rule':'result-line-reference', 'consumer':f.id, 'line_ref':f.line_ref})
+    for c in k.calls:
+        if c['fn']=='orthogonal_projection_line' and c['args'].get('line_ref') and c['id'] in k.fact_ids:
+            k.auxiliary.append({'rule':'result-line-reference', 'consumer':c['id'], 'line_ref':c['args']['line_ref']})
             k.resolver.used = True
+    for alias, canonical in k.resolver.aliases.items():
+        if alias!=canonical and canonical in k.resolver.lines:
+            k.auxiliary.append({'rule':'result-line-alias','producer':alias,'canonical':canonical,'line_ref':canonical})
     if k.resolver.used:
         _bind_result_dependencies(k)
     return k
@@ -355,7 +360,12 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
         return phat(f.id, "altitude", {"apex": dinh, "foot": chan, "solid": kh.ten}, q, "altitude")
     if f.kind == "projection":
         if f.line_ref:
-            return phat(f.id, "orthogonal_projection_line", {"point": f.point, "line_ref": f.line_ref, "image": f.at}, q,
+            ref = k.resolver.aliases.get(f.line_ref,f.line_ref)
+            k.resolver.used = True
+            k.resolver.lines.add(ref)
+            if len(k.resolver.lines)>MAX_RESULT_LINES:
+                raise TuChoi('PLAN_TOO_LARGE','quá trần line results')
+            return phat(f.id, "orthogonal_projection_line", {"point": f.point, "line_ref": ref, "image": f.at}, q,
                         "projection(point, result line)")
         if len(f.points) == 2:
             return phat(f.id, "orthogonal_projection_line", {"point": f.point, "line": f.points, "image": f.at}, q, "projection(point, line)")
@@ -558,12 +568,22 @@ class _EffectResolver:
         self.lines = set()
         self.used = False
         self.active = set()
+        self.memo = {}
+        groups = {}
+        for f in facts:
+            if (f.kind=='intersection_line' and f.role in ('premise','question') and not f.negated
+                    and all(len(p or [])==3 and len(set(p))==3 for p in (f.points_a,f.points_b))):
+                key=tuple(sorted((tuple(sorted(f.points_a)),tuple(sorted(f.points_b)))))
+                groups.setdefault(key,[]).append(f.id)
+        self.aliases = {fid:min(ids) for ids in groups.values() for fid in ids}
 
     def _resolve(self, kind, operands, depth=0):
+        key = (kind, operands)
+        if kind!='AnswerDistance' and key in self.memo:
+            return self.memo[key]  # available producer binding only; Engine still verifies every given later
         self.needs += 1
         if self.needs > MAX_EFFECT_NEEDS:
             raise TuChoi("PLAN_TOO_LARGE", "quá trần typed needs")
-        key = (kind, operands)
         if key in self.active:
             raise TuChoi("DEPENDENCY_CYCLE", "typed need phụ thuộc chính nó")
         if kind in ('Point','Plane'):
@@ -621,7 +641,10 @@ class _EffectResolver:
                 choices.append(_Choice(spec.name, env, children, existing, cost))
             if not choices:
                 raise TuChoi("UNSUPPORTED_CAPABILITY", f"không effect nào giải được {kind}")
-            return min(choices, key=lambda c: (c.cost, c.fn, c.env.get('F') or '', c.existing['id'] if c.existing else ''))
+            selected = min(choices, key=lambda c: (c.cost, c.fn, c.env.get('F') or '', c.existing['id'] if c.existing else ''))
+            if kind!='AnswerDistance':
+                self.memo[key]=selected
+            return selected
         finally:
             self.active.remove(key)
 
@@ -651,12 +674,17 @@ class _EffectResolver:
             cid, args = fact.id, {'segment':[env['P'],env['F']]}
         else:
             raise TuChoi('UNSUPPORTED_CAPABILITY', 'producer chưa được khai trong nguồn')
-        self.emit(cid, choice.fn, args, fact.quotes, f'effect({REGISTRY[choice.fn].planning.effect.kind})→{choice.fn}')
+        call = self.emit(cid, choice.fn, args, fact.quotes, f'effect({REGISTRY[choice.fn].planning.effect.kind})→{choice.fn}')
         self.plan.trace[-1]['fact'] = fact.id
+        if policy!='distance_witness':
+            choice.env.update(env)
+            choice.existing, choice.cost = call, 0
         return env
 
     def distance(self, fact, point, line):
         self.used = True
+        if line[0]=='result':
+            line=('result',self.aliases.get(line[1],line[1]))
         choice = self._resolve('AnswerDistance', (point,line))
         env = self._emit(choice, fact)
         foot = next(c for c in self.plan.calls if c['fn']=='orthogonal_projection_line'

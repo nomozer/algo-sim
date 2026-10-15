@@ -693,7 +693,7 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
     chiem = nhan | nhan_phu_da_dung(de)
     nhan_da_khai: set = set()
     for d in phu:
-        if d.get('effect_binding') or d.get('rule') == 'result-line-reference':
+        if d.get('effect_binding') or d.get('rule') in ('result-line-reference','result-line-alias'):
             continue  # same source authority validated actual producer/consumer/goal above
         x, luat = d.get("label"), d.get("rule")
         if luat not in AUXILIARY_RULES:
@@ -784,13 +784,21 @@ def _kiem_result_binding(phu, calls, de, nhan):
             if not re.fullmatch(rf'(?:(?i:tìm|dựng|xác định)\s+|(?i:gọi)\s+[A-Za-z][A-Za-z0-9]*\s+(?i:là)\s+)'
                                 rf'(?i:giao tuyến của)\s*{_MAT_TOAN_HANG}\s*(?i:và)\s*{_MAT_TOAN_HANG}[.\s]*',q):
                 raise TuChoi('SOURCE_OBJECT_MISMATCH','producer chưa có định nghĩa/yêu cầu dựng nguyên tử',(ref,))
+            for match in _GIAO_TUYEN.finditer(q):
+                planes = [_nhan_cum(next((match[i] for i in group if match[i]),''))
+                          for group in ((1,2,3),(4,5,6))]
+                if any(len(p)!=3 or len(set(p))!=3 for p in planes):
+                    raise TuChoi('SOURCE_OBJECT_MISMATCH','mặt nguồn cần đúng ba nhãn phân biệt',(ref,))
             if not mat_cat_dung_nguon(replace(c,quotes=(q,)),calls):
                 raise TuChoi('SOURCE_OBJECT_MISMATCH','hai mặt producer không khớp nguồn',(ref,))
         accepted.add(ref)
         return c
 
     def matches_planes(m, c):
-        planes = [frozenset(_nhan_cum(m.group(i))) for i in ('a','b')]
+        labels = [_nhan_cum(m.group(i)) for i in ('a','b')]
+        if any(len(p)!=3 or len(set(p))!=3 for p in labels):
+            return False
+        planes = list(map(frozenset,labels))
         return set(planes)=={frozenset(c.args.plane1),frozenset(c.args.plane2)}
 
     plane_pattern = rf'(?P<a>{_MAT_TOAN_HANG})\s*(?i:và)\s*(?P<b>{_MAT_TOAN_HANG})'
@@ -798,6 +806,11 @@ def _kiem_result_binding(phu, calls, de, nhan):
                          + rf'\s*(?i:đến|tới)\s*(?i:giao tuyến của)\s*{plane_pattern}')
     seen_fresh = {}
     for d in phu:
+        if d.get('rule')=='result-line-alias':
+            a,b=producer(d.get('producer')),producer(d.get('canonical'))
+            if {frozenset(a.args.plane1),frozenset(a.args.plane2)} != {frozenset(b.args.plane1),frozenset(b.args.plane2)}:
+                raise TuChoi('AUXILIARY_RULE_MISMATCH','hai producer alias không cùng mặt nguồn')
+            continue
         if d.get('rule') == 'result-line-reference':
             c = by_id.get(d.get('consumer'))
             if not c or c.fn!='orthogonal_projection_line' or c.args.line_ref!=d.get('line_ref'):

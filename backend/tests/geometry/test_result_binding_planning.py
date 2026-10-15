@@ -341,3 +341,54 @@ def test_type_incompatible_effect_candidate_is_excluded(monkeypatch):
     c=CORPUS['positive'][0]
     r=run_fact_route(c['text'],c['payload'])
     assert r.status=='REFUSED' and r.code=='UNSUPPORTED_CAPABILITY'
+
+
+@pytest.mark.parametrize('swapped',[False,True])
+def test_equivalent_source_line_producers_share_one_verified_result(swapped):
+    c=deepcopy(CORPUS['positive'][0])
+    producer=deepcopy(next(f for f in c['payload']['facts'] if f['id']=='g'))
+    producer['id']='h'
+    if swapped:producer['points_a'],producer['points_b']=producer['points_b'],producer['points_a']
+    goal=deepcopy(c['payload']['facts'][-1]);goal.update(id='q2',line_ref='h')
+    c['payload']['facts'] += [producer,goal]
+    r=run_fact_route(c['text'],c['payload'])
+    assert r.status=='SERVED',(r.code,r.reason)
+    assert set(r.answers)=={'q','q2'}
+    statements=r.program['statements']
+    assert len([s for s in statements if s.get('expr',{}).get('kind')=='intersect_plane_plane'])==1
+    assert len([s for s in statements if s.get('expr',{}).get('kind')=='project_onto'])==1
+    assert all(squared(r.exec_result.final_memory['kq_'+q])==Fraction(10,11) for q in r.answers)
+
+
+def test_three_repeated_goals_reuse_memoized_needs_and_distinct_answers():
+    c=deepcopy(CORPUS['positive'][0])
+    for qid in ('q2','q3'):
+        c['payload']['facts'].append({**deepcopy(c['payload']['facts'][-1]),'id':qid})
+    r=run_fact_route(c['text'],c['payload'])
+    assert r.status=='SERVED',(r.code,r.reason)
+    assert set(r.answers)=={'q','q2','q3'}
+    assert len([s for s in r.program['statements'] if s.get('expr',{}).get('kind')=='project_onto'])==1
+
+
+def test_identical_explicit_foot_declarations_preserve_sources_and_one_construction():
+    c=deepcopy(CORPUS['positive'][0])
+    quote='Gọi J là hình chiếu vuông góc của M lên giao tuyến của (SAC) và (SBD).'
+    c['text'] += ' '+quote
+    for fid in ('foot1','foot2'):
+        c['payload']['facts'].append({'id':fid,'kind':'projection','role':'premise','point':'M','at':'J',
+                                      'line_ref':'g','quotes':[quote]})
+    r=run_fact_route(c['text'],c['payload'])
+    assert r.status=='SERVED',(r.code,r.reason)
+    assert len([s for s in r.program['statements'] if s.get('expr',{}).get('kind')=='project_onto'])==1
+    assert next(x for x in r.planner['calls'] if x['id']=='q')['args']['segment']==['M','J']
+
+
+@pytest.mark.parametrize('location',['producer','goal','both'])
+def test_source_plane_has_exactly_three_distinct_labels_before_set_normalization(location):
+    c=deepcopy(CORPUS['positive'][0])
+    for f in c['payload']['facts']:
+        if f['id'] in ({'g'} if location=='producer' else {'q'} if location=='goal' else {'g','q'}):
+            f['quotes']=[q.replace('(SAC)','(SAAC)') for q in f['quotes']]
+    c['text']=' '.join(f['quotes'][0] for f in c['payload']['facts'])
+    r=run_fact_route(c['text'],c['payload'])
+    assert r.status=='REFUSED' and r.code=='SOURCE_OBJECT_MISMATCH'

@@ -192,6 +192,13 @@ class _Dung:
         self.constructions: dict[str, LoiGoi] = {}
         self.lines: dict[str, Line3] = {}       # existing entity store: verified source-bound line results
         self.line_refs = {c.args.line_ref for c in calls if c.fn=='orthogonal_projection_line' and c.args.line_ref}
+        self.line_aliases = {}
+        if self.line_refs:
+            groups={}
+            for c in self.of('intersection_line'):
+                key=tuple(sorted((tuple(sorted(c.args.plane1)),tuple(sorted(c.args.plane2)))))
+                groups.setdefault(key,[]).append(c.id)
+            self.line_aliases={cid:min(ids) for ids in groups.values() for cid in ids}
         self.sections: list[str] = []           # biến IR của thiết diện đã dựng (kiểm khép kín sau khi thực thi)
         self.mat_phu: list[dict] = []           # mặt phẳng dẫn xuất đã khai (`MAT_SONG_SONG`), kiểm ở `kiem_mat_cat`
         self.ten_mat_phu: dict[str, str | None] = {}   # tên đề đặt cho mỗi mặt dẫn xuất — do `kiem_nguon` trả về
@@ -412,7 +419,8 @@ class _Dung:
                         self.lines[c.id]=line
                 except GeometryError as e:
                     raise TuChoi(e.code,str(e),(c.id,)) from None
-                self.trace.append({'step':'resolve_line','object':f'gt_{c.id}','producer':c.fn,'calls':[c.id],
+                sources = sorted(cid for cid,canonical in self.line_aliases.items() if canonical==c.id) or [c.id]
+                self.trace.append({'step':'resolve_line','object':f'gt_{c.id}','producer':c.fn,'calls':sources,
                                    'dependencies':list(dict.fromkeys(c.args.plane1+c.args.plane2)),
                                    'provenance':'DERIVED','relation_verified':verified})
                 return True
@@ -972,6 +980,8 @@ class _Dung:
 
     def _emit_intersection(self, c, declarations, statements):
         """Emit the existing line IR once, inside the first consumer's dependency block."""
+        if c.id in self.line_aliases:
+            c=next(p for p in self.calls if p.id==self.line_aliases[c.id])
         name = f'gt_{c.id}'
         if c.id in self.emitted_lines:
             return name

@@ -15,13 +15,14 @@ import rowsHardening from "../../docs/evaluation/geometry/runs/hybrid-semantic-h
 import rowsGoal from "../../docs/evaluation/geometry/runs/goal-directed-section-planning/visual/scenes.json";
 import rowsTwoLine from "../../docs/evaluation/geometry/runs/two-line-plane-section/visual/scenes.json";
 import rowsSequencing from "../../docs/evaluation/geometry/runs/pedagogical-construction-sequencing/visual/scenes.json";
+import rowsResultBinding from "../../docs/evaluation/geometry/runs/source-bound-result-planning/visual/scenes.json";
 import "../src/styles/global.css";
 
 const q = new URLSearchParams(location.search);
 const index = Number(q.get("i") ?? 0);
 // `src=goal`: scenes of run goal-directed-section-planning; default stays the frozen hardening export.
 // `src=sequencing`: the same two-line problems after the learner construction order (run `pedagogical-construction-sequencing`).
-const row = ((q.get("src") === "sequencing" ? rowsSequencing : q.get("src") === "two-line" ? rowsTwoLine : q.get("src") === "goal" ? rowsGoal : rowsHardening) as any[])[index];
+const row = ((q.get("src") === "result-binding" ? rowsResultBinding : q.get("src") === "sequencing" ? rowsSequencing : q.get("src") === "two-line" ? rowsTwoLine : q.get("src") === "goal" ? rowsGoal : rowsHardening) as any[])[index];
 // Diagnostic only: `hide=<id>` drops one object, so a frame diff shows exactly the pixels that object contributes.
 const hide = new Set((q.get("hide") ?? "").split(",").filter(Boolean));
 // Diagnostic only: `set=<id>.<field>=<json>` overrides one field of one object (e.g. a line direction).
