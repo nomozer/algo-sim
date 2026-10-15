@@ -1,0 +1,6 @@
+SERVED None {'q': '√17'} 'Tính độ dài SC.'
+SERVED None {'q': '√17'} 'Tính độ dài SC (đơn vị: mm).'
+SERVED None {'q': '√17'} 'Tính độ dài SC theo đơn vị mm.'
+SERVED None {'q': '√17'} 'Tính độ dài SC (mm).'
+SERVED None {'q': '√17'} 'Tính độ dài SC (đơn vị m).'
+SERVED None {'q': '√17'} 'Tính độ dài SC (dm; làm tròn đến hàng phần trăm).'

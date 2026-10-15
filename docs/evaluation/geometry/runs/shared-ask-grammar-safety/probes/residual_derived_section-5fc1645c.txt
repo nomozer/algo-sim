@@ -1,0 +1,8 @@
+SERVED None {'q': '1'} 'Tính diện tích thiết diện của hình chóp S.ABCD với (P).'
+REFUSED QUESTION_CONTEXT_UNSUPPORTED {} 'Xác định thiết diện của hình chóp S.ABCD với (P) và tính diện tích thiết diện đó.'
+SERVED None {'q': '1'} 'Xác định thiết diện của hình chóp S.ABCD với (P), rồi tính diện tích thiết diện của hình chóp S.ABCD với (P).'
+SERVED None {'q': '1'} 'Xác định thiết diện của hình chóp S.ABCD với (P). Tính diện tích thiết diện của hình chóp S.ABCD với (P).'
+SERVED None {'q': '1'} 'Nhân đôi kết quả, tính diện tích thiết diện của hình chóp S.ABCD với (P).'
+SERVED None {'q': '1'} 'Tính diện tích thiết diện của hình chóp S.ABCD với (P). Hãy tính kết quả nhân đôi.'
+SERVED None {'q': '1'} 'Chứng minh SA ⊥ BD, nhân đôi kết quả và tính diện tích thiết diện của hình chóp S.ABCD với (P).'
+SERVED None {'q': '1'} 'a) Tính diện tích thiết diện của hình chóp S.ABCD với (P) (làm tròn đến hàng phần trăm).'

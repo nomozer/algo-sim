@@ -1,0 +1,964 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="79" skipped="0" tests="132" time="3.859" timestamp="2026-10-15T20:50:37.918907+07:00" hostname="DESKTOP-SCQFJL8"><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:Nh\xe2n \u0111\xf4i k\u1ebft qu\u1ea3, t\xednh {O}.]" time="0.465"><failure message="AssertionError: ({'q': '√11'}, 'Nhân đôi kết quả, tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Nhân đôi kết quả, tính {O}.', kind = 'line'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√11'}, 'Nhân đôi kết quả, tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:Nh\xe2n \u0111\xf4i k\u1ebft qu\u1ea3, t\xednh {O}.]" time="0.008"><failure message="AssertionError: ({'q': '3'}, 'Nhân đôi kết quả, tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Nhân đôi kết quả, tính {O}.', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Nhân đôi kết quả, tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:Nh\xe2n \u0111\xf4i k\u1ebft qu\u1ea3, t\xednh {O}.]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Nhân đôi kết quả, tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Nhân đôi kết quả, tính {O}.', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Nhân đôi kết quả, tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:Hai l\u1ea7n c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau b\u1eb1ng bao nhi\xeau: {O}?]" time="0.010"><failure message="AssertionError: ({'q': '√11'}, 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?', kind = 'line'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√11'}, 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:Hai l\u1ea7n c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau b\u1eb1ng bao nhi\xeau: {O}?]" time="0.008"><failure message="AssertionError: ({'q': '3'}, 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:Hai l\u1ea7n c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau b\u1eb1ng bao nhi\xeau: {O}?]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:B\xecnh ph\u01b0\u01a1ng c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau b\u1eb1ng bao nhi\xeau: {O}?]" time="0.002" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:B\xecnh ph\u01b0\u01a1ng c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau b\u1eb1ng bao nhi\xeau: {O}?]" time="0.008"><failure message="AssertionError: ({'q': '3'}, 'Bình phương của đại lượng sau bằng bao nhiêu: {O}?')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Bình phương của đại lượng sau bằng bao nhiêu: {O}?', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Bình phương của đại lượng sau bằng bao nhiêu: {O}?')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:B\xecnh ph\u01b0\u01a1ng c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau b\u1eb1ng bao nhi\xeau: {O}?]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Bình phương của đại lượng sau bằng bao nhiêu: {O}?')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Bình phương của đại lượng sau bằng bao nhiêu: {O}?', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Bình phương của đại lượng sau bằng bao nhiêu: {O}?')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:\u0110\xe1p s\u1ed1 l\xe0 b\xecnh ph\u01b0\u01a1ng c\u1ee7a k\u1ebft qu\u1ea3; t\xednh {O}.]" time="0.002" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:\u0110\xe1p s\u1ed1 l\xe0 b\xecnh ph\u01b0\u01a1ng c\u1ee7a k\u1ebft qu\u1ea3; t\xednh {O}.]" time="0.009"><failure message="AssertionError: ({'q': '3'}, 'Đáp số là bình phương của kết quả; tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Đáp số là bình phương của kết quả; tính {O}.', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Đáp số là bình phương của kết quả; tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:\u0110\xe1p s\u1ed1 l\xe0 b\xecnh ph\u01b0\u01a1ng c\u1ee7a k\u1ebft qu\u1ea3; t\xednh {O}.]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Đáp số là bình phương của kết quả; tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Đáp số là bình phương của kết quả; tính {O}.', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Đáp số là bình phương của kết quả; tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:L\u1ea5y b\xecnh ph\u01b0\u01a1ng, t\xednh {O}.]" time="0.002" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:L\u1ea5y b\xecnh ph\u01b0\u01a1ng, t\xednh {O}.]" time="0.008"><failure message="AssertionError: ({'q': '3'}, 'Lấy bình phương, tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Lấy bình phương, tính {O}.', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Lấy bình phương, tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:L\u1ea5y b\xecnh ph\u01b0\u01a1ng, t\xednh {O}.]" time="0.009"><failure message="AssertionError: ({'q': '√17'}, 'Lấy bình phương, tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Lấy bình phương, tính {O}.', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Lấy bình phương, tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:M\u1ed9t n\u1eeda c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau l\xe0 bao nhi\xeau: {O}?]" time="0.002" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:M\u1ed9t n\u1eeda c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau l\xe0 bao nhi\xeau: {O}?]" time="0.008"><failure message="AssertionError: ({'q': '3'}, 'Một nửa của đại lượng sau là bao nhiêu: {O}?')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Một nửa của đại lượng sau là bao nhiêu: {O}?', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Một nửa của đại lượng sau là bao nhiêu: {O}?')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:M\u1ed9t n\u1eeda c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau l\xe0 bao nhi\xeau: {O}?]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Một nửa của đại lượng sau là bao nhiêu: {O}?')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Một nửa của đại lượng sau là bao nhiêu: {O}?', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Một nửa của đại lượng sau là bao nhiêu: {O}?')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:\u0110\u1ec1 h\u1ecfi b\xecnh ph\u01b0\u01a1ng; h\xe3y t\xednh {O}.]" time="0.002" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:\u0110\u1ec1 h\u1ecfi b\xecnh ph\u01b0\u01a1ng; h\xe3y t\xednh {O}.]" time="0.008"><failure message="AssertionError: ({'q': '3'}, 'Đề hỏi bình phương; hãy tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Đề hỏi bình phương; hãy tính {O}.', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Đề hỏi bình phương; hãy tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:\u0110\u1ec1 h\u1ecfi b\xecnh ph\u01b0\u01a1ng; h\xe3y t\xednh {O}.]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Đề hỏi bình phương; hãy tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Đề hỏi bình phương; hãy tính {O}.', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Đề hỏi bình phương; hãy tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:G\u1ea5p ba k\u1ebft qu\u1ea3 r\u1ed3i t\xednh {O}.]" time="0.009"><failure message="AssertionError: ({'q': '√11'}, 'Gấp ba kết quả rồi tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Gấp ba kết quả rồi tính {O}.', kind = 'line'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√11'}, 'Gấp ba kết quả rồi tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:G\u1ea5p ba k\u1ebft qu\u1ea3 r\u1ed3i t\xednh {O}.]" time="0.008"><failure message="AssertionError: ({'q': '3'}, 'Gấp ba kết quả rồi tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Gấp ba kết quả rồi tính {O}.', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Gấp ba kết quả rồi tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:G\u1ea5p ba k\u1ebft qu\u1ea3 r\u1ed3i t\xednh {O}.]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Gấp ba kết quả rồi tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Gấp ba kết quả rồi tính {O}.', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Gấp ba kết quả rồi tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:T\xednh {O} (k\u1ebft qu\u1ea3 nh\xe2n \u0111\xf4i).]" time="0.009"><failure message="AssertionError: ({'q': '√11'}, 'Tính {O} (kết quả nhân đôi).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả nhân đôi).', kind = 'line'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√11'}, 'Tính {O} (kết quả nhân đôi).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:T\xednh {O} (k\u1ebft qu\u1ea3 nh\xe2n \u0111\xf4i).]" time="0.008"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (kết quả nhân đôi).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả nhân đôi).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (kết quả nhân đôi).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:T\xednh {O} (k\u1ebft qu\u1ea3 nh\xe2n \u0111\xf4i).]" time="0.007"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả nhân đôi).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả nhân đôi).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả nhân đôi).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:T\xednh {O} (k\u1ebft qu\u1ea3 l\u1ea5y b\xecnh ph\u01b0\u01a1ng).]" time="0.010"><failure message="AssertionError: ({'q': '√11'}, 'Tính {O} (kết quả lấy bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả lấy bình phương).', kind = 'line'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√11'}, 'Tính {O} (kết quả lấy bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:T\xednh {O} (k\u1ebft qu\u1ea3 l\u1ea5y b\xecnh ph\u01b0\u01a1ng).]" time="0.009"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (kết quả lấy bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả lấy bình phương).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (kết quả lấy bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:T\xednh {O} (k\u1ebft qu\u1ea3 l\u1ea5y b\xecnh ph\u01b0\u01a1ng).]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả lấy bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả lấy bình phương).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả lấy bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:T\xednh {O} (k\u1ebft qu\u1ea3 g\u1ea5p \u0111\xf4i).]" time="0.009"><failure message="AssertionError: ({'q': '√11'}, 'Tính {O} (kết quả gấp đôi).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả gấp đôi).', kind = 'line'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√11'}, 'Tính {O} (kết quả gấp đôi).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:T\xednh {O} (k\u1ebft qu\u1ea3 g\u1ea5p \u0111\xf4i).]" time="0.008"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (kết quả gấp đôi).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả gấp đôi).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (kết quả gấp đôi).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:T\xednh {O} (k\u1ebft qu\u1ea3 g\u1ea5p \u0111\xf4i).]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả gấp đôi).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả gấp đôi).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả gấp đôi).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:T\xednh {O} (k\u1ebft qu\u1ea3 ghi d\u01b0\u1edbi d\u1ea1ng b\xecnh ph\u01b0\u01a1ng).]" time="0.009"><failure message="AssertionError: ({'q': '√11'}, 'Tính {O} (kết quả ghi dưới dạng bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả ghi dưới dạng bình phương).', kind = 'line'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√11'}, 'Tính {O} (kết quả ghi dưới dạng bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:T\xednh {O} (k\u1ebft qu\u1ea3 ghi d\u01b0\u1edbi d\u1ea1ng b\xecnh ph\u01b0\u01a1ng).]" time="0.008"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (kết quả ghi dưới dạng bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả ghi dưới dạng bình phương).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (kết quả ghi dưới dạng bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:T\xednh {O} (k\u1ebft qu\u1ea3 ghi d\u01b0\u1edbi d\u1ea1ng b\xecnh ph\u01b0\u01a1ng).]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả ghi dưới dạng bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả ghi dưới dạng bình phương).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả ghi dưới dạng bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:T\xednh {O} (\u0111\u01a1n v\u1ecb: m\u1ed9t n\u1eeda cm).]" time="0.009"><failure message="AssertionError: ({'q': '√11'}, 'Tính {O} (đơn vị: một nửa cm).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (đơn vị: một nửa cm).', kind = 'line'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√11'}, 'Tính {O} (đơn vị: một nửa cm).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:T\xednh {O} (\u0111\u01a1n v\u1ecb: m\u1ed9t n\u1eeda cm).]" time="0.011"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (đơn vị: một nửa cm).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (đơn vị: một nửa cm).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (đơn vị: một nửa cm).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:T\xednh {O} (\u0111\u01a1n v\u1ecb: m\u1ed9t n\u1eeda cm).]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (đơn vị: một nửa cm).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (đơn vị: một nửa cm).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (đơn vị: một nửa cm).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:T\xednh {O} (\u0111\u01a1n v\u1ecb: cm, k\u1ebft qu\u1ea3 b\xecnh ph\u01b0\u01a1ng).]" time="0.010"><failure message="AssertionError: ({'q': '√11'}, 'Tính {O} (đơn vị: cm, kết quả bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (đơn vị: cm, kết quả bình phương).', kind = 'line'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√11'}, 'Tính {O} (đơn vị: cm, kết quả bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:T\xednh {O} (\u0111\u01a1n v\u1ecb: cm, k\u1ebft qu\u1ea3 b\xecnh ph\u01b0\u01a1ng).]" time="0.013"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (đơn vị: cm, kết quả bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (đơn vị: cm, kết quả bình phương).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (đơn vị: cm, kết quả bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:T\xednh {O} (\u0111\u01a1n v\u1ecb: cm, k\u1ebft qu\u1ea3 b\xecnh ph\u01b0\u01a1ng).]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (đơn vị: cm, kết quả bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (đơn vị: cm, kết quả bình phương).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (đơn vị: cm, kết quả bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:T\xednh {O} (k\u1ebft qu\u1ea3 3).]" time="0.009"><failure message="AssertionError: ({'q': '√11'}, 'Tính {O} (kết quả 3).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả 3).', kind = 'line'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√11'}, 'Tính {O} (kết quả 3).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:T\xednh {O} (k\u1ebft qu\u1ea3 3).]" time="0.011"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (kết quả 3).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả 3).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (kết quả 3).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:T\xednh {O} (k\u1ebft qu\u1ea3 3).]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả 3).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả 3).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả 3).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:T\xednh {O} (k\u1ebft qu\u1ea3 c\xf3 l\u1edbn h\u01a1n 3 kh\xf4ng).]" time="0.010"><failure message="AssertionError: ({'q': '√11'}, 'Tính {O} (kết quả có lớn hơn 3 không).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả có lớn hơn 3 không).', kind = 'line'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√11'}, 'Tính {O} (kết quả có lớn hơn 3 không).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:T\xednh {O} (k\u1ebft qu\u1ea3 c\xf3 l\u1edbn h\u01a1n 3 kh\xf4ng).]" time="0.011"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (kết quả có lớn hơn 3 không).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả có lớn hơn 3 không).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (kết quả có lớn hơn 3 không).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:T\xednh {O} (k\u1ebft qu\u1ea3 c\xf3 l\u1edbn h\u01a1n 3 kh\xf4ng).]" time="0.008"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả có lớn hơn 3 không).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả có lớn hơn 3 không).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_B, ids=[f"{k}:{t}" for t, k in CASES_B])
+    def test_route_b_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả có lớn hơn 3 không).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:66: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[line:T\xednh {O}, l\xe0m tr\xf2n sau khi nh\xe2n \u0111\xf4i.]" time="0.005" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[plane:T\xednh {O}, l\xe0m tr\xf2n sau khi nh\xe2n \u0111\xf4i.]" time="0.003" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_b_does_not_answer_a_changed_quantity[length:T\xednh {O}, l\xe0m tr\xf2n sau khi nh\xe2n \u0111\xf4i.]" time="0.003" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:Nh\xe2n \u0111\xf4i k\u1ebft qu\u1ea3, t\xednh {O}.]" time="0.017"><failure message="AssertionError: ({'q': '3'}, 'Nhân đôi kết quả, tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Nhân đôi kết quả, tính {O}.', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Nhân đôi kết quả, tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:Nh\xe2n \u0111\xf4i k\u1ebft qu\u1ea3, t\xednh {O}.]" time="0.015"><failure message="AssertionError: ({'q': '√17'}, 'Nhân đôi kết quả, tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Nhân đôi kết quả, tính {O}.', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Nhân đôi kết quả, tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:Hai l\u1ea7n c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau b\u1eb1ng bao nhi\xeau: {O}?]" time="0.016"><failure message="AssertionError: ({'q': '3'}, 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:Hai l\u1ea7n c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau b\u1eb1ng bao nhi\xeau: {O}?]" time="0.019"><failure message="AssertionError: ({'q': '√17'}, 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Hai lần của đại lượng sau bằng bao nhiêu: {O}?')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:B\xecnh ph\u01b0\u01a1ng c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau b\u1eb1ng bao nhi\xeau: {O}?]" time="0.016"><failure message="AssertionError: ({'q': '3'}, 'Bình phương của đại lượng sau bằng bao nhiêu: {O}?')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Bình phương của đại lượng sau bằng bao nhiêu: {O}?', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Bình phương của đại lượng sau bằng bao nhiêu: {O}?')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:B\xecnh ph\u01b0\u01a1ng c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau b\u1eb1ng bao nhi\xeau: {O}?]" time="0.019"><failure message="AssertionError: ({'q': '√17'}, 'Bình phương của đại lượng sau bằng bao nhiêu: {O}?')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Bình phương của đại lượng sau bằng bao nhiêu: {O}?', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Bình phương của đại lượng sau bằng bao nhiêu: {O}?')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:\u0110\xe1p s\u1ed1 l\xe0 b\xecnh ph\u01b0\u01a1ng c\u1ee7a k\u1ebft qu\u1ea3; t\xednh {O}.]" time="0.016"><failure message="AssertionError: ({'q': '3'}, 'Đáp số là bình phương của kết quả; tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Đáp số là bình phương của kết quả; tính {O}.', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Đáp số là bình phương của kết quả; tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:\u0110\xe1p s\u1ed1 l\xe0 b\xecnh ph\u01b0\u01a1ng c\u1ee7a k\u1ebft qu\u1ea3; t\xednh {O}.]" time="0.016"><failure message="AssertionError: ({'q': '√17'}, 'Đáp số là bình phương của kết quả; tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Đáp số là bình phương của kết quả; tính {O}.', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Đáp số là bình phương của kết quả; tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:L\u1ea5y b\xecnh ph\u01b0\u01a1ng, t\xednh {O}.]" time="0.025"><failure message="AssertionError: ({'q': '3'}, 'Lấy bình phương, tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Lấy bình phương, tính {O}.', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Lấy bình phương, tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:L\u1ea5y b\xecnh ph\u01b0\u01a1ng, t\xednh {O}.]" time="0.020"><failure message="AssertionError: ({'q': '√17'}, 'Lấy bình phương, tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Lấy bình phương, tính {O}.', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Lấy bình phương, tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:M\u1ed9t n\u1eeda c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau l\xe0 bao nhi\xeau: {O}?]" time="0.015"><failure message="AssertionError: ({'q': '3'}, 'Một nửa của đại lượng sau là bao nhiêu: {O}?')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Một nửa của đại lượng sau là bao nhiêu: {O}?', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Một nửa của đại lượng sau là bao nhiêu: {O}?')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:M\u1ed9t n\u1eeda c\u1ee7a \u0111\u1ea1i l\u01b0\u1ee3ng sau l\xe0 bao nhi\xeau: {O}?]" time="0.022"><failure message="AssertionError: ({'q': '√17'}, 'Một nửa của đại lượng sau là bao nhiêu: {O}?')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Một nửa của đại lượng sau là bao nhiêu: {O}?', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Một nửa của đại lượng sau là bao nhiêu: {O}?')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:\u0110\u1ec1 h\u1ecfi b\xecnh ph\u01b0\u01a1ng; h\xe3y t\xednh {O}.]" time="0.020"><failure message="AssertionError: ({'q': '3'}, 'Đề hỏi bình phương; hãy tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Đề hỏi bình phương; hãy tính {O}.', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Đề hỏi bình phương; hãy tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:\u0110\u1ec1 h\u1ecfi b\xecnh ph\u01b0\u01a1ng; h\xe3y t\xednh {O}.]" time="0.014"><failure message="AssertionError: ({'q': '√17'}, 'Đề hỏi bình phương; hãy tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Đề hỏi bình phương; hãy tính {O}.', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Đề hỏi bình phương; hãy tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:G\u1ea5p ba k\u1ebft qu\u1ea3 r\u1ed3i t\xednh {O}.]" time="0.018"><failure message="AssertionError: ({'q': '3'}, 'Gấp ba kết quả rồi tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Gấp ba kết quả rồi tính {O}.', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Gấp ba kết quả rồi tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:G\u1ea5p ba k\u1ebft qu\u1ea3 r\u1ed3i t\xednh {O}.]" time="0.021"><failure message="AssertionError: ({'q': '√17'}, 'Gấp ba kết quả rồi tính {O}.')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Gấp ba kết quả rồi tính {O}.', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Gấp ba kết quả rồi tính {O}.')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:T\xednh {O} (k\u1ebft qu\u1ea3 nh\xe2n \u0111\xf4i).]" time="0.019"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (kết quả nhân đôi).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả nhân đôi).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (kết quả nhân đôi).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:T\xednh {O} (k\u1ebft qu\u1ea3 nh\xe2n \u0111\xf4i).]" time="0.014"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả nhân đôi).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả nhân đôi).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả nhân đôi).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:T\xednh {O} (k\u1ebft qu\u1ea3 l\u1ea5y b\xecnh ph\u01b0\u01a1ng).]" time="0.019"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (kết quả lấy bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả lấy bình phương).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (kết quả lấy bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:T\xednh {O} (k\u1ebft qu\u1ea3 l\u1ea5y b\xecnh ph\u01b0\u01a1ng).]" time="0.021"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả lấy bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả lấy bình phương).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả lấy bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:T\xednh {O} (k\u1ebft qu\u1ea3 g\u1ea5p \u0111\xf4i).]" time="0.023"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (kết quả gấp đôi).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả gấp đôi).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (kết quả gấp đôi).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:T\xednh {O} (k\u1ebft qu\u1ea3 g\u1ea5p \u0111\xf4i).]" time="0.016"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả gấp đôi).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả gấp đôi).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả gấp đôi).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:T\xednh {O} (k\u1ebft qu\u1ea3 ghi d\u01b0\u1edbi d\u1ea1ng b\xecnh ph\u01b0\u01a1ng).]" time="0.017"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (kết quả ghi dưới dạng bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả ghi dưới dạng bình phương).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (kết quả ghi dưới dạng bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:T\xednh {O} (k\u1ebft qu\u1ea3 ghi d\u01b0\u1edbi d\u1ea1ng b\xecnh ph\u01b0\u01a1ng).]" time="0.014"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả ghi dưới dạng bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả ghi dưới dạng bình phương).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả ghi dưới dạng bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:T\xednh {O} (\u0111\u01a1n v\u1ecb: m\u1ed9t n\u1eeda cm).]" time="0.015"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (đơn vị: một nửa cm).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (đơn vị: một nửa cm).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (đơn vị: một nửa cm).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:T\xednh {O} (\u0111\u01a1n v\u1ecb: m\u1ed9t n\u1eeda cm).]" time="0.014"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (đơn vị: một nửa cm).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (đơn vị: một nửa cm).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (đơn vị: một nửa cm).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:T\xednh {O} (\u0111\u01a1n v\u1ecb: cm, k\u1ebft qu\u1ea3 b\xecnh ph\u01b0\u01a1ng).]" time="0.018"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (đơn vị: cm, kết quả bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (đơn vị: cm, kết quả bình phương).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (đơn vị: cm, kết quả bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:T\xednh {O} (\u0111\u01a1n v\u1ecb: cm, k\u1ebft qu\u1ea3 b\xecnh ph\u01b0\u01a1ng).]" time="0.014"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (đơn vị: cm, kết quả bình phương).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (đơn vị: cm, kết quả bình phương).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (đơn vị: cm, kết quả bình phương).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:T\xednh {O} (k\u1ebft qu\u1ea3 3).]" time="0.018"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (kết quả 3).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả 3).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (kết quả 3).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:T\xednh {O} (k\u1ebft qu\u1ea3 3).]" time="0.015"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả 3).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả 3).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả 3).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:T\xednh {O} (k\u1ebft qu\u1ea3 c\xf3 l\u1edbn h\u01a1n 3 kh\xf4ng).]" time="0.020"><failure message="AssertionError: ({'q': '3'}, 'Tính {O} (kết quả có lớn hơn 3 không).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả có lớn hơn 3 không).', kind = 'plane'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '3'}, 'Tính {O} (kết quả có lớn hơn 3 không).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:T\xednh {O} (k\u1ebft qu\u1ea3 c\xf3 l\u1edbn h\u01a1n 3 kh\xf4ng).]" time="0.015"><failure message="AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả có lớn hơn 3 không).')&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">tpl = 'Tính {O} (kết quả có lớn hơn 3 không).', kind = 'length'
+
+    @pytest.mark.parametrize("tpl,kind", CASES_A, ids=[f"{k}:{t}" for t, k in CASES_A])
+    def test_route_a_does_not_answer_a_changed_quantity(tpl, kind):
+        r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+&gt;       assert r.status == "REFUSED", (r.answers, tpl)
+E       AssertionError: ({'q': '√17'}, 'Tính {O} (kết quả có lớn hơn 3 không).')
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:72: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[plane:T\xednh {O}, l\xe0m tr\xf2n sau khi nh\xe2n \u0111\xf4i.]" time="0.011" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_does_not_answer_a_changed_quantity[length:T\xednh {O}, l\xe0m tr\xf2n sau khi nh\xe2n \u0111\xf4i.]" time="0.011" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[line:T\xednh {O}.]" time="0.012" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[plane:T\xednh {O}.]" time="0.010" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[length:T\xednh {O}.]" time="0.009" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[line:H\u01a1n n\u1eefa, t\xednh {O}.]" time="0.010" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[plane:H\u01a1n n\u1eefa, t\xednh {O}.]" time="0.009" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[length:H\u01a1n n\u1eefa, t\xednh {O}.]" time="0.008" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[line:{O} b\u1eb1ng bao nhi\xeau?]" time="0.010" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[plane:{O} b\u1eb1ng bao nhi\xeau?]" time="0.008" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[length:{O} b\u1eb1ng bao nhi\xeau?]" time="0.007" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[line:H\xe3y t\xednh {O}.]" time="0.008" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[plane:H\xe3y t\xednh {O}.]" time="0.010" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[length:H\xe3y t\xednh {O}.]" time="0.010" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[line:T\xecm {O}.]" time="0.008" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[plane:T\xecm {O}.]" time="0.009" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[length:T\xecm {O}.]" time="0.008" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[line:H\u1ecfi {O} b\u1eb1ng bao nhi\xeau?]" time="0.008" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[plane:H\u1ecfi {O} b\u1eb1ng bao nhi\xeau?]" time="0.008" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[length:H\u1ecfi {O} b\u1eb1ng bao nhi\xeau?]" time="0.007" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[line:Khi \u0111\xf3, t\xednh {O}.]" time="0.012" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[plane:Khi \u0111\xf3, t\xednh {O}.]" time="0.012" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[length:Khi \u0111\xf3, t\xednh {O}.]" time="0.011" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[line:T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).]" time="0.009" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[plane:T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).]" time="0.012" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[length:T\xednh {O} (l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m).]" time="0.011" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[line:T\xednh {O} (\u0111\u01a1n v\u1ecb: cm).]" time="0.008" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[plane:T\xednh {O} (\u0111\u01a1n v\u1ecb: cm).]" time="0.009" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[length:T\xednh {O} (\u0111\u01a1n v\u1ecb: cm).]" time="0.011" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[line:T\xednh {O} (k\u1ebft qu\u1ea3 l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi).]" time="0.013" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[plane:T\xednh {O} (k\u1ebft qu\u1ea3 l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi).]" time="0.011" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[length:T\xednh {O} (k\u1ebft qu\u1ea3 l\xe0m tr\xf2n \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi).]" time="0.008" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[line:T\xednh {O}, l\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.]" time="0.008" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[plane:T\xednh {O}, l\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.]" time="0.011" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[length:T\xednh {O}, l\xe0m tr\xf2n k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.]" time="0.008" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[line:T\xednh {O} (\u0111\u01a1n v\u1ecb: cm; l\xe0m tr\xf2n \u0111\u1ebfn 2 ch\u1eef s\u1ed1 th\u1eadp ph\xe2n).]" time="0.010" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[plane:T\xednh {O} (\u0111\u01a1n v\u1ecb: cm; l\xe0m tr\xf2n \u0111\u1ebfn 2 ch\u1eef s\u1ed1 th\u1eadp ph\xe2n).]" time="0.011" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_plain_asks_and_closed_notes_are_still_served[length:T\xednh {O} (\u0111\u01a1n v\u1ecb: cm; l\xe0m tr\xf2n \u0111\u1ebfn 2 ch\u1eef s\u1ed1 th\u1eadp ph\xe2n).]" time="0.011" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_plain_ask_is_still_served[plane]" time="0.064" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_route_a_plain_ask_is_still_served[length]" time="0.019" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_a_whole_problem_in_one_sentence_is_still_served[line]" time="0.015" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_a_whole_problem_in_one_sentence_is_still_served[plane]" time="0.013" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_a_whole_problem_in_one_sentence_is_still_served[length]" time="0.012" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_reused_foot_reads_the_source_not_the_spliced_quote[T\xednh hai l\u1ea7n.kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD?-hai l\u1ea7n. kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD?]" time="0.017"><failure message="AssertionError: {'q': '√11'}&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">source = 'Tính hai lần.khoảng cách từ S đến BD?'
+quote = 'hai lần. khoảng cách từ S đến BD?'
+
+    @pytest.mark.parametrize("source,quote", [
+        ("Tính hai lần.khoảng cách từ S đến BD?", "hai lần. khoảng cách từ S đến BD?"),   # quote invents a sentence boundary
+        ("Nhân đôi kết quả, tính khoảng cách từ S đến BD.", "tính khoảng cách từ S đến BD."),
+        ("Tính khoảng cách từ S đến BD (kết quả nhân đôi).", "khoảng cách từ S đến BD"),
+        ("Tính bình phương khoảng cách từ S đến BD.", "khoảng cách từ S đến BD.")])
+    def test_reused_foot_reads_the_source_not_the_spliced_quote(source, quote):
+        r = _b(source, "line", quote=quote, extra=(PROJ,))
+&gt;       assert r.status == "REFUSED", r.answers
+E       AssertionError: {'q': '√11'}
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:110: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_reused_foot_reads_the_source_not_the_spliced_quote[Nh\xe2n \u0111\xf4i k\u1ebft qu\u1ea3, t\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.-t\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.018"><failure message="AssertionError: {'q': '√11'}&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">source = 'Nhân đôi kết quả, tính khoảng cách từ S đến BD.'
+quote = 'tính khoảng cách từ S đến BD.'
+
+    @pytest.mark.parametrize("source,quote", [
+        ("Tính hai lần.khoảng cách từ S đến BD?", "hai lần. khoảng cách từ S đến BD?"),   # quote invents a sentence boundary
+        ("Nhân đôi kết quả, tính khoảng cách từ S đến BD.", "tính khoảng cách từ S đến BD."),
+        ("Tính khoảng cách từ S đến BD (kết quả nhân đôi).", "khoảng cách từ S đến BD"),
+        ("Tính bình phương khoảng cách từ S đến BD.", "khoảng cách từ S đến BD.")])
+    def test_reused_foot_reads_the_source_not_the_spliced_quote(source, quote):
+        r = _b(source, "line", quote=quote, extra=(PROJ,))
+&gt;       assert r.status == "REFUSED", r.answers
+E       AssertionError: {'q': '√11'}
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:110: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_reused_foot_reads_the_source_not_the_spliced_quote[T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD (k\u1ebft qu\u1ea3 nh\xe2n \u0111\xf4i).-kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD]" time="0.016"><failure message="AssertionError: {'q': '√11'}&#10;assert 'SERVED' == 'REFUSED'&#10;  &#10;  - REFUSED&#10;  + SERVED">source = 'Tính khoảng cách từ S đến BD (kết quả nhân đôi).'
+quote = 'khoảng cách từ S đến BD'
+
+    @pytest.mark.parametrize("source,quote", [
+        ("Tính hai lần.khoảng cách từ S đến BD?", "hai lần. khoảng cách từ S đến BD?"),   # quote invents a sentence boundary
+        ("Nhân đôi kết quả, tính khoảng cách từ S đến BD.", "tính khoảng cách từ S đến BD."),
+        ("Tính khoảng cách từ S đến BD (kết quả nhân đôi).", "khoảng cách từ S đến BD"),
+        ("Tính bình phương khoảng cách từ S đến BD.", "khoảng cách từ S đến BD.")])
+    def test_reused_foot_reads_the_source_not_the_spliced_quote(source, quote):
+        r = _b(source, "line", quote=quote, extra=(PROJ,))
+&gt;       assert r.status == "REFUSED", r.answers
+E       AssertionError: {'q': '√11'}
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+tests\geometry\test_shared_ask_grammar.py:110: AssertionError</failure></testcase><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_reused_foot_reads_the_source_not_the_spliced_quote[T\xednh b\xecnh ph\u01b0\u01a1ng kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.-kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.002" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_reused_foot_is_still_served_from_a_valid_source[T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.014" /><testcase classname="tests.geometry.test_shared_ask_grammar" name="test_reused_foot_is_still_served_from_a_valid_source[T\xednh kho\u1ea3ngc\xe1ch t\u1eeb S \u0111\u1ebfn BD.]" time="0.006"><failure message="AssertionError: ('SOURCE_OBJECT_MISMATCH', 'mục tiêu điểm/đường không khớp')&#10;assert ('REFUSED' == 'SERVED'&#10;  &#10;  - SERVED&#10;  + REFUSED)">quote = 'Tính khoảngcách từ S đến BD.'
+
+    @pytest.mark.parametrize("quote", ["Tính khoảng cách từ S đến BD.", "Tính khoảngcách từ S đến BD."])
+    def test_reused_foot_is_still_served_from_a_valid_source(quote):
+        r = _b("Tính khoảng cách từ S đến BD.", "line", quote=quote, extra=(PROJ,))
+&gt;       assert r.status == "SERVED" and r.answers == {"q": "√11"}, (r.code, r.reason)
+E       AssertionError: ('SOURCE_OBJECT_MISMATCH', 'mục tiêu điểm/đường không khớp')
+E       assert ('REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED)
+
+tests\geometry\test_shared_ask_grammar.py:116: AssertionError</failure></testcase></testsuite></testsuites>

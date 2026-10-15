@@ -1,0 +1,5 @@
+SERVED None {'q': '√17'} 'Chứng minh BD ⊥ SC; kết quả lấy bình phương; tính độ dài SC.'
+SERVED None {'q': '√17'} 'Chứng minh BD ⊥ SC, nhân đôi kết quả và tính độ dài SC.'
+SERVED None {'q': '√17'} 'Tính độ dài SC rồi suy ra đáp số là bình phương của nó.'
+SERVED None {'q': '√17'} 'Tính độ dài SC. Hãy tính kết quả dưới dạng bình phương.'
+SERVED None {'q': '√17'} 'Tính độ dài SC. Đáp số nhân đôi, biết SA = 3.'

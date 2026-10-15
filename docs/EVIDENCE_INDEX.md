@@ -1,10 +1,24 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SHARED_ASK_GRAMMAR_SAFETY
+
+REPORT = docs/evaluation/geometry/runs/shared-ask-grammar-safety/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/shared-ask-grammar-safety/
+CORRECTED_BY = NONE
+CORRECTS = SOURCE_BOUND_RESULT_PLANNING_FALSE_SERVE_FIX
+CLASSIFICATION = SHARED_ASK_GRAMMAR_SAFETY_BLOCKED
+CODE_COMMIT = 5f1b576c (product); 9ce1298f (harness)
+VERIFICATION_COMMIT = 5fc1645c (freeze 4b95dcc6…); T3 NOT_RUN
+DOCUMENTATION_COMMIT_ROLE = SELF
+MODEL_REQUEST_COUNT = 0
+
+The sentence-level reading of asking sentences, the closed bracketed/rounding/unit grammar and the source-read reused foot together cut the preregistered probe from 47 (B) and 32 (A) WRONG_SERVED to 0. Locked corpus 18/18, benchmark 30 and two-line 45/32 are invariant; provider surfaces are unchanged. A harness bug made the protected favicon read as a dirty tree; it is fixed with RED/GREEN. The independent review of `9ce1298f` is BLOCK with C1–C4 and I1–I3. C2 and C3 are outside the approved scope. No merge, no push.
+
 ## WAVE_ID = SOURCE_BOUND_RESULT_PLANNING_FALSE_SERVE_FIX
 
 REPORT = docs/evaluation/geometry/runs/source-bound-result-planning-false-serve-fix/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-bound-result-planning-false-serve-fix/
-CORRECTED_BY = NONE
+CORRECTED_BY = SHARED_ASK_GRAMMAR_SAFETY
 CORRECTS = SOURCE_BOUND_RESULT_PLANNING
 CLASSIFICATION = RESULT_BINDING_FALSE_SERVE_FIX_BLOCKED
 CODE_COMMIT = 2427289a; 8da9ae31

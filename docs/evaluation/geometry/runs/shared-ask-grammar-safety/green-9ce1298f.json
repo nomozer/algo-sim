@@ -1,0 +1,2077 @@
+{
+ "summary": {
+  "B": {
+   "CORRECT_REFUSAL": 84,
+   "CORRECT_SERVED": 36,
+   "FALSE_REFUSAL": 3
+  },
+  "A": {
+   "CORRECT_REFUSAL": 52,
+   "CORRECT_SERVED": 20
+  }
+ },
+ "rows": [
+  {
+   "id": "W1-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W2-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W3-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W4-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W5-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W6-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W7-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W8-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W9-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W10-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W11-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W12-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W13-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W14-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W15-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W16-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W17-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W18-line",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "P1-line",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P2-line",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P3-line",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P4-line",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P5-line",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P6-line",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P7-line",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P8-line",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P9-line",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P10-line",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "C1-line",
+   "group": "C",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C2-line",
+   "group": "C",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "GOAL_CLAUSE_NOT_PREMISE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C3-line",
+   "group": "C",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C4-line",
+   "group": "C",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D1-line",
+   "group": "D",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D2-line",
+   "group": "D",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D3-line",
+   "group": "D",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D4-line",
+   "group": "D",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "P11-line",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "FALSE_REFUSAL"
+  },
+  {
+   "id": "P12-line",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "W1-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W2-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W3-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W4-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W5-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W6-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W7-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W8-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W9-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W10-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W11-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W12-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W13-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W14-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W15-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W16-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W17-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W18-plane",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "P1-plane",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P2-plane",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P3-plane",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P4-plane",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P5-plane",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P6-plane",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P7-plane",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P8-plane",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P9-plane",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P10-plane",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "C1-plane",
+   "group": "C",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C2-plane",
+   "group": "C",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C3-plane",
+   "group": "C",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C4-plane",
+   "group": "C",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D1-plane",
+   "group": "D",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D2-plane",
+   "group": "D",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D3-plane",
+   "group": "D",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D4-plane",
+   "group": "D",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "P11-plane",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "FALSE_REFUSAL"
+  },
+  {
+   "id": "P12-plane",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "W1-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W2-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W3-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W4-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W5-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W6-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W7-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W8-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W9-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W10-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W11-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W12-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W13-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W14-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W15-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W16-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W17-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W18-length",
+   "group": "W",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "P1-length",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P2-length",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P3-length",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P4-length",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P5-length",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P6-length",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P7-length",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P8-length",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P9-length",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P10-length",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "C1-length",
+   "group": "C",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C2-length",
+   "group": "C",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C3-length",
+   "group": "C",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C4-length",
+   "group": "C",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D1-length",
+   "group": "D",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D2-length",
+   "group": "D",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D3-length",
+   "group": "D",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D4-length",
+   "group": "D",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "P11-length",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "FALSE_REFUSAL"
+  },
+  {
+   "id": "P12-length",
+   "group": "P",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "Q1-reused-foot",
+   "group": "Q",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "Q2-reused-foot",
+   "group": "Q",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "Q3-reused-foot",
+   "group": "Q",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "Q4-reused-foot",
+   "group": "Q",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "Q5-reused-foot",
+   "group": "Q",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "Q6-reused-foot",
+   "group": "Q",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "Q7-aux",
+   "group": "Q",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "Q8-aux",
+   "group": "Q",
+   "route": "B",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "Q9-aux",
+   "group": "Q",
+   "route": "B",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "W1-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W2-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W3-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W4-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W5-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W6-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W7-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W8-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W9-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W10-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W11-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W12-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W13-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W14-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W15-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W16-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W17-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W18-plane",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "P1-plane",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P2-plane",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P3-plane",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P4-plane",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P5-plane",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P6-plane",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P7-plane",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P8-plane",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P9-plane",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P10-plane",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "C1-plane",
+   "group": "C",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C2-plane",
+   "group": "C",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C3-plane",
+   "group": "C",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C4-plane",
+   "group": "C",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D1-plane",
+   "group": "D",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D2-plane",
+   "group": "D",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D3-plane",
+   "group": "D",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D4-plane",
+   "group": "D",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W1-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W2-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W3-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W4-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W5-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W6-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W7-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W8-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W9-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W10-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W11-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W12-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W13-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W14-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W15-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W16-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W17-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "W18-length",
+   "group": "W",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "P1-length",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P2-length",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P3-length",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P4-length",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P5-length",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P6-length",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P7-length",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P8-length",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P9-length",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "P10-length",
+   "group": "P",
+   "route": "A",
+   "expected": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17"
+   },
+   "outcome": "CORRECT_SERVED"
+  },
+  {
+   "id": "C1-length",
+   "group": "C",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C2-length",
+   "group": "C",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C3-length",
+   "group": "C",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "C4-length",
+   "group": "C",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D1-length",
+   "group": "D",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D2-length",
+   "group": "D",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D3-length",
+   "group": "D",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  },
+  {
+   "id": "D4-length",
+   "group": "D",
+   "route": "A",
+   "expected": "REFUSED",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "outcome": "CORRECT_REFUSAL"
+  }
+ ]
+}

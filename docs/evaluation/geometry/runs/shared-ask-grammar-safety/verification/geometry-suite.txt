@@ -1,0 +1,2 @@
+tests/geometry @ 5fc1645c (clean detached worktree, frontend/public/favicon.svg copied as in the user's tree), 0 model calls
+7279 passed, 1 deselected, 6 xfailed, 1 warning in 310.49s (0:05:10)

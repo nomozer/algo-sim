@@ -167,6 +167,13 @@
     `_kiem_result_binding` still reads quote-spliced text. 8 false serves remain on the auxiliary path
     (`docs/evaluation/geometry/runs/source-bound-result-planning-false-serve-fix/report.md` §6). Closing them needs a
     separately approved shared-grammar wave.
+    **Update (run `shared-ask-grammar-safety`, product `5f1b576c`):** asking sentences are now read whole, and bracketed,
+    rounding and unit notes are closed grammars. The reused foot reads the source. The 79 preregistered false serves are
+    closed on Routes A/B. The independent review is BLOCK on: (C1) a goal clause swallowing a modifier
+    ("Chứng minh BD ⊥ SC, nhân đôi kết quả và tính …"), a regression for two aux-line cases; (C2) a later sentence
+    changing the quantity ("Tính SC. Hãy tính kết quả dưới dạng bình phương."); (C3) derived-plane `ask_section_area`
+    outside the closed grammar; (C4) an asked unit that differs from the givens. There are also new false refusals (I2/I3).
+    C2/C3 need a new scope decision (`docs/evaluation/geometry/runs/shared-ask-grammar-safety/report.md` §5).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** Next Hybrid gate wave, before any product enablement or live pilot of Hybrid.
 - **default_switch_blocker:** YES
