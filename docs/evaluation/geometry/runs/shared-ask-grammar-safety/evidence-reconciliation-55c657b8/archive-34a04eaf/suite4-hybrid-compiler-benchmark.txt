@@ -1,0 +1,8 @@
+COMMAND: backend\.venv\Scripts\python.exe -X utf8 -m pytest backend/tests/geometry/test_hybrid_compiler_benchmark.py -q
+EXIT_CODE: 0
+BASE_COMMIT: 4acfc7316179e4ec7a9039dc654ea95fee8a9550
+TIMESTAMP: 2026-10-16T00:26:29+07:00
+--- OUTPUT ---
+............................................................xxxx........ [ 73%]
+..........................                                               [100%]
+94 passed, 4 xfailed in 2.30s

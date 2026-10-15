@@ -1,0 +1,1341 @@
+# PROVENANCE RECEIPT
+SOURCE_COMMIT: 34a04eaf7e9cbaf70d5c8741e3fb155fa7fd65e7
+TEST_COMMIT: 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65
+COMMAND: python -m pytest backend/tests/geometry/test_shared_ask_grammar.py -q --tb=short
+EXIT_CODE: 1
+TIMESTAMP: 2026-10-15T19:11:19Z
+PYTHON_VERSION: Python 3.12.10
+PYTEST_VERSION: pytest 9.1.1
+WORKING_TREE_STATUS: M backend/tests/geometry/test_shared_ask_grammar.py
+SOURCE_REGISTRY_BLOB_SHA256: 2aa76ece3c59ec21d6325f35efb056e9637d8e607b91eda4e3c2a3a52edad4dd
+TEST_FILE_BLOB_SHA256: 7a166b03b20c5682e1f01518e484cc67a427cb0797c9c4f3db0e39bd57aa38d0
+---
+........................................................................ [ 11%]
+........................................................................ [ 23%]
+........................................................................ [ 35%]
+........................................................................ [ 47%]
+..............................................................FFFF...... [ 59%]
+........................................................................ [ 70%]
+.......................FFFFFFFFFFFFFFF.FF.FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF [ 82%]
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF..FFFFFFFFFFFFFFFFF [ 94%]
+FFFFF..FFFFFFFFFFFFFFFFFF.....F..                                        [100%]
+================================== FAILURES ===================================
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw18-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:421: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw18-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:421: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw19-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:421: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c. T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.', 'SERVED', None, {'q': '4'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw19-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:421: in test_cr1_unit_in_note_sentence_before_or_after_ask
+    assert r.status == expected, (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c. T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.', 'SERVED', None, {'q': '4'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'line', 'SERVED', None, {'q': '\u221a11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'line', 'SERVED', None, {'q': '\u221a11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.', 'line', 'SERVED', None, {'q': '\u221a11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.', 'line', 'SERVED', None, {'q': '\u221a11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.', 'line', 'SERVED', None, {'q': '\u221a11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, g\u1ea5p \u0111\xf4i {O}, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, g\u1ea5p \u0111\xf4i {O}, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, g\u1ea5p \u0111\xf4i {O}, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, g\u1ea5p \u0111\xf4i {O}, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda {O}, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda {O}, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda {O}, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda {O}, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.', 'line', 'SERVED', None, {'q': '\u221a11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.', 'line', 'SERVED', None, {'q': '\u221a11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.', 'line', 'SERVED', None, {'q': '\u221a11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'line', 'SERVED', None, {'q': '\u221a11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.', 'line', 'SERVED', None, {'q': '\u221a11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.', 'line', 'SERVED', None, {'q': '\u221a11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'line', 'SERVED', None, {'q': '\u221a11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.', 'line', 'SERVED', None, {'q': '\u221a11'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:568: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, g\u1ea5p \u0111\xf4i {O}, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, g\u1ea5p \u0111\xf4i {O}, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, g\u1ea5p \u0111\xf4i {O}, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, g\u1ea5p \u0111\xf4i {O}, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda {O}, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda {O}, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda {O}, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda {O}, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.', 'plane', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:576: in test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.', 'length', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier[Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:585: in test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier
+    assert r_foot.status == "REFUSED" and r_foot.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, r_foot.status, r_foot.code)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'SERVED', None)
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier[Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:585: in test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier
+    assert r_foot.status == "REFUSED" and r_foot.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, r_foot.status, r_foot.code)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.', 'SERVED', None)
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier[Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:585: in test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier
+    assert r_foot.status == "REFUSED" and r_foot.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, r_foot.status, r_foot.code)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.', 'SERVED', None)
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier[Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:585: in test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier
+    assert r_foot.status == "REFUSED" and r_foot.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, r_foot.status, r_foot.code)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.', 'SERVED', None)
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier[Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.] _
+backend\tests\geometry\test_shared_ask_grammar.py:585: in test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier
+    assert r_foot.status == "REFUSED" and r_foot.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, r_foot.status, r_foot.code)
+E   AssertionError: ('Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.', 'SERVED', None)
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-\u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. \u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-\u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. \u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-L\u01b0u \xfd: vi\u1ebft \u0111\xe1p s\u1ed1 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. L\u01b0u \xfd: vi\u1ebft \u0111\xe1p s\u1ed1 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-L\u01b0u \xfd: vi\u1ebft \u0111\xe1p s\u1ed1 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. L\u01b0u \xfd: vi\u1ebft \u0111\xe1p s\u1ed1 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ch\xfa \xfd: k\u1ebft qu\u1ea3 \u1edf h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ch\xfa \xfd: k\u1ebft qu\u1ea3 \u1edf h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ch\xfa \xfd: k\u1ebft qu\u1ea3 \u1edf h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ch\xfa \xfd: k\u1ebft qu\u1ea3 \u1edf h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'SERVED', None, {'q': '3'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-\u0110\xe1p s\u1ed1 l\u1ea5y \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. \u0110\xe1p s\u1ed1 l\u1ea5y \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'REFUSED', 'SOURCE_PREMISE_UNREAD', {})
+E   assert ('REFUSED' == 'REFUSED'
+E     
+E       REFUSED and 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-\u0110\xe1p s\u1ed1 l\u1ea5y \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. \u0110\xe1p s\u1ed1 l\u1ea5y \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'REFUSED', 'SOURCE_PREMISE_UNREAD', {})
+E   assert ('REFUSED' == 'REFUSED'
+E     
+E       REFUSED and 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-K\u1ebft qu\u1ea3 l\xe0 m\u1ed9t ph\u1ea7n m\u01b0\u1eddi.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. K\u1ebft qu\u1ea3 l\xe0 m\u1ed9t ph\u1ea7n m\u01b0\u1eddi. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'REFUSED', 'SOURCE_PREMISE_UNREAD', {})
+E   assert ('REFUSED' == 'REFUSED'
+E     
+E       REFUSED and 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-K\u1ebft qu\u1ea3 l\xe0 m\u1ed9t ph\u1ea7n m\u01b0\u1eddi.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. K\u1ebft qu\u1ea3 l\xe0 m\u1ed9t ph\u1ea7n m\u01b0\u1eddi. T\xednh kho\u1ea3ng c\xe1ch t\u1eeb S \u0111\u1ebfn (ABCD).', 'REFUSED', 'SOURCE_PREMISE_UNREAD', {})
+E   assert ('REFUSED' == 'REFUSED'
+E     
+E       REFUSED and 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-\u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. \u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-\u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. \u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-L\u01b0u \xfd: vi\u1ebft \u0111\xe1p s\u1ed1 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. L\u01b0u \xfd: vi\u1ebft \u0111\xe1p s\u1ed1 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-L\u01b0u \xfd: vi\u1ebft \u0111\xe1p s\u1ed1 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. L\u01b0u \xfd: vi\u1ebft \u0111\xe1p s\u1ed1 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ch\xfa \xfd: k\u1ebft qu\u1ea3 \u1edf h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ch\xfa \xfd: k\u1ebft qu\u1ea3 \u1edf h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ch\xfa \xfd: k\u1ebft qu\u1ea3 \u1edf h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. Ch\xfa \xfd: k\u1ebft qu\u1ea3 \u1edf h\xe0ng ph\u1ea7n m\u01b0\u1eddi. T\xednh \u0111\u1ed9 d\xe0i SC.', 'SERVED', None, {'q': '\u221a17'})
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-\u0110\xe1p s\u1ed1 l\u1ea5y \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. \u0110\xe1p s\u1ed1 l\u1ea5y \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m. T\xednh \u0111\u1ed9 d\xe0i SC.', 'REFUSED', 'SOURCE_PREMISE_UNREAD', {})
+E   assert ('REFUSED' == 'REFUSED'
+E     
+E       REFUSED and 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-\u0110\xe1p s\u1ed1 l\u1ea5y \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. \u0110\xe1p s\u1ed1 l\u1ea5y \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m. T\xednh \u0111\u1ed9 d\xe0i SC.', 'REFUSED', 'SOURCE_PREMISE_UNREAD', {})
+E   assert ('REFUSED' == 'REFUSED'
+E     
+E       REFUSED and 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-K\u1ebft qu\u1ea3 l\xe0 m\u1ed9t ph\u1ea7n m\u01b0\u1eddi.-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. K\u1ebft qu\u1ea3 l\xe0 m\u1ed9t ph\u1ea7n m\u01b0\u1eddi. T\xednh \u0111\u1ed9 d\xe0i SC.', 'REFUSED', 'SOURCE_PREMISE_UNREAD', {})
+E   assert ('REFUSED' == 'REFUSED'
+E     
+E       REFUSED and 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD)
+_ test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-K\u1ebft qu\u1ea3 l\xe0 m\u1ed9t ph\u1ea7n m\u01b0\u1eddi.-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:626: in test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'Cho h\xecnh ch\xf3p S.ABCD. \u0110\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 cm. SA vu\xf4ng g\xf3c v\u1edbi (ABCD). SA = 3 cm. K\u1ebft qu\u1ea3 l\xe0 m\u1ed9t ph\u1ea7n m\u01b0\u1eddi. T\xednh \u0111\u1ed9 d\xe0i SC.', 'REFUSED', 'SOURCE_PREMISE_UNREAD', {})
+E   assert ('REFUSED' == 'REFUSED'
+E     
+E       REFUSED and 'SOURCE_PREMISE_UNREAD' == 'QUESTION_CONTEXT_UNSUPPORTED'
+E     
+E     - QUESTION_CONTEXT_UNSUPPORTED
+E     + SOURCE_PREMISE_UNREAD)
+_ test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections[K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.] _
+backend\tests\geometry\test_shared_ask_grammar.py:634: in test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections
+    assert r_line.status == "REFUSED" and r_line.code == "QUESTION_CONTEXT_UNSUPPORTED", (note, r_line.status, r_line.code)
+E   AssertionError: ('K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.', 'SERVED', None)
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections[Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi.] _
+backend\tests\geometry\test_shared_ask_grammar.py:634: in test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections
+    assert r_line.status == "REFUSED" and r_line.code == "QUESTION_CONTEXT_UNSUPPORTED", (note, r_line.status, r_line.code)
+E   AssertionError: ('Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi.', 'SERVED', None)
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections[Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m.] _
+backend\tests\geometry\test_shared_ask_grammar.py:634: in test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections
+    assert r_line.status == "REFUSED" and r_line.code == "QUESTION_CONTEXT_UNSUPPORTED", (note, r_line.status, r_line.code)
+E   AssertionError: ('Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m.', 'SERVED', None)
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections[Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.] _
+backend\tests\geometry\test_shared_ask_grammar.py:634: in test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections
+    assert r_line.status == "REFUSED" and r_line.code == "QUESTION_CONTEXT_UNSUPPORTED", (note, r_line.status, r_line.code)
+E   AssertionError: ('Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.', 'SERVED', None)
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections[\u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3.] _
+backend\tests\geometry\test_shared_ask_grammar.py:634: in test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections
+    assert r_line.status == "REFUSED" and r_line.code == "QUESTION_CONTEXT_UNSUPPORTED", (note, r_line.status, r_line.code)
+E   AssertionError: ('\u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3.', 'SERVED', None)
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections[Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn.] _
+backend\tests\geometry\test_shared_ask_grammar.py:634: in test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections
+    assert r_line.status == "REFUSED" and r_line.code == "QUESTION_CONTEXT_UNSUPPORTED", (note, r_line.status, r_line.code)
+E   AssertionError: ('Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn.', 'SERVED', None)
+E   assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_ test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 (ABCD).-kw0-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:660: in test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 (ABCD).', 'SERVED', None, {'q': 'cos\xb2=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 (ABCD).-kw0-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:660: in test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 (ABCD).', 'SERVED', None, {'q': 'cos\xb2=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o c\u1ee7a g\xf3c gi\u1eefa SC v\xe0 (ABCD).-kw1-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:660: in test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T\xednh s\u1ed1 \u0111o c\u1ee7a g\xf3c gi\u1eefa SC v\xe0 (ABCD).', 'SERVED', None, {'q': 'cos\xb2=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o c\u1ee7a g\xf3c gi\u1eefa SC v\xe0 (ABCD).-kw1-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:660: in test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T\xednh s\u1ed1 \u0111o c\u1ee7a g\xf3c gi\u1eefa SC v\xe0 (ABCD).', 'SERVED', None, {'q': 'cos\xb2=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 m\u1eb7t \u0111\xe1y.-kw2-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:660: in test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 m\u1eb7t \u0111\xe1y.', 'SERVED', None, {'q': 'cos\xb2=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 m\u1eb7t \u0111\xe1y.-kw2-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:660: in test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 m\u1eb7t \u0111\xe1y.', 'SERVED', None, {'q': 'cos\xb2=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[S\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 (ABCD) b\u1eb1ng bao nhi\xeau?-kw3-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:660: in test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'S\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 (ABCD) b\u1eb1ng bao nhi\xeau?', 'SERVED', None, {'q': 'cos\xb2=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[S\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 (ABCD) b\u1eb1ng bao nhi\xeau?-kw3-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:660: in test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'S\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 (ABCD) b\u1eb1ng bao nhi\xeau?', 'SERVED', None, {'q': 'cos\xb2=8/17'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa hai m\u1eb7t ph\u1eb3ng (SBC) v\xe0 (ABCD).-kw4-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:660: in test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa hai m\u1eb7t ph\u1eb3ng (SBC) v\xe0 (ABCD).', 'SERVED', None, {'q': 'cos\xb2=4/13'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa hai m\u1eb7t ph\u1eb3ng (SBC) v\xe0 (ABCD).-kw4-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:660: in test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa hai m\u1eb7t ph\u1eb3ng (SBC) v\xe0 (ABCD).', 'SERVED', None, {'q': 'cos\xb2=4/13'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o c\u1ee7a g\xf3c t\u1ea1o b\u1edfi (SBC) v\xe0 (ABCD).-kw5-REFUSED-None-A] _
+backend\tests\geometry\test_shared_ask_grammar.py:660: in test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('A', 'T\xednh s\u1ed1 \u0111o c\u1ee7a g\xf3c t\u1ea1o b\u1edfi (SBC) v\xe0 (ABCD).', 'SERVED', None, {'q': 'cos\xb2=4/13'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o c\u1ee7a g\xf3c t\u1ea1o b\u1edfi (SBC) v\xe0 (ABCD).-kw5-REFUSED-None-B] _
+backend\tests\geometry\test_shared_ask_grammar.py:660: in test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+E   AssertionError: ('B', 'T\xednh s\u1ed1 \u0111o c\u1ee7a g\xf3c t\u1ea1o b\u1edfi (SBC) v\xe0 (ABCD).', 'SERVED', None, {'q': 'cos\xb2=4/13'})
+E   assert 'SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED
+_ test_cra_crb_ima_mutants_are_killed_by_regression_suite[cra_skip_relational_predicate_after_comma] _
+backend\tests\geometry\test_shared_ask_grammar.py:686: in test_cra_crb_ima_mutants_are_killed_by_regression_suite
+    monkeypatch.setattr(RG, "_VI_TU_MUC_TIEU", _re.compile(r""))
+E   AttributeError: <module 'app.simulation.geometry_functions.registry' from 'C:\\Users\\Bunny\\AppData\\Local\\Temp\\algosim-e1-wt-34a04eaf\\backend\\app\\simulation\\geometry_functions\\registry.py'> has no attribute '_VI_TU_MUC_TIEU'
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw18-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-T\xednh \u0111\u1ed9 d\xe0i SC.-kw18-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw19-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cr1_unit_in_note_sentence_before_or_after_ask[L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABCD.-kw19-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, g\u1ea5p \u0111\xf4i {O}, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, g\u1ea5p \u0111\xf4i {O}, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda {O}, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda {O}, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[line:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b[length:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, g\u1ea5p \u0111\xf4i {O}, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, g\u1ea5p \u0111\xf4i {O}, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda {O}, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda {O}, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, ba l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, 2 SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh SC g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh m\u1ed9t n\u1eeda SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh hai l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[plane:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a[length:Ch\u1ee9ng minh BD \u22a5 SC, SC b\u1eb1ng hai l\u1ea7n, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier[Ch\u1ee9ng minh BD \u22a5 SC, SC g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier[Ch\u1ee9ng minh BD \u22a5 SC v\xe0 g\u1ea5p \u0111\xf4i, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier[Ch\u1ee9ng minh BD \u22a5 SC, m\u1ed9t n\u1eeda SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier[Ch\u1ee9ng minh BD \u22a5 SC, hai l\u1ea7n SC, r\u1ed3i t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier[Ch\u1ee9ng minh BD \u22a5 SC, 2 l\u1ea7n SC, t\xednh {O}.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-\u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-\u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-L\u01b0u \xfd: vi\u1ebft \u0111\xe1p s\u1ed1 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-L\u01b0u \xfd: vi\u1ebft \u0111\xe1p s\u1ed1 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ch\xfa \xfd: k\u1ebft qu\u1ea3 \u1edf h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-Ch\xfa \xfd: k\u1ebft qu\u1ea3 \u1edf h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-\u0110\xe1p s\u1ed1 l\u1ea5y \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-\u0110\xe1p s\u1ed1 l\u1ea5y \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-K\u1ebft qu\u1ea3 l\xe0 m\u1ed9t ph\u1ea7n m\u01b0\u1eddi.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[plane-K\u1ebft qu\u1ea3 l\xe0 m\u1ed9t ph\u1ea7n m\u01b0\u1eddi.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-\u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-\u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-L\u01b0u \xfd: k\u1ebft qu\u1ea3 \u0111\u1ec3 \u1edf d\u1ea1ng c\u0103n th\u1ee9c.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-L\u01b0u \xfd: vi\u1ebft \u0111\xe1p s\u1ed1 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-L\u01b0u \xfd: vi\u1ebft \u0111\xe1p s\u1ed1 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ch\xfa \xfd: k\u1ebft qu\u1ea3 \u1edf h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-Ch\xfa \xfd: k\u1ebft qu\u1ea3 \u1edf h\xe0ng ph\u1ea7n m\u01b0\u1eddi.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-\u0110\xe1p s\u1ed1 l\u1ea5y \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-\u0110\xe1p s\u1ed1 l\u1ea5y \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-K\u1ebft qu\u1ea3 l\xe0 m\u1ed9t ph\u1ea7n m\u01b0\u1eddi.-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask[length-K\u1ebft qu\u1ea3 l\xe0 m\u1ed9t ph\u1ea7n m\u01b0\u1eddi.-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections[K\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n tr\u0103m.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections[Ghi k\u1ebft qu\u1ea3 \u0111\u1ebfn h\xe0ng ph\u1ea7n m\u01b0\u1eddi.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections[Ghi \u0111\xe1p s\u1ed1 \u1edf h\xe0ng ph\u1ea7n tr\u0103m.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections[Vi\u1ebft k\u1ebft qu\u1ea3 d\u01b0\u1edbi d\u1ea1ng ph\xe2n s\u1ed1.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections[\u0110\xe1p s\u1ed1 l\xe0 ph\u1ea7n m\u01b0\u1eddi c\u1ee7a k\u1ebft qu\u1ea3.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections[Ghi k\u1ebft qu\u1ea3 theo h\xe0ng ngh\xecn.]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 (ABCD).-kw0-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 (ABCD).-kw0-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o c\u1ee7a g\xf3c gi\u1eefa SC v\xe0 (ABCD).-kw1-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o c\u1ee7a g\xf3c gi\u1eefa SC v\xe0 (ABCD).-kw1-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 m\u1eb7t \u0111\xe1y.-kw2-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 m\u1eb7t \u0111\xe1y.-kw2-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[S\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 (ABCD) b\u1eb1ng bao nhi\xeau?-kw3-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[S\u1ed1 \u0111o g\xf3c gi\u1eefa SC v\xe0 (ABCD) b\u1eb1ng bao nhi\xeau?-kw3-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa hai m\u1eb7t ph\u1eb3ng (SBC) v\xe0 (ABCD).-kw4-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o g\xf3c gi\u1eefa hai m\u1eb7t ph\u1eb3ng (SBC) v\xe0 (ABCD).-kw4-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o c\u1ee7a g\xf3c t\u1ea1o b\u1edfi (SBC) v\xe0 (ABCD).-kw5-REFUSED-None-A]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served[T\xednh s\u1ed1 \u0111o c\u1ee7a g\xf3c t\u1ea1o b\u1edfi (SBC) v\xe0 (ABCD).-kw5-REFUSED-None-B]
+FAILED backend\tests\geometry\test_shared_ask_grammar.py::test_cra_crb_ima_mutants_are_killed_by_regression_suite[cra_skip_relational_predicate_after_comma]
+145 failed, 464 passed in 9.51s

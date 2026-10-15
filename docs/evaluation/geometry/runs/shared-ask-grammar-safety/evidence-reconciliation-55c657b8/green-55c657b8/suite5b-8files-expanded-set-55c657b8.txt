@@ -1,0 +1,25 @@
+# PROVENANCE RECEIPT
+SOURCE_COMMIT: 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65
+TEST_COMMIT: 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65
+COMMAND: python -m pytest backend/tests/geometry/test_goal_directed_section_planning.py backend/tests/geometry/test_two_line_plane_section.py backend/tests/geometry/test_question_local_givens.py backend/tests/geometry/test_question_followup_context.py backend/tests/geometry/test_premise_source_coverage.py backend/tests/geometry/test_hybrid_ask_operand_binding.py backend/tests/geometry/test_source_gate_clause_role.py backend/tests/geometry/test_text_to_geometry_functions.py -q
+EXIT_CODE: 0
+TIMESTAMP: 2026-10-15T19:13:04Z
+PYTHON_VERSION: Python 3.12.10
+PYTEST_VERSION: pytest 9.1.1
+WORKING_TREE_STATUS: CLEAN (0 modified, 0 untracked)
+FILE_COUNT: 8 (7 historical files + test_text_to_geometry_functions.py [64 items])
+---
+........................................................................ [  8%]
+........................................................................ [ 16%]
+........................................................................ [ 24%]
+........................................................................ [ 33%]
+.........................................................x.............. [ 41%]
+........................................................................ [ 49%]
+........................................................................ [ 57%]
+........................................................................ [ 66%]
+........................................................................ [ 74%]
+........................................................................ [ 82%]
+........................................................................ [ 91%]
+........................................................................ [ 99%]
+.....                                                                    [100%]
+868 passed, 1 xfailed in 9.38s

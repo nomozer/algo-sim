@@ -1,0 +1,24 @@
+# PROVENANCE RECEIPT
+SOURCE_COMMIT: 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65
+TEST_COMMIT: 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65
+COMMAND: python -m pytest backend/tests/geometry/test_shared_ask_grammar.py -k test_cra_crb_ima_mutants_are_killed_by_regression_suite -v
+EXIT_CODE: 0
+TIMESTAMP: 2026-10-15T19:18:31Z
+PYTHON_VERSION: Python 3.12.10
+PYTEST_VERSION: pytest 9.1.1
+MUTANT_COUNT: 4 (parametrized monkeypatch probes in test_cra_crb_ima_mutants_are_killed_by_regression_suite; no 16-mutant suite or REVIEW_4ACFC731_MUTANTS exists)
+---
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.1.1, pluggy-1.6.0 -- d:\Documents\projects\algo-sim\backend\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: d:\Documents\projects\algo-sim\backend
+configfile: pytest.ini
+plugins: anyio-4.14.1
+collecting ... collected 609 items / 605 deselected / 4 selected
+
+backend\tests\geometry\test_shared_ask_grammar.py::test_cra_crb_ima_mutants_are_killed_by_regression_suite[cra_allow_bare_quantifier_in_goal] PASSED [ 25%]
+backend\tests\geometry\test_shared_ask_grammar.py::test_cra_crb_ima_mutants_are_killed_by_regression_suite[cra_skip_relational_predicate_after_comma] PASSED [ 50%]
+backend\tests\geometry\test_shared_ask_grammar.py::test_cra_crb_ima_mutants_are_killed_by_regression_suite[crb_permissive_note_fallback_true] PASSED [ 75%]
+backend\tests\geometry\test_shared_ask_grammar.py::test_cra_crb_ima_mutants_are_killed_by_regression_suite[ima_allow_so_do_goc_as_cos2] PASSED [100%]
+
+====================== 4 passed, 605 deselected in 1.18s ======================

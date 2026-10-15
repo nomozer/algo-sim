@@ -1,0 +1,12 @@
+# PROVENANCE RECEIPT
+SOURCE_COMMIT: 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65
+TEST_COMMIT: 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65
+COMMAND: python -m pytest backend/tests/geometry/test_result_binding_planning.py -q
+EXIT_CODE: 0
+TIMESTAMP: 2026-10-15T19:12:02Z
+PYTHON_VERSION: Python 3.12.10
+PYTEST_VERSION: pytest 9.1.1
+WORKING_TREE_STATUS: CLEAN (0 modified, 0 untracked)
+---
+........................................................................ [100%]
+72 passed in 1.60s

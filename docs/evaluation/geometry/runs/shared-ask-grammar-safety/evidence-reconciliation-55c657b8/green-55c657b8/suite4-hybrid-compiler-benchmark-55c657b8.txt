@@ -1,0 +1,13 @@
+# PROVENANCE RECEIPT
+SOURCE_COMMIT: 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65
+TEST_COMMIT: 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65
+COMMAND: python -m pytest backend/tests/geometry/test_hybrid_compiler_benchmark.py -q
+EXIT_CODE: 0
+TIMESTAMP: 2026-10-15T19:12:44Z
+PYTHON_VERSION: Python 3.12.10
+PYTEST_VERSION: pytest 9.1.1
+WORKING_TREE_STATUS: CLEAN (0 modified, 0 untracked)
+---
+............................................................xxxx........ [ 73%]
+..........................                                               [100%]
+94 passed, 4 xfailed in 2.13s
