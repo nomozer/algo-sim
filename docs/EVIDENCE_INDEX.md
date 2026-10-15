@@ -6,12 +6,12 @@ REPORT = docs/evaluation/geometry/runs/source-bound-result-planning/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-bound-result-planning/
 CORRECTED_BY = NONE
 CORRECTS = NONE
-CLASSIFICATION = LOCAL_RESEARCH_SLICE_VERIFIED_NO_PUSH
-CODE_COMMIT = b8112f35
-VERIFICATION_COMMIT = b8112f35
+CLASSIFICATION = RESULT_BINDING_INTEGRATION_REVIEW_READY
+CODE_COMMIT = 10dd6d6e
+VERIFICATION_COMMIT = 10dd6d6e
 MODEL_REQUEST_COUNT = 0
 
-Source-bound result binding (`line_ref`) and bounded effect-driven point–line distance planning over `REGISTRY` effects (`PlanningContract` on `intersection_line`, `orthogonal_projection_line`, `ask_length`). RED `de5ea1a7` 18/18 `SCHEMA_INVALID` → GREEN 6/6 positive `SERVED`, 12/12 negative `REFUSED` (`test_result_binding_planning.py` 64 passed). Browser harness (`visual/{swiftshader,gpu}/receipt.json`) 4 scenes `PASS_CORE_CAUSAL_RENDERING`, 0 errors. Historical two-line 45/32 and benchmark 30 invariant. Candidate `92bd1a6bcf736ac2…` (110 files). Detached T3 not run.
+Source-bound result binding (`line_ref`) and bounded effect-driven point–line distance planning over `REGISTRY` effects (`PlanningContract` on `intersection_line`, `orthogonal_projection_line`, `ask_length`). RED `de5ea1a7` 18/18 `SCHEMA_INVALID` → GREEN 6/6 positive `SERVED` ($d^2 \in \{10/11, 5, 3, 10, 0, 10/11\}$), 12/12 negative `REFUSED` (`test_result_binding_planning.py` 72 passed; 18/18 `EXACT_MATCH` in `reconciliation.json`). Independent 11-dimension review (`review.md`) closed `CRITICAL-1`, `IMPORTANT-1`, `IMPORTANT-2`, `NONBLOCKING-1` via RED → GREEN at `10dd6d6e`. Browser harness (`visual/{swiftshader,gpu}/receipt.json`) 4 scenes `PASS_CORE_CAUSAL_RENDERING`, 0 errors. Historical two-line 45/32 and benchmark 30 invariant. Candidate `47e54b3dc9d261e8…` (110 files). Clean detached T3 PASS (`verification/t3-pass.json`, `verification/t3-authoritative.log`).
 
 ## WAVE_ID = GOAL_DIRECTED_PLANNER_GENERALIZATION_AUDIT
 

@@ -5,7 +5,7 @@
   "date": "2026-10-15",
   "environment": "LOCAL Windows 11, Python 3.12, Node, Chromium (SwiftShader, Intel UHD D3D11)",
   "naming_policy": "docs/evaluation/RUN_NAMING.md",
-  "status": "LOCAL_RESEARCH_SLICE_VERIFIED_NO_PUSH",
+  "status": "RESULT_BINDING_INTEGRATION_REVIEW_READY",
   "branch": "research/source-bound-result-planning",
   "base_commit": "19140e2f",
   "main_before": "2a3c0787",
@@ -16,11 +16,12 @@
   "commits": {
     "red_baseline": "de5ea1a7",
     "initial_implementation": "fb7024ac",
-    "product_final": "b8112f35"
+    "pre_review_product": "b8112f35",
+    "product_final": "10dd6d6e"
   },
-  "product_commit": "b8112f35",
+  "product_commit": "10dd6d6e",
   "candidate": {
-    "tree_hash": "92bd1a6bcf736ac2e70a3b6687abb482a7170a60fd8b2773173ee99dee16a3b0",
+    "tree_hash": "47e54b3dc9d261e86d4c1415cf904fd5e20ff884dc67fad2e316ea360cddc1fc",
     "files": 110,
     "divergence": "inputs/candidate_divergence.json"
   },
@@ -31,11 +32,14 @@
   "Hybrid_product_enablement": "NO-GO (unchanged)",
   "results": {
     "red": "red.json — 18/18 SCHEMA_INVALID at de5ea1a7",
-    "locked_corpus": "visual/corpus-results.json — 6/6 positive SERVED, 12/12 negative REFUSED, 64/64 tests in test_result_binding_planning.py PASS",
+    "locked_corpus": "visual/corpus-results.json & reconciliation.json — 6/6 positive SERVED (10/11, 5, 3, 10, 0, 10/11), 12/12 negative REFUSED, 18/18 EXACT_MATCH, 72/72 tests in test_result_binding_planning.py PASS",
+    "review": "review.md — independent 11-dimension review PASS after closing CRITICAL-1, IMPORTANT-1, IMPORTANT-2, NONBLOCKING-1 via RED → GREEN at 10dd6d6e",
     "invariance": "verification/two-line-development (12/33), verification/two-line-heldout (11/21), verification/benchmark-30 (19/9/0/2) unchanged",
     "browser": "visual/{swiftshader,gpu}/receipt.json — PASS_CORE_CAUSAL_RENDERING, 4 scenes, 0 errors; image-policy.json records 14 kept + 88 pruned SHA-256 hashes",
-    "t3": "NOT_RUN_DETACHED — focused geometry cluster (872 passed, 5 xfailed), docs/identity/candidate (123 passed), frontend Vitest (1055 passed / 68 files), and Vite build PASS"
+    "t3": "verification/t3-pass.json & verification/t3-authoritative.log — clean detached worktree T3 PASS (full backend pytest, frontend Vitest 1055 passed / 68 files, Vite build, demo replay 5/5, crash surface 6/6)"
   },
+  "reconciliation": "reconciliation.json",
+  "review": "review.md",
   "report": "report.md",
   "handoff": "handoff.md"
 }

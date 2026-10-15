@@ -1,0 +1,265 @@
+{
+  "schema": "RESULT_BINDING_RECONCILIATION/1",
+  "locked_artifacts": {
+    "next_slice_preregistration_md_sha256": "14303fa0d80f5a55e5f0fd87f7cc6d15f23fdf80e118668c02007019ed297db7",
+    "next_slice_corpus_json_sha256": "6587fabf084029bf7aa787df291b27bbf83fde95212ca9a8f1bd4c4ce9cbda84"
+  },
+  "corpus_reconciliation_root_cause": "EVIDENCE_ONLY_DEFECT in report.md lines 23-24 (narrative summary drafted from memory instead of copying from next-slice-corpus.json and visual/corpus-results.json; code, tests, and exported visual/corpus-results.json used the exact 18 locked cases all along)",
+  "cases": [
+    {
+      "locked_id": "derived-line-pyramid",
+      "input_hash": "2d5da82ce5b17d6d3965b078cadd4746d2d8c0e458118dbb920d58dd4f700ae5",
+      "locked_expectation": "SERVED (d²=10/11)",
+      "tested_id": "derived-line-pyramid",
+      "tested_input_hash": "2d5da82ce5b17d6d3965b078cadd4746d2d8c0e458118dbb920d58dd4f700ae5",
+      "actual_status": "SERVED",
+      "actual_value": "d²=10/11 (d=√110/11)",
+      "oracle_value": "d²=10/11",
+      "first_stop": "NONE (SERVED)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "derived-line-cuboid",
+      "input_hash": "c019d8d5b711db22d01a17df4e55b45281fb259a8bc0bbf4735845bfb9581fb6",
+      "locked_expectation": "SERVED (d²=5)",
+      "tested_id": "derived-line-cuboid",
+      "tested_input_hash": "c019d8d5b711db22d01a17df4e55b45281fb259a8bc0bbf4735845bfb9581fb6",
+      "actual_status": "SERVED",
+      "actual_value": "d²=5 (d=√5)",
+      "oracle_value": "d²=5",
+      "first_stop": "NONE (SERVED)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "derived-line-prism",
+      "input_hash": "eb1990b834130b15661307268d4d402e15724d14bee946462bb25f1bc307ddb2",
+      "locked_expectation": "SERVED (d²=3)",
+      "tested_id": "derived-line-prism",
+      "tested_input_hash": "eb1990b834130b15661307268d4d402e15724d14bee946462bb25f1bc307ddb2",
+      "actual_status": "SERVED",
+      "actual_value": "d²=3 (d=√3)",
+      "oracle_value": "d²=3",
+      "first_stop": "NONE (SERVED)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "different-direction-decomposition",
+      "input_hash": "9529a912cb0c1484321f5b6f4e34917f99c0736db35342c33e989a4decffe269",
+      "locked_expectation": "SERVED (d²=10)",
+      "tested_id": "different-direction-decomposition",
+      "tested_input_hash": "9529a912cb0c1484321f5b6f4e34917f99c0736db35342c33e989a4decffe269",
+      "actual_status": "SERVED",
+      "actual_value": "d²=10 (d=√10)",
+      "oracle_value": "d²=10",
+      "first_stop": "NONE (SERVED)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "zero-distance",
+      "input_hash": "6469208545e8e4f2386470bb8b506ee51f60444582975daf8b0fd5e2af901539",
+      "locked_expectation": "SERVED (d²=0)",
+      "tested_id": "zero-distance",
+      "tested_input_hash": "6469208545e8e4f2386470bb8b506ee51f60444582975daf8b0fd5e2af901539",
+      "actual_status": "SERVED",
+      "actual_value": "d²=0 (d=0)",
+      "oracle_value": "d²=0",
+      "first_stop": "NONE (SERVED)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "shared-line-foot-two-goals",
+      "input_hash": "b903debe7e2d3005da12bdb66eb9ea939302f2418bfe0089c59d92dd64101503",
+      "locked_expectation": "SERVED (d²=10/11)",
+      "tested_id": "shared-line-foot-two-goals",
+      "tested_input_hash": "b903debe7e2d3005da12bdb66eb9ea939302f2418bfe0089c59d92dd64101503",
+      "actual_status": "SERVED",
+      "actual_value": "d²=10/11 (d=√110/11)",
+      "oracle_value": "d²=10/11",
+      "first_stop": "NONE (SERVED)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "unknown-reference",
+      "input_hash": "db700d2eab784342a5edf1b695df57b78c5a26d8777dcdeb21d9c1cfcc8da75e",
+      "locked_expectation": "REFUSED (UNKNOWN_DERIVED_REFERENCE)",
+      "tested_id": "unknown-reference",
+      "tested_input_hash": "db700d2eab784342a5edf1b695df57b78c5a26d8777dcdeb21d9c1cfcc8da75e",
+      "actual_status": "REFUSED",
+      "actual_value": "UNKNOWN_DERIVED_REFERENCE",
+      "oracle_value": "REFUSED (UNKNOWN_DERIVED_REFERENCE)",
+      "first_stop": "Planner (doc_du_kien reference integrity)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "wrong-reference-type",
+      "input_hash": "0d2adfde7c9e945d545f82508414f0eee0d40c732ab9810f87d02a572384d64e",
+      "locked_expectation": "REFUSED (DERIVED_REFERENCE_TYPE_MISMATCH)",
+      "tested_id": "wrong-reference-type",
+      "tested_input_hash": "0d2adfde7c9e945d545f82508414f0eee0d40c732ab9810f87d02a572384d64e",
+      "actual_status": "REFUSED",
+      "actual_value": "DERIVED_REFERENCE_TYPE_MISMATCH",
+      "oracle_value": "REFUSED (DERIVED_REFERENCE_TYPE_MISMATCH)",
+      "first_stop": "Planner (doc_du_kien producer kind check)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "producer-source-mismatch",
+      "input_hash": "dad0c8f91b368f41fab9e1be93d6413782e716c7b9e9bbba24cde8278de48f12",
+      "locked_expectation": "REFUSED (SOURCE_OBJECT_MISMATCH)",
+      "tested_id": "producer-source-mismatch",
+      "tested_input_hash": "dad0c8f91b368f41fab9e1be93d6413782e716c7b9e9bbba24cde8278de48f12",
+      "actual_status": "REFUSED",
+      "actual_value": "SOURCE_OBJECT_MISMATCH",
+      "oracle_value": "REFUSED (SOURCE_OBJECT_MISMATCH)",
+      "first_stop": "Registry (_kiem_result_binding source span/plane check)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "conditional-producer",
+      "input_hash": "ac48f2498b8c99571386746107688741c6dd0f8fbd636df4e16db9fd24cdaef1",
+      "locked_expectation": "REFUSED (CONDITIONAL_CLAUSE)",
+      "tested_id": "conditional-producer",
+      "tested_input_hash": "ac48f2498b8c99571386746107688741c6dd0f8fbd636df4e16db9fd24cdaef1",
+      "actual_status": "REFUSED",
+      "actual_value": "CONDITIONAL_CLAUSE",
+      "oracle_value": "REFUSED (CONDITIONAL_CLAUSE)",
+      "first_stop": "Planner (doc_du_kien conditional role check)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "proof-producer",
+      "input_hash": "e3b57965761b0e152a1ab9a6ebc79814c9abd0807bf7dfd6dd86262940576ffb",
+      "locked_expectation": "REFUSED (GOAL_CLAUSE_NOT_PREMISE)",
+      "tested_id": "proof-producer",
+      "tested_input_hash": "e3b57965761b0e152a1ab9a6ebc79814c9abd0807bf7dfd6dd86262940576ffb",
+      "actual_status": "REFUSED",
+      "actual_value": "GOAL_CLAUSE_NOT_PREMISE",
+      "oracle_value": "REFUSED (GOAL_CLAUSE_NOT_PREMISE)",
+      "first_stop": "Planner (doc_du_kien prove role check)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "negated-producer",
+      "input_hash": "92a68411064a69777a04e87ad0f4acb147f973de367f2fc1d98b7d7af5742c18",
+      "locked_expectation": "REFUSED (NEGATED_CLAUSE)",
+      "tested_id": "negated-producer",
+      "tested_input_hash": "92a68411064a69777a04e87ad0f4acb147f973de367f2fc1d98b7d7af5742c18",
+      "actual_status": "REFUSED",
+      "actual_value": "NEGATED_CLAUSE",
+      "oracle_value": "REFUSED (NEGATED_CLAUSE)",
+      "first_stop": "Planner (doc_du_kien negated premise check)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "parallel-planes",
+      "input_hash": "fae02227133f37d44dcd48a93469927577459880651d2fbfffaeecccbc656a7f",
+      "locked_expectation": "REFUSED (PARALLEL_NO_INTERSECTION)",
+      "tested_id": "parallel-planes",
+      "tested_input_hash": "fae02227133f37d44dcd48a93469927577459880651d2fbfffaeecccbc656a7f",
+      "actual_status": "REFUSED",
+      "actual_value": "PARALLEL_NO_INTERSECTION",
+      "oracle_value": "REFUSED (PARALLEL_NO_INTERSECTION)",
+      "first_stop": "Engine (intersect_plane_plane kernel check)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "coincident-planes",
+      "input_hash": "2658adf547ad2e513a006b42935991de38f5a5aa1d26d254f3adabc63339de0f",
+      "locked_expectation": "REFUSED (CONTAINED_INFINITE_INTERSECTION)",
+      "tested_id": "coincident-planes",
+      "tested_input_hash": "2658adf547ad2e513a006b42935991de38f5a5aa1d26d254f3adabc63339de0f",
+      "actual_status": "REFUSED",
+      "actual_value": "CONTAINED_INFINITE_INTERSECTION",
+      "oracle_value": "REFUSED (CONTAINED_INFINITE_INTERSECTION)",
+      "first_stop": "Engine (intersect_plane_plane kernel check)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "long-quote-nonnumeric",
+      "input_hash": "221727116605ae9c716e61a180cac2960b14ef29680794db7432eb96276f4be6",
+      "locked_expectation": "REFUSED (closed source refusal)",
+      "tested_id": "long-quote-nonnumeric",
+      "tested_input_hash": "221727116605ae9c716e61a180cac2960b14ef29680794db7432eb96276f4be6",
+      "actual_status": "REFUSED",
+      "actual_value": "SOURCE_PREMISE_UNREAD",
+      "oracle_value": "REFUSED (closed source refusal)",
+      "first_stop": "Registry (_kiem_nguon_dong unread premise check)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "and-song-unread-premise",
+      "input_hash": "ae2bc0e099c3e70d47327c5b40a2b8a4021dc745bb3d3721a121f1b2a9374050",
+      "locked_expectation": "REFUSED (closed source refusal)",
+      "tested_id": "and-song-unread-premise",
+      "tested_input_hash": "ae2bc0e099c3e70d47327c5b40a2b8a4021dc745bb3d3721a121f1b2a9374050",
+      "actual_status": "REFUSED",
+      "actual_value": "SOURCE_PREMISE_UNREAD",
+      "oracle_value": "REFUSED (closed source refusal)",
+      "first_stop": "Registry (_kiem_nguon_dong unread premise check)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "unverified-goal-value",
+      "input_hash": "35dbb5901af1645a97f98d7619cb234e5c06ed3b0cc2a7faea20b2426bfe8b8e",
+      "locked_expectation": "REFUSED (NOT_ASKED_IN_SOURCE)",
+      "tested_id": "unverified-goal-value",
+      "tested_input_hash": "35dbb5901af1645a97f98d7619cb234e5c06ed3b0cc2a7faea20b2426bfe8b8e",
+      "actual_status": "REFUSED",
+      "actual_value": "NOT_ASKED_IN_SOURCE",
+      "oracle_value": "REFUSED (NOT_ASKED_IN_SOURCE)",
+      "first_stop": "Registry (_kiem_result_binding / _kiem_nguon_dong goal ask check)",
+      "verdict": "EXACT_MATCH"
+    },
+    {
+      "locked_id": "cycle",
+      "input_hash": "d22a37568a59ef5922fc875f7435b7aca805713299dfa5473beb8d94328bb71f",
+      "locked_expectation": "REFUSED (dependency cycle refusal)",
+      "tested_id": "cycle",
+      "tested_input_hash": "d22a37568a59ef5922fc875f7435b7aca805713299dfa5473beb8d94328bb71f",
+      "actual_status": "REFUSED",
+      "actual_value": "DEPENDENCY_CYCLE",
+      "oracle_value": "REFUSED (dependency cycle refusal)",
+      "first_stop": "Planner (ke_hoach point dependency cycle check)",
+      "verdict": "EXACT_MATCH"
+    }
+  ],
+  "provider_surfaces": {
+    "serializer": {
+      "route_a": "app.ai.function_calling.surface_fingerprint()",
+      "route_b": "app.ai.fact_extraction.surface_fingerprint()",
+      "function_declarations": "sha256(json.dumps(app.simulation.geometry_functions.registry.function_declarations(), ensure_ascii=False, sort_keys=True))"
+    },
+    "surfaces": [
+      {
+        "surface": "route_a_function_calling",
+        "baseline_commit": "19140e2f5b4214b6e98967bc1b79d6fc45ffca01",
+        "baseline_sha256": "912b22ef7f89851412b8ff026012454d1f9aa225bdd5bd00eb0d8f2dbd53fa3e",
+        "current_commit": "10dd6d6ebee34cdf8258b0e559c031e82931502a",
+        "actual_sha256": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+        "schema_change": "ProjectionLineArgs added optional line_ref: str | None = None (mutually exclusive with line; refused on Route A by _kiem_result_binding with RESULT_BINDING_UNVERIFIED)",
+        "consumer_compatibility": "Backward-compatible; existing explicit-line calls unchanged; PlanningContract excluded from function_declarations()",
+        "report_discrepancy_cause": "report.md line 13 quoted pre-slice baseline Route A hash (912b22ef...) instead of current canonical hash (7ea511a6...) recorded in provider-surfaces.json"
+      },
+      {
+        "surface": "route_b_fact_extraction",
+        "baseline_commit": "19140e2f5b4214b6e98967bc1b79d6fc45ffca01",
+        "baseline_sha256": "145feb1873eac91fab1336f3f6aded7b792d82a9d3599e446087fe6b33a489b5",
+        "current_commit": "10dd6d6ebee34cdf8258b0e559c031e82931502a",
+        "actual_sha256": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+        "schema_change": "TypedFact added optional line_ref: str | None = None and FACT_EXTRACTION_INSTRUCTION added line_ref extraction guidance",
+        "consumer_compatibility": "Backward-compatible; old TypedFact payloads without line_ref default to None",
+        "report_discrepancy_cause": "report.md line 13 quoted historical two-line-plane-section Route B hash (442d1a0b...) instead of current canonical hash (485d3834...) recorded in provider-surfaces.json"
+      },
+      {
+        "surface": "registry_function_declarations",
+        "baseline_commit": "19140e2f5b4214b6e98967bc1b79d6fc45ffca01",
+        "baseline_sha256": "f2ec9698a4ee8af86448790f83d9af340eb6afcfce0a8f258ea67e46bf7504b1",
+        "current_commit": "10dd6d6ebee34cdf8258b0e559c031e82931502a",
+        "actual_sha256": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169",
+        "schema_change": "orthogonal_projection_line parameter schema includes optional line_ref; PlanningContract is internal-only and not exported",
+        "consumer_compatibility": "Backward-compatible; PlanningContract not exposed to provider declarations",
+        "report_discrepancy_cause": "report.md line 13 quoted historical two-line-plane-section declarations hash (be38f55f...) instead of current canonical hash (5ceb0f99...) recorded in provider-surfaces.json"
+      }
+    ]
+  }
+}
