@@ -8,18 +8,18 @@
   "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
   "current_candidate_hash": "4b95dcc665f5930b74c849164122458ad070af9af24cb085bcfa9217063dee25",
   "current_candidate_source_commit": "9ce1298f8f7cef090169c5ae5a64b0625a1ddbd4",
-  "current_product_commit": "5f1b576c62eb75293c800718dc200da45ff4934d",
+  "current_product_commit": "34a04eaf7e9cbaf70d5c8741e3fb155fa7fd65e7",
   "previous_candidate_hash": "7e993f8d1f9578cbb601ace02a972844d5516ca51da5c5e4357877c976f334d7",
-  "previous_product_commit": "8da9ae3170f8129ca88bbc390668e4e249323ff0",
+  "previous_product_commit": "4acfc7316179e4ec7a9039dc654ea95fee8a9550",
   "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
   "diverged": true,
   "measured_system_paths_changed": true,
-  "reason": "Hybrid-only shared ask-grammar change in registry.py: sentence-level reading of asking sentences in _kiem_du_kien_cau_hoi (_vung_hoi extracted from _hoi_dung_cum, closed residue grammar _DAN_CAU_HOI), closed bracketed-note / rounding / unit grammar in _SAU_HOP_LE, reused-foot branch of _kiem_result_binding reads the source, two squared/half denylists removed. Production LLM_ONLY route, prompts, routing, schema, provider surfaces, planner, engine, kernel, interpreter and scene3d unchanged.",
-  "historical_effect": "Locked corpus 18/18 unchanged (scenes.json, corpus-results.json, manifest.json byte-identical on re-export at 9ce1298f). Benchmark 30 metrics byte-identical; two-line development 45 and heldout 32 rows identical. Historical results keep their source candidates.",
+  "reason": "Hybrid-only shared ask-grammar closure in registry.py (closing 9ce1298f C1-C4/I2/I3, 4acfc731 CR-1/CR-2/IM-1/IM-2, and 34a04eaf CR-A/CR-B/IM-A): closed sentence-level ask/note/goal-clause reading, closed unit/parameter/rounding verification, and fail-closed refusal for angle measure ('số đo góc') vs cos² output contract. Production LLM_ONLY route, prompts, routing, schema, provider surfaces, planner, engine, kernel, interpreter and scene3d unchanged.",
+  "historical_effect": "Locked corpus 18/18 unchanged (scenes.json, corpus-results.json, manifest.json byte-identical). Benchmark 30 metrics unchanged (19 SERVED, 11 REFUSED; 94 passed, 4 xfailed). Two-line development 45 and heldout 32 rows identical. Historical results keep their source candidates.",
   "hieu_luc_len_ket_qua_da_do": {
     "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
     "live_requests": 0
   },
-  "integration": "NONE: research branch only; wave BLOCKED, user decision required",
+  "integration": "PENDING FINAL CANDIDATE: research branch only; do not refreeze EVALUATION_CANDIDATE.json or run authoritative T3 before independent review passes",
   "push": "NONE: not authorized"
 }

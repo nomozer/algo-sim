@@ -407,7 +407,9 @@ def test_stage_b_c3_mat_hai_duong_ask_section_area_shared_grammar(new_ask, expec
     ("Kết quả ghi ở đơn vị cm³.", "Tính thể tích khối chóp S.ABCD.", dict(quantity="volume", solid="S.ABCD"), "SERVED", "4"),
     ("Đơn vị độ dài là cm.", "Tính diện tích tam giác SAC.", dict(quantity="area", points=list("SAC")), "SERVED", "3√2"),
     ("Hãy trình bày lời giải ngắn gọn.", "Tính độ dài SC.", dict(quantity="length", points=["S", "C"]), "SERVED", "√17"),
-    ("Lưu ý: kết quả để ở dạng căn thức.", "Tính độ dài SC.", dict(quantity="length", points=["S", "C"]), "SERVED", "√17"),
+    # Policy closure (§4 CR-B): "dạng căn thức" / "dạng phân số" is not guaranteed to match every output (e.g. integer volume 4).
+    ("Lưu ý: kết quả để ở dạng căn thức.", "Tính độ dài SC.", dict(quantity="length", points=["S", "C"]), "REFUSED", None),
+    ("Lưu ý: kết quả để ở dạng căn thức.", "Tính thể tích khối chóp S.ABCD.", dict(quantity="volume", solid="S.ABCD"), "REFUSED", None),
 ])
 def test_cr1_unit_in_note_sentence_before_or_after_ask(arm, note, ask_sent, kw, expected, ans):
     from app.simulation.geometry_functions.planner import lap_ke_hoach
@@ -480,8 +482,12 @@ IM1_SERVED = [
     "Chứng minh AC và BD cắt nhau và tính {O}.",
     "Chứng minh BD vuông góc SC bằng hai cách và tính {O}.",
     "Chứng minh SC bằng hai lần SA, tính {O}.",
+    "Chứng minh SC bằng gấp đôi SA, tính {O}.",
+    "Chứng minh SC bằng một nửa SA, tính {O}.",
+    "Chứng minh SC = 2 SA, tính {O}.",
     "Chứng minh tam giác SAB vuông, SC bằng hai lần SA, tính {O}.",
     "Chứng minh ΔSAB vuông, SC bằng hai lần SA và tính {O}.",
+    "Chứng minh SA ⊥ (ABCD), SB = SD rồi tính {O}.",
 ]
 
 IM1_REFUSED = [
@@ -535,4 +541,163 @@ def test_policy_angle_degree_or_radian_representation_is_refused_while_plain_cos
         assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
 
 
+# ── Review of 34a04eaf closure: CR-A (goal-clause quantity modifiers), CR-B (closed note semantics), IM-A (số đo góc) ──
+
+CRA_REFUSED = [
+    "Chứng minh BD ⊥ SC, SC gấp đôi, tính {O}.",
+    "Chứng minh BD ⊥ SC và gấp đôi, tính {O}.",
+    "Chứng minh BD ⊥ SC, một nửa SC, tính {O}.",
+    "Chứng minh BD ⊥ SC, hai lần SC, rồi tính {O}.",
+    "Chứng minh BD ⊥ SC, 2 lần SC, tính {O}.",
+    "Chứng minh BD ⊥ SC, gấp đôi {O}, tính {O}.",
+    "Chứng minh BD ⊥ SC, một nửa {O}, tính {O}.",
+    "Chứng minh BD ⊥ SC, ba lần SC, tính {O}.",
+    "Chứng minh BD ⊥ SC, 2 SC, tính {O}.",
+    "Chứng minh BD ⊥ SC, SC, tính {O}.",
+    "Chứng minh SC gấp đôi, tính {O}.",
+    "Chứng minh một nửa SC, tính {O}.",
+    "Chứng minh hai lần SC, tính {O}.",
+    "Chứng minh BD ⊥ SC, SC bằng gấp đôi, tính {O}.",
+    "Chứng minh BD ⊥ SC, SC bằng hai lần, tính {O}.",
+]
+
+
+@pytest.mark.parametrize("tpl,kind", [(t, k) for t in CRA_REFUSED for k in OBJ], ids=[f"{k}:{t}" for t in CRA_REFUSED for k in OBJ])
+def test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_b(tpl, kind):
+    r = _b(_cap(tpl.format(O=OBJ[kind][0])), kind)
+    assert r.status == "REFUSED" and r.code in ("QUESTION_CONTEXT_UNSUPPORTED", "GOAL_CLAUSE_NOT_PREMISE"), (
+        tpl, kind, r.status, r.code, r.answers)
+
+
+@pytest.mark.parametrize("tpl,kind", [(t, k) for t in CRA_REFUSED for k in ("plane", "length")],
+                         ids=[f"{k}:{t}" for t in CRA_REFUSED for k in ("plane", "length")])
+def test_cra_goal_clause_does_not_hide_bare_quantifier_or_incomplete_clause_route_a(tpl, kind):
+    r = _a(_cap(tpl.format(O=OBJ[kind][0])), kind)
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, kind, r.status, r.code, r.answers)
+
+
+@pytest.mark.parametrize("tpl", CRA_REFUSED[:5])
+def test_cra_reused_foot_and_derived_sections_refuse_goal_clause_quantifier(tpl):
+    from tests.geometry.test_goal_directed_section_planning import _pyramid_problem
+    from tests.geometry.test_two_line_plane_section import problem
+    sent_line = _cap(tpl.format(O=OBJ["line"][0]))
+    r_foot = _b(sent_line, "line", quote="tính khoảng cách từ S đến BD.", extra=(PROJ,))
+    assert r_foot.status == "REFUSED" and r_foot.code == "QUESTION_CONTEXT_UNSUPPORTED", (tpl, r_foot.status, r_foot.code)
+    for fn_prob in (_pyramid_problem, problem):
+        old = "Tính diện tích thiết diện của hình chóp S.ABCD với (P)."
+        phrase = "diện tích thiết diện của hình chóp S.ABCD với (P)"
+        new_ask = _cap(tpl.format(O=phrase))
+        text, payload = fn_prob()
+        text = text.replace(old, new_ask)
+        for f in payload["facts"]:
+            f["quotes"] = [new_ask if x == old else x for x in f["quotes"]]
+        r_sec = run_fact_route(text, payload)
+        assert r_sec.status == "REFUSED", (fn_prob.__name__, tpl, r_sec.status, r_sec.code, r_sec.answers)
+
+
+CRB_REFUSED_NOTES = [
+    "Kết quả đến hàng phần trăm.",
+    "Ghi kết quả đến hàng phần mười.",
+    "Ghi đáp số ở hàng phần trăm.",
+    "Viết kết quả dưới dạng phân số.",
+    "Đáp số là phần mười của kết quả.",
+    "Ghi kết quả theo hàng nghìn.",
+    "Lưu ý: kết quả để ở dạng căn thức.",
+    "Lưu ý: viết đáp số dưới dạng phân số.",
+    "Chú ý: kết quả ở hàng phần mười.",
+    "Đáp số lấy đến hàng phần trăm.",
+    "Kết quả là một phần mười.",
+    "Ghi kết quả dưới dạng số thập phân.",
+]
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+@pytest.mark.parametrize("note", CRB_REFUSED_NOTES)
+@pytest.mark.parametrize("kind", ["plane", "length"])
+def test_crb_note_sentences_altering_format_or_scale_are_refused_before_and_after_ask(arm, note, kind):
+    from app.simulation.geometry_functions.planner import lap_ke_hoach
+    phrase, kw, _v = OBJ[kind]
+    ask_sent = f"Tính {phrase}."
+    base, facts = _cm_base()
+    q = HB._f("q", "question", ask_sent, role="question", **kw)
+    payload = {"facts": facts + [q]}
+    for text in (" ".join(base + [note, ask_sent]), " ".join(base + [ask_sent, note])):
+        r = run_fact_route(text, payload) if arm == "B" else run_function_route(text, {"calls": lap_ke_hoach(payload, text).calls})
+        assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (arm, text, r.status, r.code, r.answers)
+
+
+@pytest.mark.parametrize("note", CRB_REFUSED_NOTES[:6])
+def test_crb_note_sentences_refused_on_auxiliary_line_and_derived_sections(note):
+    from tests.geometry.test_goal_directed_section_planning import _pyramid_problem
+    from tests.geometry.test_two_line_plane_section import problem
+    r_line = _b(f"Tính khoảng cách từ S đến BD. {note}", "line", quote="Tính khoảng cách từ S đến BD.")
+    assert r_line.status == "REFUSED" and r_line.code == "QUESTION_CONTEXT_UNSUPPORTED", (note, r_line.status, r_line.code)
+    for fn_prob in (_pyramid_problem, problem):
+        old = "Tính diện tích thiết diện của hình chóp S.ABCD với (P)."
+        text, payload = fn_prob()
+        r_sec = run_fact_route(text.replace(old, f"{old} {note}"), payload)
+        assert r_sec.status == "REFUSED" and r_sec.code == "QUESTION_CONTEXT_UNSUPPORTED", (fn_prob.__name__, note, r_sec.status, r_sec.code)
+
+
+@pytest.mark.parametrize("arm", ["A", "B"])
+@pytest.mark.parametrize("sentence,kw,expected,ans", [
+    ("Tính số đo góc giữa SC và (ABCD).", dict(quantity="angle", points_a=["S", "C"], points_b=list("ABCD")), "REFUSED", None),
+    ("Tính số đo của góc giữa SC và (ABCD).", dict(quantity="angle", points_a=["S", "C"], points_b=list("ABCD")), "REFUSED", None),
+    ("Tính số đo góc giữa SC và mặt đáy.", dict(quantity="angle", points_a=["S", "C"], points_b=list("ABCD")), "REFUSED", None),
+    ("Số đo góc giữa SC và (ABCD) bằng bao nhiêu?", dict(quantity="angle", points_a=["S", "C"], points_b=list("ABCD")), "REFUSED", None),
+    ("Tính số đo góc giữa hai mặt phẳng (SBC) và (ABCD).", dict(quantity="angle", points_a=list("SBC"), points_b=list("ABCD")), "REFUSED", None),
+    ("Tính số đo của góc tạo bởi (SBC) và (ABCD).", dict(quantity="angle", points_a=list("SBC"), points_b=list("ABCD")), "REFUSED", None),
+    ("Tính góc giữa SC và (ABCD).", dict(quantity="angle", points_a=["S", "C"], points_b=list("ABCD")), "SERVED", "cos²=8/17"),
+    ("Tính góc giữa hai mặt phẳng (SBC) và (ABCD).", dict(quantity="angle", points_a=list("SBC"), points_b=list("ABCD")), "SERVED", "cos²=4/13"),
+])
+def test_ima_angle_measure_so_do_goc_is_refused_while_plain_angle_cos2_is_served(arm, sentence, kw, expected, ans):
+    from app.simulation.geometry_functions.planner import lap_ke_hoach
+    base, facts = HB._square()
+    q = HB._f("q", "question", sentence, role="question", **kw)
+    text = " ".join(base + [sentence])
+    payload = {"facts": facts + [q]}
+    r = run_fact_route(text, payload) if arm == "B" else run_function_route(text, {"calls": lap_ke_hoach(payload, text).calls})
+    assert r.status == expected, (arm, sentence, r.status, r.code, r.answers)
+    if expected == "SERVED":
+        assert r.answers == {"q": ans}
+    else:
+        assert r.code == "QUESTION_CONTEXT_UNSUPPORTED"
+
+
+@pytest.mark.parametrize("mutant_id", [
+    "cra_allow_bare_quantifier_in_goal",
+    "cra_skip_relational_predicate_after_comma",
+    "crb_permissive_note_fallback_true",
+    "ima_allow_so_do_goc_as_cos2",
+])
+def test_cra_crb_ima_mutants_are_killed_by_regression_suite(monkeypatch, mutant_id):
+    import re as _re
+    from app.simulation.geometry_functions import registry as RG
+
+    if mutant_id == "cra_allow_bare_quantifier_in_goal":
+        monkeypatch.setattr(
+            RG,
+            "_THAN_MUC_TIEU_CON",
+            _re.compile(RG._THAN_MUC_TIEU_CON.pattern.replace("nhau|", "nhau|gấp\\s+đôi|một\\s+nửa|hai\\s+lần|"), _re.IGNORECASE),
+        )
+        r = _b("Chứng minh BD ⊥ SC và gấp đôi, tính độ dài SC.", "length")
+        assert r.status == "SERVED"  # mutant re-opens the CR-A false serve
+    elif mutant_id == "cra_skip_relational_predicate_after_comma":
+        monkeypatch.setattr(RG, "_VI_TU_MUC_TIEU", _re.compile(r""))
+        r = _b("Chứng minh BD ⊥ SC, SC, tính độ dài SC.", "length")
+        assert r.status == "SERVED"  # mutant re-opens incomplete comma goal clause
+    elif mutant_id == "crb_permissive_note_fallback_true":
+        monkeypatch.setattr(RG, "_kiem_ghi_chu", lambda note, calls, don_vi_de: True)
+        base, facts = _cm_base()
+        q = HB._f("q", "question", "Tính độ dài SC.", role="question", quantity="length", points=["S", "C"])
+        r = run_fact_route(" ".join(base + ["Tính độ dài SC.", "Kết quả đến hàng phần trăm."]), {"facts": facts + [q]})
+        assert r.status == "SERVED"  # mutant re-opens the CR-B false serve
+    elif mutant_id == "ima_allow_so_do_goc_as_cos2":
+        orig = RG._kiem_don_vi_hoi
+        monkeypatch.setattr(RG, "_kiem_don_vi_hoi", lambda fn, de, a, b, dv, calls=(): True if fn == "ask_angle_line_plane" else orig(fn, de, a, b, dv, calls))
+        base, facts = HB._square()
+        sent = "Tính số đo góc giữa SC và (ABCD)."
+        q = HB._f("q", "question", sent, role="question", quantity="angle", points_a=["S", "C"], points_b=list("ABCD"))
+        r = run_fact_route(" ".join(base + [sent]), {"facts": facts + [q]})
+        assert r.status == "SERVED"  # mutant re-opens the IM-A false serve
 

@@ -131,7 +131,6 @@ def test_goal_directed_decomposition_reads_its_premises():
     "",                                                   # the plain problem
     "Chứng minh SC vuông góc với BD.",                    # a goal: something to show, never a hypothesis
     "Hãy trình bày lời giải ngắn gọn.",                   # a note with no geometry
-    "Lưu ý: kết quả để ở dạng căn thức.",
     "Hãy vẽ hình minh hoạ.",                               # a display request
     "Bài 5.",                                             # scaffolding
 ])
@@ -139,6 +138,14 @@ def test_non_hypothesis_premise_text_stays_served(arm, extra):
     r = _with_premise(extra, arm)
     assert r.status == "SERVED", (r.code, r.reason)
     assert HB.answer_square(r.answers["q"]) == 17
+
+
+@pytest.mark.parametrize("arm", ARMS)
+def test_unverified_radical_format_note_in_premise_is_refused_by_policy(arm):
+    # Policy override (run `shared-ask-grammar-safety`, §4 CR-B): "Lưu ý: kết quả để ở dạng căn thức." cannot be
+    # assumed valid for all outputs (e.g. integer volume 4) and fails closed with `QUESTION_CONTEXT_UNSUPPORTED`.
+    r = _with_premise("Lưu ý: kết quả để ở dạng căn thức.", arm)
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (r.status, r.code, r.reason)
 
 
 @pytest.mark.parametrize("arm", ARMS)

@@ -1,8 +1,3 @@
-COMMAND: backend\.venv\Scripts\python.exe -X utf8 -m pytest backend/tests/geometry -q
-EXIT_CODE: 1
-BASE_COMMIT: 4acfc7316179e4ec7a9039dc654ea95fee8a9550
-TIMESTAMP: 2026-10-16T00:27:52+07:00
---- OUTPUT ---
 ........................................................................ [  0%]
 ..........................F............................................. [  1%]
 ........................................................................ [  2%]
@@ -16,12 +11,12 @@ TIMESTAMP: 2026-10-16T00:27:52+07:00
 ........................................................................ [ 10%]
 ........................................................................ [ 11%]
 ........................................................................ [ 12%]
+........................................................................ [ 12%]
 ........................................................................ [ 13%]
 ........................................................................ [ 14%]
 ........................................................................ [ 15%]
 ........................................................................ [ 16%]
 ........................................................................ [ 17%]
-........................................................................ [ 18%]
 ........................................................................ [ 18%]
 .............................................F.......................... [ 19%]
 F....................................................................... [ 20%]
@@ -30,24 +25,25 @@ F....................................................................... [ 20%]
 ........................................................................ [ 23%]
 ........................................................................ [ 24%]
 ........................................................................ [ 25%]
+........................................................................ [ 25%]
 ........................................................................ [ 26%]
 ........................................................................ [ 27%]
 ........................................................................ [ 28%]
 ........................................................................ [ 29%]
-........................................................................ [ 30%]
-.F...................................................................... [ 31%]
+.F...................................................................... [ 30%]
+........................................................................ [ 31%]
 ........................................................................ [ 32%]
 ........................................................................ [ 33%]
 ........................................................................ [ 34%]
 ........................................................................ [ 35%]
 ........................................................................ [ 36%]
-........................................................................ [ 37%]
 ...................................xxxx................................. [ 37%]
+........................................................................ [ 38%]
 ........................................................................ [ 38%]
 ........................................................................ [ 39%]
 ........................................................................ [ 40%]
-........................................................................ [ 41%]
-....................x................................................... [ 42%]
+....................x................................................... [ 41%]
+........................................................................ [ 42%]
 ........................................................................ [ 43%]
 ........................................................................ [ 44%]
 ........................................................................ [ 45%]
@@ -56,11 +52,11 @@ F....................................................................... [ 20%]
 ........................................................................ [ 48%]
 ........................................................................ [ 49%]
 ........................................................................ [ 50%]
+........................................................................ [ 50%]
 ........................................................................ [ 51%]
-........................................................................ [ 52%]
+.....................................................x.................. [ 52%]
 ........................................................................ [ 53%]
-.....................................................x.................. [ 54%]
-........................................................................ [ 55%]
+........................................................................ [ 54%]
 ........................................................................ [ 55%]
 ........................................................................ [ 56%]
 ........................................................................ [ 57%]
@@ -69,6 +65,7 @@ F....................................................................... [ 20%]
 ........................................................................ [ 60%]
 ........................................................................ [ 61%]
 ........................................................................ [ 62%]
+........................................................................ [ 63%]
 ........................................................................ [ 63%]
 ........................................................................ [ 64%]
 ........................................................................ [ 65%]
@@ -81,8 +78,8 @@ F....................................................................... [ 20%]
 ........................................................................ [ 72%]
 ........................................................................ [ 73%]
 ........................................................................ [ 74%]
-........................................................................ [ 74%]
 ........................................................................ [ 75%]
+........................................................................ [ 76%]
 ........................................................................ [ 76%]
 ........................................................................ [ 77%]
 ........................................................................ [ 78%]
@@ -97,18 +94,18 @@ F....................................................................... [ 20%]
 ........................................................................ [ 87%]
 ........................................................................ [ 88%]
 ........................................................................ [ 89%]
+........................................................................ [ 89%]
 ........................................................................ [ 90%]
 ........................................................................ [ 91%]
 ........................................................................ [ 92%]
-........................................................................ [ 92%]
 ........................................................................ [ 93%]
-...............................F........................................ [ 94%]
+...............................................................F........ [ 94%]
 ........................................................................ [ 95%]
 ........................................................................ [ 96%]
 ........................................................................ [ 97%]
 ........................................................................ [ 98%]
 ........................................................................ [ 99%]
-.............................                                            [100%]
+.............................................................            [100%]
 ================================== FAILURES ===================================
 _____________________________ test_tien_kiem_kho ______________________________
 
@@ -129,7 +126,7 @@ E       assert False is True
 backend\tests\geometry\test_analyze_failure_cluster_diagnosis.py:55: AssertionError
 _____________ test_diagnose_precheck_independent_of_branch[main] ______________
 
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002907E8851C0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000014C710B76E0>
 branch_name = 'main'
 
     @pytest.mark.parametrize("branch_name", [
@@ -139,7 +136,7 @@ branch_name = 'main'
         "hotfix/test-isolation-123",
     ])
     def test_diagnose_precheck_independent_of_branch(monkeypatch, branch_name):
-        """precheck() cß╗ºa diagnose_analyze_failure_cluster chß║íy ─æß╗Öc lß║¡p vß╗¢i branch."""
+        """precheck() c\u1ee7a diagnose_analyze_failure_cluster ch\u1ea1y \u0111\u1ed9c l\u1eadp v\u1edbi branch."""
         real_run = subprocess.run
     
         def fake_run(cmd, *a, **k):
@@ -159,7 +156,7 @@ E         + FAIL
 backend\tests\geometry\test_branch_independent_harness.py:47: AssertionError
 _ test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler] _
 
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002907E8604D0>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000014C71447EC0>
 branch_name = 'feat/rectangular-base-pyramid-compiler'
 
     @pytest.mark.parametrize("branch_name", [
@@ -169,7 +166,7 @@ branch_name = 'feat/rectangular-base-pyramid-compiler'
         "hotfix/test-isolation-123",
     ])
     def test_diagnose_precheck_independent_of_branch(monkeypatch, branch_name):
-        """precheck() cß╗ºa diagnose_analyze_failure_cluster chß║íy ─æß╗Öc lß║¡p vß╗¢i branch."""
+        """precheck() c\u1ee7a diagnose_analyze_failure_cluster ch\u1ea1y \u0111\u1ed9c l\u1eadp v\u1edbi branch."""
         real_run = subprocess.run
     
         def fake_run(cmd, *a, **k):
@@ -189,7 +186,7 @@ E         + FAIL
 backend\tests\geometry\test_branch_independent_harness.py:47: AssertionError
 _ test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz] __
 
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002907E898650>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000014C71447650>
 branch_name = 'arbitrary-feature-branch-xyz'
 
     @pytest.mark.parametrize("branch_name", [
@@ -199,7 +196,7 @@ branch_name = 'arbitrary-feature-branch-xyz'
         "hotfix/test-isolation-123",
     ])
     def test_diagnose_precheck_independent_of_branch(monkeypatch, branch_name):
-        """precheck() cß╗ºa diagnose_analyze_failure_cluster chß║íy ─æß╗Öc lß║¡p vß╗¢i branch."""
+        """precheck() c\u1ee7a diagnose_analyze_failure_cluster ch\u1ea1y \u0111\u1ed9c l\u1eadp v\u1edbi branch."""
         real_run = subprocess.run
     
         def fake_run(cmd, *a, **k):
@@ -219,7 +216,7 @@ E         + FAIL
 backend\tests\geometry\test_branch_independent_harness.py:47: AssertionError
 ___ test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123] ___
 
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002907EBB7620>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000014C710ACA10>
 branch_name = 'hotfix/test-isolation-123'
 
     @pytest.mark.parametrize("branch_name", [
@@ -229,7 +226,7 @@ branch_name = 'hotfix/test-isolation-123'
         "hotfix/test-isolation-123",
     ])
     def test_diagnose_precheck_independent_of_branch(monkeypatch, branch_name):
-        """precheck() cß╗ºa diagnose_analyze_failure_cluster chß║íy ─æß╗Öc lß║¡p vß╗¢i branch."""
+        """precheck() c\u1ee7a diagnose_analyze_failure_cluster ch\u1ea1y \u0111\u1ed9c l\u1eadp v\u1edbi branch."""
         real_run = subprocess.run
     
         def fake_run(cmd, *a, **k):
@@ -249,8 +246,8 @@ E         + FAIL
 backend\tests\geometry\test_branch_independent_harness.py:47: AssertionError
 ________________ test_precheck_accepts_detached_head[precheck] ________________
 
-monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000002907EBB6090>
-precheck = <function precheck at 0x000002907A0DD080>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000014C71060CB0>
+precheck = <function precheck at 0x0000014C6C85D620>
 
     @pytest.mark.parametrize("precheck", [D.precheck, R.run_precheck])
     def test_precheck_accepts_detached_head(monkeypatch, precheck):
@@ -274,20 +271,20 @@ backend\tests\geometry\test_branch_independent_harness.py:83: AssertionError
 _________________ test_inv_20_candidate_and_cache_verify_only _________________
 
     def test_inv_20_candidate_and_cache_verify_only():
-        """20. Candidate v├á cache chß╗ë verify-only, kh├┤ng thay ─æß╗òi."""
+        """20. Candidate v\xe0 cache ch\u1ec9 verify-only, kh\xf4ng thay \u0111\u1ed5i."""
         cand_cmd = subprocess.run(
             [sys.executable, "backend/scripts/freeze_evaluation_candidate.py", "--verify"],
             cwd=REPO, capture_output=True, text=True, env=dict(subprocess.os.environ, PYTHONUTF8="1")
         )
 >       assert cand_cmd.returncode == 0
 E       AssertionError: assert 1 == 0
-E        +  where 1 = CompletedProcess(args=['D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe', 'backend/scripts/free...t_sha, measured_system.tree_hash\nNß║┐u lß╗çch v├¼ mß╗Öt kß║┐t quß║ú SEALED th├¼ ─æ├óy l├á VI PHß║áM luß║¡t con dß║Ñu (┬º7.4).\n', stderr='').returncode
+E        +  where 1 = CompletedProcess(args=['D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe', 'backend/scripts/freeze_evaluation_candidate.py', '--verify'], returncode=1, stderr='').returncode
 
 backend\tests\geometry\test_docs_information_architecture.py:197: AssertionError
 _________________ test_inv_05_candidate_and_cache_verify_only _________________
 
     def test_inv_05_candidate_and_cache_verify_only():
-        """Kiß╗âm tra candidate v├á cache kh├│a khß╗¢p ß╗ƒ chß║┐ ─æß╗Ö verify-only."""
+        """Ki\u1ec3m tra candidate v\xe0 cache kh\xf3a kh\u1edbp \u1edf ch\u1ebf \u0111\u1ed9 verify-only."""
         res = C.collect_candidate_cache_proof()
         candidate = json.loads(
             (REPO / "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json")
@@ -302,18 +299,18 @@ _____________________ test_bao_cao_da_sinh_va_KHONG_TROI ______________________
 RP = <module 'report_holdout_readiness' from 'D:\\Documents\\projects\\algo-sim\\backend\\scripts\\report_holdout_readiness.py'>
 
     def test_bao_cao_da_sinh_va_KHONG_TROI(RP):
-        """B├ío c├ío mang b─âm v├á sß╗æ ─æß║┐m. Viß║┐t tay th├¼ n├│ ─æ├║ng ─æ├║ng mß╗Öt lß║ºn."""
+        """B\xe1o c\xe1o mang b\u0103m v\xe0 s\u1ed1 \u0111\u1ebfm. Vi\u1ebft tay th\xec n\xf3 \u0111\xfang \u0111\xfang m\u1ed9t l\u1ea7n."""
         f = GEO / "PHASE7B_READINESS_REPORT.md"
-        assert f.exists(), "ch╞░a sinh PHASE7B_READINESS_REPORT.md"
+        assert f.exists(), "ch\u01b0a sinh PHASE7B_READINESS_REPORT.md"
         src = f.read_text(encoding="utf-8")
         d = RP.thu_thap()
-        assert d["pool_hash"] in src, "b├ío c├ío tr├┤i khß╗Åi pool ΓÇö chß║íy lß║íi script"
+        assert d["pool_hash"] in src, "b\xe1o c\xe1o tr\xf4i kh\u1ecfi pool \u2014 ch\u1ea1y l\u1ea1i script"
         assert f"accepted`: {d['accepted']}/40" in src
 >       assert ("READY_FOR_PHASE7B:  NO" in src) == bool(RP.blockers(d))
-E       AssertionError: assert ('READY_FOR_PHASE7B:  NO' in '# PHASE 7B ΓÇö B├üO C├üO Sß║┤N S├ÇNG\n\n> Sinh bß║▒ng `scripts/report_holdout_readiness.py`. **0 API call.**\n> Mß╗ìi sß╗æ dß║½n tß╗½ ...ng: [`PHASE7B_READINESS.md`](PHASE7B_READINESS.md) v├á\n[`HOLDOUT_ACQUISITION_LOG.md`](HOLDOUT_ACQUISITION_LOG.md).\n\n') == True
-E        +  where True = bool(['C├éY L├ÇM VIß╗åC Bß║¿N ΓÇö ni├¬m phong ─æ├▓i c├óy sß║ích.'])
-E        +    where ['C├éY L├ÇM VIß╗åC Bß║¿N ΓÇö ni├¬m phong ─æ├▓i c├óy sß║ích.'] = <function blockers at 0x00000290016CA700>({'luc': '2026-10-15T17:30:32+00:00', 'git_sha': '4acfc7316179e4ec7a9039dc654ea95fee8a9550', 'cay_sach': False, 'cache_version': '125', ...})
-E        +      where <function blockers at 0x00000290016CA700> = <module 'report_holdout_readiness' from 'D:\\Documents\\projects\\algo-sim\\backend\\scripts\\report_holdout_readiness.py'>.blockers
+E       AssertionError: assert ('READY_FOR_PHASE7B:  NO' in '# PHASE 7B \u2014 B\xc1O C\xc1O S\u1eb4N S\xc0NG\\n\\n> Sinh b\u1eb1ng `scripts/report_holdout_readiness.py`. **0 API call.**\\n> M\u1ecdi s\u1ed1 d\u1eabn t\u1eeb ...ng: [`PHASE7B_READINESS.md`](PHASE7B_READINESS.md) v\xe0\\n[`HOLDOUT_ACQUISITION_LOG.md`](HOLDOUT_ACQUISITION_LOG.md).\\n\\n') == True
+E        +  where True = bool(['C\xc2Y L\xc0M VI\u1ec6C B\u1ea8N \u2014 ni\xeam phong \u0111\xf2i c\xe2y s\u1ea1ch.'])
+E        +    where ['C\xc2Y L\xc0M VI\u1ec6C B\u1ea8N \u2014 ni\xeam phong \u0111\xf2i c\xe2y s\u1ea1ch.'] = <function blockers at 0x0000014C72CBED40>({'luc': '2026-10-15T18:32:58+00:00', 'git_sha': '34a04eaf7e9cbaf70d5c8741e3fb155fa7fd65e7', 'cay_sach': False, 'cache_version': '125', ...})
+E        +      where <function blockers at 0x0000014C72CBED40> = <module 'report_holdout_readiness' from 'D:\\Documents\\projects\\algo-sim\\backend\\scripts\\report_holdout_readiness.py'>.blockers
 
 backend\tests\geometry\test_holdout_readiness.py:832: AssertionError
 _________________ test_C2b_candidate_hien_tai_phai_duoc_KHAI __________________
@@ -321,32 +318,32 @@ _________________ test_C2b_candidate_hien_tai_phai_duoc_KHAI __________________
 nguong = {'policy_id': 'THESIS_FINAL_ACCEPTANCE', 'policy_version': '1.1.0', 'created_before_live_run': True, 'amendments': [{'...'1.1.0', 'from_version': '1.0.0', 'date': '2026-09-08', 'wave': 'THESIS_FINAL_ACCEPTANCE_RUNNER_ALIGNMENT', ...}], ...}
 
     def test_C2b_candidate_hien_tai_phai_duoc_KHAI(nguong):
-        """M├ú sß║ún phß║⌐m ─æ╞░ß╗úc ph├⌐p rß╗¥i khß╗Åi candidate ─æ├ú ─æo ΓÇö nh╞░ng KH├öNG ─æ╞░ß╗úc rß╗¥i
-        trong im lß║╖ng.
+        """M\xe3 s\u1ea3n ph\u1ea9m \u0111\u01b0\u1ee3c ph\xe9p r\u1eddi kh\u1ecfi candidate \u0111\xe3 \u0111o \u2014 nh\u01b0ng KH\xd4NG \u0111\u01b0\u1ee3c r\u1eddi
+        trong im l\u1eb7ng.
     
-        Guard n├áy thay ─æ├║ng c├íi r─âng m├á `test_C2` vß╗½a nhß║ú ra, v├á n├│ cß║»n theo cß║ú hai
-        chiß╗üu: sß╗¡a `backend/app` m├á qu├¬n khai ΓçÆ ─æß╗Å; khai mß╗Öt b─âm kh├┤ng phß║úi b─âm
-        thß║¡t ΓçÆ c┼⌐ng ─æß╗Å. C├íi n├│ KH├öNG c├▓n l├ám l├á cß║Ñm sß╗¡a m├ú ΓÇö ─æ├│ l├á chß╗ù guard c┼⌐
-        v╞░ß╗út qu├í thß║⌐m quyß╗ün cß╗ºa mß╗Öt cß╗òng pre-registration.
+        Guard n\xe0y thay \u0111\xfang c\xe1i r\u0103ng m\xe0 `test_C2` v\u1eeba nh\u1ea3 ra, v\xe0 n\xf3 c\u1eafn theo c\u1ea3 hai
+        chi\u1ec1u: s\u1eeda `backend/app` m\xe0 qu\xean khai \u21d2 \u0111\u1ecf; khai m\u1ed9t b\u0103m kh\xf4ng ph\u1ea3i b\u0103m
+        th\u1eadt \u21d2 c\u0169ng \u0111\u1ecf. C\xe1i n\xf3 KH\xd4NG c\xf2n l\xe0m l\xe0 c\u1ea5m s\u1eeda m\xe3 \u2014 \u0111\xf3 l\xe0 ch\u1ed7 guard c\u0169
+        v\u01b0\u1ee3t qu\xe1 th\u1ea9m quy\u1ec1n c\u1ee7a m\u1ed9t c\u1ed5ng pre-registration.
         """
         import freeze_evaluation_candidate as F
     
         assert KHAI_LECH.exists(), (
-            "sß╗¡a `backend/app` sau l╞░ß╗út ─æo cuß╗æi th├¼ phß║úi KHAI ß╗ƒ "
+            "s\u1eeda `backend/app` sau l\u01b0\u1ee3t \u0111o cu\u1ed1i th\xec ph\u1ea3i KHAI \u1edf "
             f"{KHAI_LECH.relative_to(GOC).as_posix()}")
         khai = json.loads(KHAI_LECH.read_text(encoding="utf-8"))
         lock = json.loads((RA / "IDENTITY_LOCK.json").read_text(encoding="utf-8"))
         he, _n = F.measured_system_hash()
     
         assert khai["run_candidate_hash"] == lock["CANDIDATE_HASH"], \
-            "v─ân bß║ún khai trß╗Å sai l╞░ß╗út ─æo"
+            "v\u0103n b\u1ea3n khai tr\u1ecf sai l\u01b0\u1ee3t \u0111o"
 >       assert khai["current_candidate_hash"] == he, (
-            "v─ân bß║ún khai ─æ├ú c┼⌐ ΓÇö hß╗ç hiß╗çn tß║íi l├á "
-            f"{he[:16]}ΓÇª, khai {str(khai['current_candidate_hash'])[:16]}ΓÇª")
-E       AssertionError: v─ân bß║ún khai ─æ├ú c┼⌐ ΓÇö hß╗ç hiß╗çn tß║íi l├á 363aebd2570622ffΓÇª, khai 4b95dcc665f5930bΓÇª
-E       assert '4b95dcc665f5...a9217063dee25' == '363aebd25706...fae4caca0e2dc'
+            "v\u0103n b\u1ea3n khai \u0111\xe3 c\u0169 \u2014 h\u1ec7 hi\u1ec7n t\u1ea1i l\xe0 "
+            f"{he[:16]}à, khai {str(khai['current_candidate_hash'])[:16]}à")
+E       AssertionError: v\u0103n b\u1ea3n khai \u0111\xe3 c\u0169 \u2014 h\u1ec7 hi\u1ec7n t\u1ea1i l\xe0 30808cb002b377e4\u2026, khai 4b95dcc665f5930b\u2026
+E       assert '4b95dcc665f5...a9217063dee25' == '30808cb002b3...01419f58d91dc'
 E         
-E         - 363aebd2570622ffee58b7bfe2e9a2d831265f71099bbaad7c8fae4caca0e2dc
+E         - 30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc
 E         + 4b95dcc665f5930b74c849164122458ad070af9af24cb085bcfa9217063dee25
 
 backend\tests\geometry\test_thesis_acceptance_matrix.py:339: AssertionError
@@ -354,6 +351,26 @@ backend\tests\geometry\test_thesis_acceptance_matrix.py:339: AssertionError
 backend\.venv\Lib\site-packages\fastapi\testclient.py:1
   D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
     from starlette.testclient import TestClient as TestClient  # noqa
+
+tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\_pytest\threadexception.py:58: PytestUnhandledThreadExceptionWarning: Exception in thread Thread-1966 (_readerthread)
+  
+  Traceback (most recent call last):
+    File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1075, in _bootstrap_inner
+      self.run()
+    File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\threading.py", line 1012, in run
+      self._target(*self._args, **self._kwargs)
+    File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 1599, in _readerthread
+      buffer.append(fh.read())
+                    ^^^^^^^^^
+    File "C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1252.py", line 23, in decode
+      return codecs.charmap_decode(input,self.errors,decoding_table)[0]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  UnicodeDecodeError: 'charmap' codec can't decode byte 0x90 in position 18: character maps to <undefined>
+  
+  Enable tracemalloc to get traceback where the object was allocated.
+  See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+    warnings.warn(pytest.PytestUnhandledThreadExceptionWarning(msg))
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
@@ -367,5 +384,6 @@ FAILED backend\tests\geometry\test_docs_information_architecture.py::test_inv_20
 FAILED backend\tests\geometry\test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only
 FAILED backend\tests\geometry\test_holdout_readiness.py::test_bao_cao_da_sinh_va_KHONG_TROI
 FAILED backend\tests\geometry\test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI
-10 failed, 7573 passed, 1 deselected, 6 xfailed, 1 warning in 368.38s (0:06:08)
+10 failed, 7749 passed, 1 deselected, 6 xfailed, 2 warnings in 277.81s (0:04:37)
 
+EXIT_CODE: 1

@@ -118,7 +118,6 @@ ASKED = [
     # the angle answer is cos² ("cos²=8/17"); `answer_square` reads that value as is
     ("Tính góc giữa SC và (ABCD).", ANG, False, F(8, 17)),
     ("Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).", ANG, False, F(8, 17)),
-    ("Tính số đo góc giữa SC và mặt đáy.", ANG, False, F(8, 17)),
     ("Tính khoảng cách giữa hai đường thẳng SC và BD.", DLL, False, F(18, 17)),
     ("Tính khoảng cách giữa SC và BD.", DLL, False, F(18, 17)),
     ("Tính diện tích tam giác SAC.", lambda s: AREA(s, "SAC"), False, F(18)),
@@ -132,6 +131,13 @@ def test_common_asks_stay_served(sentence, qf, mid, sq):
     r = _run(sentence, qf, mid)
     assert r.status == "SERVED", (r.code, r.reason, sentence)
     assert HB.answer_square(r.answers["q"]) == sq, r.answers
+
+
+def test_angle_measure_so_do_goc_is_refused_by_output_contract_policy():
+    # Policy override (run `shared-ask-grammar-safety`, §5 IM-A): the engine returns `cos²=...` for angle asks,
+    # which is not the angle measure ("số đo góc"), so "Tính số đo góc ..." fails closed (`QUESTION_CONTEXT_UNSUPPORTED`).
+    r = _run("Tính số đo góc giữa SC và mặt đáy.", ANG, False)
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (r.status, r.code, r.answers)
 
 
 # ── group B: a length value is a given only when the source states an EQUALITY (shared value authority) ───────────────

@@ -34,7 +34,7 @@ không vào khai báo hàm.
 |---|---|
 | dữ kiện | `regular_polygon` · `rectangle` · `right_angle` · `segment_length` · `equal_length` · `height` · `perpendicular_line_plane` · `perpendicular_lines` · `altitude` · `orthogonal_projection` · `face_perpendicular_base` |
 | dựng | `midpoint` · `centroid` (tam giác) · `pyramid` · `regular_pyramid` · `prism` · `orthogonal_projection_line` · `intersect_line_line` · `intersect_line_plane` · `section` (thiết diện khối × mặt qua ba điểm có tên) · `intersection_line` (giao tuyến hai mặt) |
-| hỏi | `ask_volume` · `ask_area` · `ask_section_area` · `ask_length` · `ask_distance_point_plane` · `ask_distance_lines` · `ask_angle_line_plane` · `ask_angle_plane_plane` (góc trả `cos²`) |
+| hỏi | `ask_volume` · `ask_area` · `ask_section_area` · `ask_length` · `ask_distance_point_plane` · `ask_distance_lines` · `ask_angle_line_plane` · `ask_angle_plane_plane` (góc trả `cos²`; đề hỏi `"số đo (của) góc"` hoặc theo `độ`/`radian` ⇒ `QUESTION_CONTEXT_UNSUPPORTED`) |
 | thoát | `unsupported` ⇒ `OUT_OF_SCOPE` |
 
 **Hàm chỉ dành cho planner** (run `goal-directed-section-planning`): `translate_point` (`auxiliary_only`) — ảnh của
@@ -67,14 +67,18 @@ của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cầ
      với điều kiện, trừ khi) hoặc mốc đứng trước "thì" ⇒ `CONDITIONAL_CLAUSE`;
    - mệnh đề hỏi có/không (phải chăng, có phải, hay không, "… không?") ⇒ `QUESTION_CLAUSE_NOT_PREMISE`;
    - dữ kiện sau "biết" trong câu hỏi là tiền đề.
-   **Câu hỏi** (`ask_*`, S1 — run `hybrid-semantic-hardening`): đề phải có một **cụm đối tượng** thuộc văn phạm đóng của
-   hàm (`_CUM_HOI`: "khoảng cách từ P đến (Q)", "thể tích khối chóp S.ABCD", "góc giữa SC và (ABCD)", "diện tích thiết diện
-   … cắt bởi (P)" …) mà toán hạng ĐÚNG là toán hạng của lời gọi (mặt: chung ba điểm có tên; "đáy": đáy của khối duy nhất;
-   ký hiệu và loại khối phải khớp) — không có ⇒ `SOURCE_OBJECT_MISMATCH`. Cụm phải được hỏi NGUYÊN VẸN: trước nó (từ động
-   từ hỏi cuối) chỉ có từ nối và cụm hỏi khác; sau nó chỉ "bằng / là bao nhiêu", "?", "theo a / độ", ngoặc lời dặn (làm
-   tròn, đơn vị), "đã cho / đó", "của <khối>", rồi kết câu thật, lời dẫn dữ kiện (biết, với, cho, trong đó), việc kế tiếp
-   (rồi, sau đó, từ đó) hay lời dặn (làm tròn, bằng cách); không bị gán giá trị, không là câu có/không, không trong mệnh đề
-   chứng minh/điều kiện — sai ⇒ `NOT_ASKED_IN_SOURCE` hoặc mã vai trò.
+   **Câu hỏi** (`ask_*`, S1 — run `hybrid-semantic-hardening`, đóng an toàn ở run `shared-ask-grammar-safety`): đề phải có một
+   **cụm đối tượng** thuộc văn phạm đóng của hàm (`_CUM_HOI`: "khoảng cách từ P đến (Q)", "thể tích khối chóp S.ABCD", "góc
+   giữa SC và (ABCD)", "diện tích thiết diện … cắt bởi (P)" …) mà toán hạng ĐÚNG là toán hạng của lời gọi (mặt: chung ba điểm
+   có tên; "đáy": đáy của khối duy nhất; ký hiệu và loại khối phải khớp) — không có ⇒ `SOURCE_OBJECT_MISMATCH`. Cụm phải được
+   hỏi NGUYÊN VẸN: trước nó (từ động từ hỏi cuối) chỉ có từ nối và cụm hỏi khác; sau nó chỉ "bằng / là bao nhiêu", "?", "theo a"
+   (khi đề khai báo tham số `a` và không dùng đơn vị mét), "theo <đơn vị>" / ngoặc đơn vị khớp chiều đại lượng và cơ sở đơn vị
+   của đề, "đã cho / đó", "của <khối>", rồi kết câu thật, lời dẫn dữ kiện (biết, với, cho, trong đó) hay việc kế tiếp (rồi,
+   sau đó, từ đó, bằng cách); không bị gán giá trị, không là câu có/không, không trong mệnh đề chứng minh/điều kiện — sai ⇒
+   `NOT_ASKED_IN_SOURCE` hoặc mã vai trò. Vì engine chỉ trả biểu thức căn/hữu tỉ chính xác và trả `cos²=...` cho góc, mọi yêu
+   cầu làm tròn số thập phân (`_LAM_TRON` khi có `ask_*`), ghi kết quả ở dạng phân số / căn thức / hàng thập phân chưa xác
+   minh, đổi đơn vị chưa hỗ trợ, hoặc hỏi `"số đo (của) góc"` / góc theo `độ` hay `radian` đều từ chối fail-closed với
+   `QUESTION_CONTEXT_UNSUPPORTED`.
    **Vai trò tiền đề** (S1) còn nhận: mục tiêu "chỉ ra / giải thích / kiểm chứng / kiểm tra / tìm điều kiện / suy ra / xác
    minh / vì sao / lập luận"; giả định và tường thuật "hễ / xét trường hợp / cho rằng / cho là / coi như / giả định / muốn
    / khẳng định / theo bạn"; điều kiện đặt SAU quan hệ ("… khi M trùng S"); mệnh đề kết bằng "?" hay "có … không.".
@@ -92,17 +96,19 @@ của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cầ
    "là", "dài", "có độ dài", chuỗi "SA = SB = 3") và sau số chỉ có đơn vị rồi hết mệnh đề — "SA ≥ 3", "SA ≈ 3", "SA bằng 3
    lần AB", "SA = 3 là sai" ⇒ `UNGROUNDED_VALUE`.
 
-6. **Ngữ cảnh yêu cầu** (run `question-local-givens`, research branch): sau khi mọi lời gọi vượt cổng nguồn thường,
-   `_kiem_du_kien_cau_hoi` kiểm dữ kiện cục bộ trong và sau câu hỏi, cả yêu cầu chỉ dựng hình và câu tiếp theo.
-   Quote ngắn, câu hỏi sạch đứng trước hoặc lời gọi phụ của planner không miễn kiểm ngữ cảnh.
-   Dùng lại số chính xác, vai trò mệnh đề và `shape_constraint.doc_rang_buoc`; đối chiếu với cùng tập lời gọi canonical,
-   gồm dữ kiện gốc có tên bị model bỏ sót. Không tạo state ngữ nghĩa thứ hai, không thêm/sửa giả thiết.
+6. **Ngữ cảnh yêu cầu & văn phạm câu hỏi dùng chung** (runs `question-local-givens`, `shared-ask-grammar-safety`, research
+   branch): sau khi mọi lời gọi vượt cổng nguồn thường, `_kiem_du_kien_cau_hoi` và `_kiem_vung_tien_de` kiểm toàn bộ câu hỏi,
+   mệnh đề mục tiêu/phép dựng đứng trước động từ hỏi, việc kế tiếp, câu theo sau và câu ghi chú.
+   - Mọi chữ trong câu có cụm được hỏi phải thuộc một vùng đã đọc (`_vung_hoi`, động từ hỏi, fragment dữ kiện đã cover, việc
+     kế tiếp hợp lệ, mệnh đề mục tiêu hoàn chỉnh có vị từ quan hệ/tính chất `_VI_TU_MUC_TIEU` hoặc quan hệ bội số nhị nguyên
+     `_QUAN_HE_BOI_SO` giữa hai đoạn thẳng, hoặc phép dựng hợp lệ); phần dư chỉ được khớp `_DAN_CAU_HOI`.
+   - Câu ghi chú chỉ hợp lệ theo 3 mẫu câu đóng (`_GHI_CHU_TRINH_BAY`, `_GHI_CHU_THANG_DO`, `_GHI_CHU_DON_VI_KET_QUA`), không
+     dùng túi từ lặp và không có nhánh mặc định cho qua.
    - Độ dài trực tiếp và cạnh kề của đa giác đều đã khai, hình đáy và các quan hệ trong vocabulary đóng phải khớp.
    - Dữ kiện mâu thuẫn ⇒ `QUESTION_LOCAL_GIVEN_CONFLICT`; chưa có thẩm quyền xác minh ⇒ `QUESTION_LOCAL_GIVEN_UNVERIFIED`.
-   - Ngữ cảnh giả định/thay cấu hình hoặc câu theo sau chưa được phủ ⇒ `QUESTION_CONTEXT_UNSUPPORTED`.
+   - Ngữ cảnh giả định/thay cấu hình, câu theo sau chưa được phủ, yêu cầu làm tròn/định dạng kết quả/đổi đơn vị hoặc hỏi số
+     đo góc ⇒ `QUESTION_CONTEXT_UNSUPPORTED`.
    - Dữ kiện cùng câu đã xác minh vẫn phục vụ, kể cả "Tính thể tích …, biết SA = 3." và cạnh AB = 2 của đáy vuông cạnh 2.
-   Đây là cổng phủ nguồn có giới hạn; scoped replacement, arbitrary prose, chuyển đơn vị và các vị từ nguồn ngoài
-   bộ đối chiếu vẫn unsupported. Nếu có dữ kiện cục bộ mà không giữ được ràng buộc gốc thì từ chối; không dùng hình cũ.
    Engine tiếp tục sở hữu dựng hình và kiểm ràng buộc. Hai route A/B dùng chung cổng; LLM_ONLY mặc định không đổi.
 
 ## 4. Engine
