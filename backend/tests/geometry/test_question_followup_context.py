@@ -179,4 +179,9 @@ def test_each_follow_up_rule_carries_its_own_refusal(monkeypatch, name, sentence
     monkeypatch.setattr(R, name, mutant)
     if name == "_SAU_VIEC_KE_TIEP":                    # re-request still refuses "tính lại SC"; drop it to isolate the rule
         sentence = sentence.replace(" và tính lại SC", "")
-    assert run(sentence, "B").status == "SERVED"      # the fault re-opens the old false serve
+        assert run(sentence, "B").status == "SERVED"  # the fault re-opens the old false serve
+    else:
+        # Run `shared-ask-grammar-safety`: with the follow-up marker unseen, the sentence-level question-context gate still
+        # reads "thay SA bằng SB" as unread (defence in depth) — the old false serve stays closed.
+        r = run(sentence, "B")
+        assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (r.status, r.code)

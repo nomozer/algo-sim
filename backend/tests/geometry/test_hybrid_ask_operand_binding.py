@@ -354,10 +354,9 @@ MUTANTS = [
      'm["p"] == a.point)', ("Tính khoảng cách từ S đến (SBC).", DPP, False)),
     ("solid symbol not bound", "if (sym := m[n + \"s\"]) and sym != solid:", "if (sym := m[n + \"s\"]) and False:",
      ("Tính thể tích khối chóp M.ABCD.", VOL, True)),
-    ("words before the phrase not checked", "return bool(_GIUA_HOP_LE.fullmatch(_bo_cum(giua)) and ", "return bool(True and ",
+    # Re-pointed to `_vung_hoi` (run `shared-ask-grammar-safety`), which `_hoi_dung_cum` now delegates to.
+    ("words before the phrase not checked", "if _GIUA_HOP_LE.fullmatch(_bo_cum(giua)) and sau else None", "if sau else None",
      ("Tính nửa thể tích khối chóp S.ABCD.", VOL, False)),
-    ("words after the phrase not checked", " and _SAU_HOP_LE.match(_bo_cum(de[b:c1])))", ")",
-     ("Tính thể tích phần còn lại của khối chóp S.ABCD.", VOL, False)),
     ("section solid word not checked",
      '    if (kw := m[n + "k"]) and not sym and not tu and \\\n',
      '    if False and \\\n', ("Tính diện tích thiết diện của khối lập phương cắt bởi (MAB).", SAREA, True)),
@@ -415,6 +414,15 @@ def test_value_mutant_is_killed(monkeypatch, name, old, new, case):
     assert _len_run(*case).status == "REFUSED", "the unmutated gate must refuse the kill case"
     _mutant(monkeypatch, old, new)
     assert _len_run(*case).status == "SERVED", f"mutant survived: {name}"
+
+
+def test_equivalent_mutant_words_after_the_phrase_is_still_refused(monkeypatch):
+    """Since run `shared-ask-grammar-safety` the question-context gate reads every word of an asking sentence, so an
+    unread tail after the phrase is refused there too (defence in depth): dropping the tail check changes no outcome."""
+    case = ("Tính thể tích phần còn lại của khối chóp S.ABCD.", VOL, False)
+    assert _run(*case).status == "REFUSED"
+    _mutant(monkeypatch, "sau = _SAU_HOP_LE.match(_bo_cum(de[b:c1]))", "sau = re.match('', '')")
+    assert _run(*case).status == "REFUSED"
 
 
 @pytest.mark.parametrize("name,old,new,case", MUTANTS, ids=[m[0] for m in MUTANTS])

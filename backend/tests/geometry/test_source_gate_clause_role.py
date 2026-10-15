@@ -270,11 +270,6 @@ MUTANTS = [
      lambda: _run(NOT_ASKED[0]).code != "NOT_ASKED_IN_SOURCE"),
     ("question-clause role dropped", 'if (_HOI_QUAN_HE.search(de[ma:mb]) or de[ma:mb].rstrip().endswith("?")', "if (False",
      lambda: _code(_perp("Phải chăng SA vuông góc với (ABCD)?"), _no_perpendicular) != "QUESTION_CLAUSE_NOT_PREMISE"),
-    # Since run `source-bound-result-planning-false-serve-fix` the auxiliary point–line ask also goes through the closed
-    # phrase grammar (`_hoi_dung_cum`), so no path has `_duoc_hoi` as its only guard. The asserted-value check still matters
-    # inside a bracketed note, which the closed grammar admits after the object.
-    ("asserted-value check dropped", "if (so := _GIA_TRI.search(gan)) and not _HOI_SAU.search(gan[:so.start()]):", "if False:",
-     lambda: _run(_dist_line("Tính khoảng cách từ S đến BD (kết quả bằng 3).")).status != "REFUSED"),
     # The label-anchor mutant of review 2 targeted `_moc_doi_tuong_hoi`, replaced by operand-bound phrases in S1 (run
     # `hybrid-semantic-hardening`); its mutants live in `test_hybrid_ask_operand_binding.py`.
 ]
@@ -288,6 +283,9 @@ EQUIVALENT_MUTANTS = [
      "Tính SC theo khoảng cách từ S đến BD."),
     ("yes/no relation check dropped", "    if _CO_KHONG.search(gan) and not", "    if False and not",
      "Khoảng cách từ S đến BD có vượt quá 5 không?"),
+    # Run `shared-ask-grammar-safety`: the bracketed note is a closed grammar now, so a value inside it is refused there.
+    ("asserted-value check dropped", "if (so := _GIA_TRI.search(gan)) and not _HOI_SAU.search(gan[:so.start()]):", "if False:",
+     "Tính khoảng cách từ S đến BD (kết quả bằng 3)."),
 ]
 
 

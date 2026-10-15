@@ -730,11 +730,8 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
             for m in _KHOANG_CACH_DIEM_DUONG.finditer(de):
                 if vt[0] <= m.start() and m.end() <= vt[1] and m[1] == p and [m[2], m[3]] in (dt, dt[::-1]):
                     vai.append(_vai_tro_tai(de, m.start()))
-                    # ponytail: `_hoi_dung_cum` reads only from the last question verb; "bình phương / nửa" earlier in the
-                    # sentence (efb756aa's guard) is kept as an open denylist on the source. Sentence-level quantity reading
-                    # is the shared-grammar gap of ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES.
-                    hoi_that.append(_hoi_dung_cum(de, m.start(), m.end()) and not _GAN_GIA_TRI.match(de[m.end():])
-                                    and not re.search(r"(?i:\b(?:bình\s+phương|nửa)\b)", de[_bien_cau(de, m.start())[0]:m.start()]))
+                    # The rest of the sentence (before the governing verb) is read by the question-context gate.
+                    hoi_that.append(_hoi_dung_cum(de, m.start(), m.end()) and not _GAN_GIA_TRI.match(de[m.end():]))
         if not vai:
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{hoi.id}: câu hỏi không nói 'khoảng cách từ {p} đến {''.join(dt)}'", ids)
         if "GOAL" in vai:
@@ -869,22 +866,24 @@ def _kiem_result_binding(phu, calls, de, nhan):
                 vt = source_role(ask,q,m.start() if m else 0)
                 if not m or m['p']!=p or not matches_planes(m,g):
                     raise TuChoi('SOURCE_OBJECT_MISMATCH','điểm/hai mặt của mục tiêu không khớp nguồn',(ask.id,))
-                if not _duoc_hoi(de,vt+m.start(),vt+m.end()) or re.search(r'(?i:\b(?:bình\s+phương|nửa)\b)',de[_bien_cau(de,vt+m.start())[0]:vt+m.start()]):
+                if not _duoc_hoi(de,vt+m.start(),vt+m.end()):
                     raise TuChoi('NOT_ASKED_IN_SOURCE','nguồn không hỏi khoảng cách này',(ask.id,))
                 ask_form = r'(?i:(?:tính|tìm)\s+)?'+derived.pattern+r'[.?\s]*'
                 if not re.fullmatch(ask_form,q) or not re.fullmatch(ask_form,de[slice(*_bien_cau(de,vt+m.start()))].strip()):
                     raise TuChoi('SOURCE_PREMISE_UNREAD','quote mục tiêu có phần chưa được đọc',(ask.id,))
             else:
-                matches=[m for m in _KHOANG_CACH_DIEM_DUONG.finditer(q)
-                         if m[1]==p and [m[2],m[3]] in (line,line[::-1])]
+                # The source is the authority, the quote only locates: never read the quote spliced into the source
+                # (an extra space in the quote can invent a sentence boundary the source does not have).
+                span=_vi_tri(de,q)
+                if span is None:
+                    raise TuChoi('QUOTE_NOT_IN_SOURCE','quote mục tiêu không có trong đề',(ask.id,))
+                matches=[m for m in _KHOANG_CACH_DIEM_DUONG.finditer(de) if span[0]<=m.start() and m.end()<=span[1]
+                         and m[1]==p and [m[2],m[3]] in (line,line[::-1])]
                 if not matches:
                     raise TuChoi('SOURCE_OBJECT_MISMATCH','mục tiêu điểm/đường không khớp',(ask.id,))
-                span=_vi_tri(de,q)
-                qn=chuan_hoa(q)
-                s=de[:span[0]]+qn+de[span[1]:] if span else de
                 for m in matches:
-                    vt=source_role(ask,q,m.start())
-                    if not _hoi_dung_cum(s,vt+m.start(),vt+m.end()) or _GAN_GIA_TRI.match(s[vt+m.end():]):
+                    source_role(ask,q,m.start()-span[0])
+                    if not _hoi_dung_cum(de,m.start(),m.end()) or _GAN_GIA_TRI.match(de[m.end():]):
                         raise TuChoi('NOT_ASKED_IN_SOURCE','nguồn không hỏi khoảng cách này',(ask.id,))
         accepted.add(ask.id)
     return accepted
@@ -1011,14 +1010,22 @@ def _hoi_dung_cum(de: str, a: int, b: int) -> bool:
     - sau cụm tới hết câu chỉ có các cụm hỏi khác, "bằng / là bao nhiêu", "?", "theo a", một ngoặc chú thích, rồi kết câu,
       lời dẫn dữ kiện (biết, với, cho, trong đó) hay việc kế tiếp (rồi, sau đó) — "khi M thay đổi", "song song với CD",
       "lên đáy" không lọt."""
+    return _vung_hoi(de, a, b) is not None
+
+
+def _vung_hoi(de: str, a: int, b: int) -> tuple[int, int] | None:
+    """Vùng `_hoi_dung_cum` đã ĐỌC cho cụm `de[a:b]`: từ động từ hỏi chi phối (không có thì đầu mệnh đề) tới hết phần đuôi
+    đóng — hay None khi cụm không được hỏi nguyên vẹn. Cổng ngữ cảnh câu hỏi dùng nó để biết chữ nào của câu đã có người đọc."""
     if not _duoc_hoi(de, a, b):
-        return False
+        return None
     c0, c1 = _bien_cau(de, a)
     truoc = de[c0:a]
     moc = [m.end() for m in _DUNG_GAN.finditer(truoc)]
     dong_tu = list(_DONG_TU_HOI.finditer(truoc, moc[-1] if moc else 0))
-    giua = truoc[dong_tu[-1].end():] if dong_tu else de[_bien_menh_de(de, a)[0]:a]
-    return bool(_GIUA_HOP_LE.fullmatch(_bo_cum(giua)) and _SAU_HOP_LE.match(_bo_cum(de[b:c1])))
+    tu = c0 + dong_tu[-1].start() if dong_tu else _bien_menh_de(de, a)[0]
+    giua = truoc[dong_tu[-1].end():] if dong_tu else de[tu:a]
+    sau = _SAU_HOP_LE.match(_bo_cum(de[b:c1]))
+    return (tu, b + sau.end()) if _GIUA_HOP_LE.fullmatch(_bo_cum(giua)) and sau else None
 
 
 def _kiem_cau_hoi(c: LoiGoi, de: str, vts: list[tuple[int, int]], calls: tuple[LoiGoi, ...]) -> None:
@@ -1259,26 +1266,43 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         assertions = [r.span for r in rb] + [m.span() for m in lengths]
         object_ends = [b for _a, b in phrases] + [m.end() for pattern in (*_CAT_BOI, _GIAO_TUYEN)
                                                for m in pattern.finditer(de, start, end)]
-        markers = [start + m.end() for m in _DUNG_GAN.finditer("".join(masked))
-                   if m.group().lower() not in ("khi", "nếu")
-                   and not any(a <= start + m.start() < b for a, b in assertions)
-                   and (m.group().lower() != "với" or any(p <= start + m.start()
-                        and not de[p:start + m.start()].strip(" ,;:") for p in (start, *object_ends)))]
+        dan = [m for m in _DUNG_GAN.finditer("".join(masked))
+               if m.group().lower() not in ("khi", "nếu")
+               and not any(a <= start + m.start() < b for a, b in assertions)
+               and (m.group().lower() != "với" or any(p <= start + m.start()
+                    and not de[p:start + m.start()].strip(" ,;:") for p in (start, *object_ends)))]
+        markers = [start + m.end() for m in dan]
         stops = sorted({a for a, _b in phrases} | {m.start() for m in request_verb.finditer(de, start, end)} | {end})
-        fragments = [(a, next(p for p in stops if p >= a)) for a in markers]
+        fragments = [(start + m.start(), a, next(p for p in stops if p >= a)) for m, a in zip(dan, markers)]
         if not phrases and not request_verb.search(de, start, end) and (start, end) not in construction_contexts and not fragments:
-            fragments.append((start, end))
+            fragments.append((start, start, end))
         first = min(stops)
         prefix = de[start:first]
-        discourse = (_GIUA_HOP_LE.fullmatch(prefix) or re.fullmatch(r"\s*khi đó\s*,?\s*", prefix, re.I)
-                     or any(word in prefix.lower() for word in _MUC_TIEU))
+        muc = [i for word in _MUC_TIEU if (i := prefix.lower().find(word)) >= 0]
+        discourse = (_GIUA_HOP_LE.fullmatch(prefix) or re.fullmatch(r"\s*khi đó\s*,?\s*", prefix, re.I) or muc)
         if start < first < end and not markers and not discourse and _tu_nhan(prefix):
-            fragments.append((start, first))
-        for a, b in fragments:
+            fragments.append((start, start, first))
+        # Sentence-level reading (run `shared-ask-grammar-safety`): in a sentence that asks an object, every word must be
+        # read by something — the asked phrase with its governing verb and closed tail, a covered given fragment, a
+        # follow-up read in closed words, a goal clause. What is left may only be punctuation and closed connectors: a word
+        # that changes the asked quantity ("Nhân đôi kết quả, tính …", "Bình phương của đại lượng sau …: …") is unread.
+        doc_cau = [False] * (end - start)
+
+        def doc(a: int, b: int) -> None:
+            doc_cau[a - start:b - start] = [True] * (b - a)
+
+        for a, b in phrases:
+            doc(*_vung_hoi(de, a, b))
+        for m in request_verb.finditer(de, start, end):
+            doc(m.start(), m.end())
+        if muc:
+            doc(start + min(muc), first)
+        for tu, a, b in fragments:
             remaining, found = cover(a, b)
             if (not found and remaining.strip(" ,;:.?!")) or not _NOI_DU_KIEN_CUC_BO.fullmatch(remaining):
                 raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                              "phần dữ kiện/đổi giả thiết trong câu hỏi chưa được đọc trọn; không dùng mô hình cũ")
+            doc(tu, b)
         # The ask grammar accepts a next task after the asked phrase (`_VIEC_KE_TIEP`) and stops reading there. The gate
         # reads it with the same closed obligation as a given fragment: after covering assertions, only given words, a
         # comparison of named objects or a rounding instruction may remain; a goal clause (chứng minh, suy ra …) is not a
@@ -1288,6 +1312,7 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
             if any(x <= start + m.start() < y for x, y in assertions):
                 continue
             b = next(p for p in stops if p >= a)
+            doc(start + m.start(), a)
             if not de[a:b].strip(" ,;:.?!"):
                 continue
             remaining, _found = cover(a, b)
@@ -1302,11 +1327,16 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
             if not ok:
                 raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                              "việc kế tiếp trong yêu cầu chưa được đọc trọn (có thể đổi giả thiết); không dùng mô hình cũ")
+            doc(a, b)
         # A length asserted after the first request, whatever its wording or position ("… tính lại SC với SA = 5"), is a
         # local claim like any other: it must match a validated call.
         for m in lengths:
             if first < m.start() < end and _vai_tro_tai(de, m.start()) not in ("GOAL", "QUESTION"):
                 cover(m.start(), m.end())
+        du = "".join(" " if x else ch for x, ch in zip(doc_cau, de[start:end]))
+        if phrases and not _DAN_CAU_HOI.fullmatch(du):
+            raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED", f"câu hỏi có phần chưa được đọc ({du.strip()!r}) — có thể đổi đại "
+                         "lượng được hỏi; không trả lời một đại lượng khác")
     # Requesting the same object again in a modified form after it was asked ("Tính SC, … tính lại SC", "SC lần nữa",
     # "SC mới") presupposes a changed scope; the ask grammar rejects that form, so its hypothesis is unread. Refuse. A plain
     # repeated ask ("SC bằng bao nhiêu? Tính độ dài SC.") carries no new hypothesis of its own.
@@ -1652,7 +1682,9 @@ _CUM_HOI = {
 #: Next task / method after an asked phrase. The ask grammar stops reading here, so the source-coverage gate must read what
 #: follows (`_kiem_du_kien_cau_hoi`): one constant, two consumers.
 _VIEC_KE_TIEP = r"rồi|sau đó|từ đó|tiếp theo|tiếp đó|bằng cách"
-_LAM_TRON = r"(?:kết quả\s+)?làm tròn"
+#: A rounding instruction, read whole in closed words ("làm tròn kết quả đến hàng phần trăm"); "làm tròn sau khi …" is not.
+_LAM_TRON = (r"(?:kết quả\s+)?làm tròn(?:\s+kết quả)?(?:\s+(?:đến|tới)\s+(?:hàng\s+(?:phần\s+(?:mười|trăm|nghìn)|đơn vị)"
+             r"|\d{1,2}\s+chữ\s+số(?:\s+thập\s+phân)?(?:\s+sau\s+dấu\s+phẩy)?))?")
 _VIEC_KE_TIEP_RE = re.compile(rf"(?<!\w)(?:{_VIEC_KE_TIEP})(?!\w)", re.IGNORECASE)
 #: Where a goal clause ends (premise coverage): the gate's own given / condition / next-task markers (`_DUNG_GAN`,
 #: `_DIEU_KIEN`, `_VIEC_KE_TIEP`), contrast and joining words, and the clause boundary — no separate vocabulary.
@@ -1696,16 +1728,25 @@ _PHUONG_PHAP = re.compile(r"\s*(?:dùng|áp dụng|sử dụng)\s+(?:công thứ
                           re.IGNORECASE)
 #: Giữa động từ hỏi và cụm (sau khi xoá các cụm hỏi khác): chỉ từ nối.
 _GIUA_HOP_LE = re.compile(r"[\s,:]*(?:(?:và|cùng|lần lượt|hãy|các)(?!\w)[\s,:]*)*", re.IGNORECASE)
+#: Phần còn lại của một câu hỏi sau khi mọi vùng đã đọc được xoá: chỉ dấu câu, từ nối, lời mở đầu câu và đánh mục.
+_DAN_CAU_HOI = re.compile(
+    r"[\s,;:.?!]*(?:(?:\(?(?:[a-z]|\d{1,2})\)|(?:câu|ý|phần)\s+(?:[a-z]|\d{1,2})|hơn nữa|ngoài ra|khi đó|từ đó|sau đó|tiếp theo|tiếp đó"
+    r"|cuối cùng|và|cùng|hãy|em hãy|các|lần lượt)(?!\w)[\s,;:.?!]*)*", re.IGNORECASE)
+_DON_VI = r"(?:cm|dm|mm|m|đvđd|độ|radian)"
+#: Lời dặn trong ngoặc — văn phạm ĐÓNG (run `shared-ask-grammar-safety`): chỉ cách làm tròn và đơn vị, nối bằng , ;
+#: "(kết quả nhân đôi)", "(đơn vị: một nửa cm)", "(kết quả 3)" đổi hay gán đại lượng được hỏi — không lọt.
+_MUC_GHI_CHU = rf"(?:{_LAM_TRON}|đơn vị(?:\s+độ dài)?(?:\s*:?\s*{_DON_VI})?|{_DON_VI})"
+_GHI_CHU_NGOAC = rf"\(\s*{_MUC_GHI_CHU}(?:\s*[,;]\s*{_MUC_GHI_CHU})*\s*\)"
 #: Sau cụm (sau khi xoá các cụm hỏi khác): chỉ những thứ này rồi kết câu / dữ kiện / việc kế tiếp.
 _SAU_HOP_LE = re.compile(
     r"(?:[\s,;:]+|(?:và|cùng)(?!\w)|(?:có\s+)?(?:độ dài\s+)?(?:bằng|là)\s+bao\s+nhiêu|dài\s+bao\s+nhiêu|bao\s+nhiêu"
     r"|(?:bằng|là)\s*[?:]"                                                     # đề trắc nghiệm "… bằng?"
     # ngoặc chỉ là LỜI DẶN (làm tròn, đơn vị) — "(sau khi cắt bỏ …)" / "(tính theo đơn vị mới …)" không lọt (review S1)
-    r"|theo\s+(?:[a-z](?![\w'])|độ|radian|đơn vị\s+\w+)|\((?:làm tròn|kết quả|đơn vị|đvđd|cm|dm|mm|m|độ)(?![\w'])[^()]*\)"
+    rf"|theo\s+(?:[a-z](?![\w'])|độ|radian|đơn vị\s+{_DON_VI}(?![\w']))|{_GHI_CHU_NGOAC}|{_LAM_TRON}(?![\w'])"
     r"|(?:đã cho|đó|này|trên)(?!\w)"
     r"|của\s+(?:hình|khối)\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện)(?:\s+(?-i:[A-Z][0-9]*'?)+(?:\.(?-i:[A-Z][0-9]*'?)+)?)?)*"
     # kết: dấu câu THẬT (sau nó là khoảng trắng / hết đề — "SC.SA" không kết), dữ kiện, việc kế tiếp, lời dặn làm tròn
-    rf"(?:[.?!](?=\s|$)|$|(?:biết|với|cho|trong đó|{_VIEC_KE_TIEP}|{_LAM_TRON})(?!\w))", re.IGNORECASE)
+    rf"(?:[.?!](?=\s|$)|$|(?:biết|với|cho|trong đó|{_VIEC_KE_TIEP})(?!\w))", re.IGNORECASE)
 #: "V" đã được đề định nghĩa ("Gọi V là …", "V = …", "V(S.MAB)") — không buộc mặc nhiên vào khối duy nhất (review S1, I4).
 _V_DINH_NGHIA = re.compile(r"(?<![\w'])(?-i:V)\s*(?:là|=|\()", re.IGNORECASE)
 

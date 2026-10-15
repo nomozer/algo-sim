@@ -312,7 +312,9 @@ EARLIER_IN_SENTENCE = ["Đáp số là bình phương của kết quả; tính k
 
 @pytest.mark.parametrize("sentence", EARLIER_IN_SENTENCE)
 def test_a_modifier_earlier_in_the_sentence_is_still_read(sentence):
-    _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+    # Run `shared-ask-grammar-safety`: read by the sentence-level question-context gate (shared by every ask), not by the
+    # former two-word denylist of `_kiem_phu`.
+    _refused(_problem(_dist(sentence, "S", "BD")), "QUESTION_CONTEXT_UNSUPPORTED")
 
 
 @pytest.mark.parametrize("quote", ["Tính", "khoảng cách từ S đến B"])
