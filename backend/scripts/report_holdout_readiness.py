@@ -80,7 +80,10 @@ def thu_thap() -> dict:
     return {
         "luc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "git_sha": _chay("git", "rev-parse", "HEAD"),
-        "cay_sach": [l for l in _chay("git", "status", "--porcelain").splitlines() if not l.strip().endswith("favicon.svg")] == [],
+        # --untracked-files=all: plain --porcelain folds the protected untracked file into "?? frontend/public/", which the
+        # favicon exclusion never matched — every checkout holding the user's favicon read as dirty.
+        "cay_sach": [l for l in _chay("git", "status", "--porcelain", "--untracked-files=all").splitlines()
+                     if not l.strip().endswith("favicon.svg")] == [],
         "cache_version": rt["cache_version"],
         "skill_hash": rt["skills"]["tong"],
         "prompt_hash": rt["skills"]["grammar_card"],
