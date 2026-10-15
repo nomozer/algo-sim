@@ -301,6 +301,27 @@ def test_the_source_not_the_quote_decides_what_is_asked(source, quote):
     _refused(_source_vs_quote(source, quote), "NOT_ASKED_IN_SOURCE")
 
 
+# Independent review of 2427289a, CRITICAL-1 (regression part): the closed grammar reads only from the last question verb,
+# so a modifier earlier in the sentence was no longer seen. efb756aa refused these; they must stay refused.
+EARLIER_IN_SENTENCE = ["Đáp số là bình phương của kết quả; tính khoảng cách từ S đến BD.",
+                       "Lấy bình phương, tính khoảng cách từ S đến BD.",
+                       "Bình phương của đại lượng sau bằng bao nhiêu: khoảng cách từ S đến BD?",
+                       "Một nửa của đại lượng sau là bao nhiêu: khoảng cách từ S đến BD?",
+                       "Đề hỏi bình phương; hãy tính khoảng cách từ S đến BD."]
+
+
+@pytest.mark.parametrize("sentence", EARLIER_IN_SENTENCE)
+def test_a_modifier_earlier_in_the_sentence_is_still_read(sentence):
+    _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+
+@pytest.mark.parametrize("quote", ["Tính", "khoảng cách từ S đến B"])
+def test_the_asked_phrase_must_lie_inside_the_quoted_span(quote):
+    case = _problem(_dist("Tính khoảng cách từ S đến BD.", "S", "BD"))
+    case["facts"][-1]["quotes"] = [quote]
+    _refused(case, "SOURCE_OBJECT_MISMATCH")
+
+
 # Controls: the closed grammar must not turn into "refuse every question".
 def test_hon_nua_is_not_nua_and_a_whitespace_variant_quote_of_a_plain_question_is_served():
     _served(_problem(_dist("Hơn nữa, tính khoảng cách từ S đến BD.", "S", "BD")), F(11))

@@ -730,7 +730,11 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
             for m in _KHOANG_CACH_DIEM_DUONG.finditer(de):
                 if vt[0] <= m.start() and m.end() <= vt[1] and m[1] == p and [m[2], m[3]] in (dt, dt[::-1]):
                     vai.append(_vai_tro_tai(de, m.start()))
-                    hoi_that.append(_hoi_dung_cum(de, m.start(), m.end()) and not _GAN_GIA_TRI.match(de[m.end():]))
+                    # ponytail: `_hoi_dung_cum` reads only from the last question verb; "bình phương / nửa" earlier in the
+                    # sentence (efb756aa's guard) is kept as an open denylist on the source. Sentence-level quantity reading
+                    # is the shared-grammar gap of ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES.
+                    hoi_that.append(_hoi_dung_cum(de, m.start(), m.end()) and not _GAN_GIA_TRI.match(de[m.end():])
+                                    and not re.search(r"(?i:\b(?:bình\s+phương|nửa)\b)", de[_bien_cau(de, m.start())[0]:m.start()]))
         if not vai:
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{hoi.id}: câu hỏi không nói 'khoảng cách từ {p} đến {''.join(dt)}'", ids)
         if "GOAL" in vai:
