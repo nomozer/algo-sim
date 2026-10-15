@@ -2,7 +2,7 @@
 
 - **Reviewer:** Fresh-context read-only `research` subagent (`conversationId = efce624a-8e4b-497d-959f-1b2c9c421f9b`)
 - **Initial Audited Product Commit:** `b8112f357763c1f29601c666552bb82f5a97f1c1`
-- **Final Re-Verified Product Commit:** `10dd6d6ebee34cdf8258b0e559c031e82931502a`
+- **Final Re-Verified Product Commit:** `efb756aa166e8da18b20971338fece8adf80bc89`
 - **Final Verdict:** `PASS` (0 open `CRITICAL`, 0 open `IMPORTANT`, 0 open `NONBLOCKING`)
 
 ---
@@ -36,8 +36,8 @@
   5. Truncated named-line distance question quotes hiding a trailing given value (`Tính khoảng cách từ S đến BD = 1.`).
 - **RED → GREEN Fix:**
   - Added `test_enclosing_sentence_outside_truncated_quote_or_modifier_is_refused` (6 parametrized adversarial cases covering all 5 bypass vectors) in `backend/tests/geometry/test_result_binding_planning.py` — confirmed **RED** (`6 failed`).
-  - Updated `backend/app/simulation/geometry_functions/registry.py` (`_CHAN_TAN_NGU`, `_GAN_GIA_TRI`, `_kiem_phu`, `_kiem_result_binding`) to locate `vt = de.find(q)` and validate against the full enclosing sentence `cau = de[slice(*_bien_cau(de, vt, vt + len(q)))].strip()`, enforce `_hoi_dung_cum` on `line_ref` goals and supplied named-line feet, and reject `bình phương`/`nửa` object modifiers and `đổi`/`thay`/`cộng`/`trừ`/`nhân`/`chia` arithmetic tails.
-  - Confirmed **GREEN** across `test_result_binding_planning.py`, `test_source_gate_clause_role.py`, and `test_hybrid_goal_decomposition.py`.
+  - Updated `backend/app/simulation/geometry_functions/registry.py` (`_GAN_GIA_TRI`, `_kiem_phu`, `_kiem_result_binding`) to locate `vt = de.find(q)` and validate against the full enclosing sentence `cau = de[slice(*_bien_cau(de, vt, vt + len(q)))].strip()`, enforce `_hoi_dung_cum` on `line_ref` goals and supplied named-line feet, and reject `bình phương`/`nửa` object modifiers in `_kiem_phu` and `đổi`/`thay`/`cộng`/`trừ`/`nhân`/`chia` arithmetic tails.
+  - Confirmed **GREEN** across `test_result_binding_planning.py`, `test_hybrid_ask_operand_binding.py`, `test_source_gate_clause_role.py`, and `test_hybrid_goal_decomposition.py`.
 
 ### `[IMPORTANT-1]` Unreferenced Duplicate `intersection_line` Premises Bypass Alias Coalescing and Emit Duplicate Kernel Lines
 - **Finding:** `_EffectResolver` only coalesced `intersection_line` facts when referenced via `resolve_line(fid)`. Two equivalent `intersection_line` premises that were not referenced by any `line_ref` emitted two identical `intersection_line` calls (`gt_g1`, `gt_g2`), or both a coalesced call and a duplicate unreferenced call.

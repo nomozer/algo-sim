@@ -17,11 +17,11 @@
     "red_baseline": "de5ea1a7",
     "initial_implementation": "fb7024ac",
     "pre_review_product": "b8112f35",
-    "product_final": "10dd6d6e"
+    "product_final": "efb756aa"
   },
-  "product_commit": "10dd6d6e",
+  "product_commit": "efb756aa",
   "candidate": {
-    "tree_hash": "47e54b3dc9d261e86d4c1415cf904fd5e20ff884dc67fad2e316ea360cddc1fc",
+    "tree_hash": "c0a8792f1c491ae40b41c6af5bbb00ed372e1bbc3b6b39c1093e14572b02b79e",
     "files": 110,
     "divergence": "inputs/candidate_divergence.json"
   },
@@ -33,7 +33,7 @@
   "results": {
     "red": "red.json — 18/18 SCHEMA_INVALID at de5ea1a7",
     "locked_corpus": "visual/corpus-results.json & reconciliation.json — 6/6 positive SERVED (10/11, 5, 3, 10, 0, 10/11), 12/12 negative REFUSED, 18/18 EXACT_MATCH, 72/72 tests in test_result_binding_planning.py PASS",
-    "review": "review.md — independent 11-dimension review PASS after closing CRITICAL-1, IMPORTANT-1, IMPORTANT-2, NONBLOCKING-1 via RED → GREEN at 10dd6d6e",
+    "review": "review.md — independent 11-dimension review PASS after closing CRITICAL-1, IMPORTANT-1, IMPORTANT-2, NONBLOCKING-1 via RED → GREEN at efb756aa",
     "invariance": "verification/two-line-development (12/33), verification/two-line-heldout (11/21), verification/benchmark-30 (19/9/0/2) unchanged",
     "browser": "visual/{swiftshader,gpu}/receipt.json — PASS_CORE_CAUSAL_RENDERING, 4 scenes, 0 errors; image-policy.json records 14 kept + 88 pruned SHA-256 hashes",
     "t3": "verification/t3-pass.json & verification/t3-authoritative.log — clean detached worktree T3 PASS (full backend pytest, frontend Vitest 1055 passed / 68 files, Vite build, demo replay 5/5, crash surface 6/6)"
