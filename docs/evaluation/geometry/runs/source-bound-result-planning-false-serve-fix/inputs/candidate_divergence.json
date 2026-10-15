@@ -6,19 +6,26 @@
   "run_id": "thesis-final-20260908T160224Z",
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
-  "current_candidate_hash": "a6ba6f32d98b06af44f883e7b6e66a2b989ae1656a59bc205f201d7470d217ec",
-  "current_candidate_source_commit": "2427289ab0ede0639815f4549b971b6e4246b3a3",
+  "current_candidate_hash": "7e993f8d1f9578cbb601ace02a972844d5516ca51da5c5e4357877c976f334d7",
+  "current_candidate_source_commit": "8da9ae3170f8129ca88bbc390668e4e249323ff0",
   "previous_candidate_hash": "c0a8792f1c491ae40b41c6af5bbb00ed372e1bbc3b6b39c1093e14572b02b79e",
   "previous_product_commit": "efb756aa166e8da18b20971338fece8adf80bc89",
   "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
   "diverged": true,
   "measured_system_paths_changed": true,
-  "reason": "Hybrid-only source gate fix in registry.py::_kiem_phu: the auxiliary distance(point, line) ask is located in the source span the quote points to and checked by _hoi_dung_cum (the closed ask grammar used by every ordinary ask) on the original source, instead of _duoc_hoi plus a two-word denylist on the problem with the AI quote spliced in. Closes IMPORTANT-1/2 of the independent efb756aa delta review. Production LLM_ONLY route, prompts, routing, schema, provider surfaces, planner, engine, kernel, interpreter and scene3d unchanged.",
+  "reason": "Hybrid-only source gate fix in registry.py::_kiem_phu: the auxiliary distance(point, line) ask is located in the source span the quote points to and checked by _hoi_dung_cum (the closed ask grammar used by every ordinary ask) on the original source, instead of _duoc_hoi plus a two-word denylist on the problem with the AI quote spliced in. Closes IMPORTANT-1/2 of the independent efb756aa delta review; 8da9ae31 keeps the sentence-wide squared/half check, now read on the source. Production LLM_ONLY route, prompts, routing, schema, provider surfaces, planner, engine, kernel, interpreter and scene3d unchanged.",
   "historical_effect": "Locked corpus 18/18 unchanged (corpus-results.json, scenes.json, manifest.json byte-identical on re-export). Historical benchmark 30 metrics byte-identical; two-line development 45 and heldout 32 rows identical. Historical results keep their source candidates.",
   "hieu_luc_len_ket_qua_da_do": {
     "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
     "live_requests": 0
   },
   "integration": "NONE: research branch only; user decision required",
-  "push": "NONE: not authorized"
+  "push": "NONE: not authorized",
+  "intermediate_candidates": [
+    {
+      "product_commit": "2427289a",
+      "candidate_hash": "a6ba6f32d98b06af44f883e7b6e66a2b989ae1656a59bc205f201d7470d217ec",
+      "note": "Closed-grammar source read before restoring the sentence-wide squared/half check (independent review CRITICAL-1 regression part)"
+    }
+  ]
 }
