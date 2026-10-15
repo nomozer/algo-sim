@@ -1,0 +1,58 @@
+{
+  "schema": "T3_AUTHORITATIVE_VERIFICATION/1",
+  "task": "source-bound-result-planning",
+  "branch": "research/source-bound-result-planning",
+  "verified_commit": "7b14fe0453b45a3c87e2414ae44f6dc4058c9213",
+  "verified_commit_short": "7b14fe04",
+  "product_commit": "efb756aa166e8da18b20971338fece8adf80bc89",
+  "product_commit_short": "efb756aa",
+  "candidate_tree_hash": "c0a8792f1c491ae40b41c6af5bbb00ed372e1bbc3b6b39c1093e14572b02b79e",
+  "measured_files": 110,
+  "cache_version": 125,
+  "default_mode": "LLM_ONLY",
+  "model_request_count": 0,
+  "environment": "clean detached git worktree at 7b14fe0453b45a3c87e2414ae44f6dc4058c9213 (removed after run)",
+  "command": "node frontend/scripts/full-gate.mjs",
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "total_duration_seconds": 406.1,
+  "log_file": "docs/evaluation/geometry/runs/source-bound-result-planning/verification/t3-authoritative.log",
+  "log_sha256": "29b09bf585a020d92712d71974f84c25c160e4033845800af0fcb0012a4780cb",
+  "subgates": [
+    {
+      "name": "pytest (toàn bộ backend)",
+      "ok": true,
+      "exit_code": 0,
+      "duration_seconds": 388.5,
+      "summary": "9405 passed, 1 skipped, 2 deselected, 6 xfailed, 1 warning in 385.69s (0:06:25)"
+    },
+    {
+      "name": "vitest (toàn bộ frontend)",
+      "ok": true,
+      "exit_code": 0,
+      "duration_seconds": 8.4,
+      "summary": "68 test files passed (68), 1055 tests passed (1055)"
+    },
+    {
+      "name": "typecheck + build production",
+      "ok": true,
+      "exit_code": 0,
+      "duration_seconds": 8.1,
+      "summary": "tsc -b && vite build (94 modules transformed, dist built in 2.15s)"
+    },
+    {
+      "name": "tập demo khoá luận",
+      "ok": true,
+      "exit_code": 0,
+      "duration_seconds": 0.7,
+      "summary": "DEMO_CASES=5, DEMO_REPLAY_PASS=5/5, REDUCED_CHAIN_CASES=1/1"
+    },
+    {
+      "name": "bề mặt sập của demo",
+      "ok": true,
+      "exit_code": 0,
+      "duration_seconds": 0.4,
+      "summary": "BIÊN ĐÚNG KỲ VỌNG=6/6, NÉM RA NGOÀI (=500)=0"
+    }
+  ]
+}

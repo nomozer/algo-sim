@@ -36,7 +36,7 @@
     "review": "review.md — independent 11-dimension review PASS after closing CRITICAL-1, IMPORTANT-1, IMPORTANT-2, NONBLOCKING-1 via RED → GREEN at efb756aa",
     "invariance": "verification/two-line-development (12/33), verification/two-line-heldout (11/21), verification/benchmark-30 (19/9/0/2) unchanged",
     "browser": "visual/{swiftshader,gpu}/receipt.json — PASS_CORE_CAUSAL_RENDERING, 4 scenes, 0 errors; image-policy.json records 14 kept + 88 pruned SHA-256 hashes",
-    "t3": "verification/t3-pass.json & verification/t3-authoritative.log — clean detached worktree T3 PASS (full backend pytest, frontend Vitest 1055 passed / 68 files, Vite build, demo replay 5/5, crash surface 6/6)"
+    "t3": "verification/t3-pass.json & verification/t3-authoritative.log (sha256=29b09bf585a020d92712d71974f84c25c160e4033845800af0fcb0012a4780cb) — clean detached worktree T3 FULL_PRODUCT_GATE_PASS at 7b14fe04 (backend pytest 9405 passed / 1 skipped / 2 deselected / 6 xfailed, frontend Vitest 1055 passed / 68 files, Vite build PASS, demo replay 5/5, crash surface 6/6)"
   },
   "reconciliation": "reconciliation.json",
   "review": "review.md",
