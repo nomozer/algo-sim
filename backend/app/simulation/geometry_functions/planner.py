@@ -285,7 +285,8 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     gon: dict[str, dict] = {}
     for c in k.calls:
         # Referenced line declarations retain their IDs/quotes for Registry validation; Engine coalesces verified aliases.
-        khoa = (c['id'] if c['fn'].startswith('ask_') or c['fn']=='intersection_line' and k.resolver.used else
+        khoa = (c['id'] if c['fn'].startswith('ask_')
+                or c['fn']=='intersection_line' and k.resolver.aliases.get(c['id'],c['id']) in k.resolver.lines else
                 c['fn'] + json.dumps(c['args'],sort_keys=True,ensure_ascii=False))
         if khoa not in gon:
             gon[khoa] = c

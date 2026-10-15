@@ -392,3 +392,86 @@ def test_source_plane_has_exactly_three_distinct_labels_before_set_normalization
     c['text']=' '.join(f['quotes'][0] for f in c['payload']['facts'])
     r=run_fact_route(c['text'],c['payload'])
     assert r.status=='REFUSED' and r.code=='SOURCE_OBJECT_MISMATCH'
+
+
+@pytest.mark.parametrize('case_kind',[
+    'unquoted-squared-goal',
+    'unquoted-goal-tail',
+    'unquoted-producer-tail',
+    'unquoted-projection-tail',
+    'named-line-squared-goal',
+    'named-line-tail',
+])
+def test_enclosing_sentence_outside_truncated_quote_or_modifier_is_refused(case_kind):
+    if case_kind.startswith('named-line-'):
+        c = named_case()
+        old = 'Tính khoảng cách từ S đến BD.'
+        if case_kind == 'named-line-squared-goal':
+            new = 'Tính bình phương khoảng cách từ S đến BD.'
+            c['text'] = c['text'].replace(old, new)
+            c['payload']['facts'][-1]['quotes'] = ['khoảng cách từ S đến BD.']
+        else:
+            new = 'Tính khoảng cách từ S đến BD đổi đáy thành hình thoi.'
+            c['text'] = c['text'].replace(old, new)
+            c['payload']['facts'][-1]['quotes'] = ['Tính khoảng cách từ S đến BD']
+    else:
+        c = deepcopy(CORPUS['positive'][0])
+        if case_kind == 'unquoted-squared-goal':
+            old = 'Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD).'
+            c['text'] = c['text'].replace(old, 'Tính bình phương khoảng cách từ M đến giao tuyến của (SAC) và (SBD).')
+            c['payload']['facts'][-1]['quotes'] = ['khoảng cách từ M đến giao tuyến của (SAC) và (SBD).']
+        elif case_kind == 'unquoted-goal-tail':
+            old = 'Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD).'
+            c['text'] = c['text'].replace(old, 'Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD) đổi đáy thành hình thoi.')
+            c['payload']['facts'][-1]['quotes'] = ['Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD)']
+        elif case_kind == 'unquoted-producer-tail':
+            old = 'Tìm giao tuyến của (SAC) và (SBD).'
+            c['text'] = c['text'].replace(old, 'Tìm giao tuyến của (SAC) và (SBD) đổi đáy thành hình thoi.')
+            next(f for f in c['payload']['facts'] if f['id'] == 'g')['quotes'] = ['Tìm giao tuyến của (SAC) và (SBD)']
+        elif case_kind == 'unquoted-projection-tail':
+            quote_full = 'Gọi J là hình chiếu vuông góc của M lên giao tuyến của (SAC) và (SBD) đổi M thành trung điểm BC.'
+            quote_short = 'Gọi J là hình chiếu vuông góc của M lên giao tuyến của (SAC) và (SBD)'
+            c['text'] = c['text'].replace('Tính khoảng cách', quote_full + ' Tính khoảng cách')
+            c['payload']['facts'].insert(0, {'id': 'foot', 'kind': 'projection', 'role': 'premise',
+                                             'point': 'M', 'at': 'J', 'line_ref': 'g', 'quotes': [quote_short]})
+    r = run_fact_route(c['text'], c['payload'])
+    assert r.status == 'REFUSED' and not r.answers and r.scene3d is None, (case_kind, r.status, r.code, r.answers)
+
+
+def test_unreferenced_intersection_line_deduplication_and_coexistence():
+    # 1. Duplicate unreferenced intersection_line facts alongside a named-line distance goal deduplicate to 1 IR statement.
+    c1 = named_case()
+    q_line = 'Tìm giao tuyến của (SAC) và (SBD).'
+    c1['text'] = c1['text'].replace('Tính khoảng cách', q_line + ' Tính khoảng cách')
+    for fid in ('g1', 'g2'):
+        c1['payload']['facts'].insert(-1, {'id': fid, 'kind': 'intersection_line', 'role': 'premise',
+                                           'points_a': ['S', 'A', 'C'], 'points_b': ['S', 'B', 'D'], 'quotes': [q_line]})
+    r1 = run_fact_route(c1['text'], c1['payload'])
+    assert r1.status == 'SERVED', (r1.code, r1.reason)
+    assert len([s for s in r1.program['statements'] if s.get('expr', {}).get('kind') == 'intersect_plane_plane']) == 1
+
+    # 2. An unreferenced atomic intersection_line fact alongside a line_ref goal is accepted by closed-source validation.
+    c2 = deepcopy(CORPUS['positive'][0])
+    extra_q = 'Tìm giao tuyến của (SAB) và (SCD).'
+    c2['text'] = c2['text'].replace('Tính khoảng cách', extra_q + ' Tính khoảng cách')
+    c2['payload']['facts'].insert(-1, {'id': 'g_extra', 'kind': 'intersection_line', 'role': 'premise',
+                                       'points_a': ['S', 'A', 'B'], 'points_b': ['S', 'C', 'D'], 'quotes': [extra_q]})
+    r2 = run_fact_route(c2['text'], c2['payload'])
+    assert r2.status == 'SERVED', (r2.code, r2.reason)
+    assert len([s for s in r2.program['statements'] if s.get('expr', {}).get('kind') == 'intersect_plane_plane']) == 2
+
+
+def test_collinear_three_point_plane_in_intersection_line_is_refused():
+    c = deepcopy(CORPUS['positive'][0])
+    old_g = 'Tìm giao tuyến của (SAC) và (SBD).'
+    new_g = 'Tìm giao tuyến của (AMB) và (SBD).'
+    old_q = 'Tính khoảng cách từ M đến giao tuyến của (SAC) và (SBD).'
+    new_q = 'Tính khoảng cách từ M đến giao tuyến của (AMB) và (SBD).'
+    c['text'] = c['text'].replace(old_g, new_g).replace(old_q, new_q)
+    g = next(f for f in c['payload']['facts'] if f['id'] == 'g')
+    g['points_a'] = ['A', 'M', 'B']
+    g['quotes'] = [new_g]
+    c['payload']['facts'][-1]['quotes'] = [new_q]
+    r = run_fact_route(c['text'], c['payload'])
+    assert r.status == 'REFUSED' and r.code == 'COLLINEAR_POINTS' and not r.answers and r.scene3d is None
+

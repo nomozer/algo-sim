@@ -665,7 +665,7 @@ _KHOANG_CACH_DIEM_DUONG = re.compile(
     r"khoảng cách\s+từ\s+(?:điểm\s+)?([A-Z][0-9]*'?)\s+(?:đến|tới)\s+(?:đường thẳng\s+)?([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![\w'])",
     re.IGNORECASE)
 #: Câu hỏi khoảng cách điểm–đường: không gán giá trị ngay sau đường thẳng ("bằng 4", "không bằng 3", "khác 3"; "bằng bao nhiêu" vẫn là câu hỏi).
-_GAN_GIA_TRI = re.compile(r"\s*(?:\w+\s+)?(?:bằng|=|là|khác|≠)\s*(?!bao\s+nhiêu|\?)\S", re.IGNORECASE)
+_GAN_GIA_TRI = re.compile(r"\s*(?:(?:\w+\s+)?(?:bằng|=|là|khác|≠)\s*(?!bao\s+nhiêu|\?)\S|(?:đổi|thay|cộng|trừ|nhân|chia|[+\-*/])\b)", re.IGNORECASE)
 _CHI_SO_DUOI = str.maketrans("₀₁₂₃₄₅₆₇₈₉", "0123456789")
 
 
@@ -778,12 +778,15 @@ def _kiem_result_binding(phu, calls, de, nhan):
             raise TuChoi('FACT_INCOMPLETE','reference cần hai mặt ba nhãn phân biệt',(ref,))
         if nhan_cua_loi_goi(c)-nhan:
             raise TuChoi('UNKNOWN_LABEL','mặt producer có nhãn ngoài nguồn',(ref,))
+        producer_form = (rf'(?:(?i:tìm|dựng|xác định)\s+|(?i:gọi)\s+[A-Za-z][A-Za-z0-9]*\s+(?i:là)\s+)'
+                         rf'(?i:giao tuyến của)\s*{_MAT_TOAN_HANG}\s*(?i:và)\s*{_MAT_TOAN_HANG}[.\s]*')
         for q in c.quotes:
             m = re.search(r'(?i:giao tuyến)',q)
-            source_role(c,q,m.start() if m else 0)
-            if not re.fullmatch(rf'(?:(?i:tìm|dựng|xác định)\s+|(?i:gọi)\s+[A-Za-z][A-Za-z0-9]*\s+(?i:là)\s+)'
-                                rf'(?i:giao tuyến của)\s*{_MAT_TOAN_HANG}\s*(?i:và)\s*{_MAT_TOAN_HANG}[.\s]*',q):
+            vt = source_role(c,q,m.start() if m else 0)
+            if not re.fullmatch(producer_form,q):
                 raise TuChoi('SOURCE_OBJECT_MISMATCH','producer chưa có định nghĩa/yêu cầu dựng nguyên tử',(ref,))
+            if not re.fullmatch(producer_form,de[slice(*_bien_cau(de,vt))].strip()):
+                raise TuChoi('SOURCE_PREMISE_UNREAD','câu producer có phần ngoài quote chưa được đọc',(ref,))
             for match in _GIAO_TUYEN.finditer(q):
                 planes = [_nhan_cum(next((match[i] for i in group if match[i]),''))
                           for group in ((1,2,3),(4,5,6))]
@@ -817,12 +820,14 @@ def _kiem_result_binding(phu, calls, de, nhan):
                 raise TuChoi('AUXILIARY_RULE_MISMATCH','projection reference không khớp lời gọi')
             g = producer(c.args.line_ref)
             for q in c.quotes:
-                source_role(c,q,0)
+                vt = source_role(c,q,0)
                 pattern = (rf'(?i:gọi)\s*(?P<f>{_P1})\s*(?i:là hình chiếu vuông góc của)\s*(?P<p>{_P1})'
                            rf'\s*(?i:lên)\s*(?i:giao tuyến của)\s*{plane_pattern}[.\s]*')
                 m = re.fullmatch(pattern,q)
                 if not m or m['f']!=c.args.image or m['p']!=c.args.point or not matches_planes(m,g):
                     raise TuChoi('SOURCE_OBJECT_MISMATCH','projection reference không khớp nguồn',(c.id,))
+                if not re.fullmatch(pattern,de[slice(*_bien_cau(de,vt))].strip()):
+                    raise TuChoi('SOURCE_PREMISE_UNREAD','câu hình chiếu có phần ngoài quote chưa được đọc',(c.id,))
             accepted.add(c.id)
             continue
         if not d.get('effect_binding'):
@@ -863,16 +868,20 @@ def _kiem_result_binding(phu, calls, de, nhan):
                     raise TuChoi('SOURCE_OBJECT_MISMATCH','điểm/hai mặt của mục tiêu không khớp nguồn',(ask.id,))
                 if not _duoc_hoi(de,vt+m.start(),vt+m.end()):
                     raise TuChoi('NOT_ASKED_IN_SOURCE','nguồn không hỏi khoảng cách này',(ask.id,))
-                if not re.fullmatch(r'(?i:(?:tính|tìm)\s+)?'+derived.pattern+r'[.?\s]*',q):
+                ask_form = r'(?i:(?:tính|tìm)\s+)?'+derived.pattern+r'[.?\s]*'
+                if not re.fullmatch(ask_form,q) or not re.fullmatch(ask_form,de[slice(*_bien_cau(de,vt+m.start()))].strip()):
                     raise TuChoi('SOURCE_PREMISE_UNREAD','quote mục tiêu có phần chưa được đọc',(ask.id,))
             else:
                 matches=[m for m in _KHOANG_CACH_DIEM_DUONG.finditer(q)
                          if m[1]==p and [m[2],m[3]] in (line,line[::-1])]
                 if not matches:
                     raise TuChoi('SOURCE_OBJECT_MISMATCH','mục tiêu điểm/đường không khớp',(ask.id,))
+                span=_vi_tri(de,q)
+                qn=chuan_hoa(q)
+                s=de[:span[0]]+qn+de[span[1]:] if span else de
                 for m in matches:
                     vt=source_role(ask,q,m.start())
-                    if not _duoc_hoi(de,vt+m.start(),vt+m.end()) or _GAN_GIA_TRI.match(q[m.end():]):
+                    if not _hoi_dung_cum(s,vt+m.start(),vt+m.end()) or _GAN_GIA_TRI.match(s[vt+m.end():]):
                         raise TuChoi('NOT_ASKED_IN_SOURCE','nguồn không hỏi khoảng cách này',(ask.id,))
         accepted.add(ask.id)
     return accepted
@@ -906,7 +915,7 @@ _DUNG_GAN = re.compile(r"(?<!\w)(?:biết|với|cho|khi|nếu|trong đó|có(?!\
 #: Giữa động từ hỏi và đối tượng (hay ngay sau đối tượng): đối tượng KHÔNG còn là tân ngữ được hỏi — nó là tham chiếu
 #: ("theo", "tỉ số giữa … và …"), điều kiện cực trị ("sao cho … nhỏ nhất"), hay chú thích ("ở đây", "trong đó", "gấp").
 _CHAN_TAN_NGU = re.compile(r"(?<!\w)(?:theo|tỉ số|tỷ số|tổng|hiệu|sao cho|ở đây|trong đó|gấp|lớn hơn|nhỏ hơn|bé hơn"
-                           r"|lớn nhất|nhỏ nhất|bé nhất)(?!\w)", re.IGNORECASE)
+                           r"|lớn nhất|nhỏ nhất|bé nhất|bình phương|nửa)(?!\w)", re.IGNORECASE)
 
 
 def _bien_cau(de: str, p: int) -> tuple[int, int]:
@@ -981,7 +990,8 @@ def _cum_hoi(c: LoiGoi, de: str, dau: int, cuoi: int, calls: tuple[LoiGoi, ...])
 def _bo_cum(s: str) -> str:
     """Xoá mọi cụm hỏi (của bất kỳ hàm nào) — phần còn lại là chữ NẰM NGOÀI các đối tượng được liệt kê. Cụm dài xoá trước,
     không chồng lấn: "SC" trần không được cắt vỡ cụm "góc giữa SC và (ABC)"."""
-    cum = sorted(((m.start(), m.end()) for ds in _CUM_HOI.values() for mau, _b in ds for m in mau.finditer(s) if m.end() > m.start()),
+    patterns = (*(mau for ds in _CUM_HOI.values() for mau, _b in ds), _KHOANG_CACH_DIEM_DUONG)
+    cum = sorted(((m.start(), m.end()) for mau in patterns for m in mau.finditer(s) if m.end() > m.start()),
                  key=lambda x: x[0] - x[1])
     bo = [False] * len(s)
     for a, b in cum:
@@ -2002,44 +2012,56 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
     # This is a refusal in the SAME source authority, not an inferred fact or another semantic state.
     if read_quotes or _MO_MUC_TIEU.search(de):
         raise TuChoi('SOURCE_PREMISE_UNREAD','lát hai đường chưa nhận mệnh đề chứng minh/suy ra trong nguồn')
+    intersection_form = (rf'(?:(?:tìm|dựng|xác định)\s+|gọi\s+[A-Za-z][A-Za-z0-9]*\s+là\s+)'
+                         rf'giao tuyến của\s*{_MAT_TOAN_HANG}\s*và\s*{_MAT_TOAN_HANG}[.\s]*')
     for c in calls:
         if c.id in phu:
             continue
         for q in c.quotes:
-            atomic = re.sub(r'(?<!\w)song\s+song(?!\w)',' ',q,flags=re.I)
-            if re.search(r'[,;]|(?<!\w)(?:và|song|đổi|thay|gấp|nhân đôi)(?!\w)',atomic,re.I):
-                raise TuChoi('SOURCE_PREMISE_UNREAD','quote tiền đề ghép chưa được đọc độc lập trên lát hai đường',(c.id,))
-            # Read the complete accepted span, not just its first keyword/object. These two premise forms carry
-            # the geometry/length anchors of this slice; unparsed suffixes never acquire authority from a quote.
-            if c.fn == 'perpendicular_line_plane' and not re.fullmatch(
-                rf"(?:cho\s+|biết\s+)?(?:đường thẳng\s+|cạnh bên\s+)?{_P1}\s*{_P1}\s*"
-                rf"(?:vuông góc\s+(?:với\s+)?|⊥\s*){_MAT_TOAN_HANG}[.\s]*",q,re.I):
-                raise TuChoi('SOURCE_PREMISE_UNREAD','quote vuông góc có phần chưa được đọc trên lát hai đường',(c.id,))
-            if c.fn == 'segment_length':
-                length=_DO_DAI_CUC_BO.search(q)
-                prefix=q[:length.start()] if length else q
-                if (length is None or not re.fullmatch(r'(?:cho|biết|độ dài|cạnh bên|chiều cao|cạnh|\s)*',prefix,re.I)
-                        or not re.fullmatch(r'\s*(?:cm|dm|mm|m|đvđd)?[.\s]*',q[length.end():],re.I)):
-                    raise TuChoi('SOURCE_PREMISE_UNREAD','quote độ dài có phần chưa được đọc trên lát hai đường',(c.id,))
-            if c.spec.kind != 'ask' and c.fn not in ('perpendicular_line_plane','segment_length'):
-                # Closed syntax only: existing source checks below still bind every operand/value and role.
-                # This guard grants no fact authority; it refuses tails the existing quote anchor cannot read.
-                labels = rf'(?:{_P1})+'
-                solid = rf'{labels}\.{labels}'
-                number = _SO.pattern
-                shape = rf'(?:tam giác đều|hình vuông|lục giác đều)\s*(?:{labels}\s*)?(?:cạnh\s*{number})?'
-                prism = rf'(?:cho\s+)?(?:hình\s+)?lăng trụ đứng\s+{solid}\s+có đáy là\s+{shape}[.\s]*'
-                atomic_forms = {
-                    'pyramid': rf'(?:cho\s+)?(?:hình|khối) chóp\s+{solid}[.\s]*',
-                    'prism': rf'(?:cho\s+)?(?:hình\s+)?(?:lăng trụ đứng|hình hộp chữ nhật)\s+{solid}[.\s]*',
-                    'regular_polygon': rf'(?:đáy\s+{labels}\s+là\s+)?{shape}[.\s]*',
-                    'rectangle': rf'(?:cho\s+)?(?:hình hộp chữ nhật\s+{solid}|(?:đáy\s+{labels}\s+là\s+)?hình chữ nhật\s*(?:{labels})?)[.\s]*',
-                    'midpoint': rf'(?:gọi\s+)?{_P1}\s+là trung điểm\s+(?:của\s+)?{_P1}{_P1}[.\s]*',
-                }
-                form = atomic_forms.get(c.fn)
-                if not ((form and re.fullmatch(form,q,re.I))
-                        or c.fn in ('prism','regular_polygon') and re.fullmatch(prism,q,re.I)):
-                    raise TuChoi('SOURCE_PREMISE_UNREAD','quote tiền đề chưa nằm trọn trong văn phạm lát hai đường',(c.id,))
+            vt = _vi_tri(de, q)
+            spans = (q, de[slice(*_bien_cau(de, vt[0]))].strip()) if vt else (q,)
+            if c.fn == 'intersection_line':
+                if not all(re.fullmatch(intersection_form, s, re.I) for s in spans):
+                    raise TuChoi('SOURCE_PREMISE_UNREAD','quote giao tuyến có phần chưa được đọc',(c.id,))
+                continue
+            for s in spans:
+                atomic = re.sub(r'(?<!\w)song\s+song(?!\w)',' ',s,flags=re.I)
+                if re.search(r'[,;]|(?<!\w)(?:và|song|đổi|thay|gấp|nhân đôi)(?!\w)',atomic,re.I):
+                    raise TuChoi('SOURCE_PREMISE_UNREAD','quote tiền đề ghép chưa được đọc độc lập trên lát hai đường',(c.id,))
+                # Read the complete accepted span, not just its first keyword/object. These two premise forms carry
+                # the geometry/length anchors of this slice; unparsed suffixes never acquire authority from a quote.
+                if c.fn == 'perpendicular_line_plane' and not re.fullmatch(
+                    rf"(?:cho\s+|biết\s+)?(?:đường thẳng\s+|cạnh bên\s+)?{_P1}\s*{_P1}\s*"
+                    rf"(?:vuông góc\s+(?:với\s+)?|⊥\s*){_MAT_TOAN_HANG}[.\s]*",s,re.I):
+                    raise TuChoi('SOURCE_PREMISE_UNREAD','quote vuông góc có phần chưa được đọc trên lát hai đường',(c.id,))
+                if c.fn == 'segment_length':
+                    length=_DO_DAI_CUC_BO.search(s)
+                    prefix=s[:length.start()] if length else s
+                    if (length is None or not re.fullmatch(r'(?:cho|biết|độ dài|cạnh bên|chiều cao|cạnh|\s)*',prefix,re.I)
+                            or not re.fullmatch(r'\s*(?:cm|dm|mm|m|đvđd)?[.\s]*',s[length.end():],re.I)):
+                        raise TuChoi('SOURCE_PREMISE_UNREAD','quote độ dài có phần chưa được đọc trên lát hai đường',(c.id,))
+                if c.spec.kind != 'ask' and c.fn not in ('perpendicular_line_plane','segment_length'):
+                    # Closed syntax only: existing source checks below still bind every operand/value and role.
+                    # This guard grants no fact authority; it refuses tails the existing quote anchor cannot read.
+                    labels = rf'(?:{_P1})+'
+                    solid = rf'{labels}\.{labels}'
+                    number = _SO.pattern
+                    shape = rf'(?:tam giác đều|hình vuông|lục giác đều)\s*(?:{labels}\s*)?(?:cạnh\s*{number})?'
+                    prism = rf'(?:cho\s+)?(?:hình\s+)?lăng trụ đứng\s+{solid}\s+có đáy là\s+{shape}[.\s]*'
+                    reg_pyr = rf'(?:cho\s+)?(?:hình|khối) chóp\s+(?:đều|tam giác đều|tứ giác đều)\s+{solid}(?:\s+có\s+cạnh\s+đáy\s*(?:bằng|=)?\s*{number})?[.\s]*'
+                    atomic_forms = {
+                        'pyramid': rf'(?:cho\s+)?(?:hình|khối) chóp\s+{solid}[.\s]*',
+                        'regular_pyramid': reg_pyr,
+                        'prism': rf'(?:cho\s+)?(?:hình\s+)?(?:lăng trụ đứng|hình hộp chữ nhật)\s+{solid}[.\s]*',
+                        'regular_polygon': rf'(?:đáy\s+{labels}\s+là\s+)?{shape}[.\s]*',
+                        'rectangle': rf'(?:cho\s+)?(?:hình hộp chữ nhật\s+{solid}|(?:đáy\s+{labels}\s+là\s+)?hình chữ nhật\s*(?:{labels})?)[.\s]*',
+                        'midpoint': rf'(?:gọi\s+)?{_P1}\s+là trung điểm\s+(?:của\s+)?{_P1}{_P1}[.\s]*',
+                    }
+                    form = atomic_forms.get(c.fn)
+                    if not ((form and re.fullmatch(form,s,re.I))
+                            or c.fn in ('prism','regular_polygon') and re.fullmatch(prism,s,re.I)
+                            or c.fn == 'regular_polygon' and re.fullmatch(reg_pyr,s,re.I)):
+                        raise TuChoi('SOURCE_PREMISE_UNREAD','quote tiền đề chưa nằm trọn trong văn phạm lát hai đường',(c.id,))
     from ..semantic_program.shape_constraint import doc_rang_buoc
     from ..semantic_program.source_entities import dinh_danh_thuc_the
     for assertion in doc_rang_buoc(de):
