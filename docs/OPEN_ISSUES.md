@@ -153,6 +153,12 @@
   - 78 of the 79 residual probes are now refused; the one served is the correct reading.
   - M4 is unchanged by decision.
   - **Residual:** question-local givens that change the figure → `ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS`. The lexicon is closed but not complete for adversarial wording.
+  - **Residual (2026-10-15, open on `main` and on `research/source-bound-result-planning`):** the planner's auxiliary
+    distance(point, line) ask (`registry.py::_kiem_phu`) is not on the closed grammar. It is SERVED `√11` for
+    "Tính hai lần / căn bậc hai của / lập phương / nghịch đảo / một phần ba / 1/2 khoảng cách từ S đến BD." and for
+    "… BD bình phương.". On top of that, its `bình phương|nửa` guard reads the source with the AI quote spliced in, so a
+    space-squeezed quote ("bìnhphương") bypasses it. Evidence: `docs/evaluation/geometry/runs/source-bound-result-planning-main-integration/review-efb756aa-delta.md`
+    (IMPORTANT-1/2). This blocks the result-binding main integration until the user decides.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** Next Hybrid gate wave, before any product enablement or live pilot of Hybrid.
 - **default_switch_blocker:** YES

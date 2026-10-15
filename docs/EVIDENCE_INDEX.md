@@ -1,10 +1,24 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SOURCE_BOUND_RESULT_PLANNING_MAIN_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/source-bound-result-planning-main-integration/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-bound-result-planning-main-integration/
+CORRECTED_BY = NONE
+CORRECTS = SOURCE_BOUND_RESULT_PLANNING_INTEGRATION_READINESS
+CLASSIFICATION = RESULT_BINDING_MAIN_INTEGRATION_BLOCKED
+CODE_COMMIT = NONE (product efb756aa unchanged)
+VERIFICATION_COMMIT = d3323447 (preflight); main 2a3c0787 (probe comparison)
+DOCUMENTATION_COMMIT_ROLE = SELF
+MODEL_REQUEST_COUNT = 0
+
+Fresh-context independent review of `10dd6d6e..efb756aa`: delta PASS (shared `_CHAN_TAN_NGU` back to main, no new serve in 36 probes). It found 2 IMPORTANT pre-existing false serves on the auxiliary distance(point, line) `_kiem_phu` path, identical on `main`. Following the task rule, there was no fast-forward and no push; the user's decision is pending. Preflight otherwise passes: ff-eligible, candidate MATCH, provider pins MATCH, corpus intact.
+
 ## WAVE_ID = SOURCE_BOUND_RESULT_PLANNING_INTEGRATION_READINESS
 
 REPORT = docs/evaluation/geometry/runs/source-bound-result-planning-integration-readiness/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-bound-result-planning-integration-readiness/
-CORRECTED_BY = NONE
+CORRECTED_BY = SOURCE_BOUND_RESULT_PLANNING_MAIN_INTEGRATION
 CORRECTS = SOURCE_BOUND_RESULT_PLANNING
 CLASSIFICATION = RESULT_BINDING_MAIN_INTEGRATION_GO_AWAITING_APPROVAL
 CODE_COMMIT = NONE (product efb756aa unchanged)
