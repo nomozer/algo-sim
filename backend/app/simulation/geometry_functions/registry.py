@@ -731,7 +731,7 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
                 if m[1] == p and [m[2], m[3]] in (dt, dt[::-1]):
                     dau, sau = vt[0] + m.start(), vt[0] + m.end()
                     vai.append(_vai_tro_tai(s, dau))                   # cùng bộ phân tích với câu hỏi thường
-                    hoi_that.append(_duoc_hoi(s, dau, sau) and not _GAN_GIA_TRI.match(s[sau:]))
+                    hoi_that.append(_duoc_hoi(s, dau, sau) and not re.search(r"(?i:\b(?:bình\s+phương|nửa)\b)", s[_bien_cau(s, dau)[0]:dau]) and not _GAN_GIA_TRI.match(s[sau:]))
         if not vai:
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{hoi.id}: câu hỏi không nói 'khoảng cách từ {p} đến {''.join(dt)}'", ids)
         if "GOAL" in vai:
@@ -866,7 +866,7 @@ def _kiem_result_binding(phu, calls, de, nhan):
                 vt = source_role(ask,q,m.start() if m else 0)
                 if not m or m['p']!=p or not matches_planes(m,g):
                     raise TuChoi('SOURCE_OBJECT_MISMATCH','điểm/hai mặt của mục tiêu không khớp nguồn',(ask.id,))
-                if not _duoc_hoi(de,vt+m.start(),vt+m.end()):
+                if not _duoc_hoi(de,vt+m.start(),vt+m.end()) or re.search(r'(?i:\b(?:bình\s+phương|nửa)\b)',de[_bien_cau(de,vt+m.start())[0]:vt+m.start()]):
                     raise TuChoi('NOT_ASKED_IN_SOURCE','nguồn không hỏi khoảng cách này',(ask.id,))
                 ask_form = r'(?i:(?:tính|tìm)\s+)?'+derived.pattern+r'[.?\s]*'
                 if not re.fullmatch(ask_form,q) or not re.fullmatch(ask_form,de[slice(*_bien_cau(de,vt+m.start()))].strip()):
@@ -915,7 +915,7 @@ _DUNG_GAN = re.compile(r"(?<!\w)(?:biết|với|cho|khi|nếu|trong đó|có(?!\
 #: Giữa động từ hỏi và đối tượng (hay ngay sau đối tượng): đối tượng KHÔNG còn là tân ngữ được hỏi — nó là tham chiếu
 #: ("theo", "tỉ số giữa … và …"), điều kiện cực trị ("sao cho … nhỏ nhất"), hay chú thích ("ở đây", "trong đó", "gấp").
 _CHAN_TAN_NGU = re.compile(r"(?<!\w)(?:theo|tỉ số|tỷ số|tổng|hiệu|sao cho|ở đây|trong đó|gấp|lớn hơn|nhỏ hơn|bé hơn"
-                           r"|lớn nhất|nhỏ nhất|bé nhất|bình phương|nửa)(?!\w)", re.IGNORECASE)
+                           r"|lớn nhất|nhỏ nhất|bé nhất)(?!\w)", re.IGNORECASE)
 
 
 def _bien_cau(de: str, p: int) -> tuple[int, int]:
