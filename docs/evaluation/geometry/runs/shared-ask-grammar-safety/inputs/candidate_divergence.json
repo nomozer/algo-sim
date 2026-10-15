@@ -1,0 +1,25 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "shared-ask-grammar-safety",
+  "task": "shared-ask-grammar-safety",
+  "corrects": "docs/evaluation/geometry/runs/source-bound-result-planning-false-serve-fix/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "4b95dcc665f5930b74c849164122458ad070af9af24cb085bcfa9217063dee25",
+  "current_candidate_source_commit": "9ce1298f8f7cef090169c5ae5a64b0625a1ddbd4",
+  "current_product_commit": "5f1b576c62eb75293c800718dc200da45ff4934d",
+  "previous_candidate_hash": "7e993f8d1f9578cbb601ace02a972844d5516ca51da5c5e4357877c976f334d7",
+  "previous_product_commit": "8da9ae3170f8129ca88bbc390668e4e249323ff0",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "measured_system_paths_changed": true,
+  "reason": "Hybrid-only shared ask-grammar change in registry.py: sentence-level reading of asking sentences in _kiem_du_kien_cau_hoi (_vung_hoi extracted from _hoi_dung_cum, closed residue grammar _DAN_CAU_HOI), closed bracketed-note / rounding / unit grammar in _SAU_HOP_LE, reused-foot branch of _kiem_result_binding reads the source, two squared/half denylists removed. Production LLM_ONLY route, prompts, routing, schema, provider surfaces, planner, engine, kernel, interpreter and scene3d unchanged.",
+  "historical_effect": "Locked corpus 18/18 unchanged (scenes.json, corpus-results.json, manifest.json byte-identical on re-export at 9ce1298f). Benchmark 30 metrics byte-identical; two-line development 45 and heldout 32 rows identical. Historical results keep their source candidates.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "NONE: research branch only; wave BLOCKED, user decision required",
+  "push": "NONE: not authorized"
+}
