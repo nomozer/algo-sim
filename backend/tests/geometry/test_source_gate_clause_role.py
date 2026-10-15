@@ -270,18 +270,32 @@ MUTANTS = [
      lambda: _run(NOT_ASKED[0]).code != "NOT_ASKED_IN_SOURCE"),
     ("question-clause role dropped", 'if (_HOI_QUAN_HE.search(de[ma:mb]) or de[ma:mb].rstrip().endswith("?")', "if (False",
      lambda: _code(_perp("Phải chăng SA vuông góc với (ABCD)?"), _no_perpendicular) != "QUESTION_CLAUSE_NOT_PREMISE"),
-    # Since S1 (run `hybrid-semantic-hardening`) ordinary asks are also refused by the closed phrase grammar, so these
-    # `_duoc_hoi` mutants are killed through the auxiliary point–line path, where `_duoc_hoi` is the only guard.
+    # Since run `source-bound-result-planning-false-serve-fix` the auxiliary point–line ask also goes through the closed
+    # phrase grammar (`_hoi_dung_cum`), so no path has `_duoc_hoi` as its only guard. The asserted-value check still matters
+    # inside a bracketed note, which the closed grammar admits after the object.
     ("asserted-value check dropped", "if (so := _GIA_TRI.search(gan)) and not _HOI_SAU.search(gan[:so.start()]):", "if False:",
-     lambda: _run(_dist_line("Ta tính được khoảng cách từ S đến BD có giá trị 3.")).status != "REFUSED"),
-    ("object blocker between verb and object dropped",
-     "qua_dong_tu = bool(dong_tu) and not _CHAN_TAN_NGU.search(", "qua_dong_tu = bool(dong_tu) or not _CHAN_TAN_NGU.search(",
-     lambda: _run(_dist_line("Tính SC theo khoảng cách từ S đến BD.")).status != "REFUSED"),
+     lambda: _run(_dist_line("Tính khoảng cách từ S đến BD (kết quả bằng 3).")).status != "REFUSED"),
     # The label-anchor mutant of review 2 targeted `_moc_doi_tuong_hoi`, replaced by operand-bound phrases in S1 (run
     # `hybrid-semantic-hardening`); its mutants live in `test_hybrid_ask_operand_binding.py`.
-    ("yes/no relation check dropped", "    if _CO_KHONG.search(gan) and not", "    if False and not",
-     lambda: _run(_dist_line("Khoảng cách từ S đến BD có vượt quá 5 không?")).status != "REFUSED"),
 ]
+
+# Equivalent under the closed grammar: dropping these `_duoc_hoi` checks changes no served/refused outcome (searched over
+# the auxiliary point–line and point–plane asks). The checks stay as defence in depth; the test pins WHY the input is still
+# refused — the closed grammar around the asked phrase — so the equivalence is checked, not assumed.
+EQUIVALENT_MUTANTS = [
+    ("object blocker between verb and object dropped",
+     "qua_dong_tu = bool(dong_tu) and not _CHAN_TAN_NGU.search(", "qua_dong_tu = bool(dong_tu) or not _CHAN_TAN_NGU.search(",
+     "Tính SC theo khoảng cách từ S đến BD."),
+    ("yes/no relation check dropped", "    if _CO_KHONG.search(gan) and not", "    if False and not",
+     "Khoảng cách từ S đến BD có vượt quá 5 không?"),
+]
+
+
+@pytest.mark.parametrize("name,old,new,sentence", EQUIVALENT_MUTANTS, ids=[m[0] for m in EQUIVALENT_MUTANTS])
+def test_equivalent_mutant_is_still_refused_by_the_closed_grammar(monkeypatch, name, old, new, sentence):
+    assert _run(_dist_line(sentence)).code == "NOT_ASKED_IN_SOURCE"
+    _mutant(monkeypatch, old, new)
+    assert _run(_dist_line(sentence)).code == "NOT_ASKED_IN_SOURCE", name
 
 
 @pytest.mark.parametrize("name,old,new,killed", MUTANTS, ids=[m[0] for m in MUTANTS])

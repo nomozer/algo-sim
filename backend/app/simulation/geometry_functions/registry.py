@@ -725,13 +725,12 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
                 raise TuChoi("QUOTE_NOT_IN_SOURCE", f"{hoi.id}: đoạn {q!r} không có nguyên văn trong đề", ids)
             if _phu_dinh(de, vt[0], q):
                 raise TuChoi("NEGATED_CLAUSE", f"{hoi.id}: {q!r} mang phủ định", ids)
-            qn = chuan_hoa(q)
-            s = de[:vt[0]] + qn + de[vt[1]:]                     # đề với quote ở dạng chuẩn hoá — vị trí nhất quán
-            for m in _KHOANG_CACH_DIEM_DUONG.finditer(qn):
-                if m[1] == p and [m[2], m[3]] in (dt, dt[::-1]):
-                    dau, sau = vt[0] + m.start(), vt[0] + m.end()
-                    vai.append(_vai_tro_tai(s, dau))                   # cùng bộ phân tích với câu hỏi thường
-                    hoi_that.append(_duoc_hoi(s, dau, sau) and not re.search(r"(?i:\b(?:bình\s+phương|nửa)\b)", s[_bien_cau(s, dau)[0]:dau]) and not _GAN_GIA_TRI.match(s[sau:]))
+            # Đề là thẩm quyền, quote chỉ định vị: cụm và mọi bổ ngữ quanh nó đọc trên đề GỐC (quote khác khoảng trắng hay bỏ
+            # bổ ngữ không che được "bình phương / hai lần …"), theo cùng văn phạm đóng của câu hỏi thường (`_hoi_dung_cum`).
+            for m in _KHOANG_CACH_DIEM_DUONG.finditer(de):
+                if vt[0] <= m.start() and m.end() <= vt[1] and m[1] == p and [m[2], m[3]] in (dt, dt[::-1]):
+                    vai.append(_vai_tro_tai(de, m.start()))
+                    hoi_that.append(_hoi_dung_cum(de, m.start(), m.end()) and not _GAN_GIA_TRI.match(de[m.end():]))
         if not vai:
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{hoi.id}: câu hỏi không nói 'khoảng cách từ {p} đến {''.join(dt)}'", ids)
         if "GOAL" in vai:

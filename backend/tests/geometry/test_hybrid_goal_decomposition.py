@@ -262,6 +262,62 @@ def test_question_wordings_are_still_served(sentence):
     _served(_problem(_dist(sentence, "S", "BD")), F(11))
 
 
+def _source_vs_quote(source, quote):
+    """The AI quotes `quote`; the problem actually says `source` in its place (the quote is only a locator)."""
+    case = _problem(_dist(quote, "S", "BD"))
+    case["text"] = case["text"].replace(quote, source)
+    assert source in case["text"]
+    return case
+
+
+# Independent review of efb756aa (run `source-bound-result-planning-main-integration`), IMPORTANT-2: the auxiliary
+# distance(point, line) ask used an open two-word denylist. Any other quantity built on the distance was answered with the
+# distance itself (√11). The ask must be the bare object under the same closed grammar as every ordinary ask.
+ALTERED = ["Tính bình phương khoảng cách từ S đến BD.", "Tính nửa khoảng cách từ S đến BD.",
+           "Tính một nửa khoảng cách từ S đến BD.", "Tính hai lần khoảng cách từ S đến BD.",
+           "Tính căn bậc hai của khoảng cách từ S đến BD.", "Tính lập phương khoảng cách từ S đến BD.",
+           "Tính nghịch đảo khoảng cách từ S đến BD.", "Tính một phần ba khoảng cách từ S đến BD.",
+           "Tính 1/2 khoảng cách từ S đến BD.", "Tính giá trị bình phương khoảng cách từ S đến BD.",
+           "Tính khoảng cách từ S đến BD bình phương.", "TÍNH BÌNH PHƯƠNG KHOẢNG CÁCH TỪ S ĐẾN BD."]
+
+
+@pytest.mark.parametrize("sentence", ALTERED)
+def test_a_quantity_built_on_the_distance_is_not_answered_with_the_distance(sentence):
+    _refused(_problem(_dist(sentence, "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+
+# IMPORTANT-1: the modifier check read the problem with the AI quote spliced in. A quote that differs from the source only
+# in whitespace (still located by `_vi_tri`), or that leaves the modifier out, hid the modifier the problem actually wrote.
+SUBSTITUTED = [("Tính bình phương khoảng cách từ S đến BD.", "Tính bìnhphương khoảng cách từ S đến BD."),
+               ("Tính bình phương khoảng cách từ S đến BD.", "bìnhphươngkhoảng cách từ S đến BD."),
+               ("Tính bình phương khoảng cách từ S đến BD.", "khoảng cách từ S đến BD."),
+               ("Tính hai lần khoảng cách từ S đến BD.", "khoảng cách từ S đến BD."),
+               ("Tính hai lần khoảng cách từ S đến BD.", "Tính hailần khoảng cách từ S đến BD."),
+               ("Tính khoảng cách từ S đến BD bình phương.", "Tính khoảng cách từ S đến BDbình phương.")]
+
+
+@pytest.mark.parametrize("source,quote", SUBSTITUTED, ids=[q for _, q in SUBSTITUTED])
+def test_the_source_not_the_quote_decides_what_is_asked(source, quote):
+    _refused(_source_vs_quote(source, quote), "NOT_ASKED_IN_SOURCE")
+
+
+# Controls: the closed grammar must not turn into "refuse every question".
+def test_hon_nua_is_not_nua_and_a_whitespace_variant_quote_of_a_plain_question_is_served():
+    _served(_problem(_dist("Hơn nữa, tính khoảng cách từ S đến BD.", "S", "BD")), F(11))
+    _served(_source_vs_quote("Tính khoảng cách từ S đến BD.", "Tính khoảngcách từ S đến BD."), F(11))
+
+
+def test_an_unread_second_ask_in_the_clause_is_refused_as_on_ordinary_asks():
+    """Fail-closed by design, same as `ask_distance_point_plane` / `ask_length`: an ask nobody answers is unread."""
+    _refused(_problem(_dist("Tính khoảng cách từ S đến BD và nửa chu vi đáy.", "S", "BD")), "NOT_ASKED_IN_SOURCE")
+
+
+def test_nua_mat_phang_in_an_earlier_sentence_does_not_reach_the_question_gate():
+    case = _problem(_dist("Tính khoảng cách từ S đến BD.", "S", "BD"))
+    case["text"] = case["text"].replace("Tính khoảng cách", "Xét nửa mặt phẳng bờ BD. Tính khoảng cách")
+    _refused(case, "SOURCE_PREMISE_UNREAD")    # the unread premise sentence, not the asked object
+
+
 # Important 2: labels the scanner reads differently (subscript, underscore, glued to other letters) still occupy the name.
 @pytest.mark.parametrize("sentence,expected", [
     ("Gọi H₁ là hình chiếu của C lên BD.", "H2"), ("Gọi H_1 là hình chiếu của C lên BD.", "H2"),
@@ -404,8 +460,10 @@ MUTANTS = [
     # mutants need sentences where only the mutated check decides.
     ("gate: no 'is it asked' check", RG, "_kiem_phu", "if not all(hoi_that):", "if False:",
      lambda: _code_of("Gọi d là khoảng cách từ S đến BD.") != "NOT_ASKED_IN_SOURCE"),
-    ("gate: no asserted-value check", RG, "_kiem_phu", " and not _GAN_GIA_TRI.match(s[sau:])", "",
-     lambda: _code_of("Ta tính được khoảng cách từ S đến BD bằng SA.") != "NOT_ASKED_IN_SOURCE"),
+    # IMPORTANT-2 of the efb756aa review: the auxiliary ask must use the closed ask grammar, not the open `_duoc_hoi`.
+    ("gate: open grammar for the auxiliary ask", RG, "_kiem_phu", "hoi_that.append(_hoi_dung_cum(de, m.start(), m.end())",
+     "hoi_that.append(_duoc_hoi(de, m.start(), m.end())",
+     lambda: _code_of("Tính hai lần khoảng cách từ S đến BD.") != "NOT_ASKED_IN_SOURCE"),
     ("gate: duplicate labels allowed", RG, "_kiem_phu", "if x in nhan_da_khai:", "if False:",
      lambda: _duplicate_label_code() != "AUXILIARY_RULE_MISMATCH"),
     ("planner: scanner-only label choice", PL, "lap_ke_hoach", "| nhan_phu_da_dung(problem_text) |", "|",
@@ -434,6 +492,15 @@ MUTANTS = [
     ("planner: asks the wrong segment", PL, "_EffectResolver", "{'segment':[env['P'],env['F']]}", "{'segment':[env['L'][1][0],env['F']]}",
      lambda: _run(_problem(_dist("Tính khoảng cách từ S đến BD.", "S", "BD"))).answers != {"q": "√11"}),
 ]
+
+
+def test_equivalent_mutant_asserted_value_is_still_refused_by_the_closed_grammar(monkeypatch):
+    """Since the auxiliary ask uses `_hoi_dung_cum`, dropping `_GAN_GIA_TRI` changes no outcome (it stays as defence in
+    depth): an asserted value after the phrase is refused by the closed grammar itself."""
+    sentence = "Ta tính được khoảng cách từ S đến BD bằng SA."
+    assert _code_of(sentence) == "NOT_ASKED_IN_SOURCE"
+    monkeypatch.setattr(RG, "_kiem_phu", _mutant(monkeypatch, RG, " and not _GAN_GIA_TRI.match(de[m.end():])", "")._kiem_phu)
+    assert _code_of(sentence) == "NOT_ASKED_IN_SOURCE"
 
 
 def _raises_code(fn):
