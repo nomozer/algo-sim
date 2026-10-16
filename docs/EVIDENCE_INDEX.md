@@ -1,5 +1,22 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = GOAL_DIRECTED_FUNCTION_DISCOVERY
+
+REPORT = docs/evaluation/geometry/runs/goal-directed-function-discovery/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/goal-directed-function-discovery/
+CORRECTED_BY = NONE
+CORRECTS = NONE
+CLASSIFICATION = FUNCTION_DISCOVERY_SLICE_READY_FOR_REVIEW
+CODE_COMMIT = 9fec9f43 (route D: geometry_functions planner/registry/engine, ai/function_route)
+VERIFICATION_COMMIT = e02b7c7f candidate refreeze (8f77fec7…, 110 files); T3 checkpoint and review: run report §7
+DOCUMENTATION_COMMIT_ROLE = SELF
+MODEL_REQUEST_COUNT = 0
+
+Preregistered (`66593504`) development corpus, NOT_HELD_OUT, independent Fraction/Gram oracle: NEW 9/9 positives exact, 15/16
+negatives with the registered code (deviation D-1), 0 wrong served; FIXED (`2a3c0787`) and BOUNDED (`8c24cb52`) 0/9; NEW identical
+to BOUNDED on 125 regression cases; registry ablation (no-midpoint, no-plane-ask, +centroid 3/3, reversed identical, lying contract
+refused by the engine). Scene3D harness SwiftShader + Intel D3D11 `PASS_CORE_CAUSAL_RENDERING` (6 fixtures, 0 errors).
+
 ## WAVE_ID = SCENE3D_ARCHITECTURE_VISUAL_RELIABILITY
 
 REPORT = docs/evaluation/geometry/runs/scene3d-architecture-visual-reliability/report.md

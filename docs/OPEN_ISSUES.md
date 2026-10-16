@@ -1,11 +1,30 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE
+
+- **status:** OPEN — found 2026-10-16 (run `goal-directed-function-discovery`, deviation D-1); not fixed.
+- **description:** Every route-B problem that uses a source result line (`line_ref`) must pass the closed premise grammar
+  `registry._kiem_nguon_dong`. Its solid forms read "hình chóp", "lăng trụ đứng", "hình hộp chữ nhật" — not "hình lập phương".
+  A cube problem with "Tìm giao tuyến …" is therefore refused `SOURCE_PREMISE_UNREAD` before any geometry is built.
+- **evidence:** corpus row `parallel-result-line` (`runs/goal-directed-function-discovery/corpus.json`), strict xfail in
+  `backend/tests/geometry/test_function_discovery_planning.py`; the same goal on a cuboid reaches `PARALLEL_NO_INTERSECTION`.
+- **impact:** False refusal (fail-closed) of cube + intersection-line distances; no wrong answer.
+- **scope:** one more closed solid form in `_kiem_nguon_dong` plus negatives; pre-existing since `source-bound-result-planning`.
+- **owner_class:** ARCHITECTURE
+- **default_switch_blocker:** NO
+
 ### ISSUE-ARCH-PLANNER-RESULT-BINDING-AND-EFFECT-DISCOVERY
 
 - **status:** OPEN — next slice designed/preregistered, product not implemented.
   **Update 2026-10-16:** the bounded slice is implemented on the research branch: `efb756aa` (run
   `source-bound-result-planning`), hardened up to product `55c657b8`, T3 PASS at `7f355a81`. It is resolved in code but
   not integrated (`main` `2a3c0787`). General effect discovery (a new Registry function found automatically) stays OPEN.
+  **Update 2026-10-16 (run `goal-directed-function-discovery`, research branch, not integrated):** PARTLY RESOLVED for
+  distance goals. Contracts now carry their call template, so `_EffectResolver` writes calls without a per-function branch;
+  a contract added as data to an experimental catalog (`centroid`) was used for three new goal forms with no planner, gate
+  or engine change. Still OPEN: only `distance` questions enter the resolver (volume/area/angle/length keep fixed dispatch);
+  descriptions are those the TypedFact `point_kind` literal can carry (midpoint, centroid); a description with two operand
+  groups (intersection point of two lines) has no transport; the foot on a plane is a scene witness, not a construction step.
 - **description:** Current TypedFact/functions encode lines as point pairs; an intersection_line output line3 cannot
   become a projection/distance operand. FunctionSpec has no planning effects; Planner maps kinds/goals with fixed expansions,
   so a new Registry function is not automatically discovered. Valid supplied dependencies are scheduled by Engine.
@@ -291,6 +310,10 @@
 - **status:** PARTLY RESOLVED.
   - B26 is closed by goal decomposition slice 1 (run `hybrid-goal-decomposition`, 2026-10-11, research branch, awaiting review).
   - B27 (unnamed derived operand) stays OPEN. It needs slice 2, a Typed Facts schema change, which is not approved.
+  - **Update 2026-10-16:** the capability behind B27 is implemented on `research/goal-directed-function-discovery` WITHOUT a
+    schema change: a question fact with `point_kind` + `points` (fields that already exist) names the unnamed operand; the
+    provider prompt is unchanged, so live extraction of that form is NOT_MEASURED. The frozen benchmark row B27 still
+    encodes the request as `unsupported` and stays a false refusal under its frozen facts (labels not edited).
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** slice 2 only after a separate approval.
 - **default_switch_blocker:** NO

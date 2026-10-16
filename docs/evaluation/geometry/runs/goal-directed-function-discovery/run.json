@@ -3,23 +3,40 @@
   "run_id": "goal-directed-function-discovery",
   "wave": "goal-directed-function-discovery",
   "date": "2026-10-16",
-  "environment": "LOCAL Windows 11, Python 3.12",
+  "environment": "LOCAL Windows 11, Python 3.12, Node, Chromium (SwiftShader, Intel UHD D3D11)",
   "naming_policy": "docs/evaluation/RUN_NAMING.md",
-  "status": "PREREGISTERED",
+  "status": "FUNCTION_DISCOVERY_SLICE_READY_FOR_REVIEW",
   "branch": "research/goal-directed-function-discovery",
   "base_commit": "8c24cb52",
   "base_dependencies": ["main 2a3c0787", "result-binding f83b4ed1 (not integrated)", "Scene3D W1-W3 8c24cb52 (not reviewed)"],
   "main_before": "2a3c0787",
+  "main_after": "2a3c0787",
   "push": "NONE",
   "preregistration": "preregistration.md",
   "oracle": "oracle.py",
   "corpus": "corpus.json",
-  "baseline": {
-    "bundle_sha256": "baseline/bundle.sha256",
-    "fixed": "baseline/arm-fixed.json — main 2a3c0787, geometry-fact-planner/4",
-    "bounded": "baseline/arm-bounded.json — 8c24cb52, geometry-fact-planner/5"
+  "commits": {
+    "preregistration": "66593504",
+    "red": "b30c46af",
+    "product": "9fec9f43",
+    "tooling": "dda0d888",
+    "evidence": "98f0d1a1",
+    "refreeze": "e02b7c7f"
   },
+  "product_commit": "9fec9f43",
+  "candidate": {"tree_hash": "8f77fec7b577f8fd0ac531c1698b36514edfb4d79cdabf3a0d58081a6eb54583", "files": 110,
+                "divergence": "inputs/candidate_divergence.json"},
+  "cache_version": 125,
   "default": "LLM_ONLY",
   "live_calls": 0,
-  "Hybrid_product_enablement": "NO-GO (unchanged)"
+  "Hybrid_product_enablement": "NO-GO (unchanged)",
+  "provider_surfaces_unchanged": {"A": "7ea511a6", "B": "485d3834", "declarations": "5ceb0f99", "fact_schema": "282f5f76"},
+  "baseline": {"bundle_sha256": "baseline/bundle.sha256", "fixed": "baseline/arm-fixed.json", "bounded": "baseline/arm-bounded.json"},
+  "results": {
+    "red": "red/pytest-red-summary.txt — 49 failed, 2 passed at b30c46af",
+    "comparison": "results/comparison.json — NEW 9/9 positives exact, 15/16 negatives registered code (D-1), 0 wrong served; regression 125 cases identical to BOUNDED",
+    "ablation": "results/arm-new-{production,no-midpoint,no-plane-ask,centroid,reversed,lying}.json",
+    "browser": "visual/{swiftshader,gpu}/receipt.json — PASS_CORE_CAUSAL_RENDERING, 6 fixtures, 0 errors; visual/images/ kept, all hashes in all-images.sha256",
+    "t3_and_review": "report.md §7"
+  }
 }

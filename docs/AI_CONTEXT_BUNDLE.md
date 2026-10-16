@@ -1,6 +1,7 @@
 # AI_CONTEXT_BUNDLE.md — AlgoSim Session Handoff & Quick Context
 
 ## LOCAL override — 2026-10-15 (ưu tiên hơn snapshot §2)
+**2026-10-16, goal-directed function discovery (`goal-directed-function-discovery`, branch `research/goal-directed-function-discovery` stacked on result binding `f83b4ed1` + Scene3D W1–W3 `8c24cb52`, both not integrated):** product `9fec9f43` (route D only), candidate `8f77fec7…` (110 files) frozen at `98f0d1a1`, refreeze/T3 checkpoint `e02b7c7f`. Planner composes distances from an unnamed described point ("trung điểm của SC") to a plane / named line / intersection line from Registry contracts; 9/9 dev positives exact, 15/16 negatives registered code (D-1), 0 wrong served, regression corpora identical to the previous planner; an experimental contract added as data served 3 new forms without planner change. No schema/prompt change, cache 125, LLM_ONLY, 0 Gemini. T3/review: run report §7. Next: `STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION`.
 
 **2026-10-16, result binding FINAL T3 PASS (`result-binding-final-acceptance`):** product `55c657b8` (shared ask-grammar closure, independently code-reviewed; E-1 evidence review PASS at `7a583590`), refreeze checkpoint `7f355a81`, candidate `30808cb0…` (110 files). T3 `FULL_PRODUCT_GATE_PASS` on a clean detached worktree (pytest 10046/0, vitest 1055/1055). Corpus 18/18, Benchmark 30 and grammar probe byte-identical; provider fingerprints unchanged. Integration readiness READY_FOR_REVIEW; `main` is still `2a3c0787`; no merge, nothing pushed. Earlier: `shared-ask-grammar-safety` (5f1b576c → 55c657b8, E-1 addenda 1–3).
 
@@ -200,7 +201,7 @@ Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FU
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

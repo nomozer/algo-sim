@@ -8,6 +8,13 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-16, goal-directed function discovery (LOCAL research, not merged):** branch
+`research/goal-directed-function-discovery` stacks on result binding (`f83b4ed1`) and Scene3D W1–W3 (`8c24cb52`, review
+pending). Planner composes distances from unnamed described points via Registry contracts; a contract added as data is
+used without planner change. Run [`goal-directed-function-discovery`](evaluation/geometry/runs/goal-directed-function-discovery/report.md).
+Next only: the user's decision on the stack, in order — result-binding fast-forward, independent review of Scene3D W1–W3,
+then this slice. Integration ≠ Hybrid enablement (NO-GO, LLM_ONLY, cache125). Proposed next slice (not started): report §9.
+
 **2026-10-15, result-binding slice implemented and integration-checked (LOCAL, not merged):** branch
 `research/source-bound-result-planning` (product `efb756aa`, candidate `c0a8792f…`, T3 `7b14fe04`) is a fast-forward of
 main `2a3c0787`. Readiness + provider-fingerprint correction: run
@@ -23,7 +30,7 @@ Group A remains integrated on main; Hybrid stays off. Presentation backlog, orbi
 No Group B, new family, new Planner/FactGraph/DSL or product enablement. No additional task starts without that decision.
 
 ```text
-CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

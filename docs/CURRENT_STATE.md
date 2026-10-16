@@ -1,8 +1,29 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL — Goal-directed function discovery (unnamed derived operands), 2026-10-16
+
+CANONICAL_NEXT_ACTION = STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION
+
+Research branch `research/goal-directed-function-discovery`, stacked on `8c24cb52` = `main` `2a3c0787` + result binding
+(`f83b4ed1`, not integrated) + Scene3D W1–W3 (not independently reviewed); not merged, not pushed. Four identities:
+product commit `9fec9f43` (route D only: `geometry_functions/{planner,registry,engine}.py`, `ai/function_route.py`);
+candidate `8f77fec7b577f8fd0ac531c1698b36514edfb4d79cdabf3a0d58081a6eb54583` (110 files) frozen at `98f0d1a1`, refreeze /
+T3 checkpoint `e02b7c7f`; T3 and review results: run report §7. `LLM_ONLY`, `CACHE_VERSION = 125` (no bump: route D is not
+on `/api/analyze`), Hybrid product enablement NO-GO, 0 Gemini calls, provider surfaces A `7ea511a6…` / B `485d3834…` unchanged.
+- **Capability:** distance from a point the source DESCRIBES but does not name ("trung điểm của SC") to a named plane, a
+  named line or a source intersection line; Planner composes it from Registry contracts (`midpoint`,
+  `ask_distance_point_plane`, `orthogonal_projection_line`, `ask_length`, `intersection_line`) — closes the composition gap
+  behind benchmark B27 without a TypedFact schema change.
+- **Measured (offline, development corpus, NOT_HELD_OUT):** 9/9 positives exact vs an independent Fraction/Gram oracle,
+  15/16 negatives with the registered code (D-1: wrong code, `ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE`), 0 wrong served;
+  FIXED and BOUNDED planners 0/9; NEW identical to BOUNDED on benchmark 30, result binding 18, two-line 45 + 32; a contract
+  added as data (centroid) served 3/3 new forms with no planner/gate/engine change; a lying contract is refused by the
+  engine. Scene3D harness SwiftShader + Intel D3D11 `PASS_CORE_CAUSAL_RENDERING` (6 fixtures, 0 errors).
+Receipt: [`goal-directed-function-discovery`](evaluation/geometry/runs/goal-directed-function-discovery/report.md).
+
 ## LOCAL — Scene3D architecture & visual reliability implementation (W1–W3), 2026-10-16
 
-CANONICAL_NEXT_ACTION = SCENE3D_ARCHITECTURE_INDEPENDENT_REVIEW
+Next action at that time (still pending, now part of the stacked decision above): `SCENE3D_ARCHITECTURE_INDEPENDENT_REVIEW`
 
 Research branch `research/scene3d-visual-parity-audit` (branched from `f83b4ed1`, W0 audit at `4b51fde8`); not merged, not pushed; `main`/`origin/main` remain `2a3c0787`. Resolves all 2 CRITICAL, 5 IMPORTANT, and 2 NONBLOCKING findings from W0 (`scene3d-visual-parity-audit`) for `ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY` with 0 backend/Kernel/Planner changes (`LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid OFF, 0 Gemini calls):
 - **W1 (Mapping, Auxiliary Carrier Persistence & Parity):** `veKhongGian` (`scene3d-chart.ts`) transforms `o.perpendicular_witness` idempotently (`0.0` world-space displacement across 11/11 fixtures); `auxiliaryObjects` (`scene3d-auxiliary.ts`) excludes `perpendicular_witness.on` target carrier lines (`gt_g`, `derived_H_line`) from disposable hiding under default `aux=0` while `mp1_gt_g`, `mp2_gt_g` hide; `hybrid-section-visual.tsx` enables `withSubEntities` by default and adds `Bước học` + `Hình phụ` controls; unselected `face` sub-entities render as transparent `hit_proxy` meshes.
@@ -13,7 +34,7 @@ Receipts: [`scene3d-architecture-visual-reliability`](evaluation/geometry/runs/s
 
 ## LOCAL — Result binding final acceptance, 2026-10-16
 
-CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
+Next action at that time (superseded 2026-10-16 by the stacked decision above): `RESULT_BINDING_MAIN_INTEGRATION_DECISION`
 
 Research branch `research/source-bound-result-planning`; not merged, not pushed; `main`/`origin/main` remain `2a3c0787`.
 Four identities, not interchangeable:
@@ -35,7 +56,7 @@ The two 2026-10-15 sections below are historical for product, candidate and T3.
 
 ## LOCAL — Result binding main-integration readiness, 2026-10-15 (historical; superseded 2026-10-16)
 
-CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
+Next action at that time (superseded 2026-10-16 by the stacked decision above): `RESULT_BINDING_MAIN_INTEGRATION_DECISION`
 
 `research/source-bound-result-planning` is a fast-forward of `main`/`origin/main` `2a3c0787` (0 divergent commits); not
 merged, not pushed. Product `efb756aa` unchanged; candidate `c0a8792f…` (110 files) verify MATCH; T3 `7b14fe04` reused
@@ -46,13 +67,13 @@ INTENTIONALLY_CHANGED, backward compatible; draft-provenance and review-scope co
 
 ## LOCAL — Source-bound result binding & bounded effect planning, 2026-10-15 (historical; superseded 2026-10-16)
 
-CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
+Next action at that time (superseded 2026-10-16 by the stacked decision above): `RESULT_BINDING_MAIN_INTEGRATION_DECISION`
 
 Research branch `research/source-bound-result-planning` from `19140e2f` (`main`/`origin/main` remain `2a3c0787`; no merge/push). Product `efb756aa`, candidate `c0a8792f1c491ae40b41c6af5bbb00ed372e1bbc3b6b39c1093e14572b02b79e` (110 files), `CACHE_VERSION = 125`, `DEFAULT_MODE = LLM_ONLY`, Hybrid off, `LIVE_GEMINI_REQUESTS = 0`. Implements preregistered `line_ref` transport, `PlanningContract` effects on `intersection_line` / `orthogonal_projection_line` / `ask_length`, bounded `_EffectResolver` (`MAX_EFFECT_DEPTH = 3`, `MAX_EFFECT_NEEDS = 32`, `MAX_EFFECT_CANDIDATES = 8`, `MAX_RESULT_LINES = 4`, `MAX_RESULT_FEET = 8`), `_kiem_result_binding` enclosing-sentence source certificate verification, and Engine/IR line result binding (`_Dung.lines`, `_emit_intersection`). Locked development corpus (`NOT_HELD_OUT`): RED `de5ea1a7` 18/18 `SCHEMA_INVALID` → GREEN 6/6 positive `SERVED` ($10/11, 5, 3, 10, 0, 10/11$), 12/12 negative `REFUSED` (`test_result_binding_planning.py` 72 passed; 18/18 `EXACT_MATCH` in `reconciliation.json`). Independent 11-dimension review (`review.md`) PASS (`efb756aa`). Historical two-line (45 dev / 32 heldout) and benchmark 30 (19/9/0/2) invariant; Playwright Scene3D harness SwiftShader + Intel UHD D3D11 `PASS_CORE_CAUSAL_RENDERING` (4 scenes, 0 errors); authoritative clean detached T3 `FULL_PRODUCT_GATE_PASS` at `7b14fe04` (`verification/t3-pass.json`, `verification/t3-authoritative.log` `29b09bf5…`: backend `9405 passed`, frontend `1055 passed`, build PASS, demo `5/5`, crash surface `6/6`). Receipt: [`source-bound-result-planning`](evaluation/geometry/runs/source-bound-result-planning/report.md).
 
 ## LOCAL — Planner generalization audit/design, 2026-10-14
 
-CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
+Next action at that time (superseded 2026-10-16 by the stacked decision above): `RESULT_BINDING_MAIN_INTEGRATION_DECISION`
 
 Research branch `research/goal-directed-planner-generalization-audit` from synchronized main/origin/remote2a3c0787.
 Product/candidate/cache125/LLM_ONLY unchanged; Hybrid off/Gemini0, no merge/push. Current Planner uses fixed goal
@@ -64,7 +85,7 @@ Scene3D backlog/Hybrid blockers stay OPEN. The following integration snapshot re
 
 ## LOCAL — Group A research integrated on main, 2026-10-14
 
-CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
+Next action at that time (superseded 2026-10-16 by the stacked decision above): `RESULT_BINDING_MAIN_INTEGRATION_DECISION`
 
 User-authorized fast-forward `5270f3dd` → `5d73f7c2`, first main/origin/ls-remote sync verified. Integration documentation
 publication commit follows (SELF); research branch retained. Product `a5a0797c`, freeze `f227dd72`, candidate
