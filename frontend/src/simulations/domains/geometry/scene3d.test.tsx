@@ -789,6 +789,17 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     expect(dai).toBeLessThan(2.2);
   });
 
+  it("FE-4 (review tích hợp): đoạn hiển thị của đường chỉ căn theo các điểm của hình nằm trên đường — điểm neo xa hình không kéo lệch", () => {
+    // Đường y = z = 0 neo tại x = 10 (một điểm bất kỳ backend chọn); trên đường có A(0) và B(2) của hình.
+    const diem: [number, number, number][] = [[0, 0, 0], [2, 0, 0], [2, 2, 0], [0, 2, 0], [0, 0, 3]];
+    const [a, b] = doanDuongThang([10, 0, 0], [1, 0, 0], diem)!;
+    const xs = [a[0], b[0]].sort((p, q) => p - q);
+    expect((xs[0] + xs[1]) / 2).toBeCloseTo(1, 6);      // tâm giữa A và B
+    expect(xs[0]).toBeLessThan(0);                      // hai đầu vẫn vượt qua A và B: đường, không phải đoạn
+    expect(xs[1]).toBeGreaterThan(2);
+    expect(xs[1]).toBeLessThan(10);                     // không kéo tới điểm neo
+  });
+
   it("VISUAL-FE-4: mặt phẳng có ≥3 điểm không thẳng hàng nằm trên nó dựng đúng miền đa giác phẳng của các điểm đó, không thò góc vuông xuống dưới đáy", () => {
     const mp = {
       id: "mp_q", label: "(SAB)", type: "plane3", render: "surface" as const,

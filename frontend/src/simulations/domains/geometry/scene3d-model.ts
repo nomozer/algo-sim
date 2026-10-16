@@ -983,7 +983,8 @@ export function doanDuongThang(diemDuong: Vec3, huong: Vec3, diem: Vec3[]): [Vec
   // khoảng cơ sở theo đúng các điểm nằm trên đường, nới đều hai đầu để phân biệt đường vô hạn với đoạn hữu hạn mà
   // không bị các đỉnh ngoài đường kéo lệch tâm.
   const dungSai = 1e-4 * Math.max(1, cheo);
-  let onLo = 0, onHi = 0;
+  // Khoảng chỉ của các điểm NẰM TRÊN đường: điểm neo `diemDuong` (một điểm bất kỳ backend chọn) không phải điểm của hình.
+  let onLo = Infinity, onHi = -Infinity;
   for (let i = 0; i < diem.length; i++) {
     const p = diem[i], ti = t[i];
     const lech = Math.hypot(
