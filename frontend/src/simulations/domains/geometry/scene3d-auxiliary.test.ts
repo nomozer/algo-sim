@@ -6,7 +6,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import type { Scene3D } from "./scene3d-model";
-import { anchorOfGeometryStep, geometryStepCount, objectsAt } from "./scene3d-model";
+import { anchorOfGeometryStep, geometryStepCount } from "./scene3d-model";
 import { withSubEntities } from "./scene3d-subentities";
 import { auxiliaryHiddenAt, auxiliaryObjects, geometryStepGroups } from "./scene3d-auxiliary";
 
@@ -103,7 +103,7 @@ describe("hình phụ", () => {
     expect(auxiliaryHiddenAt(tlp, cuoi, false, null).has("H1")).toBe(true);
     expect(auxiliaryHiddenAt(tlp, cuoi, true, null).has("H")).toBe(false);
     expect(auxiliaryHiddenAt(tlp, cuoi, false, "mp_td_q").has("H")).toBe(false);
-    const tlpSub = withSubEntities(tlp, objectsAt);
+    const tlpSub = withSubEntities(tlp);
     expect(auxiliaryHiddenAt(tlpSub, cuoi, false, null).has("H")).toBe(true);
     expect(auxiliaryHiddenAt(tlpSub, cuoi, false, null).has("H1")).toBe(true);
   });
