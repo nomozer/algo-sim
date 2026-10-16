@@ -1,0 +1,33 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "generalized-goal-entry",
+  "task": "generalized-goal-entry",
+  "corrects": "docs/evaluation/geometry/runs/goal-directed-function-discovery/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "eaddb56c2d7b8a0a5bfc095c2cd06adef9e5780c3e049d9e48f7ceb825b7a08f",
+  "current_candidate_source_commit": "aa2a4d20ea8185eb7b273f73d655145c6fe4b439",
+  "current_product_commit": "289007a40834045def08fe8b1783dbfdb3919190",
+  "previous_candidate_hash": "093359c2551f11482c2a8ab06a74efba221c435561183308b39fe10e5fedd415",
+  "previous_product_commit": "cfa27baad3c49f3726b8edb51bea1c4ebe00fb1e",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "measured_system_paths_changed": true,
+  "measured_paths_changed": [
+    "backend/app/simulation/geometry_functions/engine.py",
+    "backend/app/simulation/geometry_functions/planner.py",
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "reason": "Route-D generalized goal entry (PlanningContract.goal, FunctionSpec.planning_extra, AnswerLength on ask_length, _EffectResolver.goal, certificate label provenance, engine point-distance check). Production LLM_ONLY route, prompts, schema, provider surfaces, kernel and interpreter unchanged. The Scene3D witness fix 289007a4 is outside the measured paths.",
+  "historical_effect": "153 earlier bundle rows identical to Function Discovery (results/final-193e634a/comparison.json). Historical results keep their source candidates.",
+  "cache_version": 125,
+  "cache_decision": "no bump: route D is not on /api/analyze",
+  "freeze": "clean detached worktree at aa2a4d20, --verify MATCH there and in the branch checkout",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "research branch only, stacked; user decision pending",
+  "push": "NONE: not authorized"
+}
