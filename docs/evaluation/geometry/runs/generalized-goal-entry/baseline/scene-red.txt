@@ -1,0 +1,58 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/frontend
+
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts (27 tests | 1 failed) 56ms
+     × ẩn điểm gốc hoặc chân thì không để lại nhân chứng của điểm đã ẩn 17ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/scene3d-annotations.test.ts > nhân chứng hình chiếu (review I1) > ẩn điểm gốc hoặc chân thì không để lại nhân chứng của điểm đã ẩn
+AssertionError: expected [ { id: 'perpendicular:K', …(5) } ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   {
++     "foot": [
++       0.375,
++       0.375,
++       0.25,
++     ],
++     "from": [
++       0,
++       0,
++       0,
++     ],
++     "id": "perpendicular:K",
++     "u": [
++       -0.375,
++       -0.375,
++       0.75,
++     ],
++     "v": [
++       -0.375,
++       -0.375,
++       -0.25,
++     ],
++     "vai": "hinh_chieu",
++   },
++ ]
+
+ ❯ src/simulations/domains/geometry/scene3d-annotations.test.ts:305:79
+    303|
+    304|   it("ẩn điểm gốc hoặc chân thì không để lại nhân chứng của điểm đã ẩn…
+    305|     expect(projectionWitnessesAt(canhChieu(), new Set(["B", "C", "S", …
+       |                                                                               ^
+    306|     expect(projectionWitnessesAt(canhChieu(), new Set(["A", "B", "C", …
+    307|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 26 passed (27)
+   Start at  20:45:35
+   Duration  865ms (transform 354ms, setup 53ms, import 451ms, tests 56ms, environment 0ms)
+

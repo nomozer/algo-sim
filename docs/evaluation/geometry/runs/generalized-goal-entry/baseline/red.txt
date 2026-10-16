@@ -1,0 +1,426 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.                             [100%]
+================================== FAILURES ===================================
+_________________ test_length_goal_exact[pyramid-midpoint-A] __________________
+backend\tests\geometry\test_generalized_goal_entry.py:32: in test_length_goal_exact
+    def test_length_goal_exact(c): exact(run(c),c)
+                                   ^^^^^^^^^^^^^^^
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_________________ test_length_goal_exact[pyramid-midpoint-B] __________________
+backend\tests\geometry\test_generalized_goal_entry.py:32: in test_length_goal_exact
+    def test_length_goal_exact(c): exact(run(c),c)
+                                   ^^^^^^^^^^^^^^^
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+___________________ test_length_goal_exact[cube-midpoint-A] ___________________
+backend\tests\geometry\test_generalized_goal_entry.py:32: in test_length_goal_exact
+    def test_length_goal_exact(c): exact(run(c),c)
+                                   ^^^^^^^^^^^^^^^
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+___________________ test_length_goal_exact[cube-midpoint-B] ___________________
+backend\tests\geometry\test_generalized_goal_entry.py:32: in test_length_goal_exact
+    def test_length_goal_exact(c): exact(run(c),c)
+                                   ^^^^^^^^^^^^^^^
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+__________________ test_length_goal_exact[cuboid-midpoint-A] __________________
+backend\tests\geometry\test_generalized_goal_entry.py:32: in test_length_goal_exact
+    def test_length_goal_exact(c): exact(run(c),c)
+                                   ^^^^^^^^^^^^^^^
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+__________________ test_length_goal_exact[cuboid-midpoint-B] __________________
+backend\tests\geometry\test_generalized_goal_entry.py:32: in test_length_goal_exact
+    def test_length_goal_exact(c): exact(run(c),c)
+                                   ^^^^^^^^^^^^^^^
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+__________________ test_length_goal_exact[prism-midpoint-A] ___________________
+backend\tests\geometry\test_generalized_goal_entry.py:32: in test_length_goal_exact
+    def test_length_goal_exact(c): exact(run(c),c)
+                                   ^^^^^^^^^^^^^^^
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+__________________ test_length_goal_exact[prism-midpoint-B] ___________________
+backend\tests\geometry\test_generalized_goal_entry.py:32: in test_length_goal_exact
+    def test_length_goal_exact(c): exact(run(c),c)
+                                   ^^^^^^^^^^^^^^^
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_____________________ test_length_goal_refusal[ambiguous] _____________________
+backend\tests\geometry\test_generalized_goal_entry.py:38: in test_length_goal_refusal
+    assert r.code in c['expected_codes'],(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'SCHEMA_INVALID' in ['AMBIGUOUS_FACT']
+E    +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng..._exact={}, length_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/6'}, declared_topology=None).code
+____________________ test_length_goal_refusal[conditional] ____________________
+backend\tests\geometry\test_generalized_goal_entry.py:38: in test_length_goal_refusal
+    assert r.code in c['expected_codes'],(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'SCHEMA_INVALID' in ['CONDITIONAL_CLAUSE']
+E    +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng..._exact={}, length_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/6'}, declared_topology=None).code
+_______________________ test_length_goal_refusal[prove] _______________________
+backend\tests\geometry\test_generalized_goal_entry.py:38: in test_length_goal_refusal
+    assert r.code in c['expected_codes'],(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'SCHEMA_INVALID' in ['GOAL_CLAUSE_NOT_PREMISE']
+E    +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng..._exact={}, length_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/6'}, declared_topology=None).code
+______________________ test_length_goal_refusal[negated] ______________________
+backend\tests\geometry\test_generalized_goal_entry.py:38: in test_length_goal_refusal
+    assert r.code in c['expected_codes'],(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'SCHEMA_INVALID' in ['NEGATED_CLAUSE']
+E    +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng..._exact={}, length_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/6'}, declared_topology=None).code
+__________________ test_length_goal_refusal[missing-target] ___________________
+backend\tests\geometry\test_generalized_goal_entry.py:38: in test_length_goal_refusal
+    assert r.code in c['expected_codes'],(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'SCHEMA_INVALID' in ['FACT_INCOMPLETE']
+E    +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng..._exact={}, length_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/6'}, declared_topology=None).code
+___________________ test_length_goal_refusal[extra-target] ____________________
+backend\tests\geometry\test_generalized_goal_entry.py:38: in test_length_goal_refusal
+    assert r.code in c['expected_codes'],(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'SCHEMA_INVALID' in ['FACT_INCOMPLETE']
+E    +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng..._exact={}, length_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/6'}, declared_topology=None).code
+_______________ test_length_goal_refusal[duplicate-descriptor] ________________
+backend\tests\geometry\test_generalized_goal_entry.py:38: in test_length_goal_refusal
+    assert r.code in c['expected_codes'],(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'SCHEMA_INVALID' in ['FACT_INCOMPLETE']
+E    +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng..._exact={}, length_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/6'}, declared_topology=None).code
+________________ test_length_goal_refusal[wrong-source-target] ________________
+backend\tests\geometry\test_generalized_goal_entry.py:38: in test_length_goal_refusal
+    assert r.code in c['expected_codes'],(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'SCHEMA_INVALID' in ['SOURCE_OBJECT_MISMATCH']
+E    +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng..._exact={}, length_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/6'}, declared_topology=None).code
+__________________ test_length_goal_refusal[squared-request] __________________
+backend\tests\geometry\test_generalized_goal_entry.py:38: in test_length_goal_refusal
+    assert r.code in c['expected_codes'],(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'SCHEMA_INVALID' in ['NOT_ASKED_IN_SOURCE', 'SOURCE_OBJECT_MISMATCH']
+E    +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng..._exact={}, length_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/6'}, declared_topology=None).code
+_________________ test_length_goal_refusal[unread-second-ask] _________________
+backend\tests\geometry\test_generalized_goal_entry.py:38: in test_length_goal_refusal
+    assert r.code in c['expected_codes'],(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'SCHEMA_INVALID' in ['QUESTION_CONTEXT_UNSUPPORTED', 'NOT_ASKED_IN_SOURCE']
+E    +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng..._exact={}, length_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/6'}, declared_topology=None).code
+_______________ test_length_goal_refusal[contradictory-length] ________________
+backend\tests\geometry\test_generalized_goal_entry.py:38: in test_length_goal_refusal
+    assert r.code in c['expected_codes'],(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'SCHEMA_INVALID' in ['INCONSISTENT_CONSTRAINTS']
+E    +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng..._exact={}, length_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/6'}, declared_topology=None).code
+_______ test_new_producer_contract_needs_no_planner_change[centroid-A] ________
+backend\tests\geometry\test_generalized_goal_entry.py:45: in test_new_producer_contract_needs_no_planner_change
+    exact(run(c),c)
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_______ test_new_producer_contract_needs_no_planner_change[centroid-D] ________
+backend\tests\geometry\test_generalized_goal_entry.py:45: in test_new_producer_contract_needs_no_planner_change
+    exact(run(c),c)
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+______________ test_goal_contract_removal_and_registry_reversal _______________
+backend\tests\geometry\test_generalized_goal_entry.py:50: in test_goal_contract_removal_and_registry_reversal
+    c=C['positive'][0]; before=planner.lap_ke_hoach(c['payload'],c['text'])
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:241: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+backend\app\simulation\geometry_functions\planner.py:225: in _doc_toan_hang_mo_ta
+    raise TuChoi("SCHEMA_INVALID", f"{f.id}: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch "
+E   app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)
+_________________ test_repeated_goals_share_only_construction _________________
+backend\tests\geometry\test_generalized_goal_entry.py:63: in test_repeated_goals_share_only_construction
+    r=run(c); exact(r,c)
+              ^^^^^^^^^^
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+__________________ test_metamorphic_lengths[reverse-points] ___________________
+backend\tests\geometry\test_generalized_goal_entry.py:80: in test_metamorphic_lengths
+    exact(run(c),c)
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+___________________ test_metamorphic_lengths[reverse-facts] ___________________
+backend\tests\geometry\test_generalized_goal_entry.py:80: in test_metamorphic_lengths
+    exact(run(c),c)
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+______________________ test_metamorphic_lengths[rename] _______________________
+backend\tests\geometry\test_generalized_goal_entry.py:80: in test_metamorphic_lengths
+    exact(run(c),c)
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_______________________ test_metamorphic_lengths[scale] _______________________
+backend\tests\geometry\test_generalized_goal_entry.py:80: in test_metamorphic_lengths
+    exact(run(c),c)
+backend\tests\geometry\test_generalized_goal_entry.py:25: in exact
+    assert r.status=='SERVED',(r.code,r.reason)
+E   AssertionError: ('SCHEMA_INVALID', 'q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)')
+E   assert 'REFUSED' == 'SERVED'
+E     
+E     - SERVED
+E     + REFUSED
+_______ test_certificate_labels_cannot_forge_scene_provenance[labels0] ________
+backend\tests\geometry\test_generalized_goal_entry.py:89: in test_certificate_labels_cannot_forge_scene_provenance
+    assert r.status=='REFUSED' and r.code=='AUXILIARY_RULE_MISMATCH'
+E   AssertionError: assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_______ test_certificate_labels_cannot_forge_scene_provenance[labels1] ________
+backend\tests\geometry\test_generalized_goal_entry.py:89: in test_certificate_labels_cannot_forge_scene_provenance
+    assert r.status=='REFUSED' and r.code=='AUXILIARY_RULE_MISMATCH'
+E   AssertionError: assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_______ test_certificate_labels_cannot_forge_scene_provenance[labels2] ________
+backend\tests\geometry\test_generalized_goal_entry.py:89: in test_certificate_labels_cannot_forge_scene_provenance
+    assert r.status=='REFUSED' and r.code=='AUXILIARY_RULE_MISMATCH'
+E   AssertionError: assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+_______ test_certificate_labels_cannot_forge_scene_provenance[labels3] ________
+backend\tests\geometry\test_generalized_goal_entry.py:89: in test_certificate_labels_cannot_forge_scene_provenance
+    assert r.status=='REFUSED' and r.code=='AUXILIARY_RULE_MISMATCH'
+E   AssertionError: assert ('SERVED' == 'REFUSED'
+E     
+E     - REFUSED
+E     + SERVED)
+______________ test_length_certificate_tampering_refuses[target] ______________
+backend\tests\geometry\test_generalized_goal_entry.py:94: in test_length_certificate_tampering_refuses
+    c=C['positive'][0]; k=planner.lap_ke_hoach(c['payload'],c['text']); aux=deepcopy(k.auxiliary); d=aux[0]
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:241: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+backend\app\simulation\geometry_functions\planner.py:225: in _doc_toan_hang_mo_ta
+    raise TuChoi("SCHEMA_INVALID", f"{f.id}: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch "
+E   app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)
+______________ test_length_certificate_tampering_refuses[effect] ______________
+backend\tests\geometry\test_generalized_goal_entry.py:94: in test_length_certificate_tampering_refuses
+    c=C['positive'][0]; k=planner.lap_ke_hoach(c['payload'],c['text']); aux=deepcopy(k.auxiliary); d=aux[0]
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:241: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+backend\app\simulation\geometry_functions\planner.py:225: in _doc_toan_hang_mo_ta
+    raise TuChoi("SCHEMA_INVALID", f"{f.id}: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch "
+E   app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)
+_______________ test_length_certificate_tampering_refuses[env] ________________
+backend\tests\geometry\test_generalized_goal_entry.py:94: in test_length_certificate_tampering_refuses
+    c=C['positive'][0]; k=planner.lap_ke_hoach(c['payload'],c['text']); aux=deepcopy(k.auxiliary); d=aux[0]
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:241: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+backend\app\simulation\geometry_functions\planner.py:225: in _doc_toan_hang_mo_ta
+    raise TuChoi("SCHEMA_INVALID", f"{f.id}: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch "
+E   app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)
+______________ test_length_certificate_tampering_refuses[quotes] ______________
+backend\tests\geometry\test_generalized_goal_entry.py:94: in test_length_certificate_tampering_refuses
+    c=C['positive'][0]; k=planner.lap_ke_hoach(c['payload'],c['text']); aux=deepcopy(k.auxiliary); d=aux[0]
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:241: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+backend\app\simulation\geometry_functions\planner.py:225: in _doc_toan_hang_mo_ta
+    raise TuChoi("SCHEMA_INVALID", f"{f.id}: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch "
+E   app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)
+______________ test_length_certificate_tampering_refuses[labels] ______________
+backend\tests\geometry\test_generalized_goal_entry.py:94: in test_length_certificate_tampering_refuses
+    c=C['positive'][0]; k=planner.lap_ke_hoach(c['payload'],c['text']); aux=deepcopy(k.auxiliary); d=aux[0]
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:241: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+backend\app\simulation\geometry_functions\planner.py:225: in _doc_toan_hang_mo_ta
+    raise TuChoi("SCHEMA_INVALID", f"{f.id}: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch "
+E   app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)
+_____________ test_length_certificate_tampering_refuses[missing] ______________
+backend\tests\geometry\test_generalized_goal_entry.py:94: in test_length_certificate_tampering_refuses
+    c=C['positive'][0]; k=planner.lap_ke_hoach(c['payload'],c['text']); aux=deepcopy(k.auxiliary); d=aux[0]
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:241: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+backend\app\simulation\geometry_functions\planner.py:225: in _doc_toan_hang_mo_ta
+    raise TuChoi("SCHEMA_INVALID", f"{f.id}: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch "
+E   app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: \u0111i\u1ec3m kh\xf4ng t\xean ch\u1ec9 l\xe0 to\xe1n h\u1ea1ng \u0111\u1ea7u c\u1ee7a c\xe2u h\u1ecfi kho\u1ea3ng c\xe1ch (point_kind + points; kh\xf4ng points_a, kh\xf4ng point)
+___________________ test_engine_answer_disagreement_refuses ___________________
+backend\tests\geometry\test_generalized_goal_entry.py:106: in test_engine_answer_disagreement_refuses
+    assert run(C['positive'][0]).code=='ENGINE_SELF_CHECK_FAILED'
+E   AssertionError: assert 'SCHEMA_INVALID' == 'ENGINE_SELF_CHECK_FAILED'
+E     
+E     - ENGINE_SELF_CHECK_FAILED
+E     + SCHEMA_INVALID
+________ test_budget_exhaustion_never_serves_partial[MAX_EFFECT_DEPTH] ________
+backend\tests\geometry\test_generalized_goal_entry.py:112: in test_budget_exhaustion_never_serves_partial
+    assert run(C['positive'][0]).code=='PLAN_TOO_LARGE'
+E   AssertionError: assert 'SCHEMA_INVALID' == 'PLAN_TOO_LARGE'
+E     
+E     - PLAN_TOO_LARGE
+E     + SCHEMA_INVALID
+________ test_budget_exhaustion_never_serves_partial[MAX_EFFECT_NEEDS] ________
+backend\tests\geometry\test_generalized_goal_entry.py:112: in test_budget_exhaustion_never_serves_partial
+    assert run(C['positive'][0]).code=='PLAN_TOO_LARGE'
+E   AssertionError: assert 'SCHEMA_INVALID' == 'PLAN_TOO_LARGE'
+E     
+E     - PLAN_TOO_LARGE
+E     + SCHEMA_INVALID
+_____ test_budget_exhaustion_never_serves_partial[MAX_EFFECT_CANDIDATES] ______
+backend\tests\geometry\test_generalized_goal_entry.py:112: in test_budget_exhaustion_never_serves_partial
+    assert run(C['positive'][0]).code=='PLAN_TOO_LARGE'
+E   AssertionError: assert 'SCHEMA_INVALID' == 'PLAN_TOO_LARGE'
+E     
+E     - PLAN_TOO_LARGE
+E     + SCHEMA_INVALID
+________ test_budget_exhaustion_never_serves_partial[MAX_RESULT_FEET] _________
+backend\tests\geometry\test_generalized_goal_entry.py:112: in test_budget_exhaustion_never_serves_partial
+    assert run(C['positive'][0]).code=='PLAN_TOO_LARGE'
+E   AssertionError: assert 'SCHEMA_INVALID' == 'PLAN_TOO_LARGE'
+E     
+E     - PLAN_TOO_LARGE
+E     + SCHEMA_INVALID
+___________ test_budget_exhaustion_never_serves_partial[MAX_CALLS] ____________
+backend\tests\geometry\test_generalized_goal_entry.py:112: in test_budget_exhaustion_never_serves_partial
+    assert run(C['positive'][0]).code=='PLAN_TOO_LARGE'
+E   AssertionError: assert 'SCHEMA_INVALID' == 'PLAN_TOO_LARGE'
+E     
+E     - PLAN_TOO_LARGE
+E     + SCHEMA_INVALID
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_exact[pyramid-midpoint-A]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_exact[pyramid-midpoint-B]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_exact[cube-midpoint-A]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_exact[cube-midpoint-B]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_exact[cuboid-midpoint-A]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_exact[cuboid-midpoint-B]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_exact[prism-midpoint-A]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_exact[prism-midpoint-B]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_refusal[ambiguous]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_refusal[conditional]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_refusal[prove]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_refusal[negated]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_refusal[missing-target]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_refusal[extra-target]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_refusal[duplicate-descriptor]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_refusal[wrong-source-target]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_refusal[squared-request]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_refusal[unread-second-ask]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_refusal[contradictory-length]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_new_producer_contract_needs_no_planner_change[centroid-A]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_new_producer_contract_needs_no_planner_change[centroid-D]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_goal_contract_removal_and_registry_reversal
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_repeated_goals_share_only_construction
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_metamorphic_lengths[reverse-points]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_metamorphic_lengths[reverse-facts]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_metamorphic_lengths[rename]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_metamorphic_lengths[scale]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_certificate_labels_cannot_forge_scene_provenance[labels0]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_certificate_labels_cannot_forge_scene_provenance[labels1]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_certificate_labels_cannot_forge_scene_provenance[labels2]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_certificate_labels_cannot_forge_scene_provenance[labels3]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_certificate_tampering_refuses[target]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_certificate_tampering_refuses[effect]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_certificate_tampering_refuses[env]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_certificate_tampering_refuses[quotes]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_certificate_tampering_refuses[labels]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_certificate_tampering_refuses[missing]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_engine_answer_disagreement_refuses
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_budget_exhaustion_never_serves_partial[MAX_EFFECT_DEPTH]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_budget_exhaustion_never_serves_partial[MAX_EFFECT_NEEDS]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_budget_exhaustion_never_serves_partial[MAX_EFFECT_CANDIDATES]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_budget_exhaustion_never_serves_partial[MAX_RESULT_FEET]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_budget_exhaustion_never_serves_partial[MAX_CALLS]
+43 failed, 1 passed in 7.14s

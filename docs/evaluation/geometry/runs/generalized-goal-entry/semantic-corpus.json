@@ -1,0 +1,15 @@
+{
+ "status": "DESIGNED_NOT_MEASURED",
+ "live_extraction": "NOT_MEASURED",
+ "evaluation_layers": ["intent_extraction", "entity_reference_grounding", "goal_interpretation", "construction_planning", "mathematical_execution"],
+ "cases": [
+  {"text":"Mô phỏng tìm khoảng cách từ A đến SB.","intent":"measure_distance","operands":["A","SB"],"coverage":"named point-line; extraction NOT_MEASURED"},
+  {"text":"Hạ đường vuông góc từ A xuống SB.","intent":"construct_projection","operands":["A","SB"],"coverage":"construction intent is distinct from a scalar ask; extraction NOT_MEASURED"},
+  {"text":"Tính khoảng cách từ trung điểm SC đến giao tuyến hai mặt phẳng.","intent":"measure_distance","operands":["midpoint(SC)","intersection(unspecified planes)"],"coverage":"must ground both planes or refuse; extraction NOT_MEASURED"},
+  {"text":"Dựng hình chiếu của điểm lên mặt phẳng.","intent":"construct_projection","operands":["unspecified point","unspecified plane"],"coverage":"missing entities must refuse; extraction NOT_MEASURED"},
+  {"text":"Cho tôi xem từng bước dựng hình.","intent":"replay_construction","operands":["active scene"],"coverage":"requires conversation/scene context; extraction NOT_MEASURED"},
+  {"text":"Tính độ dài đoạn nối trung điểm của SC với A.","intent":"measure_length","operands":["midpoint(SC)","A"],"coverage":"typed planning and exact execution measured in this run; extraction NOT_MEASURED"},
+  {"text":"Đo đoạn từ A tới điểm nằm chính giữa S và C.","intent":"measure_length","operands":["A","midpoint(SC)"],"coverage":"paraphrase and reversed reference need separate source-grounding work; extraction NOT_MEASURED"},
+  {"text":"Tính bình phương độ dài đoạn nối trung điểm của SC với A.","intent":"measure_squared_length","operands":["midpoint(SC)","A"],"coverage":"modifier must not collapse into length; current closed source gate refuses"}
+ ]
+}

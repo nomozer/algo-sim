@@ -1,0 +1,1713 @@
+{
+ "run": "generalized-goal-entry",
+ "status": "DEVELOPMENT_NOT_HELD_OUT",
+ "positive": [
+  {
+   "id": "pyramid-midpoint-A",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trung điểm của SC với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của SC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "17/4"
+   }
+  },
+  {
+   "id": "pyramid-midpoint-B",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trung điểm của SC với B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của SC với B."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "17/4"
+   }
+  },
+  {
+   "id": "cube-midpoint-A",
+   "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính độ dài đoạn nối trung điểm của C'D' với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "solid_type": "cube"
+     },
+     {
+      "id": "f2",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "measure": "edge",
+      "value": "2"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của C'D' với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "C'",
+       "D'"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "9"
+   }
+  },
+  {
+   "id": "cube-midpoint-B",
+   "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính độ dài đoạn nối trung điểm của C'D' với B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "solid_type": "cube"
+     },
+     {
+      "id": "f2",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "measure": "edge",
+      "value": "2"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của C'D' với B."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "C'",
+       "D'"
+      ],
+      "points_b": [
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "9"
+   }
+  },
+  {
+   "id": "cuboid-midpoint-A",
+   "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. AB = 2. AD = 4. AA' = 3. Tính độ dài đoạn nối trung điểm của A'C' với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "solid_type": "cuboid"
+     },
+     {
+      "id": "f2",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AB = 2."
+      ],
+      "points": [
+       "A",
+       "B"
+      ],
+      "value": "2",
+      "measure": "segment"
+     },
+     {
+      "id": "f3",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AD = 4."
+      ],
+      "points": [
+       "A",
+       "D"
+      ],
+      "value": "4",
+      "measure": "segment"
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AA' = 3."
+      ],
+      "points": [
+       "A",
+       "A'"
+      ],
+      "value": "3",
+      "measure": "segment"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của A'C' với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "A'",
+       "C'"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "14"
+   }
+  },
+  {
+   "id": "cuboid-midpoint-B",
+   "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. AB = 2. AD = 4. AA' = 3. Tính độ dài đoạn nối trung điểm của A'C' với B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "solid_type": "cuboid"
+     },
+     {
+      "id": "f2",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AB = 2."
+      ],
+      "points": [
+       "A",
+       "B"
+      ],
+      "value": "2",
+      "measure": "segment"
+     },
+     {
+      "id": "f3",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AD = 4."
+      ],
+      "points": [
+       "A",
+       "D"
+      ],
+      "value": "4",
+      "measure": "segment"
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AA' = 3."
+      ],
+      "points": [
+       "A",
+       "A'"
+      ],
+      "value": "3",
+      "measure": "segment"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của A'C' với B."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "A'",
+       "C'"
+      ],
+      "points_b": [
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "14"
+   }
+  },
+  {
+   "id": "prism-midpoint-A",
+   "text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2. AA' = 3. Tính độ dài đoạn nối trung điểm của B'C' với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+      ],
+      "solid": "ABC.A'B'C'",
+      "solid_type": "prism",
+      "right": true
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C"
+      ],
+      "shape": "equilateral_triangle",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AA' = 3."
+      ],
+      "points": [
+       "A",
+       "A'"
+      ],
+      "value": "3",
+      "measure": "segment"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của B'C' với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "B'",
+       "C'"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "12"
+   }
+  },
+  {
+   "id": "prism-midpoint-B",
+   "text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2. AA' = 3. Tính độ dài đoạn nối trung điểm của B'C' với B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+      ],
+      "solid": "ABC.A'B'C'",
+      "solid_type": "prism",
+      "right": true
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C"
+      ],
+      "shape": "equilateral_triangle",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AA' = 3."
+      ],
+      "points": [
+       "A",
+       "A'"
+      ],
+      "value": "3",
+      "measure": "segment"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của B'C' với B."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "B'",
+       "C'"
+      ],
+      "points_b": [
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "10"
+   }
+  }
+ ],
+ "negative": [
+  {
+   "id": "ambiguous",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trung điểm của SC với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của SC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ],
+      "ambiguous": true
+     }
+    ]
+   },
+   "expected_codes": [
+    "AMBIGUOUS_FACT"
+   ]
+  },
+  {
+   "id": "conditional",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trung điểm của SC với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "condition",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của SC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "CONDITIONAL_CLAUSE"
+   ]
+  },
+  {
+   "id": "prove",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trung điểm của SC với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "prove",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của SC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "GOAL_CLAUSE_NOT_PREMISE"
+   ]
+  },
+  {
+   "id": "negated",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trung điểm của SC với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của SC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ],
+      "negated": true
+     }
+    ]
+   },
+   "expected_codes": [
+    "NEGATED_CLAUSE"
+   ]
+  },
+  {
+   "id": "missing-target",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trung điểm của SC với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của SC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": []
+     }
+    ]
+   },
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ]
+  },
+  {
+   "id": "extra-target",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trung điểm của SC với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của SC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ]
+  },
+  {
+   "id": "duplicate-descriptor",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trung điểm của SC với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của SC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "S"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ]
+  },
+  {
+   "id": "wrong-source-target",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trung điểm của SC với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của SC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ]
+  },
+  {
+   "id": "squared-request",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính bình phương độ dài đoạn nối trung điểm của SC với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính bình phương độ dài đoạn nối trung điểm của SC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "NOT_ASKED_IN_SOURCE",
+    "SOURCE_OBJECT_MISMATCH"
+   ]
+  },
+  {
+   "id": "unread-second-ask",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trung điểm của SC với A. Tính độ dài đoạn nối trung điểm của SC với B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của SC với A. Tính độ dài đoạn nối trung điểm của SC với B."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "QUESTION_CONTEXT_UNSUPPORTED",
+    "NOT_ASKED_IN_SOURCE"
+   ]
+  },
+  {
+   "id": "contradictory-length",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trung điểm của SC với A. SA = 4.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "conflict",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 4."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "4"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của SC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "INCONSISTENT_CONSTRAINTS"
+   ]
+  }
+ ],
+ "discovery": [
+  {
+   "id": "centroid-A",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trọng tâm của tam giác SBC với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trọng tâm của tam giác SBC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "29/9"
+   }
+  },
+  {
+   "id": "centroid-D",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trọng tâm của tam giác SBC với D.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trọng tâm của tam giác SBC với D."
+      ],
+      "quantity": "length",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "41/9"
+   }
+  }
+ ]
+}

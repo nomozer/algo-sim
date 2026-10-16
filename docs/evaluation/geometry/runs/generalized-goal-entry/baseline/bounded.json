@@ -1,0 +1,5025 @@
+{
+ "schema": "function_discovery_arm/1",
+ "label": "BOUNDED",
+ "registry_variant": "production",
+ "planner_version": "geometry-fact-planner/5",
+ "code_root": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\goal-bounded",
+ "model_calls": 0,
+ "rows": [
+  {
+   "corpus": "new/positive",
+   "id": "pyr-midpoint-to-plane",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0006,
+   "plan_seconds": 0.00092,
+   "plan_peak_bytes": 23425
+  },
+  {
+   "corpus": "new/positive",
+   "id": "pyr-midpoint-to-named-line",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00097,
+   "plan_peak_bytes": 22223
+  },
+  {
+   "corpus": "new/positive",
+   "id": "pyr-midpoint-to-result-line",
+   "status": "REFUSED",
+   "code": "SCHEMA_INVALID",
+   "answers": {},
+   "squares": {},
+   "plan_error": "SCHEMA_INVALID",
+   "plan": null,
+   "route_seconds": 0.0001,
+   "plan_seconds": 0.0004,
+   "plan_peak_bytes": 15332
+  },
+  {
+   "corpus": "new/positive",
+   "id": "cube-midpoint-to-plane",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00067,
+   "plan_peak_bytes": 16489
+  },
+  {
+   "corpus": "new/positive",
+   "id": "cuboid-midpoint-to-result-line",
+   "status": "REFUSED",
+   "code": "SCHEMA_INVALID",
+   "answers": {},
+   "squares": {},
+   "plan_error": "SCHEMA_INVALID",
+   "plan": null,
+   "route_seconds": 0.0001,
+   "plan_seconds": 0.00037,
+   "plan_peak_bytes": 15399
+  },
+  {
+   "corpus": "new/positive",
+   "id": "prism-midpoint-to-plane",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00081,
+   "plan_peak_bytes": 19020
+  },
+  {
+   "corpus": "new/positive",
+   "id": "pyr-reuse-named-midpoint",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00105,
+   "plan_peak_bytes": 21769
+  },
+  {
+   "corpus": "new/positive",
+   "id": "pyr-two-goals-shared-point",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00096,
+   "plan_peak_bytes": 21547
+  },
+  {
+   "corpus": "new/positive",
+   "id": "pyr-zero-distance",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00107,
+   "plan_peak_bytes": 20801
+  },
+  {
+   "corpus": "new/negative",
+   "id": "label-not-in-source",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00084,
+   "plan_peak_bytes": 21625
+  },
+  {
+   "corpus": "new/negative",
+   "id": "descriptor-operands-mismatch",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00086,
+   "plan_peak_bytes": 21865
+  },
+  {
+   "corpus": "new/negative",
+   "id": "descriptor-kind-mismatch",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00084,
+   "plan_peak_bytes": 21883
+  },
+  {
+   "corpus": "new/negative",
+   "id": "conditional-question",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0003,
+   "plan_seconds": 0.00085,
+   "plan_peak_bytes": 18863
+  },
+  {
+   "corpus": "new/negative",
+   "id": "asserted-not-asked",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.0008,
+   "plan_peak_bytes": 18837
+  },
+  {
+   "corpus": "new/negative",
+   "id": "proof-goal",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00105,
+   "plan_peak_bytes": 21122
+  },
+  {
+   "corpus": "new/negative",
+   "id": "negated-question",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0003,
+   "plan_seconds": 0.00086,
+   "plan_peak_bytes": 21927
+  },
+  {
+   "corpus": "new/negative",
+   "id": "centroid-without-contract",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.0009,
+   "plan_peak_bytes": 21891
+  },
+  {
+   "corpus": "new/negative",
+   "id": "named-descriptor",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00083,
+   "plan_peak_bytes": 21911
+  },
+  {
+   "corpus": "new/negative",
+   "id": "descriptor-arity",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0003,
+   "plan_seconds": 0.00081,
+   "plan_peak_bytes": 18841
+  },
+  {
+   "corpus": "new/negative",
+   "id": "degenerate-descriptor",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00081,
+   "plan_peak_bytes": 18833
+  },
+  {
+   "corpus": "new/negative",
+   "id": "underdetermined-figure",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00072,
+   "plan_peak_bytes": 17863
+  },
+  {
+   "corpus": "new/negative",
+   "id": "contradictory-givens",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0003,
+   "plan_seconds": 0.00099,
+   "plan_peak_bytes": 25099
+  },
+  {
+   "corpus": "new/negative",
+   "id": "unread-modifier",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00091,
+   "plan_peak_bytes": 21881
+  },
+  {
+   "corpus": "new/negative",
+   "id": "parallel-result-line",
+   "status": "REFUSED",
+   "code": "SCHEMA_INVALID",
+   "answers": {},
+   "squares": {},
+   "plan_error": "SCHEMA_INVALID",
+   "plan": null,
+   "route_seconds": 0.0001,
+   "plan_seconds": 0.00022,
+   "plan_peak_bytes": 11200
+  },
+  {
+   "corpus": "new/negative",
+   "id": "segment-is-not-a-line",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00081,
+   "plan_peak_bytes": 21857
+  },
+  {
+   "corpus": "new/discovery",
+   "id": "centroid-to-plane",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0003,
+   "plan_seconds": 0.00082,
+   "plan_peak_bytes": 18859
+  },
+  {
+   "corpus": "new/discovery",
+   "id": "centroid-to-named-line",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNSUPPORTED_CAPABILITY",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00079,
+   "plan_peak_bytes": 18841
+  },
+  {
+   "corpus": "new/discovery",
+   "id": "centroid-to-result-line",
+   "status": "REFUSED",
+   "code": "SCHEMA_INVALID",
+   "answers": {},
+   "squares": {},
+   "plan_error": "SCHEMA_INVALID",
+   "plan": null,
+   "route_seconds": 0.0001,
+   "plan_seconds": 0.00033,
+   "plan_peak_bytes": 15358
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B01",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "4"
+   },
+   "squares": {
+    "q": "16"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_volume",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0115,
+   "plan_seconds": 0.00152,
+   "plan_peak_bytes": 18452
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B02",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√23/3"
+   },
+   "squares": {
+    "q": "23/9"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 4,
+    "functions": [
+     "ask_volume",
+     "regular_polygon",
+     "regular_pyramid",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0079,
+   "plan_seconds": 0.00099,
+   "plan_peak_bytes": 14892
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B03",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "2√3/3"
+   },
+   "squares": {
+    "q": "4/3"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 4,
+    "functions": [
+     "ask_distance_point_plane",
+     "prism",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0098,
+   "plan_seconds": 0.00081,
+   "plan_peak_bytes": 13803
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B04",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3√3"
+   },
+   "squares": {
+    "q": "27"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 4,
+    "functions": [
+     "ask_volume",
+     "prism",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0077,
+   "plan_seconds": 0.00084,
+   "plan_peak_bytes": 15360
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B05",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "squares": {
+    "q": "11"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 6,
+    "functions": [
+     "ask_length",
+     "intersect_line_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0094,
+   "plan_seconds": 0.00119,
+   "plan_peak_bytes": 20761
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B06",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3/2"
+   },
+   "squares": {
+    "q": "9/4"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 6,
+    "functions": [
+     "ask_distance_point_plane",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0078,
+   "plan_seconds": 0.00115,
+   "plan_peak_bytes": 21120
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B07",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "6√13/13"
+   },
+   "squares": {
+    "q": "36/13"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 6,
+    "functions": [
+     "ask_length",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0089,
+   "plan_seconds": 0.00127,
+   "plan_peak_bytes": 20711
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B08",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "6√13/13"
+   },
+   "squares": {
+    "q": "36/13"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 6,
+    "functions": [
+     "ask_length",
+     "orthogonal_projection",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0082,
+   "plan_seconds": 0.00119,
+   "plan_peak_bytes": 20682
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B09",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11/2"
+   },
+   "squares": {
+    "q": "11/4"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_length",
+     "intersect_line_plane",
+     "midpoint",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0111,
+   "plan_seconds": 0.00159,
+   "plan_peak_bytes": 26029
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B10",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17/3"
+   },
+   "squares": {
+    "q": "17/9"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_length",
+     "intersect_line_line",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0107,
+   "plan_seconds": 0.00157,
+   "plan_peak_bytes": 26055
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B11",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3√22/11"
+   },
+   "squares": {
+    "q": "18/11"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 7,
+    "functions": [
+     "ask_length",
+     "intersect_line_line",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0097,
+   "plan_seconds": 0.00133,
+   "plan_peak_bytes": 23305
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B12",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11/2"
+   },
+   "squares": {
+    "q": "11/4"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_length",
+     "intersect_line_line",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0124,
+   "plan_seconds": 0.00159,
+   "plan_peak_bytes": 28807
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B13",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11/2"
+   },
+   "squares": {
+    "q": "11/4"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_length",
+     "intersect_line_plane",
+     "midpoint",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0121,
+   "plan_seconds": 0.00143,
+   "plan_peak_bytes": 26029
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B14",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17/3"
+   },
+   "squares": {
+    "q": "17/9"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_length",
+     "intersect_line_line",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0126,
+   "plan_seconds": 0.00145,
+   "plan_peak_bytes": 26055
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B15",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "6√13/13"
+   },
+   "squares": {
+    "q": "36/13"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 6,
+    "functions": [
+     "ask_length",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0078,
+   "plan_seconds": 0.00127,
+   "plan_peak_bytes": 20711
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B16",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17/3"
+   },
+   "squares": {
+    "q": "17/9"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_length",
+     "intersect_line_line",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0108,
+   "plan_seconds": 0.00141,
+   "plan_peak_bytes": 26055
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B17",
+   "status": "REFUSED",
+   "code": "MISSING_DIMENSION",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 4,
+    "functions": [
+     "ask_volume",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0023,
+   "plan_seconds": 0.00081,
+   "plan_peak_bytes": 14912
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B18",
+   "status": "REFUSED",
+   "code": "MISSING_DIMENSION",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 4,
+    "functions": [
+     "ask_volume",
+     "perpendicular_line_plane",
+     "pyramid",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0021,
+   "plan_seconds": 0.00072,
+   "plan_peak_bytes": 14275
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B19",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 6,
+    "functions": [
+     "ask_volume",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0031,
+   "plan_seconds": 0.00106,
+   "plan_peak_bytes": 21737
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B20",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 7,
+    "functions": [
+     "ask_length",
+     "intersect_line_line",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.004,
+   "plan_seconds": 0.00135,
+   "plan_peak_bytes": 23374
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B21",
+   "status": "REFUSED",
+   "code": "FIGURE_NOT_UNIQUE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 4,
+    "functions": [
+     "ask_volume",
+     "height",
+     "pyramid",
+     "regular_polygon"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0027,
+   "plan_seconds": 0.00086,
+   "plan_peak_bytes": 14825
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B22",
+   "status": "REFUSED",
+   "code": "UNDERDETERMINED_POINT",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 4,
+    "functions": [
+     "ask_distance_point_plane",
+     "height",
+     "pyramid",
+     "regular_polygon"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0023,
+   "plan_seconds": 0.00086,
+   "plan_peak_bytes": 15452
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B23",
+   "status": "REFUSED",
+   "code": "OUT_OF_SCOPE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 6,
+    "functions": [
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length",
+     "unsupported"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0018,
+   "plan_seconds": 0.00111,
+   "plan_peak_bytes": 21035
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B24",
+   "status": "REFUSED",
+   "code": "OUT_OF_SCOPE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_volume",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "unsupported"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0014,
+   "plan_seconds": 0.00095,
+   "plan_peak_bytes": 18593
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B25",
+   "status": "REFUSED",
+   "code": "OUT_OF_SCOPE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length",
+     "unsupported"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0013,
+   "plan_seconds": 0.00113,
+   "plan_peak_bytes": 18538
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B26",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√11"
+   },
+   "squares": {
+    "q": "11"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 6,
+    "functions": [
+     "ask_length",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H"
+    ],
+    "needs": 5,
+    "candidates": 2,
+    "depth_max": null,
+    "resolver_used": true
+   },
+   "route_seconds": 0.0079,
+   "plan_seconds": 0.00358,
+   "plan_peak_bytes": 85601
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B27",
+   "status": "REFUSED",
+   "code": "OUT_OF_SCOPE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length",
+     "unsupported"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0014,
+   "plan_seconds": 0.00105,
+   "plan_peak_bytes": 18339
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B28",
+   "status": "REFUSED",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 6,
+    "functions": [
+     "ask_distance_point_plane",
+     "centroid",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0017,
+   "plan_seconds": 0.00116,
+   "plan_peak_bytes": 21146
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B29",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "cos²=8/17"
+   },
+   "squares": {
+    "q": "64/289"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_angle_line_plane",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0075,
+   "plan_seconds": 0.00098,
+   "plan_peak_bytes": 18334
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B30",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√7"
+   },
+   "squares": {
+    "q": "7"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_length",
+     "intersect_line_line",
+     "regular_polygon",
+     "regular_pyramid",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0079,
+   "plan_seconds": 0.0012,
+   "plan_peak_bytes": 18314
+  },
+  {
+   "corpus": "result_binding/positive",
+   "id": "derived-line-pyramid",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√110/11"
+   },
+   "squares": {
+    "q": "10/11"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_length",
+     "intersection_line",
+     "midpoint",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H"
+    ],
+    "needs": 7,
+    "candidates": 3,
+    "depth_max": null,
+    "resolver_used": true
+   },
+   "route_seconds": 0.0151,
+   "plan_seconds": 0.0042,
+   "plan_peak_bytes": 90828
+  },
+  {
+   "corpus": "result_binding/positive",
+   "id": "derived-line-cuboid",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√5"
+   },
+   "squares": {
+    "q": "5"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_length",
+     "intersection_line",
+     "midpoint",
+     "orthogonal_projection_line",
+     "prism",
+     "rectangle",
+     "segment_length"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H"
+    ],
+    "needs": 7,
+    "candidates": 3,
+    "depth_max": null,
+    "resolver_used": true
+   },
+   "route_seconds": 0.0234,
+   "plan_seconds": 0.00396,
+   "plan_peak_bytes": 90808
+  },
+  {
+   "corpus": "result_binding/positive",
+   "id": "derived-line-prism",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√3"
+   },
+   "squares": {
+    "q": "3"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 7,
+    "functions": [
+     "ask_length",
+     "intersection_line",
+     "midpoint",
+     "orthogonal_projection_line",
+     "prism",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H"
+    ],
+    "needs": 7,
+    "candidates": 3,
+    "depth_max": null,
+    "resolver_used": true
+   },
+   "route_seconds": 0.0114,
+   "plan_seconds": 0.00374,
+   "plan_peak_bytes": 89030
+  },
+  {
+   "corpus": "result_binding/positive",
+   "id": "different-direction-decomposition",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√10"
+   },
+   "squares": {
+    "q": "10"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_length",
+     "intersection_line",
+     "midpoint",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H"
+    ],
+    "needs": 7,
+    "candidates": 3,
+    "depth_max": null,
+    "resolver_used": true
+   },
+   "route_seconds": 0.0108,
+   "plan_seconds": 0.00402,
+   "plan_peak_bytes": 90763
+  },
+  {
+   "corpus": "result_binding/positive",
+   "id": "zero-distance",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "0"
+   },
+   "squares": {
+    "q": "0"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 7,
+    "functions": [
+     "ask_length",
+     "intersection_line",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H"
+    ],
+    "needs": 7,
+    "candidates": 3,
+    "depth_max": null,
+    "resolver_used": true
+   },
+   "route_seconds": 0.0093,
+   "plan_seconds": 0.00368,
+   "plan_peak_bytes": 88185
+  },
+  {
+   "corpus": "result_binding/positive",
+   "id": "shared-line-foot-two-goals",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√110/11",
+    "q2": "√110/11"
+   },
+   "squares": {
+    "q": "10/11",
+    "q2": "10/11"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_length",
+     "intersection_line",
+     "midpoint",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 2,
+    "fresh_labels": [
+     "H",
+     "H"
+    ],
+    "needs": 9,
+    "candidates": 4,
+    "depth_max": null,
+    "resolver_used": true
+   },
+   "route_seconds": 0.0118,
+   "plan_seconds": 0.00487,
+   "plan_peak_bytes": 92971
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "unknown-reference",
+   "status": "REFUSED",
+   "code": "UNKNOWN_DERIVED_REFERENCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": "UNKNOWN_DERIVED_REFERENCE",
+   "plan": null,
+   "route_seconds": 0.0003,
+   "plan_seconds": 0.00041,
+   "plan_peak_bytes": 17696
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "wrong-reference-type",
+   "status": "REFUSED",
+   "code": "DERIVED_REFERENCE_TYPE_MISMATCH",
+   "answers": {},
+   "squares": {},
+   "plan_error": "DERIVED_REFERENCE_TYPE_MISMATCH",
+   "plan": null,
+   "route_seconds": 0.0001,
+   "plan_seconds": 0.00038,
+   "plan_peak_bytes": 17680
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "producer-source-mismatch",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_length",
+     "intersection_line",
+     "midpoint",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H"
+    ],
+    "needs": 7,
+    "candidates": 3,
+    "depth_max": null,
+    "resolver_used": true
+   },
+   "route_seconds": 0.0012,
+   "plan_seconds": 0.00416,
+   "plan_peak_bytes": 90755
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "conditional-producer",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "squares": {},
+   "plan_error": "CONDITIONAL_CLAUSE",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.0004,
+   "plan_peak_bytes": 17519
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "proof-producer",
+   "status": "REFUSED",
+   "code": "GOAL_CLAUSE_NOT_PREMISE",
+   "answers": {},
+   "squares": {},
+   "plan_error": "GOAL_CLAUSE_NOT_PREMISE",
+   "plan": null,
+   "route_seconds": 0.0001,
+   "plan_seconds": 0.00038,
+   "plan_peak_bytes": 17551
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "negated-producer",
+   "status": "REFUSED",
+   "code": "NEGATED_CLAUSE",
+   "answers": {},
+   "squares": {},
+   "plan_error": "NEGATED_CLAUSE",
+   "plan": null,
+   "route_seconds": 0.0001,
+   "plan_seconds": 0.00039,
+   "plan_peak_bytes": 17559
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "parallel-planes",
+   "status": "REFUSED",
+   "code": "PARALLEL_NO_INTERSECTION",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_length",
+     "intersection_line",
+     "midpoint",
+     "orthogonal_projection_line",
+     "prism",
+     "rectangle",
+     "segment_length"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H"
+    ],
+    "needs": 7,
+    "candidates": 3,
+    "depth_max": null,
+    "resolver_used": true
+   },
+   "route_seconds": 0.005,
+   "plan_seconds": 0.00467,
+   "plan_peak_bytes": 91167
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "coincident-planes",
+   "status": "REFUSED",
+   "code": "CONTAINED_INFINITE_INTERSECTION",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_length",
+     "intersection_line",
+     "midpoint",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H"
+    ],
+    "needs": 7,
+    "candidates": 3,
+    "depth_max": null,
+    "resolver_used": true
+   },
+   "route_seconds": 0.0049,
+   "plan_seconds": 0.004,
+   "plan_peak_bytes": 90755
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "long-quote-nonnumeric",
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_length",
+     "intersection_line",
+     "midpoint",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H"
+    ],
+    "needs": 7,
+    "candidates": 3,
+    "depth_max": null,
+    "resolver_used": true
+   },
+   "route_seconds": 0.0016,
+   "plan_seconds": 0.00393,
+   "plan_peak_bytes": 90758
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "and-song-unread-premise",
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_length",
+     "intersection_line",
+     "midpoint",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H"
+    ],
+    "needs": 7,
+    "candidates": 3,
+    "depth_max": null,
+    "resolver_used": true
+   },
+   "route_seconds": 0.0016,
+   "plan_seconds": 0.00407,
+   "plan_peak_bytes": 90829
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "unverified-goal-value",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_length",
+     "intersection_line",
+     "midpoint",
+     "orthogonal_projection_line",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H"
+    ],
+    "needs": 7,
+    "candidates": 3,
+    "depth_max": null,
+    "resolver_used": true
+   },
+   "route_seconds": 0.0014,
+   "plan_seconds": 0.0038,
+   "plan_peak_bytes": 90756
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "cycle",
+   "status": "REFUSED",
+   "code": "DEPENDENCY_CYCLE",
+   "answers": {},
+   "squares": {},
+   "plan_error": "DEPENDENCY_CYCLE",
+   "plan": null,
+   "route_seconds": 0.0007,
+   "plan_seconds": 0.00413,
+   "plan_peak_bytes": 91086
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-0",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "9/4"
+   },
+   "squares": {
+    "q": "81/16"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0176,
+   "plan_seconds": 0.00696,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-1",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3√13/4"
+   },
+   "squares": {
+    "q": "117/16"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0159,
+   "plan_seconds": 0.00658,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-2",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3√13/4"
+   },
+   "squares": {
+    "q": "117/16"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.016,
+   "plan_seconds": 0.00688,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-3",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0079,
+   "plan_seconds": 0.00678,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-4",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0079,
+   "plan_seconds": 0.00712,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-5",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.008,
+   "plan_seconds": 0.0065,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-6",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0085,
+   "plan_seconds": 0.00671,
+   "plan_peak_bytes": 97537
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-7",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0084,
+   "plan_seconds": 0.00656,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-8",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0093,
+   "plan_seconds": 0.00678,
+   "plan_peak_bytes": 97537
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-9",
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.013,
+   "plan_seconds": 0.0072,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-10",
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0114,
+   "plan_seconds": 0.0069,
+   "plan_peak_bytes": 97537
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-11",
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0112,
+   "plan_seconds": 0.00649,
+   "plan_peak_bytes": 97537
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-12",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3/2"
+   },
+   "squares": {
+    "q": "9/4"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0152,
+   "plan_seconds": 0.00663,
+   "plan_peak_bytes": 97602
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-13",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√3/2"
+   },
+   "squares": {
+    "q": "3/4"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0148,
+   "plan_seconds": 0.00797,
+   "plan_peak_bytes": 97602
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-14",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√3/2"
+   },
+   "squares": {
+    "q": "3/4"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0143,
+   "plan_seconds": 0.00658,
+   "plan_peak_bytes": 97602
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-15",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0082,
+   "plan_seconds": 0.00673,
+   "plan_peak_bytes": 97602
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-16",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0079,
+   "plan_seconds": 0.00664,
+   "plan_peak_bytes": 97602
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-17",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.008,
+   "plan_seconds": 0.00661,
+   "plan_peak_bytes": 97555
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-18",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "squares": {
+    "q": "9"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0168,
+   "plan_seconds": 0.00695,
+   "plan_peak_bytes": 95383
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-19",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "squares": {
+    "q": "9"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0185,
+   "plan_seconds": 0.0066,
+   "plan_peak_bytes": 95336
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-20",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "squares": {
+    "q": "9"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0158,
+   "plan_seconds": 0.00667,
+   "plan_peak_bytes": 95383
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-21",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.008,
+   "plan_seconds": 0.00716,
+   "plan_peak_bytes": 95473
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-22",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0085,
+   "plan_seconds": 0.00679,
+   "plan_peak_bytes": 95473
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-23",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0076,
+   "plan_seconds": 0.00651,
+   "plan_peak_bytes": 95426
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-24",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0082,
+   "plan_seconds": 0.00665,
+   "plan_peak_bytes": 95293
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-25",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0079,
+   "plan_seconds": 0.00657,
+   "plan_peak_bytes": 95293
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-26",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0078,
+   "plan_seconds": 0.00674,
+   "plan_peak_bytes": 95426
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-27",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0095,
+   "plan_seconds": 0.00683,
+   "plan_peak_bytes": 95657
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-28",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0088,
+   "plan_seconds": 0.00674,
+   "plan_peak_bytes": 95610
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-29",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0093,
+   "plan_seconds": 0.00685,
+   "plan_peak_bytes": 95610
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-30",
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0117,
+   "plan_seconds": 0.00665,
+   "plan_peak_bytes": 95381
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-31",
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0113,
+   "plan_seconds": 0.00685,
+   "plan_peak_bytes": 95428
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-32",
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0112,
+   "plan_seconds": 0.0068,
+   "plan_peak_bytes": 95612
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-33",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "12"
+   },
+   "squares": {
+    "q": "144"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0175,
+   "plan_seconds": 0.00665,
+   "plan_peak_bytes": 98183
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-34",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "12"
+   },
+   "squares": {
+    "q": "144"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0193,
+   "plan_seconds": 0.00659,
+   "plan_peak_bytes": 98183
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-35",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "12"
+   },
+   "squares": {
+    "q": "144"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0172,
+   "plan_seconds": 0.00803,
+   "plan_peak_bytes": 98183
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-36",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0085,
+   "plan_seconds": 0.00679,
+   "plan_peak_bytes": 98093
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-37",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.008,
+   "plan_seconds": 0.00665,
+   "plan_peak_bytes": 98273
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-38",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0084,
+   "plan_seconds": 0.00684,
+   "plan_peak_bytes": 98226
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-39",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0079,
+   "plan_seconds": 0.00658,
+   "plan_peak_bytes": 98046
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-40",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0081,
+   "plan_seconds": 0.00647,
+   "plan_peak_bytes": 98093
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-41",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0086,
+   "plan_seconds": 0.00643,
+   "plan_peak_bytes": 98273
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-42",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0095,
+   "plan_seconds": 0.00668,
+   "plan_peak_bytes": 98183
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-43",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0081,
+   "plan_seconds": 0.00663,
+   "plan_peak_bytes": 98183
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-44",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0089,
+   "plan_seconds": 0.00668,
+   "plan_peak_bytes": 98457
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-0",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3√13/4"
+   },
+   "squares": {
+    "q": "117/16"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0153,
+   "plan_seconds": 0.00713,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-1",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0082,
+   "plan_seconds": 0.00706,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-2",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0079,
+   "plan_seconds": 0.00976,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-3",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3√13/4"
+   },
+   "squares": {
+    "q": "117/16"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0257,
+   "plan_seconds": 0.01177,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-4",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3√2/4"
+   },
+   "squares": {
+    "q": "9/8"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0156,
+   "plan_seconds": 0.00945,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-5",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0098,
+   "plan_seconds": 0.00976,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-6",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "9/4"
+   },
+   "squares": {
+    "q": "81/16"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0242,
+   "plan_seconds": 0.01227,
+   "plan_peak_bytes": 97537
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-7",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3√13/4"
+   },
+   "squares": {
+    "q": "117/16"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0252,
+   "plan_seconds": 0.00895,
+   "plan_peak_bytes": 97584
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-8",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0093,
+   "plan_seconds": 0.00715,
+   "plan_peak_bytes": 97602
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-9",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0083,
+   "plan_seconds": 0.00759,
+   "plan_peak_bytes": 97555
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-10",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√3"
+   },
+   "squares": {
+    "q": "3"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0196,
+   "plan_seconds": 0.00983,
+   "plan_peak_bytes": 97602
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-11",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0121,
+   "plan_seconds": 0.01119,
+   "plan_peak_bytes": 97602
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-12",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0119,
+   "plan_seconds": 0.00832,
+   "plan_peak_bytes": 97602
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-13",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0119,
+   "plan_seconds": 0.01113,
+   "plan_peak_bytes": 97602
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-14",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3/4"
+   },
+   "squares": {
+    "q": "9/16"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.023,
+   "plan_seconds": 0.01265,
+   "plan_peak_bytes": 97602
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-15",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 9,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0125,
+   "plan_seconds": 0.01287,
+   "plan_peak_bytes": 97602
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-16",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0135,
+   "plan_seconds": 0.01257,
+   "plan_peak_bytes": 95383
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-17",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√3"
+   },
+   "squares": {
+    "q": "3"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0173,
+   "plan_seconds": 0.00701,
+   "plan_peak_bytes": 95338
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-18",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0106,
+   "plan_seconds": 0.01001,
+   "plan_peak_bytes": 95747
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-19",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0084,
+   "plan_seconds": 0.00915,
+   "plan_peak_bytes": 95563
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-20",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "squares": {
+    "q": "9"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0212,
+   "plan_seconds": 0.00756,
+   "plan_peak_bytes": 95567
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-21",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0131,
+   "plan_seconds": 0.01097,
+   "plan_peak_bytes": 95563
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-22",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0082,
+   "plan_seconds": 0.00811,
+   "plan_peak_bytes": 95700
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-23",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 8,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "regular_polygon",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0082,
+   "plan_seconds": 0.00773,
+   "plan_peak_bytes": 95381
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-24",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0082,
+   "plan_seconds": 0.00963,
+   "plan_peak_bytes": 98547
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-25",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0115,
+   "plan_seconds": 0.00748,
+   "plan_peak_bytes": 98365
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-26",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0105,
+   "plan_seconds": 0.00755,
+   "plan_peak_bytes": 98273
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-27",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0085,
+   "plan_seconds": 0.00758,
+   "plan_peak_bytes": 98363
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-28",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "8"
+   },
+   "squares": {
+    "q": "64"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0333,
+   "plan_seconds": 0.01454,
+   "plan_peak_bytes": 98091
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-29",
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "12"
+   },
+   "squares": {
+    "q": "144"
+   },
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0301,
+   "plan_seconds": 0.01064,
+   "plan_peak_bytes": 98457
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-30",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0136,
+   "plan_seconds": 0.00786,
+   "plan_peak_bytes": 98228
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-31",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 10,
+    "functions": [
+     "ask_section_area",
+     "midpoint",
+     "prism",
+     "rectangle",
+     "section",
+     "segment_length",
+     "translate_point"
+    ],
+    "auxiliary": 1,
+    "fresh_labels": [
+     "H",
+     "H1"
+    ],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0156,
+   "plan_seconds": 0.0109,
+   "plan_peak_bytes": 98275
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "pyramid-midpoint-A",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_length",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0024,
+   "plan_seconds": 0.00133,
+   "plan_peak_bytes": 18447
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "pyramid-midpoint-B",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_length",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0021,
+   "plan_seconds": 0.00179,
+   "plan_peak_bytes": 18516
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "cube-midpoint-A",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 4,
+    "functions": [
+     "ask_length",
+     "prism",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0015,
+   "plan_seconds": 0.00128,
+   "plan_peak_bytes": 13962
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "cube-midpoint-B",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 4,
+    "functions": [
+     "ask_length",
+     "prism",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0019,
+   "plan_seconds": 0.00125,
+   "plan_peak_bytes": 13962
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "cuboid-midpoint-A",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 6,
+    "functions": [
+     "ask_length",
+     "prism",
+     "rectangle",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0016,
+   "plan_seconds": 0.00195,
+   "plan_peak_bytes": 18511
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "cuboid-midpoint-B",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 6,
+    "functions": [
+     "ask_length",
+     "prism",
+     "rectangle",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0032,
+   "plan_seconds": 0.00215,
+   "plan_peak_bytes": 18464
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "prism-midpoint-A",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 4,
+    "functions": [
+     "ask_length",
+     "prism",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.002,
+   "plan_seconds": 0.00093,
+   "plan_peak_bytes": 16093
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "prism-midpoint-B",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 4,
+    "functions": [
+     "ask_length",
+     "prism",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0017,
+   "plan_seconds": 0.00104,
+   "plan_peak_bytes": 16046
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "ambiguous",
+   "status": "REFUSED",
+   "code": "AMBIGUOUS_FACT",
+   "answers": {},
+   "squares": {},
+   "plan_error": "AMBIGUOUS_FACT",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00071,
+   "plan_peak_bytes": 17450
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "conditional",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "squares": {},
+   "plan_error": "CONDITIONAL_CLAUSE",
+   "plan": null,
+   "route_seconds": 0.0002,
+   "plan_seconds": 0.00068,
+   "plan_peak_bytes": 17401
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "prove",
+   "status": "REFUSED",
+   "code": "PROOF_UNVERIFIABLE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 4,
+    "functions": [
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0082,
+   "plan_seconds": 0.00163,
+   "plan_peak_bytes": 18604
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "negated",
+   "status": "REFUSED",
+   "code": "NEGATED_CLAUSE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 4,
+    "functions": [
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0079,
+   "plan_seconds": 0.00148,
+   "plan_peak_bytes": 18655
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "missing-target",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_length",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0022,
+   "plan_seconds": 0.00133,
+   "plan_peak_bytes": 18407
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "extra-target",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_length",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0019,
+   "plan_seconds": 0.00138,
+   "plan_peak_bytes": 18477
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "duplicate-descriptor",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_length",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0014,
+   "plan_seconds": 0.00127,
+   "plan_peak_bytes": 18516
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "wrong-source-target",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_length",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0022,
+   "plan_seconds": 0.00187,
+   "plan_peak_bytes": 18516
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "squared-request",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_length",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0028,
+   "plan_seconds": 0.00169,
+   "plan_peak_bytes": 18424
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "unread-second-ask",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_length",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0024,
+   "plan_seconds": 0.00133,
+   "plan_peak_bytes": 18539
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "contradictory-length",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 6,
+    "functions": [
+     "ask_length",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0017,
+   "plan_seconds": 0.00169,
+   "plan_peak_bytes": 21015
+  },
+  {
+   "corpus": "goal/discovery",
+   "id": "centroid-A",
+   "status": "REFUSED",
+   "code": "SCHEMA_INVALID",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_length",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0008,
+   "plan_seconds": 0.00158,
+   "plan_peak_bytes": 18426
+  },
+  {
+   "corpus": "goal/discovery",
+   "id": "centroid-D",
+   "status": "REFUSED",
+   "code": "SCHEMA_INVALID",
+   "answers": {},
+   "squares": {},
+   "plan_error": null,
+   "plan": {
+    "calls": 5,
+    "functions": [
+     "ask_length",
+     "perpendicular_line_plane",
+     "pyramid",
+     "regular_polygon",
+     "segment_length"
+    ],
+    "auxiliary": 0,
+    "fresh_labels": [],
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": null,
+    "resolver_used": false
+   },
+   "route_seconds": 0.0005,
+   "plan_seconds": 0.0013,
+   "plan_peak_bytes": 18426
+  }
+ ]
+}
