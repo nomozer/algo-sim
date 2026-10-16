@@ -1,0 +1,15 @@
+{
+  "schema": "candidate_divergence/1",
+  "from": {"candidate": "30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc", "product_commit": "55c657b8", "freeze_commit": "7f355a81"},
+  "to": {"candidate": "8f77fec7b577f8fd0ac531c1698b36514edfb4d79cdabf3a0d58081a6eb54583", "product_commit": "9fec9f43", "frozen_at_commit": "98f0d1a1", "files": 110},
+  "measured_paths_changed": [
+    "backend/app/ai/function_route.py",
+    "backend/app/simulation/geometry_functions/engine.py",
+    "backend/app/simulation/geometry_functions/planner.py",
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "not_in_measured_paths": "Scene3D W1-W3 (8c24cb52) changed frontend/src/simulations/domains/geometry only; it is outside MEASURED_SYSTEM_PATHS, so the 30808cb0 candidate stayed byte-valid for it, while its frontend is still unreviewed",
+  "freeze": "clean detached worktree D:/tmp/gdfd-freeze at 98f0d1a1, --verify MATCH there and in the branch checkout",
+  "cache_version": 125,
+  "cache_decision": "no bump: route D (geometry_functions, function_route) is not on /api/analyze; LLM_ONLY prompts, policy and cache keys untouched"
+}
