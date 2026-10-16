@@ -1,0 +1,27 @@
+
+> algo-sim-frontend@0.1.0 test:wave
+> vitest run && tsc -b && vite build
+
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/frontend
+
+
+ Test Files  68 passed (68)
+      Tests  1062 passed (1062)
+   Start at  20:52:21
+   Duration  8.15s (transform 16.24s, setup 3.41s, import 26.88s, tests 16.75s, environment 13ms)
+
+vite v6.4.3 building for production...
+transforming...
+✓ 94 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.59 kB │ gzip:   0.41 kB
+dist/assets/index-BhQg9KBS.css   56.03 kB │ gzip:  10.14 kB
+dist/assets/index-DlQ-nuUM.js   964.35 kB │ gzip: 255.15 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 2.25s

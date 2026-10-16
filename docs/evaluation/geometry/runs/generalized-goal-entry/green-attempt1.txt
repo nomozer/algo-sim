@@ -1,0 +1,20 @@
+.................FF................................................x.... [ 39%]
+........................................................................ [ 78%]
+........................................                                 [100%]
+================================== FAILURES ===================================
+_________________ test_length_goal_refusal[unread-second-ask] _________________
+backend\tests\geometry\test_generalized_goal_entry.py:38: in test_length_goal_refusal
+    assert r.code in c['expected_codes'],(r.code,r.reason)
+E   AssertionError: ('SOURCE_PREMISE_UNREAD', 'c\xe2u m\u1ee5c ti\xeau c\xf3 ph\u1ea7n ch\u01b0a \u0111\u01b0\u1ee3c \u0111\u1ecdc')
+E   assert 'SOURCE_PREMISE_UNREAD' in ['QUESTION_CONTEXT_UNSUPPORTED', 'NOT_ASKED_IN_SOURCE']
+E    +  where 'SOURCE_PREMISE_UNREAD' = KetQuaTuyen(status='REFUSED', code='SOURCE_PREMISE_UNREAD', reason='c\xe2u m\u1ee5c ti\xeau c\xf3 ph\u1ea7n ch\u01b0a \u0111\u01b0\u1ee3c \u0111\u1ecdc', failed_calls=...], 'provenance': 'DERIVED', 'binding': 'AUXILIARY'}], 'goal_checks': {}, 'negated_checks': {}}, declared_topology=None).code
+_______________ test_length_goal_refusal[contradictory-length] ________________
+backend\tests\geometry\test_generalized_goal_entry.py:38: in test_length_goal_refusal
+    assert r.code in c['expected_codes'],(r.code,r.reason)
+E   AssertionError: ('INCONSISTENT_FACTS', '\u0111o\u1ea1n SA nh\u1eadn hai \u0111\u1ed9 d\xe0i kh\xe1c nhau t\u1eeb c\xe1c d\u1eef ki\u1ec7n')
+E   assert 'INCONSISTENT_FACTS' in ['INCONSISTENT_CONSTRAINTS']
+E    +  where 'INCONSISTENT_FACTS' = KetQuaTuyen(status='REFUSED', code='INCONSISTENT_FACTS', reason='\u0111o\u1ea1n SA nh\u1eadn hai \u0111\u1ed9 d\xe0i kh\xe1c nhau t\u1eeb c\xe1c d\u1eef ki\u1ec7n', fa...], 'provenance': 'DERIVED', 'binding': 'AUXILIARY'}], 'goal_checks': {}, 'negated_checks': {}}, declared_topology=None).code
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_refusal[unread-second-ask]
+FAILED backend\tests\geometry\test_generalized_goal_entry.py::test_length_goal_refusal[contradictory-length]
+2 failed, 181 passed, 1 xfailed in 6.92s

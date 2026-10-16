@@ -1,0 +1,33 @@
+T0 IMPACT GATE
+
+Đã đổi (2):
+  - frontend/src/simulations/domains/geometry/scene3d-annotations.ts
+  - frontend/src/simulations/domains/geometry/scene3d-view.tsx
+
+Lý do chọn:
+  frontend/src/simulations/domains/geometry/scene3d-annotations.ts
+    → SỞ HỮU THEO THƯ MỤC — miền geometry
+    → src/simulations/domains/geometry/
+  frontend/src/simulations/domains/geometry/scene3d-view.tsx
+    → SỞ HỮU THEO THƯ MỤC — miền geometry
+    → src/simulations/domains/geometry/
+  frontend/src/simulations/domains/geometry/scene3d-annotations.ts, frontend/src/simulations/domains/geometry/scene3d-view.tsx
+    → CODE_INDEX_UPDATE_REQUIRED — file sản phẩm mới phải có entry mô tả nó sở hữu gì
+    → src/code-index-sync.test.ts
+
+Đã chọn: 2 đơn vị — 2 mẫu vitest
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/frontend
+
+
+ Test Files  35 passed (35)
+      Tests  712 passed (712)
+   Start at  20:55:19
+   Duration  3.07s (transform 5.46s, setup 1.13s, import 11.92s, tests 4.46s, environment 7ms)
+
+
+Kết quả: IMPACT_GATE_PASS
+Thời gian: 4.8s
+
+⚠️ IMPACT_GATE_PASS chỉ nói về tập vừa chọn. Nó KHÔNG thay được gate
+   sản phẩm đầy đủ (T3) — xem docs/TEST_TIERS.md.

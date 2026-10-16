@@ -1,0 +1,13 @@
+
+> algo-sim-frontend@0.1.0 test:domain:geometry
+> vitest run src/simulations/domains/geometry/
+
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/frontend
+
+
+ Test Files  34 passed (34)
+      Tests  709 passed (709)
+   Start at  20:51:12
+   Duration  2.74s (transform 4.81s, setup 925ms, import 10.62s, tests 4.01s, environment 6ms)
+

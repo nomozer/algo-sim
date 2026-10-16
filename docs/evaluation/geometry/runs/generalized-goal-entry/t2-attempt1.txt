@@ -1,0 +1,42 @@
+
+> algo-sim-frontend@0.1.0 test:wave
+> vitest run && tsc -b && vite build
+
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/frontend
+
+ ❯ src/code-index-sync.test.ts (3 tests | 1 failed) 53ms
+     × mọi file sản phẩm đều được CODE_INDEX nhắc tới (trừ nợ đã khai) 35ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/code-index-sync.test.ts > sync-lock · docs/CODE_INDEX.md không được trôi khỏi mã > mọi file sản phẩm đều được CODE_INDEX nhắc tới (trừ nợ đã khai)
+AssertionError: File dưới đây chưa có trong docs/CODE_INDEX.md.
+Thêm một entry MÔ TẢ NÓ SỞ HỮU GÌ (đừng chỉ liệt kê tên) — lần sau agent
+tra ra là khỏi viết bản thứ hai:
+  - goal-entry-browser-check.mjs: expected [ 'goal-entry-browser-check.mjs' ] to deeply equal []
+
+- Expected
++ Received
+
+- []
++ [
++   "goal-entry-browser-check.mjs",
++ ]
+
+ ❯ src/code-index-sync.test.ts:92:7
+     90|         "tra ra là khỏi viết bản thứ hai:\n" +
+     91|         offenders.map((f) => `  - ${f}`).join("\n"),
+     92|     ).toEqual([]);
+       |       ^
+     93|   });
+     94|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 67 passed (68)
+      Tests  1 failed | 1061 passed (1062)
+   Start at  20:51:16
+   Duration  5.08s (transform 7.06s, setup 1.94s, import 15.40s, tests 8.48s, environment 26ms)
+

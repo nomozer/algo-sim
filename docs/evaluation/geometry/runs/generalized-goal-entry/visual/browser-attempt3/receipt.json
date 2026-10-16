@@ -1,0 +1,214 @@
+{
+  "status": "PASS_PRODUCT_AND_HARNESS",
+  "model_calls": 0,
+  "human_visual_acceptance": "NOT_APPROVED",
+  "api_extraction": "NOT_MEASURED",
+  "injection": "public store; minimal shell config, exact route Scene3D unchanged",
+  "results": [
+    {
+      "id": "pyramid-midpoint-A",
+      "frames": [
+        {
+          "step": 0,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ],
+          "image": {
+            "file": "pyramid-midpoint-A-product-0.png",
+            "sha256": "9b48b33a92c990e1ec07e06b86cf8b04c55d0b467a5d6fc0b742a6d001b97212"
+          }
+        },
+        {
+          "step": 2,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ],
+          "image": {
+            "file": "pyramid-midpoint-A-product-2.png",
+            "sha256": "9bda638e5105785885fe9a32d9d36525be2dd5ccabbc897d2e48c950d3ad3b1b"
+          }
+        },
+        {
+          "step": 4,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D",
+            "khoi_S_ABCD::face:0",
+            "khoi_S_ABCD::edge:A-B",
+            "khoi_S_ABCD::edge:B-C",
+            "khoi_S_ABCD::edge:C-D",
+            "khoi_S_ABCD::edge:A-D",
+            "khoi_S_ABCD::face:1",
+            "khoi_S_ABCD::edge:S-A",
+            "khoi_S_ABCD::edge:S-B",
+            "khoi_S_ABCD::face:2",
+            "khoi_S_ABCD::edge:S-C",
+            "khoi_S_ABCD::face:3",
+            "khoi_S_ABCD::edge:S-D",
+            "khoi_S_ABCD::face:4"
+          ],
+          "image": {
+            "file": "pyramid-midpoint-A-product-4.png",
+            "sha256": "4aa26aa19c6276c757675d3f6156b4a5723366d413e61ae41597f6010a9f8d91"
+          }
+        }
+      ],
+      "selected": {
+        "file": "pyramid-midpoint-A-selected-M.png",
+        "sha256": "4ac37217a6243115d638091c8d835fd560c0b8758f7393bf68fd1356b26bd518"
+      },
+      "sameObjects": true,
+      "harness_image": {
+        "file": "pyramid-midpoint-A-harness.png",
+        "sha256": "c03a03dcb96ca603a2431e62aa66f3d26fadd5c7f5f45bd9764ac2fa0f6bbc0a"
+      }
+    },
+    {
+      "id": "prism-midpoint-A",
+      "frames": [
+        {
+          "step": 0,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "A_prime",
+            "B_prime",
+            "C_prime"
+          ],
+          "image": {
+            "file": "prism-midpoint-A-product-0.png",
+            "sha256": "dd0b5b5602a4270bbb699fcc639ed5c34b0afa8e14e42a697dc71ca053811f8f"
+          }
+        },
+        {
+          "step": 2,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "day_ABC",
+            "day_A_primeB_primeC_prime"
+          ],
+          "image": {
+            "file": "prism-midpoint-A-product-2.png",
+            "sha256": "b5b71b280e6f4d387a1734fd1fe5a07aed1dd80ff4564213f543a9ed832573b2"
+          }
+        },
+        {
+          "step": 5,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "khoi_ABC_A_primeB_primeC_prime",
+            "M",
+            "day_ABC",
+            "day_A_primeB_primeC_prime",
+            "canh_ben_A_A_prime",
+            "canh_ben_B_B_prime",
+            "canh_ben_C_C_prime",
+            "khoi_ABC_A_primeB_primeC_prime::face:0",
+            "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+            "khoi_ABC_A_primeB_primeC_prime::edge:B-C",
+            "khoi_ABC_A_primeB_primeC_prime::edge:A-C",
+            "khoi_ABC_A_primeB_primeC_prime::face:1",
+            "khoi_ABC_A_primeB_primeC_prime::edge:A_prime-B_prime",
+            "khoi_ABC_A_primeB_primeC_prime::edge:B_prime-C_prime",
+            "khoi_ABC_A_primeB_primeC_prime::edge:A_prime-C_prime",
+            "khoi_ABC_A_primeB_primeC_prime::face:2",
+            "khoi_ABC_A_primeB_primeC_prime::edge:B-B_prime",
+            "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+            "khoi_ABC_A_primeB_primeC_prime::face:3",
+            "khoi_ABC_A_primeB_primeC_prime::edge:C-C_prime",
+            "khoi_ABC_A_primeB_primeC_prime::face:4"
+          ],
+          "image": {
+            "file": "prism-midpoint-A-product-5.png",
+            "sha256": "ffa5d33db4db692f326933dd2d071308bb347966f0a95e3718cb65211f5389be"
+          }
+        }
+      ],
+      "selected": {
+        "file": "prism-midpoint-A-selected-M.png",
+        "sha256": "0c20865d52b8a2715904f1c07b7ff2ba24271894e6185588a0c8b1d5069f4d21"
+      },
+      "sameObjects": true,
+      "harness_image": {
+        "file": "prism-midpoint-A-harness.png",
+        "sha256": "067701014636ba667bd38ec68c984bf04338553944f1648431cb47b86f0538b1"
+      }
+    },
+    {
+      "id": "hidden-source-witness",
+      "before": [
+        "perpendicular:H"
+      ],
+      "after": {
+        "witnesses": [],
+        "rendered": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "khoi_S_ABCD",
+          "derived_H_line",
+          "H",
+          "day_ABCD",
+          "canh_ben_S_A",
+          "canh_ben_S_B",
+          "canh_ben_S_C",
+          "canh_ben_S_D",
+          "khoi_S_ABCD::face:0",
+          "khoi_S_ABCD::edge:A-B",
+          "khoi_S_ABCD::edge:B-C",
+          "khoi_S_ABCD::edge:C-D",
+          "khoi_S_ABCD::edge:A-D",
+          "khoi_S_ABCD::face:1",
+          "khoi_S_ABCD::edge:S-A",
+          "khoi_S_ABCD::edge:S-B",
+          "khoi_S_ABCD::face:2",
+          "khoi_S_ABCD::edge:S-C",
+          "khoi_S_ABCD::face:3",
+          "khoi_S_ABCD::edge:S-D",
+          "khoi_S_ABCD::face:4"
+        ]
+      },
+      "image": {
+        "file": "hidden-source-witness.png",
+        "sha256": "85077fcc83b68c46732d72e45006c86b0af0ccc870e6bbf7fbdeff1bf082c8a8"
+      }
+    }
+  ],
+  "errors": []
+}

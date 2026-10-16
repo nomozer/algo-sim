@@ -1,0 +1,56 @@
+{
+  "new_positive": {
+    "correct_served": 8
+  },
+  "new_negative": {
+    "correct_refusal": 10,
+    "wrong_code_refusal": 1
+  },
+  "experimental_centroid": {
+    "correct_served": 2
+  },
+  "historical_rows": 153,
+  "historical_differences": [],
+  "new_composition_forms": 2,
+  "new_functions": 0,
+  "reused_functions": [
+    "midpoint",
+    "ask_length"
+  ],
+  "experimental_reused_function": "centroid",
+  "goal_specific_composition_branches_added": 0,
+  "supported_new_measurement_kinds": 1,
+  "resource_ranges": {
+    "route_seconds": [
+      0.0088,
+      0.0217
+    ],
+    "plan_seconds": [
+      0.00482,
+      0.00743
+    ],
+    "plan_peak_bytes": [
+      81485,
+      86034
+    ]
+  },
+  "search_ranges": {
+    "needs": [
+      5,
+      5
+    ],
+    "candidates": [
+      2,
+      2
+    ],
+    "depth_max": [
+      2,
+      2
+    ],
+    "calls": [
+      5,
+      7
+    ]
+  },
+  "model_calls": 0
+}
