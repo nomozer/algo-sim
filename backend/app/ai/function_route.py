@@ -79,7 +79,8 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
                                            prefer_declared_plane_names=bool(two_line))
             # Presentation of the certified auxiliary binding; no new geometry or semantic authority.
             aux_ids = ({ir_name(p) for d in two_line for p in d['labels']}
-                       | {ir_name(d['label']) for d in auxiliary if d.get('effect_binding') and d.get('fresh')})
+                       | {ir_name(d['label']) for d in auxiliary if d.get('effect_binding') and d.get('fresh')}
+                       | {ir_name(p) for d in auxiliary if d.get('rule') == 'effect-chain' for p in d['labels']})
             vai = {o['id']: o.get('role') for o in state['scene']['objects'] if (o.get('producer') or '').startswith('construct_point.')}
             for obj in state['scene']['objects']:
                 if obj['id'] in aux_ids:

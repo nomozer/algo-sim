@@ -512,7 +512,11 @@ MUTANTS = [
          "Tính khoảng cách từ S đến BD.", "S", "BD", negated=True))["facts"]})) != "UNSUPPORTED_CAPABILITY"),
     ("planner: ignores taken labels", PL, "_EffectResolver", "if n not in self.plan.taken", "if True",
      lambda: _code_of("Tính khoảng cách từ S đến BD.", HB._mid("f5", "H", "S", "C")) is not None),
-    ("planner: asks the wrong segment", PL, "_EffectResolver", "{'segment':[env['P'],env['F']]}", "{'segment':[env['L'][1][0],env['F']]}",
+    # Run `goal-directed-function-discovery`: the asked segment is now written from the ask_length contract template; the
+    # load-bearing planner step is binding each input slot to its producer's effect by position (same kill check).
+    ("planner: binds a producer's effect to the wrong input slots", PL, "_EffectResolver",
+     "zip(t.operands, REGISTRY[child.fn].planning.effect.operands)",
+     "zip(t.operands, reversed(REGISTRY[child.fn].planning.effect.operands))",
      lambda: _run(_problem(_dist("Tính khoảng cách từ S đến BD.", "S", "BD"))).answers != {"q": "√11"}),
 ]
 

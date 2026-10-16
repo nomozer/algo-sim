@@ -13,9 +13,11 @@ Mỗi loại dữ kiện có MỘT luật ánh xạ (bảng `_LUAT`), cộng m�
 "hình hộp chữ nhật", "tứ diện đều"). Không có luật nào nhìn vào tổ hợp dữ kiện để nhận dạng "dạng bài".
 
 ─── DỪNG VÀ GIỚI HẠN ─────────────────────────────────────────────────────────
-Các dữ kiện tường minh vẫn ánh xạ một lần. Mục tiêu khoảng cách điểm–đường phân giải typed needs từ effects của Registry,
-với ngân sách hữu hạn và tái sử dụng producer đã khai; không tìm hình bằng số, suy tiền đề hoặc lấy mẫu đáp số.
-Quá ngân sách ⇒ `PLAN_TOO_LARGE`, không phục vụ một phần.
+Các dữ kiện tường minh vẫn ánh xạ một lần. Mục tiêu khoảng cách điểm–đường, và khoảng cách từ một điểm KHÔNG TÊN do đề mô tả
+("trung điểm của SC") tới mặt / đường / giao tuyến, phân giải typed needs từ `PlanningContract` của Registry (`_EffectResolver`):
+producer tìm theo hiệu ứng + kiểu toán hạng, lời gọi viết từ khuôn của contract — một hàm có contract được dùng mà planner
+không cần nhánh riêng cho nó. Ngân sách hữu hạn, tái sử dụng producer đã khai; không tìm hình bằng số, suy tiền đề hoặc lấy
+mẫu đáp số. Quá ngân sách ⇒ `PLAN_TOO_LARGE`, không phục vụ một phần.
 """
 from __future__ import annotations
 
@@ -27,9 +29,9 @@ from typing import Annotated, Any, Literal
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from .registry import AUXILIARY_RULES, MAT_SONG_SONG, MAT_HAI_DUONG, ExactNumber, Label, TuChoi, nhan_cua_de, nhan_phu_da_dung
-from .registry import REGISTRY, doc_ke_hoach
+from .registry import REGISTRY, doc_ke_hoach, render_call, same_call
 
-PLANNER_VERSION = "geometry-fact-planner/5"
+PLANNER_VERSION = "geometry-fact-planner/6"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
 _NHAN_PHU = ("H", *(f"H{i}" for i in range(1, 100)))
@@ -166,9 +168,11 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
         raise TuChoi("SCHEMA_INVALID", "id dữ kiện trùng")
     for f in facts:
         required = _CAN[f.kind]
+        if f.kind == "question" and f.point_kind is not None:
+            _doc_toan_hang_mo_ta(f)
         if f.line_ref is not None:
-            if f.kind == "question" and f.quantity == "distance" and len(f.points_a or []) == 1:
-                if f.points or f.points_b or f.plane_relation:
+            if f.kind == "question" and f.quantity == "distance" and (len(f.points_a or []) == 1 or f.point_kind):
+                if (f.points and not f.point_kind) or f.points_b or f.plane_relation:
                     raise TuChoi("SCHEMA_INVALID", f"{f.id}: line_ref thay cho toán hạng đường", (f.id,))
             elif f.kind == "projection" and not f.points and not f.points_a and not f.points_b:
                 required = ("point", "at", "line_ref")
@@ -210,6 +214,23 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
     return facts
 
 
+def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
+    """A distance question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
+    no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
+    if f.quantity != "distance" or f.points_a or f.point or f.plane_relation:
+        raise TuChoi("SCHEMA_INVALID", f"{f.id}: điểm không tên chỉ là toán hạng đầu của câu hỏi khoảng cách "
+                     "(point_kind + points; không points_a, không point)", (f.id,))
+    contracts = [s.planning for s in REGISTRY.values() if s.planning is not None and s.planning.descriptor == f.point_kind]
+    if not contracts:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: không hàm nào của thư viện dựng được {f.point_kind}", (f.id,))
+    pts = f.points or []
+    if len(set(pts)) != len(pts) or all(len(c.inputs) != len(pts) for c in contracts):
+        raise TuChoi("FACT_INCOMPLETE", f"{f.id}: {f.point_kind} cần {sorted({len(c.inputs) for c in contracts})} điểm "
+                     "phân biệt", (f.id,))
+    if f.line_ref is None and len(f.points_b or []) < 2:
+        raise TuChoi("FACT_INCOMPLETE", f"{f.id}: thiếu đích của khoảng cách (đường, mặt hay line_ref)", (f.id,))
+
+
 def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     """Dữ kiện có kiểu → kế hoạch lời gọi. Từ chối (`TuChoi`) khi dữ kiện mơ hồ, có điều kiện, thiếu ô, hay không ánh xạ được.
     `problem_text` chỉ dùng để chọn nhãn điểm phụ không trùng đề (cổng nguồn kiểm lại độc lập)."""
@@ -241,7 +262,7 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
             raise TuChoi("UNKNOWN_SOLID", f"{f.id}: khối {s!r} không có trong dữ kiện", (f.id,))
         return kh
 
-    k.resolver = _EffectResolver(facts, k, phat)
+    k.resolver = _EffectResolver(facts, k, phat, problem_text)
 
     # ── khối + mở rộng định nghĩa ───────────────────────────────────────────
     for kh in k.solids.values():
@@ -437,6 +458,14 @@ _DIEN_TICH_DA_GIAC = re.compile(r"(?i:diện tích)\s+(?:(?i:của)\s+)?(?:(?i:t
 
 def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
     n = f.quantity
+    if f.point_kind is not None:                       # distance from an unnamed, described point: one typed goal
+        if f.role == "prove":
+            raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{f.id}: điểm không tên chỉ cho câu hỏi được hỏi", (f.id,))
+        if f.negated:
+            raise TuChoi("NEGATED_CLAUSE", f"{f.id}: câu hỏi khoảng cách bị phủ định", (f.id,))
+        b = list(dict.fromkeys(f.points_b or []))
+        target = (("result", f.line_ref) if f.line_ref else ("named", tuple(sorted(b))) if len(b) == 2 else tuple(b[:3]))
+        return k.resolver.distance(f, ("desc", f.point_kind, tuple(sorted(f.points))), target)
     if f.line_ref:
         return k.resolver.distance(f, f.points_a[0], ("result", f.line_ref))
     if n == "volume":
@@ -559,13 +588,35 @@ class _Choice:
     cost: int = 0
 
 
-class _EffectResolver:
-    """Bounded role unification over Registry effects. Proposed bindings are NEVER geometric truth."""
+def _loai(v) -> str | None:
+    """Kind of a typed-need operand: a point (label, or `("desc", kind, operands)` for an unnamed described point), a line
+    (`("named", (X, Y))` / `("result", fact_id)`) or a plane (≥ 3 labels)."""
+    if isinstance(v, str) or (isinstance(v, tuple) and v[:1] == ("desc",)):
+        return "Point"
+    if isinstance(v, tuple) and len(v) == 2 and v[0] in ("named", "result"):
+        return "Line"
+    if isinstance(v, tuple) and len(v) >= 3 and all(isinstance(x, str) for x in v):
+        return "Plane"
+    return None
 
-    def __init__(self, facts, plan, emit):
+
+def _nhan_tuoi(stem: str) -> tuple[str, ...]:
+    return (stem, *(f"{stem}{i}" for i in range(1, 100)))
+
+
+class _EffectResolver:
+    """Bounded backward search over Registry effects. A need (kind + operands) is solved by every contract whose effect has
+    that kind and kind-compatible operands — its inputs become sub-needs; a call already in the plan with the same effect
+    is reused at cost 0; the cheapest choice wins (ties by function name, never by catalog order). Calls are WRITTEN from
+    the winner's contract template (`registry.render_call`), so a function the planner never names can be used once its
+    contract is registered. Proposed bindings are NEVER geometric truth: the gate and the engine re-check them."""
+
+    def __init__(self, facts, plan, emit, text=""):
         self.facts = {f.id: f for f in facts}
-        self.plan, self.emit = plan, emit
-        self.needs = self.candidates = self.feet = 0
+        self.plan, self.emit, self.text = plan, emit, text
+        self.needs = self.candidates = self.feet = self.depth_max = 0  # feet: every fresh point (feet, unnamed operands)
+        self.trail: list[dict] = []
+        self.quet = {"H"}                     # label stems already scanned in the text (`lap_ke_hoach` scans H itself)
         self.lines = set()
         self.used = False
         self.active = set()
@@ -587,13 +638,13 @@ class _EffectResolver:
             raise TuChoi("PLAN_TOO_LARGE", "quá trần typed needs")
         if key in self.active:
             raise TuChoi("DEPENDENCY_CYCLE", "typed need phụ thuộc chính nó")
-        if kind in ('Point','Plane'):
-            value=operands[0]
-            typed = (isinstance(value,str) and value in self.plan.taken if kind=='Point' else
-                     isinstance(value,tuple) and len(value)==3 and all(p in self.plan.taken for p in value))
-            if not typed:
-                raise TuChoi('UNSUPPORTED_CAPABILITY',f'typed need {kind} không khớp kiểu toán hạng')
-            return _Choice(None,{})
+        self.depth_max = max(self.depth_max, depth)
+        if kind in ('Point', 'Line', 'Plane') and _loai(operands[0]) != kind:
+            raise TuChoi('UNSUPPORTED_CAPABILITY', f'typed need {kind} không khớp kiểu toán hạng')
+        if kind == 'Plane' or (kind == 'Point' and isinstance(operands[0], str)):
+            if not all(p in self.plan.taken for p in (operands[0] if kind == 'Plane' else operands)):
+                raise TuChoi('UNSUPPORTED_CAPABILITY', f'typed need {kind} không khớp kiểu toán hạng')
+            return _Choice(None, {})
         if kind == "Line" and operands[0][0] == "named":
             return _Choice(None, {})
         if depth >= MAX_EFFECT_DEPTH:
@@ -605,10 +656,18 @@ class _EffectResolver:
                 contract = spec.planning
                 if contract is None or contract.effect.kind != kind or len(contract.effect.operands) != len(operands):
                     continue
+                desc = operands[0] if kind == 'Point' else None      # an unnamed point: only producers of its description
+                if desc and (contract.descriptor != desc[1] or len(contract.inputs) != len(desc[2])):
+                    continue
+                typed = {t.operands[0]: t.kind for t in contract.inputs if t.kind in ('Point', 'Line', 'Plane')}
+                if any(v is not None and typed.get(s, _loai(v)) != _loai(v) for s, v in zip(contract.effect.operands, operands)):
+                    continue  # an operand of the wrong kind is not a candidate; excluded before it is counted
                 self.candidates += 1
                 if self.candidates > MAX_EFFECT_CANDIDATES:
                     raise TuChoi("PLAN_TOO_LARGE", "quá trần candidate")
                 env = dict(zip(contract.effect.operands, operands))
+                if desc:
+                    env.update(zip((t.operands[0] for t in contract.inputs), desc[2]))
                 existing = None
                 if contract.source_policy == "declared_intersection":
                     ref = env["L"][1]
@@ -628,21 +687,23 @@ class _EffectResolver:
                         continue  # exclude incompatible symbolic candidates; never skip a geometric/source failure
                     raise
                 cost = sum(c.cost for c in children)
-                if contract.source_policy == "projection_foot":
+                if contract.fresh:              # the source (or an earlier goal) may already hold this exact construction
+                    out = contract.effect.operands[0]
+                    arg = next(a for a, s in contract.call if s == out)
                     for c in self.plan.calls:
-                        a = c['args']
-                        line = (("result", a['line_ref']) if a.get('line_ref') else
-                                ("named", tuple(sorted(a.get('line') or []))))
-                        if c['fn'] == spec.name and a.get('point') == env['P'] and line == env['L']:
+                        if c['fn'] != spec.name:
+                            continue
+                        bound = {**env, out: c['args'].get(arg)}
+                        if same_call(contract, render_call(contract, bound), c['args']):
                             self.candidates += 1
                             if self.candidates > MAX_EFFECT_CANDIDATES:
                                 raise TuChoi('PLAN_TOO_LARGE','quá trần available-binding candidates')
-                            choices.append(_Choice(spec.name, {**env, 'F':a['image']}, children, c, cost))
+                            choices.append(_Choice(spec.name, bound, children, c, cost))
                     cost += 1
                 choices.append(_Choice(spec.name, env, children, existing, cost))
             if not choices:
                 raise TuChoi("UNSUPPORTED_CAPABILITY", f"không effect nào giải được {kind}")
-            selected = min(choices, key=lambda c: (c.cost, c.fn, c.env.get('F') or '', c.existing['id'] if c.existing else ''))
+            selected = min(choices, key=lambda c: (c.cost, c.fn, _nhan_ra(c), c.existing['id'] if c.existing else ''))
             if kind!='AnswerDistance':
                 self.memo[key]=selected
             return selected
@@ -652,44 +713,59 @@ class _EffectResolver:
     def _emit(self, choice, fact):
         if choice.fn is None:
             return choice.env
+        contract = REGISTRY[choice.fn].planning
         env = dict(choice.env)
-        for child in choice.inputs:
-            env.update(self._emit(child, fact))
-        policy = REGISTRY[choice.fn].planning.source_policy
+        for t, child in zip(contract.inputs, choice.inputs):  # an input slot takes its producer's effect, by position
+            got = self._emit(child, fact)
+            if child.fn is not None:
+                env.update({s: got[c] for s, c in zip(t.operands, REGISTRY[child.fn].planning.effect.operands)})
         if choice.existing:
+            self._ghi(choice.existing, env)
             return env
-        if policy == "projection_foot":
+        if not contract.call:
+            raise TuChoi('UNSUPPORTED_CAPABILITY', 'producer chưa được khai trong nguồn')
+        answer = contract.effect.kind.startswith('Answer')
+        if contract.fresh:
             self.feet += 1
             if self.feet > MAX_RESULT_FEET:
-                raise TuChoi("PLAN_TOO_LARGE", "quá trần chân phụ")
-            x = next((n for n in _NHAN_PHU if n not in self.plan.taken), None)
+                raise TuChoi("PLAN_TOO_LARGE", "quá trần điểm tươi")
+            if contract.fresh not in self.quet:
+                self.quet.add(contract.fresh)
+                self.plan.taken |= nhan_phu_da_dung(self.text, contract.fresh)
+            x = next((n for n in _nhan_tuoi(contract.fresh) if n not in self.plan.taken), None)
             if x is None:
                 raise TuChoi("PLAN_TOO_LARGE", "hết nhãn điểm phụ")
             self.plan.taken.add(x)
-            env['F'] = x
-            cid = next(i for i in (f'{fact.id}_aux', *(f'{fact.id}_aux{n}' for n in range(2,1000)))
-                       if i not in self.plan.fact_ids | {c['id'] for c in self.plan.calls})
-            args = {'point':env['P'], 'image':x}
-            args.update({'line_ref':env['L'][1]} if env['L'][0]=='result' else {'line':list(env['L'][1])})
-        elif policy == "distance_witness":
-            cid, args = fact.id, {'segment':[env['P'],env['F']]}
-        else:
-            raise TuChoi('UNSUPPORTED_CAPABILITY', 'producer chưa được khai trong nguồn')
-        call = self.emit(cid, choice.fn, args, fact.quotes, f'effect({REGISTRY[choice.fn].planning.effect.kind})→{choice.fn}')
+            env[contract.effect.operands[0]] = x
+        cid = fact.id if answer else next(i for i in (f'{fact.id}_aux', *(f'{fact.id}_aux{n}' for n in range(2,1000)))
+                                          if i not in self.plan.fact_ids | {c['id'] for c in self.plan.calls})
+        call = self.emit(cid, choice.fn, render_call(contract, env), fact.quotes, f'effect({contract.effect.kind})→{choice.fn}')
         self.plan.trace[-1]['fact'] = fact.id
-        if policy!='distance_witness':
+        self._ghi(call, env)
+        if not answer:
             choice.env.update(env)
             choice.existing, choice.cost = call, 0
         return env
+
+    def _ghi(self, call, env):
+        """Trail of the goal being resolved: the calls of its derivation, each with the slot bindings it was written from."""
+        if all(e['call'] != call['id'] for e in self.trail):
+            self.trail.append({'call': call['id'], 'fn': call['fn'], 'env': json.loads(json.dumps(env)),
+                               'fresh': call['id'] not in self.plan.fact_ids})
 
     def distance(self, fact, point, line):
         self.used = True
         if line[0]=='result':
             line=('result',self.aliases.get(line[1],line[1]))
+        self.trail = []
         choice = self._resolve('AnswerDistance', (point,line))
         env = self._emit(choice, fact)
-        foot = next(c for c in self.plan.calls if c['fn']=='orthogonal_projection_line'
-                    and c['args']['point']==point and c['args']['image']==env['F'])
+        if not isinstance(point, str):
+            return self._chuoi(fact, point, line, choice, env)
+        foot = next((c for c in self.plan.calls if c['fn']=='orthogonal_projection_line'
+                     and c['args']['point']==point and c['args']['image']==env.get('F')), None)
+        if foot is None:                                  # a resolution that wrote no foot is refused, never a crash
+            raise TuChoi('AUXILIARY_RULE_MISMATCH', f'{fact.id}: phân giải không viết chân vuông góc', (fact.id,))
         cert = {'label':env['F'], 'rule':'distance(point,line)', 'goal':fact.id, 'construct':foot['id'], 'ask':fact.id,
                 'point':point, 'line':list(line[1]) if line[0]=='named' else [],
                 'quotes':list(dict.fromkeys(fact.quotes)), 'provenance':'DERIVED', 'binding':'AUXILIARY'}
@@ -705,6 +781,37 @@ class _EffectResolver:
                                 'new_constructions':choice.cost})
         return next(c for c in self.plan.calls if c['id']==fact.id)
 
+    def _chuoi(self, fact, point, target, choice, env):
+        """`effect-chain` certificate of a goal on an unnamed described point: the trail of calls with their bindings, the
+        goal (description + target) and the fresh labels. The gate re-writes every call from its contract; the engine checks
+        the description and the answer on the built figure."""
+        answer = REGISTRY[choice.fn].planning
+        fresh = [e for e in self.trail if e['fresh'] and REGISTRY[e['fn']].planning.fresh]
+        cert = {'rule': 'effect-chain', 'effect_binding': True, 'goal': fact.id, 'ask': fact.id,
+                'operand': {'descriptor': point[1], 'points': list(fact.points), 'label': env[answer.effect.operands[0]]},
+                'target': ({'line_ref': target[1]} if target[0] == 'result' else
+                           {'line': list(target[1])} if target[0] == 'named' else {'plane': list(target)}),
+                'chain': self.trail,
+                'labels': [e['env'][REGISTRY[e['fn']].planning.effect.operands[0]] for e in fresh],
+                'quotes': list(dict.fromkeys(fact.quotes)), 'provenance': 'DERIVED', 'binding': 'AUXILIARY'}
+        if target[0] == 'result':
+            cert['line_ref'] = target[1]
+        self.plan.auxiliary.append(cert)
+        self.plan.trace.append({'fact': fact.id, 'step': 'decompose_goal', 'rule': cert['rule'],
+                                'calls': [e['call'] for e in self.trail], 'auxiliary': cert['labels'],
+                                'provenance': 'DERIVED', 'binding': 'AUXILIARY'})
+        self.plan.trace.append({'fact': fact.id, 'step': 'effect_resolution', 'selection': 'registry-effects',
+                                'new_constructions': len([e for e in self.trail if e['fresh'] and e['call'] != fact.id]),
+                                'needs': self.needs, 'candidates': self.candidates, 'depth': self.depth_max})
+        return next(c for c in self.plan.calls if c['id'] == fact.id)
+
+
+def _nhan_ra(c: _Choice) -> str:
+    """Output label of an available-binding choice (tie-break); '' for a new construction or an answer."""
+    contract = REGISTRY[c.fn].planning
+    x = c.env.get(contract.effect.operands[0]) if contract.fresh else None
+    return x if isinstance(x, str) else ''
+
 
 def _bind_result_dependencies(k):
     """Call edges are a view of the existing producers, not another FactGraph."""
@@ -718,8 +825,8 @@ def _bind_result_dependencies(k):
     for c in k.calls:
         a = c['args']
         points = [x for v in a.values() if isinstance(v,list) for x in v]
-        if c['fn'].startswith('orthogonal_projection') or c['fn']=='translate_point':
-            points += [a['point']]
+        if c['fn'].startswith('orthogonal_projection') or c['fn']=='translate_point' or c['fn'].startswith('ask_'):
+            points += [a['point']] if isinstance(a.get('point'), str) else []
         output = a.get('image') or (a.get('point') if c['fn'] in ('midpoint','centroid','intersect_line_line','intersect_line_plane') else None)
         if output:
             points = [x for x in points if x != output]

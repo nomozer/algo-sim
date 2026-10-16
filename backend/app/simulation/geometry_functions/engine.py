@@ -37,7 +37,7 @@ from app.simulation.semantic_program import ir_builders as P
 
 from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de
 
-ENGINE_VERSION = "geometry-function-engine/3"
+ENGINE_VERSION = "geometry-function-engine/4"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -997,6 +997,31 @@ class _Dung:
             self.trace.append({'step':'construct_line','object':name,'rule':c.fn,'calls':[c.id],'provenance':'DERIVED'})
         return name
 
+    def kiem_mo_ta(self, d: dict) -> None:
+        """`effect-chain` (planner): the unnamed point IS what the source describes, checked on the built figure by a
+        predicate keyed by the DESCRIPTION — not by whichever function the planner's contract chose to construct it."""
+        op, ask = d.get("operand") or {}, (d.get("ask"),)
+        dung = _MO_TA.get(op.get("descriptor"))
+        if dung is None:
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"không có vị từ kiểm cho mô tả {op.get('descriptor')!r}", ask)
+        x, pts = op.get("label"), op.get("points") or []
+        if x not in self.pts or any(p not in self.pts for p in pts) or not dung(self.pts[x], [self.pts[p] for p in pts]):
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"điểm {x} không phải {op.get('descriptor')} của {''.join(pts)}", ask)
+
+    def kc2_dich(self, d: dict) -> Fraction:
+        """Squared distance from the described point to the certificate's target, straight from the built figure (Gram) —
+        independent of the chain whose measurement answered the question."""
+        p, t = d["operand"]["label"], d["target"]
+        if "plane" in t:
+            return self._kc2_mat(p, tuple(t["plane"][:3]))
+        if "line" in t:
+            o, u = self.pts[t["line"][0]], self._vec(*t["line"])
+        else:
+            line = self.lines[t["line_ref"]]
+            o, u = (line.point.x, line.point.y, line.point.z), (line.direction.x, line.direction.y, line.direction.z)
+        w = tuple(self.pts[p][i] - o[i] for i in range(3))
+        return self.g(w, w) - self.g(w, u) ** 2 / self.g(u, u)
+
     def metric(self) -> _metric.Metric:
         G2, h2 = self.G2, self.h2 or Fraction(1)
         return _metric.Metric(((G2[0][0], G2[0][1], Z), (G2[1][0], G2[1][1], Z), (Z, Z, h2)))
@@ -1005,6 +1030,22 @@ class _Dung:
 #: Bậc theo độ dài của mỗi đại lượng được hỏi — đáp số với độ dài ký hiệu a là (hệ số tại a = 1) · a^bậc.
 BAC_DAI_LUONG = {"ask_volume": 3, "ask_length": 1, "ask_distance_point_plane": 1, "ask_angle_line_plane": 0,
                  "ask_area": 2, "ask_angle_plane_plane": 0, "ask_distance_lines": 1, "ask_section_area": 2}
+
+
+#: Definitions of the unnamed points a planner `effect-chain` may introduce (affine: valid in chart coordinates). A
+#: description without a predicate here is not served, whatever contract proposes it.
+_MO_TA = {
+    "midpoint": lambda x, ps: len(ps) == 2 and all(2 * x[i] == ps[0][i] + ps[1][i] for i in range(3)),
+    "centroid": lambda x, ps: len(ps) == 3 and all(3 * x[i] == sum(p[i] for p in ps) for i in range(3)),
+}
+
+
+def _binh_phuong(v: Any) -> Fraction | None:
+    from app.simulation.geometry.radical import Radical
+
+    if isinstance(v, Radical):
+        return None if getattr(v, "mu", 0) else Fraction(v.he) ** 2 * v.can
+    return Fraction(v) ** 2 if isinstance(v, (int, Fraction)) else None
 
 
 #: Thiết diện suy biến do kernel phát hiện khi thực thi — từ chối bằng chính mã ấy, không gộp vào ENGINE_EXECUTION_FAILED.
@@ -1102,6 +1143,9 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         dung.ten_mat_phu = ten_mat_phu
         dung.kiem()
         dung.kiem_mat_cat()
+        chuoi = [d for d in auxiliary if d.get("rule") == "effect-chain"]
+        for d in chuoi:
+            dung.kiem_mo_ta(d)
         program, hoi = dung.bien_dich()
         vr = validate_semantic_program(program)
         if not vr.ok:
@@ -1126,6 +1170,11 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
                                      for ref,line in dung.lines.items())
         if not kernel_ok:
             raise TuChoi("ENGINE_SELF_CHECK_FAILED", "điểm kernel thực thi khác bố cục engine")
+        for d in chuoi:                       # the composed answer is the asked quantity, not just a value of the chain
+            with _metric.using(G):
+                if _binh_phuong(fm.get(hoi.get(d["ask"], ""))) != dung.kc2_dich(d):
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", "đáp số của chuỗi khác khoảng cách tới đích tính trực tiếp",
+                                 (d["ask"],))
         if hong := [t for t in dung.sections if not fm[t].is_closed]:
             raise TuChoi("SECTION_EMPTY", f"mặt phẳng không cắt khối thành một đa giác ({hong}) — không có thiết diện để dựng")
         tra, chinh_xac = {}, {}
