@@ -1,0 +1,124 @@
+=== RBFA FREEZE PHASE ===
+WORKTREE: D:/tmp/rbfa freeze/algo-sim
+PYTHON: Python 3.12.10 D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe
+GIT: git version 2.52.0.windows.1
+### CMD: git rev-parse HEAD
+### CWD: D:/tmp/rbfa freeze/algo-sim
+### START: 2026-10-16T02:18:17Z / 2026-10-16T09:18:17+0700
+7a58359039edf1fa815813a26597a6f450fc2783
+### EXIT: 0
+
+### CMD: git rev-parse HEAD^{tree} HEAD:backend/app HEAD:backend/tests HEAD:frontend/src
+### CWD: D:/tmp/rbfa freeze/algo-sim
+### START: 2026-10-16T02:18:17Z / 2026-10-16T09:18:17+0700
+3550136d1fd50fb999f8502c18939c2e09325952
+5bb9a890a1d2bdfb5d747aedfddcf31aa429de6e
+471bee5ee76b840f1a4360df575de0828ee629c1
+59dc9534485e2ac874971823c9ee88891d435010
+### EXIT: 0
+
+### CMD: git status --porcelain --untracked-files=all
+### CWD: D:/tmp/rbfa freeze/algo-sim
+### START: 2026-10-16T02:18:17Z / 2026-10-16T09:18:17+0700
+### EXIT: 0
+
+### CMD: git rev-parse HEAD:docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+### CWD: D:/tmp/rbfa freeze/algo-sim
+### START: 2026-10-16T02:18:18Z / 2026-10-16T09:18:18+0700
+033284ce9e17a17e1ca7af360b64b3bb27e0ee92
+### EXIT: 0
+
+### CMD: sha256sum docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+### CWD: D:/tmp/rbfa freeze/algo-sim
+### START: 2026-10-16T02:18:18Z / 2026-10-16T09:18:18+0700
+20ebeaed40dca6cc631b74a737d67c098e5199d784595e45bee6988dc7d8187b *docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+### EXIT: 0
+
+### CMD: D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe -c import sys;sys.path.insert(0,'scripts');import freeze_evaluation_candidate as F;h,n=F.measured_system_hash();print('MEASURED_SYSTEM_HASH',h,n);print('PRODUCT_COMMIT',F.product_commit())
+### CWD: D:/tmp/rbfa freeze/algo-sim/backend
+### START: 2026-10-16T02:18:18Z / 2026-10-16T09:18:18+0700
+MEASURED_SYSTEM_HASH 30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc 110
+PRODUCT_COMMIT 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65
+### EXIT: 0
+
+=== PRE-REFREEZE VERIFY ===
+### CMD: D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py --verify
+### CWD: D:/tmp/rbfa freeze/algo-sim/backend
+### START: 2026-10-16T02:18:19Z / 2026-10-16T09:18:19+0700
+MÃ SẢN PHẨM ĐÃ ĐỔI so với bản đã đóng băng.
+  đã đóng băng : 4b95dcc665f5930b…  (110 file)
+  hiện tại     : 30808cb002b377e4…  (110 file)
+
+Xem đúng cái gì đổi:
+  git diff --stat 9ce1298f HEAD -- backend/app frontend/src/simulations/domains/semantic frontend/src/simulations/domains/semantic/semantic_program.schema.json
+
+CANDIDATE LỆCH so với bản đã đóng băng: product_commit_sha, measured_system.tree_hash
+Nếu lệch vì một kết quả SEALED thì đây là VI PHẠM luật con dấu (§7.4).
+### EXIT: 1
+
+=== FREEZE ===
+### CMD: D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py
+### CWD: D:/tmp/rbfa freeze/algo-sim/backend
+### START: 2026-10-16T02:18:21Z / 2026-10-16T09:18:21+0700
+Đã đóng băng: docs\evaluation\semantic-benchmark\EVALUATION_CANDIDATE.json
+  commit            7a583590  (cây sạch: True)
+  CACHE_VERSION     125
+  taxonomy          23 nghĩa vụ · 478573817749800c
+  primitive set     9 · 9357dab18fe3bce1
+  schema            667758005778bf21
+  DEV               20 case · 8a3de7a3f9530942
+  MÃ SẢN PHẨM       110 file · 30808cb002b377e4
+  SEALED            DA_NIEM_PHONG
+### EXIT: 0
+
+=== POST-REFREEZE VERIFY ===
+### CMD: D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py --verify
+### CWD: D:/tmp/rbfa freeze/algo-sim/backend
+### START: 2026-10-16T02:18:23Z / 2026-10-16T09:18:23+0700
+Candidate khớp bản đã đóng băng (mã sản phẩm: 110 file, 30808cb002b377e4…).
+### EXIT: 0
+
+### CMD: git status --porcelain --untracked-files=all
+### CWD: D:/tmp/rbfa freeze/algo-sim
+### START: 2026-10-16T02:18:24Z / 2026-10-16T09:18:24+0700
+ M docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+### EXIT: 0
+
+### CMD: git diff -- docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+### CWD: D:/tmp/rbfa freeze/algo-sim
+### START: 2026-10-16T02:18:25Z / 2026-10-16T09:18:25+0700
+diff --git a/docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json b/docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+index 033284ce..786f862a 100644
+--- a/docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
++++ b/docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+@@ -1,9 +1,9 @@
+ {
+   "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
+-  "dong_bang_luc": "2026-10-15T14:00:13+00:00",
+-  "commit": "9ce1298f8f7cef090169c5ae5a64b0625a1ddbd4",
+-  "commit_ngan": "9ce1298f",
+-  "product_commit_sha": "5f1b576c62eb75293c800718dc200da45ff4934d",
++  "dong_bang_luc": "2026-10-16T02:18:23+00:00",
++  "commit": "7a58359039edf1fa815813a26597a6f450fc2783",
++  "commit_ngan": "7a583590",
++  "product_commit_sha": "55c657b8be715cda0edcc9e6e2ec1b3a204bdb65",
+   "product_commit_rule": "product-paths-excluding-test-only/1",
+   "cay_lam_viec_sach": true,
+   "cache_version": "125",
+@@ -15,7 +15,7 @@
+       "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+     ],
+     "so_file": 110,
+-    "tree_hash": "4b95dcc665f5930b74c849164122458ad070af9af24cb085bcfa9217063dee25",
++    "tree_hash": "30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc",
+     "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+   },
+   "taxonomy": {
+### EXIT: 0
+
+### CMD: sha256sum docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+### CWD: D:/tmp/rbfa freeze/algo-sim
+### START: 2026-10-16T02:18:25Z / 2026-10-16T09:18:25+0700
+d7a815e48f2c2ac60f06c9e258f1af5a681346a0f887a3e26284a61a0c683317 *docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json
+### EXIT: 0
+

@@ -1,0 +1,27 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "result-binding-final-acceptance",
+  "task": "result-binding-final-acceptance",
+  "corrects": "docs/evaluation/geometry/runs/shared-ask-grammar-safety/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc",
+  "current_candidate_source_commit": "7a58359039edf1fa815813a26597a6f450fc2783",
+  "current_product_commit": "55c657b8be715cda0edcc9e6e2ec1b3a204bdb65",
+  "previous_candidate_hash": "4b95dcc665f5930b74c849164122458ad070af9af24cb085bcfa9217063dee25",
+  "previous_candidate_source_commit": "9ce1298f8f7cef090169c5ae5a64b0625a1ddbd4",
+  "previous_product_commit": "5f1b576c62eb75293c800718dc200da45ff4934d",
+  "previous_layer_note": "The corrected layer names current_product_commit 34a04eaf next to hash 4b95dcc6...; that hash is the measured system frozen at 9ce1298f with product_commit_sha 5f1b576c (EVALUATION_CANDIDATE.json at 5fc1645c). The previous_* fields here take the candidate file's values. The corrected layer is kept unchanged.",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "measured_system_paths_changed": true,
+  "reason": "Final refreeze after the shared ask-grammar closure. Between product 5f1b576c and 55c657b8 only backend/app/simulation/geometry_functions/registry.py changed (commits 4acfc731, 34a04eaf, 55c657b8: closed sentence-level ask/note/goal-clause reading, closed unit/parameter/rounding verification, fail-closed refusal of angle-measure asks against the cos² output contract). Hybrid research route only; production LLM_ONLY route, prompts, routing, schema, provider surfaces, planner, engine, kernel, interpreter and scene3d unchanged.",
+  "historical_effect": "Historical results keep their source candidates. Corpus, benchmark and two-line preservation at this candidate are measured in docs/evaluation/geometry/runs/result-binding-final-acceptance/, not asserted by this declaration.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "NONE: research branch only; authoritative T3 runs on the refreeze checkpoint; no merge",
+  "push": "NONE: not authorized"
+}
