@@ -187,6 +187,8 @@ ALLOWED_CANONICAL_ACTIONS = [
     # scene3d-visual-correctness (2026-10-17): Gemini Scene3D commit reviewed + CONTRACT-BE-1 fixed on an integration
     # branch; next is the user's GO/NO-GO for main.
     "SCENE3D_VISUAL_CORRECTNESS_INTEGRATION_DECISION",
+    # scene3d-visual-correctness integration (2026-10-17): on origin/main; next is the user's choice of research priority.
+    "POST_SCENE3D_INTEGRATION_RESEARCH_PRIORITY_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

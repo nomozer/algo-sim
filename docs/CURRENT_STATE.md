@@ -1,8 +1,13 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL — Scene3D visual correctness integration (Gemini review + CONTRACT-BE-1), 2026-10-17
+## INTEGRATED ON `main` — Scene3D visual correctness (Gemini review + CONTRACT-BE-1), 2026-10-17
 
-CANONICAL_NEXT_ACTION = SCENE3D_VISUAL_CORRECTNESS_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = POST_SCENE3D_INTEGRATION_RESEARCH_PRIORITY_DECISION
+
+**Integration (user GO in session, 2026-10-17):** `main` fast-forwarded `6d8ead99` → `ee9689e6`, pushed without force;
+integration and Gemini branches deleted locally, Gemini worktree removed; record
+[`integration.md`](evaluation/geometry/runs/scene3d-visual-correctness/integration.md). Hybrid NO-GO; human visual
+review pending.
 
 Branch `integration/scene3d-visual-correctness` from `main` `6d8ead99`: merge `a7388a40` of the Gemini Scene3D commit
 `0ef0a20a` (plane hull, unified occlusion of non-canonical segments, line extent, highlight, right-angle marker), reviewed

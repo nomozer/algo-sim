@@ -22,10 +22,9 @@ used without planner change. Run [`goal-directed-function-discovery`](evaluation
 Next only: the user's decision on the stack, in order — result-binding fast-forward, independent review of Scene3D W1–W3,
 then this slice. Integration ≠ Hybrid enablement (NO-GO, LLM_ONLY, cache125). Proposed next slice (not started): report §9.
 
-**2026-10-17, Scene3D visual correctness integration (LOCAL, `integration/scene3d-visual-correctness`):** Gemini
+**2026-10-17, Scene3D visual correctness integration (on `main` + `origin/main`):** Gemini
 Scene3D commit `0ef0a20a` reviewed and merged on an integration branch from `main` `6d8ead99`, FE-4 and CONTRACT-BE-1
-fixed; run [`scene3d-visual-correctness`](evaluation/geometry/runs/scene3d-visual-correctness/report.md). Next only: the
-user's GO/NO-GO for `main`. Hybrid stays NO-GO; human visual review pending.
+fixed; run [`scene3d-visual-correctness`](evaluation/geometry/runs/scene3d-visual-correctness/report.md). User GO given: `main` fast-forwarded to `ee9689e6` and pushed ([`integration`](evaluation/geometry/runs/scene3d-visual-correctness/integration.md)). Next: the user's research priority (Source grounding / NLU recommended before G16). Hybrid stays NO-GO; human visual review pending.
 
 **2026-10-15, result-binding slice implemented and integration-checked (LOCAL, not merged):** branch
 `research/source-bound-result-planning` (product `efb756aa`, candidate `c0a8792f…`, T3 `7b14fe04`) is a fast-forward of
@@ -42,7 +41,7 @@ Group A remains integrated on main; Hybrid stays off. Presentation backlog, orbi
 No Group B, new family, new Planner/FactGraph/DSL or product enablement. No additional task starts without that decision.
 
 ```text
-CANONICAL_NEXT_ACTION = SCENE3D_VISUAL_CORRECTNESS_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = POST_SCENE3D_INTEGRATION_RESEARCH_PRIORITY_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
