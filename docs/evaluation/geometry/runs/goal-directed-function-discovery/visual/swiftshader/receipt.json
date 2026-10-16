@@ -1,0 +1,768 @@
+{
+  "scope": "Scene3DWorkspace harness only; real Hybrid fact route; no API/product E2E",
+  "src": "function-discovery",
+  "backendSceneSha256": "ab2506ee14ea03918d1d536ab428951a2dfae6ad8e5ff4223f408ce19f57e28e",
+  "gpuRequested": "SwiftShader",
+  "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "browserPid": 9732,
+  "results": [
+    {
+      "id": "pyr-midpoint-to-plane",
+      "frames": [
+        {
+          "step": 0,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ]
+        },
+        {
+          "step": 1,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "day_ABCD"
+          ]
+        },
+        {
+          "step": 2,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 3,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 4,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 5,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "mp_q",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 6,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "mp_q",
+            "kq_q",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        }
+      ],
+      "lineBorn": 3,
+      "footBorn": 4,
+      "selected": "M",
+      "ownPixels": 41471,
+      "defaultAuxHidden": [
+        "mp_q"
+      ],
+      "orbit": "OBSERVED_CHANGE_NOT_SETTLE_GATE",
+      "zoomChanged": true,
+      "resetDifferencePixels": 0
+    },
+    {
+      "id": "pyr-midpoint-to-named-line",
+      "frames": [
+        {
+          "step": 0,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ]
+        },
+        {
+          "step": 1,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "day_ABCD"
+          ]
+        },
+        {
+          "step": 2,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 3,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 4,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 5,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "derived_H_line",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 6,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "derived_H_line",
+            "H",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 7,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "derived_H_line",
+            "H",
+            "kq_q",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        }
+      ],
+      "lineBorn": 4,
+      "footBorn": 6,
+      "selected": "H",
+      "ownPixels": 6461,
+      "defaultAuxHidden": [],
+      "orbit": "OBSERVED_CHANGE_NOT_SETTLE_GATE",
+      "zoomChanged": true,
+      "resetDifferencePixels": 0
+    },
+    {
+      "id": "pyr-midpoint-to-result-line",
+      "frames": [
+        {
+          "step": 0,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ]
+        },
+        {
+          "step": 1,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "day_ABCD"
+          ]
+        },
+        {
+          "step": 2,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 3,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 4,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 5,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "mp1_gt_g",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 6,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "mp1_gt_g",
+            "mp2_gt_g",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 7,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "mp1_gt_g",
+            "mp2_gt_g",
+            "gt_g",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 8,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "mp1_gt_g",
+            "mp2_gt_g",
+            "gt_g",
+            "H",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        },
+        {
+          "step": 9,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S",
+            "khoi_S_ABCD",
+            "M",
+            "mp1_gt_g",
+            "mp2_gt_g",
+            "gt_g",
+            "H",
+            "kq_q",
+            "day_ABCD",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D"
+          ]
+        }
+      ],
+      "lineBorn": 7,
+      "footBorn": 8,
+      "selected": "H",
+      "ownPixels": 187381,
+      "defaultAuxHidden": [
+        "mp1_gt_g",
+        "mp2_gt_g"
+      ],
+      "orbit": "OBSERVED_CHANGE_NOT_SETTLE_GATE",
+      "zoomChanged": true,
+      "resetDifferencePixels": 0
+    },
+    {
+      "id": "cube-midpoint-to-plane",
+      "frames": [
+        {
+          "step": 0,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "D_prime"
+          ]
+        },
+        {
+          "step": 1,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "D_prime",
+            "day_ABCD"
+          ]
+        },
+        {
+          "step": 2,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "D_prime",
+            "day_ABCD",
+            "day_A_primeB_primeC_primeD_prime"
+          ]
+        },
+        {
+          "step": 3,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "D_prime",
+            "day_ABCD",
+            "day_A_primeB_primeC_primeD_prime",
+            "canh_ben_A_A_prime",
+            "canh_ben_B_B_prime",
+            "canh_ben_C_C_prime",
+            "canh_ben_D_D_prime"
+          ]
+        },
+        {
+          "step": 4,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "D_prime",
+            "khoi_ABCD_A_primeB_primeC_primeD_prime",
+            "day_ABCD",
+            "day_A_primeB_primeC_primeD_prime",
+            "canh_ben_A_A_prime",
+            "canh_ben_B_B_prime",
+            "canh_ben_C_C_prime",
+            "canh_ben_D_D_prime"
+          ]
+        },
+        {
+          "step": 5,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "D_prime",
+            "khoi_ABCD_A_primeB_primeC_primeD_prime",
+            "M",
+            "day_ABCD",
+            "day_A_primeB_primeC_primeD_prime",
+            "canh_ben_A_A_prime",
+            "canh_ben_B_B_prime",
+            "canh_ben_C_C_prime",
+            "canh_ben_D_D_prime"
+          ]
+        },
+        {
+          "step": 6,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "D_prime",
+            "khoi_ABCD_A_primeB_primeC_primeD_prime",
+            "M",
+            "mp_q",
+            "day_ABCD",
+            "day_A_primeB_primeC_primeD_prime",
+            "canh_ben_A_A_prime",
+            "canh_ben_B_B_prime",
+            "canh_ben_C_C_prime",
+            "canh_ben_D_D_prime"
+          ]
+        },
+        {
+          "step": 7,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "D_prime",
+            "khoi_ABCD_A_primeB_primeC_primeD_prime",
+            "M",
+            "mp_q",
+            "kq_q",
+            "day_ABCD",
+            "day_A_primeB_primeC_primeD_prime",
+            "canh_ben_A_A_prime",
+            "canh_ben_B_B_prime",
+            "canh_ben_C_C_prime",
+            "canh_ben_D_D_prime"
+          ]
+        }
+      ],
+      "lineBorn": 4,
+      "footBorn": 5,
+      "selected": "M",
+      "ownPixels": 88592,
+      "defaultAuxHidden": [
+        "mp_q"
+      ],
+      "orbit": "OBSERVED_CHANGE_NOT_SETTLE_GATE",
+      "zoomChanged": true,
+      "resetDifferencePixels": 0
+    },
+    {
+      "id": "prism-midpoint-to-plane",
+      "frames": [
+        {
+          "step": 0,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "A_prime",
+            "B_prime",
+            "C_prime"
+          ]
+        },
+        {
+          "step": 1,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "day_ABC"
+          ]
+        },
+        {
+          "step": 2,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "day_ABC",
+            "day_A_primeB_primeC_prime"
+          ]
+        },
+        {
+          "step": 3,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "day_ABC",
+            "day_A_primeB_primeC_prime",
+            "canh_ben_A_A_prime",
+            "canh_ben_B_B_prime",
+            "canh_ben_C_C_prime"
+          ]
+        },
+        {
+          "step": 4,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "khoi_ABC_A_primeB_primeC_prime",
+            "day_ABC",
+            "day_A_primeB_primeC_prime",
+            "canh_ben_A_A_prime",
+            "canh_ben_B_B_prime",
+            "canh_ben_C_C_prime"
+          ]
+        },
+        {
+          "step": 5,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "khoi_ABC_A_primeB_primeC_prime",
+            "M",
+            "day_ABC",
+            "day_A_primeB_primeC_prime",
+            "canh_ben_A_A_prime",
+            "canh_ben_B_B_prime",
+            "canh_ben_C_C_prime"
+          ]
+        },
+        {
+          "step": 6,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "khoi_ABC_A_primeB_primeC_prime",
+            "M",
+            "mp_q",
+            "day_ABC",
+            "day_A_primeB_primeC_prime",
+            "canh_ben_A_A_prime",
+            "canh_ben_B_B_prime",
+            "canh_ben_C_C_prime"
+          ]
+        },
+        {
+          "step": 7,
+          "present": [
+            "A",
+            "B",
+            "C",
+            "A_prime",
+            "B_prime",
+            "C_prime",
+            "khoi_ABC_A_primeB_primeC_prime",
+            "M",
+            "mp_q",
+            "kq_q",
+            "day_ABC",
+            "day_A_primeB_primeC_prime",
+            "canh_ben_A_A_prime",
+            "canh_ben_B_B_prime",
+            "canh_ben_C_C_prime"
+          ]
+        }
+      ],
+      "lineBorn": 4,
+      "footBorn": 5,
+      "selected": "M",
+      "ownPixels": 52646,
+      "defaultAuxHidden": [
+        "mp_q"
+      ],
+      "orbit": "OBSERVED_CHANGE_NOT_SETTLE_GATE",
+      "zoomChanged": true,
+      "resetDifferencePixels": 0
+    },
+    {
+      "id": "descriptor-operands-mismatch",
+      "refusalVisible": true,
+      "canvasAbsent": true
+    }
+  ],
+  "errors": [],
+  "networkRetries": [],
+  "mathAuthority": "separate exact oracle, not screenshots",
+  "orbitGate": "UNRESOLVED; gesture observation does not certify stability",
+  "verdict": "PASS_CORE_CAUSAL_RENDERING"
+}

@@ -193,7 +193,7 @@ def classify(row, got) -> str:
         from types import SimpleNamespace
         r = SimpleNamespace(status=got["status"], code=got["code"], answers=got["answers"])
         return HB.classify({"expect": {**e, **({"answer_sq": Fraction(e["answer_sq"])} if "answer_sq" in e else {})},
-                            "gap": None}, r)["outcome"]
+                            "gap": ""}, r)["outcome"]
     # two-line: SERVED rows carry the oracle area²; refusals are positional (their codes vary by row)
     if e["status"] == "SERVED":
         from tests.geometry import hybrid_compiler_benchmark as HB
