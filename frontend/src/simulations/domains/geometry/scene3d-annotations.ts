@@ -156,7 +156,7 @@ export function projectionWitnessesAt(scene: Scene3D, present: ReadonlySet<strin
   return scene.objects.flatMap((o) => {
     const w = present.has(o.id) ? o.perpendicular_witness : undefined;
     const tu = w ? theoId.get(w.from)?.xyz : undefined;
-    return w && tu
+    return w && tu && present.has(w.from)
       ? [{ id: `perpendicular:${o.id}`, vai: "hinh_chieu" as const, from: toVec3(tu), foot: toVec3(w.foot),
         u: toVec3(w.marker.u), v: toVec3(w.marker.v) }]
       : [];

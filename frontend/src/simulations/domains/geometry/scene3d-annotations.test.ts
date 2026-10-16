@@ -301,6 +301,11 @@ describe("nhân chứng hình chiếu (review I1)", () => {
     expect(projectionWitnessesAt(canhChieu(), new Set(["A", "B", "C", "S"]))).toEqual([]);
   });
 
+  it("ẩn điểm gốc hoặc chân thì không để lại nhân chứng của điểm đã ẩn", () => {
+    expect(projectionWitnessesAt(canhChieu(), new Set(["B", "C", "S", "K"]))).toEqual([]);
+    expect(projectionWitnessesAt(canhChieu(), new Set(["A", "B", "C", "S"]))).toEqual([]);
+  });
+
   it("đoạn vuông góc của hình chiếu là ĐƯỜNG PHỤ, không mang xanh 'đang xét' (W12) — chỉ nhân chứng khoảng cách mới mang", () => {
     const [w] = projectionWitnessesAt(canhChieu(), new Set(["A", "B", "C", "S", "K"]));
     expect(w.vai).toBe("hinh_chieu");
