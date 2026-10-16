@@ -8,7 +8,7 @@ CORRECTS = SCENE3D_ARCHITECTURE_VISUAL_RELIABILITY (interpretation only; scene-c
 CORRECTED_BY = NONE
 CLASSIFICATION = GENERALIZED_GOAL_ENTRY_READY_FOR_INTEGRATION_DECISION
 CODE_COMMIT = 193e634a (route D) + 289007a4 (Scene3D witness)
-VERIFICATION_COMMIT = run.json / verification/ (re-measured on the committed product; refreeze and clean detached T3)
+VERIFICATION_COMMIT = 5964f875 clean detached T3 FULL_PRODUCT_GATE_PASS (verification/t3-pass.json); candidate eaddb56c… refrozen at 297e6cce
 MODEL_REQUEST_COUNT = 0
 
 Preregistered new development corpus: length from an unnamed described point to one named point. Independent Fraction/Gram oracle; fixed/bounded/discovery baselines; production/removal/centroid/reversed/lying catalog variants. Exact report and final identities in the run package; no human approval or Hybrid enablement implied.

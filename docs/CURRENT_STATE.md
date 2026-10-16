@@ -7,7 +7,7 @@ CANONICAL_NEXT_ACTION = STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION
 Branch `research/generalized-goal-entry` from verified Function Discovery `96569792`, stacked on Result Binding / Scene3D
 W1–W3 / Function Discovery, none integrated; `main` = `origin/main` = `2a3c0787`. Work of an interrupted Codex session,
 committed and verified on handoff by Claude. Product commits `193e634a` (route D: length goals through Registry goal
-contracts) + `289007a4` (Scene3D: hidden source/foot hides the projection witness). Identities and T3: run `run.json`.
+contracts) + `289007a4` (Scene3D: hidden source/foot hides the projection witness). Candidate `eaddb56c…` (refreeze `297e6cce`); clean detached T3 at `5964f875` `FULL_PRODUCT_GATE_PASS` (pytest 10166/0, vitest 1062).
 Re-measured on the committed product: new length corpus 8/8 exact, 10/11 negatives with the registered code (1 registration
 error, label kept), 0 wrong served; experimental centroid contract 2/2 without code change; 153 earlier rows identical to
 Function Discovery (status/code/answers and plan stats); Codex measurements reproduced 174/174.

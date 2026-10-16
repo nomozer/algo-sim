@@ -81,4 +81,4 @@ reads "Tính …") and "đoạn nối A với trung điểm của SC" (`SOURCE_O
 named route-D length "Gọi M là trung điểm SC. Tính độ dài MA."): the asked segment MA is not drawn by default (it appears
 with the quantity) and the narration says "khoảng cách" for a length.
 
-Final identities, refreeze and authoritative T3: `run.json` and `verification/`.
+Refreeze `297e6cce` (candidate `eaddb56c…`, 110 files, frozen at `aa2a4d20`). Authoritative T3, first attempt at `297e6cce` **FAIL**: the Codex replay script passed `domain='generic'` as a keyword, forbidden by the domain-string guard (fixed in `5964f875`, script only, scenes byte-identical). Second attempt, clean detached worktree at `5964f875`: `FULL_PRODUCT_GATE_PASS` — pytest 10166 passed / 0 failed / 8 xfailed, vitest 1062/1062, typecheck + build, demo, crash surface 6/6 (`verification/t3-pass.json`, log `3292118c…`).

@@ -1,0 +1,22 @@
+{
+  "schema": "T3_AUTHORITATIVE_VERIFICATION/1",
+  "task": "generalized-goal-entry",
+  "branch": "research/generalized-goal-entry",
+  "verified_commit_short": "5964f875",
+  "product_commits": ["193e634a", "289007a4"],
+  "candidate_tree_hash": "eaddb56c2d7b8a0a5bfc095c2cd06adef9e5780c3e049d9e48f7ceb825b7a08f",
+  "measured_files": 110,
+  "refreeze_commit": "297e6cce",
+  "cache_version": 125,
+  "default_mode": "LLM_ONLY",
+  "model_request_count": 0,
+  "environment": "detached worktree D:/tmp/gge-t3b at 5964f875; status empty before and after; frontend/node_modules junction to the main checkout; Python = main checkout backend/.venv 3.12",
+  "pre_candidate_verify": "MATCH (eaddb56c2d7b8a0a..., 110 files)",
+  "gates": {"pytest_backend": "10166 passed, 1 skipped, 2 deselected, 8 xfailed", "vitest_frontend": "68 files, 1062 passed",
+            "typecheck_build": "PASS", "demo_replay": "PASS", "crash_surface": "6/6 PASS"},
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "exit_code": 0,
+  "log": "t3-authoritative.log",
+  "log_sha256": "3292118c82a7fe59d092d82df07225f220bae30c96b7e6b9ad33c9f1f583f94c",
+  "earlier_attempts": ["t3-attempt1-297e6cce-FAIL.log — domain-string guard on the Codex replay script, fixed in 5964f875"]
+}

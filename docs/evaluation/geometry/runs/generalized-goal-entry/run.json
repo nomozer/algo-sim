@@ -9,7 +9,12 @@
   "status": "GENERALIZED_GOAL_ENTRY_READY_FOR_INTEGRATION_DECISION",
   "branch": "research/generalized-goal-entry",
   "base_commit": "96569792",
-  "base_dependencies": ["main 2a3c0787", "result-binding f83b4ed1", "Scene3D W1-W3 8c24cb52", "function discovery 96569792 (cfa27baa product)"],
+  "base_dependencies": [
+    "main 2a3c0787",
+    "result-binding f83b4ed1",
+    "Scene3D W1-W3 8c24cb52",
+    "function discovery 96569792 (cfa27baa product)"
+  ],
   "main_before": "2a3c0787",
   "push": "NONE",
   "handoff_backup": "uncommitted Codex work backed up outside the repository (tracked patch + untracked tar, restore verified) before any edit",
@@ -22,9 +27,16 @@
     "product": "193e634a",
     "scene3d_witness_fix": "289007a4",
     "tooling": "3d07ddb4",
-    "codex_session_evidence": "140ae4ed"
+    "codex_session_evidence": "140ae4ed",
+    "refreeze": "297e6cce",
+    "t3_attempt1": "297e6cce FAIL (domain-string guard on replay script)",
+    "script_fix": "5964f875",
+    "t3_final": "5964f875 PASS"
   },
-  "product_commits": ["193e634a", "289007a4"],
+  "product_commits": [
+    "193e634a",
+    "289007a4"
+  ],
   "cache_version": 125,
   "default": "LLM_ONLY",
   "live_calls": 0,
@@ -35,5 +47,12 @@
     "final": "results/final-193e634a/ — re-measured on the committed product: new positives 8/8 exact, negatives 10/11 registered code (1 registration error), 0 wrong served, centroid 2/2, 153 earlier rows identical to DISCOVERY (outcomes and plan stats), reversed registry identical, Codex measurements reproduced 174/174",
     "scenes": "visual/scenes.json re-exported byte-identical from the committed product, so the browser receipt holds",
     "handoff_probes": "report.md §K — 21 adversarial probes, 0 wrong served"
-  }
+  },
+  "candidate": {
+    "tree_hash": "eaddb56c2d7b8a0a5bfc095c2cd06adef9e5780c3e049d9e48f7ceb825b7a08f",
+    "files": 110,
+    "frozen_at": "aa2a4d20",
+    "divergence": "inputs/candidate_divergence.json"
+  },
+  "t3": "verification/t3-pass.json — clean detached T3 at 5964f875 FULL_PRODUCT_GATE_PASS (pytest 10166/0, vitest 1062/1062, build, demo, crash surface 6/6)"
 }
