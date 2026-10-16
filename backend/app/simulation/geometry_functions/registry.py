@@ -34,7 +34,7 @@ from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationError, model_validator
 
-REGISTRY_VERSION = "geometry-functions/5"
+REGISTRY_VERSION = "geometry-functions/6"
 
 
 class TuChoi(Exception):
@@ -255,7 +255,7 @@ class TranslatePointArgs(_Args):
 @dataclass(frozen=True)
 class PlanningTerm:
     """Internal typed role slots; not an expression language or provider program."""
-    kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance"]
+    kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance", "AnswerLength"]
     operands: tuple[str, ...]
 
 
@@ -267,12 +267,13 @@ class PlanningContract:
     named in the source by `phrase` (operands in group `ops`, `{P}` = one point label). Never serialized to a provider."""
     inputs: tuple[PlanningTerm, ...]
     effect: PlanningTerm
-    source_policy: Literal["declared_intersection", "projection_foot", "distance_witness", "derived_point", "distance_answer"]
+    source_policy: Literal["declared_intersection", "projection_foot", "distance_witness", "derived_point", "distance_answer", "goal_answer"]
     verifier: str
     call: tuple[tuple[str, str | tuple[str, ...]], ...] = ()
     fresh: str | None = None
     descriptor: str | None = None
     phrase: str | None = None
+    goal: str | None = None  # semantic quantity accepted at goal entry; internal, never a provider field
 
 
 def render_call(contract: PlanningContract, env: dict[str, Any]) -> dict[str, Any]:
@@ -319,6 +320,19 @@ class FunctionSpec:
     #: the provider (route A), refused anywhere else.
     auxiliary_only: bool = False
     planning: PlanningContract | None = None  # internal; function_declarations never serializes it
+    planning_extra: tuple[PlanningContract, ...] = ()  # another mathematical meaning of the same function
+
+
+def planning_contracts(spec: FunctionSpec) -> tuple[PlanningContract, ...]:
+    return ((spec.planning,) if spec.planning else ()) + spec.planning_extra
+
+
+def planning_contract(spec: FunctionSpec, effect: str | None = None) -> PlanningContract | None:
+    """Certificate selects a mathematical effect, never an unchecked index into catalog data."""
+    if effect is None:
+        return spec.planning
+    matches = [c for c in planning_contracts(spec) if c.effect.kind == effect]
+    return matches[0] if len(matches) == 1 else None
 
 
 _VUONG = ("vuông", "⊥")
@@ -369,7 +383,11 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("ask_length", AskLengthArgs, "ask", "Đề hỏi độ dài một đoạn.", (("độ dài", "tính", "tìm"),),
        planning=PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Foot", ("F", "P", "L"))),
                                  PlanningTerm("AnswerDistance", ("P", "L")), "distance_witness", "distance",
-                                 call=(("segment", ("P", "F")),))),
+                                 call=(("segment", ("P", "F")),)),
+       planning_extra=(PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Point", ("Q",))),
+                                 PlanningTerm("AnswerLength", ("P", "Q")), "goal_answer", "length",
+                                 call=(("segment", ("P", "Q")),), goal="length",
+                                 phrase=r"độ dài\s+(?:của\s+)?đoạn\s+nối\s+(?:{D})\s+với\s+(?:điểm\s+)?(?P<t>{P})(?![\w'])"),)),
     _F("ask_distance_point_plane", AskDistancePointPlaneArgs, "ask", "Đề hỏi khoảng cách từ một điểm tới một mặt phẳng.",
        (("khoảng cách",),),
        planning=PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Plane", ("Q",))),
@@ -883,7 +901,7 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
         got = []
         for e in d['chain']:
             c, spec = by_id.get(e.get('call')), REGISTRY.get(e.get('fn') or '')
-            contract, env = (spec.planning if spec else None), e.get('env') or {}
+            contract, env = (planning_contract(spec, e.get('effect')) if spec else None), e.get('env') or {}
             if c is None or contract is None or c.fn != spec.name:
                 raise TuChoi('AUXILIARY_RULE_MISMATCH', 'phần tử chuỗi không khớp lời gọi có contract')
             if contract.call:
@@ -898,6 +916,9 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
             got.append((contract, env, c, bool(e.get('fresh'))))
         if [g[2].id for g in got if g[0].effect.kind.startswith('Answer')] != [ask.id] or got[-1][2].id != ask.id:
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'chuỗi phải kết bằng đúng một lời hỏi của mục tiêu', (ask.id,))
+        labels = [env.get(contract.effect.operands[0]) for contract, env, _c, fresh in got if fresh and contract.fresh]
+        if d.get('labels') != labels or len(set(labels)) != len(labels):
+            raise TuChoi('AUXILIARY_RULE_MISMATCH', 'nhãn phụ không đúng các đầu ra tươi của chuỗi', (ask.id,))
         produced = {(g[0].effect.kind, values(g[0].effect, g[1])) for g in got}
         for contract, env, c, fresh in got:
             for t in contract.inputs:                    # every input: a source leaf, or produced inside this chain
@@ -943,16 +964,23 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'toán hạng mô tả không khớp chứng chỉ', (ask.id,))
         if set(ops) - nhan:
             raise TuChoi('UNKNOWN_LABEL', 'toán hạng của điểm được mô tả không có trong nguồn', (ask.id,))
-        want = (('result', target['line_ref']) if 'line_ref' in target else ('named', tuple(sorted(target['line'])))
+        want = (target['point'] if 'point' in target else ('result', target['line_ref']) if 'line_ref' in target else ('named', tuple(sorted(target['line'])))
                 if 'line' in target else term(target.get('plane')))
         if x != want:
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'đích của mục tiêu không khớp chứng chỉ', (ask.id,))
-        g = producer(x[1]) if x[0] == 'result' else None
-        pattern = _mau_khoang_cach_mo_ta(dc.phrase or '')
+        point_target = ans[0].goal is not None
+        if point_target and (ans[0].verifier != 'length' or ans[0].effect.kind != 'AnswerLength' or not isinstance(x, str)
+                             or set(target) != {'point'} or x not in nhan):
+            raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mục tiêu độ dài cần đúng một điểm đích có nguồn', (ask.id,))
+        g = producer(x[1]) if not point_target and x[0] == 'result' else None
+        pattern = (_mau_muc_tieu_mo_ta(ans[0].phrase or '', dc.phrase or '') if point_target else
+                   _mau_khoang_cach_mo_ta(dc.phrase or ''))
 
         def binds(m):
             if sorted(_nhan_cum(m['ops'])) != sorted(ops):
                 return False
+            if point_target:
+                return m['t'] == x
             if x[0] == 'result':
                 return bool(m['a'] and m['b']) and matches_planes(m, g)
             if x[0] == 'named':
@@ -973,10 +1001,11 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                     raise TuChoi('NOT_ASKED_IN_SOURCE', 'nguồn không hỏi khoảng cách này', (ask.id,))
                 if not _kiem_don_vi_hoi(ask.fn, de, m.start(), m.end(), don_vi_de, calls):
                     raise TuChoi('QUESTION_CONTEXT_UNSUPPORTED', 'đơn vị yêu cầu không khớp chính sách đơn vị', (ask.id,))
-                if x[0] == 'result':                     # same closed sentence as the named-point result-line ask
+                if point_target or x[0] == 'result':  # complete sentence, no silently dropped target or second ask
                     form = re.compile(r'(?:(?:tính|tìm)\s+)?(?:' + pattern.pattern + r')[.?\s]*', re.IGNORECASE)
                     if not form.fullmatch(q) or not form.fullmatch(de[slice(*_bien_cau(de, m.start()))].strip()):
-                        raise TuChoi('SOURCE_PREMISE_UNREAD', 'câu mục tiêu có phần chưa được đọc', (ask.id,))
+                        raise TuChoi('QUESTION_CONTEXT_UNSUPPORTED' if point_target else 'SOURCE_PREMISE_UNREAD',
+                                     'câu mục tiêu có phần chưa được đọc', (ask.id,))
                 if buoc is not None:
                     buoc.append((m.start(), m.end()))
         accepted.add(ask.id)
@@ -1955,6 +1984,11 @@ def _mau_khoang_cach_mo_ta(phrase: str) -> re.Pattern[str]:
     """Closed ask phrase "khoảng cách từ ‹unnamed point, as the contract's `phrase` names it› đến ‹target›"."""
     return re.compile(r"khoảng cách\s+từ\s+(?:" + phrase.replace("{P}", _P1) + r")\s+(?:đến|tới)\s+" + _DICH_KHOANG_CACH,
                       re.IGNORECASE)
+
+
+@functools.lru_cache(maxsize=None)
+def _mau_muc_tieu_mo_ta(goal_phrase: str, descriptor_phrase: str) -> re.Pattern[str]:
+    return re.compile(goal_phrase.replace('{D}', descriptor_phrase).replace('{P}', _P1), re.IGNORECASE)
 
 
 #: Next task / method after an asked phrase. The ask grammar stops reading here, so the source-coverage gate must read what

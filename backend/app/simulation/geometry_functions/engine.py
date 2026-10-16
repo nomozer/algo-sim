@@ -37,7 +37,7 @@ from app.simulation.semantic_program import ir_builders as P
 
 from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de
 
-ENGINE_VERSION = "geometry-function-engine/4"
+ENGINE_VERSION = "geometry-function-engine/5"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -1012,6 +1012,9 @@ class _Dung:
         """Squared distance from the described point to the certificate's target, straight from the built figure (Gram) —
         independent of the chain whose measurement answered the question."""
         p, t = d["operand"]["label"], d["target"]
+        if 'point' in t:
+            w = self._vec(p, t['point'])
+            return self.g(w, w)
         if "plane" in t:
             return self._kc2_mat(p, tuple(t["plane"][:3]))
         if "line" in t:
