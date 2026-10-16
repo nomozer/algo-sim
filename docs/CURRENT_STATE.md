@@ -1,6 +1,29 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL — Result binding main-integration readiness, 2026-10-15
+## LOCAL — Result binding final acceptance, 2026-10-16
+
+CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
+
+Research branch `research/source-bound-result-planning`; not merged, not pushed; `main`/`origin/main` remain `2a3c0787`.
+Four identities, not interchangeable:
+
+- **product commit** `55c657b8`: result binding (`efb756aa`) plus the false-serve fix and the shared ask-grammar
+  closure, all on research route D (`geometry_functions/`, `ai/function_route.py`, `ai/fact_extraction.py`);
+- **candidate** `30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc` (110 files), `--verify` MATCH;
+- **refreeze checkpoint / T3 commit** `7f355a81`: authoritative T3 `FULL_PRODUCT_GATE_PASS` in a clean detached worktree;
+- **evidence publication commit** `4298d626`. Later commits on the branch (including the one that adds this section)
+  are documentation only and are not product commits.
+
+Evidence review E-1 (`shared-ask-grammar-safety/evidence-reconciliation-55c657b8/`, addenda 1–3) and the independent
+re-run of T3 both reported PASS. Those two reviews, and the code review of `55c657b8`, are conversation reports, not
+repository artifacts. Integration preflight: CONDITIONAL on this documentation sync, then the user's merge decision
+(fast-forward). `LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid product enablement NO-GO, 0 Gemini calls.
+Scene3D product–harness visual parity / readability audit: PENDING; the browser gate is outside T3 and was not
+refreshed (`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY` OPEN). Known limitations: `ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES`.
+Receipt: [`result-binding-final-acceptance`](evaluation/geometry/runs/result-binding-final-acceptance/report.md).
+The two 2026-10-15 sections below are historical for product, candidate and T3.
+
+## LOCAL — Result binding main-integration readiness, 2026-10-15 (historical; superseded 2026-10-16)
 
 CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
 
@@ -11,7 +34,7 @@ INTENTIONALLY_CHANGED, backward compatible; draft-provenance and review-scope co
 `LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid product enablement NO-GO, 0 Gemini calls. Receipt:
 [`source-bound-result-planning-integration-readiness`](evaluation/geometry/runs/source-bound-result-planning-integration-readiness/report.md).
 
-## LOCAL — Source-bound result binding & bounded effect planning, 2026-10-15
+## LOCAL — Source-bound result binding & bounded effect planning, 2026-10-15 (historical; superseded 2026-10-16)
 
 CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
 

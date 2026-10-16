@@ -3,6 +3,9 @@
 ### ISSUE-ARCH-PLANNER-RESULT-BINDING-AND-EFFECT-DISCOVERY
 
 - **status:** OPEN — next slice designed/preregistered, product not implemented.
+  **Update 2026-10-16:** the bounded slice is implemented on the research branch: `efb756aa` (run
+  `source-bound-result-planning`), hardened up to product `55c657b8`, T3 PASS at `7f355a81`. It is resolved in code but
+  not integrated (`main` `2a3c0787`). General effect discovery (a new Registry function found automatically) stays OPEN.
 - **description:** Current TypedFact/functions encode lines as point pairs; an intersection_line output line3 cannot
   become a projection/distance operand. FunctionSpec has no planning effects; Planner maps kinds/goals with fixed expansions,
   so a new Registry function is not automatically discovered. Valid supplied dependencies are scheduled by Engine.
@@ -29,6 +32,9 @@
   solid; the role of the perpendicular segment and foot H is unclear; default view, point labels and visual hierarchy
   below teaching expectations. Not evidence of a Kernel error; `PASS_CORE_CAUSAL_RENDERING` (run
   `source-bound-result-planning`) checks causal order/selection/pixels only, not visual quality. Not implemented.
+- **2026-10-16:** the authoritative T3 PASS at `7f355a81` (run `result-binding-final-acceptance`) does not cover this.
+  The browser gate is outside T3 and was not refreshed. The product–harness visual parity / readability audit
+  (Scene3D W0) has not run. The issue stays OPEN.
 - **evidence:** User request for final Group A integration readiness; `docs/evaluation/geometry/runs/group-a-integration-readiness/report.md`;
   addendum: `docs/evaluation/geometry/runs/source-bound-result-planning-integration-readiness/report.md` §9.
 - **impact:** Learner readability and visual acceptance. No new wrong geometry identified in the reviewed three scenes;
@@ -174,6 +180,21 @@
     changing the quantity ("Tính SC. Hãy tính kết quả dưới dạng bình phương."); (C3) derived-plane `ask_section_area`
     outside the closed grammar; (C4) an asked unit that differs from the givens. There are also new false refusals (I2/I3).
     C2/C3 need a new scope decision (`docs/evaluation/geometry/runs/shared-ask-grammar-safety/report.md` §5).
+    **Update (product `55c657b8`, 2026-10-16), classified:**
+    - **Closed (code), on the research branch only:**
+      - C1–C4 and I2/I3, closed at `4acfc731` (C2/C3 under the user-approved Option (b)).
+      - The review findings on `4acfc731` (CR-1, CR-2, IM-1, IM-2), closed at `34a04eaf`.
+      - Those on `34a04eaf` (CR-A, CR-B, IM-A), closed at `55c657b8` (`shared-ask-grammar-safety/report.md` §5, §8, §9).
+      - The preregistered probe gives 0 WRONG_SERVED on both routes. The re-run at candidate `30808cb0…` is byte-identical
+        (`docs/evaluation/geometry/runs/result-binding-final-acceptance/report.md` §5).
+      - Integration on `main` is pending the user's decision.
+    - **Known limitations, not blocking current acceptance:**
+      - Rounding requests and angle-measure asks ("số đo góc", degrees/radians) are refused fail-closed by policy; these
+        are the 10 FALSE_REFUSAL against the historical probe oracle.
+      - Source mutations M5/M6 survive, and multi-question problems are answered only in part. Both are reported by the
+        independent code review of `55c657b8`, a conversation report with no repository artifact; they are listed in
+        `.../evidence-reconciliation-55c657b8/correction-addendum-3.md` §9.
+    - **Still open:** adversarial wording beyond the closed grammars. `default_switch_blocker` stays YES.
 - **owner_class:** ARCHITECTURE
 - **suggested_wave:** Next Hybrid gate wave, before any product enablement or live pilot of Hybrid.
 - **default_switch_blocker:** YES

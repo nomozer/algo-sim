@@ -1,5 +1,33 @@
 # STATUS_LEDGER.md — SỔ TRẠNG THÁI SẢN PHẨM
 
+## Result binding final acceptance — LOCAL, 2026-10-16
+
+Branch `research/source-bound-result-planning`, not merged, not pushed; `main`/`origin/main` `2a3c0787`.
+
+- **Product code review** of `55c657b8` (shared ask-grammar closure): no Critical/Important in the reviewed scope.
+  Conversation report, no repository artifact.
+- **E-1 evidence reconciliation:** receipts restored and reconciled in
+  `docs/evaluation/geometry/runs/shared-ask-grammar-safety/evidence-reconciliation-55c657b8/` (addenda 1–3). The
+  independent consistency review of addendum 3 is PASS (conversation report).
+- **Final candidate refreeze** at checkpoint `7f355a81`: candidate `4b95dcc6…` → `30808cb0…`, 110 files, plus an
+  append-only divergence layer.
+- **Authoritative T3** at `7f355a81`: `FULL_PRODUCT_GATE_PASS`. Evidence published in `4298d626`
+  (`docs/evaluation/geometry/runs/result-binding-final-acceptance/`).
+- **Independent T3 verification:** PASS, including a full T3 re-run in a separate worktree (conversation report).
+- **Integration preflight:** CONDITIONAL. The condition is this documentation sync, then the user's merge decision.
+  Not MERGE_APPROVED.
+- **Scene3D W0** (product–harness visual parity / readability): not accepted, PENDING.
+- Cache125 / LLM_ONLY / Hybrid NO-GO / Gemini 0.
+
+Earlier waves of this chain, with no entry of their own here (2026-10-15):
+- `source-bound-result-planning`: product `efb756aa`, T3 `7b14fe04`.
+- `source-bound-result-planning-integration-readiness`.
+- `source-bound-result-planning-main-integration`: BLOCKED on two false serves.
+- `source-bound-result-planning-false-serve-fix`: product `8da9ae31`, BLOCKED.
+- `shared-ask-grammar-safety`: products `5f1b576c` → `4acfc731` → `34a04eaf` → `55c657b8`.
+
+Each run's `report.md` under `docs/evaluation/geometry/runs/` keeps its own verdict at the time.
+
 ## Planner generalization audit/design — LOCAL, 2026-10-14
 
 User prioritizes Planner architecture before Scene3D Presentation. Main remains2a3c0787; new research branch from that
