@@ -1,0 +1,25 @@
+{
+  "schema": "RUN/1",
+  "run_id": "goal-directed-function-discovery",
+  "wave": "goal-directed-function-discovery",
+  "date": "2026-10-16",
+  "environment": "LOCAL Windows 11, Python 3.12",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "status": "PREREGISTERED",
+  "branch": "research/goal-directed-function-discovery",
+  "base_commit": "8c24cb52",
+  "base_dependencies": ["main 2a3c0787", "result-binding f83b4ed1 (not integrated)", "Scene3D W1-W3 8c24cb52 (not reviewed)"],
+  "main_before": "2a3c0787",
+  "push": "NONE",
+  "preregistration": "preregistration.md",
+  "oracle": "oracle.py",
+  "corpus": "corpus.json",
+  "baseline": {
+    "bundle_sha256": "baseline/bundle.sha256",
+    "fixed": "baseline/arm-fixed.json — main 2a3c0787, geometry-fact-planner/4",
+    "bounded": "baseline/arm-bounded.json — 8c24cb52, geometry-fact-planner/5"
+  },
+  "default": "LLM_ONLY",
+  "live_calls": 0,
+  "Hybrid_product_enablement": "NO-GO (unchanged)"
+}
