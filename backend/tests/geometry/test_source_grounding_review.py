@@ -6,6 +6,8 @@ from pathlib import Path
 import pytest
 
 from app.ai.function_route import run_fact_route
+from app.ai.function_route import run_function_route
+from app.simulation.geometry_functions.planner import lap_ke_hoach
 
 RUN = Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/hybrid-semantic-grounding-reliability"
 CASES = json.loads((RUN / "corpus.json").read_text(encoding="utf-8"))["cases"]
@@ -38,6 +40,20 @@ def test_shared_collinear_labels_do_not_certify_plane_identity(source_plane):
     ]
     r = run_fact_route(c["text"], c["payload"])
     assert (r.status, r.code) == ("REFUSED", "SOURCE_OBJECT_MISMATCH"), r.answers
+
+
+@pytest.mark.parametrize("quantity,question,planes", [
+    ("angle", "Tính góc giữa SC và (ABC).", [["S", "C"], ["S", "A", "B", "C"]]),
+    ("angle", "Tính góc giữa (ABC) và (SAB).", [["S", "A", "B", "C"], ["S", "A", "B"]]),
+])
+def test_an_extra_call_label_cannot_change_the_source_plane(quantity, question, planes):
+    c = case("A01-desc-plane-imperative")
+    c["text"] = c["text"][:c["text"].index("Tính")] + question
+    c["payload"]["facts"][-1] = dict(id="q", kind="question", role="question", quotes=[question], quantity=quantity,
+                                     points_a=planes[0], points_b=planes[1])
+    plan = lap_ke_hoach(c["payload"], c["text"])
+    for r in (run_fact_route(c["text"], c["payload"]), run_function_route(c["text"], {"calls": plan.calls})):
+        assert (r.status, r.code) == ("REFUSED", "SOURCE_OBJECT_MISMATCH"), r.answers
 
 
 @pytest.mark.parametrize("source_edge,extracted_edge,serve", [("2a", "2a", True), ("2", "2a", False), ("2a", "2", False)])

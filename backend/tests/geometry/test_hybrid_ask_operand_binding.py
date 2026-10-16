@@ -49,11 +49,30 @@ def SAREA(s, pl="MAB"):
     return ask("q", s, "area", solid="S.ABCD", points=list(pl))
 
 
-def _run(sentence, qf, mid=False):
+def _run(sentence, qf, mid=False, extra=()):
     q, fs = HB._square()
     if mid:
         q, fs = q + [MID["quotes"][0]], fs + [MID]
-    return run_fact_route(" ".join(q) + " " + sentence, {"facts": fs + [qf(sentence)]})
+    return run_fact_route(" ".join(q) + " " + sentence, {"facts": fs + [qf(sentence), *extra]})
+
+
+def _run_complete_requests(sentence, qf, mid):
+    # These historical wording controls supplied only one request of a list. Keep the numeric oracle,
+    # check the omission fails closed, then supply all requests for the positive control (M1).
+    requests = {
+        "Tính thể tích khối chóp S.ABCD và khoảng cách từ S đến (ABCD).": [VOL, DPP],
+        "Tính độ dài các cạnh SB, SC.": [lambda s: LEN(s, "SB"), LEN],
+        "Tính độ dài các cạnh bên SB, SC, SD.": [lambda s: LEN(s, "SB"), LEN, lambda s: LEN(s, "SD")],
+        "Tính khoảng cách từ S đến (ABCD), từ đó suy ra thể tích khối chóp.": [DPP, VOL],
+        "Tính khoảng cách từ S đến (ABCD), từ đó tính thể tích khối chóp.": [DPP, VOL],
+    }
+    primary = qf(sentence)
+    extra = [dict(f(sentence), id=f"q_extra_{i}") for i, f in enumerate(requests.get(sentence, ()))
+             if f(sentence) != primary]
+    if extra:
+        partial = _run(sentence, qf, mid)
+        assert (partial.status, partial.code) == ("REFUSED", "REQUEST_NOT_ANSWERED"), partial.answers
+    return _run(sentence, qf, mid, extra)
 
 
 # ── must refuse: the asked phrase names other objects, or a modifier changes the quantity (groups C and D) ──────────
@@ -128,7 +147,7 @@ ASKED = [
 
 @pytest.mark.parametrize("sentence,qf,mid,sq", ASKED, ids=[f"{s}|{i}" for i, (s, *_r) in enumerate(ASKED)])
 def test_common_asks_stay_served(sentence, qf, mid, sq):
-    r = _run(sentence, qf, mid)
+    r = _run_complete_requests(sentence, qf, mid)
     assert r.status == "SERVED", (r.code, r.reason, sentence)
     assert HB.answer_square(r.answers["q"]) == sq, r.answers
 
@@ -265,7 +284,12 @@ REVIEW_ASKED = [
 
 @pytest.mark.parametrize("sentence,qf,mid,sq", REVIEW_ASKED, ids=[f"{s}|{i}" for i, (s, *_r) in enumerate(REVIEW_ASKED)])
 def test_review_common_wordings_are_served(sentence, qf, mid, sq):
-    r = _run(sentence, qf, mid)
+    r = _run_complete_requests(sentence, qf, mid)
+    if sentence == "Tính khoảng cách từ S đến (ABCD), từ đó suy ra thể tích khối chóp.":
+        # A complete extraction of "suy ra" remains a goal-clause refusal, not an answerable ask.
+        assert (r.status, r.code) == ("REFUSED", "NOT_ASKED_IN_SOURCE"), r.answers
+        sentence = sentence.replace("suy ra", "tính")
+        r = _run_complete_requests(sentence, qf, mid)
     assert r.status == "SERVED", (r.code, r.reason, sentence)
     if sq is not None:
         assert HB.answer_square(r.answers["q"]) == sq, r.answers

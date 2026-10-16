@@ -621,6 +621,9 @@ class _Dung:
     def kiem_mat_viet(self, nhom: list[list[str]]) -> None:
         """Nhóm nhãn mặt phẳng nguồn phải không suy biến và đồng phẳng trên hình đã dựng (chính xác).
         Cùng `_cung_mat`, phép kiểm này không cho rút gọn một nhóm nguồn sai thành mặt ba nhãn."""
+        # Các nhãn dư trong lời gọi cũng phải thuộc cùng mặt, kể cả hàm góc chỉ phát ba nhãn đầu vào IR.
+        nhom = [*nhom, *(g for c in self.calls for key in ("plane", "plane1", "plane2")
+                         if (g := getattr(c.args, key, None)) is not None)]
         for g in nhom:
             if any(p not in self.pts for p in g):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"({''.join(g)}) có nhãn chưa được dựng — không kiểm được là một mặt phẳng")

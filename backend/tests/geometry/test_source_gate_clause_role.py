@@ -164,6 +164,12 @@ ASKED_FOR_THIS_OBJECT = [
 @pytest.mark.parametrize("question,sq", ASKED_FOR_THIS_OBJECT, ids=[a["quotes"][0] for a, _ in ASKED_FOR_THIS_OBJECT])
 def test_ask_for_the_asked_object_is_still_answered(question, sq):
     r = _run(question)
+    if question["quotes"] == ["Tính SC và khoảng cách từ S đến (ABCD)."]:
+        # The original fixture omitted SC. M1 refuses partial success; the complete extraction still serves.
+        assert (r.status, r.code) == ("REFUSED", "REQUEST_NOT_ANSWERED"), r.answers
+        text, facts = HB._square()
+        other = ask("q_length", question["quotes"][0], "length", points=["S", "C"])
+        r = run_fact_route(" ".join(text) + " " + question["quotes"][0], {"facts": facts + [question, other]})
     assert r.status == "SERVED" and HB.answer_square(r.answers["q"]) == sq, (r.code, r.reason)
 
 
