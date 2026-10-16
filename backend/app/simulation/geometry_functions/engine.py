@@ -104,6 +104,9 @@ class KetQuaTuyen:
     checker: Any = field(default=None, repr=False, compare=False)
     #: Hợp đồng CHỈ mang tô-pô khối đề đã khai (`hop_dong_to_po_da_khai`) — cùng một giá trị cho bổ sung dựng hình và bày cảnh.
     declared_topology: Any = None
+    #: Tên IR mà ĐỀ hỏi (CONTRACT-BE-1): biến đáp số của mỗi lời hỏi đã qua cổng nguồn + toán hạng phép đo của nó, trừ điểm
+    #: phụ tươi do planner dựng. Cùng nghĩa `targets` mà tuyến LLM_ONLY đọc từ nghĩa vụ của `RequestContract`.
+    targets: tuple[str, ...] = ()
 
 
 def hop_dong_to_po_da_khai(calls: tuple[LoiGoi, ...]) -> Any:
@@ -1187,8 +1190,19 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
             he = dinh_dang(v)
             chinh_xac[cid] = {"coef": he, "dim": bac if ky_hieu else 0, "unit": ky_hieu if bac else None}
             tra[cid] = f"cos²={he}" if bac == 0 else (_hien_thi_ky_hieu(v, bac, ky_hieu) if ky_hieu else he)
+        # CONTRACT-BE-1: what the source asks = each gate-certified ask's answer variable + the operands of its measure,
+        # minus the planner's fresh auxiliary points (a foot H is a construction, not something the problem names; the
+        # described point of an `effect-chain` IS named by the problem, "trung điểm của SC").
+        phu_ir = ({ir_name(x) for x in phu}
+                  - {ir_name(d["operand"]["label"]) for d in chuoi if (d.get("operand") or {}).get("label")})
+        muc_tieu: set[str] = set()
+        for st in program["statements"]:
+            e = st.get("expr") or {}
+            if st.get("target_var") in hoi.values() and e.get("kind") == "measure":
+                muc_tieu |= {st["target_var"], *(x for x in (e.get("of"), e.get("wrt")) if x and x not in phu_ir)}
         return KetQuaTuyen("SERVED", answers=tra, trace=dung.trace, program=program, points=dict(dung.pts),
                            metric=G.as_json(), kernel_check=True, spec=spec, exec_result=ket, chart_metric=G,
+                           targets=tuple(sorted(muc_tieu)),
                            answer_exact=chinh_xac, length_unit=ky_hieu, checker=_kiem_tren_hinh(dung), declared_topology=to_po,
                            calls=[{"id": c.id, "fn": c.fn, "args": c.args.model_dump(), "quotes": list(c.quotes)}
                                   for c in calls])

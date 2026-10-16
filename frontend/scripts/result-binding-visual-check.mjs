@@ -12,7 +12,8 @@ const host=arg('--host','127.0.0.1'),port=arg('--port','3101');
 const gpu=process.argv.includes('--gpu');
 // --src function-discovery: same checks on the run `goal-directed-function-discovery` fixtures ("target" born before "foot").
 const src=arg('--src','result-binding');
-const SOURCES={'result-binding':'source-bound-result-planning','function-discovery':'goal-directed-function-discovery'};
+const SOURCES={'result-binding':'source-bound-result-planning','function-discovery':'goal-directed-function-discovery',
+  'scene3d-integration':'scene3d-visual-correctness'};
 if(!SOURCES[src]) throw new Error(`unknown --src ${src}`);
 const sourceBytes=readFileSync(new URL(`../../docs/evaluation/geometry/runs/${SOURCES[src]}/visual/scenes.json`,import.meta.url));
 const rows=JSON.parse(sourceBytes);

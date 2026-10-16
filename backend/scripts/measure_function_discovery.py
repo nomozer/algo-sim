@@ -239,14 +239,29 @@ SCENES = (("pyr-midpoint-to-plane", "khoi_S_ABCD", "M"), ("pyr-midpoint-to-named
           ("prism-midpoint-to-plane", "khoi_ABC_A_primeB_primeC_prime", "M"), ("descriptor-operands-mismatch", None, None))
 
 
-def scenes(out: Path) -> None:
+#: `--integration` (run `scene3d-visual-correctness`): the browser set re-exported from the integrated backend — the
+#: plane-target scenes check the target plane itself (CONTRACT-BE-1), plus derived-line and length-goal fixtures.
+INTEGRATION_SCENES = (("pyr-midpoint-to-plane", "khoi_S_ABCD", "mp_q"), ("cube-midpoint-to-plane", "khoi_ABCD_A_primeB_primeC_primeD_prime", "mp_q"),
+                      ("prism-midpoint-to-plane", "khoi_ABC_A_primeB_primeC_prime", "mp_q"), ("pyr-midpoint-to-named-line", "M", "H"),
+                      ("pyr-midpoint-to-result-line", "gt_g", "H"), ("cuboid-midpoint-to-result-line", "gt_g", "H"),
+                      ("rb:derived-line-pyramid", "gt_g", "H"), ("rb:derived-line-cuboid", "gt_g", "H"),
+                      ("rb:derived-line-prism", "gt_g", "H"), ("ge:pyramid-midpoint-A", "khoi_S_ABCD", "M"),
+                      ("descriptor-operands-mismatch", None, None))
+
+
+def scenes(out: Path, integration: bool = False) -> None:
     sys.path.insert(0, str(ROOT / "backend"))
     from app.ai.function_route import run_fact_route
 
     corpus = json.loads((RUN / "corpus.json").read_text(encoding="utf-8"))
     cases = {c["id"]: c for split in ("positive", "negative") for c in corpus[split]}
+    if integration:
+        runs = ROOT / "docs/evaluation/geometry/runs"
+        rb = json.loads((runs / "goal-directed-planner-generalization-audit/next-slice-corpus.json").read_text(encoding="utf-8"))
+        ge = json.loads((runs / "generalized-goal-entry/corpus.json").read_text(encoding="utf-8"))
+        cases |= {f"rb:{c['id']}": c for c in rb["positive"]} | {f"ge:{c['id']}": c for c in ge["positive"]}
     rows = []
-    for cid, first, after in SCENES:
+    for cid, first, after in (INTEGRATION_SCENES if integration else SCENES):
         c = cases[cid]
         r = run_fact_route(c["text"], json.loads(json.dumps(c["payload"])))
         ids = {o["id"] for o in (r.scene3d or {}).get("objects", [])}
@@ -262,7 +277,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     b = sub.add_parser("bundle"); b.add_argument("--out", type=Path, required=True)
-    s = sub.add_parser("scenes"); s.add_argument("--out", type=Path, required=True)
+    s = sub.add_parser("scenes"); s.add_argument("--out", type=Path, required=True); s.add_argument("--integration", action="store_true")
     a = sub.add_parser("arm")
     a.add_argument("--code-root", type=Path, required=True); a.add_argument("--bundle", type=Path, required=True)
     a.add_argument("--label", required=True); a.add_argument("--out", type=Path, required=True)
@@ -274,7 +289,7 @@ def main() -> None:
     if args.cmd == "bundle":
         bundle(args.out.resolve())
     elif args.cmd == "scenes":
-        scenes(args.out.resolve())
+        scenes(args.out.resolve(), args.integration)
     elif args.cmd == "arm":
         arm(args.code_root.resolve(), args.bundle.resolve(), args.label, args.out.resolve(), args.registry)
     else:

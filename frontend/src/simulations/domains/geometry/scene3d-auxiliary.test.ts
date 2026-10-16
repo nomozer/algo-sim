@@ -109,3 +109,26 @@ describe("hình phụ", () => {
   });
 });
 
+
+/** CONTRACT-BE-1 (run `scene3d-visual-correctness`): cảnh khoảng cách từ điểm tới mặt phẳng do backend tích hợp xuất. */
+const TICH_HOP = join(__dirname, "../../../../../docs/evaluation/geometry/runs/scene3d-visual-correctness/visual/scenes.json");
+const canhTichHop = (id: string): Scene3D =>
+  (JSON.parse(readFileSync(TICH_HOP, "utf8")) as { id: string; scene: Scene3D }[]).find((r) => r.id === id)!.scene;
+
+describe("CONTRACT-BE-1: mặt phẳng đích và đáp số của khoảng cách tới mặt phẳng", () => {
+  for (const id of ["pyr-midpoint-to-plane", "cube-midpoint-to-plane", "prism-midpoint-to-plane"]) {
+    it(`${id}: aux=0 vẫn hiện mặt đích; đáp số là kết luận, chọn nó thì có nhân chứng`, async () => {
+      const { annotationsAt } = await import("./scene3d-annotations");
+      const s = canhTichHop(id);
+      const cuoi = s.events.length - 1;
+      expect(s.events[cuoi].semantic_kind).toBe("FINAL_RESULT");
+      expect(s.events[cuoi].object).toBe("kq_q");
+      expect(auxiliaryHiddenAt(s, cuoi, false, null).has("mp_q")).toBe(false);   // đề hỏi tới mặt này: không phải hình phụ
+      const chon = annotationsAt(s, cuoi, { showAll: false }, "kq_q");
+      const kq = chon.find((a) => a.id === "kq_q")!;
+      expect(kq.role).toBe("result");
+      expect(kq.witness?.on).toBe("mp_q");
+      expect(annotationsAt(s, cuoi - 1, { showAll: true }, "kq_q").some((a) => a.id === "kq_q")).toBe(false);  // không lộ trước
+    });
+  }
+});

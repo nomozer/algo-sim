@@ -77,6 +77,9 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
         with _metric.using(r.chart_metric):
             state = build_simulation_state(r.spec, r.exec_result, r.declared_topology,
                                            prefer_declared_plane_names=bool(two_line))
+            # CONTRACT-BE-1: the third argument carries topology, not obligations, so `targets` came out empty and the
+            # asked quantity read as `intermediate` while its event was FINAL_RESULT; the engine names what the source asks.
+            state["targets"] = list(r.targets)
             # Presentation of the certified auxiliary binding; no new geometry or semantic authority.
             aux_ids = ({ir_name(p) for d in two_line for p in d['labels']}
                        | {ir_name(d['label']) for d in auxiliary if d.get('effect_binding') and d.get('fresh')}

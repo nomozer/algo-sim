@@ -376,6 +376,34 @@ def test_duplicate_target_labels_are_an_incomplete_fact():
     assert run(c).code == "FACT_INCOMPLETE"
 
 
+# ── CONTRACT-BE-1 (scene3d-visual-correctness integration): the asked quantity is the result of route D ─────────────
+def _obj(r, oid):
+    return next(o for o in r.scene3d["objects"] if o["id"] == oid)
+
+
+@pytest.mark.parametrize("cid", ["pyr-midpoint-to-plane", "cube-midpoint-to-plane", "prism-midpoint-to-plane"])
+def test_asked_distance_to_a_plane_is_the_result_and_its_plane_is_a_target(cid):
+    r = run(by_id("positive", cid))
+    kq = _obj(r, "kq_q")
+    assert kq["annotation"]["role"] == "result" and kq["annotation"]["category"] == "result"
+    assert "target" in kq["display_group"]
+    final = [e for e in r.scene3d["events"] if e.get("semantic_kind") == "FINAL_RESULT"]
+    assert [e["object"] for e in final] == ["kq_q"]
+    mp = _obj(r, "mp_q")                               # the plane the question names: not a measurement-only helper
+    assert "target" in mp["display_group"]
+    m = _obj(r, chain_certificates(r)[0]["operand"]["label"])
+    assert "target" in m["display_group"]
+
+
+def test_fresh_foot_is_never_a_target_and_named_operands_are():
+    r = run(by_id("positive", "pyr-midpoint-to-named-line"))
+    cert = chain_certificates(r)[0]
+    foot = next(x for x in cert["labels"] if x != cert["operand"]["label"])
+    assert "target" not in _obj(r, foot)["display_group"]      # an auxiliary construction, hidden like one
+    assert "target" in _obj(r, cert["operand"]["label"])["display_group"]
+    assert _obj(r, "kq_q")["annotation"]["role"] == "result"
+
+
 def test_route_a_cannot_use_an_unnamed_point_without_a_planner_certificate():
     from app.ai.function_route import run_function_route
     c, k = _plan("pyr-midpoint-to-plane")
