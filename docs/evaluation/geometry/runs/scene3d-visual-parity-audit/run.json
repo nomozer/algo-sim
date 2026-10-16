@@ -1,0 +1,39 @@
+{
+  "schema": "RUN/1",
+  "run_id": "scene3d-visual-parity-audit",
+  "wave": "scene3d-visual-parity-audit-w00",
+  "task_slug": "scene3d-visual-parity-audit",
+  "date": "2026-10-16",
+  "environment": "LOCAL Windows 11, Python 3.12, Node, Playwright Chromium (WebGL, 0 live AI calls)",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "status": "SCENE3D_W0_BASELINE_AUDIT_COMPLETE",
+  "branch": "research/scene3d-visual-parity-audit",
+  "base_commit": "f83b4ed14995c89d6cf00a643cd14c814c78004c",
+  "product_commit": "55c657b8be715cda0edcc9e6e2ec1b3a204bdb65",
+  "main_before": "2a3c0787cc35d2e5530d77658225039ab4c5991e",
+  "main_after": "2a3c0787cc35d2e5530d77658225039ab4c5991e",
+  "research_branch_before": "f83b4ed14995c89d6cf00a643cd14c814c78004c",
+  "research_branch_after": "f83b4ed14995c89d6cf00a643cd14c78004c",
+  "push": "NONE",
+  "issue_id": "ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY",
+  "candidate": {
+    "tree_hash": "30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc",
+    "files": 110,
+    "verified": true,
+    "product_files_modified": 0
+  },
+  "cache_version": 125,
+  "default": "LLM_ONLY",
+  "live_calls": 0,
+  "Hybrid_product_enablement": "NO-GO (unchanged)",
+  "results": {
+    "math_and_readability_oracle": "results/math_and_readability_oracle.json — 10/10 locked fixtures pass exact Gram metric coordinate/projection/plane/section oracle (all_cases_math_pass = true); exposes 0.668–1.000 world-unit perpendicular_witness displacement and premature auxiliary hiding",
+    "parity_telemetry": "results/parity_telemetry.json — 10 locked fixtures audited across Product ('/') and Harness ('/scripts/hybrid-section-visual.html') with page/canvas PNG SHA-256 hashes, pixel statistics, and renderer telemetry",
+    "findings": "results/findings.json — 2 CRITICAL (FINDING-B1, FINDING-B2), 5 IMPORTANT (FINDING-D1, FINDING-D2, FINDING-D3, FINDING-C2, FINDING-E1), 2 NONBLOCKING (FINDING-A1, FINDING-D4) across classes A, B, C, D, E",
+    "images_harness": "images/harness/ — Harness page & canvas screenshots across default (aux=0), intermediate step, and aux=1 states",
+    "images_product": "images/product/ — Product page & canvas screenshots across initial default (step 0, aux=0), intermediate step, final default (aux=0), and final aux=1 states"
+  },
+  "report": "report.md",
+  "handoff": "handoff.md",
+  "cleanup": "cleanup.json"
+}

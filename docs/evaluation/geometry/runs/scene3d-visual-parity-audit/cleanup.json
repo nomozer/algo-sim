@@ -1,0 +1,50 @@
+{
+  "schema": "CLEANUP_RECEIPT/1",
+  "run_id": "scene3d-visual-parity-audit",
+  "wave": "scene3d-visual-parity-audit-w00",
+  "date": "2026-10-16",
+  "retained_artifacts": [
+    "docs/evaluation/geometry/runs/scene3d-visual-parity-audit/run.json",
+    "docs/evaluation/geometry/runs/scene3d-visual-parity-audit/report.md",
+    "docs/evaluation/geometry/runs/scene3d-visual-parity-audit/handoff.md",
+    "docs/evaluation/geometry/runs/scene3d-visual-parity-audit/cleanup.json",
+    "docs/evaluation/geometry/runs/scene3d-visual-parity-audit/results/math_and_readability_oracle.json",
+    "docs/evaluation/geometry/runs/scene3d-visual-parity-audit/results/parity_telemetry.json",
+    "docs/evaluation/geometry/runs/scene3d-visual-parity-audit/results/findings.json",
+    "docs/evaluation/geometry/runs/scene3d-visual-parity-audit/images/harness/",
+    "docs/evaluation/geometry/runs/scene3d-visual-parity-audit/images/product/"
+  ],
+  "removed_temporary_items": [
+    {
+      "path": "D:/tmp/w0_math_oracle.py",
+      "kind": "temporary_oracle_script",
+      "status": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/scene3d-w0-audit-wt/frontend/scripts/_w0_parity_audit.mjs",
+      "kind": "temporary_playwright_runner",
+      "status": "REMOVED"
+    },
+    {
+      "path": "D:/tmp/scene3d-w0-audit-wt/frontend/node_modules",
+      "kind": "directory_junction_to_main_checkout_node_modules",
+      "status": "UNLINKED_BEFORE_WORKTREE_REMOVAL"
+    },
+    {
+      "path": "D:/tmp/scene3d-w0-audit-wt",
+      "kind": "temporary_git_worktree",
+      "status": "REMOVED_AFTER_COMMIT_AND_SYNC"
+    }
+  ],
+  "protected_user_files": [
+    {
+      "path": "frontend/public/favicon.svg",
+      "status": "PRESERVED_UNTOUCHED"
+    }
+  ],
+  "branch_integrity": {
+    "main": "2a3c0787cc35d2e5530d77658225039ab4c5991e",
+    "research_source_bound_result_planning": "f83b4ed14995c89d6cf00a643cd14c814c78004c",
+    "audit_branch": "research/scene3d-visual-parity-audit"
+  }
+}

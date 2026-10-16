@@ -1,0 +1,431 @@
+{
+  "schema": "SCENE3D_W0_FINDINGS/1",
+  "run_id": "scene3d-visual-parity-audit",
+  "baseline_commit": "f83b4ed14995c89d6cf00a643cd14c814c78004c",
+  "product_commit": "55c657b8be715cda0edcc9e6e2ec1b3a204bdb65",
+  "candidate_tree_hash": "30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc",
+  "issue_id": "ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY",
+  "summary": {
+    "critical_count": 2,
+    "important_count": 5,
+    "nonblocking_count": 2,
+    "total_findings": 9,
+    "classes_evaluated": [
+      "A_SCENE_DATA_IR",
+      "B_SCENE_MAPPING",
+      "C_RENDERER",
+      "D_PRODUCT_HARNESS_DIVERGENCE",
+      "E_INTERACTION_UX"
+    ],
+    "geometry_engine_coordinate_status": "EXACT_PASS_IN_GRAM_METRIC",
+    "visual_parity_status": "FAIL_DIVERGENT_BETWEEN_PRODUCT_AND_HARNESS",
+    "learner_readability_status": "FAIL_CONSTRUCTION_WITNESS_AND_AUXILIARY_DEFECTS"
+  },
+  "class_verdicts": {
+    "A_SCENE_DATA_IR": {
+      "status": "NO_COORDINATE_OR_TOPOLOGY_DEFECT_MINOR_ROLE_COUPLING",
+      "summary": "Backend Scene IR coordinates, directions, plane equations, projection feet H, perpendicular_witness payloads, and Gram distances are 100% mathematically exact across all 10 audited fixtures (verified in results/math_and_readability_oracle.json). One nonblocking contract coupling exists: carrier lines created for foot_of_perpendicular_to_line carry formation_roles=['CONSTRUCT_AUXILIARY_GEOMETRY'] without distinguishing persistent target-witness carriers from disposable intermediate scaffolding."
+    },
+    "B_SCENE_MAPPING": {
+      "status": "CRITICAL_DEFECTS_CONFIRMED",
+      "summary": "Two critical defects in frontend scene mapping: (B1) veKhongGian(scene) in scene3d-chart.ts transforms object xyz and annotation.witness through the Cholesky metric factor T (T^T T = chart_metric), but completely omits o.perpendicular_witness.{foot, marker.{u,v}}, leaving perpendicular witness segments and right-angle markers in raw chart coordinates while points/lines are in Euclidean world coordinates (0.668 to 1.000 world-unit displacement on non-identity chart metrics). (B2) auxiliaryObjects in scene3d-auxiliary.ts assigns loai='dung' with xongTai = raw step of H to derived carrier lines (gt_g, derived_H_line) and planes (mp1_gt_g, mp2_gt_g), causing them to be hidden at the final step (and even at the learner step of H when FINAL_RESULT folds into H's timeline anchor) while projectionWitnessesAt still draws the perpendicular segment to the invisible line."
+    },
+    "C_RENDERER": {
+      "status": "IMPORTANT_DEFECTS_CONFIRMED",
+      "summary": "(C1) Sub-entity faces (solid::face:i) and section sub-entity face (td::face:0) render as translucent polygon meshes coplanar with solid/section faces, altering solid shading and bypassing progressive section reveal (vatThietDienTaiBuoc). (C2) Derived plane_patch objects (mp1_gt_g, mp2_gt_g, mp_P) size their rectangular patch across all solid vertices (diemNen) with 0.22*span padding at opacity 0.26–0.42, creating large overlapping planes that obscure internal lines, feet, and right-angle markers."
+    },
+    "D_PRODUCT_HARNESS_DIVERGENCE": {
+      "status": "CRITICAL_AND_IMPORTANT_DIVERGENCES_CONFIRMED",
+      "summary": "Product and Harness do not render the same scene state: (D1) Product transforms scene via withSubEntities(veKhongGian(scene)) while Harness calls Scene3DWorkspace without withSubEntities. (D2) Product initializes at step=0 (INIT) and steps via geometryTimeline(scene) learner anchors, whereas Harness initializes at step=stepCount-1 (final raw event) and steps raw indices. (D3) Product defaults to auxiliaryShown=false while result-binding-visual-check.mjs passes &aux=1 (auxiliaryShown=true), masking the disappearance of gt_g and derived_H_line in Product. (D4) Viewport/chrome layout differs between standalone 980x720 canvas in Harness vs App topbar + SimulationWorkspace + Scene3DExplorer 2-column grid + floating panels in Product."
+    },
+    "E_INTERACTION_UX": {
+      "status": "IMPORTANT_READABILITY_GAPS_CONFIRMED",
+      "summary": "(E1) Learner step timeline folds FINAL_RESULT into the last construction step's anchor, advancing raw step past H's step and triggering premature hiding of H's carrier line/planes on the very step explaining H. (E2) Derived IDs (gt_g, mp1_gt_g, mp2_gt_g, derived_H_line) and duplicate sub-entity vertex labels ('Đỉnh 1', 'Đỉnh 2' colliding with named intersection points M) degrade pedagogical clarity and label legibility."
+    }
+  },
+  "findings": [
+    {
+      "id": "FINDING-B1",
+      "class": "B_SCENE_MAPPING",
+      "severity": "CRITICAL",
+      "title": "veKhongGian omits o.perpendicular_witness when mapping chart coordinates to Euclidean world coordinates",
+      "files": [
+        "frontend/src/simulations/domains/geometry/scene3d-chart.ts:53-70",
+        "frontend/src/simulations/domains/geometry/scene3d-annotations.ts:154-164"
+      ],
+      "reproduction": {
+        "cases": [
+          "aux-foot-S-to-BD",
+          "derived-line-pyramid",
+          "derived-line-cuboid",
+          "derived-line-prism"
+        ],
+        "condition": "Any scene with chart_metric != I_3 and an object carrying perpendicular_witness (point3 foot H from foot_of_perpendicular_to_line or foot_of_perpendicular_to_plane).",
+        "exact_mechanism": "veKhongGian(scene) computes Cholesky upper factor T such that T^T * T = chart_metric, and maps point3.xyz -> T * xyz and annotation.witness.{foot, marker.{u,v}} -> {T * foot, {dinh: T * foot, u: normalize(T * u), v: normalize(T * v)}}. However, lines 53-70 do not transform o.perpendicular_witness. Subsequently, projectionWitnessesAt (scene3d-annotations.ts:154-164) constructs witness 'perpendicular:<id>' with from = o.xyz (Wait: from = pointMap.get(w.from).xyz = T * S_chart in world space) and foot = w.foot (still in untransformed chart space!) and marker = {dinh: w.foot, u: w.marker.u, v: w.marker.v} (untransformed chart space!)."
+      },
+      "measured_evidence": {
+        "aux-foot-S-to-BD": {
+          "H_world_xyz": [1.0, 1.0, 0.0],
+          "witness_foot_untransformed": [0.5, 0.5, 0.0],
+          "euclidean_displacement": 0.707107
+        },
+        "derived-line-pyramid": {
+          "H_world_xyz": [0.909091, 0.909091, 0.272727],
+          "witness_foot_untransformed": [0.454545, 0.454545, 0.090909],
+          "euclidean_displacement": 0.668153
+        },
+        "derived-line-cuboid": {
+          "H_world_xyz": [2.0, 0.0, 0.0],
+          "witness_foot_untransformed": [1.0, 0.0, 0.0],
+          "euclidean_displacement": 1.0
+        },
+        "derived-line-prism": {
+          "H_world_xyz": [2.0, 0.0, 0.0],
+          "witness_foot_untransformed": [1.0, 0.0, 0.0],
+          "euclidean_displacement": 1.0
+        }
+      },
+      "product_impact": "In both Product and Harness, the purple dashed perpendicular segment ('perpendicular:H') from the source point (S or A) does NOT terminate at the rendered point H or on the target line/plane. Instead, it terminates in mid-air/base-interior at the raw chart coordinate [0.45, 0.45, 0.09] or [1, 0, 0], with a detached right-angle square marker, while the orange sphere H sits 0.67 to 1.00 world units away on the actual line. This is the primary cause of the perpendicular construction appearing broken and unreadable.",
+      "harness_impact": "Affects Harness identically to Product because both call veKhongGian(scene), and existing causal checks only asserted that 'perpendicular:H' existed in state.annotations without verifying geometric incidence between the witness endpoint and H.xyz.",
+      "minimal_fix": "In frontend/src/simulations/domains/geometry/scene3d-chart.ts inside doiDoiTuong(o, T), transform o.perpendicular_witness identically to o.annotation.witness: foot = nhan(T, w.foot), marker = { ...w.marker, dinh: nhan(T, w.foot), u: donVi(nhan(T, w.marker.u)), v: donVi(nhan(T, w.marker.v)) }. Add a unit test asserting ||witness.foot - H.xyz|| < 1e-9 after veKhongGian."
+    },
+    {
+      "id": "FINDING-B2",
+      "class": "B_SCENE_MAPPING",
+      "severity": "CRITICAL",
+      "title": "Disposable auxiliary heuristic hides the target carrier line (gt_g / derived_H_line) at the final step and at H's learner step while leaving H and its perpendicular witness visible",
+      "files": [
+        "frontend/src/simulations/domains/geometry/scene3d-auxiliary.ts:36-63",
+        "frontend/src/simulations/domains/geometry/scene3d-timeline.ts:110-128",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:1430,1840-1850,1951"
+      ],
+      "reproduction": {
+        "cases": [
+          "derived-line-pyramid",
+          "derived-line-cuboid",
+          "derived-line-prism",
+          "aux-foot-S-to-BD"
+        ],
+        "condition": "Product default mode (auxiliaryShown = false) at the final learner step or final raw step.",
+        "exact_mechanism": "1. Backend emits carrier line (gt_g or derived_H_line) with formation_roles=['CONSTRUCT_AUXILIARY_GEOMETRY'], followed by foot H (roles=['CONSTRUCT_PROJECTED_FOOT','PRODUCE_GOAL_RESULT'], depends_on=[..., line_id]), followed by quantity q (roles=['FINAL_RESULT'], depends_on=[..., 'H']).\n2. auxiliaryObjects (scene3d-auxiliary.ts:36-49) classifies any line3/plane3 with ONLY 'CONSTRUCT_AUXILIARY_GEOMETRY' role and at least one non-quantity dependent (H) as loai='dung' (disposable construction scaffolding) with xongTai = raw step where H first appears (e.g., step 8 in derived-line-pyramid, step 5 in aux-foot-S-to-BD).\n3. At raw step k > xongTai (i.e. raw step 9 in derived-line-pyramid, raw step 6 in aux-foot-S-to-BD), auxiliaryHiddenAt(scene, k, false) hides gt_g, mp1_gt_g, mp2_gt_g, and derived_H_line.\n4. Worse still, geometryTimeline(scene) folds the FINAL_RESULT step (step 9 / step 6) into H's learner step by setting H's learner step anchor = 9 (or 6). Thus, when the learner clicks the final step ('Hạ chân vuông góc H...' / 'Tính khoảng cách...'), raw step is 9 > xongTai (8), so gt_g / derived_H_line is IMMEDIATELY HIDDEN on the very step that constructs H!\n5. Meanwhile, coMatNhan (scene3d-view.tsx:1430) computes projectionWitnessesAt(scene, buoc) from objectsAt(scene, buoc) WITHOUT filtering out auxiliaryHiddenAt. Thus the dashed perpendicular segment 'perpendicular:H' and point 'H' remain visible, floating in space with the line they project onto completely hidden!"
+      },
+      "measured_evidence": {
+        "derived-line-pyramid": {
+          "carrier_line_id": "gt_g",
+          "xongTai_raw_step": 8,
+          "final_learner_step_anchor": 9,
+          "hidden_in_product_default_at_final_step": [
+            "mp1_gt_g",
+            "mp2_gt_g",
+            "gt_g"
+          ],
+          "visible_orphaned_dependents": [
+            "H",
+            "perpendicular:H"
+          ]
+        },
+        "aux-foot-S-to-BD": {
+          "carrier_line_id": "derived_H_line",
+          "xongTai_raw_step": 5,
+          "final_learner_step_anchor": 6,
+          "hidden_in_product_default_at_final_step": [
+            "derived_H_line"
+          ],
+          "visible_orphaned_dependents": [
+            "H",
+            "perpendicular:H"
+          ]
+        }
+      },
+      "product_impact": "1. Target carrier line disappears: In Product (where auxiliaryShown defaults to false), at the final step of derived-line-pyramid, derived-line-cuboid, derived-line-prism, and aux-foot-S-to-BD, the target line (gt_g or derived_H_line = BD) onto which H is projected disappears completely! The learner sees point H and a dashed perpendicular line pointing to nothing.\n2. Off-solid auxiliary construction points never hide: Conversely, in two-line-pyramid, two-line-prism, and two-line-cuboid, translated construction points H and H1 (construct_point.translate with source.binding='AUXILIARY', formation_roles=['CONSTRUCT_AUXILIARY_GEOMETRY']) are created solely to span cutting plane (P). Because scene3d-auxiliary.ts:38 checks only o.type === 'line3' || o.type === 'plane3', point3 scaffolding (such as H1 floating in empty space above/left of S in two-line-pyramid, or H floating outside C in two-line-prism) is never classified as loai='dung' and remains permanently visible at the final step.",
+      "harness_impact": "result-binding-visual-check.mjs:31 passed '&aux=1' in the Harness URL, forcing auxiliaryShown = true and completely masking the disappearance of gt_g during T3 visual checks.",
+      "minimal_fix": "1. Never classify a line3/plane3 that is the direct target carrier of a visible perpendicular_witness or PRODUCE_GOAL_RESULT foot H as disposable (loai='dung') that hides while H is visible; keep the target carrier line visible whenever H (or its perpendicular witness) is visible.\n2. Include point3 objects with source.binding === 'AUXILIARY' (such as translated direction points H, H1 used only to construct a plane) in disposable auxiliary classification once their dependent plane/section is constructed.\n3. Ensure coMatNhan / projectionWitnessesAt and auxiliaryHiddenAt share consistent visibility rules so a witness never renders without its target carrier."
+    },
+    {
+      "id": "FINDING-D1",
+      "class": "D_PRODUCT_HARNESS_DIVERGENCE",
+      "severity": "IMPORTANT",
+      "title": "Product wraps scene with withSubEntities(veKhongGian(scene)) while Harness passes raw scene to Scene3DWorkspace",
+      "files": [
+        "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:210",
+        "frontend/scripts/hybrid-section-visual.tsx:32,96-103",
+        "frontend/src/simulations/domains/geometry/scene3d-subentities.ts:95-106,188-237,431-442",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:1138-1154,1920-1929"
+      ],
+      "reproduction": {
+        "cases": [
+          "basic-regular-pyramid",
+          "derived-line-pyramid",
+          "derived-line-cuboid",
+          "derived-line-prism",
+          "two-line-pyramid",
+          "two-line-prism",
+          "two-line-cuboid",
+          "aux-foot-S-to-BD",
+          "intersection-SAB-SCD",
+          "p1_chop_thiet_dien_khoang_cach"
+        ],
+        "condition": "Every Scene3D render in Product vs Harness.",
+        "exact_mechanism": "Scene3DExplorer.tsx:210 computes sceneCoSub = useMemo(() => withSubEntities(veKhongGian(scene)), [scene]) and passes sceneCoSub to Scene3DPlayer -> Scene3DWorkspace. By contrast, hybrid-section-visual.tsx passes raw scene directly to Scene3DWorkspace (which internally calls veKhongGian(rawScene) but NEVER calls withSubEntities)."
+      },
+      "measured_evidence": {
+        "derived-line-pyramid": {
+          "harness_object_count": 7,
+          "product_object_count": 12,
+          "extra_product_objects": [
+            "chop::face:0",
+            "chop::face:1",
+            "chop::face:2",
+            "chop::face:3",
+            "chop::face:4"
+          ]
+        },
+        "two-line-pyramid": {
+          "harness_object_count": 10,
+          "product_object_count": 18,
+          "extra_product_objects": [
+            "chop::face:0..4",
+            "td::face:0",
+            "td::vertex:0",
+            "td::vertex:1"
+          ]
+        },
+        "p1_chop_thiet_dien_khoang_cach": {
+          "harness_object_count": 15,
+          "product_object_count": 26,
+          "extra_product_objects": [
+            "chop::face:0..4",
+            "td::face:0",
+            "td::vertex:0..4"
+          ]
+        }
+      },
+      "product_impact": "Causes three concrete visual differences between Product and Harness across all 10 cases:\n1. Solid face tinting (Class C1): chop::face:i / hop::face:i / lt::face:i have type='face', render='polygon' and are rendered by buildObject3D (scene3d-view.tsx:1138-1154) as amber (0xd97706, opacity 0.14) polygon meshes on every face of the solid.\n2. Premature section fill & degenerate polygon (Class B3/C1): deriveSectionSubEntities creates td::face:0 (type='face'). Because entitiesPresentAt (scene3d-subentities.ts:431-442) only checks if parent 'td' is in rawIds, and 'td' is added on the FIRST section edge step, td::face:0 renders the full section face immediately on the first edge step in Product, bypassing vatThietDienTaiBuoc(scene, buoc) which withholds 'td' until the closure step!\n3. Duplicate section vertices (Class B3): deriveSectionSubEntities creates td::vertex:0..k as point3 markers with labels 'Đỉnh 1'..'Đỉnh k', even when td has only 2 vertices (two-line-pyramid, two-line-prism) or when a vertex already exists as a named point3 ('M'), creating overlapping sphere meshes at the exact same 3D coordinates.",
+      "harness_impact": "Harness never exercises sub-entities at all, so visual gates run in Harness cannot catch sub-entity rendering bugs in Product.",
+      "minimal_fix": "1. Do not render unselected sub-entity faces (solid::face:i, td::face:0) as opaque/translucent amber polygon meshes by default; only render a sub-entity face overlay when hovered or selected, or gate td::face:0 on section closure (vatThietDienTaiBuoc).\n2. Deduplicate td::vertex:i against existing point3 objects at identical coordinates and skip section sub-entity derivation when polygon.length < 3.\n3. Align Harness with Product by either enabling withSubEntities in hybrid-section-visual.tsx (or supporting a URL param defaulting to Product behavior)."
+    },
+    {
+      "id": "FINDING-D2",
+      "class": "D_PRODUCT_HARNESS_DIVERGENCE",
+      "severity": "IMPORTANT",
+      "title": "Initial step and step-index domain diverge between Product (step=0, learner timeline anchors) and Harness (step=last, raw steps)",
+      "files": [
+        "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:222-227,264-281",
+        "frontend/src/simulations/domains/geometry/scene3d-timeline.ts:75-167",
+        "frontend/scripts/hybrid-section-visual.tsx:41-46,66-70"
+      ],
+      "reproduction": {
+        "cases": [
+          "basic-regular-pyramid",
+          "derived-line-pyramid",
+          "derived-line-cuboid",
+          "derived-line-prism",
+          "two-line-pyramid",
+          "two-line-prism",
+          "two-line-cuboid",
+          "aux-foot-S-to-BD",
+          "intersection-SAB-SCD",
+          "p1_chop_thiet_dien_khoang_cach"
+        ],
+        "condition": "Opening a scene in Product vs opening a scene in Harness without explicit step parameter.",
+        "exact_mechanism": "Scene3DExplorer initializes playback to step=0 (first learner step 'Dựng khối cơ sở'). Stepping forward in Product jumps through timeline.steps[i].anchor (which skips raw steps folded into composite learner steps). By contrast, hybrid-section-visual.tsx defaults to step = stepCount - 1 (last raw step) and exposes raw step indices 0..stepCount-1."
+      },
+      "measured_evidence": {
+        "derived-line-pyramid": {
+          "raw_step_count": 10,
+          "product_learner_step_count": 4,
+          "product_initial_raw_step": 0,
+          "harness_initial_raw_step": 9,
+          "product_learner_anchors": [
+            0,
+            6,
+            7,
+            9
+          ]
+        }
+      },
+      "product_impact": "Upon loading a problem in Product, the learner sees only the base solid (step 0) and must step or play to reach the goal construction; moreover, intermediate raw steps (such as raw step 8 in derived-line-pyramid, where H is constructed before FINAL_RESULT step 9) are unreachable via the Product step list because learner step 4 jumps directly from anchor 7 to anchor 9!",
+      "harness_impact": "Harness scripts that test raw step k (e.g. k=8) test states that are unreachable in the Product UI timeline!",
+      "minimal_fix": "Expose learner timeline metadata in Harness (`__scene3d_harness.state().timeline`) and ensure `geometryTimeline` does not fold a `FINAL_RESULT` raw step in a way that hides the construction target of the step it folds into."
+    },
+    {
+      "id": "FINDING-D3",
+      "class": "D_PRODUCT_HARNESS_DIVERGENCE",
+      "severity": "IMPORTANT",
+      "title": "Harness visual gate forced aux=1 (auxiliaryShown=true), masking Product's default auxiliaryShown=false hiding behavior",
+      "files": [
+        "frontend/scripts/result-binding-visual-check.mjs:31",
+        "frontend/scripts/hybrid-section-visual.tsx:24,100",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:1770"
+      ],
+      "reproduction": {
+        "cases": [
+          "derived-line-pyramid",
+          "derived-line-cuboid",
+          "derived-line-prism",
+          "aux-foot-S-to-BD"
+        ],
+        "condition": "Running result-binding-visual-check.mjs (which sets ?case=...&aux=1) vs rendering in Product (where auxiliaryShown initializes to false).",
+        "exact_mechanism": "result-binding-visual-check.mjs:31 constructs URL with `&aux=1`. In hybrid-section-visual.tsx:24, `aux = params.get('aux') === '1'` sets `initialAuxiliaryShown={aux}`. In Product (`scene3d-view.tsx:1770`), `initialAuxiliaryShown` is not passed, so `auxiliaryShown` defaults to `false`."
+      },
+      "measured_evidence": {
+        "derived-line-pyramid": {
+          "harness_with_aux1_visible_objects": [
+            "chop",
+            "S",
+            "mp1_gt_g",
+            "mp2_gt_g",
+            "gt_g",
+            "H"
+          ],
+          "product_default_aux0_visible_objects": [
+            "chop",
+            "S",
+            "H"
+          ]
+        }
+      },
+      "product_impact": "Visual verification passed in T3 only because `aux=1` was hardcoded in the verification script, while the actual Product hid `gt_g` by default.",
+      "harness_impact": "Harness default (`aux=0` when omitted) matches Product's `auxiliaryShown=false`, but audit/gate scripts must always test Product's default state first (`aux=0`) before testing `aux=1`.",
+      "minimal_fix": "Require visual parity and causal checks to assert target construction visibility under Product default (`aux=0`), and fix `auxiliaryObjects` so target carrier lines remain visible under `aux=0`."
+    },
+    {
+      "id": "FINDING-C2",
+      "class": "C_RENDERER",
+      "severity": "IMPORTANT",
+      "title": "Auxiliary plane patches (mp1_gt_g, mp2_gt_g, mp_P) span the entire solid bounding box and visually occlude internal lines, feet, and labels",
+      "files": [
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:1256-1305,1376-1388"
+      ],
+      "reproduction": {
+        "cases": [
+          "derived-line-pyramid",
+          "derived-line-cuboid",
+          "derived-line-prism",
+          "two-line-pyramid",
+          "two-line-prism",
+          "two-line-cuboid",
+          "intersection-SAB-SCD"
+        ],
+        "condition": "Any step where one or more plane3 objects (render='plane_patch') are visible.",
+        "exact_mechanism": "In buildObject3D (scene3d-view.tsx:1256-1305), every plane3 object projects ALL reference points of the scene (`diemNen`, which includes all solid vertices) onto the plane, computes the 2D bounding box `[uMin, uMax] x [vMin, vMax]`, expands it by `padding = 0.22 * span`, and renders a double-sided filled quad (`opacity = 0.26`, or `0.42` when active) plus a dashed perimeter border. When two planes intersect to form a line (`mp1_gt_g` and `mp2_gt_g`, or `plane_SAB` and `plane_SCD`), both full-solid quads cut through the solid interior."
+      },
+      "measured_evidence": {
+        "derived-line-pyramid": {
+          "plane_ids": [
+            "mp1_gt_g",
+            "mp2_gt_g"
+          ],
+          "base_opacity": 0.26,
+          "active_opacity": 0.42,
+          "padding_ratio": 0.22
+        }
+      },
+      "product_impact": "When `mp1_gt_g` and `mp2_gt_g` are visible (during steps 1–2 in Product, or at the final step when `auxiliaryShown=true`), two large translucent green planes cross the entire pyramid/cuboid/prism, reducing contrast of internal lines (`gt_g`, `perpendicular:H`) and creating visual clutter.",
+      "harness_impact": "In Harness with `aux=1`, all final-step screenshots of `derived-line-*` and `two-line-*` are dominated by 1–2 oversized green rectangles.",
+      "minimal_fix": "1. When a plane corresponds to a triad of named solid vertices (e.g. (S,A,C) or (S,B,D)), clip or bound its visual representation to the convex hull / triangle of those defining points (or a subtle dihedral wedge along the intersection line) rather than an oversized axis-aligned rectangle over the entire solid.\n2. Reduce passive auxiliary plane fill opacity (e.g. 0.10–0.14) and de-emphasize once the intersection line is constructed."
+    },
+    {
+      "id": "FINDING-E1",
+      "class": "E_INTERACTION_UX",
+      "severity": "IMPORTANT",
+      "title": "Internal compiler IDs (gt_g, mp1_gt_g, mp2_gt_g, derived_H_line) and duplicate sub-entity labels ('Đỉnh 1', 'Đỉnh 2') leak into 3D labels and step descriptions",
+      "files": [
+        "backend/app/simulation/geometry_functions/engine.py:1395-1465",
+        "frontend/src/simulations/domains/geometry/scene3d-subentities.ts:221-235",
+        "frontend/src/simulations/domains/geometry/scene3d-timeline.ts:28-73",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:1577-1595"
+      ],
+      "reproduction": {
+        "cases": [
+          "derived-line-pyramid",
+          "derived-line-cuboid",
+          "derived-line-prism",
+          "two-line-pyramid",
+          "two-line-prism",
+          "two-line-cuboid",
+          "aux-foot-S-to-BD"
+        ],
+        "condition": "Viewing 3D canvas labels or step titles in Product and Harness.",
+        "exact_mechanism": "1. Derived intersection lines and auxiliary planes receive internal compiler IDs (`gt_g`, `mp1_gt_g`, `mp2_gt_g`, `derived_H_line`) as their `label` field in Scene IR.\n2. `deriveSectionSubEntities` (`scene3d-subentities.ts:229`) generates `td::vertex:0..k` with `label: 'Đỉnh 1'`, `'Đỉnh 2'`, etc. When hovered/selected or inspected in Product, these generic labels duplicate existing named points (`M`)."
+      },
+      "measured_evidence": {
+        "derived-line-pyramid": {
+          "internal_labels": [
+            "mp1_gt_g",
+            "mp2_gt_g",
+            "gt_g"
+          ]
+        },
+        "aux-foot-S-to-BD": {
+          "internal_labels": [
+            "derived_H_line"
+          ]
+        }
+      },
+      "product_impact": "Learners see internal identifiers like `gt_g` or `derived_H_line` instead of mathematical notation like `d = (SAC) ∩ (SBD)`, `SO`, or `BD`.",
+      "harness_impact": "Same labels appear in Harness.",
+      "minimal_fix": "Map derived object display labels in the presentation/scene-mapping layer (or Scene IR label formatting) from provenance (`(SAC) ∩ (SBD)` or `Δ`, line through `B, D` as `BD`) while preserving stable object `id`s for references."
+    },
+    {
+      "id": "FINDING-A1",
+      "class": "A_SCENE_DATA_IR",
+      "severity": "NONBLOCKING",
+      "title": "Carrier lines constructed for foot_of_perpendicular_to_line use generic CONSTRUCT_AUXILIARY_GEOMETRY role without distinguishing persistent target carriers from disposable scaffolding",
+      "files": [
+        "backend/app/simulation/geometry_functions/engine.py:1395-1465",
+        "frontend/src/simulations/domains/geometry/scene3d-auxiliary.ts:36-63"
+      ],
+      "reproduction": {
+        "cases": [
+          "derived-line-pyramid",
+          "derived-line-cuboid",
+          "derived-line-prism",
+          "aux-foot-S-to-BD"
+        ],
+        "condition": "Inspecting formation_roles of `gt_g` and `derived_H_line` in scenes.json.",
+        "exact_mechanism": "Both intermediate planes (`mp1_gt_g`, `mp2_gt_g`) and the target carrier line (`gt_g`, `derived_H_line`) are emitted with `formation_roles: ['CONSTRUCT_AUXILIARY_GEOMETRY']`. While the frontend can already distinguish the target carrier line without changing Scene IR (by checking `perpendicular_witness` or `depends_on` of `PRODUCE_GOAL_RESULT` / `CONSTRUCT_PROJECTED_FOOT` objects), the IR role itself conflates disposable plane scaffolding with persistent projection target lines."
+      },
+      "measured_evidence": {
+        "derived-line-pyramid": {
+          "mp1_gt_g_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "gt_g_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ]
+        }
+      },
+      "product_impact": "Contributes to FINDING-B2 when `scene3d-auxiliary.ts` treats all `CONSTRUCT_AUXILIARY_GEOMETRY` objects with non-quantity dependents as disposable (`loai: 'dung'`). Can be resolved purely in frontend `scene3d-auxiliary.ts` in W1 without touching backend Scene IR.",
+      "harness_impact": "None once frontend `scene3d-auxiliary.ts` distinguishes target carriers of visible projection witnesses.",
+      "minimal_fix": "In W1 (frontend-only), refine `auxiliaryObjects` in `scene3d-auxiliary.ts` to check whether a line/plane is referenced by an active `perpendicular_witness` or goal foot `H` (`CONSTRUCT_PROJECTED_FOOT` / `PRODUCE_GOAL_RESULT`), keeping it visible (`loai: 'co_dinh'` or extending `xongTai` through the end of the scene)."
+    },
+    {
+      "id": "FINDING-D4",
+      "class": "D_PRODUCT_HARNESS_DIVERGENCE",
+      "severity": "NONBLOCKING",
+      "title": "Viewport framing and overlay chrome differ between Harness standalone canvas and Product 2-column workspace",
+      "files": [
+        "frontend/scripts/hybrid-section-visual.tsx:79-106",
+        "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:303-548",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx:1966-2250"
+      ],
+      "reproduction": {
+        "cases": [
+          "basic-regular-pyramid",
+          "derived-line-pyramid"
+        ],
+        "condition": "Comparing full-page and canvas screenshots between `/hybrid-section-visual.html` and `/`.",
+        "exact_mechanism": "Harness mounts `Scene3DWorkspace` inside a standalone 980px max-width container at 1280x900 viewport (`canvas` ~946x560). Product mounts `Scene3DExplorer` inside `SimulationWorkspace` with a left problem/step sidebar and right `Scene3DPlayer` stage at 1440x900 (`canvas` ~692x560). Camera FOV (40 deg), ` cameraPose` azimuth/elevation, and framing multiplier (`1.22`) are identical, so the 3D projection is identical up to aspect ratio."
+      },
+      "measured_evidence": {
+        "camera_fov_deg": 40,
+        "framing_multiplier": 1.22,
+        "camera_pose_parity": "IDENTICAL_CAMERA_POSE_AND_FRAMING_LOGIC"
+      },
+      "product_impact": "Aspect ratio differs slightly between Harness and Product, though camera pose and auto-framing logic are shared inside `Scene3DWorkspace`.",
+      "harness_impact": "Harness can match Product canvas dimensions when configured with matching container width, and should also expose a Product-parity mode (`withSubEntities` + learner timeline anchors).",
+      "minimal_fix": "Add a Product-parity toggle (`?parity=product`, default on for parity checks) in `hybrid-section-visual.tsx` that applies `withSubEntities(scene)` and exposes learner timeline anchors alongside raw steps."
+    }
+  ]
+}
