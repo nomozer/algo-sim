@@ -9,6 +9,7 @@ import {
   clampStep,
   SECTION_STROKE_RATIO,
   cauTrucGocNhin,
+  daGiacMatPhang,
   dayVaDinhChop,
   diemHuuHan,
   doanDuongThang,
@@ -17,6 +18,7 @@ import {
   geometryNarrationAt,
   geometryStepCount,
   geometryStepOf,
+  huongChanVuongGoc,
   khungMatPhang,
   objectsAt,
   toNumber,
@@ -39,7 +41,9 @@ import { entitiesPresentAt, parentSolidOf } from "./scene3d-subentities";
 import {
   canonicalEdgesOf,
   classifySolidEdgeVisibility,
+  classifyWorldSegmentVisibility,
   type EdgeVisibilityAudit,
+  type WorldSolidOccluder,
 } from "./scene3d-edge-visibility";
 export { classifySolidEdgeVisibility } from "./scene3d-edge-visibility";
 import {
@@ -164,6 +168,9 @@ export function lamDiu(obj: THREE.Object3D, k = HE_SO_LAM_DIU): void {
   obj.traverse((x) => {
     if (bo.has(x)) return;
     if (x.userData?.visualOwnerId) x.userData.lamDiu = k;
+    if (x.userData?.nonCanonicalSegment || x.userData?.nonCanonicalLoop) {
+      x.userData.lamDiu = ((x.userData.lamDiu as number | undefined) ?? 1) * k;
+    }
     if (x.userData?.sang === true) return;   // khúc tô sáng của đoạn con nằm trên cạnh (W4)
     const m = (x as THREE.Mesh).material as THREE.Material | THREE.Material[] | undefined;
     for (const vl of Array.isArray(m) ? m : m ? [m] : []) lamDiuVatLieu(vl, k);
@@ -429,9 +436,29 @@ export function toSangCanhChuan(
 ): { ca: Map<string, number>; khuc: Map<string, KhucToSang> } {
   const ca = new Map<string, number>();
   const khuc = new Map<string, KhucToSang>();
+  const canhKhoi = vat.filter((x) => x.type === "solid").flatMap((s) => canonicalEdgesOf(s));
   for (const o of vat.filter((x) => laNoiBat(x.id))) {
     if (o.edge_span) khuc.set(o.edge_span.edge_id, { t0: o.edge_span.t0, t1: o.edge_span.t1, mau: mau(o.id) });
-    else for (const id of o.boundary_edge_ids ?? []) ca.set(id, mau(o.id));
+    else if (o.boundary_edge_ids?.length) {
+      for (const id of o.boundary_edge_ids) ca.set(id, mau(o.id));
+    } else if (o.type === "line3" && o.point && o.direction && canhKhoi.length > 0) {
+      const [px, py, pz] = toVec3(o.point);
+      const [dx, dy, dz] = toVec3(o.direction);
+      const dn = Math.hypot(dx, dy, dz);
+      if (dn > 1e-9) {
+        const ux = dx / dn, uy = dy / dn, uz = dz / dn;
+        const lechDuong = (v: THREE.Vector3) => {
+          const vx = v.x - px, vy = v.y - py, vz = v.z - pz;
+          const t = vx * ux + vy * uy + vz * uz;
+          return Math.hypot(vx - t * ux, vy - t * uy, vz - t * uz);
+        };
+        for (const ce of canhKhoi) {
+          if (lechDuong(ce.a) <= 1e-4 && lechDuong(ce.b) <= 1e-4) {
+            ca.set(ce.id, mau(o.id));
+          }
+        }
+      }
+    }
   }
   return { ca, khuc };
 }
@@ -474,6 +501,129 @@ function rebuildCanonicalEdgeOwner(
   }
 }
 
+interface NonCanonicalSegmentMeta {
+  prefix: string;
+  objectId: string;
+  a: THREE.Vector3;
+  b: THREE.Vector3;
+  color: number;
+  dashSize: number;
+  highlighted: boolean;
+  yieldColinear: boolean;
+  renderOrder: number;
+  noRaycast?: boolean;
+}
+
+interface NonCanonicalLoopMeta {
+  objectId: string;
+  pts: THREE.Vector3[];
+  closed: boolean;
+  color: number;
+  dashSize: number;
+  highlighted: boolean;
+  renderOrder: number;
+  yieldColinear?: boolean;
+}
+
+function updateNonCanonicalVisibility(
+  targetRoot: THREE.Object3D,
+  camera: THREE.Camera,
+  occluders: readonly WorldSolidOccluder[],
+  worldSignature: string,
+): void {
+  const worldCam = camera.position.clone();
+  targetRoot.traverse((node) => {
+    const seg = node.userData?.nonCanonicalSegment as NonCanonicalSegmentMeta | undefined;
+    if (seg && (node as THREE.Group).isGroup) {
+      if (node.userData.nonCanonicalSig === worldSignature) return;
+      node.updateWorldMatrix(true, false);
+      const worldA = seg.a.clone().applyMatrix4(node.matrixWorld);
+      const worldB = seg.b.clone().applyMatrix4(node.matrixWorld);
+      const res = classifyWorldSegmentVisibility(worldA, worldB, worldCam, occluders, {
+        edge_id: seg.objectId,
+        yield_colinear_canonical_edges: seg.yieldColinear,
+      });
+      for (const child of [...node.children]) {
+        if (child.userData?.nonCanonicalSpanLine
+            || child.name.endsWith(":thay")
+            || child.name.endsWith(":khuat")) {
+          node.remove(child);
+          (child as THREE.Line).geometry?.dispose();
+          ((child as THREE.Line).material as THREE.Material | undefined)?.dispose();
+        }
+      }
+      res.spans.forEach((span, idx) => {
+        const p0 = seg.a.clone().lerp(seg.b, span.t0);
+        const p1 = seg.a.clone().lerp(seg.b, span.t1);
+        const isHidden = span.visibility === "HIDDEN";
+        const mat = canonicalEdgeMaterial(isHidden, seg.highlighted, seg.color, seg.dashSize, seg.color);
+        if (node.userData.lamDiu) lamDiuVatLieu(mat, node.userData.lamDiu as number);
+        const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints([p0, p1]), mat);
+        if (isHidden) line.computeLineDistances();
+        line.name = idx === 0 && !isHidden ? `${seg.prefix}:thay` : `${seg.prefix}:span:${idx}`;
+        line.userData.nonCanonicalSpanLine = true;
+        line.userData.hidden = isHidden;
+        line.renderOrder = seg.renderOrder;
+        if (seg.noRaycast) line.raycast = () => {};
+        node.add(line);
+      });
+      if (seg.yieldColinear && res.colinear_canonical_edge_ids.length > 0 && !seg.noRaycast) {
+        const proxy = new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints([seg.a, seg.b]),
+          new THREE.LineBasicMaterial({
+            colorWrite: false, depthWrite: false, transparent: true, opacity: 0, linewidth: 6,
+          }),
+        );
+        proxy.name = `${seg.prefix}:proxy`;
+        proxy.userData.nonCanonicalSpanLine = true;
+        node.add(proxy);
+      }
+      node.userData.nonCanonicalSig = worldSignature;
+      return;
+    }
+
+    const loop = node.userData?.nonCanonicalLoop as NonCanonicalLoopMeta | undefined;
+    if (loop) {
+      if (node.userData.nonCanonicalSig === worldSignature) return;
+      node.updateWorldMatrix(true, false);
+      for (const child of [...node.children]) {
+        if (child.userData?.nonCanonicalBorderLine) {
+          node.remove(child);
+          (child as THREE.Line).geometry?.dispose();
+          ((child as THREE.Line).material as THREE.Material | undefined)?.dispose();
+        }
+      }
+      const edgeCount = loop.closed ? loop.pts.length : Math.max(0, loop.pts.length - 1);
+      for (let i = 0; i < edgeCount; i += 1) {
+        const localA = loop.pts[i];
+        const localB = loop.pts[(i + 1) % loop.pts.length];
+        const worldA = localA.clone().applyMatrix4(node.matrixWorld);
+        const worldB = localB.clone().applyMatrix4(node.matrixWorld);
+        const res = classifyWorldSegmentVisibility(worldA, worldB, worldCam, occluders, {
+          edge_id: `${loop.objectId}::border:${i}`,
+          yield_colinear_canonical_edges: Boolean(loop.yieldColinear),
+        });
+        res.spans.forEach((span, idx) => {
+          const p0 = localA.clone().lerp(localB, span.t0);
+          const p1 = localA.clone().lerp(localB, span.t1);
+          const isHidden = span.visibility === "HIDDEN";
+          const mat = canonicalEdgeMaterial(isHidden, loop.highlighted, loop.color, loop.dashSize, loop.color);
+          if (!isHidden) mat.linewidth = loop.highlighted ? 3 : 2;
+          if (node.userData.lamDiu) lamDiuVatLieu(mat, node.userData.lamDiu as number);
+          const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints([p0, p1]), mat);
+          if (isHidden) line.computeLineDistances();
+          line.name = `section_border:${loop.objectId}:${i}:${idx}`;
+          line.userData.nonCanonicalBorderLine = true;
+          line.userData.hidden = isHidden;
+          line.renderOrder = loop.renderOrder;
+          node.add(line);
+        });
+      }
+      node.userData.nonCanonicalSig = worldSignature;
+    }
+  });
+}
+
 export function updateCanonicalEdgeVisibility(
   root: THREE.Object3D,
   camera: THREE.Camera,
@@ -490,19 +640,22 @@ export function updateCanonicalEdgeVisibility(
   const counts = new Map<string, number>();
   const highlighted = new Set<string>();
   const allSpans: EdgeVisibilityAudit["edge_spans"] = [];
+  const occluders: WorldSolidOccluder[] = [];
   let triangleCount = 0;
   let sampleCount = 0;
   let recomputedSolidCount = 0;
+  const khoa = (v: number) => (Math.abs(v) < 1e-12 ? 0 : Number(v.toPrecision(10)));
   root.traverse((candidate) => {
     const source = candidate.userData?.solidSceneObject as SceneObject | undefined;
     if (!source) return;
+    candidate.updateWorldMatrix(true, false);
+    occluders.push({ solid: source, matrixWorld: candidate.matrixWorld.clone() });
     const localCamera = candidate.worldToLocal(camera.position.clone());
     // `OrbitControls` (damping) round-trips the pose through spherical
     // coordinates every frame, so an idle camera walks in its last ULPs and an
     // exact-float key recomputed every mobile frame. 10 significant digits move
     // a projected point by ~1e-6 physical px here — far below the 0.5 px
     // product↔oracle tolerance; ±0 and sub-1e-12 noise collapse to 0.
-    const khoa = (v: number) => (Math.abs(v) < 1e-12 ? 0 : Number(v.toPrecision(10)));
     const signature = [
       ...[
         localCamera.x, localCamera.y, localCamera.z,
@@ -553,6 +706,26 @@ export function updateCanonicalEdgeVisibility(
       if (child.userData.highlighted === true) highlighted.add(id);
     });
   });
+
+  if (occluders.length > 0) {
+    const worldSignature = [
+      ...[
+        camera.position.x, camera.position.y, camera.position.z,
+        ...camera.matrixWorldInverse.elements,
+        ...camera.projectionMatrix.elements,
+      ].map(khoa),
+      renderSignature,
+    ].join("|");
+    updateNonCanonicalVisibility(root, camera, occluders, worldSignature);
+    if (root.parent) {
+      for (const sibling of root.parent.children) {
+        if (sibling !== root && sibling.userData?.nhanChungGroup) {
+          updateNonCanonicalVisibility(sibling, camera, occluders, worldSignature);
+        }
+      }
+    }
+  }
+
   const visible = [...status].filter(([, values]) => values.size === 1 && values.has("visible"))
     .map(([id]) => id).sort();
   const hidden = [...status].filter(([, values]) => values.size === 1 && values.has("hidden"))
@@ -803,14 +976,25 @@ export function buildObject3D(
     const a = doan ? new THREE.Vector3(...doan[0]) : p.clone().addScaledVector(d, -LINE_DISPLAY_HALF_LENGTH);
     const b = doan ? new THREE.Vector3(...doan[1]) : p.clone().addScaledVector(d, LINE_DISPLAY_HALF_LENGTH);
     const g = new THREE.BufferGeometry().setFromPoints([a, b]);
-    const duong = duongHaiLuot(g, net(MAU.line),
-      beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE,
-      `line:${o.id}`, true);
+    const mauDuong = net(MAU.line);
+    const coNetDut = beDayNet(diemNen, 1) / SECTION_STROKE_RATIO * NET_DUT_TI_LE;
+    const duong = duongHaiLuot(g, mauDuong, coNetDut, `line:${o.id}`, true);
     // Cùng lẽ với mặt phẳng: `line3` vô hạn, hai đầu mút là quyết định trình
     // bày. Ở `p1`, đường `BD` kéo dài vượt ra ngoài khối chóp; để nó tham gia
     // auto-fit thì camera phải lùi ra và khối thật bé đi vì một đoạn thẳng do
     // chính renderer bịa ra độ dài.
     duong.userData.voHan = true;
+    duong.userData.nonCanonicalSegment = {
+      prefix: `line:${o.id}`,
+      objectId: o.id,
+      a,
+      b,
+      color: mauDuong,
+      dashSize: coNetDut,
+      highlighted: Boolean(noiBat),
+      yieldColinear: true,
+      renderOrder: THU_TU_DUONG,
+    } satisfies NonCanonicalSegmentMeta;
     // Đường phụ: rõ ở bước dựng nó (formation tô) hay khi được chọn; mọi lúc
     // khác lùi xuống để thiết diện và kết quả làm trọng tâm (review W10-H7).
     if (!noiBat) lamDiu(duong, HE_SO_DUONG_PHU);
@@ -824,6 +1008,8 @@ export function buildObject3D(
     const a = new THREE.Vector3(...toVec3(ptA));
     const b = new THREE.Vector3(...toVec3(ptB));
     const g = new THREE.BufferGeometry().setFromPoints([a, b]);
+    const mauDoan = net(MAU.line);
+    const coNetDut = (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE;
     // Nhường nét cho cạnh chuẩn của khối (`doanNhuongCanh`): chỉ còn vùng bấm.
     const duong: THREE.Object3D = o.display_role === "hit_proxy"
       ? v(new THREE.Line(g, new THREE.LineBasicMaterial({
@@ -831,12 +1017,25 @@ export function buildObject3D(
         })), `segment:${o.id}:proxy`)
       : duongHaiLuot(
           g,
-          net(MAU.line),
-          (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE,
+          mauDoan,
+          coNetDut,
           `segment:${o.id}`,
           true,
         );
     duong.userData.voHan = false;
+    if (o.display_role !== "hit_proxy") {
+      duong.userData.nonCanonicalSegment = {
+        prefix: `segment:${o.id}`,
+        objectId: o.id,
+        a,
+        b,
+        color: mauDoan,
+        dashSize: coNetDut,
+        highlighted: Boolean(noiBat),
+        yieldColinear: true,
+        renderOrder: THU_TU_DUONG,
+      } satisfies NonCanonicalSegmentMeta;
+    }
 
     // Ký hiệu góc vuông (perpendicular marker) tại chân đường cao nếu là chiều cao
     const laChieuCao =
@@ -881,10 +1080,43 @@ export function buildObject3D(
     // pháp tuyến ĐÃ CÓ, không phải suy ra mặt phẳng từ ba điểm.
     //
     // ⚠️ TÂM VÀ CỠ lấy từ vùng hình học liên quan (`khungMatPhang`), không còn
-    // là ô vuông cố định đặt tại `point`. `point` chỉ là MỘT điểm bất kỳ trên
-    // một mặt phẳng vô hạn: ở `p7` nó nằm ngoài hẳn hình nón, nên miếng cũ trôi
-    // ra khỏi thiết diện. Xem `khungMatPhang` để biết vì sao đây là quyết định
-    // TRÌNH BÀY chứ không phải một mệnh đề toán học.
+    // là ô vuông cố định đặt tại `point`. Khi trên mặt phẳng có ≥ 3 điểm không
+    // thẳng hàng của hình (`daGiacMatPhang`), vẽ đúng đa giác bao lồi của các
+    // điểm đó để không bị góc vuông lệch trục thò xuống dưới mặt đáy.
+    const daGiac = daGiacMatPhang(toVec3(o.point), toVec3(o.normal), diemNen);
+    if (daGiac && daGiac.length >= 3) {
+      const pos: number[] = [];
+      for (const [a, b, c] of chiaTamGiac(daGiac)) {
+        for (const j of [a, b, c]) pos.push(...daGiac[j]);
+      }
+      if (pos.length > 0) {
+        const g = new THREE.BufferGeometry();
+        g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+        g.computeVertexNormals();
+        const m = new THREE.MeshStandardMaterial({
+          color: net(MAU.surface),
+          transparent: true,
+          opacity: noiBat ? 0.24 : 0.11,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+          depthTest: false,
+        });
+        const mesh = new THREE.Mesh(g, m);
+        mesh.renderOrder = 1;
+        mesh.userData.voHan = true;
+        mesh.userData.nonCanonicalLoop = {
+          objectId: o.id,
+          pts: daGiac.map((p) => new THREE.Vector3(...p)),
+          closed: true,
+          color: net(MAU.surface),
+          dashSize: (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE,
+          highlighted: Boolean(noiBat),
+          renderOrder: THU_TU_DUONG,
+          yieldColinear: true,
+        };
+        return v(mesh, `plane:${o.id}`);
+      }
+    }
     const khung = khungMatPhang(toVec3(o.point), toVec3(o.normal), diemNen);
     const canh = khung ? khung.canh : PLANE_DISPLAY_SIZE;
     const g = new THREE.PlaneGeometry(canh, canh);
@@ -1179,14 +1411,33 @@ export function buildObject3D(
     const pts = rawPts.map((p) => new THREE.Vector3(...p));
     const vong = o.closed === false ? pts : [...pts, pts[0]];
     const gLine = new THREE.BufferGeometry().setFromPoints(vong);
+    const mauVien = net(MAU.polygon);
+    const coNetDut = (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE;
+    const thietDien = o.type === "section";
+    const thuTuVien = thietDien ? THU_TU_VE_THIET_DIEN : THU_TU_DUONG;
     const line = new THREE.Line(gLine, new THREE.LineBasicMaterial({
-      color: net(MAU.polygon), linewidth: 2,
+      color: mauVien, linewidth: 2,
     }));
+    line.userData.nonCanonicalBorderLine = true;
+    line.renderOrder = thuTuVien;
     const ownsBoundary = !(
       o.surface_role === "BASE_REGION"
       && o.occludes_edges === false
       && (o.boundary_edge_ids?.length ?? 0) > 0
     );
+    const nhom = new THREE.Group();
+    if (ownsBoundary) {
+      nhom.add(line);
+      nhom.userData.nonCanonicalLoop = {
+        objectId: o.id,
+        pts,
+        closed: o.closed !== false,
+        color: mauVien,
+        dashSize: coNetDut,
+        highlighted: Boolean(noiBat),
+        renderOrder: thuTuVien,
+      } satisfies NonCanonicalLoopMeta;
+    }
 
     if (o.closed !== false && o.fill_visible !== false && rawPts.length >= 3) {
       const pos: number[] = [];
@@ -1209,7 +1460,6 @@ export function buildObject3D(
         //
         // W16: thứ tự `THU_TU_TO_THIET_DIEN` — sau mặt, TRƯỚC nét: cạnh khối đi qua vùng
         // tô vẫn đọc rõ (§14.4), thay vì bị phủ hổ phách như ở thứ tự 10 của W15.
-        const thietDien = o.type === "section";
         const mesh = new THREE.Mesh(gMesh, new THREE.MeshStandardMaterial({
           color: nen(MAU.polygon),
           transparent: true,
@@ -1220,14 +1470,11 @@ export function buildObject3D(
         }));
         mesh.name = `${thietDien ? "section_fill" : "polygon_fill"}:${o.id}`;
         if (thietDien) mesh.renderOrder = THU_TU_TO_THIET_DIEN;
-        const nhom = new THREE.Group();
-        if (ownsBoundary) nhom.add(line);
         nhom.add(mesh);
-        return v(nhom, `polygon:${o.id}`);
       }
     }
 
-    return ownsBoundary ? v(line, `polygon:${o.id}`) : v(new THREE.Group(), `polygon:${o.id}`);
+    return v(nhom, `polygon:${o.id}`);
   }
 
   return null; // `readout` và mọi loại chưa vẽ được
@@ -1352,7 +1599,7 @@ interface Props {
 }
 
 /** §16.7 — cạnh góc vuông của ký hiệu tại chân, theo độ dài đoạn tới chân, có trần (đơn vị cảnh). */
-const NHAN_CHUNG_GOC = { tiLe: 0.15, toiDa: 0.5 };
+const NHAN_CHUNG_GOC = { tiLe: 0.14, toiDa: 0.34 };
 
 /** Màu nhân chứng theo VAI: nhãn khoảng cách đang xét mang xanh "đang xét" (W12); đoạn vuông góc của điểm hình chiếu
  *  luôn hiện nên là ĐƯỜNG PHỤ — cùng màu với các đường phụ khác, không giành nghĩa "đang xét" (review, 2026-10-11). */
@@ -1362,26 +1609,34 @@ export function mauNhanChung(vai: WitnessShown["vai"]): number {
 
 /** Nhân chứng một khoảng cách: đoạn nét đứt từ điểm tới CHÂN backend phát + ký hiệu vuông góc dựng từ
  *  hai phương backend phát (`u`, `v`) — chỉ đổi độ dài để có cỡ ký hiệu, không suy luận hình học nào. */
-function vatNhanChung(w: WitnessShown): THREE.Group {
+export function vatNhanChung(
+  w: WitnessShown,
+  diemNen: Vec3[] = [],
+  mau?: number,
+  diu = false,
+): THREE.Group {
   const g = new THREE.Group();
   const tu = new THREE.Vector3(...w.from);
   const chan = new THREE.Vector3(...w.foot);
   const v = new THREE.Vector3(...w.v);
+  const uHuong = huongChanVuongGoc(w.foot, w.u, diemNen);
   const s = Math.min(v.length() * NHAN_CHUNG_GOC.tiLe, NHAN_CHUNG_GOC.toiDa);
-  const u1 = new THREE.Vector3(...w.u).normalize().multiplyScalar(s);
+  const u1 = new THREE.Vector3(...uHuong).normalize().multiplyScalar(s);
   const v1 = v.normalize().multiplyScalar(s);
+  const mauNet = mau ?? mauNhanChung(w.vai);
   const doan = new THREE.Line(new THREE.BufferGeometry().setFromPoints([tu, chan]),
-    new THREE.LineDashedMaterial({ color: mauNhanChung(w.vai), dashSize: 0.16, gapSize: 0.1, depthTest: false }));
+    new THREE.LineDashedMaterial({ color: mauNet, dashSize: 0.16, gapSize: 0.1, depthTest: false, transparent: true, opacity: 0.92 }));
   doan.computeLineDistances();
   const goc = new THREE.Line(new THREE.BufferGeometry().setFromPoints(
     [chan.clone().add(u1), chan.clone().add(u1).add(v1), chan.clone().add(v1)]),
-  new THREE.LineBasicMaterial({ color: mauNhanChung(w.vai), depthTest: false }));
+  new THREE.LineBasicMaterial({ color: mauNet, depthTest: false, transparent: true, opacity: 0.92 }));
   for (const x of [doan, goc]) {
     x.renderOrder = 10;
     x.raycast = () => {};                 // trình bày thuần: không bao giờ bắt cú bấm chọn vật
     g.add(x);
   }
   g.userData = { nhanChung: w.id };
+  if (diu) lamDiu(g, HE_SO_LAM_DIU);
   return g;
 }
 
@@ -1774,7 +2029,16 @@ export function Scene3DWorkspace({
       chieuNhan();
       requestAnimationFrame(vong);
     };
-    veRef.current = () => renderer.render(scene3, cam);
+    veRef.current = () => {
+      cam.updateMatrixWorld();
+      updateCanonicalEdgeVisibility(
+        goc,
+        cam,
+        `${renderer.domElement.clientWidth}x${renderer.domElement.clientHeight}`
+          + `@${renderer.getPixelRatio()}`,
+      );
+      renderer.render(scene3, cam);
+    };
     // Móc ĐO của cổng ảnh `SECTION_FILL_DISTINGUISHABLE` — chỉ harness gọi, người học không
     // thấy (mặc định bật). Tắt/bật phần tô rồi vẽ lại ĐÚNG khung hình này; trả tên các vật
     // đã chạm — rỗng thì không có gì để đo, cổng phải tự đỏ.
@@ -1852,12 +2116,19 @@ export function Scene3DWorkspace({
       });
     }
     // Review I1: cộng đoạn vuông góc PHỤ của điểm hình chiếu đã có mặt ở bước này — cùng cách vẽ, chân do backend phát.
+    const diemToanCanh = diemHuuHan(scene.objects);
     const hienNhanChung = new Set([...coMatNhan].filter((id) => isVisible(tuongTac, id, coMatNhan)));
     const ds = [...witnessesShown(scene, nhanSoDo), ...projectionWitnessesAt(scene, hienNhanChung)];
-    for (const w of ds) nhom.add(vatNhanChung(w));
+    for (const w of ds) {
+      const chuId = w.vai === "hinh_chieu" ? w.id.slice("perpendicular:".length) : w.id;
+      const t = tang?.get(chuId);
+      const mau = t && t !== "boi_canh" ? MAU_TANG[t] : undefined;
+      const diu = Boolean(tang && !t);
+      nhom.add(vatNhanChung(w, diemToanCanh, mau, diu));
+    }
     if (typeof window !== "undefined") (window as any).__geo3d_witness_ids = ds.map((w) => w.id);
     veRef.current?.();
-  }, [scene, nhanSoDo, coMatNhan, tuongTac]);
+  }, [scene, nhanSoDo, coMatNhan, tuongTac, tang]);
 
   // W2 · F — LƯỚI NỀN tuỳ chọn: mảnh, nhạt, nằm dưới đáy hình (mặt z thấp nhất của cảnh), ô theo cỡ cảnh — không
   // số toạ độ, không đơn vị. Bật/tắt chỉ thêm/bớt nhóm này rồi vẽ lại một khung: camera, bước, lựa chọn không đổi.
@@ -1965,6 +2236,8 @@ export function Scene3DWorkspace({
        cảnh. Bước 1 chưa có khối thì miếng mặt phẳng cũng chưa được phình ra
        ôm một khối chưa xuất hiện — mắt đọc đúng thứ tự dựng. */
     const diemNen = diemHuuHan(seDung);
+    const diemToanCanh = diemHuuHan(scene.objects);
+    const coHinhCong = seDung.some((x) => x.render === "circle" || x.render === "ellipse" || x.render === "curved_solid");
     const idSeDung = new Set(seDung.map((o) => o.id));
     const khoaDich = (id: string) => visualTransformOf(tuongTac, scene, id).translate.join(",");
     const nhuong = doanNhuongCanh(seDung, khoaDich);
@@ -1989,10 +2262,17 @@ export function Scene3DWorkspace({
         renderObject = theoBuoc;
       }
       const diemMp = o.render === "surface"
-        ? diemHuuHan(seDung.filter((x) => o.depends.includes(x.id) || (x.type === "section" && x.depends.includes(o.id))))
+        ? (coHinhCong
+            ? diemHuuHan(seDung.filter((x) => o.depends.includes(x.id) || (x.type === "section" && x.depends.includes(o.id))))
+            : diemHuuHan(seDung.filter((x) => o.depends.includes(x.id) || x.type === "solid" || (x.type === "section" && x.depends.includes(o.id)))))
         : [];
+      const diemChoVat = o.render === "line"
+        ? diemToanCanh
+        : o.render === "surface" && diemMp.length >= 3
+          ? diemMp
+          : diemNen;
       const obj = buildObject3D(renderObject, tang ? tang.get(o.id) ?? false : noiBat.has(o.id),
-        banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemMp.length >= 3 ? diemMp : diemNen, undefined, canonicalHighlights, khucToSang);
+        banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemChoVat, undefined, canonicalHighlights, khucToSang);
       if (!obj) continue;
       if (tang && !tang.has(o.id)) lamDiu(obj);   // ngoài chuỗi nhân quả
       const bd = visualTransformOf(tuongTac, scene, o.id);

@@ -91,14 +91,33 @@ interface OccludingTriangle {
   a: THREE.Vector3;
   b: THREE.Vector3;
   c: THREE.Vector3;
+  normal: THREE.Vector3;
+  tri: THREE.Triangle;
   box: THREE.Box3;
 }
 
-function occludingTriangles(objects: SceneObject[]): OccludingTriangle[] {
+export interface WorldSolidOccluder {
+  solid: SceneObject;
+  matrixWorld?: THREE.Matrix4;
+}
+
+export interface WorldSegmentVisibilityResult {
+  spans: EdgeVisibilitySpan[];
+  colinear_canonical_edge_ids: string[];
+}
+
+function occludingTriangles(objects: SceneObject[], transforms?: (THREE.Matrix4 | undefined)[]): OccludingTriangle[] {
   const triangles: OccludingTriangle[] = [];
-  for (const object of objects) {
-    if (object.type !== "solid" || !object.vertices || !object.faces) continue;
-    const vertices = object.vertices.map((point) => new THREE.Vector3(...toVec3(point)));
+  objects.forEach((object, objIdx) => {
+    if (object.type !== "solid" || !object.vertices || !object.faces) return;
+    const mat = transforms?.[objIdx];
+    const vertices = object.vertices.map((point) => {
+      const v = new THREE.Vector3(...toVec3(point));
+      return mat ? v.applyMatrix4(mat) : v;
+    });
+    const center = new THREE.Vector3();
+    for (const v of vertices) center.add(v);
+    if (vertices.length > 0) center.divideScalar(vertices.length);
     object.faces.forEach((face, faceIndex) => {
       const policy = object.surfaces?.find((surface) =>
         surface.surface_id === `${object.id}::face:${faceIndex}`);
@@ -109,14 +128,21 @@ function occludingTriangles(objects: SceneObject[]): OccludingTriangle[] {
         const a = points[ia];
         const b = points[ib];
         const c = points[ic];
+        const normal = new THREE.Vector3().subVectors(b, a).cross(new THREE.Vector3().subVectors(c, a));
+        if (normal.lengthSq() > 1e-12) {
+          normal.normalize();
+          if (normal.dot(new THREE.Vector3().subVectors(a, center)) < 0) normal.negate();
+        }
         triangles.push({
           surfaceId: policy?.surface_id ?? `${object.id}::face:${faceIndex}`,
           a, b, c,
+          normal,
+          tri: new THREE.Triangle(a, b, c),
           box: new THREE.Box3().setFromPoints([a, b, c]),
         });
       }
     });
-  }
+  });
   return triangles;
 }
 
@@ -204,3 +230,120 @@ export function classifySolidEdgeVisibility(
     sample_count: sampleCount,
   };
 }
+
+/**
+ * Classify visibility of an arbitrary world-space segment `[a, b]` (derived `line3`, `segment3`,
+ * cross-section boundary edge, or perpendicular witness) against `SOLID_FACE` occluders.
+ * Also detects and optionally yields sub-intervals that coincide with canonical solid edges.
+ */
+export function classifyWorldSegmentVisibility(
+  a: THREE.Vector3,
+  b: THREE.Vector3,
+  camera: THREE.Vector3,
+  occluders: readonly WorldSolidOccluder[],
+  options: {
+    edge_id?: string;
+    yield_colinear_canonical_edges?: boolean;
+    projected_edge_pixels?: number;
+  } = {},
+): WorldSegmentVisibilityResult {
+  const edgeId = options.edge_id ?? "segment";
+  const ab = b.clone().sub(a);
+  const len = ab.length();
+  if (len <= 1e-9 || occluders.length === 0) {
+    return {
+      spans: [{ edge_id: edgeId, t0: 0, t1: 1, visibility: "VISIBLE" }],
+      colinear_canonical_edge_ids: [],
+    };
+  }
+  const dir = ab.clone().divideScalar(len);
+  const colinearTol = 1e-4 * Math.max(1, len);
+  const colinearIds: string[] = [];
+  let intervals: [number, number][] = [[0, 1]];
+
+  for (const occ of occluders) {
+    for (const ce of canonicalEdgesOf(occ.solid)) {
+      const eA = occ.matrixWorld ? ce.a.clone().applyMatrix4(occ.matrixWorld) : ce.a;
+      const eB = occ.matrixWorld ? ce.b.clone().applyMatrix4(occ.matrixWorld) : ce.b;
+      const vA = eA.clone().sub(a);
+      const vB = eB.clone().sub(a);
+      const projA = vA.dot(dir);
+      const projB = vB.dot(dir);
+      const distA = vA.clone().addScaledVector(dir, -projA).length();
+      const distB = vB.clone().addScaledVector(dir, -projB).length();
+      if (distA <= colinearTol && distB <= colinearTol) {
+        const u0 = Math.max(0, Math.min(projA, projB) / len);
+        const u1 = Math.min(1, Math.max(projA, projB) / len);
+        if (u1 - u0 > 1e-4) {
+          if (!colinearIds.includes(ce.id)) colinearIds.push(ce.id);
+          if (options.yield_colinear_canonical_edges) {
+            intervals = intervals.flatMap(([s0, s1]): [number, number][] => {
+              if (u1 <= s0 + 1e-5 || u0 >= s1 - 1e-5) return [[s0, s1]];
+              const next: [number, number][] = [];
+              if (u0 - s0 > 1e-4) next.push([s0, u0]);
+              if (s1 - u1 > 1e-4) next.push([u1, s1]);
+              return next;
+            });
+          }
+        }
+      }
+    }
+  }
+
+  if (intervals.length === 0) {
+    return { spans: [], colinear_canonical_edge_ids: colinearIds };
+  }
+
+  const triangles = occludingTriangles(
+    occluders.map((occ) => occ.solid),
+    occluders.map((occ) => occ.matrixWorld),
+  );
+  const onFaceTol = 1e-4 * Math.max(1, len);
+  const closestTmp = new THREE.Vector3();
+
+  const sampleHidden = (t: number): boolean => {
+    const point = a.clone().lerp(b, t);
+    const containingSurfaces = new Set<string>();
+    const containingNormals: THREE.Vector3[] = [];
+    for (const triangle of triangles) {
+      if (triangle.box.distanceToPoint(point) > onFaceTol) continue;
+      if (Math.abs(triangle.normal.dot(point.clone().sub(triangle.a))) > onFaceTol) continue;
+      if (triangle.tri.closestPointToPoint(point, closestTmp).distanceTo(point) <= onFaceTol) {
+        containingSurfaces.add(triangle.surfaceId);
+        containingNormals.push(triangle.normal);
+      }
+    }
+    if (pointIsHidden(point, camera, triangles, containingSurfaces)) return true;
+    if (containingNormals.length > 0) {
+      const toCam = camera.clone().sub(point);
+      const anyFrontFacing = containingNormals.some((n) => n.dot(toCam) > 1e-6);
+      if (!anyFrontFacing) return true;
+    }
+    return false;
+  };
+
+  const spans: EdgeVisibilitySpan[] = [];
+  const basePixels = options.projected_edge_pixels ?? 192;
+  for (const [int0, int1] of intervals) {
+    const spanLen = int1 - int0;
+    const cells = Math.max(16, Math.min(128, sampleSegments(basePixels * spanLen)));
+    const states: boolean[] = [];
+    for (let i = 0; i < cells; i += 1) {
+      const t = int0 + ((i + 0.5) / cells) * spanLen;
+      states.push(sampleHidden(t));
+    }
+    let start = 0;
+    for (let i = 1; i <= states.length; i += 1) {
+      if (i < states.length && states[i] === states[start]) continue;
+      spans.push({
+        edge_id: edgeId,
+        t0: int0 + (start / cells) * spanLen,
+        t1: int0 + (i / cells) * spanLen,
+        visibility: states[start] ? "HIDDEN" : "VISIBLE",
+      });
+      start = i;
+    }
+  }
+  return { spans, colinear_canonical_edge_ids: colinearIds };
+}
+

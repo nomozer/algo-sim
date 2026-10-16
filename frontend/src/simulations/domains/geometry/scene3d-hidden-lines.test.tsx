@@ -436,4 +436,76 @@ describe("chấm đỉnh và đường phụ", () => {
     expect(Math.max(...op(buildObject3D(DUONG, false)!))).toBeLessThanOrEqual(0.5);
     expect(Math.max(...op(buildObject3D(DUONG, true)!))).toBe(1);
   });
+
+  it("VISUAL-FE-2/3: đường thẳng trùng cạnh khối nhường đoạn giữa cho cạnh chuẩn (chỉ vẽ hai đầu kéo dài) và tô sáng cạnh chuẩn khi đường được chọn", () => {
+    const HOP: SceneObject = {
+      id: "hop", label: "Hộp", type: "solid", render: "mesh",
+      origin: "derived", producer: "construct_solid", depends: [],
+      vertices: [
+        ["0", "0", "0"], ["2", "0", "0"], ["2", "4", "0"], ["0", "4", "0"],
+        ["0", "0", "3"], ["2", "0", "3"], ["2", "4", "3"], ["0", "4", "3"],
+      ],
+      vertex_ids: ["A", "B", "C", "D", "A'", "B'", "C'", "D'"],
+      faces: [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]],
+    };
+    const GT: SceneObject = {
+      id: "gt_g", label: "BB'", type: "line3", render: "line",
+      origin: "derived", producer: "intersect_plane_plane", depends: [],
+      point: ["2", "0", "0"], direction: ["0", "0", "3"],
+    };
+    const diem: [number, number, number][] = [
+      [0, 0, 0], [2, 0, 0], [2, 4, 0], [0, 4, 0],
+      [0, 0, 3], [2, 0, 3], [2, 4, 3], [0, 4, 3],
+    ];
+    const goc = new THREE.Group();
+    const objHop = buildObject3D(HOP, false, undefined, diem)!;
+    const objGt = buildObject3D(GT, false, undefined, diem)!;
+    goc.add(objHop, objGt);
+    const cam = new THREE.PerspectiveCamera(45, 4 / 3, 0.1, 100);
+    cam.position.set(6, -6, 5);
+    cam.lookAt(1, 2, 1.5);
+    cam.updateMatrixWorld(true);
+    cam.updateProjectionMatrix();
+    updateCanonicalEdgeVisibility(goc, cam, "800x600@1");
+    const visibleLines = gom(objGt).filter((c) => (c as THREE.Line).isLine
+      && ((c as THREE.Line).material as THREE.Material & { colorWrite?: boolean }).colorWrite !== false);
+    // Chỉ còn 2 đoạn đầu mút kéo dài (z < 0 và z > 3); khúc giữa [0, 3] đã nhường cho hop::edge:B-B'
+    expect(visibleLines).toHaveLength(2);
+    for (const l of visibleLines) {
+      const pos = (l as THREE.Line).geometry.getAttribute("position");
+      const z0 = pos.getZ(0), z1 = pos.getZ(1);
+      expect(Math.max(z0, z1) <= 1e-4 || Math.min(z0, z1) >= 3 - 1e-4).toBe(true);
+    }
+  });
+
+  it("VISUAL-FE-3: viền thiết diện qua khối được phân loại thấy (nét liền) / khuất (nét đứt) theo mặt khối", () => {
+    const CHOP: SceneObject = {
+      id: "chop", label: "S.ABCD", type: "solid", render: "mesh",
+      origin: "derived", producer: "construct_solid", depends: [],
+      vertices: [["0", "0", "0"], ["2", "0", "0"], ["2", "2", "0"], ["0", "2", "0"], ["0", "0", "3"]],
+      vertex_ids: ["A", "B", "C", "D", "S"],
+      faces: [[0, 1, 2, 3], [0, 1, 4], [1, 2, 4], [2, 3, 4], [3, 0, 4]],
+    };
+    const TD: SceneObject = {
+      id: "td", label: "Thiết diện", type: "section", render: "polygon",
+      origin: "derived", producer: "construct_section", depends: ["chop"],
+      polygon: [["1", "0", "3/2"], ["2", "1", "0"], ["1", "2", "0"], ["0", "1", "3/2"]],
+      closed: true, fill_visible: true,
+    };
+    const goc = new THREE.Group();
+    const objChop = buildObject3D(CHOP, false)!;
+    const objTd = buildObject3D(TD, false)!;
+    goc.add(objChop, objTd);
+    const cam = new THREE.PerspectiveCamera(45, 4 / 3, 0.1, 100);
+    cam.position.set(6, 5, 4);
+    cam.lookAt(1, 1, 1);
+    cam.updateMatrixWorld(true);
+    cam.updateProjectionMatrix();
+    updateCanonicalEdgeVisibility(goc, cam, "800x600@1");
+    const mats = gom(objTd).filter((c) => (c as THREE.Line).isLine)
+      .map((c) => (c as THREE.Line).material);
+    expect(mats.some((m) => m instanceof THREE.LineDashedMaterial)).toBe(true);
+    expect(mats.some((m) => m instanceof THREE.LineBasicMaterial && !(m instanceof THREE.LineDashedMaterial))).toBe(true);
+  });
 });
+
