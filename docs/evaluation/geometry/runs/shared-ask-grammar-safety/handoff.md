@@ -1,6 +1,6 @@
 # CLAUDE_RESUME_HANDOFF — shared-ask-grammar-safety (2026-10-16)
 
-**Status:** `E1_FINAL_DOCUMENTATION_CORRECTION_READY_FOR_REVIEW` — E-1 `PENDING INDEPENDENT SHORT REVIEW` of [`evidence-reconciliation-55c657b8/correction-addendum-2.md`](evidence-reconciliation-55c657b8/correction-addendum-2.md) (Product commit: `55c657b8be715cda0edcc9e6e2ec1b3a204bdb65`; Full geometry gate: `PENDING FINAL CANDIDATE` — NOT PASS cho tới khi refreeze candidate). Không merge, không push, không refreeze candidate trước khi review độc lập đạt.
+**Status:** `E1_CONSISTENCY_CORRECTION_READY_FOR_REVIEW` — E-1 `PENDING INDEPENDENT SHORT REVIEW` of [`evidence-reconciliation-55c657b8/correction-addendum-3.md`](evidence-reconciliation-55c657b8/correction-addendum-3.md) (Product commit: `55c657b8be715cda0edcc9e6e2ec1b3a204bdb65`; Full geometry gate: `PENDING FINAL CANDIDATE` — NOT PASS cho tới khi refreeze candidate). Không merge, không push, không refreeze candidate trước khi review độc lập đạt.
 
 ## Kiểm lại trước khi tin
 
@@ -27,10 +27,11 @@ cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe ../docs/evaluation
       - F-1: 9 failure đúng là 9 node ID thuộc `test_analyze_failure_cluster_diagnosis.py`, `test_branch_independent_harness.py` ×5, `test_docs_information_architecture.py`, `test_docs_test_telemetry.py` và `test_thesis_acceptance_matrix.py`, đều do candidate verify. Candidate nằm ở `docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json`, định danh `4b95dcc665f5930b…`.
       - F-2: RED gồm 2 mục chuyển FAIL → PASS, 3/4 mutation pass, 1 mutation fail do `AttributeError`.
       - F-3: môi trường của 7 receipt GREEN là NOT_ATTESTED; receipt mutation chạy trên cây chính.
-    - Đã tái lập toàn bộ biên lai GREEN kèm header provenance (môi trường: xem F-3) tại `55c657b8` trong [`evidence-reconciliation-55c657b8/green-55c657b8/`](evidence-reconciliation-55c657b8/green-55c657b8/) (gồm cả `suite5a` 7-file `804 passed, 1 xfailed`, `suite5b` 8-file `868 passed, 1 xfailed`, `suite6` cây commit sạch `9 failed, 7750 passed, 1 deselected, 6 xfailed`, và `mutation-4-monkeypatch-tests-55c657b8.txt` `4 passed`).
+    - **Đính chính lần 3 ([`correction-addendum-3.md`](evidence-reconciliation-55c657b8/correction-addendum-3.md), append-only):** thay thế theo JSON path các trường đã thu hồi trong `manifest.json` (`exact_delta_explanation[0]`, `[1]`, `clean_committed_worktree_55c657b8_result`, tên khoá `clean_committed_receipt_path`), xác nhận không có consumer tự động nào đọc các trường đó, tách bạch cây commit / checkout / working tree sạch, và xử lý NB-1…NB-6.
+    - Đã tái lập toàn bộ biên lai GREEN kèm header provenance (môi trường: xem F-3) tại `55c657b8` trong [`evidence-reconciliation-55c657b8/green-55c657b8/`](evidence-reconciliation-55c657b8/green-55c657b8/) (gồm cả `suite5a` 7-file `804 passed, 1 xfailed`, `suite5b` 8-file `868 passed, 1 xfailed`, `suite6` trên mã sản phẩm `55c657b8` (working tree lúc chạy NOT_ATTESTED) `9 failed, 7750 passed, 1 deselected, 6 xfailed`, và `mutation-4-monkeypatch-tests-55c657b8.txt` `4 passed`).
 
 ## Bước tiếp theo
 
-1. Chạy **review độc lập ngắn** chỉ trên `correction-addendum-2.md` và các sửa `report.md`/`handoff.md` đi kèm. Product code review của `55c657b8` đã xong và vẫn giữ nguyên.
+1. Chạy **review độc lập ngắn** chỉ trên `correction-addendum-3.md` và các sửa `report.md`/`handoff.md` đi kèm. Product code review của `55c657b8` đã xong và vẫn giữ nguyên.
 2. Sau khi review độc lập đạt (`PASS`) và được user cho phép, mới thực hiện refreeze `EVALUATION_CANDIDATE.json`, cập nhật `inputs/candidate_divergence.json` và chạy authoritative T3 trên detached worktree sạch.
 3. Scene3D product–Playwright parity audit (`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY` OPEN).
