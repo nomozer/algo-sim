@@ -34,7 +34,11 @@ from .registry import REGISTRY, doc_ke_hoach, render_call, same_call
 PLANNER_VERSION = "geometry-fact-planner/6"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
-_NHAN_PHU = ("H", *(f"H{i}" for i in range(1, 100)))
+def _nhan_tuoi(stem: str) -> tuple[str, ...]:
+    return (stem, *(f"{stem}{i}" for i in range(1, 100)))
+
+
+_NHAN_PHU = _nhan_tuoi("H")
 MAX_CALLS = 64
 #: Bound of the goal-directed decomposition `MAT_SONG_SONG`: derived planes per problem (each costs two auxiliary points).
 MAX_DERIVED_PLANES = 4
@@ -227,7 +231,7 @@ def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
     if len(set(pts)) != len(pts) or all(len(c.inputs) != len(pts) for c in contracts):
         raise TuChoi("FACT_INCOMPLETE", f"{f.id}: {f.point_kind} cần {sorted({len(c.inputs) for c in contracts})} điểm "
                      "phân biệt", (f.id,))
-    if f.line_ref is None and len(f.points_b or []) < 2:
+    if f.line_ref is None and len(set(f.points_b or [])) < 2:
         raise TuChoi("FACT_INCOMPLETE", f"{f.id}: thiếu đích của khoảng cách (đường, mặt hay line_ref)", (f.id,))
 
 
@@ -598,10 +602,6 @@ def _loai(v) -> str | None:
     if isinstance(v, tuple) and len(v) >= 3 and all(isinstance(x, str) for x in v):
         return "Plane"
     return None
-
-
-def _nhan_tuoi(stem: str) -> tuple[str, ...]:
-    return (stem, *(f"{stem}{i}" for i in range(1, 100)))
 
 
 class _EffectResolver:

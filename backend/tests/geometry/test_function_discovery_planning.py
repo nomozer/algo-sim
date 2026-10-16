@@ -286,6 +286,96 @@ def test_tampered_certificate_or_calls_fail_closed(tamper):
     assert r.status == "REFUSED", tamper
 
 
+# ── independent review findings (RED before the fix) ─────────────────────────────────────────────────────────────
+@pytest.mark.parametrize("cid,old,new", [
+    ("pyr-midpoint-to-named-line", "đến BD.", "đến AC."),          # IMP-1: the source names another line
+    ("pyr-midpoint-to-plane", "đến (SAB).", "đến (SAD)."),         # IMP-1: the source names another plane
+    ("pyr-midpoint-to-plane", "đến (SAB).", "đến đáy."),
+])
+def test_target_named_by_the_source_must_be_the_target_of_the_facts(cid, old, new):
+    c = by_id("positive", cid)
+    c["text"] = c["text"].replace(old, new)
+    c["payload"]["facts"][-1]["quotes"] = [q.replace(old, new) for q in c["payload"]["facts"][-1]["quotes"]]
+    r = run(c)
+    assert r.status == "REFUSED" and r.code == "SOURCE_OBJECT_MISMATCH", (r.code, r.answers)
+
+
+def test_a_second_ask_in_the_certified_quote_is_not_read_as_answered():
+    """IMP-2: only the phrase the certificate bound is read; another descriptor ask in the same quote stays unread."""
+    c = by_id("positive", "pyr-midpoint-to-plane")
+    two = "Tính khoảng cách từ trung điểm của SC đến (SAB). Tính khoảng cách từ trung điểm của SC đến BD."
+    c["text"] = c["text"].replace("Tính khoảng cách từ trung điểm của SC đến (SAB).", two)
+    c["payload"]["facts"][-1]["quotes"] = [two]
+    r = run(c)
+    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (r.code, r.answers)
+
+
+def test_engine_answer_check_is_wired(monkeypatch):
+    """MINOR-5: the engine compares the composed answer with a direct distance; a disagreement refuses."""
+    from app.simulation.geometry_functions import engine
+    monkeypatch.setattr(engine._Dung, "kc2_dich", lambda self, d: Fraction(-1))
+    r = run(by_id("positive", "pyr-midpoint-to-plane"))
+    assert r.status == "REFUSED" and r.code == "ENGINE_SELF_CHECK_FAILED", r.code
+
+
+def test_fresh_label_equal_to_a_source_label_is_a_collision():
+    """MINOR-5: a certificate whose calls AND bindings consistently use a source label as the fresh point."""
+    from app.ai.function_route import run_function_route
+    c, k = _plan("pyr-midpoint-to-plane")
+    aux, calls = deepcopy(k.auxiliary), deepcopy(k.calls)
+    cert = next(d for d in aux if d.get("rule") == "effect-chain")
+    def swap(v):                                   # values only — the slot NAME "M" of the midpoint contract stays
+        if isinstance(v, dict):
+            return {k: swap(x) for k, x in v.items()}
+        if isinstance(v, list):
+            return [swap(x) for x in v]
+        return "D" if v == "M" else v
+    for x in calls:
+        x["args"] = swap(x["args"])
+    for key in ("chain", "labels", "operand"):
+        cert[key] = swap(cert[key])
+    r = run_function_route(c["text"], {"calls": calls}, tuple(aux))
+    assert r.status == "REFUSED" and r.code == "AUXILIARY_LABEL_COLLISION", r.code
+
+
+def test_kind_filter_excludes_candidates_before_they_are_counted():
+    """MINOR-5: a plane target never counts the line-only foot producer; a line target never the plane ask."""
+    from app.simulation.geometry_functions.planner import lap_ke_hoach
+    for cid, want in (("pyr-midpoint-to-plane", 3), ("pyr-midpoint-to-named-line", 3)):
+        c = by_id("positive", cid)
+        assert lap_ke_hoach(c["payload"], c["text"]).resolver.candidates == want, cid
+
+
+@pytest.mark.parametrize("edit", ["operand-str", "target-str", "chain-str", "line-none", "line-int", "quote-none"])
+def test_malformed_certificate_is_refused_with_a_code(edit):
+    """MINOR-4: a hand-made malformed certificate is a coded refusal, never an exception."""
+    from app.ai.function_route import run_function_route
+    c, k = _plan("pyr-midpoint-to-named-line")
+    aux = deepcopy(k.auxiliary)
+    cert = next(d for d in aux if d.get("rule") == "effect-chain")
+    if edit == "operand-str":
+        cert["operand"] = "x"
+    elif edit == "target-str":
+        cert["target"] = "x"
+    elif edit == "chain-str":
+        cert["chain"].append("x")
+    elif edit == "line-none":
+        cert["target"] = {"line": None}
+    elif edit == "line-int":
+        cert["target"] = {"line": ["B", 1]}
+    else:
+        cert["quotes"] = [None]
+    r = run_function_route(c["text"], {"calls": k.calls}, tuple(aux))
+    assert r.status == "REFUSED" and r.code == "AUXILIARY_RULE_MISMATCH", (edit, r.code)
+
+
+def test_duplicate_target_labels_are_an_incomplete_fact():
+    """MINOR-8 (MINOR-7, narration "CS" for "SC", is the pre-existing scene `depends` order, also for named midpoints)."""
+    c = by_id("positive", "pyr-midpoint-to-named-line")
+    c["payload"]["facts"][-1]["points_b"] = ["B", "B"]
+    assert run(c).code == "FACT_INCOMPLETE"
+
+
 def test_route_a_cannot_use_an_unnamed_point_without_a_planner_certificate():
     from app.ai.function_route import run_function_route
     c, k = _plan("pyr-midpoint-to-plane")

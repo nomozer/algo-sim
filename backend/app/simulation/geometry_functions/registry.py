@@ -726,12 +726,13 @@ def nhan_phu_da_dung(text: str, chu: str = "H") -> set[str]:
 
 
 def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: set[str],
-              ten_mat_phu: dict | None = None, don_vi_de: set[str] = frozenset()) -> set[str]:
+              ten_mat_phu: dict | None = None, don_vi_de: set[str] = frozenset(),
+              buoc: list[tuple[int, int]] | None = None) -> set[str]:
     """Điểm phụ do planner khai: đúng luật, nhãn không trùng đề, hai lời gọi đúng hình dạng luật, câu hỏi nguồn có thật,
     không điều kiện/chứng minh/phủ định, và gắn đúng điểm + đường. Trả id các lời gọi đã kiểm (bỏ qua ở vòng thường).
     Nhãn phụ ở bất kỳ lời gọi nào KHÁC vẫn rơi vào `UNKNOWN_LABEL` của vòng thường."""
     theo_id = {c.id: c for c in calls}
-    da: set[str] = _kiem_result_binding(phu, calls, de, nhan, don_vi_de)
+    da: set[str] = _kiem_result_binding(phu, calls, de, nhan, don_vi_de, buoc)
     chiem = nhan | nhan_phu_da_dung(de)
     nhan_da_khai: set = set()
     for d in phu:
@@ -790,19 +791,23 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
     return da
 
 
-def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()):
-    """Validate proposed effects against real calls and closed source spans. No client promise is truth."""
+def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset(), buoc=None):
+    """Validate proposed effects against real calls and closed source spans. No client promise is truth. `buoc` collects
+    the exact source spans of the descriptor ask phrases an `effect-chain` certificate bound (read by the coverage gate)."""
     by_id = {c.id:c for c in calls}
     accepted = set()
     registered = {d.get('consumer') for d in phu if d.get('rule') == 'result-line-reference'}
     registered |= {d.get('construct') for d in phu if d.get('effect_binding') and d.get('line_ref')}
-    registered |= {e.get('call') for d in phu if d.get('rule') == 'effect-chain' for e in d.get('chain') or ()}
+    # Malformed parts are skipped here and refused by `chain` below (a coded AUXILIARY_RULE_MISMATCH, never an exception).
+    chains = [d for d in phu if d.get('rule') == 'effect-chain' and isinstance(d.get('chain'), list)]
+    registered |= {e.get('call') for d in chains for e in d['chain'] if isinstance(e, dict)}
     # A planner-written call may serve several goals; its quotes must come from the goals whose chains contain it.
     chain_quotes: dict[str, set[str]] = {}
-    for d in phu:
-        if d.get('rule') == 'effect-chain':
-            for e in d.get('chain') or ():
-                chain_quotes.setdefault(e.get('call'), set()).update(chuan_hoa(q) for q in d.get('quotes') or ())
+    for d in chains:
+        for e in d['chain']:
+            if isinstance(e, dict):
+                chain_quotes.setdefault(e.get('call'), set()).update(
+                    chuan_hoa(q) for q in d.get('quotes') or () if isinstance(q, str))
     for c in calls:
         if getattr(c.args,'line_ref',None) and c.id not in registered:
             raise TuChoi('RESULT_BINDING_UNVERIFIED', 'line_ref chỉ qua chứng chỉ của Planner', (c.id,))
@@ -972,11 +977,16 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                     form = re.compile(r'(?:(?:tính|tìm)\s+)?(?:' + pattern.pattern + r')[.?\s]*', re.IGNORECASE)
                     if not form.fullmatch(q) or not form.fullmatch(de[slice(*_bien_cau(de, m.start()))].strip()):
                         raise TuChoi('SOURCE_PREMISE_UNREAD', 'câu mục tiêu có phần chưa được đọc', (ask.id,))
+                if buoc is not None:
+                    buoc.append((m.start(), m.end()))
         accepted.add(ask.id)
 
     for d in phu:
         if d.get('rule') == 'effect-chain':
-            chain(d)
+            try:
+                chain(d)
+            except (AttributeError, KeyError, TypeError, ValueError, IndexError):
+                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'chứng chỉ chuỗi hiệu ứng dị dạng') from None
             continue
         if d.get('rule')=='result-line-alias':
             a,b=producer(d.get('producer')),producer(d.get('canonical'))
@@ -1255,7 +1265,8 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
     if len(don_vi_de) > 1:
         raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED", "đơn vị độ dài trong đề không đồng nhất; chưa hỗ trợ đổi đơn vị")
     ten_mat_phu: dict[str, str | None] = {}              # derived plane (first construct id) → name the source gave it
-    phu = _kiem_phu(tuple(auxiliary), calls, de, nhan, ten_mat_phu, don_vi_de)
+    buoc: list[tuple[int, int]] = []                     # descriptor ask phrases an `effect-chain` certificate bound
+    phu = _kiem_phu(tuple(auxiliary), calls, de, nhan, ten_mat_phu, don_vi_de, buoc)
     if any(d.get('rule') == MAT_HAI_DUONG or d.get('line_ref') for d in auxiliary):
         _kiem_nguon_dong(calls, de, phu, read_quotes)
     if lac := sorted(c.id for c in calls if c.spec.auxiliary_only and c.id not in phu):
@@ -1339,12 +1350,13 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
             if gt != so[0]:
                 raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {v} không phải số trong {c.quote!r}", (c.id,))
 
-    _kiem_du_kien_cau_hoi(calls, de, read_quotes, phu, don_vi_de)
+    _kiem_du_kien_cau_hoi(calls, de, read_quotes, phu, don_vi_de, tuple(buoc))
     return ten_mat_phu
 
 
 def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple[str, ...] = (),
-                          phu: set[str] = frozenset(), don_vi_de: set[str] | None = None) -> None:
+                          phu: set[str] = frozenset(), don_vi_de: set[str] | None = None,
+                          buoc: tuple[tuple[int, int], ...] = ()) -> None:
     """Source coverage, not a second fact state: local claims must match validated calls before engine verification.
 
     Read the whole question context, including text outside the model's quote. Only closed source spans are covered;
@@ -1422,9 +1434,6 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
 
     phep_dung_spans: list[tuple[int, int]] = []
     questions = {_bien_cau(de, m.start()) for m in request_verb.finditer(de)}
-    # A descriptor ask phrase is read only inside the quote of an ask a planner `effect-chain` certificate already bound.
-    chain_spans = [vt for c in calls if c.id in phu and c.spec.kind == "ask" for q in c.quotes
-                   if (vt := _vi_tri(de, q)) is not None]
     for c in calls:
         if c.spec.kind == "ask":
             for q in c.quotes:
@@ -1459,8 +1468,8 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         phrases += [(m.start(), m.end()) for pattern in (
             _KHOANG_CACH_DIEM_DUONG, _KHOANG_CACH_GIAO_TUYEN, _CUM_HOI_THIET_DIEN_PHU)
                     for m in pattern.finditer(de, start, end) if _hoi_dung_cum(de, m.start(), m.end())]
-        phrases += [(m.start(), m.end()) for pattern in _mau_mo_ta() for m in pattern.finditer(de, start, end)
-                    if any(a <= m.start() and m.end() <= b for a, b in chain_spans) and _hoi_dung_cum(de, m.start(), m.end())]
+        # A descriptor ask phrase is read only where an `effect-chain` certificate bound exactly that phrase.
+        phrases += [(a, b) for a, b in buoc if start <= a and b <= end and _hoi_dung_cum(de, a, b)]
         if _DIEU_KIEN.search(de, start, end):
             raise TuChoi("CONDITIONAL_CLAUSE", "ngữ cảnh câu hỏi có giả thiết điều kiện; chưa hỗ trợ thay phạm vi")
         masked = list(de[start:end])
@@ -1946,12 +1955,6 @@ def _mau_khoang_cach_mo_ta(phrase: str) -> re.Pattern[str]:
     """Closed ask phrase "khoảng cách từ ‹unnamed point, as the contract's `phrase` names it› đến ‹target›"."""
     return re.compile(r"khoảng cách\s+từ\s+(?:" + phrase.replace("{P}", _P1) + r")\s+(?:đến|tới)\s+" + _DICH_KHOANG_CACH,
                       re.IGNORECASE)
-
-
-def _mau_mo_ta() -> tuple[re.Pattern[str], ...]:
-    """The descriptor ask phrases of the CURRENT catalog — a contract added to the Registry brings its own phrase."""
-    return tuple(_mau_khoang_cach_mo_ta(s.planning.phrase) for s in REGISTRY.values()
-                 if s.planning is not None and s.planning.descriptor and s.planning.phrase)
 
 
 #: Next task / method after an asked phrase. The ask grammar stops reading here, so the source-coverage gate must read what
