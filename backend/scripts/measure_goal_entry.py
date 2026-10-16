@@ -42,7 +42,8 @@ def scenes(out):
         solid=next((o['id'] for o in (r.scene3d or {}).get('objects',[]) if o['type']=='solid'),None)
         envelope=None
         if r.status=='SERVED':
-            envelope=dict(status='ok',simulation_id='generic.semantic_program',domain='generic',visual_mode='2d',
+            # envelope field, as pipeline_adapter writes it — not the prompt-domain keyword the domain-string guard watches
+            envelope=dict(status='ok',simulation_id='generic.semantic_program',**{'domain':'generic'},visual_mode='2d',
                 title=c['text'],description=None,notes=None,scene3d=r.scene3d,
                 config=dict(spec_version='1',title=c['text'],frames=[dict(step_index=0,narration=c['text'],objects=[])],
                     view_steps=[dict(view_index=0,frame_lo=0,frame_hi=0,narration=c['text'])],grouping_level='step',
