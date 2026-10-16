@@ -1,0 +1,5114 @@
+{
+ "schema": "function_discovery_comparison/1",
+ "model_calls": 0,
+ "counts": {
+  "NEW[production]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "false_refusal": 2
+   },
+   "goal/negative": {
+    "correct_refusal": 10,
+    "wrong_code_refusal": 1
+   },
+   "goal/positive": {
+    "correct_served": 8
+   },
+   "new/discovery": {
+    "false_refusal": 3
+   },
+   "new/negative": {
+    "correct_refusal": 15,
+    "wrong_code_refusal": 1
+   },
+   "new/positive": {
+    "correct_served": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  }
+ },
+ "pairwise_identity": {},
+ "cases": {
+  "new/positive::pyr-midpoint-to-plane": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "1"
+    },
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00495,
+    "route_seconds": 0.0202,
+    "plan_peak_bytes": 87276
+   }
+  },
+  "new/positive::pyr-midpoint-to-named-line": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3/2"
+    },
+    "plan": {
+     "calls": 7,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M",
+      "H"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00635,
+    "route_seconds": 0.0089,
+    "plan_peak_bytes": 87312
+   }
+  },
+  "new/positive::pyr-midpoint-to-result-line": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√13/2"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M",
+      "H"
+     ],
+     "needs": 8,
+     "candidates": 4,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00661,
+    "route_seconds": 0.0148,
+    "plan_peak_bytes": 90510
+   }
+  },
+  "new/positive::cube-midpoint-to-plane": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√3"
+    },
+    "plan": {
+     "calls": 5,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00421,
+    "route_seconds": 0.0096,
+    "plan_peak_bytes": 81699
+   }
+  },
+  "new/positive::cuboid-midpoint-to-result-line": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√5"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "prism",
+      "rectangle",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M",
+      "H"
+     ],
+     "needs": 8,
+     "candidates": 4,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.0066,
+    "route_seconds": 0.0131,
+    "plan_peak_bytes": 90561
+   }
+  },
+  "new/positive::prism-midpoint-to-plane": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√3/2"
+    },
+    "plan": {
+     "calls": 5,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.004,
+    "route_seconds": 0.0084,
+    "plan_peak_bytes": 83638
+   }
+  },
+  "new/positive::pyr-reuse-named-midpoint": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "1"
+    },
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [],
+     "needs": 6,
+     "candidates": 4,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00246,
+    "route_seconds": 0.0088,
+    "plan_peak_bytes": 36925
+   }
+  },
+  "new/positive::pyr-two-goals-shared-point": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q1": "1",
+     "q2": "3/2"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_distance_point_plane",
+      "ask_length",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 2,
+     "fresh_labels": [
+      "M",
+      "M",
+      "H"
+     ],
+     "needs": 9,
+     "candidates": 5,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00753,
+    "route_seconds": 0.0103,
+    "plan_peak_bytes": 92804
+   }
+  },
+  "new/positive::pyr-zero-distance": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "0"
+    },
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00473,
+    "route_seconds": 0.0077,
+    "plan_peak_bytes": 85874
+   }
+  },
+  "new/negative::label-not-in-source": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "UNKNOWN_LABEL",
+    "answers": {},
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00454,
+    "route_seconds": 0.0011,
+    "plan_peak_bytes": 85874
+   }
+  },
+  "new/negative::descriptor-operands-mismatch": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "answers": {},
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00433,
+    "route_seconds": 0.0011,
+    "plan_peak_bytes": 85874
+   }
+  },
+  "new/negative::descriptor-kind-mismatch": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "answers": {},
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00416,
+    "route_seconds": 0.001,
+    "plan_peak_bytes": 85892
+   }
+  },
+  "new/negative::conditional-question": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "CONDITIONAL_CLAUSE",
+    "answers": {},
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00418,
+    "route_seconds": 0.0013,
+    "plan_peak_bytes": 85857
+   }
+  },
+  "new/negative::asserted-not-asked": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "NOT_ASKED_IN_SOURCE",
+    "answers": {},
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00414,
+    "route_seconds": 0.0011,
+    "plan_peak_bytes": 85878
+   }
+  },
+  "new/negative::proof-goal": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "GOAL_CLAUSE_NOT_PREMISE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00092,
+    "route_seconds": 0.0003,
+    "plan_peak_bytes": 21465
+   }
+  },
+  "new/negative::negated-question": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "NEGATED_CLAUSE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00091,
+    "route_seconds": 0.0002,
+    "plan_peak_bytes": 22339
+   }
+  },
+  "new/negative::centroid-without-contract": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_CAPABILITY",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00033,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 13601
+   }
+  },
+  "new/negative::named-descriptor": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SCHEMA_INVALID",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00031,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 13813
+   }
+  },
+  "new/negative::descriptor-arity": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "FACT_INCOMPLETE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00033,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 13545
+   }
+  },
+  "new/negative::degenerate-descriptor": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "FACT_INCOMPLETE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00033,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 13537
+   }
+  },
+  "new/negative::underdetermined-figure": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": {},
+    "plan": {
+     "calls": 5,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00407,
+    "route_seconds": 0.003,
+    "plan_peak_bytes": 82944
+   }
+  },
+  "new/negative::contradictory-givens": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "plan": {
+     "calls": 7,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00477,
+    "route_seconds": 0.0038,
+    "plan_peak_bytes": 88389
+   }
+  },
+  "new/negative::unread-modifier": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "NOT_ASKED_IN_SOURCE",
+    "answers": {},
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00434,
+    "route_seconds": 0.0013,
+    "plan_peak_bytes": 85890
+   }
+  },
+  "new/negative::parallel-result-line": {
+   "NEW[production]": {
+    "outcome": "wrong_code_refusal",
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "answers": {},
+    "plan": {
+     "calls": 7,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "prism",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M",
+      "H"
+     ],
+     "needs": 8,
+     "candidates": 4,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00696,
+    "route_seconds": 0.0024,
+    "plan_peak_bytes": 85655
+   }
+  },
+  "new/negative::segment-is-not-a-line": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "answers": {},
+    "plan": {
+     "calls": 7,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M",
+      "H"
+     ],
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00652,
+    "route_seconds": 0.0018,
+    "plan_peak_bytes": 86675
+   }
+  },
+  "new/discovery::centroid-to-plane": {
+   "NEW[production]": {
+    "outcome": "false_refusal",
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_CAPABILITY",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00035,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 13601
+   }
+  },
+  "new/discovery::centroid-to-named-line": {
+   "NEW[production]": {
+    "outcome": "false_refusal",
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_CAPABILITY",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00031,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 13587
+   }
+  },
+  "new/discovery::centroid-to-result-line": {
+   "NEW[production]": {
+    "outcome": "false_refusal",
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_CAPABILITY",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00054,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 15802
+   }
+  },
+  "benchmark30::B01": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "4"
+    },
+    "plan": {
+     "calls": 5,
+     "functions": [
+      "ask_volume",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00117,
+    "route_seconds": 0.0066,
+    "plan_peak_bytes": 18235
+   }
+  },
+  "benchmark30::B02": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√23/3"
+    },
+    "plan": {
+     "calls": 4,
+     "functions": [
+      "ask_volume",
+      "regular_polygon",
+      "regular_pyramid",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00084,
+    "route_seconds": 0.0065,
+    "plan_peak_bytes": 15148
+   }
+  },
+  "benchmark30::B03": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "2√3/3"
+    },
+    "plan": {
+     "calls": 4,
+     "functions": [
+      "ask_distance_point_plane",
+      "prism",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00077,
+    "route_seconds": 0.0078,
+    "plan_peak_bytes": 14059
+   }
+  },
+  "benchmark30::B04": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3√3"
+    },
+    "plan": {
+     "calls": 4,
+     "functions": [
+      "ask_volume",
+      "prism",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00089,
+    "route_seconds": 0.0076,
+    "plan_peak_bytes": 15616
+   }
+  },
+  "benchmark30::B05": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√11"
+    },
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_length",
+      "intersect_line_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 3,
+     "candidates": 1,
+     "depth_max": 1,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00189,
+    "route_seconds": 0.0095,
+    "plan_peak_bytes": 33636
+   }
+  },
+  "benchmark30::B06": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3/2"
+    },
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_distance_point_plane",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00123,
+    "route_seconds": 0.0074,
+    "plan_peak_bytes": 21376
+   }
+  },
+  "benchmark30::B07": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "6√13/13"
+    },
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_length",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 3,
+     "candidates": 1,
+     "depth_max": 1,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00214,
+    "route_seconds": 0.0092,
+    "plan_peak_bytes": 33548
+   }
+  },
+  "benchmark30::B08": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "6√13/13"
+    },
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_length",
+      "orthogonal_projection",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 3,
+     "candidates": 1,
+     "depth_max": 1,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00196,
+    "route_seconds": 0.0086,
+    "plan_peak_bytes": 33577
+   }
+  },
+  "benchmark30::B09": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√11/2"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_length",
+      "intersect_line_plane",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 3,
+     "candidates": 1,
+     "depth_max": 1,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00247,
+    "route_seconds": 0.0114,
+    "plan_peak_bytes": 42394
+   }
+  },
+  "benchmark30::B10": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√17/3"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_length",
+      "intersect_line_line",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 3,
+     "candidates": 1,
+     "depth_max": 1,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00232,
+    "route_seconds": 0.0118,
+    "plan_peak_bytes": 42373
+   }
+  },
+  "benchmark30::B11": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3√22/11"
+    },
+    "plan": {
+     "calls": 7,
+     "functions": [
+      "ask_length",
+      "intersect_line_line",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 3,
+     "candidates": 1,
+     "depth_max": 1,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00235,
+    "route_seconds": 0.0102,
+    "plan_peak_bytes": 37960
+   }
+  },
+  "benchmark30::B12": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√11/2"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_length",
+      "intersect_line_line",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 3,
+     "candidates": 1,
+     "depth_max": 1,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00264,
+    "route_seconds": 0.0126,
+    "plan_peak_bytes": 47485
+   }
+  },
+  "benchmark30::B13": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√11/2"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_length",
+      "intersect_line_plane",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 3,
+     "candidates": 1,
+     "depth_max": 1,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00264,
+    "route_seconds": 0.0208,
+    "plan_peak_bytes": 42482
+   }
+  },
+  "benchmark30::B14": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√17/3"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_length",
+      "intersect_line_line",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 3,
+     "candidates": 1,
+     "depth_max": 1,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00244,
+    "route_seconds": 0.0106,
+    "plan_peak_bytes": 42373
+   }
+  },
+  "benchmark30::B15": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "6√13/13"
+    },
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_length",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 3,
+     "candidates": 1,
+     "depth_max": 1,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00171,
+    "route_seconds": 0.0075,
+    "plan_peak_bytes": 33548
+   }
+  },
+  "benchmark30::B16": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√17/3"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_length",
+      "intersect_line_line",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 3,
+     "candidates": 1,
+     "depth_max": 1,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00273,
+    "route_seconds": 0.01,
+    "plan_peak_bytes": 42373
+   }
+  },
+  "benchmark30::B17": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": {},
+    "plan": {
+     "calls": 4,
+     "functions": [
+      "ask_volume",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00078,
+    "route_seconds": 0.0023,
+    "plan_peak_bytes": 15168
+   }
+  },
+  "benchmark30::B18": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "answers": {},
+    "plan": {
+     "calls": 4,
+     "functions": [
+      "ask_volume",
+      "perpendicular_line_plane",
+      "pyramid",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00073,
+    "route_seconds": 0.0018,
+    "plan_peak_bytes": 14531
+   }
+  },
+  "benchmark30::B19": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_volume",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00094,
+    "route_seconds": 0.0031,
+    "plan_peak_bytes": 21993
+   }
+  },
+  "benchmark30::B20": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "plan": {
+     "calls": 7,
+     "functions": [
+      "ask_length",
+      "intersect_line_line",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 3,
+     "candidates": 1,
+     "depth_max": 1,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00216,
+    "route_seconds": 0.0045,
+    "plan_peak_bytes": 41685
+   }
+  },
+  "benchmark30::B21": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "FIGURE_NOT_UNIQUE",
+    "answers": {},
+    "plan": {
+     "calls": 4,
+     "functions": [
+      "ask_volume",
+      "height",
+      "pyramid",
+      "regular_polygon"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00078,
+    "route_seconds": 0.002,
+    "plan_peak_bytes": 15081
+   }
+  },
+  "benchmark30::B22": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "UNDERDETERMINED_POINT",
+    "answers": {},
+    "plan": {
+     "calls": 4,
+     "functions": [
+      "ask_distance_point_plane",
+      "height",
+      "pyramid",
+      "regular_polygon"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00082,
+    "route_seconds": 0.0019,
+    "plan_peak_bytes": 15708
+   }
+  },
+  "benchmark30::B23": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "OUT_OF_SCOPE",
+    "answers": {},
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length",
+      "unsupported"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00107,
+    "route_seconds": 0.0014,
+    "plan_peak_bytes": 21291
+   }
+  },
+  "benchmark30::B24": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "OUT_OF_SCOPE",
+    "answers": {},
+    "plan": {
+     "calls": 5,
+     "functions": [
+      "ask_volume",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "unsupported"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00097,
+    "route_seconds": 0.0012,
+    "plan_peak_bytes": 18849
+   }
+  },
+  "benchmark30::B25": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "OUT_OF_SCOPE",
+    "answers": {},
+    "plan": {
+     "calls": 5,
+     "functions": [
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length",
+      "unsupported"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00088,
+    "route_seconds": 0.0013,
+    "plan_peak_bytes": 18473
+   }
+  },
+  "benchmark30::B26": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√11"
+    },
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_length",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H"
+     ],
+     "needs": 5,
+     "candidates": 2,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00372,
+    "route_seconds": 0.0075,
+    "plan_peak_bytes": 85393
+   }
+  },
+  "benchmark30::B27": {
+   "NEW[production]": {
+    "outcome": "false_refusal",
+    "status": "REFUSED",
+    "code": "OUT_OF_SCOPE",
+    "answers": {},
+    "plan": {
+     "calls": 5,
+     "functions": [
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length",
+      "unsupported"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.0009,
+    "route_seconds": 0.0013,
+    "plan_peak_bytes": 18595
+   }
+  },
+  "benchmark30::B28": {
+   "NEW[production]": {
+    "outcome": "false_refusal",
+    "status": "REFUSED",
+    "code": "PREDICATE_NOT_IN_QUOTE",
+    "answers": {},
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_distance_point_plane",
+      "centroid",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00104,
+    "route_seconds": 0.0013,
+    "plan_peak_bytes": 21402
+   }
+  },
+  "benchmark30::B29": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "cos²=8/17"
+    },
+    "plan": {
+     "calls": 5,
+     "functions": [
+      "ask_angle_line_plane",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00093,
+    "route_seconds": 0.0064,
+    "plan_peak_bytes": 18590
+   }
+  },
+  "benchmark30::B30": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√7"
+    },
+    "plan": {
+     "calls": 5,
+     "functions": [
+      "ask_length",
+      "intersect_line_line",
+      "regular_polygon",
+      "regular_pyramid",
+      "segment_length"
+     ],
+     "auxiliary": 0,
+     "fresh_labels": [],
+     "needs": 3,
+     "candidates": 1,
+     "depth_max": 1,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00154,
+    "route_seconds": 0.0072,
+    "plan_peak_bytes": 29348
+   }
+  },
+  "result_binding/positive::derived-line-pyramid": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√110/11"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H"
+     ],
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00456,
+    "route_seconds": 0.0116,
+    "plan_peak_bytes": 91442
+   }
+  },
+  "result_binding/positive::derived-line-cuboid": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√5"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "prism",
+      "rectangle",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H"
+     ],
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00462,
+    "route_seconds": 0.0121,
+    "plan_peak_bytes": 91581
+   }
+  },
+  "result_binding/positive::derived-line-prism": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√3"
+    },
+    "plan": {
+     "calls": 7,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "prism",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H"
+     ],
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00452,
+    "route_seconds": 0.0114,
+    "plan_peak_bytes": 89803
+   }
+  },
+  "result_binding/positive::different-direction-decomposition": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√10"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H"
+     ],
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00476,
+    "route_seconds": 0.0102,
+    "plan_peak_bytes": 91354
+   }
+  },
+  "result_binding/positive::zero-distance": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "0"
+    },
+    "plan": {
+     "calls": 7,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H"
+     ],
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00458,
+    "route_seconds": 0.0094,
+    "plan_peak_bytes": 88823
+   }
+  },
+  "result_binding/positive::shared-line-foot-two-goals": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√110/11",
+     "q2": "√110/11"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 2,
+     "fresh_labels": [
+      "H",
+      "H"
+     ],
+     "needs": 9,
+     "candidates": 4,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.0051,
+    "route_seconds": 0.0108,
+    "plan_peak_bytes": 93562
+   }
+  },
+  "result_binding/negative::unknown-reference": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "UNKNOWN_DERIVED_REFERENCE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00038,
+    "route_seconds": 0.0002,
+    "plan_peak_bytes": 17696
+   }
+  },
+  "result_binding/negative::wrong-reference-type": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "DERIVED_REFERENCE_TYPE_MISMATCH",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00035,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 17680
+   }
+  },
+  "result_binding/negative::producer-source-mismatch": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H"
+     ],
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.0042,
+    "route_seconds": 0.0012,
+    "plan_peak_bytes": 91346
+   }
+  },
+  "result_binding/negative::conditional-producer": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "CONDITIONAL_CLAUSE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00038,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 17519
+   }
+  },
+  "result_binding/negative::proof-producer": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "GOAL_CLAUSE_NOT_PREMISE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00036,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 17551
+   }
+  },
+  "result_binding/negative::negated-producer": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "NEGATED_CLAUSE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00036,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 17559
+   }
+  },
+  "result_binding/negative::parallel-planes": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PARALLEL_NO_INTERSECTION",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "prism",
+      "rectangle",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H"
+     ],
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00457,
+    "route_seconds": 0.0051,
+    "plan_peak_bytes": 92439
+   }
+  },
+  "result_binding/negative::coincident-planes": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "CONTAINED_INFINITE_INTERSECTION",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H"
+     ],
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00472,
+    "route_seconds": 0.0046,
+    "plan_peak_bytes": 91346
+   }
+  },
+  "result_binding/negative::long-quote-nonnumeric": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H"
+     ],
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00427,
+    "route_seconds": 0.0016,
+    "plan_peak_bytes": 91396
+   }
+  },
+  "result_binding/negative::and-song-unread-premise": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SOURCE_PREMISE_UNREAD",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H"
+     ],
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00418,
+    "route_seconds": 0.0015,
+    "plan_peak_bytes": 91420
+   }
+  },
+  "result_binding/negative::unverified-goal-value": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "NOT_ASKED_IN_SOURCE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_length",
+      "intersection_line",
+      "midpoint",
+      "orthogonal_projection_line",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H"
+     ],
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 3,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00456,
+    "route_seconds": 0.0012,
+    "plan_peak_bytes": 91394
+   }
+  },
+  "result_binding/negative::cycle": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "DEPENDENCY_CYCLE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00477,
+    "route_seconds": 0.001,
+    "plan_peak_bytes": 91844
+   }
+  },
+  "two_line/development::development-0": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "9/4"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00697,
+    "route_seconds": 0.0179,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/development::development-1": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3√13/4"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00704,
+    "route_seconds": 0.0171,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/development::development-2": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3√13/4"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00871,
+    "route_seconds": 0.0167,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/development::development-3": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_NOT_UNIQUE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00809,
+    "route_seconds": 0.0098,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/development::development-4": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_NOT_UNIQUE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00742,
+    "route_seconds": 0.0084,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/development::development-5": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_NOT_UNIQUE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00865,
+    "route_seconds": 0.013,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/development::development-6": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00813,
+    "route_seconds": 0.0111,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/development::development-7": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00747,
+    "route_seconds": 0.0086,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/development::development-8": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00725,
+    "route_seconds": 0.0101,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/development::development-9": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_TOUCHES_EDGE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00739,
+    "route_seconds": 0.0129,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/development::development-10": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_TOUCHES_EDGE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00722,
+    "route_seconds": 0.012,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/development::development-11": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_TOUCHES_EDGE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00773,
+    "route_seconds": 0.0118,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/development::development-12": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3/2"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00724,
+    "route_seconds": 0.0162,
+    "plan_peak_bytes": 97858
+   }
+  },
+  "two_line/development::development-13": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√3/2"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00765,
+    "route_seconds": 0.0168,
+    "plan_peak_bytes": 97858
+   }
+  },
+  "two_line/development::development-14": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√3/2"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.0074,
+    "route_seconds": 0.016,
+    "plan_peak_bytes": 97858
+   }
+  },
+  "two_line/development::development-15": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00701,
+    "route_seconds": 0.0083,
+    "plan_peak_bytes": 97858
+   }
+  },
+  "two_line/development::development-16": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00727,
+    "route_seconds": 0.0088,
+    "plan_peak_bytes": 97858
+   }
+  },
+  "two_line/development::development-17": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00707,
+    "route_seconds": 0.0091,
+    "plan_peak_bytes": 97858
+   }
+  },
+  "two_line/development::development-18": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00917,
+    "route_seconds": 0.0181,
+    "plan_peak_bytes": 95639
+   }
+  },
+  "two_line/development::development-19": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00723,
+    "route_seconds": 0.019,
+    "plan_peak_bytes": 95639
+   }
+  },
+  "two_line/development::development-20": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00642,
+    "route_seconds": 0.0166,
+    "plan_peak_bytes": 95639
+   }
+  },
+  "two_line/development::development-21": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_NOT_UNIQUE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00748,
+    "route_seconds": 0.0078,
+    "plan_peak_bytes": 95729
+   }
+  },
+  "two_line/development::development-22": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_NOT_UNIQUE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00701,
+    "route_seconds": 0.008,
+    "plan_peak_bytes": 95729
+   }
+  },
+  "two_line/development::development-23": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_NOT_UNIQUE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00696,
+    "route_seconds": 0.0084,
+    "plan_peak_bytes": 95729
+   }
+  },
+  "two_line/development::development-24": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00713,
+    "route_seconds": 0.0083,
+    "plan_peak_bytes": 95502
+   }
+  },
+  "two_line/development::development-25": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00702,
+    "route_seconds": 0.008,
+    "plan_peak_bytes": 95549
+   }
+  },
+  "two_line/development::development-26": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00683,
+    "route_seconds": 0.008,
+    "plan_peak_bytes": 95729
+   }
+  },
+  "two_line/development::development-27": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SECTION_PLANE_IS_FACE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00733,
+    "route_seconds": 0.0083,
+    "plan_peak_bytes": 95913
+   }
+  },
+  "two_line/development::development-28": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SECTION_PLANE_IS_FACE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00703,
+    "route_seconds": 0.0086,
+    "plan_peak_bytes": 95913
+   }
+  },
+  "two_line/development::development-29": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SECTION_PLANE_IS_FACE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00689,
+    "route_seconds": 0.0094,
+    "plan_peak_bytes": 95913
+   }
+  },
+  "two_line/development::development-30": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_TOUCHES_EDGE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.01139,
+    "route_seconds": 0.0156,
+    "plan_peak_bytes": 95684
+   }
+  },
+  "two_line/development::development-31": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_TOUCHES_EDGE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00683,
+    "route_seconds": 0.0119,
+    "plan_peak_bytes": 95684
+   }
+  },
+  "two_line/development::development-32": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_TOUCHES_EDGE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00713,
+    "route_seconds": 0.0125,
+    "plan_peak_bytes": 95868
+   }
+  },
+  "two_line/development::development-33": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "12"
+    },
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00737,
+    "route_seconds": 0.0189,
+    "plan_peak_bytes": 98439
+   }
+  },
+  "two_line/development::development-34": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "12"
+    },
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00677,
+    "route_seconds": 0.0203,
+    "plan_peak_bytes": 98392
+   }
+  },
+  "two_line/development::development-35": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "12"
+    },
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00709,
+    "route_seconds": 0.0184,
+    "plan_peak_bytes": 98439
+   }
+  },
+  "two_line/development::development-36": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_NOT_UNIQUE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00707,
+    "route_seconds": 0.0081,
+    "plan_peak_bytes": 98349
+   }
+  },
+  "two_line/development::development-37": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_NOT_UNIQUE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00795,
+    "route_seconds": 0.0086,
+    "plan_peak_bytes": 98529
+   }
+  },
+  "two_line/development::development-38": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_NOT_UNIQUE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00681,
+    "route_seconds": 0.0108,
+    "plan_peak_bytes": 98529
+   }
+  },
+  "two_line/development::development-39": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00665,
+    "route_seconds": 0.0084,
+    "plan_peak_bytes": 98349
+   }
+  },
+  "two_line/development::development-40": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00725,
+    "route_seconds": 0.0081,
+    "plan_peak_bytes": 98349
+   }
+  },
+  "two_line/development::development-41": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00659,
+    "route_seconds": 0.008,
+    "plan_peak_bytes": 98482
+   }
+  },
+  "two_line/development::development-42": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SECTION_PLANE_IS_FACE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00666,
+    "route_seconds": 0.0082,
+    "plan_peak_bytes": 98439
+   }
+  },
+  "two_line/development::development-43": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SECTION_PLANE_IS_FACE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00657,
+    "route_seconds": 0.0079,
+    "plan_peak_bytes": 98392
+   }
+  },
+  "two_line/development::development-44": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SECTION_PLANE_IS_FACE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00676,
+    "route_seconds": 0.0084,
+    "plan_peak_bytes": 98666
+   }
+  },
+  "two_line/heldout::heldout-0": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3√13/4"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.0069,
+    "route_seconds": 0.016,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/heldout::heldout-1": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.0067,
+    "route_seconds": 0.0081,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/heldout::heldout-2": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00684,
+    "route_seconds": 0.0079,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/heldout::heldout-3": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3√13/4"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00678,
+    "route_seconds": 0.0154,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/heldout::heldout-4": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3√2/4"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00688,
+    "route_seconds": 0.0149,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/heldout::heldout-5": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00684,
+    "route_seconds": 0.008,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/heldout::heldout-6": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "9/4"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00683,
+    "route_seconds": 0.0156,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/heldout::heldout-7": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3√13/4"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00707,
+    "route_seconds": 0.0163,
+    "plan_peak_bytes": 97840
+   }
+  },
+  "two_line/heldout::heldout-8": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00693,
+    "route_seconds": 0.008,
+    "plan_peak_bytes": 97858
+   }
+  },
+  "two_line/heldout::heldout-9": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00697,
+    "route_seconds": 0.0084,
+    "plan_peak_bytes": 97858
+   }
+  },
+  "two_line/heldout::heldout-10": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√3"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00732,
+    "route_seconds": 0.0149,
+    "plan_peak_bytes": 97858
+   }
+  },
+  "two_line/heldout::heldout-11": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00694,
+    "route_seconds": 0.0081,
+    "plan_peak_bytes": 97858
+   }
+  },
+  "two_line/heldout::heldout-12": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00688,
+    "route_seconds": 0.0079,
+    "plan_peak_bytes": 97858
+   }
+  },
+  "two_line/heldout::heldout-13": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00711,
+    "route_seconds": 0.0091,
+    "plan_peak_bytes": 97858
+   }
+  },
+  "two_line/heldout::heldout-14": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3/4"
+    },
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00723,
+    "route_seconds": 0.0149,
+    "plan_peak_bytes": 97811
+   }
+  },
+  "two_line/heldout::heldout-15": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 9,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00686,
+    "route_seconds": 0.0078,
+    "plan_peak_bytes": 97858
+   }
+  },
+  "two_line/heldout::heldout-16": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SECTION_PLANE_IS_FACE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00645,
+    "route_seconds": 0.0079,
+    "plan_peak_bytes": 95639
+   }
+  },
+  "two_line/heldout::heldout-17": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√3"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00706,
+    "route_seconds": 0.0157,
+    "plan_peak_bytes": 95594
+   }
+  },
+  "two_line/heldout::heldout-18": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00665,
+    "route_seconds": 0.0076,
+    "plan_peak_bytes": 96003
+   }
+  },
+  "two_line/heldout::heldout-19": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00661,
+    "route_seconds": 0.0075,
+    "plan_peak_bytes": 95819
+   }
+  },
+  "two_line/heldout::heldout-20": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3"
+    },
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00653,
+    "route_seconds": 0.0156,
+    "plan_peak_bytes": 95823
+   }
+  },
+  "two_line/heldout::heldout-21": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00643,
+    "route_seconds": 0.0076,
+    "plan_peak_bytes": 95772
+   }
+  },
+  "two_line/heldout::heldout-22": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00658,
+    "route_seconds": 0.008,
+    "plan_peak_bytes": 96003
+   }
+  },
+  "two_line/heldout::heldout-23": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 8,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00644,
+    "route_seconds": 0.0076,
+    "plan_peak_bytes": 95637
+   }
+  },
+  "two_line/heldout::heldout-24": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.0066,
+    "route_seconds": 0.0088,
+    "plan_peak_bytes": 98803
+   }
+  },
+  "two_line/heldout::heldout-25": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00656,
+    "route_seconds": 0.0078,
+    "plan_peak_bytes": 98668
+   }
+  },
+  "two_line/heldout::heldout-26": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00716,
+    "route_seconds": 0.008,
+    "plan_peak_bytes": 98482
+   }
+  },
+  "two_line/heldout::heldout-27": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00756,
+    "route_seconds": 0.0084,
+    "plan_peak_bytes": 98572
+   }
+  },
+  "two_line/heldout::heldout-28": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "8"
+    },
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00692,
+    "route_seconds": 0.018,
+    "plan_peak_bytes": 98394
+   }
+  },
+  "two_line/heldout::heldout-29": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "12"
+    },
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00669,
+    "route_seconds": 0.02,
+    "plan_peak_bytes": 98713
+   }
+  },
+  "two_line/heldout::heldout-30": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "LINE_CONTAINED_IN_PLANE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.00648,
+    "route_seconds": 0.0083,
+    "plan_peak_bytes": 98484
+   }
+  },
+  "two_line/heldout::heldout-31": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "PLANE_NOT_UNIQUE",
+    "answers": {},
+    "plan": {
+     "calls": 10,
+     "functions": [
+      "ask_section_area",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "section",
+      "segment_length",
+      "translate_point"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "H",
+      "H1"
+     ],
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0,
+     "resolver_used": false
+    },
+    "plan_seconds": 0.0073,
+    "route_seconds": 0.0076,
+    "plan_peak_bytes": 98531
+   }
+  },
+  "goal/positive::pyramid-midpoint-A": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√17/2"
+    },
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 5,
+     "candidates": 2,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00422,
+    "route_seconds": 0.0082,
+    "plan_peak_bytes": 85970
+   }
+  },
+  "goal/positive::pyramid-midpoint-B": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√17/2"
+    },
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 5,
+     "candidates": 2,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00393,
+    "route_seconds": 0.0074,
+    "plan_peak_bytes": 85970
+   }
+  },
+  "goal/positive::cube-midpoint-A": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3"
+    },
+    "plan": {
+     "calls": 5,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 5,
+     "candidates": 2,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00386,
+    "route_seconds": 0.0087,
+    "plan_peak_bytes": 81485
+   }
+  },
+  "goal/positive::cube-midpoint-B": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "3"
+    },
+    "plan": {
+     "calls": 5,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 5,
+     "candidates": 2,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00402,
+    "route_seconds": 0.0086,
+    "plan_peak_bytes": 81485
+   }
+  },
+  "goal/positive::cuboid-midpoint-A": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√14"
+    },
+    "plan": {
+     "calls": 7,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 5,
+     "candidates": 2,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.0041,
+    "route_seconds": 0.01,
+    "plan_peak_bytes": 85987
+   }
+  },
+  "goal/positive::cuboid-midpoint-B": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√14"
+    },
+    "plan": {
+     "calls": 7,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "prism",
+      "rectangle",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 5,
+     "candidates": 2,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00402,
+    "route_seconds": 0.0088,
+    "plan_peak_bytes": 86034
+   }
+  },
+  "goal/positive::prism-midpoint-A": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "2√3"
+    },
+    "plan": {
+     "calls": 5,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 5,
+     "candidates": 2,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00384,
+    "route_seconds": 0.0074,
+    "plan_peak_bytes": 83569
+   }
+  },
+  "goal/positive::prism-midpoint-B": {
+   "NEW[production]": {
+    "outcome": "correct_served",
+    "status": "SERVED",
+    "code": null,
+    "answers": {
+     "q": "√10"
+    },
+    "plan": {
+     "calls": 5,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "prism",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 5,
+     "candidates": 2,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00374,
+    "route_seconds": 0.0071,
+    "plan_peak_bytes": 83616
+   }
+  },
+  "goal/negative::ambiguous": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_FACT",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00076,
+    "route_seconds": 0.0004,
+    "plan_peak_bytes": 17450
+   }
+  },
+  "goal/negative::conditional": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "CONDITIONAL_CLAUSE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00072,
+    "route_seconds": 0.0002,
+    "plan_peak_bytes": 17401
+   }
+  },
+  "goal/negative::prove": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "GOAL_CLAUSE_NOT_PREMISE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00086,
+    "route_seconds": 0.0002,
+    "plan_peak_bytes": 19236
+   }
+  },
+  "goal/negative::negated": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "NEGATED_CLAUSE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.0009,
+    "route_seconds": 0.0002,
+    "plan_peak_bytes": 19446
+   }
+  },
+  "goal/negative::missing-target": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "FACT_INCOMPLETE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00032,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 13505
+   }
+  },
+  "goal/negative::extra-target": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "FACT_INCOMPLETE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00031,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 13553
+   }
+  },
+  "goal/negative::duplicate-descriptor": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "FACT_INCOMPLETE",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00031,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 13545
+   }
+  },
+  "goal/negative::wrong-source-target": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "answers": {},
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 5,
+     "candidates": 2,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00399,
+    "route_seconds": 0.0011,
+    "plan_peak_bytes": 85970
+   }
+  },
+  "goal/negative::squared-request": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "NOT_ASKED_IN_SOURCE",
+    "answers": {},
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 5,
+     "candidates": 2,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00431,
+    "route_seconds": 0.0014,
+    "plan_peak_bytes": 85994
+   }
+  },
+  "goal/negative::unread-second-ask": {
+   "NEW[production]": {
+    "outcome": "correct_refusal",
+    "status": "REFUSED",
+    "code": "QUESTION_CONTEXT_UNSUPPORTED",
+    "answers": {},
+    "plan": {
+     "calls": 6,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 5,
+     "candidates": 2,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00414,
+    "route_seconds": 0.0015,
+    "plan_peak_bytes": 86062
+   }
+  },
+  "goal/negative::contradictory-length": {
+   "NEW[production]": {
+    "outcome": "wrong_code_refusal",
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "answers": {},
+    "plan": {
+     "calls": 7,
+     "functions": [
+      "ask_length",
+      "midpoint",
+      "perpendicular_line_plane",
+      "pyramid",
+      "regular_polygon",
+      "segment_length"
+     ],
+     "auxiliary": 1,
+     "fresh_labels": [
+      "M"
+     ],
+     "needs": 5,
+     "candidates": 2,
+     "depth_max": 2,
+     "resolver_used": true
+    },
+    "plan_seconds": 0.00426,
+    "route_seconds": 0.004,
+    "plan_peak_bytes": 88538
+   }
+  },
+  "goal/discovery::centroid-A": {
+   "NEW[production]": {
+    "outcome": "false_refusal",
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_CAPABILITY",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00033,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 13609
+   }
+  },
+  "goal/discovery::centroid-D": {
+   "NEW[production]": {
+    "outcome": "false_refusal",
+    "status": "REFUSED",
+    "code": "UNSUPPORTED_CAPABILITY",
+    "answers": {},
+    "plan": null,
+    "plan_seconds": 0.00038,
+    "route_seconds": 0.0001,
+    "plan_peak_bytes": 13609
+   }
+  }
+ }
+}

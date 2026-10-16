@@ -1,5 +1,17 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Scene3D visual correctness — Gemini review + CONTRACT-BE-1 (LOCAL integration branch, Hybrid off)
+
+Run `docs/evaluation/geometry/runs/scene3d-visual-correctness/`. No new module.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts` | `classifyWorldSegmentVisibility` + `WorldSolidOccluder`: visible/hidden/mixed spans of a NON-canonical world segment (line3 span, segment3, witness) against the solid faces; a span colinear with a canonical edge yields to that edge (drawn once) | `scene3d-hidden-lines.test.tsx` |
+| `frontend/src/simulations/domains/geometry/scene3d-model.ts` | `daGiacMatPhang` (plane3 display polygon = convex hull of scene points on the plane, square patch fallback); `doanDuongThang` span from figure points ON the line only (FE-4 fix: the backend anchor is not a figure point); `diemChoDuong(objects, lineId)` = scene points + the kernel feet of witnesses `on` that line, so a foot outside the edge stays inside the drawn span (review fix); `huongChanVuongGoc` (right-angle marker display direction, not the mathematical relation) | `scene3d.test.tsx` (FE-4 regression) |
+| `frontend/src/simulations/domains/geometry/scene3d-view.tsx` | Draws the plane hull, classifies non-canonical spans on every view change, witness colour/dim by `tang` (`vatNhanChung`), `NHAN_CHUNG_GOC` marker size | `scene3d.test.tsx`, browser receipts |
+| `backend/app/simulation/geometry_functions/engine.py` · `backend/app/ai/function_route.py` | `KetQuaTuyen.targets`: IR names the source asks for (asked measure + its named operands; fresh effect-chain labels such as a foot excluded); the route writes them to `state["targets"]` because `build_simulation_state` got topology, not obligations | `test_function_discovery_planning.py` (`test_asked_distance_to_a_plane_is_the_result…`, `test_fresh_foot_is_never_a_target…`), `scene3d-auxiliary.test.ts` (CONTRACT-BE-1 block) |
+| `backend/scripts/measure_function_discovery.py` (`--integration`) · `frontend/scripts/hybrid-section-visual.tsx` (`src=scene3d-integration`) · `frontend/scripts/result-binding-visual-check.mjs` (`--src scene3d-integration`) | 11 integration fixtures from the current backend (function discovery + result binding + goal entry positives, one refusal) and their harness/browser check | run `visual/` |
+
 ## Generalized Goal Entry — length goals (LOCAL research, Hybrid off)
 
 Run `generalized-goal-entry`; contract `docs/architecture/GENERALIZED_GOAL_ENTRY_CONTRACT.md`. Reuses all existing geometry, IR and rendering.

@@ -1,5 +1,18 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SCENE3D_VISUAL_CORRECTNESS
+
+REPORT = docs/evaluation/geometry/runs/scene3d-visual-correctness/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-visual-correctness/
+CORRECTS = NONE
+CORRECTED_BY = NONE
+CLASSIFICATION = SCENE3D_VISUAL_CORRECTNESS_READY_FOR_INTEGRATION_DECISION
+CODE_COMMIT = a7388a40 (merge of Gemini 0ef0a20a, frontend) + 08021881 (FE-4) + f07ea069 (CONTRACT-BE-1, route D)
+VERIFICATION_COMMIT = see run.json (candidate refreeze and clean detached T3 recorded there)
+MODEL_REQUEST_COUNT = 0
+
+Integration scenes (`visual/scenes.json`) regenerated from the integrated backend; Scene3D harness D3D11 + SwiftShader receipts in `visual/receipts/`. Technical rendering only; no human visual approval or Hybrid enablement implied.
+
 ## WAVE_ID = GENERALIZED_GOAL_ENTRY
 
 REPORT = docs/evaluation/geometry/runs/generalized-goal-entry/report.md

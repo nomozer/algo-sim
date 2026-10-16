@@ -184,6 +184,9 @@ ALLOWED_CANONICAL_ACTIONS = [
     "STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION",
     # stacked-integration (2026-10-16): the four research slices are on main; next is the user's choice of research priority.
     "POST_STACK_INTEGRATION_RESEARCH_PRIORITY_DECISION",
+    # scene3d-visual-correctness (2026-10-17): Gemini Scene3D commit reviewed + CONTRACT-BE-1 fixed on an integration
+    # branch; next is the user's GO/NO-GO for main.
+    "SCENE3D_VISUAL_CORRECTNESS_INTEGRATION_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

@@ -48,7 +48,7 @@
 
 ### ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY
 
-- **status:** IMPLEMENTED_ON_RESEARCH_BRANCH_AWAITING_REVIEW — W0 baseline audit (`scene3d-visual-parity-audit`, `4b51fde8`) and W1–W3 implementation (`scene3d-architecture-visual-reliability`) completed on `research/scene3d-visual-parity-audit`; ready for independent code review before candidate refreeze / T3 / `main` integration.
+- **status:** TECHNICAL_FIXES_IMPLEMENTED, HUMAN_VISUAL_REVIEW_PENDING — W1–W3 on `main` (2026-10-16); Gemini follow-up + CONTRACT-BE-1 on `integration/scene3d-visual-correctness` (2026-10-17, see update below). Original 2026-10-16 status: W0 audit and W1–W3 implementation on `research/scene3d-visual-parity-audit`, awaiting review.
 - **description:** Prefer an oblique view from above while preserving free orbit/reset; choose defaults by verified scene
   families rather than one fixed angle. Optional reference background: sparse, very faint diagonal lines, not a dense
   square grid or a mathematical entity. The reference image is not in this review's evidence package, so its exact visual
@@ -61,8 +61,17 @@
   `source-bound-result-planning`) checks causal order/selection/pixels only, not visual quality.
 - **2026-10-16 update (W0 audit `scene3d-visual-parity-audit` + W1–W3 implementation `scene3d-architecture-visual-reliability`):**
   W0 proved 11/11 locked fixtures are mathematically exact in Gram metric $G$ (`all_cases_math_pass = true`) and isolated 2 CRITICAL + 5 IMPORTANT frontend/parity root causes (`FINDING-B1`, `FINDING-B2`, `FINDING-D1..D4`, `FINDING-C2`, `FINDING-E1`). W1–W3 resolved all 9 findings in frontend/harness (`scene3d-chart.ts`, `scene3d-auxiliary.ts`, `scene3d-presentation.ts`, `scene3d-model.ts`, `scene3d-view.tsx`, `hybrid-section-visual.tsx`, `result-binding-visual-check.mjs`): `veKhongGian` now transforms `o.perpendicular_witness` idempotently (`0.0` world-space displacement); target carrier lines (`gt_g`, `derived_H_line`) stay visible at the final step under default `aux=0` while disposable planes (`mp1_gt_g`, `mp2_gt_g`) and off-solid translated points (`H`, `H1`) hide; unselected `face` sub-entities act as transparent hit proxies; section sub-entities respect progressive `geometry_progress`; coincident points render `"B ≡ H"`; passive `surface` planes bound to defining points at `0.10` opacity; and Product vs. Harness achieve 100% rendered object + sub-entity parity (`after_same_all_rendered_objects: true`).
+- **2026-10-17 update (`scene3d-visual-correctness`, branch `integration/scene3d-visual-correctness`):** W1–W3 are on
+  `main` since the 2026-10-16 stacked integration. A later Gemini commit (`0ef0a20a`: plane hull, unified occlusion of
+  non-canonical segments, line extent, highlight, right-angle marker) was reviewed independently and merged on the
+  integration branch with one fix (FE-4, `08021881`). CONTRACT-BE-1 (route D scenes had no `targets`, so the asked
+  distance was `intermediate` and the target plane hid at `aux=0`) is RESOLVED by `f07ea069`. BE-2 (canonical-edge
+  association), BE-3 (marker direction) and BE-4 (plane display region): no contract change, because the frontend owns
+  that display geometry and backend metadata would duplicate it. Technical rendering: harness D3D11 + SwiftShader
+  `PASS_CORE_CAUSAL_RENDERING`, 11 scenes; `HUMAN_VISUAL_REVIEW_PENDING`.
 - **evidence:** `docs/evaluation/geometry/runs/scene3d-visual-parity-audit/report.md`;
-  `docs/evaluation/geometry/runs/scene3d-architecture-visual-reliability/report.md`.
+  `docs/evaluation/geometry/runs/scene3d-architecture-visual-reliability/report.md`;
+  `docs/evaluation/geometry/runs/scene3d-visual-correctness/report.md`.
 - **impact:** Learner readability and visual parity between Product and Harness resolved on `research/scene3d-visual-parity-audit`; awaiting independent review, refreeze, and human visual sign-off before `main` integration.
 - **scope:** Bounded frontend Scene3D mapping/presentation/harness slice; 0 backend/Kernel/coordinate changes.
 - **owner_class:** UX
