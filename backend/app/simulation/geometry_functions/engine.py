@@ -35,7 +35,7 @@ from app.simulation.geometry import kernel as K
 from app.simulation.geometry.predicates import parallel_planes, point_on_line, point_on_plane, parallel_line_plane, line_in_plane
 from app.simulation.semantic_program import ir_builders as P
 
-from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de
+from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de, nhom_mat_nguon
 
 ENGINE_VERSION = "geometry-function-engine/5"
 Z = Fraction(0)
@@ -618,6 +618,18 @@ class _Dung:
     def _line(self, labels) -> Line3:
         return Line3.through(*(Vec3(*self.pts[p]) for p in labels))
 
+    def kiem_mat_viet(self, nhom: list[list[str]]) -> None:
+        """Nhóm nhãn mặt phẳng nguồn phải không suy biến và đồng phẳng trên hình đã dựng (chính xác).
+        Cùng `_cung_mat`, phép kiểm này không cho rút gọn một nhóm nguồn sai thành mặt ba nhãn."""
+        for g in nhom:
+            if any(p not in self.pts for p in g):
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"({''.join(g)}) có nhãn chưa được dựng — không kiểm được là một mặt phẳng")
+            v = [Vec3(*self.pts[p]) for p in g]
+            ba = next(((a, b, c) for a, b, c in combinations(v, 3) if not (b - a).cross(c - a).is_zero()), None)
+            if ba is None or any(Plane3.through(*ba).signed_eval(p) != 0 for p in v):
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"({''.join(g)}) không phải một mặt phẳng của hình — "
+                             "không đọc nó thành mặt ba nhãn")
+
     def _plane(self, labels) -> Plane3:
         plane = Plane3.through(*(Vec3(*self.pts[p]) for p in labels[:3]))
         if any(plane.signed_eval(Vec3(*self.pts[p])) != 0 for p in labels[3:]):
@@ -1149,6 +1161,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         dung.ten_mat_phu = ten_mat_phu
         dung.kiem()
         dung.kiem_mat_cat()
+        dung.kiem_mat_viet(nhom_mat_nguon(problem_text))
         chuoi = [d for d in auxiliary if d.get("rule") == "effect-chain"]
         for d in chuoi:
             dung.kiem_mo_ta(d)

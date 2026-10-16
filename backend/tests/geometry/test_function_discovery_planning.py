@@ -69,10 +69,10 @@ def test_positive_unnamed_operand_is_served_exactly(case):
         assert all(2 * r.points[x][i] == r.points[p][i] + r.points[q][i] for i in range(3))
 
 
-#: Deviation D-1 (recorded in the run report, label NOT edited): the cube premise "Cho hình lập phương …" is outside the
-#: closed premise grammar that every `line_ref` problem must pass (`registry._kiem_nguon_dong`, pre-existing), so the case
-#: is refused SOURCE_PREMISE_UNREAD before the parallel planes are ever reached — a correct refusal with the wrong code.
-_DEVIATION = {"parallel-result-line": "D-1: refused SOURCE_PREMISE_UNREAD by the pre-existing line_ref premise grammar"}
+#: Deviation D-1 (recorded in the run report, label NOT edited) was the cube premise outside the closed `line_ref` premise
+#: grammar: refused SOURCE_PREMISE_UNREAD before the parallel planes were reached. Closed by M4 of run
+#: `hybrid-semantic-grounding-reliability`; the row now meets its preregistered code, so no deviation remains.
+_DEVIATION: dict[str, str] = {}
 
 
 @pytest.mark.parametrize("case", [pytest.param(c, marks=pytest.mark.xfail(strict=True, reason=_DEVIATION[c["id"]]))
@@ -84,10 +84,11 @@ def test_negative_is_refused_with_a_registered_code(case):
     assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
 
 
-def test_deviation_d1_is_a_premise_grammar_refusal_and_parallel_planes_refuse_on_a_readable_solid():
-    """Post-registration supplement (not a corpus row): the same goal on a cuboid, whose premises the grammar reads."""
+def test_deviation_d1_closed_cube_and_cuboid_parallel_planes_refuse_with_the_registered_code():
+    """Post-registration supplement (not a corpus row): the same goal on a cuboid. Since M4 (run
+    `hybrid-semantic-grounding-reliability`) the cube premise is read too, so both reach the parallel-planes refusal."""
     r = run(by_id("negative", "parallel-result-line"))
-    assert r.status == "REFUSED" and r.code == "SOURCE_PREMISE_UNREAD"
+    assert r.status == "REFUSED" and r.code in ("PARALLEL_NO_INTERSECTION", "PARALLEL_PLANES"), (r.code, r.reason)
     c = by_id("positive", "cuboid-midpoint-to-result-line")
     old_gt, new_gt = "Tìm giao tuyến của (ABB') và (BCC').", "Tìm giao tuyến của (ABB') và (CDD')."
     old_q = "Tính khoảng cách từ trung điểm của A'C' đến giao tuyến của (ABB') và (BCC')."
@@ -307,7 +308,9 @@ def test_a_second_ask_in_the_certified_quote_is_not_read_as_answered():
     c["text"] = c["text"].replace("Tính khoảng cách từ trung điểm của SC đến (SAB).", two)
     c["payload"]["facts"][-1]["quotes"] = [two]
     r = run(c)
-    assert r.status == "REFUSED" and r.code == "QUESTION_CONTEXT_UNSUPPORTED", (r.code, r.answers)
+    # was QUESTION_CONTEXT_UNSUPPORTED (unread words); request coverage (M1, run `hybrid-semantic-grounding-reliability`)
+    # now names the dropped ask itself
+    assert r.status == "REFUSED" and r.code == "REQUEST_NOT_ANSWERED", (r.code, r.answers)
 
 
 def test_engine_answer_check_is_wired(monkeypatch):

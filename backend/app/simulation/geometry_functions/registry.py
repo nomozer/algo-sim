@@ -272,7 +272,7 @@ class PlanningContract:
     call: tuple[tuple[str, str | tuple[str, ...]], ...] = ()
     fresh: str | None = None
     descriptor: str | None = None
-    phrase: str | None = None
+    phrase: str | tuple[str, ...] | None = None   # a goal contract may list several closed wordings (`_cac_cau`)
     goal: str | None = None  # semantic quantity accepted at goal entry; internal, never a provider field
 
 
@@ -387,7 +387,9 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
        planning_extra=(PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Point", ("Q",))),
                                  PlanningTerm("AnswerLength", ("P", "Q")), "goal_answer", "length",
                                  call=(("segment", ("P", "Q")),), goal="length",
-                                 phrase=r"độ dài\s+(?:của\s+)?đoạn\s+nối\s+(?:{D})\s+với\s+(?:điểm\s+)?(?P<t>{P})(?![\w'])"),)),
+                                 # the segment joining two points has no order: both closed wordings (M3)
+                                 phrase=(r"độ dài\s+(?:của\s+)?đoạn\s+nối\s+(?:{D})\s+với\s+(?:điểm\s+)?(?P<t>{P})(?![\w'])",
+                                         r"độ dài\s+(?:của\s+)?đoạn\s+nối\s+(?:điểm\s+)?(?P<t>{P})\s+với\s+(?:{D})")),)),
     _F("ask_distance_point_plane", AskDistancePointPlaneArgs, "ask", "Đề hỏi khoảng cách từ một điểm tới một mặt phẳng.",
        (("khoảng cách",),),
        planning=PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Plane", ("Q",))),
@@ -793,6 +795,8 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
                     vai.append(_vai_tro_tai(de, m.start()))
                     # The rest of the sentence (before the governing verb) is read by the question-context gate.
                     hoi_that.append(_hoi_dung_cum(de, m.start(), m.end()) and not _GAN_GIA_TRI.match(de[m.end():]))
+                    if hoi_that[-1] and buoc is not None:     # the span this certificate answers (M1 request coverage)
+                        buoc.append((m.start(), m.end()))
                     if _hoi_dung_cum(de, m.start(), m.end()) and not _kiem_don_vi_hoi("ask_length", de, m.start(), m.end(), don_vi_de, calls):
                         raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                                      f"{hoi.id}: đơn vị yêu cầu không khớp chính sách đơn vị của dữ kiện hoặc loại đại lượng", ids)
@@ -973,8 +977,9 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                              or set(target) != {'point'} or x not in nhan):
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mục tiêu độ dài cần đúng một điểm đích có nguồn', (ask.id,))
         g = producer(x[1]) if not point_target and x[0] == 'result' else None
-        pattern = (_mau_muc_tieu_mo_ta(ans[0].phrase or '', dc.phrase or '') if point_target else
-                   _mau_khoang_cach_mo_ta(dc.phrase or ''))
+        # a goal contract may declare several closed wordings (operand orders): each is one exact pattern (M3)
+        patterns = (tuple(_mau_muc_tieu_mo_ta(p, dc.phrase or '') for p in _cac_cau(ans[0].phrase)) if point_target else
+                    (_mau_khoang_cach_mo_ta(dc.phrase or ''),))
 
         def binds(m):
             if sorted(_nhan_cum(m['ops'])) != sorted(ops):
@@ -991,7 +996,8 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
             span = _vi_tri(de, q)
             if span is None:
                 raise TuChoi('QUOTE_NOT_IN_SOURCE', 'quote mục tiêu không có trong đề', (ask.id,))
-            found = [m for m in pattern.finditer(de) if span[0] <= m.start() and m.end() <= span[1] and binds(m)]
+            found = [m for pattern in patterns for m in pattern.finditer(de)
+                     if span[0] <= m.start() and m.end() <= span[1] and binds(m)]
             if not found:
                 raise TuChoi('SOURCE_OBJECT_MISMATCH', 'nguồn không hỏi khoảng cách từ đúng điểm được mô tả tới đúng đích',
                              (ask.id,))
@@ -1001,11 +1007,12 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                     raise TuChoi('NOT_ASKED_IN_SOURCE', 'nguồn không hỏi khoảng cách này', (ask.id,))
                 if not _kiem_don_vi_hoi(ask.fn, de, m.start(), m.end(), don_vi_de, calls):
                     raise TuChoi('QUESTION_CONTEXT_UNSUPPORTED', 'đơn vị yêu cầu không khớp chính sách đơn vị', (ask.id,))
-                if point_target or x[0] == 'result':  # complete sentence, no silently dropped target or second ask
-                    form = re.compile(r'(?:(?:tính|tìm)\s+)?(?:' + pattern.pattern + r')[.?\s]*', re.IGNORECASE)
+                # A length goal is read like every other ask: the shared grammar above (`_hoi_dung_cum`: "Tính …",
+                # "… bằng bao nhiêu?") and request coverage (M1) for a dropped second ask — not one bare sentence form (M3).
+                if x[0] == 'result':  # complete sentence, no silently dropped target or second ask
+                    form = re.compile(r'(?:(?:tính|tìm)\s+)?(?:' + m.re.pattern + r')[.?\s]*', re.IGNORECASE)
                     if not form.fullmatch(q) or not form.fullmatch(de[slice(*_bien_cau(de, m.start()))].strip()):
-                        raise TuChoi('QUESTION_CONTEXT_UNSUPPORTED' if point_target else 'SOURCE_PREMISE_UNREAD',
-                                     'câu mục tiêu có phần chưa được đọc', (ask.id,))
+                        raise TuChoi('SOURCE_PREMISE_UNREAD', 'câu mục tiêu có phần chưa được đọc', (ask.id,))
                 if buoc is not None:
                     buoc.append((m.start(), m.end()))
         accepted.add(ask.id)
@@ -1079,6 +1086,8 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                 ask_form = r'(?i:(?:tính|tìm)\s+)?'+derived.pattern+r'[.?\s]*'
                 if not re.fullmatch(ask_form,q) or not re.fullmatch(ask_form,de[slice(*_bien_cau(de,vt+m.start()))].strip()):
                     raise TuChoi('SOURCE_PREMISE_UNREAD','quote mục tiêu có phần chưa được đọc',(ask.id,))
+                if buoc is not None and (span := _vi_tri(de, q)) is not None:
+                    buoc += [(x.start(), x.end()) for x in derived.finditer(de, *span)]
             else:
                 # The source is the authority, the quote only locates: never read the quote spliced into the source
                 # (an extra space in the quote can invent a sentence boundary the source does not have).
@@ -1097,6 +1106,8 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                         raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                                      f"{ask.id}: đơn vị yêu cầu không khớp chính sách đơn vị của dữ kiện hoặc loại đại lượng",
                                      (ask.id,))
+                    if buoc is not None:
+                        buoc.append((m.start(), m.end()))
         accepted.add(ask.id)
     return accepted
 
@@ -1204,9 +1215,7 @@ def _cum_hoi(c: LoiGoi, de: str, dau: int, cuoi: int, calls: tuple[LoiGoi, ...])
 def _bo_cum(s: str) -> str:
     """Xoá mọi cụm hỏi (của bất kỳ hàm nào) — phần còn lại là chữ NẰM NGOÀI các đối tượng được liệt kê. Cụm dài xoá trước,
     không chồng lấn: "SC" trần không được cắt vỡ cụm "góc giữa SC và (ABC)"."""
-    patterns = (*(mau for ds in _CUM_HOI.values() for mau, _b in ds), _KHOANG_CACH_DIEM_DUONG,
-                _KHOANG_CACH_GIAO_TUYEN, _CUM_HOI_THIET_DIEN_PHU)
-    cum = sorted(((m.start(), m.end()) for mau in patterns for m in mau.finditer(s)
+    cum = sorted(((m.start(), m.end()) for mau in _mau_hoi_tat_ca() for m in mau.finditer(s)
                   if m.end() > m.start() and not re.match(r"số\s+đo\b", m.group(), re.IGNORECASE)),
                  key=lambda x: x[0] - x[1])
     bo = [False] * len(s)
@@ -1489,6 +1498,13 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
     _kiem_vung_tien_de(calls, de, first_request, read_quotes, don_vi_de)
     dung = {n for c in calls for n in nhan_cua_loi_goi(c)}
     khoi = _khoi_cua_loi_goi(calls)
+    # M1 request coverage (run `hybrid-semantic-grounding-reliability`): an object phrase is ANSWERED only where a
+    # validated call binds it — an `ask_*` call's own binder, or a span an auxiliary / effect-chain certificate bound.
+    tra_loi = [s for c in calls if c.spec.kind == "ask" and c.id not in phu for s in _cum_hoi(c, de, 0, len(de), calls)]
+    tra_loi += list(buoc)
+
+    def khong_tra_loi(spans) -> list[str]:
+        return [de[a:b] for a, b in spans if not any(x <= a and b <= y for x, y in tra_loi)]
     for start, end in sorted(questions):
         phrases = [(m.start(), m.end()) for fn, rules in _CUM_HOI.items() for pattern, _bind in rules
                    for m in pattern.finditer(de, start, end)
@@ -1501,6 +1517,11 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         phrases += [(a, b) for a, b in buoc if start <= a and b <= end and _hoi_dung_cum(de, a, b)]
         if _DIEU_KIEN.search(de, start, end):
             raise TuChoi("CONDITIONAL_CLAUSE", "ngữ cảnh câu hỏi có giả thiết điều kiện; chưa hỗ trợ thay phạm vi")
+        # An object the sentence ASKS (listed after the same verb, after "sau đó", in its own sentence …) that no call
+        # answers would be dropped silently while the rest is served: refuse, whatever the joining words.
+        if bo := khong_tra_loi((a, b) for a, b in _cum_lon_nhat(de, start, end) if _hoi_dung_cum(de, a, b)):
+            raise TuChoi("REQUEST_NOT_ANSWERED", f"đề còn yêu cầu {bo} mà không lời gọi nào trả lời — không trả lời một "
+                         "phần rồi coi như xong")
         masked = list(de[start:end])
         for a, b in phrases:
             masked[a - start:b - start] = " " * (b - a)
@@ -1599,6 +1620,9 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
                 )
                 ok = (((bool(spans) and not de[spans[-1][1]:end_goal].strip(" .?!")) or suy_ra_cum)
                       and (cham < 0 or _SAU_VIEC_KE_TIEP.fullmatch(remaining[cham - a + 1:])))
+                # "… rồi suy ra thể tích …" asks that quantity too (M1): it must be answered, not read as a remark.
+                if suy_ra_cum and (bo := khong_tra_loi(_cum_lon_nhat(de, mo_f.end(), end_goal))):
+                    raise TuChoi("REQUEST_NOT_ANSWERED", f"đề còn yêu cầu suy ra {bo} mà không lời gọi nào trả lời")
             else:
                 ok = _SAU_VIEC_KE_TIEP.fullmatch(remaining)
             if not ok:
@@ -1903,9 +1927,36 @@ def _mat_cua(m: re.Match, n: str, khoi: dict) -> frozenset | None:
     return next(iter(khoi.values())) if m[n + "d"] and len(khoi) == 1 else None    # "đáy": đáy của khối duy nhất
 
 
+_MAT_VIET = re.compile(rf"\((?P<p>{_NHOM_NHAN})\)|(?<!\w)(?:mặt phẳng|mp)\s+(?P<b>{_NHOM_NHAN})(?![\w'])", re.IGNORECASE)
+
+
+def nhom_mat_nguon(text: str) -> list[list[str]]:
+    """Giữ trọn nhóm nhãn mặt phẳng, dùng cùng văn phạm toán hạng với cổng buộc nguồn.
+
+    Engine kiểm cả tính không suy biến: ba nhãn thẳng hàng không định danh một mặt phẳng.
+    """
+    de = chuan_hoa(text)
+    groups = [m["p"] or m["b"] for m in _MAT_VIET.finditer(de)]
+    for pattern in _mau_hoi_tat_ca():
+        for m in pattern.finditer(de):
+            groups += [s for k, s in m.groupdict().items() if k in ("mp", "mb", "ap", "ab", "bp", "bb", "a", "b") and s]
+    for pattern in (*_CAT_BOI, _GIAO_TUYEN):
+        groups += [s for m in pattern.finditer(de) for s in m.groups() if s]
+    ra = []
+    for group in groups:
+        nhan = _nhan_cum(group)
+        if len(set(nhan)) >= 3 and nhan not in ra:
+            ra.append(nhan)
+    return ra
+
+
 def _cung_mat(tap: frozenset | None, diem: list[str]) -> bool:
-    """Cùng một mặt phẳng: chung ít nhất ba điểm có tên — (ABCD) là (ABC); (SBC) không là (ABC)."""
-    return tap is not None and len(tap & set(diem)) >= 3
+    """Một nhóm định nghĩa phải chứa trọn nhóm kia; engine còn kiểm chúng không suy biến và đồng phẳng.
+
+    Chỉ chung ba nhãn là thiếu: ba điểm ấy có thể thẳng hàng và nằm trên hai mặt khác nhau.
+    """
+    target = set(diem)
+    return tap is not None and len(tap & target) >= 3 and (tap <= target or target <= tap)
 
 
 def _khoi_khop(m: re.Match, n: str, solid: str, khoi: dict) -> bool:
@@ -1989,6 +2040,29 @@ def _mau_khoang_cach_mo_ta(phrase: str) -> re.Pattern[str]:
 @functools.lru_cache(maxsize=None)
 def _mau_muc_tieu_mo_ta(goal_phrase: str, descriptor_phrase: str) -> re.Pattern[str]:
     return re.compile(goal_phrase.replace('{D}', descriptor_phrase).replace('{P}', _P1), re.IGNORECASE)
+
+
+def _cac_cau(phrase: str | tuple[str, ...] | None) -> tuple[str, ...]:
+    """A contract `phrase`: one closed wording, or a tuple of closed wordings (e.g. both operand orders)."""
+    return phrase if isinstance(phrase, tuple) else (phrase,) if phrase else ()
+
+
+@functools.lru_cache(maxsize=None)
+def _mau_hoi_tat_ca() -> tuple[re.Pattern[str], ...]:
+    """EVERY object phrase a request can name — the per-function ask grammar, the auxiliary distance phrases and the
+    contract phrases of unnamed points (Registry data). One inventory for request coverage (M1): no wording list."""
+    ct = [p for s in REGISTRY.values() for p in planning_contracts(s)]
+    desc = [p.phrase for p in ct if p.descriptor and p.phrase]
+    goals = [g for p in ct if p.goal for g in _cac_cau(p.phrase)]
+    return (*(mau for ds in _CUM_HOI.values() for mau, _b in ds), _KHOANG_CACH_DIEM_DUONG, _KHOANG_CACH_GIAO_TUYEN,
+            _CUM_HOI_THIET_DIEN_PHU, *(_mau_khoang_cach_mo_ta(d) for d in desc),
+            *(_mau_muc_tieu_mo_ta(g, d) for g in goals for d in desc))
+
+
+def _cum_lon_nhat(de: str, a: int, b: int) -> list[tuple[int, int]]:
+    """Object phrases in `de[a:b]` not contained in a longer one ("SC" inside "khoảng cách từ trung điểm của SC đến …")."""
+    cum = {(m.start(), m.end()) for mau in _mau_hoi_tat_ca() for m in mau.finditer(de, a, b) if m.end() > m.start()}
+    return sorted(x for x in cum if not any(y != x and y[0] <= x[0] and x[1] <= y[1] for y in cum))
 
 
 #: Next task / method after an asked phrase. The ask grammar stops reading here, so the source-coverage gate must read what
@@ -2709,6 +2783,10 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
         raise TuChoi('SOURCE_PREMISE_UNREAD','lát hai đường chưa nhận mệnh đề chứng minh/suy ra trong nguồn')
     intersection_form = (rf'(?:(?:tìm|dựng|xác định)\s+|gọi\s+[A-Za-z][A-Za-z0-9]*\s+là\s+)'
                          rf'giao tuyến của\s*{_MAT_TOAN_HANG}\s*và\s*{_MAT_TOAN_HANG}[.\s]*')
+    # A cube premise expands to prism + square base + edge length, all quoting the one sentence (M4, run
+    # `hybrid-semantic-grounding-reliability`; ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE). Values stay bound by the gate.
+    cube_form = (rf'(?:cho\s+)?(?:hình|khối)\s+lập phương\s+(?:{_P1})+\.(?:{_P1})+'
+                 rf'(?:\s+(?:có\s+)?(?:độ dài\s+)?cạnh\s*(?:bằng|=)?\s*{_SO.pattern})?[.\s]*')
     for c in calls:
         if c.id in phu:
             continue
@@ -2720,6 +2798,8 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
                     raise TuChoi('SOURCE_PREMISE_UNREAD','quote giao tuyến có phần chưa được đọc',(c.id,))
                 continue
             for s in spans:
+                if c.fn in ('prism', 'regular_polygon', 'segment_length') and re.fullmatch(cube_form, s, re.I):
+                    continue
                 atomic = re.sub(r'(?<!\w)song\s+song(?!\w)',' ',s,flags=re.I)
                 if re.search(r'[,;]|(?<!\w)(?:và|song|đổi|thay|gấp|nhân đôi)(?!\w)',atomic,re.I):
                     raise TuChoi('SOURCE_PREMISE_UNREAD','quote tiền đề ghép chưa được đọc độc lập trên lát hai đường',(c.id,))
@@ -2759,11 +2839,19 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
                         raise TuChoi('SOURCE_PREMISE_UNREAD','quote tiền đề chưa nằm trọn trong văn phạm lát hai đường',(c.id,))
     from ..semantic_program.shape_constraint import doc_rang_buoc
     from ..semantic_program.source_entities import dinh_danh_thuc_the
+    from ..geometry.radical import display
+
+    def base_ok(d, c, kind, value):
+        if d.fn != ('rectangle' if kind == 'cuboid' else 'regular_polygon') or d.args.vertices != c.args.base:
+            return False
+        # cube / cube_edge (M4): square base; the stated edge is the base side
+        return kind == 'cuboid' or value is None or (d.args.side is not None
+                                                     and doc_so(display(value))[0] == doc_so(d.args.side)[0])
     for assertion in doc_rang_buoc(de):
-        prism = assertion.kind == 'cuboid' and any(
+        prism = assertion.kind in ('cuboid', 'cube', 'cube_edge') and any(
             c.fn == 'prism' and c.args.right
             and tuple(dinh_danh_thuc_the(n)[0] for n in c.args.base+c.args.top)==assertion.entities
-            and any(d.fn == 'rectangle' and d.args.vertices == c.args.base for d in calls)
+            and any(base_ok(d, c, assertion.kind, assertion.value) for d in calls)
             for c in calls)
         if not prism and not any(_rang_buoc_cuc_bo_khop(assertion,c) for c in calls):
             raise TuChoi('SOURCE_PREMISE_UNREAD','quan hệ nguồn chưa khớp lời gọi đã xác thực trên lát hai đường')

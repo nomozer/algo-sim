@@ -1,5 +1,15 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Hybrid semantic grounding reliability (research, Hybrid off)
+
+Run `docs/evaluation/geometry/runs/hybrid-semantic-grounding-reliability/`; frozen corpus/oracle at `2e08922a`.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/registry.py` | `_mau_hoi_tat_ca`, `_cum_lon_nhat`: shared asked-object inventory; `_kiem_du_kien_cau_hoi` refuses uncovered requests (`REQUEST_NOT_ANSWERED`); `_cac_cau`/`PlanningContract.phrase` support alternate length operand order; `_cung_mat` requires complete-set containment; `nhom_mat_nguon` preserves source plane groups from the same grammar; `_kiem_nguon_dong` reads atomic cube premises | `test_source_grounding_reliability.py`, `test_source_grounding_review.py`, historical function/goal-entry tests |
+| `backend/app/simulation/geometry_functions/engine.py` | `_Dung.kiem_mat_viet`: exact nondegeneracy and coplanarity of complete source plane groups before answering | same |
+| Run `measure.py`, `oracle.py` | Offline authored-fact classification and independent Fraction squared-value oracle; no provider calls, never overwrite measurements | run corpus/results; no live-language claim |
+
 ## Scene3D visual correctness — Gemini review + CONTRACT-BE-1 (LOCAL integration branch, Hybrid off)
 
 Run `docs/evaluation/geometry/runs/scene3d-visual-correctness/`. No new module.
