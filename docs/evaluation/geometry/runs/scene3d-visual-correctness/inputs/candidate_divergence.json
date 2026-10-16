@@ -1,0 +1,32 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "scene3d-visual-correctness",
+  "task": "scene3d-visual-correctness",
+  "corrects": "docs/evaluation/geometry/runs/generalized-goal-entry/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "43e877ed49e409e48504737edcf010b0b8cad395bb93ad2c0494985347a40ccf",
+  "current_candidate_source_commit": "e460cfac24dbb10f5987a55969b1ac5087b7c6d3",
+  "current_product_commit": "e460cfac24dbb10f5987a55969b1ac5087b7c6d3",
+  "previous_candidate_hash": "eaddb56c2d7b8a0a5bfc095c2cd06adef9e5780c3e049d9e48f7ceb825b7a08f",
+  "previous_product_commit": "289007a40834045def08fe8b1783dbfdb3919190",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "measured_system_paths_changed": true,
+  "measured_paths_changed": [
+    "backend/app/ai/function_route.py",
+    "backend/app/simulation/geometry_functions/engine.py"
+  ],
+  "reason": "CONTRACT-BE-1 (f07ea069): route D wrote no scene targets; the engine now reports the asked measure and its named operands (KetQuaTuyen.targets) and the route writes them into the state. Production LLM_ONLY route, prompts, schema, provider surfaces, kernel and interpreter unchanged. The Gemini Scene3D merge a7388a40 and the frontend fixes 08021881 / e460cfac are outside the measured paths.",
+  "historical_effect": "Answers, outcomes and refusal codes of route D are unchanged (targets only change scene metadata: annotation role, display_group, FINAL_RESULT subject); historical results keep their source candidates.",
+  "cache_version": 125,
+  "cache_decision": "no bump: route D is not on /api/analyze",
+  "freeze": "clean detached worktree at e460cfac, --verify MATCH there",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "integration branch integration/scene3d-visual-correctness; user decision pending",
+  "push": "NONE: not authorized"
+}
