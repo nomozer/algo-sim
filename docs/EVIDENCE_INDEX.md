@@ -1,10 +1,24 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = RESULT_BINDING_FINAL_ACCEPTANCE
+
+REPORT = docs/evaluation/geometry/runs/result-binding-final-acceptance/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/result-binding-final-acceptance/
+CORRECTED_BY = NONE
+CORRECTS = SHARED_ASK_GRAMMAR_SAFETY
+CLASSIFICATION = FINAL_RESULT_BINDING_T3_PASS
+CODE_COMMIT = 55c657b8 (product, independently code-reviewed)
+VERIFICATION_COMMIT = 7f355a81 (refreeze checkpoint, candidate 30808cb0…, 110 files); T3 FULL_PRODUCT_GATE_PASS on a clean detached worktree at 7f355a81
+DOCUMENTATION_COMMIT_ROLE = SELF
+MODEL_REQUEST_COUNT = 0
+
+Final refreeze (candidate 4b95dcc6… → 30808cb0…) from a clean detached worktree, with an append-only divergence layer chained through `corrects`. Authoritative T3 at the checkpoint: pytest 10046 passed / 0 failed (1 skipped, 2 deselected, 6 xfailed), vitest 1055/1055, build, demo 5/5, crash surface 6/6. The nine former candidate failures pass. Supplementary, not T3: locked corpus 18/18 and Benchmark 30 (19/9/0/2) byte-identical, two-line 45 (12/33) and 32 (11/21) identical except identity fields, grammar probe byte-identical (0 WRONG_SERVED), provider fingerprints unchanged. Integration readiness READY_FOR_REVIEW; no merge, no push.
+
 ## WAVE_ID = SHARED_ASK_GRAMMAR_SAFETY
 
 REPORT = docs/evaluation/geometry/runs/shared-ask-grammar-safety/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/shared-ask-grammar-safety/
-CORRECTED_BY = NONE
+CORRECTED_BY = RESULT_BINDING_FINAL_ACCEPTANCE
 CORRECTS = SOURCE_BOUND_RESULT_PLANNING_FALSE_SERVE_FIX
 CLASSIFICATION = SHARED_ASK_GRAMMAR_SAFETY_BLOCKED
 CODE_COMMIT = 5f1b576c (product); 9ce1298f (harness)

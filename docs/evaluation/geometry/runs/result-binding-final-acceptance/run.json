@@ -1,0 +1,21 @@
+{
+  "schema": "RUN/1",
+  "run": "result-binding-final-acceptance",
+  "date": "2026-10-16",
+  "branch": "research/source-bound-result-planning",
+  "start_commit": "7a58359039edf1fa815813a26597a6f450fc2783",
+  "product_commit": "55c657b8be715cda0edcc9e6e2ec1b3a204bdb65",
+  "checkpoint_commit": "7f355a81296e655f3b75b0dea345a8b6fc447ae4",
+  "previous_candidate": "4b95dcc665f5930b74c849164122458ad070af9af24cb085bcfa9217063dee25",
+  "candidate": "30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc",
+  "measured_files": 110,
+  "t3": "FULL_PRODUCT_GATE_PASS",
+  "verdict": "FINAL_RESULT_BINDING_T3_PASS",
+  "integration_readiness": "READY_FOR_REVIEW",
+  "cache_version": 125,
+  "default_mode": "LLM_ONLY",
+  "hybrid": "OFF",
+  "model_request_count": 0,
+  "merge": "NONE",
+  "push": "NONE"
+}

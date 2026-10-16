@@ -32,6 +32,8 @@ cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe ../docs/evaluation
 
 ## Bước tiếp theo
 
+> **Cập nhật 2026-10-16:** review độc lập ngắn của `correction-addendum-3.md` đạt; refreeze candidate và authoritative T3 đã chạy ở run [`result-binding-final-acceptance`](../result-binding-final-acceptance/report.md) (`FINAL_RESULT_BINDING_T3_PASS`). Các mục 1–2 dưới đây đã xong; giữ nguyên làm lịch sử.
+
 1. Chạy **review độc lập ngắn** chỉ trên `correction-addendum-3.md` và các sửa `report.md`/`handoff.md` đi kèm. Product code review của `55c657b8` đã xong và vẫn giữ nguyên.
 2. Sau khi review độc lập đạt (`PASS`) và được user cho phép, mới thực hiện refreeze `EVALUATION_CANDIDATE.json`, cập nhật `inputs/candidate_divergence.json` và chạy authoritative T3 trên detached worktree sạch.
 3. Scene3D product–Playwright parity audit (`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY` OPEN).

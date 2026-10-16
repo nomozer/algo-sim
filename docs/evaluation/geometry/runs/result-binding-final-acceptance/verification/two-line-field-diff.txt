@@ -1,0 +1,12 @@
+== development vs docs/evaluation/geometry/runs/source-bound-result-planning/verification/two-line-development/metrics.json: 2 differing leaves
+   /candidate | new: 30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc | base: 92bd1a6bcf736ac2e70a3b6687abb482a7170a60fd8b2773173ee99dee16a3b0
+   /product_commit | new: 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65 | base: b8112f357763c1f29601c666552bb82f5a97f1c1
+== development vs docs/evaluation/geometry/runs/shared-ask-grammar-safety/verification/two-line-development-metrics.json: 2 differing leaves
+   /candidate | new: 30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc | base: 4b95dcc665f5930b74c849164122458ad070af9af24cb085bcfa9217063dee25
+   /product_commit | new: 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65 | base: 5f1b576c62eb75293c800718dc200da45ff4934d
+== heldout vs docs/evaluation/geometry/runs/source-bound-result-planning/verification/two-line-heldout/metrics.json: 2 differing leaves
+   /candidate | new: 30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc | base: 92bd1a6bcf736ac2e70a3b6687abb482a7170a60fd8b2773173ee99dee16a3b0
+   /product_commit | new: 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65 | base: b8112f357763c1f29601c666552bb82f5a97f1c1
+== heldout vs docs/evaluation/geometry/runs/shared-ask-grammar-safety/verification/two-line-heldout-metrics.json: 2 differing leaves
+   /candidate | new: 30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc | base: 4b95dcc665f5930b74c849164122458ad070af9af24cb085bcfa9217063dee25
+   /product_commit | new: 55c657b8be715cda0edcc9e6e2ec1b3a204bdb65 | base: 5f1b576c62eb75293c800718dc200da45ff4934d

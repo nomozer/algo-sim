@@ -1,0 +1,51 @@
+{
+  "schema": "T3_AUTHORITATIVE_VERIFICATION/1",
+  "task": "result-binding-final-acceptance",
+  "branch": "research/source-bound-result-planning",
+  "verified_commit": "7f355a81296e655f3b75b0dea345a8b6fc447ae4",
+  "verified_commit_short": "7f355a81",
+  "verified_tree": "0a15b4f9548213d20d431ff551a2e339a905f15c",
+  "product_commit": "55c657b8be715cda0edcc9e6e2ec1b3a204bdb65",
+  "product_commit_short": "55c657b8",
+  "product_trees": {
+    "backend/app": "5bb9a890a1d2bdfb5d747aedfddcf31aa429de6e",
+    "backend/tests": "471bee5ee76b840f1a4360df575de0828ee629c1",
+    "frontend/src": "59dc9534485e2ac874971823c9ee88891d435010"
+  },
+  "candidate_tree_hash": "30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc",
+  "candidate_blob": "786f862ac5a04915271b3b40a24219c315062c24",
+  "measured_files": 110,
+  "cache_version": 125,
+  "default_mode": "LLM_ONLY",
+  "model_request_count": 0,
+  "environment": "detached git worktree 'D:/tmp/rbfa t3/algo-sim' at 7f355a81 (path with a space); git status --porcelain --untracked-files=all empty before and after; frontend/node_modules is a gitignored directory junction to the main checkout install; Python resolved by full-gate as active_venv = main checkout backend/.venv; log written outside the worktree and copied here",
+  "tools": {
+    "python": "3.12.10",
+    "node": "v24.13.0",
+    "npm": "11.6.2",
+    "git": "2.52.0.windows.1"
+  },
+  "pre_candidate_verify": {"command": "python scripts/freeze_evaluation_candidate.py --verify", "cwd": "<worktree>/backend", "exit_code": 0},
+  "command": "node frontend/scripts/full-gate.mjs",
+  "cwd": "<worktree>",
+  "started_utc": "2026-10-16T02:21:03Z",
+  "ended_utc": "2026-10-16T02:27:41Z",
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "total_duration_seconds": 397.5,
+  "log_file": "docs/evaluation/geometry/runs/result-binding-final-acceptance/verification/t3-authoritative.log",
+  "subgates": [
+    {"name": "pytest (toàn bộ backend)", "ok": true, "duration_seconds": 370.2,
+     "summary": "10046 passed, 1 skipped, 2 deselected, 6 xfailed, 1 warning in 367.54s (0:06:07)"},
+    {"name": "vitest (toàn bộ frontend)", "ok": true, "duration_seconds": 17.5,
+     "summary": "68 test files passed (68), 1055 tests passed (1055)"},
+    {"name": "typecheck + build production", "ok": true, "duration_seconds": 8.8,
+     "summary": "tsc -b + vite build exit 0"},
+    {"name": "tập demo khoá luận", "ok": true, "duration_seconds": 0.6,
+     "summary": "DEMO_REPLAY_PASS 5/5, REDUCED_CHAIN_CASES 1/1"},
+    {"name": "bề mặt sập của demo", "ok": true, "duration_seconds": 0.4,
+     "summary": "BIÊN ĐÚNG KỲ VỌNG 6/6, NÉM RA NGOÀI (=500) 0"}
+  ],
+  "post_candidate_verify": {"exit_code": 0},
+  "post_worktree_status": "empty"
+}

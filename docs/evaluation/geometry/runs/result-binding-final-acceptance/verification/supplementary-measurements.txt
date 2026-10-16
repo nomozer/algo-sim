@@ -1,0 +1,84 @@
+=== RBFA SUPPLEMENTARY MEASUREMENTS (not part of T3) ===
+### CMD: git rev-parse HEAD HEAD^{tree}
+### CWD: D:/tmp/rbfa t3/algo-sim
+### START: 2026-10-16T02:28:51Z
+7f355a81296e655f3b75b0dea345a8b6fc447ae4
+0a15b4f9548213d20d431ff551a2e339a905f15c
+### EXIT: 0
+
+### CMD: git status --porcelain --untracked-files=all
+### CWD: D:/tmp/rbfa t3/algo-sim
+### START: 2026-10-16T02:28:51Z
+### EXIT: 0
+
+### CMD: D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/export_result_binding_scenes.py --out D:/tmp/rbfa-supp/corpus
+### CWD: D:/tmp/rbfa t3/algo-sim/backend
+### START: 2026-10-16T02:28:51Z
+Exported 18 real-route outcomes and 4 browser fixtures; live calls 0.
+### EXIT: 0
+
+### CMD: D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/measure_hybrid_compiler_benchmark.py --out D:/tmp/rbfa-supp/benchmark-30
+### CWD: D:/tmp/rbfa t3/algo-sim/backend
+### START: 2026-10-16T02:28:52Z
+{"facts": {"correct_refusal": 9, "correct_served": 19, "diagnosis:keyword_dependence": 1, "diagnosis:missing_composition": 1, "false_refusal": 2, "refusal:contradictory": 2, "refusal:figure_not_unique": 1, "refusal:underconstrained": 3, "refusal:unsupported": 3}, "pipeline": {"correct_refusal": 9, "correct_served": 19, "diagnosis:keyword_dependence": 1, "diagnosis:missing_composition": 1, "false_refusal": 2, "refusal:contradictory": 2, "refusal:figure_not_unique": 1, "refusal:underconstrained": 3, "refusal:unsupported": 3}}
+### EXIT: 0
+
+### CMD: D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/measure_two_line_plane_sections.py --split development --out D:/tmp/rbfa-supp/two-line-development
+### CWD: D:/tmp/rbfa t3/algo-sim/backend
+### START: 2026-10-16T02:28:53Z
+{"split": "development", "cases": 45, "counts": {"correct_served": 12, "correct_refusal": 33}, "failures": []}
+### EXIT: 0
+
+### CMD: D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/measure_two_line_plane_sections.py --split heldout --out D:/tmp/rbfa-supp/two-line-heldout
+### CWD: D:/tmp/rbfa t3/algo-sim/backend
+### START: 2026-10-16T02:28:55Z
+{"split": "heldout", "cases": 32, "counts": {"correct_served": 11, "correct_refusal": 21}, "failures": []}
+### EXIT: 0
+
+### CMD: D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe ../docs/evaluation/geometry/runs/shared-ask-grammar-safety/grammar_probe.py D:/tmp/rbfa-supp/grammar-probe.json
+### CWD: D:/tmp/rbfa t3/algo-sim/backend
+### START: 2026-10-16T02:28:57Z
+{"B": {"CORRECT_REFUSAL": 84, "CORRECT_SERVED": 33, "FALSE_REFUSAL": 6}, "A": {"CORRECT_REFUSAL": 52, "CORRECT_SERVED": 16, "FALSE_REFUSAL": 4}}
+FALSE_REFUSAL B P5-line QUESTION_CONTEXT_UNSUPPORTED
+FALSE_REFUSAL B P7-line QUESTION_CONTEXT_UNSUPPORTED
+FALSE_REFUSAL B P5-plane QUESTION_CONTEXT_UNSUPPORTED
+FALSE_REFUSAL B P7-plane QUESTION_CONTEXT_UNSUPPORTED
+FALSE_REFUSAL B P5-length QUESTION_CONTEXT_UNSUPPORTED
+FALSE_REFUSAL B P7-length QUESTION_CONTEXT_UNSUPPORTED
+FALSE_REFUSAL A P5-plane QUESTION_CONTEXT_UNSUPPORTED
+FALSE_REFUSAL A P7-plane QUESTION_CONTEXT_UNSUPPORTED
+FALSE_REFUSAL A P5-length QUESTION_CONTEXT_UNSUPPORTED
+FALSE_REFUSAL A P7-length QUESTION_CONTEXT_UNSUPPORTED
+### EXIT: 0
+
+### CMD: D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe C:/Users/Bunny/AppData/Local/Temp/claude/d--Documents-projects-algo-sim/e5c8c4c3-f490-4044-9aa8-c6174596794e/scratchpad/rbfa_fp.py
+### CWD: D:/tmp/rbfa t3/algo-sim/backend
+### START: 2026-10-16T02:28:58Z
+{
+  "A": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+  "B": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+  "declarations": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"
+}
+### EXIT: 0
+
+### CMD: D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe C:/Users/Bunny/AppData/Local/Temp/claude/d--Documents-projects-algo-sim/e5c8c4c3-f490-4044-9aa8-c6174596794e/scratchpad/rbfa_cmp.py D:/tmp/rbfa t3/algo-sim D:/tmp/rbfa-supp
+### CWD: D:/tmp/rbfa t3/algo-sim
+### START: 2026-10-16T02:28:59Z
+MATCH corpus/scenes.json <-> docs/evaluation/geometry/runs/source-bound-result-planning/visual/scenes.json c9d5748c2fa1fe8b c9d5748c2fa1fe8b
+MATCH corpus/corpus-results.json <-> docs/evaluation/geometry/runs/source-bound-result-planning/visual/corpus-results.json 1a6598e6d62c1f9b 1a6598e6d62c1f9b
+MATCH corpus/manifest.json <-> docs/evaluation/geometry/runs/source-bound-result-planning/visual/manifest.json 7e75912efa7f58a2 7e75912efa7f58a2
+MATCH benchmark-30/metrics.json <-> docs/evaluation/geometry/runs/source-bound-result-planning/verification/benchmark-30/metrics.json 65cfe3e1eb893ce9 65cfe3e1eb893ce9
+MATCH benchmark-30/metrics.json <-> docs/evaluation/geometry/runs/shared-ask-grammar-safety/verification/benchmark-30-metrics.json 65cfe3e1eb893ce9 65cfe3e1eb893ce9
+DIFF  two-line-development/metrics.json <-> docs/evaluation/geometry/runs/source-bound-result-planning/verification/two-line-development/metrics.json eb3c61c12a830a5e b138d0a0e58213e9
+DIFF  two-line-heldout/metrics.json <-> docs/evaluation/geometry/runs/source-bound-result-planning/verification/two-line-heldout/metrics.json 51e44417126e51ab 9ec02da82773a23e
+DIFF  two-line-development/metrics.json <-> docs/evaluation/geometry/runs/shared-ask-grammar-safety/verification/two-line-development-metrics.json eb3c61c12a830a5e 1541e6ea008ac451
+DIFF  two-line-heldout/metrics.json <-> docs/evaluation/geometry/runs/shared-ask-grammar-safety/verification/two-line-heldout-metrics.json 51e44417126e51ab 45b5a4de626efb66
+MATCH grammar-probe.json <-> docs/evaluation/geometry/runs/shared-ask-grammar-safety/verification/suite3-grammar-probe.json f46ba2c950c04803 f46ba2c950c04803
+DIFF_COUNT 4
+### EXIT: 0
+
+### CMD: git status --porcelain --untracked-files=all
+### CWD: D:/tmp/rbfa t3/algo-sim
+### START: 2026-10-16T02:28:59Z
+### EXIT: 0
+
