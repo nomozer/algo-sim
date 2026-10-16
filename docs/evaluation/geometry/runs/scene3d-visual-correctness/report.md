@@ -92,12 +92,12 @@ auxiliary planes: correct on the inspected screenshots; **not human-reviewed**.
 
 None found. Frontend vitest 1072/1072, `tsc -b` clean; backend geometry/route-D suites green (2305 at `f07ea069`);
 route D replay identical; Planner, compiler, kernel, interpreter, schema, prompts and `/api/analyze` untouched.
-Authoritative numbers: T3 in `run.json`.
+Authoritative T3 at `0a33fcc8`: `FULL_PRODUCT_GATE_PASS` (pytest 10170/0, vitest 1072/1072).
 
 ## G. Gates
 
 Candidate `43e877ed49e409e48504737edcf010b0b8cad395bb93ad2c0494985347a40ccf` (110 files) frozen at `e460cfac` in a
-clean detached worktree, `--verify` MATCH there and on the branch. T3, Playwright, typecheck and build: `run.json`.
+clean detached worktree, `--verify` MATCH there, on the branch and in the T3 worktree. Clean detached T3 at `0a33fcc8`: `FULL_PRODUCT_GATE_PASS` — pytest 10170 passed / 0 failed, vitest 1072/1072, typecheck + production build, demo replay, crash surface 6/6 (`verification/t3-pass.json`). Playwright: §E. Independent review: §A.
 
 ## H. Git — see `handoff.md`
 

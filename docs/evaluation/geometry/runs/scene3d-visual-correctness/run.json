@@ -38,5 +38,5 @@
     "frozen_at": "e460cfac",
     "divergence": "inputs/candidate_divergence.json"
   },
-  "t3": "PENDING"
+  "t3": "verification/t3-pass.json — clean detached T3 at 0a33fcc8 FULL_PRODUCT_GATE_PASS (pytest 10170/0, vitest 1072/1072, build, demo, crash surface 6/6)"
 }

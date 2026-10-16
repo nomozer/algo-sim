@@ -11,7 +11,7 @@ independently; FE-4 fix `08021881` (displayed line span no longer pulled toward 
 engine now reports the asked measure and its named operands). BE-2/3/4: no contract change (frontend owns display
 geometry). Integration scenes regenerated from this backend; Scene3D harness D3D11 + SwiftShader
 `PASS_CORE_CAUSAL_RENDERING` (11 scenes, 0 errors); independent review found a second line-span bug (witness foot
-outside the edge), fixed `e460cfac`. Candidate `43e877ed…` (refreeze `8f437980`). `LLM_ONLY`, cache 125, Hybrid NO-GO, 0 Gemini;
+outside the edge), fixed `e460cfac`. Candidate `43e877ed…` (refreeze `8f437980`); clean detached T3 at `0a33fcc8` `FULL_PRODUCT_GATE_PASS` (pytest 10170/0, vitest 1072). `LLM_ONLY`, cache 125, Hybrid NO-GO, 0 Gemini;
 `HUMAN_VISUAL_REVIEW_PENDING`. Run [`scene3d-visual-correctness`](evaluation/geometry/runs/scene3d-visual-correctness/report.md).
 
 ## INTEGRATED ON `main` — Generalized Goal Entry and its stack, 2026-10-16

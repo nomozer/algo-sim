@@ -8,7 +8,7 @@ CORRECTS = NONE
 CORRECTED_BY = NONE
 CLASSIFICATION = SCENE3D_VISUAL_CORRECTNESS_READY_FOR_INTEGRATION_DECISION
 CODE_COMMIT = a7388a40 (merge of Gemini 0ef0a20a, frontend) + 08021881 (FE-4) + f07ea069 (CONTRACT-BE-1, route D)
-VERIFICATION_COMMIT = see run.json (candidate refreeze and clean detached T3 recorded there)
+VERIFICATION_COMMIT = 0a33fcc8 clean detached T3 FULL_PRODUCT_GATE_PASS (verification/t3-pass.json); candidate 43e877ed… refrozen at 8f437980
 MODEL_REQUEST_COUNT = 0
 
 Integration scenes (`visual/scenes.json`) regenerated from the integrated backend; Scene3D harness D3D11 + SwiftShader receipts in `visual/receipts/`. Technical rendering only; no human visual approval or Hybrid enablement implied.
