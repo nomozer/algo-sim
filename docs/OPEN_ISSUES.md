@@ -1,5 +1,14 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-GENERALIZED-GOAL-ENTRY-COVERAGE
+
+- **status:** PARTIALLY_IMPLEMENTED — run `generalized-goal-entry`, length goal through Registry metadata; described midpoint → named point, experimental centroid producer.
+- **limits:** flat point operands, supported descriptor predicates and length-specific source/exact verifier. Area/volume/angle entry and arbitrary contracts are not implied. Provider extraction of these field combinations remains NOT_MEASURED; prompt and schema unchanged.
+- **conservative false refusals (handoff probes):** "… bằng bao nhiêu?" and "đoạn nối A với trung điểm của SC" are refused (closed sentence / one phrase order). Inherited presentation: the asked segment is not drawn by default and the narration says "khoảng cách" for a length, as on the named route-D length.
+- **certificate blocker fixed:** forged effect-chain `labels` could mislabel original vertices as auxiliary; the source gate now compares labels with actual fresh outputs.
+- **Scene3D review:** W1–W3 independently reviewed PASS_WITH_FINDINGS. Inherited hidden-source perpendicular witness fixed by this run; historical evidence interpretation corrected append-only in `scene-corrections.md`. Human visual acceptance remains NOT_APPROVED.
+- **enablement:** existing named-distance source grammar residuals and cube line-ref grammar remain OPEN. Hybrid product NO-GO.
+
 ### ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE
 
 - **status:** OPEN — found 2026-10-16 (run `goal-directed-function-discovery`, deviation D-1); not fixed.

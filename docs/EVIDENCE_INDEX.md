@@ -1,5 +1,18 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = GENERALIZED_GOAL_ENTRY
+
+REPORT = docs/evaluation/geometry/runs/generalized-goal-entry/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/generalized-goal-entry/
+CORRECTS = SCENE3D_ARCHITECTURE_VISUAL_RELIABILITY (interpretation only; scene-corrections.md)
+CORRECTED_BY = NONE
+CLASSIFICATION = GENERALIZED_GOAL_ENTRY_READY_FOR_INTEGRATION_DECISION
+CODE_COMMIT = 193e634a (route D) + 289007a4 (Scene3D witness)
+VERIFICATION_COMMIT = run.json / verification/ (re-measured on the committed product; refreeze and clean detached T3)
+MODEL_REQUEST_COUNT = 0
+
+Preregistered new development corpus: length from an unnamed described point to one named point. Independent Fraction/Gram oracle; fixed/bounded/discovery baselines; production/removal/centroid/reversed/lying catalog variants. Exact report and final identities in the run package; no human approval or Hybrid enablement implied.
+
 ## WAVE_ID = GOAL_DIRECTED_FUNCTION_DISCOVERY
 
 REPORT = docs/evaluation/geometry/runs/goal-directed-function-discovery/report.md
@@ -21,7 +34,7 @@ refused by the engine). Scene3D harness SwiftShader + Intel D3D11 `PASS_CORE_CAU
 
 REPORT = docs/evaluation/geometry/runs/scene3d-architecture-visual-reliability/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-architecture-visual-reliability/
-CORRECTED_BY = NONE
+CORRECTED_BY = GENERALIZED_GOAL_ENTRY (scene-corrections.md; original artifacts unchanged)
 CORRECTS = SCENE3D_VISUAL_PARITY_AUDIT
 CLASSIFICATION = SCENE3D_ARCHITECTURE_IMPLEMENTATION_READY_FOR_REVIEW
 CODE_COMMIT = SELF (frontend W1–W3 implementation on research/scene3d-visual-parity-audit; backend 55c657b8 unchanged)

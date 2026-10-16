@@ -1,0 +1,39 @@
+{
+  "schema": "RUN/1",
+  "run_id": "generalized-goal-entry",
+  "wave": "generalized-goal-entry",
+  "date": "2026-10-16",
+  "environment": "LOCAL Windows 11, Python 3.12, Node, Chromium",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "agents": "implemented by a Codex session that hit its usage limit before committing; committed, re-measured, reviewed and closed by Claude Code (handoff)",
+  "status": "GENERALIZED_GOAL_ENTRY_READY_FOR_INTEGRATION_DECISION",
+  "branch": "research/generalized-goal-entry",
+  "base_commit": "96569792",
+  "base_dependencies": ["main 2a3c0787", "result-binding f83b4ed1", "Scene3D W1-W3 8c24cb52", "function discovery 96569792 (cfa27baa product)"],
+  "main_before": "2a3c0787",
+  "push": "NONE",
+  "handoff_backup": "uncommitted Codex work backed up outside the repository (tracked patch + untracked tar, restore verified) before any edit",
+  "preregistration": "preregistration.md (committed at handoff; mtimes 20:41 precede the last product edits 20:43-20:55, first-edit order not provable from git)",
+  "oracle": "oracle.py",
+  "corpus": "corpus.json",
+  "commits": {
+    "preregistration_and_baselines": "067147d5",
+    "tests_and_mutant_rebind": "b41b4181",
+    "product": "193e634a",
+    "scene3d_witness_fix": "289007a4",
+    "tooling": "3d07ddb4",
+    "codex_session_evidence": "140ae4ed"
+  },
+  "product_commits": ["193e634a", "289007a4"],
+  "cache_version": 125,
+  "default": "LLM_ONLY",
+  "live_calls": 0,
+  "Hybrid_product_enablement": "NO-GO (unchanged)",
+  "provider_surfaces_unchanged": true,
+  "results": {
+    "codex_session": "results/*.json, visual/browser-attempt3/receipt.json — measured before the last planner.py edit",
+    "final": "results/final-193e634a/ — re-measured on the committed product: new positives 8/8 exact, negatives 10/11 registered code (1 registration error), 0 wrong served, centroid 2/2, 153 earlier rows identical to DISCOVERY (outcomes and plan stats), reversed registry identical, Codex measurements reproduced 174/174",
+    "scenes": "visual/scenes.json re-exported byte-identical from the committed product, so the browser receipt holds",
+    "handoff_probes": "report.md §K — 21 adversarial probes, 0 wrong served"
+  }
+}

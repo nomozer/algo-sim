@@ -1,5 +1,19 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Generalized Goal Entry — length goals (LOCAL research, Hybrid off)
+
+Run `generalized-goal-entry`; contract `docs/architecture/GENERALIZED_GOAL_ENTRY_CONTRACT.md`. Reuses all existing geometry, IR and rendering.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/registry.py` | `FunctionSpec.planning_extra`, `PlanningContract.goal`, `planning_contracts` / `planning_contract`: alternative mathematical effects of an existing function. `ask_length` adds `AnswerLength`; `_mau_muc_tieu_mo_ta` source pattern, full sentence and exact fresh-label certificate validation | `backend/tests/geometry/test_generalized_goal_entry.py` |
+| `backend/app/simulation/geometry_functions/planner.py` | Metadata-driven `_cau_hoi` → `_EffectResolver.goal`; typed descriptor or named operands, all Answer effects bypass answer memoization; `_Choice.contract` selects the exact template; chain records an alternative effect | same |
+| `backend/app/simulation/geometry_functions/engine.py` | `_Dung.kc2_dich` independently verifies point-target squared length using the existing Gram metric | same |
+| `backend/scripts/measure_goal_entry.py` | Reuses Function Discovery bundle/arm/compare tooling; new length corpus, catalog ablations and real-route scene export, never overwrites results | run `baseline/`, `results/`, independent `oracle.py` |
+| `frontend/scripts/goal-entry-browser-check.mjs` | Playwright Product store injection of exact route scenes, first/middle/final steps, point selection, shared harness object parity, hidden-source witness regression | run `visual/` |
+| `frontend/src/simulations/domains/geometry/scene3d-annotations.ts` · `scene3d-view.tsx` | Projection witnesses require both visible foot and source, including interaction hide/isolate. Hiding auxiliary carrier planes alone does not suppress the marker | `scene3d-annotations.test.ts`, Product browser check |
+
+
 ## Goal-directed function discovery — unnamed derived operands planned from contracts (LOCAL research, Hybrid off)
 
 Run `docs/evaluation/geometry/runs/goal-directed-function-discovery/` (preregistration, independent `oracle.py` → `corpus.json`).

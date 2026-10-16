@@ -8,6 +8,8 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-16, generalized-goal-entry:** length entry implemented and measured on research branch from96569792; Codex session committed and re-verified by Claude; the stack (Result Binding → Scene3D W1–W3 → Function Discovery → this slice) waits for one decision, `STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION`. No merge/push/enablement authorized. Review+Product browser passed;8/8new exact,153prior invariant. Next research proposal is semantic-understanding/grounding evaluation design before G16, because authored-fact planning is measured while extraction remains NOT_MEASURED and known source residuals remain OPEN. Run [`generalized-goal-entry`](evaluation/geometry/runs/generalized-goal-entry/report.md). Earlier next actions below are historical.
+
 **2026-10-16, goal-directed function discovery (LOCAL research, not merged):** branch
 `research/goal-directed-function-discovery` stacks on result binding (`f83b4ed1`) and Scene3D W1–W3 (`8c24cb52`, review
 pending). Planner composes distances from unnamed described points via Registry contracts; a contract added as data is

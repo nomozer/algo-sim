@@ -1,5 +1,19 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL — Generalized Goal Entry, 2026-10-16
+
+CANONICAL_NEXT_ACTION = STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION
+
+Branch `research/generalized-goal-entry` from verified Function Discovery `96569792`, stacked on Result Binding / Scene3D
+W1–W3 / Function Discovery, none integrated; `main` = `origin/main` = `2a3c0787`. Work of an interrupted Codex session,
+committed and verified on handoff by Claude. Product commits `193e634a` (route D: length goals through Registry goal
+contracts) + `289007a4` (Scene3D: hidden source/foot hides the projection witness). Identities and T3: run `run.json`.
+Re-measured on the committed product: new length corpus 8/8 exact, 10/11 negatives with the registered code (1 registration
+error, label kept), 0 wrong served; experimental centroid contract 2/2 without code change; 153 earlier rows identical to
+Function Discovery (status/code/answers and plan stats); Codex measurements reproduced 174/174.
+`LLM_ONLY`, cache 125, Hybrid NO-GO, 0 Gemini; TypedFact schema and provider surfaces unchanged; human visual acceptance
+NOT_APPROVED. Run [`generalized-goal-entry`](evaluation/geometry/runs/generalized-goal-entry/report.md).
+
 ## LOCAL — Goal-directed function discovery (unnamed derived operands), 2026-10-16
 
 CANONICAL_NEXT_ACTION = STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION
