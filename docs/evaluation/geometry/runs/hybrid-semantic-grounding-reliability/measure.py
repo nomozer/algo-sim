@@ -48,10 +48,10 @@ def classify(case, r, want):
     return "CORRECT_REFUSAL", None
 
 
-def run(label: str, out: Path) -> None:
+def run(label: str, out: Path, code_root: Path = ROOT) -> None:
     if out.exists():
         raise SystemExit(f"{out} exists — measurements are never overwritten")
-    sys.path.insert(0, str(ROOT / "backend"))
+    sys.path.insert(0, str(code_root / "backend"))
     from app.ai.function_route import run_fact_route
     oracle = json.loads((HERE / "oracle.json").read_text(encoding="utf-8"))["values"]
     cases = (json.loads((HERE / "corpus.json").read_text(encoding="utf-8"))["cases"]
@@ -63,8 +63,8 @@ def run(label: str, out: Path) -> None:
         rows.append({"id": c["id"], "group": c["group"], "mechanism": c["mechanism"], "extraction": c["extraction"],
                      "expect": c["expect"], "source_requests": c["source_requests"], "status": r.status, "code": r.code,
                      "answers": r.answers, "class": cls, "why": why})
-    sha = subprocess.run(["git", "-C", str(ROOT), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
-    dirty = subprocess.run(["git", "-C", str(ROOT), "status", "--porcelain", "--", "backend/app"],
+    sha = subprocess.run(["git", "-C", str(code_root), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+    dirty = subprocess.run(["git", "-C", str(code_root), "status", "--porcelain", "--", "backend/app"],
                            capture_output=True, text=True).stdout.strip()
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps({"label": label, "head": sha, "product_dirty": bool(dirty), "model_calls": 0,
@@ -108,9 +108,10 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--label")
     ap.add_argument("--out", type=Path)
+    ap.add_argument("--code-root", type=Path, default=ROOT)
     ap.add_argument("--compare", type=Path, nargs=2)
     a = ap.parse_args()
     if a.compare:
         compare(*a.compare)
     else:
-        run(a.label, a.out)
+        run(a.label, a.out, a.code_root.resolve())

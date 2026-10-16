@@ -762,7 +762,7 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
         if luat not in AUXILIARY_RULES:
             raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x}: luật {luat!r} không có trong bảng phân rã")
         if luat in (MAT_SONG_SONG, MAT_HAI_DUONG):
-            da |= _kiem_mat_song_song(d, theo_id, de, nhan, chiem, nhan_da_khai, calls, ten_mat_phu, don_vi_de)
+            da |= _kiem_mat_song_song(d, theo_id, de, nhan, chiem, nhan_da_khai, calls, ten_mat_phu, don_vi_de, buoc)
             continue
         if x in nhan_da_khai:
             raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x} được khai hai lần")
@@ -2487,7 +2487,8 @@ def _khoi_trong_quote(c: LoiGoi, khoi: dict[str, frozenset]) -> bool:
 
 
 def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tuple[LoiGoi, ...],
-                             ten_ra: set[str] | None = None, don_vi_de: set[str] = frozenset()) -> bool:
+                             ten_ra: set[str] | None = None, don_vi_de: set[str] = frozenset(),
+                             buoc: list[tuple[int, int]] | None = None) -> bool:
     """Bounded grammar binding a section to a derived plane: the plane through `p` parallel to (q) is defined in the quotes
     (named "(P)" and referred to by a section phrase, or written inside the section phrase), as a premise, not negated.
     Unknown wording is refused, not guessed. `ten_ra` receives the plane names the source gave, once bound."""
@@ -2558,6 +2559,8 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
             raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED",
                          f"{c.id}: đơn vị yêu cầu trong câu hỏi không khớp chính sách đơn vị của dữ kiện hoặc loại đại lượng",
                          (c.id,))
+        if thiet_dien and buoc is not None:
+            buoc.extend(hoi_p)
     if thiet_dien and ten_ra is not None:
         ten_ra |= ten_mat
     return thiet_dien                                    # chỉ đặt True từ một mệnh đề định nghĩa đã khớp (p, q)
@@ -2565,7 +2568,7 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
 
 def _kiem_mat_song_song(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: set[str], nhan_da_khai: set,
                         calls: tuple[LoiGoi, ...], ten_mat_phu: dict | None = None,
-                        don_vi_de: set[str] = frozenset()) -> set[str]:
+                        don_vi_de: set[str] = frozenset(), buoc: list[tuple[int, int]] | None = None) -> set[str]:
     """Declared decomposition `MAT_SONG_SONG`: two fresh labels, two translates of the point along two directions of the
     reference plane, every target section on exactly (point, label₁, label₂), shared quotes, and a source binding."""
     xs, p, q = list(d.get("labels") or []), d.get("point"), list(d.get("parallel_to") or [])
@@ -2594,8 +2597,8 @@ def _kiem_mat_song_song(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: 
         raise TuChoi("UNKNOWN_LABEL", f"nhãn {lac} không có trong đề", ids)
     ten_nguon: set[str] = set()
     for c in dich:
-        bound = (_mat_hai_duong_dung_nguon(c, p, lines, d["plane_name"], de, calls, don_vi_de) if two else
-                 mat_song_song_dung_nguon(c, p, q, de, calls, ten_nguon, don_vi_de))
+        bound = (_mat_hai_duong_dung_nguon(c, p, lines, d["plane_name"], de, calls, don_vi_de, buoc) if two else
+                 mat_song_song_dung_nguon(c, p, q, de, calls, ten_nguon, don_vi_de, buoc))
         if not bound:
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: đề không nói thiết diện của {c.args.solid} với mặt phẳng qua {p} "
                          f"song song ({''.join(q)})", ids)
@@ -2638,7 +2641,8 @@ _CUM_DUNG_THIET_DIEN_PHU = re.compile(
 
 
 def _mat_hai_duong_dung_nguon(c: LoiGoi, point: str, lines: list[list[str]], name: str, de: str,
-                            calls: tuple[LoiGoi, ...], don_vi_de: set[str] = frozenset()) -> bool:
+                            calls: tuple[LoiGoi, ...], don_vi_de: set[str] = frozenset(),
+                            buoc: list[tuple[int, int]] | None = None) -> bool:
     """Closed named definition and direct section reference; no quote/anaphor may rebind another goal."""
     if not _khoi_trong_quote(c, _khoi_cua_loi_goi(calls)):
         return False
@@ -2692,6 +2696,8 @@ def _mat_hai_duong_dung_nguon(c: LoiGoi, point: str, lines: list[list[str]], nam
                                  f"{c.id}: đơn vị yêu cầu trong câu hỏi không khớp chính sách đơn vị của dữ kiện hoặc loại đại lượng",
                                  (c.id,))
                 request_ok = True
+                if buoc is not None:
+                    buoc.append(ask_m.span())
     return request_ok
 
 
