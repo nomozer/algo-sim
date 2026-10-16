@@ -7,6 +7,7 @@ import {
   PLANE_DISPLAY_SIZE,
   RENDER_KINDS,
   clampStep,
+  diemChoDuong,
   doanDuongThang,
   highlightedAt,
   narrationAt,
@@ -798,6 +799,21 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     expect(xs[0]).toBeLessThan(0);                      // hai đầu vẫn vượt qua A và B: đường, không phải đoạn
     expect(xs[1]).toBeGreaterThan(2);
     expect(xs[1]).toBeLessThan(10);                     // không kéo tới điểm neo
+  });
+
+  it("FE-4 (review tích hợp): chân vuông góc NGOÀI cạnh (không phải điểm của cảnh) vẫn nằm trong phần vẽ của đường", () => {
+    // d(A, BC): chân H = (1,−1,0) nằm ngoài đoạn BC; H chỉ có trong nhân chứng của đại lượng, không là vật của cảnh.
+    const p = (id: string, xyz: number[]) => ({ id, type: "point3", render: "point", depends: [], xyz: xyz.map(String) });
+    const objects = [p("A", [0, 0, 0]), p("B", [2, 0, 0]), p("C", [3, 1, 0]), p("S", [1, 0, 2]),
+      { id: "dt", type: "line3", render: "line", depends: ["B", "C"], point: ["2", "0", "0"], direction: ["1", "1", "0"] },
+      { id: "kq", type: "scalar", render: "non_visual", depends: ["A", "dt"],
+        annotation: { witness: { from: "A", foot: ["1", "-1", "0"], on: "dt", marker: { u: ["1", "1", "0"], v: ["-1", "1", "0"] } } } },
+    ] as unknown as Scene3D["objects"];
+    const [a, b] = doanDuongThang([2, 0, 0], [1, 1, 0], diemChoDuong(objects, "dt"))!;
+    const t = (q: number[]) => ((q[0] - 2) + q[1]) / Math.SQRT2;   // toạ độ dọc đường tính từ B
+    const [lo, hi] = [t(a), t(b)].sort((x, y) => x - y);
+    expect(lo).toBeLessThan(-Math.SQRT2);               // H (t = −√2) ở trong phần vẽ, kèm phần kéo dài
+    expect(hi).toBeGreaterThan(Math.SQRT2);             // C (t = √2) cũng vậy
   });
 
   it("VISUAL-FE-4: mặt phẳng có ≥3 điểm không thẳng hàng nằm trên nó dựng đúng miền đa giác phẳng của các điểm đó, không thò góc vuông xuống dưới đáy", () => {

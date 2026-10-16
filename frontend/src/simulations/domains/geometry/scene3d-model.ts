@@ -957,6 +957,14 @@ export function daGiacMatPhang(
   return Math.abs(dienTich2) > 1e-5 ? bao.map((b) => b.p) : null;
 }
 
+/** Điểm nền cho phần vẽ của đường `duongId`: điểm có biên của cảnh + chân (do kernel tính) của mọi nhân chứng vuông
+ *  góc rơi trên đường ấy — chân thường không phải điểm của cảnh, nên thiếu nó thì chân ngoài cạnh nằm ngoài nét vẽ. */
+export function diemChoDuong(objects: SceneObject[], duongId: string): Vec3[] {
+  const chan = objects.flatMap((o) => [o.annotation?.witness, o.perpendicular_witness])
+    .filter((w) => w?.on === duongId).map((w) => toVec3(w!.foot));
+  return [...diemHuuHan(objects), ...chan];
+}
+
 /**
  * ĐOẠN ĐẠI DIỆN của một đường thẳng vô hạn — cùng quy tắc với `khungMatPhang`: chiếu mọi điểm có biên của cảnh lên
  * đường, lấy khoảng hình chiếu, nới theo `PLANE_PATCH_MARGIN`; dài tối thiểu bằng đường chéo hộp bao của cảnh.

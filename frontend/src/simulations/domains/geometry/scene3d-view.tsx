@@ -12,6 +12,7 @@ import {
   daGiacMatPhang,
   dayVaDinhChop,
   diemHuuHan,
+  diemChoDuong,
   doanDuongThang,
   duongKinhCanh,
   geometryHighlightedAt,
@@ -2236,7 +2237,6 @@ export function Scene3DWorkspace({
        cảnh. Bước 1 chưa có khối thì miếng mặt phẳng cũng chưa được phình ra
        ôm một khối chưa xuất hiện — mắt đọc đúng thứ tự dựng. */
     const diemNen = diemHuuHan(seDung);
-    const diemToanCanh = diemHuuHan(scene.objects);
     const coHinhCong = seDung.some((x) => x.render === "circle" || x.render === "ellipse" || x.render === "curved_solid");
     const idSeDung = new Set(seDung.map((o) => o.id));
     const khoaDich = (id: string) => visualTransformOf(tuongTac, scene, id).translate.join(",");
@@ -2267,7 +2267,7 @@ export function Scene3DWorkspace({
             : diemHuuHan(seDung.filter((x) => o.depends.includes(x.id) || x.type === "solid" || (x.type === "section" && x.depends.includes(o.id)))))
         : [];
       const diemChoVat = o.render === "line"
-        ? diemToanCanh
+        ? diemChoDuong(scene.objects, o.id)
         : o.render === "surface" && diemMp.length >= 3
           ? diemMp
           : diemNen;
