@@ -1,0 +1,151 @@
+{
+ "run": "hybrid-semantic-grounding-reliability",
+ "values": {
+  "A01-desc-plane-imperative": {
+   "q": "1"
+  },
+  "A02-desc-plane-bao-nhieu": {
+   "q": "1"
+  },
+  "A03-desc-plane-tim-toi-mp": {
+   "q": "1"
+  },
+  "A04-named-midpoint-then-ask": {
+   "q": "1"
+  },
+  "A05-desc-length": {
+   "q": "17/4"
+  },
+  "A06-desc-length-reversed": {
+   "q": "17/4"
+  },
+  "A07-desc-length-bao-nhieu": {
+   "q": "17/4"
+  },
+  "A08-desc-length-reversed-bao-nhieu": {
+   "q": "17/4"
+  },
+  "A09-named-plane": {
+   "q": "4"
+  },
+  "A10-named-plane-bao-nhieu": {
+   "q": "4"
+  },
+  "A11-named-line": {
+   "q": "72/17"
+  },
+  "A12-named-line-bao-nhieu": {
+   "q": "72/17"
+  },
+  "A13-paraphrase-chinh-giua": {
+   "q": "1"
+  },
+  "A14-paraphrase-bao-xa": {
+   "q": "72/17"
+  },
+  "B05-construct-projection": {},
+  "B06-define-projection": {},
+  "C03-four-label-base-desc": {
+   "q": "9/4"
+  },
+  "C04-four-label-base-named": {
+   "q": "9"
+  },
+  "C08-result-line-pyramid": {
+   "q": "13/4"
+  },
+  "C09-result-line-cube": {
+   "q": "2"
+  },
+  "C11-cube-lateral-face-four-labels": {
+   "q": "4"
+  },
+  "C12-cube-diagonal-plane-four-labels": {
+   "q": "0"
+  },
+  "D02-two-asks-both-extracted": {
+   "q1": "1",
+   "q2": "17"
+  },
+  "D04-then-volume-both-extracted": {
+   "q1": "1",
+   "q2": "16"
+  },
+  "D06-next-sentence-volume-both-extracted": {
+   "q1": "1",
+   "q2": "16"
+  },
+  "D09-named-two-asks-both-extracted": {
+   "q1": "4",
+   "q2": "17"
+  },
+  "D11-length-and-volume-both-extracted": {
+   "q1": "17",
+   "q2": "16"
+  },
+  "D13-two-sentences-both-extracted": {
+   "q1": "1",
+   "q2": "9/4"
+  },
+  "U00": {
+   "q": "36/13"
+  },
+  "U01": {
+   "q": "9/4"
+  },
+  "U02": {
+   "q": "88/13"
+  },
+  "U03": {
+   "q": "17"
+  },
+  "U04": {
+   "q": "16"
+  },
+  "U05": {
+   "q": "4"
+  },
+  "U08": {},
+  "U11": {},
+  "U12": {},
+  "U13": {
+   "q1": "17",
+   "q2": "36/13"
+  },
+  "U14": {
+   "q": "36/13"
+  },
+  "U15": {
+   "q1": "16",
+   "q2": "36/13"
+  },
+  "U16": {
+   "q1": "13",
+   "q2": "13",
+   "q3": "88/13"
+  },
+  "U17": {
+   "q1": "72/17",
+   "q2": "2"
+  },
+  "U18": {
+   "q1": "8",
+   "q2": "11"
+  },
+  "U24": {
+   "q": "8/17"
+  },
+  "U25": {
+   "q": "36/13"
+  },
+  "U26": {
+   "q": "88/13"
+  },
+  "U30": {
+   "q": "13"
+  },
+  "U33": {
+   "q": "52/17"
+  }
+ }
+}

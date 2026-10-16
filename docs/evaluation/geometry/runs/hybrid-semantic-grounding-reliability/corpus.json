@@ -1,0 +1,5892 @@
+{
+ "run": "hybrid-semantic-grounding-reliability",
+ "status": "PREREGISTERED_DEVELOPMENT_NOT_HELD_OUT",
+ "author": "implementing agent (same as fixer) — see preregistration.md; unseen split authored separately",
+ "cases": [
+  {
+   "id": "A01-desc-plane-imperative",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "plane": [
+      "S",
+      "A",
+      "B"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "A02-desc-plane-bao-nhieu",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Khoảng cách từ trung điểm của SC đến (SAB) bằng bao nhiêu?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Khoảng cách từ trung điểm của SC đến (SAB) bằng bao nhiêu?"
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "plane": [
+      "S",
+      "A",
+      "B"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "A03-desc-plane-tim-toi-mp",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tìm khoảng cách từ trung điểm của SC tới mặt phẳng (SAB).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tìm khoảng cách từ trung điểm của SC tới mặt phẳng (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "plane": [
+      "S",
+      "A",
+      "B"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "A04-named-midpoint-then-ask",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm SC. Tính khoảng cách từ M đến (SAB).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "f5",
+      "kind": "point_def",
+      "role": "premise",
+      "quotes": [
+       "Gọi M là trung điểm SC."
+      ],
+      "point": "M",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ M đến (SAB)."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "M"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "plane": [
+      "S",
+      "A",
+      "B"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "A05-desc-length",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trung điểm của SC với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trung điểm của SC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "length",
+     "a": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "b": "A"
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "A06-desc-length-reversed",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối A với trung điểm của SC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối A với trung điểm của SC."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "length",
+     "a": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "b": "A"
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "M3",
+   "extraction": "faithful",
+   "note": "reported false refusal (operand order)"
+  },
+  {
+   "id": "A07-desc-length-bao-nhieu",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Độ dài đoạn nối trung điểm của SC với A bằng bao nhiêu?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Độ dài đoạn nối trung điểm của SC với A bằng bao nhiêu?"
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "length",
+     "a": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "b": "A"
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "M3",
+   "extraction": "faithful",
+   "note": "reported false refusal (question form)"
+  },
+  {
+   "id": "A08-desc-length-reversed-bao-nhieu",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Độ dài đoạn nối điểm A với trung điểm của cạnh SC bằng bao nhiêu?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Độ dài đoạn nối điểm A với trung điểm của cạnh SC bằng bao nhiêu?"
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "length",
+     "a": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "b": "A"
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "M3",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "A09-named-plane",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ C đến (SAB).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ C đến (SAB)."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": "C",
+     "plane": [
+      "S",
+      "A",
+      "B"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "A10-named-plane-bao-nhieu",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Khoảng cách từ điểm C tới mặt phẳng (SAB) bằng bao nhiêu?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Khoảng cách từ điểm C tới mặt phẳng (SAB) bằng bao nhiêu?"
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": "C",
+     "plane": [
+      "S",
+      "A",
+      "B"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "A11-named-line",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ A đến SC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ A đến SC."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_line",
+     "point": "A",
+     "line": [
+      "named",
+      [
+       "S",
+       "C"
+      ]
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "A12-named-line-bao-nhieu",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Khoảng cách từ A đến đường thẳng SC bằng bao nhiêu?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Khoảng cách từ A đến đường thẳng SC bằng bao nhiêu?"
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_line",
+     "point": "A",
+     "line": [
+      "named",
+      [
+       "S",
+       "C"
+      ]
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "A13-paraphrase-chinh-giua",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Điểm nằm chính giữa S và C cách (SAB) bao xa?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Điểm nằm chính giữa S và C cách (SAB) bao xa?"
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "plane": [
+      "S",
+      "A",
+      "B"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": "free paraphrase outside every closed grammar: a refusal here is a measured false refusal, not targeted"
+  },
+  {
+   "id": "A14-paraphrase-bao-xa",
+   "group": "A",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Cho tôi xem A cách đường thẳng SC bao xa.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Cho tôi xem A cách đường thẳng SC bao xa."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_line",
+     "point": "A",
+     "line": [
+      "named",
+      [
+       "S",
+       "C"
+      ]
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": "free paraphrase, not targeted"
+  },
+  {
+   "id": "B01-squared-length",
+   "group": "B",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính bình phương độ dài đoạn nối trung điểm của SC với A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính bình phương độ dài đoạn nối trung điểm của SC với A."
+      ],
+      "quantity": "length",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "NOT_ASKED_IN_SOURCE",
+    "SOURCE_OBJECT_MISMATCH",
+    "QUESTION_CONTEXT_UNSUPPORTED"
+   ],
+   "mechanism": "none",
+   "extraction": "drops a modifier",
+   "note": ""
+  },
+  {
+   "id": "B02-twice-distance",
+   "group": "B",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính hai lần khoảng cách từ trung điểm của SC đến (SAB).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính hai lần khoảng cách từ trung điểm của SC đến (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "NOT_ASKED_IN_SOURCE",
+    "QUESTION_CONTEXT_UNSUPPORTED"
+   ],
+   "mechanism": "none",
+   "extraction": "drops a modifier",
+   "note": ""
+  },
+  {
+   "id": "B03-segment-not-line",
+   "group": "B",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến đoạn BD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến đoạn BD."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "B",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "mechanism": "none",
+   "extraction": "types a segment as a line",
+   "note": ""
+  },
+  {
+   "id": "B04-projection-not-distance",
+   "group": "B",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tìm hình chiếu vuông góc của A lên SC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tìm hình chiếu vuông góc của A lên SC."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "SOURCE_OBJECT_MISMATCH",
+    "NOT_ASKED_IN_SOURCE"
+   ],
+   "mechanism": "none",
+   "extraction": "types a projection request as a distance",
+   "note": ""
+  },
+  {
+   "id": "B05-construct-projection",
+   "group": "B",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Dựng hình chiếu H của A lên SC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "f5",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Dựng hình chiếu H của A lên SC."
+      ],
+      "point": "A",
+      "points": [
+       "S",
+       "C"
+      ],
+      "at": "H"
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": "construction-only request (no value): SERVE means a construction scene with no answer; ISSUE-ARCH-CONSTRUCTION-WORDING-BREADTH — measured, not targeted"
+  },
+  {
+   "id": "B06-define-projection",
+   "group": "B",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi H là hình chiếu của A lên SC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "f5",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Gọi H là hình chiếu của A lên SC."
+      ],
+      "point": "A",
+      "points": [
+       "S",
+       "C"
+      ],
+      "at": "H"
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [],
+   "source_requests": 0,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": "a definition, no request: construction scene, no answer"
+  },
+  {
+   "id": "B07-varying-point",
+   "group": "B",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB) khi M thay đổi trên SC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB) khi M thay đổi trên SC."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "NOT_ASKED_IN_SOURCE",
+    "QUESTION_CONTEXT_UNSUPPORTED",
+    "CONDITIONAL_CLAUSE",
+    "UNKNOWN_LABEL"
+   ],
+   "mechanism": "none",
+   "extraction": "drops a scope modifier",
+   "note": ""
+  },
+  {
+   "id": "C01-four-label-nonplane-desc",
+   "group": "C",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SABC).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SABC)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "mechanism": "M2",
+   "extraction": "shortens (SABC) to (SAB)",
+   "note": "reported false serve: S, A, B, C are not coplanar"
+  },
+  {
+   "id": "C02-four-label-nonplane-named",
+   "group": "C",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ D đến (SABC).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ D đến (SABC)."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "D"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "mechanism": "M2",
+   "extraction": "shortens (SABC) to (SAB)",
+   "note": ""
+  },
+  {
+   "id": "C03-four-label-base-desc",
+   "group": "C",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (ABCD)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "plane": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "M2",
+   "extraction": "names the base by three of its labels",
+   "note": "must stay served: (ABCD) is the declared base, so three of its labels name the same plane"
+  },
+  {
+   "id": "C04-four-label-base-named",
+   "group": "C",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ S đến (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ S đến (ABCD)."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "S"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": "S",
+     "plane": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "M2",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "C05-four-label-nonplane-other",
+   "group": "C",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SACD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SACD)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "mechanism": "M2",
+   "extraction": "shortens (SACD) to (SAD)",
+   "note": ""
+  },
+  {
+   "id": "C06-wrong-target-plane",
+   "group": "C",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "mechanism": "none",
+   "extraction": "wrong plane",
+   "note": ""
+  },
+  {
+   "id": "C07-wrong-described-point",
+   "group": "C",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "B"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "mechanism": "none",
+   "extraction": "wrong descriptor operands",
+   "note": ""
+  },
+  {
+   "id": "C08-result-line-pyramid",
+   "group": "C",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tìm giao tuyến của (SAB) và (SCD). Tính khoảng cách từ trung điểm của SC đến giao tuyến của (SAB) và (SCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "g",
+      "kind": "intersection_line",
+      "role": "premise",
+      "quotes": [
+       "Tìm giao tuyến của (SAB) và (SCD)."
+      ],
+      "points_a": [
+       "S",
+       "A",
+       "B"
+      ],
+      "points_b": [
+       "S",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến giao tuyến của (SAB) và (SCD)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "line_ref": "g"
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_line",
+     "point": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "line": [
+      "planes",
+      [
+       "S",
+       "A",
+       "B"
+      ],
+      [
+       "S",
+       "C",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": "source asks to find the intersection line too; the line is constructed and shown, its value-free request is answered by construction"
+  },
+  {
+   "id": "C09-result-line-cube",
+   "group": "C",
+   "figure": "cube",
+   "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tìm giao tuyến của (ABB') và (BCC'). Tính khoảng cách từ trung điểm của A'C' đến giao tuyến của (ABB') và (BCC').",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "solid_type": "cube"
+     },
+     {
+      "id": "f2",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "measure": "edge",
+      "value": "2"
+     },
+     {
+      "id": "g",
+      "kind": "intersection_line",
+      "role": "premise",
+      "quotes": [
+       "Tìm giao tuyến của (ABB') và (BCC')."
+      ],
+      "points_a": [
+       "A",
+       "B",
+       "B'"
+      ],
+      "points_b": [
+       "B",
+       "C",
+       "C'"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của A'C' đến giao tuyến của (ABB') và (BCC')."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "A'",
+       "C'"
+      ],
+      "line_ref": "g"
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_line",
+     "point": [
+      "mid",
+      "A'",
+      "C'"
+     ],
+     "line": [
+      "planes",
+      [
+       "A",
+       "B",
+       "B'"
+      ],
+      [
+       "B",
+       "C",
+       "C'"
+      ]
+     ]
+    }
+   ],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "M4",
+   "extraction": "faithful",
+   "note": "ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE: cube premise outside the closed line_ref premise grammar"
+  },
+  {
+   "id": "C10-result-line-cube-parallel",
+   "group": "C",
+   "figure": "cube",
+   "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tìm giao tuyến của (ABC) và (A'B'C'). Tính khoảng cách từ trung điểm của AC' đến giao tuyến của (ABC) và (A'B'C').",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "solid_type": "cube"
+     },
+     {
+      "id": "f2",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "measure": "edge",
+      "value": "2"
+     },
+     {
+      "id": "g",
+      "kind": "intersection_line",
+      "role": "premise",
+      "quotes": [
+       "Tìm giao tuyến của (ABC) và (A'B'C')."
+      ],
+      "points_a": [
+       "A",
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "A'",
+       "B'",
+       "C'"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của AC' đến giao tuyến của (ABC) và (A'B'C')."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "A",
+       "C'"
+      ],
+      "line_ref": "g"
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "PARALLEL_NO_INTERSECTION",
+    "PARALLEL_PLANES"
+   ],
+   "mechanism": "M4",
+   "extraction": "faithful",
+   "note": "deviation D-1 of goal-directed-function-discovery: right refusal, wrong code before the fix"
+  },
+  {
+   "id": "C11-cube-lateral-face-four-labels",
+   "group": "C",
+   "figure": "cube",
+   "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính khoảng cách từ trung điểm của C'D' đến (ABB'A').",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "solid_type": "cube"
+     },
+     {
+      "id": "f2",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "measure": "edge",
+      "value": "2"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của C'D' đến (ABB'A')."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "C'",
+       "D'"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "B'"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": [
+      "mid",
+      "C'",
+      "D'"
+     ],
+     "plane": [
+      "A",
+      "B",
+      "B'",
+      "A'"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "M2",
+   "extraction": "names a lateral face by three labels",
+   "note": "must stay served: (ABB'A') is a face of the declared cube"
+  },
+  {
+   "id": "C12-cube-diagonal-plane-four-labels",
+   "group": "C",
+   "figure": "cube",
+   "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính khoảng cách từ trung điểm của C'D' đến (ABC'D').",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "solid_type": "cube"
+     },
+     {
+      "id": "f2",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "measure": "edge",
+      "value": "2"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của C'D' đến (ABC'D')."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "C'",
+       "D'"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C'"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": [
+      "mid",
+      "C'",
+      "D'"
+     ],
+     "plane": [
+      "A",
+      "B",
+      "C'",
+      "D'"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "M2",
+   "extraction": "faithful",
+   "note": "(ABC'D') is a real plane but not a declared face; serving needs a coplanarity proof the gate does not have"
+  },
+  {
+   "id": "D01-two-asks-one-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB) và độ dài SC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB) và độ dài SC."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 2,
+   "refuse_codes": [
+    "REQUEST_NOT_ANSWERED"
+   ],
+   "mechanism": "M1",
+   "extraction": "drops the second request",
+   "note": ""
+  },
+  {
+   "id": "D02-two-asks-both-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB) và độ dài SC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB) và độ dài SC."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     },
+     {
+      "id": "q2",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB) và độ dài SC."
+      ],
+      "quantity": "length",
+      "points": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q1",
+     "q": "dist_point_plane",
+     "point": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "plane": [
+      "S",
+      "A",
+      "B"
+     ]
+    },
+    {
+     "id": "q2",
+     "q": "length",
+     "a": "S",
+     "b": "C"
+    }
+   ],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "M1",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "D03-then-volume-one-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB), sau đó tính thể tích khối chóp S.ABCD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB), sau đó tính thể tích khối chóp S.ABCD."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 2,
+   "refuse_codes": [
+    "REQUEST_NOT_ANSWERED"
+   ],
+   "mechanism": "M1",
+   "extraction": "drops the follow-up request",
+   "note": ""
+  },
+  {
+   "id": "D04-then-volume-both-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB), sau đó tính thể tích khối chóp S.ABCD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB), sau đó tính thể tích khối chóp S.ABCD."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     },
+     {
+      "id": "q2",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB), sau đó tính thể tích khối chóp S.ABCD."
+      ],
+      "quantity": "volume",
+      "solid": "S.ABCD"
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q1",
+     "q": "dist_point_plane",
+     "point": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "plane": [
+      "S",
+      "A",
+      "B"
+     ]
+    },
+    {
+     "id": "q2",
+     "q": "volume_pyramid",
+     "apex": "S",
+     "base": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    }
+   ],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "M1",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "D05-next-sentence-volume-one-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB). Sau đó tính thể tích khối chóp S.ABCD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 2,
+   "refuse_codes": [
+    "REQUEST_NOT_ANSWERED"
+   ],
+   "mechanism": "M1",
+   "extraction": "drops the second sentence",
+   "note": ""
+  },
+  {
+   "id": "D06-next-sentence-volume-both-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB). Sau đó tính thể tích khối chóp S.ABCD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     },
+     {
+      "id": "q2",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Sau đó tính thể tích khối chóp S.ABCD."
+      ],
+      "quantity": "volume",
+      "solid": "S.ABCD"
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q1",
+     "q": "dist_point_plane",
+     "point": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "plane": [
+      "S",
+      "A",
+      "B"
+     ]
+    },
+    {
+     "id": "q2",
+     "q": "volume_pyramid",
+     "apex": "S",
+     "base": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    }
+   ],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "M1",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "D07-named-trailing-object",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ C đến (SAB) và AC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ C đến (SAB) và AC."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 2,
+   "refuse_codes": [
+    "REQUEST_NOT_ANSWERED"
+   ],
+   "mechanism": "M1",
+   "extraction": "drops a listed object",
+   "note": ""
+  },
+  {
+   "id": "D08-named-two-asks-one-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ C đến (SAB) và độ dài SC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ C đến (SAB) và độ dài SC."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 2,
+   "refuse_codes": [
+    "REQUEST_NOT_ANSWERED"
+   ],
+   "mechanism": "M1",
+   "extraction": "drops the second request",
+   "note": ""
+  },
+  {
+   "id": "D09-named-two-asks-both-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ C đến (SAB) và độ dài SC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ C đến (SAB) và độ dài SC."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     },
+     {
+      "id": "q2",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ C đến (SAB) và độ dài SC."
+      ],
+      "quantity": "length",
+      "points": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q1",
+     "q": "dist_point_plane",
+     "point": "C",
+     "plane": [
+      "S",
+      "A",
+      "B"
+     ]
+    },
+    {
+     "id": "q2",
+     "q": "length",
+     "a": "S",
+     "b": "C"
+    }
+   ],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "M1",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "D10-length-and-volume-one-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính SC và thể tích khối chóp S.ABCD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính SC và thể tích khối chóp S.ABCD."
+      ],
+      "quantity": "length",
+      "points": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 2,
+   "refuse_codes": [
+    "REQUEST_NOT_ANSWERED"
+   ],
+   "mechanism": "M1",
+   "extraction": "drops the second request",
+   "note": ""
+  },
+  {
+   "id": "D11-length-and-volume-both-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính SC và thể tích khối chóp S.ABCD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính SC và thể tích khối chóp S.ABCD."
+      ],
+      "quantity": "length",
+      "points": [
+       "S",
+       "C"
+      ]
+     },
+     {
+      "id": "q2",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính SC và thể tích khối chóp S.ABCD."
+      ],
+      "quantity": "volume",
+      "solid": "S.ABCD"
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q1",
+     "q": "length",
+     "a": "S",
+     "b": "C"
+    },
+    {
+     "id": "q2",
+     "q": "volume_pyramid",
+     "apex": "S",
+     "base": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    }
+   ],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "M1",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "D12-roi-suy-ra-one-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB) rồi suy ra thể tích khối chóp S.ABCD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB) rồi suy ra thể tích khối chóp S.ABCD."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 2,
+   "refuse_codes": [
+    "REQUEST_NOT_ANSWERED",
+    "QUESTION_CONTEXT_UNSUPPORTED"
+   ],
+   "mechanism": "M1",
+   "extraction": "drops the follow-up",
+   "note": ""
+  },
+  {
+   "id": "D13-two-sentences-both-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB). Tính khoảng cách từ trung điểm của SC đến BD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     },
+     {
+      "id": "q2",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến BD."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "B",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q1",
+     "q": "dist_point_plane",
+     "point": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "plane": [
+      "S",
+      "A",
+      "B"
+     ]
+    },
+    {
+     "id": "q2",
+     "q": "dist_point_line",
+     "point": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "line": [
+      "named",
+      [
+       "B",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "D14-two-sentences-one-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB). Tính khoảng cách từ trung điểm của SC đến BD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 2,
+   "refuse_codes": [
+    "REQUEST_NOT_ANSWERED"
+   ],
+   "mechanism": "M1",
+   "extraction": "drops the second sentence",
+   "note": ""
+  },
+  {
+   "id": "D15-aux-line-and-volume-one-extracted",
+   "group": "D",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ A đến SC và thể tích khối chóp S.ABCD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ A đến SC và thể tích khối chóp S.ABCD."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 2,
+   "refuse_codes": [
+    "REQUEST_NOT_ANSWERED"
+   ],
+   "mechanism": "M1",
+   "extraction": "drops the second request (auxiliary distance path)",
+   "note": ""
+  },
+  {
+   "id": "E01-conditional",
+   "group": "E",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Nếu SA = 3 thì tính khoảng cách từ trung điểm của SC đến (SAB).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Nếu SA = 3 thì tính khoảng cách từ trung điểm của SC đến (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "CONDITIONAL_CLAUSE"
+   ],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "E02-negated",
+   "group": "E",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Khoảng cách từ trung điểm của SC đến (SAB) không phải là 2.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Khoảng cách từ trung điểm của SC đến (SAB) không phải là 2."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "NEGATED_CLAUSE",
+    "NOT_ASKED_IN_SOURCE",
+    "QUESTION_CONTEXT_UNSUPPORTED"
+   ],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "E03-proof-goal",
+   "group": "E",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Chứng minh rằng khoảng cách từ trung điểm của SC đến (SAB) bằng 1.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Chứng minh rằng khoảng cách từ trung điểm của SC đến (SAB) bằng 1."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "GOAL_CLAUSE_NOT_PREMISE"
+   ],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "E04-rounding",
+   "group": "E",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB), làm tròn đến hàng phần trăm.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB), làm tròn đến hàng phần trăm."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "QUESTION_CONTEXT_UNSUPPORTED"
+   ],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "E05-unsupported-second-quantity",
+   "group": "E",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB) và diện tích toàn phần của hình chóp.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB) và diện tích toàn phần của hình chóp."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 2,
+   "refuse_codes": [
+    "REQUEST_NOT_ANSWERED",
+    "QUESTION_CONTEXT_UNSUPPORTED"
+   ],
+   "mechanism": "M1",
+   "extraction": "drops an unsupported request",
+   "note": ""
+  },
+  {
+   "id": "E06-contradiction",
+   "group": "E",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. SB = 5. Tính khoảng cách từ trung điểm của SC đến (SAB).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "f9",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SB = 5."
+      ],
+      "points": [
+       "S",
+       "B"
+      ],
+      "measure": "segment",
+      "value": "5"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "INCONSISTENT_FACTS"
+   ],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "E07-quote-not-in-source",
+   "group": "E",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SBC)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "QUOTE_NOT_IN_SOURCE"
+   ],
+   "mechanism": "none",
+   "extraction": "invented quote",
+   "note": ""
+  },
+  {
+   "id": "E08-unknown-label",
+   "group": "E",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SE đến (SAB).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SE đến (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "E"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "UNKNOWN_LABEL"
+   ],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "E09-show-that",
+   "group": "E",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Hãy chỉ ra rằng khoảng cách từ trung điểm của SC đến (SAB) bằng 1.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Hãy chỉ ra rằng khoảng cách từ trung điểm của SC đến (SAB) bằng 1."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [
+    "GOAL_CLAUSE_NOT_PREMISE"
+   ],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  },
+  {
+   "id": "E10-changed-scope-follow-up",
+   "group": "E",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến (SAB). Tính lại khi SA = 5.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 2,
+   "refuse_codes": [
+    "QUESTION_CONTEXT_UNSUPPORTED",
+    "QUESTION_LOCAL_GIVEN_CONFLICT",
+    "REQUEST_NOT_ANSWERED",
+    "CONDITIONAL_CLAUSE"
+   ],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "note": ""
+  }
+ ]
+}

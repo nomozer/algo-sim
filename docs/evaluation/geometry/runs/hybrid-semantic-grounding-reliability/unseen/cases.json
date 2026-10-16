@@ -1,0 +1,4104 @@
+{
+ "status": "UNSEEN_WORDING_INDEPENDENT_AUTHOR_NOT_HUMAN_HELD_OUT",
+ "cases": [
+  {
+   "id": "U00",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính khoảng cách từ điểm A đến mặt phẳng (SBC).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ điểm A đến mặt phẳng (SBC)."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "S",
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": "A",
+     "plane": [
+      "S",
+      "B",
+      "C"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 1,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U01",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Khoảng cách từ trung điểm của cạnh SC tới mặt phẳng đáy bằng bao nhiêu?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Khoảng cách từ trung điểm của cạnh SC tới mặt phẳng đáy bằng bao nhiêu?"
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": [
+      "mid",
+      "S",
+      "C"
+     ],
+     "plane": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 1,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U02",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Hỏi đường thẳng SB cách điểm D bao xa?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Hỏi đường thẳng SB cách điểm D bao xa?"
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "D"
+      ],
+      "points_b": [
+       "S",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_line",
+     "point": "D",
+     "line": [
+      "named",
+      [
+       "S",
+       "B"
+      ]
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 1,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U03",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Em nhờ thầy tính giúp em độ dài đoạn SC với ạ.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Em nhờ thầy tính giúp em độ dài đoạn SC với ạ."
+      ],
+      "quantity": "length",
+      "points": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "length",
+     "a": "S",
+     "b": "C"
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 1,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U04",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Thể tích khối chóp S.ABCD là bao nhiêu?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Thể tích khối chóp S.ABCD là bao nhiêu?"
+      ],
+      "quantity": "volume",
+      "solid": "S.ABCD"
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "volume_pyramid",
+     "apex": "S",
+     "base": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 1,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U05",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Cho mình hỏi từ C tới mặt (SAD) là mấy vậy?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Cho mình hỏi từ C tới mặt (SAD) là mấy vậy?"
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": "C",
+     "plane": [
+      "S",
+      "A",
+      "D"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 1,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U06",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Hãy tính thể tích khối chóp có đỉnh là trung điểm của SA và đáy là hình vuông ABCD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Hãy tính thể tích khối chóp có đỉnh là trung điểm của SA và đáy là hình vuông ABCD."
+      ],
+      "quantity": "volume",
+      "solid": "S.ABCD"
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "author_family": 1,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U07",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Dựng hình chiếu vuông góc của A lên mặt phẳng (SBC).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "p",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Dựng hình chiếu vuông góc của A lên mặt phẳng (SBC)."
+      ],
+      "point": "A",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "at": "H"
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "author_family": 2,
+   "author_behaviour": "CONSTRUCT"
+  },
+  {
+   "id": "U08",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Kẻ AH vuông góc với SB tại H.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "p",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Kẻ AH vuông góc với SB tại H."
+      ],
+      "point": "A",
+      "points": [
+       "S",
+       "B"
+      ],
+      "at": "H"
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 2,
+   "author_behaviour": "CONSTRUCT"
+  },
+  {
+   "id": "U09",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Xác định chân đường vuông góc hạ từ A xuống đường thẳng SD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "p",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Xác định chân đường vuông góc hạ từ A xuống đường thẳng SD."
+      ],
+      "point": "A",
+      "points": [
+       "S",
+       "D"
+      ],
+      "at": "H"
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "author_family": 2,
+   "author_behaviour": "CONSTRUCT"
+  },
+  {
+   "id": "U10",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Hạ đường vuông góc từ trung điểm của AB xuống mặt phẳng (SCD), chỉ cần dựng thôi, không cần tính.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "p",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Hạ đường vuông góc từ trung điểm của AB xuống mặt phẳng (SCD), chỉ cần dựng thôi, không cần tính."
+      ],
+      "point": "A",
+      "points": [
+       "S",
+       "C",
+       "D"
+      ],
+      "at": "H"
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "author_family": 2,
+   "author_behaviour": "CONSTRUCT"
+  },
+  {
+   "id": "U11",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Xác định giao tuyến của hai mặt phẳng (SAB) và (SCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "g",
+      "kind": "intersection_line",
+      "role": "premise",
+      "quotes": [
+       "Xác định giao tuyến của hai mặt phẳng (SAB) và (SCD)."
+      ],
+      "points_a": [
+       "S",
+       "A",
+       "B"
+      ],
+      "points_b": [
+       "S",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 2,
+   "author_behaviour": "CONSTRUCT"
+  },
+  {
+   "id": "U12",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Trong mặt phẳng (SAC), dựng đường thẳng đi qua A và vuông góc với SC, cắt SC tại K.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "p",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Trong mặt phẳng (SAC), dựng đường thẳng đi qua A và vuông góc với SC, cắt SC tại K."
+      ],
+      "point": "A",
+      "points": [
+       "S",
+       "C"
+      ],
+      "at": "K"
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 2,
+   "author_behaviour": "CONSTRUCT"
+  },
+  {
+   "id": "U13",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính SC rồi tính khoảng cách từ A đến (SCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính SC rồi tính khoảng cách từ A đến (SCD)."
+      ],
+      "quantity": "length",
+      "points": [
+       "S",
+       "C"
+      ]
+     },
+     {
+      "id": "q2",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính SC rồi tính khoảng cách từ A đến (SCD)."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "S",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q1",
+     "q": "length",
+     "a": "S",
+     "b": "C"
+    },
+    {
+     "id": "q2",
+     "q": "dist_point_plane",
+     "point": "A",
+     "plane": [
+      "S",
+      "C",
+      "D"
+     ]
+    }
+   ],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 3,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U14",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Dựng hình chiếu H của A trên (SBC), sau đó tính độ dài AH.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "p",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Dựng hình chiếu H của A trên (SBC), sau đó tính độ dài AH."
+      ],
+      "point": "A",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "at": "H"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Dựng hình chiếu H của A trên (SBC), sau đó tính độ dài AH."
+      ],
+      "quantity": "length",
+      "points": [
+       "A",
+       "H"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_plane",
+     "point": "A",
+     "plane": [
+      "S",
+      "B",
+      "C"
+     ]
+    }
+   ],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 3,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U15",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính thể tích khối chóp. Từ đó suy ra khoảng cách từ D đến mặt phẳng (SBC).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính thể tích khối chóp."
+      ],
+      "quantity": "volume",
+      "solid": "S.ABCD"
+     },
+     {
+      "id": "q2",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Từ đó suy ra khoảng cách từ D đến mặt phẳng (SBC)."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "D"
+      ],
+      "points_b": [
+       "S",
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q1",
+     "q": "volume_pyramid",
+     "apex": "S",
+     "base": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    },
+    {
+     "id": "q2",
+     "q": "dist_point_plane",
+     "point": "D",
+     "plane": [
+      "S",
+      "B",
+      "C"
+     ]
+    }
+   ],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 3,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U16",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Cho biết độ dài SB và SD, rồi tính khoảng cách từ B tới đường thẳng SD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Cho biết độ dài SB và SD, rồi tính khoảng cách từ B tới đường thẳng SD."
+      ],
+      "quantity": "length",
+      "points": [
+       "S",
+       "B"
+      ]
+     },
+     {
+      "id": "q2",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Cho biết độ dài SB và SD, rồi tính khoảng cách từ B tới đường thẳng SD."
+      ],
+      "quantity": "length",
+      "points": [
+       "S",
+       "D"
+      ]
+     },
+     {
+      "id": "q3",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Cho biết độ dài SB và SD, rồi tính khoảng cách từ B tới đường thẳng SD."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "B"
+      ],
+      "points_b": [
+       "S",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q1",
+     "q": "length",
+     "a": "S",
+     "b": "B"
+    },
+    {
+     "id": "q2",
+     "q": "length",
+     "a": "S",
+     "b": "D"
+    },
+    {
+     "id": "q3",
+     "q": "dist_point_line",
+     "point": "B",
+     "line": [
+      "named",
+      [
+       "S",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "source_requests": 3,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 3,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U17",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính khoảng cách từ A đến SC và từ B đến (SAC).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ A đến SC và từ B đến (SAC)."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "S",
+       "C"
+      ]
+     },
+     {
+      "id": "q2",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ A đến SC và từ B đến (SAC)."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "B"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q1",
+     "q": "dist_point_line",
+     "point": "A",
+     "line": [
+      "named",
+      [
+       "S",
+       "C"
+      ]
+     ]
+    },
+    {
+     "id": "q2",
+     "q": "dist_point_plane",
+     "point": "B",
+     "plane": [
+      "S",
+      "A",
+      "C"
+     ]
+    }
+   ],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 3,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U18",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính độ dài đường chéo BD của đáy, sau đó cho biết khoảng cách từ S đến BD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đường chéo BD của đáy, sau đó cho biết khoảng cách từ S đến BD."
+      ],
+      "quantity": "length",
+      "points": [
+       "B",
+       "D"
+      ]
+     },
+     {
+      "id": "q2",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đường chéo BD của đáy, sau đó cho biết khoảng cách từ S đến BD."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "S"
+      ],
+      "points_b": [
+       "B",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q1",
+     "q": "length",
+     "a": "B",
+     "b": "D"
+    },
+    {
+     "id": "q2",
+     "q": "dist_point_line",
+     "point": "S",
+     "line": [
+      "named",
+      [
+       "B",
+       "D"
+      ]
+     ]
+    }
+   ],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 3,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U19",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính khoảng cách từ A đến (SBC) và khoảng cách từ E đến (SCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ A đến (SBC) và khoảng cách từ E đến (SCD)."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "S",
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 2,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 3,
+   "author_behaviour": "PARTIAL_MUST_DECLARE"
+  },
+  {
+   "id": "U20",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính bình phương độ dài đoạn SC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính bình phương độ dài đoạn SC."
+      ],
+      "quantity": "length",
+      "points": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "author_family": 4,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U21",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính một nửa khoảng cách từ A đến mặt phẳng (SBD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính một nửa khoảng cách từ A đến mặt phẳng (SBD)."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "S",
+       "B",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "author_family": 4,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U22",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tìm hình chiếu của S trên mặt phẳng (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "p",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Tìm hình chiếu của S trên mặt phẳng (ABCD)."
+      ],
+      "point": "S",
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "at": "H"
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "author_family": 4,
+   "author_behaviour": "CONSTRUCT"
+  },
+  {
+   "id": "U23",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Xác định giao điểm của đường thẳng AC với mặt phẳng (SBD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "p",
+      "kind": "point_def",
+      "role": "premise",
+      "quotes": [
+       "Xác định giao điểm của đường thẳng AC với mặt phẳng (SBD)."
+      ],
+      "point": "O",
+      "point_kind": "intersect_line_plane",
+      "points_a": [
+       "A",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "B",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "author_family": 4,
+   "author_behaviour": "CONSTRUCT"
+  },
+  {
+   "id": "U24",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng SC và mặt phẳng (ABCD)."
+      ],
+      "quantity": "angle",
+      "points_a": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "angle_line_plane_cos2",
+     "line": [
+      "S",
+      "C"
+     ],
+     "plane": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 4,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U25",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính khoảng cách giữa hai đường thẳng AB và SC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách giữa hai đường thẳng AB và SC."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "A",
+       "B"
+      ],
+      "points_b": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_lines",
+     "l1": [
+      "A",
+      "B"
+     ],
+     "l2": [
+      "S",
+      "C"
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 4,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U26",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính khoảng cách từ D đến đoạn thẳng SB.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ D đến đoạn thẳng SB."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "D"
+      ],
+      "points_b": [
+       "S",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_line",
+     "point": "D",
+     "line": [
+      "named",
+      [
+       "S",
+       "B"
+      ]
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 4,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U27",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Nếu SA bằng 4 thì thể tích khối chóp là bao nhiêu?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Nếu SA bằng 4 thì thể tích khối chóp là bao nhiêu?"
+      ],
+      "quantity": "volume",
+      "solid": "S.ABCD"
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 5,
+   "author_behaviour": "REFUSE"
+  },
+  {
+   "id": "U28",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Chứng minh rằng BC vuông góc với mặt phẳng (SAB).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "g",
+      "kind": "perpendicular",
+      "role": "prove",
+      "quotes": [
+       "Chứng minh rằng BC vuông góc với mặt phẳng (SAB)."
+      ],
+      "points_a": [
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "NO_VALUE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 5,
+   "author_behaviour": "REFUSE"
+  },
+  {
+   "id": "U29",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Có phải khoảng cách từ A đến (SBC) bằng 2 không?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Có phải khoảng cách từ A đến (SBC) bằng 2 không?"
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "S",
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "author_family": 5,
+   "author_behaviour": "REFUSE"
+  },
+  {
+   "id": "U30",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Không cần tính thể tích đâu, chỉ cần tính độ dài SD thôi.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Không cần tính thể tích đâu, chỉ cần tính độ dài SD thôi."
+      ],
+      "quantity": "length",
+      "points": [
+       "S",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "length",
+     "a": "S",
+     "b": "D"
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 5,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U31",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Đường thẳng SC có vuông góc với BD không?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "g",
+      "kind": "perpendicular",
+      "role": "prove",
+      "quotes": [
+       "Đường thẳng SC có vuông góc với BD không?"
+      ],
+      "points_a": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "B",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "NO_VALUE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "author_family": 5,
+   "author_behaviour": "REFUSE"
+  },
+  {
+   "id": "U32",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Nếu gọi M là trung điểm của SB thì AM có vuông góc với SC hay không?",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "g",
+      "kind": "perpendicular",
+      "role": "prove",
+      "quotes": [
+       "Nếu gọi M là trung điểm của SB thì AM có vuông góc với SC hay không?"
+      ],
+      "points_a": [
+       "A",
+       "M"
+      ],
+      "points_b": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "NO_VALUE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "author_family": 5,
+   "author_behaviour": "REFUSE"
+  },
+  {
+   "id": "U33",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Mình không hỏi khoảng cách từ B đến (SAC) đâu, mình muốn biết khoảng cách từ B đến đường thẳng SC cơ.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "mình muốn biết khoảng cách từ B đến đường thẳng SC cơ."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "B"
+      ],
+      "points_b": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "SERVE",
+   "requests": [
+    {
+     "id": "q",
+     "q": "dist_point_line",
+     "point": "B",
+     "line": [
+      "named",
+      [
+       "S",
+       "C"
+      ]
+     ]
+    }
+   ],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 5,
+   "author_behaviour": "ANSWER_ALL"
+  },
+  {
+   "id": "U34",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính khoảng cách từ điểm E đến mặt phẳng (SBC).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ điểm E đến mặt phẳng (SBC)."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "E"
+      ],
+      "points_b": [
+       "S",
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 6,
+   "author_behaviour": "REFUSE"
+  },
+  {
+   "id": "U35",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính khoảng cách từ D đến mặt phẳng (SABC).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ D đến mặt phẳng (SABC)."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "D"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 6,
+   "author_behaviour": "REFUSE"
+  },
+  {
+   "id": "U36",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Biết thêm SA = 5, hãy tính thể tích khối chóp S.ABCD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "f9",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 5"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "5"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "hãy tính thể tích khối chóp S.ABCD."
+      ],
+      "quantity": "volume",
+      "solid": "S.ABCD"
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 6,
+   "author_behaviour": "REFUSE"
+  },
+  {
+   "id": "U37",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính diện tích toàn phần của hình chóp S.ABCD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "u",
+      "kind": "unsupported",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích toàn phần của hình chóp S.ABCD."
+      ],
+      "reason": "total surface area"
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 6,
+   "author_behaviour": "REFUSE"
+  },
+  {
+   "id": "U38",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính khoảng cách từ C đến mặt phẳng (SBD), làm tròn kết quả đến hàng phần trăm.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ C đến mặt phẳng (SBD), làm tròn kết quả đến hàng phần trăm."
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "B",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 6,
+   "author_behaviour": "PARTIAL_MUST_DECLARE"
+  },
+  {
+   "id": "U39",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Tính độ dài đoạn SO.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn SO."
+      ],
+      "quantity": "length",
+      "points": [
+       "S",
+       "O"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "faithful",
+   "author_family": 6,
+   "author_behaviour": "REFUSE"
+  },
+  {
+   "id": "U33n",
+   "group": "F",
+   "figure": "pyramid",
+   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Mình không hỏi khoảng cách từ B đến (SAC) đâu, mình muốn biết khoảng cách từ B đến đường thẳng SC cơ.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD"
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "đáy ABCD là hình vuông cạnh 2"
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)"
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3"
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Mình không hỏi khoảng cách từ B đến (SAC) đâu"
+      ],
+      "quantity": "distance",
+      "points_a": [
+       "B"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expect": "REFUSE",
+   "requests": [],
+   "source_requests": 1,
+   "refuse_codes": [],
+   "mechanism": "none",
+   "extraction": "near-miss (negated request typed as asked)",
+   "author_family": 5,
+   "author_behaviour": "ANSWER_ALL"
+  }
+ ]
+}
