@@ -1,6 +1,7 @@
 """Comparative replay for run `goal-directed-function-discovery` — 0 model calls, never writes over an output.
 
     bundle  --out B.json                      text + verified Typed Facts of every corpus, built from THIS checkout
+    scenes  --out DIR                         real-route Scene3D fixtures for the browser harness (src=function-discovery)
     arm     --code-root R --bundle B.json --label L --out O.json [--registry VARIANT]
             run the bundle on the code under R/backend (a detached worktree of another commit, or this checkout)
     compare --bundle B.json --arms O1.json O2.json … --out C.json
@@ -230,10 +231,38 @@ def compare(bundle_path: Path, arm_paths: list[Path], out: Path) -> None:
     print(json.dumps(table, indent=1))
 
 
+# ── browser fixtures (this checkout) ─────────────────────────────────────────────────────────────────────────────
+#: (case, object born first, object born after it): the harness checks order, rendering under aux=0, selection,
+#: backward playback, orbit/zoom/reset and the first object's own pixels.
+SCENES = (("pyr-midpoint-to-plane", "khoi_S_ABCD", "M"), ("pyr-midpoint-to-named-line", "M", "H"),
+          ("pyr-midpoint-to-result-line", "gt_g", "H"), ("cube-midpoint-to-plane", "khoi_ABCD_A_primeB_primeC_primeD_prime", "M"),
+          ("prism-midpoint-to-plane", "khoi_ABC_A_primeB_primeC_prime", "M"), ("descriptor-operands-mismatch", None, None))
+
+
+def scenes(out: Path) -> None:
+    sys.path.insert(0, str(ROOT / "backend"))
+    from app.ai.function_route import run_fact_route
+
+    corpus = json.loads((RUN / "corpus.json").read_text(encoding="utf-8"))
+    cases = {c["id"]: c for split in ("positive", "negative") for c in corpus[split]}
+    rows = []
+    for cid, first, after in SCENES:
+        c = cases[cid]
+        r = run_fact_route(c["text"], json.loads(json.dumps(c["payload"])))
+        ids = {o["id"] for o in (r.scene3d or {}).get("objects", [])}
+        if r.status == "SERVED" and not {first, after} <= ids:
+            raise SystemExit(f"{cid}: scene lacks {first}/{after}: {sorted(ids)}")
+        rows.append({"id": cid, "served": r.status == "SERVED", "code": r.code, "reason": r.reason, "kind": "descriptor",
+                     "target": first, "foot": after, "scene": r.scene3d, "answers": r.answers, "text": c["text"]})
+    _write(out / "scenes.json", rows)
+    print(f"exported {len(rows)} fixtures; live calls 0")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     sub = ap.add_subparsers(dest="cmd", required=True)
     b = sub.add_parser("bundle"); b.add_argument("--out", type=Path, required=True)
+    s = sub.add_parser("scenes"); s.add_argument("--out", type=Path, required=True)
     a = sub.add_parser("arm")
     a.add_argument("--code-root", type=Path, required=True); a.add_argument("--bundle", type=Path, required=True)
     a.add_argument("--label", required=True); a.add_argument("--out", type=Path, required=True)
@@ -244,6 +273,8 @@ def main() -> None:
     args = ap.parse_args()
     if args.cmd == "bundle":
         bundle(args.out.resolve())
+    elif args.cmd == "scenes":
+        scenes(args.out.resolve())
     elif args.cmd == "arm":
         arm(args.code_root.resolve(), args.bundle.resolve(), args.label, args.out.resolve(), args.registry)
     else:

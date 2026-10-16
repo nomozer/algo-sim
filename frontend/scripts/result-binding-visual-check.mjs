@@ -10,7 +10,11 @@ const out=resolve(arg('--out',''));
 if(!arg('--out') || existsSync(out)) throw new Error('--out must name a new task-owned directory');
 const host=arg('--host','127.0.0.1'),port=arg('--port','3101');
 const gpu=process.argv.includes('--gpu');
-const sourceBytes=readFileSync(new URL('../../docs/evaluation/geometry/runs/source-bound-result-planning/visual/scenes.json',import.meta.url));
+// --src function-discovery: same checks on the run `goal-directed-function-discovery` fixtures ("target" born before "foot").
+const src=arg('--src','result-binding');
+const SOURCES={'result-binding':'source-bound-result-planning','function-discovery':'goal-directed-function-discovery'};
+if(!SOURCES[src]) throw new Error(`unknown --src ${src}`);
+const sourceBytes=readFileSync(new URL(`../../docs/evaluation/geometry/runs/${SOURCES[src]}/visual/scenes.json`,import.meta.url));
 const rows=JSON.parse(sourceBytes);
 mkdirSync(out,{recursive:true});
 function different(a,b){
@@ -28,7 +32,7 @@ try{
   page.on('pageerror',e=>errors.push(String(e)));
   page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
   async function load(i,extra=''){
-    const url=`http://${host}:${port}/scripts/hybrid-section-visual.html?src=result-binding&i=${i}${extra}`;
+    const url=`http://${host}:${port}/scripts/hybrid-section-visual.html?src=${src}&i=${i}${extra}`;
     for(let attempt=0;;attempt++){
       try{await page.goto(url);await page.waitForSelector(rows[i].served?'canvas':'[data-testid="refusal"]');return;}
       catch(e){if(attempt>=2 || !/ERR_NETWORK_ACCESS_DENIED|ERR_CONNECTION_REFUSED/.test(String(e)))throw e;
@@ -102,7 +106,7 @@ try{
   }
   const renderer=await page.evaluate(()=>{const c=document.createElement('canvas');const g=c.getContext('webgl');
     const d=g?.getExtension('WEBGL_debug_renderer_info');return d?g.getParameter(d.UNMASKED_RENDERER_WEBGL):'UNKNOWN';});
-  const receipt={scope:'Scene3DWorkspace harness only; real Hybrid fact route; no API/product E2E',
+  const receipt={scope:'Scene3DWorkspace harness only; real Hybrid fact route; no API/product E2E',src,
                  backendSceneSha256:createHash('sha256').update(sourceBytes).digest('hex'),
                  gpuRequested:gpu?'D3D11 hardware':'SwiftShader',renderer,browserPid:server.process().pid,
                  results,errors,networkRetries,mathAuthority:'separate exact oracle, not screenshots',
