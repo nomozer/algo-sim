@@ -9,7 +9,8 @@ Research branch `research/goal-directed-function-discovery`, stacked on `8c24cb5
 product commit `cfa27baa` (first product `9fec9f43` + independent-review fixes; route D only:
 `geometry_functions/{planner,registry,engine}.py`, `ai/function_route.py`); candidate
 `093359c2551f11482c2a8ab06a74efba221c435561183308b39fe10e5fedd415` (110 files) frozen at `313cc537`, refreeze commit
-`81315986`; independent review PASS_WITH_FINDINGS (0 wrong served; findings closed or recorded); T3: run report §7.
+`81315986`; independent review PASS_WITH_FINDINGS (0 wrong served; findings closed or recorded); authoritative clean detached T3 at `e6c5b0f1` `FULL_PRODUCT_GATE_PASS` (pytest 10115/0,
+vitest 1061/1061, build, demo, crash surface 6/6).
 Also fixes an inherited Scene3D test typing error that broke `tsc -b` (`19eec205`). `LLM_ONLY`, `CACHE_VERSION = 125` (no bump: route D is not
 on `/api/analyze`), Hybrid product enablement NO-GO, 0 Gemini calls, provider surfaces A `7ea511a6…` / B `485d3834…` unchanged.
 - **Capability:** distance from a point the source DESCRIBES but does not name ("trung điểm của SC") to a named plane, a

@@ -142,8 +142,10 @@ nên receipt trình duyệt giữ hiệu lực.
 `corrects` ⇒ `test_C2b` đỏ; (ii) `scene3d-auxiliary.test.ts` của Scene3D W1–W3 gọi `withSubEntities` với hai đối số ⇒
 `tsc -b` đỏ (vitest vẫn xanh; wave ấy chưa từng chạy build). Sửa ở `36b6d3f9`, `19eec205` (chỉ test, không đổi hành vi).
 Lần 2 tại `36b6d3f9`: `FULL_PRODUCT_GATE_PASS` (pytest 10101/0, vitest 1061/1061, build, demo 5/5, bề mặt sập 6/6) — trên
-sản phẩm `9fec9f43`, nay đã bị thay. Lần cuối trên sản phẩm `cfa27baa`: `verification/t3-authoritative.log` (dòng kết ở
-`verification/t3-pass.json`).
+sản phẩm `9fec9f43`, nay đã bị thay (`verification/t3-attempt2-36b6d3f9-PASS.log`). **Lần cuối, có thẩm quyền:** worktree
+detached sạch tại `e6c5b0f1` (sản phẩm `cfa27baa`, candidate `093359c2…` `--verify` MATCH, status rỗng trước và sau):
+`FULL_PRODUCT_GATE_PASS` — pytest 10115 passed / 0 failed / 1 skipped / 7 xfailed, vitest 68 file / 1061 passed, typecheck +
+build PASS, demo PASS, bề mặt sập 6/6 (`verification/t3-pass.json`, log `90beb911…`).
 
 **Git:** `main` = `origin/main` = `2a3c0787`; không merge, không push, không viết lại lịch sử; `frontend/public/` của người dùng
 không đụng; không trailer `Co-Authored-By`. Điều kiện tích hợp: (1) người dùng quyết result binding; (2) review độc lập

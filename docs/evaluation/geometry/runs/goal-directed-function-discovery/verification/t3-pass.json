@@ -1,0 +1,27 @@
+{
+  "schema": "T3_AUTHORITATIVE_VERIFICATION/1",
+  "task": "goal-directed-function-discovery",
+  "branch": "research/goal-directed-function-discovery",
+  "verified_commit_short": "e6c5b0f1",
+  "product_commit_short": "cfa27baa",
+  "candidate_tree_hash": "093359c2551f11482c2a8ab06a74efba221c435561183308b39fe10e5fedd415",
+  "measured_files": 110,
+  "cache_version": 125,
+  "default_mode": "LLM_ONLY",
+  "model_request_count": 0,
+  "environment": "detached git worktree D:/tmp/gdfd-t3c at e6c5b0f1; git status --porcelain --untracked-files=all empty before and after (0/0); frontend/node_modules is a gitignored directory junction to the main checkout install; Python = main checkout backend/.venv 3.12; log written outside the worktree and copied here",
+  "pre_candidate_verify": "MATCH (093359c2551f1148..., 110 files)",
+  "command": "node frontend/scripts/full-gate.mjs (ALLOW_LIVE_AI=0)",
+  "gates": {
+    "pytest_backend": "10115 passed, 1 skipped, 2 deselected, 7 xfailed (351.1s)",
+    "vitest_frontend": "68 files, 1061 passed",
+    "typecheck_build": "PASS",
+    "demo_replay": "PASS",
+    "crash_surface": "6/6 PASS"
+  },
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "exit_code": 0,
+  "log": "t3-authoritative.log",
+  "log_sha256": "90beb911a9bbb55c1b1f9b9a1c822704bf3cd3b7d451fd5b3768aa019a382d0f",
+  "earlier_attempts": ["t3-attempt1-ae12069a-FAIL.log (2 inherited/bookkeeping failures, fixed)", "t3-attempt2-36b6d3f9-PASS.log (product 9fec9f43, superseded by cfa27baa)"]
+}

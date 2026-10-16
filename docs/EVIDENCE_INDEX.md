@@ -8,7 +8,7 @@ CORRECTED_BY = NONE
 CORRECTS = NONE
 CLASSIFICATION = FUNCTION_DISCOVERY_SLICE_READY_FOR_REVIEW
 CODE_COMMIT = cfa27baa (route D: geometry_functions planner/registry/engine, ai/function_route; 9fec9f43 + review fixes)
-VERIFICATION_COMMIT = 81315986 candidate refreeze (093359c2…, 110 files, frozen at 313cc537); T3 and independent review: run report §7
+VERIFICATION_COMMIT = e6c5b0f1 clean detached T3 FULL_PRODUCT_GATE_PASS (verification/t3-pass.json); candidate 093359c2… refrozen at 81315986; independent review PASS_WITH_FINDINGS (run report §7)
 DOCUMENTATION_COMMIT_ROLE = SELF
 MODEL_REQUEST_COUNT = 0
 
