@@ -1,0 +1,189 @@
+{
+  "schema": "SCENE3D_W1_W3_FINDINGS_RESOLUTION/1",
+  "run_id": "scene3d-architecture-visual-reliability",
+  "resolves_w0_run": "scene3d-visual-parity-audit",
+  "w0_baseline_commit": "f83b4ed14995c89d6cf00a643cd14c814c78004c",
+  "w0_audit_commit": "4b51fde81e79a7caf7bd4dbd69cfca266cabaa8e",
+  "candidate_before_tree_hash": "30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc",
+  "issue_id": "ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY",
+  "w0_metadata_reconciliation": {
+    "w0_oracle_cases_count": 10,
+    "w0_parity_telemetry_cases_count": 11,
+    "omitted_in_w0_oracle": "section-MAB-trapezoid",
+    "reconciliation_resolution": "Both results/math_and_readability_oracle.json and results/parity_telemetry.json in scene3d-architecture-visual-reliability cover all 11 locked fixtures identically."
+  },
+  "summary": {
+    "w0_critical_resolved": 2,
+    "w0_important_resolved": 5,
+    "w0_nonblocking_resolved": 2,
+    "remaining_critical": 0,
+    "remaining_important": 0,
+    "geometry_engine_coordinate_status": "EXACT_PASS_IN_GRAM_METRIC_11_OF_11",
+    "perpendicular_witness_world_alignment_status": "EXACT_PASS_ZERO_DISPLACEMENT",
+    "auxiliary_lifecycle_status": "PASS_ZERO_ORPHAN_WITNESS_TARGETS_AND_OFF_SOLID_SCAFFOLDING_HIDDEN",
+    "visual_parity_status": "PASS_100_PERCENT_RENDERED_OBJECT_AND_SUBENTITY_PARITY_AT_MATCHED_STEPS",
+    "learner_readability_status": "PASS_PROGRESSIVE_SECTION_COINCIDENT_LABELS_AND_BOUNDED_PLANES"
+  },
+  "resolutions": [
+    {
+      "id": "FINDING-B1",
+      "w0_severity": "CRITICAL",
+      "class": "B_SCENE_MAPPING",
+      "status": "RESOLVED_IN_W1",
+      "title": "veKhongGian transforms o.perpendicular_witness alongside o.annotation.witness and is idempotent",
+      "files_modified": [
+        "frontend/src/simulations/domains/geometry/scene3d-chart.ts",
+        "frontend/src/simulations/domains/geometry/scene3d-chart.test.ts"
+      ],
+      "mechanism_of_fix": "Extracted shared nhanChung(w, T) helper in scene3d-chart.ts so both o.annotation.witness and o.perpendicular_witness have foot mapped by nhan(T, w.foot) and marker mapped by { ...w.marker, dinh: nhan(T, w.foot), u: donVi(nhan(T, w.marker.u)), v: donVi(nhan(T, w.marker.v)) }. Added WeakSet<Scene3D> idempotency guard (_daVe) so repeated veKhongGian calls (e.g. Scene3DExplorer -> Scene3DWorkspace) do not re-apply T while keeping chart_metric intact for maTranKhung4.",
+      "before_after_evidence": {
+        "aux-foot-S-to-BD_displacement": { "before": 0.707107, "after": 0.0 },
+        "derived-line-pyramid_displacement": { "before": 0.668153, "after": 0.0 },
+        "derived-line-cuboid_displacement": { "before": 1.0, "after": 0.0 },
+        "derived-line-prism_displacement": { "before": 1.0, "after": 0.0 }
+      }
+    },
+    {
+      "id": "FINDING-B2",
+      "w0_severity": "CRITICAL",
+      "class": "B_SCENE_MAPPING",
+      "status": "RESOLVED_IN_W1_AND_W2",
+      "title": "Target carrier lines of perpendicular_witness stay visible at final step under aux=0, while disposable planes and off-solid translated auxiliary points (H, H1) hide after their target plane is constructed",
+      "files_modified": [
+        "frontend/src/simulations/domains/geometry/scene3d-auxiliary.ts",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+        "frontend/src/simulations/domains/geometry/scene3d-auxiliary.test.ts"
+      ],
+      "mechanism_of_fix": "1. In auxiliaryObjects (scene3d-auxiliary.ts), collected duongChieu = Set of all o.perpendicular_witness.on target line IDs and excluded them from disposable loai='dung' classification, so gt_g and derived_H_line remain visible at the final step under default aux=0 while mp1_gt_g and mp2_gt_g still hide after gt_g is constructed.\n2. Included off-solid translated auxiliary points (point3 with origin='derived', single role CONSTRUCT_AUXILIARY_GEOMETRY, no perpendicular_witness, depending on a vector3, whose non-sub-entity semantic dependents !x.parent are all plane3) in loai='dung' with xongTai = step of the plane3, so H and H1 hide once the cutting plane is built.\n3. Filtered !anPhu.has(o.id) in coMatNhan, diemNen, and nhanDiem in scene3d-view.tsx so hidden auxiliary points do not leave orphan labels or inflate bounding boxes.",
+      "before_after_evidence": {
+        "derived-line-pyramid_final_aux0_hidden": {
+          "before": ["gt_g", "mp1_gt_g", "mp2_gt_g"],
+          "after": ["mp1_gt_g", "mp2_gt_g"]
+        },
+        "aux-foot-S-to-BD_final_aux0_hidden": {
+          "before": ["derived_H_line"],
+          "after": []
+        },
+        "two-line-pyramid_final_aux0_hidden": {
+          "before": [],
+          "after": ["H", "H1"]
+        },
+        "two-line-prism_final_aux0_hidden": {
+          "before": [],
+          "after": ["H", "H1"]
+        },
+        "two-line-cuboid_final_aux0_hidden": {
+          "before": [],
+          "after": ["H", "H1"]
+        }
+      }
+    },
+    {
+      "id": "FINDING-D1",
+      "w0_severity": "IMPORTANT",
+      "class": "D_PRODUCT_HARNESS_DIVERGENCE",
+      "status": "RESOLVED_IN_W1_AND_W3",
+      "title": "Harness applies withSubEntities by default; unselected face sub-entities act as transparent hit proxies; section sub-entities respect progressive geometry_progress and deduplicate named vertices",
+      "files_modified": [
+        "frontend/scripts/hybrid-section-visual.tsx",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+        "frontend/src/simulations/domains/geometry/scene3d.test.tsx"
+      ],
+      "mechanism_of_fix": "1. Enabled withSubEntities(daVe, objectsAt) by default in hybrid-section-visual.tsx (with sub=0 opt-out).\n2. Assigned display_role='hit_proxy' to unselected face sub-entities when their parent solid/section is rendered and un-exploded, and configured buildObject3D to render unselected hit_proxy faces with colorWrite=false, depthWrite=false, opacity=0 (raycastable without double-tinting solid/section faces).\n3. Gated section sub-entities (td::face:0, td::edge:i, td::vertex:i) on parent geometry_progress (progressCha.closed && progressCha.fill_visible, visible_edge_ids) and skipped unselected section ::vertex:i sub-entities that coincide with already-rendered named points.",
+      "before_after_evidence": {
+        "subentities_only_in_product_across_9_harness_cases": {
+          "before_range": [13, 23],
+          "after_all_cases": 0
+        },
+        "two-line-prism_step10_premature_section_face": {
+          "before_rendered": true,
+          "after_rendered": false
+        },
+        "two-line-prism_final_aux0_amber_pixels": {
+          "before": 57598,
+          "after": 21515
+        }
+      }
+    },
+    {
+      "id": "FINDING-D2",
+      "w0_severity": "IMPORTANT",
+      "class": "D_PRODUCT_HARNESS_DIVERGENCE",
+      "status": "RESOLVED_IN_W1",
+      "title": "Harness exposes learner timeline selector (Bước học) mapped via anchorOfGeometryStep alongside raw step slider",
+      "files_modified": [
+        "frontend/scripts/hybrid-section-visual.tsx"
+      ],
+      "mechanism_of_fix": "Added learner step combobox (aria-label='Bước học', data-testid='learner-step-select') and lstep URL parameter in hybrid-section-visual.tsx using geometryStepCount, geometryStepOf, and anchorOfGeometryStep, plus Hình phụ checkbox toggle."
+    },
+    {
+      "id": "FINDING-D3",
+      "w0_severity": "IMPORTANT",
+      "class": "D_PRODUCT_HARNESS_DIVERGENCE",
+      "status": "RESOLVED_IN_W1",
+      "title": "result-binding-visual-check.mjs verifies Product-default aux=0 first and then tests Hình phụ toggle (aux=1)",
+      "files_modified": [
+        "frontend/scripts/result-binding-visual-check.mjs",
+        "frontend/scripts/hybrid-section-visual-check.mjs"
+      ],
+      "mechanism_of_fix": "Removed hardcoded &aux=1 from default load in result-binding-visual-check.mjs; added explicit assertions that under default aux=0 the target carrier line (gt_g) and foot (H) remain rendered while auxiliary planes (mp1_gt_g, mp2_gt_g) are hidden in auxiliaryHiddenIds, followed by toggling Hình phụ to verify aux=1."
+    },
+    {
+      "id": "FINDING-C2",
+      "w0_severity": "IMPORTANT",
+      "class": "C_RENDERER",
+      "status": "RESOLVED_IN_W2_AND_W3",
+      "title": "Passive plane patch opacity reduced to 0.10, defining-point frame used for surface planes, and PLANE_PATCH_MIN_SIZE floor removed when banKinh > 0",
+      "files_modified": [
+        "frontend/src/simulations/domains/geometry/scene3d-model.ts",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx"
+      ],
+      "mechanism_of_fix": "1. In khungMatPhang (scene3d-model.ts:905), used 2 * banKinh * PLANE_PATCH_MARGIN whenever banKinh > 0 instead of clamping up to PLANE_PATCH_MIN_SIZE (2.5).\n2. In scene3d-view.tsx, scoped reference points for surface plane patches to their finite defining points or section polygon vertices (diemMp) when >= 3 points exist, and reduced passive surface plane opacity from 0.16 to 0.10 (active 0.32).",
+      "before_after_evidence": {
+        "derived-line-pyramid_aux1_purple_pixels": { "before": 145473, "after": 0 },
+        "two-line-prism_aux1_non_bg_ratio": { "before": 0.502, "after": 0.3977 }
+      }
+    },
+    {
+      "id": "FINDING-E1",
+      "w0_severity": "IMPORTANT",
+      "class": "E_INTERACTION_UX",
+      "status": "RESOLVED_IN_W3",
+      "title": "Coincident points render combined 'B ≡ H' label without overlap, and harness selection details fall back cleanly across label/notation/id",
+      "files_modified": [
+        "frontend/src/simulations/domains/geometry/scene3d-presentation.ts",
+        "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+        "frontend/scripts/hybrid-section-visual.tsx",
+        "frontend/src/simulations/domains/geometry/scene3d-presentation.test.ts"
+      ],
+      "mechanism_of_fix": "1. Added kyHieuDiem(o, tatCaDiem) in scene3d-presentation.ts to combine coincident visible points (distance <= 1e-3) into 'B ≡ H' (prioritizing given vertices before derived points).\n2. Updated nhanDiem in scene3d-view.tsx to use kyHieuDiem and updated hybrid-section-visual.tsx selection details to [o.label || o.notation || o.id, o.role].filter(Boolean).join(' · ').",
+      "before_after_evidence": {
+        "derived-line-cuboid_coincident_label": { "before": ["B", "H"], "after": ["B ≡ H"] },
+        "derived-line-prism_coincident_label": { "before": ["B", "H"], "after": ["B ≡ H"] },
+        "two-line-prism_selection_details_H": { "before": "undefined · Điểm dựng phụ", "after": "H · Điểm dựng phụ" }
+      }
+    },
+    {
+      "id": "FINDING-A1",
+      "w0_severity": "NONBLOCKING",
+      "class": "A_SCENE_DATA_IR",
+      "status": "RESOLVED_IN_FRONTEND_W1_WITHOUT_IR_CHANGE",
+      "title": "Frontend scene3d-auxiliary.ts distinguishes perpendicular_witness target carrier lines from disposable auxiliary scaffolding without altering locked backend Scene IR",
+      "files_modified": [
+        "frontend/src/simulations/domains/geometry/scene3d-auxiliary.ts"
+      ],
+      "mechanism_of_fix": "Inspecting o.perpendicular_witness.on across scene.objects in auxiliaryObjects decouples target carrier lines from disposable scaffolding purely in frontend presentation while keeping backend Scene IR and candidate 30808cb0… backend files 100% untouched."
+    },
+    {
+      "id": "FINDING-D4",
+      "w0_severity": "NONBLOCKING",
+      "class": "D_PRODUCT_HARNESS_DIVERGENCE",
+      "status": "RESOLVED_IN_W1",
+      "title": "Harness matches Product sub-entity and auxiliary pipeline at identical camera pose and FOV",
+      "files_modified": [
+        "frontend/scripts/hybrid-section-visual.tsx"
+      ],
+      "mechanism_of_fix": "With withSubEntities enabled by default and learner timeline + Hình phụ controls exposed in hybrid-section-visual.tsx, Product and Harness render identical object and sub-entity sets (after_same_all_rendered_objects: true across all 9 harness cases)."
+    }
+  ]
+}

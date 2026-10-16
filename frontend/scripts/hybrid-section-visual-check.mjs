@@ -254,7 +254,7 @@ async function playbackAudit() {
       const name = `step-${String(g.index + 1).padStart(2, "0")}.png`;
       writeFileSync(join(dir, name), s.b);
       shots.set(g.index, s.b);
-      const base = f.rendered.map((x) => x.split("#")[0]);
+      const base = [...new Set(f.rendered.map((x) => x.split("#")[0].split("::")[0]))];
       const drawable = present.filter((id) => !["non_visual", "readout"].includes(objs.get(id).render) && !f.aux_hidden.includes(id));
       const proj = projectionCheck(row, f);
       const pointsDrawn = drawable.filter((id) => objs.get(id).type === "point3");

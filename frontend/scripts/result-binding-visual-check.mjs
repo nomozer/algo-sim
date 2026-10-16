@@ -28,7 +28,7 @@ try{
   page.on('pageerror',e=>errors.push(String(e)));
   page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
   async function load(i,extra=''){
-    const url=`http://${host}:${port}/scripts/hybrid-section-visual.html?src=result-binding&i=${i}&aux=1${extra}`;
+    const url=`http://${host}:${port}/scripts/hybrid-section-visual.html?src=result-binding&i=${i}${extra}`;
     for(let attempt=0;;attempt++){
       try{await page.goto(url);await page.waitForSelector(rows[i].served?'canvas':'[data-testid="refusal"]');return;}
       catch(e){if(attempt>=2 || !/ERR_NETWORK_ACCESS_DENIED|ERR_CONNECTION_REFUSED/.test(String(e)))throw e;
@@ -57,7 +57,21 @@ try{
     const lineBorn=frames.find(f=>f.present.includes(row.target))?.step;
     const footBorn=frames.find(f=>f.present.includes(row.foot))?.step;
     if(lineBorn===undefined || footBorn===undefined || lineBorn>=footBorn)throw new Error('line/foot order');
+    const finalState=await page.evaluate(()=>({
+      rendered:window.__geo3d_rendered_object_ids||[],
+      auxHidden:window.__geo3d_auxiliary_hidden_ids||[]
+    }));
+    if(!finalState.rendered.includes(row.target)||!finalState.rendered.includes(row.foot)){
+      throw new Error(`${row.id}: target line or foot missing from rendered objects under default aux=0`);
+    }
     const final=await shot(`${row.id}-final.png`);
+    await page.getByRole('checkbox',{name:'Hình phụ'}).check();
+    await page.waitForTimeout(150);
+    const auxShownHidden=await page.evaluate(()=>window.__geo3d_auxiliary_hidden_ids||[]);
+    if(auxShownHidden.length!==0)throw new Error(`${row.id}: auxiliary toggle did not reveal hidden auxiliaries`);
+    await shot(`${row.id}-final-aux1.png`);
+    await page.getByRole('checkbox',{name:'Hình phụ'}).uncheck();
+    await page.waitForTimeout(150);
     await page.getByRole('combobox',{name:'Chọn đối tượng'}).selectOption(row.foot);
     const selected=await page.evaluate(()=>window.__hybrid.selected_id);
     if(selected!==row.foot)throw new Error('foot selection failed');
@@ -82,6 +96,7 @@ try{
     const ownPixels=different(final,hidden);
     if(ownPixels===0)throw new Error(`${row.id}: line draws zero own pixels`);
     results.push({id:row.id,frames,lineBorn,footBorn,selected,ownPixels,
+                  defaultAuxHidden:finalState.auxHidden,
                   orbit:orbitChanged?'OBSERVED_CHANGE_NOT_SETTLE_GATE':'UNRESOLVED_EXISTING_ORBIT_ISSUE',
                   zoomChanged:different(orbit,zoom)>0,resetDifferencePixels:different(final,reset)});
   }

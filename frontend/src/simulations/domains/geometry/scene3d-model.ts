@@ -902,7 +902,7 @@ export function khungMatPhang(
   const tam: Vec3 = [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2];
   const banKinh = Math.max(
     ...chieu.map((p) => Math.hypot(p[0] - tam[0], p[1] - tam[1], p[2] - tam[2])));
-  const canh = Math.max(PLANE_PATCH_MIN_SIZE, 2 * banKinh * PLANE_PATCH_MARGIN);
+  const canh = banKinh > 0 ? 2 * banKinh * PLANE_PATCH_MARGIN : PLANE_PATCH_MIN_SIZE;
   return Number.isFinite(canh) ? { tam, canh } : null;
 }
 

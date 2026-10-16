@@ -730,4 +730,49 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     // Quạt cũ: `for (let i = 1; i < …length - 1` ngay trong khung nhìn.
     expect(view).not.toMatch(/for \(let i = 1; i < \w+\.length - 1/);
   });
+
+  it("FINDING-D1/D2: mặt con có `display_role === 'hit_proxy'` giữ nguyên Mesh bắt chuột nhưng không nhuộm màu khi chưa chọn, và tô nổi bật khi được chọn", () => {
+    const m = {
+      id: "chop::face:1", label: "ABS", type: "face", render: "polygon" as const,
+      display_role: "hit_proxy" as const,
+      origin: "derived" as const, producer: "construct_solid.face[1]",
+      depends: ["A", "B", "S"],
+      polygon: [["0", "0", "0"], ["1", "0", "0"], ["0", "0", "1"]] as ExactVec3[],
+    };
+    const thuong = buildObject3D(m, false) as unknown as {
+      name: string; type: string; material: { opacity: number; colorWrite: boolean };
+    };
+    expect(thuong.name).toBe("face:chop::face:1");
+    expect(thuong.type).toBe("Mesh");
+    expect(thuong.material.opacity).toBe(0);
+    expect(thuong.material.colorWrite).toBe(false);
+
+    const chon = buildObject3D(m, true) as unknown as {
+      material: { opacity: number; colorWrite: boolean };
+    };
+    expect(chon.material.opacity).toBe(0.55);
+    expect(chon.material.colorWrite).toBe(true);
+  });
+
+  it("W2 / FINDING-C2: miếng mặt phẳng co giãn theo bán kính điểm định nghĩa (không ép tối thiểu 2 đơn vị trên hình đơn vị) và có độ đục thụ động ≤ 0.12", async () => {
+    const M = await import("./scene3d-model");
+    const k = M.khungMatPhang([0, 0, 0], [0, 0, 1], [[0, 0, 0], [1, 0, 0], [0, 1, 0]]);
+    expect(k).not.toBeNull();
+    // Đường chéo tam giác vuông cạnh 1 là √2 ≈ 1.414 ⇒ bán kính từ tâm hộp bao là √2/2 ≈ 0.707, nhân 2 * 1.15 ≈ 1.626 < 2
+    expect(k!.canh).toBeLessThan(1.8);
+    expect(k!.canh).toBeGreaterThan(1.4);
+
+    const mp = {
+      id: "mp1_gt_g", label: "(SAC)", type: "plane3", render: "surface" as const,
+      origin: "derived" as const, producer: "construct_plane",
+      depends: ["A", "C", "S"],
+      point: ["0", "0", "0"] as ExactVec3,
+      normal: ["0", "1", "0"] as ExactVec3,
+    };
+    const mesh = buildObject3D(mp, false, undefined, [[0, 0, 0], [1, 0, 0], [0, 0, 1]]) as unknown as {
+      material: { opacity: number };
+    };
+    expect(mesh.material.opacity).toBeLessThanOrEqual(0.12);
+  });
 });
+

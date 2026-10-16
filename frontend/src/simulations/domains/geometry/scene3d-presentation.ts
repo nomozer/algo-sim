@@ -49,6 +49,33 @@ export function kyHieu(o: Pick<SceneObject, "notation">): string | null {
 }
 
 /**
+ * Ký hiệu hiển thị của các điểm đang hiện — nếu nhiều điểm có ký hiệu cùng nằm
+ * tại đúng một vị trí (`xyz` trùng nhau), ghép ký hiệu bằng `" ≡ "` (điểm đề
+ * cho đứng trước điểm dựng) để chân đường vuông góc `H` trùng đỉnh `B` hiện
+ * thành `"B ≡ H"` thay vì làm biến mất tên đỉnh `B`.
+ */
+export function kyHieuDiem<T extends Pick<SceneObject, "id" | "notation" | "origin" | "xyz">>(
+  diem: T[],
+  khoa: (o: T) => string = (o) => o.xyz?.join("|") ?? o.id,
+): Map<string, string> {
+  const nhom = new Map<string, T[]>();
+  for (const o of diem) {
+    if (!kyHieu(o)) continue;
+    const k = khoa(o);
+    const ds = nhom.get(k) ?? [];
+    ds.push(o);
+    nhom.set(k, ds);
+  }
+  const ra = new Map<string, string>();
+  for (const ds of nhom.values()) {
+    const sap = [...ds].sort((a, b) => (a.origin === "free" ? 0 : 1) - (b.origin === "free" ? 0 : 1));
+    const chu = [...new Set(sap.map((o) => kyHieu(o)!))].join(" ≡ ");
+    for (const o of ds) ra.set(o.id, chu);
+  }
+  return ra;
+}
+
+/**
  * Vật có được vẽ trên khung 3D mặc định không.
  *
  * Đọc `render`, là trường backend dùng để NÓI điều đó. `readout` (đại lượng

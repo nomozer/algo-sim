@@ -54,6 +54,7 @@ import {
 } from "./pick-target";
 import {
   kyHieu,
+  kyHieuDiem,
   locNhanChongNhau,
   uuTienNhan,
   veTrenKhung,
@@ -890,7 +891,7 @@ export function buildObject3D(
     const m = new THREE.MeshStandardMaterial({
       color: net(MAU.surface),
       transparent: true,
-      opacity: noiBat ? 0.38 : 0.2,
+      opacity: noiBat ? 0.32 : 0.1,
       side: THREE.DoubleSide,
       depthWrite: false,
     });
@@ -1144,7 +1145,14 @@ export function buildObject3D(
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
     g.computeVertexNormals();
-    return v(new THREE.Mesh(g, new THREE.MeshStandardMaterial({
+    const hitProxy = o.display_role === "hit_proxy" && !noiBat;
+    return v(new THREE.Mesh(g, new THREE.MeshStandardMaterial(hitProxy ? {
+      colorWrite: false,
+      depthWrite: false,
+      transparent: true,
+      opacity: 0,
+      side: THREE.DoubleSide,
+    } : {
       color: nen(MAU.polygon),
       transparent: true,
       opacity: noiBat ? 0.55 : 0.14,
@@ -1424,10 +1432,17 @@ export function Scene3DWorkspace({
     () => (tuongTac.selected_id ? tangNhanManh(scene, tuongTac.selected_id) : null),
     [scene, tuongTac.selected_id],
   );
+  const anPhu = useMemo(
+    () => auxiliaryHiddenAt(scene, buoc, auxiliaryShown, tuongTac.selected_id ?? null),
+    [scene, buoc, auxiliaryShown, tuongTac.selected_id],
+  );
   // W17 · §15.4 / W18 · §16.5: nhãn số đo của bước — gọn mặc định, tập trung theo lựa chọn. Chủ thể
   // phải đang hiện — ẩn/cô lập theo cùng luật nhãn điểm. "Hiện tất cả" chỉ đổi danh sách này (và nhân
   // chứng của nó): hình, camera, bước, chuỗi nhân quả, nét đứt không đọc nó.
-  const coMatNhan = useMemo(() => new Set(objectsAt(scene, buoc).map((o) => o.id)), [scene, buoc]);
+  const coMatNhan = useMemo(
+    () => new Set(objectsAt(scene, buoc).filter((o) => !anPhu.has(o.id)).map((o) => o.id)),
+    [scene, buoc, anPhu],
+  );
   const nhanSoDo = useMemo(
     () => annotationsAt(scene, buoc, annotationView, tuongTac.selected_id ?? null)
       .filter((a) => a.subject_ids.every((id) => isVisible(tuongTac, id, coMatNhan))),
@@ -1923,10 +1938,6 @@ export function Scene3DWorkspace({
     // mặt nào, và raycast chỉ còn trúng khối. Demo tay bắt đúng chuyện đó.
     const daTonTai = entitiesPresentAt(scene, buoc, objectsAt);
     const hienTai = scene.objects.filter((o) => daTonTai.has(o.id));
-    /* Nền hình học để cắt mặt phẳng vô hạn: lấy từ vật ĐANG HIỆN, không từ cả
-       cảnh. Bước 1 chưa có khối thì miếng mặt phẳng cũng chưa được phình ra
-       ôm một khối chưa xuất hiện — mắt đọc đúng thứ tự dựng. */
-    const diemNen = diemHuuHan(hienTai);
     const progressById = new Map(
       (scene.formation?.steps[buoc]?.geometry_progress ?? [])
         .map((progress) => [progress.object_id, progress]),
@@ -1948,20 +1959,39 @@ export function Scene3DWorkspace({
     // mesh vô hình vẫn nằm trên đường raycast và vẫn ăn cú bấm. Backend NÓI vật
     // nào không có hình trên khung (`render: "non_visual"`); phía này chỉ tuân.
     // W2 · D: hình phụ đã xong nhiệm vụ / mặt phẳng chỉ để đo — không dựng (dữ liệu, xuất xứ, timeline giữ nguyên).
-    const anPhu = auxiliaryHiddenAt(scene, buoc, auxiliaryShown, tuongTac.selected_id ?? null);
     const seDung = hienTai.filter((o) => isVisible(tuongTac, o.id, daTonTai) && veTrenKhung(o) && !anPhu.has(o.id));
-    const nhuong = doanNhuongCanh(seDung,
-      (id) => visualTransformOf(tuongTac, scene, id).translate.join(","));
+    /* Nền hình học để cắt mặt phẳng vô hạn: lấy từ vật ĐANG HIỆN, không từ cả
+       cảnh. Bước 1 chưa có khối thì miếng mặt phẳng cũng chưa được phình ra
+       ôm một khối chưa xuất hiện — mắt đọc đúng thứ tự dựng. */
+    const diemNen = diemHuuHan(seDung);
+    const idSeDung = new Set(seDung.map((o) => o.id));
+    const khoaDich = (id: string) => visualTransformOf(tuongTac, scene, id).translate.join(",");
+    const nhuong = doanNhuongCanh(seDung, khoaDich);
     for (const o of seDung) {
       const progress = progressById.get(o.id);
+      const progressCha = o.parent ? progressById.get(o.parent) : undefined;
+      if (o.type === "face" && progressCha && (!progressCha.closed || !progressCha.fill_visible)) continue;
+      if (o.type === "edge" && progressCha && !progressCha.visible_edge_ids.includes(o.id)) continue;
+      if (o.type === "point3" && o.parent) {
+        if (progressCha && !progressCha.closed && Number(o.id.split(":vertex:")[1]) > progressCha.visible_edge_ids.length) {
+          continue;
+        }
+        if ((o.depends ?? []).some((d) => idSeDung.has(d)) && !noiBat.has(o.id)) continue;
+      }
       let renderObject = nhuong.has(o.id) ? { ...o, display_role: "hit_proxy" } as SceneObject : o;
+      if (o.type === "face" && o.parent && idSeDung.has(o.parent) && khoaDich(o.id) === khoaDich(o.parent)) {
+        renderObject = { ...renderObject, display_role: "hit_proxy" };
+      }
       if (o.type === "section" && progress && o.polygon) {
         const theoBuoc = vatThietDienTaiBuoc(o, progress);
         if (!theoBuoc) continue;
         renderObject = theoBuoc;
       }
+      const diemMp = o.render === "surface"
+        ? diemHuuHan(seDung.filter((x) => o.depends.includes(x.id) || (x.type === "section" && x.depends.includes(o.id))))
+        : [];
       const obj = buildObject3D(renderObject, tang ? tang.get(o.id) ?? false : noiBat.has(o.id),
-        banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemNen, undefined, canonicalHighlights, khucToSang);
+        banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemMp.length >= 3 ? diemMp : diemNen, undefined, canonicalHighlights, khucToSang);
       if (!obj) continue;
       if (tang && !tang.has(o.id)) lamDiu(obj);   // ngoài chuỗi nhân quả
       const bd = visualTransformOf(tuongTac, scene, o.id);
@@ -1984,7 +2014,7 @@ export function Scene3DWorkspace({
       (window as any).__geo3d_causal_tiers = tang ? Object.fromEntries(tang) : null;
     }
     veRef.current?.();
-  }, [scene, buoc, tuongTac, tapNoiBat, tang, auxiliaryShown]);
+  }, [scene, buoc, tuongTac, tapNoiBat, tang, anPhu]);
 
   // ── KHI NÀO ĐẶT LẠI KHUNG NHÌN ────────────────────────────────────────
   //
@@ -2006,12 +2036,15 @@ export function Scene3DWorkspace({
   // Chỉ in nhãn cho vật CÓ ký hiệu do backend phát. Vật không có ký hiệu thì
   // khung không in gì cho nó — trước bản này phía đây tự rút một ký hiệu từ
   // `id`, nên `plane_MNP` hiện thành `MNP` và `V_AMNP` hiện nguyên si.
-  const nhanDiem = hien.filter(
+  const ungVienNhan = hien.filter(
     (o) => o.type === "point3"
       && veTrenKhung(o)
       && kyHieu(o) !== null
+      && !anPhu.has(o.id)
       && isVisible(tuongTac, o.id, new Set(hien.map((x) => x.id))),
   );
+  const chuNhanDiem = kyHieuDiem(ungVienNhan);
+  const nhanDiem = ungVienNhan.filter((o) => chuNhanDiem.has(o.id));
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -2040,7 +2073,7 @@ export function Scene3DWorkspace({
                 data-uu-tien={uuTienNhan(o, tuongTac.selected_id)}
                 title={o.label}
               >
-                {kyHieu(o)}
+                {chuNhanDiem.get(o.id) ?? kyHieu(o)}
               </span>
             ))}
           </div>

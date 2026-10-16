@@ -1,0 +1,19 @@
+{
+  "schema": "CLEANUP/1",
+  "run_id": "scene3d-architecture-visual-reliability",
+  "date": "2026-10-16",
+  "removed_temporary_files": [
+    {
+      "path": "frontend/scripts/_temp_w1_w3_parity_audit.mjs",
+      "reason": "One-shot W1–W3 Playwright browser parity and telemetry capture harness; all output JSONs and PNG screenshots persisted in docs/evaluation/geometry/runs/scene3d-architecture-visual-reliability/."
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/scene3d-architecture-visual-reliability/results/result-binding-check/*.png",
+      "reason": "Temporary per-step verification screenshots produced by result-binding-visual-check.mjs; receipt.json retained in results/result-binding-check/receipt.json and full-resolution Product/Harness screenshots retained in images/."
+    }
+  ],
+  "preserved_user_untracked_files": [
+    "frontend/public/favicon.svg"
+  ],
+  "preserved_w0_evidence_directory": "docs/evaluation/geometry/runs/scene3d-visual-parity-audit/"
+}

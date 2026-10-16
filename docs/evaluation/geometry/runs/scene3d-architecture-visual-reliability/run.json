@@ -1,0 +1,43 @@
+{
+  "schema": "RUN/1",
+  "run_id": "scene3d-architecture-visual-reliability",
+  "wave": "scene3d-architecture-visual-reliability-w01",
+  "task_slug": "scene3d-architecture-visual-reliability",
+  "date": "2026-10-16",
+  "environment": "LOCAL Windows 11, Python 3.12, Node, Playwright Chromium (WebGL SwiftShader, 0 live AI calls)",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "status": "SCENE3D_ARCHITECTURE_IMPLEMENTATION_READY_FOR_REVIEW",
+  "branch": "research/scene3d-visual-parity-audit",
+  "w0_baseline_commit": "f83b4ed14995c89d6cf00a643cd14c814c78004c",
+  "base_commit": "4b51fde81e79a7caf7bd4dbd69cfca266cabaa8e",
+  "main_before": "2a3c0787cc35d2e5530d77658225039ab4c5991e",
+  "main_after": "2a3c0787cc35d2e5530d77658225039ab4c5991e",
+  "push": "NONE",
+  "issue_id": "ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY",
+  "corrects_or_follows": "scene3d-visual-parity-audit",
+  "candidate": {
+    "before_tree_hash": "30808cb002b377e4ad68f224363ef58ab6e51e0facba7e2d4c501419f58d91dc",
+    "backend_files_modified": 0,
+    "frontend_files_modified": 5,
+    "refreeze_status": "NOT_REFROZEN_AWAITING_INDEPENDENT_REVIEW"
+  },
+  "cache_version": 125,
+  "default": "LLM_ONLY",
+  "live_calls": 0,
+  "Hybrid_product_enablement": "NO-GO (unchanged)",
+  "results": {
+    "red_evidence": "red/vitest-red.txt — 6 failing regression assertions across scene3d-chart.test.ts, scene3d-auxiliary.test.ts, scene3d-presentation.test.ts, and scene3d.test.tsx before W1–W3 fixes",
+    "vitest_green": "results/vitest-green.txt — 68 frontend test files (1061 tests) 100% PASS",
+    "pytest_green": "results/pytest-green.txt — 7758 backend geometry tests PASS, 0 backend files modified",
+    "math_and_readability_oracle": "results/math_and_readability_oracle.json — 11/11 locked fixtures pass exact Gram metric coordinate/projection/plane/section oracle (all_cases_math_pass = true, zero_orphan_witness_targets = true, 0.0 world-unit perpendicular_witness displacement)",
+    "parity_telemetry": "results/parity_telemetry.json — 11/11 locked fixtures audited across Product ('/') and Harness ('/scripts/hybrid-section-visual.html') with 0 console errors, 0 page errors, and 100% rendered object + sub-entity parity at matched steps",
+    "before_after_comparison": "results/before_after_comparison.json — quantitative before/after comparison against W0 across all 11 cases",
+    "result_binding_check": "results/result-binding-check/receipt.json — PASS_CORE_CAUSAL_RENDERING across 4 result-binding scenes under default aux=0 and toggled aux=1",
+    "findings": "results/findings.json — resolution ledger for all 9 W0 findings (2 CRITICAL, 5 IMPORTANT, 2 NONBLOCKING)",
+    "images_harness": "images/harness/ — Harness page & canvas screenshots across default (aux=0), intermediate step, and aux=1 states",
+    "images_product": "images/product/ — Product page & canvas screenshots across initial default (step 0, aux=0), intermediate step, final default (aux=0), and final aux=1 states"
+  },
+  "report": "report.md",
+  "handoff": "handoff.md",
+  "cleanup": "cleanup.json"
+}

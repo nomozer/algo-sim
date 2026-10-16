@@ -1,0 +1,190 @@
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.10 [39m[90mD:/Documents/projects/algo-sim[39m
+
+ [31mΓ¥»[39m frontend/src/simulations/domains/geometry/scene3d-chart.test.ts [2m([22m[2m4 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 8[2mms[22m[39m
+     [32mΓ£ô[39m kh├┤ng metric ΓçÆ CH├ìNH cß║únh ß║Ñy (mß╗ìi hß╗ì kh├íc kh├┤ng ─æß╗òi mß╗Öt byte)[32m 2[2mms[22m[39m
+     [32mΓ£ô[39m Tß╡Ç┬╖T = G v├á h├¼nh thß║┐ giß╗¢i c├│ ─æ├║ng c├íc ─æß╗Ö d├ái cß╗ºa ─æß╗ü[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m ph├íp tuyß║┐n ─æi theo TΓü╗ß╡Ç: vß║½n vu├┤ng g├│c vß╗¢i ─æ├íy trong kh├┤ng gian[32m 0[2mms[22m[39m
+[31m     [31m├ù[31m FINDING-B1: biß║┐n ─æß╗òi cß║ú `perpendicular_witness` (ch├ón H v├á hai ph╞░╞íng k├╜ hiß╗çu g├│c vu├┤ng) sang kh├┤ng gian thß║┐ giß╗¢i v├á l┼⌐y ─æß║│ng khi gß╗ìi lß║╖p[39m[32m 3[2mms[22m[39m
+ [31mΓ¥»[39m frontend/src/simulations/domains/geometry/scene3d-presentation.test.ts [2m([22m[2m14 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 20[2mms[22m[39m
+     [32mΓ£ô[39m in ─æ├║ng thß╗⌐ backend n├│i[32m 2[2mms[22m[39m
+     [32mΓ£ô[39m kh├┤ng c├│ k├╜ hiß╗çu ΓçÆ KH├öNG in g├¼, kh├┤ng ─æo├ín tß║ím[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m kh├┤ng h├ám n├áo b├│c tiß╗ün tß╗æ/hß║¡u tß╗æ cß╗ºa `id`[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m kh├┤ng ─æß╗ìc `producer` ─æß╗â quyß║┐t bß║Ñt cß╗⌐ ─æiß╗üu g├¼[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m `non_visual` (vect╞í) v├á `readout` (sß╗æ ─æo) kh├┤ng l├¬n khung[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m mß╗ìi loß║íi vß║╜ thß║¡t th├¼ l├¬n khung[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m vß║¡t ─æang chß╗ìn lu├┤n ─æß╗ìc ─æ╞░ß╗úc[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m ─æiß╗âm dß║½n xuß║Ñt h╞ín ─æiß╗âm gß╗æc[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m hai nh├ún tr├╣ng chß╗ù ΓçÆ chß╗ë giß╗» mß╗Öt, v├á giß╗» c├íi ╞░u ti├¬n cao[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m nh├ún c├ích xa nhau th├¼ giß╗» hß║┐t ΓÇö kh├┤ng ß║⌐n oan[32m 9[2mms[22m[39m
+     [32mΓ£ô[39m nh├ún ngß║»n gß║ºn nhau nh╞░ng hß╗Öp THß║¼T kh├┤ng chß║ím ΓçÆ giß╗» cß║ú hai (S v├á H1 cß╗ºa ch├│p, run scene3d-construction-audit)[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m hß╗Öp thß║¡t chß║ím nhau ΓçÆ vß║½n giß║Ñu nh├ún ╞░u ti├¬n thß║Ñp[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m tß║Ñt ─æß╗ïnh: c├╣ng ─æß║ºu v├áo cho c├╣ng kß║┐t quß║ú bß║Ñt kß╗â thß╗⌐ tß╗▒ truyß╗ün v├áo[32m 0[2mms[22m[39m
+[31m     [31m├ù[31m W3: hai ─æiß╗âm hiß╗çn tß║íi c├╣ng toß║í ─æß╗Ö (`B` ─æß╗ü cho v├á ch├ón vu├┤ng g├│c `H` tß║íi `(1,0,0)`) gß╗Öp k├╜ hiß╗çu th├ánh `B Γëí H` ─æß╗â kh├┤ng mß║Ñt t├¬n ─æß╗ënh[39m[32m 6[2mms[22m[39m
+ [31mΓ¥»[39m frontend/src/simulations/domains/geometry/scene3d-auxiliary.test.ts [2m([22m[2m7 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 28[2mms[22m[39m
+     [32mΓ£ô[39m AC, BD l├á h├¼nh phß╗Ñ Dß╗░NG (xong khi c├│ O); mß║╖t phß║│ng qua A, B, C l├á h├¼nh phß╗Ñ ─ÉO[32m 3[2mms[22m[39m
+     [32mΓ£ô[39m ─æ╞░ß╗¥ng phß╗Ñ hiß╗çn tß╗¢i khi O c├│, rß╗ôi ß║⌐n khß╗Åi cß║únh trung t├¡nh; mß║╖t phß║│ng ─æo ß║⌐n ß╗ƒ mß╗ìi b╞░ß╗¢c[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m c├┤ng tß║»c ┬½H├¼nh phß╗Ñ┬╗ hiß╗çn tß║Ñt cß║ú; chß╗ìn h├¼nh phß╗Ñ hay vß║¡t dß╗▒a tr├¬n n├│ c┼⌐ng hiß╗çn n├│[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m ─æß╗æi chß╗⌐ng: ─æ╞░ß╗¥ng ─æß╗ü gß╗ìi t├¬n chß╗ë ─æß╗â ─æo v├á mß║╖t cß║»t kh├┤ng ß║⌐n[32m 8[2mms[22m[39m
+     [32mΓ£ô[39m ┬½C├íc b╞░ß╗¢c dß╗▒ng┬╗: AC, BD, O th├ánh mß╗Öt nh├│m, giß╗» thß╗⌐ tß╗▒ v├á mß╗ùi b╞░ß╗¢c con vß║½n l├á mß╗Öt b╞░ß╗¢c[32m 3[2mms[22m[39m
+[31m     [31m├ù[31m FINDING-B2: ─æ╞░ß╗¥ng thß║│ng mang ch├ón ─æ╞░ß╗¥ng vu├┤ng g├│c (`gt_g`, `derived_H_line`) KH├öNG tß╗▒ ß║⌐n ß╗ƒ b╞░ß╗¢c cuß╗æi khi `aux=0`, c├▓n hai mß║╖t phß║│ng dß╗▒ng giao tuyß║┐n (`mp1_gt_g`, `mp2_gt_g`) ß║⌐n sau khi c├│ `gt_g`[39m[32m 8[2mms[22m[39m
+[31m     [31m├ù[31m W2: ─æiß╗âm tß╗ïnh tiß║┐n phß╗Ñ ngo├ái khß╗æi (`H`, `H1` trong `two-line-prism`) hiß╗çn tß╗¢i khi dß╗▒ng xong mß║╖t cß║»t `(P)` rß╗ôi ß║⌐n ß╗ƒ b╞░ß╗¢c cuß╗æi khi `aux=0`[39m[32m 3[2mms[22m[39m
+ [31mΓ¥»[39m frontend/src/simulations/domains/geometry/scene3d.test.tsx [2m([22m[2m49 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[32m 78[2mms[22m[39m
+     [32mΓ£ô[39m ph├ón sß╗æ ─æß╗ìc ─æ├║ng, kh├┤ng qua eval v├á kh├┤ng ra NaN[32m 2[2mms[22m[39m
+     [32mΓ£ô[39m chuß╗ùi hß╗Ång N├ëM thay v├¼ trß║ú NaN[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m model KH├öNG sß╗æ ho├í float ß╗ƒ ─æ├óu ngo├ái `toNumber`[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m cß║únh giß╗» nguy├¬n chuß╗ùi ph├ón sß╗æ, kh├┤ng ─æß╗òi kiß╗âu[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m ─æ├║ng m╞░ß╗¥i mß╗Öt loß║íi, kh├┤ng h╞ín[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m KH├öNG c├│ primitive ngo├ái hß╗úp ─æß╗ông ngß╗» ngh─⌐a[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m mß╗ùi primitive cong PHß║óI c├│ mß╗Öt `curved_kind` ß╗ƒ backend ─æß╗í l╞░ng[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m `readout` KH├öNG dß╗▒ng h├¼nh trong kh├┤ng gian[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m kh├┤ng t├¡ch c├│ h╞░ß╗¢ng, kh├┤ng giao ─æiß╗âm, kh├┤ng t├¡ch v├┤ h╞░ß╗¢ng[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m raycast CHß╗ê ─æ╞░ß╗úc d├╣ng ─æß╗â lß║Ñy ID, kh├┤ng ─æß╗â lß║Ñy toß║í ─æß╗Ö[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m kh├┤ng import kernel/validator/oracle ΓÇö chß╗ë nguß╗ôn THUß║ªN cß╗ºa miß╗ün[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m `scene3d-presentation` l├á quy tß║»c TR├îNH B├ÇY thuß║ºn ΓÇö kh├┤ng three, kh├┤ng to├ín h├¼nh hß╗ìc[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m `scene3d-camera` chß╗ë ─æß║╖t KHUNG NH├îN, v├á kh├┤ng bao giß╗¥ trß║ú NaN[32m 2[2mms[22m[39m
+     [32mΓ£ô[39m `interaction-state` l├á m├┤ h├¼nh THUß║ªN ΓÇö kh├┤ng three, kh├┤ng kernel[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m model KH├öNG import three ΓÇö t├ích ─æß╗â test ─æ╞░ß╗úc m├á kh├┤ng cß║ºn WebGL[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m k├¡ch th╞░ß╗¢c mß║╖t phß║│ng/─æ╞░ß╗¥ng l├á hß║▒ng TR├îNH B├ÇY, kh├┤ng phß║úi to├ín hß╗ìc[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m b╞░ß╗¢c 0 chß╗ë c├│ dß╗» kiß╗çn ─æß╗ü cho, ch╞░a c├│ g├¼ dß╗▒ng ra[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m mß╗ùi b╞░ß╗¢c th├¬m ─æ├║ng ─æß╗æi t╞░ß╗úng cß╗ºa b╞░ß╗¢c ─æ├│[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m b╞░ß╗¢c cuß╗æi c├│ ─æß╗º mß╗ìi ─æß╗æi t╞░ß╗úng[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m thß╗⌐ tß╗▒ dß╗▒ng KH├öNG bß╗ï ─æß║úo[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m l├ám nß╗òi bß║¡t ─æß╗æi t╞░ß╗úng vß╗½a dß╗▒ng V├Ç thß╗⌐ n├│ phß╗Ñ thuß╗Öc[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m lß╗¥i kß╗â theo ─æ├║ng b╞░ß╗¢c, do engine sinh[32m 4[2mms[22m[39m
+     [32mΓ£ô[39m b╞░ß╗¢c ngo├ái bi├¬n bß╗ï kß║╣p, kh├┤ng vß╗í[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m cß║únh Rß╗ûNG kh├┤ng l├ám vß╗í g├¼[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m C├ÖNG state cho C├ÖNG kß║┐t quß║ú ΓÇö kh├┤ng phß╗Ñ thuß╗Öc thß╗⌐ tß╗▒ gß╗ìi[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m SSR ra ─æ╞░ß╗úc vß╗Å + lß╗¥i kß╗â + sß╗æ b╞░ß╗¢c, kh├┤ng cß║ºn WebGL[32m 6[2mms[22m[39m
+     [32mΓ£ô[39m ─æß║íi l╞░ß╗úng hiß╗çn ß╗ƒ bß║úng chß╗», kh├┤ng nß║▒m trong khung 3D[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m c├│ lß╗æi tho├ít khi WebGL kh├┤ng khß║ú dß╗Ñng[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m KH├öNG c├│ toolbar / ├┤ nhß║¡p lß╗çnh / n├║t tß║ío h├¼nh[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m I0 ┬╖ ─É╞»ß╗£NG v├┤ hß║ín vß║╜ quanh V├ÖNG H├îNH, kh├┤ng cß╗æ ─æß╗ïnh ┬▒6 (giao tuyß║┐n v├┤ h├¼nh, run hybrid-semantic-hardening)[32m 2[2mms[22m[39m
+     [32mΓ£ô[39m I1 ┬╖ ─æß╗Ö d├ái tß╗æi thiß╗âu cß╗ºa ─æoß║ín ─æ╞░ß╗¥ng thß║│ng theo Tß╗ê Lß╗å cß║únh (review S2)[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m I ┬╖ Mß║╢T dß╗▒ng th├ánh mß╗Öt Object3D mang ─æ├║ng id `chop::face:n`[32m 1[2mms[22m[39m
+     [32mΓ£ô[39m J ┬╖ Cß║áNH dß╗▒ng ri├¬ng v├á mang ─æ├║ng id[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m K ┬╖ tia tr├║ng cß║ú mß║╖t lß║½n khß╗æi ΓçÆ chß╗ìn Mß║╢T, kh├┤ng r╞íi vß╗ü khß╗æi[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m L ┬╖ tia tr├║ng cß║ú cß║ính lß║½n khß╗æi ΓçÆ chß╗ìn Cß║áNH[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m K2 ┬╖ ─ÉIß╗éM gß║ºn h╞ín th├¼ THß║«NG mß║╖t ΓÇö kh├┤ng nhß║úy qua n├│[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m K3 ┬╖ kh├┤ng c├│ vß║¡t con ΓçÆ KHß╗ÉI vß║½n chß╗ìn ─æ╞░ß╗úc nh╞░ th╞░ß╗¥ng[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m luß║¡t chß╗ìn nß║▒m TRONG view, kh├┤ng chß╗ë trong test[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m khung nh├¼n hß╗Åi C├ÖNG thß║⌐m quyß╗ün c├│-mß║╖t vß╗¢i c├óy[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m khß╗æi vß║½n dß╗▒ng ─æ╞░ß╗úc ΓÇö thß╗▒c thß╗â con KH├öNG thay n├│[32m 18[2mms[22m[39m
+     [32mΓ£ô[39m dß╗ïch chuyß╗ân TR├îNH B├ÇY kh├┤ng ─æi qua bß╗Ö ph├ón t├¡ch ph├ón sß╗æ[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m vß╗ï tr├¡ tr├¼nh b├áy Cß╗ÿNG v├áo vß╗ï tr├¡ gß╗æc, kh├┤ng GHI ─É├ê n├│[32m 0[2mms[22m[39m
+     [32mΓ£ô[39m RENDERED_PROJECTED_AREA = 10 ΓÇö kh├┤ng phß║úi 14 cß╗ºa quß║ít[32m 8[2mms[22m[39m
+     [32mΓ£ô[39m NOTCH_REMAINS_EMPTY ΓÇö phß║ºn l├╡m KH├öNG bß╗ï tam gi├íc n├áo lß║Ñp[32m 3[2mms[22m[39m
+     [32mΓ£ô[39m TRIANGLE_OVERLAP_OUTSIDE_FACE = 0[32m 4[2mms[22m[39m
+     [32mΓ£ô[39m mß║╖t b├¬n vß║½n dß╗▒ng ─æß╗º ΓÇö sß╗¡a ─æ├íy kh├┤ng ─æ╞░ß╗úc nuß╗æt mß║╖t n├áo[32m 2[2mms[22m[39m
+     [32mΓ£ô[39m renderer gß╗ìi ─É├ÜNG thß║⌐m quyß╗ün chia tam gi├íc, kh├┤ng tß╗▒ quß║ít lß║íi[32m 1[2mms[22m[39m
+[31m     [31m├ù[31m FINDING-D1/D2: mß║╖t con c├│ `display_role === 'hit_proxy'` giß╗» nguy├¬n Mesh bß║»t chuß╗Öt nh╞░ng kh├┤ng nhuß╗Öm m├áu khi ch╞░a chß╗ìn, v├á t├┤ nß╗òi bß║¡t khi ─æ╞░ß╗úc chß╗ìn[39m[32m 6[2mms[22m[39m
+[31m     [31m├ù[31m W2 / FINDING-C2: miß║┐ng mß║╖t phß║│ng co gi├ún theo b├ín k├¡nh ─æiß╗âm ─æß╗ïnh ngh─⌐a (kh├┤ng ├⌐p tß╗æi thiß╗âu 2 ─æ╞ín vß╗ï tr├¬n h├¼nh ─æ╞ín vß╗ï) v├á c├│ ─æß╗Ö ─æß╗Ñc thß╗Ñ ─æß╗Öng Γëñ 0.12[39m[32m 1[2mms[22m[39m
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Failed Tests 6 ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+
+ FAIL  frontend/src/simulations/domains/geometry/scene3d-auxiliary.test.ts > h├¼nh phß╗Ñ > FINDING-B2: ─æ╞░ß╗¥ng thß║│ng mang ch├ón ─æ╞░ß╗¥ng vu├┤ng g├│c (`gt_g`, `derived_H_line`) KH├öNG tß╗▒ ß║⌐n ß╗ƒ b╞░ß╗¢c cuß╗æi khi `aux=0`, c├▓n hai mß║╖t phß║│ng dß╗▒ng giao tuyß║┐n (`mp1_gt_g`, `mp2_gt_g`) ß║⌐n sau khi c├│ `gt_g`
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ Γ¥» frontend/src/simulations/domains/geometry/scene3d-auxiliary.test.ts:74:31
+     72|     const cuoiDlp = anchorOfGeometryStep(dlp, geometryStepCount(dlp) -ΓÇª
+     73|     const anDlp = auxiliaryHiddenAt(dlp, cuoiDlp, false, null);
+     74|     expect(anDlp.has("gt_g")).toBe(false);
+       |                               ^
+     75|     expect(anDlp.has("mp1_gt_g")).toBe(true);
+     76|     expect(anDlp.has("mp2_gt_g")).toBe(true);
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/6]ΓÄ»
+
+ FAIL  frontend/src/simulations/domains/geometry/scene3d-auxiliary.test.ts > h├¼nh phß╗Ñ > W2: ─æiß╗âm tß╗ïnh tiß║┐n phß╗Ñ ngo├ái khß╗æi (`H`, `H1` trong `two-line-prism`) hiß╗çn tß╗¢i khi dß╗▒ng xong mß║╖t cß║»t `(P)` rß╗ôi ß║⌐n ß╗ƒ b╞░ß╗¢c cuß╗æi khi `aux=0`
+AssertionError: expected undefined to deeply equal { loai: 'dung', xongTai: 10 }
+
+- Expected:
+{
+  "loai": "dung",
+  "xongTai": 10,
+}
+
++ Received:
+undefined
+
+ Γ¥» frontend/src/simulations/domains/geometry/scene3d-auxiliary.test.ts:95:26
+     93|     const buocMp = buocCuaVat(tlp, "mp_td_q");
+     94|     const phu = auxiliaryObjects(tlp);
+     95|     expect(phu.get("H")).toEqual({ loai: "dung", xongTai: buocMp });
+       |                          ^
+     96|     expect(phu.get("H1")).toEqual({ loai: "dung", xongTai: buocMp });
+     97|     expect(phu.has("M")).toBe(false);
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[2/6]ΓÄ»
+
+ FAIL  frontend/src/simulations/domains/geometry/scene3d-chart.test.ts > khung ΓåÆ kh├┤ng gian > FINDING-B1: biß║┐n ─æß╗òi cß║ú `perpendicular_witness` (ch├ón H v├á hai ph╞░╞íng k├╜ hiß╗çu g├│c vu├┤ng) sang kh├┤ng gian thß║┐ giß╗¢i v├á l┼⌐y ─æß║│ng khi gß╗ìi lß║╖p
+AssertionError: expected 1.0352761802985002 to be less than 0.000001
+ Γ¥» frontend/src/simulations/domains/geometry/scene3d-chart.test.ts:68:27
+     66|     const hXyz = toVec3(h.xyz!);
+     67|     const foot = toVec3(h.perpendicular_witness!.foot);
+     68|     expect(d(hXyz, foot)).toBeLessThan(1e-6);
+       |                           ^
+     69|     const u = toVec3(h.perpendicular_witness!.marker.u);
+     70|     const v = toVec3(h.perpendicular_witness!.marker.v);
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[3/6]ΓÄ»
+
+ FAIL  frontend/src/simulations/domains/geometry/scene3d-presentation.test.ts > nh├ún chß╗ông nhau: giß╗» c├íi ╞░u ti├¬n cao > W3: hai ─æiß╗âm hiß╗çn tß║íi c├╣ng toß║í ─æß╗Ö (`B` ─æß╗ü cho v├á ch├ón vu├┤ng g├│c `H` tß║íi `(1,0,0)`) gß╗Öp k├╜ hiß╗çu th├ánh `B Γëí H` ─æß╗â kh├┤ng mß║Ñt t├¬n ─æß╗ënh
+AssertionError: expected 'undefined' to be 'function' // Object.is equality
+
+Expected: "function"
+Received: "undefined"
+
+ Γ¥» frontend/src/simulations/domains/geometry/scene3d-presentation.test.ts:134:33
+    132|       ) => Map<string, string>;
+    133|     };
+    134|     expect(typeof P.kyHieuDiem).toBe("function");
+       |                                 ^
+    135|     const m = P.kyHieuDiem!([
+    136|       { id: "H", notation: "H", origin: "derived", xyz: ["1", "0", "0"ΓÇª
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[4/6]ΓÄ»
+
+ FAIL  frontend/src/simulations/domains/geometry/scene3d.test.tsx > (5D-l├╡m) renderer tr├¼nh b├áy ─É├ÜNG phß║ºn l├╡m > FINDING-D1/D2: mß║╖t con c├│ `display_role === 'hit_proxy'` giß╗» nguy├¬n Mesh bß║»t chuß╗Öt nh╞░ng kh├┤ng nhuß╗Öm m├áu khi ch╞░a chß╗ìn, v├á t├┤ nß╗òi bß║¡t khi ─æ╞░ß╗úc chß╗ìn
+AssertionError: expected 0.14 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 0.14
+
+ Γ¥» frontend/src/simulations/domains/geometry/scene3d.test.tsx:747:37
+    745|     expect(thuong.name).toBe("face:chop::face:1");
+    746|     expect(thuong.type).toBe("Mesh");
+    747|     expect(thuong.material.opacity).toBe(0);
+       |                                     ^
+    748|     expect(thuong.material.colorWrite).toBe(false);
+    749|
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[5/6]ΓÄ»
+
+ FAIL  frontend/src/simulations/domains/geometry/scene3d.test.tsx > (5D-l├╡m) renderer tr├¼nh b├áy ─É├ÜNG phß║ºn l├╡m > W2 / FINDING-C2: miß║┐ng mß║╖t phß║│ng co gi├ún theo b├ín k├¡nh ─æiß╗âm ─æß╗ïnh ngh─⌐a (kh├┤ng ├⌐p tß╗æi thiß╗âu 2 ─æ╞ín vß╗ï tr├¬n h├¼nh ─æ╞ín vß╗ï) v├á c├│ ─æß╗Ö ─æß╗Ñc thß╗Ñ ─æß╗Öng Γëñ 0.12
+AssertionError: expected 2 to be less than 1.8
+ Γ¥» frontend/src/simulations/domains/geometry/scene3d.test.tsx:762:21
+    760|     expect(k).not.toBeNull();
+    761|     // ─É╞░ß╗¥ng ch├⌐o tam gi├íc vu├┤ng cß║ính 1 l├á ΓêÜ2 Γëê 1.414 ΓçÆ b├ín k├¡nh tß╗½ t├óΓÇª
+    762|     expect(k!.canh).toBeLessThan(1.8);
+       |                     ^
+    763|     expect(k!.canh).toBeGreaterThan(1.4);
+    764|
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[6/6]ΓÄ»
+
+
+[2m Test Files [22m [1m[31m4 failed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[31m6 failed[39m[22m[2m | [22m[1m[32m68 passed[39m[22m[90m (74)[39m
+[2m   Start at [22m 13:51:44
+[2m   Duration [22m 1.27s[2m (transform 576ms, setup 0ms, import 962ms, tests 134ms, environment 0ms)[22m
+

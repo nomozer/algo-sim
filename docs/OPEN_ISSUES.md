@@ -20,8 +20,7 @@
 
 ### ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY
 
-- **status:** DEFERRED — user-requested presentation scope recorded 2026-10-14; no implementation authorized in this run.
-  Group A integration accepts this limitation; it remains OPEN/DEFERRED, not a completed presentation slice.
+- **status:** IMPLEMENTED_ON_RESEARCH_BRANCH_AWAITING_REVIEW — W0 baseline audit (`scene3d-visual-parity-audit`, `4b51fde8`) and W1–W3 implementation (`scene3d-architecture-visual-reliability`) completed on `research/scene3d-visual-parity-audit`; ready for independent code review before candidate refreeze / T3 / `main` integration.
 - **description:** Prefer an oblique view from above while preserving free orbit/reset; choose defaults by verified scene
   families rather than one fixed angle. Optional reference background: sparse, very faint diagonal lines, not a dense
   square grid or a mathematical entity. The reference image is not in this review's evidence package, so its exact visual
@@ -31,17 +30,13 @@
   not verified per camera angle; auxiliary lines, intersection lines and solid edges overlap; large planes cover the
   solid; the role of the perpendicular segment and foot H is unclear; default view, point labels and visual hierarchy
   below teaching expectations. Not evidence of a Kernel error; `PASS_CORE_CAUSAL_RENDERING` (run
-  `source-bound-result-planning`) checks causal order/selection/pixels only, not visual quality. Not implemented.
-- **2026-10-16:** the authoritative T3 PASS at `7f355a81` (run `result-binding-final-acceptance`) does not cover this.
-  The browser gate is outside T3 and was not refreshed. The product–harness visual parity / readability audit
-  (Scene3D W0) has not run. The issue stays OPEN.
-- **evidence:** User request for final Group A integration readiness; `docs/evaluation/geometry/runs/group-a-integration-readiness/report.md`;
-  addendum: `docs/evaluation/geometry/runs/source-bound-result-planning-integration-readiness/report.md` §9.
-- **impact:** Learner readability and visual acceptance. No new wrong geometry identified in the reviewed three scenes;
-  a presentation that changes perceived incidence or construction meaning must be treated as a semantic clarity blocker.
-- **scope:** One bounded Scene3D Presentation slice after an explicit scope decision; no Kernel/coordinate changes.
-  Keep step contact sheets. Existing orbit findings remain in `ISSUE-OPS-ORBIT-GATE-UNSETTLED-LOCAL` and
-  `ISSUE-ARCH-ORBIT-P1-SECTION-SCENE-DOES-NOT-SETTLE`; this issue does not duplicate their diagnosis.
+  `source-bound-result-planning`) checks causal order/selection/pixels only, not visual quality.
+- **2026-10-16 update (W0 audit `scene3d-visual-parity-audit` + W1–W3 implementation `scene3d-architecture-visual-reliability`):**
+  W0 proved 11/11 locked fixtures are mathematically exact in Gram metric $G$ (`all_cases_math_pass = true`) and isolated 2 CRITICAL + 5 IMPORTANT frontend/parity root causes (`FINDING-B1`, `FINDING-B2`, `FINDING-D1..D4`, `FINDING-C2`, `FINDING-E1`). W1–W3 resolved all 9 findings in frontend/harness (`scene3d-chart.ts`, `scene3d-auxiliary.ts`, `scene3d-presentation.ts`, `scene3d-model.ts`, `scene3d-view.tsx`, `hybrid-section-visual.tsx`, `result-binding-visual-check.mjs`): `veKhongGian` now transforms `o.perpendicular_witness` idempotently (`0.0` world-space displacement); target carrier lines (`gt_g`, `derived_H_line`) stay visible at the final step under default `aux=0` while disposable planes (`mp1_gt_g`, `mp2_gt_g`) and off-solid translated points (`H`, `H1`) hide; unselected `face` sub-entities act as transparent hit proxies; section sub-entities respect progressive `geometry_progress`; coincident points render `"B ≡ H"`; passive `surface` planes bound to defining points at `0.10` opacity; and Product vs. Harness achieve 100% rendered object + sub-entity parity (`after_same_all_rendered_objects: true`).
+- **evidence:** `docs/evaluation/geometry/runs/scene3d-visual-parity-audit/report.md`;
+  `docs/evaluation/geometry/runs/scene3d-architecture-visual-reliability/report.md`.
+- **impact:** Learner readability and visual parity between Product and Harness resolved on `research/scene3d-visual-parity-audit`; awaiting independent review, refreeze, and human visual sign-off before `main` integration.
+- **scope:** Bounded frontend Scene3D mapping/presentation/harness slice; 0 backend/Kernel/coordinate changes.
 - **owner_class:** UX
 - **default_switch_blocker:** NO — not an authorization to enable Hybrid; its independent production blockers remain.
 

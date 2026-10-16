@@ -11,6 +11,7 @@ import { Scene3DWorkspace } from "../src/simulations/domains/geometry/scene3d-vi
 import { TRANG_THAI_DAU, select } from "../src/simulations/domains/geometry/interaction-state";
 import { geometryTimeline, objectsAt, stepCount, toVec3 } from "../src/simulations/domains/geometry/scene3d-model";
 import { veKhongGian } from "../src/simulations/domains/geometry/scene3d-chart";
+import { withSubEntities } from "../src/simulations/domains/geometry/scene3d-subentities";
 import rowsHardening from "../../docs/evaluation/geometry/runs/hybrid-semantic-hardening/visual/scenes.json";
 import rowsGoal from "../../docs/evaluation/geometry/runs/goal-directed-section-planning/visual/scenes.json";
 import rowsTwoLine from "../../docs/evaluation/geometry/runs/two-line-plane-section/visual/scenes.json";
@@ -29,22 +30,32 @@ const hide = new Set((q.get("hide") ?? "").split(",").filter(Boolean));
 const sets = q.getAll("set").map((s) => { const [k, v] = s.split("="); const [id, f] = k.split("."); return { id, f, v: JSON.parse(v) }; });
 const khung = row.scene && { ...row.scene, objects: row.scene.objects.filter((o: any) => !hide.has(o.id))
   .map((o: any) => sets.filter((s) => s.id === o.id).reduce((a: any, s) => ({ ...a, [s.f]: s.v }), o)) } as any;
-const scene = khung && (q.get("frame") === "payload" ? khung : veKhongGian(khung));
+const daVe = khung && (q.get("frame") === "payload" ? khung : veKhongGian(khung));
+const scene = daVe && (q.get("sub") === "0" ? daVe : withSubEntities(daVe, objectsAt));
 const n = scene ? stepCount(scene) : 0;
+const timeline = scene ? geometryTimeline(scene) : [];
+const initialStep = q.has("step")
+  ? Number(q.get("step"))
+  : q.has("g")
+    ? (timeline[Number(q.get("g"))]?.anchor ?? n - 1)
+    : n - 1;
 
 function Harness() {
   const [fit, setFit] = useState(0);
-  const [step, setStep] = useState(q.has("step") ? Number(q.get("step")) : n - 1);
+  const [step, setStep] = useState(initialStep);
+  const [aux, setAux] = useState(q.get("aux") === "1");
   const [interaction, setInteraction] = useState(TRANG_THAI_DAU);
+  const learnerIdx = timeline.findIndex((g) => step >= g.start && step <= g.end);
   (window as any).__hybrid = {
-    id: row.id, served: row.served, stepCount: n, step, selected_id: interaction.selected_id,
+    id: row.id, served: row.served, stepCount: n, step, learnerStep: learnerIdx, selected_id: interaction.selected_id,
+    auxiliaryShown: aux,
     presentAt: (k: number) => scene ? objectsAt(scene, k).map((o: any) => o.id) : [],
-    objects: scene ? scene.objects.map((o: any) => ({ id: o.id, type: o.type, origin: o.origin, depends: o.depends ?? [],
+    objects: scene ? scene.objects.filter((o: any) => !o.parent).map((o: any) => ({ id: o.id, type: o.type, origin: o.origin, depends: o.depends ?? [],
       label: o.label, role: o.role, source: o.source, endpoint_entities: o.endpoint_entities, render: o.render })) : [],
     // Learner steps of the product scrubber (`Scene3DExplorer` shows frame `anchor` of each) and the WORLD coordinates
     // the renderer receives after `veKhongGian` — for the playback audit (`hybrid-section-visual-check.mjs --playback`).
-    timeline: scene ? geometryTimeline(scene).map(({ index, start, end, anchor }) => ({ index, start, end, anchor })) : [],
-    world: scene ? Object.fromEntries(scene.objects.filter((o: any) => o.type === "point3").map((o: any) => [o.id, toVec3(o.xyz)])) : {},
+    timeline: timeline.map(({ index: idx, start, end, anchor }) => ({ index: idx, start, end, anchor })),
+    world: scene ? Object.fromEntries(scene.objects.filter((o: any) => o.type === "point3" && !o.parent).map((o: any) => [o.id, toVec3(o.xyz)])) : {},
   };
   if (!row.served || !scene) return <main style={{ padding: 16 }}>
     <h1>Scene3D harness / Hybrid IR / {row.id}</h1>
@@ -56,19 +67,24 @@ function Harness() {
     <button onClick={() => setFit(x => x + 1)}>Đặt lại khung nhìn</button>
     <label>Bước dựng <input aria-label="Bước dựng" type="range" min={0} max={n - 1} value={step}
       onChange={e => setStep(Number(e.target.value))} /></label>
+    {timeline.length > 0 && <label>Bước học <select aria-label="Bước học" value={learnerIdx >= 0 ? learnerIdx : 0}
+      onChange={e => { const g = timeline[Number(e.target.value)]; if (g) setStep(g.anchor); }}>
+      {timeline.map(g => <option key={g.index} value={g.index}>Bước {g.index + 1}/{timeline.length}</option>)}
+    </select></label>}
+    <label><input aria-label="Hình phụ" type="checkbox" checked={aux} onChange={e => setAux(e.target.checked)} /> Hình phụ</label>
     <label>Chọn đối tượng <select aria-label="Chọn đối tượng" value={interaction.selected_id ?? ""}
       onChange={e => setInteraction(s => select(s, e.target.value || null))}>
       <option value="">Bỏ chọn</option>
       {objectsAt(scene, step).filter((o: any) => o.render !== "non_visual").map((o: any) =>
-        <option key={o.id} value={o.id}>{o.label || o.id}{o.source?.binding === "AUXILIARY" ? ` · ${o.role}` : ""}</option>)}
+        <option key={o.id} value={o.id}>{o.label || o.notation || o.id}{o.source?.binding === "AUXILIARY" && o.role ? ` · ${o.role}` : ""}</option>)}
     </select></label>
     </div>
     {interaction.selected_id && <p data-testid="selection-details">{scene.objects.filter((o: any) =>
-      o.id === interaction.selected_id).map((o: any) => `${o.label} · ${o.role}`).join("")}</p>}
+      o.id === interaction.selected_id).map((o: any) => [o.label || o.notation || o.id, o.role].filter(Boolean).join(" · ")).join("")}</p>}
     <div data-testid="khung" style={{ height: "75vh", minHeight: 440 }}>
       <Scene3DWorkspace scene={scene} step={step} interaction={{ ...interaction, current_step: step }}
         onSelect={id => setInteraction(s => select(s, id))}
-        fitToken={fit} auxiliaryShown={q.get("aux") === "1"} />
+        fitToken={fit} auxiliaryShown={aux} />
     </div>
   </main>;
 }

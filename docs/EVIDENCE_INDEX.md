@@ -1,5 +1,33 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SCENE3D_ARCHITECTURE_VISUAL_RELIABILITY
+
+REPORT = docs/evaluation/geometry/runs/scene3d-architecture-visual-reliability/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-architecture-visual-reliability/
+CORRECTED_BY = NONE
+CORRECTS = SCENE3D_VISUAL_PARITY_AUDIT
+CLASSIFICATION = SCENE3D_ARCHITECTURE_IMPLEMENTATION_READY_FOR_REVIEW
+CODE_COMMIT = SELF (frontend W1–W3 implementation on research/scene3d-visual-parity-audit; backend 55c657b8 unchanged)
+VERIFICATION_COMMIT = SELF (Vitest 68 files / 1061 passed, Pytest geometry 7758 passed, Playwright 11/11 parity & oracle PASS, result-binding-visual-check PASS_CORE_CAUSAL_RENDERING; T3 NOT_RUN awaiting independent review)
+DOCUMENTATION_COMMIT_ROLE = SELF
+MODEL_REQUEST_COUNT = 0
+
+Resolves all 2 CRITICAL, 5 IMPORTANT, and 2 NONBLOCKING W0 findings (`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY`): `veKhongGian` transforms `o.perpendicular_witness` idempotently (`0.0` displacement across 11/11 cases); `scene3d-auxiliary.ts` preserves `perpendicular_witness.on` carrier lines (`gt_g`, `derived_H_line`) under default `aux=0` while hiding disposable planes (`mp1_gt_g`, `mp2_gt_g`) and off-solid translated points (`H`, `H1`); `hybrid-section-visual.tsx` enables `withSubEntities` by default (`after_same_all_rendered_objects = true` across all 9 harness cases); unselected `face` sub-entities act as transparent hit proxies; section sub-entities respect progressive `geometry_progress`; coincident points render `"B ≡ H"`; passive `surface` planes bound to defining points at `0.10` opacity; and W0 10/11 case metadata is reconciled (`section-MAB-trapezoid` included in both oracle and parity telemetry). Candidate not yet refrozen; no merge, no push.
+
+## WAVE_ID = SCENE3D_VISUAL_PARITY_AUDIT
+
+REPORT = docs/evaluation/geometry/runs/scene3d-visual-parity-audit/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-visual-parity-audit/
+CORRECTED_BY = SCENE3D_ARCHITECTURE_VISUAL_RELIABILITY
+CORRECTS = NONE
+CLASSIFICATION = SCENE3D_W0_BASELINE_AUDIT_COMPLETE
+CODE_COMMIT = NONE (product 55c657b8 unchanged)
+VERIFICATION_COMMIT = 4b51fde8 (W0 baseline audit on f83b4ed1, candidate 30808cb0… verified)
+DOCUMENTATION_COMMIT_ROLE = SELF
+MODEL_REQUEST_COUNT = 0
+
+W0 visual parity and readability baseline audit (`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY`) across Product (`/`) and Playwright Harness (`/scripts/hybrid-section-visual.html`). Proved backend Scene IR coordinates, planes, projection feet, and distances are 100% exact in Gram metric $G$, and isolated 2 CRITICAL (`FINDING-B1`, `FINDING-B2`), 5 IMPORTANT (`FINDING-D1..D3`, `FINDING-C2`, `FINDING-E1`), and 2 NONBLOCKING (`FINDING-A1`, `FINDING-D4`) frontend mapping, renderer, and harness divergences. Reconciled in `SCENE3D_ARCHITECTURE_VISUAL_RELIABILITY` (W0 oracle had 10 cases omitting `section-MAB-trapezoid` while W0 parity telemetry had 11 cases).
+
 ## WAVE_ID = RESULT_BINDING_FINAL_ACCEPTANCE
 
 REPORT = docs/evaluation/geometry/runs/result-binding-final-acceptance/report.md

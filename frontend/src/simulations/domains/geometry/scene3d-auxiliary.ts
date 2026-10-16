@@ -30,12 +30,24 @@ export function auxiliaryObjects(scene: Scene3D): Map<string, HinhPhu> {
   if (co) return co;
   const ra = new Map<string, HinhPhu>();
   const n = stepCount(scene);
+  const loai = new Map(scene.objects.map((o) => [o.id, o.type]));
+  const duongChieu = new Set(scene.objects.flatMap((o) => o.perpendicular_witness?.on ? [o.perpendicular_witness.on] : []));
   for (const o of scene.objects) {
     const vai = o.formation_roles ?? [];
     const nhom = o.display_group ?? [];
-    if (!(o.type === "line3" || o.type === "plane3") || o.origin !== "derived"
-        || vai.length !== 1 || vai[0] !== VAI_PHU || nhom.includes("given") || nhom.includes("target")) continue;
-    const con = scene.objects.filter((x) => x.depends?.includes(o.id));
+    if (o.origin !== "derived" || vai.length !== 1 || vai[0] !== VAI_PHU
+        || nhom.includes("given") || nhom.includes("target")) continue;
+    const con = scene.objects.filter((x) => !x.parent && x.depends?.includes(o.id));
+    if (o.type === "point3") {
+      const diemPhuMp = !o.perpendicular_witness
+        && (o.depends ?? []).some((id) => loai.get(id) === "vector3")
+        && con.length > 0 && con.every((x) => x.type === "plane3");
+      if (!diemPhuMp) continue;
+    } else if (o.type === "line3") {
+      if (duongChieu.has(o.id)) continue;
+    } else if (o.type !== "plane3") {
+      continue;
+    }
     const dung = con.filter((x) => x.type !== "quantity").map((x) => x.id);
     if (dung.length > 0) {
       const k = [...Array(n).keys()].find((s) => {

@@ -1,5 +1,16 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL — Scene3D architecture & visual reliability implementation (W1–W3), 2026-10-16
+
+CANONICAL_NEXT_ACTION = SCENE3D_ARCHITECTURE_INDEPENDENT_REVIEW
+
+Research branch `research/scene3d-visual-parity-audit` (branched from `f83b4ed1`, W0 audit at `4b51fde8`); not merged, not pushed; `main`/`origin/main` remain `2a3c0787`. Resolves all 2 CRITICAL, 5 IMPORTANT, and 2 NONBLOCKING findings from W0 (`scene3d-visual-parity-audit`) for `ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY` with 0 backend/Kernel/Planner changes (`LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid OFF, 0 Gemini calls):
+- **W1 (Mapping, Auxiliary Carrier Persistence & Parity):** `veKhongGian` (`scene3d-chart.ts`) transforms `o.perpendicular_witness` idempotently (`0.0` world-space displacement across 11/11 fixtures); `auxiliaryObjects` (`scene3d-auxiliary.ts`) excludes `perpendicular_witness.on` target carrier lines (`gt_g`, `derived_H_line`) from disposable hiding under default `aux=0` while `mp1_gt_g`, `mp2_gt_g` hide; `hybrid-section-visual.tsx` enables `withSubEntities` by default and adds `Bước học` + `Hình phụ` controls; unselected `face` sub-entities render as transparent `hit_proxy` meshes.
+- **W2 (Off-Solid Auxiliary Points & Plane Framing):** `auxiliaryObjects` classifies off-solid translated auxiliary points (`H`, `H1` in `two-line-*`, ignoring synthetic sub-entities `!x.parent`) as `loai: "dung"` so they hide at the final step under `aux=0`; `surface` plane patches bound to defining points at `0.10` passive opacity and `khungMatPhang` drops the `PLANE_PATCH_MIN_SIZE` floor when `banKinh > 0`.
+- **W3 (Progressive Section Sub-Entities & Coincident Labels):** section sub-entities (`td::face:0`, `td::edge:i`, `td::vertex:i`) gate on parent `geometry_progress` and skip coincident named vertices; `kyHieuDiem` (`scene3d-presentation.ts`) combines coincident labels into `"B ≡ H"`; selection details fall back across `label || notation || id`.
+- **Verification:** RED 6 failing assertions (`red/vitest-red.txt`) → GREEN `68 files / 1061 passed` (`results/vitest-green.txt`), backend geometry `7758 passed` (`results/pytest-green.txt`), `result-binding-visual-check.mjs` `PASS_CORE_CAUSAL_RENDERING` (`results/result-binding-check/receipt.json`), and 11/11 browser parity & oracle pass (`results/parity_telemetry.json`, `results/math_and_readability_oracle.json`, `results/before_after_comparison.json`). Candidate not yet refrozen and authoritative T3 not yet run pending independent code review.
+Receipts: [`scene3d-architecture-visual-reliability`](evaluation/geometry/runs/scene3d-architecture-visual-reliability/report.md) · [`scene3d-visual-parity-audit`](evaluation/geometry/runs/scene3d-visual-parity-audit/report.md).
+
 ## LOCAL — Result binding final acceptance, 2026-10-16
 
 CANONICAL_NEXT_ACTION = RESULT_BINDING_MAIN_INTEGRATION_DECISION
@@ -18,8 +29,7 @@ Evidence review E-1 (`shared-ask-grammar-safety/evidence-reconciliation-55c657b8
 re-run of T3 both reported PASS. Those two reviews, and the code review of `55c657b8`, are conversation reports, not
 repository artifacts. Integration preflight: CONDITIONAL on this documentation sync, then the user's merge decision
 (fast-forward). `LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid product enablement NO-GO, 0 Gemini calls.
-Scene3D product–harness visual parity / readability audit: PENDING; the browser gate is outside T3 and was not
-refreshed (`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY` OPEN). Known limitations: `ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES`.
+Scene3D product–harness visual parity / readability audit: audited in W0 and implemented in W1–W3 on `research/scene3d-visual-parity-audit` (above). Known limitations: `ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES`.
 Receipt: [`result-binding-final-acceptance`](evaluation/geometry/runs/result-binding-final-acceptance/report.md).
 The two 2026-10-15 sections below are historical for product, candidate and T3.
 

@@ -43,4 +43,38 @@ describe("khung → không gian", () => {
       expect(n[0] * u[0] + n[1] * u[1] + n[2] * u[2]).toBeCloseTo(0, 6);
     }
   });
+
+  it("FINDING-B1: biến đổi cả `perpendicular_witness` (chân H và hai phương ký hiệu góc vuông) sang không gian thế giới và lũy đẳng khi gọi lặp", () => {
+    const c = canh({
+      chart_metric: G,
+      objects: [
+        ...canh().objects,
+        {
+          id: "H", label: "H", type: "point3", render: "point_marker", origin: "derived",
+          producer: "construct_point.project_onto", depends: ["S", "mp"],
+          xyz: ["2", "2", "0"],
+          perpendicular_witness: {
+            from: "S", on: "mp",
+            foot: ["2", "2", "0"],
+            marker: { u: ["1", "0", "0"], v: ["0", "0", "1"] },
+          },
+        },
+      ],
+    });
+    const w = veKhongGian(c);
+    const h = w.objects.find((o) => o.id === "H")!;
+    const hXyz = toVec3(h.xyz!);
+    const foot = toVec3(h.perpendicular_witness!.foot);
+    expect(d(hXyz, foot)).toBeLessThan(1e-6);
+    const u = toVec3(h.perpendicular_witness!.marker.u);
+    const v = toVec3(h.perpendicular_witness!.marker.v);
+    expect(Math.hypot(...u)).toBeCloseTo(1, 6);
+    expect(Math.hypot(...v)).toBeCloseTo(1, 6);
+    expect(u[0] * v[0] + u[1] * v[1] + u[2] * v[2]).toBeCloseTo(0, 6);
+    // Gọi lặp `veKhongGian(veKhongGian(c))` không biến đổi lần hai
+    const w2 = veKhongGian(w);
+    expect(toVec3(w2.objects.find((o) => o.id === "H")!.xyz!)).toEqual(hXyz);
+    expect(toVec3(w2.objects.find((o) => o.id === "H")!.perpendicular_witness!.foot)).toEqual(foot);
+  });
 });
+

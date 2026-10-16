@@ -1,0 +1,1144 @@
+{
+  "schema": "SCENE3D_W1_W3_MATH_AND_STRUCTURE_ORACLE/1",
+  "w0_baseline_commit": "f83b4ed14995c89d6cf00a643cd14c814c78004c",
+  "w0_audit_commit": "4b51fde81e79a7caf7bd4dbd69cfca266cabaa8e",
+  "cases_audited": 11,
+  "reconciled_w0_case_count_note": "W0 math_and_readability_oracle.json had 10 cases (omitting section-MAB-trapezoid) while W0 parity_telemetry.json had 11 cases. Both W1-W3 oracle and telemetry now cover all 11 cases.",
+  "all_cases_math_pass": true,
+  "zero_orphan_witness_targets": true,
+  "cases": [
+    {
+      "case_id": "section-MAB-trapezoid",
+      "family_group": "G1_G4_BASIC_PYRAMID_AND_SECTION",
+      "source_path": "docs/evaluation/geometry/runs/goal-directed-section-planning/visual/scenes.json",
+      "source_file_sha256": "cf4e6c3b13e28e59c0822d8d273edb01cdaf1ba8ec176f293f5d15624132a839",
+      "scene_sha256": "567c5f53206fa673a5c43c1dee6ae47d6c8dbfdfa2523ef8c67396f16288d3aa",
+      "route_kind": "HYBRID_FACT_ROUTE",
+      "harness_query": "src=goal&i=0",
+      "counts": {
+        "objects_total": 14,
+        "points": 6,
+        "solids": 1,
+        "lines": 0,
+        "segments": 4,
+        "planes": 1,
+        "sections": 1,
+        "quantities": 0,
+        "raw_steps": 11
+      },
+      "solid_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "finite_scene_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "math_checks": [
+        {
+          "check": "section_planarity:td_f6",
+          "vertex_count": 4,
+          "plane_id": "mp_td_f6",
+          "max_plane_distance_error": 0.0,
+          "pass": true
+        }
+      ],
+      "all_math_checks_pass": true,
+      "coincident_section_vertices": [
+        {
+          "section_id": "td_f6",
+          "vertex_index": 0,
+          "subentity_id": "td_f6::vertex:0",
+          "subentity_default_label": "Đỉnh 1",
+          "coincides_with_named_points": [
+            "A"
+          ]
+        },
+        {
+          "section_id": "td_f6",
+          "vertex_index": 1,
+          "subentity_id": "td_f6::vertex:1",
+          "subentity_default_label": "Đỉnh 2",
+          "coincides_with_named_points": [
+            "B"
+          ]
+        },
+        {
+          "section_id": "td_f6",
+          "vertex_index": 2,
+          "subentity_id": "td_f6::vertex:2",
+          "subentity_default_label": "Đỉnh 3",
+          "coincides_with_named_points": [
+            "M"
+          ]
+        },
+        {
+          "section_id": "td_f6",
+          "vertex_index": 3,
+          "subentity_id": "td_f6::vertex:3",
+          "subentity_default_label": "Đỉnh 4",
+          "coincides_with_named_points": []
+        }
+      ],
+      "auxiliary_lifecycle": []
+    },
+    {
+      "case_id": "intersection-SAB-SCD",
+      "family_group": "G3_PLANE_PLANE_INTERSECTION",
+      "source_path": "docs/evaluation/geometry/runs/goal-directed-section-planning/visual/scenes.json",
+      "source_file_sha256": "cf4e6c3b13e28e59c0822d8d273edb01cdaf1ba8ec176f293f5d15624132a839",
+      "scene_sha256": "783fce57d74a3fc3a6002988279e8ddc387531aa1a1110c0bec4616c3921fd01",
+      "route_kind": "HYBRID_FACT_ROUTE",
+      "harness_query": "src=goal&i=4",
+      "counts": {
+        "objects_total": 14,
+        "points": 5,
+        "solids": 1,
+        "lines": 1,
+        "segments": 4,
+        "planes": 2,
+        "sections": 0,
+        "quantities": 0,
+        "raw_steps": 7
+      },
+      "solid_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "finite_scene_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "math_checks": [
+        {
+          "check": "intersect_plane_plane:gt_f5",
+          "depends": [
+            "mp1_gt_f5",
+            "mp2_gt_f5"
+          ],
+          "plane_errors": [
+            {
+              "plane": "mp1_gt_f5",
+              "point_on_plane_err": 0.0,
+              "dir_in_plane_err": 0.0
+            },
+            {
+              "plane": "mp2_gt_f5",
+              "point_on_plane_err": 0.0,
+              "dir_in_plane_err": 0.0
+            }
+          ],
+          "pass": true
+        }
+      ],
+      "all_math_checks_pass": true,
+      "coincident_section_vertices": [],
+      "auxiliary_lifecycle": [
+        {
+          "object_id": "mp1_gt_f5",
+          "type": "plane3",
+          "producer": "construct_plane",
+          "dependents": [
+            "gt_f5"
+          ],
+          "xongTai_step": 6,
+          "final_step_index": 6,
+          "hidden_at_final_step_when_aux_false": false,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        },
+        {
+          "object_id": "mp2_gt_f5",
+          "type": "plane3",
+          "producer": "construct_plane",
+          "dependents": [
+            "gt_f5"
+          ],
+          "xongTai_step": 6,
+          "final_step_index": 6,
+          "hidden_at_final_step_when_aux_false": false,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        },
+        {
+          "object_id": "gt_f5",
+          "type": "line3",
+          "producer": "intersect_plane_plane",
+          "dependents": [],
+          "xongTai_step": null,
+          "final_step_index": 6,
+          "hidden_at_final_step_when_aux_false": false,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        }
+      ]
+    },
+    {
+      "case_id": "aux-foot-S-to-BD",
+      "family_group": "G2_PROJECTION_DISTANCE",
+      "source_path": "docs/evaluation/geometry/runs/goal-directed-section-planning/visual/scenes.json",
+      "source_file_sha256": "cf4e6c3b13e28e59c0822d8d273edb01cdaf1ba8ec176f293f5d15624132a839",
+      "scene_sha256": "530ab398b4899d6221fda980be7bafa9955433cbff1b28beda003ce404c935d4",
+      "route_kind": "HYBRID_FACT_ROUTE",
+      "harness_query": "src=goal&i=5",
+      "counts": {
+        "objects_total": 14,
+        "points": 6,
+        "solids": 1,
+        "lines": 1,
+        "segments": 4,
+        "planes": 0,
+        "sections": 0,
+        "quantities": 1,
+        "raw_steps": 7
+      },
+      "solid_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "finite_scene_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "math_checks": [
+        {
+          "check": "perpendicular_witness:H",
+          "kind": "onto_line3",
+          "from": "S",
+          "target": "derived_H_line",
+          "foot_matches_point_xyz": true,
+          "incidence_error": 0.0,
+          "orthogonality_error": 0.0,
+          "pass": true
+        }
+      ],
+      "all_math_checks_pass": true,
+      "coincident_section_vertices": [],
+      "auxiliary_lifecycle": [
+        {
+          "object_id": "derived_H_line",
+          "type": "line3",
+          "producer": "construct_line",
+          "dependents": [
+            "H"
+          ],
+          "xongTai_step": null,
+          "final_step_index": 6,
+          "hidden_at_final_step_when_aux_false": false,
+          "is_perpendicular_witness_target": true,
+          "causes_orphan_witness_in_product_default": false
+        }
+      ]
+    },
+    {
+      "case_id": "derived-line-pyramid",
+      "family_group": "G2_G3_DERIVED_LINE_PROJECTION_DISTANCE",
+      "source_path": "docs/evaluation/geometry/runs/source-bound-result-planning/visual/scenes.json",
+      "source_file_sha256": "177665cc2935543233b394538a5240b154ba497ee31887c0e3dd4b5f6965b718",
+      "scene_sha256": "af1a7c51e046a6d479d555b8fca55ddd163ee2d7876926322ec2bddd37ebc291",
+      "route_kind": "HYBRID_FACT_ROUTE",
+      "harness_query": "src=result-binding&i=0",
+      "counts": {
+        "objects_total": 17,
+        "points": 7,
+        "solids": 1,
+        "lines": 1,
+        "segments": 4,
+        "planes": 2,
+        "sections": 0,
+        "quantities": 1,
+        "raw_steps": 10
+      },
+      "solid_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "finite_scene_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "math_checks": [
+        {
+          "check": "perpendicular_witness:H",
+          "kind": "onto_line3",
+          "from": "M",
+          "target": "gt_g",
+          "foot_matches_point_xyz": true,
+          "incidence_error": 0.0,
+          "orthogonality_error": 0.0,
+          "pass": true
+        },
+        {
+          "check": "intersect_plane_plane:gt_g",
+          "depends": [
+            "mp1_gt_g",
+            "mp2_gt_g"
+          ],
+          "plane_errors": [
+            {
+              "plane": "mp1_gt_g",
+              "point_on_plane_err": 0.0,
+              "dir_in_plane_err": 0.0
+            },
+            {
+              "plane": "mp2_gt_g",
+              "point_on_plane_err": 0.0,
+              "dir_in_plane_err": 0.0
+            }
+          ],
+          "pass": true
+        }
+      ],
+      "all_math_checks_pass": true,
+      "coincident_section_vertices": [],
+      "auxiliary_lifecycle": [
+        {
+          "object_id": "mp1_gt_g",
+          "type": "plane3",
+          "producer": "construct_plane",
+          "dependents": [
+            "gt_g"
+          ],
+          "xongTai_step": 7,
+          "final_step_index": 9,
+          "hidden_at_final_step_when_aux_false": true,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        },
+        {
+          "object_id": "mp2_gt_g",
+          "type": "plane3",
+          "producer": "construct_plane",
+          "dependents": [
+            "gt_g"
+          ],
+          "xongTai_step": 7,
+          "final_step_index": 9,
+          "hidden_at_final_step_when_aux_false": true,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        },
+        {
+          "object_id": "gt_g",
+          "type": "line3",
+          "producer": "intersect_plane_plane",
+          "dependents": [
+            "H"
+          ],
+          "xongTai_step": null,
+          "final_step_index": 9,
+          "hidden_at_final_step_when_aux_false": false,
+          "is_perpendicular_witness_target": true,
+          "causes_orphan_witness_in_product_default": false
+        }
+      ]
+    },
+    {
+      "case_id": "derived-line-cuboid",
+      "family_group": "G2_G3_DERIVED_LINE_PROJECTION_DISTANCE",
+      "source_path": "docs/evaluation/geometry/runs/source-bound-result-planning/visual/scenes.json",
+      "source_file_sha256": "177665cc2935543233b394538a5240b154ba497ee31887c0e3dd4b5f6965b718",
+      "scene_sha256": "d59e5b1263229e3d603f7e4a02867fd8beadc1682506a297faa80319bb46753f",
+      "route_kind": "HYBRID_FACT_ROUTE",
+      "harness_query": "src=result-binding&i=1",
+      "counts": {
+        "objects_total": 21,
+        "points": 10,
+        "solids": 1,
+        "lines": 1,
+        "segments": 4,
+        "planes": 2,
+        "sections": 0,
+        "quantities": 1,
+        "raw_steps": 11
+      },
+      "solid_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "finite_scene_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "math_checks": [
+        {
+          "check": "perpendicular_witness:H",
+          "kind": "onto_line3",
+          "from": "M",
+          "target": "gt_g",
+          "foot_matches_point_xyz": true,
+          "incidence_error": 0.0,
+          "orthogonality_error": 0.0,
+          "pass": true
+        },
+        {
+          "check": "intersect_plane_plane:gt_g",
+          "depends": [
+            "mp1_gt_g",
+            "mp2_gt_g"
+          ],
+          "plane_errors": [
+            {
+              "plane": "mp1_gt_g",
+              "point_on_plane_err": 0.0,
+              "dir_in_plane_err": 0.0
+            },
+            {
+              "plane": "mp2_gt_g",
+              "point_on_plane_err": 0.0,
+              "dir_in_plane_err": 0.0
+            }
+          ],
+          "pass": true
+        }
+      ],
+      "all_math_checks_pass": true,
+      "coincident_section_vertices": [],
+      "auxiliary_lifecycle": [
+        {
+          "object_id": "mp1_gt_g",
+          "type": "plane3",
+          "producer": "construct_plane",
+          "dependents": [
+            "gt_g"
+          ],
+          "xongTai_step": 8,
+          "final_step_index": 10,
+          "hidden_at_final_step_when_aux_false": true,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        },
+        {
+          "object_id": "mp2_gt_g",
+          "type": "plane3",
+          "producer": "construct_plane",
+          "dependents": [
+            "gt_g"
+          ],
+          "xongTai_step": 8,
+          "final_step_index": 10,
+          "hidden_at_final_step_when_aux_false": true,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        },
+        {
+          "object_id": "gt_g",
+          "type": "line3",
+          "producer": "intersect_plane_plane",
+          "dependents": [
+            "H"
+          ],
+          "xongTai_step": null,
+          "final_step_index": 10,
+          "hidden_at_final_step_when_aux_false": false,
+          "is_perpendicular_witness_target": true,
+          "causes_orphan_witness_in_product_default": false
+        }
+      ]
+    },
+    {
+      "case_id": "derived-line-prism",
+      "family_group": "G2_G3_DERIVED_LINE_PROJECTION_DISTANCE",
+      "source_path": "docs/evaluation/geometry/runs/source-bound-result-planning/visual/scenes.json",
+      "source_file_sha256": "177665cc2935543233b394538a5240b154ba497ee31887c0e3dd4b5f6965b718",
+      "scene_sha256": "bbfcb0b62907cc88aceec8a30b72777dbe269b4173a0fbc543e4d0f0be6673c8",
+      "route_kind": "HYBRID_FACT_ROUTE",
+      "harness_query": "src=result-binding&i=2",
+      "counts": {
+        "objects_total": 18,
+        "points": 8,
+        "solids": 1,
+        "lines": 1,
+        "segments": 3,
+        "planes": 2,
+        "sections": 0,
+        "quantities": 1,
+        "raw_steps": 11
+      },
+      "solid_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "finite_scene_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "math_checks": [
+        {
+          "check": "perpendicular_witness:H",
+          "kind": "onto_line3",
+          "from": "M",
+          "target": "gt_g",
+          "foot_matches_point_xyz": true,
+          "incidence_error": 0.0,
+          "orthogonality_error": 0.0,
+          "pass": true
+        },
+        {
+          "check": "intersect_plane_plane:gt_g",
+          "depends": [
+            "mp1_gt_g",
+            "mp2_gt_g"
+          ],
+          "plane_errors": [
+            {
+              "plane": "mp1_gt_g",
+              "point_on_plane_err": 0.0,
+              "dir_in_plane_err": 0.0
+            },
+            {
+              "plane": "mp2_gt_g",
+              "point_on_plane_err": 0.0,
+              "dir_in_plane_err": 0.0
+            }
+          ],
+          "pass": true
+        }
+      ],
+      "all_math_checks_pass": true,
+      "coincident_section_vertices": [],
+      "auxiliary_lifecycle": [
+        {
+          "object_id": "mp1_gt_g",
+          "type": "plane3",
+          "producer": "construct_plane",
+          "dependents": [
+            "gt_g"
+          ],
+          "xongTai_step": 8,
+          "final_step_index": 10,
+          "hidden_at_final_step_when_aux_false": true,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        },
+        {
+          "object_id": "mp2_gt_g",
+          "type": "plane3",
+          "producer": "construct_plane",
+          "dependents": [
+            "gt_g"
+          ],
+          "xongTai_step": 8,
+          "final_step_index": 10,
+          "hidden_at_final_step_when_aux_false": true,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        },
+        {
+          "object_id": "gt_g",
+          "type": "line3",
+          "producer": "intersect_plane_plane",
+          "dependents": [
+            "H"
+          ],
+          "xongTai_step": null,
+          "final_step_index": 10,
+          "hidden_at_final_step_when_aux_false": false,
+          "is_perpendicular_witness_target": true,
+          "causes_orphan_witness_in_product_default": false
+        }
+      ]
+    },
+    {
+      "case_id": "two-line-pyramid",
+      "family_group": "G3_G4_TWO_LINE_PLANE_SECTION",
+      "source_path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/visual/scenes.json",
+      "source_file_sha256": "09ca4b4e434d3c11036c0bf2f132459c94a6e73387bae219782e2778140f3d35",
+      "scene_sha256": "23c88f43fd26c8e4927038fcfe437c3813eeb6d6fad846f3c0beb5c40b144214",
+      "route_kind": "HYBRID_FACT_ROUTE",
+      "harness_query": "src=sequencing&i=0",
+      "counts": {
+        "objects_total": 19,
+        "points": 8,
+        "solids": 1,
+        "lines": 0,
+        "segments": 4,
+        "planes": 1,
+        "sections": 1,
+        "quantities": 1,
+        "raw_steps": 16
+      },
+      "solid_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "finite_scene_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "math_checks": [
+        {
+          "check": "section_planarity:td_q",
+          "vertex_count": 4,
+          "plane_id": "mp_td_q",
+          "max_plane_distance_error": 0.0,
+          "pass": true
+        }
+      ],
+      "all_math_checks_pass": true,
+      "coincident_section_vertices": [
+        {
+          "section_id": "td_q",
+          "vertex_index": 0,
+          "subentity_id": "td_q::vertex:0",
+          "subentity_default_label": "Đỉnh 1",
+          "coincides_with_named_points": [
+            "M"
+          ]
+        },
+        {
+          "section_id": "td_q",
+          "vertex_index": 1,
+          "subentity_id": "td_q::vertex:1",
+          "subentity_default_label": "Đỉnh 2",
+          "coincides_with_named_points": [
+            "H"
+          ]
+        },
+        {
+          "section_id": "td_q",
+          "vertex_index": 2,
+          "subentity_id": "td_q::vertex:2",
+          "subentity_default_label": "Đỉnh 3",
+          "coincides_with_named_points": []
+        },
+        {
+          "section_id": "td_q",
+          "vertex_index": 3,
+          "subentity_id": "td_q::vertex:3",
+          "subentity_default_label": "Đỉnh 4",
+          "coincides_with_named_points": []
+        }
+      ],
+      "auxiliary_lifecycle": [
+        {
+          "object_id": "H",
+          "type": "point3",
+          "producer": "construct_point.translate",
+          "dependents": [
+            "mp_td_q"
+          ],
+          "xongTai_step": 9,
+          "final_step_index": 15,
+          "hidden_at_final_step_when_aux_false": true,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        },
+        {
+          "object_id": "H1",
+          "type": "point3",
+          "producer": "construct_point.translate",
+          "dependents": [
+            "mp_td_q"
+          ],
+          "xongTai_step": 9,
+          "final_step_index": 15,
+          "hidden_at_final_step_when_aux_false": true,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        }
+      ]
+    },
+    {
+      "case_id": "two-line-prism",
+      "family_group": "G3_G4_TWO_LINE_PLANE_SECTION",
+      "source_path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/visual/scenes.json",
+      "source_file_sha256": "09ca4b4e434d3c11036c0bf2f132459c94a6e73387bae219782e2778140f3d35",
+      "scene_sha256": "1e44ef7eba4c3495c5692018594e59806994c12e92d7058feb48552032fedea3",
+      "route_kind": "HYBRID_FACT_ROUTE",
+      "harness_query": "src=sequencing&i=1",
+      "counts": {
+        "objects_total": 20,
+        "points": 9,
+        "solids": 1,
+        "lines": 0,
+        "segments": 3,
+        "planes": 1,
+        "sections": 1,
+        "quantities": 1,
+        "raw_steps": 17
+      },
+      "solid_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "finite_scene_bbox_3d": {
+        "min": [
+          -0.5,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 2.061553
+      },
+      "math_checks": [
+        {
+          "check": "section_planarity:td_q",
+          "vertex_count": 4,
+          "plane_id": "mp_td_q",
+          "max_plane_distance_error": 0.0,
+          "pass": true
+        }
+      ],
+      "all_math_checks_pass": true,
+      "coincident_section_vertices": [
+        {
+          "section_id": "td_q",
+          "vertex_index": 0,
+          "subentity_id": "td_q::vertex:0",
+          "subentity_default_label": "Đỉnh 1",
+          "coincides_with_named_points": [
+            "M"
+          ]
+        },
+        {
+          "section_id": "td_q",
+          "vertex_index": 1,
+          "subentity_id": "td_q::vertex:1",
+          "subentity_default_label": "Đỉnh 2",
+          "coincides_with_named_points": []
+        },
+        {
+          "section_id": "td_q",
+          "vertex_index": 2,
+          "subentity_id": "td_q::vertex:2",
+          "subentity_default_label": "Đỉnh 3",
+          "coincides_with_named_points": []
+        },
+        {
+          "section_id": "td_q",
+          "vertex_index": 3,
+          "subentity_id": "td_q::vertex:3",
+          "subentity_default_label": "Đỉnh 4",
+          "coincides_with_named_points": [
+            "H1"
+          ]
+        }
+      ],
+      "auxiliary_lifecycle": [
+        {
+          "object_id": "H",
+          "type": "point3",
+          "producer": "construct_point.translate",
+          "dependents": [
+            "mp_td_q"
+          ],
+          "xongTai_step": 10,
+          "final_step_index": 16,
+          "hidden_at_final_step_when_aux_false": true,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        },
+        {
+          "object_id": "H1",
+          "type": "point3",
+          "producer": "construct_point.translate",
+          "dependents": [
+            "mp_td_q"
+          ],
+          "xongTai_step": 10,
+          "final_step_index": 16,
+          "hidden_at_final_step_when_aux_false": true,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        }
+      ]
+    },
+    {
+      "case_id": "two-line-cuboid",
+      "family_group": "G3_G4_TWO_LINE_PLANE_SECTION",
+      "source_path": "docs/evaluation/geometry/runs/pedagogical-construction-sequencing/visual/scenes.json",
+      "source_file_sha256": "09ca4b4e434d3c11036c0bf2f132459c94a6e73387bae219782e2778140f3d35",
+      "scene_sha256": "049cfdc4ba5e40b7824deacc14b02e02506b357c2b39af390a70a8e892c8f1ac",
+      "route_kind": "HYBRID_FACT_ROUTE",
+      "harness_query": "src=sequencing&i=2",
+      "counts": {
+        "objects_total": 23,
+        "points": 11,
+        "solids": 1,
+        "lines": 0,
+        "segments": 4,
+        "planes": 1,
+        "sections": 1,
+        "quantities": 1,
+        "raw_steps": 17
+      },
+      "solid_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "finite_scene_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "diag": 1.732051
+      },
+      "math_checks": [
+        {
+          "check": "section_planarity:td_q",
+          "vertex_count": 4,
+          "plane_id": "mp_td_q",
+          "max_plane_distance_error": 0.0,
+          "pass": true
+        }
+      ],
+      "all_math_checks_pass": true,
+      "coincident_section_vertices": [
+        {
+          "section_id": "td_q",
+          "vertex_index": 0,
+          "subentity_id": "td_q::vertex:0",
+          "subentity_default_label": "Đỉnh 1",
+          "coincides_with_named_points": [
+            "M"
+          ]
+        },
+        {
+          "section_id": "td_q",
+          "vertex_index": 1,
+          "subentity_id": "td_q::vertex:1",
+          "subentity_default_label": "Đỉnh 2",
+          "coincides_with_named_points": [
+            "H"
+          ]
+        },
+        {
+          "section_id": "td_q",
+          "vertex_index": 2,
+          "subentity_id": "td_q::vertex:2",
+          "subentity_default_label": "Đỉnh 3",
+          "coincides_with_named_points": []
+        },
+        {
+          "section_id": "td_q",
+          "vertex_index": 3,
+          "subentity_id": "td_q::vertex:3",
+          "subentity_default_label": "Đỉnh 4",
+          "coincides_with_named_points": [
+            "H1"
+          ]
+        }
+      ],
+      "auxiliary_lifecycle": [
+        {
+          "object_id": "H",
+          "type": "point3",
+          "producer": "construct_point.translate",
+          "dependents": [
+            "mp_td_q"
+          ],
+          "xongTai_step": 10,
+          "final_step_index": 16,
+          "hidden_at_final_step_when_aux_false": true,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        },
+        {
+          "object_id": "H1",
+          "type": "point3",
+          "producer": "construct_point.translate",
+          "dependents": [
+            "mp_td_q"
+          ],
+          "xongTai_step": 10,
+          "final_step_index": 16,
+          "hidden_at_final_step_when_aux_false": true,
+          "is_perpendicular_witness_target": false,
+          "causes_orphan_witness_in_product_default": false
+        }
+      ]
+    },
+    {
+      "case_id": "rectangular_pyramid_positive",
+      "family_group": "G1_BASIC_SOLID",
+      "source_path": "docs/evaluation/geometry/runs/w18-binding-focus/inputs/fixtures/rectangular_pyramid_positive.json",
+      "source_file_sha256": "17f1e0aa9f0c04f134de904ef6e5c44aa0701a24c663dbe4bb9b4868720a8a02",
+      "scene_sha256": "5a1915f50636d7a8a63f38f0ce7b9a6dd24a8fe5c474f0ffbb51b102a026795d",
+      "route_kind": "PRODUCT_ENVELOPE_FIXTURE",
+      "harness_query": null,
+      "counts": {
+        "objects_total": 17,
+        "points": 5,
+        "solids": 1,
+        "lines": 0,
+        "segments": 4,
+        "planes": 0,
+        "sections": 0,
+        "quantities": 6,
+        "raw_steps": 8
+      },
+      "solid_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          3.0,
+          4.0,
+          6.0
+        ],
+        "diag": 7.81025
+      },
+      "finite_scene_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          3.0,
+          4.0,
+          6.0
+        ],
+        "diag": 7.81025
+      },
+      "math_checks": [],
+      "all_math_checks_pass": true,
+      "coincident_section_vertices": [],
+      "auxiliary_lifecycle": []
+    },
+    {
+      "case_id": "p1_chop_thiet_dien_khoang_cach",
+      "family_group": "G2_G3_G4_PRODUCT_SECTION_DISTANCE",
+      "source_path": "docs/evaluation/geometry/product-ui-result-rendering/fixtures/p1_chop_thiet_dien_khoang_cach.json",
+      "source_file_sha256": "c0f1ea8f018ba5bdb5f47abafb27a68822eb3e1e7aaa698dd4c61b41e15c91f4",
+      "scene_sha256": "829f70b2da93d2bd4ab2467d70c58b4b9f01e69d83a5b429bb053233872c9f01",
+      "route_kind": "PRODUCT_ENVELOPE_FIXTURE",
+      "harness_query": null,
+      "counts": {
+        "objects_total": 13,
+        "points": 5,
+        "solids": 1,
+        "lines": 1,
+        "segments": 0,
+        "planes": 1,
+        "sections": 1,
+        "quantities": 3,
+        "raw_steps": 0
+      },
+      "solid_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          6.0,
+          6.0,
+          6.0
+        ],
+        "diag": 10.392305
+      },
+      "finite_scene_bbox_3d": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          6.0,
+          6.0,
+          6.0
+        ],
+        "diag": 10.392305
+      },
+      "math_checks": [
+        {
+          "check": "section_planarity:T",
+          "vertex_count": 4,
+          "plane_id": "alpha_plane",
+          "max_plane_distance_error": 0.0,
+          "pass": true
+        }
+      ],
+      "all_math_checks_pass": true,
+      "coincident_section_vertices": [
+        {
+          "section_id": "T",
+          "vertex_index": 0,
+          "subentity_id": "T::vertex:0",
+          "subentity_default_label": "Đỉnh 1",
+          "coincides_with_named_points": []
+        },
+        {
+          "section_id": "T",
+          "vertex_index": 1,
+          "subentity_id": "T::vertex:1",
+          "subentity_default_label": "Đỉnh 2",
+          "coincides_with_named_points": []
+        },
+        {
+          "section_id": "T",
+          "vertex_index": 2,
+          "subentity_id": "T::vertex:2",
+          "subentity_default_label": "Đỉnh 3",
+          "coincides_with_named_points": []
+        },
+        {
+          "section_id": "T",
+          "vertex_index": 3,
+          "subentity_id": "T::vertex:3",
+          "subentity_default_label": "Đỉnh 4",
+          "coincides_with_named_points": []
+        }
+      ],
+      "auxiliary_lifecycle": []
+    }
+  ]
+}

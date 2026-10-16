@@ -6,7 +6,8 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import type { Scene3D } from "./scene3d-model";
-import { anchorOfGeometryStep, geometryStepCount } from "./scene3d-model";
+import { anchorOfGeometryStep, geometryStepCount, objectsAt } from "./scene3d-model";
+import { withSubEntities } from "./scene3d-subentities";
 import { auxiliaryHiddenAt, auxiliaryObjects, geometryStepGroups } from "./scene3d-auxiliary";
 
 const W1 = join(__dirname, "../../../../../docs/evaluation/geometry/runs/regular-square-pyramid-w01/inputs/fixtures");
@@ -62,4 +63,49 @@ describe("hình phụ", () => {
     expect(phang).toEqual([...Array(geometryStepCount(s)).keys()]);
     expect(geometryStepGroups(canh("rectangular_pyramid_positive")).every((m) => m.loai === "buoc")).toBe(true);
   });
+
+  it("FINDING-B2: đường thẳng mang chân đường vuông góc (`gt_g`, `derived_H_line`) KHÔNG tự ẩn ở bước cuối khi `aux=0`, còn hai mặt phẳng dựng giao tuyến (`mp1_gt_g`, `mp2_gt_g`) ẩn sau khi có `gt_g`", () => {
+    const rb = JSON.parse(readFileSync(
+      join(__dirname, "../../../../../docs/evaluation/geometry/runs/source-bound-result-planning/visual/scenes.json"),
+      "utf8",
+    )) as { id: string; scene: Scene3D }[];
+    const dlp = rb.find((x) => x.id === "derived-line-pyramid")!.scene;
+    const cuoiDlp = anchorOfGeometryStep(dlp, geometryStepCount(dlp) - 1);
+    const anDlp = auxiliaryHiddenAt(dlp, cuoiDlp, false, null);
+    expect(anDlp.has("gt_g")).toBe(false);
+    expect(anDlp.has("mp1_gt_g")).toBe(true);
+    expect(anDlp.has("mp2_gt_g")).toBe(true);
+
+    const gd = JSON.parse(readFileSync(
+      join(__dirname, "../../../../../docs/evaluation/geometry/runs/goal-directed-section-planning/visual/scenes.json"),
+      "utf8",
+    )) as { id: string; scene: Scene3D }[];
+    const foot = gd.find((x) => x.id === "aux-foot-S-to-BD")!.scene;
+    const cuoiFoot = anchorOfGeometryStep(foot, geometryStepCount(foot) - 1);
+    expect(auxiliaryHiddenAt(foot, cuoiFoot, false, null).has("derived_H_line")).toBe(false);
+  });
+
+  it("W2: điểm tịnh tiến phụ ngoài khối (`H`, `H1` trong `two-line-prism`) hiện tới khi dựng xong mặt cắt `(P)` rồi ẩn ở bước cuối khi `aux=0`", () => {
+    const seq = JSON.parse(readFileSync(
+      join(__dirname, "../../../../../docs/evaluation/geometry/runs/pedagogical-construction-sequencing/visual/scenes.json"),
+      "utf8",
+    )) as { id: string; scene: Scene3D }[];
+    const tlp = seq.find((x) => x.id === "two-line-prism")!.scene;
+    const buocMp = buocCuaVat(tlp, "mp_td_q");
+    const phu = auxiliaryObjects(tlp);
+    expect(phu.get("H")).toEqual({ loai: "dung", xongTai: buocMp });
+    expect(phu.get("H1")).toEqual({ loai: "dung", xongTai: buocMp });
+    expect(phu.has("M")).toBe(false);
+    expect(auxiliaryHiddenAt(tlp, buocMp, false, null).has("H")).toBe(false);
+    expect(auxiliaryHiddenAt(tlp, buocMp, false, null).has("H1")).toBe(false);
+    const cuoi = anchorOfGeometryStep(tlp, geometryStepCount(tlp) - 1);
+    expect(auxiliaryHiddenAt(tlp, cuoi, false, null).has("H")).toBe(true);
+    expect(auxiliaryHiddenAt(tlp, cuoi, false, null).has("H1")).toBe(true);
+    expect(auxiliaryHiddenAt(tlp, cuoi, true, null).has("H")).toBe(false);
+    expect(auxiliaryHiddenAt(tlp, cuoi, false, "mp_td_q").has("H")).toBe(false);
+    const tlpSub = withSubEntities(tlp, objectsAt);
+    expect(auxiliaryHiddenAt(tlpSub, cuoi, false, null).has("H")).toBe(true);
+    expect(auxiliaryHiddenAt(tlpSub, cuoi, false, null).has("H1")).toBe(true);
+  });
 });
+

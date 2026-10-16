@@ -124,4 +124,22 @@ describe("nhãn chồng nhau: giữ cái ưu tiên cao", () => {
     ];
     expect([...locNhanChongNhau(a)]).toEqual([...locNhanChongNhau([...a].reverse())]);
   });
+
+  it("W3: hai điểm hiện tại cùng toạ độ (`B` đề cho và chân vuông góc `H` tại `(1,0,0)`) gộp ký hiệu thành `B ≡ H` để không mất tên đỉnh", async () => {
+    const P = await import("./scene3d-presentation") as unknown as {
+      kyHieuDiem?: (
+        diem: { id: string; notation?: string | null; origin: "free" | "derived"; xyz?: [string, string, string] }[],
+      ) => Map<string, string>;
+    };
+    expect(typeof P.kyHieuDiem).toBe("function");
+    const m = P.kyHieuDiem!([
+      { id: "H", notation: "H", origin: "derived", xyz: ["1", "0", "0"] },
+      { id: "B", notation: "B", origin: "free", xyz: ["1", "0", "0"] },
+      { id: "M", notation: "M", origin: "derived", xyz: ["1/2", "1/2", "0"] },
+    ]);
+    expect(m.get("B")).toBe("B ≡ H");
+    expect(m.get("H")).toBe("B ≡ H");
+    expect(m.get("M")).toBe("M");
+  });
 });
+

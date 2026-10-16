@@ -42,14 +42,20 @@ function nghichChuyenVi(t: M3): M3 {
 
 const xau = (x: number): Exact => `${Math.round(x * 1e9)}/1000000000`;
 
+const _daVe = new WeakSet<Scene3D>();
+
 /** Cảnh với toạ độ THẾ GIỚI — chính `scene` khi không có metric khung (không sao chép, không đổi một byte). */
 export function veKhongGian(scene: Scene3D): Scene3D {
+  if (_daVe.has(scene)) return scene;
   const t = maTranKhung(scene);
   if (!t) return scene;
   const tn = nghichChuyenVi(t);
   const d = (v: ExactVec3): ExactVec3 => nhan(t, toVec3(v)).map(xau) as ExactVec3;
   const n = (v: ExactVec3): ExactVec3 => nhan(tn, toVec3(v)).map(xau) as ExactVec3;
   const ds = (vs?: ExactVec3[]) => vs?.map(d);
+  const nhanChung = (w: NonNullable<NonNullable<SceneObject["annotation"]>["witness"]>) => ({
+    ...w, foot: d(w.foot), marker: { u: d(w.marker.u), v: d(w.marker.v) },
+  });
   const vat = (o: SceneObject): SceneObject => {
     const r: SceneObject = { ...o };
     for (const k of ["xyz", "point", "point_a", "point_b", "anchor", "rim_point", "center", "direction", "major_dir",
@@ -62,13 +68,17 @@ export function veKhongGian(scene: Scene3D): Scene3D {
     if (o.vertices) r.vertices = ds(o.vertices);
     if (o.polygon) r.polygon = ds(o.polygon);
     if (o.steps) r.steps = o.steps.map((s) => ({ ...s, a: d(s.a), b: d(s.b) }));
-    const w = o.annotation?.witness;
-    if (w && o.annotation) {
-      r.annotation = { ...o.annotation, witness: { ...w, foot: d(w.foot), marker: { u: d(w.marker.u), v: d(w.marker.v) } } };
+    if (o.annotation?.witness) {
+      r.annotation = { ...o.annotation, witness: nhanChung(o.annotation.witness) };
+    }
+    if (o.perpendicular_witness) {
+      r.perpendicular_witness = nhanChung(o.perpendicular_witness);
     }
     return r;
   };
-  return { ...scene, objects: scene.objects.map(vat) };
+  const ra: Scene3D = { ...scene, objects: scene.objects.map(vat) };
+  _daVe.add(ra);
+  return ra;
 }
 
 /** T dưới dạng ma trận 4×4 cột-chính (cho ảnh chụp camera của bộ đo: model = xoay hiển thị · T). */
