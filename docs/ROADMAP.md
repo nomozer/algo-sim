@@ -8,6 +8,12 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-17, grounding continuation:** the user authorized completion of the interrupted semantic/source reliability
+slice. Product `94b3437b`; independent review clear, offline false serves closed on the registered cases; finish detached
+T3 then request the concrete integration decision. No G16/G17 or Hybrid enablement. Next research proposal: separately
+preregistered/budgeted independent extraction evaluation targeting remaining construction/reference false refusals.
+Evidence: [`hybrid-semantic-grounding-reliability`](evaluation/geometry/runs/hybrid-semantic-grounding-reliability/report.md).
+
 **2026-10-16, stacked integration:** result binding, Scene3D W1–W3, Function Discovery and Generalized Goal Entry are on `main`
 (`bd4d3f59`, user GO, record [`integration.md`](evaluation/geometry/runs/generalized-goal-entry/integration.md)). Next only: the
 user's research priority. Proposal from the runs: semantic-understanding/grounding evaluation design and closure of the

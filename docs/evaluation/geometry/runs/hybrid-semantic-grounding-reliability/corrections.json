@@ -1,0 +1,13 @@
+{
+  "schema": "GROUNDING_PREREGISTRATION_DEVIATIONS/1",
+  "date": "2026-10-17",
+  "frozen_inputs_unchanged": true,
+  "deviations": [
+    {"item": "independent wording count", "registered": "40 authored items", "actual": "40 sentences, 41 extraction cases: U00–U39 plus U33n, a negated near-miss extraction of the existing U33 sentence; all already present at 2e08922a", "impact": "99 total extraction cases, not 98; no extra independent sentence"},
+    {"item": "M2 implementation", "registered": "source equality or source-declared coplanar solid face in _cung_mat", "actual": "complete label-set containment plus exact nondegeneracy and coplanarity of source and call groups in Engine", "impact": "no arbitrary three-label overlap; alternate non-contained coplanar groups conservatively refuse; geometry is checked in the source-bound accepted deterministic figure"},
+    {"item": "E05", "registered": "REQUEST_NOT_ANSWERED", "actual": "NOT_ASKED_IN_SOURCE", "impact": "wrong-code refusal counted; unsupported quantity not in shared ask inventory; original strict xfail preserved"},
+    {"item": "E08", "registered": "source unknown-label refusal", "actual": "UNDERDETERMINED_POINT", "impact": "wrong-code refusal counted; original labels untouched"},
+    {"item": "unseen final protocol", "registered": "BASE and final candidate only", "actual": "first final at 93c7bc97, then historical-derived coverage fix and remeasurement at 94b3437b", "impact": "not a fresh final holdout; no product change motivated by unseen outcomes; same 99-case results; use DEVELOPMENT_NOT_HELD_OUT for inference, separate-author wording only"},
+    {"item": "historical multi-ask controls", "registered": "retain prior outcomes except source-unlicensed rows", "actual": "six test controls exposed partial-success expectations; incomplete extraction now explicitly refuses, complete extraction supplied for positives; suy-ra remains goal-clause refusal and explicit tính control preserves numeric check", "impact": "frozen historical corpora/oracle unchanged; original source/primary numeric assertions retained; xfail markers unchanged"}
+  ]
+}

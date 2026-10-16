@@ -4,14 +4,14 @@
 
 - **status:** PARTIALLY_IMPLEMENTED — run `generalized-goal-entry`, length goal through Registry metadata; described midpoint → named point, experimental centroid producer.
 - **limits:** flat point operands, supported descriptor predicates and length-specific source/exact verifier. Area/volume/angle entry and arbitrary contracts are not implied. Provider extraction of these field combinations remains NOT_MEASURED; prompt and schema unchanged.
-- **conservative false refusals (handoff probes):** "… bằng bao nhiêu?" and "đoạn nối A với trung điểm của SC" are refused (closed sentence / one phrase order). Inherited presentation: the asked segment is not drawn by default and the narration says "khoảng cách" for a length, as on the named route-D length.
+- **conservative false refusals (handoff probes):** the described-length "… bằng bao nhiêu?" and reversed "đoạn nối A với trung điểm của SC" forms are fixed on research product `94b3437b` (run `hybrid-semantic-grounding-reliability`); `chính giữa`, `bao xa` and construction wording remain limited. Inherited presentation: the asked segment is not drawn by default and the narration says "khoảng cách" for a length, as on the named route-D length.
 - **certificate blocker fixed:** forged effect-chain `labels` could mislabel original vertices as auxiliary; the source gate now compares labels with actual fresh outputs.
 - **Scene3D review:** W1–W3 independently reviewed PASS_WITH_FINDINGS. Inherited hidden-source perpendicular witness fixed by this run; historical evidence interpretation corrected append-only in `scene-corrections.md`. Human visual acceptance remains NOT_APPROVED.
 - **enablement:** existing named-distance source grammar residuals and cube line-ref grammar remain OPEN. Hybrid product NO-GO.
 
 ### ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE
 
-- **status:** OPEN — found 2026-10-16 (run `goal-directed-function-discovery`, deviation D-1); not fixed.
+- **status:** RESOLVED_ON_RESEARCH_BRANCH — product `94b3437b`, run `hybrid-semantic-grounding-reliability` (integration decision pending). Cube result-line positive serves and parallel-plane negative reaches its registered refusal. Numeric/symbolic `2a` controls verified; `2a√2` remains a reused-reader limitation. Historical description below records the original failure.
 - **description:** Every route-B problem that uses a source result line (`line_ref`) must pass the closed premise grammar
   `registry._kiem_nguon_dong`. Its solid forms read "hình chóp", "lăng trụ đứng", "hình hộp chữ nhật" — not "hình lập phương".
   A cube problem with "Tìm giao tuyến …" is therefore refused `SOURCE_PREMISE_UNREAD` before any geometry is built.
@@ -174,6 +174,13 @@
 - **default_switch_blocker:** NO
 
 ### ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES
+
+- **2026-10-17 update (research product `94b3437b`, integration pending):** the registered four-label plane, omitted
+  target/second request/follow-up false serves are closed; independent review also closed shared-collinear-label and
+  extra-call-label plane mismatches and source-spelling bypasses. Offline99:13→0 wrong serves,21→16 false refusals;
+  this is bounded authored-fact evidence, not a complete-language guarantee. Separate-author40 sentences/41 mappings
+  are not human held-out. See run `hybrid-semantic-grounding-reliability/report.md`; remaining wording/unsupported
+  quantities and the existing residual policies keep Hybrid product enablement NO-GO.
 
 - **2026-10-16 update (independent review of `goal-directed-function-discovery`, IMP-3):** distance asks, named point and
   described point alike, still serve when the target group shares three labels with a different set ("đến (SABC)" for

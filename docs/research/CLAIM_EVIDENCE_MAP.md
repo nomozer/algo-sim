@@ -28,6 +28,13 @@
    **sản phẩm** do `backend/app/simulation/product_capability.py` quyết (khối cong, khối lõm, thiết diện xiên:
    `foundation_only`). Một họ chỉ "được hỗ trợ" khi đi trọn đề → analyze → chương trình → các cổng → kernel → cảnh.
 
+Current offline grounding research (2026-10-17, product `94b3437b`):
+[`hybrid-semantic-grounding-reliability`](../evaluation/geometry/runs/hybrid-semantic-grounding-reliability/report.md)
+measures source certification on authored Typed Facts:99 extraction cases, wrong serves13→0, false refusals21→16;
+32/32 accepted answers source-licensed and exact, recall32/48. Development58 plus40 independently authored sentences
+mapped by implementer into41 cases; no human held-out, no live extraction/intent accuracy. Historical174 answers and
+plan statistics unchanged, two intentional refusal-code changes. Level **MEASURED (offline)**; Hybrid enablement NO-GO.
+
 ## 1. Bốn mức
 
 | mức | nghĩa |

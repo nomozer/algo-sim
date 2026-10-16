@@ -1,0 +1,35 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-semantic-grounding-reliability",
+  "task": "scene3d-visual-correctness",
+  "corrects": "docs/evaluation/geometry/runs/scene3d-visual-correctness/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "57c7f5dbedaa7b21c66345fa4d6f0e1ea461a425293d44035b5678e12d76f96e",
+  "current_candidate_source_commit": "94b3437bfbb287a10670348ea1658b53d513c340",
+  "current_product_commit": "e460cfac24dbb10f5987a55969b1ac5087b7c6d3",
+  "previous_candidate_hash": "43e877ed49e409e48504737edcf010b0b8cad395bb93ad2c0494985347a40ccf",
+  "previous_product_commit": "289007a40834045def08fe8b1783dbfdb3919190",
+  "locked_ab_candidate_hash": "12da4768495572d7b4d04af733edf0c787337a6ab486ce2cae42f7c94bbbce52",
+  "diverged": true,
+  "measured_system_paths_changed": true,
+  "measured_paths_changed": [
+    "backend/app/ai/function_route.py",
+    "backend/app/simulation/geometry_functions/engine.py"
+  ],
+  "reason": "Source request completeness, exact plane source/call validation, alternate length wording and cube premise acceptance on research route D.",
+  "historical_effect": "Answers, outcomes and refusal codes of route D are unchanged (targets only change scene metadata: annotation role, display_group, FINAL_RESULT subject); historical results keep their source candidates.",
+  "cache_version": 125,
+  "cache_decision": "no bump: route D is not on /api/analyze",
+  "freeze": "clean detached worktree at e460cfac, --verify MATCH there",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements retain their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "integration branch integration/scene3d-visual-correctness; user decision pending",
+  "push": "NONE: not authorized",
+  "current_candidate_frozen_at": "94b3437bfbb287a10670348ea1658b53d513c340",
+  "current_candidate_note": "Frozen from clean detached candidate; 110 measured files; cache125 and LLM_ONLY unchanged. Historical candidate receipts preserved.",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+}

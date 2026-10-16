@@ -1,8 +1,20 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL — Hybrid semantic grounding reliability, 2026-10-17
+
+CANONICAL_NEXT_ACTION = HYBRID_SEMANTIC_GROUNDING_FINAL_VERIFICATION
+
+Resumed Claude's interrupted work on `research/hybrid-semantic-grounding-reliability`; preserved 8 working files outside
+the repository before edits. Final product `94b3437b`; clean refreeze candidate `57c7f5db…` (110 files), MATCH. Offline
+99-case replay: 13→0 wrong serves, 21→16 false refusals; historical 174 rows preserve answers/plan statistics, with two
+declared refusal-code changes. Independent review delta has no remaining critical/important finding. Full geometry/T3
+still being verified in this checkpoint; integration requires user GO. cache125/LLM_ONLY/Hybrid NO-GO, 0 live calls;
+no human-held-out or live Vietnamese-understanding claim. Single handoff:
+[`report.md`](evaluation/geometry/runs/hybrid-semantic-grounding-reliability/report.md).
+
 ## INTEGRATED ON `main` — Scene3D visual correctness (Gemini review + CONTRACT-BE-1), 2026-10-17
 
-CANONICAL_NEXT_ACTION = POST_SCENE3D_INTEGRATION_RESEARCH_PRIORITY_DECISION
+Next action at that time (superseded by the grounding continuation above): POST_SCENE3D_INTEGRATION_RESEARCH_PRIORITY_DECISION
 
 **Integration (user GO in session, 2026-10-17):** `main` fast-forwarded `6d8ead99` → `ee9689e6`, pushed without force;
 integration and Gemini branches deleted locally, Gemini worktree removed; record

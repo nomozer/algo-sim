@@ -1,0 +1,278 @@
+{
+  "schema": "GROUNDING_EVALUATION_RECONCILIATION/1",
+  "product_commit": "94b3437b",
+  "model_calls": 0,
+  "baseline_original_reproduced_identical": true,
+  "oracle_recomputed_match": true,
+  "oracle_licensed_cases": 48,
+  "registered_input_integrity": [
+    {
+      "path": "preregistration.md",
+      "sha256_lf": "dcca319090d317450c496ea223431489567ae769ce4049952884f162f4e1d3c1",
+      "matches_preregistration_commit": true
+    },
+    {
+      "path": "corpus_build.py",
+      "sha256_lf": "9067a67f8f8141461d79431fb6c1c64330013a231a2cdf1654bb5887b7c27dd0",
+      "matches_preregistration_commit": true
+    },
+    {
+      "path": "corpus.json",
+      "sha256_lf": "4bd9c4192496f6422af1ff23a1994ab44aad688df1f1937f44879b0aa19382c6",
+      "matches_preregistration_commit": true
+    },
+    {
+      "path": "oracle.py",
+      "sha256_lf": "6c642d7210d3ac4692e28fd0714392f7c61320a8dd1cfd582362b14b8577da4f",
+      "matches_preregistration_commit": true
+    },
+    {
+      "path": "oracle.json",
+      "sha256_lf": "f2d72c0fa75556a5e7a3ab98f5239e9168b229cb60b3747ce2bab21994b23980",
+      "matches_preregistration_commit": true
+    },
+    {
+      "path": "unseen/authored.json",
+      "sha256_lf": "8eb393cf3d9590f7bd2dc546fcdcdc8a85109ffad340116d955182b890b4c672",
+      "matches_preregistration_commit": true
+    },
+    {
+      "path": "unseen/build.py",
+      "sha256_lf": "4c3c0b8d6d1a16c79efdd8685d5bbddfacbbdbe2e1835464e7b23c89345bb537",
+      "matches_preregistration_commit": true
+    },
+    {
+      "path": "unseen/cases.json",
+      "sha256_lf": "fc47556858bdd142f7b5e1c562b9a515153098999d2a9685750d619b1b06bffb",
+      "matches_preregistration_commit": true
+    }
+  ],
+  "development_cases": 58,
+  "independently_authored_sentences": 40,
+  "independent_wording_extractions": 41,
+  "extra_extraction_id": "U33n",
+  "independence": "DEVELOPMENT_NOT_HELD_OUT; separate-author wording, implementer mapping, repeated final measurement; no human held-out claim",
+  "base": {
+    "all": {
+      "CORRECT_SERVED": 27,
+      "FALSE_REFUSAL": 21,
+      "CORRECT_REFUSAL": 34,
+      "WRONG_SERVED": 13,
+      "WRONG_CODE_REFUSAL": 4
+    },
+    "by_group": {
+      "A": {
+        "CORRECT_SERVED": 9,
+        "FALSE_REFUSAL": 5
+      },
+      "B": {
+        "CORRECT_REFUSAL": 5,
+        "FALSE_REFUSAL": 1,
+        "CORRECT_SERVED": 1
+      },
+      "C": {
+        "WRONG_SERVED": 3,
+        "CORRECT_SERVED": 5,
+        "CORRECT_REFUSAL": 2,
+        "FALSE_REFUSAL": 1,
+        "WRONG_CODE_REFUSAL": 1
+      },
+      "D": {
+        "WRONG_SERVED": 8,
+        "FALSE_REFUSAL": 1,
+        "CORRECT_SERVED": 5,
+        "WRONG_CODE_REFUSAL": 1
+      },
+      "E": {
+        "CORRECT_REFUSAL": 8,
+        "WRONG_CODE_REFUSAL": 2
+      },
+      "F": {
+        "CORRECT_SERVED": 7,
+        "FALSE_REFUSAL": 13,
+        "CORRECT_REFUSAL": 19,
+        "WRONG_SERVED": 2
+      }
+    },
+    "by_mechanism": {
+      "M1": {
+        "WRONG_SERVED": 8,
+        "FALSE_REFUSAL": 1,
+        "CORRECT_SERVED": 4,
+        "WRONG_CODE_REFUSAL": 2
+      },
+      "M2": {
+        "WRONG_SERVED": 3,
+        "CORRECT_SERVED": 4
+      },
+      "M3": {
+        "FALSE_REFUSAL": 3
+      },
+      "M4": {
+        "FALSE_REFUSAL": 1,
+        "WRONG_CODE_REFUSAL": 1
+      },
+      "none": {
+        "CORRECT_SERVED": 19,
+        "FALSE_REFUSAL": 16,
+        "CORRECT_REFUSAL": 34,
+        "WRONG_CODE_REFUSAL": 1,
+        "WRONG_SERVED": 2
+      }
+    },
+    "source_certification": {
+      "accepted_licensed": 27,
+      "accepted_unlicensed": 13,
+      "refused_licensed": 21,
+      "precision": "27/40",
+      "recall": "27/48"
+    },
+    "multi_goal": {
+      "cases": 26,
+      "silent_omission": 9,
+      "complete": 8,
+      "false_refusal": 7
+    },
+    "schema_gap_items": {
+      "cases": 11,
+      "wrong_served": 0
+    },
+    "not_measured_offline": [
+      "intent accuracy",
+      "entity/reference grounding accuracy of an extractor",
+      "goal interpretation accuracy of an extractor"
+    ]
+  },
+  "final": {
+    "all": {
+      "CORRECT_SERVED": 32,
+      "FALSE_REFUSAL": 16,
+      "CORRECT_REFUSAL": 49,
+      "WRONG_CODE_REFUSAL": 2
+    },
+    "by_group": {
+      "A": {
+        "CORRECT_SERVED": 12,
+        "FALSE_REFUSAL": 2
+      },
+      "B": {
+        "CORRECT_REFUSAL": 5,
+        "FALSE_REFUSAL": 1,
+        "CORRECT_SERVED": 1
+      },
+      "C": {
+        "CORRECT_REFUSAL": 6,
+        "CORRECT_SERVED": 6
+      },
+      "D": {
+        "CORRECT_REFUSAL": 9,
+        "CORRECT_SERVED": 6
+      },
+      "E": {
+        "CORRECT_REFUSAL": 8,
+        "WRONG_CODE_REFUSAL": 2
+      },
+      "F": {
+        "CORRECT_SERVED": 7,
+        "FALSE_REFUSAL": 13,
+        "CORRECT_REFUSAL": 21
+      }
+    },
+    "by_mechanism": {
+      "M1": {
+        "CORRECT_REFUSAL": 9,
+        "CORRECT_SERVED": 5,
+        "WRONG_CODE_REFUSAL": 1
+      },
+      "M2": {
+        "CORRECT_REFUSAL": 3,
+        "CORRECT_SERVED": 4
+      },
+      "M3": {
+        "CORRECT_SERVED": 3
+      },
+      "M4": {
+        "CORRECT_SERVED": 1,
+        "CORRECT_REFUSAL": 1
+      },
+      "none": {
+        "CORRECT_SERVED": 19,
+        "FALSE_REFUSAL": 16,
+        "CORRECT_REFUSAL": 36,
+        "WRONG_CODE_REFUSAL": 1
+      }
+    },
+    "source_certification": {
+      "accepted_licensed": 32,
+      "accepted_unlicensed": 0,
+      "refused_licensed": 16,
+      "precision": "32/32",
+      "recall": "32/48"
+    },
+    "multi_goal": {
+      "cases": 26,
+      "silent_omission": 0,
+      "complete": 20,
+      "false_refusal": 5
+    },
+    "schema_gap_items": {
+      "cases": 11,
+      "wrong_served": 0
+    },
+    "not_measured_offline": [
+      "intent accuracy",
+      "entity/reference grounding accuracy of an extractor",
+      "goal interpretation accuracy of an extractor"
+    ]
+  },
+  "splits": {
+    "development": {
+      "CORRECT_SERVED": 25,
+      "FALSE_REFUSAL": 3,
+      "CORRECT_REFUSAL": 28,
+      "WRONG_CODE_REFUSAL": 2
+    },
+    "independent_wording": {
+      "CORRECT_SERVED": 7,
+      "FALSE_REFUSAL": 13,
+      "CORRECT_REFUSAL": 21
+    }
+  },
+  "historical": {
+    "cases": 174,
+    "identical_status_code_answers": 172,
+    "changes": [
+      {
+        "corpus": "new/negative",
+        "id": "parallel-result-line",
+        "before": {
+          "status": "REFUSED",
+          "code": "SOURCE_PREMISE_UNREAD",
+          "answers": {}
+        },
+        "after": {
+          "status": "REFUSED",
+          "code": "PARALLEL_NO_INTERSECTION",
+          "answers": {}
+        }
+      },
+      {
+        "corpus": "goal/negative",
+        "id": "unread-second-ask",
+        "before": {
+          "status": "REFUSED",
+          "code": "QUESTION_CONTEXT_UNSUPPORTED",
+          "answers": {}
+        },
+        "after": {
+          "status": "REFUSED",
+          "code": "REQUEST_NOT_ANSWERED",
+          "answers": {}
+        }
+      }
+    ],
+    "planner_statistics_identical": true
+  },
+  "final_sha256_lf": "d54549b92fb1f987b146e33e40d2f62fae4f8d8bfa3bc457a90b69da11206438",
+  "historical_sha256_lf": "50ff10b168b3b8db2f2b37608ee09244a4ee8b430c4c0617b62099e1dabfc370"
+}

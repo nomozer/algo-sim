@@ -1,0 +1,1444 @@
+{
+ "label": "FINAL",
+ "head": "93c7bc97e322752d26b6427cb8beb3bd6c59a07e",
+ "product_dirty": false,
+ "model_calls": 0,
+ "summary": {
+  "all": {
+   "CORRECT_SERVED": 32,
+   "FALSE_REFUSAL": 16,
+   "CORRECT_REFUSAL": 49,
+   "WRONG_CODE_REFUSAL": 2
+  },
+  "by_group": {
+   "A": {
+    "CORRECT_SERVED": 12,
+    "FALSE_REFUSAL": 2
+   },
+   "B": {
+    "CORRECT_REFUSAL": 5,
+    "FALSE_REFUSAL": 1,
+    "CORRECT_SERVED": 1
+   },
+   "C": {
+    "CORRECT_REFUSAL": 6,
+    "CORRECT_SERVED": 6
+   },
+   "D": {
+    "CORRECT_REFUSAL": 9,
+    "CORRECT_SERVED": 6
+   },
+   "E": {
+    "CORRECT_REFUSAL": 8,
+    "WRONG_CODE_REFUSAL": 2
+   },
+   "F": {
+    "CORRECT_SERVED": 7,
+    "FALSE_REFUSAL": 13,
+    "CORRECT_REFUSAL": 21
+   }
+  },
+  "by_mechanism": {
+   "M1": {
+    "CORRECT_REFUSAL": 9,
+    "CORRECT_SERVED": 5,
+    "WRONG_CODE_REFUSAL": 1
+   },
+   "M2": {
+    "CORRECT_REFUSAL": 3,
+    "CORRECT_SERVED": 4
+   },
+   "M3": {
+    "CORRECT_SERVED": 3
+   },
+   "M4": {
+    "CORRECT_SERVED": 1,
+    "CORRECT_REFUSAL": 1
+   },
+   "none": {
+    "CORRECT_SERVED": 19,
+    "FALSE_REFUSAL": 16,
+    "CORRECT_REFUSAL": 36,
+    "WRONG_CODE_REFUSAL": 1
+   }
+  },
+  "source_certification": {
+   "accepted_licensed": 32,
+   "accepted_unlicensed": 0,
+   "refused_licensed": 16,
+   "precision": "32/32",
+   "recall": "32/48"
+  },
+  "multi_goal": {
+   "cases": 26,
+   "silent_omission": 0,
+   "complete": 20,
+   "false_refusal": 5
+  },
+  "schema_gap_items": {
+   "cases": 11,
+   "wrong_served": 0
+  },
+  "not_measured_offline": [
+   "intent accuracy",
+   "entity/reference grounding accuracy of an extractor",
+   "goal interpretation accuracy of an extractor"
+  ]
+ },
+ "rows": [
+  {
+   "id": "A01-desc-plane-imperative",
+   "group": "A",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "1"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "A02-desc-plane-bao-nhieu",
+   "group": "A",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "1"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "A03-desc-plane-tim-toi-mp",
+   "group": "A",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "1"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "A04-named-midpoint-then-ask",
+   "group": "A",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "1"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "A05-desc-length",
+   "group": "A",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17/2"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "A06-desc-length-reversed",
+   "group": "A",
+   "mechanism": "M3",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17/2"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "A07-desc-length-bao-nhieu",
+   "group": "A",
+   "mechanism": "M3",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17/2"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "A08-desc-length-reversed-bao-nhieu",
+   "group": "A",
+   "mechanism": "M3",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√17/2"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "A09-named-plane",
+   "group": "A",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "2"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "A10-named-plane-bao-nhieu",
+   "group": "A",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "2"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "A11-named-line",
+   "group": "A",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "6√34/17"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "A12-named-line-bao-nhieu",
+   "group": "A",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "6√34/17"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "A13-paraphrase-chinh-giua",
+   "group": "A",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "A14-paraphrase-bao-xa",
+   "group": "A",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "B01-squared-length",
+   "group": "B",
+   "mechanism": "none",
+   "extraction": "drops a modifier",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "B02-twice-distance",
+   "group": "B",
+   "mechanism": "none",
+   "extraction": "drops a modifier",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "B03-segment-not-line",
+   "group": "B",
+   "mechanism": "none",
+   "extraction": "types a segment as a line",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "B04-projection-not-distance",
+   "group": "B",
+   "mechanism": "none",
+   "extraction": "types a projection request as a distance",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "B05-construct-projection",
+   "group": "B",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "B06-define-projection",
+   "group": "B",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 0,
+   "status": "SERVED",
+   "code": null,
+   "answers": {},
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "B07-varying-point",
+   "group": "B",
+   "mechanism": "none",
+   "extraction": "drops a scope modifier",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "C01-four-label-nonplane-desc",
+   "group": "C",
+   "mechanism": "M2",
+   "extraction": "shortens (SABC) to (SAB)",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "C02-four-label-nonplane-named",
+   "group": "C",
+   "mechanism": "M2",
+   "extraction": "shortens (SABC) to (SAB)",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "C03-four-label-base-desc",
+   "group": "C",
+   "mechanism": "M2",
+   "extraction": "names the base by three of its labels",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3/2"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "C04-four-label-base-named",
+   "group": "C",
+   "mechanism": "M2",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "C05-four-label-nonplane-other",
+   "group": "C",
+   "mechanism": "M2",
+   "extraction": "shortens (SACD) to (SAD)",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "C06-wrong-target-plane",
+   "group": "C",
+   "mechanism": "none",
+   "extraction": "wrong plane",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "C07-wrong-described-point",
+   "group": "C",
+   "mechanism": "none",
+   "extraction": "wrong descriptor operands",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "C08-result-line-pyramid",
+   "group": "C",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 2,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√13/2"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "C09-result-line-cube",
+   "group": "C",
+   "mechanism": "M4",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 2,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "√2"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "C10-result-line-cube-parallel",
+   "group": "C",
+   "mechanism": "M4",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "PARALLEL_NO_INTERSECTION",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "C11-cube-lateral-face-four-labels",
+   "group": "C",
+   "mechanism": "M2",
+   "extraction": "names a lateral face by three labels",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "2"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "C12-cube-diagonal-plane-four-labels",
+   "group": "C",
+   "mechanism": "M2",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "0"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "D01-two-asks-one-extracted",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "drops the second request",
+   "expect": "REFUSE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "D02-two-asks-both-extracted",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 2,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "1",
+    "q2": "√17"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "D03-then-volume-one-extracted",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "drops the follow-up request",
+   "expect": "REFUSE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "D04-then-volume-both-extracted",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 2,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "1",
+    "q2": "4"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "D05-next-sentence-volume-one-extracted",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "drops the second sentence",
+   "expect": "REFUSE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "D06-next-sentence-volume-both-extracted",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 2,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "1",
+    "q2": "4"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "D07-named-trailing-object",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "drops a listed object",
+   "expect": "REFUSE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "D08-named-two-asks-one-extracted",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "drops the second request",
+   "expect": "REFUSE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "D09-named-two-asks-both-extracted",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 2,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "2",
+    "q2": "√17"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "D10-length-and-volume-one-extracted",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "drops the second request",
+   "expect": "REFUSE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "D11-length-and-volume-both-extracted",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 2,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "√17",
+    "q2": "4"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "D12-roi-suy-ra-one-extracted",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "drops the follow-up",
+   "expect": "REFUSE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "D13-two-sentences-both-extracted",
+   "group": "D",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 2,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q1": "1",
+    "q2": "3/2"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "D14-two-sentences-one-extracted",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "drops the second sentence",
+   "expect": "REFUSE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "D15-aux-line-and-volume-one-extracted",
+   "group": "D",
+   "mechanism": "M1",
+   "extraction": "drops the second request (auxiliary distance path)",
+   "expect": "REFUSE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "E01-conditional",
+   "group": "E",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "E02-negated",
+   "group": "E",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "NEGATED_CLAUSE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "E03-proof-goal",
+   "group": "E",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "GOAL_CLAUSE_NOT_PREMISE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "E04-rounding",
+   "group": "E",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "E05-unsupported-second-quantity",
+   "group": "E",
+   "mechanism": "M1",
+   "extraction": "drops an unsupported request",
+   "expect": "REFUSE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "WRONG_CODE_REFUSAL",
+   "why": "NOT_ASKED_IN_SOURCE"
+  },
+  {
+   "id": "E06-contradiction",
+   "group": "E",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "E07-quote-not-in-source",
+   "group": "E",
+   "mechanism": "none",
+   "extraction": "invented quote",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "QUOTE_NOT_IN_SOURCE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "E08-unknown-label",
+   "group": "E",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "UNDERDETERMINED_POINT",
+   "answers": {},
+   "class": "WRONG_CODE_REFUSAL",
+   "why": "UNDERDETERMINED_POINT"
+  },
+  {
+   "id": "E09-show-that",
+   "group": "E",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "GOAL_CLAUSE_NOT_PREMISE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "E10-changed-scope-follow-up",
+   "group": "E",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U00",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "6√13/13"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "U01",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "3/2"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "U02",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U03",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U04",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "4"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "U05",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U06",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U07",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "UNKNOWN_LABEL",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U08",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U09",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "UNKNOWN_LABEL",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U10",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "UNKNOWN_LABEL",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U11",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {},
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "U12",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U13",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 2,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q2": "6√13/13",
+    "q1": "√17"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "U14",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U15",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U16",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 3,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U17",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U18",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U19",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 2,
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U20",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U21",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U22",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "UNKNOWN_LABEL",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U23",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "UNKNOWN_LABEL",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U24",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "cos²=8/17"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "U25",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "SERVED",
+   "code": null,
+   "answers": {
+    "q": "6√13/13"
+   },
+   "class": "CORRECT_SERVED",
+   "why": null
+  },
+  {
+   "id": "U26",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U27",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U28",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "NO_VALUE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "PROOF_UNVERIFIABLE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U29",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U30",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U31",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "expect": "NO_VALUE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U32",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "schema_gap",
+   "expect": "NO_VALUE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U33",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "SERVE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "answers": {},
+   "class": "FALSE_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U34",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "UNDERDETERMINED_POINT",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U35",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U36",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U37",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "OUT_OF_SCOPE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U38",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "QUESTION_CONTEXT_UNSUPPORTED",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U39",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "faithful",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "UNDERDETERMINED_POINT",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  },
+  {
+   "id": "U33n",
+   "group": "F",
+   "mechanism": "none",
+   "extraction": "near-miss (negated request typed as asked)",
+   "expect": "REFUSE",
+   "source_requests": 1,
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "answers": {},
+   "class": "CORRECT_REFUSAL",
+   "why": null
+  }
+ ]
+}
