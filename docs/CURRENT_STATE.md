@@ -1,8 +1,13 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL — Generalized Goal Entry, 2026-10-16
+## INTEGRATED ON `main` — Generalized Goal Entry and its stack, 2026-10-16
 
-CANONICAL_NEXT_ACTION = STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = POST_STACK_INTEGRATION_RESEARCH_PRIORITY_DECISION
+
+**Integration (user GO in session, 2026-10-16):** `main` fast-forwarded `2a3c0787` → `bd4d3f59` (58 commits: result binding,
+Scene3D W1–W3, Function Discovery, Generalized Goal Entry), then pushed without force; record:
+[`integration.md`](evaluation/geometry/runs/generalized-goal-entry/integration.md). Hybrid product enablement stays NO-GO;
+human visual acceptance NOT_APPROVED.
 
 Branch `research/generalized-goal-entry` from verified Function Discovery `96569792`, stacked on Result Binding / Scene3D
 W1–W3 / Function Discovery, none integrated; `main` = `origin/main` = `2a3c0787`. Work of an interrupted Codex session,
@@ -16,7 +21,7 @@ NOT_APPROVED. Run [`generalized-goal-entry`](evaluation/geometry/runs/generalize
 
 ## LOCAL — Goal-directed function discovery (unnamed derived operands), 2026-10-16
 
-CANONICAL_NEXT_ACTION = STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION
+Next action at that time (closed by the 2026-10-16 stacked integration): `STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION`
 
 Research branch `research/goal-directed-function-discovery`, stacked on `8c24cb52` = `main` `2a3c0787` + result binding
 (`f83b4ed1`, not integrated) + Scene3D W1–W3 (not independently reviewed); not merged, not pushed. Four identities:

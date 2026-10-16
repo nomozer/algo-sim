@@ -182,6 +182,8 @@ ALLOWED_CANONICAL_ACTIONS = [
     # goal-directed-function-discovery (2026-10-16): three stacked research branches (result binding → Scene3D W1–W3,
     # independent review pending → function discovery); next is the user's review/integration decision for the stack.
     "STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION",
+    # stacked-integration (2026-10-16): the four research slices are on main; next is the user's choice of research priority.
+    "POST_STACK_INTEGRATION_RESEARCH_PRIORITY_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

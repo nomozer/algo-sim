@@ -8,6 +8,11 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-16, stacked integration:** result binding, Scene3D W1–W3, Function Discovery and Generalized Goal Entry are on `main`
+(`bd4d3f59`, user GO, record [`integration.md`](evaluation/geometry/runs/generalized-goal-entry/integration.md)). Next only: the
+user's research priority. Proposal from the runs: semantic-understanding/grounding evaluation design and closure of the
+recorded source false-serves before G16. Hybrid product enablement stays NO-GO.
+
 **2026-10-16, generalized-goal-entry:** length entry implemented and measured on research branch from96569792; Codex session committed and re-verified by Claude; the stack (Result Binding → Scene3D W1–W3 → Function Discovery → this slice) waits for one decision, `STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION`. No merge/push/enablement authorized. Review+Product browser passed;8/8new exact,153prior invariant. Next research proposal is semantic-understanding/grounding evaluation design before G16, because authored-fact planning is measured while extraction remains NOT_MEASURED and known source residuals remain OPEN. Run [`generalized-goal-entry`](evaluation/geometry/runs/generalized-goal-entry/report.md). Earlier next actions below are historical.
 
 **2026-10-16, goal-directed function discovery (LOCAL research, not merged):** branch
@@ -32,7 +37,7 @@ Group A remains integrated on main; Hybrid stays off. Presentation backlog, orbi
 No Group B, new family, new Planner/FactGraph/DSL or product enablement. No additional task starts without that decision.
 
 ```text
-CANONICAL_NEXT_ACTION = STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = POST_STACK_INTEGRATION_RESEARCH_PRIORITY_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
