@@ -515,8 +515,9 @@ MUTANTS = [
     # Run `goal-directed-function-discovery`: the asked segment is now written from the ask_length contract template; the
     # load-bearing planner step is binding each input slot to its producer's effect by position (same kill check).
     ("planner: binds a producer's effect to the wrong input slots", PL, "_EffectResolver",
-     "zip(t.operands, REGISTRY[child.fn].planning.effect.operands)",
-     "zip(t.operands, reversed(REGISTRY[child.fn].planning.effect.operands))",
+     # run `generalized-goal-entry`: a function may carry several contracts, so the child's CHOSEN contract is bound
+     "zip(t.operands, child.contract.effect.operands)",
+     "zip(t.operands, reversed(child.contract.effect.operands))",
      lambda: _run(_problem(_dist("Tính khoảng cách từ S đến BD.", "S", "BD"))).answers != {"q": "√11"}),
 ]
 
