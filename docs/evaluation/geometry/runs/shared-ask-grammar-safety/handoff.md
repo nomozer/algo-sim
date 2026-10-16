@@ -1,6 +1,6 @@
 # CLAUDE_RESUME_HANDOFF — shared-ask-grammar-safety (2026-10-16)
 
-**Status:** `ASK_GRAMMAR_EVIDENCE_INTEGRITY_READY_FOR_REVIEW` (Product commit: `55c657b8be715cda0edcc9e6e2ec1b3a204bdb65`; Full geometry gate: `PENDING FINAL CANDIDATE` — NOT PASS cho tới khi refreeze candidate). Không merge, không push, không refreeze candidate trước khi review độc lập đạt.
+**Status:** `E1_FINAL_DOCUMENTATION_CORRECTION_READY_FOR_REVIEW` — E-1 `PENDING INDEPENDENT SHORT REVIEW` of [`evidence-reconciliation-55c657b8/correction-addendum-2.md`](evidence-reconciliation-55c657b8/correction-addendum-2.md) (Product commit: `55c657b8be715cda0edcc9e6e2ec1b3a204bdb65`; Full geometry gate: `PENDING FINAL CANDIDATE` — NOT PASS cho tới khi refreeze candidate). Không merge, không push, không refreeze candidate trước khi review độc lập đạt.
 
 ## Kiểm lại trước khi tin
 
@@ -23,10 +23,14 @@ cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe ../docs/evaluation
   - **E-1 (Khôi phục toàn vẹn bằng chứng & Provenance — [`evidence-reconciliation-55c657b8/correction-addendum.md`](evidence-reconciliation-55c657b8/correction-addendum.md), [`evidence-reconciliation-55c657b8/manifest.json`](evidence-reconciliation-55c657b8/manifest.json)):**
     - Đã khôi phục nguyên bản 6 biên lai lịch sử tại `34a04eaf` vào [`evidence-reconciliation-55c657b8/archive-34a04eaf/`](evidence-reconciliation-55c657b8/archive-34a04eaf/) mà không ghi đè lại [`verification/`](verification/).
     - Đã tái lập biên lai RED chéo phiên bản (`SOURCE_COMMIT = 34a04eaf`, `TEST_COMMIT = 55c657b8`: `145 failed, 464 passed` / `609` mục) tại [`evidence-reconciliation-55c657b8/reproduced-red-34a04eaf-with-55c657b8-tests.txt`](evidence-reconciliation-55c657b8/reproduced-red-34a04eaf-with-55c657b8-tests.txt) và đối soát với [`red/red-review-34a04eaf.txt`](red/red-review-34a04eaf.txt) (`146 failed, 459 passed` / `605` mục).
-    - Đã tái lập toàn bộ biên lai GREEN kèm header provenance trên worktree sạch tại `55c657b8` trong [`evidence-reconciliation-55c657b8/green-55c657b8/`](evidence-reconciliation-55c657b8/green-55c657b8/) (gồm cả `suite5a` 7-file `804 passed, 1 xfailed`, `suite5b` 8-file `868 passed, 1 xfailed`, `suite6` cây commit sạch `9 failed, 7750 passed, 1 deselected, 6 xfailed`, và `mutation-4-monkeypatch-tests-55c657b8.txt` `4 passed`).
+    - **Đính chính lần 2 ([`correction-addendum-2.md`](evidence-reconciliation-55c657b8/correction-addendum-2.md), append-only; `correction-addendum.md` giữ nguyên):**
+      - F-1: 9 failure đúng là 9 node ID thuộc `test_analyze_failure_cluster_diagnosis.py`, `test_branch_independent_harness.py` ×5, `test_docs_information_architecture.py`, `test_docs_test_telemetry.py` và `test_thesis_acceptance_matrix.py`, đều do candidate verify. Candidate nằm ở `docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json`, định danh `4b95dcc665f5930b…`.
+      - F-2: RED gồm 2 mục chuyển FAIL → PASS, 3/4 mutation pass, 1 mutation fail do `AttributeError`.
+      - F-3: môi trường của 7 receipt GREEN là NOT_ATTESTED; receipt mutation chạy trên cây chính.
+    - Đã tái lập toàn bộ biên lai GREEN kèm header provenance (môi trường: xem F-3) tại `55c657b8` trong [`evidence-reconciliation-55c657b8/green-55c657b8/`](evidence-reconciliation-55c657b8/green-55c657b8/) (gồm cả `suite5a` 7-file `804 passed, 1 xfailed`, `suite5b` 8-file `868 passed, 1 xfailed`, `suite6` cây commit sạch `9 failed, 7750 passed, 1 deselected, 6 xfailed`, và `mutation-4-monkeypatch-tests-55c657b8.txt` `4 passed`).
 
 ## Bước tiếp theo
 
-1. Chạy **Independent Code Review** đối với gói khôi phục bằng chứng `E-1` và product commit `55c657b8be715cda0edcc9e6e2ec1b3a204bdb65`.
+1. Chạy **review độc lập ngắn** chỉ trên `correction-addendum-2.md` và các sửa `report.md`/`handoff.md` đi kèm. Product code review của `55c657b8` đã xong và vẫn giữ nguyên.
 2. Sau khi review độc lập đạt (`PASS`) và được user cho phép, mới thực hiện refreeze `EVALUATION_CANDIDATE.json`, cập nhật `inputs/candidate_divergence.json` và chạy authoritative T3 trên detached worktree sạch.
 3. Scene3D product–Playwright parity audit (`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY` OPEN).
