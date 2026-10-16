@@ -907,6 +907,57 @@ export function khungMatPhang(
 }
 
 /**
+ * Bao lồi phẳng của các điểm trong `diem` thực sự nằm trên mặt phẳng `(diemMp, phapTuyen)`.
+ * Khi mặt phẳng đi qua ≥ 3 điểm không thẳng hàng của hình (vd `(SAB)`, `(SAC)`, `(A'BD)`),
+ * trả về các đỉnh đa giác theo thứ tự ngược chiều kim đồng hồ để vẽ đúng miền phẳng của hình
+ * thay vì một tấm vuông lệch trục thò ra dưới đáy. Không đủ 3 điểm không thẳng hàng ⇒ `null`.
+ */
+export function daGiacMatPhang(
+  diemMp: Vec3, phapTuyen: Vec3, diem: Vec3[],
+): Vec3[] | null {
+  const n = Math.hypot(...phapTuyen);
+  if (!Number.isFinite(n) || n === 0 || diem.length < 3) return null;
+  const u: Vec3 = [phapTuyen[0] / n, phapTuyen[1] / n, phapTuyen[2] / n];
+  const [e1, e2] = truc_vuong_goc(u);
+  const trenMp: { p: Vec3; x: number; y: number }[] = [];
+  for (const p of diem) {
+    if (!p.every(Number.isFinite)) continue;
+    const vx = p[0] - diemMp[0], vy = p[1] - diemMp[1], vz = p[2] - diemMp[2];
+    const h = vx * u[0] + vy * u[1] + vz * u[2];
+    if (Math.abs(h) > 1e-3) continue;
+    const x = vx * e1[0] + vy * e1[1] + vz * e1[2];
+    const y = vx * e2[0] + vy * e2[1] + vz * e2[2];
+    if (trenMp.some((q) => Math.hypot(q.x - x, q.y - y) <= 1e-5)) continue;
+    trenMp.push({ p: [p[0] - h * u[0], p[1] - h * u[1], p[2] - h * u[2]], x, y });
+  }
+  if (trenMp.length < 3) return null;
+  trenMp.sort((a, b) => a.x - b.x || a.y - b.y);
+  const re = (o: { x: number; y: number }, a: { x: number; y: number }, b: { x: number; y: number }) =>
+    (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
+  const duoi: typeof trenMp = [];
+  for (const pt of trenMp) {
+    while (duoi.length >= 2 && re(duoi[duoi.length - 2], duoi[duoi.length - 1], pt) <= 1e-7) duoi.pop();
+    duoi.push(pt);
+  }
+  const tren: typeof trenMp = [];
+  for (let i = trenMp.length - 1; i >= 0; i--) {
+    const pt = trenMp[i];
+    while (tren.length >= 2 && re(tren[tren.length - 2], tren[tren.length - 1], pt) <= 1e-7) tren.pop();
+    tren.push(pt);
+  }
+  duoi.pop();
+  tren.pop();
+  const bao = [...duoi, ...tren];
+  if (bao.length < 3) return null;
+  let dienTich2 = 0;
+  for (let i = 0; i < bao.length; i++) {
+    const a = bao[i], b = bao[(i + 1) % bao.length];
+    dienTich2 += a.x * b.y - b.x * a.y;
+  }
+  return Math.abs(dienTich2) > 1e-5 ? bao.map((b) => b.p) : null;
+}
+
+/**
  * ĐOẠN ĐẠI DIỆN của một đường thẳng vô hạn — cùng quy tắc với `khungMatPhang`: chiếu mọi điểm có biên của cảnh lên
  * đường, lấy khoảng hình chiếu, nới theo `PLANE_PATCH_MARGIN`; dài tối thiểu bằng đường chéo hộp bao của cảnh.
  *
@@ -925,15 +976,67 @@ export function doanDuongThang(diemDuong: Vec3, huong: Vec3, diem: Vec3[]): [Vec
   const t = diem.map((p) => (p[0] - diemDuong[0]) * u[0] + (p[1] - diemDuong[1]) * u[1] + (p[2] - diemDuong[2]) * u[2]);
   if (!t.every(Number.isFinite)) return null;
   const lo = Math.min(...t), hi = Math.max(...t);
+  const truc = [0, 1, 2].map((i) => Math.max(...diem.map((p) => p[i])) - Math.min(...diem.map((p) => p[i])));
+  const cheo = Math.hypot(...truc);
+  const tai = (s: number): Vec3 => [diemDuong[0] + s * u[0], diemDuong[1] + s * u[1], diemDuong[2] + s * u[2]];
+  // Khi trên đường thẳng có ≥ 2 điểm của hình (vd hai đầu mút đoạn/cạnh hoặc đỉnh + chân vuông góc), lấy tâm và
+  // khoảng cơ sở theo đúng các điểm nằm trên đường, nới đều hai đầu để phân biệt đường vô hạn với đoạn hữu hạn mà
+  // không bị các đỉnh ngoài đường kéo lệch tâm.
+  const dungSai = 1e-4 * Math.max(1, cheo);
+  let onLo = 0, onHi = 0;
+  for (let i = 0; i < diem.length; i++) {
+    const p = diem[i], ti = t[i];
+    const lech = Math.hypot(
+      p[0] - diemDuong[0] - ti * u[0],
+      p[1] - diemDuong[1] - ti * u[1],
+      p[2] - diemDuong[2] - ti * u[2],
+    );
+    if (lech <= dungSai) {
+      if (ti < onLo) onLo = ti;
+      if (ti > onHi) onHi = ti;
+    }
+  }
+  const khoangTrenDuong = onHi - onLo;
+  if (khoangTrenDuong > 1e-5) {
+    const giuaOn = (onLo + onHi) / 2;
+    const duoi = Math.max(khoangTrenDuong * (PLANE_PATCH_MARGIN - 1), cheo * 0.08);
+    const nuaOn = khoangTrenDuong / 2 + duoi;
+    return [tai(giuaOn - nuaOn), tai(giuaOn + nuaOn)];
+  }
   const giua = (lo + hi) / 2;
   // Tối thiểu theo TỈ LỆ cảnh (nửa đường chéo hộp bao), không cố định: cảnh 0,05 không nhận đường dài 2 (lại đâm qua
   // camera), cảnh 100 không nhận một mẩu dài 2 (review S2). Cảnh một điểm ⇒ rơi về `PLANE_PATCH_MIN_SIZE`.
-  const truc = [0, 1, 2].map((i) => Math.max(...diem.map((p) => p[i])) - Math.min(...diem.map((p) => p[i])));
-  const cheo = Math.hypot(...truc);
   const nua = Math.max(cheo > 0 ? cheo / 2 : PLANE_PATCH_MIN_SIZE / 2, ((hi - lo) / 2) * PLANE_PATCH_MARGIN);
-  const tai = (s: number): Vec3 => [diemDuong[0] + s * u[0], diemDuong[1] + s * u[1], diemDuong[2] + s * u[2]];
   return [tai(giua - nua), tai(giua + nua)];
 }
+
+/**
+ * Hướng cạnh góc vuông `u` tại `chan`: giữ nguyên phương `u` do backend phát,
+ * nhưng nếu `chan` nằm ở đầu mút của các điểm thuộc đường `(chan, u)` khiến `+u`
+ * chĩa ra ngoài đoạn còn `-u` hướng vào phần trong của đoạn (như khi chân H trùng
+ * đỉnh B' trên đường BB'), lật sang `-u` để ký hiệu góc vuông nằm gọn trong hình.
+ */
+export function huongChanVuongGoc(chan: Vec3, u: Vec3, diem: Vec3[]): Vec3 {
+  const d = Math.hypot(u[0], u[1], u[2]);
+  if (!Number.isFinite(d) || d < 1e-9 || diem.length === 0) return u;
+  const ux = u[0] / d, uy = u[1] / d, uz = u[2] / d;
+  let tMin = 0, tMax = 0;
+  for (const p of diem) {
+    const dx = p[0] - chan[0], dy = p[1] - chan[1], dz = p[2] - chan[2];
+    const t = dx * ux + dy * uy + dz * uz;
+    const px = dx - t * ux, py = dy - t * uy, pz = dz - t * uz;
+    if (Math.hypot(px, py, pz) <= 1e-4) {
+      if (t < tMin) tMin = t;
+      if (t > tMax) tMax = t;
+    }
+  }
+  if (tMax - tMin > 1e-4 && tMax < -tMin * 0.25) {
+    return [-u[0], -u[1], -u[2]];
+  }
+  return u;
+}
+
+
 
 /**
  * Số cạnh khi CHIA LƯỚI một mặt cong để vẽ.

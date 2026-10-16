@@ -23,6 +23,7 @@ import {
   buildObject3D,
   chonCuThe,
   semanticIdOf,
+  vatNhanChung,
 } from "./scene3d-view";
 
 /**
@@ -774,5 +775,67 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     };
     expect(mesh.material.opacity).toBeLessThanOrEqual(0.12);
   });
+
+  it("VISUAL-FE-1: đường thẳng đi qua ≥2 điểm trên hình (`S`, `H`) lấy tâm theo đoạn trên đường, không bị đỉnh ngoài đường (`B`, `C`) kéo lệch", () => {
+    const diem: [number, number, number][] = [
+      [0, 0, 0], [2, 0, 0], [2, 2, 0], [0, 2, 0], [0, 0, 3], [1, 0, 3],
+    ];
+    const [a, b] = doanDuongThang([0, 0, 3], [-1, 0, 0], diem)!;
+    const tamX = (a[0] + b[0]) / 2;
+    const dai = Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2]);
+    // Đoạn SH trên đường là x ∈ [0, 1] ⇒ tâm phải ở x = 0.5, đối xứng hai đầu, tổng độ dài gọn (< 2.2)
+    expect(tamX).toBeCloseTo(0.5, 6);
+    expect(dai).toBeGreaterThan(1.2);
+    expect(dai).toBeLessThan(2.2);
+  });
+
+  it("VISUAL-FE-4: mặt phẳng có ≥3 điểm không thẳng hàng nằm trên nó dựng đúng miền đa giác phẳng của các điểm đó, không thò góc vuông xuống dưới đáy", () => {
+    const mp = {
+      id: "mp_q", label: "(SAB)", type: "plane3", render: "surface" as const,
+      origin: "derived" as const, producer: "construct_plane",
+      depends: ["A", "B", "S"],
+      point: ["0", "0", "0"] as ExactVec3,
+      normal: ["0", "-3", "0"] as ExactVec3,
+    };
+    const diem: [number, number, number][] = [
+      [0, 0, 0], [2, 0, 0], [2, 2, 0], [0, 2, 0], [0, 0, 3],
+    ];
+    const mesh = buildObject3D(mp, "dich", undefined, diem)!;
+    mesh.updateMatrixWorld(true);
+    const pos = (mesh as unknown as { geometry: { getAttribute(n: string): { count: number; getX(i: number): number; getY(i: number): number; getZ(i: number): number } } })
+      .geometry.getAttribute("position");
+    expect(pos.count).toBe(3);
+    for (let i = 0; i < pos.count; i++) {
+      expect(pos.getZ(i)).toBeGreaterThanOrEqual(-1e-6);
+      expect(pos.getX(i)).toBeGreaterThanOrEqual(-1e-6);
+    }
+  });
+
+  it("VISUAL-FE-6: ký hiệu góc vuông tại chân H trùng đầu mút B' trên đường BB' quay vào trong đoạn BB' (z ≤ 5), không chĩa ra ngoài khối (z > 5)", () => {
+    const w = {
+      id: "perpendicular:H",
+      vai: "hinh_chieu" as const,
+      from: [1.5, 2, 5] as [number, number, number],
+      foot: [3, 0, 5] as [number, number, number],
+      u: [0, 0, 5] as [number, number, number],
+      v: [-1.5, 2, 0] as [number, number, number],
+    };
+    const diem: [number, number, number][] = [
+      [0, 0, 0], [3, 0, 0], [3, 4, 0], [0, 4, 0],
+      [0, 0, 5], [3, 0, 5], [3, 4, 5], [0, 4, 5],
+    ];
+    const nhom = vatNhanChung(w, diem, 0x0284c7, false);
+    const goc = nhom.children[1] as unknown as {
+      geometry: { getAttribute(n: string): { count: number; getZ(i: number): number } };
+      material: { color: { getHex(): number } };
+    };
+    const pos = goc.geometry.getAttribute("position");
+    expect(pos.count).toBe(3);
+    expect(pos.getZ(0)).toBeLessThan(5 - 1e-3);
+    expect(pos.getZ(1)).toBeLessThan(5 - 1e-3);
+    expect(goc.material.color.getHex()).toBe(0x0284c7);
+  });
 });
+
+
 
