@@ -6,7 +6,9 @@ W1–W3 — **cả hai lớp dưới chưa được tích hợp, Scene3D chưa �
 Gemini, `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid tắt trên sản phẩm.
 
 Chuỗi commit: tiền đăng ký `66593504` → RED `b30c46af` → sản phẩm `9fec9f43` → tooling `dda0d888` → bằng chứng `98f0d1a1`
-→ refreeze `e02b7c7f` (candidate `8f77fec7…`, 110 file) → tài liệu (commit sau, vai SELF).
+→ refreeze `e02b7c7f` (`8f77fec7…`) → tài liệu `ae12069a` → T3 lần 1 **FAIL** → sửa lỗi kế thừa `19eec205` + `36b6d3f9` → T3 lần 2
+PASS → review độc lập → sửa sau review `cfa27baa` (**sản phẩm cuối**) → đo lại `313cc537` → refreeze `81315986` (candidate
+`093359c2…`, 110 file) → tài liệu + T3 cuối (§7).
 
 ## 1. Năng lực mới (trả lời A)
 
@@ -47,9 +49,10 @@ của hai đường (lược đồ không có chỗ cho hai nhóm toán hạng),
 
 ## 4. Thực nghiệm so sánh (tiền đăng ký `preregistration.md`, cùng một bundle Typed Facts `56a4fe1c…`)
 
-Ba nhánh mã chạy trong worktree tách rời; nhãn và oracle không sửa sau RED. Số liệu: `results/comparison.json`.
+Ba nhánh mã chạy trong worktree tách rời; nhãn và oracle không sửa sau RED. Số liệu: `results/comparison.json` (NEW tại
+`9fec9f43`) và `results/final-cfa27baa/comparison.json` (NEW tại sản phẩm cuối — trùng từng ca).
 
-| corpus | FIXED `2a3c0787` (/4) | BOUNDED `8c24cb52` (/5) | NEW `9fec9f43` (/6) |
+| corpus | FIXED `2a3c0787` (/4) | BOUNDED `8c24cb52` (/5) | NEW `9fec9f43` = `cfa27baa` (/6) |
 |---|---|---|---|
 | dương mới (9) | 0 đúng · 9 từ chối nhầm | 0 · 9 từ chối nhầm | **9 đúng chính xác** · 0 sai |
 | âm mới (16) | 1 đúng mã · 15 sai mã | 1 · 15 sai mã | **15 đúng mã** · 1 sai mã (D-1) · 0 phục vụ |
@@ -115,9 +118,37 @@ diễn được bằng `point_kind` của lược đồ (midpoint, centroid, …
   có mã. Mutant "asks the wrong segment" chuyển sang phép gán theo vị trí (cùng phép kiểm diệt), vì phân đoạn hỏi nay do khuôn
   contract viết.
 
-## 7. Cổng, review, Git
+## 7. Cổng, review, Git (trả lời G)
 
-PENDING — điền sau T3 sạch tại `e02b7c7f` và review độc lập.
+**Review độc lập** (tác nhân riêng, ngữ cảnh mới, chỉ đọc; báo cáo là kết quả hội thoại, không phải artifact kho):
+`PASS_WITH_FINDINGS`, **0 phục vụ sai** trên mọi probe; tự dựng lại base `8c24cb52` và xác nhận 125 ca hồi quy trùng cả ở
+mức lời gọi/trace/cảnh, kế hoạch không đổi khi đảo Registry (153 ca), D-1 có từ trước, mutant dời là có nghĩa.
+
+| phát hiện | xử lý |
+|---|---|
+| IMP-1 không test nào khoá ràng buộc **đích** trong cổng chuỗi (mutant phục vụ khoảng cách tới đích khác) | test mới (đường AC, mặt (SAD), "đáy") ⇒ `SOURCE_OBJECT_MISMATCH`; mã vốn đúng |
+| IMP-2 cổng phủ đọc **mọi** cụm mô tả trong quote đã chứng nhận ⇒ câu hỏi thứ hai cùng quote bị bỏ im lặng | `cfa27baa`: chỉ span đã buộc được tính là đã đọc (`kiem_nguon` truyền span) ⇒ `QUESTION_CONTEXT_UNSUPPORTED`; RED → GREEN |
+| IMP-3 lỗ văn phạm kế thừa từ đường điểm có tên (`(SABC)` chung 3 điểm, ", AC", "sau đó tính thể tích…" chỉ trả một đáp số) | **không sửa** (có từ `8c24cb52`, ngoài lát); ghi vào `ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES` |
+| MINOR-4 chứng chỉ dị dạng tự viết ném ngoại lệ | `cfa27baa`: `AUXILIARY_RULE_MISMATCH` có mã; 6 test |
+| MINOR-5 kiểm đáp số engine, va chạm nhãn tươi, bộ lọc kiểu không có test | 3 test mới, mỗi test diệt đúng mutant ấy |
+| MINOR-6 hai bộ sinh nhãn tươi; văn phạm đích thứ hai | gộp `_NHAN_PHU = _nhan_tuoi("H")`; trùng văn phạm đích ghi nợ (§9) |
+| MINOR-7 lời kể "đoạn CS" khi đề viết SC | do thứ tự `depends` của tầng cảnh, có từ trước (trung điểm đề đặt tên cũng vậy) — giới hạn trình bày, không sửa |
+| MINOR-8 `points_b` trùng nhãn ⇒ mã sai | `FACT_INCOMPLETE` |
+
+Sau sửa: 6 biến thể × 153 ca **trùng từng ca** với lần đo ở `9fec9f43` (`results/final-cfa27baa/`); cảnh xuất lại trùng byte,
+nên receipt trình duyệt giữ hiệu lực.
+
+**T3:** lần 1 tại `ae12069a` **FAIL** (`verification/t3-attempt1-ae12069a-FAIL.log`): (i) lớp divergence của run chưa nối chuỗi
+`corrects` ⇒ `test_C2b` đỏ; (ii) `scene3d-auxiliary.test.ts` của Scene3D W1–W3 gọi `withSubEntities` với hai đối số ⇒
+`tsc -b` đỏ (vitest vẫn xanh; wave ấy chưa từng chạy build). Sửa ở `36b6d3f9`, `19eec205` (chỉ test, không đổi hành vi).
+Lần 2 tại `36b6d3f9`: `FULL_PRODUCT_GATE_PASS` (pytest 10101/0, vitest 1061/1061, build, demo 5/5, bề mặt sập 6/6) — trên
+sản phẩm `9fec9f43`, nay đã bị thay. Lần cuối trên sản phẩm `cfa27baa`: `verification/t3-authoritative.log` (dòng kết ở
+`verification/t3-pass.json`).
+
+**Git:** `main` = `origin/main` = `2a3c0787`; không merge, không push, không viết lại lịch sử; `frontend/public/` của người dùng
+không đụng; không trailer `Co-Authored-By`. Điều kiện tích hợp: (1) người dùng quyết result binding; (2) review độc lập
+Scene3D W1–W3; (3) quyết định lát này — hợp nhất fast-forward cả chồng hoặc cherry-pick lát (chỉ chạm tuyến D + 2 script harness
++ 1 test Scene3D + tài liệu). Hybrid trong sản phẩm vẫn NO-GO.
 
 ## 8. Phần nghiên cứu (cho khoá luận / bài báo)
 
@@ -154,7 +185,8 @@ Theo blocker thật của run này, theo thứ tự:
 2. **G16 góc đường–mặt dựng hình chiếu** (chân S lên mặt + góc tại giao điểm) — cần một hàm đo góc giữa hai đường và cung
    đánh dấu góc (L11 thiếu); chân lên mặt nên thành hiệu ứng `Foot` qua `orthogonal_projection` (đã dựng tiến được).
 3. **Transport hai nhóm toán hạng** (giao điểm không tên của hai đường) — đổi lược đồ Typed Facts ⇒ cần phê duyệt riêng.
-4. `ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE` (nhỏ, an toàn).
+4. `ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE` (nhỏ, an toàn) và lỗ văn phạm IMP-3 (một văn phạm đích chung cho ba đường
+   khoảng cách thay cho ba bản hiện có).
 G05/G17/hình cong không bị lát này mở khoá; giữ thứ tự ROADMAP.
 
 ## 10. Trả lời B–E, G

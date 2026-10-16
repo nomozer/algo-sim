@@ -7,8 +7,8 @@ ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/goal-directed-function-discov
 CORRECTED_BY = NONE
 CORRECTS = NONE
 CLASSIFICATION = FUNCTION_DISCOVERY_SLICE_READY_FOR_REVIEW
-CODE_COMMIT = 9fec9f43 (route D: geometry_functions planner/registry/engine, ai/function_route)
-VERIFICATION_COMMIT = e02b7c7f candidate refreeze (8f77fec7…, 110 files); T3 checkpoint and review: run report §7
+CODE_COMMIT = cfa27baa (route D: geometry_functions planner/registry/engine, ai/function_route; 9fec9f43 + review fixes)
+VERIFICATION_COMMIT = 81315986 candidate refreeze (093359c2…, 110 files, frozen at 313cc537); T3 and independent review: run report §7
 DOCUMENTATION_COMMIT_ROLE = SELF
 MODEL_REQUEST_COUNT = 0
 

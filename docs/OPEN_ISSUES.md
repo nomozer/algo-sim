@@ -157,6 +157,12 @@
 
 ### ISSUE-ARCH-HYBRID-GATE-RESIDUAL-FALSE-SERVES
 
+- **2026-10-16 update (independent review of `goal-directed-function-discovery`, IMP-3):** distance asks, named point and
+  described point alike, still serve when the target group shares three labels with a different set ("đến (SABC)" for
+  (SAB)), when a trailing ", AC" or "và AC" is unread, and when a follow-up request ("…, sau đó tính thể tích …", "… rồi suy ra
+  …") is answered by one value only. All reproduce at `8c24cb52` on the named-point path; the descriptor path inherits them. A
+  second descriptor ask inside one certified quote is now refused (IMP-2, `cfa27baa`); the named-point path keeps that gap.
+  Narration says "đoạn CS" for "SC" (scene `depends` order, pre-existing for every route-D midpoint).
 - **description:** After the review fixes, the independent reviewer's final pass still found inputs where the source gate serves an answer the source does not license (about 80 probes, `!!` = served):
   - **A** — non-premise clauses typed as premises: goal verbs other than "chứng minh" ("Hãy chỉ ra rằng …", "Giải thích vì sao …", "Tìm điều kiện để …"), questions without "không" ("Tại sao …?"), reported claims, and negation, modality or disjunction outside the `PHU_DINH` list ("không hề", "chẳng", "có thể", "… hoặc …").
   - **B** — a length value taken from a non-equality ("SA ≠ 4", "SA ≥ 3", "SA xấp xỉ 3", "SA bằng 3 lần AB", "SA = 3 hoặc SA = 4").

@@ -3,8 +3,9 @@
 - **Status:** `FUNCTION_DISCOVERY_SLICE_READY_FOR_REVIEW` (T3 + review: `report.md` §7).
 - **Branch:** `research/goal-directed-function-discovery`, stacked on `8c24cb52` (result binding `f83b4ed1` + Scene3D W1–W3,
   both not integrated; Scene3D independent review still pending). `main` = `origin/main` = `2a3c0787`; nothing pushed.
-- **Commits:** preregistration `66593504` · RED `b30c46af` · product `9fec9f43` · tooling `dda0d888` · evidence `98f0d1a1` ·
-  refreeze `e02b7c7f` (candidate `8f77fec7…`, 110 files) · docs (SELF).
+- **Commits:** preregistration `66593504` · RED `b30c46af` · product `9fec9f43` → review fixes `cfa27baa` (final product) ·
+  inherited Scene3D test typing fix `19eec205` · final refreeze `81315986` (candidate `093359c2…`, 110 files, frozen at
+  `313cc537`) · docs (SELF). Full chain and both T3 attempts: `run.json`, `report.md` §7.
 - **Invariants:** `LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid product enablement NO-GO, 0 Gemini calls, provider surfaces
   A `7ea511a6…` / B `485d3834…` / declarations `5ceb0f99…` / fact schema `282f5f76…` unchanged, `frontend/public/` (user) untouched.
 

@@ -6,9 +6,11 @@ CANONICAL_NEXT_ACTION = STACKED_RESEARCH_BRANCH_INTEGRATION_DECISION
 
 Research branch `research/goal-directed-function-discovery`, stacked on `8c24cb52` = `main` `2a3c0787` + result binding
 (`f83b4ed1`, not integrated) + Scene3D W1–W3 (not independently reviewed); not merged, not pushed. Four identities:
-product commit `9fec9f43` (route D only: `geometry_functions/{planner,registry,engine}.py`, `ai/function_route.py`);
-candidate `8f77fec7b577f8fd0ac531c1698b36514edfb4d79cdabf3a0d58081a6eb54583` (110 files) frozen at `98f0d1a1`, refreeze /
-T3 checkpoint `e02b7c7f`; T3 and review results: run report §7. `LLM_ONLY`, `CACHE_VERSION = 125` (no bump: route D is not
+product commit `cfa27baa` (first product `9fec9f43` + independent-review fixes; route D only:
+`geometry_functions/{planner,registry,engine}.py`, `ai/function_route.py`); candidate
+`093359c2551f11482c2a8ab06a74efba221c435561183308b39fe10e5fedd415` (110 files) frozen at `313cc537`, refreeze commit
+`81315986`; independent review PASS_WITH_FINDINGS (0 wrong served; findings closed or recorded); T3: run report §7.
+Also fixes an inherited Scene3D test typing error that broke `tsc -b` (`19eec205`). `LLM_ONLY`, `CACHE_VERSION = 125` (no bump: route D is not
 on `/api/analyze`), Hybrid product enablement NO-GO, 0 Gemini calls, provider surfaces A `7ea511a6…` / B `485d3834…` unchanged.
 - **Capability:** distance from a point the source DESCRIBES but does not name ("trung điểm của SC") to a named plane, a
   named line or a source intersection line; Planner composes it from Registry contracts (`midpoint`,

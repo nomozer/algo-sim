@@ -8,7 +8,11 @@
   "status": "FUNCTION_DISCOVERY_SLICE_READY_FOR_REVIEW",
   "branch": "research/goal-directed-function-discovery",
   "base_commit": "8c24cb52",
-  "base_dependencies": ["main 2a3c0787", "result-binding f83b4ed1 (not integrated)", "Scene3D W1-W3 8c24cb52 (not reviewed)"],
+  "base_dependencies": [
+    "main 2a3c0787",
+    "result-binding f83b4ed1 (not integrated)",
+    "Scene3D W1-W3 8c24cb52 (not reviewed)"
+  ],
   "main_before": "2a3c0787",
   "main_after": "2a3c0787",
   "push": "NONE",
@@ -21,22 +25,45 @@
     "product": "9fec9f43",
     "tooling": "dda0d888",
     "evidence": "98f0d1a1",
-    "refreeze": "e02b7c7f"
+    "refreeze": "e02b7c7f",
+    "docs_t3_checkpoint_1": "ae12069a",
+    "t3_attempt1": "ae12069a FAIL (verification/t3-attempt1-ae12069a-FAIL.log)",
+    "inherited_scene3d_test_fix": "19eec205",
+    "divergence_chain": "36b6d3f9",
+    "t3_attempt2": "36b6d3f9 PASS on product 9fec9f43 (superseded)",
+    "review_fixes_product": "cfa27baa",
+    "remeasure": "313cc537",
+    "refreeze_final": "81315986"
   },
-  "product_commit": "9fec9f43",
-  "candidate": {"tree_hash": "8f77fec7b577f8fd0ac531c1698b36514edfb4d79cdabf3a0d58081a6eb54583", "files": 110,
-                "divergence": "inputs/candidate_divergence.json"},
+  "product_commit": "cfa27baa",
+  "candidate": {
+    "tree_hash": "093359c2551f11482c2a8ab06a74efba221c435561183308b39fe10e5fedd415",
+    "files": 110,
+    "frozen_at": "313cc537",
+    "divergence": "inputs/candidate_divergence.json"
+  },
   "cache_version": 125,
   "default": "LLM_ONLY",
   "live_calls": 0,
   "Hybrid_product_enablement": "NO-GO (unchanged)",
-  "provider_surfaces_unchanged": {"A": "7ea511a6", "B": "485d3834", "declarations": "5ceb0f99", "fact_schema": "282f5f76"},
-  "baseline": {"bundle_sha256": "baseline/bundle.sha256", "fixed": "baseline/arm-fixed.json", "bounded": "baseline/arm-bounded.json"},
+  "provider_surfaces_unchanged": {
+    "A": "7ea511a6",
+    "B": "485d3834",
+    "declarations": "5ceb0f99",
+    "fact_schema": "282f5f76"
+  },
+  "baseline": {
+    "bundle_sha256": "baseline/bundle.sha256",
+    "fixed": "baseline/arm-fixed.json",
+    "bounded": "baseline/arm-bounded.json"
+  },
   "results": {
     "red": "red/pytest-red-summary.txt — 49 failed, 2 passed at b30c46af",
     "comparison": "results/comparison.json — NEW 9/9 positives exact, 15/16 negatives registered code (D-1), 0 wrong served; regression 125 cases identical to BOUNDED",
     "ablation": "results/arm-new-{production,no-midpoint,no-plane-ask,centroid,reversed,lying}.json",
     "browser": "visual/{swiftshader,gpu}/receipt.json — PASS_CORE_CAUSAL_RENDERING, 6 fixtures, 0 errors; visual/images/ kept, all hashes in all-images.sha256",
-    "t3_and_review": "report.md §7"
-  }
+    "t3_and_review": "report.md §7; verification/t3-authoritative.log, verification/t3-pass.json",
+    "final": "results/final-cfa27baa/ — 6 variants x 153 rows identical to the 9fec9f43 measurement; scenes byte-identical"
+  },
+  "review": "independent agent review PASS_WITH_FINDINGS, 0 wrong served; IMP-1/2, MINOR-4/5/6/8 closed RED->GREEN in cfa27baa; IMP-3 (inherited grammar gaps) and MINOR-7 (inherited narration order) recorded (report §7)"
 }
