@@ -2,7 +2,7 @@
 
 ## LOCAL — Hybrid semantic grounding reliability, 2026-10-17
 
-CANONICAL_NEXT_ACTION = HYBRID_SEMANTIC_GROUNDING_FINAL_VERIFICATION
+CANONICAL_NEXT_ACTION = HYBRID_SEMANTIC_GROUNDING_INTEGRATION_DECISION
 
 Resumed Claude's interrupted work on `research/hybrid-semantic-grounding-reliability`; preserved 8 working files outside
 the repository before edits. Final product `94b3437b`; clean refreeze candidate `57c7f5db…` (110 files), MATCH. Offline

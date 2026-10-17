@@ -1,5 +1,4 @@
 # AI_CONTEXT_BUNDLE.md — AlgoSim Session Handoff & Quick Context
-
 ## LOCAL override — 2026-10-15 (ưu tiên hơn snapshot §2)
 **2026-10-17, hybrid-semantic-grounding-reliability:** resumed Claude's preserved uncommitted M1–M4; product `94b3437b`, clean candidate `57c7f5db…` MATCH. Offline 99 cases: wrong serves13→0, false refusals21→16; historical174 answers/planner unchanged, two refusal-code changes. Independent review delta clear; full regression/T3 verification underway, no integration GO yet. cache125/LLM_ONLY/Hybrid NO-GO/live0. Single handoff: `evaluation/geometry/runs/hybrid-semantic-grounding-reliability/report.md`.
 **2026-10-17, scene3d-visual-correctness (branch `integration/scene3d-visual-correctness` from `main` `6d8ead99`):** Gemini Scene3D commit `0ef0a20a` merged (`a7388a40`) and independently reviewed; FE-4 line-span fix `08021881`; CONTRACT-BE-1 `f07ea069` (route D scenes now carry `targets`: asked distance = result, target plane stays visible at `aux=0`). BE-2/3/4 no contract change. Harness D3D11 + SwiftShader PASS (11 scenes); candidate `43e877ed…`, clean T3 `0a33fcc8` PASS. cache125/LLM_ONLY/Hybrid NO-GO/Gemini 0; human visual review pending. **Integrated on `main` `ee9689e6` (user GO, pushed; branches and worktree cleaned).** Next: research priority decision.
@@ -203,7 +202,7 @@ Offline readiness GO có giới hạn; human review chưa phê duyệt; SMOKE/FU
 Correction của hybrid cũ: object-binding chính xác, configuration ≠ proof; current divergence authority ở run mới, lịch sử giữ nguyên.
 
 ```text
-CANONICAL_NEXT_ACTION = POST_SCENE3D_INTEGRATION_RESEARCH_PRIORITY_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_SEMANTIC_GROUNDING_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

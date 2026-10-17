@@ -47,7 +47,7 @@ Group A remains integrated on main; Hybrid stays off. Presentation backlog, orbi
 No Group B, new family, new Planner/FactGraph/DSL or product enablement. No additional task starts without that decision.
 
 ```text
-CANONICAL_NEXT_ACTION = POST_SCENE3D_INTEGRATION_RESEARCH_PRIORITY_DECISION
+CANONICAL_NEXT_ACTION = HYBRID_SEMANTIC_GROUNDING_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

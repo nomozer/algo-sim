@@ -189,6 +189,8 @@ ALLOWED_CANONICAL_ACTIONS = [
     "SCENE3D_VISUAL_CORRECTNESS_INTEGRATION_DECISION",
     # scene3d-visual-correctness integration (2026-10-17): on origin/main; next is the user's choice of research priority.
     "POST_SCENE3D_INTEGRATION_RESEARCH_PRIORITY_DECISION",
+    # Resumed semantic grounding slice: complete final gates, then request its own integration GO.
+    "HYBRID_SEMANTIC_GROUNDING_INTEGRATION_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 
