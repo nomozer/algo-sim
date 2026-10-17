@@ -323,7 +323,9 @@ def test_centroid_must_bind_to_exactly_the_named_polygon(g, poly):
 
 
 @pytest.mark.parametrize("right", ["(SAB) là tam giác vuông tại A", "mặt (SAB) là tam giác vuông tại A",
-                                   "mặt bên là tam giác vuông tại A"])
+                                   "mặt bên là tam giác vuông tại A",
+                                   "Mặt bên SAB của hình chóp S.ABC là tam giác vuông tại A",   # "ABC" of S.ABC is no subject
+                                   "tam giác SAB của khối chóp S.ABC vuông tại A"])
 def test_a_side_face_right_angle_is_never_the_base_one(right):
     # Re-review C1 residual: only the subject "đáy" may resolve an unlabelled right triangle to the unique base, and a
     # parenthesised face label names that face. "(SAB) vuông tại A" is no fact about the base (it follows from SA ⊥ (ABC)).
@@ -341,3 +343,13 @@ def test_a_side_face_right_angle_is_never_the_base_one(right):
 ])
 def test_common_wordings_of_bound_definitions_still_serve(mid, right):
     served(ABC.format(right=right, mid=mid, ask="AM"), _pyramid_abc(right=right, mid=mid), {"q": Fraction(9, 2)})
+
+
+def test_unlabelled_right_base_reads_the_base_subject_before_a_short_quote():
+    # The quote may hold only the clause; "đáy (ABC) là" just before it in the source names the base.
+    for lead in ("đáy là", "đáy ABC là"):
+        text = f"Cho hình chóp S.ABC có SA vuông góc với (ABC), SA = 3, {lead} tam giác vuông tại B, AB = 3, BC = 4. Tính độ dài SC."
+        payload = _pyramid_abc(right="tam giác vuông tại B", ask=("S", "C"))
+        payload["facts"] = [f for f in payload["facts"] if f["id"] != "f7"]
+        payload["facts"][3]["quotes"] = [lead, "tam giác vuông tại B"]     # the premise span must still be read
+        served(text, payload, {"q": Fraction(34)})

@@ -2763,8 +2763,9 @@ _DIEM = r"[A-Z][0-9]*'?"
 _DS_DIEM = rf"(?<![\w']){_DIEM}(?![\w'])(?:\s*(?:,|và)\s*(?<![\w']){_DIEM}(?![\w']))*"
 _DOI_TUONG = (r"(?:(?i:cạnh(?:\s+(?:bên|đáy))?|đoạn(?:\s+thẳng)?|tam\s+giác|tứ\s+giác|đa\s+giác"
               r"|hình\s+(?:vuông|chữ\s+nhật|bình\s+hành|thoi)|mặt(?:\s+(?:bên|đáy))?)\s+|Δ\s*)?")
-#: Start of a label group: not glued to a word, except right after "Δ" (a letter, so `(?<![\w'])` alone never matches it).
-_DAU_NHAN = r"(?:(?<=Δ)|(?<![\w']))"
+#: Start of a label group: not glued to a word nor to the "." of a solid symbol (the "ABC" of S.ABC is no subject), except
+#: right after "Δ" (a letter, so `(?<![\w'.])` alone never matches it).
+_DAU_NHAN = r"(?:(?<=Δ)|(?<![\w'.]))"
 _DS_NHOM = (rf"{_DOI_TUONG}{_DAU_NHAN}(?:{_DIEM}){{2,}}(?![\w'])"
             rf"(?:\s*(?:,|và)\s*{_DOI_TUONG}{_DAU_NHAN}(?:{_DIEM}){{2,}}(?![\w']))*")
 _CUE_DIEM = {"midpoint": r"(?i:trung\s+điểm)", "centroid": r"(?i:trọng\s+tâm)"}
@@ -2774,9 +2775,12 @@ _CUE_DIEM = {"midpoint": r"(?i:trung\s+điểm)", "centroid": r"(?i:trọng\s+t�
 #: tam giác vuông tại A", names that face (re-review C1 residual: a side face's right angle is never the base's).
 #: Case-insensitive only for the words: labels stay upper-case, so "tam" or the length symbol "a" is never a label.
 _HINH_VUONG_TAI = r"(?i:tam\s+giác|tứ\s+giác|hình\s+thang|hình\s+chữ\s+nhật)"
-_VUONG_TAI = re.compile(rf"(?:{_DAU_NHAN}\(?((?:{_DIEM}){{3,}})\)?(?![\w'])\s+(?:(?i:là)\s+(?:(?i:một)\s+)?)?(?:{_HINH_VUONG_TAI}\s+)?)?"
+_VUONG_TAI = re.compile(rf"(?:{_DAU_NHAN}\(?((?:{_DIEM}){{3,}})\)?(?![\w'.])\s+(?:(?i:là)\s+(?:(?i:một)\s+)?)?(?:{_HINH_VUONG_TAI}\s+)?)?"
                         rf"(?i:vuông(?:\s+cân)?\s+(?:tại|ở))\s+({_DIEM}(?:\s*(?:,|(?i:và))\s*{_DIEM})*)(?![\w'])")
-_DAY_VUONG = re.compile(rf"(?<!\w)(?i:đáy)\s+(?:(?i:là)\s+)?(?:(?i:một)\s+)?{_HINH_VUONG_TAI}\s+$")
+#: The base subject right before an unlabelled right polygon, read in the SOURCE up to the clause (a quote may hold only
+#: "tam giác vuông tại B"): "đáy (ABC) là (một) tam giác …"; an optional label names the base itself.
+_DAY_VUONG = re.compile(rf"(?<!\w)(?i:đáy)\s+(?:\(?((?:{_DIEM}){{3,}})\)?(?![\w'.])\s+)?(?:(?i:là)\s+)?(?:(?i:một)\s+)?"
+                        rf"{_HINH_VUONG_TAI}\s+$")
 _GOC_VUONG = re.compile(rf"(?i:góc)\s+(?<![\w'])((?:{_DIEM}){{3}})(?![\w'])\s+(?i:vuông|=\s*90|bằng\s+90)")
 
 
@@ -2801,11 +2805,14 @@ def _dinh_nghia_diem_dung_nguon(c: LoiGoi, q: str, de: str) -> bool:
                 continue
             if m[1]:
                 poly = re.findall(_DIEM, m[1])
-            elif _DAY_VUONG.search(q[:m.start()]):
-                bases = {tuple(p[1] if len(p[0]) == 1 else p[0]) for _d, _c, p in _tu_nhan(de) if len(p) == 2}
-                if len(bases) != 1:
-                    continue
-                poly = list(bases.pop())
+            elif (vt := _vi_tri(de, q)) and (day := _DAY_VUONG.search(de[:vt[0]] + q[:m.start()])):
+                if day[1]:
+                    poly = re.findall(_DIEM, day[1])
+                else:
+                    bases = {tuple(p[1] if len(p[0]) == 1 else p[0]) for _d, _c, p in _tu_nhan(de) if len(p) == 2}
+                    if len(bases) != 1:
+                        continue
+                    poly = list(bases.pop())
             else:
                 continue
             if len(set(poly)) == len(poly) and a.vertex in poly and ke(poly) == rays:
