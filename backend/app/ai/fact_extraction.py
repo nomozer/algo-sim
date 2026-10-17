@@ -78,8 +78,10 @@ def _contract_v3() -> dict[str, Any]:
     """Schema-Contract v3 (research): `anyOf` of kind/goal variants. Each variant only restricts the flat contract — the
     goal's operand slots become REQUIRED with their arity, labels and values carry their grammar — and `unsupported`
     stays an honest exit (labels/ambiguous allowed, no operand required) so a required slot never forces invention.
-    Documented Gemini Schema subset only (anyOf, required, enum, pattern, min/maxItems); no oneOf/const/$ref."""
-    flat = facts_response_schema("flat")["properties"]["facts"]["items"]["properties"]
+    Documented Gemini Schema subset only (anyOf, required, enum, pattern, min/maxItems); no oneOf/const/$ref.
+    Every field keeps the flat contract's description (the arms differ in structure only, not in guidance)."""
+    item = facts_response_schema("flat")["properties"]["facts"]["items"]
+    flat = item["properties"]
     lbl = {"type": "STRING", "pattern": _LABEL}
 
     def labels(lo: int, hi: int = 0) -> dict[str, Any]:
@@ -97,8 +99,12 @@ def _contract_v3() -> dict[str, Any]:
     ref = {"type": "STRING", "minLength": 1}
 
     def v(kind: str, need: tuple[str, ...], **props: Any) -> dict[str, Any]:
-        return {"type": "OBJECT", "properties": {**common, "kind": one(kind), **props},
-                "required": ["id", "kind", "role", "quotes", *need]}
+        props = {**common, "kind": one(kind), **props}
+        props = {k: {"description": flat[k]["description"], **s} if "description" in flat.get(k, {}) else s for k, s in props.items()}
+        return {"type": "OBJECT", "properties": props, "required": ["id", "kind", "role", "quotes", *need]}
+
+    # A centroid keeps every vertex the source names (a quadrilateral's 4): never a 3-vertex subset; the engine refuses >3.
+    described = {"midpoint": labels(2, 2), "centroid": labels(3)}
 
     variants = [
         v("solid", ("solid", "solid_type"), solid=solid, solid_type={k: x for k, x in flat["solid_type"].items() if k != "nullable"},
@@ -114,8 +120,8 @@ def _contract_v3() -> dict[str, Any]:
         v("altitude", ("points", "solid"), points=labels(2, 2), solid=solid),
         v("projection", ("point", "at", "points"), point=lbl, at=lbl, points=labels(2)),
         v("projection", ("point", "at", "line_ref"), point=lbl, at=lbl, line_ref=ref),
-        *[v("point_def", ("point", "point_kind", "points"), point=lbl, point_kind=one(kind), points=labels(n, n))
-          for kind, n in (("midpoint", 2), ("centroid", 3))],
+        *[v("point_def", ("point", "point_kind", "points"), point=lbl, point_kind=one(kind), points=described[kind])
+          for kind in described],
         *[v("point_def", ("point", "point_kind", "points_a", "points_b"), point=lbl,
             point_kind=one(kind), points_a=labels(2, 2), points_b=labels(n, n if n == 2 else 0))
           for kind, n in (("intersect_line_line", 2), ("intersect_line_plane", 3))],
@@ -124,11 +130,11 @@ def _contract_v3() -> dict[str, Any]:
         # questions: the quantity fixes which operands must be present
         v("question", ("quantity", "points"), quantity=one("length"), points=labels(2, 2)),
         *[v("question", ("quantity", "point_kind", "points", "points_b"), quantity=one(quantity),
-            point_kind=one(kind), points=labels(n, n), points_b=labels(1, 1) if quantity == "length" else labels(2))
-          for kind, n in (("midpoint", 2), ("centroid", 3)) for quantity in ("length", "distance")],
+            point_kind=one(kind), points=described[kind], points_b=labels(1, 1) if quantity == "length" else labels(2))
+          for kind in described for quantity in ("length", "distance")],
         *[v("question", ("quantity", "point_kind", "points", "line_ref"), quantity=one("distance"),
-            point_kind=one(kind), points=labels(n, n), line_ref=ref)
-          for kind, n in (("midpoint", 2), ("centroid", 3))],
+            point_kind=one(kind), points=described[kind], line_ref=ref)
+          for kind in described],
         v("question", ("quantity", "points_a", "points_b"), quantity=one("distance"), points_a=labels(1), points_b=labels(1)),
         v("question", ("quantity", "points_a", "line_ref"), quantity=one("distance"), points_a=labels(1, 1), line_ref=ref),
         v("question", ("quantity", "points_a", "points_b"), quantity=one("angle"), points_a=labels(2), points_b=labels(2)),
@@ -150,7 +156,8 @@ def _contract_v3() -> dict[str, Any]:
               **goal, solid=solid, point=lbl, plane_relation=one("parallel_two_lines"), plane_name=lbl,
               points_a=labels(2, 2), points_b=labels(2, 2)),
         ])
-    return {"type": "OBJECT", "properties": {"facts": {"type": "ARRAY", "items": {"anyOf": variants}}}, "required": ["facts"]}
+    return {"type": "OBJECT", "properties": {"facts": {"type": "ARRAY", "items": {"description": item["description"], "anyOf": variants}}},
+            "required": ["facts"]}
 
 
 def schema_accepts(schema: dict[str, Any], value: Any) -> bool:
@@ -240,7 +247,7 @@ def run_ai_fact_route(problem_text: str, transport: Callable[[dict[str, Any]], A
     try:
         data = parse_response(body, diag)
         if RESPONSE_CONTRACT == "v3" and not schema_accepts(facts_response_schema("v3"), data):
-            raise _TuChoiAI("SCHEMA_INVALID", "phản hồi không đáp ứng hợp đồng dữ kiện/toán hạng v3")
+            raise _TuChoiAI("RESPONSE_CONTRACT_INVALID", "phản hồi không đáp ứng hợp đồng dữ kiện/toán hạng v3")
     except _TuChoiAI as e:
         return KetQuaTuyen("REFUSED", e.code, e.reason, ai=diag)
     r = run_fact_route(problem_text, data)

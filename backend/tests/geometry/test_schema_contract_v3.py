@@ -121,10 +121,37 @@ def _keys(node):
                     yield from _keys(x)
 
 
+def _structure(node):
+    """The schema without descriptions: what the provider must compile into constraints."""
+    if isinstance(node, dict):
+        return {k: _structure(v) for k, v in node.items() if k != "description"}
+    return [_structure(x) for x in node] if isinstance(node, list) else node
+
+
 def test_v3_uses_only_the_documented_schema_subset_and_stays_bounded():
     assert set(_keys(V3)) <= ALLOWED, set(_keys(V3)) - ALLOWED
-    size = len(json.dumps(V3, ensure_ascii=False))
-    assert size < 7 * len(json.dumps(fx.facts_response_schema(), ensure_ascii=False)), size
+    # Regression ceiling on the STRUCTURE the provider must compile (descriptions repeat per variant by design, see the
+    # next test; this subset has no $ref). The earlier "< 7 x flat" compared v3-without-descriptions to flat-with-them;
+    # like for like the structure was always ~11.7 x flat. Whether Gemini accepts it is NOT_MEASURED (HTTP 400 stops a run).
+    assert len(ITEM["anyOf"]) == 34
+    assert len(json.dumps(_structure(V3), ensure_ascii=False)) <= 24_500
+
+
+def test_v3_keeps_every_flat_field_description():
+    # The arms must differ in structure only: a lost description ("NGUYÊN VĂN", "ĐỨNG", ambiguous…) would confound them.
+    flat = fx.facts_response_schema()["properties"]["facts"]["items"]
+    assert ITEM["description"] == flat["description"]
+    for variant in ITEM["anyOf"]:
+        for k, s in variant["properties"].items():
+            if "description" in flat["properties"].get(k, {}) and not (variant["properties"]["kind"]["enum"] == ["right_angle"]
+                                                                         and k == "points"):
+                assert s.get("description") == flat["properties"][k]["description"], (variant["properties"]["kind"], k)
+
+
+def test_v3_centroid_keeps_every_named_vertex():
+    four = {"id": "p", "kind": "point_def", "role": "premise", "quotes": ["G là trọng tâm tứ giác ABCD"],
+            "point": "G", "point_kind": "centroid", "points": ["A", "B", "C", "D"]}
+    assert fx.schema_accepts(ITEM, four)
 
 
 def test_existing_served_described_point_to_result_line_fits_v3():
@@ -226,9 +253,21 @@ def test_intake_guard_catches_a_widened_variant():
     assert [code for code, _ in _intake_rejections(widened)] == ["FACT_INCOMPLETE"]
 
 
+@pytest.mark.parametrize("value", ["1/0", "3/0", "a/0", "2a√3/0", "0/0"])
+def test_zero_denominator_is_a_coded_refusal_not_a_crash(value):
+    # NUMBER_PATTERN (shared by TypedFact and the v3 provider schema) admits a zero denominator; the reader must refuse it.
+    from app.simulation.geometry_functions.registry import TuChoi, doc_so, so_trong
+    assert fx.schema_accepts({"type": "STRING", "pattern": fx.NUMBER_PATTERN}, value)
+    with pytest.raises(TuChoi) as e:
+        doc_so(value)
+    assert e.value.code == "SCHEMA_INVALID"
+    assert so_trong(f"AB = {value}") == []
+
+
 def test_v3_checks_the_returned_contract_before_planning(monkeypatch):
     monkeypatch.setattr(fx, "RESPONSE_CONTRACT", "v3")
     malformed = {"facts": [q(quantity="distance", points_a=["A"])]}
     body = {"candidates": [{"finishReason": "STOP", "content": {"parts": [{"text": json.dumps(malformed)}]}}]}
     result = fx.run_ai_fact_route("Tính khoảng cách từ A đến (BCD).", lambda _: body)
-    assert (result.status, result.code) == ("REFUSED", "SCHEMA_INVALID")
+    # Its own code, distinct from the planner's SCHEMA_INVALID, so contract violations are countable per arm.
+    assert (result.status, result.code) == ("REFUSED", "RESPONSE_CONTRACT_INVALID")
