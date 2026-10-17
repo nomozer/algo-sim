@@ -1,0 +1,31 @@
+{
+  "schema": "RUN/1",
+  "run_id": "scene3d-annotation-correctness",
+  "wave": "scene3d-annotation-correctness",
+  "date": "2026-10-17",
+  "environment": "LOCAL Windows 11, Python 3.12, Node, Chromium (D3D11 + SwiftShader WebGL2)",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "agents": "frontend mathematical audit, implementation, test, and browser verification by Gemini (Antigravity); independent read-only review by research subagent (d5b4214c-190a-45e8-b81b-9a42318492e5)",
+  "status": "SCENE3D_ANNOTATION_CORRECTNESS_INTEGRATED_ON_MAIN",
+  "branch": "research/scene3d-annotation-correctness",
+  "base_commit": "8427c87989487fdbcbb547ec16039d439528eb51",
+  "corrects": [
+    "docs/evaluation/geometry/runs/scene3d-educational-finalization/report.md#EDU-4"
+  ],
+  "cache_version": 125,
+  "default": "LLM_ONLY",
+  "live_calls": 0,
+  "Hybrid_product_enablement": "NO-GO (unchanged)",
+  "provider_surfaces_unchanged": true,
+  "backend_unchanged": true,
+  "results": {
+    "unit_and_regression_tests": "vitest: 68 files passed (1079 tests), 0 failed; tsc -b && vite build: exit 0",
+    "visual_audit_before": "visual/before/ — 49 baseline screenshots at 8427c879",
+    "visual_audit_after": "visual/after/audit-summary.json — 30 full-size (1280x900) screenshots across all P1 & P2 scenes (normal state, construction steps, selected result/foot, and rotated orbit views), 0 console/page errors",
+    "comparison_sheets": "visual/p1-cmp-01..07-*.png — 6 side-by-side BEFORE (8427c879) vs AFTER (scene3d-annotation-correctness) sheets",
+    "orbit_gate": "visual/receipts/orbit-gate.json — DAT on p1/p6/p7 (vong=449 deg, axis=Z[0,0,1] ||1.000||, cos in [-1.00, 1.00], snap=0, capPhat=0, yen=0.0 deg)",
+    "hybrid_section_browser_check": "visual/receipts/browser-check.json — 8 scenes, failures=[], net_retries=0",
+    "independent_review": "review.md — PASS on all code, boundary, mathematical, and visual gates",
+    "human_visual_review": "HUMAN_VISUAL_REVIEW_PASS (confirmed by user in session, 2026-10-17)"
+  }
+}
