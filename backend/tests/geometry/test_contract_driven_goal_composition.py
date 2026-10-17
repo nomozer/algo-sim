@@ -272,3 +272,17 @@ def test_frozen_surfaces_unchanged():
     assert fact_extraction.surface_fingerprint().startswith("485d3834db8b18cf")
     decl = json.dumps(registry.function_declarations(), ensure_ascii=False, sort_keys=True).encode()
     assert hashlib.sha256(decl).hexdigest().startswith("5ceb0f999d4d7c1e")
+
+
+def test_capability_disabled_negative_reconciliation():
+    reconciled = json.loads((RUN / "ablation-reconciled.json").read_text(encoding="utf-8"))
+    for arm, summary in reconciled["safety_summary_by_arm"].items():
+        assert summary["safety_wrong_served"] == 0, f"Safety wrong_served > 0 in {arm}: {summary}"
+    audit = reconciled["capability_disabled_negative_audit"]["new/negative::centroid-without-contract"]
+    assert audit["negative_kind"] == "capability_disabled_negative"
+    assert audit["discovery_twin"] == "new/discovery::centroid-to-plane"
+    assert audit["arms"]["NEW[production]"]["reconciled_outcome"] == "correct_refusal_disabled_capability"
+    assert audit["arms"]["NEW[centroid]"]["raw_outcome"] == "wrong_served"
+    assert audit["arms"]["NEW[centroid]"]["reconciled_outcome"] == "correct_served_enabled_capability"
+    assert audit["arms"]["NEW[centroid]"]["answers"] == {"q": "4/3"}
+    assert audit["arms"]["NEW[centroid]"]["squares"] == {"q": "16/9"}

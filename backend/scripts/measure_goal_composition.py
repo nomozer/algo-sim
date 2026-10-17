@@ -85,10 +85,10 @@ def run_arm_in_memory(rows: list[dict], label: str, variant: str) -> dict:
             cos2s = {}
             if r.status == "SERVED":
                 fm = r.exec_result.final_memory
-                for q in (r.answers or {}):
+                for q, ans_str in (r.answers or {}).items():
                     val = fm.get(f"kq_{q}")
                     squares[q] = fd._square(val)
-                    if isinstance(val, (int, Fraction)):
+                    if isinstance(val, (int, Fraction)) and str(ans_str).startswith("cos²="):
                         cos2s[q] = str(Fraction(val))
             tracemalloc.start()
             t0 = time.perf_counter()
@@ -153,10 +153,114 @@ def classify_row(row: dict, got: dict) -> str:
     return fd.classify(row, got)
 
 
+#: Capability-disabled negatives: valid, source-grounded mathematical problems placed in a `negative` split solely to
+#: verify fail-closed refusal (`UNSUPPORTED_CAPABILITY`) when a producer contract is absent from the production catalog.
+#: Paired with their exact discovery twin and independent oracle squared value when the capability arm is enabled.
+CAPABILITY_DISABLED_NEGATIVES = {
+    "new/negative::centroid-without-contract": {
+        "enabled_in_arms": ("NEW[centroid]",),
+        "discovery_twin": "new/discovery::centroid-to-plane",
+        "oracle_expected_squared": {"q": "16/9"},
+        "oracle_expected_answer": {"q": "4/3"},
+        "disabled_expected_codes": ["UNSUPPORTED_CAPABILITY"],
+    }
+}
+
+
+def reconcile_ablation(ablation_path: Path, out_path: Path) -> None:
+    """Reconcile raw ablation classifications by separating safety negatives from capability-disabled negatives,
+    without modifying raw ablation.json or any gold expectations."""
+    ablation = json.loads(ablation_path.read_text(encoding="utf-8"))
+    cases = ablation["cases"]
+    reconciled_counts: dict[str, dict[str, dict[str, int]]] = {}
+    safety_summary: dict[str, dict[str, int]] = {}
+    capability_disabled_audit: dict[str, dict] = {}
+
+    for arm in ablation["counts"]:
+        reconciled_counts[arm] = {}
+        safety_summary[arm] = {
+            "safety_wrong_served": 0,
+            "capability_disabled_raw_wrong_served": 0,
+            "capability_enabled_oracle_verified_served": 0,
+        }
+
+    for cid, by_arm in sorted(cases.items()):
+        corpus = cid.split("::", 1)[0]
+        cap_spec = CAPABILITY_DISABLED_NEGATIVES.get(cid)
+        if cap_spec is not None:
+            twin_by_arm = cases.get(cap_spec["discovery_twin"], {})
+            capability_disabled_audit[cid] = {
+                "negative_kind": "capability_disabled_negative",
+                "discovery_twin": cap_spec["discovery_twin"],
+                "oracle_expected_squared": cap_spec["oracle_expected_squared"],
+                "oracle_expected_answer": cap_spec["oracle_expected_answer"],
+                "arms": {},
+            }
+        for arm, res in by_arm.items():
+            raw_outcome = res["outcome"]
+            if cap_spec is not None:
+                if arm in cap_spec["enabled_in_arms"]:
+                    twin_res = twin_by_arm.get(arm, {})
+                    oracle_match = (
+                        res["status"] == "SERVED"
+                        and res.get("squares") == cap_spec["oracle_expected_squared"]
+                        and res.get("answers") == cap_spec["oracle_expected_answer"]
+                        and twin_res.get("status") == "SERVED"
+                        and twin_res.get("squares") == res.get("squares")
+                    )
+                    reconciled = "correct_served_enabled_capability" if oracle_match else "safety_wrong_served"
+                    if raw_outcome == "wrong_served":
+                        safety_summary[arm]["capability_disabled_raw_wrong_served"] += 1
+                    if oracle_match:
+                        safety_summary[arm]["capability_enabled_oracle_verified_served"] += 1
+                    else:
+                        safety_summary[arm]["safety_wrong_served"] += 1
+                else:
+                    reconciled = (
+                        "correct_refusal_disabled_capability"
+                        if res["status"] == "REFUSED" and res["code"] in cap_spec["disabled_expected_codes"]
+                        else "correct_refusal_lying_contract_caught"
+                        if res["status"] == "REFUSED" and res["code"] == "ENGINE_SELF_CHECK_FAILED"
+                        else raw_outcome
+                    )
+                    if res["status"] == "SERVED":
+                        safety_summary[arm]["safety_wrong_served"] += 1
+                capability_disabled_audit[cid]["arms"][arm] = {
+                    "raw_outcome": raw_outcome,
+                    "reconciled_outcome": reconciled,
+                    "status": res["status"],
+                    "code": res["code"],
+                    "answers": res["answers"],
+                    "squares": res["squares"],
+                }
+            else:
+                reconciled = raw_outcome
+                if raw_outcome == "wrong_served":
+                    safety_summary[arm]["safety_wrong_served"] += 1
+            reconciled_counts[arm].setdefault(corpus, Counter())[reconciled] += 1
+
+    for arm in reconciled_counts:
+        reconciled_counts[arm] = {c: dict(cnt) for c, cnt in sorted(reconciled_counts[arm].items())}
+
+    out_data = {
+        "schema": "goal_composition_ablation_reconciled/1",
+        "source_ablation": str(ablation_path.relative_to(ROOT)).replace("\\", "/"),
+        "model_calls": 0,
+        "safety_summary_by_arm": safety_summary,
+        "capability_disabled_negative_audit": capability_disabled_audit,
+        "raw_counts": ablation["counts"],
+        "reconciled_counts": reconciled_counts,
+    }
+    fd._write(out_path, out_data)
+    print(json.dumps({
+        "safety_summary_by_arm": safety_summary,
+        "capability_disabled_negative_audit": capability_disabled_audit,
+    }, ensure_ascii=False, indent=2))
+
+
 def run_all(out_dir: Path) -> None:
     sys.path.insert(0, str(ROOT / "backend"))
     baseline_reg_path = out_dir / "baseline/regression-174.json"
-    baseline_bundle_path = out_dir / "baseline/bundle-174.json"
     baseline_reg = json.loads(baseline_reg_path.read_text(encoding="utf-8"))
     baseline_rows_by_key = {(r["corpus"], r["id"]): r for r in baseline_reg["rows"]}
 
@@ -219,7 +323,7 @@ def run_all(out_dir: Path) -> None:
                 "plan": got["plan"],
                 "plan_seconds": got["plan_seconds"],
                 "route_seconds": got["route_seconds"],
-                "plan_peak_bytes": got["plan_peak_bytes"],
+                "plan_peak_bytes": peak if "peak" in locals() else got["plan_peak_bytes"],
             }
         summary_counts[key] = {c: dict(cnt) for c, cnt in sorted(counts.items())}
 
@@ -252,28 +356,6 @@ def run_all(out_dir: Path) -> None:
         "cases": per_case,
     }
     fd._write(out_dir / "ablation.json", ablation_out)
-    print(json.dumps({
-        "prior_174_diffs_vs_baseline": len(diffs_vs_baseline),
-        "all_214_diffs_prod_vs_reversed": len(prod_vs_rev_all),
-        "goal_composition_counts_production": {
-            k: v for k, v in summary_counts["NEW[production]"].items() if k.startswith("goal_composition/")
-        },
-        "goal_composition_counts_centroid": {
-            k: v for k, v in summary_counts["NEW[centroid]"].items() if k.startswith("goal_composition/")
-        },
-        "goal_composition_counts_no_area": {
-            k: v for k, v in summary_counts["NEW[no-area]"].items() if k.startswith("goal_composition/")
-        },
-        "goal_composition_counts_no_midpoint": {
-            k: v for k, v in summary_counts["NEW[no-midpoint]"].items() if k.startswith("goal_composition/")
-        },
-        "goal_composition_counts_lying": {
-            k: v for k, v in summary_counts["NEW[lying]"].items() if k.startswith("goal_composition/")
-        },
-        "goal_composition_counts_lying_area_verifier": {
-            k: v for k, v in summary_counts["NEW[lying-area-verifier]"].items() if k.startswith("goal_composition/")
-        },
-    }, indent=2))
 
 
 def main() -> None:
@@ -281,9 +363,14 @@ def main() -> None:
     sub = ap.add_subparsers(dest="cmd", required=True)
     r = sub.add_parser("run-all")
     r.add_argument("--out-dir", type=Path, default=RUN)
+    rec = sub.add_parser("reconcile")
+    rec.add_argument("--ablation", type=Path, default=RUN / "ablation.json")
+    rec.add_argument("--out", type=Path, default=RUN / "ablation-reconciled.json")
     args = ap.parse_args()
     if args.cmd == "run-all":
         run_all(args.out_dir.resolve())
+    elif args.cmd == "reconcile":
+        reconcile_ablation(args.ablation.resolve(), args.out.resolve())
 
 
 if __name__ == "__main__":
