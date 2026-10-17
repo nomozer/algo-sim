@@ -116,10 +116,12 @@ export const KHE_NHAN_PX = 2;
  * trước; với ký hiệu ngắn nó giấu oan đỉnh S cạnh H1 và A′, B′ cạnh H1 (run `scene3d-construction-audit`).
  */
 export function locNhanChongNhau(
-  nhan: { id: string; x: number; y: number; uuTien: number; w: number; h: number }[],
+  nhan: { id: string; x: number; y: number; duoi?: boolean; uuTien: number; w: number; h: number }[],
 ): Set<string> {
-  const hop = (n: { x: number; y: number; w: number; h: number }) =>
-    [n.x - n.w / 2, n.y - 1.4 * n.h, n.x + n.w / 2, n.y - 0.4 * n.h];
+  const hop = (n: { x: number; y: number; duoi?: boolean; w: number; h: number }) =>
+    n.duoi
+      ? [n.x - n.w / 2, n.y + 0.4 * n.h, n.x + n.w / 2, n.y + 1.4 * n.h]
+      : [n.x - n.w / 2, n.y - 1.4 * n.h, n.x + n.w / 2, n.y - 0.4 * n.h];
   const giu: number[][] = [];
   const ket = new Set<string>();
   for (const n of [...nhan].sort((a, b) => b.uuTien - a.uuTien || a.id.localeCompare(b.id))) {

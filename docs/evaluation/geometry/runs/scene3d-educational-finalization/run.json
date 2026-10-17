@@ -1,0 +1,28 @@
+{
+  "schema": "RUN/1",
+  "run_id": "scene3d-educational-finalization",
+  "wave": "scene3d-educational-finalization",
+  "date": "2026-10-17",
+  "environment": "LOCAL Windows 11, Node, Chromium (SwiftShader + WebGL2)",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "agents": "frontend audit, implementation, test, browser verification by Gemini (Antigravity); independent read-only review by research subagent",
+  "status": "SCENE3D_EDUCATIONAL_FINALIZATION_INTEGRATED_ON_MAIN",
+  "branch": "research/scene3d-educational-finalization",
+  "base_commit": "76dca142d5b25c288863dae147943404f4184598",
+  "main_before": "bc0445ae4a4376c97af6ef9e1a21fa8fb0f5a3f8",
+  "cache_version": 125,
+  "default": "LLM_ONLY",
+  "live_calls": 0,
+  "Hybrid_product_enablement": "NO-GO (unchanged)",
+  "provider_surfaces_unchanged": true,
+  "backend_unchanged": true,
+  "results": {
+    "unit_and_regression_tests": "vitest: 68 files passed (1077 tests), 0 failed; tsc -b && vite build: exit 0",
+    "visual_audit_before": "visual/before/audit-summary.json — 34 screenshots across 10 benchmark scenes at 76dca142",
+    "visual_audit_after": "visual/after/audit-summary.json — 49 full-size (1280x900) screenshots across 12 benchmark and section scenes (including step-by-step construction), 0 console/page errors, 0 label overlaps, 0 unplaced annotations",
+    "comparison_sheets": "visual/cmp-01..09-*.png — 7 side-by-side BEFORE vs AFTER sheets",
+    "orbit_gate": "visual/receipts/orbit-gate.json — DAT on p1/p6/p7 (vong=449 deg, axis=Z[0,0,1] ||1.000||, cos in [-1.00, 1.00], snap=0, capPhat=0, yen=0.0 deg)",
+    "hybrid_section_browser_check": "visual/receipts/browser-check.json — 8 scenes, failures=[], net_retries=0",
+    "human_visual_review": "HUMAN_VISUAL_REVIEW_PASS (confirmed by user in session, 2026-10-17)"
+  }
+}

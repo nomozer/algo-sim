@@ -297,9 +297,9 @@ export function chonHuongNhin(diem: Diem3[], canh: [number, number][], mat: numb
   let tot: { huong: Diem3; diem: number; dat: boolean } | null = null;
   for (const { huong, q } of cac) {
     const dat = datNguong(q, tran);
-    const diemSo = q.dienTichBao / (tran.dienTichBao || 1) + 2 * Math.min(q.khoangDinhCanhMin, 0.3)
-      + Math.min(q.khoangDinhMin, 0.5) + 0.5 * q.doSau / (tran.doSau || 1)
-      - 0.4 * (1 - tich(huong, quen));
+    const diemSo = q.dienTichBao / (tran.dienTichBao || 1) + 2 * Math.min(q.khoangDinhCanhMin, 0.2)
+      + Math.min(q.khoangDinhMin, 0.38) + 0.5 * q.doSau / (tran.doSau || 1)
+      - 0.85 * (1 - tich(huong, quen));
     if (!tot || (dat && !tot.dat) || (dat === tot.dat && diemSo > tot.diem)) {
       tot = { huong, diem: diemSo, dat };
     }

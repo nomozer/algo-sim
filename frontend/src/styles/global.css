@@ -2779,14 +2779,14 @@ html {
   min-height: 320px;
   border: 1px solid var(--hairline);
   border-radius: var(--rounded-lg);
-  background: var(--canvas-soft);
+  background: #f8fafc;
   overflow: hidden;
-  /* Nền rất nhạt hướng tâm: mắt bám vào giữa khung, nơi hình luôn nằm. Đây là
-     một tầng nền, không phải hiệu ứng — không viền phát sáng, không bóng màu. */
+  /* Nền trắng sáng sách giáo khoa với chuyển sắc cực nhẹ hướng tâm: giữ mặt khối xanh xám trong trẻo,
+     không pha tông vàng ấm của trang vào mặt bán trong suốt. */
   background-image: radial-gradient(
-    ellipse 70% 60% at 50% 45%,
-    var(--canvas) 0%,
-    var(--canvas-soft) 100%
+    ellipse 75% 65% at 50% 45%,
+    #ffffff 0%,
+    #f8fafc 100%
   );
 }
 
@@ -2804,8 +2804,8 @@ html {
   left: 0;
   padding: 1px 5px;
   border-radius: var(--rounded-sm);
-  background: color-mix(in srgb, var(--canvas) 82%, transparent);
-  color: var(--ink-secondary);
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--ink);
   font-size: 0.8125rem;
   font-weight: 600;
   line-height: 1.2;
