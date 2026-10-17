@@ -102,3 +102,12 @@ Sau phép nhúng metric `veKhongGian` ($T^T T = G$) tại [`scene3d-chart.ts`](.
    - `node scripts/scene3d-orbit-gate.mjs`: **17/17 PASS**.
    - `node scripts/hybrid-section-visual-check.mjs --gate-all`: **14/14 PASS**.
    - Bộ 30 ảnh `1280×900` (`after/`) và 6 bảng đối chiếu `BEFORE/AFTER` (`p1-cmp-*.png`) lưu tại `docs/evaluation/geometry/runs/scene3d-annotation-correctness/visual/`.
+
+---
+
+## 4. Nghiệm Thu Độc Lập, Nghiệm Thu Thị Giác Người Dùng & Cổng T3 Có Thẩm Quyền
+
+- **Independent Read-Only Review (`review.md`):** Subagent `research` (`d5b4214c-190a-45e8-b81b-9a42318492e5`) kiểm toán toàn bộ diff (`scene3d-model.ts`, `scene3d-view.tsx`, `scene3d.test.tsx`, `scene3d-annotations.test.ts`), 68 file Vitest (`1.079` tests) và 30 ảnh `1280×900` (`after/`) + 6 bảng đối chiếu `BEFORE/AFTER` (`p1-cmp-*.png`): **PASS trên toàn bộ cổng mã nguồn, ranh giới kiến trúc, toán học và thị giác**.
+- **Human Visual Review:** Người dùng xác nhận **`HUMAN_VISUAL_REVIEW_PASS`** và đồng ý **GO INTEGRATION** trong phiên làm việc ngày `2026-10-17`.
+- **Final Authoritative T3 (`verification/t3-pass.json`, `verification/t3-authoritative.log`):** Chạy trên worktree detached sạch `D:/tmp/s3d-ann-t3` tại commit `29127ba2cccbd29022d802971fbd5e6860f7cc6a` (`product_commit_sha = e218b5ef`, `tree_hash = 57c7f5db…` 110 file MATCH): **`FULL_PRODUCT_GATE_PASS`** (`exit_code = 0`, `457.5s`; `pytest` 10.263 passed / 1 skipped / 2 deselected / 9 xfailed; `vitest` 68 files / 1.079 passed; `typecheck + build` PASS; demo khóa luận `5/5`; bề mặt sập `6/6`, 0 lỗi HTTP 500).
+

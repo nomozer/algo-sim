@@ -9,6 +9,9 @@
   "status": "SCENE3D_ANNOTATION_CORRECTNESS_INTEGRATED_ON_MAIN",
   "branch": "research/scene3d-annotation-correctness",
   "base_commit": "8427c87989487fdbcbb547ec16039d439528eb51",
+  "product_commit": "e218b5ef06783af41fd53f1d25eca76d7677d42a",
+  "refreeze_commit": "b2352aae156968d9fee98ad376d56ebfd97d92db",
+  "verification_commit": "29127ba2cccbd29022d802971fbd5e6860f7cc6a",
   "corrects": [
     "docs/evaluation/geometry/runs/scene3d-educational-finalization/report.md#EDU-4"
   ],
@@ -26,6 +29,7 @@
     "orbit_gate": "visual/receipts/orbit-gate.json — DAT on p1/p6/p7 (vong=449 deg, axis=Z[0,0,1] ||1.000||, cos in [-1.00, 1.00], snap=0, capPhat=0, yen=0.0 deg)",
     "hybrid_section_browser_check": "visual/receipts/browser-check.json — 8 scenes, failures=[], net_retries=0",
     "independent_review": "review.md — PASS on all code, boundary, mathematical, and visual gates",
-    "human_visual_review": "HUMAN_VISUAL_REVIEW_PASS (confirmed by user in session, 2026-10-17)"
+    "human_visual_review": "HUMAN_VISUAL_REVIEW_PASS (confirmed by user in session, 2026-10-17)",
+    "authoritative_t3": "verification/t3-pass.json & verification/t3-authoritative.log (SHA256 d9ac3922...) — FULL_PRODUCT_GATE_PASS at 29127ba2 (pytest 10263 passed/1 skipped/2 deselected/9 xfailed, vitest 68 files/1079 passed, build PASS, demo 5/5, crash surface 6/6 PASS, 457.5s)"
   }
 }

@@ -26,7 +26,7 @@ cache125/LLM_ONLY/Hybrid NO-GO.
 **Corrective wave (`scene3d-annotation-correctness`, user `HUMAN_VISUAL_REVIEW_PASS` + GO INTEGRATION in session, 2026-10-17):**
 product commit `e218b5ef` (from `main` `8427c879`), candidate `product_commit_sha` refrozen at `b2352aae` (`tree_hash` `57c7f5db…`,
 110 files unchanged), independent review PASS ([`review.md`](evaluation/geometry/runs/scene3d-annotation-correctness/review.md)),
-clean detached T3 `FULL_PRODUCT_GATE_PASS`, fast-forwarded onto `main` and pushed without force; record
+clean detached T3 at `29127ba2` `FULL_PRODUCT_GATE_PASS` (`verification/t3-pass.json`), fast-forwarded onto `main` and pushed without force; record
 [`integration.md`](evaluation/geometry/runs/scene3d-annotation-correctness/integration.md) and
 [`report.md`](evaluation/geometry/runs/scene3d-annotation-correctness/report.md). Audits and resolves P1 (world-space
 `dot(u_world, v_world) = 0.000000` across all 9 witnesses; `huongChanVuongGoc` aligns plane-witness tangent `u` with a

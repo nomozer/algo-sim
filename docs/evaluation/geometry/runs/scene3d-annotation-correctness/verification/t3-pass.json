@@ -1,0 +1,29 @@
+{
+  "schema": "T3_AUTHORITATIVE_VERIFICATION/1",
+  "task": "scene3d-annotation-correctness",
+  "branch": "research/scene3d-annotation-correctness",
+  "verified_commit_short": "29127ba2",
+  "verified_commit_sha": "29127ba2cccbd29022d802971fbd5e6860f7cc6a",
+  "product_commits": ["e218b5ef"],
+  "refreeze_commit": "b2352aae",
+  "candidate_tree_hash": "57c7f5dbedaa7b21c66345fa4d6f0e1ea461a425293d44035b5678e12d76f96e",
+  "measured_files": 110,
+  "cache_version": 125,
+  "default_mode": "LLM_ONLY",
+  "model_request_count": 0,
+  "environment": "detached worktree D:/tmp/s3d-ann-t3 at 29127ba2; status empty before and after; frontend/node_modules junction to the main checkout; Python = main checkout backend/.venv 3.12",
+  "pre_candidate_verify": "MATCH (57c7f5dbedaa7b21..., 110 files, product_commit_sha=e218b5ef)",
+  "post_candidate_verify": "MATCH (57c7f5dbedaa7b21..., 110 files, product_commit_sha=e218b5ef)",
+  "gates": {
+    "pytest_backend": "10263 passed, 1 skipped, 2 deselected, 9 xfailed (436.3s)",
+    "vitest_frontend": "68 files, 1079 passed (10.4s)",
+    "typecheck_build": "PASS (9.5s)",
+    "demo_replay": "PASS 5/5, 1/1 (0.8s)",
+    "crash_surface": "6/6 PASS, 0 HTTP 500 (0.6s)"
+  },
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "exit_code": 0,
+  "duration_seconds": 457.5,
+  "log": "t3-authoritative.log",
+  "log_sha256": "d9ac3922aa8b16309114dbaef99b26deab003d72abf40f614bdddc3556b8341e (LF bytes as written; the checkout may convert line endings)"
+}
