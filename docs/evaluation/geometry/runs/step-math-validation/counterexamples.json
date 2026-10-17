@@ -1,0 +1,437 @@
+{
+  "run": "step-math-validation",
+  "total_counterexamples": 10,
+  "all_detected_by_oracle": true,
+  "counterexamples": [
+    {
+      "id": "P3.1",
+      "category": "Mặt phẳng gần ngang nhưng không hoàn toàn ngang (Nearly horizontal plane)",
+      "minimal_input": {
+        "plane_point": [
+          0,
+          0,
+          1
+        ],
+        "plane_normal": [
+          1,
+          0,
+          6
+        ],
+        "unit_normal_uz": 0.986394,
+        "defining_points": {
+          "P0": [
+            0,
+            0,
+            1
+          ],
+          "P1": [
+            6,
+            0,
+            0
+          ],
+          "P2": [
+            0,
+            2,
+            1
+          ]
+        }
+      },
+      "expected_math": "All polygon vertices V of plane (x - P0)·n = 0 with n=(1,0,6) must satisfy x + 6(z - 1) = 0 (max residual = 0); non-incident points must not be snapped onto the plane.",
+      "actual_output": {
+        "branch_moRongDaGiacMatPhang_is_horizontal_override": true,
+        "branch_max_plane_residual": 1.183673,
+        "branch_vertices": [
+          [
+            -1.2000000000000002,
+            -1.2000000000000002,
+            1.0
+          ],
+          [
+            7.2,
+            -1.2000000000000002,
+            1.0
+          ],
+          [
+            7.2,
+            3.2,
+            1.0
+          ],
+          [
+            -1.2000000000000002,
+            3.2,
+            1.0
+          ]
+        ],
+        "main_daGiacMatPhang_snapped_non_incident_ids": [
+          "Q_non_incident"
+        ],
+        "oracle_verdict_on_horizontalized_point": "INVALID",
+        "oracle_failures": [
+          "Plane plane_nearly_horiz defining point P1 does not satisfy n.(P-P0)=0 (err=9.864e-01)"
+        ]
+      },
+      "root_cause": "1) In `research/scene3d-plane-grid-camera` (`frontend/src/simulations/domains/geometry/scene3d-model.ts:1049`), `const ngang = Math.abs(u[2]) > 0.98;` classifies any plane with |u_z| > 0.98 (tilt up to 11.48°, e.g. n=(1,0,6) with |u_z|=0.9864) as strictly horizontal and emits vertices `[diemMp[0]+s, diemMp[1]+t, diemMp[2]]` with constant z, violating (V - P0)·n = 0 by up to 1.18 units. 2) On `main` (`4abc4afb`, `scene3d-model.ts:926`), `daGiacMatPhang` checks `Math.abs(h) <= 1e-3` across all `diemNen`, snapping non-incident points (`Q_non_incident`) into the plane polygon.",
+      "oracle_detected": true
+    },
+    {
+      "id": "P3.2",
+      "category": "Mặt phẳng gần đứng (Nearly vertical plane)",
+      "minimal_input": {
+        "plane_normal": [
+          100,
+          0,
+          1
+        ],
+        "plane_point": [
+          0,
+          0,
+          0
+        ],
+        "defining_points": {
+          "A": [
+            0,
+            0,
+            0
+          ],
+          "B": [
+            0,
+            2,
+            0
+          ],
+          "S_vertical_approx": [
+            0,
+            0,
+            2
+          ]
+        }
+      },
+      "expected_math": "For plane 100x + z = 0, point S at z=2 must have x = -1/50 = -0.02; approximating a nearly vertical plane (89.43°) by a vertical plane x=0 leaves residual |n·(S-P0)|/||n|| = 0.019999 > 1e-6.",
+      "actual_output": {
+        "oracle_verdict": "INVALID",
+        "oracle_failures": [
+          "Plane plane_nearly_vert defining point S does not satisfy n.(P-P0)=0 (err=2.000e-02)"
+        ]
+      },
+      "root_cause": "Approximating a nearly vertical plane n=(100,0,1) by vertical x=0 violates exact point-plane incidence `|n·(S - P0)| / ||n|| = 2 / sqrt(10001) = 0.019999 > PLANE_TOL`. Furthermore, in frontend `scene3d-model.ts` (`catDaGiacTheoDay`), clipping a nearly vertical plane purely at `zMin = min(diemNen.z)` discards any valid lower half-space constructions when an intersection point lies below `zMin`.",
+      "oracle_detected": true
+    },
+    {
+      "id": "P3.3",
+      "category": "Đường thẳng nghiêng không vuông góc mặt phẳng (Oblique line not perpendicular to plane)",
+      "minimal_input": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          2,
+          0,
+          0
+        ],
+        "C": [
+          0,
+          2,
+          0
+        ],
+        "S": [
+          1,
+          1,
+          3
+        ],
+        "segment_id": "seg_cao_SA",
+        "claimed_foot": "A"
+      },
+      "expected_math": "Vector SA = (1,1,3) is NOT orthogonal to AB=(2,0,0) (cos = 1/sqrt(11) = 0.3015 != 0); true foot of S on (ABC) is H=(1,1,0) with altitude h=3, and no right-angle marker may be drawn at A.",
+      "actual_output": {
+        "frontend_draws_two_right_angle_markers_at_A": true,
+        "frontend_marker_d_tilt_from_vertical": 0.426401,
+        "frontend_warnings": [
+          "FE_OBLIQUE_HEIGHT_MARKER on segment seg_cao_SA (['S', 'A']): oblique direction d=(0.30151134457776363, 0.30151134457776363, 0.9045340337332909) tilts right-angle markers out of base plane (|e1_z|=0.2860)"
+        ],
+        "oracle_verdict": "INVALID",
+        "oracle_failures": [
+          "Quantity q_dist perpendicular_witness (S->A) not G-orthogonal to (A->B) (cos=3.015e-01)",
+          "Quantity q_dist perpendicular_witness (S->A) not G-orthogonal to (A->C) (cos=3.015e-01)",
+          "Quantity q_dist (distance_point_plane) value=3.3166247903554 != expected=3.0"
+        ]
+      },
+      "root_cause": "In `frontend/src/simulations/domains/geometry/scene3d-view.tsx:1173-1205` (`main` `4abc4afb`, and lines 1180-1213 in `scene3d-plane-grid-camera`), `buildObject3D` checks `const laChieuCao = o.id.includes('cao') || /chiều cao/i.test(o.label) || /chiều cao/i.test(o.role)` and unconditionally draws two right-angle markers via `khungGocVuong(chan, dinh)` without checking if `d = normalize(dinh - chan)` is perpendicular to the base plane.",
+      "oracle_detected": true
+    },
+    {
+      "id": "P3.4",
+      "category": "Quan hệ vuông góc chưa được chứng nhận (Uncertified perpendicularity relation)",
+      "minimal_input": {
+        "segment_id": "doan_cao_gia",
+        "source": "segment_between",
+        "perpendicular_witness": null
+      },
+      "expected_math": "Right-angle markers must only be rendered when backed by an explicit mathematical certificate (`perpendicular_witness`, `project_point_to_plane`, `altitude_from_to_plane`, or `plane_perpendicular_to_line`), never from substring matching on `o.id` / `o.label`.",
+      "actual_output": {
+        "frontend_laChieuCao_triggered": true,
+        "frontend_warnings": [
+          "FE_UNCERTIFIED_HEIGHT_MARKER on segment doan_cao_gia (['S', 'A']): triggers `laChieuCao` heuristic in scene3d-view.tsx without perpendicularity certificate"
+        ]
+      },
+      "root_cause": "In `frontend/src/simulations/domains/geometry/scene3d-view.tsx:1173` (`main`) and `:1180` (`scene3d-plane-grid-camera`), `const laChieuCao = o.id.includes('cao') || (o.label && /chiều cao/i.test(o.label)) || (o.role && /chiều cao/i.test(o.role));` synthesizes two right-angle markers solely from string matching (`'cao'`) even when `source == 'segment_between'` and no perpendicularity witness exists in `scene.quantities` or `scene.objects`.",
+      "oracle_detected": true
+    },
+    {
+      "id": "P3.5",
+      "category": "Hai dấu góc vuông được dựng từ các hướng đã bị phép chiếu đồ họa chỉnh sửa (Two right-angle markers from graphically projected directions)",
+      "minimal_input": {
+        "chan": [
+          0,
+          0,
+          0
+        ],
+        "dinh": [
+          1,
+          2,
+          2
+        ],
+        "true_plane_edges": {
+          "AB": [
+            2,
+            -1,
+            0
+          ],
+          "AC": [
+            0,
+            2,
+            -2
+          ]
+        }
+      },
+      "expected_math": "Right-angle markers for a line perpendicular to a plane must have their base legs aligned with actual constructed rays/edges `(foot -> P_i)` in that plane (as `projectionWitnessesAt` does via `plane_point_ids`), NOT arbitrary Gram-Schmidt projections of the world `[1,0,0]` / `[0,1,0]` axes.",
+      "actual_output": {
+        "khungGocVuong_e1": [
+          0.942809,
+          -0.235702,
+          -0.235702
+        ],
+        "khungGocVuong_e2": [
+          0.0,
+          0.707107,
+          -0.707107
+        ],
+        "sin_angle_between_e1_and_AB": 0.316228,
+        "sin_angle_between_e2_and_AC": 0.0,
+        "e1_z_tilt_from_horizontal": 0.235702
+      },
+      "root_cause": "In `frontend/src/simulations/domains/geometry/scene3d-camera.ts:375-383` (`khungGocVuong`) called by `scene3d-view.tsx:1178-1204`, `e1 = normalize(truc - (truc·d)d)` and `e2 = d × e1` are synthesized by projecting the world coordinate axis `truc = [1,0,0]` (or `[0,1,0]`) orthogonal to `d` and drawing two right-angle markers `[e1, d]` and `[e2, d]`. When `d` is tilted or the base polygon is rotated, `e1` and `e2` point into empty space (`sin(e1, AB) = 0.2981 != 0`, `|e1_z| = 0.2357 != 0`) instead of lying along actual constructed lines in the plane.",
+      "oracle_detected": true
+    },
+    {
+      "id": "P3.6",
+      "category": "Ba điểm thẳng hàng khi được dùng để xác định mặt phẳng (Three collinear points used to define a plane)",
+      "minimal_input": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          2,
+          2,
+          0
+        ],
+        "M": [
+          1,
+          1,
+          0
+        ],
+        "plane_depends": [
+          "A",
+          "B",
+          "M"
+        ]
+      },
+      "expected_math": "(B - A) × (M - A) = (0, 0, 0); three collinear points span a 1D line and leave the plane normal underdetermined (1-parameter family of planes). Must fail-closed.",
+      "actual_output": {
+        "oracle_verdict": "INVALID",
+        "oracle_failures": [
+          "Plane plane_ABM constructed from collinear points ['A', 'B', 'M'] (||u x v||=0.000e+00)"
+        ]
+      },
+      "root_cause": "Backend kernel `Plane3.through(a, b, c)` (`backend/app/simulation/geometry/kernel.py:194-199`) checks `if n.is_zero(): raise GeometryError(ERR_THANG_HANG, ...)` and refuses collinear plane triples fail-closed. Our independent oracle (`1_incidence`) also independently checks `||(P2-P1) x (P3-P1)|| > TOL` on every `construct_plane` object.",
+      "oracle_detected": true
+    },
+    {
+      "id": "P3.7",
+      "category": "Thiết diện có đỉnh sai cạnh hoặc sai mặt (Section with vertex on wrong edge or wrong face)",
+      "minimal_input": {
+        "cutting_plane": "z = 1",
+        "solid_faces": [
+          [
+            "A",
+            "B",
+            "C"
+          ],
+          [
+            "S",
+            "A",
+            "B"
+          ],
+          [
+            "S",
+            "B",
+            "C"
+          ],
+          [
+            "S",
+            "C",
+            "A"
+          ]
+        ],
+        "corrupted_section_vertex": [
+          1,
+          1,
+          1
+        ],
+        "claimed_edge": [
+          "S",
+          "C"
+        ],
+        "corrupted_step_face_index": 0
+      },
+      "expected_math": "Intersection of z=1 with edge SC ((0,0,2)->(0,2,0)) is (0,1,1), not (1,1,1); and boundary segment (0,0,1)->(1,0,1) lies on face[1] (SAB), not face[0] (ABC, z=0).",
+      "actual_output": {
+        "oracle_verdict": "INVALID",
+        "oracle_failures": [
+          "Section sec_bad vertex (1.0, 1.0, 1.0) does not lie on edge ['S', 'C']",
+          "Section sec_bad vertex[2]=(1.0, 1.0, 1.0) is NOT on any edge of solid solid_SABC",
+          "Section sec_bad missed solid-plane intersection point (0.0, 1.0, 1.0)",
+          "Section sec_bad boundary segment on face[0] has endpoint off-face (da=1.000e+00, db=1.000e+00)",
+          "Event e1 (step 0) depends on plane_cut which is created later at step 999999",
+          "Object sec_bad created at step 0 depends on plane_cut created later at step 999999"
+        ]
+      },
+      "root_cause": "Category `9_section` independently intersects every topological edge of `solid3.faces` with the cutting plane, verifies each `vertex_sources` entry lies collinearily on its claimed edge with `t in [0,1]`, and verifies each `steps[k]` segment lies on `faces[face_index]`.",
+      "oracle_detected": true
+    },
+    {
+      "id": "P3.8",
+      "category": "Điểm trung gian xuất hiện trước khi được dựng (Intermediate point appearing before it is constructed)",
+      "minimal_input": {
+        "event_0": {
+          "creates": [
+            "seg_CM"
+          ],
+          "depends": [
+            "C",
+            "M"
+          ]
+        },
+        "event_1": {
+          "creates": [
+            "M"
+          ],
+          "depends": [
+            "A",
+            "B"
+          ]
+        },
+        "formation_step_0_visible_ids": [
+          "A",
+          "B",
+          "C",
+          "seg_CM"
+        ]
+      },
+      "expected_math": "For every event k and formation step s, every operand/dependency D of a constructed or visible object X must satisfy t_create(D) <= t_create(X) and D in visible_ids[s].",
+      "actual_output": {
+        "oracle_verdict": "INVALID",
+        "oracle_failures": [
+          "Event e0 (step 0) depends on M which is created later at step 1",
+          "Object seg_CM created at step 0 depends on M created later at step 1",
+          "Formation step[0] (fs0) makes seg_CM visible before its dependency M is visible",
+          "Formation step[0]: seg_CM created at 0 before intermediate dependency M at 1",
+          "Formation step[1]: seg_CM created at 0 before intermediate dependency M at 1"
+        ]
+      },
+      "root_cause": "Category `10_step_dependency_ordering` checks both event topological order (`created_at[dep] <= step_idx`) and `formation.steps` visibility closure (`dep_id in vis_set` and `created_at[dep_id] <= created_at[vid]`).",
+      "oracle_detected": true
+    },
+    {
+      "id": "P3.9",
+      "category": "Bước kết luận sử dụng đối tượng không nằm trong closure phụ thuộc hợp lệ (Conclusion step using object outside valid dependency closure)",
+      "minimal_input": {
+        "free_objects": [
+          "A",
+          "B",
+          "C"
+        ],
+        "dangling_object": {
+          "id": "X_dangling",
+          "depends": [
+            "A",
+            "Z_ghost"
+          ]
+        },
+        "conclusion_quantity": {
+          "id": "q_ax",
+          "depends": [
+            "A",
+            "X_dangling"
+          ]
+        }
+      },
+      "expected_math": "Every object referenced in a conclusion quantity or FINAL_RESULT step must belong to the forward transitive closure C(free_objects).",
+      "actual_output": {
+        "oracle_verdict": "INVALID",
+        "oracle_failures": [
+          "Midpoint X_dangling invalid depends=['A', 'Z_ghost']",
+          "Event e1 (step 0) depends on X_dangling which is created later at step 999999",
+          "Object q_ax created at step 0 depends on X_dangling created later at step 999999",
+          "Conclusion quantity q_ax is outside the valid dependency closure from free_objects (depends=['A', 'X_dangling'])",
+          "Conclusion quantity q_ax annotation subject X_dangling is outside the valid dependency closure",
+          "FINAL_RESULT step fs_final references X_dangling outside valid dependency closure",
+          "FINAL_RESULT step fs_final references Z_ghost outside valid dependency closure",
+          "FINAL_RESULT step fs_final focuses q_ax outside valid dependency closure"
+        ]
+      },
+      "root_cause": "Category `11_conclusion_and_premises` computes the inductive forward closure `valid_closure` rooted at `free_objects` and rejects any conclusion quantity, `annotation.subject_ids`, or `FINAL_RESULT.formula.references` outside `valid_closure`.",
+      "oracle_detected": true
+    },
+    {
+      "id": "P3.10",
+      "category": "Kết quả tính toán đúng số nhưng biểu diễn sai đối tượng toán học (Numerically correct result representing wrong mathematical object)",
+      "minimal_input": {
+        "A": [
+          0,
+          0,
+          0
+        ],
+        "B": [
+          1,
+          0,
+          0
+        ],
+        "C": [
+          1,
+          1,
+          0
+        ],
+        "quantity_depends": [
+          "A",
+          "B"
+        ],
+        "quantity_value": "1",
+        "claimed_subject_ids": [
+          "C"
+        ]
+      },
+      "expected_math": "Even when `value = 1` matches `||C - B|| = 1` numerically, a quantity with `depends=['A', 'B']` represents `d(A, B)` and must be rejected when bound to disconnected target `subject_ids=['C']`.",
+      "actual_output": {
+        "oracle_verdict": "INVALID",
+        "oracle_failures": [
+          "Quantity q_wrong_obj annotation subject_ids=['C'] disconnected from mathematical operands depends=['A', 'B']"
+        ]
+      },
+      "root_cause": "Category `11_conclusion_and_premises` (`_check_semantic_conclusion_alignment`) verifies structural operand alignment between `quantity.depends` (and their defining points/endpoints) and `annotation.subject_ids`, plus backend `_kiem_result_binding` in `registry.py` enforces source-grounded target binding.",
+      "oracle_detected": true
+    }
+  ]
+}
