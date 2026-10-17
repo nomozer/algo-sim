@@ -512,6 +512,8 @@ def main():
     else:
         if args.action == "live" and not args.out.resolve().is_relative_to(ROOT / ".superpowers"):
             raise V1.PilotStopped("LIVE_RAW_OUTPUT_REQUIRES_IGNORED_DIRECTORY")
+        if args.action == "live":
+            import app.persistence.db  # noqa: F401 — the product's own loader of backend/.env (key never printed), as V1
         provider = h.live_provider(inp, args.mode, args.approval) if args.action == "live" else h.ReplayProvider(inp)
         secrets = (os.environ["GEMINI_API_KEY"],) if args.action == "live" else ()
         state = h.run_eval(inp, args.mode, provider, args.out, secrets=secrets)
