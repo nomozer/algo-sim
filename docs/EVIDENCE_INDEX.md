@@ -1,5 +1,19 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_SEMANTIC_EXTRACTION_V2
+
+REPORT = docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/
+CORRECTS = NONE (scorer /2 reported beside the frozen NLU scorer; its L01 artifact re-checked on the recorded receipt)
+CORRECTED_BY = NONE
+CLASSIFICATION = RESEARCH_BRANCH_OFFLINE_ONLY · LIVE_NOT_AUTHORIZED · integration PENDING_OWNER_GO
+CODE_COMMIT = 69fa9be8 (route-B prompt v2 + bounded Source Grounding); protocol lock 6ceb2508
+VERIFICATION_COMMIT = candidate b5406c91… MATCH at 108fc086; identities + offline receipts at c640cd14; T3 in verification/
+MODEL_REQUEST_COUNT = 0
+
+Fresh 36-case corpus (dev 12 / heldout 24, 34 Fraction oracles), scorer grounded-source-obligations/2 (independent
+review NOT_READY → LOCK_READY). GOLD served correct dev 1→2/12, heldout 2→2/24, 0 unsafe; prompt effect NOT_MEASURED.
+
 ## WAVE_ID = INDEPENDENT_NLU_EXTRACTION_EVALUATION
 
 REPORT = docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/report.md

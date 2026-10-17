@@ -7,6 +7,7 @@
 - **grounding (product):** correct extractions refused for "dài bao nhiêu", "… thì … bằng mấy", "tính cos²", "Tính BD'", L23 ordering; the unlabelled base "đáy là hình vuông" refuses even gold facts. Prompt rule 7 conflicts with the gate on four-label planes.
 - **scorer:** served values are judged through fact pairing (L01 artifact); the next protocol must compare served values with the oracle independently.
 - **next:** a separately approved Semantic Extraction wave (prompt/schema surface ⇒ cache decision) measured on NEW items; then grounding wording coverage. Hybrid product NO-GO.
+- **update 2026-10-17 (run `hybrid-semantic-extraction-v2`, research branch, not integrated):** scorer artifact fixed by scorer /2 (L01 recorded receipt now `CORRECT_COMPLETE`); prompt v2 teaches operands, solid ownership, unsupported without approximation, no invented labels, written plane label groups (rule 7 conflict resolved); `dài bao nhiêu` grounded; bare `hình hộp` no longer certifies a right prism (a wrong-serve path on main). Prompt effect NOT_MEASURED until owner GO PILOT. Still open: `… thì … bằng mấy`, `Tính cos²`, repeated `tính`, `rồi suy ra`, projection naming, `ba kích thước`; GOLD ceiling 4/36 on the new corpus is dominated by capability/grounding gaps, not extraction.
 
 ### ISSUE-ARCH-GENERALIZED-GOAL-ENTRY-COVERAGE
 
