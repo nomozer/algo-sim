@@ -7,6 +7,7 @@
 - **grounding (product):** correct extractions refused for "dài bao nhiêu", "… thì … bằng mấy", "tính cos²", "Tính BD'", L23 ordering; the unlabelled base "đáy là hình vuông" refuses even gold facts. Prompt rule 7 conflicts with the gate on four-label planes.
 - **scorer:** served values are judged through fact pairing (L01 artifact); the next protocol must compare served values with the oracle independently.
 - **next:** a separately approved Semantic Extraction wave (prompt/schema surface ⇒ cache decision) measured on NEW items; then grounding wording coverage. Hybrid product NO-GO.
+- **update 2026-10-17 (run `hybrid-semantic-extraction-v2`; selective integration `extraction-v2-safety`):** scorer artifact fixed by scorer /2 (L01 recorded receipt now `CORRECT_COMPLETE`); `dài bao nhiêu`, `hộp chữ nhật` and a sentence-initial article grounded; bare `hình hộp` no longer certifies a right prism (a wrong-serve path on main, now closed). Prompt v2 was measured on a 24-request paired dev pilot and NOT integrated: operands 2/8, solid 3/6, expressible goals 5/11 unchanged vs baseline, both arms served 0/12 (`disposition.md`). Still open: question operands land in `value` or are omitted under the flat optional response schema (Schema-Contract v3, offline); `… thì … bằng mấy`, `Tính cos²`, repeated `tính`, `rồi suy ra`, projection naming, `ba kích thước`; GOLD ceiling 4/36 on the new corpus is dominated by capability/grounding gaps.
 
 ### ISSUE-ARCH-GENERALIZED-GOAL-ENTRY-COVERAGE
 

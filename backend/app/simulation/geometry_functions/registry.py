@@ -336,6 +336,11 @@ def planning_contract(spec: FunctionSpec, effect: str | None = None) -> Planning
 
 
 _VUONG = ("vuông", "⊥")
+#: "hộp chữ nhật" names a cuboid with or without "hình"/"khối" (same pattern as `_HOP_CHU_NHAT`); bare "hộp" does not.
+_HOP_CHU_NHAT_KW = r"re:(?i)(?<!\w)hộp\s+chữ\s+nhật(?!\w)"
+#: "AB dài bao nhiêu" asks a length; "dài 3" assigns one and "dài hơn … bao nhiêu" compares, so neither matches.
+#: Same wording as the question grammar accepts (no "dài là/bằng bao nhiêu" the ask grammar would reject anyway).
+_DAI_BAO_NHIEU_KW = r"re:(?i)(?<!\w)dài\s+bao\s+nhiêu(?!\w)"
 _F = FunctionSpec
 REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("regular_polygon", RegularPolygonArgs, "fact", "Đa giác đều (tam giác đều, hình vuông, lục giác đều) với các đỉnh "
@@ -378,9 +383,9 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("regular_pyramid", PyramidArgs, "construct", "Khối chóp ĐỀU: đáy đa giác đều, chân đường cao tại tâm đáy.",
        (("chóp", "tứ diện"), ("đều",))),
     _F("prism", PrismArgs, "construct", "Khối lăng trụ với hai đáy tương ứng; `right` khi đề nói lăng trụ đứng/đều.",
-       (("lăng trụ", "hình hộp", "lập phương"),)),
+       (("lăng trụ", "hình hộp", "lập phương", _HOP_CHU_NHAT_KW),)),
     _F("ask_volume", AskVolumeArgs, "ask", "Đề hỏi thể tích một khối.", (("thể tích", r"re:(?<![\w'])V(?![\w'])"),)),
-    _F("ask_length", AskLengthArgs, "ask", "Đề hỏi độ dài một đoạn.", (("độ dài", "tính", "tìm"),),
+    _F("ask_length", AskLengthArgs, "ask", "Đề hỏi độ dài một đoạn.", (("độ dài", "tính", "tìm", _DAI_BAO_NHIEU_KW),),
        planning=PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Foot", ("F", "P", "L"))),
                                  PlanningTerm("AnswerDistance", ("P", "L")), "distance_witness", "distance",
                                  call=(("segment", ("P", "F")),)),
@@ -1349,7 +1354,8 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
         for nhom in c.spec.keywords:
             if not _co_tu(c.quotes, nhom):
                 raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: {c.fn} cần một trong {list(nhom)} trong {c.quote!r}", (c.id,))
-        if c.fn == "prism" and c.args.right and not _co_tu(c.quotes, ("đứng", "đều", "hình hộp", "lập phương")):
+        # A bare "hình hộp" (parallelepiped) may be oblique: rightness needs đứng/đều/hộp chữ nhật/lập phương in the quote.
+        if c.fn == "prism" and c.args.right and not _co_tu(c.quotes, ("đứng", "đều", "lập phương", _HOP_CHU_NHAT_KW)):
             raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: lăng trụ đứng cần 'đứng'/'đều' trong {c.quote!r}", (c.id,))
         for f in c.spec.plane_fields:
             if not _co_mat(c.quotes, getattr(c.args, f), cho_day=f != "face"):
@@ -1664,6 +1670,9 @@ _NOI_TIEN_DE = re.compile(r"[\s,;:.()\-–]*(?:(?:cho|gọi|biết|rằng|có|v�
 #: Exam scaffolding at the start of a premise segment ("Bài 3.", "Câu 2:", "a)", "1)", "Câu a:", "(1 điểm)").
 _GIAN_DAN = re.compile(r"\s*(?:(?:bài tập|bài|câu|ví dụ)\s*(?:\d+|[a-d])\s*[.:)]|(?:\d+|[a-d])\s*\)"
                        r"|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*", re.IGNORECASE)
+#: Sentence-initial indefinite article directly before a solid noun ("Một hộp chữ nhật …"); "một" anywhere else (a number,
+#: "một nửa", "một cạnh") stays premise content.
+_MAO_TU_KHOI = re.compile(r"\s*một\s+(?=(?:hình|khối|hộp|lăng\s+trụ|chóp|tứ\s+diện)(?!\w))", re.IGNORECASE)
 #: Nouns that only NAME an object next to its label; ROLE nouns also state a role and are accepted only when that role
 #: matches a validated call (`_vai_tro_doi_tuong_khop`) — "đường cao SB" is a claim, not a name.
 _DANH_TU_TRUNG_TINH = r"mặt phẳng|đường thẳng|đoạn thẳng|đoạn|cạnh|mặt|điểm|độ dài|hình chóp|khối chóp"
@@ -1790,6 +1799,8 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             continue
         gd = _GIAN_DAN.match(de, a, b)
         a0 = gd.end() if gd else a
+        if mt := _MAO_TU_KHOI.match(de, a0, b):
+            a0 = mt.end()
         if (_GHI_CHU.fullmatch(de, a0, b) and not _tu_nhan(de[a0:b])
                 and not re.search(r"(?<![a-zA-Z\^])\d+(?![\d\s]*chữ số)", de[a0:b], re.I)
                 and not re.search(r"(?<!\w)(?:bỏ|thay|đổi|tăng|giảm|phóng|nhân|chia|gấp|nửa|mọi|kích thước|giả thiết)(?!\w)", de[a0:b], re.I)):

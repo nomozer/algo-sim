@@ -1,5 +1,19 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_SEMANTIC_EXTRACTION_V2
+
+REPORT = docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/
+CORRECTS = NONE (scorer /2 reported beside the frozen NLU scorer; its L01 artifact re-checked on the recorded receipt)
+CORRECTED_BY = NONE
+CLASSIFICATION = RESEARCH_BRANCH · LIVE PILOT MEASURED (results/live-pilot-analysis.md) · LOCKED NOT RUN · integration PENDING_OWNER_GO
+CODE_COMMIT = 69fa9be8 (route-B prompt v2 + bounded Source Grounding); protocol lock 6ceb2508
+VERIFICATION_COMMIT = candidate b5406c91… MATCH at 108fc086; identities + offline receipts at c640cd14; T3 FULL_PRODUCT_GATE_PASS at fa6d792e and, merged with main 8427c879, at b7b7e89e (verification/t3-merged.json)
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
+
+Fresh 36-case corpus (dev 12 / heldout 24, 34 Fraction oracles), scorer grounded-source-obligations/2 (independent
+review NOT_READY → LOCK_READY). GOLD served correct dev 1→2/12, heldout 2→2/24, 0 unsafe; prompt effect NOT_MEASURED.
+
 ## WAVE_ID = SCENE3D_EDUCATIONAL_FINALIZATION
 
 REPORT = docs/evaluation/geometry/runs/scene3d-educational-finalization/report.md

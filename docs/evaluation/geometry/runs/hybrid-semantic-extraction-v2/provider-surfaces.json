@@ -1,0 +1,28 @@
+{
+  "schema": "PROVIDER_SURFACE_CHANGE/1",
+  "baseline_commit": "6ceb2508",
+  "superseded_unmeasured": {"B": "cc6316fb90c405126adb4f9416753d059a8fb10cd9f684907a978553a7e50f61", "why": "first v2 draft (fb3f4ee5); review found rule 7 contradicting rule 11; never sent to a provider"},
+  "previous_receipt": "docs/evaluation/geometry/runs/source-bound-result-planning/provider-surfaces.json",
+  "old": {
+    "A": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+    "B": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "declarations": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"
+  },
+  "current": {
+    "A": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+    "B": "c4e4392c2c87d7a4a83645af54fa455fd042ce5bf68c60114107bf9f399db890",
+    "declarations": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"
+  },
+  "intentional": true,
+  "changes": [
+    "Fact extraction prompt v2 (B only): atomic request coverage, question operand matrix, measure/volume solid ownership, two-ray right angles, written label groups for section and intersection planes, every label for operand planes (three only for line_ref producers, else unsupported), unnamed-point target in points_b, no invented labels or properties, explicit unsupported without approximation",
+    "TypedFact schema, response schema, parser, planner and function declarations unchanged",
+    "Registry Source Grounding (not model-facing): 'hộp chữ nhật' names a prism/cuboid, 'dài bao nhiêu' asks a length, a sentence-initial article 'Một' before a solid is not premise content, and a bare 'hình hộp' no longer certifies a right prism"
+  ],
+  "old_fixtures_compatible": true,
+  "Gemini_extraction": "NOT_MEASURED (LIVE_NOT_AUTHORIZED)",
+  "live_calls": 0,
+  "default_route": "LLM_ONLY unchanged; research modules not in API import closure",
+  "cache_version": 125,
+  "metadata_exposed_to_provider": false
+}

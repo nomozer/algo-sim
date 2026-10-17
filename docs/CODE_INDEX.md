@@ -6419,6 +6419,14 @@ Run `docs/evaluation/geometry/runs/w17-operation-annotations/`. Thẩm quyền �
 | Adversarial safety / mutation | `backend/tests/geometry/test_hybrid_safety_readiness.py`, `backend/tests/geometry/test_hybrid_ab_pilot_mutations.py`, `backend/tests/geometry/fixtures/hybrid_safety_oracles.json` | Literal independent grounding/checker oracles, guard-removal mutants trong bộ nhớ; proof-only/negation boundary | real A/B routes → assertions | pytest 3 hybrid test modules |
 | Current candidate divergence | `docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/candidate_divergence.json` | Correction của khai báo hybrid cũ, không sửa historical artifact | measured system hash → `backend/tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI` | exact hash guard + candidate `--verify` |
 
+### Semantic extraction v2 — run hybrid-semantic-extraction-v2 (2026-10-17)
+
+| Thành phần | Path | Purpose · authority | Producer → consumer | Verify |
+|---|---|---|---|---|
+| Scorer /2 + paired-arm runner | `backend/scripts/run_semantic_extraction_evaluation.py` | `grounded-source-obligations/2`: chấm câu trả lời theo toán hạng lời gọi ĐÃ THỰC THI + oracle Fraction độc lập, không qua ghép fact; đếm mọi yêu cầu nguồn; tương đương toán hạng theo vai trò (đoạn, mặt = tập nhãn, đa giác = chu trình, khối = cấu trúc đỉnh); tách từ chối theo GOLD route; arm `baseline`/`v2` mỗi tiến trình một arm; tái dùng executor của `run_nlu_extraction_evaluation.py` qua bản module riêng (bản cũ không đổi byte); LIVE chỉ ghi vào `.superpowers/` | `runs/hybrid-semantic-extraction-v2/inputs/` → `score.json` (chỉ số dẫn xuất + băm) | `pytest tests/geometry/test_semantic_extraction_evaluation.py -q` |
+| Source Grounding regressions + extraction ablation | `backend/tests/geometry/test_semantic_extraction_v2_grounding.py` | Từ vựng `hộp chữ nhật` / `dài bao nhiêu` / mạo từ `Một` / `hình hộp` không tự đứng, kèm phản ví dụ; ablation đột biến trích xuất (0 phục vụ sai) | `geometry_functions/registry.py` (prompt sản phẩm KHÔNG đổi: prompt v2 không tích hợp) | `pytest tests/geometry/test_semantic_extraction_v2_grounding.py -q` |
+| Inputs khoá | `docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/` | Corpus 36 ca của tác giả AI độc lập, oracle Fraction, gold + 33 đính chính trước khoá, protocol băm | `prepare_protocol.py` (đã chạy, chặn chạy lại) → `load_inputs` | `INPUT_IDENTITY_MISMATCH` / `SOURCE_REQUEST_COVERAGE_MISMATCH` / `SPLIT_FAMILY_LEAK` |
+
 ### NLU extraction evaluation — run independent-nlu-extraction-evaluation (2026-10-17)
 
 | Thành phần | Path | Purpose · authority | Producer → consumer | Verify |
