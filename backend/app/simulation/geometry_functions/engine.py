@@ -902,21 +902,33 @@ class _Dung:
         return {"title": "Dựng hình từ lời gọi hàm có nguồn", "memory_declarations": khai, "statements": lenh}, hoi
 
     def kiem_mat_cat(self) -> None:
-        """Tiền điều kiện của thiết diện / giao tuyến trên hình ĐÃ dựng — từ chối có mã thay vì để kernel ném lúc thực thi:
-        mặt cắt qua ba điểm thẳng hàng hay không cùng mặt ⇒ mã của kernel; hai mặt song song (hay trùng) ⇒ PARALLEL_PLANES."""
+        """Tiền điều kiện của thiết diện / giao tuyến / tam giác / góc đường–mặt trên hình ĐÃ dựng — từ chối có mã thay vì để
+        kernel ném lúc thực thi: mặt cắt/tam giác qua ba điểm thẳng hàng hay không cùng mặt ⇒ mã của kernel; hai mặt song song
+        (hay trùng) ⇒ PARALLEL_PLANES."""
+        cur_id: tuple[str, ...] = ()
         try:
             with _metric.using(self.metric()):
                 for d in self.mat_phu:
+                    cur_id = tuple(d["constructs"]) + tuple(d["targets"])
                     self._kiem_mat_phu(d)
                 for c in self.of("section", "ask_section_area"):
+                    cur_id = (c.id,)
                     self._plane(c.args.plane)
+                for c in self.of("ask_area"):
+                    cur_id = (c.id,)
+                    self._plane(c.args.polygon)
+                for c in self.of("ask_angle_line_plane"):
+                    cur_id = (c.id,)
+                    self._line(c.args.line)
+                    self._plane(c.args.plane[:3])
                 for c in self.of("intersection_line"):
+                    cur_id = (c.id,)
                     p1, p2 = self._plane(c.args.plane1), self._plane(c.args.plane2)
                     if p1.normal.cross(p2.normal).is_zero():
                         raise TuChoi("PARALLEL_PLANES", f"{c.id}: hai mặt phẳng song song hoặc trùng nhau — không có giao tuyến",
                                      (c.id,))
         except GeometryError as e:
-            raise TuChoi(e.code, str(e), tuple(c.id for c in self.of("section", "ask_section_area", "intersection_line")))
+            raise TuChoi(e.code, str(e), cur_id or tuple(c.id for c in self.of("section", "ask_section_area", "intersection_line", "ask_area", "ask_angle_line_plane")))
 
     def _kiem_mat_phu(self, d: dict) -> None:
         """Postconditions of a derived plane, independent of how the planner built it. It passes through the point by
@@ -1026,13 +1038,31 @@ class _Dung:
         if x not in self.pts or any(p not in self.pts for p in pts) or not dung(self.pts[x], [self.pts[p] for p in pts]):
             raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"điểm {x} không phải {op.get('descriptor')} của {''.join(pts)}", ask)
 
-    def kc2_dich(self, d: dict) -> Fraction:
-        """Squared distance from the described point to the certificate's target, straight from the built figure (Gram) —
-        independent of the chain whose measurement answered the question."""
+    def _dt2_tam_giac(self, p: str, q: str, r: str) -> Fraction:
+        """Squared area of triangle (p, q, r) directly from Gram determinant: (g(u,u)·g(v,v) - g(u,v)²) / 4."""
+        u, v = self._vec(p, q), self._vec(p, r)
+        det = self.g(u, u) * self.g(v, v) - self.g(u, v) ** 2
+        if det <= 0:
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"ba đỉnh {p}, {q}, {r} thẳng hàng — định thức Gram suy biến")
+        return det / 4
+
+    def _goc_duong_mat_cos2(self, line: tuple[str, ...], plane: tuple[str, ...]) -> Fraction:
+        """Line–plane angle cos²(θ) = 1 - sin²(θ) directly from Gram determinants of (u, v, w), independent of kernel covectors."""
+        u, v, w = self._vec(plane[0], plane[1]), self._vec(plane[0], plane[2]), self._vec(line[0], line[1])
+        ww = self.g(w, w)
+        if ww == 0:
+            raise TuChoi("DEGENERATE_LINE", "đường thẳng suy biến (hai đầu mút trùng nhau)")
+        M = [[self.g(x, y) for y in (u, v, w)] for x in (u, v, w)]
+        det2 = M[0][0] * M[1][1] - M[0][1] * M[1][0]
+        if det2 == 0:
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", "ba điểm xác định mặt phẳng thẳng hàng — định thức Gram suy biến")
+        d3 = (M[0][0] * (M[1][1] * M[2][2] - M[1][2] * M[2][1]) - M[0][1] * (M[1][0] * M[2][2] - M[1][2] * M[2][0])
+              + M[0][2] * (M[1][0] * M[2][1] - M[1][1] * M[2][0]))
+        sin2 = d3 / (ww * det2)
+        return Fraction(1) - sin2
+
+    def _kc2_khoang_cach(self, d: dict) -> Fraction:
         p, t = d["operand"]["label"], d["target"]
-        if 'point' in t:
-            w = self._vec(p, t['point'])
-            return self.g(w, w)
         if "plane" in t:
             return self._kc2_mat(p, tuple(t["plane"][:3]))
         if "line" in t:
@@ -1043,9 +1073,49 @@ class _Dung:
         w = tuple(self.pts[p][i] - o[i] for i in range(3))
         return self.g(w, w) - self.g(w, u) ** 2 / self.g(u, u)
 
+    def _kc2_do_dai(self, d: dict) -> Fraction:
+        w = self._vec(d["operand"]["label"], d["target"]["point"])
+        return self.g(w, w)
+
+    def _kc2_dien_tich(self, d: dict) -> Fraction:
+        q, r = d["target"]["points"]
+        return self._dt2_tam_giac(d["operand"]["label"], q, r)
+
+    def _kc2_goc_duong_mat(self, d: dict) -> Fraction:
+        p, t = d["operand"]["label"], d["target"]
+        return self._goc_duong_mat_cos2((p, t["point"]), tuple(t["plane"][:3]))
+
+    def kc2_dich(self, d: dict) -> Fraction:
+        """Direct Gram-metric target verifier dispatched by `_KIEM_DICH` from the certified goal contract —
+        independent of the chain whose measurement answered the question."""
+        t = d["target"]
+        verifier = ("area" if "points" in t else "angle_line_plane" if "point" in t and "plane" in t
+                    else "length" if "point" in t else "distance")
+        ask_call = next((c for c in self.calls if c.id == d.get("ask")), None)
+        if ask_call is not None and d.get("chain"):
+            from .registry import planning_contract
+            ans_entry = d["chain"][-1]
+            contract = planning_contract(ask_call.spec, ans_entry.get("effect"))
+            if contract is None or contract.verifier != verifier or contract.verifier not in _KIEM_DICH:
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "verifier của hợp đồng mục tiêu không khớp bộ kiểm độc lập",
+                             (ask_call.id,))
+        fn = _KIEM_DICH.get(verifier)
+        if fn is None:
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"không có bộ kiểm độc lập cho {verifier!r}", (d.get("ask", ""),))
+        return fn(self, d)
+
     def metric(self) -> _metric.Metric:
         G2, h2 = self.G2, self.h2 or Fraction(1)
         return _metric.Metric(((G2[0][0], G2[0][1], Z), (G2[1][0], G2[1][1], Z), (Z, Z, h2)))
+
+
+#: Independent Gram-metric verifiers keyed by goal contract `verifier` kind.
+_KIEM_DICH = {
+    "distance": _Dung._kc2_khoang_cach,
+    "length": _Dung._kc2_do_dai,
+    "area": _Dung._kc2_dien_tich,
+    "angle_line_plane": _Dung._kc2_goc_duong_mat,
+}
 
 
 #: Bậc theo độ dài của mỗi đại lượng được hỏi — đáp số với độ dài ký hiệu a là (hệ số tại a = 1) · a^bậc.
@@ -1194,9 +1264,18 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
             raise TuChoi("ENGINE_SELF_CHECK_FAILED", "điểm kernel thực thi khác bố cục engine")
         for d in chuoi:                       # the composed answer is the asked quantity, not just a value of the chain
             with _metric.using(G):
-                if _binh_phuong(fm.get(hoi.get(d["ask"], ""))) != dung.kc2_dich(d):
-                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", "đáp số của chuỗi khác khoảng cách tới đích tính trực tiếp",
+                c_ask = next((c for c in calls if c.id == d["ask"]), None)
+                raw_v = fm.get(hoi.get(d["ask"], ""))
+                got_v = Fraction(raw_v) if (c_ask and BAC_DAI_LUONG[c_ask.fn] == 0 and isinstance(raw_v, (int, Fraction))) else _binh_phuong(raw_v)
+                if got_v != dung.kc2_dich(d):
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", "đáp số của chuỗi khác đại lượng đích tính trực tiếp",
                                  (d["ask"],))
+        for c in dung.of("ask_area"):
+            if len(c.args.polygon) == 3 and _binh_phuong(fm.get(hoi.get(c.id, ""))) != dung._dt2_tam_giac(*c.args.polygon):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "diện tích tam giác thực thi khác định thức Gram độc lập", (c.id,))
+        for c in dung.of("ask_angle_line_plane"):
+            if fm.get(hoi.get(c.id, "")) != dung._goc_duong_mat_cos2(tuple(c.args.line), tuple(c.args.plane[:3])):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "góc đường–mặt thực thi khác công thức Gram độc lập", (c.id,))
         if hong := [t for t in dung.sections if not fm[t].is_closed]:
             raise TuChoi("SECTION_EMPTY", f"mặt phẳng không cắt khối thành một đa giác ({hong}) — không có thiết diện để dựng")
         tra, chinh_xac = {}, {}
@@ -1211,7 +1290,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         # described point of an `effect-chain` IS named by the problem, "trung điểm của SC").
         phu_ir = ({ir_name(x) for x in phu}
                   - {ir_name(d["operand"]["label"]) for d in chuoi if (d.get("operand") or {}).get("label")})
-        muc_tieu: set[str] = set()
+        muc_tieu: set[str] = {ir_name(d["operand"]["label"]) for d in chuoi if (d.get("operand") or {}).get("label")}
         for st in program["statements"]:
             e = st.get("expr") or {}
             if st.get("target_var") in hoi.values() and e.get("kind") == "measure":

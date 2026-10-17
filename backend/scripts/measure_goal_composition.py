@@ -1,0 +1,290 @@
+"""Comparative and ablation replay for run `contract-driven-goal-composition` — 0 model calls, never overwrites output.
+
+Usage:
+    python backend/scripts/measure_goal_composition.py run-all --out-dir docs/evaluation/geometry/runs/contract-driven-goal-composition
+"""
+from __future__ import annotations
+
+import argparse
+from collections import Counter
+from dataclasses import replace
+from fractions import Fraction
+import json
+import os
+from pathlib import Path
+import sys
+from tempfile import TemporaryDirectory
+import time
+import tracemalloc
+
+import measure_function_discovery as fd
+import measure_goal_entry as ge
+
+ROOT = Path(__file__).resolve().parents[2]
+RUN = ROOT / "docs/evaluation/geometry/runs/contract-driven-goal-composition"
+os.environ.setdefault("ALLOW_LIVE_AI", "0")
+
+
+def apply_variant(variant: str) -> None:
+    from app.simulation.geometry_functions import planner, registry
+
+    R = registry.REGISTRY
+    if variant == "production":
+        return
+    if variant == "no-area":
+        R["ask_area"] = replace(R["ask_area"], planning=None)
+        return
+    if variant == "lying-area-verifier":
+        R["ask_area"] = replace(R["ask_area"], planning=replace(R["ask_area"].planning, verifier="length"))
+        return
+    ge.variant(variant)
+    assert planner.REGISTRY is registry.REGISTRY
+
+
+def build_bundle(out: Path) -> None:
+    with TemporaryDirectory() as td:
+        p = Path(td) / "ge_bundle.json"
+        ge.bundle(p)
+        data = json.loads(p.read_text(encoding="utf-8"))
+    corpus = json.loads((RUN / "corpus.json").read_text(encoding="utf-8"))
+    for split in ("positive", "discovery", "held_out", "angle_line_plane_slice_b", "negative"):
+        for c in corpus[split]:
+            expect = {
+                k: c[k]
+                for k in ("expected_squared", "expected_cos_sq", "expected_codes", "expected_code", "expected_answer")
+                if k in c
+            }
+            data["rows"].append({
+                "corpus": f"goal_composition/{split}",
+                "id": c["id"],
+                "slice": c.get("slice"),
+                "text": c["text"],
+                "facts": c["payload"]["facts"],
+                "expect": expect,
+            })
+    data["schema"] = "goal_composition_bundle/1"
+    fd._write(out, data)
+
+
+def run_arm_in_memory(rows: list[dict], label: str, variant: str) -> dict:
+    sys.path.insert(0, str(ROOT / "backend"))
+    from app.ai.function_route import run_fact_route
+    from app.simulation.geometry_functions import planner, registry
+    from app.simulation.geometry_functions.registry import TuChoi
+
+    saved_registry = dict(registry.REGISTRY)
+    try:
+        apply_variant(variant)
+        res = []
+        for row in rows:
+            payload = {"facts": row["facts"]}
+            t0 = time.perf_counter()
+            r = run_fact_route(row["text"], json.loads(json.dumps(payload)))
+            route_s = time.perf_counter() - t0
+            squares = {}
+            cos2s = {}
+            if r.status == "SERVED":
+                fm = r.exec_result.final_memory
+                for q in (r.answers or {}):
+                    val = fm.get(f"kq_{q}")
+                    squares[q] = fd._square(val)
+                    if isinstance(val, (int, Fraction)):
+                        cos2s[q] = str(Fraction(val))
+            tracemalloc.start()
+            t0 = time.perf_counter()
+            try:
+                k = planner.lap_ke_hoach(json.loads(json.dumps(payload)), row["text"])
+                plan_err = None
+            except TuChoi as e:
+                k, plan_err = None, e.code
+            plan_s = time.perf_counter() - t0
+            peak = tracemalloc.get_traced_memory()[1]
+            tracemalloc.stop()
+            stats = None
+            if k is not None:
+                rv = getattr(k, "resolver", None)
+                fresh = [x for d in k.auxiliary for x in (d.get("labels") or ([d["label"]] if d.get("label") else []))]
+                stats = {
+                    "calls": len(k.calls),
+                    "functions": sorted({c["fn"] for c in k.calls}),
+                    "auxiliary": len(k.auxiliary),
+                    "fresh_labels": fresh,
+                    "needs": getattr(rv, "needs", None),
+                    "candidates": getattr(rv, "candidates", None),
+                    "depth_max": getattr(rv, "depth_max", None),
+                    "resolver_used": getattr(rv, "used", None),
+                }
+            res.append({
+                "corpus": row["corpus"],
+                "id": row["id"],
+                "status": r.status,
+                "code": r.code,
+                "answers": r.answers or {},
+                "squares": squares,
+                "cos2s": cos2s,
+                "plan_error": plan_err,
+                "plan": stats,
+                "route_seconds": round(route_s, 4),
+                "plan_seconds": round(plan_s, 5),
+                "plan_peak_bytes": peak,
+            })
+        return {
+            "schema": "goal_composition_arm/1",
+            "label": label,
+            "registry_variant": variant,
+            "planner_version": planner.PLANNER_VERSION,
+            "registry_version": registry.REGISTRY_VERSION,
+            "model_calls": 0,
+            "rows": res,
+        }
+    finally:
+        registry.REGISTRY.clear()
+        registry.REGISTRY.update(saved_registry)
+
+
+def classify_row(row: dict, got: dict) -> str:
+    e = row["expect"]
+    served = got["status"] == "SERVED"
+    if "expected_cos_sq" in e:
+        want = e["expected_cos_sq"]
+        ok = served and (all(got.get("cos2s", {}).get(q) == v for q, v in want.items()) if isinstance(want, dict)
+                         else bool(got.get("cos2s")) and all(v == want for v in got["cos2s"].values()))
+        return "correct_served" if ok else "wrong_served" if served else "false_refusal"
+    return fd.classify(row, got)
+
+
+def run_all(out_dir: Path) -> None:
+    sys.path.insert(0, str(ROOT / "backend"))
+    baseline_reg_path = out_dir / "baseline/regression-174.json"
+    baseline_bundle_path = out_dir / "baseline/bundle-174.json"
+    baseline_reg = json.loads(baseline_reg_path.read_text(encoding="utf-8"))
+    baseline_rows_by_key = {(r["corpus"], r["id"]): r for r in baseline_reg["rows"]}
+
+    with TemporaryDirectory() as td:
+        bpath = Path(td) / "bundle_all.json"
+        build_bundle(bpath)
+        bundle_all = json.loads(bpath.read_text(encoding="utf-8"))
+    all_rows = bundle_all["rows"]
+    rows_by_key = {(r["corpus"], r["id"]): r for r in all_rows}
+
+    variants = ("production", "centroid", "no-area", "no-midpoint", "reversed", "lying", "lying-area-verifier")
+    arms = {v: run_arm_in_memory(all_rows, "NEW", v) for v in variants}
+
+    # 1. Verify 174 prior rows regression against baseline
+    prod_prior = [r for r in arms["production"]["rows"] if not r["corpus"].startswith("goal_composition/")]
+    rev_prior = [r for r in arms["reversed"]["rows"] if not r["corpus"].startswith("goal_composition/")]
+    diffs_vs_baseline = []
+    diffs_vs_reversed = []
+    for r_prod, r_rev in zip(prod_prior, rev_prior):
+        key = (r_prod["corpus"], r_prod["id"])
+        r_base = baseline_rows_by_key[key]
+        if (r_prod["status"], r_prod["code"], r_prod["answers"], r_prod["squares"], r_prod["plan"]) != (
+            r_base["status"], r_base["code"], r_base["answers"], r_base["squares"], r_base["plan"]
+        ):
+            diffs_vs_baseline.append({"corpus": key[0], "id": key[1], "baseline": r_base, "new": r_prod})
+        if (r_prod["status"], r_prod["code"], r_prod["answers"], r_prod["squares"]) != (
+            r_rev["status"], r_rev["code"], r_rev["answers"], r_rev["squares"]
+        ):
+            diffs_vs_reversed.append({"corpus": key[0], "id": key[1], "production": r_prod, "reversed": r_rev})
+
+    reg_out = {
+        "schema": "goal_composition_regression_174/1",
+        "model_calls": 0,
+        "total_prior_rows": len(prod_prior),
+        "n_differing_from_baseline": len(diffs_vs_baseline),
+        "differing_from_baseline": diffs_vs_baseline,
+        "n_differing_reversed_registry": len(diffs_vs_reversed),
+        "differing_reversed_registry": diffs_vs_reversed,
+        "rows": prod_prior,
+    }
+    fd._write(out_dir / "regression-174.json", reg_out)
+
+    # 2. Summarize ablation across all arms
+    summary_counts = {}
+    per_case = {}
+    for v, arm_data in arms.items():
+        key = f"NEW[{v}]"
+        counts: dict[str, Counter] = {}
+        for got in arm_data["rows"]:
+            row = rows_by_key[(got["corpus"], got["id"])]
+            outcome = classify_row(row, got)
+            counts.setdefault(got["corpus"], Counter())[outcome] += 1
+            per_case.setdefault(f"{got['corpus']}::{got['id']}", {})[key] = {
+                "outcome": outcome,
+                "status": got["status"],
+                "code": got["code"],
+                "answers": got["answers"],
+                "squares": got["squares"],
+                "cos2s": got["cos2s"],
+                "plan": got["plan"],
+                "plan_seconds": got["plan_seconds"],
+                "route_seconds": got["route_seconds"],
+                "plan_peak_bytes": got["plan_peak_bytes"],
+            }
+        summary_counts[key] = {c: dict(cnt) for c, cnt in sorted(counts.items())}
+
+    # Check production vs reversed across ALL 214 rows (174 prior + 40 new)
+    prod_vs_rev_all = [
+        cid for cid, by in per_case.items()
+        if (
+            by["NEW[production]"]["status"],
+            by["NEW[production]"]["code"],
+            by["NEW[production]"]["answers"],
+            by["NEW[production]"]["squares"],
+            by["NEW[production]"]["cos2s"],
+        ) != (
+            by["NEW[reversed]"]["status"],
+            by["NEW[reversed]"]["code"],
+            by["NEW[reversed]"]["answers"],
+            by["NEW[reversed]"]["squares"],
+            by["NEW[reversed]"]["cos2s"],
+        )
+    ]
+
+    ablation_out = {
+        "schema": "goal_composition_ablation/1",
+        "model_calls": 0,
+        "total_rows": len(all_rows),
+        "prior_rows": len(prod_prior),
+        "new_rows": len(all_rows) - len(prod_prior),
+        "production_vs_reversed_differing_cases": prod_vs_rev_all,
+        "counts": summary_counts,
+        "cases": per_case,
+    }
+    fd._write(out_dir / "ablation.json", ablation_out)
+    print(json.dumps({
+        "prior_174_diffs_vs_baseline": len(diffs_vs_baseline),
+        "all_214_diffs_prod_vs_reversed": len(prod_vs_rev_all),
+        "goal_composition_counts_production": {
+            k: v for k, v in summary_counts["NEW[production]"].items() if k.startswith("goal_composition/")
+        },
+        "goal_composition_counts_centroid": {
+            k: v for k, v in summary_counts["NEW[centroid]"].items() if k.startswith("goal_composition/")
+        },
+        "goal_composition_counts_no_area": {
+            k: v for k, v in summary_counts["NEW[no-area]"].items() if k.startswith("goal_composition/")
+        },
+        "goal_composition_counts_no_midpoint": {
+            k: v for k, v in summary_counts["NEW[no-midpoint]"].items() if k.startswith("goal_composition/")
+        },
+        "goal_composition_counts_lying": {
+            k: v for k, v in summary_counts["NEW[lying]"].items() if k.startswith("goal_composition/")
+        },
+        "goal_composition_counts_lying_area_verifier": {
+            k: v for k, v in summary_counts["NEW[lying-area-verifier]"].items() if k.startswith("goal_composition/")
+        },
+    }, indent=2))
+
+
+def main() -> None:
+    ap = argparse.ArgumentParser()
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    r = sub.add_parser("run-all")
+    r.add_argument("--out-dir", type=Path, default=RUN)
+    args = ap.parse_args()
+    if args.cmd == "run-all":
+        run_all(args.out_dir.resolve())
+
+
+if __name__ == "__main__":
+    main()

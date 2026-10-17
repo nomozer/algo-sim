@@ -1,0 +1,248 @@
+{
+  "head_commit": "4abc4afbb976babc4740bf22e42dc368a24c1b13",
+  "branch": "research/contract-driven-goal-composition",
+  "versions": {
+    "planner": "geometry-fact-planner/7",
+    "registry": "geometry-functions/6",
+    "engine": "geometry-function-engine/5"
+  },
+  "registry_counts": {
+    "total_functions": 31,
+    "by_kind": {
+      "ask_aux=False": {
+        "count": 8,
+        "names": [
+          "ask_volume",
+          "ask_length",
+          "ask_distance_point_plane",
+          "ask_distance_lines",
+          "ask_angle_line_plane",
+          "ask_angle_plane_plane",
+          "ask_area",
+          "ask_section_area"
+        ]
+      },
+      "construct_aux=False": {
+        "count": 10,
+        "names": [
+          "orthogonal_projection_line",
+          "intersect_line_line",
+          "intersect_line_plane",
+          "midpoint",
+          "centroid",
+          "pyramid",
+          "regular_pyramid",
+          "prism",
+          "section",
+          "intersection_line"
+        ]
+      },
+      "construct_aux=True": {
+        "count": 1,
+        "names": [
+          "translate_point"
+        ]
+      },
+      "escape_aux=False": {
+        "count": 1,
+        "names": [
+          "unsupported"
+        ]
+      },
+      "fact_aux=False": {
+        "count": 11,
+        "names": [
+          "regular_polygon",
+          "rectangle",
+          "right_angle",
+          "segment_length",
+          "perpendicular_line_plane",
+          "altitude",
+          "orthogonal_projection",
+          "perpendicular_lines",
+          "equal_length",
+          "height",
+          "face_perpendicular_base"
+        ]
+      }
+    },
+    "functions_with_planning_contract": 5,
+    "total_planning_contracts": 6,
+    "contracts": [
+      {
+        "fn": "orthogonal_projection_line",
+        "inputs": [
+          [
+            "Point",
+            [
+              "P"
+            ]
+          ],
+          [
+            "Line",
+            [
+              "L"
+            ]
+          ]
+        ],
+        "effect": [
+          "Foot",
+          [
+            "F",
+            "P",
+            "L"
+          ]
+        ],
+        "goal": null,
+        "descriptor": null,
+        "verifier": "_construction_relation"
+      },
+      {
+        "fn": "midpoint",
+        "inputs": [
+          [
+            "Point",
+            [
+              "A"
+            ]
+          ],
+          [
+            "Point",
+            [
+              "B"
+            ]
+          ]
+        ],
+        "effect": [
+          "Point",
+          [
+            "M"
+          ]
+        ],
+        "goal": null,
+        "descriptor": "midpoint",
+        "verifier": "midpoint"
+      },
+      {
+        "fn": "ask_length",
+        "inputs": [
+          [
+            "Point",
+            [
+              "P"
+            ]
+          ],
+          [
+            "Foot",
+            [
+              "F",
+              "P",
+              "L"
+            ]
+          ]
+        ],
+        "effect": [
+          "AnswerDistance",
+          [
+            "P",
+            "L"
+          ]
+        ],
+        "goal": null,
+        "descriptor": null,
+        "verifier": "distance"
+      },
+      {
+        "fn": "ask_length",
+        "inputs": [
+          [
+            "Point",
+            [
+              "P"
+            ]
+          ],
+          [
+            "Point",
+            [
+              "Q"
+            ]
+          ]
+        ],
+        "effect": [
+          "AnswerLength",
+          [
+            "P",
+            "Q"
+          ]
+        ],
+        "goal": "length",
+        "descriptor": null,
+        "verifier": "length"
+      },
+      {
+        "fn": "ask_distance_point_plane",
+        "inputs": [
+          [
+            "Point",
+            [
+              "P"
+            ]
+          ],
+          [
+            "Plane",
+            [
+              "Q"
+            ]
+          ]
+        ],
+        "effect": [
+          "AnswerDistance",
+          [
+            "P",
+            "Q"
+          ]
+        ],
+        "goal": null,
+        "descriptor": null,
+        "verifier": "distance"
+      },
+      {
+        "fn": "intersection_line",
+        "inputs": [
+          [
+            "Plane",
+            [
+              "A"
+            ]
+          ],
+          [
+            "Plane",
+            [
+              "B"
+            ]
+          ]
+        ],
+        "effect": [
+          "Line",
+          [
+            "L"
+          ]
+        ],
+        "goal": null,
+        "descriptor": null,
+        "verifier": "intersect_plane_plane"
+      }
+    ]
+  },
+  "fingerprints": {
+    "typed_fact_schema_sha256": "aa9d93eeac9f1659af8e5acd42af1904b7aaed674a8ab0f56f0c7dd8b2ad4ee8",
+    "function_declarations_sha256": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169",
+    "function_calling_surface": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+    "fact_extraction_surface": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a"
+  },
+  "baseline_pytest_route_d": {
+    "passed": 520,
+    "xfailed": 7,
+    "failed": 0
+  }
+}
