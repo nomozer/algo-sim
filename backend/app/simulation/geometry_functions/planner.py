@@ -221,10 +221,12 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
 def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
     """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
     no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
-    goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
-    if (f.quantity != "distance" and not goals) or f.points_a or f.point or f.plane_relation:
+    if f.points_a or f.point or f.plane_relation:
         raise TuChoi("SCHEMA_INVALID", f"{f.id}: điểm không tên cần hợp đồng mục tiêu đã hỗ trợ "
                      "(point_kind + points; không points_a, không point)", (f.id,))
+    goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
+    if f.quantity != "distance" and not goals:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: chưa có hợp đồng mục tiêu cho {f.quantity} với điểm được mô tả", (f.id,))
     contracts = [s.planning for s in REGISTRY.values() if s.planning is not None and s.planning.descriptor == f.point_kind]
     if not contracts:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: không hàm nào của thư viện dựng được {f.point_kind}", (f.id,))
@@ -233,8 +235,13 @@ def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
         raise TuChoi("FACT_INCOMPLETE", f"{f.id}: {f.point_kind} cần {sorted({len(c.inputs) for c in contracts})} điểm "
                      "phân biệt", (f.id,))
     if goals:
-        if f.line_ref or len(f.points_b or []) != 1:
-            raise TuChoi('FACT_INCOMPLETE', f'{f.id}: mục tiêu cần đúng một điểm đích', (f.id,))
+        point_arities = {len(c.inputs) - 1 for c in goals
+                         if c.inputs and all(t.kind == "Point" and len(t.operands) == 1 for t in c.inputs)}
+        if not point_arities:
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: hợp đồng mục tiêu {f.quantity} cần toán hạng phân biệt vai trò", (f.id,))
+        b = f.points_b or []
+        if f.line_ref or len(set(b)) != len(b) or len(b) not in point_arities:
+            raise TuChoi('FACT_INCOMPLETE', f'{f.id}: mục tiêu {f.quantity} cần {sorted(point_arities)} điểm đích phân biệt', (f.id,))
     elif f.line_ref is None and len(set(f.points_b or [])) < 2:
         raise TuChoi("FACT_INCOMPLETE", f"{f.id}: thiếu đích của khoảng cách (đường, mặt hay line_ref)", (f.id,))
 
@@ -466,8 +473,22 @@ _DIEN_TICH_DA_GIAC = re.compile(r"(?i:diện tích)\s+(?:(?i:của)\s+)?(?:(?i:t
 
 def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
     n = f.quantity
+    # Diện tích THIẾT DIỆN chỉ khi câu hỏi gọi tên đúng đối tượng ấy ("diện tích (của) thiết diện"); "diện tích tam giác MAB"
+    # có ô `solid` vẫn là đa giác; một dữ kiện hỏi CẢ HAI là mơ hồ (review 2, I2). Cổng nguồn kiểm lại cụm mặt cắt.
+    hoi_td = any(_DIEN_TICH_THIET_DIEN.search(x) for x in q)
+    if n == "area" and hoi_td and any(_DIEN_TICH_DA_GIAC.search(x) for x in q):
+        raise TuChoi("AMBIGUOUS_FACT", f"{f.id}: một câu hỏi diện tích nêu cả thiết diện lẫn một đa giác — tách hai câu hỏi", (f.id,))
+    if n == "area" and f.plane_relation and hoi_td and not f.negated and f.role == "question":
+        return _mat_qua_diem(f, q, k, phat, khoi_cua(f.solid, f).ten, "ask_section_area")
+    if f.plane_relation:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt cho bằng quan hệ chỉ dùng cho thiết diện / diện tích thiết diện",
+                     (f.id,))
+    if n == "area" and f.solid and len(f.points or []) >= 3 and hoi_td:
+        return phat(f.id, "ask_section_area", {"solid": khoi_cua(f.solid, f).ten, "plane": f.points}, q,
+                    "question(area of section)")
     entries = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == n]
-    if entries and not f.plane_relation and f.role == 'question' and not f.negated:
+    if entries and f.role == 'question' and not f.negated and (
+            f.point_kind is not None or len(f.points or []) <= max(len(c.effect.operands) for c in entries)):
         return k.resolver.goal(f, entries)
     if f.point_kind is not None:                       # distance from an unnamed, described point: one typed goal
         if f.role == "prove":
@@ -483,19 +504,6 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
         kh = khoi_cua(f.solid, f)
         k.volume_asks[f.id] = kh.ten
         return phat(f.id, "ask_volume", {"solid": kh.ten}, q, "question(volume)")
-    # Diện tích THIẾT DIỆN chỉ khi câu hỏi gọi tên đúng đối tượng ấy ("diện tích (của) thiết diện"); "diện tích tam giác MAB"
-    # có ô `solid` vẫn là đa giác; một dữ kiện hỏi CẢ HAI là mơ hồ (review 2, I2). Cổng nguồn kiểm lại cụm mặt cắt.
-    hoi_td = any(_DIEN_TICH_THIET_DIEN.search(x) for x in q)
-    if n == "area" and hoi_td and any(_DIEN_TICH_DA_GIAC.search(x) for x in q):
-        raise TuChoi("AMBIGUOUS_FACT", f"{f.id}: một câu hỏi diện tích nêu cả thiết diện lẫn một đa giác — tách hai câu hỏi", (f.id,))
-    if n == "area" and f.plane_relation and hoi_td and not f.negated and f.role == "question":
-        return _mat_qua_diem(f, q, k, phat, khoi_cua(f.solid, f).ten, "ask_section_area")
-    if f.plane_relation:
-        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt cho bằng quan hệ chỉ dùng cho thiết diện / diện tích thiết diện",
-                     (f.id,))
-    if n == "area" and f.solid and len(f.points or []) >= 3 and hoi_td:
-        return phat(f.id, "ask_section_area", {"solid": khoi_cua(f.solid, f).ten, "plane": f.points}, q,
-                    "question(area of section)")
     if n == "area":
         return phat(f.id, "ask_area", {"polygon": f.points}, q, "question(area)")
     if n == "length" or (n == "distance" and _toan_hang(f.points_a) == _toan_hang(f.points_b) == "point"):
@@ -778,7 +786,8 @@ class _EffectResolver:
         choice = self._resolve(next(iter(kinds)), operands)
         env = self._emit(choice, fact)
         if fact.point_kind:
-            return self._chuoi(fact, operands[0], operands[1], choice, env)
+            target = operands[1] if len(operands) == 2 else ('points', operands[1:])
+            return self._chuoi(fact, operands[0], target, choice, env)
         return next(c for c in self.plan.calls if c['id'] == fact.id)
 
     def distance(self, fact, point, line):
@@ -817,8 +826,11 @@ class _EffectResolver:
         fresh = [e for e in self.trail if e['fresh'] and REGISTRY[e['fn']].planning and REGISTRY[e['fn']].planning.fresh]
         cert = {'rule': 'effect-chain', 'effect_binding': True, 'goal': fact.id, 'ask': fact.id,
                 'operand': {'descriptor': point[1], 'points': list(fact.points), 'label': env[answer.effect.operands[0]]},
-                'target': ({'point': target} if isinstance(target, str) else {'line_ref': target[1]} if target[0] == 'result' else
-                           {'line': list(target[1])} if target[0] == 'named' else {'plane': list(target)}),
+                'target': ({'point': target} if isinstance(target, str)
+                           else {'points': list(target[1])} if target[0] == 'points'
+                           else {'line_ref': target[1]} if target[0] == 'result'
+                           else {'line': list(target[1])} if target[0] == 'named'
+                           else {'plane': list(target)}),
                 'chain': self.trail,
                 'labels': [e['env'][REGISTRY[e['fn']].planning.effect.operands[0]] for e in fresh],
                 'quotes': list(dict.fromkeys(fact.quotes)), 'provenance': 'DERIVED', 'binding': 'AUXILIARY'}

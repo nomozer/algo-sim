@@ -1,0 +1,3610 @@
+{
+ "run": "contract-driven-goal-composition",
+ "status": "DEVELOPMENT_AND_HELD_OUT_SPLITS",
+ "slice_b_unnamed_status": "SCHEMA_REPRESENTATION_BLOCKER",
+ "positive": [
+  {
+   "id": "pyramid-midpoint-area-AB",
+   "slice": "A_area",
+   "composition": "midpoint->ask_area",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "13/4"
+   }
+  },
+  {
+   "id": "pyramid-midpoint-area-AD-reversed-wording",
+   "slice": "A_area",
+   "composition": "midpoint->ask_area",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi hai điểm A, D và trung điểm của SC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi hai điểm A, D và trung điểm của SC."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "13/4"
+   }
+  },
+  {
+   "id": "cube-midpoint-area",
+   "slice": "A_area",
+   "composition": "midpoint->ask_area",
+   "text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính diện tích tam giác tạo bởi trung điểm của C'D' và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "solid_type": "cube"
+     },
+     {
+      "id": "f2",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "measure": "edge",
+      "value": "2"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của C'D' và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "C'",
+       "D'"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "8"
+   }
+  },
+  {
+   "id": "cuboid-midpoint-area",
+   "slice": "A_area",
+   "composition": "midpoint->ask_area",
+   "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. AB = 2. AD = 4. AA' = 3. Tính diện tích tam giác tạo bởi trung điểm của A'C' và hai điểm B, D.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "solid_type": "cuboid"
+     },
+     {
+      "id": "f2",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AB = 2."
+      ],
+      "points": [
+       "A",
+       "B"
+      ],
+      "value": "2",
+      "measure": "segment"
+     },
+     {
+      "id": "f3",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AD = 4."
+      ],
+      "points": [
+       "A",
+       "D"
+      ],
+      "value": "4",
+      "measure": "segment"
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AA' = 3."
+      ],
+      "points": [
+       "A",
+       "A'"
+      ],
+      "value": "3",
+      "measure": "segment"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của A'C' và hai điểm B, D."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "A'",
+       "C'"
+      ],
+      "points_b": [
+       "B",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "45"
+   }
+  },
+  {
+   "id": "prism-midpoint-area",
+   "slice": "A_area",
+   "composition": "midpoint->ask_area",
+   "text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2. AA' = 3. Tính diện tích tam giác tạo bởi trung điểm của B'C' và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+      ],
+      "solid": "ABC.A'B'C'",
+      "solid_type": "prism",
+      "right": true
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C"
+      ],
+      "shape": "equilateral_triangle",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AA' = 3."
+      ],
+      "points": [
+       "A",
+       "A'"
+      ],
+      "value": "3",
+      "measure": "segment"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của B'C' và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "B'",
+       "C'"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "39/4"
+   }
+  },
+  {
+   "id": "pyramid-projection-plane-area",
+   "slice": "A_area",
+   "composition": "orthogonal_projection->ask_area",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi H là hình chiếu vuông góc của A lên (SBC). Tính diện tích tam giác HAB.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "fp",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Gọi H là hình chiếu vuông góc của A lên (SBC)."
+      ],
+      "point": "A",
+      "at": "H",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác HAB."
+      ],
+      "quantity": "area",
+      "points": [
+       "H",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "144/169"
+   }
+  },
+  {
+   "id": "pyramid-projection-line-area",
+   "slice": "A_area",
+   "composition": "orthogonal_projection_line->ask_area",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi H là hình chiếu vuông góc của A lên SB. Tính diện tích tam giác HCD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "fp",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Gọi H là hình chiếu vuông góc của A lên SB."
+      ],
+      "point": "A",
+      "at": "H",
+      "points": [
+       "S",
+       "B"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác HCD."
+      ],
+      "quantity": "area",
+      "points": [
+       "H",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "820/169"
+   }
+  },
+  {
+   "id": "pyramid-projection-and-unnamed-midpoint-area",
+   "slice": "A_area",
+   "composition": "orthogonal_projection_line+midpoint->ask_area",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi H là hình chiếu vuông góc của A lên SB. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm H, D.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "fp",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Gọi H là hình chiếu vuông góc của A lên SB."
+      ],
+      "point": "A",
+      "at": "H",
+      "points": [
+       "S",
+       "B"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm H, D."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "H",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "509/338"
+   }
+  },
+  {
+   "id": "pyramid-reuse-named-midpoint-area",
+   "slice": "A_area",
+   "composition": "reuse_named_midpoint->ask_area",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi N là trung điểm của SC. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "fn",
+      "kind": "point_def",
+      "role": "premise",
+      "quotes": [
+       "Gọi N là trung điểm của SC."
+      ],
+      "point": "N",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "13/4"
+   },
+   "expected_new_points": 0
+  },
+  {
+   "id": "pyramid-shared-midpoint-area-and-distance",
+   "slice": "A_area",
+   "composition": "midpoint->(ask_area+ask_distance_point_plane)",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B. Tính khoảng cách từ trung điểm của SC đến (SAB).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     },
+     {
+      "id": "q2",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến (SAB)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q1": "13/4",
+    "q2": "1"
+   },
+   "expected_midpoint_constructions": 1
+  }
+ ],
+ "discovery": [
+  {
+   "id": "pyramid-centroid-area-AB",
+   "slice": "A_area_discovery",
+   "composition": "centroid->ask_area",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trọng tâm của tam giác SBC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trọng tâm của tam giác SBC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "13/9"
+   }
+  },
+  {
+   "id": "pyramid-centroid-area-AD-reversed-wording",
+   "slice": "A_area_discovery",
+   "composition": "centroid->ask_area",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi hai điểm A, D và trọng tâm của tam giác SBC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi hai điểm A, D và trọng tâm của tam giác SBC."
+      ],
+      "quantity": "area",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "25/9"
+   }
+  },
+  {
+   "id": "prism-centroid-area",
+   "slice": "A_area_discovery",
+   "composition": "centroid->ask_area",
+   "text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2. AA' = 3. Tính diện tích tam giác tạo bởi trọng tâm của tam giác A'B'C' và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+      ],
+      "solid": "ABC.A'B'C'",
+      "solid_type": "prism",
+      "right": true
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C"
+      ],
+      "shape": "equilateral_triangle",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AA' = 3."
+      ],
+      "points": [
+       "A",
+       "A'"
+      ],
+      "value": "3",
+      "measure": "segment"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trọng tâm của tam giác A'B'C' và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "centroid",
+      "points": [
+       "A'",
+       "B'",
+       "C'"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "28/3"
+   }
+  },
+  {
+   "id": "pyramid-projection-and-unnamed-centroid-area",
+   "slice": "A_area_discovery",
+   "composition": "orthogonal_projection_line+centroid->ask_area",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi H là hình chiếu vuông góc của A lên SB. Tính diện tích tam giác tạo bởi trọng tâm của tam giác SBC và hai điểm H, D.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "fp",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Gọi H là hình chiếu vuông góc của A lên SB."
+      ],
+      "point": "A",
+      "at": "H",
+      "points": [
+       "S",
+       "B"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trọng tâm của tam giác SBC và hai điểm H, D."
+      ],
+      "quantity": "area",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "H",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "490/1521"
+   }
+  }
+ ],
+ "held_out": [
+  {
+   "id": "heldout-tetrahedron-midpoint-area",
+   "slice": "A_area_held_out",
+   "text": "Cho tứ diện đều ABCD cạnh 2. Tính diện tích tam giác tạo bởi trung điểm của CD và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho tứ diện đều ABCD cạnh 2."
+      ],
+      "solid": "ABCD",
+      "solid_type": "tetrahedron",
+      "regular": true
+     },
+     {
+      "id": "f2",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "Cho tứ diện đều ABCD cạnh 2."
+      ],
+      "solid": "ABCD",
+      "measure": "edge",
+      "value": "2"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của CD và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "C",
+       "D"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "2"
+   }
+  },
+  {
+   "id": "heldout-regular-pyramid-midpoint-area",
+   "slice": "A_area_held_out",
+   "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 2. SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SD và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 2."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid",
+      "regular": true
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SD và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "D"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "4"
+   }
+  },
+  {
+   "id": "heldout-cuboid-projection-and-midpoint-area",
+   "slice": "A_area_held_out",
+   "text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. AB = 2. AD = 4. AA' = 3. Gọi H là hình chiếu vuông góc của A lên B'D'. Tính diện tích tam giác tạo bởi trung điểm của C'D' và hai điểm H, A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình hộp chữ nhật ABCD.A'B'C'D'."
+      ],
+      "solid": "ABCD.A'B'C'D'",
+      "solid_type": "cuboid"
+     },
+     {
+      "id": "f2",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AB = 2."
+      ],
+      "points": [
+       "A",
+       "B"
+      ],
+      "value": "2",
+      "measure": "segment"
+     },
+     {
+      "id": "f3",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AD = 4."
+      ],
+      "points": [
+       "A",
+       "D"
+      ],
+      "value": "4",
+      "measure": "segment"
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AA' = 3."
+      ],
+      "points": [
+       "A",
+       "A'"
+      ],
+      "value": "3",
+      "measure": "segment"
+     },
+     {
+      "id": "fp",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Gọi H là hình chiếu vuông góc của A lên B'D'."
+      ],
+      "point": "A",
+      "at": "H",
+      "points": [
+       "B'",
+       "D'"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của C'D' và hai điểm H, A."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "C'",
+       "D'"
+      ],
+      "points_b": [
+       "H",
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "3169/100"
+   }
+  },
+  {
+   "id": "heldout-prism-midpoint-area-reversed",
+   "slice": "A_area_held_out",
+   "text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2. AA' = 3. Tính diện tích tam giác tạo bởi hai điểm C, C' và trung điểm của A'B'.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+      ],
+      "solid": "ABC.A'B'C'",
+      "solid_type": "prism",
+      "right": true
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác đều ABC cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C"
+      ],
+      "shape": "equilateral_triangle",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AA' = 3."
+      ],
+      "points": [
+       "A",
+       "A'"
+      ],
+      "value": "3",
+      "measure": "segment"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi hai điểm C, C' và trung điểm của A'B'."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "A'",
+       "B'"
+      ],
+      "points_b": [
+       "C",
+       "C'"
+      ]
+     }
+    ]
+   },
+   "expected_squared": {
+    "q": "27/4"
+   }
+  }
+ ],
+ "angle_line_plane_slice_b": [
+  {
+   "id": "angle-90deg-perpendicular-line-plane",
+   "slice": "B_angle_line_plane",
+   "angle_regime": "90_deg",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm của AB. Tính góc giữa SA và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "fm",
+      "kind": "point_def",
+      "role": "premise",
+      "quotes": [
+       "Gọi M là trung điểm của AB."
+      ],
+      "point": "M",
+      "point_kind": "midpoint",
+      "points": [
+       "A",
+       "B"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa SA và (ABCD)."
+      ],
+      "quantity": "angle",
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_cos_sq": {
+    "q": "0"
+   },
+   "expected_sin_sq": {
+    "q": "1"
+   }
+  },
+  {
+   "id": "angle-0deg-parallel-midline-plane",
+   "slice": "B_angle_line_plane",
+   "angle_regime": "0_deg",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm của SC. Gọi N là trung điểm của SD. Tính góc giữa MN và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "fm",
+      "kind": "point_def",
+      "role": "premise",
+      "quotes": [
+       "Gọi M là trung điểm của SC."
+      ],
+      "point": "M",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ]
+     },
+     {
+      "id": "fn",
+      "kind": "point_def",
+      "role": "premise",
+      "quotes": [
+       "Gọi N là trung điểm của SD."
+      ],
+      "point": "N",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "D"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa MN và (ABCD)."
+      ],
+      "quantity": "angle",
+      "points_a": [
+       "M",
+       "N"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_cos_sq": {
+    "q": "1"
+   },
+   "expected_sin_sq": {
+    "q": "0"
+   }
+  },
+  {
+   "id": "angle-oblique-midpoint-line-plane",
+   "slice": "B_angle_line_plane",
+   "angle_regime": "oblique",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm của SC. Tính góc giữa AM và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "fm",
+      "kind": "point_def",
+      "role": "premise",
+      "quotes": [
+       "Gọi M là trung điểm của SC."
+      ],
+      "point": "M",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa AM và (ABCD)."
+      ],
+      "quantity": "angle",
+      "points_a": [
+       "A",
+       "M"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_cos_sq": {
+    "q": "8/17"
+   },
+   "expected_sin_sq": {
+    "q": "9/17"
+   }
+  },
+  {
+   "id": "angle-oblique-centroid-line-plane",
+   "slice": "B_angle_line_plane",
+   "angle_regime": "oblique",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi G là trọng tâm của tam giác SBC. Tính góc giữa AG và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "fg",
+      "kind": "point_def",
+      "role": "premise",
+      "quotes": [
+       "Gọi G là trọng tâm của tam giác SBC."
+      ],
+      "point": "G",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa AG và (ABCD)."
+      ],
+      "quantity": "angle",
+      "points_a": [
+       "A",
+       "G"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_cos_sq": {
+    "q": "20/29"
+   },
+   "expected_sin_sq": {
+    "q": "9/29"
+   }
+  },
+  {
+   "id": "angle-oblique-projection-line-plane",
+   "slice": "B_angle_line_plane",
+   "angle_regime": "oblique",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi H là hình chiếu vuông góc của A lên SB. Tính góc giữa HC và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "fp",
+      "kind": "projection",
+      "role": "premise",
+      "quotes": [
+       "Gọi H là hình chiếu vuông góc của A lên SB."
+      ],
+      "point": "A",
+      "at": "H",
+      "points": [
+       "S",
+       "B"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa HC và (ABCD)."
+      ],
+      "quantity": "angle",
+      "points_a": [
+       "H",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_cos_sq": {
+    "q": "185/221"
+   },
+   "expected_sin_sq": {
+    "q": "36/221"
+   }
+  }
+ ],
+ "negative": [
+  {
+   "id": "collinear-triangle-unnamed-midpoint",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm S, C.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm S, C."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "COLLINEAR_POINTS"
+   ]
+  },
+  {
+   "id": "collinear-triangle-named-midpoint",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Gọi M là trung điểm của SC. Tính diện tích tam giác SMC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "fm",
+      "kind": "point_def",
+      "role": "premise",
+      "quotes": [
+       "Gọi M là trung điểm của SC."
+      ],
+      "point": "M",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác SMC."
+      ],
+      "quantity": "area",
+      "points": [
+       "S",
+       "M",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "COLLINEAR_POINTS"
+   ]
+  },
+  {
+   "id": "underdetermined-metric",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "MISSING_DIMENSION",
+    "UNDERDETERMINED_POINT"
+   ]
+  },
+  {
+   "id": "contradictory-facts",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. SA = 4. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "f_conflict",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 4."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "4"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "INCONSISTENT_FACTS"
+   ]
+  },
+  {
+   "id": "ambiguous-fact",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ],
+      "ambiguous": true
+     }
+    ]
+   },
+   "expected_codes": [
+    "AMBIGUOUS_FACT"
+   ]
+  },
+  {
+   "id": "conditional-question",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "condition",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "CONDITIONAL_CLAUSE"
+   ]
+  },
+  {
+   "id": "prove-role",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "prove",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "GOAL_CLAUSE_NOT_PREMISE"
+   ]
+  },
+  {
+   "id": "negated-question",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ],
+      "negated": true
+     }
+    ]
+   },
+   "expected_codes": [
+    "NEGATED_CLAUSE"
+   ]
+  },
+  {
+   "id": "missing-target-point",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ]
+  },
+  {
+   "id": "extra-target-point",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ]
+  },
+  {
+   "id": "duplicate-target-point",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "A"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ]
+  },
+  {
+   "id": "duplicate-descriptor-point",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "S"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ]
+  },
+  {
+   "id": "wrong-source-target",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ]
+  },
+  {
+   "id": "wrong-source-descriptor",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "B"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ]
+  },
+  {
+   "id": "unknown-label-in-target",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "Z"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "UNKNOWN_LABEL",
+    "SOURCE_OBJECT_MISMATCH",
+    "UNSUPPORTED_CAPABILITY"
+   ]
+  },
+  {
+   "id": "unread-second-ask",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, D.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, D."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "REQUEST_NOT_ANSWERED",
+    "QUESTION_CONTEXT_UNSUPPORTED",
+    "NOT_ASKED_IN_SOURCE"
+   ]
+  },
+  {
+   "id": "unnamed-angle-line-plane-blocker",
+   "blocker": "SCHEMA_REPRESENTATION_BLOCKER",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính góc giữa đường thẳng đi qua trung điểm của SC và A với (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng đi qua trung điểm của SC và A với (ABCD)."
+      ],
+      "quantity": "angle",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "A",
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "UNSUPPORTED_CAPABILITY",
+    "SCHEMA_INVALID"
+   ]
+  }
+ ]
+}

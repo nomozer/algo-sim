@@ -1,0 +1,1496 @@
+.FFFFF..FFFFFFFFFFFFFFFFFFFFFFFFFFF......FFFFFFFFFFFFFFFFFFFFFFFFF.      [100%]
+================================== FAILURES ===================================
+______ test_slice_a_positive_area_composition[pyramid-midpoint-area-AB] _______
+
+case = {'id': 'pyramid-midpoint-area-AB', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': 'Cho h├¼nh ch├│p S.AB...├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.', ...}
+
+    @pytest.mark.parametrize("case", CORPUS["positive"], ids=lambda c: c["id"])
+    def test_slice_a_positive_area_composition(case):
+        r = run(case)
+>       exact_area(r, case)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'pyramid-midpoint-area-AB', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': 'Cho h├¼nh ch├│p S.AB...├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.', ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('pyramid-midpoint-area-AB', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+_ test_slice_a_positive_area_composition[pyramid-midpoint-area-AD-reversed-wording] _
+
+case = {'id': 'pyramid-midpoint-area-AD-reversed-wording', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': 'C...├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi hai ─æiß╗âm A, D v├á trung ─æiß╗âm cß╗ºa SC.', ...}
+
+    @pytest.mark.parametrize("case", CORPUS["positive"], ids=lambda c: c["id"])
+    def test_slice_a_positive_area_composition(case):
+        r = run(case)
+>       exact_area(r, case)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'pyramid-midpoint-area-AD-reversed-wording', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': 'C...├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi hai ─æiß╗âm A, D v├á trung ─æiß╗âm cß╗ºa SC.', ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('pyramid-midpoint-area-AD-reversed-wording', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+_________ test_slice_a_positive_area_composition[cube-midpoint-area] __________
+
+case = {'id': 'cube-midpoint-area', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': "Cho h├¼nh lß║¡p ph╞░╞íng ABCD.A'B'C'D' cß║ính 2. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa C'D' v├á hai ─æiß╗âm A, B.", ...}
+
+    @pytest.mark.parametrize("case", CORPUS["positive"], ids=lambda c: c["id"])
+    def test_slice_a_positive_area_composition(case):
+        r = run(case)
+>       exact_area(r, case)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'cube-midpoint-area', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': "Cho h├¼nh lß║¡p ph╞░╞íng ABCD.A'B'C'D' cß║ính 2. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa C'D' v├á hai ─æiß╗âm A, B.", ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('cube-midpoint-area', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+________ test_slice_a_positive_area_composition[cuboid-midpoint-area] _________
+
+case = {'id': 'cuboid-midpoint-area', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': "Cho h├¼nh hß╗Öp chß╗» nhß║¡t ABCD.A'B'C'D'. AB = 2. AD = 4. AA' = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa A'C' v├á hai ─æiß╗âm B, D.", ...}
+
+    @pytest.mark.parametrize("case", CORPUS["positive"], ids=lambda c: c["id"])
+    def test_slice_a_positive_area_composition(case):
+        r = run(case)
+>       exact_area(r, case)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'cuboid-midpoint-area', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': "Cho h├¼nh hß╗Öp chß╗» nhß║¡t ABCD.A'B'C'D'. AB = 2. AD = 4. AA' = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa A'C' v├á hai ─æiß╗âm B, D.", ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('cuboid-midpoint-area', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+_________ test_slice_a_positive_area_composition[prism-midpoint-area] _________
+
+case = {'id': 'prism-midpoint-area', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': "Cho l─âng trß╗Ñ ─æß╗⌐ng ABC.A...├│ ─æ├íy l├á tam gi├íc ─æß╗üu ABC cß║ính 2. AA' = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa B'C' v├á hai ─æiß╗âm A, B.", ...}
+
+    @pytest.mark.parametrize("case", CORPUS["positive"], ids=lambda c: c["id"])
+    def test_slice_a_positive_area_composition(case):
+        r = run(case)
+>       exact_area(r, case)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'prism-midpoint-area', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': "Cho l─âng trß╗Ñ ─æß╗⌐ng ABC.A...├│ ─æ├íy l├á tam gi├íc ─æß╗üu ABC cß║ính 2. AA' = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa B'C' v├á hai ─æiß╗âm A, B.", ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('prism-midpoint-area', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+_ test_slice_a_positive_area_composition[pyramid-projection-and-unnamed-midpoint-area] _
+
+case = {'id': 'pyramid-projection-and-unnamed-midpoint-area', 'slice': 'A_area', 'composition': 'orthogonal_projection_line+m... Gß╗ìi H l├á h├¼nh chiß║┐u vu├┤ng g├│c cß╗ºa A l├¬n SB. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm H, D.', ...}
+
+    @pytest.mark.parametrize("case", CORPUS["positive"], ids=lambda c: c["id"])
+    def test_slice_a_positive_area_composition(case):
+        r = run(case)
+>       exact_area(r, case)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'pyramid-projection-and-unnamed-midpoint-area', 'slice': 'A_area', 'composition': 'orthogonal_projection_line+m... Gß╗ìi H l├á h├¼nh chiß║┐u vu├┤ng g├│c cß╗ºa A l├¬n SB. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm H, D.', ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('pyramid-projection-and-unnamed-midpoint-area', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+__ test_slice_a_positive_area_composition[pyramid-reuse-named-midpoint-area] __
+
+case = {'id': 'pyramid-reuse-named-midpoint-area', 'slice': 'A_area', 'composition': 'reuse_named_midpoint->ask_area', 'text'... (ABCD). SA = 3. Gß╗ìi N l├á trung ─æiß╗âm cß╗ºa SC. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.', ...}
+
+    @pytest.mark.parametrize("case", CORPUS["positive"], ids=lambda c: c["id"])
+    def test_slice_a_positive_area_composition(case):
+        r = run(case)
+>       exact_area(r, case)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'pyramid-reuse-named-midpoint-area', 'slice': 'A_area', 'composition': 'reuse_named_midpoint->ask_area', 'text'... (ABCD). SA = 3. Gß╗ìi N l├á trung ─æiß╗âm cß╗ºa SC. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.', ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('pyramid-reuse-named-midpoint-area', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+_ test_slice_a_positive_area_composition[pyramid-shared-midpoint-area-and-distance] _
+
+case = {'id': 'pyramid-shared-midpoint-area-and-distance', 'slice': 'A_area', 'composition': 'midpoint->(ask_area+ask_distanc... diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B. T├¡nh khoß║úng c├ích tß╗½ trung ─æiß╗âm cß╗ºa SC ─æß║┐n (SAB).', ...}
+
+    @pytest.mark.parametrize("case", CORPUS["positive"], ids=lambda c: c["id"])
+    def test_slice_a_positive_area_composition(case):
+        r = run(case)
+>       exact_area(r, case)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q1: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'pyramid-shared-midpoint-area-and-distance', 'slice': 'A_area', 'composition': 'midpoint->(ask_area+ask_distanc... diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B. T├¡nh khoß║úng c├ích tß╗½ trung ─æiß╗âm cß╗ºa SC ─æß║┐n (SAB).', ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('pyramid-shared-midpoint-area-and-distance', 'SCHEMA_INVALID', 'q1: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+__ test_slice_a_held_out_area_composition[heldout-tetrahedron-midpoint-area] __
+
+case = {'id': 'heldout-tetrahedron-midpoint-area', 'slice': 'A_area_held_out', 'text': 'Cho tß╗⌐ diß╗çn ─æß╗üu ABCD cß║ính 2. T├¡nh diß╗ç...n', 'role': 'question', 'quotes': ['T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa CD v├á hai ─æiß╗âm A, B.'], ...}]}, ...}
+
+    @pytest.mark.parametrize("case", CORPUS["held_out"], ids=lambda c: c["id"])
+    def test_slice_a_held_out_area_composition(case):
+>       exact_area(run(case), case)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'heldout-tetrahedron-midpoint-area', 'slice': 'A_area_held_out', 'text': 'Cho tß╗⌐ diß╗çn ─æß╗üu ABCD cß║ính 2. T├¡nh diß╗ç...n', 'role': 'question', 'quotes': ['T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa CD v├á hai ─æiß╗âm A, B.'], ...}]}, ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('heldout-tetrahedron-midpoint-area', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+_ test_slice_a_held_out_area_composition[heldout-regular-pyramid-midpoint-area] _
+
+case = {'id': 'heldout-regular-pyramid-midpoint-area', 'slice': 'A_area_held_out', 'text': 'Cho h├¼nh ch├│p ─æß╗üu S.ABCD c├│ cß║ính ...n', 'role': 'question', 'quotes': ['T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SD v├á hai ─æiß╗âm A, B.'], ...}]}, ...}
+
+    @pytest.mark.parametrize("case", CORPUS["held_out"], ids=lambda c: c["id"])
+    def test_slice_a_held_out_area_composition(case):
+>       exact_area(run(case), case)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'heldout-regular-pyramid-midpoint-area', 'slice': 'A_area_held_out', 'text': 'Cho h├¼nh ch├│p ─æß╗üu S.ABCD c├│ cß║ính ...n', 'role': 'question', 'quotes': ['T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SD v├á hai ─æiß╗âm A, B.'], ...}]}, ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('heldout-regular-pyramid-midpoint-area', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+_ test_slice_a_held_out_area_composition[heldout-cuboid-projection-and-midpoint-area] _
+
+case = {'id': 'heldout-cuboid-projection-and-midpoint-area', 'slice': 'A_area_held_out', 'text': "Cho h├¼nh hß╗Öp chß╗» nhß║¡t ABCD...., 'role': 'question', 'quotes': ["T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa C'D' v├á hai ─æiß╗âm H, A."], ...}]}, ...}
+
+    @pytest.mark.parametrize("case", CORPUS["held_out"], ids=lambda c: c["id"])
+    def test_slice_a_held_out_area_composition(case):
+>       exact_area(run(case), case)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'heldout-cuboid-projection-and-midpoint-area', 'slice': 'A_area_held_out', 'text': "Cho h├¼nh hß╗Öp chß╗» nhß║¡t ABCD...., 'role': 'question', 'quotes': ["T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa C'D' v├á hai ─æiß╗âm H, A."], ...}]}, ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('heldout-cuboid-projection-and-midpoint-area', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+_ test_slice_a_held_out_area_composition[heldout-prism-midpoint-area-reversed] _
+
+case = {'id': 'heldout-prism-midpoint-area-reversed', 'slice': 'A_area_held_out', 'text': "Cho l─âng trß╗Ñ ─æß╗⌐ng ABC.A'B'C' c├│ ─æ├í... 'role': 'question', 'quotes': ["T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi hai ─æiß╗âm C, C' v├á trung ─æiß╗âm cß╗ºa A'B'."], ...}]}, ...}
+
+    @pytest.mark.parametrize("case", CORPUS["held_out"], ids=lambda c: c["id"])
+    def test_slice_a_held_out_area_composition(case):
+>       exact_area(run(case), case)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:84: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'heldout-prism-midpoint-area-reversed', 'slice': 'A_area_held_out', 'text': "Cho l─âng trß╗Ñ ─æß╗⌐ng ABC.A'B'C' c├│ ─æ├í... 'role': 'question', 'quotes': ["T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi hai ─æiß╗âm C, C' v├á trung ─æiß╗âm cß╗ºa A'B'."], ...}]}, ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('heldout-prism-midpoint-area-reversed', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+_ test_slice_a_zero_planner_edit_discovery_centroid_to_area[pyramid-centroid-area-AB] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CC6444D70>
+case = {'id': 'pyramid-centroid-area-AB', 'slice': 'A_area_discovery', 'composition': 'centroid->ask_area', 'text': 'Cho h├¼nh...2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trß╗ìng t├óm cß╗ºa tam gi├íc SBC v├á hai ─æiß╗âm A, B.', ...}
+
+    @pytest.mark.parametrize("case", CORPUS["discovery"], ids=lambda c: c["id"])
+    def test_slice_a_zero_planner_edit_discovery_centroid_to_area(monkeypatch, case):
+        code = {m.__name__: Path(m.__file__).read_bytes() for m in (planner, registry, engine)}
+        r_before = run(case)
+>       assert r_before.status == "REFUSED" and r_before.code == "UNSUPPORTED_CAPABILITY"
+E       AssertionError: assert ('REFUSED' == 'REFUSED'
+E         
+E           REFUSED and 'SCHEMA_INVALID' == 'UNSUPPORTED_CAPABILITY'
+E         
+E         - UNSUPPORTED_CAPABILITY
+E         + SCHEMA_INVALID)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:91: AssertionError
+_ test_slice_a_zero_planner_edit_discovery_centroid_to_area[pyramid-centroid-area-AD-reversed-wording] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CC6447950>
+case = {'id': 'pyramid-centroid-area-AD-reversed-wording', 'slice': 'A_area_discovery', 'composition': 'centroid->ask_area', ...2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi hai ─æiß╗âm A, D v├á trß╗ìng t├óm cß╗ºa tam gi├íc SBC.', ...}
+
+    @pytest.mark.parametrize("case", CORPUS["discovery"], ids=lambda c: c["id"])
+    def test_slice_a_zero_planner_edit_discovery_centroid_to_area(monkeypatch, case):
+        code = {m.__name__: Path(m.__file__).read_bytes() for m in (planner, registry, engine)}
+        r_before = run(case)
+>       assert r_before.status == "REFUSED" and r_before.code == "UNSUPPORTED_CAPABILITY"
+E       AssertionError: assert ('REFUSED' == 'REFUSED'
+E         
+E           REFUSED and 'SCHEMA_INVALID' == 'UNSUPPORTED_CAPABILITY'
+E         
+E         - UNSUPPORTED_CAPABILITY
+E         + SCHEMA_INVALID)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:91: AssertionError
+_ test_slice_a_zero_planner_edit_discovery_centroid_to_area[prism-centroid-area] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CC63BF7D0>
+case = {'id': 'prism-centroid-area', 'slice': 'A_area_discovery', 'composition': 'centroid->ask_area', 'text': "Cho l─âng trß╗Ñ ...am gi├íc ─æß╗üu ABC cß║ính 2. AA' = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trß╗ìng t├óm cß╗ºa tam gi├íc A'B'C' v├á hai ─æiß╗âm A, B.", ...}
+
+    @pytest.mark.parametrize("case", CORPUS["discovery"], ids=lambda c: c["id"])
+    def test_slice_a_zero_planner_edit_discovery_centroid_to_area(monkeypatch, case):
+        code = {m.__name__: Path(m.__file__).read_bytes() for m in (planner, registry, engine)}
+        r_before = run(case)
+>       assert r_before.status == "REFUSED" and r_before.code == "UNSUPPORTED_CAPABILITY"
+E       AssertionError: assert ('REFUSED' == 'REFUSED'
+E         
+E           REFUSED and 'SCHEMA_INVALID' == 'UNSUPPORTED_CAPABILITY'
+E         
+E         - UNSUPPORTED_CAPABILITY
+E         + SCHEMA_INVALID)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:91: AssertionError
+_ test_slice_a_zero_planner_edit_discovery_centroid_to_area[pyramid-projection-and-unnamed-centroid-area] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CC63BE420>
+case = {'id': 'pyramid-projection-and-unnamed-centroid-area', 'slice': 'A_area_discovery', 'composition': 'orthogonal_project... h├¼nh chiß║┐u vu├┤ng g├│c cß╗ºa A l├¬n SB. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trß╗ìng t├óm cß╗ºa tam gi├íc SBC v├á hai ─æiß╗âm H, D.', ...}
+
+    @pytest.mark.parametrize("case", CORPUS["discovery"], ids=lambda c: c["id"])
+    def test_slice_a_zero_planner_edit_discovery_centroid_to_area(monkeypatch, case):
+        code = {m.__name__: Path(m.__file__).read_bytes() for m in (planner, registry, engine)}
+        r_before = run(case)
+>       assert r_before.status == "REFUSED" and r_before.code == "UNSUPPORTED_CAPABILITY"
+E       AssertionError: assert ('REFUSED' == 'REFUSED'
+E         
+E           REFUSED and 'SCHEMA_INVALID' == 'UNSUPPORTED_CAPABILITY'
+E         
+E         - UNSUPPORTED_CAPABILITY
+E         + SCHEMA_INVALID)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:91: AssertionError
+____ test_negative_cases_fail_closed[collinear-triangle-unnamed-midpoint] _____
+
+case = {'id': 'collinear-triangle-unnamed-midpoint', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g...'T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm S, C.'], ...}]}, 'expected_codes': ['COLLINEAR_POINTS']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('collinear-triangle-unnamed-midpoint', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['COLLINEAR_POINTS']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+_____ test_negative_cases_fail_closed[collinear-triangle-named-midpoint] ______
+
+case = {'id': 'collinear-triangle-named-midpoint', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c...stion', 'role': 'question', 'quotes': ['T├¡nh diß╗çn t├¡ch tam gi├íc SMC.'], ...}]}, 'expected_codes': ['COLLINEAR_POINTS']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+>       assert r.status == "REFUSED", (case["id"], r.answers)
+E       AssertionError: ('collinear-triangle-named-midpoint', {'q': '0'})
+E       assert 'SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:105: AssertionError
+___________ test_negative_cases_fail_closed[underdetermined-metric] ___________
+
+case = {'id': 'underdetermined-metric', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD)...ß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.'], ...}]}, 'expected_codes': ['MISSING_DIMENSION', 'UNDERDETERMINED_POINT']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('underdetermined-metric', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['MISSING_DIMENSION', 'UNDERDETERMINED_POINT']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+____________ test_negative_cases_fail_closed[contradictory-facts] _____________
+
+case = {'id': 'contradictory-facts', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). S...├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.'], ...}]}, 'expected_codes': ['INCONSISTENT_FACTS']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('contradictory-facts', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['INCONSISTENT_FACTS']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+_______________ test_negative_cases_fail_closed[ambiguous-fact] _______________
+
+case = {'id': 'ambiguous-fact', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3... ['T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.'], ...}]}, 'expected_codes': ['AMBIGUOUS_FACT']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('ambiguous-fact', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['AMBIGUOUS_FACT']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+____________ test_negative_cases_fail_closed[conditional-question] ____________
+
+case = {'id': 'conditional-question', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). ...├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.'], ...}]}, 'expected_codes': ['CONDITIONAL_CLAUSE']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('conditional-question', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['CONDITIONAL_CLAUSE']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+_________________ test_negative_cases_fail_closed[prove-role] _________________
+
+case = {'id': 'prove-role', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3. T├¡...iß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.'], ...}]}, 'expected_codes': ['GOAL_CLAUSE_NOT_PREMISE']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('prove-role', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['GOAL_CLAUSE_NOT_PREMISE']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+______________ test_negative_cases_fail_closed[negated-question] ______________
+
+case = {'id': 'negated-question', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA =... ['T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.'], ...}]}, 'expected_codes': ['NEGATED_CLAUSE']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('negated-question', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['NEGATED_CLAUSE']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+____________ test_negative_cases_fail_closed[missing-target-point] ____________
+
+case = {'id': 'missing-target-point', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). ...['T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.'], ...}]}, 'expected_codes': ['FACT_INCOMPLETE']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('missing-target-point', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['FACT_INCOMPLETE']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+_____________ test_negative_cases_fail_closed[extra-target-point] _____________
+
+case = {'id': 'extra-target-point', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA...['T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.'], ...}]}, 'expected_codes': ['FACT_INCOMPLETE']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('extra-target-point', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['FACT_INCOMPLETE']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+___________ test_negative_cases_fail_closed[duplicate-target-point] ___________
+
+case = {'id': 'duplicate-target-point', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD)...['T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.'], ...}]}, 'expected_codes': ['FACT_INCOMPLETE']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('duplicate-target-point', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['FACT_INCOMPLETE']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+_________ test_negative_cases_fail_closed[duplicate-descriptor-point] _________
+
+case = {'id': 'duplicate-descriptor-point', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (A...['T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.'], ...}]}, 'expected_codes': ['FACT_INCOMPLETE']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('duplicate-descriptor-point', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['FACT_INCOMPLETE']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+____________ test_negative_cases_fail_closed[wrong-source-target] _____________
+
+case = {'id': 'wrong-source-target', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). S...diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.'], ...}]}, 'expected_codes': ['SOURCE_OBJECT_MISMATCH']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('wrong-source-target', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['SOURCE_OBJECT_MISMATCH']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+__________ test_negative_cases_fail_closed[wrong-source-descriptor] ___________
+
+case = {'id': 'wrong-source-descriptor', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD...diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.'], ...}]}, 'expected_codes': ['SOURCE_OBJECT_MISMATCH']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('wrong-source-descriptor', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['SOURCE_OBJECT_MISMATCH']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+__________ test_negative_cases_fail_closed[unknown-label-in-target] ___________
+
+case = {'id': 'unknown-label-in-target', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD...C v├á hai ─æiß╗âm A, B.'], ...}]}, 'expected_codes': ['UNKNOWN_LABEL', 'SOURCE_OBJECT_MISMATCH', 'UNSUPPORTED_CAPABILITY']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('unknown-label-in-target', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['UNKNOWN_LABEL', 'SOURCE_OBJECT_MISMATCH', 'UNSUPPORTED_CAPABILITY']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+_____________ test_negative_cases_fail_closed[unread-second-ask] ______________
+
+case = {'id': 'unread-second-ask', 'text': 'Cho h├¼nh ch├│p S.ABCD. ─É├íy ABCD l├á h├¼nh vu├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA ...iß╗âm A, D.'], ...}]}, 'expected_codes': ['REQUEST_NOT_ANSWERED', 'QUESTION_CONTEXT_UNSUPPORTED', 'NOT_ASKED_IN_SOURCE']}
+
+    @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
+    def test_negative_cases_fail_closed(case):
+        r = run(case)
+        assert r.status == "REFUSED", (case["id"], r.answers)
+        assert not r.answers and r.scene3d is None
+>       assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+E       AssertionError: ('unread-second-ask', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'SCHEMA_INVALID' in ['REQUEST_NOT_ANSWERED', 'QUESTION_CONTEXT_UNSUPPORTED', 'NOT_ASKED_IN_SOURCE']
+E        +  where 'SCHEMA_INVALID' = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=()).code
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:107: AssertionError
+_____________ test_slice_b_verifier_table_and_degenerate_refusals _____________
+
+    def test_slice_b_verifier_table_and_degenerate_refusals():
+>       assert set(engine._KIEM_DICH) >= {"distance", "length", "area", "angle_line_plane"}
+                   ^^^^^^^^^^^^^^^^^
+E       AttributeError: module 'app.simulation.geometry_functions.engine' has no attribute '_KIEM_DICH'
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:122: AttributeError
+________ test_slice_b_unnamed_point_kind_schema_representation_blocker ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CC886CC50>
+
+    def test_slice_b_unnamed_point_kind_schema_representation_blocker(monkeypatch):
+        # Even if a speculative contract attempts to declare goal="angle" with heterogeneous inputs (Point + Plane),
+        # _doc_toan_hang_mo_ta refuses to guess positional splits of points_b under the frozen TypedFact schema.
+        spec = registry.REGISTRY["ask_angle_line_plane"]
+        bad_contract = registry.PlanningContract(
+            inputs=(
+                registry.PlanningTerm("Point", ("P",)),
+                registry.PlanningTerm("Point", ("Q",)),
+                registry.PlanningTerm("Plane", ("M",)),
+            ),
+            effect=registry.PlanningTerm("AnswerDistance", ("P", "M")),
+            source_policy="goal_answer",
+            verifier="angle_line_plane",
+            goal="angle",
+        )
+        monkeypatch.setitem(registry.REGISTRY, "ask_angle_line_plane", replace(spec, planning=bad_contract))
+        blocker_case = next(c for c in CORPUS["negative"] if c["id"] == "unnamed-angle-line-plane-blocker")
+        r = run(blocker_case)
+>       assert r.status == "REFUSED" and r.code == "UNSUPPORTED_CAPABILITY"
+E       AssertionError: assert ('REFUSED' == 'REFUSED'
+E         
+E           REFUSED and 'FACT_INCOMPLETE' == 'UNSUPPORTED_CAPABILITY'
+E         
+E         - UNSUPPORTED_CAPABILITY
+E         + FACT_INCOMPLETE)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:150: AssertionError
+_______ test_ablation_goal_and_producer_contracts_and_registry_reversal _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CC886CE00>
+
+    def test_ablation_goal_and_producer_contracts_and_registry_reversal(monkeypatch):
+        c = CORPUS["positive"][0]
+>       before = planner.lap_ke_hoach(c["payload"], c["text"])
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:155: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\simulation\geometry_functions\planner.py:245: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+f = TypedFact(id='q', kind='question', role='question', negated=False, ambiguous=False, quotes=['T├¡nh diß╗çn t├¡ch tam gi├íc t... points_a=None, points_b=['A', 'B'], line_ref=None, quantity='area', plane_relation=None, plane_name=None, reason=None)
+
+    def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
+        """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
+        no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
+        goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
+        if (f.quantity != "distance" and not goals) or f.points_a or f.point or f.plane_relation:
+>           raise TuChoi("SCHEMA_INVALID", f"{f.id}: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú "
+                         "(point_kind + points; kh├┤ng points_a, kh├┤ng point)", (f.id,))
+E           app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)
+
+backend\app\simulation\geometry_functions\planner.py:226: TuChoi
+___________ test_area_certificate_tampering_refuses[target-points] ____________
+
+field = 'target-points'
+
+    @pytest.mark.parametrize(
+        "field",
+        ["target-points", "target-kind", "effect", "env-target", "env-desc", "quotes", "labels-empty", "labels-source", "labels-dup", "missing-cert"],
+    )
+    def test_area_certificate_tampering_refuses(field):
+        c = CORPUS["positive"][0]
+>       k = planner.lap_ke_hoach(c["payload"], c["text"])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\simulation\geometry_functions\planner.py:245: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+f = TypedFact(id='q', kind='question', role='question', negated=False, ambiguous=False, quotes=['T├¡nh diß╗çn t├¡ch tam gi├íc t... points_a=None, points_b=['A', 'B'], line_ref=None, quantity='area', plane_relation=None, plane_name=None, reason=None)
+
+    def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
+        """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
+        no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
+        goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
+        if (f.quantity != "distance" and not goals) or f.points_a or f.point or f.plane_relation:
+>           raise TuChoi("SCHEMA_INVALID", f"{f.id}: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú "
+                         "(point_kind + points; kh├┤ng points_a, kh├┤ng point)", (f.id,))
+E           app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)
+
+backend\app\simulation\geometry_functions\planner.py:226: TuChoi
+____________ test_area_certificate_tampering_refuses[target-kind] _____________
+
+field = 'target-kind'
+
+    @pytest.mark.parametrize(
+        "field",
+        ["target-points", "target-kind", "effect", "env-target", "env-desc", "quotes", "labels-empty", "labels-source", "labels-dup", "missing-cert"],
+    )
+    def test_area_certificate_tampering_refuses(field):
+        c = CORPUS["positive"][0]
+>       k = planner.lap_ke_hoach(c["payload"], c["text"])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\simulation\geometry_functions\planner.py:245: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+f = TypedFact(id='q', kind='question', role='question', negated=False, ambiguous=False, quotes=['T├¡nh diß╗çn t├¡ch tam gi├íc t... points_a=None, points_b=['A', 'B'], line_ref=None, quantity='area', plane_relation=None, plane_name=None, reason=None)
+
+    def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
+        """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
+        no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
+        goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
+        if (f.quantity != "distance" and not goals) or f.points_a or f.point or f.plane_relation:
+>           raise TuChoi("SCHEMA_INVALID", f"{f.id}: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú "
+                         "(point_kind + points; kh├┤ng points_a, kh├┤ng point)", (f.id,))
+E           app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)
+
+backend\app\simulation\geometry_functions\planner.py:226: TuChoi
+_______________ test_area_certificate_tampering_refuses[effect] _______________
+
+field = 'effect'
+
+    @pytest.mark.parametrize(
+        "field",
+        ["target-points", "target-kind", "effect", "env-target", "env-desc", "quotes", "labels-empty", "labels-source", "labels-dup", "missing-cert"],
+    )
+    def test_area_certificate_tampering_refuses(field):
+        c = CORPUS["positive"][0]
+>       k = planner.lap_ke_hoach(c["payload"], c["text"])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\simulation\geometry_functions\planner.py:245: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+f = TypedFact(id='q', kind='question', role='question', negated=False, ambiguous=False, quotes=['T├¡nh diß╗çn t├¡ch tam gi├íc t... points_a=None, points_b=['A', 'B'], line_ref=None, quantity='area', plane_relation=None, plane_name=None, reason=None)
+
+    def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
+        """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
+        no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
+        goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
+        if (f.quantity != "distance" and not goals) or f.points_a or f.point or f.plane_relation:
+>           raise TuChoi("SCHEMA_INVALID", f"{f.id}: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú "
+                         "(point_kind + points; kh├┤ng points_a, kh├┤ng point)", (f.id,))
+E           app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)
+
+backend\app\simulation\geometry_functions\planner.py:226: TuChoi
+_____________ test_area_certificate_tampering_refuses[env-target] _____________
+
+field = 'env-target'
+
+    @pytest.mark.parametrize(
+        "field",
+        ["target-points", "target-kind", "effect", "env-target", "env-desc", "quotes", "labels-empty", "labels-source", "labels-dup", "missing-cert"],
+    )
+    def test_area_certificate_tampering_refuses(field):
+        c = CORPUS["positive"][0]
+>       k = planner.lap_ke_hoach(c["payload"], c["text"])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\simulation\geometry_functions\planner.py:245: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+f = TypedFact(id='q', kind='question', role='question', negated=False, ambiguous=False, quotes=['T├¡nh diß╗çn t├¡ch tam gi├íc t... points_a=None, points_b=['A', 'B'], line_ref=None, quantity='area', plane_relation=None, plane_name=None, reason=None)
+
+    def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
+        """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
+        no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
+        goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
+        if (f.quantity != "distance" and not goals) or f.points_a or f.point or f.plane_relation:
+>           raise TuChoi("SCHEMA_INVALID", f"{f.id}: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú "
+                         "(point_kind + points; kh├┤ng points_a, kh├┤ng point)", (f.id,))
+E           app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)
+
+backend\app\simulation\geometry_functions\planner.py:226: TuChoi
+______________ test_area_certificate_tampering_refuses[env-desc] ______________
+
+field = 'env-desc'
+
+    @pytest.mark.parametrize(
+        "field",
+        ["target-points", "target-kind", "effect", "env-target", "env-desc", "quotes", "labels-empty", "labels-source", "labels-dup", "missing-cert"],
+    )
+    def test_area_certificate_tampering_refuses(field):
+        c = CORPUS["positive"][0]
+>       k = planner.lap_ke_hoach(c["payload"], c["text"])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\simulation\geometry_functions\planner.py:245: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+f = TypedFact(id='q', kind='question', role='question', negated=False, ambiguous=False, quotes=['T├¡nh diß╗çn t├¡ch tam gi├íc t... points_a=None, points_b=['A', 'B'], line_ref=None, quantity='area', plane_relation=None, plane_name=None, reason=None)
+
+    def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
+        """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
+        no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
+        goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
+        if (f.quantity != "distance" and not goals) or f.points_a or f.point or f.plane_relation:
+>           raise TuChoi("SCHEMA_INVALID", f"{f.id}: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú "
+                         "(point_kind + points; kh├┤ng points_a, kh├┤ng point)", (f.id,))
+E           app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)
+
+backend\app\simulation\geometry_functions\planner.py:226: TuChoi
+_______________ test_area_certificate_tampering_refuses[quotes] _______________
+
+field = 'quotes'
+
+    @pytest.mark.parametrize(
+        "field",
+        ["target-points", "target-kind", "effect", "env-target", "env-desc", "quotes", "labels-empty", "labels-source", "labels-dup", "missing-cert"],
+    )
+    def test_area_certificate_tampering_refuses(field):
+        c = CORPUS["positive"][0]
+>       k = planner.lap_ke_hoach(c["payload"], c["text"])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\simulation\geometry_functions\planner.py:245: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+f = TypedFact(id='q', kind='question', role='question', negated=False, ambiguous=False, quotes=['T├¡nh diß╗çn t├¡ch tam gi├íc t... points_a=None, points_b=['A', 'B'], line_ref=None, quantity='area', plane_relation=None, plane_name=None, reason=None)
+
+    def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
+        """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
+        no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
+        goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
+        if (f.quantity != "distance" and not goals) or f.points_a or f.point or f.plane_relation:
+>           raise TuChoi("SCHEMA_INVALID", f"{f.id}: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú "
+                         "(point_kind + points; kh├┤ng points_a, kh├┤ng point)", (f.id,))
+E           app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)
+
+backend\app\simulation\geometry_functions\planner.py:226: TuChoi
+____________ test_area_certificate_tampering_refuses[labels-empty] ____________
+
+field = 'labels-empty'
+
+    @pytest.mark.parametrize(
+        "field",
+        ["target-points", "target-kind", "effect", "env-target", "env-desc", "quotes", "labels-empty", "labels-source", "labels-dup", "missing-cert"],
+    )
+    def test_area_certificate_tampering_refuses(field):
+        c = CORPUS["positive"][0]
+>       k = planner.lap_ke_hoach(c["payload"], c["text"])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\simulation\geometry_functions\planner.py:245: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+f = TypedFact(id='q', kind='question', role='question', negated=False, ambiguous=False, quotes=['T├¡nh diß╗çn t├¡ch tam gi├íc t... points_a=None, points_b=['A', 'B'], line_ref=None, quantity='area', plane_relation=None, plane_name=None, reason=None)
+
+    def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
+        """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
+        no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
+        goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
+        if (f.quantity != "distance" and not goals) or f.points_a or f.point or f.plane_relation:
+>           raise TuChoi("SCHEMA_INVALID", f"{f.id}: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú "
+                         "(point_kind + points; kh├┤ng points_a, kh├┤ng point)", (f.id,))
+E           app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)
+
+backend\app\simulation\geometry_functions\planner.py:226: TuChoi
+___________ test_area_certificate_tampering_refuses[labels-source] ____________
+
+field = 'labels-source'
+
+    @pytest.mark.parametrize(
+        "field",
+        ["target-points", "target-kind", "effect", "env-target", "env-desc", "quotes", "labels-empty", "labels-source", "labels-dup", "missing-cert"],
+    )
+    def test_area_certificate_tampering_refuses(field):
+        c = CORPUS["positive"][0]
+>       k = planner.lap_ke_hoach(c["payload"], c["text"])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\simulation\geometry_functions\planner.py:245: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+f = TypedFact(id='q', kind='question', role='question', negated=False, ambiguous=False, quotes=['T├¡nh diß╗çn t├¡ch tam gi├íc t... points_a=None, points_b=['A', 'B'], line_ref=None, quantity='area', plane_relation=None, plane_name=None, reason=None)
+
+    def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
+        """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
+        no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
+        goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
+        if (f.quantity != "distance" and not goals) or f.points_a or f.point or f.plane_relation:
+>           raise TuChoi("SCHEMA_INVALID", f"{f.id}: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú "
+                         "(point_kind + points; kh├┤ng points_a, kh├┤ng point)", (f.id,))
+E           app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)
+
+backend\app\simulation\geometry_functions\planner.py:226: TuChoi
+_____________ test_area_certificate_tampering_refuses[labels-dup] _____________
+
+field = 'labels-dup'
+
+    @pytest.mark.parametrize(
+        "field",
+        ["target-points", "target-kind", "effect", "env-target", "env-desc", "quotes", "labels-empty", "labels-source", "labels-dup", "missing-cert"],
+    )
+    def test_area_certificate_tampering_refuses(field):
+        c = CORPUS["positive"][0]
+>       k = planner.lap_ke_hoach(c["payload"], c["text"])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\simulation\geometry_functions\planner.py:245: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+f = TypedFact(id='q', kind='question', role='question', negated=False, ambiguous=False, quotes=['T├¡nh diß╗çn t├¡ch tam gi├íc t... points_a=None, points_b=['A', 'B'], line_ref=None, quantity='area', plane_relation=None, plane_name=None, reason=None)
+
+    def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
+        """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
+        no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
+        goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
+        if (f.quantity != "distance" and not goals) or f.points_a or f.point or f.plane_relation:
+>           raise TuChoi("SCHEMA_INVALID", f"{f.id}: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú "
+                         "(point_kind + points; kh├┤ng points_a, kh├┤ng point)", (f.id,))
+E           app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)
+
+backend\app\simulation\geometry_functions\planner.py:226: TuChoi
+____________ test_area_certificate_tampering_refuses[missing-cert] ____________
+
+field = 'missing-cert'
+
+    @pytest.mark.parametrize(
+        "field",
+        ["target-points", "target-kind", "effect", "env-target", "env-desc", "quotes", "labels-empty", "labels-source", "labels-dup", "missing-cert"],
+    )
+    def test_area_certificate_tampering_refuses(field):
+        c = CORPUS["positive"][0]
+>       k = planner.lap_ke_hoach(c["payload"], c["text"])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:180: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\simulation\geometry_functions\planner.py:245: in lap_ke_hoach
+    facts = doc_du_kien(raw)
+            ^^^^^^^^^^^^^^^^
+backend\app\simulation\geometry_functions\planner.py:176: in doc_du_kien
+    _doc_toan_hang_mo_ta(f)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+f = TypedFact(id='q', kind='question', role='question', negated=False, ambiguous=False, quotes=['T├¡nh diß╗çn t├¡ch tam gi├íc t... points_a=None, points_b=['A', 'B'], line_ref=None, quantity='area', plane_relation=None, plane_name=None, reason=None)
+
+    def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
+        """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
+        no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
+        goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
+        if (f.quantity != "distance" and not goals) or f.points_a or f.point or f.plane_relation:
+>           raise TuChoi("SCHEMA_INVALID", f"{f.id}: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú "
+                         "(point_kind + points; kh├┤ng points_a, kh├┤ng point)", (f.id,))
+E           app.simulation.geometry_functions.registry.TuChoi: SCHEMA_INVALID: q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)
+
+backend\app\simulation\geometry_functions\planner.py:226: TuChoi
+____________ test_verifier_mismatch_in_contract_is_refused[length] ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CC88A4F20>
+bad_verifier = 'length'
+
+    @pytest.mark.parametrize("bad_verifier", ["length", "distance", "angle_line_plane", "nonexistent"])
+    def test_verifier_mismatch_in_contract_is_refused(monkeypatch, bad_verifier):
+        spec = registry.REGISTRY["ask_area"]
+>       tampered = replace(spec.planning, verifier=bad_verifier)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:210: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+obj = None, changes = {'verifier': 'length'}
+
+    def replace(obj, /, **changes):
+        """Return a new object replacing specified fields with new values.
+    
+        This is especially useful for frozen classes.  Example usage::
+    
+          @dataclass(frozen=True)
+          class C:
+              x: int
+              y: int
+    
+          c = C(1, 2)
+          c1 = replace(c, x=3)
+          assert c1.x == 3 and c1.y == 2
+        """
+    
+        # We're going to mutate 'changes', but that's okay because it's a
+        # new dict, even if called with 'replace(obj, **my_changes)'.
+    
+        if not _is_dataclass_instance(obj):
+>           raise TypeError("replace() should be called on dataclass instances")
+E           TypeError: replace() should be called on dataclass instances
+
+C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:1559: TypeError
+___________ test_verifier_mismatch_in_contract_is_refused[distance] ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CC88F2450>
+bad_verifier = 'distance'
+
+    @pytest.mark.parametrize("bad_verifier", ["length", "distance", "angle_line_plane", "nonexistent"])
+    def test_verifier_mismatch_in_contract_is_refused(monkeypatch, bad_verifier):
+        spec = registry.REGISTRY["ask_area"]
+>       tampered = replace(spec.planning, verifier=bad_verifier)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:210: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+obj = None, changes = {'verifier': 'distance'}
+
+    def replace(obj, /, **changes):
+        """Return a new object replacing specified fields with new values.
+    
+        This is especially useful for frozen classes.  Example usage::
+    
+          @dataclass(frozen=True)
+          class C:
+              x: int
+              y: int
+    
+          c = C(1, 2)
+          c1 = replace(c, x=3)
+          assert c1.x == 3 and c1.y == 2
+        """
+    
+        # We're going to mutate 'changes', but that's okay because it's a
+        # new dict, even if called with 'replace(obj, **my_changes)'.
+    
+        if not _is_dataclass_instance(obj):
+>           raise TypeError("replace() should be called on dataclass instances")
+E           TypeError: replace() should be called on dataclass instances
+
+C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:1559: TypeError
+_______ test_verifier_mismatch_in_contract_is_refused[angle_line_plane] _______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CC7CE2900>
+bad_verifier = 'angle_line_plane'
+
+    @pytest.mark.parametrize("bad_verifier", ["length", "distance", "angle_line_plane", "nonexistent"])
+    def test_verifier_mismatch_in_contract_is_refused(monkeypatch, bad_verifier):
+        spec = registry.REGISTRY["ask_area"]
+>       tampered = replace(spec.planning, verifier=bad_verifier)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:210: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+obj = None, changes = {'verifier': 'angle_line_plane'}
+
+    def replace(obj, /, **changes):
+        """Return a new object replacing specified fields with new values.
+    
+        This is especially useful for frozen classes.  Example usage::
+    
+          @dataclass(frozen=True)
+          class C:
+              x: int
+              y: int
+    
+          c = C(1, 2)
+          c1 = replace(c, x=3)
+          assert c1.x == 3 and c1.y == 2
+        """
+    
+        # We're going to mutate 'changes', but that's okay because it's a
+        # new dict, even if called with 'replace(obj, **my_changes)'.
+    
+        if not _is_dataclass_instance(obj):
+>           raise TypeError("replace() should be called on dataclass instances")
+E           TypeError: replace() should be called on dataclass instances
+
+C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:1559: TypeError
+_________ test_verifier_mismatch_in_contract_is_refused[nonexistent] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CC88A1D60>
+bad_verifier = 'nonexistent'
+
+    @pytest.mark.parametrize("bad_verifier", ["length", "distance", "angle_line_plane", "nonexistent"])
+    def test_verifier_mismatch_in_contract_is_refused(monkeypatch, bad_verifier):
+        spec = registry.REGISTRY["ask_area"]
+>       tampered = replace(spec.planning, verifier=bad_verifier)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:210: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+obj = None, changes = {'verifier': 'nonexistent'}
+
+    def replace(obj, /, **changes):
+        """Return a new object replacing specified fields with new values.
+    
+        This is especially useful for frozen classes.  Example usage::
+    
+          @dataclass(frozen=True)
+          class C:
+              x: int
+              y: int
+    
+          c = C(1, 2)
+          c1 = replace(c, x=3)
+          assert c1.x == 3 and c1.y == 2
+        """
+    
+        # We're going to mutate 'changes', but that's okay because it's a
+        # new dict, even if called with 'replace(obj, **my_changes)'.
+    
+        if not _is_dataclass_instance(obj):
+>           raise TypeError("replace() should be called on dataclass instances")
+E           TypeError: replace() should be called on dataclass instances
+
+C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:1559: TypeError
+_______ test_lying_area_answer_contract_caught_by_independent_verifier ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CC88B23F0>
+
+    def test_lying_area_answer_contract_caught_by_independent_verifier(monkeypatch):
+        # Contract claims to compute AnswerArea(P, Q, R) for A, D (area┬▓ = 13/4), but its call template substitutes B for D (area┬▓ = 9/2).
+        c = CORPUS["positive"][1]  # pyramid-midpoint-area-AD-reversed-wording: target A, D
+        spec = registry.REGISTRY["ask_area"]
+        # Lie: wire polygon to (P, Q, P) or swap a slot in engine self-check
+        monkeypatch.setattr(engine._Dung, "kc2_dich", lambda self, d: Fraction(-1))
+>       assert run(c).code == "ENGINE_SELF_CHECK_FAILED"
+E       AssertionError: assert 'SCHEMA_INVALID' == 'ENGINE_SELF_CHECK_FAILED'
+E         
+E         - ENGINE_SELF_CHECK_FAILED
+E         + SCHEMA_INVALID
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:222: AssertionError
+___________ test_lying_area_call_template_caught_when_gate_bypassed ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CC88B1640>
+
+    def test_lying_area_call_template_caught_when_gate_bypassed(monkeypatch):
+        # Even if a lying call template passes the gate by wiring polygon to (P, A, B) while certificate target is (A, D):
+        c = CORPUS["positive"][1]  # target A, D (area┬▓ = 13/4 != area┬▓(M, A, B) = 9/2)
+        spec = registry.REGISTRY["ask_area"]
+>       lie = replace(spec.planning, call=(("polygon", ("P", "Q", "Q")),))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:229: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+obj = None, changes = {'call': (('polygon', ('P', 'Q', 'Q')),)}
+
+    def replace(obj, /, **changes):
+        """Return a new object replacing specified fields with new values.
+    
+        This is especially useful for frozen classes.  Example usage::
+    
+          @dataclass(frozen=True)
+          class C:
+              x: int
+              y: int
+    
+          c = C(1, 2)
+          c1 = replace(c, x=3)
+          assert c1.x == 3 and c1.y == 2
+        """
+    
+        # We're going to mutate 'changes', but that's okay because it's a
+        # new dict, even if called with 'replace(obj, **my_changes)'.
+    
+        if not _is_dataclass_instance(obj):
+>           raise TypeError("replace() should be called on dataclass instances")
+E           TypeError: replace() should be called on dataclass instances
+
+C:\Users\Bunny\AppData\Local\Programs\Python\Python312\Lib\dataclasses.py:1559: TypeError
+___________ test_lying_descriptor_contract_on_area_caught_by_engine ___________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000025CC88B1C40>
+
+    def test_lying_descriptor_contract_on_area_caught_by_engine(monkeypatch):
+        c = CORPUS["discovery"][0]
+        lie = replace(experimental_centroid_contract(registry).planning, call=(("point", "G"), ("segment", ("A", "B"))))
+        monkeypatch.setitem(registry.REGISTRY, "midpoint", replace(registry.REGISTRY["midpoint"], planning=lie))
+        r = run(c)
+>       assert r.status == "REFUSED" and r.code == "ENGINE_SELF_CHECK_FAILED"
+E       AssertionError: assert ('REFUSED' == 'REFUSED'
+E         
+E           REFUSED and 'SCHEMA_INVALID' == 'ENGINE_SELF_CHECK_FAILED'
+E         
+E         - ENGINE_SELF_CHECK_FAILED
+E         + SCHEMA_INVALID)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:240: AssertionError
+_________ test_metamorphic_area_invariance[reverse-descriptor-points] _________
+
+transform = 'reverse-descriptor-points'
+
+    @pytest.mark.parametrize("transform", ["reverse-descriptor-points", "reverse-target-points", "reverse-facts", "rename", "scale"])
+    def test_metamorphic_area_invariance(transform):
+        c = deepcopy(CORPUS["positive"][0])
+        if transform == "reverse-descriptor-points":
+            c["payload"]["facts"][-1]["points"].reverse()
+        elif transform == "reverse-target-points":
+            c["payload"]["facts"][-1]["points_b"].reverse()
+        elif transform == "reverse-facts":
+            c["payload"]["facts"].reverse()
+        elif transform == "rename":
+            c = json.loads(json.dumps(c, ensure_ascii=False).replace("S", "T").replace("C", "E"))
+        else:
+            c["text"] = c["text"].replace("cß║ính 2", "cß║ính 4").replace("SA = 3", "SA = 6")
+            for f in c["payload"]["facts"]:
+                f["quotes"] = [q.replace("cß║ính 2", "cß║ính 4").replace("SA = 3", "SA = 6") for q in f["quotes"]]
+                if f.get("value") in ("2", "3"):
+                    f["value"] = str(int(f["value"]) * 2)
+            # Scaling linear dimensions by 2 scales area by 4, hence area┬▓ by 16.
+            c["expected_squared"] = {q: str(Fraction(x) * 16) for q, x in c["expected_squared"].items()}
+>       exact_area(run(c), c)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:262: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'pyramid-midpoint-area-AB', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': 'Cho h├¼nh ch├│p S.AB...├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.', ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('pyramid-midpoint-area-AB', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+___________ test_metamorphic_area_invariance[reverse-target-points] ___________
+
+transform = 'reverse-target-points'
+
+    @pytest.mark.parametrize("transform", ["reverse-descriptor-points", "reverse-target-points", "reverse-facts", "rename", "scale"])
+    def test_metamorphic_area_invariance(transform):
+        c = deepcopy(CORPUS["positive"][0])
+        if transform == "reverse-descriptor-points":
+            c["payload"]["facts"][-1]["points"].reverse()
+        elif transform == "reverse-target-points":
+            c["payload"]["facts"][-1]["points_b"].reverse()
+        elif transform == "reverse-facts":
+            c["payload"]["facts"].reverse()
+        elif transform == "rename":
+            c = json.loads(json.dumps(c, ensure_ascii=False).replace("S", "T").replace("C", "E"))
+        else:
+            c["text"] = c["text"].replace("cß║ính 2", "cß║ính 4").replace("SA = 3", "SA = 6")
+            for f in c["payload"]["facts"]:
+                f["quotes"] = [q.replace("cß║ính 2", "cß║ính 4").replace("SA = 3", "SA = 6") for q in f["quotes"]]
+                if f.get("value") in ("2", "3"):
+                    f["value"] = str(int(f["value"]) * 2)
+            # Scaling linear dimensions by 2 scales area by 4, hence area┬▓ by 16.
+            c["expected_squared"] = {q: str(Fraction(x) * 16) for q, x in c["expected_squared"].items()}
+>       exact_area(run(c), c)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:262: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'pyramid-midpoint-area-AB', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': 'Cho h├¼nh ch├│p S.AB...├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.', ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('pyramid-midpoint-area-AB', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+_______________ test_metamorphic_area_invariance[reverse-facts] _______________
+
+transform = 'reverse-facts'
+
+    @pytest.mark.parametrize("transform", ["reverse-descriptor-points", "reverse-target-points", "reverse-facts", "rename", "scale"])
+    def test_metamorphic_area_invariance(transform):
+        c = deepcopy(CORPUS["positive"][0])
+        if transform == "reverse-descriptor-points":
+            c["payload"]["facts"][-1]["points"].reverse()
+        elif transform == "reverse-target-points":
+            c["payload"]["facts"][-1]["points_b"].reverse()
+        elif transform == "reverse-facts":
+            c["payload"]["facts"].reverse()
+        elif transform == "rename":
+            c = json.loads(json.dumps(c, ensure_ascii=False).replace("S", "T").replace("C", "E"))
+        else:
+            c["text"] = c["text"].replace("cß║ính 2", "cß║ính 4").replace("SA = 3", "SA = 6")
+            for f in c["payload"]["facts"]:
+                f["quotes"] = [q.replace("cß║ính 2", "cß║ính 4").replace("SA = 3", "SA = 6") for q in f["quotes"]]
+                if f.get("value") in ("2", "3"):
+                    f["value"] = str(int(f["value"]) * 2)
+            # Scaling linear dimensions by 2 scales area by 4, hence area┬▓ by 16.
+            c["expected_squared"] = {q: str(Fraction(x) * 16) for q, x in c["expected_squared"].items()}
+>       exact_area(run(c), c)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:262: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'pyramid-midpoint-area-AB', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': 'Cho h├¼nh ch├│p S.AB...├┤ng cß║ính 2. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.', ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('pyramid-midpoint-area-AB', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+__________________ test_metamorphic_area_invariance[rename] ___________________
+
+transform = 'rename'
+
+    @pytest.mark.parametrize("transform", ["reverse-descriptor-points", "reverse-target-points", "reverse-facts", "rename", "scale"])
+    def test_metamorphic_area_invariance(transform):
+        c = deepcopy(CORPUS["positive"][0])
+        if transform == "reverse-descriptor-points":
+            c["payload"]["facts"][-1]["points"].reverse()
+        elif transform == "reverse-target-points":
+            c["payload"]["facts"][-1]["points_b"].reverse()
+        elif transform == "reverse-facts":
+            c["payload"]["facts"].reverse()
+        elif transform == "rename":
+            c = json.loads(json.dumps(c, ensure_ascii=False).replace("S", "T").replace("C", "E"))
+        else:
+            c["text"] = c["text"].replace("cß║ính 2", "cß║ính 4").replace("SA = 3", "SA = 6")
+            for f in c["payload"]["facts"]:
+                f["quotes"] = [q.replace("cß║ính 2", "cß║ính 4").replace("SA = 3", "SA = 6") for q in f["quotes"]]
+                if f.get("value") in ("2", "3"):
+                    f["value"] = str(int(f["value"]) * 2)
+            # Scaling linear dimensions by 2 scales area by 4, hence area┬▓ by 16.
+            c["expected_squared"] = {q: str(Fraction(x) * 16) for q, x in c["expected_squared"].items()}
+>       exact_area(run(c), c)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:262: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'pyramid-midpoint-area-AB', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': 'Eho h├¼nh ch├│p T.AB...├┤ng cß║ính 2. TA vu├┤ng g├│c vß╗¢i (ABED). TA = 3. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa TE v├á hai ─æiß╗âm A, B.', ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('pyramid-midpoint-area-AB', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+___________________ test_metamorphic_area_invariance[scale] ___________________
+
+transform = 'scale'
+
+    @pytest.mark.parametrize("transform", ["reverse-descriptor-points", "reverse-target-points", "reverse-facts", "rename", "scale"])
+    def test_metamorphic_area_invariance(transform):
+        c = deepcopy(CORPUS["positive"][0])
+        if transform == "reverse-descriptor-points":
+            c["payload"]["facts"][-1]["points"].reverse()
+        elif transform == "reverse-target-points":
+            c["payload"]["facts"][-1]["points_b"].reverse()
+        elif transform == "reverse-facts":
+            c["payload"]["facts"].reverse()
+        elif transform == "rename":
+            c = json.loads(json.dumps(c, ensure_ascii=False).replace("S", "T").replace("C", "E"))
+        else:
+            c["text"] = c["text"].replace("cß║ính 2", "cß║ính 4").replace("SA = 3", "SA = 6")
+            for f in c["payload"]["facts"]:
+                f["quotes"] = [q.replace("cß║ính 2", "cß║ính 4").replace("SA = 3", "SA = 6") for q in f["quotes"]]
+                if f.get("value") in ("2", "3"):
+                    f["value"] = str(int(f["value"]) * 2)
+            # Scaling linear dimensions by 2 scales area by 4, hence area┬▓ by 16.
+            c["expected_squared"] = {q: str(Fraction(x) * 16) for q, x in c["expected_squared"].items()}
+>       exact_area(run(c), c)
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:262: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+r = KetQuaTuyen(status='REFUSED', code='SCHEMA_INVALID', reason='q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/7'}, declared_topology=None, targets=())
+case = {'id': 'pyramid-midpoint-area-AB', 'slice': 'A_area', 'composition': 'midpoint->ask_area', 'text': 'Cho h├¼nh ch├│p S.AB...├┤ng cß║ính 4. SA vu├┤ng g├│c vß╗¢i (ABCD). SA = 6. T├¡nh diß╗çn t├¡ch tam gi├íc tß║ío bß╗ƒi trung ─æiß╗âm cß╗ºa SC v├á hai ─æiß╗âm A, B.', ...}
+
+    def exact_area(r, case: dict) -> None:
+>       assert r.status == "SERVED", (case["id"], r.code, r.reason)
+E       AssertionError: ('pyramid-midpoint-area-AB', 'SCHEMA_INVALID', 'q: ─æiß╗âm kh├┤ng t├¬n cß║ºn hß╗úp ─æß╗ông mß╗Ñc ti├¬u ─æ├ú hß╗ù trß╗ú (point_kind + points; kh├┤ng points_a, kh├┤ng point)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_contract_driven_goal_composition.py:36: AssertionError
+=========================== short test summary info ===========================
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_positive_area_composition[pyramid-midpoint-area-AB]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_positive_area_composition[pyramid-midpoint-area-AD-reversed-wording]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_positive_area_composition[cube-midpoint-area]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_positive_area_composition[cuboid-midpoint-area]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_positive_area_composition[prism-midpoint-area]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_positive_area_composition[pyramid-projection-and-unnamed-midpoint-area]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_positive_area_composition[pyramid-reuse-named-midpoint-area]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_positive_area_composition[pyramid-shared-midpoint-area-and-distance]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_held_out_area_composition[heldout-tetrahedron-midpoint-area]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_held_out_area_composition[heldout-regular-pyramid-midpoint-area]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_held_out_area_composition[heldout-cuboid-projection-and-midpoint-area]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_held_out_area_composition[heldout-prism-midpoint-area-reversed]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_zero_planner_edit_discovery_centroid_to_area[pyramid-centroid-area-AB]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_zero_planner_edit_discovery_centroid_to_area[pyramid-centroid-area-AD-reversed-wording]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_zero_planner_edit_discovery_centroid_to_area[prism-centroid-area]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_a_zero_planner_edit_discovery_centroid_to_area[pyramid-projection-and-unnamed-centroid-area]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[collinear-triangle-unnamed-midpoint]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[collinear-triangle-named-midpoint]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[underdetermined-metric]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[contradictory-facts]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[ambiguous-fact]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[conditional-question]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[prove-role]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[negated-question]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[missing-target-point]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[extra-target-point]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[duplicate-target-point]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[duplicate-descriptor-point]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[wrong-source-target]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[wrong-source-descriptor]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[unknown-label-in-target]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_negative_cases_fail_closed[unread-second-ask]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_b_verifier_table_and_degenerate_refusals
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_slice_b_unnamed_point_kind_schema_representation_blocker
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_ablation_goal_and_producer_contracts_and_registry_reversal
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_area_certificate_tampering_refuses[target-points]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_area_certificate_tampering_refuses[target-kind]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_area_certificate_tampering_refuses[effect]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_area_certificate_tampering_refuses[env-target]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_area_certificate_tampering_refuses[env-desc]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_area_certificate_tampering_refuses[quotes]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_area_certificate_tampering_refuses[labels-empty]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_area_certificate_tampering_refuses[labels-source]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_area_certificate_tampering_refuses[labels-dup]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_area_certificate_tampering_refuses[missing-cert]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_verifier_mismatch_in_contract_is_refused[length]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_verifier_mismatch_in_contract_is_refused[distance]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_verifier_mismatch_in_contract_is_refused[angle_line_plane]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_verifier_mismatch_in_contract_is_refused[nonexistent]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_lying_area_answer_contract_caught_by_independent_verifier
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_lying_area_call_template_caught_when_gate_bypassed
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_lying_descriptor_contract_on_area_caught_by_engine
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_metamorphic_area_invariance[reverse-descriptor-points]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_metamorphic_area_invariance[reverse-target-points]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_metamorphic_area_invariance[reverse-facts]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_metamorphic_area_invariance[rename]
+FAILED backend\tests\geometry\test_contract_driven_goal_composition.py::test_metamorphic_area_invariance[scale]
+57 failed, 10 passed in 2.31s

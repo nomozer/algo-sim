@@ -1,0 +1,938 @@
+{
+ "schema": "goal_composition_ablation_reconciled/1",
+ "source_ablation": "docs/evaluation/geometry/runs/contract-driven-goal-composition/ablation.json",
+ "model_calls": 0,
+ "corpus_taxonomy_breakdown": {
+  "total_evaluated_cases": 214,
+  "production_positive_cases": 86,
+  "experimental_discovery_positive_cases": 9,
+  "total_negative_cases": 119,
+  "true_safety_negative_cases": 118,
+  "true_safety_negative_explicit_splits": 55,
+  "true_safety_negative_benchmark_and_two_line": 63,
+  "capability_disabled_negative_cases": 1
+ },
+ "safety_summary_by_arm": {
+  "NEW[production]": {
+   "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
+   "capability_disabled_raw_wrong_served": 0,
+   "capability_enabled_oracle_verified_served": 0
+  },
+  "NEW[centroid]": {
+   "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
+   "capability_disabled_raw_wrong_served": 1,
+   "capability_enabled_oracle_verified_served": 1
+  },
+  "NEW[no-area]": {
+   "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
+   "capability_disabled_raw_wrong_served": 0,
+   "capability_enabled_oracle_verified_served": 0
+  },
+  "NEW[no-midpoint]": {
+   "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
+   "capability_disabled_raw_wrong_served": 0,
+   "capability_enabled_oracle_verified_served": 0
+  },
+  "NEW[reversed]": {
+   "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
+   "capability_disabled_raw_wrong_served": 0,
+   "capability_enabled_oracle_verified_served": 0
+  },
+  "NEW[lying]": {
+   "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
+   "capability_disabled_raw_wrong_served": 0,
+   "capability_enabled_oracle_verified_served": 0
+  },
+  "NEW[lying-area-verifier]": {
+   "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
+   "capability_disabled_raw_wrong_served": 0,
+   "capability_enabled_oracle_verified_served": 0
+  }
+ },
+ "capability_disabled_negative_audit": {
+  "new/negative::centroid-without-contract": {
+   "negative_kind": "capability_disabled_negative",
+   "discovery_twin": "new/discovery::centroid-to-plane",
+   "oracle_expected_squared": {
+    "q": "16/9"
+   },
+   "oracle_expected_answer": {
+    "q": "4/3"
+   },
+   "arms": {
+    "NEW[production]": {
+     "raw_outcome": "correct_refusal",
+     "reconciled_outcome": "correct_refusal_disabled_capability",
+     "status": "REFUSED",
+     "code": "UNSUPPORTED_CAPABILITY",
+     "answers": {},
+     "squares": {}
+    },
+    "NEW[centroid]": {
+     "raw_outcome": "wrong_served",
+     "reconciled_outcome": "correct_served_enabled_capability",
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "q": "4/3"
+     },
+     "squares": {
+      "q": "16/9"
+     }
+    },
+    "NEW[no-area]": {
+     "raw_outcome": "correct_refusal",
+     "reconciled_outcome": "correct_refusal_disabled_capability",
+     "status": "REFUSED",
+     "code": "UNSUPPORTED_CAPABILITY",
+     "answers": {},
+     "squares": {}
+    },
+    "NEW[no-midpoint]": {
+     "raw_outcome": "correct_refusal",
+     "reconciled_outcome": "correct_refusal_disabled_capability",
+     "status": "REFUSED",
+     "code": "UNSUPPORTED_CAPABILITY",
+     "answers": {},
+     "squares": {}
+    },
+    "NEW[reversed]": {
+     "raw_outcome": "correct_refusal",
+     "reconciled_outcome": "correct_refusal_disabled_capability",
+     "status": "REFUSED",
+     "code": "UNSUPPORTED_CAPABILITY",
+     "answers": {},
+     "squares": {}
+    },
+    "NEW[lying]": {
+     "raw_outcome": "wrong_code_refusal",
+     "reconciled_outcome": "correct_refusal_lying_contract_caught",
+     "status": "REFUSED",
+     "code": "ENGINE_SELF_CHECK_FAILED",
+     "answers": {},
+     "squares": {}
+    },
+    "NEW[lying-area-verifier]": {
+     "raw_outcome": "correct_refusal",
+     "reconciled_outcome": "correct_refusal_disabled_capability",
+     "status": "REFUSED",
+     "code": "UNSUPPORTED_CAPABILITY",
+     "answers": {},
+     "squares": {}
+    }
+   }
+  }
+ },
+ "raw_counts": {
+  "NEW[production]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "false_refusal": 2
+   },
+   "goal/negative": {
+    "correct_refusal": 9,
+    "wrong_code_refusal": 2
+   },
+   "goal/positive": {
+    "correct_served": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "false_refusal": 4
+   },
+   "goal_composition/held_out": {
+    "correct_served": 4
+   },
+   "goal_composition/negative": {
+    "correct_refusal": 17
+   },
+   "goal_composition/positive": {
+    "correct_served": 10
+   },
+   "new/discovery": {
+    "false_refusal": 3
+   },
+   "new/negative": {
+    "correct_refusal": 16
+   },
+   "new/positive": {
+    "correct_served": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  },
+  "NEW[centroid]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "correct_served": 2
+   },
+   "goal/negative": {
+    "correct_refusal": 9,
+    "wrong_code_refusal": 2
+   },
+   "goal/positive": {
+    "correct_served": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "correct_served": 4
+   },
+   "goal_composition/held_out": {
+    "correct_served": 4
+   },
+   "goal_composition/negative": {
+    "correct_refusal": 17
+   },
+   "goal_composition/positive": {
+    "correct_served": 10
+   },
+   "new/discovery": {
+    "correct_served": 3
+   },
+   "new/negative": {
+    "correct_refusal": 15,
+    "wrong_served": 1
+   },
+   "new/positive": {
+    "correct_served": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  },
+  "NEW[no-area]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "false_refusal": 2
+   },
+   "goal/negative": {
+    "correct_refusal": 9,
+    "wrong_code_refusal": 2
+   },
+   "goal/positive": {
+    "correct_served": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "false_refusal": 4
+   },
+   "goal_composition/held_out": {
+    "false_refusal": 4
+   },
+   "goal_composition/negative": {
+    "wrong_code_refusal": 14,
+    "correct_refusal": 3
+   },
+   "goal_composition/positive": {
+    "false_refusal": 8,
+    "correct_served": 2
+   },
+   "new/discovery": {
+    "false_refusal": 3
+   },
+   "new/negative": {
+    "correct_refusal": 16
+   },
+   "new/positive": {
+    "correct_served": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  },
+  "NEW[no-midpoint]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "false_refusal": 2
+   },
+   "goal/negative": {
+    "wrong_code_refusal": 11
+   },
+   "goal/positive": {
+    "false_refusal": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "false_refusal": 4
+   },
+   "goal_composition/held_out": {
+    "false_refusal": 4
+   },
+   "goal_composition/negative": {
+    "wrong_code_refusal": 14,
+    "correct_refusal": 3
+   },
+   "goal_composition/positive": {
+    "false_refusal": 8,
+    "correct_served": 2
+   },
+   "new/discovery": {
+    "false_refusal": 3
+   },
+   "new/negative": {
+    "wrong_code_refusal": 14,
+    "correct_refusal": 2
+   },
+   "new/positive": {
+    "false_refusal": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  },
+  "NEW[reversed]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "false_refusal": 2
+   },
+   "goal/negative": {
+    "correct_refusal": 9,
+    "wrong_code_refusal": 2
+   },
+   "goal/positive": {
+    "correct_served": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "false_refusal": 4
+   },
+   "goal_composition/held_out": {
+    "correct_served": 4
+   },
+   "goal_composition/negative": {
+    "correct_refusal": 17
+   },
+   "goal_composition/positive": {
+    "correct_served": 10
+   },
+   "new/discovery": {
+    "false_refusal": 3
+   },
+   "new/negative": {
+    "correct_refusal": 16
+   },
+   "new/positive": {
+    "correct_served": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  },
+  "NEW[lying]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "false_refusal": 2
+   },
+   "goal/negative": {
+    "wrong_code_refusal": 11
+   },
+   "goal/positive": {
+    "false_refusal": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "false_refusal": 4
+   },
+   "goal_composition/held_out": {
+    "false_refusal": 4
+   },
+   "goal_composition/negative": {
+    "wrong_code_refusal": 14,
+    "correct_refusal": 3
+   },
+   "goal_composition/positive": {
+    "false_refusal": 8,
+    "correct_served": 2
+   },
+   "new/discovery": {
+    "false_refusal": 3
+   },
+   "new/negative": {
+    "wrong_code_refusal": 15,
+    "correct_refusal": 1
+   },
+   "new/positive": {
+    "false_refusal": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  },
+  "NEW[lying-area-verifier]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "false_refusal": 2
+   },
+   "goal/negative": {
+    "correct_refusal": 9,
+    "wrong_code_refusal": 2
+   },
+   "goal/positive": {
+    "correct_served": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "false_refusal": 4
+   },
+   "goal_composition/held_out": {
+    "false_refusal": 4
+   },
+   "goal_composition/negative": {
+    "wrong_code_refusal": 6,
+    "correct_refusal": 11
+   },
+   "goal_composition/positive": {
+    "false_refusal": 8,
+    "correct_served": 2
+   },
+   "new/discovery": {
+    "false_refusal": 3
+   },
+   "new/negative": {
+    "correct_refusal": 16
+   },
+   "new/positive": {
+    "correct_served": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  }
+ },
+ "reconciled_counts": {
+  "NEW[production]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "false_refusal": 2
+   },
+   "goal/negative": {
+    "correct_refusal": 9,
+    "wrong_code_refusal": 2
+   },
+   "goal/positive": {
+    "correct_served": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "false_refusal": 4
+   },
+   "goal_composition/held_out": {
+    "correct_served": 4
+   },
+   "goal_composition/negative": {
+    "correct_refusal": 17
+   },
+   "goal_composition/positive": {
+    "correct_served": 10
+   },
+   "new/discovery": {
+    "false_refusal": 3
+   },
+   "new/negative": {
+    "correct_refusal": 15,
+    "correct_refusal_disabled_capability": 1
+   },
+   "new/positive": {
+    "correct_served": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  },
+  "NEW[centroid]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "correct_served": 2
+   },
+   "goal/negative": {
+    "correct_refusal": 9,
+    "wrong_code_refusal": 2
+   },
+   "goal/positive": {
+    "correct_served": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "correct_served": 4
+   },
+   "goal_composition/held_out": {
+    "correct_served": 4
+   },
+   "goal_composition/negative": {
+    "correct_refusal": 17
+   },
+   "goal_composition/positive": {
+    "correct_served": 10
+   },
+   "new/discovery": {
+    "correct_served": 3
+   },
+   "new/negative": {
+    "correct_refusal": 15,
+    "correct_served_enabled_capability": 1
+   },
+   "new/positive": {
+    "correct_served": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  },
+  "NEW[no-area]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "false_refusal": 2
+   },
+   "goal/negative": {
+    "correct_refusal": 9,
+    "wrong_code_refusal": 2
+   },
+   "goal/positive": {
+    "correct_served": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "false_refusal": 4
+   },
+   "goal_composition/held_out": {
+    "false_refusal": 4
+   },
+   "goal_composition/negative": {
+    "wrong_code_refusal": 14,
+    "correct_refusal": 3
+   },
+   "goal_composition/positive": {
+    "false_refusal": 8,
+    "correct_served": 2
+   },
+   "new/discovery": {
+    "false_refusal": 3
+   },
+   "new/negative": {
+    "correct_refusal": 15,
+    "correct_refusal_disabled_capability": 1
+   },
+   "new/positive": {
+    "correct_served": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  },
+  "NEW[no-midpoint]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "false_refusal": 2
+   },
+   "goal/negative": {
+    "wrong_code_refusal": 11
+   },
+   "goal/positive": {
+    "false_refusal": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "false_refusal": 4
+   },
+   "goal_composition/held_out": {
+    "false_refusal": 4
+   },
+   "goal_composition/negative": {
+    "wrong_code_refusal": 14,
+    "correct_refusal": 3
+   },
+   "goal_composition/positive": {
+    "false_refusal": 8,
+    "correct_served": 2
+   },
+   "new/discovery": {
+    "false_refusal": 3
+   },
+   "new/negative": {
+    "wrong_code_refusal": 14,
+    "correct_refusal_disabled_capability": 1,
+    "correct_refusal": 1
+   },
+   "new/positive": {
+    "false_refusal": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  },
+  "NEW[reversed]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "false_refusal": 2
+   },
+   "goal/negative": {
+    "correct_refusal": 9,
+    "wrong_code_refusal": 2
+   },
+   "goal/positive": {
+    "correct_served": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "false_refusal": 4
+   },
+   "goal_composition/held_out": {
+    "correct_served": 4
+   },
+   "goal_composition/negative": {
+    "correct_refusal": 17
+   },
+   "goal_composition/positive": {
+    "correct_served": 10
+   },
+   "new/discovery": {
+    "false_refusal": 3
+   },
+   "new/negative": {
+    "correct_refusal": 15,
+    "correct_refusal_disabled_capability": 1
+   },
+   "new/positive": {
+    "correct_served": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  },
+  "NEW[lying]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "false_refusal": 2
+   },
+   "goal/negative": {
+    "wrong_code_refusal": 11
+   },
+   "goal/positive": {
+    "false_refusal": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "false_refusal": 4
+   },
+   "goal_composition/held_out": {
+    "false_refusal": 4
+   },
+   "goal_composition/negative": {
+    "wrong_code_refusal": 14,
+    "correct_refusal": 3
+   },
+   "goal_composition/positive": {
+    "false_refusal": 8,
+    "correct_served": 2
+   },
+   "new/discovery": {
+    "false_refusal": 3
+   },
+   "new/negative": {
+    "wrong_code_refusal": 14,
+    "correct_refusal_lying_contract_caught": 1,
+    "correct_refusal": 1
+   },
+   "new/positive": {
+    "false_refusal": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  },
+  "NEW[lying-area-verifier]": {
+   "benchmark30": {
+    "correct_served": 19,
+    "correct_refusal": 9,
+    "false_refusal": 2
+   },
+   "goal/discovery": {
+    "false_refusal": 2
+   },
+   "goal/negative": {
+    "correct_refusal": 9,
+    "wrong_code_refusal": 2
+   },
+   "goal/positive": {
+    "correct_served": 8
+   },
+   "goal_composition/angle_line_plane_slice_b": {
+    "correct_served": 5
+   },
+   "goal_composition/discovery": {
+    "false_refusal": 4
+   },
+   "goal_composition/held_out": {
+    "false_refusal": 4
+   },
+   "goal_composition/negative": {
+    "correct_refusal": 11,
+    "wrong_code_refusal": 6
+   },
+   "goal_composition/positive": {
+    "false_refusal": 8,
+    "correct_served": 2
+   },
+   "new/discovery": {
+    "false_refusal": 3
+   },
+   "new/negative": {
+    "correct_refusal": 15,
+    "correct_refusal_disabled_capability": 1
+   },
+   "new/positive": {
+    "correct_served": 9
+   },
+   "result_binding/negative": {
+    "correct_refusal": 12
+   },
+   "result_binding/positive": {
+    "correct_served": 6
+   },
+   "two_line/development": {
+    "correct_served": 12,
+    "correct_refusal": 33
+   },
+   "two_line/heldout": {
+    "correct_served": 11,
+    "correct_refusal": 21
+   }
+  }
+ }
+}

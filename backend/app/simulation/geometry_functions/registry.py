@@ -260,7 +260,7 @@ class TranslatePointArgs(_Args):
 @dataclass(frozen=True)
 class PlanningTerm:
     """Internal typed role slots; not an expression language or provider program."""
-    kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance", "AnswerLength"]
+    kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance", "AnswerLength", "AnswerArea", "AnswerAngleLinePlane"]
     operands: tuple[str, ...]
 
 
@@ -410,7 +410,15 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("ask_angle_line_plane", AskAngleLinePlaneArgs, "ask", "Đề hỏi góc giữa đường thẳng và mặt phẳng (trả cos²).",
        (("góc",),)),
     _F("ask_angle_plane_plane", AskAnglePlanePlaneArgs, "ask", "Đề hỏi góc giữa hai mặt phẳng (trả cos²).", (("góc",),)),
-    _F("ask_area", AskAreaArgs, "ask", "Đề hỏi diện tích một đa giác.", (("diện tích",),)),
+    _F("ask_area", AskAreaArgs, "ask", "Đề hỏi diện tích một đa giác.", (("diện tích",),),
+       planning=PlanningContract(
+           (PlanningTerm("Point", ("P",)), PlanningTerm("Point", ("Q",)), PlanningTerm("Point", ("R",))),
+           PlanningTerm("AnswerArea", ("P", "Q", "R")), "goal_answer", "area",
+           call=(("polygon", ("P", "Q", "R")),), goal="area",
+           phrase=(
+               r"diện tích\s+(?:của\s+)?tam giác\s+(?:tạo bởi|có\s+(?:ba\s+)?đỉnh\s+(?:là\s+)?|qua)\s+(?:{D})\s*(?:,\s*|\s+và\s+)(?:hai\s+(?:điểm|đỉnh)\s+)?(?P<t1>{P})\s*(?:,\s*|\s+và\s+)(?:(?:điểm|đỉnh)\s+)?(?P<t2>{P})(?![\w'])",
+               r"diện tích\s+(?:của\s+)?tam giác\s+(?:tạo bởi|có\s+(?:ba\s+)?đỉnh\s+(?:là\s+)?|qua)\s+(?:hai\s+(?:điểm|đỉnh)\s+)?(?P<t1>{P})\s*(?:,\s*|\s+và\s+)(?:(?:điểm|đỉnh)\s+)?(?P<t2>{P})\s+(?:và|với|cùng(?:\s+với)?)\s+(?:{D})",
+           ))),
     # Slice 1 (run `hybrid-section-slice`): cửa vào cho phép dựng engine chung ĐÃ có (`construct_section`, `intersect_plane_plane`).
     _F("section", SectionArgs, "construct", "Dựng THIẾT DIỆN của một khối với mặt phẳng qua ba điểm đã có tên.",
        (("thiết diện",),), plane_fields=("plane",)),
@@ -990,7 +998,8 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'lời hỏi không mang quote của mục tiêu', (ask.id,))
         # the goal: the asked quantity binds the DESCRIBED point and the declared target
         ans = got[-1]
-        p, x = values(ans[0].effect, ans[1])
+        eff_vals = values(ans[0].effect, ans[1])
+        p, rest = eff_vals[0], eff_vals[1:]
         op, target = d.get('operand') or {}, d.get('target') or {}
         desc = [g for g in got if g[0].descriptor and g[0].descriptor == op.get('descriptor')
                 and values(g[0].effect, g[1]) == (p,)]
@@ -1002,24 +1011,36 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'toán hạng mô tả không khớp chứng chỉ', (ask.id,))
         if set(ops) - nhan:
             raise TuChoi('UNKNOWN_LABEL', 'toán hạng của điểm được mô tả không có trong nguồn', (ask.id,))
-        want = (target['point'] if 'point' in target else ('result', target['line_ref']) if 'line_ref' in target else ('named', tuple(sorted(target['line'])))
-                if 'line' in target else term(target.get('plane')))
-        if x != want:
+        want = (tuple(target['points']) if 'points' in target else (target['point'],) if 'point' in target
+                else (('result', target['line_ref']),) if 'line_ref' in target
+                else (('named', tuple(sorted(target['line']))),) if 'line' in target else (term(target.get('plane')),))
+        if rest != want:
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'đích của mục tiêu không khớp chứng chỉ', (ask.id,))
-        point_target = ans[0].goal is not None
-        if point_target and (ans[0].verifier != 'length' or ans[0].effect.kind != 'AnswerLength' or not isinstance(x, str)
-                             or set(target) != {'point'} or x not in nhan):
-            raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mục tiêu độ dài cần đúng một điểm đích có nguồn', (ask.id,))
-        g = producer(x[1]) if not point_target and x[0] == 'result' else None
+        goal_kind = ans[0].goal
+        if goal_kind == 'length':
+            if (ask.fn != 'ask_length' or ans[0].verifier != 'length' or ans[0].effect.kind != 'AnswerLength'
+                    or len(rest) != 1 or not isinstance(rest[0], str) or set(target) != {'point'} or rest[0] not in nhan):
+                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mục tiêu độ dài cần đúng một điểm đích có nguồn', (ask.id,))
+        elif goal_kind == 'area':
+            if (ask.fn != 'ask_area' or ans[0].verifier != 'area' or ans[0].effect.kind != 'AnswerArea'
+                    or len(rest) != 2 or not all(isinstance(v, str) for v in rest) or len(set(rest)) != 2
+                    or set(target) != {'points'} or set(rest) - nhan):
+                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mục tiêu diện tích cần đúng hai điểm đích phân biệt có nguồn', (ask.id,))
+        elif goal_kind is not None or len(rest) != 1 or ans[0].verifier != 'distance' or ans[0].effect.kind != 'AnswerDistance':
+            raise TuChoi('AUXILIARY_RULE_MISMATCH', 'loại mục tiêu không hợp lệ trong chứng chỉ chuỗi', (ask.id,))
+        x = rest[0]
+        g = producer(x[1]) if goal_kind is None and x[0] == 'result' else None
         # a goal contract may declare several closed wordings (operand orders): each is one exact pattern (M3)
-        patterns = (tuple(_mau_muc_tieu_mo_ta(p, dc.phrase or '') for p in _cac_cau(ans[0].phrase)) if point_target else
+        patterns = (tuple(_mau_muc_tieu_mo_ta(p, dc.phrase or '') for p in _cac_cau(ans[0].phrase)) if goal_kind else
                     (_mau_khoang_cach_mo_ta(dc.phrase or ''),))
 
         def binds(m):
             if sorted(_nhan_cum(m['ops'])) != sorted(ops):
                 return False
-            if point_target:
+            if goal_kind == 'length':
                 return m['t'] == x
+            if goal_kind == 'area':
+                return {m['t1'], m['t2']} == set(rest) and m['t1'] != m['t2']
             if x[0] == 'result':
                 return bool(m['a'] and m['b']) and matches_planes(m, g)
             if x[0] == 'named':
@@ -1043,7 +1064,7 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
                     raise TuChoi('QUESTION_CONTEXT_UNSUPPORTED', 'đơn vị yêu cầu không khớp chính sách đơn vị', (ask.id,))
                 # A length goal is read like every other ask: the shared grammar above (`_hoi_dung_cum`: "Tính …",
                 # "… bằng bao nhiêu?") and request coverage (M1) for a dropped second ask — not one bare sentence form (M3).
-                if x[0] == 'result':  # complete sentence, no silently dropped target or second ask
+                if goal_kind is None and x[0] == 'result':  # complete sentence, no silently dropped target or second ask
                     form = re.compile(r'(?:(?:tính|tìm)\s+)?(?:' + m.re.pattern + r')[.?\s]*', re.IGNORECASE)
                     if not form.fullmatch(q) or not form.fullmatch(de[slice(*_bien_cau(de, m.start()))].strip()):
                         raise TuChoi('SOURCE_PREMISE_UNREAD', 'câu mục tiêu có phần chưa được đọc', (ask.id,))
@@ -2089,15 +2110,19 @@ def _cac_cau(phrase: str | tuple[str, ...] | None) -> tuple[str, ...]:
 
 
 @functools.lru_cache(maxsize=None)
+def _mau_hoi_dong(desc: tuple[str, ...], goals: tuple[str, ...]) -> tuple[re.Pattern[str], ...]:
+    return (*(mau for ds in _CUM_HOI.values() for mau, _b in ds), _KHOANG_CACH_DIEM_DUONG, _KHOANG_CACH_GIAO_TUYEN,
+            _CUM_HOI_THIET_DIEN_PHU, *(_mau_khoang_cach_mo_ta(d) for d in desc),
+            *(_mau_muc_tieu_mo_ta(g, d) for g in goals for d in desc))
+
+
 def _mau_hoi_tat_ca() -> tuple[re.Pattern[str], ...]:
     """EVERY object phrase a request can name — the per-function ask grammar, the auxiliary distance phrases and the
     contract phrases of unnamed points (Registry data). One inventory for request coverage (M1): no wording list."""
     ct = [p for s in REGISTRY.values() for p in planning_contracts(s)]
-    desc = [p.phrase for p in ct if p.descriptor and p.phrase]
-    goals = [g for p in ct if p.goal for g in _cac_cau(p.phrase)]
-    return (*(mau for ds in _CUM_HOI.values() for mau, _b in ds), _KHOANG_CACH_DIEM_DUONG, _KHOANG_CACH_GIAO_TUYEN,
-            _CUM_HOI_THIET_DIEN_PHU, *(_mau_khoang_cach_mo_ta(d) for d in desc),
-            *(_mau_muc_tieu_mo_ta(g, d) for g in goals for d in desc))
+    desc = tuple(p.phrase for p in ct if p.descriptor and isinstance(p.phrase, str))
+    goals = tuple(g for p in ct if p.goal for g in _cac_cau(p.phrase))
+    return _mau_hoi_dong(desc, goals)
 
 
 def _cum_lon_nhat(de: str, a: int, b: int) -> list[tuple[int, int]]:
