@@ -6,9 +6,10 @@
   "environment": "LOCAL Windows 11, Python 3.12",
   "naming_policy": "docs/evaluation/RUN_NAMING.md",
   "agents": "Antigravity (independent backend worktree on research/contract-driven-goal-composition) + Independent Mathematical & Architecture Reviewer subagent (024a6ace-3a20-4761-b1da-f6a24fc29de0)",
-  "status": "READY_FOR_INTEGRATION",
+  "status": "FROZEN_PENDING_INTEGRATION",
+  "readiness": "READY_FOR_INTEGRATION",
   "integration_deferral": "INTEGRATION_DEFERRED_PENDING_SEMANTIC_V3",
-  "review_status": "INDEPENDENT_REVIEW_PASS (0 BLOCKER, 2 IMPORTANT resolved, 2 MINOR resolved/documented in quality-gate-report.md)",
+  "review_status": "INDEPENDENT_REVIEW_PASS + DELTA_REVIEW_PASS (0 BLOCKER, 2 IMPORTANT resolved, 2 MINOR resolved/documented in quality-gate-report.md)",
   "corpus_provenance": "AGENT_AUTHORED_WITH_INDEPENDENT_ORACLE_NOT_HUMAN_VALIDATED",
   "branch": "research/contract-driven-goal-composition",
   "base_commit": "4abc4afbb976babc4740bf22e42dc368a24c1b13",
@@ -28,7 +29,8 @@
     "ablation_raw": "ablation.json",
     "ablation_reconciled": "ablation-reconciled.json",
     "regression_174": "regression-174.json",
-    "quality_gate_report": "quality-gate-report.md"
+    "quality_gate_report": "quality-gate-report.md",
+    "handoff": "handoff.md"
   },
   "versions_before": {
     "planner": "geometry-fact-planner/7",
@@ -36,9 +38,9 @@
     "engine": "geometry-function-engine/5"
   },
   "versions_after": {
-    "planner": "geometry-fact-planner/8",
-    "registry": "geometry-functions/7",
-    "engine": "geometry-function-engine/6"
+    "planner": "geometry-fact-planner/7",
+    "registry": "geometry-functions/6",
+    "engine": "geometry-function-engine/5"
   },
   "cache_version": 125,
   "default": "LLM_ONLY",
@@ -52,12 +54,13 @@
     "fact_extraction_surface": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a"
   },
   "results": {
+    "corpus_taxonomy_breakdown": "214 total evaluated rows (174 historical + 40 new) = 86 production positive + 9 experimental centroid discovery positive + 119 negative (118 true safety negatives [55 in explicit */negative splits + 63 in benchmark30/two_line] + 1 capability-disabled negative [new/negative::centroid-without-contract])",
     "slice_a_area_positive": "10/10 exact (8 unnamed midpoint -> ask_area across 4 solid families + multi-goal + named reuse; 2 named orthogonal_projection / orthogonal_projection_line -> ask_area)",
     "slice_a_area_discovery_centroid": "0/4 without centroid contract (fail-closed UNSUPPORTED_CAPABILITY); 4/4 exact when centroid PlanningContract is added as data (including pyramid-projection-and-unnamed-centroid-area) with 0 planner/engine edits",
     "slice_a_area_held_out": "4/4 exact (heldout-tetrahedron-midpoint-area, heldout-regular-pyramid-midpoint-area, heldout-cuboid-projection-and-midpoint-area, heldout-prism-midpoint-area-reversed)",
     "slice_b_angle_line_plane_named": "5/5 exact across 0°, 90°, oblique midpoint, oblique centroid, and oblique orthogonal projection (proves independent Gram verifier _goc_duong_mat_cos2 on named derived points)",
     "slice_b_angle_line_plane_unnamed": "SCHEMA_REPRESENTATION_BLOCKER (proven: TypedFact question has only points and points_b for unnamed point_kind, cannot represent 2-point descriptor + 1 named line endpoint + >=3 plane points without positional/schema ambiguity; refused fail-closed with UNSUPPORTED_CAPABILITY)",
-    "negatives": "17/17 refused with exact registered code; safety_wrong_served = 0 across all 7 arms (new/negative::centroid-without-contract is a capability-disabled negative that serves exact oracle 4/3, d^2=16/9 matching new/discovery::centroid-to-plane when NEW[centroid] is enabled; reconciled in ablation-reconciled.json)",
+    "negatives": "17/17 new negatives refused with exact registered code; 118/118 true safety negatives refused across all 7 arms (safety_wrong_served = 0); 1 capability-disabled negative (new/negative::centroid-without-contract) refuses with UNSUPPORTED_CAPABILITY when centroid contract is disabled and serves exact oracle 4/3 (d^2=16/9, matching new/discovery::centroid-to-plane) when NEW[centroid] is enabled (reconciled in ablation-reconciled.json)",
     "prior_174_regression": "174/174 identical to baseline in status, code, answers, squared values, and plan stats (0 diffs)",
     "reversed_registry": "214/214 identical to production across all 174 prior rows and 40 new rows (0 diffs)",
     "tamper_and_lying_contracts": "8 tamper/lying-contract categories all refused fail-closed (0 wrong served)",

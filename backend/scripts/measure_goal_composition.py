@@ -168,7 +168,7 @@ CAPABILITY_DISABLED_NEGATIVES = {
 
 
 def reconcile_ablation(ablation_path: Path, out_path: Path) -> None:
-    """Reconcile raw ablation classifications by separating safety negatives from capability-disabled negatives,
+    """Reconcile raw ablation classifications by separating true safety negatives from capability-disabled negatives,
     without modifying raw ablation.json or any gold expectations."""
     ablation = json.loads(ablation_path.read_text(encoding="utf-8"))
     cases = ablation["cases"]
@@ -176,16 +176,63 @@ def reconcile_ablation(ablation_path: Path, out_path: Path) -> None:
     safety_summary: dict[str, dict[str, int]] = {}
     capability_disabled_audit: dict[str, dict] = {}
 
+    with TemporaryDirectory() as td:
+        bpath = Path(td) / "bundle_all.json"
+        build_bundle(bpath)
+        bundle_rows = {f"{r['corpus']}::{r['id']}": r for r in json.loads(bpath.read_text(encoding="utf-8"))["rows"]}
+
+    taxonomy = {
+        "total_evaluated_cases": len(bundle_rows),
+        "production_positive_cases": 0,
+        "experimental_discovery_positive_cases": 0,
+        "total_negative_cases": 0,
+        "true_safety_negative_cases": 0,
+        "true_safety_negative_explicit_splits": 0,
+        "true_safety_negative_benchmark_and_two_line": 0,
+        "capability_disabled_negative_cases": 0,
+    }
+    for cid, row in bundle_rows.items():
+        c = row["corpus"]
+        e = row["expect"]
+        if cid in CAPABILITY_DISABLED_NEGATIVES:
+            taxonomy["total_negative_cases"] += 1
+            taxonomy["capability_disabled_negative_cases"] += 1
+        elif c.endswith("/discovery"):
+            taxonomy["experimental_discovery_positive_cases"] += 1
+        elif "expected_codes" in e or "expected_code" in e:
+            taxonomy["total_negative_cases"] += 1
+            taxonomy["true_safety_negative_cases"] += 1
+            taxonomy["true_safety_negative_explicit_splits"] += 1
+        elif (c == "benchmark30" or c.startswith("two_line/")) and e.get("status") != "SERVED":
+            taxonomy["total_negative_cases"] += 1
+            taxonomy["true_safety_negative_cases"] += 1
+            taxonomy["true_safety_negative_benchmark_and_two_line"] += 1
+        else:
+            taxonomy["production_positive_cases"] += 1
+
     for arm in ablation["counts"]:
         reconciled_counts[arm] = {}
         safety_summary[arm] = {
             "safety_wrong_served": 0,
+            "true_safety_negatives_refused": 0,
+            "true_safety_negatives_total": taxonomy["true_safety_negative_cases"],
             "capability_disabled_raw_wrong_served": 0,
             "capability_enabled_oracle_verified_served": 0,
         }
 
     for cid, by_arm in sorted(cases.items()):
         corpus = cid.split("::", 1)[0]
+        row = bundle_rows[cid]
+        e = row["expect"]
+        is_true_safety_neg = (
+            cid not in CAPABILITY_DISABLED_NEGATIVES
+            and not corpus.endswith("/discovery")
+            and (
+                "expected_codes" in e
+                or "expected_code" in e
+                or ((corpus == "benchmark30" or corpus.startswith("two_line/")) and e.get("status") != "SERVED")
+            )
+        )
         cap_spec = CAPABILITY_DISABLED_NEGATIVES.get(cid)
         if cap_spec is not None:
             twin_by_arm = cases.get(cap_spec["discovery_twin"], {})
@@ -235,6 +282,8 @@ def reconcile_ablation(ablation_path: Path, out_path: Path) -> None:
                 }
             else:
                 reconciled = raw_outcome
+                if is_true_safety_neg and res["status"] == "REFUSED":
+                    safety_summary[arm]["true_safety_negatives_refused"] += 1
                 if raw_outcome == "wrong_served":
                     safety_summary[arm]["safety_wrong_served"] += 1
             reconciled_counts[arm].setdefault(corpus, Counter())[reconciled] += 1
@@ -246,6 +295,7 @@ def reconcile_ablation(ablation_path: Path, out_path: Path) -> None:
         "schema": "goal_composition_ablation_reconciled/1",
         "source_ablation": str(ablation_path.relative_to(ROOT)).replace("\\", "/"),
         "model_calls": 0,
+        "corpus_taxonomy_breakdown": taxonomy,
         "safety_summary_by_arm": safety_summary,
         "capability_disabled_negative_audit": capability_disabled_audit,
         "raw_counts": ablation["counts"],
@@ -253,6 +303,7 @@ def reconcile_ablation(ablation_path: Path, out_path: Path) -> None:
     }
     fd._write(out_path, out_data)
     print(json.dumps({
+        "corpus_taxonomy_breakdown": taxonomy,
         "safety_summary_by_arm": safety_summary,
         "capability_disabled_negative_audit": capability_disabled_audit,
     }, ensure_ascii=False, indent=2))

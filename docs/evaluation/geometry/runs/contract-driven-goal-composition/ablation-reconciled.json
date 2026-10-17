@@ -2,39 +2,63 @@
  "schema": "goal_composition_ablation_reconciled/1",
  "source_ablation": "docs/evaluation/geometry/runs/contract-driven-goal-composition/ablation.json",
  "model_calls": 0,
+ "corpus_taxonomy_breakdown": {
+  "total_evaluated_cases": 214,
+  "production_positive_cases": 86,
+  "experimental_discovery_positive_cases": 9,
+  "total_negative_cases": 119,
+  "true_safety_negative_cases": 118,
+  "true_safety_negative_explicit_splits": 55,
+  "true_safety_negative_benchmark_and_two_line": 63,
+  "capability_disabled_negative_cases": 1
+ },
  "safety_summary_by_arm": {
   "NEW[production]": {
    "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
    "capability_disabled_raw_wrong_served": 0,
    "capability_enabled_oracle_verified_served": 0
   },
   "NEW[centroid]": {
    "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
    "capability_disabled_raw_wrong_served": 1,
    "capability_enabled_oracle_verified_served": 1
   },
   "NEW[no-area]": {
    "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
    "capability_disabled_raw_wrong_served": 0,
    "capability_enabled_oracle_verified_served": 0
   },
   "NEW[no-midpoint]": {
    "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
    "capability_disabled_raw_wrong_served": 0,
    "capability_enabled_oracle_verified_served": 0
   },
   "NEW[reversed]": {
    "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
    "capability_disabled_raw_wrong_served": 0,
    "capability_enabled_oracle_verified_served": 0
   },
   "NEW[lying]": {
    "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
    "capability_disabled_raw_wrong_served": 0,
    "capability_enabled_oracle_verified_served": 0
   },
   "NEW[lying-area-verifier]": {
    "safety_wrong_served": 0,
+   "true_safety_negatives_refused": 118,
+   "true_safety_negatives_total": 118,
    "capability_disabled_raw_wrong_served": 0,
    "capability_enabled_oracle_verified_served": 0
   }

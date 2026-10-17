@@ -1,6 +1,6 @@
 # Contract-Driven Goal Composition — Research Report
 
-Status: `READY_FOR_INTEGRATION` (`INDEPENDENT_REVIEW_PASS` after reconciling `IMPORTANT-1` and `IMPORTANT-2`; `INTEGRATION_DEFERRED_PENDING_SEMANTIC_V3`)
+Status: `FROZEN_PENDING_INTEGRATION` (`READY_FOR_INTEGRATION` · `INDEPENDENT_REVIEW_PASS` · `INTEGRATION_DEFERRED_PENDING_SEMANTIC_V3`)
 Branch: `research/contract-driven-goal-composition` (isolated worktree from verified `main` at `4abc4afb`)
 Merge / Push: `NONE` · Live Gemini calls: `0` · Default mode: `LLM_ONLY` · Hybrid product enablement: `NO-GO` · `CACHE_VERSION = 125`
 
@@ -95,7 +95,7 @@ We inspected and generalized the six bottlenecks identified in the audit without
     4. **Oblique centroid regime** (`angle-oblique-centroid-line-plane`, $AG$ with $(ABCD)$): $\cos^2\theta = 20/29$, $\sin^2\theta = 9/29$.
     5. **Oblique orthogonal-projection regime** (`angle-oblique-projection-line-plane`, $HC$ with $(ABCD)$): $\cos^2\theta = 185/221$, $\sin^2\theta = 36/221$.
 - **Unnamed `point_kind` + `quantity="angle"` (`SCHEMA_REPRESENTATION_BLOCKER`)**:
-  - Proven and recorded in `corpus.json` (`unnamed-angle-line-plane-schema-blocker`) and `test_slice_b_unnamed_point_kind_schema_representation_blocker`:
+  - Proven and recorded in `corpus.json` (`unnamed-angle-line-plane-blocker`) and `test_slice_b_unnamed_point_kind_schema_representation_blocker`:
     - A line–plane angle with an unnamed described point requires three distinct point groups: (1) the descriptor's parent points (2 or 3 labels), (2) the named second endpoint of the line (1 label), and (3) the target plane's defining vertices ($\ge 3$ labels).
     - Frozen `TypedFact` (`kind="question"`) provides only `points` (bound to the descriptor's parent points when `point_kind` is set) and a single flat `points_b: list[str]`. Packing both the named line endpoint and the plane vertices into `points_b` would require guessing by list position (`points_b[0]` vs `points_b[1:]`), which is forbidden by the architecture contract.
     - Therefore, unnamed `point_kind` with `quantity="angle"` is refused fail-closed with `UNSUPPORTED_CAPABILITY` and documented as `SCHEMA_REPRESENTATION_BLOCKER` until `TypedFact` schema ownership is open.
@@ -123,22 +123,31 @@ We inspected and generalized the six bottlenecks identified in the audit without
 
 Measured by `backend/scripts/measure_goal_composition.py` (`ablation.json`, `ablation-reconciled.json`, `regression-174.json`, **0 live calls**):
 
-| Arm / Variant | Prior 174 Rows Diff vs Baseline | Slice A Positive (10) | Slice A Discovery Centroid (4) | Slice A Held-Out (4) | Slice B Angle Line–Plane (5) | Slice A/B Negatives (17) | Safety Wrong Served (213 Safety Rows) | Capability-Disabled Negative (`new/negative::centroid-without-contract`) |
-|---|---|---|---|---|---|---|---|---|
-| `NEW[production]` | **0 / 174** | **10 / 10** | 0 / 4 (fail-closed) | **4 / 4** | **5 / 5** | **17 / 17** exact code | **0** | `REFUSED / UNSUPPORTED_CAPABILITY` (`correct_refusal_disabled_capability`) |
-| `NEW[centroid]` (+1 data contract, 0 planner edits) | — | **10 / 10** | **4 / 4** | **4 / 4** | **5 / 5** | **17 / 17** exact code | **0** | `SERVED` `4/3` ($d^2=16/9$, matches oracle twin `new/discovery::centroid-to-plane`; raw `fd.classify`: `wrong_served`) |
-| `NEW[reversed]` (reversed `REGISTRY` order) | **0 / 174** | **10 / 10** | 0 / 4 (fail-closed) | **4 / 4** | **5 / 5** | **17 / 17** exact code | **0** | `REFUSED / UNSUPPORTED_CAPABILITY` (`correct_refusal_disabled_capability`) |
-| `NEW[no-area]` (`ask_area` contract removed) | **0 / 174** | 2 / 10 (8 unnamed refused) | 0 / 4 | 0 / 4 | **5 / 5** | 17 / 17 refused | **0** | `REFUSED / UNSUPPORTED_CAPABILITY` |
-| `NEW[no-midpoint]` (`midpoint` contract removed) | — | 2 / 10 (8 unnamed refused) | 0 / 4 | 0 / 4 | **5 / 5** | 17 / 17 refused | **0** | `REFUSED / UNSUPPORTED_CAPABILITY` |
-| `NEW[lying]` (`midpoint` claims `descriptor="centroid"`) | — | 2 / 10 (8 unnamed refused by Engine) | 0 / 4 | 0 / 4 | **5 / 5** | 17 / 17 refused | **0** | `REFUSED / ENGINE_SELF_CHECK_FAILED` (`correct_refusal_lying_contract_caught`) |
-| `NEW[lying-area-verifier]` (`ask_area` claims `verifier="length"`) | **0 / 174** | 2 / 10 (8 unnamed refused by Engine) | 0 / 4 | 0 / 4 | **5 / 5** | 17 / 17 refused | **0** | `REFUSED / UNSUPPORTED_CAPABILITY` |
+| Arm / Variant | Prior 174 Rows Diff vs Baseline | Slice A Positive (10) | Slice A Discovery Centroid (4) | Slice A Held-Out (4) | Slice B Angle Line–Plane (5) | Slice A/B Negatives (17) | True Safety Negatives Refused (`118/118`) | Safety Wrong Served | Capability-Disabled Negative (`1`: `new/negative::centroid-without-contract`) |
+|---|---|---|---|---|---|---|---|---|---|
+| `NEW[production]` | **0 / 174** | **10 / 10** | 0 / 4 (fail-closed) | **4 / 4** | **5 / 5** | **17 / 17** exact code | **118 / 118** | **0** | `REFUSED / UNSUPPORTED_CAPABILITY` (`correct_refusal_disabled_capability`) |
+| `NEW[centroid]` (+1 data contract, 0 planner edits) | — | **10 / 10** | **4 / 4** | **4 / 4** | **5 / 5** | **17 / 17** exact code | **118 / 118** | **0** | `SERVED` `4/3` ($d^2=16/9$, matches oracle twin `new/discovery::centroid-to-plane`; raw `fd.classify`: `wrong_served`) |
+| `NEW[reversed]` (reversed `REGISTRY` order) | **0 / 174** | **10 / 10** | 0 / 4 (fail-closed) | **4 / 4** | **5 / 5** | **17 / 17** exact code | **118 / 118** | **0** | `REFUSED / UNSUPPORTED_CAPABILITY` (`correct_refusal_disabled_capability`) |
+| `NEW[no-area]` (`ask_area` contract removed) | **0 / 174** | 2 / 10 (8 unnamed refused) | 0 / 4 | 0 / 4 | **5 / 5** | 17 / 17 refused | **118 / 118** | **0** | `REFUSED / UNSUPPORTED_CAPABILITY` |
+| `NEW[no-midpoint]` (`midpoint` contract removed) | — | 2 / 10 (8 unnamed refused) | 0 / 4 | 0 / 4 | **5 / 5** | 17 / 17 refused | **118 / 118** | **0** | `REFUSED / UNSUPPORTED_CAPABILITY` |
+| `NEW[lying]` (`midpoint` claims `descriptor="centroid"`) | — | 2 / 10 (8 unnamed refused by Engine) | 0 / 4 | 0 / 4 | **5 / 5** | 17 / 17 refused | **118 / 118** | **0** | `REFUSED / ENGINE_SELF_CHECK_FAILED` (`correct_refusal_lying_contract_caught`) |
+| `NEW[lying-area-verifier]` (`ask_area` claims `verifier="length"`) | **0 / 174** | 2 / 10 (8 unnamed refused by Engine) | 0 / 4 | 0 / 4 | **5 / 5** | 17 / 17 refused | **118 / 118** | **0** | `REFUSED / UNSUPPORTED_CAPABILITY` |
 
-### Explanation of `new/negative::centroid-without-contract` (`ablation-reconciled.json`)
-- In the historical `goal-directed-function-discovery` corpus, the valid problem *"Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trọng tâm của tam giác SBC đến (SAD)."* appears twice with byte-identical `text` and `payload.facts`:
-  1. `new/negative::centroid-without-contract` (`expected_codes: ["UNSUPPORTED_CAPABILITY"]`), which tests that when `centroid` has no `PlanningContract` in the production catalog, the route refuses fail-closed (`capability_disabled_negative`).
-  2. `new/discovery::centroid-to-plane` (`expected_squared: {"q": "16/9"}`), which tests that when the experimental `centroid` contract is enabled (`NEW[centroid]`), the route serves the exact distance $4/3$ ($d^2 = 16/9$).
-- Because the legacy classifier `fd.classify` evaluates `new/negative::centroid-without-contract` against its static production-only expectation (`expected_codes: ["UNSUPPORTED_CAPABILITY"]`), enabling the `centroid` contract in `NEW[centroid]` produces a raw `wrong_served` count of `1` even though the served answer `4/3` ($d^2 = 16/9$) is mathematically exact and matches `new/discovery::centroid-to-plane`.
-- `measure_goal_composition.py reconcile` (`ablation-reconciled.json`) separates **Safety Negatives** (which must refuse in every arm; `safety_wrong_served = 0` across all 7 arms) from **Capability-Disabled Negatives** (`capability_enabled_oracle_verified_served = 1` in `NEW[centroid]`), without modifying `ablation.json` or any gold label.
+### Exact 214-Row Corpus Taxonomy Breakdown & Reconciliation of `new/negative::centroid-without-contract` (`ablation-reconciled.json`)
+- **Total Evaluated Rows (`214`)**: `174` historical regression rows + `40` new rows in `corpus.json`:
+  - **Production Positive / Supported Rows (`86`)**: `benchmark30` (`21`), `two_line` (`23`), `result_binding/positive` (`6`), `new/positive` (`9`), `goal/positive` (`8`), `goal_composition/positive` (`10`), `goal_composition/held_out` (`4`), `goal_composition/angle_line_plane_slice_b` (`5`).
+  - **Experimental `centroid`-Contract Discovery Positive Rows (`9`)**: `new/discovery` (`3`), `goal/discovery` (`2`), `goal_composition/discovery` (`4`).
+  - **Total Negative / Expected-Refusal Rows (`119`)**, partitioned into:
+    1. **True Safety Negatives (`118` rows)**:
+       - `55` rows in explicit `*/negative` splits (`result_binding/negative`: `12`, `new/negative`: `15`, `goal/negative`: `11`, `goal_composition/negative`: `17`).
+       - `63` implicit refusal rows inside `benchmark30` (`9`) and `two_line/*` (`31` `LINE_CONTAINED_IN_PLANE`, `6` `NO_POLYGON`, `10` `PLANE_NOT_UNIQUE`, `7` `SECTION_PLANE_IS_FACE`).
+       - Across all 7 ablation arms, **`118/118` true safety negatives are refused** and **`safety_wrong_served = 0`**. (Earlier phrasing `"213 safety-checked rows"` summed `86` production positives + `9` discovery positives + `118` true safety negatives = `213` non-capability-disabled rows; `ablation-reconciled.json` now reports the exact `86 / 9 / 118 / 1` taxonomy explicitly.)
+    2. **Capability-Disabled Negatives (`1` row: `new/negative::centroid-without-contract`)**:
+       - In the historical `goal-directed-function-discovery` corpus, the valid problem *"Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trọng tâm của tam giác SBC đến (SAD)."* appears twice with byte-identical `text` and `payload.facts`:
+         - `new/negative::centroid-without-contract` (`expected_codes: ["UNSUPPORTED_CAPABILITY"]`), testing fail-closed refusal when `centroid` has no `PlanningContract` in the production catalog.
+         - `new/discovery::centroid-to-plane` (`expected_squared: {"q": "16/9"}`), testing that when the experimental `centroid` contract is enabled (`NEW[centroid]`), the route serves the exact distance $4/3$ ($d^2 = 16/9$).
+       - Because the legacy classifier `fd.classify` evaluates `new/negative::centroid-without-contract` against its static production-only expectation (`expected_codes: ["UNSUPPORTED_CAPABILITY"]`), enabling `NEW[centroid]` produces a raw `wrong_served` count of `1` even though the served answer `4/3` ($d^2 = 16/9$) is mathematically exact and matches `new/discovery::centroid-to-plane`.
+       - `measure_goal_composition.py reconcile` (`ablation-reconciled.json`) separates the `118` **True Safety Negatives** (`true_safety_negatives_refused = 118`, `safety_wrong_served = 0` across all 7 arms) from the `1` **Capability-Disabled Negative** (`capability_enabled_oracle_verified_served = 1` in `NEW[centroid]`), while keeping raw `ablation.json` and all gold labels untouched.
 
 ### Tamper & Security Suite (`test_contract_driven_goal_composition.py`)
 All 8 tamper categories are tested and refused fail-closed (`0 wrong served`):
@@ -155,16 +164,16 @@ All 8 tamper categories are tested and refused fail-closed (`0 wrong served`):
 
 ## 5. Parallel Safety & Compatibility Check Against `research/semantic-extraction-v3`
 
-We audited both Git hunks and semantic interactions against `research/semantic-extraction-v3` (`d785277d`):
+We audited both Git hunks and semantic interactions against `research/semantic-extraction-v3` (`d785277d`) (full checklist in `handoff.md`):
 - **Git Hunk Disjointness**:
   - `semantic-extraction-v3` does **not** modify `planner.py` or `engine.py`.
   - In `registry.py`, `semantic-extraction-v3` modifies lines `60–64`, `338–383`, `598–616`, `1352`, and `1666–1792` (exporting `NUMBER_PATTERN`, `_HOP_CHU_NHAT_KW`, `_DAI_BAO_NHIEU_KW`, `_khoi_dung(c)`, `_MAO_TU_KHOI`).
-  - Our branch `research/contract-driven-goal-composition` modifies lines `258` (`PlanningTerm`), `403` (`ask_area` `PlanningContract`), `959–1012` (`_kiem_result_binding` `effect-chain`), and `2050–2059` (`_mau_muc_tieu_mo_ta`, `_mau_hoi_tat_ca`, `REGISTRY_VERSION`).
-- **Semantic Compatibility & Contract Compatibility Proposal**:
+  - Our branch `research/contract-driven-goal-composition` modifies lines `258` (`PlanningTerm`), `403` (`ask_area` `PlanningContract`), `959–1012` (`_kiem_result_binding` `effect-chain`), and `2050–2059` (`_mau_muc_tieu_mo_ta`, `_mau_hoi_tat_ca`).
+- **Semantic Compatibility & Compatibility Hypothesis**:
   1. **Right-Prism Grounding (`_khoi_dung`)**: Every prism, cuboid, and cube case in `contract-driven-goal-composition/corpus.json` places the solid cue (`lập phương`, `hộp chữ nhật`, `lăng trụ đứng`) immediately before the 2-face solid label (`ABCD.A'B'C'D'`, `ABC.A'B'C'`), satisfying `_khoi_dung(c)` in `semantic-extraction-v3`.
   2. **Default Response Contract (`RESPONSE_CONTRACT = "flat"`)**: 100% compatible without changes; `TypedFact` schema and `surface_fingerprint("flat")` are identical.
-  3. **Research Schema-Contract v3 (`_contract_v3()` in `fact_extraction.py`)**: In `semantic-extraction-v3`, `_contract_v3()` defines `anyOf` variants for unnamed `point_kind` questions over `for quantity in ("length", "distance")`. When integrating both branches, `_contract_v3()` should extend that comprehension to `for quantity in ("length", "distance", "area")` with `points_b=labels(1, 1) if quantity == "length" else labels(2, 2) if quantity == "area" else labels(2)` so `RESPONSE_CONTRACT == "v3"` also accepts unnamed `point_kind` area questions.
-  4. **Integration Status**: Because `research/semantic-extraction-v3` is still active, integration to `main` is marked `INTEGRATION_DEFERRED_PENDING_SEMANTIC_V3`.
+  3. **Compatibility Hypothesis for Research Schema-Contract v3 (`_contract_v3()` in `fact_extraction.py`)**: In `semantic-extraction-v3`, `_contract_v3()` defines `anyOf` variants for unnamed `point_kind` questions over `for quantity in ("length", "distance")`. We did **not** modify `fact_extraction.py` or the `semantic-extraction-v3` worktree. Whether extending that comprehension in `_contract_v3()` to include `"area"` (`points_b=labels(2, 2)`) is desired and sufficient for `RESPONSE_CONTRACT == "v3"` is recorded strictly as a **compatibility hypothesis to be tested on the combined integration candidate** after `semantic-extraction-v3` completes (see `handoff.md` §2.3).
+  4. **Integration Status**: `FROZEN_PENDING_INTEGRATION` (`INTEGRATION_DEFERRED_PENDING_SEMANTIC_V3`).
 
 ---
 
@@ -178,4 +187,4 @@ We audited both Git hunks and semantic interactions against `research/semantic-e
   - `backend/tests/geometry/test_contract_driven_goal_composition.py` (68 tests)
   - `backend/scripts/measure_goal_composition.py` (`run-all` + `reconcile`)
 - **Run package (`docs/evaluation/geometry/runs/contract-driven-goal-composition/`)**:
-  - `run.json`, `report.md`, `quality-gate-report.md`, `oracle.py`, `corpus.json`, `red.txt`, `green.txt`, `green-quality-gate.txt`, `ablation.json`, `ablation-reconciled.json`, `regression-174.json`, `baseline/{receipt.json,bundle-174.json,regression-174.json}`
+  - `run.json`, `report.md`, `quality-gate-report.md`, `handoff.md`, `oracle.py`, `corpus.json`, `red.txt`, `green.txt`, `green-quality-gate.txt`, `ablation.json`, `ablation-reconciled.json`, `regression-174.json`, `baseline/{receipt.json,bundle-174.json,regression-174.json}`

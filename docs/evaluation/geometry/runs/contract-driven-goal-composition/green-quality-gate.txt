@@ -340,4 +340,4 @@ backend\tests\geometry\test_source_grounding_reliability.py::test_no_case_the_so
 backend\tests\geometry\test_source_grounding_reliability.py::test_written_plane_groups_are_collected_for_the_exact_engine_check PASSED [ 99%]
 backend\tests\geometry\test_source_grounding_reliability.py::test_an_asked_object_no_call_answers_is_refused_whatever_the_wording PASSED [100%]
 
-======================= 330 passed, 3 xfailed in 3.79s ========================
+======================= 330 passed, 3 xfailed in 4.12s ========================

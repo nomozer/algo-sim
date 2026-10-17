@@ -276,8 +276,20 @@ def test_frozen_surfaces_unchanged():
 
 def test_capability_disabled_negative_reconciliation():
     reconciled = json.loads((RUN / "ablation-reconciled.json").read_text(encoding="utf-8"))
+    tax = reconciled["corpus_taxonomy_breakdown"]
+    assert tax == {
+        "total_evaluated_cases": 214,
+        "production_positive_cases": 86,
+        "experimental_discovery_positive_cases": 9,
+        "total_negative_cases": 119,
+        "true_safety_negative_cases": 118,
+        "true_safety_negative_explicit_splits": 55,
+        "true_safety_negative_benchmark_and_two_line": 63,
+        "capability_disabled_negative_cases": 1,
+    }
     for arm, summary in reconciled["safety_summary_by_arm"].items():
         assert summary["safety_wrong_served"] == 0, f"Safety wrong_served > 0 in {arm}: {summary}"
+        assert summary["true_safety_negatives_refused"] == 118, f"True safety negatives not all refused in {arm}: {summary}"
     audit = reconciled["capability_disabled_negative_audit"]["new/negative::centroid-without-contract"]
     assert audit["negative_kind"] == "capability_disabled_negative"
     assert audit["discovery_twin"] == "new/discovery::centroid-to-plane"
