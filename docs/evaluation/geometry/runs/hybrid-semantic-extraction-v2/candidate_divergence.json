@@ -1,0 +1,32 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-semantic-extraction-v2",
+  "task": "hybrid-semantic-extraction-v2",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-semantic-grounding-reliability/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "9dd5dfcc10f37f0aa7a74141b1489ea9d6cd1d4f78a18d6da61e27a4e4361864",
+  "current_candidate_source_commit": "fb3f4ee5",
+  "current_product_commit": "fb3f4ee5",
+  "current_candidate_frozen_at": "fb3f4ee5",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "previous_candidate_hash": "57c7f5dbedaa7b21c66345fa4d6f0e1ea461a425293d44035b5678e12d76f96e",
+  "metadata_only_correction": false,
+  "diverged": true,
+  "reason": "Semantic Extraction v2: route-B fact-extraction prompt clarified (TypedFact schema, parser, planner, declarations unchanged) and two Source Grounding vocabulary entries ('hộp chữ nhật' prism predicate, 'dài bao nhiêu' length ask) with adversarial negatives.",
+  "product_changes_since_main": [
+    "backend/app/ai/fact_extraction.py",
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "historical_effect": "Historical NLU GOLD arm: 60 rows, one declared change (L02 REFUSED PREDICATE_NOT_IN_QUOTE -> REFUSED SOURCE_PREMISE_UNREAD), served 10 -> 10 (results/historical-gold-delta.json). Earlier measurement bytes unchanged.",
+  "freeze": "clean worktree at fb3f4ee5, 110 measured files, --verify MATCH",
+  "cache_version": 125,
+  "cache_decision": "no bump: research route D (fact_extraction, registry, function_route) is not imported by /api/analyze or any cached path",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical thesis-final and NLU baseline measurements keep their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "research/hybrid-semantic-extraction-v2; owner GO required for live measurement and for integration",
+  "push": "NONE: no integration approval yet"
+}
