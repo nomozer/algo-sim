@@ -1,0 +1,271 @@
+{
+  "schema": "fresh-heldout/1",
+  "independence": "Authored by an isolated AI agent from its own knowledge of Toán 11–12 solid geometry; no repository file, prompt, schema, code, doc, test or earlier corpus was read, no web and no model/API call was used.",
+  "cases": [
+    {
+      "id": "h01", "split": "heldout", "structure_id": "cube_segment_and_point_plane",
+      "source_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 2. Tính độ dài đoạn thẳng AC' và khoảng cách từ điểm A đến mặt phẳng (A'BD).",
+      "n_source_requests": 2,
+      "entities": ["A", "B", "C", "D", "A'", "B'", "C'", "D'"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "length", "target": {"points": ["A", "C'"]}, "source_quote": "Tính độ dài đoạn thẳng AC'", "disposition": "answer", "oracle": {"value_squared": "12"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["A"], "points_b": ["A'", "B", "D"]}, "source_quote": "khoảng cách từ điểm A đến mặt phẳng (A'BD)", "disposition": "answer", "oracle": {"value_squared": "4/3"}}
+      ],
+      "semantic_notes": "space diagonal plus point-plane distance to a 3-label plane with a prime; ASCII apostrophe primes"
+    },
+    {
+      "id": "h02", "split": "heldout", "structure_id": "cube_segment_and_point_plane",
+      "source_text": "Xét hình lập phương ABCD.A′B′C′D′ có cạnh bằng a. Hỏi khoảng cách từ điểm C đến mặt phẳng (B′D′D) bằng bao nhiêu?",
+      "n_source_requests": 1,
+      "entities": ["A", "B", "C", "D", "A′", "B′", "C′", "D′"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["C"], "points_b": ["B′", "D′", "D"]}, "source_quote": "khoảng cách từ điểm C đến mặt phẳng (B′D′D) bằng bao nhiêu", "disposition": "answer", "oracle": {"value_squared": "1/2"}}
+      ],
+      "semantic_notes": "paraphrase with Unicode prime U+2032 and symbolic edge a; oracle uses a = 1; plane (B′D′D) is the diagonal plane BDD′B′"
+    },
+    {
+      "id": "h03", "split": "heldout", "structure_id": "cube_segment_and_point_plane",
+      "source_text": "Một hình lập phương ABCD.A'B'C'D' có cạnh bằng 3. a) Tính khoảng cách từ A' đến đường thẳng BD. b) Tính bình phương độ dài đoạn thẳng BD'.",
+      "n_source_requests": 2,
+      "entities": ["A", "B", "C", "D", "A'", "B'", "C'", "D'"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["A'"], "points_b": ["B", "D"]}, "source_quote": "Tính khoảng cách từ A' đến đường thẳng BD", "disposition": "answer", "oracle": {"value_squared": "27/2"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "unsupported", "target": {"points": ["B", "D'"], "description": "square of the length BD' (a squared length is not a supported response form)"}, "source_quote": "Tính bình phương độ dài đoạn thẳng BD'", "disposition": "unsupported", "oracle": null}
+      ],
+      "semantic_notes": "contrast: point-line distance answered; the second item asks for a squared length, which must be refused rather than answered"
+    },
+    {
+      "id": "h04", "split": "heldout", "structure_id": "box_diagonal_and_volume",
+      "source_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 12. Tính độ dài đường chéo AC' và thể tích của khối hộp đó.",
+      "n_source_requests": 2,
+      "entities": ["A", "B", "C", "D", "A'", "B'", "C'", "D'"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "length", "target": {"points": ["A", "C'"]}, "source_quote": "Tính độ dài đường chéo AC'", "disposition": "answer", "oracle": {"value_squared": "169"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "volume", "target": {"solid": "ABCD.A'B'C'D'"}, "source_quote": "thể tích của khối hộp đó", "disposition": "answer", "oracle": {"value_squared": "20736"}}
+      ],
+      "semantic_notes": "volume owner given by anaphora 'khối hộp đó'; V = 144"
+    },
+    {
+      "id": "h05", "split": "heldout", "structure_id": "box_diagonal_and_volume",
+      "source_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4. Tính độ dài đường chéo AC' và thể tích của khối hộp đó.",
+      "n_source_requests": 2,
+      "entities": ["A", "B", "C", "D", "A'", "B'", "C'", "D'"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "length", "target": {"points": ["A", "C'"]}, "source_quote": "Tính độ dài đường chéo AC'", "disposition": "missing_source", "oracle": null},
+        {"rid": "r2", "intent": "calculate", "quantity": "volume", "target": {"solid": "ABCD.A'B'C'D'"}, "source_quote": "thể tích của khối hộp đó", "disposition": "missing_source", "oracle": null}
+      ],
+      "semantic_notes": "minimal pair of h04 with the height AA' removed; both answers depend on AA' (oracle.py checks the dependence), so the system must not invent it"
+    },
+    {
+      "id": "h06", "split": "heldout", "structure_id": "box_diagonal_and_volume",
+      "source_text": "Câu 2. Cho hình hộp chữ nhật ABCD.A'B'C'D' với AB = 2, AD = 1 và AA' = 2. a) Tính góc giữa đường thẳng A'C và mặt phẳng (ABCD). b) Diện tích tứ giác ACC'A' là bao nhiêu?",
+      "n_source_requests": 2,
+      "entities": ["A", "B", "C", "D", "A'", "B'", "C'", "D'"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "angle", "target": {"points_a": ["A'", "C"], "points_b": ["A", "B", "C", "D"]}, "source_quote": "Tính góc giữa đường thẳng A'C và mặt phẳng (ABCD)", "disposition": "answer", "oracle": {"cos_squared": "5/9"}, "response_form": "angle"},
+        {"rid": "r2", "intent": "calculate", "quantity": "area", "target": {"points": ["A", "C", "C'", "A'"]}, "source_quote": "Diện tích tứ giác ACC'A' là bao nhiêu", "disposition": "answer", "oracle": {"value_squared": "20"}}
+      ],
+      "semantic_notes": "contrast: exam scaffolding, line-plane angle to a 4-label plane, area of a named rectangle (diagonal section)"
+    },
+    {
+      "id": "h07", "split": "heldout", "structure_id": "regular_square_pyramid",
+      "source_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 2 và chiều cao bằng 3. Tính thể tích khối chóp S.ABCD và góc giữa cạnh bên SA với mặt phẳng đáy (ABCD).",
+      "n_source_requests": 2,
+      "entities": ["S", "A", "B", "C", "D"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "volume", "target": {"solid": "S.ABCD"}, "source_quote": "Tính thể tích khối chóp S.ABCD", "disposition": "answer", "oracle": {"value_squared": "16"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "angle", "target": {"points_a": ["S", "A"], "points_b": ["A", "B", "C", "D"]}, "source_quote": "góc giữa cạnh bên SA với mặt phẳng đáy (ABCD)", "disposition": "answer", "oracle": {"cos_squared": "2/11"}, "response_form": "angle"}
+      ],
+      "semantic_notes": "measures owned by the solid ('cạnh đáy', 'chiều cao'); V = 4"
+    },
+    {
+      "id": "h08", "split": "heldout", "structure_id": "regular_square_pyramid",
+      "source_text": "Xét hình chóp tứ giác đều S.ABCD có cạnh bên bằng 3, cạnh đáy bằng 2; gọi O là tâm của hình vuông ABCD. Hãy tính khoảng cách từ O đến mặt phẳng (SCD) và thể tích khối chóp đã cho.",
+      "n_source_requests": 2,
+      "entities": ["S", "A", "B", "C", "D", "O"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["O"], "points_b": ["S", "C", "D"]}, "source_quote": "Hãy tính khoảng cách từ O đến mặt phẳng (SCD)", "disposition": "answer", "oracle": {"value_squared": "7/8"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "volume", "target": {"solid": "S.ABCD"}, "source_quote": "thể tích khối chóp đã cho", "disposition": "answer", "oracle": {"value_squared": "112/9"}}
+      ],
+      "semantic_notes": "paraphrase: lateral edge given instead of height (h = sqrt 7, derived); named center O; volume owner by anaphora"
+    },
+    {
+      "id": "h09", "split": "heldout", "structure_id": "regular_square_pyramid",
+      "source_text": "Một hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4 và chiều cao bằng 2. a) Tìm góc giữa mặt phẳng (SBC) và mặt phẳng (ABCD). b) Tính diện tích tam giác SBC.",
+      "n_source_requests": 2,
+      "entities": ["S", "A", "B", "C", "D"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "angle", "target": {"points_a": ["S", "B", "C"], "points_b": ["A", "B", "C", "D"]}, "source_quote": "Tìm góc giữa mặt phẳng (SBC) và mặt phẳng (ABCD)", "disposition": "answer", "oracle": {"cos_squared": "1/2"}, "response_form": "angle"},
+        {"rid": "r2", "intent": "calculate", "quantity": "area", "target": {"points": ["S", "B", "C"]}, "source_quote": "Tính diện tích tam giác SBC", "disposition": "answer", "oracle": {"value_squared": "32"}}
+      ],
+      "semantic_notes": "contrast: dihedral angle between a 3-label and a 4-label plane (45 degrees), triangle area"
+    },
+    {
+      "id": "h10", "split": "heldout", "structure_id": "perpendicular_edge_square_pyramid",
+      "source_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a, SA vuông góc với mặt phẳng đáy và SA = a. Tính khoảng cách giữa hai đường thẳng SC và BD, sau đó tính khoảng cách từ A đến mặt phẳng (SBD).",
+      "n_source_requests": 2,
+      "entities": ["S", "A", "B", "C", "D"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["S", "C"], "points_b": ["B", "D"]}, "source_quote": "Tính khoảng cách giữa hai đường thẳng SC và BD", "disposition": "answer", "oracle": {"value_squared": "1/6"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["A"], "points_b": ["S", "B", "D"]}, "source_quote": "tính khoảng cách từ A đến mặt phẳng (SBD)", "disposition": "answer", "oracle": {"value_squared": "1/3"}}
+      ],
+      "semantic_notes": "skew-line distance and point-plane distance; perpendicularity stated in words; oracle uses a = 1"
+    },
+    {
+      "id": "h11", "split": "heldout", "structure_id": "perpendicular_edge_square_pyramid",
+      "source_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4; SA vuông góc với đáy và SA = 4. a) Tính thể tích khối chóp S.ABC. b) Khoảng cách từ A đến mặt phẳng (SBC) bằng bao nhiêu?",
+      "n_source_requests": 2,
+      "entities": ["S", "A", "B", "C"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "volume", "target": {"solid": "S.ABC"}, "source_quote": "Tính thể tích khối chóp S.ABC", "disposition": "answer", "oracle": {"value_squared": "64"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["A"], "points_b": ["S", "B", "C"]}, "source_quote": "Khoảng cách từ A đến mặt phẳng (SBC) bằng bao nhiêu", "disposition": "answer", "oracle": {"value_squared": "144/25"}}
+      ],
+      "semantic_notes": "variant with a triangular base right at B (stated in words); V = 8, distance 12/5"
+    },
+    {
+      "id": "h12", "split": "heldout", "structure_id": "perpendicular_edge_square_pyramid",
+      "source_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 2, AD = 3; cạnh bên SA vuông góc với đáy. a) Tính khoảng cách từ D đến mặt phẳng (SAB). b) Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+      "n_source_requests": 2,
+      "entities": ["S", "A", "B", "C", "D"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["D"], "points_b": ["S", "A", "B"]}, "source_quote": "Tính khoảng cách từ D đến mặt phẳng (SAB)", "disposition": "answer", "oracle": {"value_squared": "9"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "angle", "target": {"points_a": ["S", "C"], "points_b": ["A", "B", "C", "D"]}, "source_quote": "Tính góc giữa đường thẳng SC và mặt phẳng (ABCD)", "disposition": "missing_source", "oracle": null, "response_form": "angle"}
+      ],
+      "semantic_notes": "contrast: SA length not given; r1 does not depend on SA (answerable), r2 does (missing_source); oracle.py checks both facts with two heights"
+    },
+    {
+      "id": "h13", "split": "heldout", "structure_id": "right_triangular_prism",
+      "source_text": "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4 và AA' = 6. Tính thể tích khối lăng trụ ABC.A'B'C' và độ dài đoạn thẳng B'C.",
+      "n_source_requests": 2,
+      "entities": ["A", "B", "C", "A'", "B'", "C'"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "volume", "target": {"solid": "ABC.A'B'C'"}, "source_quote": "Tính thể tích khối lăng trụ ABC.A'B'C'", "disposition": "answer", "oracle": {"value_squared": "1296"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "length", "target": {"points": ["B'", "C"]}, "source_quote": "độ dài đoạn thẳng B'C", "disposition": "answer", "oracle": {"value_squared": "61"}}
+      ],
+      "semantic_notes": "right triangle at A stated in words; V = 36"
+    },
+    {
+      "id": "h14", "split": "heldout", "structure_id": "right_triangular_prism",
+      "source_text": "Xét lăng trụ đứng ABC.A′B′C′ có đáy là tam giác đều cạnh 2 và cạnh bên bằng 3. Hãy tính góc giữa hai mặt phẳng (A′BC) và (ABC), rồi tính diện tích tam giác A′BC.",
+      "n_source_requests": 2,
+      "entities": ["A", "B", "C", "A′", "B′", "C′"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "angle", "target": {"points_a": ["A′", "B", "C"], "points_b": ["A", "B", "C"]}, "source_quote": "Hãy tính góc giữa hai mặt phẳng (A′BC) và (ABC)", "disposition": "answer", "oracle": {"cos_squared": "1/4"}, "response_form": "angle"},
+        {"rid": "r2", "intent": "calculate", "quantity": "area", "target": {"points": ["A′", "B", "C"]}, "source_quote": "tính diện tích tam giác A′BC", "disposition": "answer", "oracle": {"value_squared": "12"}}
+      ],
+      "semantic_notes": "paraphrase with Unicode primes; equilateral base; measures owned by the prism ('cạnh bên'); dihedral angle 60 degrees"
+    },
+    {
+      "id": "h15", "split": "heldout", "structure_id": "right_triangular_prism",
+      "source_text": "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông cân tại B với BA = BC = 2, cạnh bên AA' = 3. Tính thể tích khối lăng trụ ABC.A'B'C' và thể tích khối chóp A'.BCC'B'.",
+      "n_source_requests": 2,
+      "entities": ["A", "B", "C", "A'", "B'", "C'"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "volume", "target": {"solid": "ABC.A'B'C'"}, "source_quote": "Tính thể tích khối lăng trụ ABC.A'B'C'", "disposition": "answer", "oracle": {"value_squared": "36"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "volume", "target": {"solid": "A'.BCC'B'"}, "source_quote": "thể tích khối chóp A'.BCC'B'", "disposition": "answer", "oracle": {"value_squared": "16"}}
+      ],
+      "semantic_notes": "contrast: solid plus sub-solid, each volume must be attributed to its own owner (6 and 4)"
+    },
+    {
+      "id": "h16", "split": "heldout", "structure_id": "tetrahedron_metrics",
+      "source_text": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc với OA = 1, OB = 2, OC = 2. Tính khoảng cách từ O đến mặt phẳng (ABC) và thể tích khối tứ diện OABC.",
+      "n_source_requests": 2,
+      "entities": ["O", "A", "B", "C"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["O"], "points_b": ["A", "B", "C"]}, "source_quote": "Tính khoảng cách từ O đến mặt phẳng (ABC)", "disposition": "answer", "oracle": {"value_squared": "2/3"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "volume", "target": {"solid": "OABC"}, "source_quote": "thể tích khối tứ diện OABC", "disposition": "answer", "oracle": {"value_squared": "4/9"}}
+      ],
+      "semantic_notes": "trirectangular tetrahedron, pairwise perpendicularity in words; V = 2/3"
+    },
+    {
+      "id": "h17", "split": "heldout", "structure_id": "tetrahedron_metrics",
+      "source_text": "Cho tứ diện đều ABCD có cạnh bằng a. a) Tính khoảng cách giữa hai đường thẳng AB và CD. b) Tính góc giữa đường thẳng AB và mặt phẳng (BCD).",
+      "n_source_requests": 2,
+      "entities": ["A", "B", "C", "D"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["A", "B"], "points_b": ["C", "D"]}, "source_quote": "Tính khoảng cách giữa hai đường thẳng AB và CD", "disposition": "answer", "oracle": {"value_squared": "1/2"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "angle", "target": {"points_a": ["A", "B"], "points_b": ["B", "C", "D"]}, "source_quote": "Tính góc giữa đường thẳng AB và mặt phẳng (BCD)", "disposition": "answer", "oracle": {"cos_squared": "1/3"}, "response_form": "angle"}
+      ],
+      "semantic_notes": "regular tetrahedron; symbolic edge a, oracle uses a = 1; the label 'a)' scaffold must not be confused with the edge a"
+    },
+    {
+      "id": "h18", "split": "heldout", "structure_id": "tetrahedron_metrics",
+      "source_text": "Một tứ diện ABCD có DA vuông góc với mặt phẳng (ABC), tam giác ABC vuông tại B, AB = 1, BC = 2 và DA = 2. a) Tính diện tích tam giác BCD. b) Tìm giá trị lớn nhất của khoảng cách từ D đến một đường thẳng thay đổi luôn đi qua B. c) Giải thích vì sao tam giác BCD vuông.",
+      "n_source_requests": 3,
+      "entities": ["A", "B", "C", "D"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "area", "target": {"points": ["B", "C", "D"]}, "source_quote": "Tính diện tích tam giác BCD", "disposition": "answer", "oracle": {"value_squared": "5"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "unsupported", "target": {"points_a": ["D"], "description": "maximum of the distance from D to a variable line through B"}, "source_quote": "Tìm giá trị lớn nhất của khoảng cách từ D đến một đường thẳng thay đổi luôn đi qua B", "disposition": "unsupported", "oracle": null},
+        {"rid": "r3", "intent": "explain", "quantity": "unsupported", "target": {"points": ["B", "C", "D"], "description": "explanation of why triangle BCD is right"}, "source_quote": "Giải thích vì sao tam giác BCD vuông", "disposition": "unsupported", "oracle": null}
+      ],
+      "semantic_notes": "contrast: one numeric request, one optimisation (max) request and one explanation request; both of the latter must be refused numerically"
+    },
+    {
+      "id": "h19", "split": "heldout", "structure_id": "square_prism_dihedral_and_subsolid",
+      "source_text": "Cho lăng trụ tứ giác đều ABCD.A'B'C'D' có cạnh đáy bằng 2 và cạnh bên bằng 4. Tính góc giữa hai mặt phẳng (A'BD) và (ABCD) và khoảng cách từ A đến đường thẳng B'D'.",
+      "n_source_requests": 2,
+      "entities": ["A", "B", "C", "D", "A'", "B'", "C'", "D'"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "angle", "target": {"points_a": ["A'", "B", "D"], "points_b": ["A", "B", "C", "D"]}, "source_quote": "Tính góc giữa hai mặt phẳng (A'BD) và (ABCD)", "disposition": "answer", "oracle": {"cos_squared": "1/9"}, "response_form": "angle"},
+        {"rid": "r2", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["A"], "points_b": ["B'", "D'"]}, "source_quote": "khoảng cách từ A đến đường thẳng B'D'", "disposition": "answer", "oracle": {"value_squared": "18"}}
+      ],
+      "semantic_notes": "regular quadrilateral right prism; two requests joined by a bare 'và' inside one sentence"
+    },
+    {
+      "id": "h20", "split": "heldout", "structure_id": "square_prism_dihedral_and_subsolid",
+      "source_text": "Xét lăng trụ tứ giác đều ABCD.A′B′C′D′ với cạnh đáy 2 và chiều cao 4. Hỏi bình phương côsin của góc giữa mặt phẳng (A′BD) và mặt đáy (ABCD) bằng bao nhiêu? Tính thêm thể tích khối tứ diện A′ABD.",
+      "n_source_requests": 2,
+      "entities": ["A", "B", "C", "D", "A′", "B′", "C′", "D′"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "angle", "target": {"points_a": ["A′", "B", "D"], "points_b": ["A", "B", "C", "D"]}, "source_quote": "bình phương côsin của góc giữa mặt phẳng (A′BD) và mặt đáy (ABCD) bằng bao nhiêu", "disposition": "answer", "oracle": {"cos_squared": "1/9"}, "response_form": "cos_squared"},
+        {"rid": "r2", "intent": "calculate", "quantity": "volume", "target": {"solid": "A′ABD"}, "source_quote": "Tính thêm thể tích khối tứ diện A′ABD", "disposition": "answer", "oracle": {"value_squared": "64/9"}}
+      ],
+      "semantic_notes": "minimal pair of h19: same dihedral angle but the text explicitly asks for cos squared (supported form); second request is the volume of a sub-solid, not of the prism; V = 8/3"
+    },
+    {
+      "id": "h21", "split": "heldout", "structure_id": "square_prism_dihedral_and_subsolid",
+      "source_text": "Cho hình lập phương ABCD.EFGH cạnh 2 (các cạnh bên AE, BF, CG, DH) và hình chóp S.ABCD có đỉnh S là tâm của hình vuông EFGH. a) Tính thể tích khối chóp S.ABCD. b) Tính góc giữa SA và mặt phẳng (ABCD). c) Tính khoảng cách từ S đến mặt bên.",
+      "n_source_requests": 3,
+      "entities": ["A", "B", "C", "D", "E", "F", "G", "H", "S"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "volume", "target": {"solid": "S.ABCD"}, "source_quote": "Tính thể tích khối chóp S.ABCD", "disposition": "answer", "oracle": {"value_squared": "64/9"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "angle", "target": {"points_a": ["S", "A"], "points_b": ["A", "B", "C", "D"]}, "source_quote": "Tính góc giữa SA và mặt phẳng (ABCD)", "disposition": "answer", "oracle": {"cos_squared": "1/3"}, "response_form": "angle"},
+        {"rid": "r3", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["S"], "description": "'mặt bên' without a name: a lateral face of the cube (distance 1) or of the pyramid (distance 0)"}, "source_quote": "Tính khoảng cách từ S đến mặt bên", "disposition": "ambiguous", "oracle": null}
+      ],
+      "semantic_notes": "contrast: two different solids sharing the base ABCD; volume must be owned by the pyramid, not the cube; unnamed lateral face is genuinely ambiguous (oracle.py shows the two readings differ)"
+    },
+    {
+      "id": "h22", "split": "heldout", "structure_id": "perpendicular_edge_equilateral_pyramid",
+      "source_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2, SA vuông góc với mặt phẳng (ABC) và SA = 2. Hỏi khoảng cách từ S đến đường thẳng BC bằng bao nhiêu? Đoạn SB dài bao nhiêu?",
+      "n_source_requests": 2,
+      "entities": ["S", "A", "B", "C"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["S"], "points_b": ["B", "C"]}, "source_quote": "khoảng cách từ S đến đường thẳng BC bằng bao nhiêu", "disposition": "answer", "oracle": {"value_squared": "7"}},
+        {"rid": "r2", "intent": "calculate", "quantity": "length", "target": {"points": ["S", "B"]}, "source_quote": "Đoạn SB dài bao nhiêu", "disposition": "answer", "oracle": {"value_squared": "8"}}
+      ],
+      "semantic_notes": "point-line distance and a segment length phrased as 'dài bao nhiêu'"
+    },
+    {
+      "id": "h23", "split": "heldout", "structure_id": "perpendicular_edge_equilateral_pyramid",
+      "source_text": "Cho hình chóp S.ABC có đáy là tam giác đều ABC cạnh 2, SA ⊥ (ABC) và SA = 2. Tính khoảng cách từ điểm S đến đoạn thẳng BC và thể tích khối chóp S.ABC.",
+      "n_source_requests": 2,
+      "entities": ["S", "A", "B", "C"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "distance", "target": {"points_a": ["S"], "points_b": ["B", "C"], "description": "distance to the finite segment BC, not to the line"}, "source_quote": "Tính khoảng cách từ điểm S đến đoạn thẳng BC", "disposition": "unsupported", "oracle": null},
+        {"rid": "r2", "intent": "calculate", "quantity": "volume", "target": {"solid": "S.ABC"}, "source_quote": "thể tích khối chóp S.ABC", "disposition": "answer", "oracle": {"value_squared": "4/3"}}
+      ],
+      "semantic_notes": "minimal pair of h22: 'đường thẳng BC' replaced by 'đoạn thẳng BC' (finite segment, unsupported); perpendicularity written with the symbol ⊥; V = 2*sqrt(3)/3"
+    },
+    {
+      "id": "h24", "split": "heldout", "structure_id": "perpendicular_edge_equilateral_pyramid",
+      "source_text": "Một hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2, SA vuông góc với đáy, SA = 2. a) Tính góc giữa đường thẳng SB và mặt phẳng (ABC). b) Tính thể tích khối cầu ngoại tiếp hình chóp S.ABC.",
+      "n_source_requests": 2,
+      "entities": ["S", "A", "B", "C"],
+      "requests": [
+        {"rid": "r1", "intent": "calculate", "quantity": "angle", "target": {"points_a": ["S", "B"], "points_b": ["A", "B", "C"]}, "source_quote": "Tính góc giữa đường thẳng SB và mặt phẳng (ABC)", "disposition": "answer", "oracle": {"cos_squared": "1/2"}, "response_form": "angle"},
+        {"rid": "r2", "intent": "calculate", "quantity": "volume", "target": {"description": "khối cầu ngoại tiếp hình chóp S.ABC (curved solid)"}, "source_quote": "Tính thể tích khối cầu ngoại tiếp hình chóp S.ABC", "disposition": "unsupported", "oracle": null}
+      ],
+      "semantic_notes": "contrast: polyhedral angle answered (45 degrees) plus a curved solid (circumscribed sphere) that must be refused; the only curved-solid case"
+    }
+  ]
+}

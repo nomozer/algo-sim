@@ -174,6 +174,58 @@ def test_v3_never_widens_typedfact_id_or_numeric_value(bad):
     assert not fx.schema_accepts(ITEM, bad)
 
 
+_SOLID = {"pyramid": "S.ABC", "prism": "ABC.DEF", "tetrahedron": "ABCD", "cube": "ABCD.EFGH", "cuboid": "ABCD.EFGH"}
+_PRODUCER = {"id": "L", "kind": "intersection_line", "role": "premise", "quotes": ["x"],
+             "points_a": ["S", "A", "B"], "points_b": ["S", "C", "D"]}
+
+
+def _minimal_instances(variant):
+    """One minimal accepted instance per enum combination of the variant's required slots (labels fresh per instance)."""
+    import itertools
+    props, req = variant["properties"], variant["required"]
+    kind = props["kind"]["enum"][0]
+    enums = [k for k in req if k not in ("kind", "role") and len(props[k].get("enum", ())) > 1]
+    for combo in itertools.product(*[props[k]["enum"] for k in enums]):
+        labels = iter("MNPQRTUVWXYZ")
+        inst = {"id": "f", "kind": kind, "role": "question" if kind == "question" else "premise", "quotes": ["x"],
+                **dict(zip(enums, combo))}
+        for k in (k for k in req if k not in inst):
+            s = props[k]
+            inst[k] = (s["enum"][0] if s.get("enum") else _SOLID.get(inst.get("solid_type"), "S.ABC") if k == "solid"
+                       else "L" if k == "line_ref" else [next(labels) for _ in range(s.get("minItems", 1))] if s["type"] == "ARRAY"
+                       else "3" if s.get("pattern") == fx.NUMBER_PATTERN else next(labels) if s.get("pattern") else "r")
+        yield inst
+
+
+def _intake_rejections(item):
+    """Accepted v3 shapes that TypedFact or the planner's intake (`doc_du_kien`) rejects as malformed."""
+    from app.simulation.geometry_functions.planner import doc_du_kien
+    from app.simulation.geometry_functions.registry import TuChoi
+    out = []
+    for v in item["anyOf"]:
+        for inst in _minimal_instances(v):
+            assert fx.schema_accepts(item, inst), inst
+            try:
+                doc_du_kien({"facts": [inst] + ([_PRODUCER] if "line_ref" in inst else [])})
+            except TuChoi as e:
+                # A described centroid has no Registry builder: an honest capability refusal of a faithful extraction.
+                if e.code != "UNSUPPORTED_CAPABILITY":
+                    out.append((e.code, inst))
+    return out
+
+
+def test_every_accepted_v3_variant_is_a_well_formed_typedfact():
+    assert not _intake_rejections(ITEM)
+
+
+def test_intake_guard_catches_a_widened_variant():
+    import copy
+    widened = copy.deepcopy(ITEM)
+    two_lines = next(v for v in widened["anyOf"] if v["properties"].get("plane_relation", {}).get("enum") == ["parallel_two_lines"])
+    two_lines["required"].remove("points_a")
+    assert [code for code, _ in _intake_rejections(widened)] == ["FACT_INCOMPLETE"]
+
+
 def test_v3_checks_the_returned_contract_before_planning(monkeypatch):
     monkeypatch.setattr(fx, "RESPONSE_CONTRACT", "v3")
     malformed = {"facts": [q(quantity="distance", points_a=["A"])]}

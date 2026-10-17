@@ -1,0 +1,106 @@
+{
+  "schema": "semantic-extraction-protocol/3",
+  "model": "gemini-2.5-flash",
+  "scorer": "grounded-source-obligations/2",
+  "lock_status": "NOT_LOCKED",
+  "live_authorizable": false,
+  "locked_sha256": {
+    "corpus": "86a42751d04276f7832f9aa3020ba769f08200d9fe6ee4499b4559e078df85db",
+    "gold_facts": "23a1f58843e9f91dbc70efca2f99f7c9714fcedfc2114311ad83b84f5f541172"
+  },
+  "source_sha256": {
+    "semantic-extraction-v3/docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/corpus.json": "31607400e6c8046fabe75e9cee75862d707f6473a4d465bb71ba25260f125edf",
+    "semantic-extraction-v3/docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/gold_facts.json": "6eec95b23e509f6ebc2096961f692aa514ce62aebe9577830f2e4b991be219c0",
+    "semantic-extraction-v3/docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/oracle.py": "e1edd74ac8b18254fd384849e14122480f28724d1b28567e56ff8cb8090ea87e",
+    "semantic-extraction-v3/docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/authoring.md": "fd5226484f711e92f1a6d74e26ad4827862ddc1daabe220889a15ffcd253414a",
+    "semantic-extraction-v3/docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/prelock_corrections.json": "d48e039d081d4b692d2381bfc710b0770c06105a015e593450fb6cc7e70ee7ec",
+    "semantic-extraction-v3/docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/corpus.json": "23f9ea9c4ec2f41b2418f41afb4dbca9d7c8c9637a4e21726344683f6d37b9ae",
+    "semantic-extraction-v3/docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/gold_facts.json": "fe70d832282c47b4863c53f9f089295d053c088f71fe0f09456cf48f16b16b9a",
+    "semantic-extraction-v3/docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/oracle.py": "0f4a281ec2911a0c30fd89bd14c4d3388a6e19efb60c48edd5a589dda0ef3875",
+    "semantic-extraction-v3/docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/authoring.md": "d5b329a16216535897cb60be615d89f07e722d8c71c89a34100b0910f1f89f98",
+    "semantic-extraction-v3/docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/gold_encoding.md": "34c9584e81ab465bdd5dfb6b6d8544ab47aa9940cda3462b71e120b6d56d4c47"
+  },
+  "review_gates": {
+    "gold-oracle": {
+      "status": "MISSING"
+    },
+    "scorer": {
+      "status": "MISSING"
+    },
+    "candidate": {
+      "status": "MISSING"
+    }
+  },
+  "frozen_candidate": {
+    "status": "NOT_MATCHED",
+    "product_sha256": "fe7cb20c4383d039bad131ea9c49d3830277bb5a47726fb34991e8323c5862d2",
+    "files": 110
+  },
+  "caps": {
+    "PILOT": {
+      "logical_calls": 12,
+      "http_attempts": 12,
+      "accounted_tokens": 400000,
+      "usd": 0.5,
+      "samples": 1
+    },
+    "LOCKED": {
+      "logical_calls": 24,
+      "http_attempts": 24,
+      "accounted_tokens": 800000,
+      "usd": 1.0,
+      "samples": 1
+    }
+  },
+  "arms": [
+    "flat",
+    "v3"
+  ],
+  "retries": 0,
+  "timeout_seconds": 90,
+  "pilot_total_calls": 24,
+  "pilot_total_usd_cap": 1.0,
+  "locked_total_calls": 48,
+  "locked_total_usd_cap": 2.0,
+  "thresholds": {
+    "unsafe_serves_max": 0,
+    "unscorable_serves_max": 0,
+    "goal_entity_recall_min": 0.85,
+    "operand_correct_min": 0.85,
+    "solid_ownership_min": 0.85,
+    "hallucinated_entity_rows_max": 0
+  },
+  "descriptive_only": [
+    "multi_goal",
+    "unsupported",
+    "correlated_structure_families"
+  ],
+  "human_validation": "NOT_HUMAN_VALIDATED",
+  "live_decision": "NOT_AUTHORIZABLE_DRAFT",
+  "integration_decision": "PENDING_SEPARATE_OWNER_GO",
+  "file_sha256": {
+    "../../../../../../../backend/scripts/freeze_evaluation_candidate.py": "ABSENT",
+    "../../../../../../../backend/scripts/run_hybrid_ab_pilot.py": "ABSENT",
+    "../../../../../../../backend/scripts/run_nlu_extraction_evaluation.py": "ABSENT",
+    "../../../../../../../backend/scripts/run_schema_contract_evaluation.py": "ABSENT",
+    "../../../../../../../backend/scripts/run_semantic_extraction_evaluation.py": "ABSENT",
+    "../../hybrid-semantic-extraction-v2/inputs/authoring.md": "fd5226484f711e92f1a6d74e26ad4827862ddc1daabe220889a15ffcd253414a",
+    "../../hybrid-semantic-extraction-v2/inputs/corpus.json": "31607400e6c8046fabe75e9cee75862d707f6473a4d465bb71ba25260f125edf",
+    "../../hybrid-semantic-extraction-v2/inputs/gold_facts.json": "6eec95b23e509f6ebc2096961f692aa514ce62aebe9577830f2e4b991be219c0",
+    "../../hybrid-semantic-extraction-v2/inputs/oracle.py": "e1edd74ac8b18254fd384849e14122480f28724d1b28567e56ff8cb8090ea87e",
+    "../../hybrid-semantic-extraction-v2/inputs/prelock_corrections.json": "d48e039d081d4b692d2381bfc710b0770c06105a015e593450fb6cc7e70ee7ec",
+    "corpus.json": "3192c43629f8f555bf60eda6eca979c8cd57270c10bf410ffefb0d4e22cdb23f",
+    "exposed_dev_oracle.py": "f3ffef911bd1c8fa19ca45d3f749193b25ddfabf85ad0d9e0e5f40201ef0fda4",
+    "gold_facts.json": "6efccb98fc08c3b6ead21390154fa643124c6da6e7cbe608fd2390d81e0e28d2",
+    "heldout/authoring.md": "d5b329a16216535897cb60be615d89f07e722d8c71c89a34100b0910f1f89f98",
+    "heldout/corpus.json": "23f9ea9c4ec2f41b2418f41afb4dbca9d7c8c9637a4e21726344683f6d37b9ae",
+    "heldout/gold_encoding.md": "34c9584e81ab465bdd5dfb6b6d8544ab47aa9940cda3462b71e120b6d56d4c47",
+    "heldout/gold_facts.json": "fe70d832282c47b4863c53f9f089295d053c088f71fe0f09456cf48f16b16b9a",
+    "heldout/oracle.py": "0f4a281ec2911a0c30fd89bd14c4d3388a6e19efb60c48edd5a589dda0ef3875",
+    "oracle.py": "9b211b9fb6aa9f430e44f566d9fda87cacc830e7ad9c131f234a647941cc48db",
+    "prepare_protocol.py": "c96e88a69cb7027303d1d434d05784369267b10361b1cccac60f7ba89ce98606",
+    "provenance.json": "4cf5be69504e918d8838777c93bf5f70d8857d5a68c2a9c65089cd79ee1ac9d7",
+    "selfcheck_protocol.py": "b6d91f1b85b00520f7b21318600fd51b42b80ceb9ba8daaf6ad6ed17f0eafb3d",
+    "../preregistration.md": "5f41a8942931115d338956822ec4e0914db1175a79daaac77ce3d2338b56a037"
+  }
+}
