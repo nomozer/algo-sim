@@ -179,3 +179,43 @@ def test_rectangular_or_explicitly_right_box_is_still_right(text, quote):
         p["facts"].insert(1, {"id": "f0", "kind": "polygon_shape", "role": "premise", "shape": "rectangle",
                               "points": list("ABCD"), "quotes": ["đáy ABCD là hình chữ nhật"]})
         served(text, p, {"q": Fraction(169)})
+
+
+# ── candidate review: the rightness cue must name THIS solid, not merely occur in the quote ──────────────────────────
+
+def _right_box(solid_type, right, solid_quote, text_extra=""):
+    p = _box(solid_type, right, solid_quote)
+    p["facts"].insert(1, {"id": "f0", "kind": "polygon_shape", "role": "premise", "shape": "rectangle",
+                          "points": list("ABCD"), "quotes": ["đáy ABCD là hình chữ nhật"]})
+    return p
+
+
+@pytest.mark.parametrize("extra", [" và các cạnh bên đều nghiêng", " giống đáy của một hộp chữ nhật"])
+@pytest.mark.parametrize("solid_type,right", [("prism", True), ("cuboid", None)])
+def test_a_rightness_word_elsewhere_in_the_quote_does_not_make_the_box_right(extra, solid_type, right):
+    text = f"Cho hình hộp ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật{extra}, AB = 3, AD = 4, AA' = 12. Tính độ dài AC'."
+    quote = f"Cho hình hộp ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật{extra}"
+    r = run_fact_route(text, _right_box(solid_type, right, quote))
+    assert (r.status, r.code) == ("REFUSED", "PREDICATE_NOT_IN_QUOTE"), (r.answers, r.code)
+
+
+@pytest.mark.parametrize("phrase", ["hình hộp đứng", "lăng trụ đứng", "hình lăng trụ đứng tứ giác", "hình lăng trụ tứ giác đứng",
+                                    "lăng trụ tứ giác đều", "hình hộp chữ nhật", "hộp chữ nhật"])
+def test_a_rightness_word_naming_the_solid_still_makes_it_right(phrase):
+    text = f"Cho {phrase} ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 3, AD = 4, AA' = 12. Tính độ dài AC'."
+    served(text, _right_box("prism", True, f"Cho {phrase} ABCD.A'B'C'D'"), {"q": Fraction(169)})
+
+
+@pytest.mark.parametrize("quote,right", [
+    ("ABCD.A'B'C'D' là hình lập phương", True),          # label first, as the rectangle check also accepts
+    ("ABCD.A'B'C'D' là một lăng trụ đứng", True),
+    ("ABCD.A'B'C'D' là hình hộp có các cạnh bên đều bằng 12", False),
+])
+def test_label_then_cue_order_names_the_solid_too(quote, right):
+    text = f"Cho {quote}, đáy ABCD là hình chữ nhật, AB = 3, AD = 4, AA' = 12. Tính độ dài AC'."
+    p = _right_box("prism", True, quote)
+    if right:
+        served(text, p, {"q": Fraction(169)})
+    else:
+        r = run_fact_route(text, p)
+        assert (r.status, r.code) == ("REFUSED", "PREDICATE_NOT_IN_QUOTE"), (r.answers, r.code)

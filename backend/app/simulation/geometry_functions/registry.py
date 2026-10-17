@@ -603,6 +603,11 @@ def _co_tu(quotes: tuple[str, ...], nhom: tuple[str, ...]) -> bool:
 
 _LAP_PHUONG = re.compile(r"(?<!\w)(?:(?:hình|khối)\s+)?lập\s+phương(?!\w|\s+hóa\b)", re.IGNORECASE)
 _HOP_CHU_NHAT = re.compile(r"(?<!\w)(?:(?:hình|khối)\s+)?hộp\s+chữ\s+nhật(?!\w)", re.IGNORECASE)
+#: A rightness cue that NAMES the prism (the solid label must follow it, see `_mat_cua_khoi_sau_cum`): "lăng trụ (tứ giác) đứng",
+#: "hình hộp đứng", "lăng trụ tam giác đều", "hộp chữ nhật", "lập phương". An adverb "đều" or a box mentioned elsewhere is not one.
+_DUNG_KHOI = re.compile(r"(?<!\w)(?:(?:hình|khối)\s+)?(?:lăng\s+trụ|hộp)(?:\s+(?:tam|tứ|ngũ|lục|đa)\s+giác)?\s+(?:đứng|đều)"
+                        r"(?:\s+(?:tam|tứ|ngũ|lục|đa)\s+giác)?(?!\w)|(?<!\w)(?:(?:hình|khối)\s+)?(?:hộp\s+chữ\s+nhật|lập\s+phương)(?!\w)",
+                        re.IGNORECASE)
 _CHU_NHAT = re.compile(r"(?<!\w)chữ\s+nhật(?!\w|\s+hóa\b)", re.IGNORECASE)
 
 
@@ -618,6 +623,19 @@ def _mat_cua_khoi_sau_cum(q: str, cum: re.Pattern[str], vertices: list[str]) -> 
                       if dau >= m.end() and not q[m.end():dau].strip()), None)
         if token and any(_cung_da_giac(p, vertices) for p in token):
             return True
+    return False
+
+
+def _khoi_dung(c: LoiGoi) -> bool:
+    """A right-prism cue that names THIS prism: `<cue> ABCD.A'B'C'D'` or `ABCD.A'B'C'D' là (một) <cue>`."""
+    base = list(c.args.base)
+    for q in c.quotes:
+        if _mat_cua_khoi_sau_cum(q, _DUNG_KHOI, base):
+            return True
+        for _dau, cuoi, phan in _tu_nhan(q):
+            if (any(_cung_da_giac(p, base) for p in phan)
+                    and re.match(r"\s+là\s+(?:một\s+)?(?:" + _DUNG_KHOI.pattern + ")", q[cuoi:], re.IGNORECASE)):
+                return True
     return False
 
 
@@ -1356,8 +1374,8 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
         for nhom in c.spec.keywords:
             if not _co_tu(c.quotes, nhom):
                 raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: {c.fn} cần một trong {list(nhom)} trong {c.quote!r}", (c.id,))
-        # A bare "hình hộp" (parallelepiped) may be oblique: rightness needs đứng/đều/hộp chữ nhật/lập phương in the quote.
-        if c.fn == "prism" and c.args.right and not _co_tu(c.quotes, ("đứng", "đều", "lập phương", _HOP_CHU_NHAT_KW)):
+        # A bare "hình hộp" (parallelepiped) may be oblique: rightness needs a cue naming THIS prism (its label right after).
+        if c.fn == "prism" and c.args.right and not _khoi_dung(c):
             raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: lăng trụ đứng cần 'đứng'/'đều' trong {c.quote!r}", (c.id,))
         for f in c.spec.plane_fields:
             if not _co_mat(c.quotes, getattr(c.args, f), cho_day=f != "face"):
