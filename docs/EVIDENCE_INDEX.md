@@ -1,5 +1,19 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = INDEPENDENT_NLU_EXTRACTION_EVALUATION
+
+REPORT = docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/
+CORRECTS = NONE
+CORRECTED_BY = NONE
+CLASSIFICATION = PREREGISTERED_OFFLINE_LIVE_NOT_AUTHORIZED
+CODE_COMMIT = NONE (no product change; evaluation runner backend/scripts/run_nlu_extraction_evaluation.py)
+VERIFICATION_COMMIT = candidate 57c7f5db… MATCH; GOLD + REPLAY receipts 0 calls (results/)
+MODEL_REQUEST_COUNT = 0
+
+Blind-authored corpus 60 (dev 16 / locked 44), oracle 56 values, implementer gold 319 facts; gold arm serves 8/44 locked.
+Independence INDEPENDENT_AGENT_AUTHORED_NOT_HUMAN_VALIDATED. No live extraction claim until approval-request.md is GO.
+
 ## WAVE_ID = HYBRID_SEMANTIC_GROUNDING_RELIABILITY
 
 REPORT = docs/evaluation/geometry/runs/hybrid-semantic-grounding-reliability/report.md

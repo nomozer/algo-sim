@@ -1,0 +1,5423 @@
+{
+ "schema": "NLU_EVAL_CORPUS/1",
+ "author": "independent-agent-1 (Claude subagent, blind to system under test)",
+ "created": "2026-10-17",
+ "cases": [
+  {
+   "id": "D01",
+   "split": "dev",
+   "group": "A",
+   "structure_id": "S01",
+   "source_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với mặt phẳng đáy và SA = 2. Tính khoảng cách từ điểm A đến mặt phẳng (SBC).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "A",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(SBC)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "square_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": "2",
+     "quote": "đáy ABCD là hình vuông cạnh 2"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với mặt phẳng đáy"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "2",
+     "quote": "SA = 2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_point_plane",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "A"
+      },
+      {
+       "kind": "plane",
+       "ref": "(SBC)"
+      }
+     ],
+     "quote": "Tính khoảng cách từ điểm A đến mặt phẳng (SBC)"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "regular pyramid (hình chóp đều)",
+    "distance equals SA or AB (=2)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "2",
+     "exact": "√2",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Three surface forms (textbook, '⊥' + 'cách ... bao nhiêu', casual lower-case 'mp(SBC)') of one request."
+  },
+  {
+   "id": "D02",
+   "split": "dev",
+   "group": "A",
+   "structure_id": "S01",
+   "source_text": "Hình chóp S.ABCD đáy là hình vuông cạnh bằng 2, cạnh bên SA ⊥ (ABCD), SA = 2. Hỏi điểm A cách mặt phẳng SBC một khoảng bằng bao nhiêu?",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "A",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(SBC)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "square_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": "2",
+     "quote": "đáy là hình vuông cạnh bằng 2"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA ⊥ (ABCD)"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "2",
+     "quote": "SA = 2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_point_plane",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "A"
+      },
+      {
+       "kind": "plane",
+       "ref": "(SBC)"
+      }
+     ],
+     "quote": "điểm A cách mặt phẳng SBC một khoảng bằng bao nhiêu"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "regular pyramid (hình chóp đều)",
+    "distance equals SA or AB (=2)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "2",
+     "exact": "√2",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Three surface forms (textbook, '⊥' + 'cách ... bao nhiêu', casual lower-case 'mp(SBC)') of one request."
+  },
+  {
+   "id": "D03",
+   "split": "dev",
+   "group": "A",
+   "structure_id": "S01",
+   "source_text": "cho chóp S.ABCD, đáy hình vuông cạnh 2, SA=2 và SA vuông góc đáy. khoảng cách từ A tới mp(SBC) là bao nhiêu vậy ạ",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "A",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(SBC)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "square_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": "2",
+     "quote": "đáy hình vuông cạnh 2"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc đáy"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "2",
+     "quote": "SA=2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_point_plane",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "A"
+      },
+      {
+       "kind": "plane",
+       "ref": "(SBC)"
+      }
+     ],
+     "quote": "khoảng cách từ A tới mp(SBC) là bao nhiêu"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "regular pyramid (hình chóp đều)",
+    "distance equals SA or AB (=2)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "2",
+     "exact": "√2",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Three surface forms (textbook, '⊥' + 'cách ... bao nhiêu', casual lower-case 'mp(SBC)') of one request."
+  },
+  {
+   "id": "D04",
+   "split": "dev",
+   "group": "B",
+   "structure_id": "S02",
+   "source_text": "Cho hình chóp S.ABCD có đáy ABCD là hình thang vuông tại A và D, AB = AD = 2, CD = 4. Cạnh SA vuông góc với đáy và SA = 2. Tính khoảng cách từ S đến đường thẳng BC.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "S",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "BC",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "right_trapezoid",
+     "operands": [
+      "ABCD",
+      "A",
+      "D"
+     ],
+     "value": null,
+     "quote": "đáy ABCD là hình thang vuông tại A và D"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB",
+      "AD"
+     ],
+     "value": "2",
+     "quote": "AB = AD = 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "CD"
+     ],
+     "value": "4",
+     "quote": "CD = 4"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với đáy"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "2",
+     "quote": "SA = 2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_point_line",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "S"
+      },
+      {
+       "kind": "line",
+       "ref": "BC"
+      }
+     ],
+     "quote": "Tính khoảng cách từ S đến đường thẳng BC"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "distance to segment BC (=SB)",
+    "foot of perpendicular is B"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "6",
+     "exact": "√6",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Contrast with D05. Foot of the perpendicular from S to line BC is the projection of A, lying on the extension of CB beyond B (angle ABC is obtuse)."
+  },
+  {
+   "id": "D05",
+   "split": "dev",
+   "group": "B",
+   "structure_id": "S03",
+   "source_text": "Cho hình chóp S.ABCD có đáy ABCD là hình thang vuông tại A và D, AB = AD = 2, CD = 4. Cạnh SA vuông góc với đáy và SA = 2. Tính khoảng cách từ S đến đoạn thẳng BC.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "S",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "BC",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "right_trapezoid",
+     "operands": [
+      "ABCD",
+      "A",
+      "D"
+     ],
+     "value": null,
+     "quote": "đáy ABCD là hình thang vuông tại A và D"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB",
+      "AD"
+     ],
+     "value": "2",
+     "quote": "AB = AD = 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "CD"
+     ],
+     "value": "4",
+     "quote": "CD = 4"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với đáy"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "2",
+     "quote": "SA = 2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_point_segment",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "S"
+      },
+      {
+       "kind": "segment",
+       "ref": "BC"
+      }
+     ],
+     "quote": "Tính khoảng cách từ S đến đoạn thẳng BC"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "distance to line BC (=√6)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "8",
+     "exact": "2√2",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Contrast with D04: perpendicular foot falls outside segment BC, so the nearest point of the segment is the endpoint B; answer SB."
+  },
+  {
+   "id": "D06",
+   "split": "dev",
+   "group": "B",
+   "structure_id": "S04",
+   "source_text": "Hình chóp S.ABCD có đáy là hình vuông cạnh 2, SA ⊥ (ABCD) và SA = 2. Tính cos² của góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "SC",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABCD)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "square_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": "2",
+     "quote": "đáy là hình vuông cạnh 2"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA ⊥ (ABCD)"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "2",
+     "quote": "SA = 2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "cos_squared_angle",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "SC"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABCD)"
+      }
+     ],
+     "quote": "Tính cos² của góc giữa đường thẳng SC và mặt phẳng (ABCD)",
+     "of": "angle_line_plane"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "answer the angle itself instead of cos²",
+    "45° (that is SB, not SC)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value": "2/3",
+     "cos_squared": "2/3",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Asks cos² explicitly; returning the angle (arccos(√6/3)) or cos (√6/3) is a wrong quantity."
+  },
+  {
+   "id": "D07",
+   "split": "dev",
+   "group": "C",
+   "structure_id": "S05",
+   "source_text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2, SA vuông góc với đáy, SA = 2. Tính khoảng cách từ trung điểm của cạnh SC đến mặt phẳng (ABCD).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "derived_point",
+     "ref": "trung điểm của cạnh SC",
+     "named_in_text": false
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABCD)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "square_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": "2",
+     "quote": "đáy là hình vuông cạnh 2"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với đáy"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "2",
+     "quote": "SA = 2"
+    },
+    {
+     "relation": "midpoint_def",
+     "operands": [
+      "?",
+      "SC"
+     ],
+     "value": null,
+     "quote": "trung điểm của cạnh SC"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_point_plane",
+     "operands": [
+      {
+       "kind": "derived_point",
+       "ref": "midpoint(SC)"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABCD)"
+      }
+     ],
+     "quote": "Tính khoảng cách từ trung điểm của cạnh SC đến mặt phẳng (ABCD)"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "midpoint of SC named (e.g. M) in the text",
+    "distance from S (=2)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "1",
+     "exact": "1",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Unnamed midpoint; answer SA/2."
+  },
+  {
+   "id": "D08",
+   "split": "dev",
+   "group": "C",
+   "structure_id": "S06",
+   "source_text": "Tứ diện OABC có OA, OB, OC đôi một vuông góc, OA = 2, OB = 3, OC = 6. Gọi H là hình chiếu vuông góc của O lên mặt phẳng (ABC). Tính độ dài OH.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "OABC",
+     "named_in_text": true
+    },
+    {
+     "kind": "derived_point",
+     "ref": "H",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABC)",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "OH",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "pairwise_perpendicular",
+     "operands": [
+      "OA",
+      "OB",
+      "OC"
+     ],
+     "value": null,
+     "quote": "OA, OB, OC đôi một vuông góc"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "OA"
+     ],
+     "value": "2",
+     "quote": "OA = 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "OB"
+     ],
+     "value": "3",
+     "quote": "OB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "OC"
+     ],
+     "value": "6",
+     "quote": "OC = 6"
+    },
+    {
+     "relation": "projection_def",
+     "operands": [
+      "H",
+      "O",
+      "(ABC)"
+     ],
+     "value": null,
+     "quote": "Gọi H là hình chiếu vuông góc của O lên mặt phẳng (ABC)"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "OH"
+      }
+     ],
+     "quote": "Tính độ dài OH",
+     "accept_equivalent_quantities": [
+      "distance_point_plane"
+     ]
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "H is the centroid of ABC (only true when OA=OB=OC)",
+    "H is the midpoint of an edge"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "18/7",
+     "exact": "3√14/7",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "H defined by words then named; OH = d(O,(ABC))."
+  },
+  {
+   "id": "D09",
+   "split": "dev",
+   "group": "C",
+   "structure_id": "S07",
+   "source_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính khoảng cách từ trọng tâm tam giác A'BD đến đỉnh C'.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "derived_point",
+     "ref": "trọng tâm tam giác A'BD",
+     "named_in_text": false
+    },
+    {
+     "kind": "point",
+     "ref": "C'",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "cube",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": "2",
+     "quote": "hình lập phương ABCD.A'B'C'D' cạnh 2"
+    },
+    {
+     "relation": "centroid_def",
+     "operands": [
+      "?",
+      "A'BD"
+     ],
+     "value": null,
+     "quote": "trọng tâm tam giác A'BD"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "derived_point",
+       "ref": "centroid(A'BD)"
+      },
+      {
+       "kind": "point",
+       "ref": "C'"
+      }
+     ],
+     "quote": "Tính khoảng cách từ trọng tâm tam giác A'BD đến đỉnh C'"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "distance from centroid to A (=2√3/3)",
+    "centroid of the whole cube"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "16/3",
+     "exact": "4√3/3",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Point-to-point distance labeled 'length'. Centroid lies on AC' at 1/3 from A."
+  },
+  {
+   "id": "D10",
+   "split": "dev",
+   "group": "D",
+   "structure_id": "S08",
+   "source_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B, AB = 3, BC = 4, SA vuông góc với (ABC) và SA = 4. Tính thể tích khối chóp S.ABC và khoảng cách từ A đến mặt phẳng (SBC).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABC",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "A",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(SBC)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "right_angle",
+     "operands": [
+      "ABC",
+      "B"
+     ],
+     "value": null,
+     "quote": "đáy ABC là tam giác vuông tại B"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "BC"
+     ],
+     "value": "4",
+     "quote": "BC = 4"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABC)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với (ABC)"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "4",
+     "quote": "SA = 4"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "volume",
+     "operands": [
+      {
+       "kind": "solid",
+       "ref": "S.ABC"
+      }
+     ],
+     "quote": "Tính thể tích khối chóp S.ABC"
+    },
+    {
+     "rid": "r2",
+     "intent": "compute_value",
+     "quantity": "distance_point_plane",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "A"
+      },
+      {
+       "kind": "plane",
+       "ref": "(SBC)"
+      }
+     ],
+     "quote": "khoảng cách từ A đến mặt phẳng (SBC)"
+    }
+   ],
+   "n_source_requests": 2,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "right angle at A",
+    "AC = 4"
+   ],
+   "expected_values": {
+    "r1": {
+     "value": "8",
+     "value_squared": "64",
+     "exact": "8",
+     "computed_by": "agent1_oracle.py"
+    },
+    "r2": {
+     "value_squared": "144/25",
+     "exact": "12/5",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Two independent requests joined by 'và'."
+  },
+  {
+   "id": "D11",
+   "split": "dev",
+   "group": "D",
+   "structure_id": "S09",
+   "source_text": "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC vuông tại A, AB = 3, AC = 4, cạnh bên AA' = 6. Hãy dựng hình chiếu vuông góc của A lên đường thẳng BC, gọi điểm đó là H, sau đó tính độ dài đoạn A'H.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABC.A'B'C'",
+     "named_in_text": true
+    },
+    {
+     "kind": "derived_point",
+     "ref": "H",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "BC",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "A'H",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "right_prism",
+     "operands": [
+      "ABC.A'B'C'"
+     ],
+     "value": null,
+     "quote": "lăng trụ đứng ABC.A'B'C'"
+    },
+    {
+     "relation": "right_angle",
+     "operands": [
+      "ABC",
+      "A"
+     ],
+     "value": null,
+     "quote": "đáy ABC vuông tại A"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AC"
+     ],
+     "value": "4",
+     "quote": "AC = 4"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AA'"
+     ],
+     "value": "6",
+     "quote": "AA' = 6"
+    },
+    {
+     "relation": "projection_def",
+     "operands": [
+      "H",
+      "A",
+      "BC"
+     ],
+     "value": null,
+     "quote": "hình chiếu vuông góc của A lên đường thẳng BC, gọi điểm đó là H"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "construct",
+     "quantity": "projection",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "A"
+      },
+      {
+       "kind": "line",
+       "ref": "BC"
+      }
+     ],
+     "quote": "dựng hình chiếu vuông góc của A lên đường thẳng BC"
+    },
+    {
+     "rid": "r2",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "A'H"
+      }
+     ],
+     "quote": "tính độ dài đoạn A'H",
+     "depends_on": [
+      "r1"
+     ]
+    }
+   ],
+   "n_source_requests": 2,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "H is the midpoint of BC",
+    "compute only AH (=12/5)"
+   ],
+   "expected_values": {
+    "r2": {
+     "value_squared": "1044/25",
+     "exact": "6√29/5",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "r2 depends on the object H defined by r1.",
+   "expected_objects": {
+    "r1": "H = chân đường cao từ A của tam giác ABC trên BC, BH = 9/5"
+   }
+  },
+  {
+   "id": "D12",
+   "split": "dev",
+   "group": "D",
+   "structure_id": "S10",
+   "source_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng a. Tính độ dài đường chéo AC'. Tính góc giữa hai đường thẳng AB' và BC'. Tính khoảng cách giữa hai đường thẳng đó.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "AC'",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "AB'",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "BC'",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "cube",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": "a",
+     "quote": "hình lập phương ABCD.A'B'C'D' có cạnh bằng a"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "AC'"
+      }
+     ],
+     "quote": "Tính độ dài đường chéo AC'"
+    },
+    {
+     "rid": "r2",
+     "intent": "compute_value",
+     "quantity": "angle_line_line",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "AB'"
+      },
+      {
+       "kind": "line",
+       "ref": "BC'"
+      }
+     ],
+     "quote": "Tính góc giữa hai đường thẳng AB' và BC'"
+    },
+    {
+     "rid": "r3",
+     "intent": "compute_value",
+     "quantity": "distance_line_line",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "AB'"
+      },
+      {
+       "kind": "line",
+       "ref": "BC'"
+      }
+     ],
+     "quote": "Tính khoảng cách giữa hai đường thẳng đó"
+    }
+   ],
+   "n_source_requests": 3,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "AB' and BC' are perpendicular (90°)",
+    "lines intersect (distance 0)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "3",
+     "exact": "a√3",
+     "computed_by": "agent1_oracle.py",
+     "unit": "a"
+    },
+    "r2": {
+     "cos_squared": "1/4",
+     "degrees": "60",
+     "exact": "60°",
+     "computed_by": "agent1_oracle.py"
+    },
+    "r3": {
+     "value_squared": "1/3",
+     "exact": "a√3/3",
+     "computed_by": "agent1_oracle.py",
+     "unit": "a"
+    }
+   },
+   "notes": "Three independent requests in separate sentences; 'đó' in r3 resolves to AB', BC' within the text."
+  },
+  {
+   "id": "D13",
+   "split": "dev",
+   "group": "E",
+   "structure_id": "S11",
+   "source_text": "Giờ tính độ dài đoạn AH vừa dựng giúp mình.",
+   "context": {
+    "prior_turn": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2, SA ⊥ (ABCD), SA = 2. Dựng hình chiếu vuông góc H của A lên đường thẳng SB.",
+    "prior_result": "Đã dựng điểm H trên SB sao cho AH ⊥ SB."
+   },
+   "entities": [
+    {
+     "kind": "segment",
+     "ref": "AH (from context)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "square_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": "2",
+     "quote": "đáy là hình vuông cạnh 2",
+     "quote_in": "context.prior_turn"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA ⊥ (ABCD)",
+     "quote_in": "context.prior_turn"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "2",
+     "quote": "SA = 2",
+     "quote_in": "context.prior_turn"
+    },
+    {
+     "relation": "projection_def",
+     "operands": [
+      "H",
+      "A",
+      "SB"
+     ],
+     "value": null,
+     "quote": "hình chiếu vuông góc H của A lên đường thẳng SB",
+     "quote_in": "context.prior_turn"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "AH"
+      }
+     ],
+     "quote": "tính độ dài đoạn AH vừa dựng"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "H is foot on SC",
+    "AH = 2"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "2",
+     "exact": "√2",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Premise quotes come from context.prior_turn (quote_in). Reference resolvable."
+  },
+  {
+   "id": "D14",
+   "split": "dev",
+   "group": "E",
+   "structure_id": "S12",
+   "source_text": "Cho điểm đó nhấp nháy để mình dễ theo dõi.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "point",
+     "ref": "'điểm đó' (unresolved)",
+     "named_in_text": false
+    }
+   ],
+   "premises": [],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "interaction",
+     "quantity": "other",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "<unresolved: điểm đó>"
+      }
+     ],
+     "quote": "Cho điểm đó nhấp nháy"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [
+    "No prior scene: 'điểm đó' has no antecedent"
+   ],
+   "gold_disposition": "clarification_required",
+   "hallucination_traps": [
+    "pick any vertex (e.g. S or A)"
+   ],
+   "expected_values": {},
+   "notes": "Pure interaction with null context."
+  },
+  {
+   "id": "D15",
+   "split": "dev",
+   "group": "F",
+   "structure_id": "S13",
+   "source_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A với AB = 3, AC = 4, BC = 6; SA vuông góc với đáy, SA = 2. Tính thể tích khối chóp.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABC",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "right_angle",
+     "operands": [
+      "ABC",
+      "A"
+     ],
+     "value": null,
+     "quote": "tam giác vuông tại A"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AC"
+     ],
+     "value": "4",
+     "quote": "AC = 4"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "BC"
+     ],
+     "value": "6",
+     "quote": "BC = 6"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABC)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với đáy"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "2",
+     "quote": "SA = 2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "volume",
+     "operands": [
+      {
+       "kind": "solid",
+       "ref": "S.ABC"
+      }
+     ],
+     "quote": "Tính thể tích khối chóp"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [
+    "AB² + AC² = 25 ≠ 36 = BC²: right angle at A contradicts the lengths"
+   ],
+   "gold_disposition": "refuse_contradictory",
+   "hallucination_traps": [
+    "ignore BC and answer V = 4",
+    "ignore the right angle and use Heron"
+   ],
+   "expected_values": {},
+   "notes": "Over-determined base; any numeric answer silently drops one premise."
+  },
+  {
+   "id": "D16",
+   "split": "dev",
+   "group": "F",
+   "structure_id": "S14",
+   "source_text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 3 và SA vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "square_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": "3",
+     "quote": "đáy là hình vuông cạnh 3"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với mặt đáy"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "volume",
+     "operands": [
+      {
+       "kind": "solid",
+       "ref": "S.ABCD"
+      }
+     ],
+     "quote": "Tính thể tích khối chóp S.ABCD"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [
+    "Height SA not given"
+   ],
+   "gold_disposition": "refuse_missing_info",
+   "hallucination_traps": [
+    "SA = 3 (= side)",
+    "SA = 3√2"
+   ],
+   "expected_values": {},
+   "notes": ""
+  },
+  {
+   "id": "L01",
+   "split": "locked",
+   "group": "A",
+   "structure_id": "S20",
+   "source_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 12. Tính độ dài đường chéo AC'.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "AC'",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangular_box",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": null,
+     "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "4",
+     "quote": "AD = 4"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AA'"
+     ],
+     "value": "12",
+     "quote": "AA' = 12"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "AC'"
+      }
+     ],
+     "quote": "Tính độ dài đường chéo AC'"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "AC' is the face diagonal AC (=5)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "169",
+     "exact": "13",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": ""
+  },
+  {
+   "id": "L02",
+   "split": "locked",
+   "group": "A",
+   "structure_id": "S20",
+   "source_text": "Một hình hộp chữ nhật ABCD.A'B'C'D' có ba kích thước AB = 3, AD = 4 và AA' = 12. Đường chéo AC' dài bao nhiêu?",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "AC'",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangular_box",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": null,
+     "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "4",
+     "quote": "AD = 4"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AA'"
+     ],
+     "value": "12",
+     "quote": "AA' = 12"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "AC'"
+      }
+     ],
+     "quote": "Đường chéo AC' dài bao nhiêu"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "AC' is the face diagonal AC (=5)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "169",
+     "exact": "13",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": ""
+  },
+  {
+   "id": "L03",
+   "split": "locked",
+   "group": "A",
+   "structure_id": "S20",
+   "source_text": "hình hộp chữ nhật ABCD.A'B'C'D' với AB=3, AD=4, AA'=12 thì đoạn AC' bằng mấy",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "AC'",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangular_box",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": null,
+     "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB=3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "4",
+     "quote": "AD=4"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AA'"
+     ],
+     "value": "12",
+     "quote": "AA'=12"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "AC'"
+      }
+     ],
+     "quote": "đoạn AC' bằng mấy"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "AC' is the face diagonal AC (=5)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "169",
+     "exact": "13",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": ""
+  },
+  {
+   "id": "L04",
+   "split": "locked",
+   "group": "A",
+   "structure_id": "S21",
+   "source_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 2. Tính khoảng cách từ A đến mặt phẳng (A'BD).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "A",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(A'BD)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "cube",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": "2",
+     "quote": "hình lập phương ABCD.A'B'C'D' có cạnh bằng 2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_point_plane",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "A"
+      },
+      {
+       "kind": "plane",
+       "ref": "(A'BD)"
+      }
+     ],
+     "quote": "Tính khoảng cách từ A đến mặt phẳng (A'BD)"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "distance = AA' (=2)",
+    "half the space diagonal (=√3)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "4/3",
+     "exact": "2√3/3",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": ""
+  },
+  {
+   "id": "L05",
+   "split": "locked",
+   "group": "A",
+   "structure_id": "S21",
+   "source_text": "Điểm A cách mặt phẳng (A'BD) bao nhiêu, biết ABCD.A'B'C'D' là hình lập phương có cạnh 2?",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "A",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(A'BD)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "cube",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": "2",
+     "quote": "ABCD.A'B'C'D' là hình lập phương có cạnh 2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_point_plane",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "A"
+      },
+      {
+       "kind": "plane",
+       "ref": "(A'BD)"
+      }
+     ],
+     "quote": "Điểm A cách mặt phẳng (A'BD) bao nhiêu"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "distance = AA' (=2)",
+    "half the space diagonal (=√3)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "4/3",
+     "exact": "2√3/3",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Question precedes the premise in the second wording."
+  },
+  {
+   "id": "L06",
+   "split": "locked",
+   "group": "A",
+   "structure_id": "S22",
+   "source_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. Cạnh bên SA vuông góc với đáy và SA = 5. Tính góc giữa đường thẳng SC và mặt phẳng (ABCD).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "SC",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABCD)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangle_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": null,
+     "quote": "đáy ABCD là hình chữ nhật"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "4",
+     "quote": "AD = 4"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với đáy"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "5",
+     "quote": "SA = 5"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "angle_line_plane",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "SC"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABCD)"
+      }
+     ],
+     "quote": "Tính góc giữa đường thẳng SC và mặt phẳng (ABCD)"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "angle SCB or SCD instead of SCA"
+   ],
+   "expected_values": {
+    "r1": {
+     "cos_squared": "1/2",
+     "degrees": "45",
+     "exact": "45°",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": ""
+  },
+  {
+   "id": "L07",
+   "split": "locked",
+   "group": "A",
+   "structure_id": "S22",
+   "source_text": "Hình chóp S.ABCD: đáy hình chữ nhật với AB = 3, AD = 4; SA ⊥ (ABCD), SA = 5. Đường thẳng SC tạo với mặt đáy một góc bằng bao nhiêu độ?",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "SC",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABCD)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangle_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": null,
+     "quote": "đáy hình chữ nhật"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "4",
+     "quote": "AD = 4"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA ⊥ (ABCD)"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "5",
+     "quote": "SA = 5"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "angle_line_plane",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "SC"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABCD)"
+      }
+     ],
+     "quote": "Đường thẳng SC tạo với mặt đáy một góc bằng bao nhiêu độ"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "angle SCB or SCD instead of SCA"
+   ],
+   "expected_values": {
+    "r1": {
+     "cos_squared": "1/2",
+     "degrees": "45",
+     "exact": "45°",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": ""
+  },
+  {
+   "id": "L08",
+   "split": "locked",
+   "group": "A",
+   "structure_id": "S60",
+   "source_text": "Cho chóp S.ABCD đáy là hcn ABCD (AB = 3, AD = 4), SA = 5 và SA vuông góc mp đáy. Vẽ cho mình góc giữa SC và mặt phẳng ABCD, rồi giải thích vì sao đó chính là góc cần tìm.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "SC",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABCD)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangle_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": null,
+     "quote": "đáy là hcn ABCD"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "4",
+     "quote": "AD = 4"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "5",
+     "quote": "SA = 5"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc mp đáy"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "construct",
+     "quantity": "angle_line_plane",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "SC"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABCD)"
+      }
+     ],
+     "quote": "Vẽ cho mình góc giữa SC và mặt phẳng ABCD"
+    },
+    {
+     "rid": "r2",
+     "intent": "explain",
+     "quantity": "angle_line_plane",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "SC"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABCD)"
+      }
+     ],
+     "quote": "giải thích vì sao đó chính là góc cần tìm",
+     "depends_on": [
+      "r1"
+     ]
+    }
+   ],
+   "n_source_requests": 2,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "user asked for the numeric value (45°)"
+   ],
+   "expected_values": {},
+   "notes": "Same geometry as S22 but intents construct + explain: deliberately a different structure_id. Giving only '45°' does not satisfy it.",
+   "expected_objects": {
+    "r1": "góc SCA (AC là hình chiếu của SC lên (ABCD))"
+   }
+  },
+  {
+   "id": "L09",
+   "split": "locked",
+   "group": "B",
+   "structure_id": "S23",
+   "source_text": "Cho hình chóp S.ABCD có đáy là hình chữ nhật ABCD với AB = 3, AD = 4, SA vuông góc với đáy, SA = 5. Tính độ dài SC.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "SC",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangle_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": null,
+     "quote": "đáy là hình chữ nhật ABCD"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "4",
+     "quote": "AD = 4"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với đáy"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "5",
+     "quote": "SA = 5"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "SC"
+      }
+     ],
+     "quote": "Tính độ dài SC"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "answer SC² = 50"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "50",
+     "exact": "5√2",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Contrast with L10 (SC²)."
+  },
+  {
+   "id": "L10",
+   "split": "locked",
+   "group": "B",
+   "structure_id": "S24",
+   "source_text": "Cho hình chóp S.ABCD có đáy là hình chữ nhật ABCD với AB = 3, AD = 4, SA vuông góc với đáy, SA = 5. Tính SC².",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "SC",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangle_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": null,
+     "quote": "đáy là hình chữ nhật ABCD"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "4",
+     "quote": "AD = 4"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với đáy"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "5",
+     "quote": "SA = 5"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length_squared",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "SC"
+      }
+     ],
+     "quote": "Tính SC²"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "answer SC = 5√2"
+   ],
+   "expected_values": {
+    "r1": {
+     "value": "50",
+     "value_squared": "2500",
+     "exact": "50",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Contrast with L09: requested value is SC² = 50 (value_squared of that is 2500)."
+  },
+  {
+   "id": "L11",
+   "split": "locked",
+   "group": "B",
+   "structure_id": "S26",
+   "source_text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành với AB = 2, AD = √2, góc BAD = 135°; SA vuông góc với mặt phẳng đáy và SA = 1. Tính khoảng cách từ B đến đường thẳng SD.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "B",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "SD",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "parallelogram_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": null,
+     "quote": "đáy ABCD là hình bình hành"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "2",
+     "quote": "AB = 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "√2",
+     "quote": "AD = √2"
+    },
+    {
+     "relation": "angle",
+     "operands": [
+      "BAD"
+     ],
+     "value": "135°",
+     "quote": "góc BAD = 135°"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với mặt phẳng đáy"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "1",
+     "quote": "SA = 1"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_point_line",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "B"
+      },
+      {
+       "kind": "line",
+       "ref": "SD"
+      }
+     ],
+     "quote": "Tính khoảng cách từ B đến đường thẳng SD"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "distance to segment (=BS=√5)",
+    "foot is the midpoint of SD"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "14/3",
+     "exact": "√42/3",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Contrast with L12. Foot of perpendicular from B to line SD lies beyond S (parameter t = -1/3 from S toward D)."
+  },
+  {
+   "id": "L12",
+   "split": "locked",
+   "group": "B",
+   "structure_id": "S27",
+   "source_text": "Cho hình chóp S.ABCD có đáy ABCD là hình bình hành với AB = 2, AD = √2, góc BAD = 135°; SA vuông góc với mặt phẳng đáy và SA = 1. Tính khoảng cách từ B đến đoạn thẳng SD.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "B",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "SD",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "parallelogram_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": null,
+     "quote": "đáy ABCD là hình bình hành"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "2",
+     "quote": "AB = 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "√2",
+     "quote": "AD = √2"
+    },
+    {
+     "relation": "angle",
+     "operands": [
+      "BAD"
+     ],
+     "value": "135°",
+     "quote": "góc BAD = 135°"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với mặt phẳng đáy"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "1",
+     "quote": "SA = 1"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_point_segment",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "B"
+      },
+      {
+       "kind": "segment",
+       "ref": "SD"
+      }
+     ],
+     "quote": "Tính khoảng cách từ B đến đoạn thẳng SD"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "distance to the line SD (=√42/3)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "5",
+     "exact": "√5",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Contrast with L11: perpendicular foot is outside the segment; nearest point is S."
+  },
+  {
+   "id": "L13",
+   "split": "locked",
+   "group": "B",
+   "structure_id": "S28",
+   "source_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 12. Tính cos² của góc giữa đường chéo AC' và mặt phẳng (ABCD).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "AC'",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABCD)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangular_box",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": null,
+     "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "4",
+     "quote": "AD = 4"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AA'"
+     ],
+     "value": "12",
+     "quote": "AA' = 12"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "cos_squared_angle",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "AC'"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABCD)"
+      }
+     ],
+     "quote": "Tính cos² của góc giữa đường chéo AC' và mặt phẳng (ABCD)",
+     "of": "angle_line_plane"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "give the angle",
+    "give cos (=5/13)",
+    "sin² (=144/169)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value": "25/169",
+     "cos_squared": "25/169",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Contrast with L14."
+  },
+  {
+   "id": "L14",
+   "split": "locked",
+   "group": "B",
+   "structure_id": "S29",
+   "source_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 12. Tính góc giữa đường chéo AC' và mặt phẳng (ABCD).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "AC'",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABCD)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangular_box",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": null,
+     "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "4",
+     "quote": "AD = 4"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AA'"
+     ],
+     "value": "12",
+     "quote": "AA' = 12"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "angle_line_plane",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "AC'"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABCD)"
+      }
+     ],
+     "quote": "Tính góc giữa đường chéo AC' và mặt phẳng (ABCD)"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "round to a 'nice' angle such as 60° or 67.5°"
+   ],
+   "expected_values": {
+    "r1": {
+     "cos_squared": "25/169",
+     "degrees": null,
+     "exact": "arccos(5/13) ≈ 67.38°",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Contrast with L13; non-standard angle (tan = 12/5)."
+  },
+  {
+   "id": "L15",
+   "split": "locked",
+   "group": "B",
+   "structure_id": "S30",
+   "source_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính khoảng cách từ điểm A' đến mặt phẳng (ABC'D').",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "A'",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABC'D')",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "cube",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": "2",
+     "quote": "hình lập phương ABCD.A'B'C'D' cạnh 2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_point_plane",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "A'"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABC'D')"
+      }
+     ],
+     "quote": "Tính khoảng cách từ điểm A' đến mặt phẳng (ABC'D')"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "treat four-label plane as invalid"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "2",
+     "exact": "√2",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Valid four-label plane (A, B, C', D' coplanar: a diagonal rectangle). Contrast with L16."
+  },
+  {
+   "id": "L16",
+   "split": "locked",
+   "group": "B",
+   "structure_id": "S31",
+   "source_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 2. Tính khoảng cách từ điểm A' đến mặt phẳng (ABC'D).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "A'",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABC'D) — not a plane",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "cube",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": "2",
+     "quote": "hình lập phương ABCD.A'B'C'D' cạnh 2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_point_plane",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "A'"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABC'D)"
+      }
+     ],
+     "quote": "Tính khoảng cách từ điểm A' đến mặt phẳng (ABC'D)"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [
+    "A, B, C', D are not coplanar, so '(ABC'D)' names no plane"
+   ],
+   "gold_disposition": "refuse_nonexistent_object",
+   "hallucination_traps": [
+    "silently read it as (ABC'D') and answer √2",
+    "read it as (ABCD) and answer 2"
+   ],
+   "expected_values": {},
+   "notes": "One-prime difference from L15. A clarification asking whether (ABC'D') was meant is also acceptable behaviour."
+  },
+  {
+   "id": "L17",
+   "split": "locked",
+   "group": "B",
+   "structure_id": "S32",
+   "source_text": "Cho hình chóp S.ABCD có đáy là hình chữ nhật ABCD và SA vuông góc với đáy. Tìm giao tuyến của hai mặt phẳng (SAB) và (SCD).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(SAB)",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(SCD)",
+     "named_in_text": true
+    },
+    {
+     "kind": "derived_line",
+     "ref": "giao tuyến (SAB)∩(SCD)",
+     "named_in_text": false
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangle_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": null,
+     "quote": "đáy là hình chữ nhật ABCD"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với đáy"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "construct",
+     "quantity": "intersection_line",
+     "operands": [
+      {
+       "kind": "plane",
+       "ref": "(SAB)"
+      },
+      {
+       "kind": "plane",
+       "ref": "(SCD)"
+      }
+     ],
+     "quote": "Tìm giao tuyến của hai mặt phẳng (SAB) và (SCD)"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "answer a line through two named points such as SC or SD",
+    "the planes are parallel"
+   ],
+   "expected_values": {},
+   "notes": "Intersection line of two planes is not a line through two labeled points; only S is shared.",
+   "expected_objects": {
+    "r1": "đường thẳng qua S song song với AB (và CD)"
+   }
+  },
+  {
+   "id": "L18",
+   "split": "locked",
+   "group": "C",
+   "structure_id": "S33",
+   "source_text": "Cho hình chóp S.ABCD có đáy là hình bình hành. Tìm giao tuyến của mặt phẳng (SAC) với mặt phẳng (SBD).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(SAC)",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(SBD)",
+     "named_in_text": true
+    },
+    {
+     "kind": "derived_point",
+     "ref": "giao điểm của AC và BD (không có tên trong đề)",
+     "named_in_text": false
+    }
+   ],
+   "premises": [
+    {
+     "relation": "parallelogram_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": null,
+     "quote": "đáy là hình bình hành"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "construct",
+     "quantity": "intersection_line",
+     "operands": [
+      {
+       "kind": "plane",
+       "ref": "(SAC)"
+      },
+      {
+       "kind": "plane",
+       "ref": "(SBD)"
+      }
+     ],
+     "quote": "Tìm giao tuyến của mặt phẳng (SAC) với mặt phẳng (SBD)"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "use point O as if the text had named it",
+    "SA ⊥ base"
+   ],
+   "expected_values": {},
+   "notes": "Requires creating an unnamed point (diagonal intersection); naming it O in the answer is fine.",
+   "expected_objects": {
+    "r1": "đường thẳng nối S với giao điểm của hai đường chéo AC và BD"
+   }
+  },
+  {
+   "id": "L19",
+   "split": "locked",
+   "group": "C",
+   "structure_id": "S34",
+   "source_text": "Tứ diện OABC có OA, OB, OC đôi một vuông góc và OA = OB = OC = 3. Tính khoảng cách từ O đến trọng tâm của tam giác ABC.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "OABC",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "O",
+     "named_in_text": true
+    },
+    {
+     "kind": "derived_point",
+     "ref": "trọng tâm của tam giác ABC",
+     "named_in_text": false
+    }
+   ],
+   "premises": [
+    {
+     "relation": "pairwise_perpendicular",
+     "operands": [
+      "OA",
+      "OB",
+      "OC"
+     ],
+     "value": null,
+     "quote": "OA, OB, OC đôi một vuông góc"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "OA",
+      "OB",
+      "OC"
+     ],
+     "value": "3",
+     "quote": "OA = OB = OC = 3"
+    },
+    {
+     "relation": "centroid_def",
+     "operands": [
+      "?",
+      "ABC"
+     ],
+     "value": null,
+     "quote": "trọng tâm của tam giác ABC"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "O"
+      },
+      {
+       "kind": "derived_point",
+       "ref": "centroid(ABC)"
+      }
+     ],
+     "quote": "Tính khoảng cách từ O đến trọng tâm của tam giác ABC"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "distance from O to a vertex (=3)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "3",
+     "exact": "√3",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Here the centroid coincides with the foot from O, so distance_point_plane gives the same number by coincidence."
+  },
+  {
+   "id": "L20",
+   "split": "locked",
+   "group": "C",
+   "structure_id": "S35",
+   "source_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Lấy trung điểm của cạnh CC' rồi đặt tên nó là M. Tính độ dài đoạn AM.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "derived_point",
+     "ref": "M",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "AM",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "cube",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": "a",
+     "quote": "hình lập phương ABCD.A'B'C'D' cạnh a"
+    },
+    {
+     "relation": "midpoint_def",
+     "operands": [
+      "M",
+      "CC'"
+     ],
+     "value": null,
+     "quote": "Lấy trung điểm của cạnh CC' rồi đặt tên nó là M"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "AM"
+      }
+     ],
+     "quote": "Tính độ dài đoạn AM"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "M midpoint of C'D' or of CD"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "9/4",
+     "exact": "3a/2",
+     "computed_by": "agent1_oracle.py",
+     "unit": "a"
+    }
+   },
+   "notes": "Object described first, named afterwards."
+  },
+  {
+   "id": "L21",
+   "split": "locked",
+   "group": "C",
+   "structure_id": "S36",
+   "source_text": "Cho lăng trụ đứng ABC.A'B'C' có đáy là tam giác vuông cân tại A, AB = AC = 2, cạnh bên AA' = 4. Tính khoảng cách từ C đến tâm của mặt bên ABB'A'.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABC.A'B'C'",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "C",
+     "named_in_text": true
+    },
+    {
+     "kind": "derived_point",
+     "ref": "tâm của mặt bên ABB'A'",
+     "named_in_text": false
+    }
+   ],
+   "premises": [
+    {
+     "relation": "right_prism",
+     "operands": [
+      "ABC.A'B'C'"
+     ],
+     "value": null,
+     "quote": "lăng trụ đứng ABC.A'B'C'"
+    },
+    {
+     "relation": "right_isosceles",
+     "operands": [
+      "ABC",
+      "A"
+     ],
+     "value": null,
+     "quote": "tam giác vuông cân tại A"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB",
+      "AC"
+     ],
+     "value": "2",
+     "quote": "AB = AC = 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AA'"
+     ],
+     "value": "4",
+     "quote": "AA' = 4"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "C"
+      },
+      {
+       "kind": "derived_point",
+       "ref": "center(ABB'A')"
+      }
+     ],
+     "quote": "Tính khoảng cách từ C đến tâm của mặt bên ABB'A'"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "distance from C to plane (ABB'A') (=2)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "9",
+     "exact": "3",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "'Tâm' of a rectangle face = intersection of its diagonals A'B and AB'."
+  },
+  {
+   "id": "L22",
+   "split": "locked",
+   "group": "C",
+   "structure_id": "S37",
+   "source_text": "Cho hình chóp S.ABC có SA vuông góc với mặt phẳng (ABC), tam giác ABC vuông tại B, AB = BC = 2, SA = 2. Tính độ dài đoạn nối A với chân đường vuông góc hạ từ A xuống mặt phẳng (SBC).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABC",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "A",
+     "named_in_text": true
+    },
+    {
+     "kind": "derived_point",
+     "ref": "chân đường vuông góc hạ từ A xuống (SBC)",
+     "named_in_text": false
+    }
+   ],
+   "premises": [
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABC)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với mặt phẳng (ABC)"
+    },
+    {
+     "relation": "right_angle",
+     "operands": [
+      "ABC",
+      "B"
+     ],
+     "value": null,
+     "quote": "tam giác ABC vuông tại B"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB",
+      "BC"
+     ],
+     "value": "2",
+     "quote": "AB = BC = 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "2",
+     "quote": "SA = 2"
+    },
+    {
+     "relation": "projection_def",
+     "operands": [
+      "?",
+      "A",
+      "(SBC)"
+     ],
+     "value": null,
+     "quote": "chân đường vuông góc hạ từ A xuống mặt phẳng (SBC)"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "A"
+      },
+      {
+       "kind": "derived_point",
+       "ref": "foot(A,(SBC))"
+      }
+     ],
+     "quote": "Tính độ dài đoạn nối A với chân đường vuông góc hạ từ A xuống mặt phẳng (SBC)",
+     "accept_equivalent_quantities": [
+      "distance_point_plane"
+     ]
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "foot lies on SC",
+    "foot is B"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "2",
+     "exact": "√2",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Unnamed foot; it lies on SB (midpoint here)."
+  },
+  {
+   "id": "L23",
+   "split": "locked",
+   "group": "D",
+   "structure_id": "S38",
+   "source_text": "Tứ diện OABC có ba cạnh OA, OB, OC đôi một vuông góc; OA = 1, OB = OC = 2. Tính thể tích tứ diện, diện tích tam giác ABC, rồi suy ra khoảng cách từ O đến (ABC).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "OABC",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABC)",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "O",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "pairwise_perpendicular",
+     "operands": [
+      "OA",
+      "OB",
+      "OC"
+     ],
+     "value": null,
+     "quote": "OA, OB, OC đôi một vuông góc"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "OA"
+     ],
+     "value": "1",
+     "quote": "OA = 1"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "OB",
+      "OC"
+     ],
+     "value": "2",
+     "quote": "OB = OC = 2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "volume",
+     "operands": [
+      {
+       "kind": "solid",
+       "ref": "OABC"
+      }
+     ],
+     "quote": "Tính thể tích tứ diện"
+    },
+    {
+     "rid": "r2",
+     "intent": "compute_value",
+     "quantity": "area",
+     "operands": [
+      {
+       "kind": "triangle",
+       "ref": "ABC"
+      }
+     ],
+     "quote": "diện tích tam giác ABC"
+    },
+    {
+     "rid": "r3",
+     "intent": "compute_value",
+     "quantity": "distance_point_plane",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "O"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABC)"
+      }
+     ],
+     "quote": "suy ra khoảng cách từ O đến (ABC)",
+     "depends_on": [
+      "r1",
+      "r2"
+     ]
+    }
+   ],
+   "n_source_requests": 3,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "area of OBC (=2)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value": "2/3",
+     "value_squared": "4/9",
+     "exact": "2/3",
+     "computed_by": "agent1_oracle.py"
+    },
+    "r2": {
+     "value": "√6",
+     "value_squared": "6",
+     "exact": "√6",
+     "computed_by": "agent1_oracle.py"
+    },
+    "r3": {
+     "value_squared": "2/3",
+     "exact": "√6/3",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Chained: r3 'suy ra' from r1, r2."
+  },
+  {
+   "id": "L24",
+   "split": "locked",
+   "group": "D",
+   "structure_id": "S39",
+   "source_text": "Cho lăng trụ đứng ABC.A'B'C', đáy ABC là tam giác vuông tại A có AB = 1 và AC = 2, chiều cao AA' = 2. a) Tính thể tích khối lăng trụ. b) Tính góc giữa hai mặt phẳng (A'BC) và (ABC).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABC.A'B'C'",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(A'BC)",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABC)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "right_prism",
+     "operands": [
+      "ABC.A'B'C'"
+     ],
+     "value": null,
+     "quote": "lăng trụ đứng ABC.A'B'C'"
+    },
+    {
+     "relation": "right_angle",
+     "operands": [
+      "ABC",
+      "A"
+     ],
+     "value": null,
+     "quote": "tam giác vuông tại A"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "1",
+     "quote": "AB = 1"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AC"
+     ],
+     "value": "2",
+     "quote": "AC = 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AA'"
+     ],
+     "value": "2",
+     "quote": "AA' = 2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "volume",
+     "operands": [
+      {
+       "kind": "solid",
+       "ref": "ABC.A'B'C'"
+      }
+     ],
+     "quote": "Tính thể tích khối lăng trụ"
+    },
+    {
+     "rid": "r2",
+     "intent": "compute_value",
+     "quantity": "angle_plane_plane",
+     "operands": [
+      {
+       "kind": "plane",
+       "ref": "(A'BC)"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABC)"
+      }
+     ],
+     "quote": "Tính góc giữa hai mặt phẳng (A'BC) và (ABC)"
+    }
+   ],
+   "n_source_requests": 2,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "pyramid volume formula (1/3)",
+    "angle A'BA"
+   ],
+   "expected_values": {
+    "r1": {
+     "value": "2",
+     "value_squared": "4",
+     "exact": "2",
+     "computed_by": "agent1_oracle.py"
+    },
+    "r2": {
+     "cos_squared": "1/6",
+     "degrees": null,
+     "exact": "arctan(√5) ≈ 65.91°",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Enumerated sub-questions a), b)."
+  },
+  {
+   "id": "L25",
+   "split": "locked",
+   "group": "D",
+   "structure_id": "S40",
+   "source_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4, SA ⊥ (ABCD), SA = 5. Hãy dựng hình chiếu vuông góc của A trên mặt phẳng (SBC), gọi là H, rồi tính độ dài AH.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "derived_point",
+     "ref": "H",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(SBC)",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "AH",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangle_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": null,
+     "quote": "đáy ABCD là hình chữ nhật"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "4",
+     "quote": "AD = 4"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA ⊥ (ABCD)"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "5",
+     "quote": "SA = 5"
+    },
+    {
+     "relation": "projection_def",
+     "operands": [
+      "H",
+      "A",
+      "(SBC)"
+     ],
+     "value": null,
+     "quote": "hình chiếu vuông góc của A trên mặt phẳng (SBC), gọi là H"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "construct",
+     "quantity": "projection",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "A"
+      },
+      {
+       "kind": "plane",
+       "ref": "(SBC)"
+      }
+     ],
+     "quote": "dựng hình chiếu vuông góc của A trên mặt phẳng (SBC)"
+    },
+    {
+     "rid": "r2",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "AH"
+      }
+     ],
+     "quote": "tính độ dài AH",
+     "depends_on": [
+      "r1"
+     ]
+    }
+   ],
+   "n_source_requests": 2,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "H on SC",
+    "H = B"
+   ],
+   "expected_values": {
+    "r2": {
+     "value_squared": "225/34",
+     "exact": "15√34/34",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Construct then compute on the constructed object.",
+   "expected_objects": {
+    "r1": "H thuộc SB, AH ⊥ SB (vì BC ⊥ (SAB))"
+   }
+  },
+  {
+   "id": "L26",
+   "split": "locked",
+   "group": "D",
+   "structure_id": "S41",
+   "source_text": "Cho hình chóp S.ABCD có đáy là hình vuông cạnh a, SA ⊥ đáy và SA = a. Tính thể tích khối chóp và góc giữa SB với mặt phẳng đáy.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "SB",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABCD)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "square_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": "a",
+     "quote": "đáy là hình vuông cạnh a"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA ⊥ đáy"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "a",
+     "quote": "SA = a"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "volume",
+     "operands": [
+      {
+       "kind": "solid",
+       "ref": "S.ABCD"
+      }
+     ],
+     "quote": "Tính thể tích khối chóp"
+    },
+    {
+     "rid": "r2",
+     "intent": "compute_value",
+     "quantity": "angle_line_plane",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "SB"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABCD)"
+      }
+     ],
+     "quote": "góc giữa SB với mặt phẳng đáy"
+    }
+   ],
+   "n_source_requests": 2,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "V = a³ (forgetting 1/3)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value": "a³/3",
+     "value_squared": "1/9",
+     "exact": "a³/3",
+     "computed_by": "agent1_oracle.py",
+     "unit": "a^3"
+    },
+    "r2": {
+     "cos_squared": "1/2",
+     "degrees": "45",
+     "exact": "45°",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Two requests in one sentence sharing the verb 'Tính'."
+  },
+  {
+   "id": "L27",
+   "split": "locked",
+   "group": "D",
+   "structure_id": "S42",
+   "source_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 1, AD = 2, AA' = 2. Tính BD', tính thể tích khối hộp, và tính khoảng cách giữa hai đường thẳng AA' và BD'.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "BD'",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "AA'",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "BD'",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangular_box",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": null,
+     "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "1",
+     "quote": "AB = 1"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "2",
+     "quote": "AD = 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AA'"
+     ],
+     "value": "2",
+     "quote": "AA' = 2"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "BD'"
+      }
+     ],
+     "quote": "Tính BD'"
+    },
+    {
+     "rid": "r2",
+     "intent": "compute_value",
+     "quantity": "volume",
+     "operands": [
+      {
+       "kind": "solid",
+       "ref": "ABCD.A'B'C'D'"
+      }
+     ],
+     "quote": "tính thể tích khối hộp"
+    },
+    {
+     "rid": "r3",
+     "intent": "compute_value",
+     "quantity": "distance_line_line",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "AA'"
+      },
+      {
+       "kind": "line",
+       "ref": "BD'"
+      }
+     ],
+     "quote": "tính khoảng cách giữa hai đường thẳng AA' và BD'"
+    }
+   ],
+   "n_source_requests": 3,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "AA' and BD' intersect",
+    "distance = AB (=1)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "9",
+     "exact": "3",
+     "computed_by": "agent1_oracle.py"
+    },
+    "r2": {
+     "value": "4",
+     "value_squared": "16",
+     "exact": "4",
+     "computed_by": "agent1_oracle.py"
+    },
+    "r3": {
+     "value_squared": "4/5",
+     "exact": "2√5/5",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Three independent requests."
+  },
+  {
+   "id": "L28",
+   "split": "locked",
+   "group": "D",
+   "structure_id": "S43",
+   "source_text": "Cho hình chóp S.ABC có SA vuông góc với đáy, đáy ABC là tam giác vuông cân tại A với AB = AC = 2, SA = 2. Gọi M là trung điểm BC. Tính độ dài SM, sau đó dựa vào SM tính diện tích tam giác SBC.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABC",
+     "named_in_text": true
+    },
+    {
+     "kind": "derived_point",
+     "ref": "M",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "SM",
+     "named_in_text": true
+    },
+    {
+     "kind": "triangle",
+     "ref": "SBC",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABC)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với đáy"
+    },
+    {
+     "relation": "right_isosceles",
+     "operands": [
+      "ABC",
+      "A"
+     ],
+     "value": null,
+     "quote": "tam giác vuông cân tại A"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB",
+      "AC"
+     ],
+     "value": "2",
+     "quote": "AB = AC = 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "2",
+     "quote": "SA = 2"
+    },
+    {
+     "relation": "midpoint_def",
+     "operands": [
+      "M",
+      "BC"
+     ],
+     "value": null,
+     "quote": "Gọi M là trung điểm BC"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "SM"
+      }
+     ],
+     "quote": "Tính độ dài SM"
+    },
+    {
+     "rid": "r2",
+     "intent": "compute_value",
+     "quantity": "area",
+     "operands": [
+      {
+       "kind": "triangle",
+       "ref": "SBC"
+      }
+     ],
+     "quote": "dựa vào SM tính diện tích tam giác SBC",
+     "depends_on": [
+      "r1"
+     ]
+    }
+   ],
+   "n_source_requests": 2,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "area of ABC (=2)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "6",
+     "exact": "√6",
+     "computed_by": "agent1_oracle.py"
+    },
+    "r2": {
+     "value": "2√3",
+     "value_squared": "12",
+     "exact": "2√3",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "r2 explicitly uses r1 (SM is the altitude of isosceles SBC)."
+  },
+  {
+   "id": "L29",
+   "split": "locked",
+   "group": "D",
+   "structure_id": "S44",
+   "source_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh a. Tính khoảng cách giữa hai đường thẳng BD và B'C. Ngoài ra, hai đường thẳng này hợp với nhau một góc bao nhiêu?",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "BD",
+     "named_in_text": true
+    },
+    {
+     "kind": "line",
+     "ref": "B'C",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "cube",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": "a",
+     "quote": "hình lập phương ABCD.A'B'C'D' cạnh a"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_line_line",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "BD"
+      },
+      {
+       "kind": "line",
+       "ref": "B'C"
+      }
+     ],
+     "quote": "Tính khoảng cách giữa hai đường thẳng BD và B'C"
+    },
+    {
+     "rid": "r2",
+     "intent": "compute_value",
+     "quantity": "angle_line_line",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "BD"
+      },
+      {
+       "kind": "line",
+       "ref": "B'C"
+      }
+     ],
+     "quote": "hai đường thẳng này hợp với nhau một góc bao nhiêu"
+    }
+   ],
+   "n_source_requests": 2,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "BD ⊥ B'C (90°)",
+    "distance = a"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "1/3",
+     "exact": "a√3/3",
+     "computed_by": "agent1_oracle.py",
+     "unit": "a"
+    },
+    "r2": {
+     "cos_squared": "1/4",
+     "degrees": "60",
+     "exact": "60°",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Second request in a separate sentence with anaphora 'hai đường thẳng này'."
+  },
+  {
+   "id": "L30",
+   "split": "locked",
+   "group": "D",
+   "structure_id": "S45",
+   "source_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4, SA vuông góc với đáy, SA = 3. Tính SC rồi tính cos² góc giữa SC và đáy, sau đó tính thể tích khối chóp.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "SC",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABCD)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "square_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": "4",
+     "quote": "đáy ABCD là hình vuông cạnh 4"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với đáy"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "3",
+     "quote": "SA = 3"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "SC"
+      }
+     ],
+     "quote": "Tính SC"
+    },
+    {
+     "rid": "r2",
+     "intent": "compute_value",
+     "quantity": "cos_squared_angle",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "SC"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABCD)"
+      }
+     ],
+     "quote": "tính cos² góc giữa SC và đáy",
+     "of": "angle_line_plane"
+    },
+    {
+     "rid": "r3",
+     "intent": "compute_value",
+     "quantity": "volume",
+     "operands": [
+      {
+       "kind": "solid",
+       "ref": "S.ABCD"
+      }
+     ],
+     "quote": "tính thể tích khối chóp"
+    }
+   ],
+   "n_source_requests": 3,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "SC = 5 (using side instead of diagonal)"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "41",
+     "exact": "√41",
+     "computed_by": "agent1_oracle.py"
+    },
+    "r2": {
+     "value": "32/41",
+     "cos_squared": "32/41",
+     "computed_by": "agent1_oracle.py"
+    },
+    "r3": {
+     "value": "16",
+     "value_squared": "256",
+     "exact": "16",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "'rồi' / 'sau đó' chain, but requests are computationally independent."
+  },
+  {
+   "id": "L31",
+   "split": "locked",
+   "group": "E",
+   "structure_id": "S46",
+   "source_text": "Khoảng cách từ giao điểm ấy tới mặt đáy ABCD bằng bao nhiêu?",
+   "context": {
+    "prior_turn": "Hình lập phương ABCD.A'B'C'D' cạnh 2. Nối A với C' và nối B với D'.",
+    "prior_result": "Đã vẽ hai đường chéo AC' và BD'; hai đường này cắt nhau tại một điểm."
+   },
+   "entities": [
+    {
+     "kind": "derived_point",
+     "ref": "giao điểm của AC' và BD' (from context)",
+     "named_in_text": false
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABCD)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "cube",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": "2",
+     "quote": "Hình lập phương ABCD.A'B'C'D' cạnh 2",
+     "quote_in": "context.prior_turn"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "distance_point_plane",
+     "operands": [
+      {
+       "kind": "derived_point",
+       "ref": "AC'∩BD'"
+      },
+      {
+       "kind": "plane",
+       "ref": "(ABCD)"
+      }
+     ],
+     "quote": "Khoảng cách từ giao điểm ấy tới mặt đáy ABCD bằng bao nhiêu"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "intersection point is a vertex"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "1",
+     "exact": "1",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "'giao điểm ấy' resolves to the (unnamed) cube center."
+  },
+  {
+   "id": "L32",
+   "split": "locked",
+   "group": "E",
+   "structure_id": "S47",
+   "source_text": "Đổi màu đường thẳng vừa dựng sang đỏ và ẩn mặt đáy đi cho dễ nhìn.",
+   "context": {
+    "prior_turn": "Cho hình chóp S.ABCD có đáy là hình vuông, SA ⊥ (ABCD). Dựng giao tuyến của (SAB) và (SCD).",
+    "prior_result": "Đã dựng đường thẳng d đi qua S và song song với AB."
+   },
+   "entities": [
+    {
+     "kind": "derived_line",
+     "ref": "d (from context)",
+     "named_in_text": false
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABCD)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "square_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": null,
+     "quote": "đáy là hình vuông",
+     "quote_in": "context.prior_turn"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA ⊥ (ABCD)",
+     "quote_in": "context.prior_turn"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "interaction",
+     "quantity": "other",
+     "operands": [
+      {
+       "kind": "derived_line",
+       "ref": "d"
+      }
+     ],
+     "quote": "Đổi màu đường thẳng vừa dựng sang đỏ"
+    },
+    {
+     "rid": "r2",
+     "intent": "interaction",
+     "quantity": "other",
+     "operands": [
+      {
+       "kind": "plane",
+       "ref": "(ABCD)"
+      }
+     ],
+     "quote": "ẩn mặt đáy đi"
+    }
+   ],
+   "n_source_requests": 2,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "recompute or re-construct the intersection line"
+   ],
+   "expected_values": {},
+   "notes": "Two pure display requests; no geometry computation expected."
+  },
+  {
+   "id": "L33",
+   "split": "locked",
+   "group": "E",
+   "structure_id": "S48",
+   "source_text": "Tính tiếp độ dài của đoạn mình vừa dựng ở trên nhé.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "segment",
+     "ref": "'đoạn mình vừa dựng' (unresolved)",
+     "named_in_text": false
+    }
+   ],
+   "premises": [],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "<unresolved>"
+      }
+     ],
+     "quote": "Tính tiếp độ dài của đoạn mình vừa dựng"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [
+    "No prior turn: the segment and the figure are unknown"
+   ],
+   "gold_disposition": "clarification_required",
+   "hallucination_traps": [
+    "invent a figure and a segment"
+   ],
+   "expected_values": {},
+   "notes": ""
+  },
+  {
+   "id": "L34",
+   "split": "locked",
+   "group": "E",
+   "structure_id": "S49",
+   "source_text": "Làm nổi bật điểm đó giúp mình.",
+   "context": {
+    "prior_turn": "Hình chóp S.ABC có SA ⊥ (ABC), tam giác ABC vuông tại B. Gọi H, K lần lượt là hình chiếu của A lên SB và SC.",
+    "prior_result": "Đã dựng H trên SB và K trên SC."
+   },
+   "entities": [
+    {
+     "kind": "point",
+     "ref": "'điểm đó' (H or K)",
+     "named_in_text": false
+    }
+   ],
+   "premises": [
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABC)"
+     ],
+     "value": null,
+     "quote": "SA ⊥ (ABC)",
+     "quote_in": "context.prior_turn"
+    },
+    {
+     "relation": "right_angle",
+     "operands": [
+      "ABC",
+      "B"
+     ],
+     "value": null,
+     "quote": "tam giác ABC vuông tại B",
+     "quote_in": "context.prior_turn"
+    },
+    {
+     "relation": "projection_def",
+     "operands": [
+      "H",
+      "A",
+      "SB"
+     ],
+     "value": null,
+     "quote": "Gọi H, K lần lượt là hình chiếu của A lên SB và SC",
+     "quote_in": "context.prior_turn"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "interaction",
+     "quantity": "other",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "<ambiguous: H or K>"
+      }
+     ],
+     "quote": "Làm nổi bật điểm đó"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [
+    "Prior turn introduced two points H and K; 'điểm đó' does not select one"
+   ],
+   "gold_disposition": "clarification_required",
+   "hallucination_traps": [
+    "pick H (first mentioned)",
+    "pick K (last mentioned)"
+   ],
+   "expected_values": {},
+   "notes": "Context exists but the reference is ambiguous between two candidates."
+  },
+  {
+   "id": "L35",
+   "split": "locked",
+   "group": "E",
+   "structure_id": "S50",
+   "source_text": "Quay hình sao cho nhìn thẳng từ trên xuống mặt (OAB) nhé.",
+   "context": {
+    "prior_turn": "Cho tứ diện OABC có OA, OB, OC đôi một vuông góc, OA = OB = OC = 3. Vẽ tứ diện này.",
+    "prior_result": "Đã vẽ tứ diện OABC."
+   },
+   "entities": [
+    {
+     "kind": "plane",
+     "ref": "(OAB)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "pairwise_perpendicular",
+     "operands": [
+      "OA",
+      "OB",
+      "OC"
+     ],
+     "value": null,
+     "quote": "OA, OB, OC đôi một vuông góc",
+     "quote_in": "context.prior_turn"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "interaction",
+     "quantity": "other",
+     "operands": [
+      {
+       "kind": "plane",
+       "ref": "(OAB)"
+      }
+     ],
+     "quote": "Quay hình sao cho nhìn thẳng từ trên xuống mặt (OAB)"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "compute something about (OAB)"
+   ],
+   "expected_values": {},
+   "notes": "'hình' resolves to the drawn tetrahedron; pure camera request."
+  },
+  {
+   "id": "L36",
+   "split": "locked",
+   "group": "E",
+   "structure_id": "S51",
+   "source_text": "Ẩn tên các điểm khác, chỉ giữ lại tên điểm vừa dựng; sau đó tính SM.",
+   "context": {
+    "prior_turn": "Cho hình chóp S.ABC có SA ⊥ (ABC), SA = 3, đáy ABC vuông tại A với AB = 3, AC = 4. Dựng trung điểm M của cạnh BC.",
+    "prior_result": "Đã dựng điểm M là trung điểm của BC."
+   },
+   "entities": [
+    {
+     "kind": "derived_point",
+     "ref": "M (from context)",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "SM",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABC)"
+     ],
+     "value": null,
+     "quote": "SA ⊥ (ABC)",
+     "quote_in": "context.prior_turn"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "3",
+     "quote": "SA = 3",
+     "quote_in": "context.prior_turn"
+    },
+    {
+     "relation": "right_angle",
+     "operands": [
+      "ABC",
+      "A"
+     ],
+     "value": null,
+     "quote": "đáy ABC vuông tại A",
+     "quote_in": "context.prior_turn"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "3",
+     "quote": "AB = 3",
+     "quote_in": "context.prior_turn"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AC"
+     ],
+     "value": "4",
+     "quote": "AC = 4",
+     "quote_in": "context.prior_turn"
+    },
+    {
+     "relation": "midpoint_def",
+     "operands": [
+      "M",
+      "BC"
+     ],
+     "value": null,
+     "quote": "trung điểm M của cạnh BC",
+     "quote_in": "context.prior_turn"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "interaction",
+     "quantity": "other",
+     "operands": [
+      {
+       "kind": "derived_point",
+       "ref": "M"
+      }
+     ],
+     "quote": "Ẩn tên các điểm khác, chỉ giữ lại tên điểm vừa dựng"
+    },
+    {
+     "rid": "r2",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "SM"
+      }
+     ],
+     "quote": "tính SM"
+    }
+   ],
+   "n_source_requests": 2,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "SM = SA (=3)",
+    "M is midpoint of AB"
+   ],
+   "expected_values": {
+    "r2": {
+     "value_squared": "61/4",
+     "exact": "√61/2",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Interaction + computation in one follow-up."
+  },
+  {
+   "id": "L37",
+   "split": "locked",
+   "group": "F",
+   "structure_id": "S52",
+   "source_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 2, AD = 5, SA = 4 nhưng SA không vuông góc với mặt đáy. Tính thể tích khối chóp S.ABCD.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangle_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": null,
+     "quote": "đáy ABCD là hình chữ nhật"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "2",
+     "quote": "AB = 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "5",
+     "quote": "AD = 5"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "4",
+     "quote": "SA = 4"
+    },
+    {
+     "relation": "negated:perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA không vuông góc với mặt đáy"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "volume",
+     "operands": [
+      {
+       "kind": "solid",
+       "ref": "S.ABCD"
+      }
+     ],
+     "quote": "Tính thể tích khối chóp S.ABCD"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [
+    "Height unknown: SA is explicitly not perpendicular, no angle or other data"
+   ],
+   "gold_disposition": "refuse_missing_info",
+   "hallucination_traps": [
+    "SA ⊥ base (V = 40/3)"
+   ],
+   "expected_values": {},
+   "notes": "Negated premise; the habitual reading 'SA ⊥ đáy' gives 40/3."
+  },
+  {
+   "id": "L38",
+   "split": "locked",
+   "group": "F",
+   "structure_id": "S53",
+   "source_text": "Cho hình lập phương ABCD.A'B'C'D'. Nếu cạnh của hình lập phương bằng 3 thì đường chéo AC' bằng bao nhiêu?",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "segment",
+     "ref": "AC'",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "cube",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": null,
+     "quote": "hình lập phương ABCD.A'B'C'D'"
+    },
+    {
+     "relation": "conditional:edge_length",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": "3",
+     "quote": "Nếu cạnh của hình lập phương bằng 3"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "AC'"
+      }
+     ],
+     "quote": "đường chéo AC' bằng bao nhiêu"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_all",
+   "hallucination_traps": [
+    "answer symbolically (a√3) ignoring the condition",
+    "refuse for missing edge"
+   ],
+   "expected_values": {
+    "r1": {
+     "value_squared": "27",
+     "exact": "3√3",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Conditional clause supplies the dimension; it is answerable, not missing."
+  },
+  {
+   "id": "L39",
+   "split": "locked",
+   "group": "F",
+   "structure_id": "S54",
+   "source_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D'. Tìm giao tuyến của mặt phẳng (ABCD) và mặt phẳng (A'B'C'D').",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(ABCD)",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(A'B'C'D')",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangular_box",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": null,
+     "quote": "hình hộp chữ nhật ABCD.A'B'C'D'"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "construct",
+     "quantity": "intersection_line",
+     "operands": [
+      {
+       "kind": "plane",
+       "ref": "(ABCD)"
+      },
+      {
+       "kind": "plane",
+       "ref": "(A'B'C'D')"
+      }
+     ],
+     "quote": "Tìm giao tuyến của mặt phẳng (ABCD) và mặt phẳng (A'B'C'D')"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [
+    "(ABCD) ∥ (A'B'C'D'): distinct parallel planes have no intersection line"
+   ],
+   "gold_disposition": "refuse_nonexistent_object",
+   "hallucination_traps": [
+    "answer some line such as AA' or AB"
+   ],
+   "expected_values": {},
+   "notes": ""
+  },
+  {
+   "id": "L40",
+   "split": "locked",
+   "group": "F",
+   "structure_id": "S55",
+   "source_text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2, SA = SB = 3. Tính thể tích khối chóp S.ABC.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABC",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "equilateral_base",
+     "operands": [
+      "ABC"
+     ],
+     "value": "2",
+     "quote": "đáy ABC là tam giác đều cạnh 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA",
+      "SB"
+     ],
+     "value": "3",
+     "quote": "SA = SB = 3"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "volume",
+     "operands": [
+      {
+       "kind": "solid",
+       "ref": "S.ABC"
+      }
+     ],
+     "quote": "Tính thể tích khối chóp S.ABC"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [
+    "SC (or height) not given; S can rotate about AB keeping SA = SB = 3"
+   ],
+   "gold_disposition": "refuse_missing_info",
+   "hallucination_traps": [
+    "regular pyramid / SC = 3 (V = √69/3)",
+    "SA ⊥ base"
+   ],
+   "expected_values": {},
+   "notes": "Text tempts 'hình chóp đều' but never states it."
+  },
+  {
+   "id": "L41",
+   "split": "locked",
+   "group": "F",
+   "structure_id": "S56",
+   "source_text": "Cho hình chóp S.ABC có SA vuông góc với đáy, tam giác ABC vuông cân tại A, AB = AC = 2 và SA = 2. Gọi M là trung điểm của BC. Chứng minh BC vuông góc với mặt phẳng (SAM) và tính khoảng cách từ A đến mặt phẳng (SBC).",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABC",
+     "named_in_text": true
+    },
+    {
+     "kind": "derived_point",
+     "ref": "M",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(SAM)",
+     "named_in_text": true
+    },
+    {
+     "kind": "plane",
+     "ref": "(SBC)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABC)"
+     ],
+     "value": null,
+     "quote": "SA vuông góc với đáy"
+    },
+    {
+     "relation": "right_isosceles",
+     "operands": [
+      "ABC",
+      "A"
+     ],
+     "value": null,
+     "quote": "tam giác ABC vuông cân tại A"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB",
+      "AC"
+     ],
+     "value": "2",
+     "quote": "AB = AC = 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "2",
+     "quote": "SA = 2"
+    },
+    {
+     "relation": "midpoint_def",
+     "operands": [
+      "M",
+      "BC"
+     ],
+     "value": null,
+     "quote": "Gọi M là trung điểm của BC"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "prove",
+     "quantity": "other",
+     "operands": [
+      {
+       "kind": "line",
+       "ref": "BC"
+      },
+      {
+       "kind": "plane",
+       "ref": "(SAM)"
+      }
+     ],
+     "quote": "Chứng minh BC vuông góc với mặt phẳng (SAM)"
+    },
+    {
+     "rid": "r2",
+     "intent": "compute_value",
+     "quantity": "distance_point_plane",
+     "operands": [
+      {
+       "kind": "point",
+       "ref": "A"
+      },
+      {
+       "kind": "plane",
+       "ref": "(SBC)"
+      }
+     ],
+     "quote": "tính khoảng cách từ A đến mặt phẳng (SBC)"
+    }
+   ],
+   "n_source_requests": 2,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "answer_supported_part_and_flag_rest",
+   "hallucination_traps": [
+    "treat the proof as already done / skip it silently"
+   ],
+   "expected_values": {
+    "r2": {
+     "value_squared": "4/3",
+     "exact": "2√3/3",
+     "computed_by": "agent1_oracle.py"
+    }
+   },
+   "notes": "Proof request is outside ordinary computation; compute r2 and flag r1 (a visual check of BC ⊥ (SAM) is not a proof)."
+  },
+  {
+   "id": "L42",
+   "split": "locked",
+   "group": "F",
+   "structure_id": "S57",
+   "source_text": "Cho hình lập phương ABCD.A'B'C'D' cạnh 1, M là điểm di động trên cạnh CD. Tìm giá trị lớn nhất của diện tích tam giác A'BM.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "M (moving)",
+     "named_in_text": true
+    },
+    {
+     "kind": "triangle",
+     "ref": "A'BM",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "cube",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": "1",
+     "quote": "hình lập phương ABCD.A'B'C'D' cạnh 1"
+    },
+    {
+     "relation": "moving_point_on_segment",
+     "operands": [
+      "M",
+      "CD"
+     ],
+     "value": null,
+     "quote": "M là điểm di động trên cạnh CD"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "other",
+     "operands": [
+      {
+       "kind": "triangle",
+       "ref": "A'BM"
+      }
+     ],
+     "quote": "Tìm giá trị lớn nhất của diện tích tam giác A'BM",
+     "of": "max_area_over_moving_point"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [],
+   "gold_disposition": "out_of_scope_request",
+   "hallucination_traps": [
+    "fix M at a vertex or midpoint and report one area as the maximum"
+   ],
+   "expected_values": {},
+   "notes": "Optimization over a moving point; not a single static construction."
+  },
+  {
+   "id": "L43",
+   "split": "locked",
+   "group": "F",
+   "structure_id": "S58",
+   "source_text": "Cho hình chóp S.ABCD có đáy là hình chữ nhật, AB = 2, AD = 3, SA ⊥ (ABCD), SA = 4. Gọi M là trung điểm của SB và M là trung điểm của SD. Tính độ dài đoạn AM.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "S.ABCD",
+     "named_in_text": true
+    },
+    {
+     "kind": "point",
+     "ref": "M (doubly defined)",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "rectangle_base",
+     "operands": [
+      "ABCD"
+     ],
+     "value": null,
+     "quote": "đáy là hình chữ nhật"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AB"
+     ],
+     "value": "2",
+     "quote": "AB = 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AD"
+     ],
+     "value": "3",
+     "quote": "AD = 3"
+    },
+    {
+     "relation": "perpendicular_line_plane",
+     "operands": [
+      "SA",
+      "(ABCD)"
+     ],
+     "value": null,
+     "quote": "SA ⊥ (ABCD)"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "SA"
+     ],
+     "value": "4",
+     "quote": "SA = 4"
+    },
+    {
+     "relation": "midpoint_def",
+     "operands": [
+      "M",
+      "SB"
+     ],
+     "value": null,
+     "quote": "Gọi M là trung điểm của SB"
+    },
+    {
+     "relation": "midpoint_def",
+     "operands": [
+      "M",
+      "SD"
+     ],
+     "value": null,
+     "quote": "M là trung điểm của SD"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "length",
+     "operands": [
+      {
+       "kind": "segment",
+       "ref": "AM"
+      }
+     ],
+     "quote": "Tính độ dài đoạn AM"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [
+    "Label M bound to two different points (midpoints of SB and SD differ)"
+   ],
+   "gold_disposition": "refuse_ambiguous",
+   "hallucination_traps": [
+    "use the first definition (AM = √5)",
+    "use the last definition (AM = 5/2)"
+   ],
+   "expected_values": {},
+   "notes": ""
+  },
+  {
+   "id": "L44",
+   "split": "locked",
+   "group": "F",
+   "structure_id": "S59",
+   "source_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 2 và đường chéo AC' = 4. Tính thể tích khối lập phương.",
+   "context": null,
+   "entities": [
+    {
+     "kind": "solid",
+     "ref": "ABCD.A'B'C'D'",
+     "named_in_text": true
+    }
+   ],
+   "premises": [
+    {
+     "relation": "cube",
+     "operands": [
+      "ABCD.A'B'C'D'"
+     ],
+     "value": "2",
+     "quote": "hình lập phương ABCD.A'B'C'D' có cạnh bằng 2"
+    },
+    {
+     "relation": "length",
+     "operands": [
+      "AC'"
+     ],
+     "value": "4",
+     "quote": "AC' = 4"
+    }
+   ],
+   "requests": [
+    {
+     "rid": "r1",
+     "intent": "compute_value",
+     "quantity": "volume",
+     "operands": [
+      {
+       "kind": "solid",
+       "ref": "ABCD.A'B'C'D'"
+      }
+     ],
+     "quote": "Tính thể tích khối lập phương"
+    }
+   ],
+   "n_source_requests": 1,
+   "missing_or_ambiguous": [
+    "Edge 2 forces AC' = 2√3 ≠ 4"
+   ],
+   "gold_disposition": "refuse_contradictory",
+   "hallucination_traps": [
+    "answer 8 ignoring AC'",
+    "answer 64/(3√3) from AC'"
+   ],
+   "expected_values": {},
+   "notes": ""
+  }
+ ]
+}

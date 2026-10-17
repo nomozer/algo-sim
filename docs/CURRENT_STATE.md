@@ -1,8 +1,20 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL — Independent NLU extraction evaluation, 2026-10-17
+
+CANONICAL_NEXT_ACTION = NLU_EXTRACTION_LIVE_GO_DECISION
+
+Branch `research/independent-nlu-extraction-evaluation` from `main` `76dca142`; no product change (candidate `57c7f5db…`
+MATCH). Preregistered offline: 60-case Vietnamese corpus by a blind AI author (dev 16 / locked 44), independent Fraction
+oracle (56 values; 44 re-checked by a second agent), implementer gold Typed Facts, single-arm harness reusing the A/B
+pilot helpers, two read-only audits (extraction architecture; evaluation, NOT_READY → all blockers fixed). Gold arm
+(0 calls): 8/44 locked served, 23 capability/grounding gaps, 13 safe refusals. **Live: LIVE_NOT_AUTHORIZED, 0 calls**;
+request: [`approval-request.md`](evaluation/geometry/runs/independent-nlu-extraction-evaluation/approval-request.md)
+(76 requests max, USD 1.83 cap). cache125/LLM_ONLY/Hybrid NO-GO.
+
 ## INTEGRATED ON `main` — Hybrid semantic grounding reliability, 2026-10-17
 
-CANONICAL_NEXT_ACTION = POST_SEMANTIC_GROUNDING_INTEGRATION_RESEARCH_PRIORITY_DECISION
+Next action at that time (superseded by the NLU evaluation above): POST_SEMANTIC_GROUNDING_INTEGRATION_RESEARCH_PRIORITY_DECISION
 
 **Integration (user GO in session, 2026-10-17):** `main` fast-forwarded `1f635ed5` → `bd20ac46`, pushed without force;
 research branch deleted with `-d`, verification worktree deregistered (leftover folder kept); record

@@ -28,6 +28,13 @@
    **sản phẩm** do `backend/app/simulation/product_capability.py` quyết (khối cong, khối lõm, thiết diện xiên:
    `foundation_only`). Một họ chỉ "được hỗ trợ" khi đi trọn đề → analyze → chương trình → các cổng → kernel → cảnh.
 
+Independent NLU extraction evaluation (2026-10-17, LOCAL, no product change):
+[`independent-nlu-extraction-evaluation`](../evaluation/geometry/runs/independent-nlu-extraction-evaluation/report.md)
+preregisters a blind-authored 60-case corpus, oracle and gold facts. Measured offline only: the deterministic ceiling
+(gold facts serve 8/44 locked cases) and Source Grounding false refusals of common wordings (unlabelled base
+"đáy là hình vuông", "dài bao nhiêu", "tính cos²", "Tính BD'"). LLM intent/entity/goal accuracy **NOT_MEASURED**
+(live not authorized). Level **IMPLEMENTED + MEASURED (offline ceiling)**; no human validation.
+
 Current offline grounding research (2026-10-17, product `94b3437b`):
 [`hybrid-semantic-grounding-reliability`](../evaluation/geometry/runs/hybrid-semantic-grounding-reliability/report.md)
 measures source certification on authored Typed Facts:99 extraction cases, wrong serves13→0, false refusals21→16;
