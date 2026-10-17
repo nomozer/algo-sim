@@ -35,13 +35,8 @@ used without planner change. Run [`goal-directed-function-discovery`](evaluation
 Next only: the user's decision on the stack, in order — result-binding fast-forward, independent review of Scene3D W1–W3,
 then this slice. Integration ≠ Hybrid enablement (NO-GO, LLM_ONLY, cache125). Proposed next slice (not started): report §9.
 
-**2026-10-17, Scene3D educational visual quality finalization (`scene3d-educational-finalization`, on `main` + `origin/main`):**
-product `22df95d6` (EDU-1..8 across shared frontend Scene3D modules), independent review v2 PASS (7/7), 49 full-size
-(`1280×900`) browser states, `scene3d-orbit-gate.mjs` `DAT` on `p1/p6/p7`, **`HUMAN_VISUAL_REVIEW_PASS`** confirmed by user
-in session, clean detached T3 PASS; integrated on `main` and pushed ([`report`](evaluation/geometry/runs/scene3d-educational-finalization/report.md),
-[`integration`](evaluation/geometry/runs/scene3d-educational-finalization/integration.md)). Earlier 2026-10-17 Scene3D
-visual correctness (`ee9689e6`, [`report`](evaluation/geometry/runs/scene3d-visual-correctness/report.md)): Gemini
-`0ef0a20a` + FE-4 `08021881` + CONTRACT-BE-1 `f07ea069`. Hybrid stays NO-GO.
+**2026-10-17, Scene3D geometric annotation correctness (`scene3d-annotation-correctness`) & educational visual finalization (`scene3d-educational-finalization`, on `main` + `origin/main`):**
+corrective wave `e218b5ef` (world-space `dot(u,v)=0` audit, boundary-edge tangent alignment in `huongChanVuongGoc`, 2-segment textbook L-bracket + dash origin at foot in `vatNhanChung`, witness-segment label obstacles in `chieuNhan`, 3D vs 2D perspective proof for $C' \notin (A'BD)$, 68 Vitest files / 1,079 tests, 30 full-size `1280×900` states, independent review PASS, **`HUMAN_VISUAL_REVIEW_PASS`**, clean detached T3 PASS; [`report`](evaluation/geometry/runs/scene3d-annotation-correctness/report.md), [`integration`](evaluation/geometry/runs/scene3d-annotation-correctness/integration.md)) on top of `scene3d-educational-finalization` (`22df95d6` → `8427c879`, EDU-1..8, [`report`](evaluation/geometry/runs/scene3d-educational-finalization/report.md)) and `scene3d-visual-correctness` (`ee9689e6`, [`report`](evaluation/geometry/runs/scene3d-visual-correctness/report.md)). Hybrid stays NO-GO.
 
 **2026-10-15, result-binding slice implemented and integration-checked (LOCAL, not merged):** branch
 `research/source-bound-result-planning` (product `efb756aa`, candidate `c0a8792f…`, T3 `7b14fe04`) is a fast-forward of

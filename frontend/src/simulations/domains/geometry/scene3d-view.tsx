@@ -1734,7 +1734,7 @@ interface Props {
 }
 
 /** §16.7 — cạnh góc vuông của ký hiệu tại chân, theo độ dài đoạn tới chân, có trần (đơn vị cảnh). */
-const NHAN_CHUNG_GOC = { tiLe: 0.14, toiDa: 0.34 };
+const NHAN_CHUNG_GOC = { tiLe: 0.12, toiDa: 0.24 };
 
 /** Màu nhân chứng theo VAI: nhãn khoảng cách đang xét mang xanh "đang xét" (W12); đoạn vuông góc của điểm hình chiếu
  *  luôn hiện nên là ĐƯỜNG PHỤ — cùng màu với các đường phụ khác, không giành nghĩa "đang xét" (review, 2026-10-11). */
@@ -1754,21 +1754,21 @@ export function vatNhanChung(
   const tu = new THREE.Vector3(...w.from);
   const chan = new THREE.Vector3(...w.foot);
   const v = new THREE.Vector3(...w.v);
-  const uHuong = huongChanVuongGoc(w.foot, w.u, diemNen);
+  const uHuong = huongChanVuongGoc(w.foot, w.u, diemNen, w.v);
   const dk = duongKinhCanh(diemNen);
   const s = dk > 0
-    ? Math.min(v.length() * 0.22, Math.max(v.length() * NHAN_CHUNG_GOC.tiLe, dk * 0.048), dk * 0.068, NHAN_CHUNG_GOC.toiDa)
+    ? Math.min(v.length() * 0.18, Math.max(v.length() * NHAN_CHUNG_GOC.tiLe, dk * 0.032), dk * 0.042, NHAN_CHUNG_GOC.toiDa)
     : Math.min(v.length() * NHAN_CHUNG_GOC.tiLe, NHAN_CHUNG_GOC.toiDa);
-  const chuKy = dk > 0 ? Math.min(0.16, Math.max(0.045, dk * 0.032)) : 0.12;
+  const chuKy = dk > 0 ? Math.max(0.045, Math.min(0.16, dk * 0.034), s * 1.05) : Math.max(0.12, s * 1.05);
   const u1 = new THREE.Vector3(...uHuong).normalize().multiplyScalar(s);
   const v1 = v.normalize().multiplyScalar(s);
   const gocDinh = chan.clone().add(u1).add(v1);
   const mauNet = mau ?? mauNhanChung(w.vai);
-  const doan = new THREE.Line(new THREE.BufferGeometry().setFromPoints([tu, chan]),
+  const doan = new THREE.Line(new THREE.BufferGeometry().setFromPoints([chan, tu]),
     new THREE.LineDashedMaterial({ color: mauNet, dashSize: chuKy, gapSize: chuKy * 0.65, depthTest: false, transparent: true, opacity: 0.92 }));
   doan.computeLineDistances();
   const goc = new THREE.Line(new THREE.BufferGeometry().setFromPoints(
-    [chan.clone().add(u1), gocDinh, chan.clone().add(v1), chan.clone(), chan.clone().add(u1)]),
+    [chan.clone().add(u1), gocDinh, chan.clone().add(v1)]),
   new THREE.LineBasicMaterial({ color: mauNet, depthTest: false, transparent: true, opacity: 0.92 }));
   const mauChan = mau ?? (w.vai === "khoang_cach" ? mauNet : MAU.derived);
   const chamChan = new THREE.Mesh(
@@ -1784,6 +1784,7 @@ export function vatNhanChung(
   }
   g.userData = {
     nhanChung: w.id,
+    from: w.from,
     foot: w.foot,
     corner: [gocDinh.x, gocDinh.y, gocDinh.z] as Vec3,
   };
@@ -2026,14 +2027,16 @@ export function Scene3DWorkspace({
       // không ở lúc dựng cảnh, vì hai nhãn có chồng nhau hay không phụ thuộc
       // GÓC NHÌN — thứ chỉ biết được sau phép chiếu.
       const gocVuongPts = (nhanChungRef.current?.children ?? []).flatMap((child) => {
-        const ud = child.userData as { foot?: Vec3; corner?: Vec3 } | undefined;
+        const ud = child.userData as { foot?: Vec3; corner?: Vec3; from?: Vec3 } | undefined;
         if (!ud?.foot || !ud?.corner) return [];
         const f3 = new THREE.Vector3(...ud.foot).applyQuaternion(qRef.current).project(cam);
         const c3 = new THREE.Vector3(...ud.corner).applyQuaternion(qRef.current).project(cam);
+        const t3 = ud.from ? new THREE.Vector3(...ud.from).applyQuaternion(qRef.current).project(cam) : null;
         if (!(f3.z < 1) || !(c3.z < 1)) return [];
         return [{
           fx: ((f3.x + 1) / 2) * w, fy: ((1 - f3.y) / 2) * h,
           cx: ((c3.x + 1) / 2) * w, cy: ((1 - c3.y) / 2) * h,
+          ...(t3 && t3.z < 1 ? { tx: ((t3.x + 1) / 2) * w, ty: ((1 - t3.y) / 2) * h } : {}),
         }];
       });
       const dat: { el: HTMLElement; id: string; x: number; y: number; duoi?: boolean; uuTien: number; w: number; h: number }[] = [];
@@ -2071,10 +2074,21 @@ export function Scene3DWorkspace({
       const chamDiem: LabelRect[] = dat.filter((d) => giu.has(d.id)).map((d) => ({
         x: d.x - 7, y: d.y - 7, w: 14, h: 14,
       }));
-      const gocVuongRects: LabelRect[] = gocVuongPts.flatMap((g) => [
-        { x: g.fx - 8, y: g.fy - 8, w: 16, h: 16 },
-        { x: g.cx - 8, y: g.cy - 8, w: 16, h: 16 },
-      ]);
+      const gocVuongRects: LabelRect[] = gocVuongPts.flatMap((g) => {
+        const ra: LabelRect[] = [
+          { x: g.fx - 8, y: g.fy - 8, w: 16, h: 16 },
+          { x: g.cx - 8, y: g.cy - 8, w: 16, h: 16 },
+        ];
+        if (g.tx !== undefined && g.ty !== undefined) {
+          const dx = g.fx - g.tx, dy = g.fy - g.ty, d = Math.hypot(dx, dy);
+          if (d > 24) {
+            const mx = (g.fx + g.tx) / 2, my = (g.fy + g.ty) / 2;
+            const ux = (dx / d) * 10, uy = (dy / d) * 10;
+            ra.push({ x: mx + ux - 2, y: my + uy - 2, w: 4, h: 4 }, { x: mx - ux - 2, y: my - uy - 2, w: 4, h: 4 });
+          }
+        }
+        return ra;
+      });
       const canDat: LabelToPlace[] = [];
       const theTheoId = new Map<string, HTMLElement>();
       for (const el of Array.from(lopSo.children) as HTMLElement[]) {

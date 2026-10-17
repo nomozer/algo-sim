@@ -21,26 +21,28 @@ scorer artifact — corrected P1 PASS, **P2 NO** (24/45 → 27/45 goal+entity; C
 [`report.md`](evaluation/geometry/runs/independent-nlu-extraction-evaluation/report.md).
 cache125/LLM_ONLY/Hybrid NO-GO.
 
-## INTEGRATED ON `main` — Scene3D educational visual quality finalization, 2026-10-17
+## INTEGRATED ON `main` — Scene3D geometric annotation correctness (`scene3d-annotation-correctness`) & educational visual finalization, 2026-10-17
 
-**Integration (user `HUMAN_VISUAL_REVIEW_PASS` + GO INTEGRATION in session, 2026-10-17):** product commit `22df95d6`
-(from `76dca142`), merged with `main` `bc0445ae` at `d4947610`, candidate `product_commit_sha` refrozen at `7dc609bd`
-(`tree_hash` `57c7f5db…`, 110 files unchanged), clean detached T3 at `8aabb4b9` `FULL_PRODUCT_GATE_PASS` (pytest 10,263 passed,
-vitest 68 files / 1,077 passed, build, demo, crash surface 6/6), fast-forwarded onto `main`
-and pushed without force; research branch and worktree cleaned; record
-[`integration.md`](evaluation/geometry/runs/scene3d-educational-finalization/integration.md).
+**Corrective wave (`scene3d-annotation-correctness`, user `HUMAN_VISUAL_REVIEW_PASS` + GO INTEGRATION in session, 2026-10-17):**
+product commit `e218b5ef` (from `main` `8427c879`), candidate `product_commit_sha` refrozen at `b2352aae` (`tree_hash` `57c7f5db…`,
+110 files unchanged), independent review PASS ([`review.md`](evaluation/geometry/runs/scene3d-annotation-correctness/review.md)),
+clean detached T3 at `29127ba2` `FULL_PRODUCT_GATE_PASS` (`verification/t3-pass.json`), fast-forwarded onto `main` and pushed without force; record
+[`integration.md`](evaluation/geometry/runs/scene3d-annotation-correctness/integration.md) and
+[`report.md`](evaluation/geometry/runs/scene3d-annotation-correctness/report.md). Audits and resolves P1 (world-space
+`dot(u_world, v_world) = 0.000000` across all 9 witnesses; `huongChanVuongGoc` aligns plane-witness tangent `u` with a
+boundary edge containing foot $H$ such as $A'B'$ in `prism-midpoint-to-plane`; `vatNhanChung` starts dashed perpendicular
+`doan` at `foot` with `chuKy >= s * 1.05` and renders a 3-point textbook L-bracket instead of a standalone 4-sided box)
+and P2 (7-scene midpoint/solid/label verification, exact 3D distance $d_{3D}(C', (A'BD)) = 4/\sqrt{3} \approx 2.3094 > 0$
+vs 2D perspective foreshortening at `(30°, 35°)`, and `±10px` witness-segment obstacles in `chieuNhan` so measurement pills
+avoid covering steep/diagonal dashed segments $MH$). 68 Vitest files (1,079 tests), 30 full-size (`1280×900`) browser states.
 
-Resolves EDU-1..8 across shared frontend Scene3D modules (`scene3d-annotations.ts`, `scene3d-camera.ts`,
-`scene3d-edge-visibility.ts`, `scene3d-model.ts`, `scene3d-presentation.ts`, `scene3d-roles.ts`, `scene3d-view.tsx`,
-`global.css`): distance-to-line measurement pills when witness lives on `point3.perpendicular_witness`; textbook camera
-affinity + witness-foot framing; auxiliary plane colinear border yield to active section/segment borders (`aux=1`);
-scene-diameter-scaled closed 4-sided right-angle square, screen-space foot marker dot, and vertex/annotation collision
-avoidance; clean near-white canvas + cool slate-blue solid faces; WebGL `BufferGeometry` span pools (`capPhat = 0`) and
-Z-up `OrbitControls` view-matrix settle (`scene3d-orbit-gate.mjs` `DAT` on `p1`, `p6`, `p7`); normal-state `FINAL_RESULT`
-point-to-plane perpendicular witness; and open-step section intersection vertex highlighting. Independent review v2 PASS
-(7/7, [`review.md`](evaluation/geometry/runs/scene3d-educational-finalization/review.md)); 68 Vitest files (1,077 tests),
-49 full-size (`1280×900`) browser states, **`HUMAN_VISUAL_REVIEW_PASS`**. `DEFAULT_MODE = LLM_ONLY`, cache 125, Hybrid
-NO-GO, 0 live calls. Run [`scene3d-educational-finalization`](evaluation/geometry/runs/scene3d-educational-finalization/report.md).
+**Earlier 2026-10-17 (`scene3d-educational-finalization`, `22df95d6` → `8427c879`):** EDU-1..8 across shared frontend Scene3D
+modules (`scene3d-annotations.ts`, `scene3d-camera.ts`, `scene3d-edge-visibility.ts`, `scene3d-model.ts`,
+`scene3d-presentation.ts`, `scene3d-roles.ts`, `scene3d-view.tsx`, `global.css`); independent review v2 PASS (7/7), 49
+full-size (`1280×900`) browser states, **`HUMAN_VISUAL_REVIEW_PASS`**, clean detached T3 at `8aabb4b9` `FULL_PRODUCT_GATE_PASS`
+([`report.md`](evaluation/geometry/runs/scene3d-educational-finalization/report.md),
+[`integration.md`](evaluation/geometry/runs/scene3d-educational-finalization/integration.md)). `DEFAULT_MODE = LLM_ONLY`,
+cache 125, Hybrid NO-GO, 0 live calls.
 
 ## INTEGRATED ON `main` — Hybrid semantic grounding reliability, 2026-10-17
 

@@ -14,12 +14,25 @@ MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123)
 Fresh 36-case corpus (dev 12 / heldout 24, 34 Fraction oracles), scorer grounded-source-obligations/2 (independent
 review NOT_READY → LOCK_READY). GOLD served correct dev 1→2/12, heldout 2→2/24, 0 unsafe; prompt effect NOT_MEASURED.
 
+## WAVE_ID = SCENE3D_ANNOTATION_CORRECTNESS
+
+REPORT = docs/evaluation/geometry/runs/scene3d-annotation-correctness/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-annotation-correctness/
+CORRECTS = docs/evaluation/geometry/runs/scene3d-educational-finalization/report.md
+CORRECTED_BY = NONE
+CLASSIFICATION = SCENE3D_ANNOTATION_CORRECTNESS_INTEGRATED_ON_MAIN (`e218b5ef`, refreeze `b2352aae`; `integration.md`) · `HUMAN_VISUAL_REVIEW_PASS` (confirmed by user in session, 2026-10-17)
+CODE_COMMIT = e218b5ef (frontend presentation-only: boundary-edge tangent alignment in `huongChanVuongGoc`, 2-segment textbook L-bracket + dash origin at foot in `vatNhanChung`, witness segment midpoint obstacles in `chieuNhan`; 0 backend/prompt changes)
+VERIFICATION_COMMIT = 29127ba2 clean detached T3 FULL_PRODUCT_GATE_PASS (verification/t3-pass.json; pytest 10263 passed/1 skipped/2 deselected/9 xfailed, vitest 68 files/1079 passed, build PASS, demo 5/5 PASS, crash surface 6/6 PASS); candidate 57c7f5db… refrozen at b2352aae; independent review (review.md) PASS
+MODEL_REQUEST_COUNT = 0
+
+Mathematical audit and presentation fix across P1 (world-space `dot(u_world, v_world) = 0.000000` across all 9 witnesses; boundary-edge tangent alignment for `prism-midpoint-to-plane`; textbook 2-segment L-bracket + dash starting at foot $H$) and P2 (7-scene midpoint/solid/label verification, 3D distance $d_{3D}(C', (A'BD)) = 4/\sqrt{3} \approx 2.3094 > 0$ vs 2D perspective foreshortening at `(30°, 35°)`, and steep witness segment obstacle rects in `chieuNhan`). Verified across 68 Vitest files (1,079 tests), 30 full-size (`1280×900`) browser states, 6 comparison sheets (`visual/p1-cmp-*.png`), `scene3d-orbit-gate.mjs` `DAT`, and `hybrid-section-visual-check.mjs` PASS (`failures: []`). `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid NO-GO.
+
 ## WAVE_ID = SCENE3D_EDUCATIONAL_FINALIZATION
 
 REPORT = docs/evaluation/geometry/runs/scene3d-educational-finalization/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-educational-finalization/
 CORRECTS = NONE
-CORRECTED_BY = NONE
+CORRECTED_BY = SCENE3D_ANNOTATION_CORRECTNESS (prose clarification for `marker: { u, v }` in report.md §2.3 EDU-4 and textbook 2-segment L-bracket refinement)
 CLASSIFICATION = SCENE3D_EDUCATIONAL_FINALIZATION_INTEGRATED_ON_MAIN (`22df95d6`, merged `d4947610`, refreeze `7dc609bd`; `integration.md`) · `HUMAN_VISUAL_REVIEW_PASS` (confirmed by user in session, 2026-10-17)
 CODE_COMMIT = 22df95d6 (shared frontend Scene3D modules EDU-1..EDU-8; 0 backend/prompt changes)
 VERIFICATION_COMMIT = 8aabb4b9 clean detached T3 FULL_PRODUCT_GATE_PASS (verification/t3-pass.json; pytest 10263 passed/1 skipped/2 deselected/9 xfailed, vitest 68 files/1077 passed, build PASS, demo PASS, crash surface 6/6 PASS); candidate 57c7f5db… refrozen at 7dc609bd; independent review v2 (review.md) PASS 7/7

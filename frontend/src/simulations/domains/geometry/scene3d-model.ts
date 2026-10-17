@@ -1026,8 +1026,11 @@ export function doanDuongThang(diemDuong: Vec3, huong: Vec3, diem: Vec3[]): [Vec
  * nhưng nếu `chan` nằm ở đầu mút của các điểm thuộc đường `(chan, u)` khiến `+u`
  * chĩa ra ngoài đoạn còn `-u` hướng vào phần trong của đoạn (như khi chân H trùng
  * đỉnh B' trên đường BB'), lật sang `-u` để ký hiệu góc vuông nằm gọn trong hình.
+ * Với khoảng cách điểm–mặt phẳng (`v` là pháp tuyến MH), nếu `chan` thực sự nằm
+ * ở phần trong của một đoạn nối hai điểm của hình thuộc mặt phẳng vuông góc với `v`
+ * (như chân H nằm trên cạnh A'B' của mặt (ABB')), ưu tiên hướng dọc theo cạnh đó.
  */
-export function huongChanVuongGoc(chan: Vec3, u: Vec3, diem: Vec3[]): Vec3 {
+export function huongChanVuongGoc(chan: Vec3, u: Vec3, diem: Vec3[], v?: Vec3): Vec3 {
   const d = Math.hypot(u[0], u[1], u[2]);
   if (!Number.isFinite(d) || d < 1e-9 || diem.length === 0) return u;
   const ux = u[0] / d, uy = u[1] / d, uz = u[2] / d;
@@ -1043,6 +1046,30 @@ export function huongChanVuongGoc(chan: Vec3, u: Vec3, diem: Vec3[]): Vec3 {
   }
   if (tMax - tMin > 1e-4 && tMax < -tMin * 0.25) {
     return [-u[0], -u[1], -u[2]];
+  }
+  if (!(tMin < -1e-4 && tMax > 1e-4) && v) {
+    const dv = Math.hypot(v[0], v[1], v[2]);
+    if (Number.isFinite(dv) && dv > 1e-9) {
+      const vx = v[0] / dv, vy = v[1] / dv, vz = v[2] / dv;
+      const trenMp: { dx: number; dy: number; dz: number; kc: number }[] = [];
+      for (const p of diem) {
+        const dx = p[0] - chan[0], dy = p[1] - chan[1], dz = p[2] - chan[2];
+        const kc = Math.hypot(dx, dy, dz);
+        if (kc > 1e-4 && Math.abs(dx * vx + dy * vy + dz * vz) <= 1e-4 * Math.max(1, kc)) {
+          trenMp.push({ dx, dy, dz, kc });
+        }
+      }
+      for (let i = 0; i < trenMp.length; i++) {
+        const a = trenMp[i];
+        for (let j = i + 1; j < trenMp.length; j++) {
+          const b = trenMp[j];
+          const cung = (a.dx * b.dx + a.dy * b.dy + a.dz * b.dz) / (a.kc * b.kc);
+          if (cung < -1 + 1e-5) {
+            return a.kc >= b.kc ? [a.dx, a.dy, a.dz] : [b.dx, b.dy, b.dz];
+          }
+        }
+      }
+    }
   }
   return u;
 }

@@ -1,0 +1,691 @@
+{
+ "harness": "scripts/hybrid-section-visual.html (Scene3D harness, not product UI)",
+ "scenes": "real Hybrid route output, backend/scripts/export_hybrid_section_scenes.py; product frame step veKhongGian applied",
+ "browser": "Playwright chromium, ANGLE D3D11 requested",
+ "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+ "browser_version": "151.0.7922.34",
+ "browser_pid": 22320,
+ "git_head": "8427c87989487fdbcbb547ec16039d439528eb51",
+ "git_dirty_paths": 10,
+ "browser_stopped": true,
+ "scenes_sha256": "536dfe78a39c235a40537117db936cd5f3a13d591bb273f863d2f676291dafbd",
+ "failures": [],
+ "console_errors": [],
+ "net_retries": [],
+ "dev_server_noise": 0,
+ "report": [
+  {
+   "id": "section-MAB-trapezoid",
+   "served": true,
+   "section_vertices_model": 4,
+   "pixels_last_step": {
+    "section": 6595,
+    "line": 0,
+    "highlight": 1035,
+    "ink": [
+     500,
+     65,
+     733,
+     440
+    ]
+   },
+   "order": null,
+   "variants": null,
+   "scrubber": null,
+   "selection": null,
+   "naming": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.04489141209335856,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.03075425790754258,
+    "ink_ratio": 1.7605564227706534,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "M",
+    "khoi_S_ABCD",
+    "mp_td_f6",
+    "td_f6#4cf",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D",
+    "khoi_S_ABCD::face:0",
+    "khoi_S_ABCD::edge:A-B",
+    "khoi_S_ABCD::edge:B-C",
+    "khoi_S_ABCD::edge:C-D",
+    "khoi_S_ABCD::edge:A-D",
+    "khoi_S_ABCD::face:1",
+    "khoi_S_ABCD::edge:S-A",
+    "khoi_S_ABCD::edge:S-B",
+    "khoi_S_ABCD::face:2",
+    "khoi_S_ABCD::edge:S-C",
+    "khoi_S_ABCD::face:3",
+    "khoi_S_ABCD::edge:S-D",
+    "khoi_S_ABCD::face:4",
+    "td_f6::vertex:3",
+    "td_f6::face:0"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "section-SAC-triangle",
+   "served": true,
+   "section_vertices_model": 3,
+   "pixels_last_step": {
+    "section": 6921,
+    "line": 0,
+    "highlight": 765,
+    "ink": [
+     500,
+     65,
+     733,
+     440
+    ]
+   },
+   "order": null,
+   "variants": null,
+   "scrubber": null,
+   "selection": null,
+   "naming": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.031105103481421405,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.035531525036796734,
+    "ink_ratio": 1.775588088088088,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "khoi_S_ABCD",
+    "mp_td_f5",
+    "td_f5#3cf",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D",
+    "khoi_S_ABCD::face:0",
+    "khoi_S_ABCD::edge:A-B",
+    "khoi_S_ABCD::edge:B-C",
+    "khoi_S_ABCD::edge:C-D",
+    "khoi_S_ABCD::edge:A-D",
+    "khoi_S_ABCD::face:1",
+    "khoi_S_ABCD::edge:S-A",
+    "khoi_S_ABCD::edge:S-B",
+    "khoi_S_ABCD::face:2",
+    "khoi_S_ABCD::edge:S-C",
+    "khoi_S_ABCD::face:3",
+    "khoi_S_ABCD::edge:S-D",
+    "khoi_S_ABCD::face:4",
+    "td_f5::face:0"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "section-MNP-mid-square",
+   "served": true,
+   "section_vertices_model": 4,
+   "pixels_last_step": {
+    "section": 1763,
+    "line": 0,
+    "highlight": 1107,
+    "ink": [
+     495,
+     65,
+     738,
+     440
+    ]
+   },
+   "order": null,
+   "variants": null,
+   "scrubber": null,
+   "selection": null,
+   "naming": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.03573698597218467,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.04492505481962092,
+    "ink_ratio": 1.8550743911561798,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "M",
+    "N",
+    "P",
+    "khoi_S_ABCD",
+    "mp_td_f8",
+    "td_f8#4cf",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D",
+    "khoi_S_ABCD::face:0",
+    "khoi_S_ABCD::edge:A-B",
+    "khoi_S_ABCD::edge:B-C",
+    "khoi_S_ABCD::edge:C-D",
+    "khoi_S_ABCD::edge:A-D",
+    "khoi_S_ABCD::face:1",
+    "khoi_S_ABCD::edge:S-A",
+    "khoi_S_ABCD::edge:S-B",
+    "khoi_S_ABCD::face:2",
+    "khoi_S_ABCD::edge:S-C",
+    "khoi_S_ABCD::face:3",
+    "khoi_S_ABCD::edge:S-D",
+    "khoi_S_ABCD::face:4",
+    "td_f8::vertex:3",
+    "td_f8::face:0"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "section-cube-A1BD",
+   "served": true,
+   "section_vertices_model": 3,
+   "pixels_last_step": {
+    "section": 32441,
+    "line": 0,
+    "highlight": 1414,
+    "ink": [
+     442,
+     65,
+     791,
+     440
+    ]
+   },
+   "order": null,
+   "variants": null,
+   "scrubber": null,
+   "selection": null,
+   "naming": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.07070739839596288,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.12930461686341654,
+    "ink_ratio": 1.9387134502923977,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "A_prime",
+    "B_prime",
+    "C_prime",
+    "D_prime",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime",
+    "mp_td_f3",
+    "td_f3#3cf",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::face:0",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-C",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-D",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::face:1",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-B_prime",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B_prime-C_prime",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C_prime-D_prime",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-D_prime",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::face:2",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-B_prime",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::face:3",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-C_prime",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::face:4",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:D-D_prime",
+    "khoi_ABCD_A_primeB_primeC_primeD_prime::face:5",
+    "td_f3::face:0"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "intersection-SAB-SCD",
+   "served": true,
+   "section_vertices_model": 0,
+   "pixels_last_step": {
+    "section": 0,
+    "line": 6,
+    "highlight": 1252,
+    "ink": [
+     380,
+     65,
+     733,
+     440
+    ]
+   },
+   "order": {
+    "target": "gt_f5",
+    "own_pixels": {
+     "default_view": 539,
+     "after_orbit": 702
+    },
+    "first_step": 6,
+    "steps": 7,
+    "depends_present": true,
+    "depends_before": true,
+    "pixels_before": {
+     "line": 0,
+     "highlight": 1263
+    },
+    "pixels_at": {
+     "line": 6,
+     "highlight": 1252
+    }
+   },
+   "variants": {
+    "dir-x": {
+     "default_view": 539,
+     "after_orbit": 702
+    },
+    "dir-y": {
+     "default_view": 737,
+     "after_orbit": 1120
+    },
+    "dir-z": {
+     "default_view": 78,
+     "after_orbit": 111
+    },
+    "dir-xy": {
+     "default_view": 316,
+     "after_orbit": 625
+    },
+    "dir-xz": {
+     "default_view": 290,
+     "after_orbit": 934
+    },
+    "through-A-dir-x": {
+     "default_view": 67,
+     "after_orbit": 73
+    },
+    "interior-dir-x": {
+     "default_view": 492,
+     "after_orbit": 776
+    },
+    "aux-shown": {
+     "default_view": 539,
+     "after_orbit": 702
+    }
+   },
+   "scrubber": null,
+   "selection": null,
+   "naming": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.0268601123426752,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.0342410861794479,
+    "ink_ratio": 1.724975385625205,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "khoi_S_ABCD",
+    "mp1_gt_f5",
+    "mp2_gt_f5",
+    "gt_f5",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D",
+    "khoi_S_ABCD::face:0",
+    "khoi_S_ABCD::edge:A-B",
+    "khoi_S_ABCD::edge:B-C",
+    "khoi_S_ABCD::edge:C-D",
+    "khoi_S_ABCD::edge:A-D",
+    "khoi_S_ABCD::face:1",
+    "khoi_S_ABCD::edge:S-A",
+    "khoi_S_ABCD::edge:S-B",
+    "khoi_S_ABCD::face:2",
+    "khoi_S_ABCD::edge:S-C",
+    "khoi_S_ABCD::face:3",
+    "khoi_S_ABCD::edge:S-D",
+    "khoi_S_ABCD::face:4"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "aux-foot-S-to-BD",
+   "served": true,
+   "section_vertices_model": 0,
+   "pixels_last_step": {
+    "section": 0,
+    "line": 344,
+    "highlight": 1115,
+    "ink": [
+     479,
+     65,
+     743,
+     440
+    ]
+   },
+   "order": null,
+   "variants": null,
+   "scrubber": null,
+   "selection": null,
+   "naming": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.02850620287765462,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.02700549698116608,
+    "ink_ratio": 1.7365591397849462,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "derived_H_line",
+    "H",
+    "khoi_S_ABCD",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D",
+    "khoi_S_ABCD::face:0",
+    "khoi_S_ABCD::edge:A-B",
+    "khoi_S_ABCD::edge:B-C",
+    "khoi_S_ABCD::edge:C-D",
+    "khoi_S_ABCD::edge:A-D",
+    "khoi_S_ABCD::face:1",
+    "khoi_S_ABCD::edge:S-A",
+    "khoi_S_ABCD::edge:S-B",
+    "khoi_S_ABCD::face:2",
+    "khoi_S_ABCD::edge:S-C",
+    "khoi_S_ABCD::face:3",
+    "khoi_S_ABCD::edge:S-D",
+    "khoi_S_ABCD::face:4"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "intersection-SAC-SBD",
+   "served": true,
+   "section_vertices_model": 0,
+   "pixels_last_step": {
+    "section": 0,
+    "line": 12,
+    "highlight": 1293,
+    "ink": [
+     500,
+     65,
+     733,
+     440
+    ]
+   },
+   "order": {
+    "target": "gt_f5",
+    "own_pixels": {
+     "default_view": 416,
+     "after_orbit": 286
+    },
+    "first_step": 6,
+    "steps": 7,
+    "depends_present": true,
+    "depends_before": true,
+    "pixels_before": {
+     "line": 0,
+     "highlight": 1300
+    },
+    "pixels_at": {
+     "line": 12,
+     "highlight": 1293
+    }
+   },
+   "variants": {
+    "dir-x": {
+     "default_view": 539,
+     "after_orbit": 701
+    },
+    "dir-y": {
+     "default_view": 737,
+     "after_orbit": 1120
+    },
+    "dir-z": {
+     "default_view": 78,
+     "after_orbit": 111
+    },
+    "dir-xy": {
+     "default_view": 316,
+     "after_orbit": 710
+    },
+    "dir-xz": {
+     "default_view": 290,
+     "after_orbit": 931
+    },
+    "through-A-dir-x": {
+     "default_view": 67,
+     "after_orbit": 73
+    },
+    "interior-dir-x": {
+     "default_view": 490,
+     "after_orbit": 667
+    },
+    "aux-shown": {
+     "default_view": 416,
+     "after_orbit": 199
+    }
+   },
+   "scrubber": null,
+   "selection": null,
+   "naming": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.03465200805022378,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.041545162356192364,
+    "ink_ratio": 1.9567901234567902,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "khoi_S_ABCD",
+    "mp1_gt_f5",
+    "mp2_gt_f5",
+    "gt_f5",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D",
+    "khoi_S_ABCD::face:0",
+    "khoi_S_ABCD::edge:A-B",
+    "khoi_S_ABCD::edge:B-C",
+    "khoi_S_ABCD::edge:C-D",
+    "khoi_S_ABCD::edge:A-D",
+    "khoi_S_ABCD::face:1",
+    "khoi_S_ABCD::edge:S-A",
+    "khoi_S_ABCD::edge:S-B",
+    "khoi_S_ABCD::face:2",
+    "khoi_S_ABCD::edge:S-C",
+    "khoi_S_ABCD::face:3",
+    "khoi_S_ABCD::edge:S-D",
+    "khoi_S_ABCD::face:4"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  },
+  {
+   "id": "intersection-SAB-SCD-unit",
+   "served": true,
+   "section_vertices_model": 0,
+   "pixels_last_step": {
+    "section": 0,
+    "line": 7,
+    "highlight": 1288,
+    "ink": [
+     362,
+     69,
+     758,
+     436
+    ]
+   },
+   "order": {
+    "target": "gt_f5",
+    "own_pixels": {
+     "default_view": 562,
+     "after_orbit": 825
+    },
+    "first_step": 6,
+    "steps": 7,
+    "depends_present": true,
+    "depends_before": true,
+    "pixels_before": {
+     "line": 0,
+     "highlight": 1298
+    },
+    "pixels_at": {
+     "line": 7,
+     "highlight": 1288
+    }
+   },
+   "variants": {
+    "dir-x": {
+     "default_view": 562,
+     "after_orbit": 825
+    },
+    "dir-y": {
+     "default_view": 756,
+     "after_orbit": 1369
+    },
+    "dir-z": {
+     "default_view": 57,
+     "after_orbit": 56
+    },
+    "dir-xy": {
+     "default_view": 396,
+     "after_orbit": 713
+    },
+    "dir-xz": {
+     "default_view": 290,
+     "after_orbit": 944
+    },
+    "through-A-dir-x": {
+     "default_view": 78,
+     "after_orbit": 91
+    },
+    "interior-dir-x": {
+     "default_view": 540,
+     "after_orbit": 741
+    },
+    "aux-shown": {
+     "default_view": 562,
+     "after_orbit": 825
+    }
+   },
+   "scrubber": null,
+   "selection": null,
+   "naming": null,
+   "console_errors": [],
+   "orbit": {
+    "changed": 0.04899582469736565,
+    "settled": true
+   },
+   "zoom": {
+    "changed": 0.042952149229521494,
+    "ink_ratio": 1.8499856947579234,
+    "settled": true
+   },
+   "rendered_ids": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "S",
+    "khoi_S_ABCD",
+    "mp1_gt_f5",
+    "mp2_gt_f5",
+    "gt_f5",
+    "day_ABCD",
+    "canh_ben_S_A",
+    "canh_ben_S_B",
+    "canh_ben_S_C",
+    "canh_ben_S_D",
+    "khoi_S_ABCD::face:0",
+    "khoi_S_ABCD::edge:A-B",
+    "khoi_S_ABCD::edge:B-C",
+    "khoi_S_ABCD::edge:C-D",
+    "khoi_S_ABCD::edge:A-D",
+    "khoi_S_ABCD::face:1",
+    "khoi_S_ABCD::edge:S-A",
+    "khoi_S_ABCD::edge:S-B",
+    "khoi_S_ABCD::face:2",
+    "khoi_S_ABCD::edge:S-C",
+    "khoi_S_ABCD::face:3",
+    "khoi_S_ABCD::edge:S-D",
+    "khoi_S_ABCD::face:4"
+   ],
+   "reset": {
+    "residual_vs_start": 0,
+    "settled": true
+   }
+  }
+ ]
+}

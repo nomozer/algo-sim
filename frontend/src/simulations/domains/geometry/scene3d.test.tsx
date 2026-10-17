@@ -857,7 +857,7 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
       material: { color: { getHex(): number } };
     };
     const pos = goc.geometry.getAttribute("position");
-    expect(pos.count).toBe(5);
+    expect(pos.count).toBe(3);
     expect(pos.getZ(0)).toBeLessThan(5 - 1e-3);
     expect(pos.getZ(1)).toBeLessThan(5 - 1e-3);
     expect(goc.material.color.getHex()).toBe(0x0284c7);
@@ -867,6 +867,48 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     };
     expect(cham.userData.dauDinh).toBe("thuong");
     expect([cham.position.x, cham.position.y, cham.position.z]).toEqual([3, 0, 5]);
+  });
+
+  it("P1-CORRECTNESS: ký hiệu góc vuông point-to-plane tại chân H nằm trên cạnh biên của mặt phẳng đích (như H trên A'B' của (ABB')) bám dọc cạnh biên đó, trực giao với MH (dot = 0) và nối liền nét đứt đầu tiên từ H", () => {
+    const w = {
+      id: "kq_q",
+      vai: "khoang_cach" as const,
+      from: [1.5, Math.sqrt(3) / 2, 3] as [number, number, number],
+      foot: [1.5, 0, 3] as [number, number, number],
+      u: [-1.5, 0, -3] as [number, number, number],
+      v: [0, Math.sqrt(3) / 2, 0] as [number, number, number],
+    };
+    const diem: [number, number, number][] = [
+      [0, 0, 0], [2, 0, 0], [1, Math.sqrt(3), 0],
+      [0, 0, 3], [2, 0, 3], [1, Math.sqrt(3), 3],
+      [1.5, Math.sqrt(3) / 2, 3], [1.5, 0, 3],
+    ];
+    const nhom = vatNhanChung(w, diem, 0x0284c7, false);
+    const doan = nhom.children[0] as unknown as {
+      geometry: { getAttribute(n: string): { getX(i: number): number; getY(i: number): number; getZ(i: number): number } };
+      material: { dashSize: number };
+    };
+    const goc = nhom.children[1] as unknown as {
+      geometry: { getAttribute(n: string): { count: number; getX(i: number): number; getY(i: number): number; getZ(i: number): number } };
+    };
+    const posDoan = doan.geometry.getAttribute("position");
+    // Đoạn nét đứt bắt đầu từ chân H để nét đầu tiên luôn nối liền với ký hiệu góc vuông tại H
+    expect([posDoan.getX(0), posDoan.getY(0), posDoan.getZ(0)]).toEqual([1.5, 0, 3]);
+    const pos = goc.geometry.getAttribute("position");
+    expect(pos.count).toBe(3);
+    const uVec = [pos.getX(0) - w.foot[0], pos.getY(0) - w.foot[1], pos.getZ(0) - w.foot[2]];
+    const vVec = [pos.getX(2) - w.foot[0], pos.getY(2) - w.foot[1], pos.getZ(2) - w.foot[2]];
+    // uVec phải nằm dọc cạnh A'B' (y = 0, z = 3 ⇒ uVec[1] = 0, uVec[2] = 0, uVec[0] < 0) thay vì chéo xuống A(0,0,0)
+    expect(Math.abs(uVec[1])).toBeLessThan(1e-9);
+    expect(Math.abs(uVec[2])).toBeLessThan(1e-9);
+    expect(uVec[0]).toBeLessThan(-1e-3);
+    // Hai cạnh của ký hiệu góc vuông trực giao tuyệt đối trong không gian thế giới (dot = 0) và có cùng độ dài s
+    const dotUV = uVec[0] * vVec[0] + uVec[1] * vVec[1] + uVec[2] * vVec[2];
+    expect(Math.abs(dotUV)).toBeLessThan(1e-9);
+    const s = Math.hypot(vVec[0], vVec[1], vVec[2]);
+    expect(Math.hypot(uVec[0], uVec[1], uVec[2])).toBeCloseTo(s, 6);
+    // Nét đứt đầu tiên từ H dài hơn s để đầu mút chan + v1 luôn chạm vào nét, không rơi vào khoảng trống
+    expect(doan.material.dashSize).toBeGreaterThanOrEqual(s * 1.04);
   });
 
   it("nhân chứng vuông góc trên khối đơn vị co giãn chu kỳ nét đứt và ô góc vuông theo đường kính cảnh, không phình quá khổ", () => {

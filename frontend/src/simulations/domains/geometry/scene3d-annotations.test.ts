@@ -375,5 +375,27 @@ describe("nhân chứng hình chiếu (review I1)", () => {
     expect(w.from).toEqual([0.5, 0.5, 0.5]);
     expect(w.foot).toEqual([0.5, 0, 0.5]);
   });
+
+  it("P2-5: nhãn số đo neo tại trung điểm đoạn nhân chứng dốc đứng tránh đè lên chính đoạn nét đứt MH khi có hộp cản dọc đoạn", () => {
+    const tx = 200, ty = 150, fx = 200, fy = 230;
+    const mx = (tx + fx) / 2, my = (ty + fy) / 2;
+    const d = Math.hypot(fx - tx, fy - ty);
+    const ux = ((fx - tx) / d) * 10, uy = ((fy - ty) / d) * 10;
+    const chan = [
+      { x: fx - 8, y: fy - 8, w: 16, h: 16 },
+      { x: mx + ux - 2, y: my + uy - 2, w: 4, h: 4 },
+      { x: mx - ux - 2, y: my - uy - 2, w: 4, h: 4 },
+    ];
+    const dat = placeAnnotationLabels(
+      [{ id: "d_M_H", ax: mx, ay: my, w: 96, h: 22, priority: 12 }],
+      chan,
+      { w: 600, h: 400 },
+    );
+    const r = dat.get("d_M_H");
+    expect(r).toBeDefined();
+    // Hộp nhãn phải nằm lệch sang bên phải hoặc bên trái đoạn đứng x = 200, không cắt qua x = 200
+    expect(r!.x >= 206 || r!.x + r!.w <= 194).toBe(true);
+  });
 });
+
 

@@ -47,15 +47,18 @@ construction/definition cases. ItemU24 uses the existing cos² convention, not a
 mapped by implementer into41 cases; no human held-out, no live extraction/intent accuracy. Historical174 answers and
 plan statistics unchanged, two intentional refusal-code changes. Level **MEASURED (offline)**; Hybrid enablement NO-GO.
 
-Scene3D educational visual quality finalization (2026-10-17, product `22df95d6`, integrated on `main`):
-[`scene3d-educational-finalization`](../evaluation/geometry/runs/scene3d-educational-finalization/report.md) resolves
-EDU-1..8 in shared frontend Scene3D modules (0 backend/prompt changes): distance-to-line witness measurement pills,
-textbook camera affinity with witness-foot framing, auxiliary-plane colinear yield to section/segment borders, closed
-4-sided right-angle square and foot marker dot at `w.foot`, normal-state `FINAL_RESULT` point-to-plane witness, open-step
-section intersection vertex highlighting, and WebGL span pooling + Z-up `OrbitControls` settle (`scene3d-orbit-gate.mjs`
-`DAT` on `p1/p6/p7`, `capPhat = 0`). Verified across 68 Vitest files (1,077 tests) and 49 full-size (`1280×900`) browser
-states, with **`HUMAN_VISUAL_REVIEW_PASS`** confirmed by the user in session for this 12-scene benchmark/section scope.
-Does not imply user-study learning outcomes (G1) or Hybrid product enablement (NO-GO).
+Scene3D educational visual quality finalization & geometric annotation correctness (2026-10-17, products `22df95d6` and
+`e218b5ef`, integrated on `main`):
+[`scene3d-educational-finalization`](../evaluation/geometry/runs/scene3d-educational-finalization/report.md) and its
+corrective wave [`scene3d-annotation-correctness`](../evaluation/geometry/runs/scene3d-annotation-correctness/report.md)
+resolve EDU-1..8 plus P1–P2 annotation correctness in shared frontend Scene3D modules (0 backend/prompt changes):
+distance-to-line witness measurement pills, textbook camera affinity with witness-foot framing, auxiliary-plane colinear
+yield to section/segment borders, boundary-edge tangent alignment (`huongChanVuongGoc`) with 3-point textbook L-bracket
+and dash origin at `w.foot` (`vatNhanChung`), witness-segment midpoint obstacles (`chieuNhan`), normal-state
+`FINAL_RESULT` point-to-plane witness, open-step section intersection vertex highlighting, and WebGL span pooling + Z-up
+`OrbitControls` settle (`scene3d-orbit-gate.mjs` `DAT` on `p1/p6/p7`, `capPhat = 0`). Verified across 68 Vitest files
+(1,079 tests) and full-size (`1280×900`) browser states, with **`HUMAN_VISUAL_REVIEW_PASS`** confirmed by the user in
+session for both waves. Does not imply user-study learning outcomes (G1) or Hybrid product enablement (NO-GO).
 
 ## 1. Bốn mức
 
