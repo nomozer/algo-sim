@@ -1,0 +1,19 @@
+{
+  "schema": "T3_ATTEMPT/1",
+  "verified_commit": "fa6d792e",
+  "product_commit": "69fa9be8",
+  "candidate_tree_hash": "b5406c9185d5bb61ccc410146275f8d7c389000e5b0064f2f59e98926729d325",
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "exit_code": 0,
+  "worktree": "D:/tmp/sev2-after (clean detached at fa6d792e; frontend/node_modules junction to the main checkout; git status empty before and after)",
+  "command": "node frontend/scripts/full-gate.mjs --python D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+  "backend": {"passed": 10356, "failures": 0, "errors": 0, "xfailed": 9, "skipped": 1, "deselected": 2, "seconds": 463.4},
+  "vitest": "68 files / 1072 passed",
+  "typecheck_build": "PASS",
+  "demo": "5/5 PASS",
+  "crash_surface": "6/6 PASS",
+  "candidate_verify_after": "MATCH (110 files, b5406c91...)",
+  "log": "kept outside the repository; sha256 1c2fa7478c6526781163acd382e912007628637f7bbfbd378e09118576e8b855",
+  "live_model_calls": 0,
+  "attempts": "1 (no earlier attempt at this commit)"
+}

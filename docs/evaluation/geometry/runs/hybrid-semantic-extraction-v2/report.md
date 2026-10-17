@@ -110,8 +110,9 @@ Old approvals (`nlu-approval.json`) do not match and cannot be reused.
 
 Backend full suite at the product commit before refreeze: 10,330 passed, only candidate-freeze guards red (expected,
 cleared by the refreeze); after the review fixes the geometry suite 8,051 passed with the same guards; targeted grounding
-suites 965 passed, 3 xfailed. Docs gate green. Final Authoritative T3 on a clean detached worktree: see
-[`verification/`](verification/) (the final result is recorded there and in `run.json`).
+suites 965 passed, 3 xfailed. Docs gate green. **Final Authoritative T3** on a clean detached worktree at `fa6d792e`:
+`FULL_PRODUCT_GATE_PASS` — pytest 10,356 passed / 0 failed, vitest 1,072/1,072, typecheck+build PASS, demo 5/5,
+crash surface 6/6, candidate `b5406c91…` MATCH after the gate ([`verification/t3.json`](verification/t3.json)).
 
 ## 7. Limits
 
