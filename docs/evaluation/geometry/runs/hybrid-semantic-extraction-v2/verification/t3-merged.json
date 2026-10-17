@@ -1,0 +1,21 @@
+{
+  "schema": "T3_ATTEMPT/1",
+  "verified_commit": "b7b7e89e",
+  "merged_main": "8427c879 (origin/main at verification time)",
+  "product_commit": "69fa9be8",
+  "candidate_tree_hash": "b5406c9185d5bb61ccc410146275f8d7c389000e5b0064f2f59e98926729d325",
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "exit_code": 0,
+  "worktree": "D:/tmp/sev2-t3m (clean detached at b7b7e89e; node_modules junction; git status empty before and after)",
+  "command": "node frontend/scripts/full-gate.mjs --python D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+  "backend": {"passed": 10356, "failures": 0, "errors": 0, "xfailed": 9, "skipped": 1, "deselected": 2, "seconds": 472.9},
+  "vitest": "68 files / 1077 passed",
+  "typecheck_build": "PASS",
+  "demo": "5/5 PASS",
+  "crash_surface": "6/6 PASS",
+  "candidate_verify_after": "MATCH (110 files, b5406c91...)",
+  "live_identities_after_merge": "unchanged (all four equal the gate's recomputation)",
+  "log": "kept outside the repository; sha256 a8ca3904fd1c71574ece0c79cb5693dc428ecce526f5b4f6bb2fccee6ca8c982",
+  "live_model_calls": 0,
+  "supersedes_for_integration": "verification/t3.json (fa6d792e, before the main merge; kept)"
+}

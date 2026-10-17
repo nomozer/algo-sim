@@ -8,7 +8,7 @@ CORRECTS = NONE (scorer /2 reported beside the frozen NLU scorer; its L01 artifa
 CORRECTED_BY = NONE
 CLASSIFICATION = RESEARCH_BRANCH_OFFLINE_ONLY · LIVE_NOT_AUTHORIZED · integration PENDING_OWNER_GO
 CODE_COMMIT = 69fa9be8 (route-B prompt v2 + bounded Source Grounding); protocol lock 6ceb2508
-VERIFICATION_COMMIT = candidate b5406c91… MATCH at 108fc086; identities + offline receipts at c640cd14; T3 FULL_PRODUCT_GATE_PASS at fa6d792e (verification/t3.json)
+VERIFICATION_COMMIT = candidate b5406c91… MATCH at 108fc086; identities + offline receipts at c640cd14; T3 FULL_PRODUCT_GATE_PASS at fa6d792e and, merged with main 8427c879, at b7b7e89e (verification/t3-merged.json)
 MODEL_REQUEST_COUNT = 0
 
 Fresh 36-case corpus (dev 12 / heldout 24, 34 Fraction oracles), scorer grounded-source-obligations/2 (independent

@@ -25,7 +25,7 @@
               "replay_equals_gold": true, "mutation_ablation": "99 mutations, 0 unsafe; 8/8 refused on gold-served cases"},
   "historical_effect": "old NLU GOLD: L02 refused -> refused (later gate); served 10 -> 10",
   "scorer": "grounded-source-obligations/2; reviews NOT_READY -> LOCK_READY",
-  "t3": "FULL_PRODUCT_GATE_PASS at fa6d792e (verification/t3.json)",
+  "t3": "FULL_PRODUCT_GATE_PASS at fa6d792e (verification/t3.json) and on the main-merged b7b7e89e (verification/t3-merged.json)",
   "integration": "PENDING_OWNER_GO",
   "push": "NONE"
 }
