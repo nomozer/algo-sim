@@ -308,7 +308,7 @@ def _square_centroid(g, poly):
 
 
 @pytest.mark.parametrize("g", ["Gọi G là trọng tâm tam giác ABD", "Gọi G là trọng tâm của tam giác ABD",
-                               "Lấy trọng tâm G của tam giác ABD"])
+                               "Lấy trọng tâm G của tam giác ABD", "Gọi G là trọng tâm ΔABD"])
 def test_bound_centroid_still_serves(g):
     served(SQUARE.format(g=g), _square_centroid(g, "ABD"), {"q": Fraction(89, 9)})
 
@@ -320,3 +320,24 @@ def test_bound_centroid_still_serves(g):
 def test_centroid_must_bind_to_exactly_the_named_polygon(g, poly):
     r = run_fact_route(SQUARE.format(g=g), _square_centroid(g, poly))
     assert (r.status, r.code) == ("REFUSED", "SOURCE_OBJECT_MISMATCH"), (r.answers, r.code)
+
+
+@pytest.mark.parametrize("right", ["(SAB) là tam giác vuông tại A", "mặt (SAB) là tam giác vuông tại A",
+                                   "mặt bên là tam giác vuông tại A"])
+def test_a_side_face_right_angle_is_never_the_base_one(right):
+    # Re-review C1 residual: only the subject "đáy" may resolve an unlabelled right triangle to the unique base, and a
+    # parenthesised face label names that face. "(SAB) vuông tại A" is no fact about the base (it follows from SA ⊥ (ABC)).
+    text = f"Cho hình chóp S.ABC có SA vuông góc với (ABC), SA = 3, AB = 3, BC = 4, {right}. Tính độ dài SC."
+    payload = _pyramid_abc(right=right, at="A", rays=("B", "C"), ask=("S", "C"))
+    payload["facts"] = [f for f in payload["facts"] if f["id"] != "f7"]
+    r = run_fact_route(text, payload)
+    assert (r.status, r.code) == ("REFUSED", "SOURCE_OBJECT_MISMATCH"), (r.answers, r.code)
+
+
+@pytest.mark.parametrize("mid,right", [
+    ("Gọi M là trung điểm cạnh bên SB", RIGHT_B),
+    ("Gọi M là trung điểm SB", "tam giác ABC vuông ở B"),
+    ("Gọi M là trung điểm SB", "ΔABC vuông tại B"),
+])
+def test_common_wordings_of_bound_definitions_still_serve(mid, right):
+    served(ABC.format(right=right, mid=mid, ask="AM"), _pyramid_abc(right=right, mid=mid), {"q": Fraction(9, 2)})

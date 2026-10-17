@@ -2761,18 +2761,22 @@ def mat_cat_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> bool:
 
 _DIEM = r"[A-Z][0-9]*'?"
 _DS_DIEM = rf"(?<![\w']){_DIEM}(?![\w'])(?:\s*(?:,|và)\s*(?<![\w']){_DIEM}(?![\w']))*"
-_DOI_TUONG = (r"(?:(?i:cạnh|đoạn(?:\s+thẳng)?|tam\s+giác|tứ\s+giác|đa\s+giác|hình\s+(?:vuông|chữ\s+nhật|bình\s+hành|thoi)|mặt)"
-              r"\s+|Δ\s*)?")
-_DS_NHOM = (rf"{_DOI_TUONG}(?<![\w'])(?:{_DIEM}){{2,}}(?![\w'])"
-            rf"(?:\s*(?:,|và)\s*{_DOI_TUONG}(?<![\w'])(?:{_DIEM}){{2,}}(?![\w']))*")
+_DOI_TUONG = (r"(?:(?i:cạnh(?:\s+(?:bên|đáy))?|đoạn(?:\s+thẳng)?|tam\s+giác|tứ\s+giác|đa\s+giác"
+              r"|hình\s+(?:vuông|chữ\s+nhật|bình\s+hành|thoi)|mặt(?:\s+(?:bên|đáy))?)\s+|Δ\s*)?")
+#: Start of a label group: not glued to a word, except right after "Δ" (a letter, so `(?<![\w'])` alone never matches it).
+_DAU_NHAN = r"(?:(?<=Δ)|(?<![\w']))"
+_DS_NHOM = (rf"{_DOI_TUONG}{_DAU_NHAN}(?:{_DIEM}){{2,}}(?![\w'])"
+            rf"(?:\s*(?:,|và)\s*{_DOI_TUONG}{_DAU_NHAN}(?:{_DIEM}){{2,}}(?![\w']))*")
 _CUE_DIEM = {"midpoint": r"(?i:trung\s+điểm)", "centroid": r"(?i:trọng\s+tâm)"}
 #: Right angle of a named polygon: `ABC (là tam giác) vuông (cân) tại B`, `ABCD là hình thang vuông tại A và D`,
 #: `góc ABC vuông`; the angle at X has its rays on X's two cyclic neighbours. An unlabelled `(đáy là) tam giác vuông tại B`
-#: is resolved only by a unique named base of a solid in the source.
+#: is resolved only when its subject is "đáy", by a unique named base of a solid; a face label in parentheses, "(SAB) là
+#: tam giác vuông tại A", names that face (re-review C1 residual: a side face's right angle is never the base's).
 #: Case-insensitive only for the words: labels stay upper-case, so "tam" or the length symbol "a" is never a label.
 _HINH_VUONG_TAI = r"(?i:tam\s+giác|tứ\s+giác|hình\s+thang|hình\s+chữ\s+nhật)"
-_VUONG_TAI = re.compile(rf"(?:(?<![\w'])((?:{_DIEM}){{3,}})(?![\w'])\s+(?:(?i:là)\s+(?:(?i:một)\s+)?)?(?:{_HINH_VUONG_TAI}\s+)?)?"
-                        rf"(?i:vuông(?:\s+cân)?\s+tại)\s+({_DIEM}(?:\s*(?:,|(?i:và))\s*{_DIEM})*)(?![\w'])")
+_VUONG_TAI = re.compile(rf"(?:{_DAU_NHAN}\(?((?:{_DIEM}){{3,}})\)?(?![\w'])\s+(?:(?i:là)\s+(?:(?i:một)\s+)?)?(?:{_HINH_VUONG_TAI}\s+)?)?"
+                        rf"(?i:vuông(?:\s+cân)?\s+(?:tại|ở))\s+({_DIEM}(?:\s*(?:,|(?i:và))\s*{_DIEM})*)(?![\w'])")
+_DAY_VUONG = re.compile(rf"(?<!\w)(?i:đáy)\s+(?:(?i:là)\s+)?(?:(?i:một)\s+)?{_HINH_VUONG_TAI}\s+$")
 _GOC_VUONG = re.compile(rf"(?i:góc)\s+(?<![\w'])((?:{_DIEM}){{3}})(?![\w'])\s+(?i:vuông|=\s*90|bằng\s+90)")
 
 
@@ -2797,7 +2801,7 @@ def _dinh_nghia_diem_dung_nguon(c: LoiGoi, q: str, de: str) -> bool:
                 continue
             if m[1]:
                 poly = re.findall(_DIEM, m[1])
-            elif re.search(rf"{_HINH_VUONG_TAI}\s+$", q[:m.start()]):
+            elif _DAY_VUONG.search(q[:m.start()]):
                 bases = {tuple(p[1] if len(p[0]) == 1 else p[0]) for _d, _c, p in _tu_nhan(de) if len(p) == 2}
                 if len(bases) != 1:
                     continue
@@ -2812,7 +2816,7 @@ def _dinh_nghia_diem_dung_nguon(c: LoiGoi, q: str, de: str) -> bool:
     forward = re.compile(rf"({_DS_DIEM})\s+((?i:lần\s+lượt)\s+)?(?i:là)\s+(?:(?i:các)\s+)?{cue}\s+(?:(?i:của)\s+)?(?:(?i:các)\s+)?({_DS_NHOM})")
     named = re.compile(rf"{cue}\s+(?<![\w'])({_DIEM})(?![\w'])\s+(?:(?i:của)\s+)?({_DS_NHOM})")
     def groups(s):
-        return [re.findall(_DIEM, g) for g in re.findall(rf"(?<![\w'])(?:{_DIEM}){{2,}}(?![\w'])", s)]
+        return [re.findall(_DIEM, g) for g in re.findall(rf"{_DAU_NHAN}(?:{_DIEM}){{2,}}(?![\w'])", s)]
     for m in forward.finditer(q):
         names, objs = re.findall(_DIEM, m[1]), groups(m[3])
         if len(names) != len(objs) or (len(names) > 1 and not m[2]):
