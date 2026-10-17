@@ -62,5 +62,21 @@
     "crash_surface_audit": "6/6 PASS (0 uncaught)",
     "live_ai_calls": 0
   },
+  "frozen_candidate_commit": "caa6cc2ea381a79869330c0671d0ecad852e96ab",
+  "independent_review": {
+    "status": "PASS",
+    "reviewer_subagent": "97bdf04e-97a7-42bc-b677-5f2e61f226e0",
+    "reviewed_commit": "caa6cc2ea381a79869330c0671d0ecad852e96ab",
+    "blocking_issues": 0
+  },
+  "authoritative_t3": {
+    "status": "PASS",
+    "detached_checkout_commit": "caa6cc2ea381a79869330c0671d0ecad852e96ab",
+    "candidate_verify": "PASS (110 files, afab0a3ca3abfe3c...)",
+    "backend_pytest": "10614 passed, 1 skipped, 2 deselected, 9 xfailed, 0 failed in 462.15s",
+    "frontend_vitest": "68 test files passed, 1079 tests passed in 7.06s",
+    "frontend_build": "tsc -b && vite build PASS in 3.16s",
+    "detached_worktree_cleaned": true
+  },
   "verdict": "COMBINED_BACKEND_VERIFIED_PENDING_MAIN_GO"
 }

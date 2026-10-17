@@ -61,3 +61,27 @@ New suite `backend/tests/geometry/test_hybrid_backend_integration.py` (`19` test
 - Safe refusals (`17/17` negative cases), lying contract verifier (`AUXILIARY_RULE_MISMATCH`), tampered engine verifier (`ENGINE_SELF_CHECK_FAILED`), and sub-`250ms` question-tail regex guard on 4,096-space suffixes.
 - Strict Riemannian metric validation (`strict_parse_metric` and `strict_mat3_inv` reject `10/10` missing, non-3x3, singular, indefinite, and asymmetric metrics as `INVALID` without ever falling back to Euclidean `IDENTITY_METRIC`).
 - `174/174` historical Planner cases (`65` served, `109` refused), `40/40` Slice A/B cases (`19` production served + `4` discovery served = `23` served, `17` refused), `88/88` combined served scenes verified by the 11-category Step Math Oracle, `148/148` baseline scenes verified, `10/10` geometric counterexamples detected, and `8/8` offline `v3` evaluation cells matching frozen `04b0db37` scores 100%.
+
+---
+
+## 4. Independent Subagent Review & Authoritative T3 (`P6`)
+
+- **Frozen Candidate Commit:** `caa6cc2ea381a79869330c0671d0ecad852e96ab` (`caa6cc2e`)
+- **Independent Subagent Review (`97bdf04e-97a7-42bc-b677-5f2e61f226e0`):** **`PASS` (`0` blocking or non-blocking defects)** — verified merge lineage (`4abc4afb` -> `a94a54d0` -> `7507312b` -> `f63dae86`), exact 4-file product diff vs `main`, version/identity separation, strict Riemannian metric guard (`strict_parse_metric` / `strict_mat3_inv`), and test coverage across all 11 mandatory requirement areas.
+- **Authoritative T3 (Clean Detached Worktree at `caa6cc2e`):**
+  - `freeze_evaluation_candidate.py --verify`: **`PASS`** (`110` files, `afab0a3ca3abfe3c…`).
+  - Full Backend `pytest`: **`10,614 passed, 1 skipped, 2 deselected, 9 xfailed, 0 failed`** (`462.15s`).
+  - Frontend Vitest (`npm test -- --run`): **`68 test files passed, 1,079 tests passed`** (`7.06s`).
+  - Frontend Production Build (`tsc -b && vite build`): **`PASS`** (`3.16s`).
+  - Detached T3 checkout removed cleanly after verification.
+
+---
+
+## 5. Cleanup Inventory & Remaining Blockers (`P7`–`P8`)
+
+- **Post-Integration Cleanup Inventory:** Recorded in `cleanup-inventory.json`. All temporary verification directories created during this task (`.superpowers/hybrid-integration-offline-tmp`, `.superpowers/b2`, `.superpowers/b3`, `.superpowers/worktrees/t3-hybrid-backend-integration`) have been removed. All source research worktrees and frontend worktree (`scene3d-plane-grid-camera`) remain untouched.
+- **Remaining Blockers before `main` Merge / Live Pilot:**
+  1. Explicit owner `GO` to merge `research/hybrid-backend-integration` into `main` (alongside or coordinated with `research/scene3d-plane-grid-camera` when ready).
+  2. Explicit owner approval + live budget/stop-rule preregistration before any live Gemini `v3` pilot (`ALLOW_LIVE_AI = 0` remains enforced).
+  3. Future schema revision (`v3.1`/`v4`) or post-extraction deterministic normalization if `solid` on segment lengths (`13/16` LOCKED gold early rejections) and `reason` notes (`3/16`) are to be accepted by the strict `v3` wire contract.
+  4. All 20 gates in `docs/MIGRATION_CHECKLIST.md` remain required before changing `DEFAULT_MODE = LLM_ONLY`.
