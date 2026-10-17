@@ -1,0 +1,125 @@
+{
+  "schema": "POST_INTEGRATION_CLEANUP_INVENTORY/1",
+  "run": "hybrid-backend-integration",
+  "date": "2026-10-18",
+  "policy": "Preserve all source worktrees, user frontend changes, and frozen historical receipts; only delete temporary directories created by this integration candidate verification.",
+  "worktrees_and_branches": [
+    {
+      "path": "D:/Documents/projects/algo-sim",
+      "branch": "main",
+      "head": "4abc4afbb976babc4740bf22e42dc368a24c1b13",
+      "classification": "ACTIVE",
+      "consumers": ["primary workspace", "user untracked frontend/public/ & .vscode/"],
+      "action": "PRESERVE_UNTOUCHED"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-integration",
+      "branch": "research/hybrid-backend-integration",
+      "head_base_merges": ["a94a54d0", "7507312b", "f63dae86"],
+      "classification": "FROZEN_PENDING_INTEGRATION",
+      "consumers": ["combined backend integration candidate awaiting owner GO MAIN INTEGRATION"],
+      "action": "PRESERVE_FOR_MAIN_INTEGRATION"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/semantic-extraction-v3-runtime-revision",
+      "branch": "research/semantic-extraction-v3-runtime-revision",
+      "head": "bb014eb80bd17b1223717d63385139bb9b23210d",
+      "classification": "SAFE_TO_DELETE_AFTER_MAIN_INTEGRATION",
+      "consumers": ["merged into research/hybrid-backend-integration at a94a54d0; retain until main integration & live v3 decision"],
+      "action": "PRESERVE_UNTIL_MAIN_INTEGRATION"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/contract-driven-goal-composition",
+      "branch": "research/contract-driven-goal-composition",
+      "head": "a629ebee346bf0083cf90294ad352640bcc936ce",
+      "classification": "SAFE_TO_DELETE_AFTER_MAIN_INTEGRATION",
+      "consumers": ["merged into research/hybrid-backend-integration at 7507312b; retain until main integration"],
+      "action": "PRESERVE_UNTIL_MAIN_INTEGRATION"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/step-math-validation",
+      "branch": "research/step-math-validation",
+      "head": "0dd1da5ce599b2a418357b7ebcc5f820b2d47dc8",
+      "classification": "SAFE_TO_DELETE_AFTER_MAIN_INTEGRATION",
+      "consumers": ["merged into research/hybrid-backend-integration at f63dae86; retain until main integration & frontend snapshot re-verification"],
+      "action": "PRESERVE_UNTIL_MAIN_INTEGRATION"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/scene3d-plane-grid-camera",
+      "branch": "research/scene3d-plane-grid-camera",
+      "head": "4abc4afbb976babc4740bf22e42dc368a24c1b13",
+      "classification": "ACTIVE",
+      "consumers": ["active frontend Scene3D plane/grid/camera wave (9 modified files in working tree)"],
+      "action": "PRESERVE_UNTOUCHED"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/semantic-extraction-v3",
+      "branch": "research/semantic-extraction-v3",
+      "head": "7168d26963011433889dc907492df87ac62140f7",
+      "classification": "SAFE_TO_DELETE_AFTER_MAIN_INTEGRATION",
+      "consumers": ["parent checkpoint of semantic-extraction-v3-runtime-revision; commit 7168d269 is reachable from bb014eb8 and research/hybrid-backend-integration"],
+      "action": "PRESERVE_UNTIL_OWNER_CLEANUP_GO"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-semantic-extraction-v2",
+      "branch": "research/hybrid-semantic-extraction-v2",
+      "head": "fdcf201cc8ec0bc6d1e62614ba243497b04c2c7f",
+      "classification": "SAFE_TO_DELETE_AFTER_MAIN_INTEGRATION",
+      "consumers": ["ancestor of semantic-extraction-v3 and research/hybrid-backend-integration"],
+      "action": "PRESERVE_UNTIL_OWNER_CLEANUP_GO"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/nlu-extraction-eval",
+      "branch": "research/nlu-extraction-eval",
+      "head": "8427c8791df4a7a7c5a18fd9675d1b9c8dcdfdb5",
+      "classification": "SAFE_TO_DELETE_AFTER_MAIN_INTEGRATION",
+      "consumers": ["already integrated into main (4abc4afb)"],
+      "action": "PRESERVE_UNTIL_OWNER_CLEANUP_GO"
+    }
+  ],
+  "run_artifacts": [
+    {
+      "path": "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/",
+      "classification": "REQUIRED_REPRODUCIBLE_EVIDENCE",
+      "product_sha256": "6ba9033bfca06d671cd27891e2dad06c7d44f365fed45527123c907d664b65ed",
+      "action": "PRESERVE_FROZEN_BYTES"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/contract-driven-goal-composition/",
+      "classification": "REQUIRED_REPRODUCIBLE_EVIDENCE",
+      "product_sha256": "540fc9d58b5ae060711aaacfb329b60f0bf18c44df3b1497faae432989ab1013",
+      "action": "PRESERVE_FROZEN_BYTES"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/step-math-validation/",
+      "classification": "REQUIRED_REPRODUCIBLE_EVIDENCE",
+      "action": "PRESERVE_FROZEN_BYTES"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/hybrid-backend-integration/",
+      "classification": "REQUIRED_REPRODUCIBLE_EVIDENCE",
+      "product_sha256": "afab0a3ca3abfe3c3f7692d34be2aeadbd099b8d43b6543d8d234d19b5ef8443",
+      "action": "ACTIVE_INTEGRATION_EVIDENCE"
+    }
+  ],
+  "temporary_files_deleted_by_this_task": [
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-integration/.superpowers/hybrid-integration-offline-check",
+      "classification": "SAFE_TO_DELETE_NOW",
+      "purpose": "Temporary output probe for offline v3 matrix runner",
+      "status": "DELETED"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-integration/.superpowers/hybrid-integration-offline-tmp",
+      "classification": "SAFE_TO_DELETE_NOW",
+      "purpose": "Temporary 8-cell offline matrix execution root on combined candidate afab0a3c...",
+      "status": "DELETED"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-integration/.superpowers/offline-logs",
+      "classification": "SAFE_TO_DELETE_NOW",
+      "purpose": "Temporary child stdout logs from 8-cell offline matrix verification",
+      "status": "DELETED"
+    }
+  ]
+}

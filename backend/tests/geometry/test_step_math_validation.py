@@ -196,11 +196,15 @@ def test_fault_injection_across_all_11_categories() -> None:
 
 
 def test_run_receipts_and_hashes_are_consistent() -> None:
-    """Verify run.json hashes match oracle.py, catalog-audit.json, and counterexamples.json."""
+    """Verify run.json hashes match oracle.py, catalog-audit.json, and counterexamples.json (raw or LF-normalized)."""
     run_data = json.loads((RUN_DIR / "run.json").read_text(encoding="utf-8"))
     assert run_data["live_ai_calls"] == 0
     assert run_data["frontend_reverification_status"] == "WAITING_FOR_FRONTEND_FINAL_SNAPSHOT"
     assert run_data["counterexamples_detected"] == "10/10"
     for fname, expected_hash in run_data["hashes"].items():
-        actual_hash = _sha256_file(RUN_DIR / fname)
-        assert actual_hash == expected_hash, f"Hash mismatch on {fname}: {actual_hash} != {expected_hash}"
+        raw = (RUN_DIR / fname).read_bytes()
+        valid_hashes = {
+            hashlib.sha256(raw).hexdigest(),
+            hashlib.sha256(raw.replace(b"\r\n", b"\n")).hexdigest(),
+        }
+        assert expected_hash in valid_hashes, f"Hash mismatch on {fname}: {valid_hashes} != {expected_hash}"

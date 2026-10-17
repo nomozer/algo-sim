@@ -1,5 +1,38 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_BACKEND_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-backend-integration/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-backend-integration/
+CLASSIFICATION = COMBINED_BACKEND_VERIFIED_PENDING_MAIN_GO (integrating semantic-extraction-v3-runtime-revision bb014eb8, contract-driven-goal-composition a629ebee, and step-math-validation 0dd1da5c onto main 4abc4afb; 174/174 historical + 40/40 Slice A/B + 8/8 offline v3 cells + 148/148 baseline scenes + 88/88 combined scenes + 10/10 counterexamples PASS)
+CODE_COMMIT = 7507312b (merge of semantic-extraction-v3-runtime-revision a94a54d0 + contract-driven-goal-composition 7507312b + step-math-validation f63dae86)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-backend-integration/run.json (product_sha256 afab0a3ca3abfe3c3f7692d34be2aeadbd099b8d43b6543d8d234d19b5ef8443 across 110 files; historical v3 receipts at 6ba9033b… preserved untouched)
+MODEL_REQUEST_COUNT = 0 (offline integration & verification only; ALLOW_LIVE_AI=0)
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## WAVE_ID = STEP_MATH_VALIDATION
+
+REPORT = docs/evaluation/geometry/runs/step-math-validation/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/step-math-validation/
+CLASSIFICATION = STEP_MATH_VALIDATED_BASELINE_AND_FROZEN_BACKEND (148/148 served scenes verified across 11 mathematical invariant categories, 5,105 checks, 10/10 fault-injection counterexamples caught)
+CODE_COMMIT = 0dd1da5c (independent oracle.py, audit_step_math_validation.py, test_step_math_validation.py)
+VERIFICATION = docs/evaluation/geometry/runs/step-math-validation/run.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## WAVE_ID = CONTRACT_DRIVEN_GOAL_COMPOSITION
+
+REPORT = docs/evaluation/geometry/runs/contract-driven-goal-composition/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/contract-driven-goal-composition/
+CLASSIFICATION = COMPLETE_LOCAL_CANDIDATE_READY_FOR_INTEGRATION_REVIEW (Slice A ask_area + Slice B ask_angle_line_plane contract-driven goal composition; 174/174 baseline + 40/40 new corpus PASS)
+CODE_COMMIT = 1529faa7 (frozen branch HEAD a629ebee; product_sha256 540fc9d58b5ae060711aaacfb329b60f0bf18c44df3b1497faae432989ab1013)
+VERIFICATION = docs/evaluation/geometry/runs/contract-driven-goal-composition/run.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SEMANTIC_EXTRACTION_V3_RUNTIME_REVISION
 
 REPORT = docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/report.md

@@ -145,12 +145,14 @@ def collect_and_audit_all_scenes() -> tuple[list[dict[str, Any]], list[dict[str,
             backend_reports.append(_serialize_report(rep))
 
     # 5. Frozen `research/contract-driven-goal-composition` (a629ebee) — 23 served scenes
-    cdgc_wt = WORKTREE_ROOT.parent / "contract-driven-goal-composition"
+    local_cdgc_corpus = WORKTREE_ROOT / "docs" / "evaluation" / "geometry" / "runs" / "contract-driven-goal-composition" / "corpus.json"
+    cdgc_wt = WORKTREE_ROOT if local_cdgc_corpus.exists() else (WORKTREE_ROOT.parent / "contract-driven-goal-composition")
     cdgc_corpus_path = cdgc_wt / "docs" / "evaluation" / "geometry" / "runs" / "contract-driven-goal-composition" / "corpus.json"
     if cdgc_corpus_path.exists():
-        sys.path.insert(0, str(cdgc_wt / "backend"))
+        if str(cdgc_wt / "backend") not in sys.path:
+            sys.path.insert(0, str(cdgc_wt / "backend"))
         import app.simulation.geometry_functions.registry as cdgc_registry  # noqa: E402
-        from app.ai.fact_extraction import run_fact_route  # noqa: E402
+        from app.ai.function_route import run_fact_route  # noqa: E402
         from tests.geometry.test_contract_driven_goal_composition import (  # noqa: E402
             experimental_centroid_contract,
         )

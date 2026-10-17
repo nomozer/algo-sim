@@ -1,5 +1,17 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Hybrid backend integration candidate (research/hybrid-backend-integration, Hybrid off)
+
+Run `docs/evaluation/geometry/runs/hybrid-backend-integration/`; combines `semantic-extraction-v3-runtime-revision` (`bb014eb8`), `contract-driven-goal-composition` (`a629ebee`), and `step-math-validation` (`0dd1da5c`) at product commit `7507312b`.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/registry.py` (`geometry-functions/6`) | Possessive regex `_SAU_HOP_LE` preventing question-tail backtracking (`h07`); `PlanningContract` metadata for `AnswerAngleLinePlane` and `AnswerArea`; multi-goal certificate list validation in `_kiem_result_binding` (`list[dict]`, shared auxiliary bindings, target uniqueness, non-collinear area checks) | `backend/tests/geometry/test_hybrid_backend_integration.py`, `backend/tests/geometry/test_contract_driven_goal_composition.py`, `backend/tests/geometry/test_question_tail_runtime.py` |
+| `backend/app/simulation/geometry_functions/planner.py` (`geometry-fact-planner/7`) | `_cau_hoi_danh_sach`, `_hoach_dinh_danh_sach_muc_tieu` (multi-goal composition with shared construction deduplication and strict budget cap across goals); `_doc_muc_tieu_dien_tich`, `_doc_muc_tieu_goc` | `backend/tests/geometry/test_hybrid_backend_integration.py`, `backend/tests/geometry/test_contract_driven_goal_composition.py` |
+| `backend/app/simulation/geometry_functions/engine.py` (`geometry-function-engine/5`) | `_Dung.goc2_duong_mat`, `_Dung.dt2_tam_giac`, `_Dung.kiem_chuoi_hieu_ung` (per-goal exact Gram verification for `AnswerDistance`, `AnswerLength`, `AnswerAngleLinePlane`, `AnswerArea`) | `backend/tests/geometry/test_hybrid_backend_integration.py`, `backend/tests/geometry/test_contract_driven_goal_composition.py` |
+| `backend/scripts/audit_step_math_validation.py` | Independent exact SymPy/Gram step-by-step mathematical oracle (`kiem_tra_toan_hoc_scene`) auditing 148 baseline scenes + 88 combined/discovery scenes + 10 counterexamples + 10 non-SPD/degenerate metric guards (never falls back to Euclidean `IDENTITY_METRIC`) | `backend/tests/geometry/test_step_math_validation.py`, `backend/tests/geometry/test_hybrid_backend_integration.py` |
+| `backend/scripts/measure_goal_composition.py` · `backend/scripts/run_schema_contract_evaluation.py` · `backend/scripts/run_schema_contract_offline.py` | Slice A/B goal-composition harness (`40/40`); split-before-evaluate `PILOT`/`LOCKED` schema-contract evaluation runner and 8-cell subprocess watchdog offline runner (`ALLOW_LIVE_AI=0`) | `backend/tests/geometry/test_schema_contract_evaluation.py`, `backend/tests/geometry/test_schema_contract_offline.py`, `backend/tests/geometry/test_hybrid_backend_integration.py` |
+
 ## Hybrid semantic grounding reliability (research, Hybrid off)
 
 Run `docs/evaluation/geometry/runs/hybrid-semantic-grounding-reliability/`; frozen corpus/oracle at `2e08922a`.

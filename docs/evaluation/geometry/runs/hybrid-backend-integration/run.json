@@ -1,0 +1,66 @@
+{
+  "schema": "HYBRID_BACKEND_INTEGRATION_PROVENANCE/1",
+  "run": "hybrid-backend-integration",
+  "branch": "research/hybrid-backend-integration",
+  "base_main_commit": "4abc4afbb976babc4740bf22e42dc368a24c1b13",
+  "merged_branches": [
+    {
+      "order": 1,
+      "branch": "research/semantic-extraction-v3-runtime-revision",
+      "source_head": "bb014eb80bd17b1223717d63385139bb9b23210d",
+      "source_product_commit": "283813b23afd5a3235cd5d944ef30ebbe9d0691a",
+      "source_product_sha256": "6ba9033bfca06d671cd27891e2dad06c7d44f365fed45527123c907d664b65ed",
+      "merge_commit": "a94a54d0559394ac90c6f338ca484417f9417d93",
+      "conflicts": 0
+    },
+    {
+      "order": 2,
+      "branch": "research/contract-driven-goal-composition",
+      "source_head": "a629ebee346bf0083cf90294ad352640bcc936ce",
+      "source_product_commit": "1529faa713a4fd1da290a8625836d61509e12661",
+      "source_product_sha256": "540fc9d58b5ae060711aaacfb329b60f0bf18c44df3b1497faae432989ab1013",
+      "merge_commit": "7507312bbb16af5527ef7c7dba4f59c2a786cbd2",
+      "conflicts": 0
+    },
+    {
+      "order": 3,
+      "branch": "research/step-math-validation",
+      "source_head": "0dd1da5ce599b2a418357b7ebcc5f820b2d47dc8",
+      "source_product_commit": "4abc4afbb976babc4740bf22e42dc368a24c1b13",
+      "merge_commit": "f63dae86e2da35a0b341697db3643486f5c99f2c",
+      "conflicts": 0
+    }
+  ],
+  "product_commit": "7507312bbb16af5527ef7c7dba4f59c2a786cbd2",
+  "product_sha256": "afab0a3ca3abfe3c3f7692d34be2aeadbd099b8d43b6543d8d234d19b5ef8443",
+  "measured_files": 110,
+  "versions": {
+    "REGISTRY_VERSION": "geometry-functions/6",
+    "PLANNER_VERSION": "geometry-fact-planner/7",
+    "ENGINE_VERSION": "geometry-function-engine/5",
+    "CACHE_VERSION": "125",
+    "DEFAULT_MODE": "LLM_ONLY",
+    "RESPONSE_CONTRACT": "flat",
+    "HYBRID_PRODUCT_ENABLEMENT": "NO-GO"
+  },
+  "surface_fingerprints": {
+    "flat": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "v3": "90bf8f039df830062e068adcf1d243643c8ebebfde5b4a5cf9ec340078ea7aab",
+    "function_calling": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+    "TypedFact_json_schema": "aa9d93eeac9f1659af8e5acd42af1904b7aaed674a8ab0f56f0c7dd8b2ad4ee8",
+    "function_declarations": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"
+  },
+  "regressions": {
+    "historical_planner_cases": "174/174 (65 served, 109 refused)",
+    "slice_ab_goal_composition_cases": "40/40 (19 production served + 4 discovery served = 23 served, 17 refused)",
+    "offline_v3_matrix_cells": "8/8 COMPLETE (matching frozen 04b0db37 scores 100%)",
+    "step_math_baseline_scenes": "148/148 VERIFIED (5,105 category checks)",
+    "step_math_combined_discovery_scenes": "88/88 VERIFIED (65 historical + 19 Slice A/B + 4 discovery, with strict SPD chart_metric guard)",
+    "step_math_counterexamples": "10/10 detected",
+    "degenerate_metric_counterexamples": "10/10 rejected (strict_parse_metric / strict_mat3_inv)",
+    "demo_replay": "5/5 PASS (1/1 reduced chain)",
+    "crash_surface_audit": "6/6 PASS (0 uncaught)",
+    "live_ai_calls": 0
+  },
+  "verdict": "COMBINED_BACKEND_VERIFIED_PENDING_MAIN_GO"
+}
