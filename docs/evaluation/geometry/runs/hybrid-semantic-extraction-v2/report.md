@@ -99,12 +99,15 @@ Historical: the old 60-case NLU GOLD arm moves one row (L02 refused → refused 
 recorded in [`results/historical-gold-delta.json`](results/historical-gold-delta.json); the old 44 locked items are
 diagnostic only, never held-out evidence.
 
-## 5. Live measurement — not run
+## 5. Live measurement — paired dev pilot (owner GO pilot only)
 
-Status **LIVE_NOT_AUTHORIZED**; no `MEASURED_LIVE` claim. Paired arms on the same frozen product (baseline = saved
-original prompt `485d3834…`, v2 = `c4e4392c…`), gemini-2.5-flash, temperature 0, one structured pass, 0 retries. Request:
-[`approval-request.md`](approval-request.md); identities: [`approval-identities.json`](approval-identities.json).
-Old approvals (`nlu-approval.json`) do not match and cannot be reused.
+24 requests (12 dev × baseline/v2), 0 retries, no stop, est. USD 0.123; LOCKED **not run**. Analysis:
+[`results/live-pilot-analysis.md`](results/live-pilot-analysis.md). Both arms served 0/12 (GOLD ceiling 2/12), 0 unsafe.
+v2 vs baseline: intent proxy 10→13/16, invented-label rows 1→0, parsed 11→12, multi-goal 0→1/4, cost −34 %, max latency
+32→13 s; **unchanged** operand correctness 2/8, solid association 3/6, expressible goal/entity 5/11, unsupported 0/1.
+The dominant failure persists: question operands land in `value` or are omitted, right angles keep three points. The
+flat response schema makes every operand slot optional; a prompt rule alone did not move it. Recommendation: no
+held-out run for this prompt; next, a separately approved provider-contract (schema) wave tuned on dev.
 
 ## 6. Verification
 

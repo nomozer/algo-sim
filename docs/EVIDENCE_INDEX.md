@@ -6,10 +6,10 @@ REPORT = docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/
 CORRECTS = NONE (scorer /2 reported beside the frozen NLU scorer; its L01 artifact re-checked on the recorded receipt)
 CORRECTED_BY = NONE
-CLASSIFICATION = RESEARCH_BRANCH_OFFLINE_ONLY · LIVE_NOT_AUTHORIZED · integration PENDING_OWNER_GO
+CLASSIFICATION = RESEARCH_BRANCH · LIVE PILOT MEASURED (results/live-pilot-analysis.md) · LOCKED NOT RUN · integration PENDING_OWNER_GO
 CODE_COMMIT = 69fa9be8 (route-B prompt v2 + bounded Source Grounding); protocol lock 6ceb2508
 VERIFICATION_COMMIT = candidate b5406c91… MATCH at 108fc086; identities + offline receipts at c640cd14; T3 FULL_PRODUCT_GATE_PASS at fa6d792e and, merged with main 8427c879, at b7b7e89e (verification/t3-merged.json)
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Fresh 36-case corpus (dev 12 / heldout 24, 34 Fraction oracles), scorer grounded-source-obligations/2 (independent
 review NOT_READY → LOCK_READY). GOLD served correct dev 1→2/12, heldout 2→2/24, 0 unsafe; prompt effect NOT_MEASURED.
@@ -23,7 +23,7 @@ CORRECTED_BY = NONE
 CLASSIFICATION = SCENE3D_EDUCATIONAL_FINALIZATION_INTEGRATED_ON_MAIN (`22df95d6`, merged `d4947610`, refreeze `7dc609bd`; `integration.md`) · `HUMAN_VISUAL_REVIEW_PASS` (confirmed by user in session, 2026-10-17)
 CODE_COMMIT = 22df95d6 (shared frontend Scene3D modules EDU-1..EDU-8; 0 backend/prompt changes)
 VERIFICATION_COMMIT = 8aabb4b9 clean detached T3 FULL_PRODUCT_GATE_PASS (verification/t3-pass.json; pytest 10263 passed/1 skipped/2 deselected/9 xfailed, vitest 68 files/1077 passed, build PASS, demo PASS, crash surface 6/6 PASS); candidate 57c7f5db… refrozen at 7dc609bd; independent review v2 (review.md) PASS 7/7
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 49 full-size (`1280×900`) browser states across 12 scenes (`visual/after/audit-summary.json`, 0 console/page errors, 0 label overlaps, 0 unplaced annotations), 7 side-by-side comparison sheets (`visual/cmp-01..09-*.png`), `scene3d-orbit-gate.mjs` `DAT` on `p1`, `p6`, `p7` (`capPhat = 0`, `yen = 0.0°`), and `hybrid-section-visual-check.mjs` PASS (`failures: []`). `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid NO-GO.
 
@@ -51,7 +51,7 @@ CORRECTED_BY = NONE
 CLASSIFICATION = HYBRID_SEMANTIC_GROUNDING_INTEGRATED_ON_MAIN (bd20ac46, pushed; integration.md)
 CODE_COMMIT = 94b3437b (final Registry/Engine; preserves Claude work plus review/historical fixes)
 VERIFICATION_COMMIT = bd2dc080 clean detached T3 FULL_PRODUCT_GATE_PASS (verification/t3-attempt3.json; attempts 1–2 FAIL kept); candidate 57c7f5db… MATCH
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Offline authored Typed Facts:99 extraction cases (58 development +40 separate-author sentences mapped to41 cases),
 13→0 wrong serves,21→16 false refusals; historical174 preserves answers/planner with two declared refusal-code changes.
@@ -69,7 +69,7 @@ CORRECTED_BY = NONE
 CLASSIFICATION = SCENE3D_VISUAL_CORRECTNESS_INTEGRATED_ON_MAIN (ee9689e6, pushed; integration.md)
 CODE_COMMIT = a7388a40 (merge of Gemini 0ef0a20a, frontend) + 08021881 (FE-4) + f07ea069 (CONTRACT-BE-1, route D)
 VERIFICATION_COMMIT = 0a33fcc8 clean detached T3 FULL_PRODUCT_GATE_PASS (verification/t3-pass.json); candidate 43e877ed… refrozen at 8f437980
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Integration scenes (`visual/scenes.json`) regenerated from the integrated backend; Scene3D harness D3D11 + SwiftShader receipts in `visual/receipts/`. Technical rendering only; no human visual approval or Hybrid enablement implied.
 
@@ -82,7 +82,7 @@ CORRECTED_BY = NONE
 CLASSIFICATION = GENERALIZED_GOAL_ENTRY_READY_FOR_INTEGRATION_DECISION
 CODE_COMMIT = 193e634a (route D) + 289007a4 (Scene3D witness)
 VERIFICATION_COMMIT = 5964f875 clean detached T3 FULL_PRODUCT_GATE_PASS (verification/t3-pass.json); candidate eaddb56c… refrozen at 297e6cce
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Preregistered new development corpus: length from an unnamed described point to one named point. Independent Fraction/Gram oracle; fixed/bounded/discovery baselines; production/removal/centroid/reversed/lying catalog variants. Exact report and final identities in the run package; no human approval or Hybrid enablement implied.
 
@@ -96,7 +96,7 @@ CLASSIFICATION = FUNCTION_DISCOVERY_SLICE_READY_FOR_REVIEW
 CODE_COMMIT = cfa27baa (route D: geometry_functions planner/registry/engine, ai/function_route; 9fec9f43 + review fixes)
 VERIFICATION_COMMIT = e6c5b0f1 clean detached T3 FULL_PRODUCT_GATE_PASS (verification/t3-pass.json); candidate 093359c2… refrozen at 81315986; independent review PASS_WITH_FINDINGS (run report §7)
 DOCUMENTATION_COMMIT_ROLE = SELF
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Preregistered (`66593504`) development corpus, NOT_HELD_OUT, independent Fraction/Gram oracle: NEW 9/9 positives exact, 15/16
 negatives with the registered code (deviation D-1), 0 wrong served; FIXED (`2a3c0787`) and BOUNDED (`8c24cb52`) 0/9; NEW identical
@@ -113,7 +113,7 @@ CLASSIFICATION = SCENE3D_ARCHITECTURE_IMPLEMENTATION_READY_FOR_REVIEW
 CODE_COMMIT = SELF (frontend W1–W3 implementation on research/scene3d-visual-parity-audit; backend 55c657b8 unchanged)
 VERIFICATION_COMMIT = SELF (Vitest 68 files / 1061 passed, Pytest geometry 7758 passed, Playwright 11/11 parity & oracle PASS, result-binding-visual-check PASS_CORE_CAUSAL_RENDERING; T3 NOT_RUN awaiting independent review)
 DOCUMENTATION_COMMIT_ROLE = SELF
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Resolves all 2 CRITICAL, 5 IMPORTANT, and 2 NONBLOCKING W0 findings (`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY`): `veKhongGian` transforms `o.perpendicular_witness` idempotently (`0.0` displacement across 11/11 cases); `scene3d-auxiliary.ts` preserves `perpendicular_witness.on` carrier lines (`gt_g`, `derived_H_line`) under default `aux=0` while hiding disposable planes (`mp1_gt_g`, `mp2_gt_g`) and off-solid translated points (`H`, `H1`); `hybrid-section-visual.tsx` enables `withSubEntities` by default (`after_same_all_rendered_objects = true` across all 9 harness cases); unselected `face` sub-entities act as transparent hit proxies; section sub-entities respect progressive `geometry_progress`; coincident points render `"B ≡ H"`; passive `surface` planes bound to defining points at `0.10` opacity; and W0 10/11 case metadata is reconciled (`section-MAB-trapezoid` included in both oracle and parity telemetry). Candidate not yet refrozen; no merge, no push.
 
@@ -127,7 +127,7 @@ CLASSIFICATION = SCENE3D_W0_BASELINE_AUDIT_COMPLETE
 CODE_COMMIT = NONE (product 55c657b8 unchanged)
 VERIFICATION_COMMIT = 4b51fde8 (W0 baseline audit on f83b4ed1, candidate 30808cb0… verified)
 DOCUMENTATION_COMMIT_ROLE = SELF
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 W0 visual parity and readability baseline audit (`ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY`) across Product (`/`) and Playwright Harness (`/scripts/hybrid-section-visual.html`). Proved backend Scene IR coordinates, planes, projection feet, and distances are 100% exact in Gram metric $G$, and isolated 2 CRITICAL (`FINDING-B1`, `FINDING-B2`), 5 IMPORTANT (`FINDING-D1..D3`, `FINDING-C2`, `FINDING-E1`), and 2 NONBLOCKING (`FINDING-A1`, `FINDING-D4`) frontend mapping, renderer, and harness divergences. Reconciled in `SCENE3D_ARCHITECTURE_VISUAL_RELIABILITY` (W0 oracle had 10 cases omitting `section-MAB-trapezoid` while W0 parity telemetry had 11 cases).
 
@@ -141,7 +141,7 @@ CLASSIFICATION = FINAL_RESULT_BINDING_T3_PASS
 CODE_COMMIT = 55c657b8 (product, independently code-reviewed)
 VERIFICATION_COMMIT = 7f355a81 (refreeze checkpoint, candidate 30808cb0…, 110 files); T3 FULL_PRODUCT_GATE_PASS on a clean detached worktree at 7f355a81
 DOCUMENTATION_COMMIT_ROLE = SELF
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Final refreeze (candidate 4b95dcc6… → 30808cb0…) from a clean detached worktree, with an append-only divergence layer chained through `corrects`. Authoritative T3 at the checkpoint: pytest 10046 passed / 0 failed (1 skipped, 2 deselected, 6 xfailed), vitest 1055/1055, build, demo 5/5, crash surface 6/6. The nine former candidate failures pass. Supplementary, not T3: locked corpus 18/18 and Benchmark 30 (19/9/0/2) byte-identical, two-line 45 (12/33) and 32 (11/21) identical except identity fields, grammar probe byte-identical (0 WRONG_SERVED), provider fingerprints unchanged. Integration readiness READY_FOR_REVIEW; no merge, no push.
 
@@ -155,7 +155,7 @@ CLASSIFICATION = SHARED_ASK_GRAMMAR_SAFETY_BLOCKED
 CODE_COMMIT = 5f1b576c (product); 9ce1298f (harness)
 VERIFICATION_COMMIT = 5fc1645c (freeze 4b95dcc6…); T3 NOT_RUN
 DOCUMENTATION_COMMIT_ROLE = SELF
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 The sentence-level reading of asking sentences, the closed bracketed/rounding/unit grammar and the source-read reused foot together cut the preregistered probe from 47 (B) and 32 (A) WRONG_SERVED to 0. Locked corpus 18/18, benchmark 30 and two-line 45/32 are invariant; provider surfaces are unchanged. A harness bug made the protected favicon read as a dirty tree; it is fixed with RED/GREEN. The independent review of `9ce1298f` is BLOCK with C1–C4 and I1–I3. C2 and C3 are outside the approved scope. No merge, no push.
 
@@ -169,7 +169,7 @@ CLASSIFICATION = RESULT_BINDING_FALSE_SERVE_FIX_BLOCKED
 CODE_COMMIT = 2427289a; 8da9ae31
 VERIFICATION_COMMIT = 55fa87e7 (freeze a6ba6f32…); f25f2deb (freeze 7e993f8d…); T3 NOT_RUN
 DOCUMENTATION_COMMIT_ROLE = SELF
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 `_kiem_phu` now reads the auxiliary distance(point, line) ask on the source under the shared closed ask grammar, which closes IMPORTANT-1/2 of the `efb756aa` review. RED: 13/20 and 5/7. GREEN: 605 targeted tests. Locked corpus 18/18 and benchmark 30 are byte-identical; two-line 45/32 unchanged; provider surfaces unchanged. The independent review of `2427289a` returned BLOCK, with CRITICAL-1/2 in the shared grammar (also ordinary asks and Route A) and IMPORTANT-1 on the reused-foot splice. The `8da9ae31` delta is not independently reviewed. 8 pre-existing false serves remain. No merge, no push.
 
@@ -183,7 +183,7 @@ CLASSIFICATION = RESULT_BINDING_MAIN_INTEGRATION_BLOCKED
 CODE_COMMIT = NONE (product efb756aa unchanged)
 VERIFICATION_COMMIT = d3323447 (preflight); main 2a3c0787 (probe comparison)
 DOCUMENTATION_COMMIT_ROLE = SELF
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Fresh-context independent review of `10dd6d6e..efb756aa`: delta PASS (shared `_CHAN_TAN_NGU` back to main, no new serve in 36 probes). It found 2 IMPORTANT pre-existing false serves on the auxiliary distance(point, line) `_kiem_phu` path, identical on `main`. Following the task rule, there was no fast-forward and no push; the user's decision is pending. Preflight otherwise passes: ff-eligible, candidate MATCH, provider pins MATCH, corpus intact.
 
@@ -197,7 +197,7 @@ CLASSIFICATION = RESULT_BINDING_MAIN_INTEGRATION_GO_AWAITING_APPROVAL
 CODE_COMMIT = NONE (product efb756aa unchanged)
 VERIFICATION_COMMIT = 11db61a1 (start); targeted gates on the readiness documentation commit (gates.json); reused T3 7b14fe04
 DOCUMENTATION_COMMIT_ROLE = SELF
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Provider fingerprints recomputed in clean detached worktrees at `19140e2f`, `efb756aa`, `7b14fe04` and HEAD: A/B/declarations all INTENTIONALLY_CHANGED, backward compatible, `PlanningContract` absent from declarations (`provider-fingerprints.json`). Corrections (`corrections.json`): C1 draft hashes `442d1a0b…`/`be38f55f…` were not two-line-plane-section hashes (origin NOT_RECOVERABLE); C2 independent re-review covered `10dd6d6e`, the 3-line `efb756aa` delta reviewed here (session, not independent) NONBLOCKING; C3 stale `TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md` §2 hash/version. Fast-forward eligible; scene/corpus re-export byte-identical at final product; no merge/push.
 
@@ -211,7 +211,7 @@ CLASSIFICATION = RESULT_BINDING_INTEGRATION_REVIEW_READY
 CODE_COMMIT = efb756aa
 VERIFICATION_COMMIT = 7b14fe04
 DOCUMENTATION_COMMIT_ROLE = SELF
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Source-bound result binding (`line_ref`) and bounded effect-driven point–line distance planning over `REGISTRY` effects (`PlanningContract` on `intersection_line`, `orthogonal_projection_line`, `ask_length`). RED `de5ea1a7` 18/18 `SCHEMA_INVALID` → GREEN 6/6 positive `SERVED` ($d^2 \in \{10/11, 5, 3, 10, 0, 10/11\}$), 12/12 negative `REFUSED` (`test_result_binding_planning.py` 72 passed; 18/18 `EXACT_MATCH` in `reconciliation.json`). Independent 11-dimension review (`review.md`) closed `CRITICAL-1`, `IMPORTANT-1`, `IMPORTANT-2`, `NONBLOCKING-1` via RED → GREEN at `efb756aa`. Browser harness (`visual/{swiftshader,gpu}/receipt.json`) 4 scenes `PASS_CORE_CAUSAL_RENDERING`, 0 errors. Historical two-line 45/32 and benchmark 30 invariant. Candidate `c0a8792f1c491ae4…` (110 files). Clean detached T3 `FULL_PRODUCT_GATE_PASS` at `7b14fe04` (`verification/t3-pass.json`, `verification/t3-authoritative.log` `29b09bf5…`: backend `9405 passed, 1 skipped, 2 deselected, 6 xfailed`, frontend Vitest `68 files / 1055 passed`, production build PASS, demo replay `5/5`, crash surface `6/6`).
 
@@ -224,7 +224,7 @@ CORRECTS = NONE
 CLASSIFICATION = NEXT_PLANNER_SLICE_DESIGN_READY_NO_PRODUCT_CHANGE
 CODE_COMMIT = NONE (existing producta5a0797c)
 VERIFICATION_COMMIT = 2a3c0787 (source baseline); a3907cc3 (diagnostic inputs before execution)
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 14 diagnostic probes, not held-out; current-transport6correct serves/4correct refusals/1grounding false refusal;
 3 separate proposed-field schema refusals with lower IR capability witnesses PASS. No general-search claim.
@@ -239,7 +239,7 @@ CORRECTS = GROUP_A_INTEGRATION_READINESS
 CLASSIFICATION = USER_AUTHORIZED_RESEARCH_INTEGRATION_MAIN_REMOTE_VERIFIED
 CODE_COMMIT = a5a0797c
 VERIFICATION_COMMIT = 5d73f7c2 (integration targeted); f227dd72 (inherited T3)
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 User accepts disclosed limits for research integration only (`APPROVAL.md`). Main fast-forward and first push verified
 at5d73f7c2; documentation publication commit has role SELF. Research branch retained, Hybrid off. Additive gzip archives
@@ -254,7 +254,7 @@ CORRECTS = PEDAGOGICAL_CONSTRUCTION_SEQUENCING
 CLASSIFICATION = GROUP_A_CONDITIONAL_GO_NO_MERGE_NO_PUSH
 CODE_COMMIT = a5a0797c
 VERIFICATION_COMMIT = d3c7381a (targeted clean detached); f227dd72 (reused authoritative T3)
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Fresh independent LOCAL re-review closes the missing final-fix review receipt. Technical gates PASS; human visual/scope
 acceptance remains pending. Historical receipts keep their bytes; integration delta and preservation snapshots recorded.
@@ -268,7 +268,7 @@ CORRECTS = SCENE3D_CONSTRUCTION_AUDIT
 CLASSIFICATION = LOCAL_READY_FOR_HUMAN_VISUAL_REVIEW_NO_PUSH
 CODE_COMMIT = a5a0797c
 VERIFICATION_COMMIT = f227dd72
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Learner construction order of Hybrid scenes; resolves the auxiliary-before-solid limitation of `scene3d-construction-audit`.
 Preregistered corpus 6 + 30; held-out ordering result is the first evaluation at `b0a853a0` (27/28 served), later runs are not
@@ -283,7 +283,7 @@ CORRECTS = TWO_LINE_PLANE_SECTION
 CLASSIFICATION = LOCAL_READY_FOR_HUMAN_VISUAL_REVIEW_NO_PUSH
 CODE_COMMIT = eea6f3df
 VERIFICATION_COMMIT = b8e96a86
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Every learner step and point of the three served two-line scenes: math oracle + browser projection, before/after receipts.
 Corrects the two-line visual limitation "some vertex labels suppressed" (renderer fix) and extends its candidate
@@ -298,7 +298,7 @@ CORRECTS = SOURCE_GROUNDING_INTEGRATION
 CLASSIFICATION = LOCAL_RESEARCH_GROUP_A_GO_NO_PUSH
 CODE_COMMIT = 2b42eb40
 VERIFICATION_COMMIT = 69ff3a16
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 New strict two-line plane/section composition, no second authority; intentional additive B surface change.
 Candidate correction extends source-grounding-integration; historical bytes/labels stay unchanged.
@@ -314,7 +314,7 @@ CORRECTS = NONE
 CLASSIFICATION = COMPACT_DSL_NO_GO_ARCHIVED
 CODE_COMMIT = NONE
 VERIFICATION_COMMIT = NONE
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 User-approved NO-GO for the Compact Geometry DSL and compact JSON as the AI → Hybrid wire format; Typed Facts JSON stays.
 The research (runs `compact-geometry-dsl-spike` HOLD, corrected by `compact-dsl-format-evaluation` NO-GO) lives on the
@@ -332,7 +332,7 @@ CORRECTS = SOURCE_GROUNDING_COMPLETENESS
 CLASSIFICATION = MAIN_INTEGRATED_PUSHED_T3_PASS_RESEARCH_CLOSURE
 CODE_COMMIT = c30049fd
 VERIFICATION_COMMIT = 27b81c51
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Independent final review uncovered a previously undeclared, preexisting numeric quote-overlap bypass; fixed in the
 same semantic authority, RED 4 fail / 14 pass → GREEN 227 pass / 1 xfail. Focused independent follow-up NON-BLOCKING.
@@ -353,7 +353,7 @@ CORRECTS = NONE
 CLASSIFICATION = RESEARCH_BRANCH_T3_PASS_AWAITING_INTEGRATION_DECISION
 CODE_COMMIT = b264828f
 VERIFICATION_COMMIT = 046ab48a
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Premise source coverage in the shared A/B gate (`SOURCE_PREMISE_UNREAD`). RED at 7767c7e1: 130 failed / 79 passed.
 Four independent LOCAL reviews (two BLOCKING), Critical/Important closed RED → GREEN. Candidate 46ca75a2 (divergence
@@ -371,7 +371,7 @@ CORRECTS = GOAL_DIRECTED_SECTION_PLANNING
 CLASSIFICATION = MAIN_INTEGRATED_PUSHED_T3_PASS
 CODE_COMMIT = 4a4f065b
 VERIFICATION_COMMIT = b653d381
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Final re-review before integration: BLOCKING C1 (anaphor bound from quotes) + I1 (definition rest read in the quote)
 fixed 39896b6e; a verifier found one more Important (anaphor not closing the object) fixed 4a4f065b; RED → GREEN.
@@ -389,7 +389,7 @@ CORRECTS = NONE
 CLASSIFICATION = PHASE_A_B_T3_PASS_AWAITING_INTEGRATION_DECISION
 CODE_COMMIT = 68fbc844
 VERIFICATION_COMMIT = a443d2a2
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Phase A: closed follow-up coverage in `registry._kiem_du_kien_cau_hoi` (125 tests, routes A/B). Phase B: route-B goal
 decomposition `MAT_SONG_SONG` with planner-only `translate_point`; exact independent oracle; Scene3D harness
@@ -408,7 +408,7 @@ CORRECTS = NONE
 CLASSIFICATION = MAIN_INTEGRATED_PUSHED_T3_PASS
 CODE_COMMIT = f56d8cb7
 VERIFICATION_COMMIT = 5fe14001
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 User-authorized ff-only `232c1225` → `5fe14001`, SessionStart commit `ebe4e463`, push `a6e27a78..ebe4e463`
 (main = origin/main = ls-remote). Candidate 25c85eed verify PASS; benchmark byte-identical 19/9/0/2; clean detached
@@ -425,7 +425,7 @@ CORRECTS = QUESTION_LOCAL_GIVENS
 CLASSIFICATION = FINAL_REVIEW_FIX_T3_PASS_AWAITING_INTEGRATION_DECISION
 CODE_COMMIT = f56d8cb7
 VERIFICATION_COMMIT = 8fa3ae4c
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Fresh LOCAL review of `232c1225..98852c8f`: no new false serve, arms identical. New false refusal "biết rằng" fixed
 RED 2/2 → GREEN 256. Narrows the prior claim: an unmarked same-sentence change after "sau đó"/"rồi" is still served
@@ -443,7 +443,7 @@ CORRECTS = HYBRID_SEMANTIC_HARDENING
 CLASSIFICATION = BOUNDED_GIVENS_REPAIR_T3_PASS_AWAITING_INTEGRATION_DECISION
 CODE_COMMIT = e1f288ec
 VERIFICATION_COMMIT = 678f5b7b
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Shared A/B source coverage refuses changed/unverified question-local assumptions and preserves original facts;
 positive same-sentence givens remain served. Baseline RED 34/28; independent review 3 Critical + 1 Important,
@@ -463,7 +463,7 @@ CORRECTS = NONE
 CLASSIFICATION = LOCAL_MAIN_INTEGRATED_T3_PASS
 CODE_COMMIT = 624e7fc5
 VERIFICATION_COMMIT = 22edf7ff
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 User-authorized local fast-forward a6e27a78 → 22edf7ff; no push. Candidate d1410731 verified in a clean detached worktree.
 T3 8675 backend / 1053 frontend PASS, build/demo/crash PASS. Benchmark 30 cases byte-identical to the locked after result.
@@ -478,7 +478,7 @@ CORRECTS = HYBRID_SLICE_REVIEW
 CLASSIFICATION = HYBRID_HARDENING_AWAITING_INTEGRATION_DECISION
 CODE_COMMIT = 624e7fc5
 VERIFICATION_COMMIT = f44130d2
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 S1 closes the residual gate false serves of HYBRID_SLICE_REVIEW (operand binding, equality values, clause roles):
 residual probes 1/79 served (the correct reading). S2 finds the root cause of the "invisible intersection line" — a fixed
@@ -494,7 +494,7 @@ CORRECTS = HYBRID_SECTION_SLICE
 CLASSIFICATION = HYBRID_SLICE_REVIEW_AWAITING_INTEGRATION_DECISION
 CODE_COMMIT = b3e946e9
 VERIFICATION_COMMIT = 542e3894
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Independent review of S0 and the section slice. Critical 2 (C1 ask answered when not asked, C2 conditional / question
 clauses as givens), Important 3, Minor 4, re-verification false refusals, N1, N2 and the yes/no false serve: all closed
@@ -511,7 +511,7 @@ CORRECTS = NONE
 CLASSIFICATION = HYBRID_S0_AND_SECTION_SLICE_AWAITING_REVIEW
 CODE_COMMIT = eeceefbc
 VERIFICATION_COMMIT = 3e0eebc8
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Sections, intersection lines and section areas on the Hybrid route through the existing IR. Independent Euclidean
 oracle: trapezoid 117/16, triangle SAC 18, mid square 1, cube A'BD 12; parallel planes refused. Provider surfaces of
@@ -526,7 +526,7 @@ CORRECTS = NONE
 CLASSIFICATION = HYBRID_GATE_CLAUSE_ROLE_FIXED_ON_RESEARCH_BRANCH
 CODE_COMMIT = 8129f4ed
 VERIFICATION_COMMIT = 9a390c71
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Fix of the CRITICAL gate defect found by HYBRID_SIMULATION_CAPABILITY_AUDIT (clause role inside the quote) and of the
 ask-gate question check, shared by routes A and B. T3 FULL_PRODUCT_GATE_PASS at 9a390c71 (pytest 8409/0, vitest 1051).
@@ -540,7 +540,7 @@ CORRECTS = NONE
 CLASSIFICATION = HYBRID_SIMULATION_AUDIT_AWAITING_DECISION
 CODE_COMMIT = a6e27a78
 VERIFICATION_COMMIT = a6e27a78
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Audit of Hybrid simulation capability with offline typed-fact probes (27 passed, 5 strict xfail). Shared engine
 builds sections (executable probe against an independent trapezoid oracle) that Hybrid cannot request. New CRITICAL
@@ -557,7 +557,7 @@ CORRECTS = NONE
 CLASSIFICATION = HYBRID_SLICE1_INTEGRATED_ON_LOCAL_MAIN
 CODE_COMMIT = 62f0b18e
 VERIFICATION_COMMIT = a246dd19
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Slice 1 (B26) and the review fixes fast-forwarded into main (548066a8 → a246dd19). On main in a clean worktree:
 candidate dda3a884 verify 0, T3 FULL_PRODUCT_GATE_PASS (pytest 8362/0, vitest 1051). Offline evidence only; no
@@ -572,7 +572,7 @@ CORRECTS = HYBRID_GOAL_DECOMPOSITION
 CLASSIFICATION = HYBRID_SLICE1_INTEGRATION_AWAITING_APPROVAL
 CODE_COMMIT = 62f0b18e
 VERIFICATION_COMMIT = 9da4e853
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Independent review of goal decomposition slice 1. Corrects two claims of HYBRID_GOAL_DECOMPOSITION: "negated,
 conditional and proof-only goals are refused" (the gate answered clauses that do not ask the distance; now
@@ -589,7 +589,7 @@ CORRECTS = NONE
 CLASSIFICATION = HYBRID_GOAL_DECOMPOSITION_SLICE1_AWAITING_REVIEW
 CODE_COMMIT = f874b4dd
 VERIFICATION_COMMIT = d8d636b5
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Goal decomposition slice 1: distance(point, line) through a compiler-introduced auxiliary foot (DERIVED/AUXILIARY),
 admitted by the source gate only through the planner's declaration. Benchmark (same 30 cases and oracle) moves from
@@ -606,7 +606,7 @@ CORRECTS = NONE
 CLASSIFICATION = HYBRID_GOAL_DIRECTED_COMPILER_DESIGN_AWAITING_APPROVAL
 CODE_COMMIT = 267eeb58
 VERIFICATION_COMMIT = 267eeb58
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 30-case Hybrid B compiler benchmark with an oracle that imports nothing from the product, pre-registered before any
 compiler change. Verified facts and fake-provider pipeline agree on all 30: 18 correct served, 9 correct refusals,
@@ -623,7 +623,7 @@ CORRECTS = NONE
 CLASSIFICATION = ALGOSIM_MAIN_INTEGRATION_READY_FOR_FINAL_APPROVAL
 CODE_COMMIT = 74df2a78
 VERIFICATION_COMMIT = 49cf739e
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Orbit gate recalibration lives in `docs/evaluation/geometry/runs/orbit-gate-v2/` (pre-registered v2 failed its
 known-good validation and is kept; v3 validated: historical DAT ×3, two injections refused; one v3 batch run
@@ -643,7 +643,7 @@ CORRECTS = GEOMETRY_LIBRARY_IMPORTANT_FIXES
 CLASSIFICATION = ALGOSIM_FINAL_INTEGRATION_GATES_AWAITING_APPROVAL
 CODE_COMMIT = 4ad89909
 VERIFICATION_COMMIT = ffe7fd68
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Withdraws the important-fixes attribution of the orbit-gate failure to the measurement environment: the
 historical build passes the unmodified gate today, while main 28ac1d61 fails it identically (canvas 545→683 px
@@ -661,7 +661,7 @@ CORRECTS = GEOMETRY_LIBRARY_EXPANSION
 CLASSIFICATION = GEOMETRY_LIBRARY_IMPORTANT_FIXES_AWAITING_REVIEW
 CODE_COMMIT = 4ad89909
 VERIFICATION_COMMIT = 811896f8
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Fixes review findings I1–I3 of GEOMETRY_LIBRARY_INTEGRATION_REVIEW. Corrects the expansion run on three points,
 without editing its artifacts: its scenes could re-root a tetrahedron (I1); its BRANCH_CANDIDATE product
@@ -679,7 +679,7 @@ CORRECTS = NONE
 CLASSIFICATION = GEOMETRY_LIBRARY_INTEGRATION_READINESS_AWAITING_APPROVAL
 CODE_COMMIT = be6608a3
 VERIFICATION_COMMIT = c6a99ac6
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Independent review; findings I1–I3 resolved by GEOMETRY_LIBRARY_IMPORTANT_FIXES (its report and screenshots
 stay as recorded).
@@ -693,7 +693,7 @@ CORRECTS = NONE
 CLASSIFICATION = GEOMETRY_LIBRARY_EXPANSION_AWAITING_REVIEW
 CODE_COMMIT = a0eb1450
 VERIFICATION_COMMIT = 815f06be
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 New isolated shared-library work, not a rerun/correction of experimental A/B outcomes.
 Before matrix audit.md, execution plan.md, new identity BRANCH_CANDIDATE.json and candidate_divergence.json;
@@ -723,7 +723,7 @@ CORRECTS = HYBRID_COMPILER_SELECTION
 CLASSIFICATION = HYBRID_AB_PILOT_READINESS_AWAITING_REVIEW
 CODE_COMMIT = cfe2ada5
 RUNNER_COMMIT = 2f1b457c
-MODEL_REQUEST_COUNT = 0
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
 
 Authoritative current identity/caps: `run.json`; inputs/oracles: `inputs/`; post-review fake certification:
 `fake-provider/verified/CERTIFICATION.json`; 344-pass focused/mutation journal, renderer metric, candidate divergence and
