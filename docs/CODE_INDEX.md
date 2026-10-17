@@ -6421,6 +6421,16 @@ Run `docs/evaluation/geometry/runs/w17-operation-annotations/`. Thẩm quyền �
 
 ### Semantic extraction v3 / Schema-Contract — run semantic-extraction-schema-contract (2026-10-17, research branch)
 
+Runtime revision (2026-10-18): run `semantic-extraction-v3-runtime-revision`; shared `_SAU_HOP_LE` uses a possessive
+separator to prevent exponential backtracking without widening the accepted language. `harness(arm, inp, mode)` in
+`run_schema_contract_evaluation.py` selects the schedule's cases before GOLD/replay and reference GOLD routing;
+whole-artifact identity and source order remain. Historical scorer/executor unchanged.
+`backend/scripts/run_schema_contract_offline.py` runs eight offline children sequentially with actual exits, a
+120-second process-tree watchdog and manifest/score/schedule checks; it stops on the first failure and refuses overwrite.
+Tests: `test_question_tail_runtime.py`, `test_schema_contract_evaluation.py`, `test_schema_contract_offline.py`.
+The revision's `inputs/prepare_protocol.py` reuses parent lock/review helpers, copies corpus/gold byte-for-byte, binds
+the unchanged original oracle/scorer plus corrected product/runner, and refuses repeat lock or stale review.
+
 | Thành phần | Path | Purpose · authority | Producer → consumer | Verify |
 |---|---|---|---|---|
 | Response contract v3 (opt-in) | `backend/app/ai/fact_extraction.py` (`facts_response_schema("v3")`, `_contract_v3`, `schema_accepts`, `RESPONSE_CONTRACT`) | `anyOf` 34 biến thể kind/goal: toán hạng bắt buộc + arity, mọi mô tả của hợp đồng flat giữ nguyên, lối thoát `unsupported`/`ambiguous`; vi phạm sau parse ⇒ `RESPONSE_CONTRACT_INVALID`. Mặc định sản phẩm vẫn `flat` (surface `485d3834…`) | runner nghiên cứu đặt `RESPONSE_CONTRACT` theo arm → `build_request` → `run_ai_fact_route` | `tests/geometry/test_schema_contract_v3.py` (mọi biến thể là TypedFact hợp lệ cho `doc_du_kien`, kèm tiêm lỗi) |

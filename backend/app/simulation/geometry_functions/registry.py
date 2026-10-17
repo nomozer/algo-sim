@@ -2171,8 +2171,9 @@ _LOAI_DON_VI = r"(?:độ dài|diện tích|thể tích|góc)"
 _MUC_GHI_CHU = rf"(?:{_LAM_TRON}|đơn vị(?:\s+{_LOAI_DON_VI})?(?:\s*:?\s*{_DON_VI})?|{_DON_VI})"
 _GHI_CHU_NGOAC = rf"\(\s*{_MUC_GHI_CHU}(?:\s*[,;]\s*{_MUC_GHI_CHU})*\s*\)"
 #: Sau cụm (sau khi xoá các cụm hỏi khác): chỉ những thứ này rồi kết câu / dữ kiện / việc kế tiếp.
+#: Possessive separators cannot be repartitioned by the outer repetition when an unread suffix fails.
 _SAU_HOP_LE = re.compile(
-    r"(?:[\s,;:]+|(?:và|cùng)(?!\w)|(?:có\s+)?(?:độ dài\s+)?(?:bằng|là)\s+bao\s+nhiêu|dài\s+bao\s+nhiêu|bao\s+nhiêu"
+    r"(?:[\s,;:]++|(?:và|cùng)(?!\w)|(?:có\s+)?(?:độ dài\s+)?(?:bằng|là)\s+bao\s+nhiêu|dài\s+bao\s+nhiêu|bao\s+nhiêu"
     r"|(?:bằng|là)\s*[?:]"                                                     # đề trắc nghiệm "… bằng?"
     # ngoặc chỉ là LỜI DẶN (làm tròn, đơn vị) — "(sau khi cắt bỏ …)" / "(tính theo đơn vị mới …)" không lọt (review S1)
     rf"|theo\s+(?:{_DON_VI}(?![\w'])|[a-z](?![\w'])|đơn vị(?:\s+{_LOAI_DON_VI})?\s+{_DON_VI}(?![\w']))|{_GHI_CHU_NGOAC}|{_LAM_TRON}(?![\w'])"

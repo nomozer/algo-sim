@@ -1,0 +1,17 @@
+{
+  "task": "bufr6nkj1",
+  "status": "TERMINATED_BY_OWNER_APPROVAL",
+  "attempt_status": "INCOMPLETE_RUNTIME_STALL",
+  "graceful_exit_code": 128,
+  "force_exit_code": 0,
+  "verified_pids": [
+    5684,
+    1304,
+    22304,
+    10692,
+    21180,
+    16508
+  ],
+  "remaining_processes": 0,
+  "observed_at": "2026-10-18T01:20:22.5183973+07:00"
+}

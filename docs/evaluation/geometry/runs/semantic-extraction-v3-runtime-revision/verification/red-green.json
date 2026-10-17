@@ -1,0 +1,38 @@
+{
+  "source_baseline": "7168d269",
+  "regex_split_red": {
+    "failed": 17,
+    "passed": 23,
+    "runtime_watchdog": "8 seconds"
+  },
+  "regex_split_safety_green": {
+    "passed": 263,
+    "xfailed": 1
+  },
+  "watchdog_red": {
+    "failed": 3,
+    "reason": "module absent"
+  },
+  "watchdog_green": {
+    "passed": 44
+  },
+  "local_logs": {
+    "red.log": {
+      "sha256": "03e24d3d03bb7e557bf57a213f0e70ba70c2a5113c1925fb916231630219c5fd",
+      "path": ".superpowers/red.log"
+    },
+    "green.log": {
+      "sha256": "8fdc80aab32b0541a790c702875758b7daabbeb044727a4344e154a6229ef1f8",
+      "path": ".superpowers/green.log"
+    },
+    "batch-red.log": {
+      "sha256": "a1af8951e37ce2c9910bf49da73a1a4dceaa4274f0364253026a071a5dcf8390",
+      "path": ".superpowers/batch-red.log"
+    },
+    "batch-green-authorized.log": {
+      "sha256": "82c171447978658673dd50204e2da1b5beaf11723211a697e13b1965512d0ed1",
+      "path": ".superpowers/batch-green-authorized.log"
+    }
+  },
+  "live_calls": 0
+}

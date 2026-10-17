@@ -2,7 +2,7 @@
 """Schema-Contract v3 evaluation: paired response-contract arms on the SAME product prompt — `flat` (the product
 contract) vs `v3` (kind/goal anyOf contract). The difference between arms is therefore the schema effect alone.
 
-Reuses scorer /2 (`run_semantic_extraction_evaluation`) and the frozen executor unchanged; one arm per process; live
+Reuses scorer /3 (`run_semantic_extraction_evaluation`) and the frozen executor unchanged; one arm per process; live
 only with an owner approval naming the exact arm identity; raw live output only under git-ignored `.superpowers/`.
 """
 from __future__ import annotations
@@ -18,31 +18,44 @@ sys.path.insert(0, str(ROOT / "backend"))
 from scripts import run_semantic_extraction_evaluation as E  # noqa: E402
 
 V1 = E.V1
-RUN = ROOT / "docs/evaluation/geometry/runs/semantic-extraction-schema-contract"
+RUN = ROOT / "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision"
 ARMS = ("flat", "v3")
 
 
-def harness(arm, inp):
-    """Scorer /2 harness with the product prompt; the arm only selects the provider response contract."""
+def harness(arm, inp, mode="PILOT"):
+    """Select the split before any route execution, retaining the full frozen artifact identity."""
     from app.ai import fact_extraction as fx
     if arm not in ARMS:
         raise ValueError(f"unknown arm {arm!r}")
     h = E.harness("v2", inp)          # product prompt (`_PRODUCT_PROMPT`), route record, persistence, base identity
     fx.RESPONSE_CONTRACT = arm        # set on every call: an earlier arm in the same process never leaks
     base = h.identity
-    if arm == "v3":
-        # The GOLD ceiling of an arm is "perfect extraction the arm's contract can express": a gold payload v3 cannot
-        # carry is refused exactly as the live check would refuse it, never assumed expressible.
-        from app.simulation.geometry_functions import KetQuaTuyen
-        contract, gold_route = fx.facts_response_schema("v3"), h.run_gold
+    gold_route, evaluate = h.run_gold, h.run_eval
 
-        def run_gold(data):
-            rows = gold_route(data)
+    def selected(data):
+        ids = {r["case_id"] for r in h.schedule(data, mode)}
+        cases = [c for c in data["corpus"]["cases"] if c["id"] in ids]
+        return {**data, "corpus": {**data["corpus"], "cases": cases},
+                "cases": {c["id"]: c for c in cases},
+                "gold": {**data["gold"], "cases": {cid: data["gold"]["cases"][cid] for cid in ids}}}
+
+    def run_gold(data):
+        data = selected(data)
+        rows = gold_route(data)
+        if arm == "v3":
+            from app.simulation.geometry_functions import KetQuaTuyen
+            contract = fx.facts_response_schema("v3")
             for r in rows:
                 if not fx.schema_accepts(contract, h.gold_payload(data, r["case_id"])):
                     r["route"] = h.route_record(KetQuaTuyen("REFUSED", "RESPONSE_CONTRACT_INVALID", "gold not expressible in v3"))
-            return rows
-        h.run_gold = run_gold
+        return rows
+
+    def run_eval(data, run_mode, *args, **kwargs):
+        if run_mode != mode:
+            raise V1.PilotStopped("HARNESS_MODE_MISMATCH")
+        return evaluate(selected(data), run_mode, *args, **kwargs)
+
+    h.run_gold, h.run_eval = run_gold, run_eval
 
     def identity(data, mode):
         return {**base(data, mode), "arm": arm, "contract": arm, "contract_runner_sha256": V1._lf_sha(Path(__file__))}
@@ -61,7 +74,7 @@ def main():
     p.add_argument("--approval", type=Path)
     args = p.parse_args()
     inp = E.load_inputs(args.inputs)
-    h = harness(args.arm, inp)
+    h = harness(args.arm, inp, args.mode)
     if args.action == "identity":
         print(json.dumps(h.identity(inp, args.mode), indent=2))
         return
@@ -72,7 +85,7 @@ def main():
         if state["identity"] != h.identity(inp, args.mode) or state["rows_sha256"] != V1._sha(state["rows"]):
             raise V1.PilotStopped("IDENTITY_MISMATCH")
     elif args.action == "gold":
-        rows = [r for r in h.run_gold(inp) if inp["cases"][r["case_id"]]["split"] == h.MODES[args.mode][0]]
+        rows = h.run_gold(inp)
         state = {"execution_class": "GOLD", "identity": h.identity(inp, args.mode), "rows": rows, "rows_sha256": V1._sha(rows),
                  "live_model_calls": 0}
     else:

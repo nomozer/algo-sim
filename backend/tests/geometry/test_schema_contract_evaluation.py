@@ -64,3 +64,40 @@ def test_v3_gold_ceiling_refuses_gold_the_contract_cannot_carry(tmp_path, monkey
     assert rows["v3"][0]["route"]["code"] == "RESPONSE_CONTRACT_INVALID"
     assert rows["flat"][0]["route"]["code"] != "RESPONSE_CONTRACT_INVALID"
     R.harness("flat", inp)
+
+
+@pytest.mark.parametrize("mode,split,count", [("PILOT", "dev", 12), ("LOCKED", "heldout", 24)])
+@pytest.mark.parametrize("arm", ["flat", "v3"])
+@pytest.mark.parametrize("action", ["gold", "replay"])
+@pytest.mark.parametrize("fail", [False, True])
+def test_routes_only_selected_split_before_processing(tmp_path, monkeypatch, mode, split, count, arm, action, fail):
+    from app.ai import fact_extraction, function_route
+    from app.simulation.geometry_functions import KetQuaTuyen
+    inp = _inp(tmp_path)
+    cases = [{"id": f"case{i}", "split": "dev" if i % 3 == 0 else "heldout", "source_text": f"source{i}"}
+             for i in range(36)]
+    inp.update(corpus={"cases": cases}, cases={c["id"]: c for c in cases},
+               gold={"cases": {c["id"]: {"facts": []} for c in cases}})
+    inp["protocol"]["caps"][mode] = {**inp["protocol"]["caps"]["PILOT"], "logical_calls": 36, "http_attempts": 36,
+                                    "accounted_tokens": 10**7, "usd": 10}
+    calls = []
+
+    def route(source, data):
+        calls.append(source)
+        if fail:
+            raise RuntimeError("synthetic route failure")
+        return KetQuaTuyen("REFUSED", "SYNTHETIC", "split boundary test")
+
+    monkeypatch.setattr(function_route, "run_fact_route", route)
+    monkeypatch.setattr(fact_extraction, "run_fact_route", route)
+    h = R.harness(arm, inp, mode=mode)
+    expected = [c["source_text"] for c in cases if c["split"] == split]
+    if action == "gold":
+        if fail:
+            with pytest.raises(RuntimeError, match="synthetic route failure"):
+                h.run_gold(inp)
+        else:
+            assert len(h.run_gold(inp)) == count
+    else:
+        h.run_eval(inp, mode, h.ReplayProvider(inp), tmp_path / "replay")
+    assert calls == (expected[:1] if fail else expected)
