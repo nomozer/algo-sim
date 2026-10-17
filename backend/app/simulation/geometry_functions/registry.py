@@ -2778,10 +2778,30 @@ _HINH_VUONG_TAI = r"(?i:tam\s+giác|tứ\s+giác|hình\s+thang|hình\s+chữ\s+n
 _VUONG_TAI = re.compile(rf"(?:{_DAU_NHAN}\(?((?:{_DIEM}){{3,}})\)?(?![\w'.])\s+(?:(?i:là)\s+(?:(?i:một)\s+)?)?(?:{_HINH_VUONG_TAI}\s+)?)?"
                         rf"(?i:vuông(?:\s+cân)?\s+(?:tại|ở))\s+({_DIEM}(?:\s*(?:,|(?i:và))\s*{_DIEM})*)(?![\w'])")
 #: The base subject right before an unlabelled right polygon, read in the SOURCE up to the clause (a quote may hold only
-#: "tam giác vuông tại B"): "đáy (ABC) là (một) tam giác …"; an optional label names the base itself.
+#: "tam giác vuông tại B"): "đáy (ABC) là (một) tam giác …"; an optional label names the base itself. Whose base it is
+#: comes from `_chu_cua_day`, never from "the only named solid".
 _DAY_VUONG = re.compile(rf"(?<!\w)(?i:đáy)\s+(?:\(?((?:{_DIEM}){{3,}})\)?(?![\w'.])\s+)?(?:(?i:là)\s+)?(?:(?i:một)\s+)?"
                         rf"{_HINH_VUONG_TAI}\s+$")
 _GOC_VUONG = re.compile(rf"(?i:góc)\s+(?<![\w'])((?:{_DIEM}){{3}})(?![\w'])\s+(?i:vuông|=\s*90|bằng\s+90)")
+
+
+#: Another solid named by a noun between a solid symbol and "đáy" takes the "đáy" for itself.
+_DANH_TU_KHOI = re.compile(r"(?<!\w)(?:chóp|lăng\s+trụ|hộp|tứ\s+diện|lập\s+phương|khối|hình\s+trụ|hình\s+nón)(?!\w)", re.IGNORECASE)
+
+
+def _chu_cua_day(truoc: str, dau_day: int) -> list[str] | None:
+    """Base labels of the solid that owns the word "đáy" at `dau_day`: the last solid symbol before it, in the same sentence,
+    with no other solid noun in between, and not the object of "vuông góc với (mặt) đáy". None when no owner is certain."""
+    if re.search(r"(?i:với)\s+(?:(?i:mặt)\s+)?$", truoc[:dau_day]):
+        return None
+    khoi = [(cuoi, p) for _d, cuoi, p in _tu_nhan(truoc[:dau_day]) if len(p) == 2]
+    if not khoi:
+        return None
+    cuoi, p = khoi[-1]
+    giua = truoc[cuoi:dau_day]
+    if re.search(r"[.!?](?=\s|$)", giua) or _DANH_TU_KHOI.search(giua):
+        return None
+    return p[1] if len(p[0]) == 1 else p[0]
 
 
 def _dinh_nghia_diem_dung_nguon(c: LoiGoi, q: str, de: str) -> bool:
@@ -2805,14 +2825,10 @@ def _dinh_nghia_diem_dung_nguon(c: LoiGoi, q: str, de: str) -> bool:
                 continue
             if m[1]:
                 poly = re.findall(_DIEM, m[1])
-            elif (vt := _vi_tri(de, q)) and (day := _DAY_VUONG.search(de[:vt[0]] + q[:m.start()])):
-                if day[1]:
-                    poly = re.findall(_DIEM, day[1])
-                else:
-                    bases = {tuple(p[1] if len(p[0]) == 1 else p[0]) for _d, _c, p in _tu_nhan(de) if len(p) == 2}
-                    if len(bases) != 1:
-                        continue
-                    poly = list(bases.pop())
+            elif (vt := _vi_tri(de, q)) and (day := _DAY_VUONG.search(truoc := de[:vt[0]] + q[:m.start()])):
+                if (chu := _chu_cua_day(truoc, day.start())) is None:
+                    continue
+                poly = re.findall(_DIEM, day[1]) if day[1] else chu
             else:
                 continue
             if len(set(poly)) == len(poly) and a.vertex in poly and ke(poly) == rays:

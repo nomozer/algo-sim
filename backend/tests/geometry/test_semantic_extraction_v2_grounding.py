@@ -353,3 +353,18 @@ def test_unlabelled_right_base_reads_the_base_subject_before_a_short_quote():
         payload["facts"] = [f for f in payload["facts"] if f["id"] != "f7"]
         payload["facts"][3]["quotes"] = [lead, "tam giác vuông tại B"]     # the premise span must still be read
         served(text, payload, {"q": Fraction(34)})
+
+
+@pytest.mark.parametrize("tail", [
+    ". Một khối lăng trụ có đáy là tam giác vuông tại A",                  # an unnamed second solid's base
+    ". So sánh với hình chóp có đáy là tam giác vuông tại A",
+    ", mặt bên (SAB) vuông góc với đáy là tam giác vuông tại A",           # "với đáy": the subject may be (SAB)
+])
+def test_an_unlabelled_base_belongs_to_the_solid_that_owns_the_word_day(tail):
+    # Fourth-round review: "đáy" must be the named solid's own base, not another solid's nor an object of "vuông góc với".
+    text = f"Cho hình chóp S.ABC có SA vuông góc với (ABC), SA = 3, AB = 3, BC = 4{tail}. Tính độ dài SC."
+    quote = tail.lstrip(".,").strip()
+    payload = _pyramid_abc(right=quote, at="A", rays=("B", "C"), ask=("S", "C"))
+    payload["facts"] = [f for f in payload["facts"] if f["id"] != "f7"]
+    r = run_fact_route(text, payload)
+    assert r.status == "REFUSED", (r.answers, r.code)
