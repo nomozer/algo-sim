@@ -507,5 +507,46 @@ describe("chấm đỉnh và đường phụ", () => {
     expect(mats.some((m) => m instanceof THREE.LineDashedMaterial)).toBe(true);
     expect(mats.some((m) => m instanceof THREE.LineBasicMaterial && !(m instanceof THREE.LineDashedMaterial))).toBe(true);
   });
+
+  it("viền mặt phẳng phụ (surface) nhường nét cho biên thiết diện (section) trùng cạnh để không vẽ chồng hai màu", () => {
+    const HOP: SceneObject = {
+      id: "hop", label: "ABCD.A'B'C'D'", type: "solid", render: "mesh",
+      origin: "derived", producer: "construct_solid", depends: [],
+      vertices: [
+        ["0", "0", "0"], ["1", "0", "0"], ["1", "1", "0"], ["0", "1", "0"],
+        ["0", "0", "1"], ["1", "0", "1"], ["1", "1", "1"], ["0", "1", "1"],
+      ],
+      vertex_ids: ["A", "B", "C", "D", "A'", "B'", "C'", "D'"],
+      faces: [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]],
+    };
+    const MP: SceneObject = {
+      id: "mp_P", label: "(A'BD)", type: "plane3", render: "surface",
+      origin: "derived", producer: "construct_plane", depends: ["A'", "B", "D"],
+      point: ["0", "0", "1"], normal: ["1", "1", "1"],
+    };
+    const TD: SceneObject = {
+      id: "td_P", label: "Thiết diện A'BD", type: "section", render: "polygon",
+      origin: "derived", producer: "construct_section", depends: ["hop", "mp_P"],
+      polygon: [["0", "0", "1"], ["1", "0", "0"], ["0", "1", "0"]],
+      closed: true, fill_visible: true,
+    };
+    const diem: [number, number, number][] = [[0, 0, 1], [1, 0, 0], [0, 1, 0]];
+    const goc = new THREE.Group();
+    const objHop = buildObject3D(HOP, false, undefined, diem)!;
+    const objMp = buildObject3D(MP, false, undefined, diem)!;
+    const objTd = buildObject3D(TD, false, undefined, diem)!;
+    goc.add(objHop, objMp, objTd);
+    const cam = new THREE.PerspectiveCamera(45, 4 / 3, 0.1, 100);
+    cam.position.set(5, 4, 3);
+    cam.lookAt(0.5, 0.5, 0.5);
+    cam.updateMatrixWorld(true);
+    cam.updateProjectionMatrix();
+    updateCanonicalEdgeVisibility(goc, cam, "800x600@1");
+    const mpBorders = gom(objMp).filter((c) => (c as THREE.Line).isLine && c.userData?.nonCanonicalBorderLine);
+    const tdBorders = gom(objTd).filter((c) => (c as THREE.Line).isLine && c.userData?.nonCanonicalBorderLine);
+    expect(tdBorders.length).toBeGreaterThan(0);
+    expect(mpBorders).toHaveLength(0);
+  });
 });
+
 

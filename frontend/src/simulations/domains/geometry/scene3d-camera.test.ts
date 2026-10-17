@@ -178,4 +178,46 @@ describe("tỉ lệ hình chiếu cao/rộng (mobile-canvas-fit, D5)", () => {
     expect(tiLeHinhChieu([[0, 0, 0]], [0, 1, 0])).toBeNull();
     expect(tiLeHinhChieu([[0, 0, 0], [0, 0, 1]], [0, 1, 0])).toBeNull();
   });
+
+  it("chân vuông góc ngoài khối vẫn nằm trong tập điểm căn khung và không kéo camera xoay lệch khỏi góc nhìn sách giáo khoa khi góc chuẩn đã đạt ngưỡng", () => {
+    const objects: Scene3D["objects"] = [
+      { id: "S", type: "point3", label: "S", render: "point_marker", origin: "free", producer: null, depends: [], xyz: ["0", "0", "1"] },
+      { id: "A", type: "point3", label: "A", render: "point_marker", origin: "free", producer: null, depends: [], xyz: ["0", "0", "0"] },
+      { id: "B", type: "point3", label: "B", render: "point_marker", origin: "free", producer: null, depends: [], xyz: ["1", "0", "0"] },
+      { id: "C", type: "point3", label: "C", render: "point_marker", origin: "free", producer: null, depends: [], xyz: ["0", "1", "0"] },
+      {
+        id: "k_1", type: "solid", label: "S.ABC", render: "mesh", origin: "derived", producer: "construct_solid",
+        depends: ["A", "B", "C", "S"],
+        vertices: [["0", "0", "0"], ["1", "0", "0"], ["0", "1", "0"], ["0", "0", "1"]],
+        faces: [[0, 1, 2], [0, 1, 3], [1, 2, 3], [2, 0, 3]],
+      },
+      { id: "M", type: "point3", label: "M", render: "point_marker", origin: "derived", producer: "midpoint", depends: ["A", "B"], xyz: ["1/2", "0", "0"] },
+      { id: "N", type: "point3", label: "N", render: "point_marker", origin: "derived", producer: "midpoint", depends: ["S", "C"], xyz: ["0", "1/2", "1/2"] },
+      {
+        id: "H", type: "point3", label: "H", render: "point_marker", origin: "derived", producer: "project", depends: ["M", "d_AN"],
+        xyz: ["0", "-1/5", "2/5"],
+        perpendicular_witness: {
+          from: "M", foot: ["0", "-1/5", "2/5"], on: "d_AN",
+          marker: { u: ["0", "1/2", "1/2"], v: ["-1/2", "-1/5", "2/5"] },
+        },
+      },
+      {
+        id: "kq", type: "quantity", label: "d", render: "readout", origin: "derived", producer: "distance", depends: ["M", "d_AN"],
+        annotation: {
+          kind: "length", role: "result", category: "result", subject_ids: ["M", "H"], anchor: "segment",
+          witness: {
+            from: "M", foot: ["0", "-1/4", "3/8"], on: "d_AN",
+            marker: { u: ["0", "1/2", "1/2"], v: ["-1/2", "-1/4", "3/8"] },
+          },
+        },
+      },
+    ];
+    const { diem, canh: ds, mat } = cauTrucGocNhin(objects);
+    expect(diem).toContainEqual([0, -0.25, 0.375]);
+    const huong = chonHuongNhin(diem, ds, mat);
+    const pv = Math.atan2(huong[1], huong[0]) * 180 / Math.PI;
+    expect(pv).toBeGreaterThanOrEqual(15);
+    expect(pv).toBeLessThanOrEqual(45);
+  });
 });
+

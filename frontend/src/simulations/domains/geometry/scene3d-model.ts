@@ -756,7 +756,7 @@ export function diemHuuHan(objects: SceneObject[]): Vec3[] {
   for (const o of objects) {
     if (o.render === "surface" || o.render === "line") continue;
     them(o.xyz); them(o.center); them(o.anchor); them(o.apex_or_top);
-    them(o.rim_point);
+    them(o.rim_point); them(o.annotation?.witness?.foot); them(o.perpendicular_witness?.foot);
     for (const v of o.vertices ?? []) them(v);
     for (const v of o.polygon ?? []) them(v);
     // Khối cong: bán kính nở ra theo hai phương ⟂ TRỤC. Chỉ có `rim_point` thì
@@ -834,6 +834,8 @@ export function cauTrucGocNhin(objects: SceneObject[]) {
     } else if (o.xyz) {
       dinh(o.xyz);
     }
+    if (o.perpendicular_witness?.foot) dinh(o.perpendicular_witness.foot);
+    if (o.annotation?.witness?.foot) dinh(o.annotation.witness.foot);
   }
   return { diem, canh, mat };
 }

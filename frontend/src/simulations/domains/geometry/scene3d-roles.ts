@@ -28,8 +28,8 @@ export const MAU_VAI_TRO = {
   trung_gian: 0xfb923c,
   /** Nét của ngữ cảnh cấu trúc/tô-pô — trung tính. */
   boi_canh: 0x6b7280,
-  /** Nền (mặt, khối) của ngữ cảnh cấu trúc — trung tính, nhạt. */
-  nen_boi_canh: 0xd1d5db,
+  /** Nền (mặt, khối) của ngữ cảnh cấu trúc — trung tính lạnh nhạt (xanh xám sách giáo khoa). */
+  nen_boi_canh: 0xcfd6df,
   /** Chấm điểm đề cho khi không có vai trò nào — trung tính đậm. */
   diem_de_cho: 0x374151,
 } as const;

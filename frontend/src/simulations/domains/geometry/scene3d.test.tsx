@@ -857,10 +857,45 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
       material: { color: { getHex(): number } };
     };
     const pos = goc.geometry.getAttribute("position");
-    expect(pos.count).toBe(3);
+    expect(pos.count).toBe(5);
     expect(pos.getZ(0)).toBeLessThan(5 - 1e-3);
     expect(pos.getZ(1)).toBeLessThan(5 - 1e-3);
     expect(goc.material.color.getHex()).toBe(0x0284c7);
+    const cham = nhom.children[2] as unknown as {
+      position: { x: number; y: number; z: number };
+      userData: { dauDinh?: string };
+    };
+    expect(cham.userData.dauDinh).toBe("thuong");
+    expect([cham.position.x, cham.position.y, cham.position.z]).toEqual([3, 0, 5]);
+  });
+
+  it("nhân chứng vuông góc trên khối đơn vị co giãn chu kỳ nét đứt và ô góc vuông theo đường kính cảnh, không phình quá khổ", () => {
+    const w = {
+      id: "perpendicular:H",
+      vai: "hinh_chieu" as const,
+      from: [1, 1, 0] as [number, number, number],
+      foot: [0, -0.2, 0.4] as [number, number, number],
+      u: [0, 1, 1] as [number, number, number],
+      v: [1, 1.2, -0.4] as [number, number, number],
+    };
+    const diem: [number, number, number][] = [
+      [0, 0, 0], [1, 0, 0], [0, 1, 0], [0, 0, 1],
+    ];
+    const nhom = vatNhanChung(w, diem, 0xc2410c, false);
+    const doan = nhom.children[0] as unknown as { material: { dashSize: number; gapSize: number } };
+    const goc = nhom.children[1] as unknown as {
+      geometry: { getAttribute(n: string): { getX(i: number): number; getY(i: number): number; getZ(i: number): number } };
+    };
+    expect(doan.material.dashSize).toBeLessThanOrEqual(0.08);
+    expect(doan.material.dashSize).toBeGreaterThanOrEqual(0.04);
+    const pos = goc.geometry.getAttribute("position");
+    const canhO = Math.hypot(
+      pos.getX(0) - w.foot[0],
+      pos.getY(0) - w.foot[1],
+      pos.getZ(0) - w.foot[2],
+    );
+    expect(canhO).toBeLessThanOrEqual(0.14);
+    expect(canhO).toBeGreaterThanOrEqual(0.06);
   });
 });
 

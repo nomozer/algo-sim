@@ -244,13 +244,14 @@ export function classifyWorldSegmentVisibility(
   options: {
     edge_id?: string;
     yield_colinear_canonical_edges?: boolean;
+    priority_segments?: readonly { id: string; a: THREE.Vector3; b: THREE.Vector3 }[];
     projected_edge_pixels?: number;
   } = {},
 ): WorldSegmentVisibilityResult {
   const edgeId = options.edge_id ?? "segment";
   const ab = b.clone().sub(a);
   const len = ab.length();
-  if (len <= 1e-9 || occluders.length === 0) {
+  if (len <= 1e-9 || (occluders.length === 0 && !options.priority_segments?.length)) {
     return {
       spans: [{ edge_id: edgeId, t0: 0, t1: 1, visibility: "VISIBLE" }],
       colinear_canonical_edge_ids: [],
@@ -261,37 +262,52 @@ export function classifyWorldSegmentVisibility(
   const colinearIds: string[] = [];
   let intervals: [number, number][] = [[0, 1]];
 
+  const checkColinear = (segId: string, eA: THREE.Vector3, eB: THREE.Vector3) => {
+    const vA = eA.clone().sub(a);
+    const vB = eB.clone().sub(a);
+    const projA = vA.dot(dir);
+    const projB = vB.dot(dir);
+    const distA = vA.clone().addScaledVector(dir, -projA).length();
+    const distB = vB.clone().addScaledVector(dir, -projB).length();
+    if (distA <= colinearTol && distB <= colinearTol) {
+      const u0 = Math.max(0, Math.min(projA, projB) / len);
+      const u1 = Math.min(1, Math.max(projA, projB) / len);
+      if (u1 - u0 > 1e-4) {
+        if (!colinearIds.includes(segId)) colinearIds.push(segId);
+        if (options.yield_colinear_canonical_edges) {
+          intervals = intervals.flatMap(([s0, s1]): [number, number][] => {
+            if (u1 <= s0 + 1e-5 || u0 >= s1 - 1e-5) return [[s0, s1]];
+            const next: [number, number][] = [];
+            if (u0 - s0 > 1e-4) next.push([s0, u0]);
+            if (s1 - u1 > 1e-4) next.push([u1, s1]);
+            return next;
+          });
+        }
+      }
+    }
+  };
+
   for (const occ of occluders) {
     for (const ce of canonicalEdgesOf(occ.solid)) {
       const eA = occ.matrixWorld ? ce.a.clone().applyMatrix4(occ.matrixWorld) : ce.a;
       const eB = occ.matrixWorld ? ce.b.clone().applyMatrix4(occ.matrixWorld) : ce.b;
-      const vA = eA.clone().sub(a);
-      const vB = eB.clone().sub(a);
-      const projA = vA.dot(dir);
-      const projB = vB.dot(dir);
-      const distA = vA.clone().addScaledVector(dir, -projA).length();
-      const distB = vB.clone().addScaledVector(dir, -projB).length();
-      if (distA <= colinearTol && distB <= colinearTol) {
-        const u0 = Math.max(0, Math.min(projA, projB) / len);
-        const u1 = Math.min(1, Math.max(projA, projB) / len);
-        if (u1 - u0 > 1e-4) {
-          if (!colinearIds.includes(ce.id)) colinearIds.push(ce.id);
-          if (options.yield_colinear_canonical_edges) {
-            intervals = intervals.flatMap(([s0, s1]): [number, number][] => {
-              if (u1 <= s0 + 1e-5 || u0 >= s1 - 1e-5) return [[s0, s1]];
-              const next: [number, number][] = [];
-              if (u0 - s0 > 1e-4) next.push([s0, u0]);
-              if (s1 - u1 > 1e-4) next.push([u1, s1]);
-              return next;
-            });
-          }
-        }
-      }
+      checkColinear(ce.id, eA, eB);
+    }
+  }
+  if (options.yield_colinear_canonical_edges && options.priority_segments) {
+    for (const ps of options.priority_segments) {
+      checkColinear(ps.id, ps.a, ps.b);
     }
   }
 
   if (intervals.length === 0) {
     return { spans: [], colinear_canonical_edge_ids: colinearIds };
+  }
+  if (occluders.length === 0) {
+    return {
+      spans: intervals.map(([t0, t1]) => ({ edge_id: edgeId, t0, t1, visibility: "VISIBLE" as const })),
+      colinear_canonical_edge_ids: colinearIds,
+    };
   }
 
   const triangles = occludingTriangles(

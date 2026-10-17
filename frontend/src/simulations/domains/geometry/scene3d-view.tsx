@@ -131,7 +131,7 @@ const MAU = {
   derived: 0xdc2626,
   line: 0x0f766e,
   surface: 0x7c3aed,
-  mesh: 0x64748b,
+  mesh: 0x647a96,
   /** Mực cạnh khối — tách khỏi màu mặt tô, nếu không cạnh chìm vào mặt (w09). */
   canh: 0x1e293b,
   polygon: 0xf59e0b,
@@ -464,6 +464,96 @@ export function toSangCanhChuan(
   return { ca, khuc };
 }
 
+function createSpanPoolGeometry(): THREE.BufferGeometry {
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(6), 3));
+  geo.setAttribute("lineDistance", new THREE.Float32BufferAttribute(new Float32Array(2), 1));
+  return geo;
+}
+
+function preallocateSpanGeoPool(owner: THREE.Object3D, count: number): THREE.BufferGeometry[] {
+  const pool = (owner.userData.spanGeoPool as THREE.BufferGeometry[] | undefined) ?? [];
+  while (pool.length < count) {
+    pool.push(createSpanPoolGeometry());
+  }
+  owner.userData.spanGeoPool = pool;
+  return pool;
+}
+
+function acquireSpanGeometry(
+  owner: THREE.Object3D,
+  slot: number,
+  a: THREE.Vector3,
+  b: THREE.Vector3,
+): THREE.BufferGeometry {
+  const pool = preallocateSpanGeoPool(owner, slot + 1);
+  const geo = pool[slot];
+  const pos = geo.getAttribute("position") as THREE.BufferAttribute;
+  const pa = pos.array as Float32Array;
+  pa[0] = a.x; pa[1] = a.y; pa[2] = a.z;
+  pa[3] = b.x; pa[4] = b.y; pa[5] = b.z;
+  pos.needsUpdate = true;
+  const dist = geo.getAttribute("lineDistance") as THREE.BufferAttribute;
+  const da = dist.array as Float32Array;
+  da[0] = 0;
+  da[1] = Math.hypot(b.x - a.x, b.y - a.y, b.z - a.z);
+  dist.needsUpdate = true;
+  geo.boundingSphere = null;
+  geo.boundingBox = null;
+  return geo;
+}
+
+function warmSpanPools(
+  goc: THREE.Object3D,
+  scene3: THREE.Scene,
+  cam: THREE.Camera,
+  renderer: THREE.WebGLRenderer,
+): void {
+  if (goc.userData.spanPoolsWarmed === true) return;
+  goc.userData.spanPoolsWarmed = true;
+  if (!scene3.userData.warmHoldGroup) {
+    const hold = new THREE.Group();
+    const holdGeo = createSpanPoolGeometry();
+    const solidHold = new THREE.Line(
+      holdGeo,
+      new THREE.LineBasicMaterial({ colorWrite: false, depthWrite: false, depthTest: false, transparent: true, opacity: 0 }),
+    );
+    const dashedHold = new THREE.Line(
+      holdGeo,
+      new THREE.LineDashedMaterial({
+        colorWrite: false, depthWrite: false, depthTest: false, transparent: true, opacity: 0, dashSize: 0.1, gapSize: 0.1,
+      }),
+    );
+    solidHold.frustumCulled = false;
+    dashedHold.frustumCulled = false;
+    solidHold.raycast = () => {};
+    dashedHold.raycast = () => {};
+    hold.add(solidHold, dashedHold);
+    scene3.add(hold);
+    scene3.userData.warmHoldGroup = hold;
+  }
+  const warmGroup = new THREE.Group();
+  const warmMat = new THREE.LineDashedMaterial({
+    colorWrite: false, depthWrite: false, depthTest: false, transparent: true, opacity: 0, dashSize: 0.1, gapSize: 0.1,
+  });
+  goc.traverse((node) => {
+    const pool = node.userData?.spanGeoPool as THREE.BufferGeometry[] | undefined;
+    if (!pool) return;
+    for (const geo of pool) {
+      const l = new THREE.Line(geo, warmMat);
+      l.frustumCulled = false;
+      l.raycast = () => {};
+      warmGroup.add(l);
+    }
+  });
+  if (warmGroup.children.length > 0) {
+    scene3.add(warmGroup);
+    renderer.render(scene3, cam);
+    scene3.remove(warmGroup);
+  }
+  warmMat.dispose();
+}
+
 function rebuildCanonicalEdgeOwner(
   owner: THREE.Group,
   edge: ReturnType<typeof canonicalEdgesOf>[number],
@@ -471,16 +561,16 @@ function rebuildCanonicalEdgeOwner(
 ): void {
   for (const child of [...owner.children]) {
     owner.remove(child);
-    (child as THREE.Line).geometry?.dispose();
+    if (!child.userData?.fromSpanPool) (child as THREE.Line).geometry?.dispose();
     const material = (child as THREE.Line).material as THREE.Material | undefined;
     material?.dispose();
   }
   const khuc = owner.userData.khuc as KhucToSang | undefined;
   const ownSpans = chiaKhucToSang(spans.filter((span) => span.edge_id === edge.id), khuc);
-  for (const span of ownSpans) {
+  ownSpans.forEach((span, idx) => {
     const a = edge.a.clone().lerp(edge.b, span.t0);
     const b = edge.a.clone().lerp(edge.b, span.t1);
-    const geometry = new THREE.BufferGeometry().setFromPoints([a, b]);
+    const geometry = acquireSpanGeometry(owner, idx, a, b);
     const isHidden = span.visibility === "HIDDEN";
     const material = canonicalEdgeMaterial(
       isHidden,
@@ -493,13 +583,13 @@ function rebuildCanonicalEdgeOwner(
     // khối ngoài chuỗi bị làm dịu, nhưng khúc S–M của nó là chính vật đang chọn).
     if (owner.userData.lamDiu && !span.sang) lamDiuVatLieu(material, owner.userData.lamDiu as number);
     const line = new THREE.Line(geometry, material);
-    if (isHidden) line.computeLineDistances();
+    line.userData.fromSpanPool = true;
     line.userData.hidden = isHidden;
     line.userData.sang = span.sang;
     line.userData.logicalEdgeId = edge.id;
     line.renderOrder = THU_TU_DUONG;
     owner.add(line);
-  }
+  });
 }
 
 interface NonCanonicalSegmentMeta {
@@ -533,10 +623,36 @@ function updateNonCanonicalVisibility(
   worldSignature: string,
 ): void {
   const worldCam = camera.position.clone();
+  const prioritySegments: { id: string; a: THREE.Vector3; b: THREE.Vector3 }[] = [];
+  targetRoot.traverse((node) => {
+    const seg = node.userData?.nonCanonicalSegment as NonCanonicalSegmentMeta | undefined;
+    if (seg && (node as THREE.Group).isGroup) {
+      node.updateWorldMatrix(true, false);
+      prioritySegments.push({
+        id: seg.objectId,
+        a: seg.a.clone().applyMatrix4(node.matrixWorld),
+        b: seg.b.clone().applyMatrix4(node.matrixWorld),
+      });
+      return;
+    }
+    const loop = node.userData?.nonCanonicalLoop as NonCanonicalLoopMeta | undefined;
+    if (loop && !loop.yieldColinear) {
+      node.updateWorldMatrix(true, false);
+      const edgeCount = loop.closed ? loop.pts.length : Math.max(0, loop.pts.length - 1);
+      for (let i = 0; i < edgeCount; i += 1) {
+        prioritySegments.push({
+          id: `${loop.objectId}::border:${i}`,
+          a: loop.pts[i].clone().applyMatrix4(node.matrixWorld),
+          b: loop.pts[(i + 1) % loop.pts.length].clone().applyMatrix4(node.matrixWorld),
+        });
+      }
+    }
+  });
   targetRoot.traverse((node) => {
     const seg = node.userData?.nonCanonicalSegment as NonCanonicalSegmentMeta | undefined;
     if (seg && (node as THREE.Group).isGroup) {
       if (node.userData.nonCanonicalSig === worldSignature) return;
+      if (occluders.length === 0) return;
       node.updateWorldMatrix(true, false);
       const worldA = seg.a.clone().applyMatrix4(node.matrixWorld);
       const worldB = seg.b.clone().applyMatrix4(node.matrixWorld);
@@ -544,12 +660,17 @@ function updateNonCanonicalVisibility(
         edge_id: seg.objectId,
         yield_colinear_canonical_edges: seg.yieldColinear,
       });
+      const spanSig = `${res.spans.map((s) => `${s.visibility}:${s.t0}:${s.t1}`).join("|")}|${res.colinear_canonical_edge_ids.join(",")}`;
+      if (node.userData.nonCanonicalSpanSig === spanSig) {
+        node.userData.nonCanonicalSig = worldSignature;
+        return;
+      }
       for (const child of [...node.children]) {
         if (child.userData?.nonCanonicalSpanLine
             || child.name.endsWith(":thay")
             || child.name.endsWith(":khuat")) {
           node.remove(child);
-          (child as THREE.Line).geometry?.dispose();
+          if (!child.userData?.fromSpanPool) (child as THREE.Line).geometry?.dispose();
           ((child as THREE.Line).material as THREE.Material | undefined)?.dispose();
         }
       }
@@ -559,9 +680,9 @@ function updateNonCanonicalVisibility(
         const isHidden = span.visibility === "HIDDEN";
         const mat = canonicalEdgeMaterial(isHidden, seg.highlighted, seg.color, seg.dashSize, seg.color);
         if (node.userData.lamDiu) lamDiuVatLieu(mat, node.userData.lamDiu as number);
-        const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints([p0, p1]), mat);
-        if (isHidden) line.computeLineDistances();
+        const line = new THREE.Line(acquireSpanGeometry(node, idx, p0, p1), mat);
         line.name = idx === 0 && !isHidden ? `${seg.prefix}:thay` : `${seg.prefix}:span:${idx}`;
+        line.userData.fromSpanPool = true;
         line.userData.nonCanonicalSpanLine = true;
         line.userData.hidden = isHidden;
         line.renderOrder = seg.renderOrder;
@@ -570,15 +691,17 @@ function updateNonCanonicalVisibility(
       });
       if (seg.yieldColinear && res.colinear_canonical_edge_ids.length > 0 && !seg.noRaycast) {
         const proxy = new THREE.Line(
-          new THREE.BufferGeometry().setFromPoints([seg.a, seg.b]),
+          acquireSpanGeometry(node, res.spans.length, seg.a, seg.b),
           new THREE.LineBasicMaterial({
             colorWrite: false, depthWrite: false, transparent: true, opacity: 0, linewidth: 6,
           }),
         );
         proxy.name = `${seg.prefix}:proxy`;
+        proxy.userData.fromSpanPool = true;
         proxy.userData.nonCanonicalSpanLine = true;
         node.add(proxy);
       }
+      node.userData.nonCanonicalSpanSig = spanSig;
       node.userData.nonCanonicalSig = worldSignature;
       return;
     }
@@ -586,15 +709,10 @@ function updateNonCanonicalVisibility(
     const loop = node.userData?.nonCanonicalLoop as NonCanonicalLoopMeta | undefined;
     if (loop) {
       if (node.userData.nonCanonicalSig === worldSignature) return;
+      if (occluders.length === 0 && !(loop.yieldColinear && prioritySegments.length > 0)) return;
       node.updateWorldMatrix(true, false);
-      for (const child of [...node.children]) {
-        if (child.userData?.nonCanonicalBorderLine) {
-          node.remove(child);
-          (child as THREE.Line).geometry?.dispose();
-          ((child as THREE.Line).material as THREE.Material | undefined)?.dispose();
-        }
-      }
       const edgeCount = loop.closed ? loop.pts.length : Math.max(0, loop.pts.length - 1);
+      const edgeResults = [];
       for (let i = 0; i < edgeCount; i += 1) {
         const localA = loop.pts[i];
         const localB = loop.pts[(i + 1) % loop.pts.length];
@@ -603,7 +721,26 @@ function updateNonCanonicalVisibility(
         const res = classifyWorldSegmentVisibility(worldA, worldB, worldCam, occluders, {
           edge_id: `${loop.objectId}::border:${i}`,
           yield_colinear_canonical_edges: Boolean(loop.yieldColinear),
+          priority_segments: loop.yieldColinear ? prioritySegments : undefined,
         });
+        edgeResults.push({ i, localA, localB, res });
+      }
+      const spanSig = edgeResults
+        .map(({ i, res }) => `${i}:${res.spans.map((s) => `${s.visibility}:${s.t0}:${s.t1}`).join(",")}`)
+        .join("|");
+      if (node.userData.nonCanonicalSpanSig === spanSig) {
+        node.userData.nonCanonicalSig = worldSignature;
+        return;
+      }
+      for (const child of [...node.children]) {
+        if (child.userData?.nonCanonicalBorderLine) {
+          node.remove(child);
+          if (!child.userData?.fromSpanPool) (child as THREE.Line).geometry?.dispose();
+          ((child as THREE.Line).material as THREE.Material | undefined)?.dispose();
+        }
+      }
+      let slotIdx = 0;
+      for (const { i, localA, localB, res } of edgeResults) {
         res.spans.forEach((span, idx) => {
           const p0 = localA.clone().lerp(localB, span.t0);
           const p1 = localA.clone().lerp(localB, span.t1);
@@ -611,15 +748,16 @@ function updateNonCanonicalVisibility(
           const mat = canonicalEdgeMaterial(isHidden, loop.highlighted, loop.color, loop.dashSize, loop.color);
           if (!isHidden) mat.linewidth = loop.highlighted ? 3 : 2;
           if (node.userData.lamDiu) lamDiuVatLieu(mat, node.userData.lamDiu as number);
-          const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints([p0, p1]), mat);
-          if (isHidden) line.computeLineDistances();
+          const line = new THREE.Line(acquireSpanGeometry(node, slotIdx++, p0, p1), mat);
           line.name = `section_border:${loop.objectId}:${i}:${idx}`;
+          line.userData.fromSpanPool = true;
           line.userData.nonCanonicalBorderLine = true;
           line.userData.hidden = isHidden;
           line.renderOrder = loop.renderOrder;
           node.add(line);
         });
       }
+      node.userData.nonCanonicalSpanSig = spanSig;
       node.userData.nonCanonicalSig = worldSignature;
     }
   });
@@ -708,24 +846,15 @@ export function updateCanonicalEdgeVisibility(
     });
   });
 
-  if (occluders.length > 0) {
-    const worldSignature = [
-      ...[
-        camera.position.x, camera.position.y, camera.position.z,
-        ...camera.matrixWorldInverse.elements,
-        ...camera.projectionMatrix.elements,
-      ].map(khoa),
-      renderSignature,
-    ].join("|");
-    updateNonCanonicalVisibility(root, camera, occluders, worldSignature);
-    if (root.parent) {
-      for (const sibling of root.parent.children) {
-        if (sibling !== root && sibling.userData?.nhanChungGroup) {
-          updateNonCanonicalVisibility(sibling, camera, occluders, worldSignature);
-        }
-      }
-    }
-  }
+  const worldSignature = [
+    ...[
+      camera.position.x, camera.position.y, camera.position.z,
+      ...camera.matrixWorldInverse.elements,
+      ...camera.projectionMatrix.elements,
+    ].map(khoa),
+    renderSignature,
+  ].join("|");
+  updateNonCanonicalVisibility(root, camera, occluders, worldSignature);
 
   const visible = [...status].filter(([, values]) => values.size === 1 && values.has("visible"))
     .map(([id]) => id).sort();
@@ -985,6 +1114,7 @@ export function buildObject3D(
     // auto-fit thì camera phải lùi ra và khối thật bé đi vì một đoạn thẳng do
     // chính renderer bịa ra độ dài.
     duong.userData.voHan = true;
+    preallocateSpanGeoPool(duong, 6);
     duong.userData.nonCanonicalSegment = {
       prefix: `line:${o.id}`,
       objectId: o.id,
@@ -1025,6 +1155,7 @@ export function buildObject3D(
         );
     duong.userData.voHan = false;
     if (o.display_role !== "hit_proxy") {
+      preallocateSpanGeoPool(duong, 6);
       duong.userData.nonCanonicalSegment = {
         prefix: `segment:${o.id}`,
         objectId: o.id,
@@ -1105,6 +1236,7 @@ export function buildObject3D(
         const mesh = new THREE.Mesh(g, m);
         mesh.renderOrder = 1;
         mesh.userData.voHan = true;
+        preallocateSpanGeoPool(mesh, Math.max(8, daGiac.length * 4));
         mesh.userData.nonCanonicalLoop = {
           objectId: o.id,
           pts: daGiac.map((p) => new THREE.Vector3(...p)),
@@ -1353,6 +1485,7 @@ export function buildObject3D(
       owner.userData.highlightColor = mau ?? mauQua ?? MAU.highlight;
       owner.userData.dashSize = dashSize;
       owner.userData.khuc = khucToSang.get(edge.id);
+      preallocateSpanGeoPool(owner, 6);
       rebuildCanonicalEdgeOwner(owner, edge, audit.edge_spans);
       owner.userData.spanSignature = audit.edge_spans.filter((span) => span.edge_id === edge.id)
         .map((span) => `${span.visibility}:${span.t0}:${span.t1}`).join("|");
@@ -1429,6 +1562,7 @@ export function buildObject3D(
     const nhom = new THREE.Group();
     if (ownsBoundary) {
       nhom.add(line);
+      preallocateSpanGeoPool(nhom, Math.max(8, pts.length * 4));
       nhom.userData.nonCanonicalLoop = {
         objectId: o.id,
         pts,
@@ -1621,22 +1755,38 @@ export function vatNhanChung(
   const chan = new THREE.Vector3(...w.foot);
   const v = new THREE.Vector3(...w.v);
   const uHuong = huongChanVuongGoc(w.foot, w.u, diemNen);
-  const s = Math.min(v.length() * NHAN_CHUNG_GOC.tiLe, NHAN_CHUNG_GOC.toiDa);
+  const dk = duongKinhCanh(diemNen);
+  const s = dk > 0
+    ? Math.min(v.length() * 0.22, Math.max(v.length() * NHAN_CHUNG_GOC.tiLe, dk * 0.048), dk * 0.068, NHAN_CHUNG_GOC.toiDa)
+    : Math.min(v.length() * NHAN_CHUNG_GOC.tiLe, NHAN_CHUNG_GOC.toiDa);
+  const chuKy = dk > 0 ? Math.min(0.16, Math.max(0.045, dk * 0.032)) : 0.12;
   const u1 = new THREE.Vector3(...uHuong).normalize().multiplyScalar(s);
   const v1 = v.normalize().multiplyScalar(s);
+  const gocDinh = chan.clone().add(u1).add(v1);
   const mauNet = mau ?? mauNhanChung(w.vai);
   const doan = new THREE.Line(new THREE.BufferGeometry().setFromPoints([tu, chan]),
-    new THREE.LineDashedMaterial({ color: mauNet, dashSize: 0.16, gapSize: 0.1, depthTest: false, transparent: true, opacity: 0.92 }));
+    new THREE.LineDashedMaterial({ color: mauNet, dashSize: chuKy, gapSize: chuKy * 0.65, depthTest: false, transparent: true, opacity: 0.92 }));
   doan.computeLineDistances();
   const goc = new THREE.Line(new THREE.BufferGeometry().setFromPoints(
-    [chan.clone().add(u1), chan.clone().add(u1).add(v1), chan.clone().add(v1)]),
+    [chan.clone().add(u1), gocDinh, chan.clone().add(v1), chan.clone(), chan.clone().add(u1)]),
   new THREE.LineBasicMaterial({ color: mauNet, depthTest: false, transparent: true, opacity: 0.92 }));
-  for (const x of [doan, goc]) {
-    x.renderOrder = 10;
+  const mauChan = mau ?? (w.vai === "khoang_cach" ? mauNet : MAU.derived);
+  const chamChan = new THREE.Mesh(
+    new THREE.SphereGeometry(BAN_KINH_NHIN, 16, 12),
+    new THREE.MeshBasicMaterial({ color: mauChan, depthTest: false, transparent: true, opacity: 0.96 }),
+  );
+  chamChan.position.copy(chan);
+  chamChan.userData.dauDinh = "thuong";
+  for (const x of [doan, goc, chamChan]) {
+    x.renderOrder = x === chamChan ? 11 : 10;
     x.raycast = () => {};                 // trình bày thuần: không bao giờ bắt cú bấm chọn vật
     g.add(x);
   }
-  g.userData = { nhanChung: w.id };
+  g.userData = {
+    nhanChung: w.id,
+    foot: w.foot,
+    corner: [gocDinh.x, gocDinh.y, gocDinh.z] as Vec3,
+  };
   if (diu) lamDiu(g, HE_SO_LAM_DIU);
   return g;
 }
@@ -1790,6 +1940,10 @@ export function Scene3DWorkspace({
 
     const dieuKhien = new OrbitControls(cam, renderer.domElement);
     dieuKhien.enableDamping = true;
+    dieuKhien.minAzimuthAngle = -Infinity;
+    dieuKhien.maxAzimuthAngle = Infinity;
+    dieuKhien.minPolarAngle = 0.005;
+    dieuKhien.maxPolarAngle = Math.PI - 0.005;
     container.appendChild(renderer.domElement);
 
     const chinhCo = () => {
@@ -1871,7 +2025,18 @@ export function Scene3DWorkspace({
       // cho thấy bốn câu mô tả đè lên nhau ngay giữa hình. Lọc ở đây chứ
       // không ở lúc dựng cảnh, vì hai nhãn có chồng nhau hay không phụ thuộc
       // GÓC NHÌN — thứ chỉ biết được sau phép chiếu.
-      const dat: { el: HTMLElement; id: string; x: number; y: number; uuTien: number; w: number; h: number }[] = [];
+      const gocVuongPts = (nhanChungRef.current?.children ?? []).flatMap((child) => {
+        const ud = child.userData as { foot?: Vec3; corner?: Vec3 } | undefined;
+        if (!ud?.foot || !ud?.corner) return [];
+        const f3 = new THREE.Vector3(...ud.foot).applyQuaternion(qRef.current).project(cam);
+        const c3 = new THREE.Vector3(...ud.corner).applyQuaternion(qRef.current).project(cam);
+        if (!(f3.z < 1) || !(c3.z < 1)) return [];
+        return [{
+          fx: ((f3.x + 1) / 2) * w, fy: ((1 - f3.y) / 2) * h,
+          cx: ((c3.x + 1) / 2) * w, cy: ((1 - c3.y) / 2) * h,
+        }];
+      });
+      const dat: { el: HTMLElement; id: string; x: number; y: number; duoi?: boolean; uuTien: number; w: number; h: number }[] = [];
       // Cỡ hộp nhãn cho phép lọc chồng: ĐỌC hết trước khi GHI style nào — đọc xen giữa các lần ghi ép trình duyệt
       // tính lại bố cục cho từng nhãn ở mỗi khung (transform/opacity không đổi offsetWidth/Height).
       const co = new Map((Array.from(lop.children) as HTMLElement[]).map((el) => [el, [el.offsetWidth, el.offsetHeight]]));
@@ -1886,9 +2051,10 @@ export function Scene3DWorkspace({
         if (!hien) { el.style.opacity = "0"; continue; }
         const x = ((p3.x + 1) / 2) * w;
         const y = ((1 - p3.y) / 2) * h;
-        el.style.transform = `translate(-50%,-140%) translate(${x}px,${y}px)`;
+        const duoi = gocVuongPts.some((g) => Math.hypot(g.fx - x, g.fy - y) < 6 && g.cy < y - 3);
+        el.style.transform = `translate(-50%,${duoi ? "40%" : "-140%"}) translate(${x}px,${y}px)`;
         const [cw, ch] = co.get(el)!;
-        dat.push({ el, id, x, y, uuTien: Number(el.dataset.uuTien ?? "1"), w: cw, h: ch });
+        dat.push({ el, id, x, y, duoi, uuTien: Number(el.dataset.uuTien ?? "1"), w: cw, h: ch });
       }
       const giu = locNhanChongNhau(dat);
       for (const d of dat) d.el.style.opacity = giu.has(d.id) ? "1" : "0";
@@ -1898,9 +2064,17 @@ export function Scene3DWorkspace({
       const lopSo = soDoRef.current;
       if (!lopSo) return;
       const hopDiem = dat.filter((d) => giu.has(d.id)).map((d) => ({
-        id: d.id, x: d.x - d.el.offsetWidth / 2, y: d.y - 1.4 * d.el.offsetHeight,
+        id: d.id, x: d.x - d.el.offsetWidth / 2,
+        y: d.duoi ? d.y + 0.4 * d.el.offsetHeight : d.y - 1.4 * d.el.offsetHeight,
         w: d.el.offsetWidth, h: d.el.offsetHeight,
       }));
+      const chamDiem: LabelRect[] = dat.filter((d) => giu.has(d.id)).map((d) => ({
+        x: d.x - 7, y: d.y - 7, w: 14, h: 14,
+      }));
+      const gocVuongRects: LabelRect[] = gocVuongPts.flatMap((g) => [
+        { x: g.fx - 8, y: g.fy - 8, w: 16, h: 16 },
+        { x: g.cx - 8, y: g.cy - 8, w: 16, h: 16 },
+      ]);
       const canDat: LabelToPlace[] = [];
       const theTheoId = new Map<string, HTMLElement>();
       for (const el of Array.from(lopSo.children) as HTMLElement[]) {
@@ -1912,8 +2086,16 @@ export function Scene3DWorkspace({
           w: el.offsetWidth, h: el.offsetHeight, priority: Number(el.dataset.uuTien ?? "1") });
         theTheoId.set(id, el);
       }
+      const vungChe = vungCheKhung(renderer.domElement.getBoundingClientRect());
       const daDat = placeAnnotationLabels(canDat,
-        [...hopDiem, ...vungCheKhung(renderer.domElement.getBoundingClientRect())], { w, h });
+        [...hopDiem, ...chamDiem, ...gocVuongRects, ...vungChe], { w, h });
+      for (const c of canDat) {
+        if (!daDat.has(c.id)) {
+          const r2 = placeAnnotationLabels([c], [...hopDiem, ...chamDiem, ...vungChe, ...daDat.values()], { w, h }).get(c.id)
+            ?? placeAnnotationLabels([c], [...hopDiem, ...vungChe, ...daDat.values()], { w, h }).get(c.id);
+          if (r2) daDat.set(c.id, r2);
+        }
+      }
       const hopSo: { id: string; box: LabelRect; anchor: { x: number; y: number } }[] = [];
       for (const c of canDat) {
         const el = theTheoId.get(c.id)!;
@@ -1941,10 +2123,17 @@ export function Scene3DWorkspace({
     let song = true;
     const vong = () => {
       if (!song) return;
-      dieuKhien.update();
+      const truocPos = cam.position.clone();
+      const truocQuat = cam.quaternion.clone();
+      if (!dieuKhien.update()) {
+        cam.position.copy(truocPos);
+        cam.quaternion.copy(truocQuat);
+      }
       cam.updateMatrixWorld();
-      datCoDauDinh(goc, cam, renderer.domElement.clientWidth || 1,
-        renderer.domElement.clientHeight || 1);
+      const wCss = renderer.domElement.clientWidth || 1;
+      const hCss = renderer.domElement.clientHeight || 1;
+      datCoDauDinh(goc, cam, wCss, hCss);
+      datCoDauDinh(nhanChung, cam, wCss, hCss);
       const edgeAudit = updateCanonicalEdgeVisibility(
         goc,
         cam,
@@ -2026,18 +2215,24 @@ export function Scene3DWorkspace({
           };
         };
       }
+      warmSpanPools(goc, scene3, cam, renderer);
       renderer.render(scene3, cam);
       chieuNhan();
       requestAnimationFrame(vong);
     };
     veRef.current = () => {
       cam.updateMatrixWorld();
+      const wCss = renderer.domElement.clientWidth || 1;
+      const hCss = renderer.domElement.clientHeight || 1;
+      datCoDauDinh(goc, cam, wCss, hCss);
+      datCoDauDinh(nhanChung, cam, wCss, hCss);
       updateCanonicalEdgeVisibility(
         goc,
         cam,
         `${renderer.domElement.clientWidth}x${renderer.domElement.clientHeight}`
           + `@${renderer.getPixelRatio()}`,
       );
+      warmSpanPools(goc, scene3, cam, renderer);
       renderer.render(scene3, cam);
     };
     // Móc ĐO của cổng ảnh `SECTION_FILL_DISTINGUISHABLE` — chỉ harness gọi, người học không
@@ -2092,6 +2287,12 @@ export function Scene3DWorkspace({
       window.removeEventListener("resize", chinhCo);
       roKhung?.disconnect();
       dieuKhien.dispose();
+      const warmHold = scene3.userData.warmHoldGroup as THREE.Group | undefined;
+      warmHold?.traverse((x) => {
+        const l = x as THREE.Line;
+        l.geometry?.dispose?.();
+        (l.material as THREE.Material | undefined)?.dispose?.();
+      });
       renderer.dispose();
       container.removeChild(renderer.domElement);
       rootRef.current = null;
@@ -2111,7 +2312,7 @@ export function Scene3DWorkspace({
     for (const con of [...nhom.children]) {
       nhom.remove(con);
       con.traverse((x) => {
-        const m = x as THREE.Line;
+        const m = x as THREE.Line | THREE.Mesh;
         m.geometry?.dispose?.();
         (m.material as THREE.Material | undefined)?.dispose?.();
       });
@@ -2119,17 +2320,22 @@ export function Scene3DWorkspace({
     // Review I1: cộng đoạn vuông góc PHỤ của điểm hình chiếu đã có mặt ở bước này — cùng cách vẽ, chân do backend phát.
     const diemToanCanh = diemHuuHan(scene.objects);
     const hienNhanChung = new Set([...coMatNhan].filter((id) => isVisible(tuongTac, id, coMatNhan)));
-    const ds = [...witnessesShown(scene, nhanSoDo), ...projectionWitnessesAt(scene, hienNhanChung)];
+    const tuSoDo = witnessesShown(scene, nhanSoDo);
+    const daCoSoDo = new Set(tuSoDo.map((w) => w.id));
+    const tuChieu = projectionWitnessesAt(scene, hienNhanChung, !tang ? buoc : undefined)
+      .filter((w) => !daCoSoDo.has(w.id.slice("perpendicular:".length)));
+    const ds = [...tuSoDo, ...tuChieu];
     for (const w of ds) {
       const chuId = w.vai === "hinh_chieu" ? w.id.slice("perpendicular:".length) : w.id;
       const t = tang?.get(chuId);
-      const mau = t && t !== "boi_canh" ? MAU_TANG[t] : undefined;
+      const dangDungDiem = !tang && tapNoiBat.has(chuId) && loaiRef.current.get(chuId) === "point3";
+      const mau = t && t !== "boi_canh" ? MAU_TANG[t] : (dangDungDiem ? MAU.highlight : undefined);
       const diu = Boolean(tang && !t);
       nhom.add(vatNhanChung(w, diemToanCanh, mau, diu));
     }
     if (typeof window !== "undefined") (window as any).__geo3d_witness_ids = ds.map((w) => w.id);
     veRef.current?.();
-  }, [scene, nhanSoDo, coMatNhan, tuongTac, tang]);
+  }, [scene, buoc, nhanSoDo, coMatNhan, tuongTac, tang, tapNoiBat]);
 
   // W2 · F — LƯỚI NỀN tuỳ chọn: mảnh, nhạt, nằm dưới đáy hình (mặt z thấp nhất của cảnh), ô theo cỡ cảnh — không
   // số toạ độ, không đơn vị. Bật/tắt chỉ thêm/bớt nhóm này rồi vẽ lại một khung: camera, bước, lựa chọn không đổi.
@@ -2191,11 +2397,13 @@ export function Scene3DWorkspace({
     if (!goc) return;
     goc.quaternion.copy(qHienThi);
     nhanChungRef.current?.quaternion.copy(qHienThi);
+    goc.userData.spanPoolsWarmed = false;
     for (const con of [...goc.children]) {
       goc.remove(con);
       con.traverse((x) => {
         const m = x as THREE.Mesh;
         m.geometry?.dispose?.();
+        (x.userData?.spanGeoPool as THREE.BufferGeometry[] | undefined)?.forEach((g) => g.dispose());
         const mat = m.material as THREE.Material | THREE.Material[] | undefined;
         if (Array.isArray(mat)) mat.forEach((i) => i.dispose());
         else mat?.dispose?.();
@@ -2271,7 +2479,9 @@ export function Scene3DWorkspace({
         : o.render === "surface" && diemMp.length >= 3
           ? diemMp
           : diemNen;
-      const obj = buildObject3D(renderObject, tang ? tang.get(o.id) ?? false : noiBat.has(o.id),
+      const sangBuoc = noiBat.has(o.id)
+        || (o.type === "point3" && Boolean(o.parent && noiBat.has(o.parent) && progressCha && !progressCha.closed));
+      const obj = buildObject3D(renderObject, tang ? tang.get(o.id) ?? false : sangBuoc,
         banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemChoVat, undefined, canonicalHighlights, khucToSang);
       if (!obj) continue;
       if (tang && !tang.has(o.id)) lamDiu(obj);   // ngoài chuỗi nhân quả

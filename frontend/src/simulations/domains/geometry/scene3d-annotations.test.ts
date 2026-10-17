@@ -323,4 +323,57 @@ describe("nhân chứng hình chiếu (review I1)", () => {
     expect(w.u).toEqual([-3 / 8, -3 / 8, 3 / 4]);
     expect(w.v).toEqual([-3 / 8, -3 / 8, -1 / 4]);
   });
+
+  it("đại lượng khoảng cách neo vào đoạn nhân chứng hình chiếu (d(A, K)) hiện nhãn khi điểm chiếu K và đoạn vuông góc đã có mặt", () => {
+    const s = canhChieu();
+    s.objects.push({
+      id: "d_A_K", label: "Khoảng cách giữa A và K", notation: "d(A, K)", type: "quantity", render: "readout",
+      origin: "derived", producer: "measure.distance", depends: ["A", "K"], value: "√22/8",
+      exact: { kind: "radical", coefficient: "1/8", radicand: 22 },
+      annotation: { kind: "length", category: "result", role: "result", subject_ids: ["A", "K"], anchor: "segment" },
+    } as never);
+    s.events = [
+      { step_index: 0, action: "INIT", object: null, depends: [], explanation: "Đầu.", semantic_kind: "EXPLANATION" },
+      { step_index: 1, action: "CREATE", object: "K", depends: ["A"], explanation: "Dựng K.", semantic_kind: "GEOMETRY_CONSTRUCTION" },
+      { step_index: 2, action: "MEASURE", object: "d_A_K", depends: ["A", "K"], explanation: "Kết luận.", semantic_kind: "FINAL_RESULT" },
+    ];
+    // Bước 0 (K chưa dựng): chưa hiện
+    expect(annotationsAt(s, 0, TAT_CA, "d_A_K")).toEqual([]);
+    // Bước 2 (K đã dựng kèm perpendicular_witness từ A, và d_A_K đã kết luận): hiện nhãn d(A, K) = √22/8
+    const a = annotationsAt(s, 2, DEFAULT_ANNOTATION_VIEW, "d_A_K");
+    expect(a.map((x) => x.id)).toEqual(["d_A_K"]);
+    expect(a[0].text).toBe("d(A, K) = √22/8");
+  });
+
+  it("đại lượng khoảng cách kết quả có witness trên mặt phẳng (không có point3 chân riêng) hiện đoạn vuông góc ở bước kết luận", () => {
+    const s: Scene3D = {
+      free_objects: ["A", "B", "S"],
+      objects: [
+        P("A", ["0", "0", "0"]), P("B", ["1", "0", "0"]), P("S", ["0", "0", "1"]),
+        { ...P("M", ["1/2", "1/2", "1/2"]), origin: "derived" },
+        { id: "mp_SAB", label: "Mặt phẳng (SAB)", type: "plane3", render: "surface", origin: "derived", depends: ["S", "A", "B"] },
+        {
+          id: "kq_q", label: "Khoảng cách từ M đến (SAB)", notation: "d(M, (SAB))", type: "quantity", render: "readout",
+          origin: "derived", producer: "measure.distance", depends: ["M", "mp_SAB"], value: "1",
+          annotation: {
+            kind: "distance", category: "result", role: "result", subject_ids: ["M", "mp_SAB"], anchor: "witness",
+            witness: { from: "M", foot: ["1/2", "0", "1/2"], on: "mp_SAB", marker: { u: ["-1/2", "0", "1/2"], v: ["0", "1/2", "0"] } },
+          },
+        },
+      ],
+      events: [
+        { step_index: 0, action: "INIT", object: null, depends: [], explanation: "Đầu.", semantic_kind: "EXPLANATION" },
+        { step_index: 1, action: "CREATE", object: "mp_SAB", depends: ["S", "A", "B"], explanation: "Mặt phẳng.", semantic_kind: "GEOMETRY_CONSTRUCTION" },
+        { step_index: 2, action: "MEASURE", object: "kq_q", depends: ["M", "mp_SAB"], explanation: "Kết luận.", semantic_kind: "FINAL_RESULT" },
+      ],
+    } as unknown as Scene3D;
+    const present = new Set(["A", "B", "S", "M", "mp_SAB", "kq_q"]);
+    expect(projectionWitnessesAt(s, present, 1)).toEqual([]);
+    const [w] = projectionWitnessesAt(s, present, 2);
+    expect(w.id).toBe("perpendicular:kq_q");
+    expect(w.vai).toBe("hinh_chieu");
+    expect(w.from).toEqual([0.5, 0.5, 0.5]);
+    expect(w.foot).toEqual([0.5, 0, 0.5]);
+  });
 });
+

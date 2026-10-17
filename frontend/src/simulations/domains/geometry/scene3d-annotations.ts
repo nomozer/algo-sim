@@ -64,6 +64,7 @@ const capDiem = (a: string, b: string) => (a < b ? `${a}\u0000${b}` : `${b}\u000
  */
 function doanCoMat(coMat: SceneObject[]): Set<string> {
   const ra = new Set<string>();
+  const ids = new Set(coMat.map((o) => o.id));
   for (const o of coMat) {
     if (o.endpoint_ids?.length === 2) ra.add(capDiem(o.endpoint_ids[0], o.endpoint_ids[1]));
     if (o.type === "polygon3" && o.vertex_ids && o.vertex_ids.length >= 3) {
@@ -71,6 +72,9 @@ function doanCoMat(coMat: SceneObject[]): Set<string> {
     }
     for (const e of o.edge_ownership ?? []) {
       if (e.endpoint_ids?.length === 2) ra.add(capDiem(e.endpoint_ids[0], e.endpoint_ids[1]));
+    }
+    if (o.perpendicular_witness?.from && ids.has(o.perpendicular_witness.from)) {
+      ra.add(capDiem(o.id, o.perpendicular_witness.from));
     }
   }
   return ra;
@@ -151,9 +155,13 @@ export function witnessesShown(scene: Scene3D, entries: AnnotationEntry[]): Witn
 
 /** Review I1 — đoạn vuông góc PHỤ của điểm dựng bằng hình chiếu (`perpendicular_witness`, chân do kernel tính) khi
  *  điểm ấy CÓ MẶT ở bước đang xem (`present` = id của `objectsAt`). Không thuộc khối, không phải chiều cao. */
-export function projectionWitnessesAt(scene: Scene3D, present: ReadonlySet<string>): WitnessShown[] {
+export function projectionWitnessesAt(
+  scene: Scene3D,
+  present: ReadonlySet<string>,
+  step?: number,
+): WitnessShown[] {
   const theoId = new Map(scene.objects.map((o) => [o.id, o]));
-  return scene.objects.flatMap((o) => {
+  const tuDiem = scene.objects.flatMap((o) => {
     const w = present.has(o.id) ? o.perpendicular_witness : undefined;
     const tu = w ? theoId.get(w.from)?.xyz : undefined;
     return w && tu && present.has(w.from)
@@ -161,6 +169,28 @@ export function projectionWitnessesAt(scene: Scene3D, present: ReadonlySet<strin
         u: toVec3(w.marker.u), v: toVec3(w.marker.v) }]
       : [];
   });
+  if (step === undefined || !scene.events?.length) return tuDiem;
+  const k = clampStep(scene, step);
+  const ketLuan = new Set(
+    scene.events
+      .filter((e) => e.step_index <= k && e.semantic_kind === "FINAL_RESULT" && e.object)
+      .map((e) => e.object as string),
+  );
+  if (ketLuan.size === 0) return tuDiem;
+  const daCo = new Set(tuDiem.map((w) => `${w.from.join(",")}|${w.foot.join(",")}`));
+  const tuKetQua = scene.objects.flatMap((o) => {
+    const ann = o.type === "quantity" && ketLuan.has(o.id) ? o.annotation : undefined;
+    if (!ann) return [];
+    const w = vaiTro(o, ann) === "result" && ann.anchor === "witness" ? ann.witness : undefined;
+    const tu = w ? theoId.get(w.from)?.xyz : undefined;
+    if (!w || !tu || !present.has(w.from) || !ann.subject_ids.every((s) => present.has(s))) return [];
+    const from = toVec3(tu);
+    const foot = toVec3(w.foot);
+    if (daCo.has(`${from.join(",")}|${foot.join(",")}`)) return [];
+    return [{ id: `perpendicular:${o.id}`, vai: "hinh_chieu" as const, from, foot,
+      u: toVec3(w.marker.u), v: toVec3(w.marker.v) }];
+  });
+  return [...tuDiem, ...tuKetQua];
 }
 
 /** Ô soi (§16.6): dữ kiện số trong chuỗi của đại lượng (`tangNhanManh`) và đầu vào trực tiếp
