@@ -97,3 +97,99 @@ def test_prompt_v2_adds_no_schema_and_no_corpus_example():
     for cid, text in labels.items():   # no corpus sentence copied into the prompt (overlap guard)
         for sentence in filter(None, (s.strip() for s in text.split("."))):
             assert len(sentence) < 25 or sentence not in fx.SYSTEM_PROMPT, cid
+
+
+# ── offline ablation: the measured baseline extraction failure classes never become an unsafe serve ──────────────
+
+def _mutate(name, fs, entities):
+    qs = [f for f in fs if f["kind"] == "question"]
+    if name == "drop_operands":
+        return [f.pop(k, None) for f in qs if f.get("quantity") != "volume" for k in ("points", "points_a", "points_b", "point_kind")]
+    if name == "drop_solid":
+        return [f.pop("solid", None) for f in fs if (f["kind"] == "length" and f.get("measure") not in (None, "segment"))
+                or (f["kind"] == "question" and f.get("quantity") == "volume")]
+    if name == "invent_label":
+        f = next((f for f in qs for k in ("points", "points_a") if f.get(k)), None)
+        if f:
+            k = "points" if f.get("points") else "points_a"
+            f[k] = ["Z"] + f[k][1:]
+        return [f]
+    if name == "three_point_right_angle":
+        return [f["points"].append(f["at"]) or f for f in fs if f["kind"] == "right_angle" and f.get("at") and f["at"] not in (f.get("points") or [])]
+    if name == "approximate_unsupported":
+        f = next((f for f in fs if f["kind"] == "unsupported" and f["role"] == "question"), None)
+        if f:
+            f.pop("reason", None)
+            f.update(kind="question", quantity="length", points=list(entities[:2]))
+        return [f]
+    if name == "drop_later_goal":
+        idx = [i for i, f in enumerate(fs) if f["role"] in ("question", "prove")]
+        return [fs.pop(idx[-1])] if len(idx) > 1 else [None]
+
+
+@pytest.mark.parametrize("name", ["drop_operands", "drop_solid", "invent_label", "three_point_right_angle",
+                                  "approximate_unsupported", "drop_later_goal"])
+def test_baseline_failure_classes_are_refused_never_served_wrong(name):
+    from copy import deepcopy
+    from scripts import run_nlu_extraction_evaluation as V1
+    from scripts import run_semantic_extraction_evaluation as E
+    inp, applied = E.load_inputs(), 0
+    for c in inp["corpus"]["cases"]:
+        fs = deepcopy(V1.gold_payload(inp, c["id"])["facts"])
+        if not any(x is not None for x in _mutate(name, fs, c["entities"])):
+            continue
+        applied += 1
+        verdict = E.score_served(c["requests"], E.route_record(run_fact_route(c["source_text"], {"facts": fs})))["classification"]
+        assert verdict in {"SAFE_REFUSAL", "FALSE_REFUSAL", "CORRECT_COMPLETE"}, (c["id"], name, verdict)
+    assert applied > 0
+
+
+# ── amendment 1 (dev01 at the GOLD route): a sentence-initial indefinite article before a solid ────────────────────
+
+def test_sentence_initial_article_before_a_solid_is_not_an_unread_premise():
+    text = "Một hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 12. Tính độ dài AC'."
+    served(text, cuboid(solid_quote="hộp chữ nhật ABCD.A'B'C'D'"), {"q": Fraction(169)})
+
+
+@pytest.mark.parametrize("extra", [
+    " Một cạnh khác dài 5.",                         # "một" opening a non-solid noun is content, not an article
+    " Biết AB bằng một nửa AD.",                      # a numeric/fraction "một" inside a premise
+    " Một hình chóp khác có thể tích 5.",             # article accepted, but the new premise itself is unread
+])
+def test_article_rule_never_hides_premise_content(extra):
+    text = "Một hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 12." + extra + " Tính độ dài AC'."
+    r = run_fact_route(text, cuboid(solid_quote="hộp chữ nhật ABCD.A'B'C'D'"))
+    assert (r.status, r.code) == ("REFUSED", "SOURCE_PREMISE_UNREAD"), (r.code, r.reason)
+
+
+# ── whole-change review: a parallelepiped is not a right prism unless the source says so ─────────────────────────
+
+def _box(solid_type, right, solid_quote):
+    p = cuboid(solid_quote=solid_quote)
+    p["facts"][0].update(solid_type=solid_type, right=right)
+    return p
+
+
+@pytest.mark.parametrize("solid_type,right", [("prism", True), ("cuboid", None)])
+def test_bare_parallelepiped_never_becomes_right_by_assumption(solid_type, right):
+    # Review repro: a "hình hộp" with a rectangular base is still possibly oblique; AC' = 13 assumes a right box.
+    text = "Cho hình hộp ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 3, AD = 4, AA' = 12. Tính độ dài AC'."
+    p = _box(solid_type, right, "Cho hình hộp ABCD.A'B'C'D'")
+    p["facts"].insert(1, {"id": "f0", "kind": "polygon_shape", "role": "premise", "shape": "rectangle",
+                          "points": list("ABCD"), "quotes": ["đáy ABCD là hình chữ nhật"]})
+    r = run_fact_route(text, p)
+    assert (r.status, r.code) == ("REFUSED", "PREDICATE_NOT_IN_QUOTE"), (r.answers, r.code)
+
+
+@pytest.mark.parametrize("text,quote", [
+    ("Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 12. Tính độ dài AC'.", "Cho hình hộp chữ nhật ABCD.A'B'C'D'"),
+    ("Cho hình hộp đứng ABCD.A'B'C'D' có đáy ABCD là hình chữ nhật, AB = 3, AD = 4, AA' = 12. Tính độ dài AC'.", None),
+])
+def test_rectangular_or_explicitly_right_box_is_still_right(text, quote):
+    if quote:
+        served(text, _box("cuboid", None, quote), {"q": Fraction(169)})
+    else:
+        p = _box("prism", True, "Cho hình hộp đứng ABCD.A'B'C'D'")
+        p["facts"].insert(1, {"id": "f0", "kind": "polygon_shape", "role": "premise", "shape": "rectangle",
+                              "points": list("ABCD"), "quotes": ["đáy ABCD là hình chữ nhật"]})
+        served(text, p, {"q": Fraction(169)})

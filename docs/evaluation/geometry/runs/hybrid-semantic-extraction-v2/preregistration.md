@@ -80,6 +80,24 @@ a cuboid/prism (dev01 `PREDICATE_NOT_IN_QUOTE`, reuses the existing `_HOP_CHU_NH
 length (baseline L02). GOLD before/after reports the grounding effect separately from the prompt arms. Other grammar gaps
 (`… thì … bằng mấy`, `Tính cos²`, repeated `tính` boundaries, `rồi suy ra`, projection wording) stay open issues.
 
+## Amendment 1 (after the lock, before any model call) — third grounding entry from the DEV split
+
+The GOLD route after the declared change moved dev01 from `PREDICATE_NOT_IN_QUOTE` to `SOURCE_PREMISE_UNREAD`: a
+sentence-initial indefinite article ("Một hộp chữ nhật …") is not premise connective vocabulary. Added, with negatives:
+`Một` at the start of a premise sentence directly before a solid noun is an article; `một` elsewhere ("một cạnh",
+"một nửa", a number) stays content. Evidence is DEV only (tuning split); no heldout observation drove it. Corpus, gold,
+oracle, scorer and protocol are unchanged; GOLD before/after is reported per split.
+
+## Amendment 2 (whole-change review, before any model call)
+
+Independent review of the product commit: GO, no unsafe serve in ~40 adversarial inputs, with findings applied before
+the prompt is frozen: rule 7 asked three labels for section/intersection planes while the gate requires the written
+label group (contradicting rule 11) — rule 7 now asks the written group; unnamed-point targets go in `points_b`; the
+unused `dài là/bằng bao nhiêu` variants were removed. A pre-existing unsafe path on main was closed: a bare "hình hộp"
+(possibly oblique) certified a right prism, serving AC′ from an unstated right box; rightness now needs
+đứng/đều/hộp chữ nhật/lập phương. Historical GOLD outcomes unchanged by these fixes. The draft B surface `cc6316fb…`
+was never sent to a provider and is superseded by `c4e4392c…` (`provider-surfaces.json`).
+
 ## Integration
 
 Independent review → fixes → verification → refreeze → clean detached authoritative T3 for this changed candidate. Integration and Hybrid enablement require separate owner decisions. At the first live gate retain a clean committed research checkpoint; do not merge/push or remove its unintegrated branch/worktree. Default LLM_ONLY and cache125 unless actual cache-consumer evidence demands invalidation.
