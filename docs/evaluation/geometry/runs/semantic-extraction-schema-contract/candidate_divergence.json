@@ -6,21 +6,21 @@
   "run_id": "thesis-final-20260908T160224Z",
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
-  "current_candidate_hash": "fe7cb20c4383d039bad131ea9c49d3830277bb5a47726fb34991e8323c5862d2",
-  "current_candidate_source_commit": "13c0f157",
-  "current_product_commit": "13c0f157",
-  "current_candidate_frozen_at": "e7b95d82",
+  "current_candidate_hash": "80c3dfd73b0459be0fdb58762b3003f1f4c2b44dad5ad5c9c26eea9d2a4b8907",
+  "current_candidate_source_commit": "93a423e7",
+  "current_product_commit": "93a423e7",
+  "current_candidate_frozen_at": "f0e89b16",
   "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
   "previous_candidate_hash": "9da80c6f3e8efbf8371b29949d7e03abebf5e3b46a5d090615feea4f7f8f78d8",
   "metadata_only_correction": false,
   "diverged": true,
-  "reason": "Opt-in research response contract v3 (facts_response_schema('v3'), schema_accepts, post-parse v3 check when RESPONSE_CONTRACT == 'v3'); the product default stays the flat contract with surface 485d3834... unchanged. The right-prism grounding cue now has to name the prism itself (both faces and their correspondence), closing a wrong serve where rightness was borrowed from another prism sharing the base.",
+  "reason": "Opt-in research response contract v3 (facts_response_schema('v3'), schema_accepts, post-parse v3 check when RESPONSE_CONTRACT == 'v3'); the product default stays the flat contract with surface 485d3834... unchanged. The right-prism grounding cue now has to name the prism itself (both faces and their correspondence), closing a wrong serve where rightness was borrowed from another prism sharing the base. After independent review: named midpoint/centroid/right-angle operands bind to their defining clause (C1), a zero denominator is a coded refusal (I1), v3 keeps every flat field description and every named centroid vertex (I2), contract violations get RESPONSE_CONTRACT_INVALID (M1).",
   "product_changes_since_main": [
     "backend/app/ai/fact_extraction.py",
     "backend/app/simulation/geometry_functions/registry.py"
   ],
-  "historical_effect": "UNKNOWN: historical GOLD arms were not rescored at this candidate. Earlier measurement bytes are unchanged.",
-  "freeze": "clean detached worktree at e7b95d82, 110 measured files, --verify MATCH",
+  "historical_effect": "Historical NLU GOLD arm: 60 rows, one declared change (L20 REFUSED QUESTION_LOCAL_GIVEN_UNVERIFIED -> REFUSED SOURCE_OBJECT_MISMATCH), served 10 -> 10 (results/historical-gold-delta.json). Earlier measurement bytes unchanged.",
+  "freeze": "clean detached worktree at f0e89b16, 110 measured files, --verify MATCH",
   "cache_version": 125,
   "cache_decision": "no bump: product prompt and default (flat) response schema unchanged; research route D (registry, function_route) is not imported by /api/analyze or any cached path",
   "hieu_luc_len_ket_qua_da_do": {
@@ -28,5 +28,13 @@
     "live_requests": 0
   },
   "integration": "not integrated; owner GO INTEGRATION required",
-  "push": "NONE"
+  "push": "NONE",
+  "superseded_within_run": [
+    {
+      "current_candidate_hash": "fe7cb20c4383d039bad131ea9c49d3830277bb5a47726fb34991e8323c5862d2",
+      "current_product_commit": "13c0f157",
+      "frozen_at": "e7b95d82",
+      "why": "independent candidate review FAIL (C1, I1, I2); fixed before any measurement"
+    }
+  ]
 }
