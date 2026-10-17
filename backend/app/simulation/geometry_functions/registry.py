@@ -58,8 +58,10 @@ def _nhan(v: Any) -> Any:
 Label = Annotated[str, BeforeValidator(_nhan), Field(pattern=r"^[A-Z][0-9]*'?$", description="nhãn một điểm của đề, vd S, A, A'")]
 SolidName = Annotated[str, BeforeValidator(_nhan),
                       Field(pattern=r"^(?:[A-Z][0-9]*'?)+\.(?:[A-Z][0-9]*'?)+$", description="ký hiệu khối, vd S.ABC hoặc ABC.A'B'C'")]
+#: Exported for provider response schemas (Schema-Contract v3), so the model is told the same value grammar the validator checks.
+NUMBER_PATTERN = r"^(?:\d+(?:[.,]\d+)?(?:/\d+)?a?(?:√\d+)?(?:/\d+)?|a(?:√\d+)?(?:/\d+)?|√\d+(?:/\d+)?)$"
 ExactNumber = Annotated[str, BeforeValidator(_nhan),
-                        Field(pattern=r"^(?:\d+(?:[.,]\d+)?(?:/\d+)?a?(?:√\d+)?(?:/\d+)?|a(?:√\d+)?(?:/\d+)?|√\d+(?:/\d+)?)$",
+                        Field(pattern=NUMBER_PATTERN,
                               description="độ dài CHÉP từ đề: số dương (4, 2/3, √3, 3√3/4) hoặc theo ký hiệu a (a, 2a, a√3, a√3/2)")]
 Seg = Annotated[list[Label], Field(min_length=2, max_length=2)]
 Poly = Annotated[list[Label], Field(min_length=3)]
@@ -71,7 +73,10 @@ _SO = re.compile(r"(?<![\w'])(?P<he>\d+(?:[.,]\d+)?(?:/\d+)?)?(?P<sym>a)?(?:√(
 def _doc(m: re.Match) -> tuple[Fraction, bool] | None:
     if not (m["he"] or m["sym"] or m["can"]):
         return None
-    he = Fraction((m["he"] or "1").replace(",", ".")) / int(m["mau"] or 1)
+    try:
+        he = Fraction((m["he"] or "1").replace(",", ".")) / int(m["mau"] or 1)
+    except ZeroDivisionError:            # "1/0" matches the grammar but is no number: refuse (doc_so), never crash
+        return None
     return he * he * int(m["can"] or 1), bool(m["sym"])
 
 
@@ -336,6 +341,11 @@ def planning_contract(spec: FunctionSpec, effect: str | None = None) -> Planning
 
 
 _VUONG = ("vuông", "⊥")
+#: "hộp chữ nhật" names a cuboid with or without "hình"/"khối" (same pattern as `_HOP_CHU_NHAT`); bare "hộp" does not.
+_HOP_CHU_NHAT_KW = r"re:(?i)(?<!\w)hộp\s+chữ\s+nhật(?!\w)"
+#: "AB dài bao nhiêu" asks a length; "dài 3" assigns one and "dài hơn … bao nhiêu" compares, so neither matches.
+#: Same wording as the question grammar accepts (no "dài là/bằng bao nhiêu" the ask grammar would reject anyway).
+_DAI_BAO_NHIEU_KW = r"re:(?i)(?<!\w)dài\s+bao\s+nhiêu(?!\w)"
 _F = FunctionSpec
 REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("regular_polygon", RegularPolygonArgs, "fact", "Đa giác đều (tam giác đều, hình vuông, lục giác đều) với các đỉnh "
@@ -378,9 +388,9 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("regular_pyramid", PyramidArgs, "construct", "Khối chóp ĐỀU: đáy đa giác đều, chân đường cao tại tâm đáy.",
        (("chóp", "tứ diện"), ("đều",))),
     _F("prism", PrismArgs, "construct", "Khối lăng trụ với hai đáy tương ứng; `right` khi đề nói lăng trụ đứng/đều.",
-       (("lăng trụ", "hình hộp", "lập phương"),)),
+       (("lăng trụ", "hình hộp", "lập phương", _HOP_CHU_NHAT_KW),)),
     _F("ask_volume", AskVolumeArgs, "ask", "Đề hỏi thể tích một khối.", (("thể tích", r"re:(?<![\w'])V(?![\w'])"),)),
-    _F("ask_length", AskLengthArgs, "ask", "Đề hỏi độ dài một đoạn.", (("độ dài", "tính", "tìm"),),
+    _F("ask_length", AskLengthArgs, "ask", "Đề hỏi độ dài một đoạn.", (("độ dài", "tính", "tìm", _DAI_BAO_NHIEU_KW),),
        planning=PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Foot", ("F", "P", "L"))),
                                  PlanningTerm("AnswerDistance", ("P", "L")), "distance_witness", "distance",
                                  call=(("segment", ("P", "F")),)),
@@ -596,6 +606,11 @@ def _co_tu(quotes: tuple[str, ...], nhom: tuple[str, ...]) -> bool:
 
 _LAP_PHUONG = re.compile(r"(?<!\w)(?:(?:hình|khối)\s+)?lập\s+phương(?!\w|\s+hóa\b)", re.IGNORECASE)
 _HOP_CHU_NHAT = re.compile(r"(?<!\w)(?:(?:hình|khối)\s+)?hộp\s+chữ\s+nhật(?!\w)", re.IGNORECASE)
+#: A rightness cue that NAMES the prism (the solid label must follow it, see `_mat_cua_khoi_sau_cum`): "lăng trụ (tứ giác) đứng",
+#: "hình hộp đứng", "lăng trụ tam giác đều", "hộp chữ nhật", "lập phương". An adverb "đều" or a box mentioned elsewhere is not one.
+_DUNG_KHOI = re.compile(r"(?<!\w)(?:(?:hình|khối)\s+)?(?:lăng\s+trụ|hộp)(?:\s+(?:tam|tứ|ngũ|lục|đa)\s+giác)?\s+(?:đứng|đều)"
+                        r"(?:\s+(?:tam|tứ|ngũ|lục|đa)\s+giác)?(?!\w)|(?<!\w)(?:(?:hình|khối)\s+)?(?:hộp\s+chữ\s+nhật|lập\s+phương)(?!\w)",
+                        re.IGNORECASE)
 _CHU_NHAT = re.compile(r"(?<!\w)chữ\s+nhật(?!\w|\s+hóa\b)", re.IGNORECASE)
 
 
@@ -611,6 +626,25 @@ def _mat_cua_khoi_sau_cum(q: str, cum: re.Pattern[str], vertices: list[str]) -> 
                       if dau >= m.end() and not q[m.end():dau].strip()), None)
         if token and any(_cung_da_giac(p, vertices) for p in token):
             return True
+    return False
+
+
+def _khoi_dung(c: LoiGoi) -> bool:
+    """A right-prism cue that names THIS prism: `<cue> ABCD.A'B'C'D'` or `ABCD.A'B'C'D' là (một) <cue>`."""
+    wanted = list(zip(c.args.base, c.args.top))
+    for q in c.quotes:
+        for dau, cuoi, phan in _tu_nhan(q):
+            if len(phan) != 2 or any(len(p) != len(wanted) for p in phan):
+                continue
+            # Both faces AND their vertex correspondence identify a prism; a shared base alone does not.
+            pairs = list(zip(*phan))
+            if not any(order[i:] + order[:i] == wanted for order in
+                       (pairs, pairs[::-1], [(b, a) for a, b in pairs], [(b, a) for a, b in pairs[::-1]])
+                       for i in range(len(pairs))):
+                continue
+            if (any(m.end() <= dau and not q[m.end():dau].strip() for m in _DUNG_KHOI.finditer(q))
+                    or re.match(r"\s+là\s+(?:một\s+)?(?:" + _DUNG_KHOI.pattern + ")", q[cuoi:], re.IGNORECASE)):
+                return True
     return False
 
 
@@ -1349,7 +1383,8 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
         for nhom in c.spec.keywords:
             if not _co_tu(c.quotes, nhom):
                 raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: {c.fn} cần một trong {list(nhom)} trong {c.quote!r}", (c.id,))
-        if c.fn == "prism" and c.args.right and not _co_tu(c.quotes, ("đứng", "đều", "hình hộp", "lập phương")):
+        # A bare "hình hộp" (parallelepiped) may be oblique: rightness needs a cue naming THIS prism (its label right after).
+        if c.fn == "prism" and c.args.right and not _khoi_dung(c):
             raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: lăng trụ đứng cần 'đứng'/'đều' trong {c.quote!r}", (c.id,))
         for f in c.spec.plane_fields:
             if not _co_mat(c.quotes, getattr(c.args, f), cho_day=f != "face"):
@@ -1361,7 +1396,8 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
             mp = getattr(c.args, "plane", None)
             if not _co_diem_rieng(c.quotes, getattr(c.args, f), mp):
                 raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: điểm {getattr(c.args, f)} ({f}) không được nhắc trong {c.quote!r}", (c.id,))
-        if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line"):
+        if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "midpoint", "centroid",
+                    "right_angle"):
             if not construction_source_bound(c, de):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò điểm và toán hạng dựng không khớp nguồn", (c.id,))
         if c.fn in ("section", "ask_section_area", "intersection_line") and not mat_cat_dung_nguon(c, calls):
@@ -1664,6 +1700,9 @@ _NOI_TIEN_DE = re.compile(r"[\s,;:.()\-–]*(?:(?:cho|gọi|biết|rằng|có|v�
 #: Exam scaffolding at the start of a premise segment ("Bài 3.", "Câu 2:", "a)", "1)", "Câu a:", "(1 điểm)").
 _GIAN_DAN = re.compile(r"\s*(?:(?:bài tập|bài|câu|ví dụ)\s*(?:\d+|[a-d])\s*[.:)]|(?:\d+|[a-d])\s*\)"
                        r"|\(\s*\d+(?:[.,]\d+)?\s*điểm\s*\))\s*", re.IGNORECASE)
+#: Sentence-initial indefinite article directly before a solid noun ("Một hộp chữ nhật …"); "một" anywhere else (a number,
+#: "một nửa", "một cạnh") stays premise content.
+_MAO_TU_KHOI = re.compile(r"\s*một\s+(?=(?:hình|khối|hộp|lăng\s+trụ|chóp|tứ\s+diện)(?!\w))", re.IGNORECASE)
 #: Nouns that only NAME an object next to its label; ROLE nouns also state a role and are accepted only when that role
 #: matches a validated call (`_vai_tro_doi_tuong_khop`) — "đường cao SB" is a claim, not a name.
 _DANH_TU_TRUNG_TINH = r"mặt phẳng|đường thẳng|đoạn thẳng|đoạn|cạnh|mặt|điểm|độ dài|hình chóp|khối chóp"
@@ -1790,6 +1829,8 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             continue
         gd = _GIAN_DAN.match(de, a, b)
         a0 = gd.end() if gd else a
+        if mt := _MAO_TU_KHOI.match(de, a0, b):
+            a0 = mt.end()
         if (_GHI_CHU.fullmatch(de, a0, b) and not _tu_nhan(de[a0:b])
                 and not re.search(r"(?<![a-zA-Z\^])\d+(?![\d\s]*chữ số)", de[a0:b], re.I)
                 and not re.search(r"(?<!\w)(?:bỏ|thay|đổi|tăng|giảm|phóng|nhân|chia|gấp|nửa|mọi|kích thước|giả thiết)(?!\w)", de[a0:b], re.I)):
@@ -2130,8 +2171,9 @@ _LOAI_DON_VI = r"(?:độ dài|diện tích|thể tích|góc)"
 _MUC_GHI_CHU = rf"(?:{_LAM_TRON}|đơn vị(?:\s+{_LOAI_DON_VI})?(?:\s*:?\s*{_DON_VI})?|{_DON_VI})"
 _GHI_CHU_NGOAC = rf"\(\s*{_MUC_GHI_CHU}(?:\s*[,;]\s*{_MUC_GHI_CHU})*\s*\)"
 #: Sau cụm (sau khi xoá các cụm hỏi khác): chỉ những thứ này rồi kết câu / dữ kiện / việc kế tiếp.
+#: Possessive separators cannot be repartitioned by the outer repetition when an unread suffix fails.
 _SAU_HOP_LE = re.compile(
-    r"(?:[\s,;:]+|(?:và|cùng)(?!\w)|(?:có\s+)?(?:độ dài\s+)?(?:bằng|là)\s+bao\s+nhiêu|dài\s+bao\s+nhiêu|bao\s+nhiêu"
+    r"(?:[\s,;:]++|(?:và|cùng)(?!\w)|(?:có\s+)?(?:độ dài\s+)?(?:bằng|là)\s+bao\s+nhiêu|dài\s+bao\s+nhiêu|bao\s+nhiêu"
     r"|(?:bằng|là)\s*[?:]"                                                     # đề trắc nghiệm "… bằng?"
     # ngoặc chỉ là LỜI DẶN (làm tròn, đơn vị) — "(sau khi cắt bỏ …)" / "(tính theo đơn vị mới …)" không lọt (review S1)
     rf"|theo\s+(?:{_DON_VI}(?![\w'])|[a-z](?![\w'])|đơn vị(?:\s+{_LOAI_DON_VI})?\s+{_DON_VI}(?![\w']))|{_GHI_CHU_NGOAC}|{_LAM_TRON}(?![\w'])"
@@ -2718,6 +2760,100 @@ def mat_cat_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> bool:
     return any(_tap_mat(m, 1, day) == frozenset(c.args.plane) for q in c.quotes for mau in _CAT_BOI for m in mau.finditer(q))
 
 
+_DIEM = r"[A-Z][0-9]*'?"
+_DS_DIEM = rf"(?<![\w']){_DIEM}(?![\w'])(?:\s*(?:,|và)\s*(?<![\w']){_DIEM}(?![\w']))*"
+_DOI_TUONG = (r"(?:(?i:cạnh(?:\s+(?:bên|đáy))?|đoạn(?:\s+thẳng)?|tam\s+giác|tứ\s+giác|đa\s+giác"
+              r"|hình\s+(?:vuông|chữ\s+nhật|bình\s+hành|thoi)|mặt(?:\s+(?:bên|đáy))?)\s+|Δ\s*)?")
+#: Start of a label group: not glued to a word nor to the "." of a solid symbol (the "ABC" of S.ABC is no subject), except
+#: right after "Δ" (a letter, so `(?<![\w'.])` alone never matches it).
+_DAU_NHAN = r"(?:(?<=Δ)|(?<![\w'.]))"
+_DS_NHOM = (rf"{_DOI_TUONG}{_DAU_NHAN}(?:{_DIEM}){{2,}}(?![\w'])"
+            rf"(?:\s*(?:,|và)\s*{_DOI_TUONG}{_DAU_NHAN}(?:{_DIEM}){{2,}}(?![\w']))*")
+_CUE_DIEM = {"midpoint": r"(?i:trung\s+điểm)", "centroid": r"(?i:trọng\s+tâm)"}
+#: Right angle of a named polygon: `ABC (là tam giác) vuông (cân) tại B`, `ABCD là hình thang vuông tại A và D`,
+#: `góc ABC vuông`; the angle at X has its rays on X's two cyclic neighbours. An unlabelled `(đáy là) tam giác vuông tại B`
+#: is resolved only when its subject is "đáy", by a unique named base of a solid; a face label in parentheses, "(SAB) là
+#: tam giác vuông tại A", names that face (re-review C1 residual: a side face's right angle is never the base's).
+#: Case-insensitive only for the words: labels stay upper-case, so "tam" or the length symbol "a" is never a label.
+_HINH_VUONG_TAI = r"(?i:tam\s+giác|tứ\s+giác|hình\s+thang|hình\s+chữ\s+nhật)"
+_VUONG_TAI = re.compile(rf"(?:{_DAU_NHAN}\(?((?:{_DIEM}){{3,}})\)?(?![\w'.])\s+(?:(?i:là)\s+(?:(?i:một)\s+)?)?(?:{_HINH_VUONG_TAI}\s+)?)?"
+                        rf"(?i:vuông(?:\s+cân)?\s+(?:tại|ở))\s+({_DIEM}(?:\s*(?:,|(?i:và))\s*{_DIEM})*)(?![\w'])")
+#: The base subject right before an unlabelled right polygon, read in the SOURCE up to the clause (a quote may hold only
+#: "tam giác vuông tại B"): "đáy (ABC) là (một) tam giác …"; an optional label names the base itself. Whose base it is
+#: comes from `_chu_cua_day`, never from "the only named solid".
+_DAY_VUONG = re.compile(rf"(?<!\w)(?i:đáy)\s+(?:\(?((?:{_DIEM}){{3,}})\)?(?![\w'.])\s+)?(?:(?i:là)\s+)?(?:(?i:một)\s+)?"
+                        rf"{_HINH_VUONG_TAI}\s+$")
+_GOC_VUONG = re.compile(rf"(?i:góc)\s+(?<![\w'])((?:{_DIEM}){{3}})(?![\w'])\s+(?i:vuông|=\s*90|bằng\s+90)")
+
+
+#: The only words allowed between a solid symbol and the unlabelled "đáy" it owns: "S.ABC (có) (chung) (mặt) đáy",
+#: or "S.ABC. Đáy" (a closed list: a noun blacklist was open-ended, review rounds 4–5).
+_SAU_KHOI_DEN_DAY = re.compile(r"\s*(?:(?i:có)\s+)?(?:(?i:chung)\s+)?(?:(?i:mặt)\s+)?")
+
+
+def _chu_cua_day(truoc: str, dau_day: int) -> list[str] | None:
+    """Base labels of the solid that owns the unlabelled word "đáy" at `dau_day`: the solid symbol directly before it
+    (`_SAU_KHOI_DEN_DAY`). Any other wording (another object's base, "vuông góc với đáy", an intervening clause) has no
+    certain owner ⇒ None (refused, not guessed)."""
+    khoi = [(cuoi, p) for _d, cuoi, p in _tu_nhan(truoc[:dau_day]) if len(p) == 2]
+    if not khoi or not _SAU_KHOI_DEN_DAY.fullmatch(truoc, khoi[-1][0], dau_day):
+        return None
+    p = khoi[-1][1]
+    return p[1] if len(p[0]) == 1 else p[0]
+
+
+def _dinh_nghia_diem_dung_nguon(c: LoiGoi, q: str, de: str) -> bool:
+    """Bind a named derived point / right angle to the clause that defines it: `M, N lần lượt là trung điểm SB, SC` pairs
+    in order (several names without `lần lượt` are refused), `G là trọng tâm tam giác ABC` / `trọng tâm G của tam giác
+    ABC` binds G to exactly {A, B, C}; `tam giác ABC vuông tại B` binds the vertex and the triangle. A label merely
+    appearing somewhere in the quote binds nothing."""
+    a = c.args
+    if c.fn == "right_angle":
+        rays = frozenset(a.rays)
+
+        def ke(poly):                      # the two cyclic neighbours of the right vertex in the named polygon
+            i = poly.index(a.vertex)
+            return frozenset((poly[i - 1], poly[(i + 1) % len(poly)]))
+        for m in _GOC_VUONG.finditer(q):
+            pts = re.findall(_DIEM, m[1])
+            if pts[1] == a.vertex and frozenset((pts[0], pts[2])) == rays:
+                return True
+        for m in _VUONG_TAI.finditer(q):
+            if a.vertex not in re.findall(_DIEM, m[2]):
+                continue
+            if m[1]:
+                poly = re.findall(_DIEM, m[1])
+            elif (vt := _vi_tri(de, q)) and (day := _DAY_VUONG.search(truoc := de[:vt[0]] + q[:m.start()])):
+                # A labelled base ("đáy ABC là …") names its polygon; only an unlabelled one needs an owner.
+                if day[1]:
+                    poly = re.findall(_DIEM, day[1])
+                elif (poly := _chu_cua_day(truoc, day.start())) is None:
+                    continue
+            else:
+                continue
+            if len(set(poly)) == len(poly) and a.vertex in poly and ke(poly) == rays:
+                return True
+        return False
+    obj = a.segment if c.fn == "midpoint" else a.polygon
+    cue = _CUE_DIEM[c.fn]
+    forward = re.compile(rf"({_DS_DIEM})\s+((?i:lần\s+lượt)\s+)?(?i:là)\s+(?:(?i:các)\s+)?{cue}\s+(?:(?i:của)\s+)?(?:(?i:các)\s+)?({_DS_NHOM})")
+    named = re.compile(rf"{cue}\s+(?<![\w'])({_DIEM})(?![\w'])\s+(?:(?i:của)\s+)?({_DS_NHOM})")
+    def groups(s):
+        return [re.findall(_DIEM, g) for g in re.findall(rf"{_DAU_NHAN}(?:{_DIEM}){{2,}}(?![\w'])", s)]
+    for m in forward.finditer(q):
+        names, objs = re.findall(_DIEM, m[1]), groups(m[3])
+        if len(names) != len(objs) or (len(names) > 1 and not m[2]):
+            continue
+        for n, o in zip(names, objs):
+            if n == a.point and len(o) == len(obj) and set(o) == set(obj):
+                return True
+    for m in named.finditer(q):
+        objs = groups(m[2])
+        if m[1] == a.point and len(objs) == 1 and len(objs[0]) == len(obj) and set(objs[0]) == set(obj):
+            return True
+    return False
+
+
 def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
     """Bounded construction grammar: bind roles together, never borrow labels across clauses.
 
@@ -2730,6 +2866,8 @@ def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
     a = c.args
     def labels(s):
         return re.findall(point, s)
+    if c.fn in ("midpoint", "centroid", "right_angle"):
+        return any(_dinh_nghia_diem_dung_nguon(c, q, de) for q in c.quotes)
     for q in c.quotes:
         if c.fn.startswith("intersect_line_"):
             pattern = rf"(?<![\w'])({point})\s+là\s+giao điểm\s+(?:của\s+)?{operand}\s+(?:và|với)\s+{operand}(?![\w'])"

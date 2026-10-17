@@ -1,0 +1,36 @@
+{
+  "development": {
+    "status": "EXPOSED_DEVELOPMENT_REUSED_NOT_FRESH_EVALUATION",
+    "cases": 12,
+    "source_run": "hybrid-semantic-extraction-v2",
+    "semantic_changes": 0,
+    "encoding_corrections": 3,
+    "oracle_derivation": "Exact source prefix before # Heldout family H1:; no author or historical heldout code copied."
+  },
+  "heldout": {
+    "status": "FRESH_INDEPENDENT_AI_AUTHORED_NOT_HUMAN_VALIDATED",
+    "cases": 24,
+    "source_directory": "heldout",
+    "semantic_changes": 0,
+    "encoding_corrections": 10,
+    "limitations": "See preserved authoring.md and gold_encoding.md; gold encoder received oracle and limited planner code, and disclosed prior structural communications."
+  },
+  "assembly": "Concatenation of original dev case objects plus original heldout case objects; matching gold objects copied, then the declared pre-lock encoding correction applied (gold_corrections.json: only appended equivalent alternatives).",
+  "gold_corrections": {
+    "rule": "base-edge-points-equivalence/1",
+    "changes": 13,
+    "source": "independent gold/oracle audit finding B1 (2026-10-17), before any model output"
+  },
+  "source_sha256": {
+    "docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/corpus.json": "31607400e6c8046fabe75e9cee75862d707f6473a4d465bb71ba25260f125edf",
+    "docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/gold_facts.json": "6eec95b23e509f6ebc2096961f692aa514ce62aebe9577830f2e4b991be219c0",
+    "docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/oracle.py": "e1edd74ac8b18254fd384849e14122480f28724d1b28567e56ff8cb8090ea87e",
+    "docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/authoring.md": "fd5226484f711e92f1a6d74e26ad4827862ddc1daabe220889a15ffcd253414a",
+    "docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/prelock_corrections.json": "d48e039d081d4b692d2381bfc710b0770c06105a015e593450fb6cc7e70ee7ec",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/corpus.json": "23f9ea9c4ec2f41b2418f41afb4dbca9d7c8c9637a4e21726344683f6d37b9ae",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/gold_facts.json": "fe70d832282c47b4863c53f9f089295d053c088f71fe0f09456cf48f16b16b9a",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/oracle.py": "0f4a281ec2911a0c30fd89bd14c4d3388a6e19efb60c48edd5a589dda0ef3875",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/authoring.md": "d5b329a16216535897cb60be615d89f07e722d8c71c89a34100b0910f1f89f98",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/gold_encoding.md": "34c9584e81ab465bdd5dfb6b6d8544ab47aa9940cda3462b71e120b6d56d4c47"
+  }
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "ProcessId": 5684,
+    "ParentProcessId": 18144,
+    "Name": "bash.exe",
+    "CreationDate": "2026-10-17T23:18:36.911925+07:00",
+    "UserModeTime": 0,
+    "KernelModeTime": 156250,
+    "WriteTransferCount": 0,
+    "command_line_sha256": "0f88f20cbfc548aea408759b462595c7e0dc07a43400c74e281888ee932b5b0d"
+  },
+  {
+    "ProcessId": 1304,
+    "ParentProcessId": 5684,
+    "Name": "bash.exe",
+    "CreationDate": "2026-10-17T23:18:36.924138+07:00",
+    "UserModeTime": 156250,
+    "KernelModeTime": 312500,
+    "WriteTransferCount": 787,
+    "command_line_sha256": "baa928944605bcf52ccb040875fc15c08a67e33135e77f3a11b389c0c12d416c"
+  },
+  {
+    "ProcessId": 22304,
+    "ParentProcessId": 1304,
+    "Name": "conhost.exe",
+    "CreationDate": "2026-10-17T23:18:36.931719+07:00",
+    "UserModeTime": 0,
+    "KernelModeTime": 0,
+    "WriteTransferCount": 0,
+    "command_line_sha256": "417222c4a0ecb4d60a457ebe8e26fddf3d5406bffb16a5c59af8eeb241beca51"
+  },
+  {
+    "ProcessId": 10692,
+    "ParentProcessId": 1304,
+    "Name": "bash.exe",
+    "CreationDate": "2026-10-17T23:18:36.972534+07:00",
+    "UserModeTime": 156250,
+    "KernelModeTime": 0,
+    "WriteTransferCount": 0,
+    "command_line_sha256": "baa928944605bcf52ccb040875fc15c08a67e33135e77f3a11b389c0c12d416c"
+  },
+  {
+    "ProcessId": 21180,
+    "ParentProcessId": 10692,
+    "Name": "python.exe",
+    "CreationDate": "2026-10-17T23:18:36.994195+07:00",
+    "UserModeTime": 0,
+    "KernelModeTime": 0,
+    "WriteTransferCount": 0,
+    "command_line_sha256": "0d2bbc721fe8c006e0ae71b33af3120697ce69741f23a904315d4962717b6bd7"
+  },
+  {
+    "ProcessId": 16508,
+    "ParentProcessId": 21180,
+    "Name": "python.exe",
+    "CreationDate": "2026-10-17T23:18:37.008383+07:00",
+    "UserModeTime": 71907500000,
+    "KernelModeTime": 187187500,
+    "WriteTransferCount": 0,
+    "command_line_sha256": "515edd35ee373ad8a78c19a090730d5f7ca2e3cc8f68a110fe097477868f96c3"
+  }
+]

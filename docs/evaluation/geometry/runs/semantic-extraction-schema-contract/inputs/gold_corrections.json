@@ -1,0 +1,542 @@
+{
+  "rule": "base-edge-points-equivalence/1",
+  "scope": "ENCODING_ONLY_BEFORE_ANY_MODEL_OUTPUT",
+  "changes": [
+    {
+      "case_id": "dev03",
+      "fact_id": "f3",
+      "before": {
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy ABCD là hình vuông cạnh 4"
+        ],
+        "solid": "S.ABCD",
+        "points": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "value": "4",
+        "measure": "base_edge",
+        "id": "f3"
+      },
+      "after": {
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy ABCD là hình vuông cạnh 4"
+        ],
+        "solid": "S.ABCD",
+        "points": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "value": "4",
+        "measure": "base_edge",
+        "id": "f3",
+        "alternatives": [
+          {
+            "points": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "dev09",
+      "fact_id": "f3",
+      "before": {
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy là hình vuông cạnh 6"
+        ],
+        "solid": "P.ABCD",
+        "points": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "value": "6",
+        "measure": "base_edge",
+        "id": "f3"
+      },
+      "after": {
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy là hình vuông cạnh 6"
+        ],
+        "solid": "P.ABCD",
+        "points": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "value": "6",
+        "measure": "base_edge",
+        "id": "f3",
+        "alternatives": [
+          {
+            "points": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "dev10",
+      "fact_id": "f3",
+      "before": {
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy ABCD là hình vuông cạnh 2"
+        ],
+        "solid": "S.ABCD",
+        "points": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "value": "2",
+        "measure": "base_edge",
+        "id": "f3"
+      },
+      "after": {
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy ABCD là hình vuông cạnh 2"
+        ],
+        "solid": "S.ABCD",
+        "points": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "value": "2",
+        "measure": "base_edge",
+        "id": "f3",
+        "alternatives": [
+          {
+            "points": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "h07",
+      "fact_id": "f2",
+      "before": {
+        "id": "f2",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "cạnh đáy bằng 2"
+        ],
+        "solid": "S.ABCD",
+        "value": "2",
+        "measure": "base_edge",
+        "required": true
+      },
+      "after": {
+        "id": "f2",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "cạnh đáy bằng 2"
+        ],
+        "solid": "S.ABCD",
+        "value": "2",
+        "measure": "base_edge",
+        "required": true,
+        "alternatives": [
+          {
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "h08",
+      "fact_id": "f3",
+      "before": {
+        "id": "f3",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "cạnh đáy bằng 2"
+        ],
+        "solid": "S.ABCD",
+        "value": "2",
+        "measure": "base_edge",
+        "required": true
+      },
+      "after": {
+        "id": "f3",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "cạnh đáy bằng 2"
+        ],
+        "solid": "S.ABCD",
+        "value": "2",
+        "measure": "base_edge",
+        "required": true,
+        "alternatives": [
+          {
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "h09",
+      "fact_id": "f2",
+      "before": {
+        "id": "f2",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "cạnh đáy bằng 4"
+        ],
+        "solid": "S.ABCD",
+        "value": "4",
+        "measure": "base_edge",
+        "required": true
+      },
+      "after": {
+        "id": "f2",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "cạnh đáy bằng 4"
+        ],
+        "solid": "S.ABCD",
+        "value": "4",
+        "measure": "base_edge",
+        "required": true,
+        "alternatives": [
+          {
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "h10",
+      "fact_id": "f3",
+      "before": {
+        "id": "f3",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy ABCD là hình vuông cạnh a"
+        ],
+        "solid": "S.ABCD",
+        "value": "a",
+        "measure": "base_edge",
+        "points": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true
+      },
+      "after": {
+        "id": "f3",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy ABCD là hình vuông cạnh a"
+        ],
+        "solid": "S.ABCD",
+        "value": "a",
+        "measure": "base_edge",
+        "points": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "required": true,
+        "alternatives": [
+          {
+            "points": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "h14",
+      "fact_id": "f3",
+      "before": {
+        "id": "f3",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy là tam giác đều cạnh 2"
+        ],
+        "solid": "ABC.A'B'C'",
+        "value": "2",
+        "measure": "base_edge",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "required": true
+      },
+      "after": {
+        "id": "f3",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy là tam giác đều cạnh 2"
+        ],
+        "solid": "ABC.A'B'C'",
+        "value": "2",
+        "measure": "base_edge",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "required": true,
+        "alternatives": [
+          {
+            "points": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "h19",
+      "fact_id": "f2",
+      "before": {
+        "id": "f2",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "cạnh đáy bằng 2"
+        ],
+        "solid": "ABCD.A'B'C'D'",
+        "value": "2",
+        "measure": "base_edge",
+        "required": true
+      },
+      "after": {
+        "id": "f2",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "cạnh đáy bằng 2"
+        ],
+        "solid": "ABCD.A'B'C'D'",
+        "value": "2",
+        "measure": "base_edge",
+        "required": true,
+        "alternatives": [
+          {
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "h20",
+      "fact_id": "f2",
+      "before": {
+        "id": "f2",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "cạnh đáy 2"
+        ],
+        "solid": "ABCD.A'B'C'D'",
+        "value": "2",
+        "measure": "base_edge",
+        "required": true
+      },
+      "after": {
+        "id": "f2",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "cạnh đáy 2"
+        ],
+        "solid": "ABCD.A'B'C'D'",
+        "value": "2",
+        "measure": "base_edge",
+        "required": true,
+        "alternatives": [
+          {
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "h22",
+      "fact_id": "f3",
+      "before": {
+        "id": "f3",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy ABC là tam giác đều cạnh 2"
+        ],
+        "solid": "S.ABC",
+        "value": "2",
+        "measure": "base_edge",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "required": true
+      },
+      "after": {
+        "id": "f3",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy ABC là tam giác đều cạnh 2"
+        ],
+        "solid": "S.ABC",
+        "value": "2",
+        "measure": "base_edge",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "required": true,
+        "alternatives": [
+          {
+            "points": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "h23",
+      "fact_id": "f3",
+      "before": {
+        "id": "f3",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy là tam giác đều ABC cạnh 2"
+        ],
+        "solid": "S.ABC",
+        "value": "2",
+        "measure": "base_edge",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "required": true
+      },
+      "after": {
+        "id": "f3",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy là tam giác đều ABC cạnh 2"
+        ],
+        "solid": "S.ABC",
+        "value": "2",
+        "measure": "base_edge",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "required": true,
+        "alternatives": [
+          {
+            "points": null
+          }
+        ]
+      }
+    },
+    {
+      "case_id": "h24",
+      "fact_id": "f3",
+      "before": {
+        "id": "f3",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy ABC là tam giác đều cạnh 2"
+        ],
+        "solid": "S.ABC",
+        "value": "2",
+        "measure": "base_edge",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "required": true
+      },
+      "after": {
+        "id": "f3",
+        "kind": "length",
+        "role": "premise",
+        "quotes": [
+          "đáy ABC là tam giác đều cạnh 2"
+        ],
+        "solid": "S.ABC",
+        "value": "2",
+        "measure": "base_edge",
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "required": true,
+        "alternatives": [
+          {
+            "points": null
+          }
+        ]
+      }
+    }
+  ]
+}

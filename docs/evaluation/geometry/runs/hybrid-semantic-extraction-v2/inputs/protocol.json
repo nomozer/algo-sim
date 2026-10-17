@@ -1,0 +1,45 @@
+{
+  "schema": "semantic-extraction-protocol/2",
+  "model": "gemini-2.5-flash",
+  "scorer": "grounded-source-obligations/2",
+  "locked_sha256": {
+    "corpus": "328f2977ebff1cb349a56bdc05bbd7a3cf51fc176156ee8413d7f3c0fa5ac8b0",
+    "gold_facts": "86f4e33a3a1f328bb49bca76aac69148568fc73048f142de639670aacc4864ab"
+  },
+  "file_sha256": {
+    "oracle.py": "e1edd74ac8b18254fd384849e14122480f28724d1b28567e56ff8cb8090ea87e",
+    "authoring.md": "fd5226484f711e92f1a6d74e26ad4827862ddc1daabe220889a15ffcd253414a",
+    "baseline_prompt.txt": "83308d82817902994b1d90fb3fa083570af207fe75d3f38ce00073a0c2873def",
+    "baseline_schema.json": "c9519515ad711270eca8cdc57e5da0625c19bd7bf6534ec6e14448191cf405ff",
+    "prelock_corrections.json": "d48e039d081d4b692d2381bfc710b0770c06105a015e593450fb6cc7e70ee7ec"
+  },
+  "caps": {
+    "PILOT": {
+      "logical_calls": 12,
+      "http_attempts": 12,
+      "accounted_tokens": 400000,
+      "usd": 0.5,
+      "samples": 1
+    },
+    "LOCKED": {
+      "logical_calls": 24,
+      "http_attempts": 24,
+      "accounted_tokens": 800000,
+      "usd": 1.0,
+      "samples": 1
+    }
+  },
+  "arms": [
+    "baseline",
+    "v2"
+  ],
+  "retries": 0,
+  "timeout_seconds": 90,
+  "pilot_total_calls": 24,
+  "pilot_total_usd_cap": 1.0,
+  "locked_total_calls": 48,
+  "locked_total_usd_cap": 2.0,
+  "human_validation": "NOT_HUMAN_VALIDATED",
+  "live_decision": "PENDING_OWNER_GO",
+  "integration_decision": "PENDING_OWNER_GO"
+}

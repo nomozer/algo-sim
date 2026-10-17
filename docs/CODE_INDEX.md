@@ -6419,6 +6419,34 @@ Run `docs/evaluation/geometry/runs/w17-operation-annotations/`. Thẩm quyền �
 | Adversarial safety / mutation | `backend/tests/geometry/test_hybrid_safety_readiness.py`, `backend/tests/geometry/test_hybrid_ab_pilot_mutations.py`, `backend/tests/geometry/fixtures/hybrid_safety_oracles.json` | Literal independent grounding/checker oracles, guard-removal mutants trong bộ nhớ; proof-only/negation boundary | real A/B routes → assertions | pytest 3 hybrid test modules |
 | Current candidate divergence | `docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/candidate_divergence.json` | Correction của khai báo hybrid cũ, không sửa historical artifact | measured system hash → `backend/tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI` | exact hash guard + candidate `--verify` |
 
+### Semantic extraction v3 / Schema-Contract — run semantic-extraction-schema-contract (2026-10-17, research branch)
+
+Runtime revision (2026-10-18): run `semantic-extraction-v3-runtime-revision`; shared `_SAU_HOP_LE` uses a possessive
+separator to prevent exponential backtracking without widening the accepted language. `harness(arm, inp, mode)` in
+`run_schema_contract_evaluation.py` selects the schedule's cases before GOLD/replay and reference GOLD routing;
+whole-artifact identity and source order remain. Historical scorer/executor unchanged.
+`backend/scripts/run_schema_contract_offline.py` runs eight offline children sequentially with actual exits, a
+120-second process-tree watchdog and manifest/score/schedule checks; it stops on the first failure and refuses overwrite.
+Tests: `test_question_tail_runtime.py`, `test_schema_contract_evaluation.py`, `test_schema_contract_offline.py`.
+The revision's `inputs/prepare_protocol.py` reuses parent lock/review helpers, copies corpus/gold byte-for-byte, binds
+the unchanged original oracle/scorer plus corrected product/runner, and refuses repeat lock or stale review.
+
+| Thành phần | Path | Purpose · authority | Producer → consumer | Verify |
+|---|---|---|---|---|
+| Response contract v3 (opt-in) | `backend/app/ai/fact_extraction.py` (`facts_response_schema("v3")`, `_contract_v3`, `schema_accepts`, `RESPONSE_CONTRACT`) | `anyOf` 34 biến thể kind/goal: toán hạng bắt buộc + arity, mọi mô tả của hợp đồng flat giữ nguyên, lối thoát `unsupported`/`ambiguous`; vi phạm sau parse ⇒ `RESPONSE_CONTRACT_INVALID`. Mặc định sản phẩm vẫn `flat` (surface `485d3834…`) | runner nghiên cứu đặt `RESPONSE_CONTRACT` theo arm → `build_request` → `run_ai_fact_route` | `tests/geometry/test_schema_contract_v3.py` (mọi biến thể là TypedFact hợp lệ cho `doc_du_kien`, kèm tiêm lỗi) |
+| Ràng buộc nguồn của điểm dựng có tên | `backend/app/simulation/geometry_functions/registry.py` (`_dinh_nghia_diem_dung_nguon` qua `construction_source_bound`; `_doc` từ chối mẫu số 0) | trung điểm / trọng tâm / góc vuông phải khớp đúng mệnh đề định nghĩa (`lần lượt` ghép theo thứ tự, đa giác đúng tập, tia góc vuông = hai đỉnh kề); cách nói khác ⇒ `SOURCE_OBJECT_MISMATCH` | `kiem_nguon` → planner/engine | `tests/geometry/test_semantic_extraction_v2_grounding.py` (C1) |
+| Runner cặp flat/v3 | `backend/scripts/run_schema_contract_evaluation.py` | cùng prompt sản phẩm, khác hợp đồng phản hồi; danh tính gồm arm + surface; trần GOLD của arm v3 từ chối gold mà v3 không chở được | `E.harness` (scorer /3) → `score.json` | `tests/geometry/test_schema_contract_evaluation.py` |
+| Scorer /3 | `backend/scripts/run_semantic_extraction_evaluation.py` (`_request_view`, `_signature`) | `grounded-source-obligations/3`: khoảng cách điểm–điểm = độ dài đoạn được phục vụ; chiều cao thuộc về đỉnh | → `summarize` | `tests/geometry/test_semantic_extraction_evaluation.py` |
+| Inputs + protocol | `docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/` (`prepare_protocol.py`, `oracle.py`, `selfcheck_protocol.py`, `gold_corrections.json`) | 12 dev lộ + 24 heldout mới (AI, chưa người duyệt); đính chính gold trước khoá; khoá một lần sau ba review gate | `prepare_protocol.py --prepare/--lock` → `load_inputs` | `selfcheck_protocol.py`, `oracle.py`, `ABSENT` hash ⇒ dừng |
+
+### Semantic extraction v2 — run hybrid-semantic-extraction-v2 (2026-10-17)
+
+| Thành phần | Path | Purpose · authority | Producer → consumer | Verify |
+|---|---|---|---|---|
+| Scorer /2 + paired-arm runner | `backend/scripts/run_semantic_extraction_evaluation.py` | `grounded-source-obligations/2`: chấm câu trả lời theo toán hạng lời gọi ĐÃ THỰC THI + oracle Fraction độc lập, không qua ghép fact; đếm mọi yêu cầu nguồn; tương đương toán hạng theo vai trò (đoạn, mặt = tập nhãn, đa giác = chu trình, khối = cấu trúc đỉnh); tách từ chối theo GOLD route; arm `baseline`/`v2` mỗi tiến trình một arm; tái dùng executor của `run_nlu_extraction_evaluation.py` qua bản module riêng (bản cũ không đổi byte); LIVE chỉ ghi vào `.superpowers/` | `runs/hybrid-semantic-extraction-v2/inputs/` → `score.json` (chỉ số dẫn xuất + băm) | `pytest tests/geometry/test_semantic_extraction_evaluation.py -q` |
+| Source Grounding regressions + extraction ablation | `backend/tests/geometry/test_semantic_extraction_v2_grounding.py` | Từ vựng `hộp chữ nhật` / `dài bao nhiêu` / mạo từ `Một` / `hình hộp` không tự đứng, kèm phản ví dụ; ablation đột biến trích xuất (0 phục vụ sai) | `geometry_functions/registry.py` (prompt sản phẩm KHÔNG đổi: prompt v2 không tích hợp) | `pytest tests/geometry/test_semantic_extraction_v2_grounding.py -q` |
+| Inputs khoá | `docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/` | Corpus 36 ca của tác giả AI độc lập, oracle Fraction, gold + 33 đính chính trước khoá, protocol băm | `prepare_protocol.py` (đã chạy, chặn chạy lại) → `load_inputs` | `INPUT_IDENTITY_MISMATCH` / `SOURCE_REQUEST_COVERAGE_MISMATCH` / `SPLIT_FAMILY_LEAK` |
+
 ### NLU extraction evaluation — run independent-nlu-extraction-evaluation (2026-10-17)
 
 | Thành phần | Path | Purpose · authority | Producer → consumer | Verify |

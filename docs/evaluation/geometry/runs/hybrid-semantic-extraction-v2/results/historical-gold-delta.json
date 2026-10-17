@@ -1,0 +1,14 @@
+{
+  "schema": "HISTORICAL_GOLD_REMEASURE/1",
+  "measured_receipt": "docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/results/gold/gold_rows.json",
+  "cause": "Source Grounding vocabulary 'dài bao nhiêu' (ask_length) — prompt v2 does not affect the GOLD arm",
+  "model_calls": 0,
+  "rows_compared": 60,
+  "served_before": 10,
+  "served_after": 10,
+  "changed": {
+    "L02": {"before": {"status": "REFUSED", "code": "PREDICATE_NOT_IN_QUOTE", "values": {}},
+            "after": {"status": "REFUSED", "code": "SOURCE_PREMISE_UNREAD", "values": {}},
+            "reading": "the ask is now recognised; the route stops at the next gate (the three-dimension premise is not read by any call). Still refused; no unsafe change."}
+  }
+}

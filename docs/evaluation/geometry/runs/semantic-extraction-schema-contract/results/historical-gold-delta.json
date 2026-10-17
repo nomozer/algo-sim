@@ -1,0 +1,15 @@
+{
+  "schema": "HISTORICAL_GOLD_REMEASURE/1",
+  "measured_receipt": "docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/results/gold/gold_rows.json",
+  "applies_after": "docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/results/historical-gold-delta.json",
+  "cause": "Source Grounding: named midpoint / centroid / right-angle operands must bind to their defining clause (schema-contract candidate review C1); unknown wording is refused, not guessed",
+  "model_calls": 0,
+  "rows_compared": 60,
+  "served_before": 10,
+  "served_after": 10,
+  "changed": {
+    "L20": {"before": {"status": "REFUSED", "code": "QUESTION_LOCAL_GIVEN_UNVERIFIED", "values": {}},
+            "after": {"status": "REFUSED", "code": "SOURCE_OBJECT_MISMATCH", "values": {}},
+            "reading": "'Lấy trung điểm của cạnh CC' rồi đặt tên nó là M' is outside the bounded midpoint grammar, so the midpoint now stops at the binding gate instead of a later gate. Still refused; no unsafe change."}
+  }
+}

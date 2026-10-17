@@ -1,0 +1,26 @@
+{
+  "gate": "scorer",
+  "status": "PASS",
+  "reviewer": "independent read-only Claude subagent (fresh context; did not write the scorer or runner), review 2026-10-17",
+  "reviewed_commit": "d7145b404989afd881e1e3dfc9b4f8ebd0204324",
+  "rounds": [
+    {"commit": "d785277d", "verdict": "FAIL", "findings": "I3 point-point distance scored WRONG_SERVED (L01-style); I4 v3 GOLD ceiling ignored the v3 contract; I5 token caps cut the v3 arm short"},
+    {"commit": "d7145b40", "verdict": "PASS", "resolution": "scorer /3 (_request_view, apex-owned height), contract-aware v3 GOLD ceiling, caps 800k/1.6M tokens (USD unchanged), arm-global restore fixture"}
+  ],
+  "audited": "symmetric operands, asymmetric relations, polygon cycles, missing operands, wrong target, multi-goal omission, partial serving, unsupported approximation incl. distance to a finite segment, hallucinated labels, source mismatch, invalid schema/parse failure in denominators, L01-style pairing artifacts; live path refuses without exact-identity human approval; raw live output only under .superpowers/",
+  "minor_open_disclosed": {
+    "M2b": "a prism height written with swapped bases (ABC.A'B'C' vs A'B'C'.ABC) no longer matches (under-credit)",
+    "M3": "invented_entities does not inspect plane_name",
+    "M4": "projection plane compares by exact labels (under-credit)",
+    "M5": "answers through a result line (line_ref) are always UNSCORABLE",
+    "M6": "UNSCORABLE takes precedence over a co-occurring wrong extra answer",
+    "M8": "provider acceptance of the v3 schema and its patterns NOT_MEASURED",
+    "I5_margin": "v3 reservation ~694k/800k PILOT and ~1.389M/1.6M LOCKED tokens, 0.425/0.50 and 0.849/1.00 USD, measured on hybrid-v2 texts"
+  },
+  "reviewed_sha256": {
+    "backend/scripts/run_semantic_extraction_evaluation.py": "325e7c91dba80c88a360aa0866056b35d13b9e47e65598bed8a8a9ea14cdc0fa",
+    "backend/scripts/run_schema_contract_evaluation.py": "7964113d4f8aea103250c87361aafbc9cdf870789178e60eb9003b518a7b0d39"
+  },
+  "tests_reported": "5 extraction/scorer files + test_hybrid_ab_pilot_runner.py: 271 passed; route-D files: 2643 passed, 9 xfailed",
+  "not_checked": "held-out and assembled corpus/gold of this run; live provider behaviour; full T3"
+}

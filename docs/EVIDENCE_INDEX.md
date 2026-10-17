@@ -1,5 +1,41 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SEMANTIC_EXTRACTION_V3_RUNTIME_REVISION
+
+REPORT = docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/
+CLASSIFICATION = OFFLINE_COMPLETE_AUTHORITATIVE_T3_PASS_AWAITING_LIVE_PILOT_GO (8/8 offline receipts COMPLETE; stalled task bufr6nkj1 verified and terminated; held-out split disclosed as REUSED_DIAGNOSTIC_NOT_FRESH_BLIND; stopped at GO_LIVE_PILOT_REQUIRED)
+CODE_COMMIT = 283813b2 (possessive separator in _SAU_HOP_LE + pre-route split isolation in run_schema_contract_evaluation.py); candidate freeze 4fdb6308; offline runner review fix da5b407d; protocol lock 2b955ead; offline receipts 04b0db37
+VERIFICATION = verification/authoritative-t3-20261018.json (candidate 6ba9033b… MATCH; independent review review-gates/revision.json PASS; targeted 445 passed / 1 xfailed; clean detached T3 at 04b0db37 FULL_PRODUCT_GATE_PASS: backend 10508 passed, frontend 68 files / 1079 passed, build PASS, demo 5/5, crash audit 6/6)
+MODEL_REQUEST_COUNT = 0 (offline GOLD/REPLAY only; live authorization NONE)
+CORRECTS = SEMANTIC_EXTRACTION_SCHEMA_CONTRACT (runtime regex backtracking in _SAU_HOP_LE, pre-route PILOT/LOCKED split isolation, and bounded sequential offline runner; original frozen lock at 5c58774d preserved byte-for-byte)
+CORRECTED_BY = NONE
+
+## WAVE_ID = SEMANTIC_EXTRACTION_SCHEMA_CONTRACT
+
+REPORT = docs/evaluation/geometry/runs/semantic-extraction-schema-contract/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/semantic-extraction-schema-contract/
+CLASSIFICATION = PARTIAL_PROTOCOL_RUNTIME_BLOCKER (0/8 completed offline receipts; original Claude task bufr6nkj1 remains active, stalled in frozen shared question grammar)
+CODE_COMMIT = a28c2a19; candidate freeze f82414ce; protocol lock / measured source 5c58774d
+VERIFICATION = verification/takeover-20261018.json (hashes/reviews MATCH; targeted 394 passed / 1 xfailed; full backend 10455 passed; frontend 1079; authoritative T3 NOT_RUN)
+MODEL_REQUEST_COUNT = 0 (v3 takeover; GOLD/REPLAY are not extraction accuracy; no live authorization)
+CORRECTS = NONE (new runtime blocker disclosed; previous reviews and measurements unchanged)
+CORRECTED_BY = SEMANTIC_EXTRACTION_V3_RUNTIME_REVISION
+
+## WAVE_ID = HYBRID_SEMANTIC_EXTRACTION_V2
+
+REPORT = docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/
+CORRECTS = NONE (scorer /2 reported beside the frozen NLU scorer; its L01 artifact re-checked on the recorded receipt)
+CORRECTED_BY = NONE
+CLASSIFICATION = RESEARCH_BRANCH · LIVE PILOT MEASURED (results/live-pilot-analysis.md) · LOCKED NOT RUN · integration PENDING_OWNER_GO
+CODE_COMMIT = 69fa9be8 (route-B prompt v2 + bounded Source Grounding); protocol lock 6ceb2508
+VERIFICATION_COMMIT = candidate b5406c91… MATCH at 108fc086; identities + offline receipts at c640cd14; T3 FULL_PRODUCT_GATE_PASS at fa6d792e and, merged with main 8427c879, at b7b7e89e (verification/t3-merged.json)
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
+
+Fresh 36-case corpus (dev 12 / heldout 24, 34 Fraction oracles), scorer grounded-source-obligations/2 (independent
+review NOT_READY → LOCK_READY). GOLD served correct dev 1→2/12, heldout 2→2/24, 0 unsafe; prompt effect NOT_MEASURED.
+
 ## WAVE_ID = SCENE3D_ANNOTATION_CORRECTNESS
 
 REPORT = docs/evaluation/geometry/runs/scene3d-annotation-correctness/report.md

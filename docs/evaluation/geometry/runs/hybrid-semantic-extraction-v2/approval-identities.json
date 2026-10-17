@@ -1,0 +1,104 @@
+{
+  "schema": "APPROVAL_IDENTITIES/1",
+  "identity_commit": "c640cd14",
+  "candidate_commit": "108fc086",
+  "approval_rule": "one owner-written approval file per arm and mode; identities[mode] must equal the arm identity below",
+  "identities": {
+    "baseline-LOCKED": {
+      "mode": "LOCKED",
+      "model": "gemini-2.5-flash",
+      "corpus_sha256": "328f2977ebff1cb349a56bdc05bbd7a3cf51fc176156ee8413d7f3c0fa5ac8b0",
+      "gold_sha256": "86f4e33a3a1f328bb49bca76aac69148568fc73048f142de639670aacc4864ab",
+      "protocol_sha256": "dfaaafbe0e0ee7cce5b6e9b898e76d138853e1592380b40f69bd3cbf46355053",
+      "preregistration_sha256": "63191ab89cc2dd5ebab752410632f968c098e427d3392daedd32e2ef64c08a35",
+      "surface_sha256": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+      "product_sha256": "b5406c9185d5bb61ccc410146275f8d7c389000e5b0064f2f59e98926729d325",
+      "runner_sha256": "9c517d806c55570f65325ff1703389b055c7edf7792eff273e320063822c48a2",
+      "helpers_sha256": "f456cf95e6e87672183f4f955f4ff309a25ea39dd1c1bdc83ee8055bfe8f8899",
+      "schedule_sha256": "e524615e198801113bd3a8bb46d1def40399b4c1b17060776896d2bbddd952ea",
+      "caps": {
+        "logical_calls": 24,
+        "http_attempts": 24,
+        "accounted_tokens": 800000,
+        "usd": 1.0,
+        "samples": 1
+      },
+      "arm": "baseline",
+      "scorer_version": "grounded-source-obligations/2",
+      "scorer_runner_sha256": "45fdd80f75d78d233b3dda75534a90a09ebf71185d0cf6c1b908232dcf341148",
+      "oracle_sha256": "e1edd74ac8b18254fd384849e14122480f28724d1b28567e56ff8cb8090ea87e"
+    },
+    "baseline-PILOT": {
+      "mode": "PILOT",
+      "model": "gemini-2.5-flash",
+      "corpus_sha256": "328f2977ebff1cb349a56bdc05bbd7a3cf51fc176156ee8413d7f3c0fa5ac8b0",
+      "gold_sha256": "86f4e33a3a1f328bb49bca76aac69148568fc73048f142de639670aacc4864ab",
+      "protocol_sha256": "dfaaafbe0e0ee7cce5b6e9b898e76d138853e1592380b40f69bd3cbf46355053",
+      "preregistration_sha256": "63191ab89cc2dd5ebab752410632f968c098e427d3392daedd32e2ef64c08a35",
+      "surface_sha256": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+      "product_sha256": "b5406c9185d5bb61ccc410146275f8d7c389000e5b0064f2f59e98926729d325",
+      "runner_sha256": "9c517d806c55570f65325ff1703389b055c7edf7792eff273e320063822c48a2",
+      "helpers_sha256": "f456cf95e6e87672183f4f955f4ff309a25ea39dd1c1bdc83ee8055bfe8f8899",
+      "schedule_sha256": "5fa6aecfd9d429cef05492e90890058aaf99993f1e0fe10bebca7c6b207da255",
+      "caps": {
+        "logical_calls": 12,
+        "http_attempts": 12,
+        "accounted_tokens": 400000,
+        "usd": 0.5,
+        "samples": 1
+      },
+      "arm": "baseline",
+      "scorer_version": "grounded-source-obligations/2",
+      "scorer_runner_sha256": "45fdd80f75d78d233b3dda75534a90a09ebf71185d0cf6c1b908232dcf341148",
+      "oracle_sha256": "e1edd74ac8b18254fd384849e14122480f28724d1b28567e56ff8cb8090ea87e"
+    },
+    "v2-LOCKED": {
+      "mode": "LOCKED",
+      "model": "gemini-2.5-flash",
+      "corpus_sha256": "328f2977ebff1cb349a56bdc05bbd7a3cf51fc176156ee8413d7f3c0fa5ac8b0",
+      "gold_sha256": "86f4e33a3a1f328bb49bca76aac69148568fc73048f142de639670aacc4864ab",
+      "protocol_sha256": "dfaaafbe0e0ee7cce5b6e9b898e76d138853e1592380b40f69bd3cbf46355053",
+      "preregistration_sha256": "63191ab89cc2dd5ebab752410632f968c098e427d3392daedd32e2ef64c08a35",
+      "surface_sha256": "c4e4392c2c87d7a4a83645af54fa455fd042ce5bf68c60114107bf9f399db890",
+      "product_sha256": "b5406c9185d5bb61ccc410146275f8d7c389000e5b0064f2f59e98926729d325",
+      "runner_sha256": "9c517d806c55570f65325ff1703389b055c7edf7792eff273e320063822c48a2",
+      "helpers_sha256": "f456cf95e6e87672183f4f955f4ff309a25ea39dd1c1bdc83ee8055bfe8f8899",
+      "schedule_sha256": "e524615e198801113bd3a8bb46d1def40399b4c1b17060776896d2bbddd952ea",
+      "caps": {
+        "logical_calls": 24,
+        "http_attempts": 24,
+        "accounted_tokens": 800000,
+        "usd": 1.0,
+        "samples": 1
+      },
+      "arm": "v2",
+      "scorer_version": "grounded-source-obligations/2",
+      "scorer_runner_sha256": "45fdd80f75d78d233b3dda75534a90a09ebf71185d0cf6c1b908232dcf341148",
+      "oracle_sha256": "e1edd74ac8b18254fd384849e14122480f28724d1b28567e56ff8cb8090ea87e"
+    },
+    "v2-PILOT": {
+      "mode": "PILOT",
+      "model": "gemini-2.5-flash",
+      "corpus_sha256": "328f2977ebff1cb349a56bdc05bbd7a3cf51fc176156ee8413d7f3c0fa5ac8b0",
+      "gold_sha256": "86f4e33a3a1f328bb49bca76aac69148568fc73048f142de639670aacc4864ab",
+      "protocol_sha256": "dfaaafbe0e0ee7cce5b6e9b898e76d138853e1592380b40f69bd3cbf46355053",
+      "preregistration_sha256": "63191ab89cc2dd5ebab752410632f968c098e427d3392daedd32e2ef64c08a35",
+      "surface_sha256": "c4e4392c2c87d7a4a83645af54fa455fd042ce5bf68c60114107bf9f399db890",
+      "product_sha256": "b5406c9185d5bb61ccc410146275f8d7c389000e5b0064f2f59e98926729d325",
+      "runner_sha256": "9c517d806c55570f65325ff1703389b055c7edf7792eff273e320063822c48a2",
+      "helpers_sha256": "f456cf95e6e87672183f4f955f4ff309a25ea39dd1c1bdc83ee8055bfe8f8899",
+      "schedule_sha256": "5fa6aecfd9d429cef05492e90890058aaf99993f1e0fe10bebca7c6b207da255",
+      "caps": {
+        "logical_calls": 12,
+        "http_attempts": 12,
+        "accounted_tokens": 400000,
+        "usd": 0.5,
+        "samples": 1
+      },
+      "arm": "v2",
+      "scorer_version": "grounded-source-obligations/2",
+      "scorer_runner_sha256": "45fdd80f75d78d233b3dda75534a90a09ebf71185d0cf6c1b908232dcf341148",
+      "oracle_sha256": "e1edd74ac8b18254fd384849e14122480f28724d1b28567e56ff8cb8090ea87e"
+    }
+  }
+}
