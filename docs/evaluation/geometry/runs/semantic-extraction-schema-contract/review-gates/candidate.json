@@ -1,0 +1,26 @@
+{
+  "gate": "candidate",
+  "status": "PASS",
+  "reviewer": "independent read-only Claude subagent (fresh context; did not write the candidate), six review rounds 2026-10-17",
+  "reviewed_commit": "f82414ce8b7d2f767668130b23d89b2a7922ea6e",
+  "product_sha256": "1ff71da76d999370897edd3a2dfaf161113e4d24f39dd41cda640ce2aa53dbc7",
+  "rounds": [
+    {"commit": "d785277d", "verdict": "FAIL", "findings": "C1 named midpoint/centroid/right-angle operands not bound to their clause (wrong serves, present on main); I1 zero denominator crash; I2 v3 dropped 14 flat descriptions"},
+    {"commit": "d7145b40", "verdict": "FAIL", "findings": "C1 residual: side-face right angle bound to the base via the unlabelled fallback"},
+    {"commit": "4c1a6b6a", "verdict": "FAIL", "findings": "label group captured after the '.' of S.ABC; 32 route-D tests falsely refused (base subject read only inside the quote)"},
+    {"commit": "bb881ed1", "verdict": "FAIL", "findings": "an unnamed second solid's 'đáy' bound to the named solid's base"},
+    {"commit": "6bb2da30", "verdict": "FAIL", "findings": "any object noun outside the solid-noun blacklist lent its 'đáy'"},
+    {"commit": "f82414ce", "verdict": "PASS", "resolution": "closed adjacency rule: an unlabelled 'đáy' is owned only by the solid symbol directly before it; a labelled base names its own polygon"}
+  ],
+  "verified": "prior findings 1-5 of the first v3 review fixed; 276 authored payloads from 8 corpora unchanged (78 served, all v3-expressible); 12,000 fuzzed v3-accepted route payloads without crash; 10,200 fuzzed v3 shapes all valid TypedFacts; 30 route-D files + extraction/runner tests 2685 passed, 9 xfailed, 0 failed",
+  "minor_open_disclosed": {
+    "conservative_refusals": "unlabelled 'đáy' after an intervening clause ('S.ABC có SA ⊥ (ABC), …, đáy là tam giác vuông tại B'); 'vuông tại đỉnh B'; 'góc (A)B(C) = 90°'; 'có góc B vuông'; 'AB vuông góc với BC' as a right-angle fact; a quote starting with another single label + comma; projection onto a centroid in one quote (pre-existing)",
+    "ambiguous_sentence_initial_day": "several solids then 'Đáy là …' would bind the last symbol; blocked by the unread-premise gate",
+    "provider": "Gemini acceptance of the 40.8 KB, 34-branch v3 schema NOT_MEASURED"
+  },
+  "reviewed_sha256": {
+    "backend/app/ai/fact_extraction.py": "e7e63ba15b983706ddac8c75cc26530ad83551b51bd1282aa109cb5624ad42f1",
+    "backend/app/simulation/geometry_functions/registry.py": "140f6c213862e940a768938d9b30097742cd369d183ad8d89bd32feaeb2c954e"
+  },
+  "not_checked": "held-out and assembled inputs of this run (frequency of the conservative refusal there is NOT_MEASURED); live provider behaviour; T3/frontend; route-B-only right-angle wordings"
+}
