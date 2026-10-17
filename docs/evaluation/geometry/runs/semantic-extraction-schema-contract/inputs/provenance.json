@@ -4,6 +4,7 @@
     "cases": 12,
     "source_run": "hybrid-semantic-extraction-v2",
     "semantic_changes": 0,
+    "encoding_corrections": 3,
     "oracle_derivation": "Exact source prefix before # Heldout family H1:; no author or historical heldout code copied."
   },
   "heldout": {
@@ -11,9 +12,15 @@
     "cases": 24,
     "source_directory": "heldout",
     "semantic_changes": 0,
+    "encoding_corrections": 10,
     "limitations": "See preserved authoring.md and gold_encoding.md; gold encoder received oracle and limited planner code, and disclosed prior structural communications."
   },
-  "assembly": "Concatenation of original dev case objects plus original heldout case objects; matching gold objects copied without semantic edits.",
+  "assembly": "Concatenation of original dev case objects plus original heldout case objects; matching gold objects copied, then the declared pre-lock encoding correction applied (gold_corrections.json: only appended equivalent alternatives).",
+  "gold_corrections": {
+    "rule": "base-edge-points-equivalence/1",
+    "changes": 13,
+    "source": "independent gold/oracle audit finding B1 (2026-10-17), before any model output"
+  },
   "source_sha256": {
     "semantic-extraction-v3/docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/corpus.json": "31607400e6c8046fabe75e9cee75862d707f6473a4d465bb71ba25260f125edf",
     "semantic-extraction-v3/docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/gold_facts.json": "6eec95b23e509f6ebc2096961f692aa514ce62aebe9577830f2e4b991be219c0",

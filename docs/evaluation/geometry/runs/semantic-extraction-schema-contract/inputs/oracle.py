@@ -37,7 +37,17 @@ def main():
     held = read(HERE / "heldout/corpus.json")["cases"]
     assert corpus["cases"] == dev + held, "CORPUS_MUTATION"
     old_gold = read(OLD / "gold_facts.json")["cases"]
-    assert gold["cases"] == {**{c["id"]: old_gold[c["id"]] for c in dev}, **read(HERE / "heldout/gold_facts.json")["cases"]}, "GOLD_MUTATION"
+    expected = {**{c["id"]: old_gold[c["id"]] for c in dev}, **read(HERE / "heldout/gold_facts.json")["cases"]}
+    # Replay the declared pre-lock encoding correction: each change must start from the original fact and may only append alternatives.
+    for ch in read(HERE / "gold_corrections.json")["changes"]:
+        facts = expected[ch["case_id"]]["facts"]
+        i = next(i for i, f in enumerate(facts) if f["id"] == ch["fact_id"])
+        before, after = ch["before"], ch["after"]
+        assert facts[i] == before, "CORRECTION_BEFORE_MISMATCH"
+        assert {k: v for k, v in after.items() if k != "alternatives"} == {k: v for k, v in before.items() if k != "alternatives"}
+        assert after["alternatives"][:len(before.get("alternatives", []))] == before.get("alternatives", []), "CORRECTION_NOT_APPEND_ONLY"
+        facts[i] = after
+    assert gold["cases"] == expected, "GOLD_MUTATION"
     prefix = (OLD / "oracle.py").read_text(encoding="utf-8").split("# Heldout family H1:")[0].rstrip("\n") + "\n"
     assert (HERE / "exposed_dev_oracle.py").read_text(encoding="utf-8") == prefix
     expected_dev = module(HERE / "exposed_dev_oracle.py").EXPECTED

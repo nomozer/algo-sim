@@ -6,9 +6,11 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -47,6 +49,33 @@ def source_hashes():
     return {p.relative_to(ROOT).as_posix(): lf_sha(p) for p in SOURCE_PATHS}
 
 
+#: Pre-lock gold-encoding correction (independent gold audit, finding B1): a solid-owned `base_edge` length was encoded
+#: sometimes with the owning solid's base labels in `points`, sometimes without; with the solid named they are the same
+#: reading, but the scorer compares `points` exactly. Rule, applied uniformly to both splits before any model output exists:
+#: append the OTHER equivalent form as an alternative. Nothing else changes; every change is recorded before/after.
+CORRECTION_RULE = "base-edge-points-equivalence/1"
+
+
+def _base_labels(solid):
+    a, b = solid.split(".", 1)
+    return re.findall(r"[A-Z][0-9]*'?", b if len(re.findall(r"[A-Z][0-9]*'?", a)) == 1 else a)
+
+
+def correct_gold(raw):
+    gold, changes = copy.deepcopy(raw), []
+    for cid, case in gold.items():
+        for f in case["facts"]:
+            if f["kind"] != "length" or f.get("measure") != "base_edge" or "." not in (f.get("solid") or ""):
+                continue
+            base = _base_labels(f["solid"])
+            if f.get("points") not in (None, base):
+                continue
+            before = copy.deepcopy(f)
+            f["alternatives"] = [*f.get("alternatives", []), {"points": None if f.get("points") else base}]
+            changes.append({"case_id": cid, "fact_id": f["id"], "before": before, "after": copy.deepcopy(f)})
+    return gold, changes
+
+
 def assemble():
     old, fresh = read(OLD / "corpus.json"), read(HERE / "heldout/corpus.json")
     dev = [c for c in old["cases"] if c["split"] == "dev"]
@@ -59,8 +88,10 @@ def assemble():
     for c in cases:
         assert families.setdefault(c["structure_id"], c["split"]) == c["split"], "SPLIT_FAMILY_LEAK"
     old_gold = read(OLD / "gold_facts.json")["cases"]
-    gold = {**{c["id"]: old_gold[c["id"]] for c in dev}, **read(HERE / "heldout/gold_facts.json")["cases"]}
-    return {"schema": "semantic-extraction-corpus/2", "independence": "MIXED_EXPOSED_DEVELOPMENT_AND_FRESH_AI_AUTHORED_HELDOUT_NOT_HUMAN_VALIDATED", "cases": cases}, {"cases": gold}
+    raw = {**{c["id"]: old_gold[c["id"]] for c in dev}, **read(HERE / "heldout/gold_facts.json")["cases"]}
+    gold, changes = correct_gold(raw)
+    return ({"schema": "semantic-extraction-corpus/2", "independence": "MIXED_EXPOSED_DEVELOPMENT_AND_FRESH_AI_AUTHORED_HELDOUT_NOT_HUMAN_VALIDATED", "cases": cases},
+            {"cases": gold}, {"rule": CORRECTION_RULE, "scope": "ENCODING_ONLY_BEFORE_ANY_MODEL_OUTPUT", "changes": changes})
 
 
 def require_unlocked(protocol):
@@ -89,8 +120,8 @@ def prepare(lock=False):
     original = source_hashes()
     if previous and previous.get("source_sha256") != original:
         raise SystemExit("SOURCE_MUTATION_REQUIRES_NEW_RUN")
-    corpus, gold = assemble()
-    for name, value in (("corpus", corpus), ("gold_facts", gold)):
+    corpus, gold, corrections = assemble()
+    for name, value in (("corpus", corpus), ("gold_facts", gold), ("gold_corrections", corrections)):
         path = HERE / (name + ".json")
         if path.exists() and read(path) != value:
             raise SystemExit("ASSEMBLED_DATA_MUTATION")
@@ -100,6 +131,7 @@ def prepare(lock=False):
     (HERE / "exposed_dev_oracle.py").write_text(dev_oracle, encoding="utf-8", newline="\n")
     write(HERE / "corpus.json", corpus)
     write(HERE / "gold_facts.json", gold)
+    write(HERE / "gold_corrections.json", corrections)
     from scripts.freeze_evaluation_candidate import measured_system_hash
     product, count = measured_system_hash()
     gates = {name: check_gate(RUN / "review-gates" / (name + ".json"), required) for name, required in GATE_REQUIRED.items()}
@@ -112,11 +144,16 @@ def prepare(lock=False):
     write(HERE / "provenance.json", {
         "development": {"status": "EXPOSED_DEVELOPMENT_REUSED_NOT_FRESH_EVALUATION", "cases": 12,
                         "source_run": "hybrid-semantic-extraction-v2", "semantic_changes": 0,
+                        "encoding_corrections": sum(c["case_id"] in {d["id"] for d in corpus["cases"][:12]} for c in corrections["changes"]),
                         "oracle_derivation": "Exact source prefix before # Heldout family H1:; no author or historical heldout code copied."},
         "heldout": {"status": "FRESH_INDEPENDENT_AI_AUTHORED_NOT_HUMAN_VALIDATED", "cases": 24,
                     "source_directory": "heldout", "semantic_changes": 0,
+                    "encoding_corrections": sum(c["case_id"] not in {d["id"] for d in corpus["cases"][:12]} for c in corrections["changes"]),
                     "limitations": "See preserved authoring.md and gold_encoding.md; gold encoder received oracle and limited planner code, and disclosed prior structural communications."},
-        "assembly": "Concatenation of original dev case objects plus original heldout case objects; matching gold objects copied without semantic edits.",
+        "assembly": "Concatenation of original dev case objects plus original heldout case objects; matching gold objects copied, "
+                    "then the declared pre-lock encoding correction applied (gold_corrections.json: only appended equivalent alternatives).",
+        "gold_corrections": {"rule": CORRECTION_RULE, "changes": len(corrections["changes"]),
+                             "source": "independent gold/oracle audit finding B1 (2026-10-17), before any model output"},
         "source_sha256": original})
     protocol = {
         "schema": "semantic-extraction-protocol/3", "model": "gemini-2.5-flash", "scorer": E.SCORER_VERSION,

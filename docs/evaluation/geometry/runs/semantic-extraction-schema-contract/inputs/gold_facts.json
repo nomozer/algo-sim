@@ -262,7 +262,12 @@
           ],
           "value": "4",
           "measure": "base_edge",
-          "id": "f3"
+          "id": "f3",
+          "alternatives": [
+            {
+              "points": null
+            }
+          ]
         },
         {
           "kind": "altitude",
@@ -750,7 +755,12 @@
           ],
           "value": "6",
           "measure": "base_edge",
-          "id": "f3"
+          "id": "f3",
+          "alternatives": [
+            {
+              "points": null
+            }
+          ]
         },
         {
           "kind": "altitude",
@@ -835,7 +845,12 @@
           ],
           "value": "2",
           "measure": "base_edge",
-          "id": "f3"
+          "id": "f3",
+          "alternatives": [
+            {
+              "points": null
+            }
+          ]
         },
         {
           "kind": "length",
@@ -1410,7 +1425,17 @@
           "solid": "S.ABCD",
           "value": "2",
           "measure": "base_edge",
-          "required": true
+          "required": true,
+          "alternatives": [
+            {
+              "points": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            }
+          ]
         },
         {
           "id": "f3",
@@ -1495,7 +1520,17 @@
           "solid": "S.ABCD",
           "value": "2",
           "measure": "base_edge",
-          "required": true
+          "required": true,
+          "alternatives": [
+            {
+              "points": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            }
+          ]
         },
         {
           "id": "f4",
@@ -1594,7 +1629,17 @@
           "solid": "S.ABCD",
           "value": "4",
           "measure": "base_edge",
-          "required": true
+          "required": true,
+          "alternatives": [
+            {
+              "points": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            }
+          ]
         },
         {
           "id": "f3",
@@ -1694,7 +1739,12 @@
             "C",
             "D"
           ],
-          "required": true
+          "required": true,
+          "alternatives": [
+            {
+              "points": null
+            }
+          ]
         },
         {
           "id": "f4",
@@ -2200,7 +2250,12 @@
             "B",
             "C"
           ],
-          "required": true
+          "required": true,
+          "alternatives": [
+            {
+              "points": null
+            }
+          ]
         },
         {
           "id": "f4",
@@ -2765,7 +2820,17 @@
           "solid": "ABCD.A'B'C'D'",
           "value": "2",
           "measure": "base_edge",
-          "required": true
+          "required": true,
+          "alternatives": [
+            {
+              "points": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            }
+          ]
         },
         {
           "id": "f3",
@@ -2845,7 +2910,17 @@
           "solid": "ABCD.A'B'C'D'",
           "value": "2",
           "measure": "base_edge",
-          "required": true
+          "required": true,
+          "alternatives": [
+            {
+              "points": [
+                "A",
+                "B",
+                "C",
+                "D"
+              ]
+            }
+          ]
         },
         {
           "id": "f3",
@@ -3074,7 +3149,12 @@
             "B",
             "C"
           ],
-          "required": true
+          "required": true,
+          "alternatives": [
+            {
+              "points": null
+            }
+          ]
         },
         {
           "id": "f4",
@@ -3189,7 +3269,12 @@
             "B",
             "C"
           ],
-          "required": true
+          "required": true,
+          "alternatives": [
+            {
+              "points": null
+            }
+          ]
         },
         {
           "id": "f4",
@@ -3294,7 +3379,12 @@
             "B",
             "C"
           ],
-          "required": true
+          "required": true,
+          "alternatives": [
+            {
+              "points": null
+            }
+          ]
         },
         {
           "id": "f4",

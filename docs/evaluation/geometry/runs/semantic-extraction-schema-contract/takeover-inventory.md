@@ -36,3 +36,28 @@ Original session `cd3501fd-bbad-487d-90b7-aed7575abeea` ends 10:22:29Z with sess
 Main checkout's untracked `frontend/public/` untouched. Safety worktree has uncommitted EVIDENCE_INDEX/handoff/integration documentation; untouched. Other worktrees (Scene3D, contract-driven composition, v2) untouched.
 
 Claude processes still exist as Chrome native host and VS Code stream host. Identified Node processes are Playwright and the main frontend Vite server. No Python job observed; original task logs and the three file mtimes are unchanged since the limit. No old process was terminated. Only the resumed encoder may write its two new assigned files; parent preserves original held-out files. Any observed concurrent source mutation stops overlapping writes.
+
+## Second takeover: Codex → Claude (2026-10-17 20:23 +0700)
+
+Codex's sections above are kept unchanged. At takeover: HEAD `13c0f157`, `main` = `origin/main` = `4abc4afb`
+(already merged into this branch at `49779a13`), 0 tracked modifications, 0 staged, 11 untracked files, all in this run directory.
+The three preserved author files were re-hashed and are byte-identical to `.superpowers/preserved/semantic-extraction-v3-takeover-2026-10-17/`.
+Gold SHA-256 matches the encoder's report (`ea33013a…`, `1b633b3c…`).
+
+Codex session (local 19:56–20:03), reconstructed from its own transcripts:
+
+| item | state at takeover | evidence |
+|---|---|---|
+| safety fix e3827c00 on v3 | DONE_UNVERIFIED | cherry-picked as `0507cb01` |
+| merge current main | DONE_VERIFIED | `49779a13`; candidate conflict resolved to the older freeze, refreeze still pending |
+| v3 reviewer findings 1–3 (+ L4 partly) | DONE_UNVERIFIED | `13c0f157`; RED 17 failures → GREEN 381/385 in scratch logs |
+| v3 re-review of the fixes | WAITING_REVIEW | the reviewer's reply is encrypted in the transcript and cannot be read, so a fresh review is needed |
+| safety review (NO-GO, prism-rightness blocker) | WAITING_REVIEW | fix present; the blocker has not been re-reviewed |
+| held-out gold | DONE_UNVERIFIED | 24 cases / 49 requests / 148 facts; AI-authored, not human-validated |
+| gold audit | WAITING_REVIEW | auditor interrupted without a verdict |
+| protocol assembly/lock scripts | PARTIAL | draft prepare runs; the selfcheck failed on a cross-drive `relpath`; NOT_LOCKED |
+| candidate refreeze, offline results, T3, report | NOT_STARTED | — |
+
+Processes: no writer to this worktree. The Codex app-server was idle (last write 20:03). The running pytest and
+`measure_goal_composition.py` belong to Gemini (Antigravity) in `contract-driven-goal-composition`. Nothing was terminated
+except Claude's own exploratory runs.
