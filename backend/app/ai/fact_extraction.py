@@ -12,12 +12,14 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from typing import Any, Callable
 
 from app.ai.function_calling import MAX_OUTPUT_TOKENS, TEMPERATURE, LiveAIDisabled, _openapi
 from app.ai.function_route import run_fact_route
 from app.simulation.geometry_functions import KetQuaTuyen
 from app.simulation.geometry_functions.planner import TypedFact
+from app.simulation.geometry_functions.registry import NUMBER_PATTERN
 
 SYSTEM_PROMPT = (
     "Bạn đọc một đề hình học không gian và CHỈ trích dữ kiện theo lược đồ; KHÔNG chọn phép dựng, KHÔNG tính.\n"
@@ -53,23 +55,120 @@ class _TuChoiAI(Exception):
         self.code, self.reason = code, reason
 
 
-def facts_response_schema() -> dict[str, Any]:
+def facts_response_schema(contract: str = "flat") -> dict[str, Any]:
+    """`flat` = the product contract (one optional-everything TypedFact object). `v3` = research Schema-Contract v3."""
+    if contract == "v3":
+        return _contract_v3()
+    if contract != "flat":
+        raise ValueError(f"unknown response contract {contract!r}")
     sch = TypedFact.model_json_schema()
     item = _openapi({k: v for k, v in sch.items() if k != "$defs"}, sch.get("$defs", {}))
     return {"type": "OBJECT", "properties": {"facts": {"type": "ARRAY", "items": item}}, "required": ["facts"]}
 
 
-def build_request(problem_text: str) -> dict[str, Any]:
+#: Provider-side label grammar; the TypedFact `Label` validator normalises primes afterwards.
+_LABEL = r"^[A-Z][0-9]*['′’]?$"
+
+
+def _contract_v3() -> dict[str, Any]:
+    """Schema-Contract v3 (research): `anyOf` of kind/goal variants. Each variant only restricts the flat contract — the
+    goal's operand slots become REQUIRED with their arity, labels and values carry their grammar — and `unsupported`
+    stays an honest exit (labels/ambiguous allowed, no operand required) so a required slot never forces invention.
+    Documented Gemini Schema subset only (anyOf, required, enum, pattern, min/maxItems); no oneOf/const/$ref."""
+    flat = facts_response_schema("flat")["properties"]["facts"]["items"]["properties"]
+    lbl = {"type": "STRING", "pattern": _LABEL}
+
+    def labels(lo: int, hi: int = 0) -> dict[str, Any]:
+        s = {"type": "ARRAY", "items": lbl, "minItems": lo}
+        return {**s, "maxItems": hi} if hi else s
+
+    def one(*values: str) -> dict[str, Any]:
+        return {"type": "STRING", "enum": list(values)}
+
+    num = {"type": "STRING", "pattern": NUMBER_PATTERN, "description": flat["value"]["description"]}
+    solid = {"type": "STRING", "description": flat["solid"]["description"]}
+    common = {"id": {"type": "STRING"}, "role": one("premise", "prove", "condition", "question"),
+              "negated": {"type": "BOOLEAN"}, "ambiguous": {"type": "BOOLEAN"},
+              "quotes": {"type": "ARRAY", "items": {"type": "STRING"}, "minItems": 1}}
+    rel = {"plane_relation": {k: v for k, v in flat["plane_relation"].items() if k != "description"},
+           "plane_name": lbl, "point": lbl, "points_b": labels(2), "points_a": labels(2, 2)}
+
+    def v(kind: str, need: tuple[str, ...], **props: Any) -> dict[str, Any]:
+        return {"type": "OBJECT", "properties": {**common, "kind": one(kind), **props},
+                "required": ["id", "kind", "role", "quotes", *need]}
+
+    variants = [
+        v("solid", ("solid", "solid_type"), solid=solid, solid_type={k: x for k, x in flat["solid_type"].items() if k != "nullable"},
+          regular={"type": "BOOLEAN"}, right={"type": "BOOLEAN"}),
+        v("polygon_shape", ("points", "shape"), points=labels(3), shape={k: x for k, x in flat["shape"].items() if k != "nullable"},
+          solid=solid, value=num),
+        v("right_angle", ("at", "points"), at=lbl, points={**labels(2, 2), "description": "HAI điểm trên hai cạnh góc, không gồm đỉnh"}),
+        v("length", ("points", "value", "measure"), measure=one("segment"), points=labels(2, 2), value=num),
+        v("length", ("solid", "value", "measure"), measure=one("base_edge", "lateral_edge", "height", "edge"), solid=solid,
+          value=num, points=labels(2)),
+        v("equal_lengths", ("points_a", "points_b"), points_a=labels(2, 2), points_b=labels(2, 2)),
+        v("perpendicular", ("points_a", "points_b"), points_a=labels(2), points_b=labels(2)),
+        v("altitude", ("points", "solid"), points=labels(2, 2), solid=solid),
+        v("projection", ("point", "at", "points"), point=lbl, at=lbl, points=labels(2)),
+        v("projection", ("point", "at", "line_ref"), point=lbl, at=lbl, line_ref={"type": "STRING"}),
+        v("point_def", ("point", "point_kind", "points"), point=lbl, point_kind=one("midpoint", "centroid"), points=labels(2)),
+        v("point_def", ("point", "point_kind", "points_a", "points_b"), point=lbl,
+          point_kind=one("intersect_line_line", "intersect_line_plane"), points_a=labels(2, 2), points_b=labels(2)),
+        v("section", ("solid", "points"), solid=solid, points=labels(3)),
+        v("section", ("solid", "point", "points_b", "plane_relation"), solid=solid, **rel),
+        v("intersection_line", ("points_a", "points_b"), points_a=labels(3), points_b=labels(3)),
+        # questions: the quantity fixes which operands must be present
+        v("question", ("quantity", "points"), quantity=one("length"), points=labels(2, 2)),
+        v("question", ("quantity", "point_kind", "points", "points_b"), quantity=one("length", "distance"),
+          point_kind=one("midpoint", "centroid"), points=labels(2), points_b=labels(1)),
+        v("question", ("quantity", "points_a", "points_b"), quantity=one("distance"), points_a=labels(1), points_b=labels(2)),
+        v("question", ("quantity", "points_a", "line_ref"), quantity=one("distance"), points_a=labels(1, 1), line_ref={"type": "STRING"}),
+        v("question", ("quantity", "points_a", "points_b"), quantity=one("angle"), points_a=labels(2), points_b=labels(2)),
+        v("question", ("quantity", "points"), quantity=one("area"), points=labels(3)),
+        v("question", ("quantity", "solid", "points"), quantity=one("area"), solid=solid, points=labels(3)),
+        v("question", ("quantity", "solid", "point", "points_b", "plane_relation"), quantity=one("area"), solid=solid, **rel),
+        v("question", ("quantity", "solid"), quantity=one("volume"), solid=solid),
+        v("unsupported", ("reason",), reason={"type": "STRING", "description": "yêu cầu/mệnh đề lược đồ không diễn đạt đúng, "
+                                                "hoặc đề thiếu/không rõ thông tin — không bịa toán hạng"},
+          points=labels(1), points_a=labels(1), points_b=labels(1), solid=solid, value={"type": "STRING"},
+          quantity={k: x for k, x in flat["quantity"].items() if k != "nullable"}),
+    ]
+    return {"type": "OBJECT", "properties": {"facts": {"type": "ARRAY", "items": {"anyOf": variants}}}, "required": ["facts"]}
+
+
+def schema_accepts(schema: dict[str, Any], value: Any) -> bool:
+    """Offline check of an instance against the Gemini Schema subset used here (no provider call)."""
+    if "anyOf" in schema:
+        return any(schema_accepts(s, value) for s in schema["anyOf"])
+    t = schema.get("type")
+    if value is None:
+        return bool(schema.get("nullable"))
+    if t == "OBJECT":
+        props = schema.get("properties", {})
+        return (isinstance(value, dict) and all(value.get(k) is not None for k in schema.get("required", []))
+                and all(k in props and schema_accepts(props[k], x) for k, x in value.items() if x is not None))
+    if t == "ARRAY":
+        return (isinstance(value, list) and schema.get("minItems", 0) <= len(value) <= schema.get("maxItems", len(value))
+                and all(schema_accepts(schema["items"], x) for x in value))
+    if t == "STRING":
+        return (isinstance(value, str) and value in schema.get("enum", [value])
+                and (not schema.get("pattern") or re.fullmatch(schema["pattern"], value) is not None))
+    if t == "BOOLEAN":
+        return isinstance(value, bool)
+    return True
+
+
+def build_request(problem_text: str, contract: str = "flat") -> dict[str, Any]:
     return {
         "systemInstruction": {"parts": [{"text": SYSTEM_PROMPT}]},
         "contents": [{"role": "user", "parts": [{"text": f'Đề bài:\n"""\n{problem_text}\n"""'}]}],
         "generationConfig": {"temperature": TEMPERATURE, "maxOutputTokens": MAX_OUTPUT_TOKENS,
-                             "responseMimeType": "application/json", "responseSchema": facts_response_schema()},
+                             "responseMimeType": "application/json", "responseSchema": facts_response_schema(contract)},
     }
 
 
-def surface_fingerprint() -> str:
-    p = build_request("")
+def surface_fingerprint(contract: str = "flat") -> str:
+    p = build_request("", contract)
     p.pop("contents")
     return hashlib.sha256(json.dumps(p, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
 
