@@ -2785,22 +2785,19 @@ _DAY_VUONG = re.compile(rf"(?<!\w)(?i:đáy)\s+(?:\(?((?:{_DIEM}){{3,}})\)?(?![\
 _GOC_VUONG = re.compile(rf"(?i:góc)\s+(?<![\w'])((?:{_DIEM}){{3}})(?![\w'])\s+(?i:vuông|=\s*90|bằng\s+90)")
 
 
-#: Another solid named by a noun between a solid symbol and "đáy" takes the "đáy" for itself.
-_DANH_TU_KHOI = re.compile(r"(?<!\w)(?:chóp|lăng\s+trụ|hộp|tứ\s+diện|lập\s+phương|khối|hình\s+trụ|hình\s+nón)(?!\w)", re.IGNORECASE)
+#: The only words allowed between a solid symbol and the unlabelled "đáy" it owns: "S.ABC (có) (chung) (mặt) đáy",
+#: or "S.ABC. Đáy" (a closed list: a noun blacklist was open-ended, review rounds 4–5).
+_SAU_KHOI_DEN_DAY = re.compile(r"\s*(?:(?i:có)\s+)?(?:(?i:chung)\s+)?(?:(?i:mặt)\s+)?")
 
 
 def _chu_cua_day(truoc: str, dau_day: int) -> list[str] | None:
-    """Base labels of the solid that owns the word "đáy" at `dau_day`: the last solid symbol before it, in the same sentence,
-    with no other solid noun in between, and not the object of "vuông góc với (mặt) đáy". None when no owner is certain."""
-    if re.search(r"(?i:với)\s+(?:(?i:mặt)\s+)?$", truoc[:dau_day]):
-        return None
+    """Base labels of the solid that owns the unlabelled word "đáy" at `dau_day`: the solid symbol directly before it
+    (`_SAU_KHOI_DEN_DAY`). Any other wording (another object's base, "vuông góc với đáy", an intervening clause) has no
+    certain owner ⇒ None (refused, not guessed)."""
     khoi = [(cuoi, p) for _d, cuoi, p in _tu_nhan(truoc[:dau_day]) if len(p) == 2]
-    if not khoi:
+    if not khoi or not _SAU_KHOI_DEN_DAY.fullmatch(truoc, khoi[-1][0], dau_day):
         return None
-    cuoi, p = khoi[-1]
-    giua = truoc[cuoi:dau_day]
-    if re.search(r"[.!?](?=\s|$)", giua) or _DANH_TU_KHOI.search(giua):
-        return None
+    p = khoi[-1][1]
     return p[1] if len(p[0]) == 1 else p[0]
 
 
@@ -2826,9 +2823,11 @@ def _dinh_nghia_diem_dung_nguon(c: LoiGoi, q: str, de: str) -> bool:
             if m[1]:
                 poly = re.findall(_DIEM, m[1])
             elif (vt := _vi_tri(de, q)) and (day := _DAY_VUONG.search(truoc := de[:vt[0]] + q[:m.start()])):
-                if (chu := _chu_cua_day(truoc, day.start())) is None:
+                # A labelled base ("đáy ABC là …") names its polygon; only an unlabelled one needs an owner.
+                if day[1]:
+                    poly = re.findall(_DIEM, day[1])
+                elif (poly := _chu_cua_day(truoc, day.start())) is None:
                     continue
-                poly = re.findall(_DIEM, day[1]) if day[1] else chu
             else:
                 continue
             if len(set(poly)) == len(poly) and a.vertex in poly and ke(poly) == rays:

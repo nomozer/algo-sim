@@ -285,11 +285,11 @@ def test_right_angle_must_bind_to_the_vertex_and_triangle_of_its_clause(right, a
     assert (r.status, r.code) == ("REFUSED", "SOURCE_OBJECT_MISMATCH"), (r.answers, r.code)
 
 
-def test_unlabelled_right_base_resolves_only_the_unique_named_base():
-    right = "đáy là tam giác vuông tại B"
-    text = ABC.format(right=right, mid=MID_MN, ask="SC")
-    served(text, _pyramid_abc(right=right, ask=("S", "C")), {"q": Fraction(34)})
-    r = run_fact_route(text, _pyramid_abc(right=right, at="A", rays=("B", "C"), ask=("S", "C")))
+def test_unlabelled_right_base_binds_the_vertex_of_the_owning_solid_base():
+    text = "Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với (ABC), SA = 3, AB = 3, BC = 4. Tính độ dài SC."
+    payload = _pyramid_abc(right="Cho hình chóp S.ABC có đáy là tam giác vuông tại B", at="A", rays=("B", "C"), ask=("S", "C"))
+    payload["facts"] = [f for f in payload["facts"] if f["id"] != "f7"]
+    r = run_fact_route(text, payload)                                  # the base is right at B, not at A
     assert (r.status, r.code) == ("REFUSED", "SOURCE_OBJECT_MISMATCH"), (r.answers, r.code)
 
 
@@ -345,20 +345,37 @@ def test_common_wordings_of_bound_definitions_still_serve(mid, right):
     served(ABC.format(right=right, mid=mid, ask="AM"), _pyramid_abc(right=right, mid=mid), {"q": Fraction(9, 2)})
 
 
-def test_unlabelled_right_base_reads_the_base_subject_before_a_short_quote():
-    # The quote may hold only the clause; "đáy (ABC) là" just before it in the source names the base.
-    for lead in ("đáy là", "đáy ABC là"):
-        text = f"Cho hình chóp S.ABC có SA vuông góc với (ABC), SA = 3, {lead} tam giác vuông tại B, AB = 3, BC = 4. Tính độ dài SC."
-        payload = _pyramid_abc(right="tam giác vuông tại B", ask=("S", "C"))
-        payload["facts"] = [f for f in payload["facts"] if f["id"] != "f7"]
-        payload["facts"][3]["quotes"] = [lead, "tam giác vuông tại B"]     # the premise span must still be read
-        served(text, payload, {"q": Fraction(34)})
+def _right_base(text, lead):
+    payload = _pyramid_abc(right="tam giác vuông tại B", ask=("S", "C"))
+    payload["facts"] = [f for f in payload["facts"] if f["id"] != "f7"]
+    payload["facts"][3]["quotes"] = [lead, "tam giác vuông tại B"]     # the premise span must still be read
+    return run_fact_route(text, payload)
+
+
+@pytest.mark.parametrize("text,lead", [
+    # The quote may hold only the clause; the base subject is read in the source just before it.
+    ("Cho hình chóp S.ABC có SA vuông góc với (ABC), SA = 3, đáy ABC là tam giác vuông tại B, AB = 3, BC = 4. Tính độ dài SC.",
+     "đáy ABC là"),                                                   # a labelled base names its own polygon
+    ("Cho hình chóp S.ABC có đáy là tam giác vuông tại B, SA vuông góc với (ABC), SA = 3, AB = 3, BC = 4. Tính độ dài SC.",
+     "có đáy là"),                                                    # unlabelled: owned by the symbol right before it
+])
+def test_unlabelled_right_base_reads_the_base_subject_before_a_short_quote(text, lead):
+    r = _right_base(text, lead)
+    assert r.status == "SERVED" and squared(r.exec_result.final_memory["kq_q"]) == 34, (r.code, r.reason)
+
+
+def test_an_unlabelled_base_after_an_intervening_clause_is_conservatively_refused():
+    # Closed ownership rule: a clause between "S.ABC" and an unlabelled "đáy" leaves its owner uncertain ⇒ refused.
+    text = "Cho hình chóp S.ABC có SA vuông góc với (ABC), SA = 3, đáy là tam giác vuông tại B, AB = 3, BC = 4. Tính độ dài SC."
+    assert _right_base(text, "đáy là").status == "REFUSED"
 
 
 @pytest.mark.parametrize("tail", [
     ". Một khối lăng trụ có đáy là tam giác vuông tại A",                  # an unnamed second solid's base
     ". So sánh với hình chóp có đáy là tam giác vuông tại A",
     ", mặt bên (SAB) vuông góc với đáy là tam giác vuông tại A",           # "với đáy": the subject may be (SAB)
+    ", một vật thể có đáy là tam giác vuông tại A",                         # any other object that "has a base" (round 5)
+    ", hình (H) có đáy là tam giác vuông tại A",
 ])
 def test_an_unlabelled_base_belongs_to_the_solid_that_owns_the_word_day(tail):
     # Fourth-round review: "đáy" must be the named solid's own base, not another solid's nor an object of "vuông góc với".
