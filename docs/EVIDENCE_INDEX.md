@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SEMANTIC_EXTRACTION_V3_RUNTIME_REVISION
+
+REPORT = docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/
+CLASSIFICATION = OFFLINE_COMPLETE_AUTHORITATIVE_T3_PASS_AWAITING_LIVE_PILOT_GO (8/8 offline receipts COMPLETE; stalled task bufr6nkj1 verified and terminated; held-out split disclosed as REUSED_DIAGNOSTIC_NOT_FRESH_BLIND; stopped at GO_LIVE_PILOT_REQUIRED)
+CODE_COMMIT = 283813b2 (possessive separator in _SAU_HOP_LE + pre-route split isolation in run_schema_contract_evaluation.py); candidate freeze 4fdb6308; offline runner review fix da5b407d; protocol lock 2b955ead; offline receipts 04b0db37
+VERIFICATION = verification/authoritative-t3-20261018.json (candidate 6ba9033b… MATCH; independent review review-gates/revision.json PASS; targeted 445 passed / 1 xfailed; clean detached T3 at 04b0db37 FULL_PRODUCT_GATE_PASS: backend 10508 passed, frontend 68 files / 1079 passed, build PASS, demo 5/5, crash audit 6/6)
+MODEL_REQUEST_COUNT = 0 (offline GOLD/REPLAY only; live authorization NONE)
+CORRECTS = SEMANTIC_EXTRACTION_SCHEMA_CONTRACT (runtime regex backtracking in _SAU_HOP_LE, pre-route PILOT/LOCKED split isolation, and bounded sequential offline runner; original frozen lock at 5c58774d preserved byte-for-byte)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SEMANTIC_EXTRACTION_SCHEMA_CONTRACT
 
 REPORT = docs/evaluation/geometry/runs/semantic-extraction-schema-contract/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = a28c2a19; candidate freeze f82414ce; protocol lock / measured sour
 VERIFICATION = verification/takeover-20261018.json (hashes/reviews MATCH; targeted 394 passed / 1 xfailed; full backend 10455 passed; frontend 1079; authoritative T3 NOT_RUN)
 MODEL_REQUEST_COUNT = 0 (v3 takeover; GOLD/REPLAY are not extraction accuracy; no live authorization)
 CORRECTS = NONE (new runtime blocker disclosed; previous reviews and measurements unchanged)
-CORRECTED_BY = NONE (a separate runtime revision requires an owner decision)
+CORRECTED_BY = SEMANTIC_EXTRACTION_V3_RUNTIME_REVISION
 
 ## WAVE_ID = HYBRID_SEMANTIC_EXTRACTION_V2
 

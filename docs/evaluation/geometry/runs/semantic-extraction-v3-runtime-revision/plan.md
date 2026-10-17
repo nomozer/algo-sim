@@ -26,12 +26,12 @@ Stop on unrelated defects. h07 source/span was exposed during diagnosis; old hel
 - [x] Write/run split-call tests (12 dev / 24 held-out, both arms, GOLD/replay, preserved source order, failure isolation).
   Filter before route processing and GOLD reference scoring; keep full artifact identity. No frozen scorer/executor edits.
 - [x] Add bounded sequential offline execution with actual child exit/duration/identity/receipt validation; test failure and timeout handling.
-- [ ] Assemble a new protocol using unchanged source/gold/oracle/scorer and new product/runner identity. Keep one-time lock and review gates.
-- [ ] Commit code, freeze candidate, obtain independent read-only review; fix only verified in-scope findings, then lock the revision.
-- [ ] Verify old task absent; run eight offline invocations into new destinations, stopping on first failed/incomplete receipt.
-- [ ] Verify identities and results; run final authoritative T3 by temporarily detaching this same clean worktree at the final candidate commit.
+- [x] Assemble a new protocol using unchanged source/gold/oracle/scorer and new product/runner identity. Keep one-time lock and review gates.
+- [x] Commit code, freeze candidate, obtain independent read-only review; fix only verified in-scope findings, then lock the revision.
+- [x] Verify old task absent; run eight offline invocations into new destinations, stopping on first failed/incomplete receipt.
+- [x] Verify identities and results; run final authoritative T3 by temporarily detaching this same clean worktree at the final candidate commit.
   Return to revision branch; commit report/receipts with measured-commit attribution. Do not create a second verification worktree.
-- [ ] Stop at `GO_LIVE_PILOT_REQUIRED`. No approval file; no merge/push. Keep both worktrees while approvals are pending.
+- [x] Stop at `GO_LIVE_PILOT_REQUIRED`. No approval file; no merge/push. Keep both worktrees while approvals are pending.
 
 Cleanup plan: retain original lock/attempt and this revision while live/integration decisions are pending; remove the revision worktree
 only after an explicitly approved integration and a clean-state check. No automatic worktree removal in this task.
