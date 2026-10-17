@@ -55,6 +55,10 @@ class _TuChoiAI(Exception):
         self.code, self.reason = code, reason
 
 
+#: Research arm switch (like SYSTEM_PROMPT): the product default is the flat contract; an evaluation harness may set "v3".
+RESPONSE_CONTRACT = "flat"
+
+
 def facts_response_schema(contract: str = "flat") -> dict[str, Any]:
     """`flat` = the product contract (one optional-everything TypedFact object). `v3` = research Schema-Contract v3."""
     if contract == "v3":
@@ -158,7 +162,8 @@ def schema_accepts(schema: dict[str, Any], value: Any) -> bool:
     return True
 
 
-def build_request(problem_text: str, contract: str = "flat") -> dict[str, Any]:
+def build_request(problem_text: str, contract: str | None = None) -> dict[str, Any]:
+    contract = contract or RESPONSE_CONTRACT
     return {
         "systemInstruction": {"parts": [{"text": SYSTEM_PROMPT}]},
         "contents": [{"role": "user", "parts": [{"text": f'Đề bài:\n"""\n{problem_text}\n"""'}]}],
@@ -167,7 +172,7 @@ def build_request(problem_text: str, contract: str = "flat") -> dict[str, Any]:
     }
 
 
-def surface_fingerprint(contract: str = "flat") -> str:
+def surface_fingerprint(contract: str | None = None) -> str:
     p = build_request("", contract)
     p.pop("contents")
     return hashlib.sha256(json.dumps(p, ensure_ascii=False, sort_keys=True).encode("utf-8")).hexdigest()
