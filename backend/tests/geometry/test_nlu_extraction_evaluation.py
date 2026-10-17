@@ -312,13 +312,15 @@ def test_locked_inputs_keep_their_registered_hashes_and_gold_outcomes():
     rec = json.loads((E.RUN / "results" / "gold" / "gold_rows.json").read_bytes())["rows"]
     now = E.run_gold(real)
     key = lambda r: (r["case_id"], r["route"]["status"], r["route"]["code"], r["route"]["values"])
-    # Re-measured, not absorbed: each later product change that moves a row declares it in its own run's delta layer.
-    delta = json.loads((E.RUN.parent / "hybrid-semantic-extraction-v2/results/historical-gold-delta.json").read_bytes())
-    want = [(c, *(lambda a: (a["status"], a["code"], a["values"]))(delta["changed"][c]["after"])) if c in delta["changed"]
-            else (c, s, code, v) for c, s, code, v in map(key, rec)]
-    assert [key(r) for r in now] == want
-    assert {c: (s, code, v) for c, s, code, v in map(key, rec) if c in delta["changed"]} == \
-        {c: (d["before"]["status"], d["before"]["code"], d["before"]["values"]) for c, d in delta["changed"].items()}
+    # Re-measured, not absorbed: each later product change that moves a row declares it in its own run's delta layer,
+    # applied in order; every layer's `before` must be the state the earlier layers left.
+    state = {c: (s, code, v) for c, s, code, v in map(key, rec)}
+    for layer in ("hybrid-semantic-extraction-v2", "semantic-extraction-schema-contract"):
+        delta = json.loads((E.RUN.parent / layer / "results/historical-gold-delta.json").read_bytes())
+        for c, d in delta["changed"].items():
+            assert state[c] == (d["before"]["status"], d["before"]["code"], d["before"]["values"]), (layer, c)
+            state[c] = (d["after"]["status"], d["after"]["code"], d["after"]["values"])
+    assert [key(r) for r in now] == [(c, *state[c]) for c, *_ in map(key, rec)]
     assert sum(c["split"] == "locked" for c in real["corpus"]["cases"]) == 44
 
 

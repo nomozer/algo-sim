@@ -73,7 +73,10 @@ _SO = re.compile(r"(?<![\w'])(?P<he>\d+(?:[.,]\d+)?(?:/\d+)?)?(?P<sym>a)?(?:√(
 def _doc(m: re.Match) -> tuple[Fraction, bool] | None:
     if not (m["he"] or m["sym"] or m["can"]):
         return None
-    he = Fraction((m["he"] or "1").replace(",", ".")) / int(m["mau"] or 1)
+    try:
+        he = Fraction((m["he"] or "1").replace(",", ".")) / int(m["mau"] or 1)
+    except ZeroDivisionError:            # "1/0" matches the grammar but is no number: refuse (doc_so), never crash
+        return None
     return he * he * int(m["can"] or 1), bool(m["sym"])
 
 
@@ -1393,7 +1396,8 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
             mp = getattr(c.args, "plane", None)
             if not _co_diem_rieng(c.quotes, getattr(c.args, f), mp):
                 raise TuChoi("ROLE_NOT_IN_QUOTE", f"{c.id}: điểm {getattr(c.args, f)} ({f}) không được nhắc trong {c.quote!r}", (c.id,))
-        if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line"):
+        if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "midpoint", "centroid",
+                    "right_angle"):
             if not construction_source_bound(c, de):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: vai trò điểm và toán hạng dựng không khớp nguồn", (c.id,))
         if c.fn in ("section", "ask_section_area", "intersection_line") and not mat_cat_dung_nguon(c, calls):
@@ -2755,6 +2759,74 @@ def mat_cat_dung_nguon(c: LoiGoi, calls: tuple[LoiGoi, ...]) -> bool:
     return any(_tap_mat(m, 1, day) == frozenset(c.args.plane) for q in c.quotes for mau in _CAT_BOI for m in mau.finditer(q))
 
 
+_DIEM = r"[A-Z][0-9]*'?"
+_DS_DIEM = rf"(?<![\w']){_DIEM}(?![\w'])(?:\s*(?:,|và)\s*(?<![\w']){_DIEM}(?![\w']))*"
+_DOI_TUONG = (r"(?:(?i:cạnh|đoạn(?:\s+thẳng)?|tam\s+giác|tứ\s+giác|đa\s+giác|hình\s+(?:vuông|chữ\s+nhật|bình\s+hành|thoi)|mặt)"
+              r"\s+|Δ\s*)?")
+_DS_NHOM = (rf"{_DOI_TUONG}(?<![\w'])(?:{_DIEM}){{2,}}(?![\w'])"
+            rf"(?:\s*(?:,|và)\s*{_DOI_TUONG}(?<![\w'])(?:{_DIEM}){{2,}}(?![\w']))*")
+_CUE_DIEM = {"midpoint": r"(?i:trung\s+điểm)", "centroid": r"(?i:trọng\s+tâm)"}
+#: Right angle of a named polygon: `ABC (là tam giác) vuông (cân) tại B`, `ABCD là hình thang vuông tại A và D`,
+#: `góc ABC vuông`; the angle at X has its rays on X's two cyclic neighbours. An unlabelled `(đáy là) tam giác vuông tại B`
+#: is resolved only by a unique named base of a solid in the source.
+#: Case-insensitive only for the words: labels stay upper-case, so "tam" or the length symbol "a" is never a label.
+_HINH_VUONG_TAI = r"(?i:tam\s+giác|tứ\s+giác|hình\s+thang|hình\s+chữ\s+nhật)"
+_VUONG_TAI = re.compile(rf"(?:(?<![\w'])((?:{_DIEM}){{3,}})(?![\w'])\s+(?:(?i:là)\s+(?:(?i:một)\s+)?)?(?:{_HINH_VUONG_TAI}\s+)?)?"
+                        rf"(?i:vuông(?:\s+cân)?\s+tại)\s+({_DIEM}(?:\s*(?:,|(?i:và))\s*{_DIEM})*)(?![\w'])")
+_GOC_VUONG = re.compile(rf"(?i:góc)\s+(?<![\w'])((?:{_DIEM}){{3}})(?![\w'])\s+(?i:vuông|=\s*90|bằng\s+90)")
+
+
+def _dinh_nghia_diem_dung_nguon(c: LoiGoi, q: str, de: str) -> bool:
+    """Bind a named derived point / right angle to the clause that defines it: `M, N lần lượt là trung điểm SB, SC` pairs
+    in order (several names without `lần lượt` are refused), `G là trọng tâm tam giác ABC` / `trọng tâm G của tam giác
+    ABC` binds G to exactly {A, B, C}; `tam giác ABC vuông tại B` binds the vertex and the triangle. A label merely
+    appearing somewhere in the quote binds nothing."""
+    a = c.args
+    if c.fn == "right_angle":
+        rays = frozenset(a.rays)
+
+        def ke(poly):                      # the two cyclic neighbours of the right vertex in the named polygon
+            i = poly.index(a.vertex)
+            return frozenset((poly[i - 1], poly[(i + 1) % len(poly)]))
+        for m in _GOC_VUONG.finditer(q):
+            pts = re.findall(_DIEM, m[1])
+            if pts[1] == a.vertex and frozenset((pts[0], pts[2])) == rays:
+                return True
+        for m in _VUONG_TAI.finditer(q):
+            if a.vertex not in re.findall(_DIEM, m[2]):
+                continue
+            if m[1]:
+                poly = re.findall(_DIEM, m[1])
+            elif re.search(rf"{_HINH_VUONG_TAI}\s+$", q[:m.start()]):
+                bases = {tuple(p[1] if len(p[0]) == 1 else p[0]) for _d, _c, p in _tu_nhan(de) if len(p) == 2}
+                if len(bases) != 1:
+                    continue
+                poly = list(bases.pop())
+            else:
+                continue
+            if len(set(poly)) == len(poly) and a.vertex in poly and ke(poly) == rays:
+                return True
+        return False
+    obj = a.segment if c.fn == "midpoint" else a.polygon
+    cue = _CUE_DIEM[c.fn]
+    forward = re.compile(rf"({_DS_DIEM})\s+((?i:lần\s+lượt)\s+)?(?i:là)\s+(?:(?i:các)\s+)?{cue}\s+(?:(?i:của)\s+)?(?:(?i:các)\s+)?({_DS_NHOM})")
+    named = re.compile(rf"{cue}\s+(?<![\w'])({_DIEM})(?![\w'])\s+(?:(?i:của)\s+)?({_DS_NHOM})")
+    def groups(s):
+        return [re.findall(_DIEM, g) for g in re.findall(rf"(?<![\w'])(?:{_DIEM}){{2,}}(?![\w'])", s)]
+    for m in forward.finditer(q):
+        names, objs = re.findall(_DIEM, m[1]), groups(m[3])
+        if len(names) != len(objs) or (len(names) > 1 and not m[2]):
+            continue
+        for n, o in zip(names, objs):
+            if n == a.point and len(o) == len(obj) and set(o) == set(obj):
+                return True
+    for m in named.finditer(q):
+        objs = groups(m[2])
+        if m[1] == a.point and len(objs) == 1 and len(objs[0]) == len(obj) and set(objs[0]) == set(obj):
+            return True
+    return False
+
+
 def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
     """Bounded construction grammar: bind roles together, never borrow labels across clauses.
 
@@ -2767,6 +2839,8 @@ def construction_source_bound(c: LoiGoi, de: str = "") -> bool:
     a = c.args
     def labels(s):
         return re.findall(point, s)
+    if c.fn in ("midpoint", "centroid", "right_angle"):
+        return any(_dinh_nghia_diem_dung_nguon(c, q, de) for q in c.quotes)
     for q in c.quotes:
         if c.fn.startswith("intersect_line_"):
             pattern = rf"(?<![\w'])({point})\s+là\s+giao điểm\s+(?:của\s+)?{operand}\s+(?:và|với)\s+{operand}(?![\w'])"

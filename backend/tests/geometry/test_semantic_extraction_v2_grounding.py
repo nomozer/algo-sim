@@ -238,3 +238,85 @@ def test_rightness_accepts_the_same_prism_with_cyclic_reflected_or_swapped_faces
     prefix = f"Cho hình hộp chữ nhật {name}"
     text = prefix + ", đáy ABCD là hình chữ nhật, AB = 3, AD = 4, AA' = 12. Tính độ dài AC'."
     served(text, _right_box("prism", True, prefix), {"q": Fraction(169)})
+
+
+# ── derived-point / right-angle operands bind to their defining clause (schema-contract review C1) ──────────────────
+# Before: a label appearing anywhere in the quote was enough, so `M, N lần lượt là trung điểm SB, SC` with M on SC, a
+# centroid of a vertex subset, or `vuông tại B` read as the right angle at A were SERVED with a wrong answer.
+
+ABC = "Cho hình chóp S.ABC có SA vuông góc với (ABC), SA = 3, {right}, AB = 3, BC = 4. {mid}. Tính độ dài {ask}."
+RIGHT_B = "tam giác ABC vuông tại B"
+MID_MN = "Gọi M, N lần lượt là trung điểm SB, SC"
+
+
+def _pyramid_abc(right=RIGHT_B, mid=MID_MN, m=("S", "B"), at="B", rays=("A", "C"), ask=("A", "M")):
+    return {"facts": [
+        {"id": "f1", "kind": "solid", "role": "premise", "solid": "S.ABC", "solid_type": "pyramid", "quotes": ["Cho hình chóp S.ABC"]},
+        {"id": "f2", "kind": "perpendicular", "role": "premise", "points_a": ["S", "A"], "points_b": ["A", "B", "C"],
+         "quotes": ["SA vuông góc với (ABC)"]},
+        L("f3", "S", "A", "3", "SA = 3"),
+        {"id": "f4", "kind": "right_angle", "role": "premise", "at": at, "points": list(rays), "quotes": [right]},
+        L("f5", "A", "B", "3", "AB = 3"), L("f6", "B", "C", "4", "BC = 4"),
+        {"id": "f7", "kind": "point_def", "role": "premise", "point": "M", "point_kind": "midpoint", "points": list(m), "quotes": [mid]},
+        {"id": "q", "kind": "question", "role": "question", "quantity": "length", "points": list(ask),
+         "quotes": [f"Tính độ dài {''.join(ask)}."]}]}
+
+
+def test_bound_midpoint_and_right_angle_still_serve():
+    served(ABC.format(right=RIGHT_B, mid=MID_MN, ask="AM"), _pyramid_abc(), {"q": Fraction(9, 2)})
+    served(ABC.format(right=RIGHT_B, mid=MID_MN, ask="SC"), _pyramid_abc(ask=("S", "C")), {"q": Fraction(34)})
+
+
+@pytest.mark.parametrize("mid,m,ask", [
+    (MID_MN, ("S", "C"), ("A", "M")),                                   # "lần lượt" pairs M with SB, not SC
+    ("Gọi M, N là trung điểm SB, SC", ("S", "B"), ("A", "M")),          # several names without "lần lượt": order unstated
+])
+def test_midpoint_name_must_bind_to_its_own_segment(mid, m, ask):
+    r = run_fact_route(ABC.format(right=RIGHT_B, mid=mid, ask="".join(ask)), _pyramid_abc(mid=mid, m=m, ask=ask))
+    assert (r.status, r.code) == ("REFUSED", "SOURCE_OBJECT_MISMATCH"), (r.answers, r.code)
+
+
+@pytest.mark.parametrize("right,at,rays", [
+    (RIGHT_B, "A", ("B", "C")),                                          # wrong vertex of the named triangle
+    ("tam giác ABC vuông tại B", "B", ("A", "S")),                       # wrong triangle at the right vertex
+])
+def test_right_angle_must_bind_to_the_vertex_and_triangle_of_its_clause(right, at, rays):
+    r = run_fact_route(ABC.format(right=right, mid=MID_MN, ask="SC"), _pyramid_abc(right=right, at=at, rays=rays, ask=("S", "C")))
+    assert (r.status, r.code) == ("REFUSED", "SOURCE_OBJECT_MISMATCH"), (r.answers, r.code)
+
+
+def test_unlabelled_right_base_resolves_only_the_unique_named_base():
+    right = "đáy là tam giác vuông tại B"
+    text = ABC.format(right=right, mid=MID_MN, ask="SC")
+    served(text, _pyramid_abc(right=right, ask=("S", "C")), {"q": Fraction(34)})
+    r = run_fact_route(text, _pyramid_abc(right=right, at="A", rays=("B", "C"), ask=("S", "C")))
+    assert (r.status, r.code) == ("REFUSED", "SOURCE_OBJECT_MISMATCH"), (r.answers, r.code)
+
+
+SQUARE = "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD), SA = 3. {g}. Tính độ dài SG."
+
+
+def _square_centroid(g, poly):
+    return {"facts": [
+        {"id": "f1", "kind": "solid", "role": "premise", "solid": "S.ABCD", "solid_type": "pyramid", "quotes": ["Cho hình chóp S.ABCD"]},
+        {"id": "f2", "kind": "polygon_shape", "role": "premise", "shape": "square", "points": list("ABCD"), "value": "2",
+         "quotes": ["đáy ABCD là hình vuông cạnh 2"]},
+        {"id": "f3", "kind": "perpendicular", "role": "premise", "points_a": ["S", "A"], "points_b": list("ABCD"), "quotes": ["SA vuông góc với (ABCD)"]},
+        L("f4", "S", "A", "3", "SA = 3"),
+        {"id": "f5", "kind": "point_def", "role": "premise", "point": "G", "point_kind": "centroid", "points": list(poly), "quotes": [g]},
+        {"id": "q", "kind": "question", "role": "question", "quantity": "length", "points": ["S", "G"], "quotes": ["Tính độ dài SG."]}]}
+
+
+@pytest.mark.parametrize("g", ["Gọi G là trọng tâm tam giác ABD", "Gọi G là trọng tâm của tam giác ABD",
+                               "Lấy trọng tâm G của tam giác ABD"])
+def test_bound_centroid_still_serves(g):
+    served(SQUARE.format(g=g), _square_centroid(g, "ABD"), {"q": Fraction(89, 9)})
+
+
+@pytest.mark.parametrize("g,poly", [
+    ("Gọi G là trọng tâm tam giác ABD", "ABC"),                          # another triangle of the same base
+    ("Gọi G là trọng tâm tứ giác ABCD", "ABC"),                          # a vertex subset of the named quadrilateral
+])
+def test_centroid_must_bind_to_exactly_the_named_polygon(g, poly):
+    r = run_fact_route(SQUARE.format(g=g), _square_centroid(g, poly))
+    assert (r.status, r.code) == ("REFUSED", "SOURCE_OBJECT_MISMATCH"), (r.answers, r.code)
