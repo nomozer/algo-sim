@@ -17,7 +17,8 @@ from pathlib import Path
 
 sys.dont_write_bytecode = True
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[6]
+ROOT = HERE.parents[5]          # <repo>/docs/evaluation/geometry/runs/<run>/inputs
+assert (ROOT / "backend/app").is_dir() and (ROOT / "docs").is_dir(), f"not the repository root: {ROOT}"
 RUN = HERE.parent
 OLD = RUN.parent / "hybrid-semantic-extraction-v2/inputs"
 sys.path.insert(0, str(ROOT / "backend"))
@@ -26,7 +27,8 @@ from scripts import run_semantic_extraction_evaluation as E
 SOURCE_PATHS = [OLD / n for n in ("corpus.json", "gold_facts.json", "oracle.py", "authoring.md", "prelock_corrections.json")]
 SOURCE_PATHS += [HERE / "heldout" / n for n in ("corpus.json", "gold_facts.json", "oracle.py", "authoring.md", "gold_encoding.md")]
 GATE_REQUIRED = {
-    "gold-oracle": {str((HERE / "heldout" / n).relative_to(ROOT).as_posix()) for n in ("corpus.json", "gold_facts.json", "oracle.py")},
+    "gold-oracle": {str((HERE / n).relative_to(ROOT).as_posix()) for n in
+                    ("heldout/corpus.json", "heldout/gold_facts.json", "heldout/oracle.py", "gold_facts.json", "gold_corrections.json")},
     "scorer": {"backend/scripts/run_semantic_extraction_evaluation.py", "backend/scripts/run_schema_contract_evaluation.py"},
     "candidate": {"backend/app/ai/fact_extraction.py", "backend/app/simulation/geometry_functions/registry.py"},
 }
@@ -161,8 +163,10 @@ def prepare(lock=False):
         "locked_sha256": {"corpus": E.V1._sha(corpus), "gold_facts": E.V1._sha(gold)},
         "source_sha256": original, "review_gates": gates,
         "frozen_candidate": {"status": "MATCH" if candidate_ok else "NOT_MATCHED", "product_sha256": product, "files": count},
-        "caps": {"PILOT": {"logical_calls": 12, "http_attempts": 12, "accounted_tokens": 400000, "usd": .50, "samples": 1},
-                 "LOCKED": {"logical_calls": 24, "http_attempts": 24, "accounted_tokens": 800000, "usd": 1.00, "samples": 1}},
+        # Token caps cover the v3 arm's measured worst-case reservation (692,318 dev / 1,386,150 heldout, review I5);
+        # cost exposure stays bounded by the unchanged USD caps (v3 reservation 0.424 / 0.848).
+        "caps": {"PILOT": {"logical_calls": 12, "http_attempts": 12, "accounted_tokens": 800000, "usd": .50, "samples": 1},
+                 "LOCKED": {"logical_calls": 24, "http_attempts": 24, "accounted_tokens": 1600000, "usd": 1.00, "samples": 1}},
         "arms": ["flat", "v3"], "retries": 0, "timeout_seconds": 90,
         "pilot_total_calls": 24, "pilot_total_usd_cap": 1.0, "locked_total_calls": 48, "locked_total_usd_cap": 2.0,
         "thresholds": {"unsafe_serves_max": 0, "unscorable_serves_max": 0, "goal_entity_recall_min": .85,
@@ -179,6 +183,8 @@ def prepare(lock=False):
         from scripts.freeze_evaluation_candidate import _measured_system_files
         files += _measured_system_files()
     protocol["file_sha256"] = {os.path.relpath(p, HERE).replace("\\", "/"): lf_sha(p) for p in sorted(set(files))}
+    if absent := sorted(k for k, v in protocol["file_sha256"].items() if v == "ABSENT"):
+        raise SystemExit(f"PROTOCOL_FILE_ABSENT: {absent}")   # a missing file binds nothing; never record it as bound
     assert original == source_hashes(), "SOURCE_CHANGED_DURING_PREPARE"
     write(HERE / "protocol.json", protocol)
     E.load_inputs(HERE)

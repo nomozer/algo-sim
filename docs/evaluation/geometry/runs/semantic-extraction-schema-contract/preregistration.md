@@ -8,7 +8,7 @@ retained after locking as provenance of its premeasurement origin.
 
 The intervention compares `flat` and `v3` response contracts with the same frozen
 product prompt and model `gemini-2.5-flash`. The scorer remains
-`grounded-source-obligations/2`; the historical executor and earlier evidence are
+`grounded-source-obligations/3` (see pre-lock revisions); the historical executor and earlier evidence are
 unchanged. The runner identity binds arm, mode, prompt/schema surface, measured
 product, runner/helpers/scorer, combined corpus/gold, oracle, protocol,
 preregistration, schedule, and caps. File hashes normalize CRLF to LF.
@@ -25,9 +25,9 @@ including encoder access to oracle/planner contracts and structural communicatio
 Neither full implementer blindness nor independent human ground truth is claimed.
 
 Per arm, PILOT uses all 12 exposed development cases once: at most 12 logical
-calls, 12 HTTP attempts, 400,000 accounted tokens and USD 0.50. Paired PILOT total
+calls, 12 HTTP attempts, 800,000 accounted tokens and USD 0.50. Paired PILOT total
 is 24 calls / USD 1.00. LOCKED uses all 24 fresh heldout cases once per arm:
-24 logical calls, 24 HTTP attempts, 800,000 accounted tokens and USD 1.00 per arm;
+24 logical calls, 24 HTTP attempts, 1,600,000 accounted tokens and USD 1.00 per arm;
 paired total 48 calls / USD 2.00. There are zero retries and a 90-second timeout.
 Costs use the inherited reservation/accounting helper; missing usage is UNKNOWN,
 never zero. A stopped or incomplete schedule cannot be interpreted as a pass.
@@ -64,3 +64,39 @@ using the existing human approval contract; this script never creates an approva
 Fresh pilot and heldout identities remain separate. Integration requires a separate
 human GO after final review, verification and refreeze. Default flat extraction,
 LLM_ONLY, cache policy and Hybrid NO-GO remain governed by the product decision.
+
+## Pre-lock revisions (2026-10-17, before any model output)
+
+These revisions follow the independent reviews. No provider request had been made and no held-out
+result existed. Each one is pinned by a regression test with RED evidence on the earlier commit.
+
+- **Gold encoding (gold audit B1).** The rule `base-edge-points-equivalence/1` appends one equivalent
+  alternative to each solid-owned `base_edge` fact: base labels present ⇄ absent. It applies to 13 facts in
+  both splits. The before/after record is `inputs/gold_corrections.json`, and the read-only oracle replays it.
+  The held-out author files are byte-unchanged.
+- **Scorer `/2` → `/3` (candidate review I3, M2).**
+  - A requested distance between two single points is the length of that segment, the same object the
+    route serves as `ask_length`. This is an L01-style artifact.
+  - A `height` fact is owned by its apex in the extraction signature: S.ABC ≠ A.SBC.
+  - Historical `/2` receipts keep their own identities and are not rescored.
+- **v3 GOLD ceiling (I4).** In the v3 arm, a gold payload the v3 contract cannot carry is refused as
+  `RESPONSE_CONTRACT_INVALID`, the same way the live check refuses it. The ceiling is therefore "perfect
+  extraction expressible in the arm".
+- **v3 contract (I2, C1, M1).**
+  - Every flat field description is restored, so the arms differ in structure, not guidance.
+  - A centroid keeps every named vertex (3 or more; the engine refuses more than 3) instead of being forced
+    to a 3-vertex subset.
+  - A contract violation gets its own code `RESPONSE_CONTRACT_INVALID`, counted in `refusal_codes`.
+  - Product Source Grounding now binds named midpoint, centroid and right-angle operands to their defining clause.
+  - The default product request is unchanged (flat surface `485d3834…`).
+- **Caps (I5).** Token caps are raised to cover v3's measured worst-case reservation. The USD caps are unchanged.
+
+Disclosed scoring limits, not changed:
+- Answers through a result line (`line_ref`) are UNSCORABLE (M5).
+- UNSCORABLE takes precedence over a co-occurring wrong extra answer (M6).
+- A projection plane compares by exact labels (M4).
+- `invented_entities` does not inspect `plane_name` (M3).
+- Gold minors m1–m7 are listed in `review-gates/gold-oracle.json`, including m6: held-out templates overlap
+  exposed dev templates semantically despite distinct family IDs.
+- Whether Gemini accepts the 34-branch, about 41 KB v3 schema is NOT_MEASURED. An HTTP 400 stops the run at
+  its first call.

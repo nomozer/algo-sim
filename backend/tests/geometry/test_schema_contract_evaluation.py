@@ -1,7 +1,17 @@
 """Schema-Contract v3 runner: arm isolation and identity; offline only (synthetic inputs, ReplayProvider)."""
 from __future__ import annotations
 
+import pytest
+
 from scripts import run_schema_contract_evaluation as R
+
+
+@pytest.fixture(autouse=True)
+def _restore_arm_globals(monkeypatch):
+    # harness() sets module globals on purpose (one arm per process); a failing test must not leak "v3" into later ones.
+    from app.ai import fact_extraction as fx
+    monkeypatch.setattr(fx, "RESPONSE_CONTRACT", fx.RESPONSE_CONTRACT)
+    monkeypatch.setattr(fx, "SYSTEM_PROMPT", fx.SYSTEM_PROMPT)
 
 
 def _inp(tmp_path):
@@ -42,3 +52,15 @@ def test_unknown_arm_is_refused(tmp_path):
     import pytest
     with pytest.raises(ValueError):
         R.harness("v4", _inp(tmp_path))
+
+
+def test_v3_gold_ceiling_refuses_gold_the_contract_cannot_carry(tmp_path, monkeypatch):
+    # I4: the v3 arm's GOLD ceiling must not assume every authored payload is v3-expressible.
+    from app.ai import fact_extraction as fx
+    inp = _inp(tmp_path)
+    bad = {"id": "q", "kind": "question", "role": "question", "quantity": "length", "quotes": ["Tính AC'."]}   # no operand
+    inp["gold"]["cases"]["a"]["facts"] = [bad]
+    rows = {arm: R.harness(arm, inp).run_gold(inp) for arm in ("flat", "v3")}
+    assert rows["v3"][0]["route"]["code"] == "RESPONSE_CONTRACT_INVALID"
+    assert rows["flat"][0]["route"]["code"] != "RESPONSE_CONTRACT_INVALID"
+    R.harness("flat", inp)

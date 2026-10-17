@@ -397,3 +397,27 @@ def test_gold_equal_lengths_premise_matches_itself():
     c = {"source_text": "Cho SA = SB.", "entities": list("SAB"), "requests": []}
     assert E.extraction(c, {"facts": [eq]}, [{**eq, "points_a": ["B", "S"], "points_b": ["A", "S"]}])["premise_match"] == 1
     assert E.extraction(c, {"facts": [eq]}, [{**eq, "points_b": ["A", "B"]}])["premise_match"] == 0
+
+
+# ── scorer /3 (schema-contract candidate review) ─────────────────────────────────────────────────────────────────────
+
+@pytest.mark.parametrize("a,b", [(["A"], ["C'"]), (["C'"], ["A"])])
+def test_point_point_distance_is_the_served_segment_length(a, b):
+    # I3: the route serves "khoảng cách từ A đến C'" as ask_length(AC'); the same object must not score WRONG_SERVED.
+    req = request(quantity="distance", target={"points_a": a, "points_b": b})
+    assert E.score_served([req], row())["classification"] == "CORRECT_COMPLETE"
+    assert E.score_served([req], row(points=["A", "B"]))["classification"] == "WRONG_SERVED"
+
+
+def test_point_line_distance_is_still_not_a_segment_length():
+    req = request(quantity="distance", target={"points_a": ["A"], "points_b": ["B", "C'"]})
+    assert E.score_served([req], row())["classification"] == "WRONG_SERVED"
+
+
+@pytest.mark.parametrize("live_solid,match", [("S.ABC", True), ("S.BCA", True), ("A.SBC", False)])
+def test_a_height_is_owned_by_its_apex(live_solid, match):
+    # M2: S.ABC and A.SBC are one tetrahedron but two different heights.
+    h = {"id": "h", "kind": "length", "role": "premise", "measure": "height", "solid": "S.ABC", "value": "3", "quotes": ["chiều cao 3"]}
+    c = {"source_text": "Cho hình chóp S.ABC có chiều cao 3.", "entities": list("SABC"), "requests": []}
+    ext = E.extraction(c, {"facts": [h]}, [{**h, "solid": live_solid}])
+    assert (ext["premise_match"] == 1) is match

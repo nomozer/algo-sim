@@ -12,7 +12,8 @@ from pathlib import Path
 
 sys.dont_write_bytecode = True
 HERE = Path(__file__).resolve().parent
-ROOT = HERE.parents[6]
+ROOT = HERE.parents[5]          # <repo>/docs/evaluation/geometry/runs/<run>/inputs
+assert (ROOT / "backend/app").is_dir() and (ROOT / "docs").is_dir(), f"not the repository root: {ROOT}"
 OLD = HERE.parents[1] / "hybrid-semantic-extraction-v2/inputs"
 
 

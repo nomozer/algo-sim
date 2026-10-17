@@ -1,0 +1,29 @@
+{
+  "gate": "gold-oracle",
+  "status": "PASS",
+  "reviewer": "independent read-only Claude subagent (fresh context; not the corpus author nor the gold encoder), audit 2026-10-17",
+  "reviewed_commit": "da75138c21224e115cc374cf70e61d5f4e29c453",
+  "rounds": [
+    {"commit": "d785277d", "verdict": "FAIL", "blocker": "B1: solid-owned base_edge facts encoded with and without base labels in `points`, compared exactly by the scorer (10 of 33 solid-ownership items swing)"},
+    {"commit": "da75138c", "verdict": "PASS", "resolution": "declared pre-lock correction base-edge-points-equivalence/1 (13 append-only alternatives); real-scorer replay solid 33/33; single-edge and wrong-base injections still miss"}
+  ],
+  "oracle_recomputation": "40/40 numeric oracle values independently recomputed (stdlib Fraction, own coordinates), 40 match",
+  "minor_findings_disclosed": {
+    "m1": "h15/f6, h20/f4: question-only sub-solids encoded as required premise solid facts (descriptive metrics only)",
+    "m2": "h18/r3 'Giải thích vì sao…' encoded role=question; role=prove also faithful (1/49 goals at risk)",
+    "m3": "h03/r2, h18/r2, h23/r1 are source-determined but labelled unsupported by product-capability policy",
+    "m4": "h21/r3 'mặt bên' ambiguity; fail-closed refusal defensible",
+    "m5": "h21 gold ambiguous=true makes exact gold replay correct=False (descriptive `correct` only)",
+    "m6": "held-out templates semantically overlap exposed dev cases (h16~dev02, h04-h06~dev01, h10/h12~dev03/09/10, h11~dev04/05) despite distinct family IDs; limits any 'novel structure' claim",
+    "m7": "gold_encoding.md records the raw CRLF hash of gold_facts.json; the protocol uses LF-normalised hashes"
+  },
+  "reviewed_sha256": {
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/corpus.json": "23f9ea9c4ec2f41b2418f41afb4dbca9d7c8c9637a4e21726344683f6d37b9ae",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/gold_facts.json": "fe70d832282c47b4863c53f9f089295d053c088f71fe0f09456cf48f16b16b9a",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/oracle.py": "0f4a281ec2911a0c30fd89bd14c4d3388a6e19efb60c48edd5a589dda0ef3875",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/gold_facts.json": "79c3f4cc57c9002e2387571fdfd84b08bcd05ff796ddc347e559dbaa7aa82c24",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/gold_corrections.json": "72daa6dc32939491b03e0be658385d1bb24992e1b2e10d1a8168181d5f8e2d36"
+  },
+  "human_validation": "NOT_HUMAN_VALIDATED",
+  "not_checked": "dev-split facts beyond the three base_edge corrections; scorer and candidate gates; no human mathematical adjudication"
+}

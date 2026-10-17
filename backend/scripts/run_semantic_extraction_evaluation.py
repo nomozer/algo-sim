@@ -23,7 +23,7 @@ sys.path.insert(0, str(ROOT / "backend"))
 from scripts import run_nlu_extraction_evaluation as V1
 
 RUN = ROOT / "docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2"
-SCORER_VERSION = "grounded-source-obligations/2"
+SCORER_VERSION = "grounded-source-obligations/3"  # /3: point-point distance = segment length (I3), height owned by its apex (M2)
 from app.ai.fact_extraction import SYSTEM_PROMPT as _PRODUCT_PROMPT  # noqa: E402 — the v2 arm is the product prompt
 
 
@@ -42,6 +42,9 @@ def _signature(f, by_id, depth=0):
     sig = _old_sig(f, by_id, depth)
     if sig.get("solid") is not None:
         sig["solid"] = _solid_key(f["solid"])
+        # A height belongs to an apex: S.ABC and A.SBC are one tetrahedron (vertex set) but two different heights (review M2).
+        if f.get("kind") == "length" and f.get("measure") == "height" and "." in f["solid"]:
+            sig["solid"] = (sig["solid"], V1._norm(f["solid"]).replace(" ", "").split(".")[0])
     if f.get("kind") == "question" and f.get("quantity") == "area":
         sig["solid"] = _solid_key(f["solid"]) if f.get("solid") else None
         if not f.get("solid") and isinstance(f.get("points"), list) and f["points"]:
@@ -170,6 +173,16 @@ def _call_target(call: dict, route: dict) -> tuple[str, dict] | None:
     return None
 
 
+def _request_view(req: dict) -> tuple[str, dict]:
+    """One canonical object per request: the distance between two single points IS the length of that segment (the
+    route serves it as `ask_length`), so both encodings match the same served answer (review I3, an L01-style artifact)."""
+    t = req["target"]
+    if (req["quantity"] == "distance" and set(t) == {"points_a", "points_b"}
+            and len(t["points_a"]) == len(t["points_b"]) == 1 and t["points_a"] != t["points_b"]):
+        return "length", {"points": [*t["points_a"], *t["points_b"]]}
+    return req["quantity"], t
+
+
 #: `answer` must be served; `capability_gap` (construct/prove/explain/…) is fulfilled only by matching executed evidence.
 #: `unsupported`, `ambiguous`, `missing_source` must never be served.
 SERVABLE = {"answer", "capability_gap"}
@@ -208,11 +221,12 @@ def score_served(requests: list[dict], route: dict, *, parse_ok: bool = True) ->
                 unknown = unknown or qid in available
                 continue
             quantity, target = bound
-            same = _same_target(req["target"], target, quantity)
+            req_quantity, req_target = _request_view(req)
+            same = _same_target(req_target, target, quantity)
             # Distance and (unsigned) angle between two objects are symmetric; projection/effect slots are not.
             if not same and quantity in {"distance", "angle"} and set(target) == {"points_a", "points_b"}:
-                same = _same_target(req["target"], {"points_a": target["points_b"], "points_b": target["points_a"]}, quantity)
-            if quantity != req["quantity"] or not same:
+                same = _same_target(req_target, {"points_a": target["points_b"], "points_b": target["points_a"]}, quantity)
+            if quantity != req_quantity or not same:
                 continue
             hit = qid
             if req.get("oracle") is not None:

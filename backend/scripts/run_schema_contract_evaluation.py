@@ -30,6 +30,19 @@ def harness(arm, inp):
     h = E.harness("v2", inp)          # product prompt (`_PRODUCT_PROMPT`), route record, persistence, base identity
     fx.RESPONSE_CONTRACT = arm        # set on every call: an earlier arm in the same process never leaks
     base = h.identity
+    if arm == "v3":
+        # The GOLD ceiling of an arm is "perfect extraction the arm's contract can express": a gold payload v3 cannot
+        # carry is refused exactly as the live check would refuse it, never assumed expressible.
+        from app.simulation.geometry_functions import KetQuaTuyen
+        contract, gold_route = fx.facts_response_schema("v3"), h.run_gold
+
+        def run_gold(data):
+            rows = gold_route(data)
+            for r in rows:
+                if not fx.schema_accepts(contract, h.gold_payload(data, r["case_id"])):
+                    r["route"] = h.route_record(KetQuaTuyen("REFUSED", "RESPONSE_CONTRACT_INVALID", "gold not expressible in v3"))
+            return rows
+        h.run_gold = run_gold
 
     def identity(data, mode):
         return {**base(data, mode), "arm": arm, "contract": arm, "contract_runner_sha256": V1._lf_sha(Path(__file__))}

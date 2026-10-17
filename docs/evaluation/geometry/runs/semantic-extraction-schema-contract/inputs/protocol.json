@@ -1,7 +1,7 @@
 {
   "schema": "semantic-extraction-protocol/3",
   "model": "gemini-2.5-flash",
-  "scorer": "grounded-source-obligations/2",
+  "scorer": "grounded-source-obligations/3",
   "lock_status": "NOT_LOCKED",
   "live_authorizable": false,
   "locked_sha256": {
@@ -9,20 +9,23 @@
     "gold_facts": "bd449d9f3b7ae618c73b6a5de963d7c34ed59b411dc7c428a03381a65b157bae"
   },
   "source_sha256": {
-    "semantic-extraction-v3/docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/corpus.json": "31607400e6c8046fabe75e9cee75862d707f6473a4d465bb71ba25260f125edf",
-    "semantic-extraction-v3/docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/gold_facts.json": "6eec95b23e509f6ebc2096961f692aa514ce62aebe9577830f2e4b991be219c0",
-    "semantic-extraction-v3/docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/oracle.py": "e1edd74ac8b18254fd384849e14122480f28724d1b28567e56ff8cb8090ea87e",
-    "semantic-extraction-v3/docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/authoring.md": "fd5226484f711e92f1a6d74e26ad4827862ddc1daabe220889a15ffcd253414a",
-    "semantic-extraction-v3/docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/prelock_corrections.json": "d48e039d081d4b692d2381bfc710b0770c06105a015e593450fb6cc7e70ee7ec",
-    "semantic-extraction-v3/docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/corpus.json": "23f9ea9c4ec2f41b2418f41afb4dbca9d7c8c9637a4e21726344683f6d37b9ae",
-    "semantic-extraction-v3/docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/gold_facts.json": "fe70d832282c47b4863c53f9f089295d053c088f71fe0f09456cf48f16b16b9a",
-    "semantic-extraction-v3/docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/oracle.py": "0f4a281ec2911a0c30fd89bd14c4d3388a6e19efb60c48edd5a589dda0ef3875",
-    "semantic-extraction-v3/docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/authoring.md": "d5b329a16216535897cb60be615d89f07e722d8c71c89a34100b0910f1f89f98",
-    "semantic-extraction-v3/docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/gold_encoding.md": "34c9584e81ab465bdd5dfb6b6d8544ab47aa9940cda3462b71e120b6d56d4c47"
+    "docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/corpus.json": "31607400e6c8046fabe75e9cee75862d707f6473a4d465bb71ba25260f125edf",
+    "docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/gold_facts.json": "6eec95b23e509f6ebc2096961f692aa514ce62aebe9577830f2e4b991be219c0",
+    "docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/oracle.py": "e1edd74ac8b18254fd384849e14122480f28724d1b28567e56ff8cb8090ea87e",
+    "docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/authoring.md": "fd5226484f711e92f1a6d74e26ad4827862ddc1daabe220889a15ffcd253414a",
+    "docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/prelock_corrections.json": "d48e039d081d4b692d2381bfc710b0770c06105a015e593450fb6cc7e70ee7ec",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/corpus.json": "23f9ea9c4ec2f41b2418f41afb4dbca9d7c8c9637a4e21726344683f6d37b9ae",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/gold_facts.json": "fe70d832282c47b4863c53f9f089295d053c088f71fe0f09456cf48f16b16b9a",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/oracle.py": "0f4a281ec2911a0c30fd89bd14c4d3388a6e19efb60c48edd5a589dda0ef3875",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/authoring.md": "d5b329a16216535897cb60be615d89f07e722d8c71c89a34100b0910f1f89f98",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/gold_encoding.md": "34c9584e81ab465bdd5dfb6b6d8544ab47aa9940cda3462b71e120b6d56d4c47"
   },
   "review_gates": {
     "gold-oracle": {
-      "status": "MISSING"
+      "status": "PASS",
+      "path": "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/review-gates/gold-oracle.json",
+      "sha256": "259a3a7232c124791052322cea7e3152def2ac4ad318c41653376631df0bc040",
+      "reviewer": "independent read-only Claude subagent (fresh context; not the corpus author nor the gold encoder), audit 2026-10-17"
     },
     "scorer": {
       "status": "MISSING"
@@ -33,21 +36,21 @@
   },
   "frozen_candidate": {
     "status": "NOT_MATCHED",
-    "product_sha256": "fe7cb20c4383d039bad131ea9c49d3830277bb5a47726fb34991e8323c5862d2",
+    "product_sha256": "80c3dfd73b0459be0fdb58762b3003f1f4c2b44dad5ad5c9c26eea9d2a4b8907",
     "files": 110
   },
   "caps": {
     "PILOT": {
       "logical_calls": 12,
       "http_attempts": 12,
-      "accounted_tokens": 400000,
+      "accounted_tokens": 800000,
       "usd": 0.5,
       "samples": 1
     },
     "LOCKED": {
       "logical_calls": 24,
       "http_attempts": 24,
-      "accounted_tokens": 800000,
+      "accounted_tokens": 1600000,
       "usd": 1.0,
       "samples": 1
     }
@@ -79,11 +82,11 @@
   "live_decision": "NOT_AUTHORIZABLE_DRAFT",
   "integration_decision": "PENDING_SEPARATE_OWNER_GO",
   "file_sha256": {
-    "../../../../../../../backend/scripts/freeze_evaluation_candidate.py": "ABSENT",
-    "../../../../../../../backend/scripts/run_hybrid_ab_pilot.py": "ABSENT",
-    "../../../../../../../backend/scripts/run_nlu_extraction_evaluation.py": "ABSENT",
-    "../../../../../../../backend/scripts/run_schema_contract_evaluation.py": "ABSENT",
-    "../../../../../../../backend/scripts/run_semantic_extraction_evaluation.py": "ABSENT",
+    "../../../../../../backend/scripts/freeze_evaluation_candidate.py": "bf659ce95a1049b170a32418b25e445990e8badc8c97a7abda68b0f367d9ea59",
+    "../../../../../../backend/scripts/run_hybrid_ab_pilot.py": "f456cf95e6e87672183f4f955f4ff309a25ea39dd1c1bdc83ee8055bfe8f8899",
+    "../../../../../../backend/scripts/run_nlu_extraction_evaluation.py": "9c517d806c55570f65325ff1703389b055c7edf7792eff273e320063822c48a2",
+    "../../../../../../backend/scripts/run_schema_contract_evaluation.py": "7964113d4f8aea103250c87361aafbc9cdf870789178e60eb9003b518a7b0d39",
+    "../../../../../../backend/scripts/run_semantic_extraction_evaluation.py": "325e7c91dba80c88a360aa0866056b35d13b9e47e65598bed8a8a9ea14cdc0fa",
     "../../hybrid-semantic-extraction-v2/inputs/authoring.md": "fd5226484f711e92f1a6d74e26ad4827862ddc1daabe220889a15ffcd253414a",
     "../../hybrid-semantic-extraction-v2/inputs/corpus.json": "31607400e6c8046fabe75e9cee75862d707f6473a4d465bb71ba25260f125edf",
     "../../hybrid-semantic-extraction-v2/inputs/gold_facts.json": "6eec95b23e509f6ebc2096961f692aa514ce62aebe9577830f2e4b991be219c0",
@@ -98,10 +101,10 @@
     "heldout/gold_encoding.md": "34c9584e81ab465bdd5dfb6b6d8544ab47aa9940cda3462b71e120b6d56d4c47",
     "heldout/gold_facts.json": "fe70d832282c47b4863c53f9f089295d053c088f71fe0f09456cf48f16b16b9a",
     "heldout/oracle.py": "0f4a281ec2911a0c30fd89bd14c4d3388a6e19efb60c48edd5a589dda0ef3875",
-    "oracle.py": "714d86b7cd455d99ffe80a39a5aa6686b607168586bb698676c57c20d456e669",
-    "prepare_protocol.py": "e4c79c998aeea706fba532977648399cae3c9f275599c25688078ce3c14f42c1",
-    "provenance.json": "31ee472a05ea7a75a7534070315b81dcdb5f74938501a55fd4e0719522c597d3",
+    "oracle.py": "73e8444a062418734e29a0d54746ce1cc8581ef097765df272d95db09c348cf9",
+    "prepare_protocol.py": "a5757904267bf5ae8cbd9a8cefee4e343ea9b24f82186f35c4f39cdd5054745f",
+    "provenance.json": "453a04f160df534022b315b4ffda305d1499fe08520066418386686a24d2edd6",
     "selfcheck_protocol.py": "5eeeb35242c895de1b5eae0a183b5417a665a31dcfc26ab4536b96b51b444ecf",
-    "../preregistration.md": "5f41a8942931115d338956822ec4e0914db1175a79daaac77ce3d2338b56a037"
+    "../preregistration.md": "ecabac4bb1193fa006714a28d7fdbdb04c272ec6ee2ebff6d9ebf42de1bfa095"
   }
 }
