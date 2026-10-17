@@ -28,7 +28,7 @@
    **sản phẩm** do `backend/app/simulation/product_capability.py` quyết (khối cong, khối lõm, thiết diện xiên:
    `foundation_only`). Một họ chỉ "được hỗ trợ" khi đi trọn đề → analyze → chương trình → các cổng → kernel → cảnh.
 
-Independent NLU extraction evaluation (2026-10-17, LOCAL, no product change):
+Independent NLU extraction evaluation (2026-10-17, on `main` `b22c2269`, no product change):
 [`independent-nlu-extraction-evaluation`](../evaluation/geometry/runs/independent-nlu-extraction-evaluation/report.md)
 preregisters a blind-authored 60-case corpus, oracle and gold facts. Measured offline only: the deterministic ceiling
 (gold facts serve 8/44 locked cases) and Source Grounding false refusals of common wordings (unlabelled base

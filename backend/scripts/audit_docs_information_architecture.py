@@ -198,6 +198,9 @@ ALLOWED_CANONICAL_ACTIONS = [
     # independent-nlu-extraction-evaluation (2026-10-17): live baseline measured and reviewed; next is the owner's
     # integration decision for the research branch.
     "NLU_EXTRACTION_BASELINE_INTEGRATION_DECISION",
+    # independent-nlu-extraction-evaluation integration (2026-10-17): on origin/main; next is the owner's research priority
+    # (proposed: a separately approved Semantic Extraction wave measured on new items).
+    "POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

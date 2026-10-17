@@ -21,6 +21,7 @@
                "P2_frozen": "24/45 CI95 [0.379, 0.683]", "P2_corrected": "27/45 CI95 [0.443, 0.743]",
                "served_correct": "1 frozen / 2 corrected of 44 (gold facts 8)"},
   "approval_receipt": "approval-receipt.json",
+  "integration": "MERGED_AND_PUSHED: owner GO; main fast-forwarded 76dca142 -> b22c2269, pushed without force; branch deleted with -d; record integration.md",
   "review": "review.md",
   "preregistration": "preregistration.md",
   "protocol": "inputs/protocol.json",
