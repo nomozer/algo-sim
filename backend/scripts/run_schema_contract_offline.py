@@ -29,8 +29,9 @@ def invoke(command, timeout, log):
         except subprocess.TimeoutExpired:
             if os.name == "nt":
                 killed = subprocess.run(["taskkill", "/F", "/PID", str(process.pid), "/T"], capture_output=True)
-                if killed.returncode and process.poll() is None:
-                    process.kill()  # Reap our owned parent even if the environment denies descendant cleanup.
+                if killed.returncode:
+                    if process.poll() is None:
+                        process.kill()  # Reap our owned parent even if the environment denies descendant cleanup.
                     process.wait(timeout=10)
                     raise RuntimeError("WATCHDOG_TERMINATION_FAILED")
             else:
@@ -76,7 +77,8 @@ def run_matrix(inputs, out, python):
            "measurement_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
            "watchdog_seconds": timeout, "live_model_calls": 0}
     out.mkdir(parents=True)
-    logs = ROOT / ".superpowers" / "offline-logs" / (out.parent.name + "-" + out.name)
+    out_tag = hashlib.sha256(str(out).encode("utf-8")).hexdigest()[:12]
+    logs = ROOT / ".superpowers" / "offline-logs" / f"{out.parent.name}-{out.name}-{out_tag}"
     logs.mkdir(parents=True, exist_ok=True)
     persist = lambda: R.V1._persist(out / "invocations.json", doc, ())
     persist()

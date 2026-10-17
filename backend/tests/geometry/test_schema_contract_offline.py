@@ -97,3 +97,39 @@ def test_receipt_check_rejects_tampered_or_incomplete_execution(tmp_path, tamper
             batch.check_receipt(tmp_path, identity, planned, "gold")
     else:
         assert batch.check_receipt(tmp_path, identity, planned, "gold")["status"] == "COMPLETE"
+
+
+def test_distinct_output_roots_do_not_share_log_destinations(tmp_path, monkeypatch):
+    batch = importlib.import_module("scripts.run_schema_contract_offline")
+    monkeypatch.setattr(batch.R.E, "load_inputs", lambda p: {"protocol": {"lock_status": "LOCKED", "offline_watchdog_seconds": 10}})
+    class Harness:
+        def identity(self, data, mode):
+            return {"mode": mode}
+    monkeypatch.setattr(batch.R, "harness", lambda *args: Harness())
+    logs = []
+    def failed(command, timeout, log):
+        logs.append(log)
+        return {"status": "FAILURE", "exit_code": 7, "duration_seconds": .01}
+    monkeypatch.setattr(batch, "invoke", failed)
+    for prefix in ("one", "two"):
+        batch.run_matrix(tmp_path, tmp_path / prefix / "shared/out", sys._base_executable)
+    assert logs[0] != logs[1]
+
+
+@pytest.mark.skipif(os.name != "nt", reason="Windows taskkill race")
+def test_unsuccessful_tree_stop_fails_even_if_parent_exited(tmp_path, monkeypatch):
+    batch = importlib.import_module("scripts.run_schema_contract_offline")
+    class ExitedParent:
+        pid = 12345
+        waits = 0
+        def wait(self, timeout):
+            self.waits += 1
+            if self.waits == 1:
+                raise batch.subprocess.TimeoutExpired("synthetic", timeout)
+            return 0
+        def poll(self):
+            return 0
+    monkeypatch.setattr(batch.subprocess, "Popen", lambda *a, **kw: ExitedParent())
+    monkeypatch.setattr(batch.subprocess, "run", lambda *a, **kw: batch.subprocess.CompletedProcess([], 1))
+    with pytest.raises(RuntimeError, match="WATCHDOG_TERMINATION_FAILED"):
+        batch.invoke(["synthetic"], .01, tmp_path / "race.log")

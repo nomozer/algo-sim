@@ -1,0 +1,42 @@
+{
+  "schema": "PARENT_PRESERVATION/1",
+  "parent_head": "7168d26963011433889dc907492df87ac62140f7",
+  "files_compared": 27,
+  "all_parent_run_lf_hashes_unchanged": true,
+  "checkout_eol_raw_differences": [
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/approval-request.md",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/candidate_divergence.json",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/plan.md",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/preregistration.md",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/report.md",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/takeover-20261018.md",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/takeover-inventory.md",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/corpus.json",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/exposed_dev_oracle.py",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/gold_corrections.json",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/gold_facts.json",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/oracle.py",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/prepare_protocol.py",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/protocol.json",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/provenance.json",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/selfcheck_protocol.py",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/results/historical-gold-delta.json",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/review-gates/candidate.json",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/review-gates/gold-oracle.json",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/review-gates/scorer.json",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/authoring.md",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/corpus.json",
+    "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/heldout/oracle.py"
+  ],
+  "unchanged_product_prompt_and_scorer_files": [
+    "backend/app/ai/fact_extraction.py",
+    "backend/scripts/run_semantic_extraction_evaluation.py",
+    "backend/scripts/run_nlu_extraction_evaluation.py",
+    "backend/scripts/run_hybrid_ab_pilot.py"
+  ],
+  "revision_corpus_gold_bytes_equal_parent_files_in_this_checkout": true,
+  "original_log_before_stop_sha256": "08ac45c04abf3617ee722c0483cb1f27d1440202385015e85794cac27903378b",
+  "parent_worktree_status": "",
+  "main_head": "4abc4afbb976babc4740bf22e42dc368a24c1b13",
+  "comparison_method": "LF-normalized cross-checkout content; original checkout not edited; raw task log copied before termination"
+}

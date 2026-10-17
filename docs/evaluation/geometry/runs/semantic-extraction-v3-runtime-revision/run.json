@@ -23,7 +23,7 @@
   "integration_authorization": "NONE",
   "old_attempt": "TERMINATED_BY_OWNER_APPROVAL / INCOMPLETE_RUNTIME_STALL",
   "targeted_tests": {
-    "passed": 443,
+    "passed": 445,
     "xfailed": 1,
     "source_commit": "283813b2"
   },
