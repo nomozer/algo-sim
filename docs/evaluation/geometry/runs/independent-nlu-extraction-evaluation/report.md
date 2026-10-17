@@ -1,114 +1,117 @@
-# Independent NLU extraction evaluation — pre-live checkpoint
+# Independent NLU extraction evaluation — baseline report
 
 2026-10-17 · branch `research/independent-nlu-extraction-evaluation` from `main` `76dca142` · no product change ·
-candidate `57c7f5db…` MATCH · `LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid NO-GO · **LIVE_PILOT done (owner GO pilot only):
-32 requests, est. USD 0.137; LOCKED not run, awaiting the owner's decision.** Pilot analysis:
-[`results/live-pilot/analysis.md`](results/live-pilot/analysis.md).
-Protocol: [`preregistration.md`](preregistration.md). Approval request: [`approval-request.md`](approval-request.md).
+candidate `57c7f5db…` MATCH · `LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid NO-GO. Protocol locked at `6255a743`
+([`preregistration.md`](preregistration.md)); live pilot (`a9724519`) and live locked run under two separate owner GOs
+(`approval-receipt.json`). Locked analysis: [`results/live-locked/analysis.md`](results/live-locked/analysis.md);
+pilot: [`results/live-pilot/analysis.md`](results/live-pilot/analysis.md); review: [`review.md`](review.md).
+
+**Baseline result (locked, 44 items):** preregistered answer **UNSAFE** (frozen scorer: 1 `WRONG_SERVED`); that row is
+a verified scorer artifact (L01 served the oracle value), and the correction beside it gives **P1 PASS, P2 NO**.
+Goal+entity agreement on expressible requests 24/45 (CI95 0.38–0.68) frozen, 27/45 (0.44–0.74) corrected — below the
+preregistered 0.85 either way. 2 of 44 rows served correctly (gold facts: 8). Cost: 76 live requests, est. USD 0.299.
 
 ## A. Provider, model, prompt, schema
 
 Route D branch B: `app/ai/fact_extraction.py` builds one Gemini `generateContent` request (REST v1beta, key in header via
-`function_calling.live_transport`, one attempt), structured JSON output with `responseSchema` = `TypedFact[]`,
-temperature 0, `maxOutputTokens` 8192 shared with default thinking (no `thinkingConfig`). Model id `gemini-2.5-flash`
-(API id; not deprecated on 2026-10-17). Surface fingerprint `485d3834…` unchanged. Branch B had **never** been run live
-before this run (`audit/extraction-architecture.md` §8).
+`function_calling.live_transport`, one attempt), structured JSON with `responseSchema` = `TypedFact[]`, temperature 0,
+`maxOutputTokens` 8192 shared with default thinking. Model id `gemini-2.5-flash` (API id; every response reported it).
+Surface fingerprint `485d3834…` unchanged. Branch B had never run live before this run.
 
 ## B. Corpus
 
-60 Vietnamese cases written by a subagent with no repository access (`inputs/corpus-authoring/AUTHORING_BRIEF.md`,
-verbatim): dev 16 (14 structures), locked 44 (40 structures). Groups locked A 8 · B 9 · C 5 · D 8 · E 6 · F 8;
-multi-request 12 by annotation (10 by gold request facts). Minimal pairs L09/L10, L11/L12, L13/L14, L15/L16 are pairs, not
-independent items. Overlap with existing repository texts is published in the preregistration (max D10 0.988, L40 0.943);
-the LLM prompt carries no examples, so the wordings are unseen by the LLM.
+60 Vietnamese cases by a subagent with no repository access (`inputs/corpus-authoring/AUTHORING_BRIEF.md`, verbatim):
+dev 16 (14 structures), locked 44 (40 structures; groups A 8 · B 9 · C 5 · D 8 · E 6 · F 8; 12 multi-request by
+annotation, 11 with ≥ 2 gold requests). Minimal pairs L09/L10, L11/L12, L13/L14, L15/L16. Wordings not shown in the
+prompt; overlap with repository fixtures published in the preregistration.
 
 ## C. Oracle and annotation independence
 
-Blind author's own `fractions` oracle: 56 values in 43 cases + 12 structural checks; a second read-only agent recomputed
-44 values with its own coordinates: 0 mismatches. Labels: **INDEPENDENT_AGENT_AUTHORED_NOT_HUMAN_VALIDATED**. Gold Typed
-Facts (319): **IMPLEMENTER_AUTHORED**, faithful to the product prompt rules; authoring and audit amendments before the lock
-are logged in `inputs/gold_authoring_log.md`. No human validation exists.
+Blind author's `fractions` oracle (56 values) re-checked independently on 44 values: 0 mismatches. Labels
+**INDEPENDENT_AGENT_AUTHORED_NOT_HUMAN_VALIDATED**; gold Typed Facts (319) **IMPLEMENTER_AUTHORED**, amendments before the
+lock logged. No human validation.
 
-## D. Harness gates (0 calls)
+## D. Harness gates
 
-`backend/scripts/run_nlu_extraction_evaluation.py`, reusing the A/B pilot's budget/redaction/persistence helpers.
-`tests/geometry/test_nlu_extraction_evaluation.py`: 21 tests — no network in REPLAY, single failure recorded and run
-continues, 3 consecutive failures stop, 400/401/403/429 stop, caps refuse before sending, secret never reaches disk,
-model-version pin, resume never re-sends, pending request blocks resume, persistence failure stops, approval identity
-required, changed inputs refused, scorer catches unsafe/over/partial/wrong-object serving, NO_PARSE, malformed facts,
-equivalent encodings, pilot gate, decision rule, locked hashes and gold outcomes. Fault injection: 7 mutants, 6 killed; the
-surviving one (removing the first redaction) is equivalent — the second redaction and the byte scan still stop the run.
-Receipts: `results/gold/`, `results/replay-pilot/` (gate `CONTINUE_TO_LOCKED`), `results/replay-locked/`
-(`NOT_A_MEASUREMENT_FAKE_PROVIDER`).
+Runner `backend/scripts/run_nlu_extraction_evaluation.py` (reuses the A/B pilot's budget/redaction/persistence helpers),
+21 tests, 7 injected faults (6 killed, 1 equivalent), two pre-lock audits (`audit/`), GOLD + REPLAY receipts at 0 calls.
+Both live runs completed without a stop rule; the frozen score re-scores byte-identically.
 
-## E. Live
+## E. Live execution
 
-PILOT (dev, owner GO pilot only): 32 requests, 0 retries, no stop; input 25,106 / output 22,074 / thinking 29,762
-tokens; est. USD 0.137 (list price; billing UNKNOWN); median latency 7.1 s. LOCKED: not approved, not run.
+| | pilot (dev 16 × 2) | locked (44 × 1) |
+|---|---|---|
+| requests / retries / stops | 32 / 0 / none | 44 / 0 / none |
+| input / output / thinking tokens | 25,106 / 22,074 / 29,762 | 34,466 / 25,468 / 35,166 |
+| median latency | 7.0 s | 5.55 s |
+| est. USD (list price; billing UNKNOWN) | 0.137 | 0.162 |
+| truncated | 1 (D05 s2) | 1 (L12) |
 
-## F. Accuracy per layer
+## F. Accuracy per layer (locked; frozen → correction)
 
-PILOT, dev, diagnostic (agreement with the implementer encoding): intent 32/37; goal+entity on expressible requests
-16/34; premise recall 100/132, precision 101/164; multi-goal 4/4; unsupported flagged 0/3; case extraction correct 1/31;
-end to end 0 served, 0 unsafe, 8 safe refusals, 19 capability gaps, 4 extraction-caused refusals, 1 no-parse.
-LOCKED: **NOT_MEASURED**. Deterministic ceiling with gold facts (locked): 7 `CORRECT_COMPLETE` + 1
-`CORRECT_PART_FLAGGED`, 23 `FALSE_REFUSAL_CAPABILITY_GAP`, 13 `SAFE_REFUSAL`, 0 unsafe.
+Intent 42/57 · goal+entity 24/57 → 27/57 (expressible 24/45 → 27/45) · premise recall 139/165, precision 142/182 ·
+multi-goal 4/11 · unsupported flagged 0/12 (1/12 in substance) with 6 approximated · invented labels 3 rows · case
+extraction correct 7/43 → 9/43. End to end: correct served 1 → 2, wrong served 1 → 0, safe refusals 13 (= always-refuse
+baseline), capability/grounding/schema refusals 22, extraction-caused refusals 6, no-parse 1. Gold facts on the same
+texts: 8 served, 0 unsafe.
 
-## G. Where failures come from
+## G. Where failures come from (locked, `results/live-locked/layer_rows.json`)
 
-Live pilot (model): request operands omitted (14 rows), measures without their solid (20), added `altitude` facts (7),
-invented labels `M` / `G_A'BD` (4), three-point right angles (8), no `unsupported` ever used; all refused by the
-planner/schema before grounding. Gold arm (offline):
-
-- **Source Grounding false refusals of faithful extractions:** unlabelled base "đáy là hình vuông/chữ nhật" (9 cases,
-  `OBJECT_NOT_IN_QUOTE`; no quote variant helps); "dài bao nhiêu" (`PREDICATE_NOT_IN_QUOTE`); "… thì đoạn AC' bằng mấy"
-  (`CONDITIONAL_CLAUSE`); "tính cos²", bare "Tính BD'" (`NOT_ASKED_IN_SOURCE`); "dựng hình chiếu …, gọi điểm đó là H"
-  and an unnamed foot (`SOURCE_OBJECT_MISMATCH`); "suy ra"; `QUESTION_LOCAL_GIVEN_UNVERIFIED` (L20/L28, cause not
-  diagnosed).
-- **Planner/Registry capability:** centroid, line–line angle, trirectangular tetrahedron, intersection line without
-  dimensions, right-trapezoid/parallelogram bases.
-- **Schema gaps (correctly `unsupported`):** distance to a segment, squared length, face centre, construct/explain,
-  interaction, optimisation, context references.
-- **Prompt/gate conflict:** prompt rule 7 (three labels per plane) vs the gate's refusal of a three-label `(ABCD)` (L39).
-- Scene3D: not reached by this measurement beyond served cases; no rendering claim.
+- **Semantic extraction:** 34 incorrect extractions — 30 stopped at planner input (`SCHEMA_INVALID`, `UNKNOWN_SOLID`,
+  `FACT_INCOMPLETE`, `AMBIGUOUS_FACT`, and L19's request without operands), 3 at Source Grounding, 1 flagged unsupported;
+  1 unparsed. Main error types: request operands omitted (14 rows), measure without its solid (14), out-of-schema requests
+  approximated (6), invented labels (3). 6 of the 8 gold-servable cases lost here.
+- **Source Grounding:** 5 correct extractions refused as the gold facts are (L02 "dài bao nhiêu", L03 "… thì … bằng mấy",
+  L13 "Tính cos²", L23, L27 "Tính BD'"); 1 hallucinated label stopped (L22). Gold arm: 18 grounding refusals, including the
+  unlabelled base "đáy là hình vuông" (9 cases across splits).
+- **Planner / Engine:** 0 live stops; gold-arm capability gaps L17 (no dimensions), L19 (centroid), L29 (line–line angle);
+  L40/L44 engine stops are correct refusals.
+- **Schema:** 12 locked requests without a schema form; refusing them is correct.
+- **Prompt/gate conflict:** prompt rule 7 (three labels per plane) vs the gate refusing a three-label `(ABCD)` (L39).
+- **Scene3D:** reached only by served rows; no rendering claim.
 
 ## H. Valid wordings still refused
 
-All of G's grounding list; these are reported as findings, not fixed here (fixing them is a product change and would
-need its own wave and a fresh held-out set).
+By Source Grounding: unlabelled base ("đáy là hình vuông/chữ nhật"), "dài bao nhiêu", "… thì … bằng mấy", "tính cos²",
+bare "Tính BD'", "dựng hình chiếu …, gọi điểm đó là H", unnamed foot of a perpendicular, "suy ra", and two
+`QUESTION_LOCAL_GIVEN_UNVERIFIED` cases. Not fixed here (product change, own wave, fresh held-out data).
 
 ## I. New false serves in live
 
-Pilot: **0** (0/32 unsafe; exact 95 % upper bound 10.9 %). Locked: not measured. Offline gold arm: 0 unsafe rows.
+Frozen scorer: 1 (L01); verified as a scorer artifact — the served value equals the oracle for the asked object. Real
+wrong serves: 0 in pilot (0/32) and locked (0/44). Not a bound beyond these items.
 
 ## J. Prompt / schema / product changes
 
-None. Product, prompt, schema, Registry, Planner, Engine untouched; only the evaluation runner, its test, run documents
-and one allow-listed next-action name in the docs audit.
+None. Product, prompt, schema, Registry, Planner, Engine untouched; only the evaluation runner, its test, run documents,
+a correction script and one allow-listed next-action name in the docs audit.
 
 ## K. Review, gates, candidate, Git
 
-Audits: extraction architecture (Agent 2) and evaluation (Agent 3, NOT_READY → every BLOCKER/IMPORTANT finding fixed or
-dispositioned, `audit/evaluation-audit.md`). Tests: new 21 + A/B runner 80 + docs gate, candidate `--verify` MATCH. T3 not
-required (no product or frontend change). Git: checkpoint commit on the research branch; no merge or push before the
-live decision and a final integration decision.
+Pre-lock audits (Agent 2 architecture; Agent 3 evaluation, NOT_READY → fixed). Post-run review (Agent 4):
+`BASELINE_EVIDENCE_NEEDS_FIXES`, all text/receipt fixes applied (`review.md`). Tests: harness 21 + docs gate; candidate
+`--verify` MATCH; T3 not required (no product or frontend change). Git: research branch, not merged or pushed.
 
 ## L. Before Hybrid could become a product candidate
 
-Live extraction measured with P1 PASS and P2 YES on a locked set; human validation of labels; the grounding false
-refusals of G fixed in a separate wave and re-measured on fresh data; capability gaps decided against the capability
-matrix; browser/Scene3D acceptance for served route-D cases; an explicit enablement decision. None is met yet.
+P1 PASS and P2 YES on a fresh locked set with a scorer that judges served values independently of pairing; human
+validation of labels; the extraction failures of G reduced (operands, solids, `unsupported`); the grounding false
+refusals of H fixed in a separate wave; the capability gaps decided against the capability matrix; Scene3D acceptance for
+served route-D cases; an explicit enablement decision. None is met.
 
-## M. Next research step
+## M. Next research step (from these numbers)
 
-The owner's live GO for this locked protocol. Independently of it, the offline data already shows that the largest
-blocker for these wordings is Source Grounding wording coverage (unlabelled base, interrogative forms), ahead of new
-goal schema or G16; that ranking is provisional until extraction accuracy is measured.
+1. **Semantic Extraction first.** It loses 30/44 rows before grounding and 6/8 of the servable ones; the specific
+   failures (operands omitted, measure without solid, no `unsupported`, invented names) are prompt/schema-level and
+   measurable on a fresh corpus. Needs its own approval (prompt/schema surface change ⇒ cache decision, re-measure).
+2. **Source Grounding wording coverage second** (H): it blocks correct extractions and the gold facts alike.
+3. **Goal schema / G16 later:** the 12 out-of-schema requests and 3 capability gaps matter only once extraction and
+   grounding let servable rows through.
+Re-using these 44 items after tuning is not held-out evidence; the next evaluation needs new items.
 
 ## Environment residuals
 
 `.superpowers/worktrees/goal-bounded`, `goal-fixed`, `semantic-grounding-base-20261017` (deregistered; every non-cache
-file equals a git blob and the main checkout) and `backend/.tmp/pytest-05045731…` are owned by `CodexSandboxOffline`;
-`BUILTIN\Users` lacks Delete, normal-user removal failed with `UnauthorizedAccessException`; no ACL change attempted.
-Owner action in an elevated PowerShell: `Remove-Item -LiteralPath <path> -Recurse -Force` for each path. A worktree
-`scene3d-educational-finalization` created outside this session is untouched.
+file equals a git blob) and `backend/.tmp/pytest-05045731…` are owned by `CodexSandboxOffline`; `BUILTIN\Users` lacks
+Delete; no ACL change attempted. Owner action (elevated PowerShell): `Remove-Item -LiteralPath <path> -Recurse -Force`.
+The worktree `scene3d-educational-finalization`, created outside this session, is untouched.

@@ -195,6 +195,9 @@ ALLOWED_CANONICAL_ACTIONS = [
     "POST_SEMANTIC_GROUNDING_INTEGRATION_RESEARCH_PRIORITY_DECISION",
     # independent-nlu-extraction-evaluation (2026-10-17): corpus/gold/harness locked offline; next is the owner's live GO.
     "NLU_EXTRACTION_LIVE_GO_DECISION",
+    # independent-nlu-extraction-evaluation (2026-10-17): live baseline measured and reviewed; next is the owner's
+    # integration decision for the research branch.
+    "NLU_EXTRACTION_BASELINE_INTEGRATION_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

@@ -1,0 +1,21 @@
+{
+ "schema": "APPROVAL_RECEIPT/1",
+ "note": "Receipt ABOUT the owner's approval file; the approval itself was written by the owner and is not copied here.",
+ "approval_file": "C:\\Users\\Bunny\\nlu-approval.json",
+ "sha256_raw": "975cbb6c313687052b4bb2e6d63312fc5fe14e5842d69f23ca9f6d0b7dffc7b7",
+ "decision": "HUMAN_APPROVED_LIVE_EXECUTION",
+ "modes_present": [
+  "LOCKED",
+  "PILOT"
+ ],
+ "pilot_identity_equals_published": true,
+ "locked_identity_equals_published": true,
+ "owner_scope": {
+  "PILOT": "GO PILOT ONLY, 32 requests, USD 0.77 (owner message 2026-10-17)",
+  "LOCKED": "GO LOCKED EVALUATION, 44 requests, USD 1.06, from a9724519 (owner message 2026-10-17)"
+ },
+ "executed": {
+  "PILOT": "6255a743 → results/live-pilot",
+  "LOCKED": "a9724519 → results/live-locked"
+ }
+}

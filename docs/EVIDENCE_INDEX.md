@@ -6,10 +6,11 @@ REPORT = docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/rep
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/
 CORRECTS = NONE
 CORRECTED_BY = NONE
-CLASSIFICATION = LIVE_PILOT_MEASURED_LOCKED_NOT_AUTHORIZED
+CLASSIFICATION = LIVE_BASELINE_MEASURED (locked: preregistered UNSAFE; correction layer corrections/ → P1 PASS, P2 NO)
 CODE_COMMIT = NONE (no product change; evaluation runner backend/scripts/run_nlu_extraction_evaluation.py)
-VERIFICATION_COMMIT = candidate 57c7f5db… MATCH; GOLD + REPLAY receipts 0 calls; live pilot at 6255a743 (results/live-pilot/)
-MODEL_REQUEST_COUNT = 32 (pilot; gemini-2.5-flash; est. USD 0.137)
+VERIFICATION_COMMIT = candidate 57c7f5db… MATCH; live pilot at 6255a743, live locked at a9724519; review.md re-scored byte-identically
+MODEL_REQUEST_COUNT = 76 (32 pilot + 44 locked; gemini-2.5-flash; est. USD 0.299)
+CORRECTION_LAYER = corrections/scorer-unused-slots.json (beside, not instead of, results/live-locked/score.json)
 
 Blind-authored corpus 60 (dev 16 / locked 44), oracle 56 values, implementer gold 319 facts; gold arm serves 8/44 locked.
 Independence INDEPENDENT_AGENT_AUTHORED_NOT_HUMAN_VALIDATED. No live extraction claim until approval-request.md is GO.

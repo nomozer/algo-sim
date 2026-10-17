@@ -10,8 +10,9 @@
 
 **2026-10-17, independent NLU extraction evaluation (LOCAL, `research/independent-nlu-extraction-evaluation`):** the
 research step proposed below is prepared and locked offline — blind-authored corpus, oracle, gold facts, harness,
-audits; no product change. Next only: the owner's live GO for a budgeted pilot + locked run
-([`approval-request.md`](evaluation/geometry/runs/independent-nlu-extraction-evaluation/approval-request.md)). Hybrid NO-GO.
+audits; no product change. Live baseline measured under two owner GOs (76 requests, est. USD 0.299): P2 NO, corrected
+P1 PASS, extraction the dominant loss ([`report`](evaluation/geometry/runs/independent-nlu-extraction-evaluation/report.md)).
+Next only: the owner's integration decision; then a separately approved Semantic Extraction wave on NEW items. Hybrid NO-GO.
 
 **2026-10-17, grounding continuation:** the user authorized completion of the interrupted semantic/source reliability
 slice. Product `94b3437b`; independent review clear, offline false serves closed on the registered cases; clean detached
@@ -52,7 +53,7 @@ Group A remains integrated on main; Hybrid stays off. Presentation backlog, orbi
 No Group B, new family, new Planner/FactGraph/DSL or product enablement. No additional task starts without that decision.
 
 ```text
-CANONICAL_NEXT_ACTION = NLU_EXTRACTION_LIVE_GO_DECISION
+CANONICAL_NEXT_ACTION = NLU_EXTRACTION_BASELINE_INTEGRATION_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 
