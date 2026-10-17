@@ -56,7 +56,7 @@
 
 ### ISSUE-ARCH-SCENE3D-CONSTRUCTION-READABILITY
 
-- **status:** TECHNICAL_FIXES_IMPLEMENTED, HUMAN_VISUAL_REVIEW_PENDING — W1–W3 on `main` (2026-10-16); Gemini follow-up + CONTRACT-BE-1 on `integration/scene3d-visual-correctness` (2026-10-17, see update below). Original 2026-10-16 status: W0 audit and W1–W3 implementation on `research/scene3d-visual-parity-audit`, awaiting review.
+- **status:** RESOLVED (`HUMAN_VISUAL_REVIEW_PASS` confirmed by user in session, 2026-10-17, run `scene3d-educational-finalization`, product `22df95d6`, integrated on `main`). Earlier milestones: W1–W3 on `main` (2026-10-16); Gemini follow-up + CONTRACT-BE-1 on `main` (`ee9689e6`, 2026-10-17).
 - **description:** Prefer an oblique view from above while preserving free orbit/reset; choose defaults by verified scene
   families rather than one fixed angle. Optional reference background: sparse, very faint diagonal lines, not a dense
   square grid or a mathematical entity. The reference image is not in this review's evidence package, so its exact visual
@@ -77,10 +77,20 @@
   association), BE-3 (marker direction) and BE-4 (plane display region): no contract change, because the frontend owns
   that display geometry and backend metadata would duplicate it. Technical rendering: harness D3D11 + SwiftShader
   `PASS_CORE_CAUSAL_RENDERING`, 11 scenes; `HUMAN_VISUAL_REVIEW_PENDING`.
+- **2026-10-17 finalization (`scene3d-educational-finalization`, product `22df95d6`):** Resolved EDU-1..8 across shared
+  frontend Scene3D modules (`scene3d-annotations.ts`, `scene3d-camera.ts`, `scene3d-edge-visibility.ts`,
+  `scene3d-model.ts`, `scene3d-presentation.ts`, `scene3d-roles.ts`, `scene3d-view.tsx`, `global.css`): restored
+  distance-to-line measurement pills when witness lives on `point3.perpendicular_witness`; included witness feet in
+  camera framing with stronger textbook pose affinity; yielded auxiliary plane borders to colinear section/segment
+  borders (`aux=1`); scaled closed 4-sided right-angle square and foot marker dot at `w.foot` with collision-free
+  vertex/annotation placement; updated background/face palette to textbook style; showed `FINAL_RESULT` plane witness
+  in normal state; and highlighted newly reached section intersection vertices (`td::vertex:i`) during open `EXTEND`
+  steps. Verified across 49 full-size (`1280×900`) browser states and confirmed **`HUMAN_VISUAL_REVIEW_PASS`** by user.
 - **evidence:** `docs/evaluation/geometry/runs/scene3d-visual-parity-audit/report.md`;
   `docs/evaluation/geometry/runs/scene3d-architecture-visual-reliability/report.md`;
-  `docs/evaluation/geometry/runs/scene3d-visual-correctness/report.md`.
-- **impact:** Learner readability and visual parity between Product and Harness resolved on `research/scene3d-visual-parity-audit`; awaiting independent review, refreeze, and human visual sign-off before `main` integration.
+  `docs/evaluation/geometry/runs/scene3d-visual-correctness/report.md`;
+  `docs/evaluation/geometry/runs/scene3d-educational-finalization/report.md`.
+- **impact:** Closed on `main` with `HUMAN_VISUAL_REVIEW_PASS`.
 - **scope:** Bounded frontend Scene3D mapping/presentation/harness slice; 0 backend/Kernel/coordinate changes.
 - **owner_class:** UX
 - **default_switch_blocker:** NO — not an authorization to enable Hybrid; its independent production blockers remain.
@@ -101,10 +111,10 @@
 
 ### ISSUE-OPS-ORBIT-GATE-UNSETTLED-LOCAL
 
-- **status:** OPEN environment/harness finding, run `scene3d-construction-audit`.
+- **status:** RESOLVED (2026-10-17, run `scene3d-educational-finalization`, product `22df95d6`). Root causes were (a) per-frame WebGL `BufferGeometry` allocations during orbit (`45,868` buffers) and (b) sub-`_EPS` quaternion/spherical round-trip drift in `OrbitControls.update()` when `cam.up = (0, 0, 1)` even after `dieuKhien.update()` returned `false`. Fixed via pre-allocated `BufferGeometry` span pools (`capPhat = 0`) and restoring `cam.position`/`cam.quaternion` when `dieuKhien.update()` returns `false`; `scene3d-orbit-gate.mjs` now passes `DAT` on `p1`, `p6`, `p7` (`yen = 0.0°`, `docs/evaluation/geometry/runs/scene3d-educational-finalization/visual/receipts/orbit-gate.json`).
 - **description:** `frontend/scripts/scene3d-orbit-gate.mjs` reports `KHONG_ON_DINH` (camera not settled within 20 s)
   for p1/p6/p7 on this machine, identically on the pre-fix build (`632d7e15`) and the fixed build (`eea6f3df`).
-- **impact:** The orbit gate gives no signal here; not part of T3. Not attributed to the label fix.
+- **impact:** Resolved; orbit gate v3 passes `DAT` on `p1`, `p6`, `p7`.
 - **owner_class:** TOOLING
 - **default_switch_blocker:** NO
 
@@ -382,12 +392,12 @@
 ### ISSUE-ARCH-ORBIT-P1-SECTION-SCENE-DOES-NOT-SETTLE
 
 - **description:** With the validated orbit gate v3, the p1 fixture (pyramid with cross-section and a distance) allocates GPU resources during orbit (111 buffers/programs/canvases; historical build: 0), its camera does not settle within 20 s, and scenes loaded after it in the same session (p6, p7) do not settle either; p6/p7 alone are DAT. Present on `main` 28ac1d61 and identical on the integration branch.
-- **evidence:** `docs/evaluation/geometry/runs/orbit-gate-v2/results-v3/` and `results-v3-isolation/`; `docs/evaluation/geometry/runs/main-integration-readiness/report.md` §1.
-- **impact:** The browser orbit gate is red on `main`; possible per-frame allocation/leak on polyhedral section scenes.
-- **scope:** Product renderer (`frontend/src/simulations/domains/geometry/`). Root cause UNKNOWN; first suspects: camera-dependent hidden-line recomputation or automatic fitting not disposed on scene change.
-- **status:** OPEN — **PRIORITY P1** (accepted by the user as a known exception for the 2026-10-11 fast-forward of `main` to `9e3c9789`; it keeps the validated browser orbit gate red on `main` until fixed).
+- **evidence:** `docs/evaluation/geometry/runs/orbit-gate-v2/results-v3/` and `results-v3-isolation/`; `docs/evaluation/geometry/runs/main-integration-readiness/report.md` §1; fix receipt `docs/evaluation/geometry/runs/scene3d-educational-finalization/visual/receipts/orbit-gate.json`.
+- **impact:** Resolved; `scene3d-orbit-gate.mjs` v3 passes `DAT` on `p1`, `p6`, `p7` (`capPhat = 0`, `yen = 0.0°`).
+- **scope:** Product renderer (`frontend/src/simulations/domains/geometry/scene3d-view.tsx`).
+- **status:** RESOLVED (2026-10-17, run `scene3d-educational-finalization`, product `22df95d6`). Pre-allocated `BufferGeometry` span pools (`createSpanPoolGeometry`, `preallocateSpanGeoPool`, `acquireSpanGeometry`, `warmSpanPools`) eliminated per-frame WebGL buffer/shader allocations during orbit (`45,868 -> 0`), and restoring `cam.position`/`cam.quaternion` when `dieuKhien.update()` returns `false` eliminated Z-up quaternion/spherical float drift near the poles.
 - **owner_class:** ARCHITECTURE
-- **suggested_wave:** Next renderer slice; reproduce with `--ca p1` on the orbit gate v3.
+- **suggested_wave:** —
 - **default_switch_blocker:** NO
 
 ### ISSUE-OPS-MAIN-CHECKOUT-FILES-OWNED-BY-ANOTHER-ACCOUNT

@@ -35,9 +35,13 @@ used without planner change. Run [`goal-directed-function-discovery`](evaluation
 Next only: the user's decision on the stack, in order — result-binding fast-forward, independent review of Scene3D W1–W3,
 then this slice. Integration ≠ Hybrid enablement (NO-GO, LLM_ONLY, cache125). Proposed next slice (not started): report §9.
 
-**2026-10-17, Scene3D visual correctness integration (on `main` + `origin/main`):** Gemini
-Scene3D commit `0ef0a20a` reviewed and merged on an integration branch from `main` `6d8ead99`, FE-4 and CONTRACT-BE-1
-fixed; run [`scene3d-visual-correctness`](evaluation/geometry/runs/scene3d-visual-correctness/report.md). User GO given: `main` fast-forwarded to `ee9689e6` and pushed ([`integration`](evaluation/geometry/runs/scene3d-visual-correctness/integration.md)). Next: the user's research priority (Source grounding / NLU recommended before G16). Hybrid stays NO-GO; human visual review pending.
+**2026-10-17, Scene3D educational visual quality finalization (`scene3d-educational-finalization`, on `main` + `origin/main`):**
+product `22df95d6` (EDU-1..8 across shared frontend Scene3D modules), independent review v2 PASS (7/7), 49 full-size
+(`1280×900`) browser states, `scene3d-orbit-gate.mjs` `DAT` on `p1/p6/p7`, **`HUMAN_VISUAL_REVIEW_PASS`** confirmed by user
+in session, clean detached T3 PASS; integrated on `main` and pushed ([`report`](evaluation/geometry/runs/scene3d-educational-finalization/report.md),
+[`integration`](evaluation/geometry/runs/scene3d-educational-finalization/integration.md)). Earlier 2026-10-17 Scene3D
+visual correctness (`ee9689e6`, [`report`](evaluation/geometry/runs/scene3d-visual-correctness/report.md)): Gemini
+`0ef0a20a` + FE-4 `08021881` + CONTRACT-BE-1 `f07ea069`. Hybrid stays NO-GO.
 
 **2026-10-15, result-binding slice implemented and integration-checked (LOCAL, not merged):** branch
 `research/source-bound-result-planning` (product `efb756aa`, candidate `c0a8792f…`, T3 `7b14fe04`) is a fast-forward of

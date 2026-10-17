@@ -21,6 +21,26 @@ scorer artifact — corrected P1 PASS, **P2 NO** (24/45 → 27/45 goal+entity; C
 [`report.md`](evaluation/geometry/runs/independent-nlu-extraction-evaluation/report.md).
 cache125/LLM_ONLY/Hybrid NO-GO.
 
+## INTEGRATED ON `main` — Scene3D educational visual quality finalization, 2026-10-17
+
+**Integration (user `HUMAN_VISUAL_REVIEW_PASS` + GO INTEGRATION in session, 2026-10-17):** product commit `22df95d6`
+(from `76dca142`), merged with `main` `bc0445ae` at `d4947610`, candidate `product_commit_sha` refrozen at `7dc609bd`
+(`tree_hash` `57c7f5db…`, 110 files unchanged), clean detached T3 `FULL_PRODUCT_GATE_PASS`, fast-forwarded onto `main`
+and pushed without force; research branch and worktree cleaned; record
+[`integration.md`](evaluation/geometry/runs/scene3d-educational-finalization/integration.md).
+
+Resolves EDU-1..8 across shared frontend Scene3D modules (`scene3d-annotations.ts`, `scene3d-camera.ts`,
+`scene3d-edge-visibility.ts`, `scene3d-model.ts`, `scene3d-presentation.ts`, `scene3d-roles.ts`, `scene3d-view.tsx`,
+`global.css`): distance-to-line measurement pills when witness lives on `point3.perpendicular_witness`; textbook camera
+affinity + witness-foot framing; auxiliary plane colinear border yield to active section/segment borders (`aux=1`);
+scene-diameter-scaled closed 4-sided right-angle square, screen-space foot marker dot, and vertex/annotation collision
+avoidance; clean near-white canvas + cool slate-blue solid faces; WebGL `BufferGeometry` span pools (`capPhat = 0`) and
+Z-up `OrbitControls` view-matrix settle (`scene3d-orbit-gate.mjs` `DAT` on `p1`, `p6`, `p7`); normal-state `FINAL_RESULT`
+point-to-plane perpendicular witness; and open-step section intersection vertex highlighting. Independent review v2 PASS
+(7/7, [`review.md`](evaluation/geometry/runs/scene3d-educational-finalization/review.md)); 68 Vitest files (1,077 tests),
+49 full-size (`1280×900`) browser states, **`HUMAN_VISUAL_REVIEW_PASS`**. `DEFAULT_MODE = LLM_ONLY`, cache 125, Hybrid
+NO-GO, 0 live calls. Run [`scene3d-educational-finalization`](evaluation/geometry/runs/scene3d-educational-finalization/report.md).
+
 ## INTEGRATED ON `main` — Hybrid semantic grounding reliability, 2026-10-17
 
 Next action at that time (superseded by the NLU evaluation above): POST_SEMANTIC_GROUNDING_INTEGRATION_RESEARCH_PRIORITY_DECISION
