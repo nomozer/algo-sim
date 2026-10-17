@@ -1,0 +1,209 @@
+{
+  "properties": {
+    "facts": {
+      "items": {
+        "description": "MỘT dữ kiện có kiểu. Phẳng (một đối tượng, các ô theo `kind`) để lược đồ structured output của provider diễn đạt được.",
+        "properties": {
+          "ambiguous": {
+            "description": "AI không chắc cách hiểu ⇒ planner từ chối, không đoán",
+            "type": "BOOLEAN"
+          },
+          "at": {
+            "description": "đỉnh góc vuông · ảnh hình chiếu",
+            "nullable": true,
+            "type": "STRING"
+          },
+          "id": {
+            "minLength": 1,
+            "type": "STRING"
+          },
+          "kind": {
+            "enum": [
+              "solid",
+              "polygon_shape",
+              "right_angle",
+              "length",
+              "equal_lengths",
+              "perpendicular",
+              "altitude",
+              "projection",
+              "point_def",
+              "section",
+              "intersection_line",
+              "question",
+              "unsupported"
+            ],
+            "type": "STRING"
+          },
+          "line_ref": {
+            "description": "ID dữ kiện intersection_line có nguồn, cho distance/projection; không phải nhãn điểm hay chương trình",
+            "minLength": 1,
+            "nullable": true,
+            "type": "STRING"
+          },
+          "measure": {
+            "description": "độ dài này là của gì: một đoạn có tên, cạnh đáy, cạnh bên, chiều cao, mọi cạnh (lập phương, tứ diện đều)",
+            "enum": [
+              "segment",
+              "base_edge",
+              "lateral_edge",
+              "height",
+              "edge"
+            ],
+            "nullable": true,
+            "type": "STRING"
+          },
+          "negated": {
+            "description": "mệnh đề bị phủ định trong đề",
+            "type": "BOOLEAN"
+          },
+          "plane_name": {
+            "description": "tên mặt phẳng cắt trong đề; bắt buộc cho parallel_two_lines",
+            "nullable": true,
+            "type": "STRING"
+          },
+          "plane_relation": {
+            "description": "thiết diện / diện tích thiết diện với mặt cắt cho bằng QUAN HỆ: mặt qua `point`, song song (parallel) hay vuông góc (perpendicular) với mặt `points_b`; khi đó không có `points`",
+            "enum": [
+              "parallel",
+              "perpendicular",
+              "parallel_two_lines"
+            ],
+            "nullable": true,
+            "type": "STRING"
+          },
+          "point": {
+            "description": "nhãn một điểm của đề, vd S, A, A'",
+            "nullable": true,
+            "type": "STRING"
+          },
+          "point_kind": {
+            "enum": [
+              "midpoint",
+              "centroid",
+              "intersect_line_line",
+              "intersect_line_plane"
+            ],
+            "nullable": true,
+            "type": "STRING"
+          },
+          "points": {
+            "description": "đỉnh đa giác / đoạn / mặt phẳng tuỳ loại",
+            "items": {
+              "description": "nhãn một điểm của đề, vd S, A, A'",
+              "type": "STRING"
+            },
+            "nullable": true,
+            "type": "ARRAY"
+          },
+          "points_a": {
+            "description": "toán hạng 1: 1 điểm, 2 điểm = đường thẳng, ≥3 = mặt phẳng",
+            "items": {
+              "description": "nhãn một điểm của đề, vd S, A, A'",
+              "type": "STRING"
+            },
+            "nullable": true,
+            "type": "ARRAY"
+          },
+          "points_b": {
+            "description": "toán hạng 2",
+            "items": {
+              "description": "nhãn một điểm của đề, vd S, A, A'",
+              "type": "STRING"
+            },
+            "nullable": true,
+            "type": "ARRAY"
+          },
+          "quantity": {
+            "enum": [
+              "volume",
+              "area",
+              "length",
+              "distance",
+              "angle"
+            ],
+            "nullable": true,
+            "type": "STRING"
+          },
+          "quotes": {
+            "description": "đoạn NGUYÊN VĂN của đề làm căn cứ",
+            "items": {
+              "type": "STRING"
+            },
+            "minItems": 1,
+            "type": "ARRAY"
+          },
+          "reason": {
+            "nullable": true,
+            "type": "STRING"
+          },
+          "regular": {
+            "description": "đề nói khối ĐỀU",
+            "nullable": true,
+            "type": "BOOLEAN"
+          },
+          "right": {
+            "description": "đề nói lăng trụ ĐỨNG",
+            "nullable": true,
+            "type": "BOOLEAN"
+          },
+          "role": {
+            "description": "premise = đề cho; prove = điều phải chứng minh; condition = trong 'nếu … thì'; question = đề hỏi",
+            "enum": [
+              "premise",
+              "prove",
+              "condition",
+              "question"
+            ],
+            "type": "STRING"
+          },
+          "shape": {
+            "enum": [
+              "equilateral_triangle",
+              "square",
+              "regular_hexagon",
+              "regular_polygon",
+              "rectangle",
+              "triangle"
+            ],
+            "nullable": true,
+            "type": "STRING"
+          },
+          "solid": {
+            "description": "ký hiệu khối như đề viết: S.ABC, ABC.A'B'C', ABCD (tứ diện)",
+            "nullable": true,
+            "type": "STRING"
+          },
+          "solid_type": {
+            "enum": [
+              "pyramid",
+              "prism",
+              "tetrahedron",
+              "cube",
+              "cuboid"
+            ],
+            "nullable": true,
+            "type": "STRING"
+          },
+          "value": {
+            "description": "độ dài CHÉP từ đề: số dương (4, 2/3, √3, 3√3/4) hoặc theo ký hiệu a (a, 2a, a√3, a√3/2)",
+            "nullable": true,
+            "type": "STRING"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "role",
+          "quotes"
+        ],
+        "type": "OBJECT"
+      },
+      "type": "ARRAY"
+    }
+  },
+  "required": [
+    "facts"
+  ],
+  "type": "OBJECT"
+}

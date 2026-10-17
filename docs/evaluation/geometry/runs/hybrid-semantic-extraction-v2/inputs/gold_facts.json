@@ -1,0 +1,3569 @@
+{
+  "cases": {
+    "dev01": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hộp chữ nhật ABCD.EFGH"
+          ],
+          "solid": "ABCD.EFGH",
+          "solid_type": "cuboid",
+          "id": "f1"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 6"
+          ],
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "BC = 8"
+          ],
+          "points": [
+            "B",
+            "C"
+          ],
+          "value": "8",
+          "measure": "segment",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AE = 10"
+          ],
+          "points": [
+            "A",
+            "E"
+          ],
+          "value": "10",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "độ dài AG"
+          ],
+          "points": [
+            "A",
+            "G"
+          ],
+          "quantity": "length",
+          "rid": "r1",
+          "id": "f5"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "diện tích mặt ABCD"
+          ],
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "quantity": "area",
+          "rid": "r2",
+          "id": "f6"
+        }
+      ]
+    },
+    "dev02": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Tứ diện OPQR"
+          ],
+          "solid": "OPQR",
+          "solid_type": "tetrahedron",
+          "id": "f1"
+        },
+        {
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "OP, OQ, OR đôi một vuông góc"
+          ],
+          "points_a": [
+            "O",
+            "P"
+          ],
+          "points_b": [
+            "O",
+            "Q"
+          ],
+          "id": "f2"
+        },
+        {
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "OP, OQ, OR đôi một vuông góc"
+          ],
+          "points_a": [
+            "O",
+            "P"
+          ],
+          "points_b": [
+            "O",
+            "R"
+          ],
+          "id": "f3"
+        },
+        {
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "OP, OQ, OR đôi một vuông góc"
+          ],
+          "points_a": [
+            "O",
+            "Q"
+          ],
+          "points_b": [
+            "O",
+            "R"
+          ],
+          "id": "f4"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "OP = 2"
+          ],
+          "points": [
+            "O",
+            "P"
+          ],
+          "value": "2",
+          "measure": "segment",
+          "id": "f5"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "OQ = 3"
+          ],
+          "points": [
+            "O",
+            "Q"
+          ],
+          "value": "3",
+          "measure": "segment",
+          "id": "f6"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "OR = 6"
+          ],
+          "points": [
+            "O",
+            "R"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f7"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "thể tích OPQR"
+          ],
+          "solid": "OPQR",
+          "quantity": "volume",
+          "rid": "r1",
+          "id": "f8"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "khoảng cách từ O đến mặt phẳng (PQR)"
+          ],
+          "points_a": [
+            "O"
+          ],
+          "points_b": [
+            "P",
+            "Q",
+            "R"
+          ],
+          "quantity": "distance",
+          "rid": "r2",
+          "id": "f9"
+        }
+      ]
+    },
+    "dev03": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "chóp S.ABCD"
+          ],
+          "solid": "S.ABCD",
+          "solid_type": "pyramid",
+          "id": "f1"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh 4"
+          ],
+          "solid": "S.ABCD",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "shape": "square",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh 4"
+          ],
+          "solid": "S.ABCD",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "value": "4",
+          "measure": "base_edge",
+          "id": "f3"
+        },
+        {
+          "kind": "altitude",
+          "role": "premise",
+          "quotes": [
+            "SA là đường cao của chóp"
+          ],
+          "solid": "S.ABCD",
+          "points": [
+            "S",
+            "A"
+          ],
+          "id": "f4"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "SA = 3"
+          ],
+          "points": [
+            "S",
+            "A"
+          ],
+          "value": "3",
+          "measure": "segment",
+          "id": "f5"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "diện tích tam giác SBC"
+          ],
+          "points": [
+            "S",
+            "B",
+            "C"
+          ],
+          "quantity": "area",
+          "rid": "r1",
+          "id": "f6"
+        }
+      ]
+    },
+    "dev04": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "chóp S.ABC"
+          ],
+          "solid": "S.ABC",
+          "solid_type": "pyramid",
+          "id": "f1"
+        },
+        {
+          "kind": "right_angle",
+          "role": "premise",
+          "quotes": [
+            "tam giác ABC vuông tại A"
+          ],
+          "points": [
+            "B",
+            "C"
+          ],
+          "at": "A",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 6"
+          ],
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AC = 8"
+          ],
+          "points": [
+            "A",
+            "C"
+          ],
+          "value": "8",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "SA vuông góc (ABC)"
+          ],
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "id": "f5"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "SA = 5"
+          ],
+          "points": [
+            "S",
+            "A"
+          ],
+          "value": "5",
+          "measure": "segment",
+          "id": "f6"
+        },
+        {
+          "kind": "point_def",
+          "role": "premise",
+          "quotes": [
+            "M là trung điểm BC"
+          ],
+          "point": "M",
+          "point_kind": "midpoint",
+          "points": [
+            "B",
+            "C"
+          ],
+          "id": "f7"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính SM"
+          ],
+          "points": [
+            "S",
+            "M"
+          ],
+          "quantity": "length",
+          "rid": "r1",
+          "id": "f8"
+        }
+      ]
+    },
+    "dev05": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Chóp S.ABC"
+          ],
+          "solid": "S.ABC",
+          "solid_type": "pyramid",
+          "id": "f1"
+        },
+        {
+          "kind": "right_angle",
+          "role": "premise",
+          "quotes": [
+            "ABC vuông tại A"
+          ],
+          "points": [
+            "B",
+            "C"
+          ],
+          "at": "A",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 9"
+          ],
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": "9",
+          "measure": "segment",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AC = 12"
+          ],
+          "points": [
+            "A",
+            "C"
+          ],
+          "value": "12",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "SA vuông góc đáy"
+          ],
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "id": "f5"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "SA = 7"
+          ],
+          "points": [
+            "S",
+            "A"
+          ],
+          "value": "7",
+          "measure": "segment",
+          "id": "f6"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "khoảng cách từ trọng tâm tam giác ABC đến mặt phẳng (SAB)"
+          ],
+          "point_kind": "centroid",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "points_b": [
+            "S",
+            "A",
+            "B"
+          ],
+          "quantity": "distance",
+          "rid": "r1",
+          "id": "f7"
+        }
+      ]
+    },
+    "dev06": {
+      "facts": [
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "Tam giác ABC"
+          ],
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "shape": "triangle",
+          "id": "f1"
+        },
+        {
+          "kind": "right_angle",
+          "role": "premise",
+          "quotes": [
+            "ABC vuông tại A"
+          ],
+          "points": [
+            "B",
+            "C"
+          ],
+          "at": "A",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 3"
+          ],
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": "3",
+          "measure": "segment",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AC = 4"
+          ],
+          "points": [
+            "A",
+            "C"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "role": "premise",
+          "quotes": [
+            "P thuộc tia AB và AP = 6"
+          ],
+          "id": "f5",
+          "kind": "unsupported",
+          "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AP = 6"
+          ],
+          "points": [
+            "A",
+            "P"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f6"
+        },
+        {
+          "role": "premise",
+          "quotes": [
+            "d là đường thẳng BC"
+          ],
+          "id": "f7",
+          "kind": "unsupported",
+          "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "khoảng cách từ P đến d"
+          ],
+          "points_a": [
+            "P"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "quantity": "distance",
+          "rid": "r1",
+          "id": "f8"
+        }
+      ]
+    },
+    "dev07": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "tứ diện T.ABC"
+          ],
+          "solid": "T.ABC",
+          "solid_type": "tetrahedron",
+          "id": "f1"
+        },
+        {
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "TA vuông góc mặt phẳng (ABC)"
+          ],
+          "points_a": [
+            "T",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "id": "f2"
+        },
+        {
+          "kind": "projection",
+          "role": "premise",
+          "quotes": [
+            "dựng H là hình chiếu vuông góc của B lên đường thẳng TC"
+          ],
+          "rid": "r1",
+          "point": "B",
+          "at": "H",
+          "points": [
+            "T",
+            "C"
+          ],
+          "id": "f3"
+        },
+        {
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "giải thích vì sao BH vuông góc TC"
+          ],
+          "rid": "r2",
+          "reason": "Construction and explanation are separate obligations; definition of orthogonal projection suffices mathematically, but these are outside numerical-answer scope.",
+          "id": "f4"
+        }
+      ]
+    },
+    "dev08": {
+      "facts": [
+        {
+          "role": "question",
+          "quotes": [
+            "tính khoảng cách từ đỉnh đó đến mặt đáy"
+          ],
+          "rid": "r1",
+          "id": "f1",
+          "kind": "unsupported",
+          "reason": "Source request has no faithful TypedFact representation; no nearby quantity substituted."
+        }
+      ]
+    },
+    "dev09": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "chóp P.ABCD"
+          ],
+          "solid": "P.ABCD",
+          "solid_type": "pyramid",
+          "id": "f1"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy là hình vuông cạnh 6"
+          ],
+          "solid": "P.ABCD",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "shape": "square",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy là hình vuông cạnh 6"
+          ],
+          "solid": "P.ABCD",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "value": "6",
+          "measure": "base_edge",
+          "id": "f3"
+        },
+        {
+          "kind": "altitude",
+          "role": "condition",
+          "quotes": [
+            "PA là đường cao"
+          ],
+          "solid": "P.ABCD",
+          "points": [
+            "P",
+            "A"
+          ],
+          "id": "f4"
+        },
+        {
+          "kind": "length",
+          "role": "condition",
+          "quotes": [
+            "PA = 4"
+          ],
+          "points": [
+            "P",
+            "A"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f5"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "hãy tính thể tích P.ABCD"
+          ],
+          "solid": "P.ABCD",
+          "quantity": "volume",
+          "rid": "r1",
+          "id": "f6"
+        }
+      ]
+    },
+    "dev10": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "chóp S.ABCD"
+          ],
+          "solid": "S.ABCD",
+          "solid_type": "pyramid",
+          "id": "f1"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh 2"
+          ],
+          "solid": "S.ABCD",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "shape": "square",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh 2"
+          ],
+          "solid": "S.ABCD",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "value": "2",
+          "measure": "base_edge",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "SA = 5"
+          ],
+          "points": [
+            "S",
+            "A"
+          ],
+          "value": "5",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "unsupported",
+          "role": "premise",
+          "quotes": [
+            "Không giả sử chóp đều, cũng không biết chân đường cao"
+          ],
+          "reason": "Explicitly denies regularity as an assumption; altitude is unspecified",
+          "id": "f5"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Có thể xác định duy nhất thể tích S.ABCD không?"
+          ],
+          "solid": "S.ABCD",
+          "quantity": "volume",
+          "rid": "r1",
+          "id": "f6"
+        }
+      ]
+    },
+    "dev11": {
+      "facts": [
+        {
+          "kind": "unsupported",
+          "role": "premise",
+          "quotes": [
+            "hình trụ tròn xoay có bán kính đáy 3 và chiều cao 5"
+          ],
+          "reason": "Curved cylinder lies outside the polyhedral geometry target",
+          "id": "f1"
+        },
+        {
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "Tính diện tích mặt xung quanh hình trụ"
+          ],
+          "rid": "r1",
+          "reason": "Preserve the cylinder surface-area obligation; do not substitute a prism or silently return a polyhedral area.",
+          "id": "f2"
+        }
+      ]
+    },
+    "dev12": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "tứ diện ABCD"
+          ],
+          "solid": "ABCD",
+          "solid_type": "tetrahedron",
+          "id": "f1"
+        },
+        {
+          "kind": "point_def",
+          "role": "premise",
+          "quotes": [
+            "M và N lần lượt là trung điểm AB và AC"
+          ],
+          "point": "M",
+          "point_kind": "midpoint",
+          "points": [
+            "A",
+            "B"
+          ],
+          "id": "f2"
+        },
+        {
+          "kind": "point_def",
+          "role": "premise",
+          "quotes": [
+            "M và N lần lượt là trung điểm AB và AC"
+          ],
+          "point": "N",
+          "point_kind": "midpoint",
+          "points": [
+            "A",
+            "C"
+          ],
+          "id": "f3"
+        },
+        {
+          "kind": "unsupported",
+          "role": "prove",
+          "quotes": [
+            "Chứng minh MN song song BC"
+          ],
+          "rid": "r1",
+          "reason": "Parallelism is the conclusion to prove, never a given. Simulation is a second request.",
+          "id": "f4"
+        },
+        {
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "mô phỏng việc kéo D trong khi A, B, C cố định"
+          ],
+          "rid": "r2",
+          "reason": "Parallelism is the conclusion to prove, never a given. Simulation is a second request.",
+          "id": "f5"
+        }
+      ]
+    },
+    "held01": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "lập phương ABCD.EFGH cạnh 4"
+          ],
+          "solid": "ABCD.EFGH",
+          "solid_type": "cube",
+          "id": "f1"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "lập phương ABCD.EFGH cạnh 4"
+          ],
+          "solid": "ABCD.EFGH",
+          "value": "4",
+          "measure": "edge",
+          "id": "f2"
+        },
+        {
+          "role": "premise",
+          "quotes": [
+            "X thuộc tia AB và AX = 8"
+          ],
+          "id": "f3",
+          "kind": "unsupported",
+          "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AX = 8"
+          ],
+          "points": [
+            "A",
+            "X"
+          ],
+          "value": "8",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "role": "premise",
+          "quotes": [
+            "d là đường thẳng BH"
+          ],
+          "id": "f5",
+          "kind": "unsupported",
+          "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "khoảng cách từ X đến d"
+          ],
+          "points_a": [
+            "X"
+          ],
+          "points_b": [
+            "B",
+            "H"
+          ],
+          "quantity": "distance",
+          "rid": "r1",
+          "id": "f6"
+        }
+      ]
+    },
+    "held02": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "lập phương ABCD.EFGH cạnh 4"
+          ],
+          "solid": "ABCD.EFGH",
+          "solid_type": "cube",
+          "id": "f1"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "lập phương ABCD.EFGH cạnh 4"
+          ],
+          "solid": "ABCD.EFGH",
+          "value": "4",
+          "measure": "edge",
+          "id": "f2"
+        },
+        {
+          "role": "premise",
+          "quotes": [
+            "X thuộc tia AB và AX = 8"
+          ],
+          "id": "f3",
+          "kind": "unsupported",
+          "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AX = 8"
+          ],
+          "points": [
+            "A",
+            "X"
+          ],
+          "value": "8",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "role": "question",
+          "quotes": [
+            "khoảng cách ngắn nhất từ X đến đoạn thẳng BH"
+          ],
+          "rid": "r1",
+          "id": "f5",
+          "kind": "unsupported",
+          "reason": "Source request has no faithful TypedFact representation; no nearby quantity substituted."
+        }
+      ]
+    },
+    "held03": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "lập phương ABCD.EFGH cạnh 4"
+          ],
+          "solid": "ABCD.EFGH",
+          "solid_type": "cube",
+          "id": "f1"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "lập phương ABCD.EFGH cạnh 4"
+          ],
+          "solid": "ABCD.EFGH",
+          "value": "4",
+          "measure": "edge",
+          "id": "f2"
+        },
+        {
+          "role": "premise",
+          "quotes": [
+            "X thuộc tia AB và AX = 8"
+          ],
+          "id": "f3",
+          "kind": "unsupported",
+          "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AX = 8"
+          ],
+          "points": [
+            "A",
+            "X"
+          ],
+          "value": "8",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "khoảng cách từ X đến đường thẳng BH"
+          ],
+          "points_a": [
+            "X"
+          ],
+          "points_b": [
+            "B",
+            "H"
+          ],
+          "quantity": "distance",
+          "rid": "r1",
+          "id": "f5"
+        },
+        {
+          "role": "question",
+          "quotes": [
+            "khoảng cách từ X đến đoạn BH"
+          ],
+          "rid": "r2",
+          "id": "f6",
+          "kind": "unsupported",
+          "reason": "Source request has no faithful TypedFact representation; no nearby quantity substituted."
+        }
+      ]
+    },
+    "held04": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Lăng trụ đứng ABCDEF.A′B′C′D′E′F′"
+          ],
+          "solid": "ABCDEF.A′B′C′D′E′F′",
+          "solid_type": "prism",
+          "right": true,
+          "id": "f1"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy là lục giác đều cạnh 2"
+          ],
+          "solid": "ABCDEF.A′B′C′D′E′F′",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "shape": "regular_hexagon",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy là lục giác đều cạnh 2"
+          ],
+          "solid": "ABCDEF.A′B′C′D′E′F′",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "value": "2",
+          "measure": "base_edge",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "chiều cao bằng 5"
+          ],
+          "solid": "ABCDEF.A′B′C′D′E′F′",
+          "value": "5",
+          "measure": "height",
+          "id": "f4"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "thể tích ABCDEF.A′B′C′D′E′F′"
+          ],
+          "solid": "ABCDEF.A′B′C′D′E′F′",
+          "quantity": "volume",
+          "rid": "r1",
+          "id": "f5"
+        }
+      ]
+    },
+    "held05": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Lăng trụ đứng ABCDEF.A′B′C′D′E′F′"
+          ],
+          "solid": "ABCDEF.A′B′C′D′E′F′",
+          "solid_type": "prism",
+          "right": true,
+          "id": "f1"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy là lục giác đều cạnh 2"
+          ],
+          "solid": "ABCDEF.A′B′C′D′E′F′",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "shape": "regular_hexagon",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy là lục giác đều cạnh 2"
+          ],
+          "solid": "ABCDEF.A′B′C′D′E′F′",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "value": "2",
+          "measure": "base_edge",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "chiều cao bằng 5"
+          ],
+          "solid": "ABCDEF.A′B′C′D′E′F′",
+          "value": "5",
+          "measure": "height",
+          "id": "f4"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "diện tích đáy ABCDEF"
+          ],
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "quantity": "area",
+          "rid": "r1",
+          "id": "f5"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "độ dài AA′"
+          ],
+          "points": [
+            "A",
+            "A′"
+          ],
+          "quantity": "length",
+          "rid": "r2",
+          "id": "f6"
+        }
+      ]
+    },
+    "held06": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Lăng trụ đứng ABCDEF.A′B′C′D′E′F′"
+          ],
+          "solid": "ABCDEF.A′B′C′D′E′F′",
+          "solid_type": "prism",
+          "right": true,
+          "id": "f1"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy là lục giác đều cạnh 2"
+          ],
+          "solid": "ABCDEF.A′B′C′D′E′F′",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "shape": "regular_hexagon",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy là lục giác đều cạnh 2"
+          ],
+          "solid": "ABCDEF.A′B′C′D′E′F′",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "value": "2",
+          "measure": "base_edge",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "chiều cao bằng 5"
+          ],
+          "solid": "ABCDEF.A′B′C′D′E′F′",
+          "value": "5",
+          "measure": "height",
+          "id": "f4"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "khoảng cách từ trung điểm AA′ đến mặt phẳng (ABCDEF)"
+          ],
+          "point_kind": "midpoint",
+          "points": [
+            "A",
+            "A′"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+          ],
+          "quantity": "distance",
+          "rid": "r1",
+          "id": "f5"
+        }
+      ]
+    },
+    "held07": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "chóp P.ABCD"
+          ],
+          "solid": "P.ABCD",
+          "solid_type": "pyramid",
+          "id": "f1"
+        },
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Q.EFGH"
+          ],
+          "solid": "Q.EFGH",
+          "solid_type": "pyramid",
+          "id": "f2"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy ABCD là hình chữ nhật"
+          ],
+          "solid": "P.ABCD",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "shape": "rectangle",
+          "id": "f3"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy EFGH là hình vuông cạnh 6"
+          ],
+          "solid": "Q.EFGH",
+          "points": [
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "shape": "square",
+          "id": "f4"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 3"
+          ],
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": "3",
+          "measure": "segment",
+          "id": "f5"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "BC = 4"
+          ],
+          "points": [
+            "B",
+            "C"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f6"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "hình vuông cạnh 6"
+          ],
+          "solid": "Q.EFGH",
+          "points": [
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "value": "6",
+          "measure": "base_edge",
+          "id": "f7"
+        },
+        {
+          "kind": "altitude",
+          "role": "premise",
+          "quotes": [
+            "PA là đường cao của P.ABCD"
+          ],
+          "solid": "P.ABCD",
+          "points": [
+            "P",
+            "A"
+          ],
+          "id": "f8"
+        },
+        {
+          "kind": "altitude",
+          "role": "premise",
+          "quotes": [
+            "QE là đường cao của Q.EFGH"
+          ],
+          "solid": "Q.EFGH",
+          "points": [
+            "Q",
+            "E"
+          ],
+          "id": "f9"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "PA = 8"
+          ],
+          "points": [
+            "P",
+            "A"
+          ],
+          "value": "8",
+          "measure": "segment",
+          "id": "f10"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "QE = 2"
+          ],
+          "points": [
+            "Q",
+            "E"
+          ],
+          "value": "2",
+          "measure": "segment",
+          "id": "f11"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "thể tích của từng khối chóp"
+          ],
+          "solid": "P.ABCD",
+          "quantity": "volume",
+          "rid": "r1",
+          "id": "f12"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "thể tích của từng khối chóp"
+          ],
+          "solid": "Q.EFGH",
+          "quantity": "volume",
+          "rid": "r2",
+          "id": "f13"
+        }
+      ]
+    },
+    "held08": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "chóp P.ABCD"
+          ],
+          "solid": "P.ABCD",
+          "solid_type": "pyramid",
+          "id": "f1"
+        },
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Q.EFGH"
+          ],
+          "solid": "Q.EFGH",
+          "solid_type": "pyramid",
+          "id": "f2"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy ABCD là hình chữ nhật"
+          ],
+          "solid": "P.ABCD",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "shape": "rectangle",
+          "id": "f3"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy EFGH là hình vuông cạnh 6"
+          ],
+          "solid": "Q.EFGH",
+          "points": [
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "shape": "square",
+          "id": "f4"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 3"
+          ],
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": "3",
+          "measure": "segment",
+          "id": "f5"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "BC = 4"
+          ],
+          "points": [
+            "B",
+            "C"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f6"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "hình vuông cạnh 6"
+          ],
+          "solid": "Q.EFGH",
+          "points": [
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "value": "6",
+          "measure": "base_edge",
+          "id": "f7"
+        },
+        {
+          "kind": "altitude",
+          "role": "premise",
+          "quotes": [
+            "PA là đường cao của P.ABCD"
+          ],
+          "solid": "P.ABCD",
+          "points": [
+            "P",
+            "A"
+          ],
+          "id": "f8"
+        },
+        {
+          "kind": "altitude",
+          "role": "premise",
+          "quotes": [
+            "QE là đường cao của Q.EFGH"
+          ],
+          "solid": "Q.EFGH",
+          "points": [
+            "Q",
+            "E"
+          ],
+          "id": "f9"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "PA = 8"
+          ],
+          "points": [
+            "P",
+            "A"
+          ],
+          "value": "8",
+          "measure": "segment",
+          "id": "f10"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "QE = 2"
+          ],
+          "points": [
+            "Q",
+            "E"
+          ],
+          "value": "2",
+          "measure": "segment",
+          "id": "f11"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Chỉ tính thể tích Q.EFGH"
+          ],
+          "solid": "Q.EFGH",
+          "quantity": "volume",
+          "rid": "r1",
+          "id": "f12"
+        }
+      ]
+    },
+    "held09": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "chóp P.ABCD"
+          ],
+          "solid": "P.ABCD",
+          "solid_type": "pyramid",
+          "id": "f1"
+        },
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Q.EFGH"
+          ],
+          "solid": "Q.EFGH",
+          "solid_type": "pyramid",
+          "id": "f2"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy ABCD là hình chữ nhật"
+          ],
+          "solid": "P.ABCD",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "shape": "rectangle",
+          "id": "f3"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy EFGH là hình vuông cạnh 6"
+          ],
+          "solid": "Q.EFGH",
+          "points": [
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "shape": "square",
+          "id": "f4"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 3"
+          ],
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": "3",
+          "measure": "segment",
+          "id": "f5"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "BC = 4"
+          ],
+          "points": [
+            "B",
+            "C"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f6"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "hình vuông cạnh 6"
+          ],
+          "solid": "Q.EFGH",
+          "points": [
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "value": "6",
+          "measure": "base_edge",
+          "id": "f7"
+        },
+        {
+          "kind": "altitude",
+          "role": "premise",
+          "quotes": [
+            "PA là đường cao của P.ABCD"
+          ],
+          "solid": "P.ABCD",
+          "points": [
+            "P",
+            "A"
+          ],
+          "id": "f8"
+        },
+        {
+          "kind": "altitude",
+          "role": "premise",
+          "quotes": [
+            "QE là đường cao của Q.EFGH"
+          ],
+          "solid": "Q.EFGH",
+          "points": [
+            "Q",
+            "E"
+          ],
+          "id": "f9"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "PA = 8"
+          ],
+          "points": [
+            "P",
+            "A"
+          ],
+          "value": "8",
+          "measure": "segment",
+          "id": "f10"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "QE = 2"
+          ],
+          "points": [
+            "Q",
+            "E"
+          ],
+          "value": "2",
+          "measure": "segment",
+          "id": "f11"
+        },
+        {
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "Giải thích vì sao không được dùng PA làm chiều cao của Q.EFGH"
+          ],
+          "rid": "r1",
+          "reason": "All dimensions belong to the explicitly named solid. In held08 the negative command excludes a P.ABCD request. For the rectangle, consecutive edge order follows the listed sides.",
+          "id": "f12"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "tính diện tích EFGH"
+          ],
+          "points": [
+            "E",
+            "F",
+            "G",
+            "H"
+          ],
+          "quantity": "area",
+          "rid": "r2",
+          "id": "f13"
+        }
+      ]
+    },
+    "held10": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Tứ diện TABC"
+          ],
+          "solid": "TABC",
+          "solid_type": "tetrahedron",
+          "id": "f1"
+        },
+        {
+          "kind": "right_angle",
+          "role": "premise",
+          "quotes": [
+            "tam giác ABC vuông cân tại A"
+          ],
+          "points": [
+            "B",
+            "C"
+          ],
+          "at": "A",
+          "id": "f2"
+        },
+        {
+          "kind": "equal_lengths",
+          "role": "premise",
+          "quotes": [
+            "AB = AC = 6"
+          ],
+          "points_a": [
+            "A",
+            "B"
+          ],
+          "points_b": [
+            "A",
+            "C"
+          ],
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = AC = 6"
+          ],
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = AC = 6"
+          ],
+          "points": [
+            "A",
+            "C"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f5"
+        },
+        {
+          "kind": "point_def",
+          "role": "premise",
+          "quotes": [
+            "O là trung điểm BC"
+          ],
+          "point": "O",
+          "point_kind": "midpoint",
+          "points": [
+            "B",
+            "C"
+          ],
+          "id": "f6"
+        },
+        {
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "TO vuông góc (ABC)"
+          ],
+          "points_a": [
+            "T",
+            "O"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "id": "f7"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "TO = 6"
+          ],
+          "points": [
+            "T",
+            "O"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f8"
+        },
+        {
+          "kind": "point_def",
+          "role": "premise",
+          "quotes": [
+            "M là trung điểm AB"
+          ],
+          "point": "M",
+          "point_kind": "midpoint",
+          "points": [
+            "A",
+            "B"
+          ],
+          "id": "f9"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính TM"
+          ],
+          "points": [
+            "T",
+            "M"
+          ],
+          "quantity": "length",
+          "rid": "r1",
+          "id": "f10"
+        }
+      ]
+    },
+    "held11": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Tứ diện TABC"
+          ],
+          "solid": "TABC",
+          "solid_type": "tetrahedron",
+          "id": "f1"
+        },
+        {
+          "kind": "right_angle",
+          "role": "premise",
+          "quotes": [
+            "tam giác ABC vuông cân tại A"
+          ],
+          "points": [
+            "B",
+            "C"
+          ],
+          "at": "A",
+          "id": "f2"
+        },
+        {
+          "kind": "equal_lengths",
+          "role": "premise",
+          "quotes": [
+            "AB = AC = 6"
+          ],
+          "points_a": [
+            "A",
+            "B"
+          ],
+          "points_b": [
+            "A",
+            "C"
+          ],
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = AC = 6"
+          ],
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = AC = 6"
+          ],
+          "points": [
+            "A",
+            "C"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f5"
+        },
+        {
+          "kind": "point_def",
+          "role": "premise",
+          "quotes": [
+            "O là trung điểm BC"
+          ],
+          "point": "O",
+          "point_kind": "midpoint",
+          "points": [
+            "B",
+            "C"
+          ],
+          "id": "f6"
+        },
+        {
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "TO vuông góc (ABC)"
+          ],
+          "points_a": [
+            "T",
+            "O"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "id": "f7"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "TO = 6"
+          ],
+          "points": [
+            "T",
+            "O"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f8"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "khoảng cách từ trung điểm AB đến đường thẳng TO"
+          ],
+          "point_kind": "midpoint",
+          "points": [
+            "A",
+            "B"
+          ],
+          "points_b": [
+            "T",
+            "O"
+          ],
+          "quantity": "distance",
+          "rid": "r1",
+          "id": "f9"
+        }
+      ]
+    },
+    "held12": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Tứ diện TABC"
+          ],
+          "solid": "TABC",
+          "solid_type": "tetrahedron",
+          "id": "f1"
+        },
+        {
+          "kind": "right_angle",
+          "role": "premise",
+          "quotes": [
+            "tam giác ABC vuông cân tại A"
+          ],
+          "points": [
+            "B",
+            "C"
+          ],
+          "at": "A",
+          "id": "f2"
+        },
+        {
+          "kind": "equal_lengths",
+          "role": "premise",
+          "quotes": [
+            "AB = AC = 6"
+          ],
+          "points_a": [
+            "A",
+            "B"
+          ],
+          "points_b": [
+            "A",
+            "C"
+          ],
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = AC = 6"
+          ],
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = AC = 6"
+          ],
+          "points": [
+            "A",
+            "C"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f5"
+        },
+        {
+          "kind": "point_def",
+          "role": "premise",
+          "quotes": [
+            "O là trung điểm BC"
+          ],
+          "point": "O",
+          "point_kind": "midpoint",
+          "points": [
+            "B",
+            "C"
+          ],
+          "id": "f6"
+        },
+        {
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "TO vuông góc (ABC)"
+          ],
+          "points_a": [
+            "T",
+            "O"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "id": "f7"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "TO = 6"
+          ],
+          "points": [
+            "T",
+            "O"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f8"
+        },
+        {
+          "kind": "point_def",
+          "role": "premise",
+          "quotes": [
+            "G là trọng tâm tam giác ABC"
+          ],
+          "point": "G",
+          "point_kind": "centroid",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "id": "f9"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính TG"
+          ],
+          "points": [
+            "T",
+            "G"
+          ],
+          "quantity": "length",
+          "rid": "r1",
+          "id": "f10"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "thể tích TABC"
+          ],
+          "solid": "TABC",
+          "quantity": "volume",
+          "rid": "r2",
+          "id": "f11"
+        }
+      ]
+    },
+    "held13": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Lăng trụ ABC.A′B′C′"
+          ],
+          "solid": "ABC.A′B′C′",
+          "solid_type": "prism",
+          "id": "f1"
+        },
+        {
+          "kind": "right_angle",
+          "role": "premise",
+          "quotes": [
+            "đáy ABC vuông tại A"
+          ],
+          "points": [
+            "B",
+            "C"
+          ],
+          "at": "A",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 4"
+          ],
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AC = 3"
+          ],
+          "points": [
+            "A",
+            "C"
+          ],
+          "value": "3",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "projection",
+          "role": "premise",
+          "quotes": [
+            "Hình chiếu vuông góc của A′ lên (ABC) là H"
+          ],
+          "point": "A′",
+          "at": "H",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "id": "f5"
+        },
+        {
+          "role": "premise",
+          "quotes": [
+            "H nằm trên đoạn AB, AH = 3"
+          ],
+          "id": "f6",
+          "kind": "unsupported",
+          "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AH = 3"
+          ],
+          "points": [
+            "A",
+            "H"
+          ],
+          "value": "3",
+          "measure": "segment",
+          "id": "f7"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "A′H = 4"
+          ],
+          "points": [
+            "A′",
+            "H"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f8"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "cạnh bên AA′"
+          ],
+          "points": [
+            "A",
+            "A′"
+          ],
+          "quantity": "length",
+          "rid": "r1",
+          "id": "f9"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "thể tích ABC.A′B′C′"
+          ],
+          "solid": "ABC.A′B′C′",
+          "quantity": "volume",
+          "rid": "r2",
+          "id": "f10"
+        }
+      ]
+    },
+    "held14": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Lăng trụ ABC.A′B′C′"
+          ],
+          "solid": "ABC.A′B′C′",
+          "solid_type": "prism",
+          "id": "f1"
+        },
+        {
+          "kind": "right_angle",
+          "role": "premise",
+          "quotes": [
+            "đáy ABC vuông tại A"
+          ],
+          "points": [
+            "B",
+            "C"
+          ],
+          "at": "A",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 4"
+          ],
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AC = 3"
+          ],
+          "points": [
+            "A",
+            "C"
+          ],
+          "value": "3",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "projection",
+          "role": "premise",
+          "quotes": [
+            "Hình chiếu vuông góc của A′ lên (ABC) là H"
+          ],
+          "point": "A′",
+          "at": "H",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "id": "f5"
+        },
+        {
+          "role": "premise",
+          "quotes": [
+            "H nằm trên đoạn AB, AH = 3"
+          ],
+          "id": "f6",
+          "kind": "unsupported",
+          "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AH = 3"
+          ],
+          "points": [
+            "A",
+            "H"
+          ],
+          "value": "3",
+          "measure": "segment",
+          "id": "f7"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "A′H = 4"
+          ],
+          "points": [
+            "A′",
+            "H"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f8"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "góc giữa AA′ và (ABC)"
+          ],
+          "points_a": [
+            "A",
+            "A′"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "quantity": "angle",
+          "rid": "r1",
+          "id": "f9"
+        }
+      ]
+    },
+    "held15": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "Lăng trụ ABC.A′B′C′"
+          ],
+          "solid": "ABC.A′B′C′",
+          "solid_type": "prism",
+          "id": "f1"
+        },
+        {
+          "kind": "right_angle",
+          "role": "premise",
+          "quotes": [
+            "đáy ABC vuông tại A"
+          ],
+          "points": [
+            "B",
+            "C"
+          ],
+          "at": "A",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 4"
+          ],
+          "points": [
+            "A",
+            "B"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AC = 3"
+          ],
+          "points": [
+            "A",
+            "C"
+          ],
+          "value": "3",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "projection",
+          "role": "premise",
+          "quotes": [
+            "Hình chiếu vuông góc của A′ lên (ABC) là H"
+          ],
+          "point": "A′",
+          "at": "H",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "id": "f5"
+        },
+        {
+          "role": "premise",
+          "quotes": [
+            "H nằm trên đoạn AB, AH = 3"
+          ],
+          "id": "f6",
+          "kind": "unsupported",
+          "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AH = 3"
+          ],
+          "points": [
+            "A",
+            "H"
+          ],
+          "value": "3",
+          "measure": "segment",
+          "id": "f7"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "A′H = 4"
+          ],
+          "points": [
+            "A′",
+            "H"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f8"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "diện tích mặt bên ABB′A′"
+          ],
+          "points": [
+            "A",
+            "B",
+            "B′",
+            "A′"
+          ],
+          "quantity": "area",
+          "rid": "r1",
+          "id": "f9"
+        }
+      ]
+    },
+    "held16": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "lập phương ABCD.EFGH có cạnh 6"
+          ],
+          "solid": "ABCD.EFGH",
+          "solid_type": "cube",
+          "id": "f1"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "lập phương ABCD.EFGH có cạnh 6"
+          ],
+          "solid": "ABCD.EFGH",
+          "value": "6",
+          "measure": "edge",
+          "id": "f2"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "khoảng cách từ B đến mặt phẳng (ACGE)"
+          ],
+          "points_a": [
+            "B"
+          ],
+          "points_b": [
+            "A",
+            "C",
+            "G",
+            "E"
+          ],
+          "quantity": "distance",
+          "rid": "r1",
+          "id": "f3"
+        }
+      ]
+    },
+    "held17": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "lập phương ABCD.EFGH có cạnh 6"
+          ],
+          "solid": "ABCD.EFGH",
+          "solid_type": "cube",
+          "id": "f1"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "lập phương ABCD.EFGH có cạnh 6"
+          ],
+          "solid": "ABCD.EFGH",
+          "value": "6",
+          "measure": "edge",
+          "id": "f2"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "cos² của góc giữa AG và mặt phẳng (ABFE)"
+          ],
+          "points_a": [
+            "A",
+            "G"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "F",
+            "E"
+          ],
+          "quantity": "angle",
+          "rid": "r1",
+          "id": "f3"
+        }
+      ]
+    },
+    "held18": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "lập phương ABCD.EFGH có cạnh 6"
+          ],
+          "solid": "ABCD.EFGH",
+          "solid_type": "cube",
+          "id": "f1"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "lập phương ABCD.EFGH có cạnh 6"
+          ],
+          "solid": "ABCD.EFGH",
+          "value": "6",
+          "measure": "edge",
+          "id": "f2"
+        },
+        {
+          "kind": "section",
+          "role": "premise",
+          "quotes": [
+            "Mặt phẳng (ACGE) cắt khối lập phương theo tứ giác ACGE"
+          ],
+          "solid": "ABCD.EFGH",
+          "points": [
+            "A",
+            "C",
+            "G",
+            "E"
+          ],
+          "id": "f3"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "diện tích thiết diện đó"
+          ],
+          "solid": "ABCD.EFGH",
+          "points": [
+            "A",
+            "C",
+            "G",
+            "E"
+          ],
+          "quantity": "area",
+          "rid": "r1",
+          "id": "f4"
+        }
+      ]
+    },
+    "held19": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "chóp V.KLMN"
+          ],
+          "solid": "V.KLMN",
+          "solid_type": "pyramid",
+          "id": "f1"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy KLMN là hình chữ nhật"
+          ],
+          "solid": "V.KLMN",
+          "points": [
+            "K",
+            "L",
+            "M",
+            "N"
+          ],
+          "shape": "rectangle",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "KL = 8"
+          ],
+          "points": [
+            "K",
+            "L"
+          ],
+          "value": "8",
+          "measure": "segment",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "LM = 6"
+          ],
+          "points": [
+            "L",
+            "M"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "VK vuông góc (KLMN)"
+          ],
+          "points_a": [
+            "V",
+            "K"
+          ],
+          "points_b": [
+            "K",
+            "L",
+            "M",
+            "N"
+          ],
+          "id": "f5"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "VK = 4"
+          ],
+          "points": [
+            "V",
+            "K"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f6"
+        },
+        {
+          "kind": "point_def",
+          "role": "premise",
+          "quotes": [
+            "I là giao điểm KM và LN"
+          ],
+          "point": "I",
+          "point_kind": "intersect_line_line",
+          "points_a": [
+            "K",
+            "M"
+          ],
+          "points_b": [
+            "L",
+            "N"
+          ],
+          "id": "f7"
+        },
+        {
+          "kind": "projection",
+          "role": "premise",
+          "quotes": [
+            "Dựng J là hình chiếu của I lên VK"
+          ],
+          "rid": "r1",
+          "point": "I",
+          "at": "J",
+          "points": [
+            "V",
+            "K"
+          ],
+          "id": "f8"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "tính VI"
+          ],
+          "points": [
+            "V",
+            "I"
+          ],
+          "quantity": "length",
+          "rid": "r2",
+          "id": "f9"
+        }
+      ]
+    },
+    "held20": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "chóp V.KLMN"
+          ],
+          "solid": "V.KLMN",
+          "solid_type": "pyramid",
+          "id": "f1"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy KLMN là hình chữ nhật"
+          ],
+          "solid": "V.KLMN",
+          "points": [
+            "K",
+            "L",
+            "M",
+            "N"
+          ],
+          "shape": "rectangle",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "KL = 8"
+          ],
+          "points": [
+            "K",
+            "L"
+          ],
+          "value": "8",
+          "measure": "segment",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "LM = 6"
+          ],
+          "points": [
+            "L",
+            "M"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "VK vuông góc (KLMN)"
+          ],
+          "points_a": [
+            "V",
+            "K"
+          ],
+          "points_b": [
+            "K",
+            "L",
+            "M",
+            "N"
+          ],
+          "id": "f5"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "VK = 4"
+          ],
+          "points": [
+            "V",
+            "K"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f6"
+        },
+        {
+          "kind": "point_def",
+          "role": "premise",
+          "quotes": [
+            "I là giao điểm KM và LN"
+          ],
+          "point": "I",
+          "point_kind": "intersect_line_line",
+          "points_a": [
+            "K",
+            "M"
+          ],
+          "points_b": [
+            "L",
+            "N"
+          ],
+          "id": "f7"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính thể tích V.KLMN"
+          ],
+          "solid": "V.KLMN",
+          "quantity": "volume",
+          "rid": "r1",
+          "id": "f8"
+        },
+        {
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "Cho phép người xem xoay mô hình quanh VK"
+          ],
+          "rid": "r2",
+          "reason": "Three explicit obligations; the interactive command is not a numerical angle question.",
+          "id": "f9"
+        },
+        {
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "giải thích I nằm ở đâu trong đáy"
+          ],
+          "rid": "r3",
+          "reason": "Three explicit obligations; the interactive command is not a numerical angle question.",
+          "id": "f10"
+        }
+      ]
+    },
+    "held21": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "chóp V.KLMN"
+          ],
+          "solid": "V.KLMN",
+          "solid_type": "pyramid",
+          "id": "f1"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy KLMN là hình chữ nhật"
+          ],
+          "solid": "V.KLMN",
+          "points": [
+            "K",
+            "L",
+            "M",
+            "N"
+          ],
+          "shape": "rectangle",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "KL = 8"
+          ],
+          "points": [
+            "K",
+            "L"
+          ],
+          "value": "8",
+          "measure": "segment",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "LM = 6"
+          ],
+          "points": [
+            "L",
+            "M"
+          ],
+          "value": "6",
+          "measure": "segment",
+          "id": "f4"
+        },
+        {
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "VK vuông góc (KLMN)"
+          ],
+          "points_a": [
+            "V",
+            "K"
+          ],
+          "points_b": [
+            "K",
+            "L",
+            "M",
+            "N"
+          ],
+          "id": "f5"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "VK = 4"
+          ],
+          "points": [
+            "V",
+            "K"
+          ],
+          "value": "4",
+          "measure": "segment",
+          "id": "f6"
+        },
+        {
+          "kind": "point_def",
+          "role": "premise",
+          "quotes": [
+            "I là giao điểm KM và LN"
+          ],
+          "point": "I",
+          "point_kind": "intersect_line_line",
+          "points_a": [
+            "K",
+            "M"
+          ],
+          "points_b": [
+            "L",
+            "N"
+          ],
+          "id": "f7"
+        },
+        {
+          "kind": "point_def",
+          "role": "condition",
+          "quotes": [
+            "U là giao điểm của đường thẳng VI với mặt phẳng (KLMN)"
+          ],
+          "point": "U",
+          "point_kind": "intersect_line_plane",
+          "points_a": [
+            "V",
+            "I"
+          ],
+          "points_b": [
+            "K",
+            "L",
+            "M",
+            "N"
+          ],
+          "id": "f8"
+        },
+        {
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "hãy dựng U"
+          ],
+          "rid": "r1",
+          "reason": "Conditional intersection definition must keep its role; the requested coincidence is not a premise.",
+          "id": "f9"
+        },
+        {
+          "kind": "unsupported",
+          "role": "prove",
+          "quotes": [
+            "chứng minh U trùng I"
+          ],
+          "rid": "r2",
+          "reason": "Conditional intersection definition must keep its role; the requested coincidence is not a premise.",
+          "id": "f10"
+        }
+      ]
+    },
+    "held22": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "lăng trụ đứng ABC.A′B′C′"
+          ],
+          "solid": "ABC.A′B′C′",
+          "solid_type": "prism",
+          "right": true,
+          "id": "f1"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh 4"
+          ],
+          "solid": "ABC.A′B′C′",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "shape": "equilateral_triangle",
+          "id": "f2"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh 4"
+          ],
+          "solid": "ABC.A′B′C′",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "value": "4",
+          "measure": "base_edge",
+          "id": "f3"
+        },
+        {
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính thể tích lăng trụ"
+          ],
+          "solid": "ABC.A′B′C′",
+          "quantity": "volume",
+          "rid": "r1",
+          "id": "f4"
+        }
+      ]
+    },
+    "held23": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "chóp S.ABC"
+          ],
+          "solid": "S.ABC",
+          "solid_type": "pyramid",
+          "id": "f1"
+        },
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "T.DEF"
+          ],
+          "solid": "T.DEF",
+          "solid_type": "pyramid",
+          "id": "f2"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy là tam giác đều cạnh 3"
+          ],
+          "solid": "S.ABC",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "shape": "equilateral_triangle",
+          "id": "f3"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy là tam giác đều cạnh 3"
+          ],
+          "solid": "S.ABC",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "value": "3",
+          "measure": "base_edge",
+          "id": "f4"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "mỗi chóp đều có chiều cao 4"
+          ],
+          "solid": "S.ABC",
+          "value": "4",
+          "measure": "height",
+          "id": "f5"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy là tam giác đều cạnh 3"
+          ],
+          "solid": "T.DEF",
+          "points": [
+            "D",
+            "E",
+            "F"
+          ],
+          "shape": "equilateral_triangle",
+          "id": "f6"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy là tam giác đều cạnh 3"
+          ],
+          "solid": "T.DEF",
+          "points": [
+            "D",
+            "E",
+            "F"
+          ],
+          "value": "3",
+          "measure": "base_edge",
+          "id": "f7"
+        },
+        {
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "mỗi chóp đều có chiều cao 4"
+          ],
+          "solid": "T.DEF",
+          "value": "4",
+          "measure": "height",
+          "id": "f8"
+        },
+        {
+          "role": "question",
+          "quotes": [
+            "Tính thể tích của chóp đó"
+          ],
+          "rid": "r1",
+          "ambiguous": true,
+          "id": "f9",
+          "kind": "unsupported",
+          "reason": "Source request has no faithful TypedFact representation; no nearby quantity substituted."
+        }
+      ]
+    },
+    "held24": {
+      "facts": [
+        {
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "chóp Z.ABCD"
+          ],
+          "solid": "Z.ABCD",
+          "solid_type": "pyramid",
+          "id": "f1"
+        },
+        {
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy ABCD là hình vuông"
+          ],
+          "solid": "Z.ABCD",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "shape": "square",
+          "id": "f2"
+        },
+        {
+          "kind": "unsupported",
+          "role": "premise",
+          "quotes": [
+            "đường cong c là giao tuyến của mặt cầu tâm Z với mặt phẳng (ABCD)"
+          ],
+          "reason": "Sphere-plane curved intersection, radius absent",
+          "id": "f3"
+        },
+        {
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "Hãy dựng c"
+          ],
+          "rid": "r1",
+          "reason": "Preserve both curved-intersection obligations; no sphere radius is supplied and no polygonal approximation is permitted.",
+          "id": "f4"
+        },
+        {
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "tính độ dài c"
+          ],
+          "rid": "r2",
+          "reason": "Preserve both curved-intersection obligations; no sphere radius is supplied and no polygonal approximation is permitted.",
+          "id": "f5"
+        }
+      ]
+    }
+  }
+}
