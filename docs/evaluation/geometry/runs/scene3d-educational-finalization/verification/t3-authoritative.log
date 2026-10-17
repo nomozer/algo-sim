@@ -1,0 +1,891 @@
+=== CLEAN DETACHED WORKTREE T3 AT 8aabb4b976c3dfc23149c7f90b841e74aa297a57 ===
+PRE_STATUS: 
+PRE_CANDIDATE: Candidate khß╗¢p bß║ún ─æ├ú ─æ├│ng b─âng (m├ú sß║ún phß║⌐m: 110 file, 57c7f5dbedaa7b21ΓÇª).
+--- FULL GATE OUTPUT ---
+PYTHON main_worktree_venv 3.12 D:\Documents\projects\algo-sim\backend\.venv\Scripts\python.exe
+T3 FULL PRODUCT GATE
+
+........................................................................ [  0%]
+........................................................................ [  1%]
+........................................................................ [  2%]
+........................................................................ [  2%]
+........................................................................ [  3%]
+........................................................................ [  4%]
+........................................................................ [  4%]
+........................................................................ [  5%]
+........................................................................ [  6%]
+........................................................................ [  7%]
+........................................................................ [  7%]
+........................................................................ [  8%]
+........................................................................ [  9%]
+........................................................................ [  9%]
+........................................................................ [ 10%]
+........................................................................ [ 11%]
+........................................................................ [ 11%]
+........................................................................ [ 12%]
+........................................................................ [ 13%]
+........................................................................ [ 14%]
+........................................................................ [ 14%]
+........................................................................ [ 15%]
+........................................................................ [ 16%]
+........................................................................ [ 16%]
+........................................................................ [ 17%]
+........................................................................ [ 18%]
+..................xx.................................................... [ 18%]
+........................................................................ [ 19%]
+........................................................................ [ 20%]
+........................................................................ [ 21%]
+........................................................................ [ 21%]
+........................................................................ [ 22%]
+........................................................................ [ 23%]
+........................................................................ [ 23%]
+........................................................................ [ 24%]
+........................................................................ [ 25%]
+........................................................................ [ 25%]
+........................................................................ [ 26%]
+........................................................................ [ 27%]
+........................................................................ [ 28%]
+........................................................................ [ 28%]
+.............xxxx....................................................... [ 29%]
+........................................................................ [ 30%]
+........................................................................ [ 30%]
+........................................................................ [ 31%]
+......................................................................x. [ 32%]
+........................................................................ [ 32%]
+........................................................................ [ 33%]
+........................................................................ [ 34%]
+........................................................................ [ 35%]
+........................................................................ [ 35%]
+........................................................................ [ 36%]
+........................................................................ [ 37%]
+........................................................................ [ 37%]
+........................................................................ [ 38%]
+........................................................................ [ 39%]
+........................................................................ [ 39%]
+........................................................................ [ 40%]
+....................................................x................... [ 41%]
+........................................................................ [ 42%]
+........................................................................ [ 42%]
+........................................................................ [ 43%]
+........................................................................ [ 44%]
+........................................................................ [ 44%]
+........................................................................ [ 45%]
+........................................................................ [ 46%]
+........................................................................ [ 46%]
+........................................................................ [ 47%]
+........................................................................ [ 48%]
+........................................................................ [ 49%]
+........................................................................ [ 49%]
+........................................................................ [ 50%]
+........................................................................ [ 51%]
+........................................................................ [ 51%]
+........................................................................ [ 52%]
+........................................................................ [ 53%]
+........................................................................ [ 53%]
+........................................................................ [ 54%]
+........................................................................ [ 55%]
+........................................................................ [ 56%]
+........................................................................ [ 56%]
+........................................................................ [ 57%]
+........................................................................ [ 58%]
+........................................................................ [ 58%]
+........................................................................ [ 59%]
+........................................................................ [ 60%]
+........................................................................ [ 60%]
+........................................................................ [ 61%]
+........................................................................ [ 62%]
+........................................................................ [ 63%]
+........................................................................ [ 63%]
+........................................................................ [ 64%]
+........................................................................ [ 65%]
+........................................................................ [ 65%]
+........................................................................ [ 66%]
+........................................................................ [ 67%]
+........................................................................ [ 67%]
+........................................................................ [ 68%]
+............x........................................................... [ 69%]
+........................................................................ [ 70%]
+........................................................................ [ 70%]
+........................................................................ [ 71%]
+........................................................................ [ 72%]
+........................................................................ [ 72%]
+........................................................................ [ 73%]
+........................................................................ [ 74%]
+........................................................................ [ 74%]
+........................................................................ [ 75%]
+........................................................................ [ 76%]
+........................................................................ [ 77%]
+........................................................................ [ 77%]
+........................................................................ [ 78%]
+........................................................................ [ 79%]
+........................................................................ [ 79%]
+........................................................................ [ 80%]
+........................................................................ [ 81%]
+........................................................................ [ 82%]
+........................................................................ [ 82%]
+........................................................................ [ 83%]
+........................................................................ [ 84%]
+........................................................................ [ 84%]
+........................................................................ [ 85%]
+........................................................................ [ 86%]
+........................................................................ [ 86%]
+........................................................................ [ 87%]
+........................................................................ [ 88%]
+...........s............................................................ [ 89%]
+........................................................................ [ 89%]
+........................................................................ [ 90%]
+........................................................................ [ 91%]
+........................................................................ [ 91%]
+........................................................................ [ 92%]
+........................................................................ [ 93%]
+........................................................................ [ 93%]
+........................................................................ [ 94%]
+........................................................................ [ 95%]
+........................................................................ [ 96%]
+........................................................................ [ 96%]
+........................................................................ [ 97%]
+........................................................................ [ 98%]
+........................................................................ [ 98%]
+........................................................................ [ 99%]
+.................................................                        [100%]
+============================== warnings summary ===============================
+..\..\..\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+10263 passed, 1 skipped, 2 deselected, 9 xfailed, 1 warning in 463.85s (0:07:43)
+
+  Γ£ö pytest (to├án bß╗Ö backend) ΓÇö 466.9s
+
+[1m[30m[46m RUN [49m[39m[22m [36mv4.1.10 [39m[90mD:/tmp/s3d-edu-t3/frontend[39m
+
+ [32mΓ£ô[39m src/simulations/domains/geometry/semantic-dumb-frontend.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 51[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-annotations.test.ts [2m([22m[2m29 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2m┬º0.1-1 ┬╖ kh├┤ng c├│ card Kß║┐t quß║ú d╞░ß╗¢i h├¼nh[2m > [22m[2mtr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi n├áo ΓÇö ─æ├íp sß╗æ ─æß╗ìc ß╗ƒ ┬½─Éß║íi l╞░ß╗úng┬╗ v├á ├┤ soi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2mc├óy ph├ón r├ú: dß╗» liß╗çu ─æß╗º, nh╞░ng gß╗ìi ra mß╗¢i hiß╗çn[2m > [22m[2mmß║╖c ─æß╗ïnh KH├öNG dß╗▒ng c├óy ΓÇö canvas kh├┤ng bß╗ï bß║úng chiß║┐m chß╗ù
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2mc├óy ph├ón r├ú: dß╗» liß╗çu ─æß╗º, nh╞░ng gß╗ìi ra mß╗¢i hiß╗çn[2m > [22m[2mmß╗Öt c├┤ng tß║»c ┬½Hiß╗çn tß║Ñt cß║ú┬╗, tß║»t mß║╖c ─æß╗ïnh; kh├┤ng c├▓n Sß╗æ ─æo/Kß║┐t quß║ú
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2m┬º0.1-3/4/5 ┬╖ ┬½C├íc b╞░ß╗¢c dß╗▒ng┬╗[2m > [22m[2mn├║t mß╗ƒ nß║▒m trong thanh ─æiß╗üu khiß╗ân; ─æ├│ng ΓçÆ kh├┤ng c├│ danh s├ích; mß╗ƒ ΓçÆ mß╗Öt n├║t mß╗ùi b╞░ß╗¢c, b╞░ß╗¢c hiß╗çn tß║íi ─æ├ính dß║Ñu
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx [2m([22m[2m32 tests[22m[2m)[22m[32m 166[2mms[22m[39m
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2m├┤ soi[2m > [22m[2mbß╗ü mß║╖t hß╗ìc sinh KH├öNG lß╗Ö ─æß╗ïnh danh kß╗╣ thuß║¡t cß╗ºa hß╗ç
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2m┬º0.1-8 ┬╖ bß╗¢t d├▓ng m├┤ tß║ú lß║╖p[2m > [22m[2mkh├┤ng c├▓n dß║úi ┬½─Éang dß╗▒ng / Dß╗▒a tr├¬n┬╗ ΓÇö d├▓ng thuyß║┐t minh v├á ├┤ soi ─æ├ú n├│i ─æiß╗üu ß║Ñy
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi[2m > [22m[2mtriangular_pyramid: thanh b╞░ß╗¢c cß╗ºa tr├¼nh ph├ít ─æß║┐m b╞░ß╗¢c Dß╗░NG, kh├┤ng ─æß║┐m b╞░ß╗¢c t├¡nh
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2mthao t├íc xem l├á ph├⌐p thuß║ºn tr├¬n trß║íng th├íi nh├¼n[2m > [22m[2mrender KH├öNG chß║ím cß║únh gß╗æc
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2m┬º16 ┬╖ x╞░ß╗ƒng: canvas l├á m├án h├¼nh, chß╗» gß╗ìi ra khi cß║ºn[2m > [22m[2mMß║╢C ─Éß╗èNH gß║ºn nh╞░ kh├┤ng c├│ chß╗»: kh├┤ng ti├¬u ─æß╗ü, kh├┤ng ─æoß║ín dß║½n
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2m┬º16 ┬╖ x╞░ß╗ƒng: canvas l├á m├án h├¼nh, chß╗» gß╗ìi ra khi cß║ºn[2m > [22m[2mKH├öNG ph╞íi metadata kß╗╣ thuß║¡t ß╗ƒ m├án mß║╖c ─æß╗ïnh
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2mbß║úng nß╗òi ┬½C├íc b╞░ß╗¢c dß╗▒ng┬╗[2m > [22m[2mkh├┤ng c├▓n cß╗Öt l╞░ß╗¢i: mß╗ƒ bß║úng kh├┤ng ─æß╗òi l╞░ß╗¢i/k├¡ch th╞░ß╗¢c cß╗ºa tr├¼nh ph├ít
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi[2m > [22m[2mtriangular_prism: thanh b╞░ß╗¢c cß╗ºa tr├¼nh ph├ít ─æß║┐m b╞░ß╗¢c Dß╗░NG, kh├┤ng ─æß║┐m b╞░ß╗¢c t├¡nh
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2m┬º16 ┬╖ x╞░ß╗ƒng: canvas l├á m├án h├¼nh, chß╗» gß╗ìi ra khi cß║ºn[2m > [22m[2mcanvas Tß╗ÆN Tß║áI, v├á ng─ân k├⌐o KH├öNG b├│p n├│ lß║íi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2mbß║úng nß╗òi ┬½C├íc b╞░ß╗¢c dß╗▒ng┬╗[2m > [22m[2mn├║t ß╗ƒ ph├¡a phß║úi thanh ─æiß╗üu khiß╗ân; aria-controls chß╗ë trß╗Å tß╗¢i bß║úng khi bß║úng c├│ mß║╖t
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2mbß║úng nß╗òi ┬½C├íc b╞░ß╗¢c dß╗▒ng┬╗[2m > [22m[2mbß║úng c├│ ─æ├│ng, vß╗ü vß╗ï tr├¡ mß║╖c ─æß╗ïnh, thu gß╗ìn v├á ti├¬u ─æß╗ü nhß║¡n b├án ph├¡m
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2m┬º16 ┬╖ x╞░ß╗ƒng: canvas l├á m├án h├¼nh, chß╗» gß╗ìi ra khi cß║ºn[2m > [22m[2m├┤ soi l├á NGß╗« Cß║óNH: kh├┤ng chß╗ìn g├¼ th├¼ kh├┤ng c├│ n├║t thao t├íc n├áo
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m > [22m[2mt├¡ch hß╗úp ┬╖ trß║íng th├íi kh├┤ng ─æ╞░ß╗úc rß╗¢t sang b├ái mß╗¢i[2m > [22m[2md├▓ng chß╗» b╞░ß╗¢c ─æ╞░ß╗úc Kß║╕P ΓÇö kh├┤ng bao giß╗¥ in mß╗Öt b╞░ß╗¢c kh├┤ng tß╗ôn tß║íi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi[2m > [22m[2mrectangular_pyramid: thanh b╞░ß╗¢c cß╗ºa tr├¼nh ph├ít ─æß║┐m b╞░ß╗¢c Dß╗░NG, kh├┤ng ─æß║┐m b╞░ß╗¢c t├¡nh
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+ [32mΓ£ô[39m src/simulations/domains/geometry/Scene3DExplorer.test.tsx [2m([22m[2m34 tests[22m[2m)[22m[32m 179[2mms[22m[39m
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-panels.test.tsx[2m > [22m[2mmß╗ìi bß║úng th├┤ng tin ─æi qua Mß╗ÿT c╞í chß║┐[2m > [22m[2mmß║╖c ─æß╗ïnh kh├┤ng bß║úng n├áo mß╗ƒ
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2mmß║╖t phß║│ng phß╗Ñ chß╗ë ─æß╗â ─æo kh├┤ng mß╗ƒ b╞░ß╗¢c dß╗▒ng[2m > [22m[2mdanh s├ích b╞░ß╗¢c kh├┤ng c├│ b╞░ß╗¢c ri├¬ng cho mß║╖t phß║│ng ß║Ñy; bß║¡t ┬½H├¼nh phß╗Ñ┬╗ th├¼ n├│ hiß╗çn ß╗ƒ khung cuß╗æi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi[2m > [22m[2mcuboid: thanh b╞░ß╗¢c cß╗ºa tr├¼nh ph├ít ─æß║┐m b╞░ß╗¢c Dß╗░NG, kh├┤ng ─æß║┐m b╞░ß╗¢c t├¡nh
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi[2m > [22m[2mcube: thanh b╞░ß╗¢c cß╗ºa tr├¼nh ph├ít ─æß║┐m b╞░ß╗¢c Dß╗░NG, kh├┤ng ─æß║┐m b╞░ß╗¢c t├¡nh
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2mmß║╖t phß║│ng phß╗Ñ chß╗ë ─æß╗â ─æo kh├┤ng mß╗ƒ b╞░ß╗¢c dß╗▒ng[2m > [22m[2mmß║╖t phß║│ng KH├öNG phß║úi h├¼nh phß╗Ñ chß╗ë ─æß╗â ─æo vß║½n mß╗ƒ b╞░ß╗¢c cß╗ºa n├│
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-panels.test.tsx[2m > [22m[2mb╞░ß╗¢c dß╗▒ng trong thanh ─æiß╗üu khiß╗ân[2m > [22m[2m┬½B╞░ß╗¢c n/N┬╗ nß║▒m trong thanh ─æiß╗üu khiß╗ân; x╞░ß╗ƒng kh├┤ng c├▓n d├▓ng lß╗¥i kß╗â d├ái d╞░ß╗¢i thanh
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m > [22m[2mlß╗¥i kß╗â cß╗ºa b╞░ß╗¢c ─æang xem kh├┤ng lß║╖p ti├¬u ─æß╗ü[2m > [22m[2mb╞░ß╗¢c dß╗» kiß╗çn (ti├¬u ─æß╗ü CH├ìNH L├Ç lß╗¥i kß╗â) kh├┤ng in lß╗¥i kß╗â lß║ºn hai; b╞░ß╗¢c dß╗▒ng c├│ lß╗¥i kß╗â kh├íc ti├¬u ─æß╗ü th├¼ giß╗»
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-steps-panel.test.tsx [2m([22m[2m20 tests[22m[2m)[22m[32m 288[2mms[22m[39m
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-panels.test.tsx[2m > [22m[2mb╞░ß╗¢c dß╗▒ng trong thanh ─æiß╗üu khiß╗ân[2m > [22m[2mm├┤ tß║ú ─æß║ºy ─æß╗º cß╗ºa b╞░ß╗¢c ─æang xem ß╗ƒ bß║úng ┬½C├íc b╞░ß╗¢c dß╗▒ng┬╗, ngay d╞░ß╗¢i mß╗Ñc cß╗ºa n├│
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-panels.test.tsx [2m([22m[2m26 tests[22m[2m)[22m[32m 239[2mms[22m[39m
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi[2m > [22m[2mcross_section: thanh b╞░ß╗¢c cß╗ºa tr├¼nh ph├ít ─æß║┐m b╞░ß╗¢c Dß╗░NG, kh├┤ng ─æß║┐m b╞░ß╗¢c t├¡nh
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi[2m > [22m[2mtriangular_pyramid: d├▓ng B╞░ß╗¢c ß╗ƒ ─æ├íy x╞░ß╗ƒng n├│i sß╗æ b╞░ß╗¢c Dß╗░NG
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/rectangular-pyramid-ui-integration.test.tsx[2m > [22m[2mRECT_PYRAMID_P01 UI End-to-End Integration[2m > [22m[2mPositive Case A: ─É├íy chß╗» nhß║¡t (V=24)[2m > [22m[2mScene3DExplorer renderToString hiß╗ân thß╗ï ─æß║ºy ─æß╗º 5 nh├ún A-D, S
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+ [32mΓ£ô[39m src/simulations/domains/geometry/rectangular-pyramid-ui-integration.test.tsx [2m([22m[2m13 tests[22m[2m)[22m[32m 178[2mms[22m[39m
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mC5/D ┬╖ h├áng tr├¬n: quay lß║íi ┬╖ t├¬n b├ái ┬╖ c├┤ng cß╗Ñ ─æ├ú nh├│m[2m > [22m[2mn├║t quay lß║íi c├│ chß╗» trang ─æ├¡ch v├á t├¬n b├ái l├á ti├¬u ─æß╗ü
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mC5/D ┬╖ h├áng tr├¬n: quay lß║íi ┬╖ t├¬n b├ái ┬╖ c├┤ng cß╗Ñ ─æ├ú nh├│m[2m > [22m[2m┬½─Éß╗ü b├ái┬╗ l├á n├║t ch├¡nh mß╗ƒ bß║úng ─æß╗ü; ba nh├│m l├á n├║t menu c├│ chß╗»
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mC5/D ┬╖ h├áng tr├¬n: quay lß║íi ┬╖ t├¬n b├ái ┬╖ c├┤ng cß╗Ñ ─æ├ú nh├│m[2m > [22m[2mchip phß║│ng c┼⌐ kh├┤ng c├▓n tr├¬n thanh: Chi tiß║┐t, L╞░ß╗¢i, H├¼nh phß╗Ñ, Hiß╗çn tß║Ñt cß║ú, Th├ánh phß║ºn, ─Éß║íi l╞░ß╗úng nß║▒m trong menu
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi[2m > [22m[2mtriangular_prism: d├▓ng B╞░ß╗¢c ß╗ƒ ─æ├íy x╞░ß╗ƒng n├│i sß╗æ b╞░ß╗¢c Dß╗░NG
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mC5/D ┬╖ h├áng tr├¬n: quay lß║íi ┬╖ t├¬n b├ái ┬╖ c├┤ng cß╗Ñ ─æ├ú nh├│m[2m > [22m[2m┬½T├ích khß╗æi┬╗ chß╗ë dß╗▒ng khi cß║únh c├│ mß║╖t; ┬½Xem lß║íi to├án h├¼nh┬╗ lu├┤n c├│
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mE ┬╖ kh├┤ng c├▓n thß║╗ lß╗¥i giß║úi lß║╖p d╞░ß╗¢i m├┤ phß╗Ång[2m > [22m[2mtriangular_pyramid: tr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi ß╗ƒ b╞░ß╗¢c cuß╗æi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi[2m > [22m[2mrectangular_pyramid: d├▓ng B╞░ß╗¢c ß╗ƒ ─æ├íy x╞░ß╗ƒng n├│i sß╗æ b╞░ß╗¢c Dß╗░NG
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mE ┬╖ kh├┤ng c├▓n thß║╗ lß╗¥i giß║úi lß║╖p d╞░ß╗¢i m├┤ phß╗Ång[2m > [22m[2mtriangular_prism: tr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi ß╗ƒ b╞░ß╗¢c cuß╗æi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mE ┬╖ kh├┤ng c├▓n thß║╗ lß╗¥i giß║úi lß║╖p d╞░ß╗¢i m├┤ phß╗Ång[2m > [22m[2mrectangular_pyramid: tr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi ß╗ƒ b╞░ß╗¢c cuß╗æi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi[2m > [22m[2mcuboid: d├▓ng B╞░ß╗¢c ß╗ƒ ─æ├íy x╞░ß╗ƒng n├│i sß╗æ b╞░ß╗¢c Dß╗░NG
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh[2m > [22m[2mp1_chop_thiet_dien_khoang_cach ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi[2m > [22m[2mcube: d├▓ng B╞░ß╗¢c ß╗ƒ ─æ├íy x╞░ß╗ƒng n├│i sß╗æ b╞░ß╗¢c Dß╗░NG
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mE ┬╖ kh├┤ng c├▓n thß║╗ lß╗¥i giß║úi lß║╖p d╞░ß╗¢i m├┤ phß╗Ång[2m > [22m[2mcuboid: tr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi ß╗ƒ b╞░ß╗¢c cuß╗æi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mtua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi[2m > [22m[2mcross_section: d├▓ng B╞░ß╗¢c ß╗ƒ ─æ├íy x╞░ß╗ƒng n├│i sß╗æ b╞░ß╗¢c Dß╗░NG
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mE ┬╖ kh├┤ng c├▓n thß║╗ lß╗¥i giß║úi lß║╖p d╞░ß╗¢i m├┤ phß╗Ång[2m > [22m[2mcube: tr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi ß╗ƒ b╞░ß╗¢c cuß╗æi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m > [22m[2mlß╗¢p lß╗¥i giß║úi giß╗» c├┤ng thß╗⌐c v├á nguß╗ôn[2m > [22m[2mkh├┤ng c├▓n bß║úng lß╗¥i giß║úi d╞░ß╗¢i thanh b╞░ß╗¢c ΓÇö ─æ├íp sß╗æ Mß╗ÿT mß╗Ñc ß╗ƒ ┬½─Éß║íi l╞░ß╗úng┬╗, c├┤ng thß╗⌐c ß╗ƒ ├┤ soi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mE ┬╖ kh├┤ng c├▓n thß║╗ lß╗¥i giß║úi lß║╖p d╞░ß╗¢i m├┤ phß╗Ång[2m > [22m[2mcross_section: tr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi ß╗ƒ b╞░ß╗¢c cuß╗æi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx [2m([22m[2m41 tests[22m[2m)[22m[33m 583[2mms[22m[39m
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh[2m > [22m[2mp2_chop_day_ngu_giac_lom ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh[2m > [22m[2mp3_mat_cau_va_thiet_dien_tron ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh[2m > [22m[2mp4_hinh_tru_the_tich_va_xung_quanh ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh[2m > [22m[2mp5_hinh_non_the_tich_va_xung_quanh ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh[2m > [22m[2mp6_thiet_dien_elip_cua_hinh_tru ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m > [22m[2mraw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh[2m > [22m[2mp7_thiet_dien_elip_cua_hinh_non ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+ [32mΓ£ô[39m src/simulations/domains/geometry/product-envelope-rendering.test.tsx [2m([22m[2m76 tests[22m[2m)[22m[33m 345[2mms[22m[39m
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mdß║úi lß╗¢p gß╗ìn tr├¬n m├án chß║¡t[2m > [22m[2mkh├┤ng c├│ dß║úi lß╗¢p ΓçÆ kh├┤ng chip, h├áng tr├¬n y nh╞░ tr╞░ß╗¢c (m├┤ phß╗Ång tß╗▒ hß╗ìc kh├┤ng ─æß╗òi)
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mdß║úi lß╗¢p gß╗ìn tr├¬n m├án chß║¡t[2m > [22m[2mc├│ dß║úi lß╗¢p ΓçÆ chip disclosure (`aria-expanded`/`aria-controls`) mang trß║íng th├íi, dß║úi ─æß║ºy ─æß╗º trong v├╣ng cß╗ºa n├│
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m > [22m[2mdß║úi lß╗¢p gß╗ìn tr├¬n m├án chß║¡t[2m > [22m[2mn├║t quay lß║íi: t├¬n gß╗ìi giß╗» ß╗ƒ `aria-label` khi chß╗» ß║⌐n (chip lß╗¢p, m├án hß║╣p)
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-focus-mode.test.tsx [2m([22m[2m32 tests[22m[2m)[22m[33m 515[2mms[22m[39m
+ [32mΓ£ô[39m src/evidence-provenance.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 1506[2mms[22m[39m
+     [33m[2mΓ£ô[22m[39m ph├ín quyß║┐t KH├öNG c├▓n ─æß╗ìc `head` l├ám kho├í [33m 384[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-camera.test.ts [2m([22m[2m30 tests[22m[2m)[22m[32m 210[2mms[22m[39m
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) t├┤n trß╗ìng giß║úm chuyß╗ân ─æß╗Öng ß╗ƒ tß║ºng JS[2m > [22m[2mbß║¡t giß║úm chuyß╗ân ─æß╗Öng ΓçÆ KH├öNG c├│ n├║t Ph├ít, vß║½n ─æi ─æ╞░ß╗úc tß╗½ng b╞░ß╗¢c
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/prism-ui-integration.test.tsx[2m > [22m[2mPRISM_P01 UI End-to-End Integration[2m > [22m[2mScene3DExplorer renderToString ho├án tß║Ñt vß╗¢i 6 nh├ún ─æiß╗âm A-F v├á 6 b╞░ß╗¢c dß╗▒ng
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vß╗Å ─æiß╗üu khiß╗ân[2m > [22m[2mc├│ ─æß╗º prev ┬╖ play ┬╖ next ┬╖ chß╗ìn b╞░ß╗¢c
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vß╗Å ─æiß╗üu khiß╗ân[2m > [22m[2mb╞░ß╗¢c cuß╗æi ΓçÆ n├║t Ph├ít th├ánh Xem lß║íi, bß║Ñm ─æ╞░ß╗úc (w10)
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-occlusion-gates.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 171[2mms[22m[39m
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vß╗Å ─æiß╗üu khiß╗ân[2m > [22m[2mb╞░ß╗¢c ─æß║ºu ΓçÆ n├║t l├╣i bß╗ï v├┤ hiß╗çu
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vß╗Å ─æiß╗üu khiß╗ân[2m > [22m[2m┬º0.1-8 ┬╖ kh├┤ng c├▓n dß║úi ┬½─Éang dß╗▒ng / Dß╗▒a tr├¬n┬╗ d╞░ß╗¢i thanh b╞░ß╗¢c
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vß╗Å ─æiß╗üu khiß╗ân[2m > [22m[2mb╞░ß╗¢c 0 n├│i r├╡ ─æ├óy l├á dß╗» kiß╗çn ─æß╗ü cho, kh├┤ng phß║úi chß╗ù trß╗æng
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+ [32mΓ£ô[39m src/simulations/domains/geometry/prism-ui-integration.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[32m 120[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-auxiliary.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 73[2mms[22m[39m
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vß╗Å ─æiß╗üu khiß╗ân[2m > [22m[2mtr├¼nh ph├ít (cß║ú panel c├íc b╞░ß╗¢c ─æang mß╗ƒ) kh├┤ng in t├¬n biß║┐n IR
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vß╗Å ─æiß╗üu khiß╗ân[2m > [22m[2mb╞░ß╗¢c dß╗▒ng NH├ôM cß║ính n├│i t├¬n h├ánh ─æß╗Öng, kh├┤ng tß╗▒ nhß║¡n l├á dß╗» kiß╗çn ─æß╗ü cho
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) vß╗Å ─æiß╗üu khiß╗ân[2m > [22m[2mmß╗ìi ─æiß╗üu khiß╗ân ─æß╗üu c├│ nh├ún cho tr├¼nh ─æß╗ìc m├án h├¼nh
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d.test.tsx [2m([22m[2m55 tests[22m[2m)[22m[32m 146[2mms[22m[39m
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-playback.test.tsx[2m > [22m[2m(5E) playback chß╗ë ─æß╗òi Mß╗ÿT Sß╗É NGUY├èN[2m > [22m[2m`scene` ─æi v├áo v├á ─æi ra NGUY├èN Vß║╕N c├╣ng tham chiß║┐u
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+System.Management.Automation.RemoteException
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-playback.test.tsx [2m([22m[2m26 tests[22m[2m)[22m[32m 132[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-section.test.ts [2m([22m[2m40 tests[22m[2m)[22m[32m 135[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/geometry-library-expansion.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 102[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-sub-edge.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 58[2mms[22m[39m
+ [32mΓ£ô[39m src/test-tiers.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 2466[2mms[22m[39m
+     [33m[2mΓ£ô[22m[39m KH├öNG BAO GIß╗£ c├│ tß║¡p chß╗ìn rß╗ùng cho thay ─æß╗òi m├ú sß║ún phß║⌐m [33m 819[2mms[22m[39m
+ [32mΓ£ô[39m src/styles/tokens.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 45[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-causal-colors.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[32m 63[2mms[22m[39m
+ [32mΓ£ô[39m src/components/ui-hygiene.test.ts [2m([22m[2m19 tests[22m[2m)[22m[32m 44[2mms[22m[39m
+ [32mΓ£ô[39m src/components/refusal-contract.test.tsx [2m([22m[2m26 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32mΓ£ô[39m src/code-index-sync.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32mΓ£ô[39m src/styles/transition-semantics.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/point-placement.test.ts [2m([22m[2m24 tests[22m[2m)[22m[32m 51[2mms[22m[39m
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-page.test.tsx[2m > [22m[2mx╞░ß╗ƒng ΓÇö hß╗úp ─æß╗ông, kh├┤ng phß║úi b├ái ─æß╗ìc[2m > [22m[2mtß╗▒ c├│ nh├ún, KH├öNG mß╗ƒ ─æß║ºu bß║▒ng mß╗Öt khß╗æi v─ân bß║ún
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-page.test.tsx[2m > [22m[2mx╞░ß╗ƒng ΓÇö hß╗úp ─æß╗ông, kh├┤ng phß║úi b├ái ─æß╗ìc[2m > [22m[2mdß╗▒ng lu├┤n tr├¼nh ph├ít b├¬n trong
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-page.test.tsx[2m > [22m[2mx╞░ß╗ƒng ΓÇö hß╗úp ─æß╗ông, kh├┤ng phß║úi b├ái ─æß╗ìc[2m > [22m[2mcanvas ─æß╗⌐ng TR╞»ß╗ÜC mß╗ìi bß║úng chß╗» trong thß╗⌐ tß╗▒ ─æß╗ìc
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+[90mstderr[2m | src/simulations/domains/geometry/scene3d-page.test.tsx[2m > [22m[2mx╞░ß╗ƒng ΓÇö hß╗úp ─æß╗ông, kh├┤ng phß║úi b├ái ─æß╗ìc[2m > [22m[2m─æß╗ü b├ái KH├öNG ─æß╗ò ra m├án h├¼nh, chß╗ë c├│ n├║t gß╗ìi
+[22m[39mWarning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/tmp/s3d-edu-t3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:172:10)
+System.Management.Automation.RemoteException
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-page.test.tsx [2m([22m[2m19 tests[22m[2m)[22m[32m 60[2mms[22m[39m
+ [32mΓ£ô[39m src/llm/extract-image.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 45[2mms[22m[39m
+ [32mΓ£ô[39m src/components/control-layout.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32mΓ£ô[39m src/components/ux-shell.test.tsx [2m([22m[2m22 tests[22m[2m)[22m[32m 86[2mms[22m[39m
+ [32mΓ£ô[39m src/components/live-classroom.test.tsx [2m([22m[2m24 tests[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32mΓ£ô[39m src/components/error-boundary.test.tsx [2m([22m[2m13 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-label-formation.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 25[2mms[22m[39m
+ [32mΓ£ô[39m src/components/transport-policy.test.tsx [2m([22m[2m12 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-presentation.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 27[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/interaction-state.test.ts [2m([22m[2m43 tests[22m[2m)[22m[32m 33[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-subentities.test.ts [2m([22m[2m33 tests[22m[2m)[22m[32m 34[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-zup-lifecycle.test.tsx [2m([22m[2m9 tests[22m[2m)[22m[32m 157[2mms[22m[39m
+ [32mΓ£ô[39m src/styles/class-coverage.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32mΓ£ô[39m src/components/photo-problem-panel.test.tsx [2m([22m[2m13 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32mΓ£ô[39m src/state/history.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32mΓ£ô[39m src/state/view-history.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/no-verdict.test.ts [2m([22m[2m8 tests[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-learner-formation.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32mΓ£ô[39m src/components/header-identity.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/exact-number.test.ts [2m([22m[2m19 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32mΓ£ô[39m src/state/workspace-lifecycle.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32mΓ£ô[39m src/components/photo-problem-flow.test.ts [2m([22m[2m24 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/semantic/semantic.test.ts [2m([22m[2m24 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/polygon-triangulate.test.ts [2m([22m[2m15 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-causal-selection.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32mΓ£ô[39m src/state/classroom-sync.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32mΓ£ô[39m src/components/learner-error.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32mΓ£ô[39m src/components/home-work-strip.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/registry.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32mΓ£ô[39m src/components/canvas-first-shell.test.tsx [2m([22m[2m7 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32mΓ£ô[39m src/state/store.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-roles.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32mΓ£ô[39m src/llm/input.test.ts [2m([22m[2m10 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/scene3d-chart.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32mΓ£ô[39m src/llm/offline-guard.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32mΓ£ô[39m src/components/assignment-open.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32mΓ£ô[39m src/styles/scrollbar-ownership.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32mΓ£ô[39m src/public-assets-hygiene.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32mΓ£ô[39m src/rules-hygiene.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32mΓ£ô[39m src/simulations/domains/geometry/pick-target.test.ts [2m([22m[2m18 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m68 passed[39m[22m[90m (68)[39m
+[2m      Tests [22m [1m[32m1077 passed[39m[22m[90m (1077)[39m
+[2m   Start at [22m 15:45:50
+[2m   Duration [22m 6.28s[2m (transform 11.28s, setup 2.48s, import 20.76s, tests 9.01s, environment 12ms)[22m
+
+
+  Γ£ö vitest (to├án bß╗Ö frontend) ΓÇö 10.6s
+
+> algo-sim-frontend@0.1.0 build
+> tsc -b && vite build
+
+[36mvite v6.4.3 [32mbuilding for production...[36m[39m
+transforming...
+[32mΓ£ô[39m 94 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                 [39m[1m[2m  0.60 kB[22m[1m[22m[2m Γöé gzip:   0.42 kB[22m
+[2mdist/[22m[35massets/index-BYkQ5tVJ.css  [39m[1m[2m 55.95 kB[22m[1m[22m[2m Γöé gzip:  10.15 kB[22m
+[2mdist/[22m[36massets/index-N2OwWDYg.js   [39m[1m[33m979.68 kB[39m[22m[2m Γöé gzip: 260.00 kB[22m
+[33m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+[32mΓ£ô built in 2.96s[39m
+
+  Γ£ö typecheck + build production ΓÇö 10.4s
+Γ£ö n1_thoi_dinh_thu_tu                [PASS   ] dß╗½ng=ΓÇö  b╞░ß╗¢c=6  cß║únh=8
+    dß╗▒ng ─æß╗ënh thß╗⌐ t╞░ tß╗½ vect╞í ┬╖ ─æo tß╗¢i ─æ╞░ß╗¥ng ┬╖ ─æ├íp sß╗æ v├┤ tß╗ë ΓêÜ3
+    loß║íi: line3,point3,quantity,vector3 ┬╖ producer 5/8 ┬╖ depends 5/8 ┬╖ sß╗▒ kiß╗çn 6
+Γ£ö n2_lang_tru_xien_hai_vecto         [PASS   ] dß╗½ng=ΓÇö  b╞░ß╗¢c=7  cß║únh=10
+    l─âng trß╗Ñ XI├èN ┬╖ hai vect╞í dß║½n xuß║Ñt ┬╖ trung ─æiß╗âm ┬╖ 3ΓêÜ3
+    loß║íi: line3,point3,quantity,vector3 ┬╖ producer 6/10 ┬╖ depends 6/10 ┬╖ sß╗▒ kiß╗çn 7
+Γ£ö t3_hop_tinh_tien_day_chuyen        [PASS   ] dß╗½ng=ΓÇö  b╞░ß╗¢c=10  cß║únh=13
+    d├óy chuyß╗ün tß╗ïnh tiß║┐n 4 ─æß╗ënh ┬╖ chuß╗ùi s├óu ┬╖ 3ΓêÜ89/5
+    loß║íi: line3,point3,quantity,vector3 ┬╖ producer 9/13 ┬╖ depends 9/13 ┬╖ sß╗▒ kiß╗çn 10
+Γ£ö t4_mat_xich_trong_chuoi_sau        [PASS   ] dß╗½ng=ΓÇö  b╞░ß╗¢c=9  cß║únh=12
+    h├¼nh chiß║┐u trong chuß╗ùi phß╗Ñ thuß╗Öc ┬╖ 2ΓêÜ2
+    loß║íi: line3,plane3,point3,quantity,vector3 ┬╖ producer 8/12 ┬╖ depends 8/12 ┬╖ sß╗▒ kiß╗çn 9
+Γ£ö n4_giao_duong_mat_roi_do           [REFUSAL] dß╗½ng=GROUNDING  b╞░ß╗¢c=None  cß║únh=None
+    Cß╗öNG Tß╗¬ CHß╗ÉI: tr├¡ch dß║½n dß╗» kiß╗çn kh├┤ng c├│ trong hß╗úp ─æß╗ông
+    INPUT_NOT_GROUNDED A: source_fact_id 'A(0; 0; 0)' kh├┤ng c├│ trong RequestContract; B: source_fact_id 'B(2; 0; 0)' kh├┤ng c├│ trong RequestContract; C: source_fact_id 'C(2; 2; 0)' kh├┤ng c├│ trong RequestContract
+
+ΓöÇΓöÇ chß║íy R├ÜT Gß╗îN (artifact kh├┤ng l╞░u hß╗úp ─æß╗ông ΓçÆ bß╗Å grounding) ΓöÇΓöÇ
+Γ£ö v2_04_thiet_dien_goc_va_the_tich   b╞░ß╗¢c=12 cß║únh=13  THIß║╛T DIß╗åN ┬╖ g├│c ┬╖ thß╗â t├¡ch
+    loß║íi: plane3,point3,quantity,section,solid
+
+  DEMO_CASES               5
+  DEMO_REPLAY_PASS         5/5
+  REDUCED_CHAIN_CASES      1/1
+
+  Γ£ö tß║¡p demo kho├í luß║¡n ΓÇö 0.6s
+Γ£ö toß║í ─æß╗Ö k├╜ hiß╗çu tß╗¢i kernel            mong=STATIC             thß╗▒c=STATIC
+    #0 IR_NOT_EXACT_RATIONAL: 'A[0]' ΓÇö cß║ºn sß╗æ hß╗»u tß╗ë ch├¡nh x├íc, vd 3 hoß║╖c -1/2 hoß║╖c "4/3", c├│ {'kind': 'var', 'name': 'a'} ΓÇö
+Γ£ö to├ín hß║íng SAI KIß╗éU tß╗¢i kernel        mong=SCHEMA             thß╗▒c=SCHEMA
+    `angle_cos.of` sai kiß╗âu: 'd' khai 'line3'. ─É╞░ß╗¥ng thß║│ng kh├┤ng c├│ chiß╗üu n├¬n kh├┤ng cho ─æ╞░ß╗úc dß║Ñu ΓÇö dß╗▒ng vect╞í bß║▒ng `vector_f
+Γ£ö r├áng buß╗Öc Lß║ªN ─Éß║ªU kh├┤ng khai         mong=OK_SAU_CHUAN_HOA   thß╗▒c=OK_SAU_CHUAN_HOA
+    chß║íy ─æ╞░ß╗úc, 3 b╞░ß╗¢c
+Γ£ö r├áng buß╗Öc lß║ºn ─æß║ºu TRONG NH├üNH        mong=STATIC             thß╗▒c=STATIC
+    #2 CONDITIONAL_UNINITIALIZED_TARGET: 'M' ΓÇö cß║ºn khai trong memory_declarations, hoß║╖c dß╗▒ng ngo├ái nh├ính, c├│ r├áng buß╗Öc lß║ºn ─æ
+Γ£ö toß║í ─æß╗Ö TH├ö ß╗ƒ mß╗Öt ├┤ T├èN               mong=SCHEMA             thß╗▒c=SCHEMA
+    Lß╗ùi c├║ ph├íp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec
+statements.0.construct_point.expr.tra
+Γ£ö rß╗¡a n─âng lß╗▒c qua biß╗âu thß╗⌐c lß╗ông      mong=SCHEMA             thß╗▒c=SCHEMA
+    Lß╗ùi c├║ ph├íp schema SemanticProgramSpec: 1 validation error for SemanticProgramSpec
+statements.0.construct_point.expr.tra
+
+  BI├èN ─É├ÜNG Kß╗▓ Vß╗îNG      6/6
+  N├ëM RA NGO├ÇI (=500)    0
+
+  Γ£ö bß╗ü mß║╖t sß║¡p cß╗ºa demo ΓÇö 0.4s
+
+ΓöÇΓöÇ Tß╗öNG Kß║╛T ΓöÇΓöÇ
+  Γ£ö pytest (to├án bß╗Ö backend)           466.9s   (engine tß║Ñt ─æß╗ïnh, validator, cß╗òng phß║ím vi, lß╗¢p hß╗ìc)
+  Γ£ö vitest (to├án bß╗Ö frontend)          10.6s   (module, renderer, guard kiß║┐n tr├║c, manifest)
+  Γ£ö typecheck + build production       10.4s   (cß╗òng kiß╗âu duy nhß║Ñt cß╗ºa repo)
+  Γ£ö tß║¡p demo kho├í luß║¡n                 0.6s   (chuß╗ùi dß╗▒ng tß║Ñt ─æß╗ïnh chß║íy hß║┐t, thiß║┐t diß╗çn/thß╗â t├¡ch ra h├¼nh)
+  Γ£ö bß╗ü mß║╖t sß║¡p cß╗ºa demo                0.4s   (s├íu bi├¬n tß╗½ chß╗æi ─É├ÜNG KIß╗éU, kh├┤ng n├⌐m 500)
+
+Tß╗òng: 488.9s
+
+FULL_PRODUCT_GATE_PASS
+--- POST CHECKS ---
+T3_EXIT_CODE: 0
+POST_STATUS: 
+POST_CANDIDATE: Candidate khß╗¢p bß║ún ─æ├ú ─æ├│ng b─âng (m├ú sß║ún phß║⌐m: 110 file, 57c7f5dbedaa7b21ΓÇª).

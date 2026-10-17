@@ -25,7 +25,8 @@ cache125/LLM_ONLY/Hybrid NO-GO.
 
 **Integration (user `HUMAN_VISUAL_REVIEW_PASS` + GO INTEGRATION in session, 2026-10-17):** product commit `22df95d6`
 (from `76dca142`), merged with `main` `bc0445ae` at `d4947610`, candidate `product_commit_sha` refrozen at `7dc609bd`
-(`tree_hash` `57c7f5db…`, 110 files unchanged), clean detached T3 `FULL_PRODUCT_GATE_PASS`, fast-forwarded onto `main`
+(`tree_hash` `57c7f5db…`, 110 files unchanged), clean detached T3 at `8aabb4b9` `FULL_PRODUCT_GATE_PASS` (pytest 10,263 passed,
+vitest 68 files / 1,077 passed, build, demo, crash surface 6/6), fast-forwarded onto `main`
 and pushed without force; research branch and worktree cleaned; record
 [`integration.md`](evaluation/geometry/runs/scene3d-educational-finalization/integration.md).
 

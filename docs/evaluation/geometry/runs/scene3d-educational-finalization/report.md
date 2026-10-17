@@ -94,3 +94,13 @@ Full suite results in isolated worktree:
 ## 5. Independent Review (`review.md`) & Human Visual Review
 
 An independent read-only review subagent (`d5b4214c-190a-45e8-b81b-9a42318492e5`) audited the full final worktree diff (`EDU-1` through `EDU-8`), test suite (68 files, 1,077 tests), and 49 full-size (`1280×900`) visual artifacts against all 7 mandatory gates (`review.md`): **PASS (7/7)**. The human user inspected the full-size acceptance package and confirmed **`HUMAN_VISUAL_REVIEW_PASS`** in session on 2026-10-17.
+
+---
+
+## 6. Authoritative T3 Verification & Integration (`verification/t3-pass.json`, `integration.md`)
+
+- **Product Commit:** `22df95d6561084e410e7d2598213c99f8f45cf94`
+- **Merge with `origin/main` (`bc0445ae`):** `d4947610bedf7723e24d33903f62a55f49e10606` (zero conflicts)
+- **Candidate Refreeze:** `7dc609bd5d4d437bf6dd5838b65186fbbbd06561` (`product_commit_sha = 22df95d6…`, `measured_system.tree_hash = 57c7f5dbedaa7b21c66345fa4d6f0e1ea461a425293d44035b5678e12d76f96e`, 110 files unchanged)
+- **Authoritative T3 (`D:/tmp/s3d-edu-t3` detached at `8aabb4b976c3dfc23149c7f90b841e74aa297a57`):** **`FULL_PRODUCT_GATE_PASS`** (`488.9s`; `pytest` `10,263 passed, 1 skipped, 2 deselected, 9 xfailed`; `vitest` `68 files, 1,077 passed`; `typecheck + build` `PASS`; `replay_demo_cases.py` `PASS`; `audit_demo_crash_surface.py` `6/6 PASS, 0 HTTP 500`; `verification/t3-pass.json`, `verification/t3-authoritative.log`, `sha256: 0bd3bc8d826c5838b4fd4f897c344801c95471d7ee7016f932db0d0435f35256`).
+

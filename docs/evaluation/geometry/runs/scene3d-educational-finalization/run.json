@@ -3,13 +3,20 @@
   "run_id": "scene3d-educational-finalization",
   "wave": "scene3d-educational-finalization",
   "date": "2026-10-17",
-  "environment": "LOCAL Windows 11, Node, Chromium (SwiftShader + WebGL2)",
+  "environment": "LOCAL Windows 11, Python 3.12, Node, Chromium (SwiftShader + WebGL2)",
   "naming_policy": "docs/evaluation/RUN_NAMING.md",
-  "agents": "frontend audit, implementation, test, browser verification by Gemini (Antigravity); independent read-only review by research subagent",
+  "agents": "frontend audit, implementation, test, browser verification, and integration by Gemini (Antigravity); independent read-only review (v2) by research subagent (d5b4214c-190a-45e8-b81b-9a42318492e5)",
   "status": "SCENE3D_EDUCATIONAL_FINALIZATION_INTEGRATED_ON_MAIN",
   "branch": "research/scene3d-educational-finalization",
   "base_commit": "76dca142d5b25c288863dae147943404f4184598",
   "main_before": "bc0445ae4a4376c97af6ef9e1a21fa8fb0f5a3f8",
+  "commits": {
+    "product": "22df95d6561084e410e7d2598213c99f8f45cf94",
+    "merge_main": "d4947610bedf7723e24d33903f62a55f49e10606",
+    "refreeze": "7dc609bd5d4d437bf6dd5838b65186fbbbd06561",
+    "docs_and_t3_candidate": "8aabb4b976c3dfc23149c7f90b841e74aa297a57"
+  },
+  "product_commits": ["22df95d6"],
   "cache_version": 125,
   "default": "LLM_ONLY",
   "live_calls": 0,
@@ -24,5 +31,11 @@
     "orbit_gate": "visual/receipts/orbit-gate.json — DAT on p1/p6/p7 (vong=449 deg, axis=Z[0,0,1] ||1.000||, cos in [-1.00, 1.00], snap=0, capPhat=0, yen=0.0 deg)",
     "hybrid_section_browser_check": "visual/receipts/browser-check.json — 8 scenes, failures=[], net_retries=0",
     "human_visual_review": "HUMAN_VISUAL_REVIEW_PASS (confirmed by user in session, 2026-10-17)"
-  }
+  },
+  "candidate": {
+    "tree_hash": "57c7f5dbedaa7b21c66345fa4d6f0e1ea461a425293d44035b5678e12d76f96e",
+    "files": 110,
+    "frozen_at": "22df95d6561084e410e7d2598213c99f8f45cf94"
+  },
+  "t3": "verification/t3-pass.json — clean detached T3 at 8aabb4b9 FULL_PRODUCT_GATE_PASS (pytest 10263 passed/1 skipped/2 deselected/9 xfailed, vitest 68 files/1077 passed, build PASS, demo PASS, crash surface 6/6 PASS)"
 }

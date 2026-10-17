@@ -8,7 +8,7 @@ CORRECTS = NONE
 CORRECTED_BY = NONE
 CLASSIFICATION = SCENE3D_EDUCATIONAL_FINALIZATION_INTEGRATED_ON_MAIN (`22df95d6`, merged `d4947610`, refreeze `7dc609bd`; `integration.md`) · `HUMAN_VISUAL_REVIEW_PASS` (confirmed by user in session, 2026-10-17)
 CODE_COMMIT = 22df95d6 (shared frontend Scene3D modules EDU-1..EDU-8; 0 backend/prompt changes)
-VERIFICATION_COMMIT = see run.json and verification/t3-pass.json (candidate `57c7f5db…` MATCH at `7dc609bd`; clean detached T3 `FULL_PRODUCT_GATE_PASS`; independent review v2 `review.md` PASS 7/7)
+VERIFICATION_COMMIT = 8aabb4b9 clean detached T3 FULL_PRODUCT_GATE_PASS (verification/t3-pass.json; pytest 10263 passed/1 skipped/2 deselected/9 xfailed, vitest 68 files/1077 passed, build PASS, demo PASS, crash surface 6/6 PASS); candidate 57c7f5db… refrozen at 7dc609bd; independent review v2 (review.md) PASS 7/7
 MODEL_REQUEST_COUNT = 0
 
 49 full-size (`1280×900`) browser states across 12 scenes (`visual/after/audit-summary.json`, 0 console/page errors, 0 label overlaps, 0 unplaced annotations), 7 side-by-side comparison sheets (`visual/cmp-01..09-*.png`), `scene3d-orbit-gate.mjs` `DAT` on `p1`, `p6`, `p7` (`capPhat = 0`, `yen = 0.0°`), and `hybrid-section-visual-check.mjs` PASS (`failures: []`). `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid NO-GO.
