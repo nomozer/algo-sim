@@ -1,0 +1,27 @@
+{
+  "schema": "GROUNDING_METRIC_UNITS/1",
+  "source": "results/final-94b3437b.json",
+  "accepted_cases": 32,
+  "licensed_cases": 48,
+  "source_certification_precision_case_unit": "32/32",
+  "source_certification_recall_case_unit": "32/48",
+  "numeric_cases_accepted": 30,
+  "numeric_cases_licensed": 43,
+  "numeric_values_checked_exactly": 37,
+  "construction_or_definition_cases_accepted": [
+    "B06-define-projection",
+    "U11"
+  ],
+  "construction_or_definition_cases_licensed": [
+    "B05-construct-projection",
+    "B06-define-projection",
+    "U08",
+    "U11",
+    "U12"
+  ],
+  "construction_visual_completion_independently_measured": false,
+  "output_convention_limit": {
+    "U24": "Registered mapping checks cos²=8/17 for a source angle question. It is not an angle measure in degrees/radians; this convention is a limit of the existing representation, not evidence of complete natural-language intent satisfaction."
+  },
+  "interpretation": "32 counts accepted extraction cases, not 32 numeric answers. There are 37 exact numeric values across 30 cases plus 2 construction/definition cases. Preserve all registered labels/scores; do not interpret 0 WRONG_SERVED under these mappings as universal semantic adequacy."
+}

@@ -9,8 +9,8 @@
 ## 0. Canonical Next Action
 
 **2026-10-17, grounding continuation:** the user authorized completion of the interrupted semantic/source reliability
-slice. Product `94b3437b`; independent review clear, offline false serves closed on the registered cases; finish detached
-T3 then request the concrete integration decision. No G16/G17 or Hybrid enablement. Next research proposal: separately
+slice. Product `94b3437b`; independent review clear, offline false serves closed on the registered cases; clean detached
+T3 `bd2dc080` PASS. Next: the concrete integration decision. No G16/G17 or Hybrid enablement. Next research proposal: separately
 preregistered/budgeted independent extraction evaluation targeting remaining construction/reference false refusals.
 Evidence: [`hybrid-semantic-grounding-reliability`](evaluation/geometry/runs/hybrid-semantic-grounding-reliability/report.md).
 

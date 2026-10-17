@@ -31,7 +31,8 @@
 Current offline grounding research (2026-10-17, product `94b3437b`):
 [`hybrid-semantic-grounding-reliability`](../evaluation/geometry/runs/hybrid-semantic-grounding-reliability/report.md)
 measures source certification on authored Typed Facts:99 extraction cases, wrong serves13→0, false refusals21→16;
-32/32 accepted answers source-licensed and exact, recall32/48. Development58 plus40 independently authored sentences
+32/32 accepted cases licensed under registered mappings, recall32/48;30numeric cases contain37exact values,2are
+construction/definition cases. ItemU24 uses the existing cos² convention, not an angle measure. Development58 plus40 independently authored sentences
 mapped by implementer into41 cases; no human held-out, no live extraction/intent accuracy. Historical174 answers and
 plan statistics unchanged, two intentional refusal-code changes. Level **MEASURED (offline)**; Hybrid enablement NO-GO.
 

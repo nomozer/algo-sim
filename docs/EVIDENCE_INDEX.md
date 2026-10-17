@@ -6,15 +6,17 @@ REPORT = docs/evaluation/geometry/runs/hybrid-semantic-grounding-reliability/rep
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-semantic-grounding-reliability/
 CORRECTS = NONE (preregistration deviations recorded in corrections.json; current candidate divergence chains from Scene3D)
 CORRECTED_BY = NONE
-CLASSIFICATION = FINAL_VERIFICATION_IN_PROGRESS
+CLASSIFICATION = HYBRID_SEMANTIC_GROUNDING_READY_FOR_INTEGRATION_DECISION
 CODE_COMMIT = 94b3437b (final Registry/Engine; preserves Claude work plus review/historical fixes)
-VERIFICATION_COMMIT = PENDING authoritative detached T3; candidate 57c7f5db… MATCH
+VERIFICATION_COMMIT = bd2dc080 clean detached T3 FULL_PRODUCT_GATE_PASS (verification/t3-attempt3.json; attempts 1–2 FAIL kept); candidate 57c7f5db… MATCH
 MODEL_REQUEST_COUNT = 0
 
 Offline authored Typed Facts:99 extraction cases (58 development +40 separate-author sentences mapped to41 cases),
 13→0 wrong serves,21→16 false refusals; historical174 preserves answers/planner with two declared refusal-code changes.
 Review hashes/results in review.md and verification/evaluation-summary.json. No human-held-out/live extraction claim;
 Hybrid NO-GO, cache125, LLM_ONLY. Frozen input/oracle hashes at2e08922a verified unchanged.
+Candidate metadata correction: run `candidate_divergence.json` CORRECTS its own initial `inputs/candidate_divergence.json`
+(stale Scene3D fields only); original layer preserved, candidate hash unchanged.
 
 ## WAVE_ID = SCENE3D_VISUAL_CORRECTNESS
 

@@ -1,0 +1,41 @@
+{
+  "schema": "T3_ATTEMPT/1",
+  "verified_commit": "bd2dc0801e2ef84855faae166f89450fae354bf3",
+  "product_commit": "94b3437b",
+  "candidate_tree_hash": "57c7f5dbedaa7b21c66345fa4d6f0e1ea461a425293d44035b5678e12d76f96e",
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "exit_code": 0,
+  "replaces": "verification/t3-attempt2.json (build ENVIRONMENT_FAIL only; same commit)",
+  "worktree": ".superpowers/worktrees/semantic-grounding-base-20261017 (detached; HEAD reflog: checkout bd2dc080 at 2026-10-17 10:07:48 +0700, unchanged since)",
+  "command": "node frontend/scripts/full-gate.mjs --python D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+  "backend": {
+    "total": 10250,
+    "passed": 10240,
+    "failures": 0,
+    "errors": 0,
+    "xfailed": 9,
+    "skipped": 1,
+    "deselected": 2
+  },
+  "geometry": {
+    "total": 7958,
+    "passed": 7949,
+    "failures": 0,
+    "errors": 0,
+    "xfailed": 9,
+    "skipped": 0
+  },
+  "vitest": "68 files / 1072 passed",
+  "typecheck_build": "PASS",
+  "demo": "5/5 PASS",
+  "crash_surface": "6/6 PASS",
+  "candidate_verify_after": "MATCH (110 files, 57c7f5db...), run by the resuming Claude session in the same worktree after the gate",
+  "clean_after": true,
+  "clean_before": "not guarded by full-gate; inferred from unchanged HEAD since 10:07:48, candidate MATCH and clean status after",
+  "product_paths_changed_since_94b3437b": [],
+  "raw_log_outside_git": "C:\\Users\\Bunny\\AppData\\Local\\Temp\\algosim-claude-rescue-20261017-013835\\t3-verified-bd2dc080.log",
+  "raw_log_sha256_lf": "ce1fd7a9d6b41d9716f70c6485306040e7edc99b944fe9779ad4d2b102ac280f",
+  "junit_sha256": "71e59c4b07837fda7d7deac14074d6f891b2ff7f3306d3418b10178605995f40",
+  "counts_source": "JUnit testcase elements recounted by the resuming session; match the log summary line",
+  "started_by": "Codex before its session limit; outcome read and verified by Claude Code after the interruption"
+}

@@ -1,6 +1,6 @@
 # Hybrid semantic understanding and source grounding — continuation handoff
 
-2026-10-17. Research branch `research/hybrid-semantic-grounding-reliability`, baseline `1f635ed5`, preregistration checkpoint `2e08922a`, final product `94b3437b`. **Integration decision pending final detached T3 and user GO.** `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid product enablement **NO-GO**, live extraction **NOT_MEASURED**, model calls **0**.
+2026-10-17. Research branch `research/hybrid-semantic-grounding-reliability`, baseline `1f635ed5`, preregistration checkpoint `2e08922a`, final product `94b3437b`. **Clean detached T3 at `bd2dc080`: `FULL_PRODUCT_GATE_PASS`** (`verification/t3-attempt3.json`). `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid product enablement **NO-GO**, live extraction **NOT_MEASURED**, model calls **0**.
 
 ## A. Claude's preserved work
 
@@ -12,7 +12,7 @@ The reported **179 passed, 3 xfailed** was reproduced locally. No complete revie
 
 ## B. Codex continuation and ownership
 
-Preserved the implementation instead of rewriting it. Repaired the measurement root and implemented its documented `--code-root` option; independently reproduced Claude's BASE rows exactly on a clean detached `1f635ed5`. Recomputed all 48 licensed numeric oracle entries in memory: MATCH, without rewriting oracle files.
+Preserved the implementation instead of rewriting it. Repaired the measurement root and implemented its documented `--code-root` option; independently reproduced Claude's BASE rows exactly on a clean detached `1f635ed5`. Recomputed the registered oracle for all48licensed case entries (43numeric,5without numeric requests) in memory: MATCH, without rewriting oracle files.
 
 Independent review found source-plane false serves: shared collinear labels, accepted spellings bypassing the collector, and extra call labels silently truncated by angle IR. Supplemental tests observed RED then GREEN. `_cung_mat` now requires full-set containment; the existing Engine checks complete source and call plane groups for nondegeneracy and coplanarity. It also fixes symbolic `2a` cube acceptance after exact source binding. No planner recipes, formulas or new product modules.
 
@@ -34,7 +34,7 @@ Product checkpoints: `94e56aa6` (preserved M1–M4 plus first review fixes), `93
 
 Closed on the registered cases: omitted second asks/list targets/follow-up quantities; four-label nonplane shortened to three; reversed described-length operands; described-length `bằng bao nhiêu?`; cube premise before an intersection-line goal. Supplemental review closes the plane identity/spelling/extra-label bypasses. Wrong-target/quote/certificate regression protections remain in the related suites.
 
-Source certification acceptance precision **27/40 → 32/32**, recall **27/48 → 32/48**. Among 26 multi-request cases, wrong serves/silent omissions **9 → 0**; final 20 correct complete-or-safe-refusal classifications, 5 false refusals and 1 wrong-code refusal. Safe refusal is not a completed simulation. Eleven schema-gap extraction cases: 0 wrong serves in either arm; refusing them is not capability coverage.
+Source certification acceptance precision **27/40 → 32/32**, recall **27/48 → 32/48**, measured in extraction cases under the registered mappings. Final accepted32 includes **30 numeric cases / 37 exact numeric values** and **2 construction/definition cases**; construction visual completion is not independently scored by this numeric classifier. Among 26 multi-request cases, wrong serves/silent omissions **9 → 0**; final 20 correct complete-or-safe-refusal classifications, 5 false refusals and 1 wrong-code refusal. Safe refusal is not a completed simulation. Eleven schema-gap extraction cases: 0 wrong serves in either arm; refusing them is not capability coverage.
 
 Remaining false refusals: `A13` (`chính giữa`), `A14` (`bao xa`), `B05` (construction projection) and 13 separate-author wording cases (`U02,U03,U05,U08,U12,U14,U15,U16,U17,U18,U26,U30,U33`). Codes/outcomes are retained per row. Remaining wrong-code refusals: `E05` unsupported second quantity → `NOT_ASKED_IN_SOURCE`; `E08` unknown point → `UNDERDETERMINED_POINT`. No frozen label changed to improve scores.
 
@@ -54,7 +54,7 @@ The first final measurement at `93c7bc97` preceded the correction driven exclusi
 | Entity/reference grounding | Source gate near-miss protection measured; extractor accuracy NOT_MEASURED |
 | Goal interpretation | Registered authored-fact behavior measured; live interpretation NOT_MEASURED |
 | Construction planning | Historical plan statistics identical on 174/174 |
-| Mathematical execution | 32 served answers exact against the independent Fraction oracle |
+| Mathematical execution | 37 numeric values across30served cases exact against the independent Fraction oracle;2other served cases are construction/definition |
 
 ## F. Historical architecture regression
 
@@ -70,7 +70,7 @@ Product diff versus main touches only Registry and function Engine source valida
 - T1: geometry frontend 719 passed. T2: 1072 passed, typecheck/build PASS; production changes after that run were backend source checks, covered again by final T3.
 - Independent fresh-context reviewer: final delta **no remaining critical or important finding**, scoped offline probes; hashes and findings in `review.md`.
 - First full geometry attempts: stale candidate failure, then an environment error accessing old `%TEMP%/pytest-of-Bunny`. No assertions disabled; pytest temp is isolated per command, no ACL resets.
-- Full geometry and authoritative detached T3: **PENDING** in this checkpoint; final receipts will be published separately in this run.
+- Full geometry and authoritative detached T3: **PASS** at `bd2dc080` on the third attempt (receipts `t3-attempt1..3.json`; see "Final T3").
 - A clean detached geometry attempt at `b2154454` stopped at the documentation next-action guard (1479 passed). Fixed in documentation/tooling only at `b4be4b98`: align all three canonical declarations and register the task's lifecycle state; preserve the 300-line handoff limit. The unchanged 42-test architecture suite passes. Final T3 includes the entire geometry suite, without narrowing or disabling assertions.
 - Refreeze from clean detached `94b3437b`: candidate **`57c7f5dbedaa7b21c66345fa4d6f0e1ea461a425293d44035b5678e12d76f96e`**, 110 files, `--verify` MATCH. Current divergence correction is append-only and points to the preceding Scene3D layer.
 
@@ -83,6 +83,12 @@ Current task remains on its original research branch; main/origin-main at entry 
 **LIVE_EXTRACTION_NOT_MEASURED**, 0 provider calls. No prompt/provider declaration change or Gemini activation. Highest-value next step: a separately preregistered, budgeted independent extraction evaluation over the remaining natural construction/reference wordings, measuring intent, entity and goal interpretation separately before enabling Hybrid. It requires its own live GO; do not open G16/G17 or change the product default from this evidence.
 
 Postflight: existing Registry, source binders, Engine, exact geometry and verification tooling reused; new product modules **0**; duplicate check found no parallel state/solver; no new dependency cycle.
+
+Metric interpretation correction (final draft):32 means accepted cases, not numeric answers; see
+`verification/metric-interpretation.json`. The separate-author angle itemU24 is scored by the implementer's registered
+`cos²` mapping (`cos²=8/17`), not an angle measure in degrees/radians. Preserve that frozen label/score, but do not infer
+complete output-intent adequacy from it. Audit angle/output and construction-completion labels independently before
+the next extraction evaluation; no G16 or angle representation change is opened here.
 
 ## Reproduction
 
@@ -118,3 +124,56 @@ that omission refuses, then removes the numeric sentence from its local positive
 The benchmark harness classifies the new `REQUEST_NOT_ANSWERED` code as grounding, alongside the existing
 `SOURCE_PREMISE_UNREAD`; only its live refusal taxonomy is extended, not its mathematical oracle or case labels.
 Focused verification of these compatibility fixes: **127 passed**. Product source and reviewed candidate unchanged.
+
+The initial `inputs/candidate_divergence.json` correctly recorded the candidate hash but inherited obsolete Scene3D
+fields (task, product, changed paths, freeze description and claim of unchanged refusal codes). It is preserved.
+The append-only correction `candidate_divergence.json` now names this task/product and both declared code changes,
+chains from that initial layer, and is the current consumer entry. Historical lock hashes are derived from the original
+identity lock; no earlier measurements or manifests are rewritten.
+
+## Component status
+
+| Component | Status | Scope / evidence |
+|---|---|---|
+| Preregistration | DONE_AND_VERIFIED | Committed input snapshot and hashes; first uncommitted-edit time UNKNOWN |
+| Independent oracle | DONE_AND_VERIFIED | Separate Fraction implementation,48case entries recomputed MATCH (43numeric,5without numeric requests); semantic labels by implementer |
+| Semantic corpus | DONE_AND_VERIFIED | 58development +41wording mappings, 40independent sentences; frozen inputs unchanged |
+| Source Grounding changes | DONE_AND_VERIFIED | Focused/review/corpus verified; final clean detached T3 PASS |
+| Source Grammar breadth | PARTIAL | M3/M4 registered forms improved;16false refusals remain |
+| Multi-goal handling | PARTIAL | 0silent omissions on26cases;5false refusals and1wrong-code refusal remain |
+| Wrong-target protection | DONE_AND_VERIFIED | Source/call complete planes, collinearity, spelling and extra-label regressions in both routes |
+| False-serve regressions | DONE_AND_VERIFIED | 13→0 in99registered extraction cases, plus independent review regressions |
+| False-refusal regressions | PARTIAL | 21→16; no general-language claim |
+| Planner / Compiler / Kernel / Renderer | DONE_AND_VERIFIED | Product bytes unchanged;174historical planning statistics/answers preserved |
+| Tests | DONE_AND_VERIFIED | Focused/T1/T2 pass; first T3 failed16compatibility checks, fixed tests-only (stricter), final T3 PASS |
+| Independent review | DONE_AND_VERIFIED | Product and all product deltas reviewed, hashes MATCH; extra evidence audit unavailable after reviewer usage limit |
+| Full regression | DONE_AND_VERIFIED | Backend 10240/0 fail, geometry 7949/0 fail, vitest 1072 in clean detached T3 |
+| Final T3 | DONE_AND_VERIFIED | `bd2dc080` FULL_PRODUCT_GATE_PASS, candidate `--verify` MATCH after the gate |
+| Git integration | PARTIAL | Commits/refreeze complete; explicit user integration GO still required |
+
+## Environment correction after the second T3
+
+At `bd2dc080`, the second full gate passed backend **10240 / 0 failures** (geometry **7949 / 0 failures / 9 xfailed**),
+frontend1072, demo5/5 and crash6/6. Production build alone failed `EPERM` deleting this task worktree's generated
+`frontend/dist/assets`, created by the earlier sandbox context. Receipt `verification/t3-attempt2.json` retains FAIL.
+
+Owner/DACL inspection identified `CodexSandboxOffline`; the path was verified as the exact ignored build directory
+inside this verification worktree and not a reparse point. Only its three generated files were removed using the
+original sandbox context. A normal-user production build then passed and the regenerated assets owner is `Bunny`.
+No repository ACL reset, owner reassignment, administrator execution or personal-file cleanup occurred. The final
+full gate runs consistently with normal-user filesystem access, fresh per-command temp and the same product hash.
+
+## Final T3 — PASS (verified after the Codex interruption)
+
+Codex launched the third gate at clean detached `bd2dc080` and hit its session limit before reading the result. Claude
+Code, resuming, found no live gate process and read the log: **`FULL_PRODUCT_GATE_PASS`**, exit 0 — backend 10240 passed /
+0 failed / 9 xfailed / 1 skipped (geometry 7949 / 0 / 9), vitest 68 files / 1072, typecheck + build PASS, demo 5/5,
+crash surface 6/6. JUnit recounted independently of the log. After the gate, in the same worktree: status clean,
+`freeze_evaluation_candidate.py --verify` MATCH (110 files, `57c7f5db…`), HEAD unchanged since its 10:07:48 checkout, no
+product path changed since `94b3437b`. Full-gate has no clean-tree guard of its own, so "clean before" is inferred from
+those facts. Receipt `verification/t3-attempt3.json`; attempts 1–2 keep their FAIL verdicts. Not rerun: the result is
+valid for the final candidate and the only later commits are documentation.
+
+The tests-only commit `bd2dc080` between attempts 1 and 3 was audited: it makes controls stricter (incomplete
+extraction must now refuse with `REQUEST_NOT_ANSWERED`; the complete extraction must serve both SC²=17 and SB²=13), and
+the proof-only control keeps its original `PROOF_UNVERIFIABLE` assertion on a proof-only source. No assertion removed.

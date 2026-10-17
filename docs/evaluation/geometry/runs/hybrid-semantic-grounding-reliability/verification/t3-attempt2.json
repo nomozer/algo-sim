@@ -1,0 +1,32 @@
+{
+  "schema": "T3_ATTEMPT/1",
+  "verified_commit": "bd2dc080",
+  "product_commit": "94b3437b",
+  "verdict": "FULL_PRODUCT_GATE_FAIL",
+  "exit_code": 1,
+  "backend": {
+    "total": 10250,
+    "passed": 10240,
+    "failures": 0,
+    "errors": 0,
+    "xfailed": 9,
+    "skipped": 1
+  },
+  "geometry": {
+    "total": 7958,
+    "passed": 7949,
+    "failures": 0,
+    "errors": 0,
+    "xfailed": 9,
+    "skipped": 0
+  },
+  "vitest": 1072,
+  "build": "ENVIRONMENT_FAIL: EPERM deleting sandbox-owned frontend/dist/assets from normal-user execution",
+  "demo": "5/5 PASS",
+  "crash_surface": "6/6 PASS",
+  "clean_before_after": true,
+  "remediation": "Inspected exact owner/DACL and verified output path is ignored, within this task verification worktree, not a reparse point. Removed only this session build output under original sandbox owner, then normal-user npm run build PASS. No ACL changes or admin privileges.",
+  "raw_log_outside_git": "C:\\Users\\Bunny\\AppData\\Local\\Temp\\algosim-claude-rescue-20261017-013835\\t3-final-bd2dc080.log",
+  "raw_log_sha256_lf": "6b766dbdfdd4542652c1bd10edf336eb40202b968df671b6e4d707aeb44229bd",
+  "junit_sha256": "af697774a726ea3d35dbe8606f4d3af033e6a8d90484914a121851f31bc7cd0b"
+}

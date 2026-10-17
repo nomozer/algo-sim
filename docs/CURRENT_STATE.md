@@ -7,8 +7,8 @@ CANONICAL_NEXT_ACTION = HYBRID_SEMANTIC_GROUNDING_INTEGRATION_DECISION
 Resumed Claude's interrupted work on `research/hybrid-semantic-grounding-reliability`; preserved 8 working files outside
 the repository before edits. Final product `94b3437b`; clean refreeze candidate `57c7f5db…` (110 files), MATCH. Offline
 99-case replay: 13→0 wrong serves, 21→16 false refusals; historical 174 rows preserve answers/plan statistics, with two
-declared refusal-code changes. Independent review delta has no remaining critical/important finding. Full geometry/T3
-still being verified in this checkpoint; integration requires user GO. cache125/LLM_ONLY/Hybrid NO-GO, 0 live calls;
+declared refusal-code changes. Independent review delta has no remaining critical/important finding. Clean detached T3
+`bd2dc080` FULL_PRODUCT_GATE_PASS (backend 10240/0, geometry 7949/0, vitest 1072); integration requires user GO. cache125/LLM_ONLY/Hybrid NO-GO, 0 live calls;
 no human-held-out or live Vietnamese-understanding claim. Single handoff:
 [`report.md`](evaluation/geometry/runs/hybrid-semantic-grounding-reliability/report.md).
 

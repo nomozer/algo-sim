@@ -1,0 +1,32 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-semantic-grounding-reliability",
+  "task": "hybrid-semantic-grounding-reliability",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-semantic-grounding-reliability/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "57c7f5dbedaa7b21c66345fa4d6f0e1ea461a425293d44035b5678e12d76f96e",
+  "current_candidate_source_commit": "94b3437bfbb287a10670348ea1658b53d513c340",
+  "current_product_commit": "94b3437bfbb287a10670348ea1658b53d513c340",
+  "current_candidate_frozen_at": "94b3437bfbb287a10670348ea1658b53d513c340",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "previous_candidate_hash": "57c7f5dbedaa7b21c66345fa4d6f0e1ea461a425293d44035b5678e12d76f96e",
+  "metadata_only_correction": true,
+  "diverged": true,
+  "reason": "Correct inherited Scene3D metadata in the preceding layer; current candidate and product bytes are unchanged. The source-grounding slice changes Registry and function Engine validation, not function_route targets.",
+  "product_changes_since_main": [
+    "backend/app/simulation/geometry_functions/registry.py",
+    "backend/app/simulation/geometry_functions/engine.py"
+  ],
+  "historical_effect": "174 historical answers and plan statistics preserved; 172 status/code/answers tuples identical. Two declared refusal-code changes: parallel-result-line to PARALLEL_NO_INTERSECTION, unread-second-ask to REQUEST_NOT_ANSWERED. Earlier measurement bytes remain unchanged.",
+  "freeze": "clean detached 94b3437b, 110 measured files, --verify MATCH; final gate uses the same product hash",
+  "cache_version": 125,
+  "cache_decision": "no bump: research route D is not on /api/analyze",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical thesis-final measurements retain their original source candidate; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "research/hybrid-semantic-grounding-reliability; final gates then explicit user GO",
+  "push": "NONE: no integration approval yet"
+}

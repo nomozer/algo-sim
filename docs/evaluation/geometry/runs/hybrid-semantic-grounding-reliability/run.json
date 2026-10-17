@@ -8,14 +8,18 @@
   "base_commit": "1f635ed50476690d92b0a9f0f15bc1250bd8ec99",
   "preregistration_commit": "2e08922a41675e6316f1429465c349273a60147e",
   "product_commit": "94b3437bfbb287a10670348ea1658b53d513c340",
-  "product_commits": ["94e56aa6", "93c7bc97", "94b3437b"],
+  "product_commits": [
+    "94e56aa6",
+    "93c7bc97",
+    "94b3437b"
+  ],
   "agents": "Claude Code implemented M1–M4 before interruption; Codex preserved, completed, verified; separate fresh-context Codex reviewer reviewed all product deltas read-only",
   "cache_version": 125,
   "default_mode": "LLM_ONLY",
   "model_request_count": 0,
   "Hybrid_product_enablement": "NO-GO",
   "live_extraction": "NOT_MEASURED",
-  "status": "FINAL_VERIFICATION_IN_PROGRESS",
+  "status": "FINAL_GATES_PASS",
   "handoff": "report.md",
   "review": "review.md",
   "corrections": "corrections.json",
@@ -25,11 +29,15 @@
     "files": 110,
     "frozen_at": "94b3437b",
     "clean_detached": true,
-    "divergence": "inputs/candidate_divergence.json"
+    "divergence": "candidate_divergence.json"
   },
-  "full_geometry": "PENDING clean detached run (working-tree attempts hit environment ACL and dirty-tree evidence guard)",
-  "t3": "NOT_STARTED",
-  "integration": "PENDING final gates and explicit user decision; no merge or push",
+  "full_geometry": "PASS 7949/0 fail/9 xfail inside clean detached T3 at bd2dc080",
+  "t3": "FULL_PRODUCT_GATE_PASS at clean detached bd2dc080 (verification/t3-attempt3.json); attempts 1 (b4be4b98, 16 test failures) and 2 (build EPERM) keep FAIL receipts",
+  "integration": "PENDING user decision in this session; record goes to integration.md",
   "protected_user_file": "frontend/public/favicon.svg, untouched and unstaged",
-  "deferred_environment_cleanup": [".superpowers/worktrees/goal-bounded", ".superpowers/worktrees/goal-fixed", "legacy backend/.tmp/pytest-* ACL debt"]
+  "deferred_environment_cleanup": [
+    ".superpowers/worktrees/goal-bounded",
+    ".superpowers/worktrees/goal-fixed",
+    "legacy backend/.tmp/pytest-* ACL debt"
+  ]
 }

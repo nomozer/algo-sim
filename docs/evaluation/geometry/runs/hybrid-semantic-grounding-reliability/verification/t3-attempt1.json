@@ -1,0 +1,92 @@
+{
+  "schema": "T3_ATTEMPT/1",
+  "verified_commit": "b4be4b98",
+  "product_commit": "94b3437b",
+  "candidate_tree_hash": "57c7f5dbedaa7b21c66345fa4d6f0e1ea461a425293d44035b5678e12d76f96e",
+  "verdict": "FULL_PRODUCT_GATE_FAIL",
+  "exit_code": 1,
+  "backend": {
+    "passed": 10224,
+    "failed": 16,
+    "skipped": 1,
+    "xfailed": 9,
+    "deselected": 2
+  },
+  "failed_tests": [
+    {
+      "classname": "tests.geometry.test_hybrid_compiler_benchmark",
+      "name": "test_every_refusal_code_of_the_route_is_classified"
+    },
+    {
+      "classname": "tests.geometry.test_hybrid_safety_readiness",
+      "name": "test_proof_only_request_without_certificate_refuses"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_multi_step_requests_without_a_change_stay_served[T\\xednh SC, sau \\u0111\\xf3 t\\xednh SB.-A]"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_multi_step_requests_without_a_change_stay_served[T\\xednh SC, sau \\u0111\\xf3 t\\xednh SB.-B]"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_multi_step_requests_without_a_change_stay_served[T\\xednh SC, r\\u1ed3i t\\xednh SB, bi\\u1ebft SA = 3.-A]"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_multi_step_requests_without_a_change_stay_served[T\\xednh SC, r\\u1ed3i t\\xednh SB, bi\\u1ebft SA = 3.-B]"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_multi_step_requests_without_a_change_stay_served[T\\xednh SC, ti\\u1ebfp theo t\\xednh SB.-A]"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_multi_step_requests_without_a_change_stay_served[T\\xednh SC, ti\\u1ebfp theo t\\xednh SB.-B]"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_multi_step_requests_without_a_change_stay_served[T\\xednh SC. Sau \\u0111\\xf3 t\\xednh SB.-A]"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_multi_step_requests_without_a_change_stay_served[T\\xednh SC. Sau \\u0111\\xf3 t\\xednh SB.-B]"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_multi_step_requests_without_a_change_stay_served[T\\xednh SC, sau \\u0111\\xf3, v\\u1edbi SA = 3, t\\xednh SB.-A]"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_multi_step_requests_without_a_change_stay_served[T\\xednh SC, sau \\u0111\\xf3, v\\u1edbi SA = 3, t\\xednh SB.-B]"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_next_task_after_a_goal_clause_stays_served[T\\xednh SC, sau \\u0111\\xf3 ch\\u1ee9ng minh SC l\\u1edbn h\\u01a1n SA; sau \\u0111\\xf3 t\\xednh SB.-A]"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_next_task_after_a_goal_clause_stays_served[T\\xednh SC, sau \\u0111\\xf3 ch\\u1ee9ng minh SC l\\u1edbn h\\u01a1n SA; sau \\u0111\\xf3 t\\xednh SB.-B]"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_next_task_after_a_goal_clause_stays_served[T\\xednh SC, sau \\u0111\\xf3 ch\\u1ee9ng minh SC l\\u1edbn h\\u01a1n SA; r\\u1ed3i t\\xednh SB.-A]"
+    },
+    {
+      "classname": "tests.geometry.test_question_followup_context",
+      "name": "test_next_task_after_a_goal_clause_stays_served[T\\xednh SC, sau \\u0111\\xf3 ch\\u1ee9ng minh SC l\\u1edbn h\\u01a1n SA; r\\u1ed3i t\\xednh SB.-B]"
+    }
+  ],
+  "cause": "Historical incomplete-extraction test setups and missing refusal taxonomy entry; all observed failures fixed in tests only at bd2dc080; focused127PASS. Frozen labels/oracle and product unchanged.",
+  "other_gates": {
+    "vitest": 1072,
+    "typecheck_build": "PASS",
+    "demo": "5/5 PASS",
+    "crash_surface": "6/6 PASS"
+  },
+  "clean_before_after": true,
+  "raw_log_outside_git": "C:\\Users\\Bunny\\AppData\\Local\\Temp\\algosim-claude-rescue-20261017-013835\\t3-authoritative.log",
+  "raw_log_sha256_lf": "1f58309706d3546c10044236bdb0f2e4f0d0398af99e015e1106ca6b94baa13b",
+  "junit_sha256": "7d51b1b58ad7c826483381e9e3222020258a30ee29a70347a07bcd2c59649b14"
+}
