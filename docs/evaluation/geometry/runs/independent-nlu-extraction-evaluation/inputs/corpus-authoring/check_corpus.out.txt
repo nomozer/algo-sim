@@ -1,0 +1,4 @@
+dev: 16 cases, groups {'A': 3, 'B': 3, 'C': 3, 'D': 3, 'E': 2, 'F': 2}, structure_ids 14, multi-request 3, with numeric values 13 (16 values), dispositions {'answer_all': 13, 'clarification_required': 1, 'refuse_contradictory': 1, 'refuse_missing_info': 1}
+locked: 44 cases, groups {'A': 8, 'B': 9, 'C': 5, 'D': 8, 'E': 6, 'F': 8}, structure_ids 40, multi-request 12, with numeric values 30 (40 values), dispositions {'answer_all': 34, 'refuse_nonexistent_object': 2, 'clarification_required': 2, 'refuse_missing_info': 2, 'answer_supported_part_and_flag_rest': 1, 'out_of_scope_request': 1, 'refuse_ambiguous': 1, 'refuse_contradictory': 1}
+quotes verified: 283; max dev/locked similarity 0.800 (D09 vs L16)
+CHECK PASS

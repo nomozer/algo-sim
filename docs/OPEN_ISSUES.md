@@ -1,5 +1,13 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-HYBRID-LIVE-EXTRACTION-BASELINE
+
+- **status:** OPEN — measured baseline, run `independent-nlu-extraction-evaluation` (2026-10-17, gemini-2.5-flash, locked 44 items, owner GO).
+- **extraction (LLM):** goal+entity on expressible requests 24/45 frozen, 27/45 corrected (preregistered threshold 0.85 → P2 NO); 30/44 rows stop at planner input — request operands omitted, measures without their solid, out-of-schema requests approximated instead of `unsupported`, invented point names. 6 of 8 gold-servable cases lost.
+- **grounding (product):** correct extractions refused for "dài bao nhiêu", "… thì … bằng mấy", "tính cos²", "Tính BD'", L23 ordering; the unlabelled base "đáy là hình vuông" refuses even gold facts. Prompt rule 7 conflicts with the gate on four-label planes.
+- **scorer:** served values are judged through fact pairing (L01 artifact); the next protocol must compare served values with the oracle independently.
+- **next:** a separately approved Semantic Extraction wave (prompt/schema surface ⇒ cache decision) measured on NEW items; then grounding wording coverage. Hybrid product NO-GO.
+
 ### ISSUE-ARCH-GENERALIZED-GOAL-ENTRY-COVERAGE
 
 - **status:** PARTIALLY_IMPLEMENTED — run `generalized-goal-entry`, length goal through Registry metadata; described midpoint → named point, experimental centroid producer.

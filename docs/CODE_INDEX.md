@@ -6419,6 +6419,13 @@ Run `docs/evaluation/geometry/runs/w17-operation-annotations/`. Thẩm quyền �
 | Adversarial safety / mutation | `backend/tests/geometry/test_hybrid_safety_readiness.py`, `backend/tests/geometry/test_hybrid_ab_pilot_mutations.py`, `backend/tests/geometry/fixtures/hybrid_safety_oracles.json` | Literal independent grounding/checker oracles, guard-removal mutants trong bộ nhớ; proof-only/negation boundary | real A/B routes → assertions | pytest 3 hybrid test modules |
 | Current candidate divergence | `docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/candidate_divergence.json` | Correction của khai báo hybrid cũ, không sửa historical artifact | measured system hash → `backend/tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI` | exact hash guard + candidate `--verify` |
 
+### NLU extraction evaluation — run independent-nlu-extraction-evaluation (2026-10-17)
+
+| Thành phần | Path | Purpose · authority | Producer → consumer | Verify |
+|---|---|---|---|---|
+| Runner + scorer | `backend/scripts/run_nlu_extraction_evaluation.py` | Đánh giá trích Typed Facts nhánh B một arm: GOLD / REPLAY (0 call) / LIVE (approval khớp identity); không retry, lỗi đơn lẻ ghi rồi chạy tiếp, dừng 3 lỗi liên tiếp / 401·403·429 / cap / secret / modelVersion; chấm theo tầng (fact-key match, intent/goal/premise, bốn ô LLM×pipeline, e2e vs oracle). Tái dùng budget/redact/persist/usage của `run_hybrid_ab_pilot.py` (không chép) | `runs/independent-nlu-extraction-evaluation/inputs/` (corpus mù, gold, protocol) → `manifest.json` / `gold_rows.json` | `pytest tests/geometry/test_nlu_extraction_evaluation.py -q` |
+| Inputs khoá | `docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/inputs/` (`corpus-authoring/`, `build_gold_facts.py`, `build_protocol.py`) | Corpus 60 ca của tác giả AI mù hệ thống + oracle Fraction riêng; gold Typed Facts do implementer soạn theo luật prompt; protocol khoá hash, cap, luật dừng | builder → `gold_facts.json`, `protocol.json` → runner `load_inputs` | hash guard `INPUT_IDENTITY_MISMATCH` + `test_locked_inputs_keep_their_registered_hashes_and_gold_outcomes` |
+
 ### Construction binding & focused annotations — w18 (2026-10-04)
 
 Run `docs/evaluation/geometry/runs/w18-binding-focus/`. Thẩm quyền đăng ký (viết TRƯỚC bản sửa): `docs/architecture/ASSUMPTION_CERTIFICATE_AMENDMENT.md` §16 (+ đính chính có ngày).

@@ -28,6 +28,17 @@
    **sản phẩm** do `backend/app/simulation/product_capability.py` quyết (khối cong, khối lõm, thiết diện xiên:
    `foundation_only`). Một họ chỉ "được hỗ trợ" khi đi trọn đề → analyze → chương trình → các cổng → kernel → cảnh.
 
+Independent NLU extraction evaluation (2026-10-17, on `main` `b22c2269`, no product change):
+[`independent-nlu-extraction-evaluation`](../evaluation/geometry/runs/independent-nlu-extraction-evaluation/report.md)
+preregisters a blind-authored 60-case corpus, oracle and gold facts. Measured offline only: the deterministic ceiling
+(gold facts serve 8/44 locked cases) and Source Grounding false refusals of common wordings (unlabelled base
+"đáy là hình vuông", "dài bao nhiêu", "tính cos²", "Tính BD'"). Live baseline (gemini-2.5-flash, 76 calls): locked 44
+items — intent 42/57, goal+entity on expressible requests 24/45 (CI95 0.38–0.68; corrected 27/45, 0.44–0.74) below the
+preregistered 0.85 ⇒ **P2 NO**; preregistered answer UNSAFE from one verified scorer artifact (corrected P1 PASS, 0/44 real
+wrong serves); 2/44 served correct (gold facts 8). Level **MEASURED_LIVE** on this corpus, labels
+INDEPENDENT_AGENT_AUTHORED_NOT_HUMAN_VALIDATED; no claim of general Vietnamese understanding, of safety beyond these items,
+or of readiness for enablement.
+
 Current offline grounding research (2026-10-17, product `94b3437b`):
 [`hybrid-semantic-grounding-reliability`](../evaluation/geometry/runs/hybrid-semantic-grounding-reliability/report.md)
 measures source certification on authored Typed Facts:99 extraction cases, wrong serves13→0, false refusals21→16;

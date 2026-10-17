@@ -1,8 +1,29 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## INTEGRATED ON `main` — Independent NLU extraction evaluation, 2026-10-17
+
+CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION
+
+**Integration (owner GO in session, 2026-10-17):** `main` fast-forwarded `76dca142` → `b22c2269`, pushed without force;
+research branch deleted with `-d`; record
+[`integration.md`](evaluation/geometry/runs/independent-nlu-extraction-evaluation/integration.md). Hybrid NO-GO.
+
+Branch `research/independent-nlu-extraction-evaluation` from `main` `76dca142`; no product change (candidate `57c7f5db…`
+MATCH). Preregistered offline: 60-case Vietnamese corpus by a blind AI author (dev 16 / locked 44), independent Fraction
+oracle (56 values; 44 re-checked by a second agent), implementer gold Typed Facts, single-arm harness reusing the A/B
+pilot helpers, two read-only audits (extraction architecture; evaluation, NOT_READY → all blockers fixed). Gold arm
+(0 calls): 8/44 locked served, 23 capability/grounding gaps, 13 safe refusals. **Live pilot (owner GO pilot only):
+32 requests, est. USD 0.137, 0 unsafe, 0 served; intent 32/37, goal+entity 16/34 expressible** — operands of requests
+omitted and measures without their solid dominate ([`analysis`](evaluation/geometry/runs/independent-nlu-extraction-evaluation/results/live-pilot/analysis.md)).
+**Locked (owner GO, 44 requests, est. USD 0.162):** preregistered answer UNSAFE (frozen scorer, L01); L01 is a verified
+scorer artifact — corrected P1 PASS, **P2 NO** (24/45 → 27/45 goal+entity; CI95 upper < 0.85 both); 2/44 served correct
+(gold facts 8); 30/44 rows stop at planner input from extraction errors. Baseline report:
+[`report.md`](evaluation/geometry/runs/independent-nlu-extraction-evaluation/report.md).
+cache125/LLM_ONLY/Hybrid NO-GO.
+
 ## INTEGRATED ON `main` — Hybrid semantic grounding reliability, 2026-10-17
 
-CANONICAL_NEXT_ACTION = POST_SEMANTIC_GROUNDING_INTEGRATION_RESEARCH_PRIORITY_DECISION
+Next action at that time (superseded by the NLU evaluation above): POST_SEMANTIC_GROUNDING_INTEGRATION_RESEARCH_PRIORITY_DECISION
 
 **Integration (user GO in session, 2026-10-17):** `main` fast-forwarded `1f635ed5` → `bd20ac46`, pushed without force;
 research branch deleted with `-d`, verification worktree deregistered (leftover folder kept); record
