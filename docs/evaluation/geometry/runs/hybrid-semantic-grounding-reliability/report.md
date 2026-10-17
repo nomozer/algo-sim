@@ -71,6 +71,7 @@ Product diff versus main touches only Registry and function Engine source valida
 - Independent fresh-context reviewer: final delta **no remaining critical or important finding**, scoped offline probes; hashes and findings in `review.md`.
 - First full geometry attempts: stale candidate failure, then an environment error accessing old `%TEMP%/pytest-of-Bunny`. No assertions disabled; pytest temp is isolated per command, no ACL resets.
 - Full geometry and authoritative detached T3: **PENDING** in this checkpoint; final receipts will be published separately in this run.
+- A clean detached geometry attempt at `b2154454` stopped at the documentation next-action guard (1479 passed). Fixed in documentation/tooling only at `b4be4b98`: align all three canonical declarations and register the task's lifecycle state; preserve the 300-line handoff limit. The unchanged 42-test architecture suite passes. Final T3 includes the entire geometry suite, without narrowing or disabling assertions.
 - Refreeze from clean detached `94b3437b`: candidate **`57c7f5dbedaa7b21c66345fa4d6f0e1ea461a425293d44035b5678e12d76f96e`**, 110 files, `--verify` MATCH. Current divergence correction is append-only and points to the preceding Scene3D layer.
 
 ## H. Git and integration
@@ -82,3 +83,38 @@ Current task remains on its original research branch; main/origin-main at entry 
 **LIVE_EXTRACTION_NOT_MEASURED**, 0 provider calls. No prompt/provider declaration change or Gemini activation. Highest-value next step: a separately preregistered, budgeted independent extraction evaluation over the remaining natural construction/reference wordings, measuring intent, entity and goal interpretation separately before enabling Hybrid. It requires its own live GO; do not open G16/G17 or change the product default from this evidence.
 
 Postflight: existing Registry, source binders, Engine, exact geometry and verification tooling reused; new product modules **0**; duplicate check found no parallel state/solver; no new dependency cycle.
+
+## Reproduction
+
+From repository root, use the existing Python 3.12 venv. Every `--out` must be a fresh path; preserve committed outputs.
+
+```powershell
+& backend/.venv/Scripts/python.exe docs/evaluation/geometry/runs/hybrid-semantic-grounding-reliability/measure.py --label REPLAY --out <fresh-result.json>
+& backend/.venv/Scripts/python.exe docs/evaluation/geometry/runs/hybrid-semantic-grounding-reliability/measure.py --label BASE --code-root <clean-detached-1f635ed5> --out <fresh-baseline.json>
+& backend/.venv/Scripts/python.exe backend/scripts/measure_goal_entry.py arm --code-root . --bundle docs/evaluation/geometry/runs/generalized-goal-entry/baseline/bundle.json --label REPLAY --out <fresh-historical.json>
+& backend/.venv/Scripts/python.exe backend/scripts/freeze_evaluation_candidate.py --verify
+```
+
+Authoritative gate: run `node frontend/scripts/full-gate.mjs --python <absolute-main-venv-python>` from a clean detached
+checkout with installed frontend dependencies. This session uses a junction to the main checkout's `node_modules`.
+TEMP/TMP/TMPDIR are scoped to that command's fresh task directory, not changed globally; an external JUnit path records
+which geometry cases ran. No `-n`, plugin installation, live provider, test exclusion or ACL reset is involved.
+
+The final artifact-specific evidence review was attempted after product review; that reviewer turn hit its usage limit.
+Product review/deltas had already completed with exact matching hashes. Artifact reconciliation was completed by the
+continuing agent; do not treat that extra evidence audit as an independent PASS.
+
+## T3 continuation — test fixture compatibility
+
+The first full gate at `b4be4b98` additionally exposed 14 follow-up test parameters (both A/B) that omitted a requested
+SB while asserting success for SC. These controls now explicitly refuse the incomplete extraction, then supply SB and
+retain SC²=17 plus independently check SB²=13. The six earlier wording controls follow the same rule. No frozen corpus,
+oracle function or xfail marker is changed.
+
+The existing proof-only test removed the question fact but left its numeric request in the source. It now first checks
+that omission refuses, then removes the numeric sentence from its local positive fixture and retains the original
+`PROOF_UNVERIFIABLE`/cannot-present-as-proven assertions. The registered JSON fixture remains untouched.
+
+The benchmark harness classifies the new `REQUEST_NOT_ANSWERED` code as grounding, alongside the existing
+`SOURCE_PREMISE_UNREAD`; only its live refusal taxonomy is extended, not its mathematical oracle or case labels.
+Focused verification of these compatibility fixes: **127 passed**. Product source and reviewed candidate unchanged.

@@ -410,6 +410,8 @@ REFUSAL_CLASS = {
     "DEGENERATE_LINE": "contradictory", "LINE_CONTAINED_IN_PLANE": "contradictory",
     # source-grounding-completeness: a premise no validated call read (taxonomy only; labels/oracle unchanged)
     "SOURCE_PREMISE_UNREAD": "grounding",
+    # Request completeness: taxonomy only; frozen case labels and exact oracle remain unchanged.
+    "REQUEST_NOT_ANSWERED": "grounding",
     # malformed facts / plan
     "SCHEMA_INVALID": "malformed", "FACT_INCOMPLETE": "malformed", "UNKNOWN_SOLID": "malformed", "NO_SOLID": "malformed",
     "DUPLICATE_CALL_ID": "malformed", "DEPENDENCY_CYCLE": "dependency", "DANGLING_DEPENDENCY": "dependency",

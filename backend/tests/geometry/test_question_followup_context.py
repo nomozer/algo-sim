@@ -100,6 +100,11 @@ def test_construction_follow_up_change_is_refused(arm, sentence):
 ])
 def test_multi_step_requests_without_a_change_stay_served(arm, sentence):
     r = run(sentence, arm)
+    if re.search(r"tính\s+SB", sentence, re.IGNORECASE):
+        assert (r.status, r.code) == ("REFUSED", "REQUEST_NOT_ANSWERED"), r.answers
+        extra = HB._ask("q2", sentence, "length", points=["S", "B"])
+        r = run(sentence, arm, extra=[extra])
+        assert HB.answer_square(r.answers.get("q2", "")) == 13, (r.code, r.reason, r.answers)
     assert r.status == "SERVED", (r.status, r.code, r.reason)
     assert HB.answer_square(r.answers["q"]) == 17
 
@@ -162,7 +167,11 @@ def test_goal_clause_does_not_cover_a_later_change(arm, sentence):
 def test_next_task_after_a_goal_clause_stays_served(arm, sentence):
     # verification of 16ac524a: a next-task connector after ";" is itself read as a follow-up, not an unread change
     r = run(sentence, arm)
+    assert (r.status, r.code) == ("REFUSED", "REQUEST_NOT_ANSWERED"), r.answers
+    extra = HB._ask("q2", sentence, "length", points=["S", "B"])
+    r = run(sentence, arm, extra=[extra])
     assert r.status == "SERVED", (r.code, r.reason)
+    assert HB.answer_square(r.answers["q"]) == 17 and HB.answer_square(r.answers["q2"]) == 13
 
 
 @pytest.mark.parametrize("sentence", [

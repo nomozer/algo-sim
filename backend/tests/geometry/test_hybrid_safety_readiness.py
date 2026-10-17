@@ -120,6 +120,14 @@ def test_proof_only_request_without_certificate_refuses():
     c = HOLD["H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED"]
     facts = [f for f in _facts(c["id"]) if f["kind"] != "question"]
     r = FR.run_fact_route(c["text"], {"facts": facts})
+    # The historical fixture also asks a numeric question. Omitting it is not a proof-only source.
+    assert (r.status, r.code, r.scene3d) == ("REFUSED", "REQUEST_NOT_ANSWERED", None)
+    proof_only = c["text"]
+    for f in _facts(c["id"]):
+        if f["kind"] == "question":
+            for quote in f["quotes"]:
+                proof_only = proof_only.replace(quote, "")
+    r = FR.run_fact_route(proof_only, {"facts": facts})
     assert (r.status, r.code, r.scene3d) == ("REFUSED", "PROOF_UNVERIFIABLE", None)
     assert r.planner["goal_checks"]["f7"]["can_present_as_proven"] is False
 
