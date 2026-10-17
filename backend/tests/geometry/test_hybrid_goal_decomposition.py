@@ -442,7 +442,8 @@ def test_provider_surfaces_are_pinned():
 
     # source-bound-result-planning: intentional optional reference transport, approved preregistration.
     # The previous measured pins remain immutable in their historical runs; this receipt is a new correction layer.
-    receipt = Path(__file__).resolve().parents[3] / 'docs/evaluation/geometry/runs/source-bound-result-planning/provider-surfaces.json'
+    # hybrid-semantic-extraction-v2: prompt v2 (B only) is the next layer; its receipt names the previous one as `old`.
+    receipt = Path(__file__).resolve().parents[3] / 'docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/provider-surfaces.json'
     pins = json.loads(receipt.read_text(encoding='utf-8'))['current']
     assert FC.surface_fingerprint() == pins['A']
     assert FE.surface_fingerprint() == pins['B']

@@ -312,7 +312,13 @@ def test_locked_inputs_keep_their_registered_hashes_and_gold_outcomes():
     rec = json.loads((E.RUN / "results" / "gold" / "gold_rows.json").read_bytes())["rows"]
     now = E.run_gold(real)
     key = lambda r: (r["case_id"], r["route"]["status"], r["route"]["code"], r["route"]["values"])
-    assert [key(r) for r in now] == [key(r) for r in rec]
+    # Re-measured, not absorbed: each later product change that moves a row declares it in its own run's delta layer.
+    delta = json.loads((E.RUN.parent / "hybrid-semantic-extraction-v2/results/historical-gold-delta.json").read_bytes())
+    want = [(c, *(lambda a: (a["status"], a["code"], a["values"]))(delta["changed"][c]["after"])) if c in delta["changed"]
+            else (c, s, code, v) for c, s, code, v in map(key, rec)]
+    assert [key(r) for r in now] == want
+    assert {c: (s, code, v) for c, s, code, v in map(key, rec) if c in delta["changed"]} == \
+        {c: (d["before"]["status"], d["before"]["code"], d["before"]["values"]) for c, d in delta["changed"].items()}
     assert sum(c["split"] == "locked" for c in real["corpus"]["cases"]) == 44
 
 

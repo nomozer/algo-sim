@@ -419,7 +419,8 @@ def test_provider_surfaces_are_unchanged():
     from app.ai import fact_extraction, function_calling
     from app.simulation.geometry_functions.registry import function_declarations
     assert function_calling.surface_fingerprint().startswith("7ea511a6e3828c9a")
-    assert fact_extraction.surface_fingerprint().startswith("485d3834db8b18cf")
+    # hybrid-semantic-extraction-v2: prompt v2 changed B only (was 485d3834…); receipt in that run's provider-surfaces.json
+    assert fact_extraction.surface_fingerprint().startswith("cc6316fb90c40512")
     decl = json.dumps(function_declarations(), ensure_ascii=False, sort_keys=True).encode()
     assert hashlib.sha256(decl).hexdigest().startswith("5ceb0f999d4d7c1e")
     assert "PlanningContract" not in json.dumps(fact_extraction.facts_response_schema())

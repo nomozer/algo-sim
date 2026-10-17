@@ -336,6 +336,10 @@ def planning_contract(spec: FunctionSpec, effect: str | None = None) -> Planning
 
 
 _VUONG = ("vuông", "⊥")
+#: "hộp chữ nhật" names a cuboid with or without "hình"/"khối" (same pattern as `_HOP_CHU_NHAT`); bare "hộp" does not.
+_HOP_CHU_NHAT_KW = r"re:(?i)(?<!\w)hộp\s+chữ\s+nhật(?!\w)"
+#: "AB dài bao nhiêu" asks a length; "dài 3" assigns one and "dài hơn … bao nhiêu" compares, so neither matches.
+_DAI_BAO_NHIEU_KW = r"re:(?i)(?<!\w)dài\s+(?:là\s+|bằng\s+)?bao\s+nhiêu(?!\w)"
 _F = FunctionSpec
 REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("regular_polygon", RegularPolygonArgs, "fact", "Đa giác đều (tam giác đều, hình vuông, lục giác đều) với các đỉnh "
@@ -378,9 +382,9 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("regular_pyramid", PyramidArgs, "construct", "Khối chóp ĐỀU: đáy đa giác đều, chân đường cao tại tâm đáy.",
        (("chóp", "tứ diện"), ("đều",))),
     _F("prism", PrismArgs, "construct", "Khối lăng trụ với hai đáy tương ứng; `right` khi đề nói lăng trụ đứng/đều.",
-       (("lăng trụ", "hình hộp", "lập phương"),)),
+       (("lăng trụ", "hình hộp", "lập phương", _HOP_CHU_NHAT_KW),)),
     _F("ask_volume", AskVolumeArgs, "ask", "Đề hỏi thể tích một khối.", (("thể tích", r"re:(?<![\w'])V(?![\w'])"),)),
-    _F("ask_length", AskLengthArgs, "ask", "Đề hỏi độ dài một đoạn.", (("độ dài", "tính", "tìm"),),
+    _F("ask_length", AskLengthArgs, "ask", "Đề hỏi độ dài một đoạn.", (("độ dài", "tính", "tìm", _DAI_BAO_NHIEU_KW),),
        planning=PlanningContract((PlanningTerm("Point", ("P",)), PlanningTerm("Foot", ("F", "P", "L"))),
                                  PlanningTerm("AnswerDistance", ("P", "L")), "distance_witness", "distance",
                                  call=(("segment", ("P", "F")),)),
@@ -1349,7 +1353,7 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
         for nhom in c.spec.keywords:
             if not _co_tu(c.quotes, nhom):
                 raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: {c.fn} cần một trong {list(nhom)} trong {c.quote!r}", (c.id,))
-        if c.fn == "prism" and c.args.right and not _co_tu(c.quotes, ("đứng", "đều", "hình hộp", "lập phương")):
+        if c.fn == "prism" and c.args.right and not _co_tu(c.quotes, ("đứng", "đều", "hình hộp", "lập phương", _HOP_CHU_NHAT_KW)):
             raise TuChoi("PREDICATE_NOT_IN_QUOTE", f"{c.id}: lăng trụ đứng cần 'đứng'/'đều' trong {c.quote!r}", (c.id,))
         for f in c.spec.plane_fields:
             if not _co_mat(c.quotes, getattr(c.args, f), cho_day=f != "face"):
