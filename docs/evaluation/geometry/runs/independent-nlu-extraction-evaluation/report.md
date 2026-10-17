@@ -1,7 +1,9 @@
 # Independent NLU extraction evaluation — pre-live checkpoint
 
 2026-10-17 · branch `research/independent-nlu-extraction-evaluation` from `main` `76dca142` · no product change ·
-candidate `57c7f5db…` MATCH · `LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid NO-GO · **LIVE_NOT_AUTHORIZED, 0 model calls**.
+candidate `57c7f5db…` MATCH · `LLM_ONLY`, `CACHE_VERSION = 125`, Hybrid NO-GO · **LIVE_PILOT done (owner GO pilot only):
+32 requests, est. USD 0.137; LOCKED not run, awaiting the owner's decision.** Pilot analysis:
+[`results/live-pilot/analysis.md`](results/live-pilot/analysis.md).
 Protocol: [`preregistration.md`](preregistration.md). Approval request: [`approval-request.md`](approval-request.md).
 
 ## A. Provider, model, prompt, schema
@@ -41,15 +43,22 @@ Receipts: `results/gold/`, `results/replay-pilot/` (gate `CONTINUE_TO_LOCKED`), 
 
 ## E. Live
 
-Not approved, not run: 0 requests, 0 tokens, USD 0. Requested: ≤ 76 requests, 0 retries, ≤ 1.493M accounted tokens,
-≤ USD 1.83 (expected ≈ 0.85–1.20).
+PILOT (dev, owner GO pilot only): 32 requests, 0 retries, no stop; input 25,106 / output 22,074 / thinking 29,762
+tokens; est. USD 0.137 (list price; billing UNKNOWN); median latency 7.1 s. LOCKED: not approved, not run.
 
 ## F. Accuracy per layer
 
-Live intent/entity/goal/premise accuracy: **NOT_MEASURED**. Deterministic ceiling with gold facts (locked): 7
-`CORRECT_COMPLETE` + 1 `CORRECT_PART_FLAGGED`, 23 `FALSE_REFUSAL_CAPABILITY_GAP`, 13 `SAFE_REFUSAL`, 0 unsafe.
+PILOT, dev, diagnostic (agreement with the implementer encoding): intent 32/37; goal+entity on expressible requests
+16/34; premise recall 100/132, precision 101/164; multi-goal 4/4; unsupported flagged 0/3; case extraction correct 1/31;
+end to end 0 served, 0 unsafe, 8 safe refusals, 19 capability gaps, 4 extraction-caused refusals, 1 no-parse.
+LOCKED: **NOT_MEASURED**. Deterministic ceiling with gold facts (locked): 7 `CORRECT_COMPLETE` + 1
+`CORRECT_PART_FLAGGED`, 23 `FALSE_REFUSAL_CAPABILITY_GAP`, 13 `SAFE_REFUSAL`, 0 unsafe.
 
-## G. Where failures come from (gold arm, offline)
+## G. Where failures come from
+
+Live pilot (model): request operands omitted (14 rows), measures without their solid (20), added `altitude` facts (7),
+invented labels `M` / `G_A'BD` (4), three-point right angles (8), no `unsupported` ever used; all refused by the
+planner/schema before grounding. Gold arm (offline):
 
 - **Source Grounding false refusals of faithful extractions:** unlabelled base "đáy là hình vuông/chữ nhật" (9 cases,
   `OBJECT_NOT_IN_QUOTE`; no quote variant helps); "dài bao nhiêu" (`PREDICATE_NOT_IN_QUOTE`); "… thì đoạn AC' bằng mấy"
@@ -70,7 +79,7 @@ need its own wave and a fresh held-out set).
 
 ## I. New false serves in live
 
-Not measured. Offline gold arm: 0 unsafe rows.
+Pilot: **0** (0/32 unsafe; exact 95 % upper bound 10.9 %). Locked: not measured. Offline gold arm: 0 unsafe rows.
 
 ## J. Prompt / schema / product changes
 

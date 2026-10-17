@@ -32,8 +32,9 @@ Independent NLU extraction evaluation (2026-10-17, LOCAL, no product change):
 [`independent-nlu-extraction-evaluation`](../evaluation/geometry/runs/independent-nlu-extraction-evaluation/report.md)
 preregisters a blind-authored 60-case corpus, oracle and gold facts. Measured offline only: the deterministic ceiling
 (gold facts serve 8/44 locked cases) and Source Grounding false refusals of common wordings (unlabelled base
-"đáy là hình vuông", "dài bao nhiêu", "tính cos²", "Tính BD'"). LLM intent/entity/goal accuracy **NOT_MEASURED**
-(live not authorized). Level **IMPLEMENTED + MEASURED (offline ceiling)**; no human validation.
+"đáy là hình vuông", "dài bao nhiêu", "tính cos²", "Tính BD'"). Live pilot on the 16 dev cases × 2 (gemini-2.5-flash,
+32 calls): intent 32/37, goal+entity 16/34 on expressible requests, 0 unsafe, 0 served — **MEASURED_LIVE (dev pilot,
+diagnostic)**; held-out (locked) extraction accuracy **NOT_MEASURED**. No human validation.
 
 Current offline grounding research (2026-10-17, product `94b3437b`):
 [`hybrid-semantic-grounding-reliability`](../evaluation/geometry/runs/hybrid-semantic-grounding-reliability/report.md)

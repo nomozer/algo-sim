@@ -8,9 +8,10 @@ Branch `research/independent-nlu-extraction-evaluation` from `main` `76dca142`; 
 MATCH). Preregistered offline: 60-case Vietnamese corpus by a blind AI author (dev 16 / locked 44), independent Fraction
 oracle (56 values; 44 re-checked by a second agent), implementer gold Typed Facts, single-arm harness reusing the A/B
 pilot helpers, two read-only audits (extraction architecture; evaluation, NOT_READY → all blockers fixed). Gold arm
-(0 calls): 8/44 locked served, 23 capability/grounding gaps, 13 safe refusals. **Live: LIVE_NOT_AUTHORIZED, 0 calls**;
-request: [`approval-request.md`](evaluation/geometry/runs/independent-nlu-extraction-evaluation/approval-request.md)
-(76 requests max, USD 1.83 cap). cache125/LLM_ONLY/Hybrid NO-GO.
+(0 calls): 8/44 locked served, 23 capability/grounding gaps, 13 safe refusals. **Live pilot (owner GO pilot only):
+32 requests, est. USD 0.137, 0 unsafe, 0 served; intent 32/37, goal+entity 16/34 expressible** — operands of requests
+omitted and measures without their solid dominate ([`analysis`](evaluation/geometry/runs/independent-nlu-extraction-evaluation/results/live-pilot/analysis.md)).
+Locked 44 not run; needs the owner's GO. cache125/LLM_ONLY/Hybrid NO-GO.
 
 ## INTEGRATED ON `main` — Hybrid semantic grounding reliability, 2026-10-17
 
