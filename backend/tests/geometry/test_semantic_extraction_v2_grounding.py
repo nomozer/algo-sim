@@ -219,3 +219,22 @@ def test_label_then_cue_order_names_the_solid_too(quote, right):
     else:
         r = run_fact_route(text, p)
         assert (r.status, r.code) == ("REFUSED", "PREDICATE_NOT_IN_QUOTE"), (r.answers, r.code)
+
+
+@pytest.mark.parametrize("other", [
+    "hình hộp chữ nhật ABCD.EFGH", "ABCD.EFGH là một lăng trụ đứng",
+    "hình hộp chữ nhật EFGH.A'B'C'D'", "hình hộp chữ nhật ABCD.B'C'D'A'",
+    "ABCD là một lăng trụ đứng",
+])
+def test_rightness_cannot_be_borrowed_from_a_shared_face_or_wrong_correspondence(other):
+    prefix = f"Cho hình hộp ABCD.A'B'C'D' và {other}"
+    text = prefix + ", đáy ABCD là hình chữ nhật, AB = 3, AD = 4, AA' = 12. Tính độ dài AC'."
+    r = run_fact_route(text, _right_box("prism", True, prefix))
+    assert (r.status, r.code) == ("REFUSED", "PREDICATE_NOT_IN_QUOTE"), (r.answers, r.code)
+
+
+@pytest.mark.parametrize("name", ["BCDA.B'C'D'A'", "ADCB.A'D'C'B'", "A'B'C'D'.ABCD"])
+def test_rightness_accepts_the_same_prism_with_cyclic_reflected_or_swapped_faces(name):
+    prefix = f"Cho hình hộp chữ nhật {name}"
+    text = prefix + ", đáy ABCD là hình chữ nhật, AB = 3, AD = 4, AA' = 12. Tính độ dài AC'."
+    served(text, _right_box("prism", True, prefix), {"q": Fraction(169)})

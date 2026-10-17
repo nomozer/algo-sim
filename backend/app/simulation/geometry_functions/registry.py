@@ -628,13 +628,19 @@ def _mat_cua_khoi_sau_cum(q: str, cum: re.Pattern[str], vertices: list[str]) -> 
 
 def _khoi_dung(c: LoiGoi) -> bool:
     """A right-prism cue that names THIS prism: `<cue> ABCD.A'B'C'D'` or `ABCD.A'B'C'D' là (một) <cue>`."""
-    base = list(c.args.base)
+    wanted = list(zip(c.args.base, c.args.top))
     for q in c.quotes:
-        if _mat_cua_khoi_sau_cum(q, _DUNG_KHOI, base):
-            return True
-        for _dau, cuoi, phan in _tu_nhan(q):
-            if (any(_cung_da_giac(p, base) for p in phan)
-                    and re.match(r"\s+là\s+(?:một\s+)?(?:" + _DUNG_KHOI.pattern + ")", q[cuoi:], re.IGNORECASE)):
+        for dau, cuoi, phan in _tu_nhan(q):
+            if len(phan) != 2 or any(len(p) != len(wanted) for p in phan):
+                continue
+            # Both faces AND their vertex correspondence identify a prism; a shared base alone does not.
+            pairs = list(zip(*phan))
+            if not any(order[i:] + order[:i] == wanted for order in
+                       (pairs, pairs[::-1], [(b, a) for a, b in pairs], [(b, a) for a, b in pairs[::-1]])
+                       for i in range(len(pairs))):
+                continue
+            if (any(m.end() <= dau and not q[m.end():dau].strip() for m in _DUNG_KHOI.finditer(q))
+                    or re.match(r"\s+là\s+(?:một\s+)?(?:" + _DUNG_KHOI.pattern + ")", q[cuoi:], re.IGNORECASE)):
                 return True
     return False
 

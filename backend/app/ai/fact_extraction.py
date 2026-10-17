@@ -89,13 +89,12 @@ def _contract_v3() -> dict[str, Any]:
     def one(*values: str) -> dict[str, Any]:
         return {"type": "STRING", "enum": list(values)}
 
-    num = {"type": "STRING", "pattern": NUMBER_PATTERN, "description": flat["value"]["description"]}
+    num = {"type": "STRING", "pattern": NUMBER_PATTERN}
     solid = {"type": "STRING", "description": flat["solid"]["description"]}
-    common = {"id": {"type": "STRING"}, "role": one("premise", "prove", "condition", "question"),
+    common = {"id": {"type": "STRING", "minLength": 1}, "role": one("premise", "prove", "condition", "question"),
               "negated": {"type": "BOOLEAN"}, "ambiguous": {"type": "BOOLEAN"},
               "quotes": {"type": "ARRAY", "items": {"type": "STRING"}, "minItems": 1}}
-    rel = {"plane_relation": {k: v for k, v in flat["plane_relation"].items() if k != "description"},
-           "plane_name": lbl, "point": lbl, "points_b": labels(2), "points_a": labels(2, 2)}
+    ref = {"type": "STRING", "minLength": 1}
 
     def v(kind: str, need: tuple[str, ...], **props: Any) -> dict[str, Any]:
         return {"type": "OBJECT", "properties": {**common, "kind": one(kind), **props},
@@ -114,29 +113,43 @@ def _contract_v3() -> dict[str, Any]:
         v("perpendicular", ("points_a", "points_b"), points_a=labels(2), points_b=labels(2)),
         v("altitude", ("points", "solid"), points=labels(2, 2), solid=solid),
         v("projection", ("point", "at", "points"), point=lbl, at=lbl, points=labels(2)),
-        v("projection", ("point", "at", "line_ref"), point=lbl, at=lbl, line_ref={"type": "STRING"}),
-        v("point_def", ("point", "point_kind", "points"), point=lbl, point_kind=one("midpoint", "centroid"), points=labels(2)),
-        v("point_def", ("point", "point_kind", "points_a", "points_b"), point=lbl,
-          point_kind=one("intersect_line_line", "intersect_line_plane"), points_a=labels(2, 2), points_b=labels(2)),
+        v("projection", ("point", "at", "line_ref"), point=lbl, at=lbl, line_ref=ref),
+        *[v("point_def", ("point", "point_kind", "points"), point=lbl, point_kind=one(kind), points=labels(n, n))
+          for kind, n in (("midpoint", 2), ("centroid", 3))],
+        *[v("point_def", ("point", "point_kind", "points_a", "points_b"), point=lbl,
+            point_kind=one(kind), points_a=labels(2, 2), points_b=labels(n, n if n == 2 else 0))
+          for kind, n in (("intersect_line_line", 2), ("intersect_line_plane", 3))],
         v("section", ("solid", "points"), solid=solid, points=labels(3)),
-        v("section", ("solid", "point", "points_b", "plane_relation"), solid=solid, **rel),
         v("intersection_line", ("points_a", "points_b"), points_a=labels(3), points_b=labels(3)),
         # questions: the quantity fixes which operands must be present
         v("question", ("quantity", "points"), quantity=one("length"), points=labels(2, 2)),
-        v("question", ("quantity", "point_kind", "points", "points_b"), quantity=one("length", "distance"),
-          point_kind=one("midpoint", "centroid"), points=labels(2), points_b=labels(1)),
-        v("question", ("quantity", "points_a", "points_b"), quantity=one("distance"), points_a=labels(1), points_b=labels(2)),
-        v("question", ("quantity", "points_a", "line_ref"), quantity=one("distance"), points_a=labels(1, 1), line_ref={"type": "STRING"}),
+        *[v("question", ("quantity", "point_kind", "points", "points_b"), quantity=one(quantity),
+            point_kind=one(kind), points=labels(n, n), points_b=labels(1, 1) if quantity == "length" else labels(2))
+          for kind, n in (("midpoint", 2), ("centroid", 3)) for quantity in ("length", "distance")],
+        *[v("question", ("quantity", "point_kind", "points", "line_ref"), quantity=one("distance"),
+            point_kind=one(kind), points=labels(n, n), line_ref=ref)
+          for kind, n in (("midpoint", 2), ("centroid", 3))],
+        v("question", ("quantity", "points_a", "points_b"), quantity=one("distance"), points_a=labels(1), points_b=labels(1)),
+        v("question", ("quantity", "points_a", "line_ref"), quantity=one("distance"), points_a=labels(1, 1), line_ref=ref),
         v("question", ("quantity", "points_a", "points_b"), quantity=one("angle"), points_a=labels(2), points_b=labels(2)),
         v("question", ("quantity", "points"), quantity=one("area"), points=labels(3)),
         v("question", ("quantity", "solid", "points"), quantity=one("area"), solid=solid, points=labels(3)),
-        v("question", ("quantity", "solid", "point", "points_b", "plane_relation"), quantity=one("area"), solid=solid, **rel),
         v("question", ("quantity", "solid"), quantity=one("volume"), solid=solid),
         v("unsupported", ("reason",), reason={"type": "STRING", "description": "yêu cầu/mệnh đề lược đồ không diễn đạt đúng, "
                                                 "hoặc đề thiếu/không rõ thông tin — không bịa toán hạng"},
-          points=labels(1), points_a=labels(1), points_b=labels(1), solid=solid, value={"type": "STRING"},
+          points=labels(1), points_a=labels(1), points_b=labels(1), solid=solid, value=num,
           quantity={k: x for k, x in flat["quantity"].items() if k != "nullable"}),
     ]
+    for kind in ("section", "question"):
+        goal = {"quantity": one("area")} if kind == "question" else {}
+        required = ("quantity",) if goal else ()
+        variants.extend([
+            v(kind, (*required, "solid", "point", "points_b", "plane_relation"), **goal, solid=solid, point=lbl,
+              plane_relation=one("parallel", "perpendicular"), points_b=labels(3), plane_name=lbl),
+            v(kind, (*required, "solid", "point", "points_a", "points_b", "plane_name", "plane_relation"),
+              **goal, solid=solid, point=lbl, plane_relation=one("parallel_two_lines"), plane_name=lbl,
+              points_a=labels(2, 2), points_b=labels(2, 2)),
+        ])
     return {"type": "OBJECT", "properties": {"facts": {"type": "ARRAY", "items": {"anyOf": variants}}}, "required": ["facts"]}
 
 
@@ -150,12 +163,13 @@ def schema_accepts(schema: dict[str, Any], value: Any) -> bool:
     if t == "OBJECT":
         props = schema.get("properties", {})
         return (isinstance(value, dict) and all(value.get(k) is not None for k in schema.get("required", []))
-                and all(k in props and schema_accepts(props[k], x) for k, x in value.items() if x is not None))
+                and all(k in props and schema_accepts(props[k], x) for k, x in value.items()))
     if t == "ARRAY":
         return (isinstance(value, list) and schema.get("minItems", 0) <= len(value) <= schema.get("maxItems", len(value))
                 and all(schema_accepts(schema["items"], x) for x in value))
     if t == "STRING":
-        return (isinstance(value, str) and value in schema.get("enum", [value])
+        return (isinstance(value, str) and schema.get("minLength", 0) <= len(value) <= schema.get("maxLength", len(value))
+                and value in schema.get("enum", [value])
                 and (not schema.get("pattern") or re.fullmatch(schema["pattern"], value) is not None))
     if t == "BOOLEAN":
         return isinstance(value, bool)
@@ -225,6 +239,8 @@ def run_ai_fact_route(problem_text: str, transport: Callable[[dict[str, Any]], A
         return KetQuaTuyen("REFUSED", "PROVIDER_ERROR", type(e).__name__, ai=diag)
     try:
         data = parse_response(body, diag)
+        if RESPONSE_CONTRACT == "v3" and not schema_accepts(facts_response_schema("v3"), data):
+            raise _TuChoiAI("SCHEMA_INVALID", "phản hồi không đáp ứng hợp đồng dữ kiện/toán hạng v3")
     except _TuChoiAI as e:
         return KetQuaTuyen("REFUSED", e.code, e.reason, ai=diag)
     r = run_fact_route(problem_text, data)

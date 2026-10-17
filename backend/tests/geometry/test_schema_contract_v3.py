@@ -78,7 +78,7 @@ def test_measured_failure_shapes_are_not_representable(bad):
      "points_a": ["M", "N"], "points_b": ["B", "C"]},
     {"id": "u", "kind": "unsupported", "role": "premise", "quotes": ["một hình chóp"], "reason": "solid not named",
      "ambiguous": True},
-    {"id": "u", "kind": "unsupported", "role": "prove", "quotes": ["MN // BC"], "reason": "parallel", "value": "MN // BC"},
+    {"id": "u", "kind": "unsupported", "role": "prove", "quotes": ["MN // BC"], "reason": "parallel"},
 ])
 def test_unsupported_and_ambiguous_exits_need_no_invented_operand(exit_):
     assert fx.schema_accepts(ITEM, exit_)
@@ -125,3 +125,58 @@ def test_v3_uses_only_the_documented_schema_subset_and_stays_bounded():
     assert set(_keys(V3)) <= ALLOWED, set(_keys(V3)) - ALLOWED
     size = len(json.dumps(V3, ensure_ascii=False))
     assert size < 7 * len(json.dumps(fx.facts_response_schema(), ensure_ascii=False)), size
+
+
+def test_existing_served_described_point_to_result_line_fits_v3():
+    from app.ai.function_route import run_fact_route
+    data = json.loads((RUNS / "goal-directed-function-discovery/corpus.json").read_text(encoding="utf-8"))
+    cases = [c for c in data["positive"] if c["id"] in
+             ("pyr-midpoint-to-result-line", "cuboid-midpoint-to-result-line")]
+    assert len(cases) == 2
+    for c in cases:
+        assert run_fact_route(c["text"], c["payload"]).status == "SERVED"
+        assert fx.schema_accepts(V3, c["payload"]), c["id"]
+
+
+@pytest.mark.parametrize("a,b", [(["A"], ["B"]), (["A", "B"], ["C"]), (["A", "B", "C"], ["S"])])
+def test_distance_preserves_both_operand_orientations(a, b):
+    assert fx.schema_accepts(ITEM, q(quantity="distance", points_a=a, points_b=b))
+
+
+@pytest.mark.parametrize("bad", [
+    {"id": "p", "kind": "point_def", "role": "premise", "quotes": ["M là trung điểm AB"],
+     "point": "M", "point_kind": "midpoint", "points": ["A", "B", "C"]},
+    {"id": "p", "kind": "point_def", "role": "premise", "quotes": ["G là trọng tâm ABC"],
+     "point": "G", "point_kind": "centroid", "points": ["A", "B"]},
+    {"id": "p", "kind": "point_def", "role": "premise", "quotes": ["M = AB giao (SCD)"],
+     "point": "M", "point_kind": "intersect_line_plane", "points_a": ["A", "B"], "points_b": ["S", "C"]},
+    {"id": "s", "kind": "section", "role": "question", "quotes": ["Dựng thiết diện"], "solid": "S.ABCD",
+     "point": "M", "points_b": ["A", "B"], "plane_relation": "parallel_two_lines"},
+    q(quantity="area", solid="S.ABCD", point="M", points_b=["A", "B"], plane_relation="parallel"),
+])
+def test_discriminated_operand_arities_cannot_be_omitted(bad):
+    assert not fx.schema_accepts(ITEM, bad)
+
+
+@pytest.mark.parametrize("extra", [{"negated": None}, {"bogus": None}])
+def test_null_fields_do_not_bypass_contract_validation(extra):
+    assert not fx.schema_accepts(ITEM, q(quantity="length", points=["A", "B"], **extra))
+
+
+def test_nullable_property_accepts_null_only_when_declared():
+    assert fx.schema_accepts({"type": "STRING", "nullable": True}, None)
+    assert not fx.schema_accepts({"type": "STRING"}, None)
+
+
+@pytest.mark.parametrize("bad", [q(id="", quantity="length", points=["A", "B"]),
+    {"id": "u", "kind": "unsupported", "role": "prove", "quotes": ["MN // BC"], "reason": "parallel", "value": "MN // BC"}])
+def test_v3_never_widens_typedfact_id_or_numeric_value(bad):
+    assert not fx.schema_accepts(ITEM, bad)
+
+
+def test_v3_checks_the_returned_contract_before_planning(monkeypatch):
+    monkeypatch.setattr(fx, "RESPONSE_CONTRACT", "v3")
+    malformed = {"facts": [q(quantity="distance", points_a=["A"])]}
+    body = {"candidates": [{"finishReason": "STOP", "content": {"parts": [{"text": json.dumps(malformed)}]}}]}
+    result = fx.run_ai_fact_route("Tính khoảng cách từ A đến (BCD).", lambda _: body)
+    assert (result.status, result.code) == ("REFUSED", "SCHEMA_INVALID")
