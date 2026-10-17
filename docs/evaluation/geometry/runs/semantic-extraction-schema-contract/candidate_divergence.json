@@ -6,10 +6,10 @@
   "run_id": "thesis-final-20260908T160224Z",
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
-  "current_candidate_hash": "40ca7b7a82379e0ee77b9f860aa704029c340137b350513b90e4039f7c424714",
-  "current_candidate_source_commit": "780e8910",
-  "current_product_commit": "780e8910",
-  "current_candidate_frozen_at": "780e8910",
+  "current_candidate_hash": "9a6056bc3ed800078bc31fdf05d1aba8f308fd03311cfb8baca0defee0c27662",
+  "current_candidate_source_commit": "353b75c8",
+  "current_product_commit": "353b75c8",
+  "current_candidate_frozen_at": "353b75c8",
   "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
   "previous_candidate_hash": "9da80c6f3e8efbf8371b29949d7e03abebf5e3b46a5d090615feea4f7f8f78d8",
   "metadata_only_correction": false,
@@ -20,7 +20,7 @@
     "backend/app/simulation/geometry_functions/registry.py"
   ],
   "historical_effect": "Historical NLU GOLD arm: 60 rows, one declared change (L20 REFUSED QUESTION_LOCAL_GIVEN_UNVERIFIED -> REFUSED SOURCE_OBJECT_MISMATCH), served 10 -> 10 (results/historical-gold-delta.json). Earlier measurement bytes unchanged.",
-  "freeze": "clean detached worktree at 780e8910, 110 measured files, --verify MATCH",
+  "freeze": "clean detached worktree at 353b75c8, 110 measured files, --verify MATCH",
   "cache_version": 125,
   "cache_decision": "no bump: product prompt and default (flat) response schema unchanged; research route D (registry, function_route) is not imported by /api/analyze or any cached path",
   "hieu_luc_len_ket_qua_da_do": {
@@ -47,6 +47,12 @@
       "current_product_commit": "912dc2bc",
       "frozen_at": "d856a590",
       "why": "third-round review FAIL (side-face via solid symbol; 32 route tests falsely refused)"
+    },
+    {
+      "current_candidate_hash": "40ca7b7a82379e0ee77b9f860aa704029c340137b350513b90e4039f7c424714",
+      "current_product_commit": "780e8910",
+      "frozen_at": "780e8910",
+      "why": "fourth-round review FAIL (unnamed second solid's 'đáy' bound to the named base)"
     }
   ]
 }
