@@ -11,7 +11,7 @@
 
 ### ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE
 
-- **status:** RESOLVED_ON_RESEARCH_BRANCH — product `94b3437b`, run `hybrid-semantic-grounding-reliability` (integration decision pending). Cube result-line positive serves and parallel-plane negative reaches its registered refusal. Numeric/symbolic `2a` controls verified; `2a√2` remains a reused-reader limitation. Historical description below records the original failure.
+- **status:** RESOLVED — product `94b3437b`, run `hybrid-semantic-grounding-reliability` (on `main` `bd20ac46`, 2026-10-17). Cube result-line positive serves and parallel-plane negative reaches its registered refusal. Numeric/symbolic `2a` controls verified; `2a√2` remains a reused-reader limitation. Historical description below records the original failure.
 - **description:** Every route-B problem that uses a source result line (`line_ref`) must pass the closed premise grammar
   `registry._kiem_nguon_dong`. Its solid forms read "hình chóp", "lăng trụ đứng", "hình hộp chữ nhật" — not "hình lập phương".
   A cube problem with "Tìm giao tuyến …" is therefore refused `SOURCE_PREMISE_UNREAD` before any geometry is built.

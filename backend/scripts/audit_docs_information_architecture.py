@@ -191,6 +191,8 @@ ALLOWED_CANONICAL_ACTIONS = [
     "POST_SCENE3D_INTEGRATION_RESEARCH_PRIORITY_DECISION",
     # Resumed semantic grounding slice: complete final gates, then request its own integration GO.
     "HYBRID_SEMANTIC_GROUNDING_INTEGRATION_DECISION",
+    # hybrid-semantic-grounding-reliability integration (2026-10-17): on origin/main; next is the user's research priority.
+    "POST_SEMANTIC_GROUNDING_INTEGRATION_RESEARCH_PRIORITY_DECISION",
 ]
 CANONICAL_NEXT_ACTION = ALLOWED_CANONICAL_ACTIONS[0]
 

@@ -33,7 +33,7 @@
   },
   "full_geometry": "PASS 7949/0 fail/9 xfail inside clean detached T3 at bd2dc080",
   "t3": "FULL_PRODUCT_GATE_PASS at clean detached bd2dc080 (verification/t3-attempt3.json); attempts 1 (b4be4b98, 16 test failures) and 2 (build EPERM) keep FAIL receipts",
-  "integration": "PENDING user decision in this session; record goes to integration.md",
+  "integration": "MERGED_AND_PUSHED: user GO in session; main fast-forwarded 1f635ed5 -> bd20ac46, pushed without force; branch deleted with -d; record integration.md",
   "protected_user_file": "frontend/public/favicon.svg, untouched and unstaged",
   "deferred_environment_cleanup": [
     ".superpowers/worktrees/goal-bounded",

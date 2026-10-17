@@ -10,7 +10,7 @@
 
 **2026-10-17, grounding continuation:** the user authorized completion of the interrupted semantic/source reliability
 slice. Product `94b3437b`; independent review clear, offline false serves closed on the registered cases; clean detached
-T3 `bd2dc080` PASS. Next: the concrete integration decision. No G16/G17 or Hybrid enablement. Next research proposal: separately
+T3 `bd2dc080` PASS. User GO given: `main` fast-forwarded to `bd20ac46` and pushed ([`integration`](evaluation/geometry/runs/hybrid-semantic-grounding-reliability/integration.md)). Next: the user's research priority. No G16/G17 or Hybrid enablement. Next research proposal: separately
 preregistered/budgeted independent extraction evaluation targeting remaining construction/reference false refusals.
 Evidence: [`hybrid-semantic-grounding-reliability`](evaluation/geometry/runs/hybrid-semantic-grounding-reliability/report.md).
 
@@ -47,7 +47,7 @@ Group A remains integrated on main; Hybrid stays off. Presentation backlog, orbi
 No Group B, new family, new Planner/FactGraph/DSL or product enablement. No additional task starts without that decision.
 
 ```text
-CANONICAL_NEXT_ACTION = HYBRID_SEMANTIC_GROUNDING_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = POST_SEMANTIC_GROUNDING_INTEGRATION_RESEARCH_PRIORITY_DECISION
 TARGET_NEXT_ACTION_AFTER_WAVE = OCR_AFTER_FAMILY_EXPANSION
 ```
 

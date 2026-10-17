@@ -1,8 +1,12 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL — Hybrid semantic grounding reliability, 2026-10-17
+## INTEGRATED ON `main` — Hybrid semantic grounding reliability, 2026-10-17
 
-CANONICAL_NEXT_ACTION = HYBRID_SEMANTIC_GROUNDING_INTEGRATION_DECISION
+CANONICAL_NEXT_ACTION = POST_SEMANTIC_GROUNDING_INTEGRATION_RESEARCH_PRIORITY_DECISION
+
+**Integration (user GO in session, 2026-10-17):** `main` fast-forwarded `1f635ed5` → `bd20ac46`, pushed without force;
+research branch deleted with `-d`, verification worktree deregistered (leftover folder kept); record
+[`integration.md`](evaluation/geometry/runs/hybrid-semantic-grounding-reliability/integration.md). Hybrid NO-GO.
 
 Resumed Claude's interrupted work on `research/hybrid-semantic-grounding-reliability`; preserved 8 working files outside
 the repository before edits. Final product `94b3437b`; clean refreeze candidate `57c7f5db…` (110 files), MATCH. Offline
