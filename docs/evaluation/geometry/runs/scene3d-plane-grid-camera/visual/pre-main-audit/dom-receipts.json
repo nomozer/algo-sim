@@ -1,0 +1,529 @@
+{
+  "schema": "PRE_MAIN_DOM_CAPTURE/1",
+  "live_ai_calls": 0,
+  "results": [
+    {
+      "id": "refusal-source-object-mismatch",
+      "feature": "F5",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "527b182888f80a4cb7f895602b47b9fcc5c6ef4bb2f6186aa0e9c3dddee382df",
+      "served_envelope_sha256": "3659db2ba9c53974afb7225a4bb898989bef8bebcac31d4914de396c3ce17002",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "unsupported",
+        "failure_category": "verification_gap",
+        "http_status": 200,
+        "reason_code": "SOURCE_OBJECT_MISMATCH",
+        "refusal_cause": "UNKNOWN"
+      },
+      "screenshot": "F5__refusal-source-object-mismatch.png",
+      "dom": {
+        "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+        "body": "Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình.",
+        "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+        "stage_label": "Không xác định được từ phản hồi cũ",
+        "kind_label": "chạy được nhưng chưa đủ bằng chứng để phát",
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 0
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "refusal-source-goal-as-premise",
+      "feature": "F5",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "47e132f07778ab6dcd1a86cc38e204ed6fc069bdeafce64cbaf09a0d7e7fa68b",
+      "served_envelope_sha256": "d64c5ff0132ac6ab5161b3ee8989e7fa864eeb5d86fb21a07ce332488288cb04",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "unsupported",
+        "failure_category": "verification_gap",
+        "http_status": 200,
+        "reason_code": "GOAL_CLAUSE_NOT_PREMISE",
+        "refusal_cause": "UNKNOWN"
+      },
+      "screenshot": "F5__refusal-source-goal-as-premise.png",
+      "dom": {
+        "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+        "body": "Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình.",
+        "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+        "stage_label": "Không xác định được từ phản hồi cũ",
+        "kind_label": "chạy được nhưng chưa đủ bằng chứng để phát",
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 0
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "refusal-source-request-unanswered",
+      "feature": "F5",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "2c7d9ea5133253ea837e53c2d31e06971097d43a2fba0e5453f8184b93e366f6",
+      "served_envelope_sha256": "34150baa784f0ba06c10b8e306729fc06987a0bf58b109d83a397259823a0dfc",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "unsupported",
+        "failure_category": "verification_gap",
+        "http_status": 200,
+        "reason_code": "REQUEST_NOT_ANSWERED",
+        "refusal_cause": "UNKNOWN"
+      },
+      "screenshot": "F5__refusal-source-request-unanswered.png",
+      "dom": {
+        "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+        "body": "Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình.",
+        "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+        "stage_label": "Không xác định được từ phản hồi cũ",
+        "kind_label": "chạy được nhưng chưa đủ bằng chứng để phát",
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 0
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "refusal-result-engine-self-check",
+      "feature": "F5",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "b326077480b9bd6b99e78f18ad76fce1352d733c5ec8d3b119121ce257dcab44",
+      "served_envelope_sha256": "8cbee89eab3cb2aad5eb36ee4b34d764d27e2cd80fd8a715d97eec7ed0a723cd",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "unsupported",
+        "failure_category": "verification_gap",
+        "http_status": 200,
+        "reason_code": "ENGINE_SELF_CHECK_FAILED",
+        "refusal_cause": "UNKNOWN"
+      },
+      "screenshot": "F5__refusal-result-engine-self-check.png",
+      "dom": {
+        "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+        "body": "Hệ đã thử dựng nhưng kết quả chưa qua được khâu kiểm chứng, nên không hiển thị hình chưa được kiểm.",
+        "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+        "stage_label": "Không xác định được từ phản hồi cũ",
+        "kind_label": "chạy được nhưng chưa đủ bằng chứng để phát",
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 0
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "refusal-result-kernel-check",
+      "feature": "F5",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "fc1951554919da87ce3c79e507d5c0181aa91198d205ab41970924c605f09409",
+      "served_envelope_sha256": "58c40cdeb944067af308de08497b5d0fe32925b5a05641a5157e92e5920f8fa4",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "unsupported",
+        "failure_category": "verification_gap",
+        "http_status": 200,
+        "reason_code": "PREVIEW_RESULT_INVALID",
+        "refusal_cause": "UNKNOWN"
+      },
+      "screenshot": "F5__refusal-result-kernel-check.png",
+      "dom": {
+        "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+        "body": "Hệ đã thử dựng nhưng kết quả chưa qua được khâu kiểm chứng, nên không hiển thị hình chưa được kiểm.",
+        "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+        "stage_label": "Không xác định được từ phản hồi cũ",
+        "kind_label": "chạy được nhưng chưa đủ bằng chứng để phát",
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 0
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "refusal-result-scene-metric",
+      "feature": "F5",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "53c7ab4de3829ee0c460a16bb048345bda719a8f21af17b06ef753d0123d105f",
+      "served_envelope_sha256": "bd4a1e4afe77a1391eb1874fb5cf2cacf378a70e96536bf3699a15b77276ada1",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "unsupported",
+        "failure_category": "verification_gap",
+        "http_status": 200,
+        "reason_code": "METRIC_NOT_EUCLIDEAN",
+        "refusal_cause": "UNKNOWN"
+      },
+      "screenshot": "F5__refusal-result-scene-metric.png",
+      "dom": {
+        "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+        "body": "Hệ đã thử dựng nhưng kết quả chưa qua được khâu kiểm chứng, nên không hiển thị hình chưa được kiểm.",
+        "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+        "stage_label": "Không xác định được từ phản hồi cũ",
+        "kind_label": "chạy được nhưng chưa đủ bằng chứng để phát",
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 0
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "refusal-inconclusive-figure",
+      "feature": "F5",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "6478aff4bb3a87640df97c1bdbacd8fa59ab539f3d8ca53b1d8f55ee7ca2d6dc",
+      "served_envelope_sha256": "947b357f2510eaf7085708c77db6df1ec98bc054411a2c12a1040e4062a46688",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "unsupported",
+        "failure_category": "verification_gap",
+        "http_status": 200,
+        "reason_code": "FIGURE_NOT_UNIQUE",
+        "refusal_cause": "UNKNOWN"
+      },
+      "screenshot": "F5__refusal-inconclusive-figure.png",
+      "dom": {
+        "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+        "body": "Hệ chưa có chứng chỉ để kết luận từ dữ kiện: kiểm tra trên một hình dựng chưa đủ để kết luận cho mọi hình thoả đề, nên hệ không đưa ra kết luận.",
+        "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+        "stage_label": "Không xác định được từ phản hồi cũ",
+        "kind_label": "chạy được nhưng chưa đủ bằng chứng để phát",
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 0
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "refusal-inconclusive-negated",
+      "feature": "F5",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "6b2d064594694fe0cfd1a331d0b6d2737c26cb7416d2b64b1fed48ea5ed35b2b",
+      "served_envelope_sha256": "bcc5b36a204cd6fc133778612cf07bea59bf40e3978feca30f9f923e31761024",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "unsupported",
+        "failure_category": "verification_gap",
+        "http_status": 200,
+        "reason_code": "NEGATED_CLAUSE",
+        "refusal_cause": "UNKNOWN"
+      },
+      "screenshot": "F5__refusal-inconclusive-negated.png",
+      "dom": {
+        "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+        "body": "Hệ chưa có chứng chỉ để kết luận từ dữ kiện: kiểm tra trên một hình dựng chưa đủ để kết luận cho mọi hình thoả đề, nên hệ không đưa ra kết luận.",
+        "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+        "stage_label": "Không xác định được từ phản hồi cũ",
+        "kind_label": "chạy được nhưng chưa đủ bằng chứng để phát",
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 0
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "refusal-inconclusive-proof-only",
+      "feature": "F5",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "94dde41314d12b3fc57e51e07098a4d30238dbe6e3f8baf7ed6ebcc0d5712252",
+      "served_envelope_sha256": "8bbdedafbac145358fa35170806a4417b9d6cc6f41bdae531935e60025727164",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "unsupported",
+        "failure_category": "verification_gap",
+        "http_status": 200,
+        "reason_code": "PROOF_UNVERIFIABLE",
+        "refusal_cause": "UNKNOWN"
+      },
+      "screenshot": "F5__refusal-inconclusive-proof-only.png",
+      "dom": {
+        "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+        "body": "Hệ chưa có chứng chỉ để kết luận từ dữ kiện: kiểm tra trên một hình dựng chưa đủ để kết luận cho mọi hình thoả đề, nên hệ không đưa ra kết luận.",
+        "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+        "stage_label": "Không xác định được từ phản hồi cũ",
+        "kind_label": "chạy được nhưng chưa đủ bằng chứng để phát",
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 0
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "refusal-missing-dimension",
+      "feature": "F6",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "d1528fcaeadb0fcb6abbaaefc38d245c7c96b32acb7d6a09aeb22c01e2b9a05e",
+      "served_envelope_sha256": "140efbedfded3c270a5c96bbc33a57247f1e4282d76ec9a0090cb3f6b3bea526",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "unsupported",
+        "failure_category": "insufficient_specification",
+        "http_status": 200,
+        "reason_code": "MISSING_DIMENSION",
+        "refusal_cause": "UNKNOWN"
+      },
+      "screenshot": "F6__refusal-missing-dimension.png",
+      "dom": {
+        "eyebrow": "CHƯA ĐỦ DỮ KIỆN",
+        "body": "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình.",
+        "hint": "Nếu đề thuộc dạng hệ dựng được và đã có đủ giả thiết, em có thể gửi lại để hệ phân tích lại.",
+        "stage_label": "Không xác định được từ phản hồi cũ",
+        "kind_label": "đề chưa đủ dữ kiện",
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 0
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "refusal-missing-ambiguous",
+      "feature": "F6",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "2e2e87a327e2caa594e2fdf4ea5d4a7273ff66255f6a42005398faf6863331b5",
+      "served_envelope_sha256": "d6f4bab4a80b4e0ea20572811f2fa83952d81f205bcfbd3794a1a7ea4919abcb",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "unsupported",
+        "failure_category": "insufficient_specification",
+        "http_status": 200,
+        "reason_code": "AMBIGUOUS_FACT",
+        "refusal_cause": "UNKNOWN"
+      },
+      "screenshot": "F6__refusal-missing-ambiguous.png",
+      "dom": {
+        "eyebrow": "CHƯA ĐỦ DỮ KIỆN",
+        "body": "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình.",
+        "hint": "Nếu đề thuộc dạng hệ dựng được và đã có đủ giả thiết, em có thể gửi lại để hệ phân tích lại.",
+        "stage_label": "Không xác định được từ phản hồi cũ",
+        "kind_label": "đề chưa đủ dữ kiện",
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 0
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "refusal-missing-underdetermined",
+      "feature": "F6",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "615384c5e65860bdf6d36323805d99707b5b8c4d8030725bb0d282cb633b0042",
+      "served_envelope_sha256": "2019f12b73f41232a5608b8101bfe57f9f49a74e99a4188765c120b50dec95b1",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "unsupported",
+        "failure_category": "insufficient_specification",
+        "http_status": 200,
+        "reason_code": "UNDERDETERMINED_POINT",
+        "refusal_cause": "UNKNOWN"
+      },
+      "screenshot": "F6__refusal-missing-underdetermined.png",
+      "dom": {
+        "eyebrow": "CHƯA ĐỦ DỮ KIỆN",
+        "body": "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình.",
+        "hint": "Nếu đề thuộc dạng hệ dựng được và đã có đủ giả thiết, em có thể gửi lại để hệ phân tích lại.",
+        "stage_label": "Không xác định được từ phản hồi cũ",
+        "kind_label": "đề chưa đủ dữ kiện",
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 0
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "refusal-invalid-zero-length",
+      "feature": "F6-SOURCE",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "b294049682dc1ff0e13bf846f303f977fa61199630f57dc809c5cfc10b1b05d3",
+      "served_envelope_sha256": "b96145b264c787771174185c88bc42b58f21c9d81850d01873ee87704f1c8dfa",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "unsupported",
+        "failure_category": "geometry_generation_failed",
+        "http_status": 200,
+        "reason_code": "NON_POSITIVE_LENGTH",
+        "refusal_cause": "SOURCE"
+      },
+      "screenshot": "F6-SOURCE__refusal-invalid-zero-length.png",
+      "dom": {
+        "eyebrow": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+        "body": "Đề bài cho một số liệu bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé.",
+        "hint": null,
+        "stage_label": "Không xác định được từ phản hồi cũ",
+        "kind_label": "chưa dựng được chương trình mô phỏng",
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 0
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "served-H01_CUBE",
+      "feature": "F3",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "2c3da7de1a9bc5d275daffffcb85a1cfb92599d4a875a1062f4e09ea3e0f4d58",
+      "served_envelope_sha256": "d0dd93b1e06747236a29ff13450275381cb80c9ec515aafb9fac2c5dba0f3070",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "ok",
+        "http_status": 200
+      },
+      "screenshot": "F3__served-H01_CUBE.png",
+      "dom": {
+        "eyebrow": "",
+        "body": null,
+        "hint": null,
+        "stage_label": null,
+        "kind_label": null,
+        "length_unit": [
+          "Tỉ lệ dựng: a = 1 đơn vị dựng"
+        ],
+        "route_d_observation": [],
+        "canvases": 1
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "served-H14_REGULAR_TETRAHEDRON",
+      "feature": "F3",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "36fe87e84b303f178ecf440a8f7dc076f9720afc941525101ed319d744cc2798",
+      "served_envelope_sha256": "6016d46034563bbf0420632488ff740dd783252bcfbfa9d0b4afc035fb47b094",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "ok",
+        "http_status": 200
+      },
+      "screenshot": "F3__served-H14_REGULAR_TETRAHEDRON.png",
+      "dom": {
+        "eyebrow": "",
+        "body": null,
+        "hint": null,
+        "stage_label": null,
+        "kind_label": null,
+        "length_unit": [
+          "Tỉ lệ dựng: a = 1 đơn vị dựng"
+        ],
+        "route_d_observation": [],
+        "canvases": 1
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "served-pyramid-midpoint-area-AB",
+      "feature": "F3-none",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "8b49b75eabfe7b7fc80714a41deeb125fba1d3f744623739c84a71af83e94934",
+      "served_envelope_sha256": "547756865bc0e9032ef36487407b67e62626d6acf10ba9bc683a3ace0a092bde",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "ok",
+        "http_status": 200
+      },
+      "screenshot": "F3-none__served-pyramid-midpoint-area-AB.png",
+      "dom": {
+        "eyebrow": "",
+        "body": null,
+        "hint": null,
+        "stage_label": null,
+        "kind_label": null,
+        "length_unit": [],
+        "route_d_observation": [],
+        "canvases": 1
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED",
+      "feature": "F4-product",
+      "path": "PRODUCT /api/analyze → store → SimulationWorkspace",
+      "manifest_response_sha256": "8192af8d654b81d20f9e25ed0d5558c11b29833f20f29458a726ebd6201eed6f",
+      "served_envelope_sha256": "09cafc54f5aaa701dd08f4bb631ae47309aae14051ca171a2ac69acdacfca6a9",
+      "envelope_identical_to_fixture": true,
+      "expected": {
+        "envelope_status": "ok",
+        "http_status": 200
+      },
+      "screenshot": "F4-product__served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED.png",
+      "dom": {
+        "eyebrow": "",
+        "body": null,
+        "hint": null,
+        "stage_label": null,
+        "kind_label": null,
+        "length_unit": [
+          "Tỉ lệ dựng: a = 1 đơn vị dựng"
+        ],
+        "route_d_observation": [],
+        "canvases": 1
+      },
+      "leaks": [],
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED",
+      "feature": "F4-component",
+      "path": "COMPONENT HARNESS Scene3DExplorer(scene=envelope.scene3d, routeD=response.route_d)",
+      "manifest_response_sha256": "8192af8d654b81d20f9e25ed0d5558c11b29833f20f29458a726ebd6201eed6f",
+      "harness_response_sha256": "8192af8d654b81d20f9e25ed0d5558c11b29833f20f29458a726ebd6201eed6f",
+      "screenshot": "F4-component__served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED.png",
+      "dom": {
+        "length_unit": [
+          "Tỉ lệ dựng: a = 1 đơn vị dựng"
+        ],
+        "route_d_observation": [
+          "Trên hình đã dựng, điều này đúng — đây là quan sát trên một hình, không phải chứng minh tổng quát."
+        ],
+        "harness_sha": "8192af8d654b81d20f9e25ed0d5558c11b29833f20f29458a726ebd6201eed6f"
+      },
+      "proven_wording": false,
+      "page_errors": []
+    },
+    {
+      "id": "served-H01_CUBE",
+      "feature": "F4-component",
+      "path": "COMPONENT HARNESS Scene3DExplorer(scene=envelope.scene3d, routeD=response.route_d)",
+      "manifest_response_sha256": "2c3da7de1a9bc5d275daffffcb85a1cfb92599d4a875a1062f4e09ea3e0f4d58",
+      "harness_response_sha256": "2c3da7de1a9bc5d275daffffcb85a1cfb92599d4a875a1062f4e09ea3e0f4d58",
+      "screenshot": "F4-component__served-H01_CUBE.png",
+      "dom": {
+        "length_unit": [
+          "Tỉ lệ dựng: a = 1 đơn vị dựng"
+        ],
+        "route_d_observation": [],
+        "harness_sha": "2c3da7de1a9bc5d275daffffcb85a1cfb92599d4a875a1062f4e09ea3e0f4d58"
+      },
+      "proven_wording": false,
+      "page_errors": []
+    }
+  ]
+}

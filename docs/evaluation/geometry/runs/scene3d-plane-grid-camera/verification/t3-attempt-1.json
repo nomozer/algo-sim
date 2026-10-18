@@ -1,0 +1,20 @@
+{
+  "schema": "T3_ATTEMPT/1",
+  "run": "scene3d-plane-grid-camera",
+  "date": "2026-10-18",
+  "checkout": "clean detached worktree .superpowers/worktrees/t3-scene3d-pre-main at 7495b7c387ee1250456bce3828d84890bd9bedc0 (0 changed/untracked; frontend/node_modules = junction to the main checkout's)",
+  "command": "node scripts/full-gate.mjs (from frontend/, ALLOW_LIVE_AI=0, empty GEMINI_API_KEY; log outside the worktree, copied to verification/t3-attempt-1.log)",
+  "log_sha256": "a35fc29e248adfd4a4359ac15397803c154452255e20c2441572b9e9ccca39ed",
+  "label": "FULL_PRODUCT_GATE_FAIL",
+  "gates": {
+    "backend_pytest": "8 failed, 10820 passed, 1 skipped, 2 deselected, 9 xfailed",
+    "frontend_vitest": "69 files, 1117 passed",
+    "typecheck_and_build": "PASS",
+    "demo_replay": "5/5",
+    "crash_surface": "6/6, 0 uncaught"
+  },
+  "failure": "freeze_evaluation_candidate.py --verify: CANDIDATE LỆCH product_commit_sha (frozen bce21d8b, HEAD product commit ec72eda0). Failing tests: test_analyze_failure_cluster_diagnosis::test_tien_kiem_kho, test_branch_independent_harness (5 params), test_docs_information_architecture::test_inv_20, test_docs_test_telemetry::test_inv_05",
+  "root_cause": "the wave changed frontend/src product files (c9408d25, ec72eda0; PRODUCT_PATHS includes frontend/src) and never refroze the candidate; earlier receipts in run.json (vitest + build + 84 contract tests) were not T3 and could not see it",
+  "fix": "refreeze in this clean detached worktree at 7495b7c3, committed alone as 61668c93; measured_system tree hash unchanged (111 files, 1b7a6713…) so the hybrid-preview-contract-hardening candidate_divergence layer still declares the current hash and no new layer is needed",
+  "live_ai_calls": 0
+}

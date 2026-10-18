@@ -1,0 +1,27 @@
+{
+  "schema": "AUTHORITATIVE_T3/1",
+  "run": "scene3d-plane-grid-camera",
+  "date": "2026-10-18",
+  "attempt": 2,
+  "previous_attempt": "verification/t3-attempt-1.json (FULL_PRODUCT_GATE_FAIL at 7495b7c3: evaluation candidate not refrozen after frontend/src product changes; fix = refreeze commit 61668c93)",
+  "checkout": "clean detached worktree .superpowers/worktrees/t3-scene3d-pre-main at 61668c9362c49df39f1ae948b0e7a7e1cad33f95 (0 changed/untracked files; frontend/node_modules = junction to the main checkout's node_modules; package manifests identical to main)",
+  "command": "node scripts/full-gate.mjs (from frontend/, ALLOW_LIVE_AI=0, empty GEMINI_API_KEY; log written outside the worktree, copied to verification/t3-attempt-2.log)",
+  "log_sha256": "2a1618b156cf1043828932b9ab39bb5a703557c35382c1415fd7d1a5e15ce197",
+  "label": "FULL_PRODUCT_GATE_PASS",
+  "exit_code": 0,
+  "gates": {
+    "backend_pytest": "10828 passed, 1 skipped, 2 deselected, 9 xfailed in 350.16s",
+    "frontend_vitest": "69 files, 1117 passed",
+    "typecheck_and_build": "PASS",
+    "demo_replay": "5/5 DEMO_REPLAY_PASS; reduced chain 1/1",
+    "crash_surface": "6/6 boundaries as expected, 0 uncaught (500)"
+  },
+  "outside_t3_same_checkout": {
+    "scene3d_orbit_gate": "DAT p1/p6/p7 (vong=449 deg, axis Z, snap=0, capPhat=0, yen=0.0 deg); receipt visual/receipts/orbit-gate-61668c93.json, commit field = 61668c93",
+    "node_harness": "node --test scripts/*.node-test.mjs: tests 112, pass 110, fail 0 (2 skipped); log verification/node-harness.log sha256 07b7384efde49f2152766356e93fe364e80df7ee3d88f2f284d935765b7be2bc"
+  },
+  "candidate_verify_in_checkout": "MATCH (111 files, 1b7a671326290f0b…; product_commit_sha ec72eda0)",
+  "xfail_note": "9 xfails, same count as the hybrid-preview-contract-hardening authoritative T3; none added",
+  "cleanup": "NONE (owner instruction: no cleanup); the T3 worktree is kept, with the F4 harness sources added after all gates finished",
+  "live_ai_calls": 0
+}

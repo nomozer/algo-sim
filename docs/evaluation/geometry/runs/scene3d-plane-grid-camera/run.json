@@ -29,5 +29,24 @@
     "hybrid_section_browser_check": "8 scenes, failures=[], net_retries=0",
     "independent_review": "review.md — PASS",
     "human_visual_review": "HUMAN_VISUAL_REVIEW_PENDING"
+  },
+  "pre_main_audit": {
+    "record": "pre-main-audit.md",
+    "candidate_head": "61668c9362c49df39f1ae948b0e7a7e1cad33f95",
+    "test_commit": "7495b7c387ee1250456bce3828d84890bd9bedc0",
+    "refreeze_commit": "61668c9362c49df39f1ae948b0e7a7e1cad33f95",
+    "product_commit": "ec72eda08f46e79b6720832762df4c44fd13f356",
+    "freeze": "111 files, 1b7a671326290f0b..., --verify MATCH",
+    "t3": "FULL_PRODUCT_GATE_PASS at 61668c93 (attempt 2; attempt 1 at 7495b7c3 FAIL: candidate not refrozen) — verification/authoritative-t3.json",
+    "orbit_gate": "DAT p1/p6/p7 at 61668c93 — visual/receipts/orbit-gate-61668c93.json (the earlier receipt was measured at 4abc4afb)",
+    "node_harness": "112 tests, 0 fail",
+    "f5": "code correct (failure_category); report said reason_code — report corrected; store-path test added, fault injections red",
+    "f4": "component only; product reads envelope.route_d, contract puts route_d outside the envelope",
+    "dom_capture": "visual/pre-main-audit/ — 19 states, 17 product-path fixtures served verbatim (manifest SHA-256 checked), 2 component-harness states",
+    "independent_review": "F5 CONFIRMED, F6 CONFIRMED (hint only), MATH_HONESTY ISSUES (non-blocking under NO-GO)",
+    "blocker": "store.ts imports simulations/domains/geometry (store domain-blind invariant M2 #7)",
+    "verdict": "NOT_READY: BLOCKER-ARCH + HUMAN_VISUAL_REVIEW_PENDING",
+    "cache_version": "125, no bump",
+    "live_ai_calls": 0
   }
 }
