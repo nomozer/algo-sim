@@ -15,7 +15,8 @@ Covers all 11 mandatory P4 integration requirements:
 6. Safe refusals, schema representation blockers, and unsupported capabilities.
 7. Tampered facts, wrong source ownership, wrong target binding, lying contracts, and regex tail guard.
 8. Version, surface fingerprint, and candidate identity separation (historical `6ba9033b...` vs combined `afab0a3c...`).
-9. Backward compatibility with `DEFAULT_MODE = "LLM_ONLY"` and `CACHE_VERSION = "125"`.
+9. Backward compatibility with `DEFAULT_MODE = "LLM_ONLY"` and `CACHE_VERSION` ("125" at this run; "126" since
+   hybrid-offline-readiness-finalization).
 10. Registry permutation invariance.
 11. Strict oracle metric error handling (singular/degenerate, indefinite, asymmetric, or malformed `chart_metric`
     must fail closed as `INVALID` and NEVER fall back to Euclidean `IDENTITY_METRIC`).
@@ -435,7 +436,8 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     assert REGISTRY_VERSION == "geometry-functions/6"
     assert PLANNER_VERSION == "geometry-fact-planner/7"
     assert ENGINE_VERSION == "geometry-function-engine/5"
-    assert main_module.CACHE_VERSION == "125"
+    # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định.
+    assert main_module.CACHE_VERSION == "126"
     assert main_module.semantic_route_mode() == "off"
     assert RESPONSE_CONTRACT == "flat"
     # Verify default production pipeline (`main.py` / `pipeline.py`) remains LLM_ONLY and does not wire Hybrid route

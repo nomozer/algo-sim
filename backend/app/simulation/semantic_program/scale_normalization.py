@@ -93,6 +93,55 @@ _LA_AN_SO = r"(?:tính|tìm|xác định)\s+(?:giá\s+trị\s+)?(?:của\s+)?{sy
 #: không phát bất biến, chứ không đoán.
 _MAU_DOAN_THANG = re.compile(r"^([A-Z]\d*[′']?)([A-Z]\d*[′']?)$")
 
+# ─── NHÃN ĐOẠN ĐỨNG MỘT MÌNH (ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO) ────
+#
+# "XY = giá trị" là ĐỘ DÀI đoạn XY chỉ khi XY đứng một mình ở vế trái. Trong
+# "GA + GB + GC = 0", "SA.BC = 0", "AB + CD = 5", "vectơ AM = 0", "MA = 0 khi
+# M trùng A" con số là của một tổng, tích, vectơ hay một điều kiện — không ai
+# viết độ dài cho đoạn đứng cuối. Đọc nó là đẻ ra dữ kiện, rồi từ chối đề hợp lệ
+# với nguyên nhân SOURCE. MỘT vị từ cho mọi bộ đọc "nhãn đoạn = giá trị" của đề
+# (số: `segment_relation`; ký hiệu: `cac_bat_bien_nguon` bên dưới).
+#
+# Ba loại (`loai_nhan_doan`):
+#   DO_DAI    — lời cho độ dài đoạn.
+#   BIEU_THUC — con số là của một tổng/hiệu/tích/tỉ số/vectơ: câu KHÔNG nói gì về độ dài đoạn ấy.
+#   DIEU_KIEN — "khi/nếu XY = …": một GIẢ ĐỊNH (câu hỏi phụ, "tính lại khi SA = 5"). Không phải tiền đề, nhưng
+#               cũng không được làm như không thấy: bộ đọc coi đoạn ấy là MƠ HỒ (bỏ), như hai giá trị khác nhau.
+# Không suy nghĩa vectơ: ngữ cảnh lạ ⇒ KHÔNG đọc (bỏ sót một độ dài làm cổng thận trọng hơn; đọc nhầm một độ dài thì
+# kết tội đề). Dấu `·`/`-` còn là gạch đầu dòng ("; · GK = 7"), nên phép toán chỉ tính khi có TOÁN HẠNG đứng trước.
+DO_DAI, BIEU_THUC, DIEU_KIEN = "DO_DAI", "BIEU_THUC", "DIEU_KIEN"
+_VECTO = r"(?:vect[oơ]r?|véc[\s-]?tơ|\\vec|overrightarrow|→)"
+#: "độ dài (của) vectơ AB = 3" — độ lớn của vectơ CHÍNH LÀ độ dài đoạn.
+_DO_DAI_VECTO = re.compile(rf"độ\s+dài\s+(?:của\s+)?{_VECTO}\s*$", re.I)
+#: Vế trái là biểu thức: toán hạng + phép toán (tổng/hiệu/tích/tỉ số/tích có hướng), hoặc tích vô hướng
+#: `SA.BC` / `SA . BC` (dấu chấm cuối câu "S.ABCD. SA = 3" — chữ, chấm, cách — KHÔNG thuộc loại này).
+_TRUOC_BIEU_THUC = re.compile(
+    r"(?:(?:[^\W_]|[)\]}'′√])\s*[+\-−–*/×·∙∧]\s*|[A-Z0-9'′)]\.|[A-Z0-9'′)]\s+\.\s*)$")
+_TRUOC_VECTO = re.compile(rf"{_VECTO}\s*$", re.I)
+_TRUOC_DIEU_KIEN = re.compile(r"(?<![A-Za-zÀ-ỹ])(?:khi|nếu)\s*$", re.I)
+#: Ngay sau giá trị: vectơ không (`0→`, `0⃗`) hay chú thích "(vectơ)/(tổng…)".
+_SAU_BIEU_THUC = re.compile(rf"\s*(?:→|⃗|\(\s*(?:{_VECTO}|tổng|hiệu|tích))", re.I)
+_SAU_DIEU_KIEN = re.compile(r"\s*(?:khi|nếu)(?![A-Za-zÀ-ỹ])", re.I)
+
+
+def loai_nhan_doan(van: str, dau: int, cuoi: int) -> str:
+    """`van[dau:cuoi]` = "<các nhãn đoạn> = <giá trị>" → `DO_DAI` | `BIEU_THUC` | `DIEU_KIEN`.
+
+    `dau` = vị trí nhãn đầu tiên (đầu chuỗi bằng nhau), `cuoi` = ngay sau giá trị."""
+    truoc = van[:dau]
+    if _DO_DAI_VECTO.search(truoc):
+        return DIEU_KIEN if _SAU_DIEU_KIEN.match(van, cuoi) else DO_DAI
+    if _TRUOC_BIEU_THUC.search(truoc) or _TRUOC_VECTO.search(truoc) or _SAU_BIEU_THUC.match(van, cuoi):
+        return BIEU_THUC
+    if _TRUOC_DIEU_KIEN.search(truoc) or _SAU_DIEU_KIEN.match(van, cuoi):
+        return DIEU_KIEN
+    return DO_DAI
+
+
+def nhan_doan_dung_mot_minh(van: str, dau: int, cuoi: int) -> bool:
+    """Lời cho độ dài đoạn, không điều kiện (`loai_nhan_doan(...) == DO_DAI`)."""
+    return loai_nhan_doan(van, dau, cuoi) == DO_DAI
+
 
 class SourceInvariant(BaseModel):
     """Một ràng buộc dữ kiện nguồn, **có cấu trúc**, do SERVER phát.
@@ -246,9 +295,9 @@ def bat_bien_nguon(binding: ScaleBinding, problem_text: str) -> tuple:
     """
     ra: list[SourceInvariant] = []
     for fid, goc, moi in binding.rewrites:
-        m = re.search(
+        m = next((x for x in re.finditer(
             rf"(?<![A-Za-z])([A-Z][A-Za-z0-9′']*)\s*=\s*{re.escape(goc)}(?![0-9a-z/])",
-            problem_text)
+            problem_text) if nhan_doan_dung_mot_minh(problem_text, x.start(1), x.end())), None)
         if m is None:
             continue
         d = _MAU_DOAN_THANG.fullmatch(m.group(1))

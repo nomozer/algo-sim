@@ -71,7 +71,9 @@ from typing import Optional
 
 from ..geometry.radical import ExactNumber, Radical, display, parse_exact
 from .literal_extractor import extract_literals, gia_tri_khong_chung_minh_duoc
-from .scale_normalization import SourceInvariant
+from .scale_normalization import (
+    BIEU_THUC, DIEU_KIEN, DO_DAI, SourceInvariant, loai_nhan_doan, nhan_doan_dung_mot_minh,
+)
 
 #: Ký hiệu ĐIỂM: chữ hoa + chỉ số + phẩy tuỳ chọn. Cùng quy ước
 #: `_MAU_DOAN_THANG` của `scale_normalization` — không dựng quy ước thứ hai.
@@ -115,10 +117,34 @@ def _cac_doan(m: re.Match) -> tuple[tuple[str, str], ...]:
     return (*re.findall(rf"({_D})({_D}){_LIEN}", m.group("chuoi")), (m.group("A"), m.group("B")))
 
 
-def cac_doan_truoc(tien_to: str) -> tuple[tuple[str, str], ...]:
-    """Các đoạn mà câu đề gắn cho con số đứng NGAY sau `tien_to` (cả chuỗi bằng nhau), hoặc `()`."""
+#: Nhãn của một con số thuộc BIỂU THỨC ("AB + CD = 5", "SA.BC = 0"): không khớp đoạn nào. Trả `()` thì con số thành
+#: "số trơn", mà số trơn làm bằng chứng được cho MỌI đoạn (`grounding_gate`) — tức là nới cổng. Nhãn này thì không.
+NHAN_BIEU_THUC: tuple[tuple[str, str], ...] = (("∑", "∑"),)
+
+
+def cac_doan_truoc(tien_to: str, sau_so: str = "") -> tuple[tuple[str, str], ...]:
+    """Các đoạn mà câu đề gắn cho con số đứng NGAY sau `tien_to` (cả chuỗi bằng nhau), hoặc `()`.
+
+    `sau_so`: phần đề ngay SAU con số (không gồm con số) — để nhận "= 0→", "= 0 (vectơ)". Con số của một biểu thức
+    ⇒ `NHAN_BIEU_THUC`. Câu giả định ("khi SA = 5") vẫn gắn đúng đoạn của nó."""
     m = _NHAN_TRUOC_SO.search(tien_to)
-    return _cac_doan(m) if m else ()
+    if m is None:
+        return ()
+    # Một ký tự giữ chỗ cho con số: vị từ đọc phần TRƯỚC nhãn và phần SAU con số.
+    if loai_nhan_doan(tien_to + "0" + sau_so, m.start("chuoi"), len(tien_to) + 1) == BIEU_THUC:
+        return NHAN_BIEU_THUC
+    return _cac_doan(m)
+
+
+def loai_cau_do_dai(m: re.Match) -> str:
+    """Loại (`DO_DAI` / `BIEU_THUC` / `DIEU_KIEN`) của một khớp `MAU_DO_DAI`."""
+    return loai_nhan_doan(m.string, m.start("chuoi"), m.end())
+
+
+def xoa_cau_do_dai(van: str) -> str:
+    """`van` bỏ đi mọi câu độ dài số mà bộ đọc ĐỌC (`DO_DAI`) — đúng tập `_moi_doan_co_do_dai` dùng
+    (`phan_chua_doc`); biểu thức và giả định còn lại như dữ kiện chưa đọc."""
+    return MAU_DO_DAI.sub(lambda m: " " if loai_cau_do_dai(m) == DO_DAI else m.group(0), van)
 
 #: `kind` của bất biến này. Một chuỗi, một chỗ khai, một checker.
 KIND = "segment_division"
@@ -252,12 +278,17 @@ def _moi_doan_co_do_dai(manh: list[str]) -> dict[frozenset, ExactNumber]:
     được, và đoán ở đây là kết tội oan một chương trình đúng.
     """
     thay: dict[frozenset, set[ExactNumber]] = {}
+    gia_dinh: dict[frozenset, set[ExactNumber]] = {}
     for van in manh:
         for m in MAU_DO_DAI.finditer(van):
-            if (q := _phan_do_dai(m.group("so"))) is not None:
-                for doan in _cac_doan(m):
-                    thay.setdefault(frozenset(doan), set()).add(q)
-    return {k: v.pop() for k, v in thay.items() if len(v) == 1 and len(k) == 2}
+            loai = loai_cau_do_dai(m)
+            if loai == BIEU_THUC or (q := _phan_do_dai(m.group("so"))) is None:
+                continue
+            for doan in _cac_doan(m):
+                (gia_dinh if loai == DIEU_KIEN else thay).setdefault(frozenset(doan), set()).add(q)
+    # Giả định ("nếu/khi SA = 4") KHÔNG là tiền đề: một mình nó không cho độ dài; khác giá trị tiền đề ⇒ đoạn mơ hồ.
+    return {k: next(iter(v)) for k, v in thay.items()
+            if len(v) == 1 and len(k) == 2 and gia_dinh.get(k, v) <= v}
 
 
 def do_dai_trong_de(problem_text: str | None) -> dict[frozenset, ExactNumber]:
@@ -376,7 +407,7 @@ def _ti_le(manh: list[str], M: str, A: str, B: str
 
         for m in _QH_DO_DAI.finditer(van):
             p1 = _phia(m.group("s1"), M, A, B)
-            if p1 is None:
+            if p1 is None or not nhan_doan_dung_mot_minh(van, m.start("s1"), m.end()):
                 continue
             tin_hieu = True                      # ← có nói về nhánh này
             nguyen_van.append(m.group(0).strip())

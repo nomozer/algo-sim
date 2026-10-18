@@ -809,7 +809,13 @@ MISSING_KEY_MSG = (
 #       chứng nhận (khuôn T12, metric khung — amendment §27): đề C1 từ chối nay phục vụ (không bị cache); C0 "lăng trụ
 #       … đều" với cạnh bên toạ độ không vuông góc đáy, hoặc cạnh bên / cạnh đáy đề nói trái toạ độ, từng phục vụ nay
 #       chiều served → refused. Row 124 sẽ trả envelope cũ (`runs/regular-prisms/cache/decision.json`).
-CACHE_VERSION = "125"
+# 126 — 2026-10-18 (hybrid-offline-readiness-finalization, ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO): BỀ MẶT MÔ
+#       HÌNH KHÔNG ĐỔI. Bộ đọc "nhãn đoạn = giá trị" của đề (`scale_normalization.loai_nhan_doan`, một vị từ cho bộ đọc
+#       số, bộ đọc thang, nhãn-trước-số của cổng grounding) không còn đọc độ dài từ biểu thức/vectơ ("AB + CD = 5",
+#       "SA.BC = 0", "GA + GB + GC = 0") hay giả định ("khi/nếu SA = 5"). Chiều served → refused: con số của một biểu
+#       thức từng làm bằng chứng cho `GIVEN CD = 5` (probe trước/sau `runs/hybrid-offline-readiness-finalization/
+#       cache/decision.json`); row 125 sẽ trả thẳng envelope đã phục vụ.
+CACHE_VERSION = "126"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,
 #: không suy từ nội dung đề, không hard-code riêng bài nào.

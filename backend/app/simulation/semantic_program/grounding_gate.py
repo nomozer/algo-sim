@@ -256,7 +256,7 @@ def _bang_chung(de: str, la_doan: Callable[[Any], bool], v: Fraction | str,
 
     def nhan_doan(m) -> tuple[tuple[str, str], ...]:
         # W05: cả chuỗi bằng nhau (`SA = SB = 3`) gắn số cho mọi đoạn của nó.
-        return cac_doan_truoc(de[:m.start()])
+        return cac_doan_truoc(de[:m.start()], de[m.end():])
 
     hop = [m for m in ung if not nhan_doan(m) or any(la_doan(d) for d in nhan_doan(m))]
     if not hop:

@@ -126,7 +126,8 @@ def test_06_danh_tinh_khop_he_hien_tai(mt):
     #    phép dựng đúng thực thể của câu cắt + giá trị chỉ trong yêu cầu chứng minh không là dữ kiện.
     # 123 -> 124 (regular-hexagonal-pyramid): chóp lục giác đều đọc + T11 (giá trị đã phục vụ đổi, served -> refused C0).
     # 124 -> 125 (regular-prisms): lăng trụ tam/lục giác đều đọc + T12 (served -> refused C0).
-    assert CACHE_VERSION == "125"
+    # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định (served -> refused).
+    assert CACHE_VERSION == "126"
 
 
 # ══ C · THỨ ma trận nói ĐÃ SẴN SÀNG thì phải CÓ MẶT ════════════════════

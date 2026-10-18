@@ -733,7 +733,10 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # envelope đổi từ UNKNOWN sang SOURCE dựa trên phụ thuộc thể tích thực.
     # 123 -> 124 (regular-hexagonal-pyramid): chóp lục giác đều đọc + T11 (giá trị đã phục vụ đổi, served -> refused C0).
     # 124 -> 125 (regular-prisms): lăng trụ tam/lục giác đều đọc + T12 (served -> refused C0).
-    assert main_module.CACHE_VERSION == "125"
+    # 125 -> 126 (hybrid-offline-readiness-finalization): bộ đọc độ dài nguồn không đọc nhãn đoạn trong biểu thức/vectơ/
+    # giả định ("AB + CD = 5" từng làm bằng chứng GIVEN CD = 5) -> served -> refused; runs/hybrid-offline-readiness-
+    # finalization/cache/decision.json.
+    assert main_module.CACHE_VERSION == "126"
     init_db()
     text = "Đề kiểm invalidate cache sau khi thêm computation-ownership gate (M13)"
     key = _cache_key(text)

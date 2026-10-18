@@ -160,7 +160,7 @@ def _do_dai_de_cho(q: str, loai: dict[str, str], mem: dict[str, Any], de: str) -
     if ma or not bc or not bc.get("span"):
         return "no GIVEN evidence span in the text"
     # Bằng chứng của `q` đứng sau đúng đoạn của nó (một thành viên của chuỗi `SA = SB = 3`), hoặc sau số trơn.
-    doan = next((d for d in cac_doan_truoc(de[:bc["span"][0]]) if _cung_doan(q, d)), None)
+    doan = next((d for d in cac_doan_truoc(de[:bc["span"][0]], de[bc["span"][1]:]) if _cung_doan(q, d)), None)
     if doan is None:
         return "the text gives the number without naming a segment"
     p, r = (dinh_danh_thuc_the(t)[0] for t in doan)

@@ -209,7 +209,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # nhân SOURCE thay cho UNKNOWN; phán quyết vẫn là unsupported.
     # 123 -> 124 (regular-hexagonal-pyramid): chóp lục giác đều đọc + T11 (giá trị đã phục vụ đổi, served -> refused C0).
     # 124 -> 125 (regular-prisms): lăng trụ tam/lục giác đều đọc + T12 (served -> refused C0).
-    assert str(CACHE_VERSION) == "125"
+    # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định (served -> refused).
+    assert str(CACHE_VERSION) == "126"
 
 
 def test_inv_21_favicon_not_in_staged_changes():
