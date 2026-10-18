@@ -8,6 +8,15 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-18, Scene3D on `main` (`551a3541`, owner HUMAN_VISUAL_REVIEW_PASS + GO_MAIN_SCENE3D, fast-forward, pushed):**
+product `cb1f4954`, authoritative T3 candidate `14c26f3f`; M2 #7, F1 and F2 done; P0–P3 visually accepted on the sample
+scenes only — no Product End-to-End PASS ([`scene3d-metric-boundary`](evaluation/geometry/runs/scene3d-metric-boundary/handoff.md)).
+Extraction v2 record corrected ([`extraction-v2-integration-record`](evaluation/geometry/runs/extraction-v2-integration-record/report.md)).
+`LLM_ONLY`, `flat`, cache 125; Hybrid product enablement NO-GO, no GO LIVE. Next only: the owner's priority among separately
+approved waves — `ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO` (backend), `ISSUE-ARCH-SCENE3D-ALTITUDE-CERTIFICATE-MISSING`
+(backend), offline F3–F6 integration before any GO HYBRID (`ISSUE-ARCH-HYBRID-FRONTEND-OFFLINE-INTEGRATION`). Earlier
+entries below are historical.
+
 **2026-10-17, independent NLU extraction evaluation (on `main` + `origin/main` `b22c2269`, owner GO; [`integration`](evaluation/geometry/runs/independent-nlu-extraction-evaluation/integration.md)):** the
 research step proposed below is prepared and locked offline — blind-authored corpus, oracle, gold facts, harness,
 audits; no product change. Live baseline measured under two owner GOs (76 requests, est. USD 0.299): P2 NO, corrected

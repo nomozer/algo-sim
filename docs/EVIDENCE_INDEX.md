@@ -15,7 +15,7 @@ CORRECTED_BY = NONE
 
 REPORT = docs/evaluation/geometry/runs/scene3d-metric-boundary/handoff.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-metric-boundary/
-CLASSIFICATION = F2_METRIC_BOUNDARY_CLOSEOUT (whole-envelope rejection before acceptance/history; M2 #7 domain-blind store retained; Hybrid product NO-GO; HUMAN_VISUAL_REVIEW_PENDING; authoritative gate status in run.json)
+CLASSIFICATION = F2_METRIC_BOUNDARY_CLOSEOUT (whole-envelope rejection before acceptance/history; M2 #7 domain-blind store retained; Hybrid product NO-GO; authoritative gate status in run.json, which records HUMAN_VISUAL_REVIEW_PENDING as of the measurement and stays unchanged) · 2026-10-18: owner HUMAN_VISUAL_REVIEW_PASS for P0–P3 on the provided sample scenes only, and GO_MAIN_SCENE3D: fast-forward to main 551a3541, pushed (record in the local untracked runs/scene3d-go-main/handoff.md); no Product End-to-End PASS
 CODE_COMMIT = cb1f4954; test-only lifecycle follow-up 216bbf84; clean refreeze/candidate 14c26f3f (111 measured files, tree 045a8a628c7923d68d6eae6446a30d24be08d900f673293b8e74661a21c44ccc; candidate 2160fbcf superseded after failed T3)
 VERIFICATION = docs/evaluation/geometry/runs/scene3d-metric-boundary/run.json
 MODEL_REQUEST_COUNT = 0 (offline)

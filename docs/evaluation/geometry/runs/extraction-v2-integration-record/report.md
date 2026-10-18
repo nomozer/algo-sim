@@ -35,12 +35,18 @@ Kiểm: `git merge-base --is-ancestor <c> main` cho từng dòng; `git cherry ma
 
 - Freeze tại `e4fff851`: 110 file, `--verify` MATCH (`candidate_divergence.json` của run gốc). **Không có T3 riêng** tại
   `e4fff851`/`aa0da02b`/`0507cb01`: `t3-safety.json` chưa từng tồn tại ⇒ T3 tại đúng các commit đó là `UNKNOWN`.
-- T3 có thẩm quyền **đầu tiên chứa cả ba commit**: `1abc0a51`, FULL_PRODUCT_GATE_PASS
-  (`../hybrid-pre-main-hardening/verification/authoritative-t3.json`). Cùng run đó chạy file probe an toàn của
-  `integration/extraction-v2-safety` trên cây: 35/35 hành vi, superset trong cây 72/72
-  (`../hybrid-pre-main-hardening/report.md` §3).
-- Mọi T3 có thẩm quyền sau đó trên dòng `main` cũng chứa chúng, gần nhất là candidate `14c26f3f`
+- T3 có thẩm quyền chứa cả ba commit, theo thứ tự (quét 139 receipt T3/run trên `main`; sớm nhất tìm được):
+  1. `04b0db37` — worktree detached, FULL_PRODUCT_GATE_PASS, trên nhánh v3 **trước** merge `a94a54d0`
+     (`../semantic-extraction-v3-runtime-revision/verification/authoritative-t3-20261018.json`);
+  2. `caa6cc2e` — T3 PASS đầu tiên sau merge, trên dòng tích hợp (`../hybrid-backend-integration/run.json`
+     `authoritative_t3`; các khẳng định khác của run đó được `HYBRID_PRE_MAIN_HARDENING` đính chính, T3 này không bị huỷ);
+  3. `1abc0a51` — FULL_PRODUCT_GATE_PASS sau các sửa của pre-main-hardening
+     (`../hybrid-pre-main-hardening/verification/authoritative-t3.json`); cùng run chạy file probe an toàn của
+     `integration/extraction-v2-safety` trên cây: 35/35 hành vi, superset trong cây 72/72 (`../hybrid-pre-main-hardening/report.md` §3).
+- Mọi T3 có thẩm quyền sau đó có cây chứa chúng (chúng reachable từ `main`), gần nhất là candidate `14c26f3f`
   (`../scene3d-metric-boundary/run.json`).
+- *Đính chính nội bộ (2026-10-18):* bản đầu của lớp này (commit `1a209ff1`, cả message lẫn `run.json`) ghi `1abc0a51` là
+  T3 **đầu tiên** chứa cả ba commit — sai; thay bằng thứ tự trên. Reviewer độc lập chỉ đọc phát hiện.
 - Prompt sản phẩm và bề mặt provider của tuyến mặc định không đổi (`candidate_divergence.json`: chỉ `registry.py`;
   `LLM_ONLY` không nhập `registry`/`function_route`).
 

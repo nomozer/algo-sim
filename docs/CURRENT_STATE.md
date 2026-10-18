@@ -1,14 +1,26 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL research — Scene3D metric boundary, 2026-10-18
+## INTEGRATED ON `main` — Scene3D plane/grid/camera + metric boundary, 2026-10-18
 
-Branch `research/scene3d-plane-grid-camera`, product `cb1f4954`, final candidate `14c26f3f` (test-only follow-up
-`216bbf84`; freeze 111 files / `045a8a628c7923d6…`, cache 125, LLM_ONLY). The registered module rejects supplied invalid
-Scene3D metrics or failed chart conversion before active/init/history; the store stays domain-blind (M2 #7). Old
-history is retained and revalidated. Gate receipts and final technical verdict:
+`main` = `origin/main` = `551a3541`: fast-forward of `research/scene3d-plane-grid-camera` from `90fe44df`, pushed
+without force (owner `HUMAN_VISUAL_REVIEW_PASS` + `GO_MAIN_SCENE3D` in session; record in the local, untracked
+`runs/scene3d-go-main/handoff.md`, not in Git). Product `cb1f4954` (test-only follow-up `216bbf84`); authoritative T3
+candidate `14c26f3f` `FULL_PRODUCT_GATE_PASS` (backend 10828, frontend 1133, build, demo 5/5, crash 6/6); freeze 111
+files / `045a8a628c7923d6…`; after `14c26f3f` only docs changed. Post-main smoke (logs local and untracked in
+`runs/scene3d-go-main/verification/`): freeze MATCH, 41/41 Adapter /2 fixtures, frontend 1133, build PASS. Tracked receipts:
 [`scene3d-metric-boundary/handoff.md`](evaluation/geometry/runs/scene3d-metric-boundary/handoff.md) and `run.json` beside it.
-Main remains `90fe44df`; no merge/push. F3/F4/F5/F6 remain OPEN before GO HYBRID; Hybrid remains locked.
-Human acceptance is separate: **HUMAN_VISUAL_REVIEW_PENDING**.
+
+- **Done:** M2 #7 (store domain-blind; `module.validateEnvelope` is the acceptance gate); F2 (invalid / non-SPD /
+  overflowing `chart_metric` rejects the whole envelope before active/init/history, no silent 2D fallback; legacy 2D
+  kept); F1 (right-angle marks on segments only with a certificate). P0–P3 (marker timing, coplanar plane sheet,
+  grid, camera/orbit/reset) visually accepted by the owner on the provided sample scenes only.
+- **Not claimed:** Product End-to-End PASS; every Scene3D capability verified; the on-canvas "select result"
+  interaction (not exercised — the sample scenes carry no on-canvas result label).
+- **Unchanged:** `DEFAULT_MODE = LLM_ONLY`, response contract `flat`, `CACHE_VERSION = 125`, Hybrid product enablement
+  **NO-GO** (no frontend caller of `/api/preview/hybrid`, no live provider integration), no GO LIVE.
+- **Open** (`OPEN_ISSUES.md`): F3–F6 and the missing `insufficient_specification` + `SOURCE` fixture
+  (`ISSUE-ARCH-HYBRID-FRONTEND-OFFLINE-INTEGRATION`), `ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO`,
+  `ISSUE-OPS-CACHE-HISTORICAL-MODE-UNKNOWN`, `ISSUE-ARCH-SCENE3D-ALTITUDE-CERTIFICATE-MISSING`; offline Product E2E not reached.
 
 ## INTEGRATED ON `main` — Independent NLU extraction evaluation, 2026-10-17
 

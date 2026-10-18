@@ -12,7 +12,13 @@
   "not_on_main": ["69fa9be8 (prompt v2, owner NO-GO)", "e3827c00 (patch-equivalent to 0507cb01)", "330a222a (stale refreeze)"],
   "entry_merge": "a94a54d0",
   "t3_at_integration_commits": "UNKNOWN (verification/t3-safety.json never existed)",
-  "first_authoritative_t3_containing_all": "1abc0a51 (hybrid-pre-main-hardening/verification/authoritative-t3.json, FULL_PRODUCT_GATE_PASS)",
+  "authoritative_t3_containing_all": [
+    "04b0db37 (earliest found; semantic-extraction-v3-runtime-revision/verification/authoritative-t3-20261018.json, FULL_PRODUCT_GATE_PASS, before merge a94a54d0)",
+    "caa6cc2e (first after the merge; hybrid-backend-integration/run.json authoritative_t3 PASS)",
+    "1abc0a51 (hybrid-pre-main-hardening/verification/authoritative-t3.json, FULL_PRODUCT_GATE_PASS; ran the extraction-v2-safety probes 35/35)"
+  ],
+  "t3_search": "139 tracked T3/run receipts under docs/evaluation scanned for T3 checkout commits containing e4fff851, aa0da02b and 0507cb01",
+  "superseded_claim": "1a209ff1 message and first version of this file named 1abc0a51 the first authoritative T3 containing all three; wrong",
   "product_changed": false,
   "cache_version": 125,
   "cache_decision": "no bump: docs only",
