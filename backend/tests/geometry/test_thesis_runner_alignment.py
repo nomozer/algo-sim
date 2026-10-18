@@ -225,10 +225,9 @@ def test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3():
     assert bd.kiem["MODEL_FACING_HASHES_MATCH"] is False, "cờ phải nói THẬT là đã lệch"
     assert dung_lai == con_dau, "băm model-facing lệch vì một thứ KHÁC prompt đọc ảnh"
 
-    khai = json.loads(
-        (GOC / "docs" / "evaluation" / "geometry"
-         / "product-response-contract-alignment"
-         / "CANDIDATE_DIVERGENCE.json").read_text(encoding="utf-8"))
+    from tests.geometry.test_thesis_acceptance_matrix import _khai_lech_hien_hanh
+
+    khai = json.loads(_khai_lech_hien_hanh().read_text(encoding="utf-8"))
     assert bd.kiem["CANDIDATE_HASH_MATCH"] is not khai["diverged"], (
         "cờ danh tính của runner và văn bản khai độ lệch nói ngược nhau")
     # Bản khai phải chở CẢ `CACHE_VERSION` hiện tại, nếu không thì một bump

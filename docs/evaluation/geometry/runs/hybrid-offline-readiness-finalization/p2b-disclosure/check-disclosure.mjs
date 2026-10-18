@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { createRequire } from "node:module";
 import { createServer } from "node:http";
 import { readFileSync, writeFileSync, existsSync, statSync } from "node:fs";
-import { resolve, join, extname } from "node:path";
+import { resolve, join, extname, dirname } from "node:path";
 import { createHash } from "node:crypto";
 const [fe, dist, repo, out] = process.argv.slice(2).map((p) => resolve(p));
 const { chromium } = createRequire(join(fe, "package.json"))("playwright");
@@ -66,15 +66,27 @@ try {
     await test(`${id}: hidden initially, final, orbit and reset; keyboard reveal/hide; no stale answers`, async () => {
       await load(id); await noAnswers();
       await finalStep(); await noAnswers();
+      const stored = await page.evaluate(() => window.__HFOI__.dapAn());
+      assert.deepEqual(Object.fromEntries(stored.map((a) => [a.quantity_id, a.symbolic])),
+        Object.fromEntries(Object.entries(responses[id].route_d.answers).map(([k, v]) => [`kq_${k}`, v])));
       const button = page.getByRole("button", { name: "Xem đáp án", exact: true });
       assert.equal(await button.count(), 1);
       assert.equal(await button.getAttribute("aria-expanded"), "false");
       assert.ok(await page.locator("[data-length-unit]").isVisible());
+      // Preselected review set: cube and pyramid, final step, hidden/revealed only.
+      if (ids.indexOf(id) < 2) await page.screenshot({ path: join(dirname(out), `${id}__hidden.png`) });
       const canvas = page.locator("canvas").first();
       const box = await canvas.boundingBox();
+      const cameraBefore = await page.evaluate(() => window.__geo3d_camera_snapshot);
       await page.mouse.move(box.x + box.width * 0.5, box.y + box.height * 0.5);
       await page.mouse.down(); await page.mouse.move(box.x + box.width * 0.6, box.y + box.height * 0.6, { steps: 8 }); await page.mouse.up();
+      await page.waitForTimeout(300);
+      assert.notDeepEqual(await page.evaluate(() => window.__geo3d_camera_snapshot), cameraBefore, "orbit changes camera");
       await page.getByRole("button", { name: "Xem lại toàn hình", exact: true }).click();
+      await page.waitForTimeout(300);
+      const cameraReset = await page.evaluate(() => window.__geo3d_camera_snapshot);
+      assert.ok(cameraReset && cameraBefore, "camera audit available for reset");
+      assert.ok(cameraReset.position.every((v, i) => Math.abs(v - cameraBefore.position[i]) < 1e-5), "reset restores fitted camera position");
       await noAnswers();
       await button.focus(); await page.keyboard.press("Enter");
       const answers = responses[id].route_d.answers;
@@ -82,6 +94,7 @@ try {
       for (const [key, symbolic] of Object.entries(answers)) {
         assert.ok((await page.locator(`[data-hybrid-answer="kq_${key}"]`).innerText()).includes(symbolic.split("=").at(-1).trim()));
       }
+      if (ids.indexOf(id) < 2) await page.screenshot({ path: join(dirname(out), `${id}__revealed.png`) });
       await page.getByRole("button", { name: "Ẩn đáp án", exact: true }).focus();
       await page.keyboard.press("Space"); await noAnswers();
       // Selection and show-all cannot reveal a duplicate result after the answers were hidden.
@@ -90,12 +103,16 @@ try {
       const q = responses[id].envelope.scene3d.objects.find((o) =>
         o.annotation?.witness && Object.keys(answers).some((k) => o.id === `kq_${k}`))?.id ?? `kq_${Object.keys(answers)[0]}`;
       await page.locator(`[data-quantity-id="${q}"]`).click();
+      await page.getByRole("button", { name: "Hiển thị", exact: true }).click();
+      await page.getByRole("menuitemcheckbox", { name: "Hiện tất cả số đo", exact: true }).click();
+      await page.keyboard.press("Escape");
       assert.equal(await page.locator(`[data-value-entity="${q}"], [data-formula-entity="${q}"]`).count(), 0);
       assert.equal(await page.locator(`[data-ann-id="${q}"]`).count(), 0);
       if (responses[id].envelope.scene3d.objects.find((o) => o.id === q)?.annotation?.witness) {
         assert.ok(await page.evaluate((q) => window.__geo3d_witness_ids?.includes(q), q), "hidden answer must preserve certified distance witness");
       }
       await noAnswers();
+      assert.deepEqual(await page.evaluate(() => window.__HFOI__.dapAn()), stored, "hide preserves exact answer payloads");
       // Same problem re-analysis is a new envelope too, not just a different title.
       await page.getByRole("button", { name: "Xem đáp án", exact: true }).click();
       await load(id); await finalStep(); await noAnswers();

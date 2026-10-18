@@ -49,3 +49,33 @@ commit · P4 đóng băng lại candidate (commit riêng) → T3 trên worktree 
   (I1 hồi quy gạch đầu dòng, I2 `⋅`/`\cdot`/`x`/`:`, I3 giả định nới cổng), 4 MINOR; sửa ở `9d17557e` (backend) và
   `cc07f512` (frontend); E2E lại 48/48, 41 fixture lại trùng byte, hồi quy backend rộng 2641 passed.
 - [ ] P4 — đóng băng lại candidate (commit riêng) → T3 trên worktree detached sạch · [ ] P5
+
+## Codex continuation checkpoint — 2026-10-19
+
+Owner continuation + minimal disclosure scope, same branch/run. Recovery: `recovery.md`.
+
+- [x] Preserve Claude commits/uncommitted files; recover background run as NOT EXECUTED (`-n` unsupported,
+  shell exit0 masked pytest status). No test/writer killed; no duplicate suite launched.
+- [x] Commit preserved second-review fix `8bcb9d8e` (178 targeted passed).
+- [x] Separate disclosure commit `531b7143`, witness preservation `2af99e0e`; RED/GREEN browser receipts in
+  `p2b-disclosure/`. Final expanded browser4/4 includes cube, pyramid, cuboid distance, keyboard, show-all,
+  actual orbit/reset, answer payload retained, same/different analysis and refusal/legacy replacement.
+- [x] Independent review findings repaired: source coefficient/conditional fixes `794563cb`, anchor/null wrapper
+  fixes `8ee9e3eb`. 185 targeted backend passed; adapter39 and annotations33 passed. Full Vitest first run had
+  1141 passed/2 stale source-contract assertions failed; updated assertions in test-only `00b7bba4` (focus32 passed).
+- [x] Final offline48/48; fixture41/41 responses identical; oracle12/12; parity1896 texts/22 intended changes,
+  diff byte-semantically identical to the prior reviewed diff. Final review: `review.md`.
+- [x] Freeze `96e2fe1e`: product `2af99e0eddb67da253adcf6dc0aa7ac4fd08b05d`, 111 files,
+  `cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c`, cache126, clean manifest.
+- [ ] Authoritative T3 RUNNING on clean detached `.superpowers/worktrees/t3-hybrid-offline-readiness-final`
+  at `96e2fe1e647ba3d7cb03f16082775219c7712a4f`. Do not edit that tree or launch another full suite.
+  Command: `node frontend/scripts/full-gate.mjs --python D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe`.
+  Live log in implementation worktree `.superpowers/verification/t3-96e2fe1e.log`, terminal session62334;
+  wrapper writes `t3-96e2fe1e-exit.json` only after completion (actual exit code). Scoped pytest basetemp is
+  `.superpowers/verification/pytest-t3-96e2fe1e`; no xdist, no global ACL changes.
+- [ ] Read final exit/log; verify candidate and clean detached tree again; preserve successful receipt or
+  sanitized failure, with hashes. Finish canonical docs, evidence index, run.json and one final handoff.
+
+No product changes after `2af99e0e`. Only tests/harness/docs/evidence may still be completed. Hybrid stays NO-GO,
+LLM_ONLY/flat/live0. HFOI-F4 exact relation operands and product transport remain absent; no Product E2E PASS.
+No main merge/push, worktree deletion, data cleanup or user-approval assertion authorized.

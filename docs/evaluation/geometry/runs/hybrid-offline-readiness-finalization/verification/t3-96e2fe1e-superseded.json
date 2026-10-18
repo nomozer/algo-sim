@@ -1,0 +1,45 @@
+{
+  "schema": "AUTHORITATIVE_T3_SUPERSEDED/1",
+  "candidate_commit": "96e2fe1e647ba3d7cb03f16082775219c7712a4f",
+  "product_commit": "2af99e0eddb67da253adcf6dc0aa7ac4fd08b05d",
+  "measured_system_sha256": "cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c",
+  "measured_files": 111,
+  "started_utc": "2026-10-18T17:12:11.9303719+00:00",
+  "finished_utc": "2026-10-18T17:23:33.4476702+00:00",
+  "duration_sec": 680.3,
+  "exit_code": 1,
+  "status": "FAILED_SINGLE_TEST_ALIGNMENT_SUPERSEDED",
+  "allow_live_ai": 0,
+  "command": "node frontend/scripts/full-gate.mjs --python D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+  "gates": {
+    "backend_pytest": {
+      "passed": 10949,
+      "failed": 1,
+      "skipped": 1,
+      "deselected": 2,
+      "xfailed": 9,
+      "duration_sec": 661.0,
+      "failed_test": "tests/geometry/test_thesis_runner_alignment.py::test_B1_G1_bo_ca_co_dinh_khong_qua_con_dau_V3",
+      "root_cause": "test_thesis_runner_alignment.py read legacy docs/evaluation/geometry/product-response-contract-alignment/CANDIDATE_DIVERGENCE.json instead of the active head of the corrects chain (_khai_lech_hien_hanh() in test_thesis_acceptance_matrix.py), asserting CACHE_VERSION 125 against 126.",
+      "resolution": "Aligned test_thesis_runner_alignment.py to _khai_lech_hien_hanh() and recorded cache_version_hien_tai=126 in docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/candidate_divergence.json."
+    },
+    "frontend_vitest": {
+      "status": "PASS",
+      "duration_sec": 8.6
+    },
+    "frontend_build": {
+      "status": "PASS",
+      "duration_sec": 9.3
+    },
+    "demo_replay": {
+      "status": "PASS",
+      "duration_sec": 0.8
+    },
+    "crash_surface": {
+      "status": "PASS",
+      "passed": 6,
+      "total": 6,
+      "duration_sec": 0.6
+    }
+  }
+}

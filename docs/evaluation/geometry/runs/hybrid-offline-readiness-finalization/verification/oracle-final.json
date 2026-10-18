@@ -1,0 +1,326 @@
+{
+ "schema": "HFOI_ORACLE/1",
+ "independence": "hand coordinates from the statement; no backend import",
+ "cases": 12,
+ "pass": 12,
+ "witness_wrong_answers_caught": "4/4",
+ "rows": [
+  {
+   "case": "H01_CUBE",
+   "checks": [
+    {
+     "call": "f3",
+     "quantity": "V",
+     "a": 1.0,
+     "backend": 1.0,
+     "oracle": 1.0,
+     "pass": true
+    },
+    {
+     "call": "f3",
+     "quantity": "V",
+     "a": 2.0,
+     "backend": 8.0,
+     "oracle": 8.0,
+     "pass": true
+    },
+    {
+     "call": "f4",
+     "quantity": "AC'",
+     "a": 1.0,
+     "backend": 1.7320508075688772,
+     "oracle": 1.7320508075688772,
+     "pass": true
+    },
+    {
+     "call": "f4",
+     "quantity": "AC'",
+     "a": 2.0,
+     "backend": 3.4641016151377544,
+     "oracle": 3.4641016151377544,
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  {
+   "case": "H02_CUBOID_DISTANCE",
+   "checks": [
+    {
+     "call": "f5",
+     "quantity": "V",
+     "a": 1.0,
+     "backend": 6.0,
+     "oracle": 6.0,
+     "pass": true
+    },
+    {
+     "call": "f5",
+     "quantity": "V",
+     "a": 2.0,
+     "backend": 48.0,
+     "oracle": 48.0,
+     "pass": true
+    },
+    {
+     "call": "f6",
+     "quantity": "d",
+     "a": 1.0,
+     "backend": 0.8571428571428571,
+     "oracle": 0.8571428571428571,
+     "pass": true
+    },
+    {
+     "call": "f6",
+     "quantity": "d",
+     "a": 2.0,
+     "backend": 1.7142857142857142,
+     "oracle": 1.7142857142857142,
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  {
+   "case": "H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS",
+   "checks": [
+    {
+     "call": "f4",
+     "quantity": "V",
+     "a": 1.0,
+     "backend": 0.40824829046386296,
+     "oracle": 0.40824829046386296,
+     "pass": true
+    },
+    {
+     "call": "f4",
+     "quantity": "V",
+     "a": 2.0,
+     "backend": 3.2659863237109037,
+     "oracle": 3.2659863237109037,
+     "pass": true
+    },
+    {
+     "call": "f5",
+     "quantity": "cos2",
+     "a": 1.0,
+     "backend": 0.25,
+     "oracle": 0.2500000000000001,
+     "pass": true
+    },
+    {
+     "call": "f5",
+     "quantity": "cos2",
+     "a": 2.0,
+     "backend": 0.25,
+     "oracle": 0.2500000000000001,
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  {
+   "case": "H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED",
+   "checks": [
+    {
+     "call": "f8",
+     "quantity": "V",
+     "a": 1.0,
+     "backend": 0.5773502691896257,
+     "oracle": 0.5773502691896257,
+     "pass": true
+    },
+    {
+     "call": "f8",
+     "quantity": "V",
+     "a": 2.0,
+     "backend": 4.618802153517006,
+     "oracle": 4.618802153517006,
+     "pass": true
+    }
+   ],
+   "goal_BC_perp_SAB_oracle": true,
+   "backend_observation": "TRUE_ON_CONFIGURATION",
+   "pass_observation": true,
+   "pass": true
+  },
+  {
+   "case": "H11_SKEW_DISTANCE_COMPOSITION",
+   "checks": [
+    {
+     "call": "f7",
+     "quantity": "d",
+     "a": 1.0,
+     "backend": 0.6666666666666666,
+     "oracle": 0.6666666666666666,
+     "pass": true
+    },
+    {
+     "call": "f7",
+     "quantity": "d",
+     "a": 2.0,
+     "backend": 1.3333333333333333,
+     "oracle": 1.3333333333333333,
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  {
+   "case": "H12_PROJECTION_MIDPOINT_ANGLE",
+   "checks": [
+    {
+     "call": "f6",
+     "quantity": "V",
+     "a": 1.0,
+     "backend": 0.125,
+     "oracle": 0.12499999999999999,
+     "pass": true
+    },
+    {
+     "call": "f6",
+     "quantity": "V",
+     "a": 2.0,
+     "backend": 1.0,
+     "oracle": 0.9999999999999999,
+     "pass": true
+    },
+    {
+     "call": "f7",
+     "quantity": "cos2",
+     "a": 1.0,
+     "backend": 0.5,
+     "oracle": 0.5000000000000001,
+     "pass": true
+    },
+    {
+     "call": "f7",
+     "quantity": "cos2",
+     "a": 2.0,
+     "backend": 0.5,
+     "oracle": 0.5000000000000001,
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  {
+   "case": "H14_REGULAR_TETRAHEDRON",
+   "checks": [
+    {
+     "call": "f3",
+     "quantity": "V",
+     "a": 1.0,
+     "backend": 0.11785113019775793,
+     "oracle": 0.1178511301977579,
+     "pass": true
+    },
+    {
+     "call": "f3",
+     "quantity": "V",
+     "a": 2.0,
+     "backend": 0.9428090415820635,
+     "oracle": 0.9428090415820632,
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  {
+   "case": "intersection-SAB-SCD",
+   "line_through_S_parallel_AB": [
+    "gt_f5"
+   ],
+   "pass": true
+  },
+  {
+   "case": "pyramid-midpoint-area-AB",
+   "checks": [
+    {
+     "call": "q",
+     "quantity": "S",
+     "a": 1.0,
+     "backend": 1.8027756377319946,
+     "oracle": 1.8027756377319946,
+     "pass": true
+    },
+    {
+     "call": "q",
+     "quantity": "S",
+     "a": 2.0,
+     "backend": 1.8027756377319946,
+     "oracle": 1.8027756377319946,
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  {
+   "case": "pyramid-projection-and-unnamed-midpoint-area",
+   "checks": [
+    {
+     "call": "q",
+     "quantity": "S",
+     "a": 1.0,
+     "backend": 1.227158164118755,
+     "oracle": 1.227158164118755,
+     "pass": true
+    },
+    {
+     "call": "q",
+     "quantity": "S",
+     "a": 2.0,
+     "backend": 1.227158164118755,
+     "oracle": 1.227158164118755,
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  {
+   "case": "pyramid-shared-midpoint-area-and-distance",
+   "checks": [
+    {
+     "call": "q1",
+     "quantity": "S",
+     "a": 1.0,
+     "backend": 1.8027756377319946,
+     "oracle": 1.8027756377319946,
+     "pass": true
+    },
+    {
+     "call": "q1",
+     "quantity": "S",
+     "a": 2.0,
+     "backend": 1.8027756377319946,
+     "oracle": 1.8027756377319946,
+     "pass": true
+    },
+    {
+     "call": "q2",
+     "quantity": "d",
+     "a": 1.0,
+     "backend": 1.0,
+     "oracle": 1.0,
+     "pass": true
+    },
+    {
+     "call": "q2",
+     "quantity": "d",
+     "a": 2.0,
+     "backend": 1.0,
+     "oracle": 1.0,
+     "pass": true
+    }
+   ],
+   "pass": true
+  },
+  {
+   "case": "section-MAB-trapezoid",
+   "trapezoid_ABMN": [
+    "td_f6"
+   ],
+   "pass": true
+  }
+ ]
+}

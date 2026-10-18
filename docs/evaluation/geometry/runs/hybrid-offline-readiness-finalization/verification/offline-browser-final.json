@@ -1,0 +1,2120 @@
+{
+ "schema": "HFOI_OFFLINE_E2E/1",
+ "provider_calls": 0,
+ "renderer": "chromium headless, ANGLE SwiftShader",
+ "injected_segment": "transport of the preview response (no product caller exists); everything else is the product shell",
+ "api_paths_seen": [
+  "/api/auth/me",
+  "/api/health"
+ ],
+ "forbidden_calls": [],
+ "total": 48,
+ "pass": 48,
+ "results": [
+  {
+   "id": "served-H01_CUBE",
+   "kind": "served",
+   "response_sha256": "2c3da7de1a9bc5d275daffffcb85a1cfb92599d4a875a1062f4e09ea3e0f4d58",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "steps": [
+    {
+     "step": 1,
+     "of": 5,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 2,
+     "of": 5,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 3,
+     "of": 5,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 4,
+     "of": 5,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 5,
+     "of": 5,
+     "answers": [
+      "Đáp số: V(ABCD.A′B′C′D′) = a³",
+      "Đáp số: d(A, C′) = a√3"
+     ],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    }
+   ],
+   "errors": [],
+   "initial_answers_hidden": true,
+   "ui_steps_match_groups": true,
+   "pass": true
+  },
+  {
+   "id": "served-H02_CUBOID_DISTANCE",
+   "kind": "served",
+   "response_sha256": "adfeadc26f76d887348a4c4a9ac5cbd5c2640d3649b999f4f2391682ce8a76fa",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "steps": [
+    {
+     "step": 1,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 2,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 3,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 4,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 5,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 6,
+     "of": 6,
+     "answers": [
+      "Đáp số: V(ABCD.A′B′C′D′) = 6a³",
+      "Đáp số: d(A, (A′BD)) = 6a/7"
+     ],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    }
+   ],
+   "errors": [],
+   "initial_answers_hidden": true,
+   "ui_steps_match_groups": true,
+   "pass": true
+  },
+  {
+   "id": "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS",
+   "kind": "served",
+   "response_sha256": "227db3511780052f083a50a27cdffc4c95b06d815d19a1b56dbcf674888798f4",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "steps": [
+    {
+     "step": 1,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 2,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 3,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 4,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 5,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 6,
+     "of": 6,
+     "answers": [
+      "Đáp số: V(S.ABCD) = a³√6/6",
+      "Đáp số: cos²(SA, (ABC)) = 1/4"
+     ],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    }
+   ],
+   "errors": [],
+   "initial_answers_hidden": true,
+   "ui_steps_match_groups": true,
+   "pass": true
+  },
+  {
+   "id": "served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED",
+   "kind": "served",
+   "response_sha256": "8192af8d654b81d20f9e25ed0d5558c11b29833f20f29458a726ebd6201eed6f",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "steps": [
+    {
+     "step": 1,
+     "of": 4,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 2,
+     "of": 4,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 3,
+     "of": 4,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 4,
+     "of": 4,
+     "answers": [
+      "Đáp số: V(S.ABC) = a³√3/3"
+     ],
+     "observations": 1,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    }
+   ],
+   "errors": [],
+   "initial_answers_hidden": true,
+   "ui_steps_match_groups": true,
+   "pass": true
+  },
+  {
+   "id": "served-H11_SKEW_DISTANCE_COMPOSITION",
+   "kind": "served",
+   "response_sha256": "46bce1ec38cb9adc993db6c4719bc58c0bc90c59a4aeea7ebe924601a34222bc",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "steps": [
+    {
+     "step": 1,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 2,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 3,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 4,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 5,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 6,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 7,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 8,
+     "of": 8,
+     "answers": [
+      "Đáp số: d(AM, B′C) = 2a/3"
+     ],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    }
+   ],
+   "errors": [],
+   "initial_answers_hidden": true,
+   "ui_steps_match_groups": true,
+   "pass": true
+  },
+  {
+   "id": "served-H12_PROJECTION_MIDPOINT_ANGLE",
+   "kind": "served",
+   "response_sha256": "ebdbd5336d6b628518a9bfbd1acd08735555116e9e6cc6022bd549a6c1f95a34",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "steps": [
+    {
+     "step": 1,
+     "of": 7,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 2,
+     "of": 7,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 3,
+     "of": 7,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 4,
+     "of": 7,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 5,
+     "of": 7,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 6,
+     "of": 7,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 7,
+     "of": 7,
+     "answers": [
+      "Đáp số: V(S.ABC) = a³/8",
+      "Đáp số: cos²(SC, (ABC)) = 1/2"
+     ],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    }
+   ],
+   "errors": [],
+   "initial_answers_hidden": true,
+   "ui_steps_match_groups": true,
+   "pass": true
+  },
+  {
+   "id": "served-H14_REGULAR_TETRAHEDRON",
+   "kind": "served",
+   "response_sha256": "36fe87e84b303f178ecf440a8f7dc076f9720afc941525101ed319d744cc2798",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "steps": [
+    {
+     "step": 1,
+     "of": 2,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 2,
+     "of": 2,
+     "answers": [
+      "Đáp số: V(D.ABC) = a³√2/12"
+     ],
+     "observations": 0,
+     "lengthUnit": [
+      "Tỉ lệ dựng: a = 1 đơn vị dựng"
+     ],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    }
+   ],
+   "errors": [],
+   "initial_answers_hidden": true,
+   "ui_steps_match_groups": true,
+   "pass": true
+  },
+  {
+   "id": "served-intersection-SAB-SCD",
+   "kind": "served",
+   "response_sha256": "bbc26432b555ba9b4e74e8443ea1797b0bcee88b628c895380049c6576bf986b",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "steps": [
+    {
+     "step": 1,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 2,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 3,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 4,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 5,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 6,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    }
+   ],
+   "errors": [],
+   "initial_answers_hidden": true,
+   "ui_steps_match_groups": true,
+   "pass": true
+  },
+  {
+   "id": "served-pyramid-midpoint-area-AB",
+   "kind": "served",
+   "response_sha256": "8b49b75eabfe7b7fc80714a41deeb125fba1d3f744623739c84a71af83e94934",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "steps": [
+    {
+     "step": 1,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 2,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 3,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 4,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 5,
+     "of": 6,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 6,
+     "of": 6,
+     "answers": [
+      "Đáp số: S(MAB) = √13/2"
+     ],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    }
+   ],
+   "errors": [],
+   "initial_answers_hidden": true,
+   "ui_steps_match_groups": true,
+   "pass": true
+  },
+  {
+   "id": "served-pyramid-projection-and-unnamed-midpoint-area",
+   "kind": "served",
+   "response_sha256": "32bbbcd5b7188f534cc52aa180f43f8d2983e37bce4f6b61be17912be1ae6593",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "steps": [
+    {
+     "step": 1,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 2,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 3,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 4,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 5,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 6,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 7,
+     "of": 8,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 8,
+     "of": 8,
+     "answers": [
+      "Đáp số: S(MHD) = √1018/26"
+     ],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    }
+   ],
+   "errors": [],
+   "initial_answers_hidden": true,
+   "ui_steps_match_groups": true,
+   "pass": true
+  },
+  {
+   "id": "served-pyramid-shared-midpoint-area-and-distance",
+   "kind": "served",
+   "response_sha256": "fcf3991bb1a3f2824a444633bb5952bf2d3f2f7f507594b3ea409770c1f3503e",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "steps": [
+    {
+     "step": 1,
+     "of": 7,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 2,
+     "of": 7,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 3,
+     "of": 7,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 4,
+     "of": 7,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 5,
+     "of": 7,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 6,
+     "of": 7,
+     "answers": [
+      "Đáp số: S(MAB) = √13/2"
+     ],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 7,
+     "of": 7,
+     "answers": [
+      "Đáp số: S(MAB) = √13/2",
+      "Đáp số: d(M, (SAB)) = 1"
+     ],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    }
+   ],
+   "errors": [],
+   "initial_answers_hidden": true,
+   "ui_steps_match_groups": true,
+   "pass": true
+  },
+  {
+   "id": "served-section-MAB-trapezoid",
+   "kind": "served",
+   "response_sha256": "c54156f5686257624edea63f658663f49022e6b85020aa9a8b1587fc108b542d",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "steps": [
+    {
+     "step": 1,
+     "of": 11,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 2,
+     "of": 11,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 3,
+     "of": 11,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 4,
+     "of": 11,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 5,
+     "of": 11,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 6,
+     "of": 11,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 7,
+     "of": 11,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 8,
+     "of": 11,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 9,
+     "of": 11,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 10,
+     "of": 11,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    },
+    {
+     "step": 11,
+     "of": 11,
+     "answers": [],
+     "observations": 0,
+     "lengthUnit": [],
+     "ok_answers": true,
+     "ok_observations": true,
+     "ok_length_unit": true,
+     "proven_wording": false,
+     "leaks": []
+    }
+   ],
+   "errors": [],
+   "initial_answers_hidden": true,
+   "ui_steps_match_groups": true,
+   "pass": true
+  },
+  {
+   "id": "refusal-capability-conditional",
+   "kind": "refusal",
+   "failure_category": "capability_gap",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "NGOÀI DANH MỤC MÔ PHỎNG",
+    "stage": "Không xác định được",
+    "kind": "hệ chưa mô phỏng chính xác được cơ chế này",
+    "hint": "Hiện hệ dựng được khối đa diện (chóp, lăng trụ, hộp — kể cả đáy lõm), hình cầu, hình trụ và hình nón.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-capability-escape-unsupported",
+   "kind": "refusal",
+   "failure_category": "capability_gap",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "NGOÀI DANH MỤC MÔ PHỎNG",
+    "stage": "Không xác định được",
+    "kind": "hệ chưa mô phỏng chính xác được cơ chế này",
+    "hint": "Hiện hệ dựng được khối đa diện (chóp, lăng trụ, hộp — kể cả đáy lõm), hình cầu, hình trụ và hình nón.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-capability-negated-question",
+   "kind": "refusal",
+   "failure_category": "capability_gap",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "NGOÀI DANH MỤC MÔ PHỎNG",
+    "stage": "Không xác định được",
+    "kind": "hệ chưa mô phỏng chính xác được cơ chế này",
+    "hint": "Hiện hệ dựng được khối đa diện (chóp, lăng trụ, hộp — kể cả đáy lõm), hình cầu, hình trụ và hình nón.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-capability-unsupported",
+   "kind": "refusal",
+   "failure_category": "capability_gap",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "NGOÀI DANH MỤC MÔ PHỎNG",
+    "stage": "Không xác định được",
+    "kind": "hệ chưa mô phỏng chính xác được cơ chế này",
+    "hint": "Hiện hệ dựng được khối đa diện (chóp, lăng trụ, hộp — kể cả đáy lõm), hình cầu, hình trụ và hình nón.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-extraction-fact-incomplete",
+   "kind": "refusal",
+   "failure_category": "geometry_generation_failed",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+    "stage": "Không xác định được",
+    "kind": "chưa dựng được chương trình mô phỏng",
+    "hint": "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), em có thể gửi lại để hệ dựng lại.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-extraction-not-json",
+   "kind": "refusal",
+   "failure_category": "geometry_generation_failed",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+    "stage": "Không xác định được",
+    "kind": "chưa dựng được chương trình mô phỏng",
+    "hint": "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), em có thể gửi lại để hệ dựng lại.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-inconclusive-figure",
+   "kind": "refusal",
+   "failure_category": "verification_gap",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+    "stage": "Không xác định được",
+    "kind": "chưa đủ bằng chứng kiểm chứng để hiển thị mô phỏng",
+    "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-inconclusive-negated",
+   "kind": "refusal",
+   "failure_category": "verification_gap",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+    "stage": "Không xác định được",
+    "kind": "chưa đủ bằng chứng kiểm chứng để hiển thị mô phỏng",
+    "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-inconclusive-proof-only",
+   "kind": "refusal",
+   "failure_category": "verification_gap",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+    "stage": "Không xác định được",
+    "kind": "chưa đủ bằng chứng kiểm chứng để hiển thị mô phỏng",
+    "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-integrity-identity",
+   "kind": "refusal",
+   "failure_category": "geometry_generation_failed",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+    "stage": "Không xác định được",
+    "kind": "chưa dựng được chương trình mô phỏng",
+    "hint": "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), em có thể gửi lại để hệ dựng lại.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-integrity-proof-status",
+   "kind": "refusal",
+   "failure_category": "geometry_generation_failed",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+    "stage": "Không xác định được",
+    "kind": "chưa dựng được chương trình mô phỏng",
+    "hint": "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), em có thể gửi lại để hệ dựng lại.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-integrity-surface",
+   "kind": "refusal",
+   "failure_category": "geometry_generation_failed",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+    "stage": "Không xác định được",
+    "kind": "chưa dựng được chương trình mô phỏng",
+    "hint": "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), em có thể gửi lại để hệ dựng lại.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-invalid-collinear",
+   "kind": "refusal",
+   "failure_category": "geometry_generation_failed",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+    "stage": "Không xác định được",
+    "kind": "chưa dựng được chương trình mô phỏng",
+    "hint": "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), em có thể gửi lại để hệ dựng lại.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-invalid-contradiction",
+   "kind": "refusal",
+   "failure_category": "geometry_generation_failed",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+    "stage": "Không xác định được",
+    "kind": "chưa dựng được chương trình mô phỏng",
+    "hint": "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), em có thể gửi lại để hệ dựng lại.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-invalid-zero-length",
+   "kind": "refusal",
+   "failure_category": "geometry_generation_failed",
+   "refusal_cause": "SOURCE",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+    "stage": "Không xác định được",
+    "kind": "chưa dựng được chương trình mô phỏng",
+    "hint": null,
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-invalid-zero-not-in-text",
+   "kind": "refusal",
+   "failure_category": "geometry_generation_failed",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA DỰNG ĐƯỢC MÔ PHỎNG",
+    "stage": "Không xác định được",
+    "kind": "chưa dựng được chương trình mô phỏng",
+    "hint": "Nếu đề thuộc dạng hệ dựng được (thiết diện, giao tuyến, khoảng cách, góc, thể tích), em có thể gửi lại để hệ dựng lại.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-missing-ambiguous",
+   "kind": "refusal",
+   "failure_category": "insufficient_specification",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN",
+    "stage": "Không xác định được",
+    "kind": "hệ chưa xác định được đủ dữ kiện từ đề",
+    "hint": "Nếu đề thuộc dạng hệ dựng được và đã có đủ giả thiết, em có thể gửi lại để hệ phân tích lại.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-missing-dimension",
+   "kind": "refusal",
+   "failure_category": "insufficient_specification",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN",
+    "stage": "Không xác định được",
+    "kind": "hệ chưa xác định được đủ dữ kiện từ đề",
+    "hint": "Nếu đề thuộc dạng hệ dựng được và đã có đủ giả thiết, em có thể gửi lại để hệ phân tích lại.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-missing-underdetermined",
+   "kind": "refusal",
+   "failure_category": "insufficient_specification",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN",
+    "stage": "Không xác định được",
+    "kind": "hệ chưa xác định được đủ dữ kiện từ đề",
+    "hint": "Nếu đề thuộc dạng hệ dựng được và đã có đủ giả thiết, em có thể gửi lại để hệ phân tích lại.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-result-engine-self-check",
+   "kind": "refusal",
+   "failure_category": "verification_gap",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+    "stage": "Không xác định được",
+    "kind": "chưa đủ bằng chứng kiểm chứng để hiển thị mô phỏng",
+    "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-result-kernel-check",
+   "kind": "refusal",
+   "failure_category": "verification_gap",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+    "stage": "Không xác định được",
+    "kind": "chưa đủ bằng chứng kiểm chứng để hiển thị mô phỏng",
+    "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-result-scene-metric",
+   "kind": "refusal",
+   "failure_category": "verification_gap",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+    "stage": "Không xác định được",
+    "kind": "chưa đủ bằng chứng kiểm chứng để hiển thị mô phỏng",
+    "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-source-goal-as-premise",
+   "kind": "refusal",
+   "failure_category": "verification_gap",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+    "stage": "Không xác định được",
+    "kind": "chưa đủ bằng chứng kiểm chứng để hiển thị mô phỏng",
+    "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-source-object-mismatch",
+   "kind": "refusal",
+   "failure_category": "verification_gap",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+    "stage": "Không xác định được",
+    "kind": "chưa đủ bằng chứng kiểm chứng để hiển thị mô phỏng",
+    "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "refusal-source-request-unanswered",
+   "kind": "refusal",
+   "failure_category": "verification_gap",
+   "refusal_cause": "UNKNOWN",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG",
+    "stage": "Không xác định được",
+    "kind": "chưa đủ bằng chứng kiểm chứng để hiển thị mô phỏng",
+    "hint": "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "synthetic-insufficient-specification-source",
+   "kind": "refusal",
+   "failure_category": "insufficient_specification",
+   "refusal_cause": "SOURCE",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "dom": {
+    "eyebrow": "CHƯA ĐỦ DỮ KIỆN",
+    "stage": "Không xác định được",
+    "kind": "đề chưa đủ dữ kiện",
+    "hint": "Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng.",
+    "canvases": 0
+   },
+   "errors": [],
+   "ok_eyebrow": true,
+   "ok_no_scene": true,
+   "ok_not_ran_claim": true,
+   "ok_stage_not_old": true,
+   "ok_source_hint_only_if_source": true,
+   "leaks": [],
+   "pass": true
+  },
+  {
+   "id": "gate-body-invalid",
+   "kind": "boundary-reject",
+   "nap": {
+    "adapter": "REJECTED",
+    "reason": "schema_version lạ",
+    "view": "home",
+    "active": false,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "errors": [],
+   "pass": true
+  },
+  {
+   "id": "gate-disabled",
+   "kind": "boundary-reject",
+   "nap": {
+    "adapter": "REJECTED",
+    "reason": "schema_version lạ",
+    "view": "home",
+    "active": false,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "errors": [],
+   "pass": true
+  },
+  {
+   "id": "gate-fixture-missing",
+   "kind": "boundary-reject",
+   "nap": {
+    "adapter": "REJECTED",
+    "reason": "schema_version lạ",
+    "view": "home",
+    "active": false,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "errors": [],
+   "pass": true
+  },
+  {
+   "id": "gate-forbidden",
+   "kind": "boundary-reject",
+   "nap": {
+    "adapter": "REJECTED",
+    "reason": "schema_version lạ",
+    "view": "home",
+    "active": false,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "errors": [],
+   "pass": true
+  },
+  {
+   "id": "tampered-answer-coef",
+   "kind": "boundary-reject",
+   "nap": {
+    "adapter": "REJECTED",
+    "reason": "đáp số f8 không khớp đại lượng kq_f8 của cảnh",
+    "view": "home",
+    "active": false,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "errors": [],
+   "pass": true
+  },
+  {
+   "id": "tampered-proof-claim",
+   "kind": "boundary-reject",
+   "nap": {
+    "adapter": "REJECTED",
+    "reason": "quan sát f7 tự xưng chứng minh",
+    "view": "home",
+    "active": false,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "errors": [],
+   "pass": true
+  },
+  {
+   "id": "malformed-non-spd-metric",
+   "kind": "fail-closed",
+   "nap": {
+    "adapter": "ACCEPTED",
+    "view": "home",
+    "active": false,
+    "unsupported": false,
+    "analysisError": "Cấu hình mô phỏng không hợp lệ: Dữ liệu hình không vượt qua kiểm tra an toàn. Hãy phân tích lại đề."
+   },
+   "errors": [],
+   "canvases": 0,
+   "pass": true
+  },
+  {
+   "id": "served-then-refusal",
+   "kind": "lifecycle",
+   "first": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "second": {
+    "adapter": "ACCEPTED",
+    "view": "workspace",
+    "active": false,
+    "unsupported": true,
+    "analysisError": null
+   },
+   "errors": [],
+   "canvases": 0,
+   "pass": true
+  },
+  {
+   "id": "llm-only-3d-sample",
+   "kind": "llm-only-compat",
+   "state": {
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "errors": [],
+   "canvases": 1,
+   "pass": true
+  },
+  {
+   "id": "legacy-2d-sample",
+   "kind": "llm-only-compat",
+   "state": {
+    "view": "workspace",
+    "active": true,
+    "unsupported": false,
+    "analysisError": null
+   },
+   "errors": [],
+   "canvases": 0,
+   "pass": true
+  }
+ ],
+ "pass_all": true
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "CACHE_CONTINUATION_CONFIRMATION/1",
+  "product_commit": "2af99e0eddb67da253adcf6dc0aa7ac4fd08b05d",
+  "cache_version": 126,
+  "decision": "KEEP explicit 125 -> 126 decision",
+  "probe_equal_to_committed_after": true,
+  "cases": 7,
+  "probe_sha256": "ca659038ec842aebc155947f34eb2a34adcc06f62267122ea7b8e6bb4fc7a750",
+  "policy": "Old pre-126 rows miss default policy identity; no database rows read/migrated/deleted. Historical writer mode remains UNKNOWN.",
+  "results": [
+    {
+      "text": "Cho tứ diện ABCD có AB = 3 và AB + CD = 5. Tính thể tích.",
+      "given": "CD = 5",
+      "verdict": "SOURCE_EVIDENCE_CONFLICT",
+      "reason": "con số 5 trong đề là độ dài của đoạn khác"
+    },
+    {
+      "text": "Cho hình chóp S.ABC có SA = 2 và SA.BC = 6. Tính SB.",
+      "given": "BC = 6",
+      "verdict": "SOURCE_EVIDENCE_CONFLICT",
+      "reason": "con số 6 trong đề là độ dài của đoạn khác"
+    },
+    {
+      "text": "Cho tam giác ABC có trọng tâm G, GA + GB + GC = 0 và AB = 3.",
+      "given": "GC = 0",
+      "verdict": "SOURCE_EVIDENCE_CONFLICT",
+      "reason": "con số 0 trong đề là độ dài của đoạn khác"
+    },
+    {
+      "text": "Cho hình chóp S.ABCD có đáy vuông cạnh 2, SA = 3. Tính lại khi SA = 5.",
+      "given": "SA = 5",
+      "verdict": "EVIDENCED",
+      "reason": ""
+    },
+    {
+      "text": "Cho tam giác ABC có AB = 3, AC = 4. Tính BC.",
+      "given": "AB = 3",
+      "verdict": "EVIDENCED",
+      "reason": ""
+    },
+    {
+      "text": "Cho hình chóp S.ABCD có SA = SB = SC = SD = 2.",
+      "given": "SC = 2",
+      "verdict": "EVIDENCED",
+      "reason": ""
+    },
+    {
+      "text": "Cho hình chóp S.ABCD. SA = 3. Tính thể tích.",
+      "given": "SA = 3",
+      "verdict": "EVIDENCED",
+      "reason": ""
+    }
+  ]
+}

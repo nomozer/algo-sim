@@ -1,5 +1,21 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL continuation — Hybrid offline readiness, 2026-10-19 (not integrated)
+
+Branch `research/hybrid-offline-readiness-finalization`; product `2af99e0e`, clean freeze/candidate `96e2fe1e`,
+111 measured files / `cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c`.
+`main` and local `origin/main` remain `f2b00ed3` (the `551a3541` block below is the earlier product integration).
+Cache **126**, `LLM_ONLY`, response `flat`, Hybrid product **NO-GO**, live calls **0**.
+
+Source/vector-zero fixed with review corrections; HFOI-F3/F5/F6 verified offline; HFOI-F4 wrapper/anchor is verified,
+but exact relation operands remain unavailable in Adapter `/2`. Explicit **Xem đáp án / Ẩn đáp án** hides Hybrid answer
+cards and duplicated value labels by default, resets on replacement, preserves exact data and distance witnesses.
+Offline browser 48/48, disclosure cube/pyramid/cuboid checks pass, 41/41 fixture responses identical, independent
+oracle 12/12. Authoritative detached T3 is in progress; no final PASS claim yet.
+Recovery and boundaries: [`recovery.md`](evaluation/geometry/runs/hybrid-offline-readiness-finalization/recovery.md).
+Historical cache-mode UNKNOWN, altitude certificate and disconnected product route remain open. Prior owner Scene3D
+visual acceptance and `GO_PRESERVE_PARTIAL` are not expanded by these automated checks.
+
 ## INTEGRATED ON `main` — Scene3D plane/grid/camera + metric boundary, 2026-10-18
 
 `main` = `origin/main` = `551a3541`: fast-forward of `research/scene3d-plane-grid-camera` from `90fe44df`, pushed

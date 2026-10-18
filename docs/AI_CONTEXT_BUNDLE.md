@@ -1,4 +1,6 @@
 # AI_CONTEXT_BUNDLE.md — AlgoSim Session Handoff & Quick Context
+**2026-10-19 LOCAL continuation (takes precedence over older snapshots):** existing branch `research/hybrid-offline-readiness-finalization`, product `2af99e0e`, candidate `96e2fe1e`, 111 files / `cb11bc7757466bd6…`. Claude work preserved; source-length fix and HFOI-F3–F6 offline work continued; explicit learner answer disclosure implemented separately, preserving certified geometry. 41/41 responses identical, oracle12/12, browser48/48; clean detached T3 PASS. Cache126 / LLM_ONLY / flat / Hybrid NO-GO / live0. Main/origin-main stay `f2b00ed3`. HFOI-F4 exact relation operands and product Hybrid caller remain absent; no Product E2E PASS. Recovery: `evaluation/geometry/runs/hybrid-offline-readiness-finalization/recovery.md`. No merge/push or cleanup authorized.
+
 ## LOCAL override — 2026-10-15 (ưu tiên hơn snapshot §2)
 **2026-10-17, independent-nlu-extraction-evaluation (LOCAL branch from `76dca142`, no product change):** blind-authored 60-case corpus + oracle, gold facts, harness, two audits; gold arm 8/44 locked served; live 76 calls (est. USD 0.299); locked: preregistered UNSAFE (scorer artifact L01) → corrected P1 PASS, P2 NO (27/45), 2/44 served; extraction is the dominant loss. **Integrated on `main` `b22c2269` (owner GO, pushed; branch deleted).** Next: research priority decision (`runs/independent-nlu-extraction-evaluation/approval-request.md`). **2026-10-17, hybrid-semantic-grounding-reliability:** resumed Claude's preserved uncommitted M1–M4; product `94b3437b`, clean candidate `57c7f5db…` MATCH. Offline 99 cases: wrong serves13→0, false refusals21→16; historical174 answers/planner unchanged, two refusal-code changes. Independent review delta clear; clean detached T3 `bd2dc080` PASS (backend 10240/0, vitest 1072), candidate MATCH. **Integrated on `main` `bd20ac46` (user GO, pushed; branch deleted).** Next: research priority decision. cache125/LLM_ONLY/Hybrid NO-GO/live0. Single handoff: `evaluation/geometry/runs/hybrid-semantic-grounding-reliability/report.md`.
 **2026-10-17, scene3d-annotation-correctness (`e218b5ef` from `8427c879`, refreeze `b2352aae`) & scene3d-educational-finalization (`22df95d6` → `8427c879`):** P1–P2 mathematical audit (`dot(u_world, v_world)=0`, `d_3D(C', (A'BD))=4/√3≈2.309>0` vs 2D perspective foreshortening) + boundary-edge tangent alignment in `huongChanVuongGoc`, 3-point textbook L-bracket & dash origin at foot in `vatNhanChung`, and `±10px` witness-segment obstacles in `chieuNhan`; independent review PASS, 68 Vitest files (1079 tests), 30 full-size (`1280×900`) states, **`HUMAN_VISUAL_REVIEW_PASS`**, clean detached T3 `29127ba2` PASS, **integrated on `main` and pushed (`runs/scene3d-annotation-correctness/integration.md`).** Earlier 2026-10-17: `scene3d-educational-finalization` (`22df95d6`, EDU-1..8, T3 `8aabb4b9` PASS, `HUMAN_VISUAL_REVIEW_PASS`) and `scene3d-visual-correctness` (`ee9689e6`). cache125/LLM_ONLY/Hybrid NO-GO/live0.
@@ -233,17 +235,11 @@ bằng chứng; sửa `frontend/src` ⇒ đóng băng lại candidate; không pu
 
 ## 7. Evidence có thẩm quyền
 
-- Run `phone-landscape-layout` (PHONE_LANDSCAPE_LAYOUT): `docs/evaluation/geometry/runs/phone-landscape-layout/` (`review.md`, `report.md`,
-  `handoff.md`, `run.json`, `plan.md`, `MEASUREMENT_ATTEMPTS.json`, `inputs/REVIEW_SET.json`, `results/`, `images/`, `diagnostics/`).
-- Run `mobile-canvas-fit` (MOBILE_CANVAS_FIT): `docs/evaluation/geometry/runs/mobile-canvas-fit/` (`review.md`, `report.md`,
-  `handoff.md`, `run.json`, `plan.md`, `inputs/REVIEW_SET.json`, `results/`, `images/`, `diagnostics/`).
-- Run `docs-cleanup` (DOCUMENTATION_AND_NAMING_CLEANUP): `docs/evaluation/geometry/runs/docs-cleanup/` (`report.md`,
-  `handoff.md`, `run.json`, `inventory.md`, `diagnostics/`).
-- Run `repo-cleanup` (REPO_CLEANUP): `docs/evaluation/geometry/runs/repo-cleanup/` (`report.md`, `handoff.md`, `run.json`,
-  `inventory.json`, `code_index_removed_entries.md`, `relocated/`, `inputs/candidate_divergence.json`, `diagnostics/`).
-- Run `exact-dimensions` (EXACT_DIMENSIONS_AND_CAPTURE_POLICY): `docs/evaluation/geometry/runs/exact-dimensions/`
-  (`review.md`, `report.md`, `handoff.md`, `run.json`, `plan.md`, `labels.json`, `capture_counts.json`, `results/`, `images/`,
-  `diagnostics/attempt1–3/`).
+- Run `phone-landscape-layout` (PHONE_LANDSCAPE_LAYOUT): `docs/evaluation/geometry/runs/phone-landscape-layout/` (`review.md`, `report.md`, `handoff.md`, `run.json`, `plan.md`, `MEASUREMENT_ATTEMPTS.json`, `inputs/REVIEW_SET.json`, `results/`, `images/`, `diagnostics/`).
+- Run `mobile-canvas-fit` (MOBILE_CANVAS_FIT): `docs/evaluation/geometry/runs/mobile-canvas-fit/` (`review.md`, `report.md`, `handoff.md`, `run.json`, `plan.md`, `inputs/REVIEW_SET.json`, `results/`, `images/`, `diagnostics/`).
+- Run `docs-cleanup` (DOCUMENTATION_AND_NAMING_CLEANUP): `docs/evaluation/geometry/runs/docs-cleanup/` (`report.md`, `handoff.md`, `run.json`, `inventory.md`, `diagnostics/`).
+- Run `repo-cleanup` (REPO_CLEANUP): `docs/evaluation/geometry/runs/repo-cleanup/` (`report.md`, `handoff.md`, `run.json`, `inventory.json`, `code_index_removed_entries.md`, `relocated/`, `inputs/candidate_divergence.json`, `diagnostics/`).
+- Run `exact-dimensions` (EXACT_DIMENSIONS_AND_CAPTURE_POLICY): `docs/evaluation/geometry/runs/exact-dimensions/` (`review.md`, `report.md`, `handoff.md`, `run.json`, `plan.md`, `labels.json`, `capture_counts.json`, `results/`, `images/`, `diagnostics/attempt1–3/`).
 - Run `regular-triangular-pyramid-w01` (REGULAR_TRIANGULAR_PYRAMID_AND_TETRAHEDRON_SLICE):
   `docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/` (`REVIEW.md`, `REPORT.md`, `HANDOFF.md`, `RUN.json`,
   `MEASUREMENT_ATTEMPTS.json`, `results/`, `images/`, `diagnostics/`, `corrections/W05_RECORD_CORRECTION.json`).

@@ -8,6 +8,18 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-19, continuation of `hybrid-offline-readiness-finalization` (local research):** complete the authoritative
+detached gate and final handoff, then owner review of the existing branch. No GO MAIN/GO HYBRID is implied.
+The vector-zero reader and minimal answer disclosure are implemented; Adapter `/2` exact relation operands and the
+product transport remain separate blockers. Earlier next-action entries below are historical.
+
+Future proposal **ALGOSIM_PEDAGOGICAL_EXPLORATION_UX** (not implemented here): help students explore objects, predict
+relations, manipulate permitted constructions, receive graduated hints and voluntarily inspect validated answers.
+Use step-specific observation prompts, selected edge/plane highlighting and independently checked predictions;
+clearly distinguish assumptions, observations and proofs. The minimal answer-disclosure behavior now exists, but
+a tutoring system, AI questions, grading, learning analytics, a three-mode architecture and planner/route changes
+require a separately approved design and evaluation. No evidence of learning effectiveness is claimed.
+
 **2026-10-18, Scene3D on `main` (`551a3541`, owner HUMAN_VISUAL_REVIEW_PASS + GO_MAIN_SCENE3D, fast-forward, pushed):**
 product `cb1f4954`, authoritative T3 candidate `14c26f3f`; M2 #7, F1 and F2 done; P0–P3 visually accepted on the sample
 scenes only — no Product End-to-End PASS ([`scene3d-metric-boundary`](evaluation/geometry/runs/scene3d-metric-boundary/handoff.md)).

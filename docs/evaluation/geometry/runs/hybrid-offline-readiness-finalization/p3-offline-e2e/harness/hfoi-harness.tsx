@@ -7,13 +7,14 @@ import { createRoot } from "react-dom/client";
 import { AppRoot } from "@fe/App";
 import { registerAllSimulations } from "@fe/simulations";
 import { useAppStore } from "@fe/state/store";
-import { docPhanHoiHybrid } from "@fe/simulations/domains/geometry/hybrid-preview-adapter";
+import { docPhanHoiHybrid, hybridViewCua } from "@fe/simulations/domains/geometry/hybrid-preview-adapter";
 import { geometryTimeline, type Scene3D } from "@fe/simulations/domains/geometry/scene3d-model";
 import "@fe/styles/global.css";
 
 registerAllSimulations();
 
 (window as unknown as { __HFOI__: unknown }).__HFOI__ = {
+  dapAn() { return hybridViewCua(useAppStore.getState().active?.envelope)?.answers ?? []; },
   /** Injected transport: response JSON → adapter → store. Returns what the store accepted. */
   async nap(url: string) {
     const raw = await (await fetch(url)).json();

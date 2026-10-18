@@ -1,0 +1,225 @@
+{
+  "schema": "HFOI_CONTINUATION_OFFLINE/1",
+  "product_commit": "2af99e0eddb67da253adcf6dc0aa7ac4fd08b05d",
+  "candidate_commit": "96e2fe1e",
+  "live_ai_calls": 0,
+  "fixture_count": 41,
+  "fixtures": [
+    {
+      "id": "served-pyramid-midpoint-area-AB",
+      "response_identical": true,
+      "response_sha256": "8b49b75eabfe7b7fc80714a41deeb125fba1d3f744623739c84a71af83e94934"
+    },
+    {
+      "id": "served-pyramid-shared-midpoint-area-and-distance",
+      "response_identical": true,
+      "response_sha256": "fcf3991bb1a3f2824a444633bb5952bf2d3f2f7f507594b3ea409770c1f3503e"
+    },
+    {
+      "id": "served-pyramid-projection-and-unnamed-midpoint-area",
+      "response_identical": true,
+      "response_sha256": "32bbbcd5b7188f534cc52aa180f43f8d2983e37bce4f6b61be17912be1ae6593"
+    },
+    {
+      "id": "served-H01_CUBE",
+      "response_identical": true,
+      "response_sha256": "2c3da7de1a9bc5d275daffffcb85a1cfb92599d4a875a1062f4e09ea3e0f4d58"
+    },
+    {
+      "id": "served-H02_CUBOID_DISTANCE",
+      "response_identical": true,
+      "response_sha256": "adfeadc26f76d887348a4c4a9ac5cbd5c2640d3649b999f4f2391682ce8a76fa"
+    },
+    {
+      "id": "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS",
+      "response_identical": true,
+      "response_sha256": "227db3511780052f083a50a27cdffc4c95b06d815d19a1b56dbcf674888798f4"
+    },
+    {
+      "id": "served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED",
+      "response_identical": true,
+      "response_sha256": "8192af8d654b81d20f9e25ed0d5558c11b29833f20f29458a726ebd6201eed6f"
+    },
+    {
+      "id": "served-H11_SKEW_DISTANCE_COMPOSITION",
+      "response_identical": true,
+      "response_sha256": "46bce1ec38cb9adc993db6c4719bc58c0bc90c59a4aeea7ebe924601a34222bc"
+    },
+    {
+      "id": "served-H12_PROJECTION_MIDPOINT_ANGLE",
+      "response_identical": true,
+      "response_sha256": "ebdbd5336d6b628518a9bfbd1acd08735555116e9e6cc6022bd549a6c1f95a34"
+    },
+    {
+      "id": "served-H14_REGULAR_TETRAHEDRON",
+      "response_identical": true,
+      "response_sha256": "36fe87e84b303f178ecf440a8f7dc076f9720afc941525101ed319d744cc2798"
+    },
+    {
+      "id": "served-section-MAB-trapezoid",
+      "response_identical": true,
+      "response_sha256": "c54156f5686257624edea63f658663f49022e6b85020aa9a8b1587fc108b542d"
+    },
+    {
+      "id": "served-intersection-SAB-SCD",
+      "response_identical": true,
+      "response_sha256": "bbc26432b555ba9b4e74e8443ea1797b0bcee88b628c895380049c6576bf986b"
+    },
+    {
+      "id": "refusal-capability-unsupported",
+      "response_identical": true,
+      "response_sha256": "9500937978f7660d728c57e17d1a715b304d33a89bcb02d216ca76bc9153b9fa"
+    },
+    {
+      "id": "refusal-capability-conditional",
+      "response_identical": true,
+      "response_sha256": "6b03b226a7b4187b8fcb614d07e5b9c3357b113629044c9f68b253eba4280d19"
+    },
+    {
+      "id": "refusal-capability-negated-question",
+      "response_identical": true,
+      "response_sha256": "750bb5ebdc8825d6ced3e94c17ab79efd05352e43f292c4ed4293370ddb67dc6"
+    },
+    {
+      "id": "refusal-capability-escape-unsupported",
+      "response_identical": true,
+      "response_sha256": "fb5d77fa519c15c15c5429bbd74b83234e625cac48f02ba6669d8c61ddfe2c24"
+    },
+    {
+      "id": "refusal-missing-dimension",
+      "response_identical": true,
+      "response_sha256": "d1528fcaeadb0fcb6abbaaefc38d245c7c96b32acb7d6a09aeb22c01e2b9a05e"
+    },
+    {
+      "id": "refusal-missing-underdetermined",
+      "response_identical": true,
+      "response_sha256": "615384c5e65860bdf6d36323805d99707b5b8c4d8030725bb0d282cb633b0042"
+    },
+    {
+      "id": "refusal-missing-ambiguous",
+      "response_identical": true,
+      "response_sha256": "2e2e87a327e2caa594e2fdf4ea5d4a7273ff66255f6a42005398faf6863331b5"
+    },
+    {
+      "id": "refusal-invalid-contradiction",
+      "response_identical": true,
+      "response_sha256": "3ddcc728d1b3e610588a9856ab381c2f938d530a8a8d3d0b420d9ae80855a2db"
+    },
+    {
+      "id": "refusal-invalid-collinear",
+      "response_identical": true,
+      "response_sha256": "cb6692ce0d251fdfd84ef24be2ec711dac6f458fc0d83752aec21ebf3da5fd71"
+    },
+    {
+      "id": "refusal-invalid-zero-length",
+      "response_identical": true,
+      "response_sha256": "b294049682dc1ff0e13bf846f303f977fa61199630f57dc809c5cfc10b1b05d3"
+    },
+    {
+      "id": "refusal-invalid-zero-not-in-text",
+      "response_identical": true,
+      "response_sha256": "c836d867ca2b366cc6098db2d0d928f4d492f8e4ab745ed727c460315e8efdd8"
+    },
+    {
+      "id": "refusal-source-object-mismatch",
+      "response_identical": true,
+      "response_sha256": "527b182888f80a4cb7f895602b47b9fcc5c6ef4bb2f6186aa0e9c3dddee382df"
+    },
+    {
+      "id": "refusal-source-goal-as-premise",
+      "response_identical": true,
+      "response_sha256": "47e132f07778ab6dcd1a86cc38e204ed6fc069bdeafce64cbaf09a0d7e7fa68b"
+    },
+    {
+      "id": "refusal-source-request-unanswered",
+      "response_identical": true,
+      "response_sha256": "2c7d9ea5133253ea837e53c2d31e06971097d43a2fba0e5453f8184b93e366f6"
+    },
+    {
+      "id": "refusal-result-kernel-check",
+      "response_identical": true,
+      "response_sha256": "fc1951554919da87ce3c79e507d5c0181aa91198d205ab41970924c605f09409"
+    },
+    {
+      "id": "refusal-result-scene-metric",
+      "response_identical": true,
+      "response_sha256": "53c7ab4de3829ee0c460a16bb048345bda719a8f21af17b06ef753d0123d105f"
+    },
+    {
+      "id": "refusal-result-engine-self-check",
+      "response_identical": true,
+      "response_sha256": "b326077480b9bd6b99e78f18ad76fce1352d733c5ec8d3b119121ce257dcab44"
+    },
+    {
+      "id": "refusal-inconclusive-figure",
+      "response_identical": true,
+      "response_sha256": "6478aff4bb3a87640df97c1bdbacd8fa59ab539f3d8ca53b1d8f55ee7ca2d6dc"
+    },
+    {
+      "id": "refusal-inconclusive-negated",
+      "response_identical": true,
+      "response_sha256": "6b2d064594694fe0cfd1a331d0b6d2737c26cb7416d2b64b1fed48ea5ed35b2b"
+    },
+    {
+      "id": "refusal-inconclusive-proof-only",
+      "response_identical": true,
+      "response_sha256": "94dde41314d12b3fc57e51e07098a4d30238dbe6e3f8baf7ed6ebcc0d5712252"
+    },
+    {
+      "id": "refusal-extraction-fact-incomplete",
+      "response_identical": true,
+      "response_sha256": "55d078f7c2bc1cb052088c621566b59c4bca50d22c88c533831f6137712cc645"
+    },
+    {
+      "id": "refusal-extraction-not-json",
+      "response_identical": true,
+      "response_sha256": "01b686c9dba7dfc43ea87dd1f63fe5466f3dc695d2c33b065ab3ac6a43cff93d"
+    },
+    {
+      "id": "refusal-integrity-identity",
+      "response_identical": true,
+      "response_sha256": "bf6b417c52851488b0ebc8bf04a520c567cb528304d5d12b6f35dd1ef1cefa1f"
+    },
+    {
+      "id": "refusal-integrity-proof-status",
+      "response_identical": true,
+      "response_sha256": "b0d38ad897ac0295bd3c2402f0ea188dccff1b71256b5aecdc1074d275e8e0f2"
+    },
+    {
+      "id": "refusal-integrity-surface",
+      "response_identical": true,
+      "response_sha256": "ca581928d2c57aa116249fb20131edb7b035e9e16d93c90146370fe2ce3eeaf0"
+    },
+    {
+      "id": "gate-disabled",
+      "response_identical": true,
+      "response_sha256": "2c8f3fee20e998b9e2d90108a2de22ef123cf37365c214921cb4cdc4bfb9249d"
+    },
+    {
+      "id": "gate-forbidden",
+      "response_identical": true,
+      "response_sha256": "7363da8bddc542fbc0e2ade3a6213e7b3a4e9eb74707a78a77b287b496464e60"
+    },
+    {
+      "id": "gate-body-invalid",
+      "response_identical": true,
+      "response_sha256": "1506b81f48caf10260e1d7f420d6e4d8c72a8ee1a69176d5681b147f3b38eb6a"
+    },
+    {
+      "id": "gate-fixture-missing",
+      "response_identical": true,
+      "response_sha256": "3cf6fb0a82058bac8e5a3fe7eb7663c85451c865d4d980e788042a7ec3f47399"
+    }
+  ],
+  "reader_parity": {
+    "texts": 1896,
+    "changed": 22,
+    "baseline_sha256": "4f8e81102142b580b1d006332cc038fb98516de80f818c1643519e7e70cea080",
+    "current_sha256": "8282b20e9e1f6f4e0c486dea793ba80b22b0bb8d751727d7e01251df72feb909"
+  },
+  "notes": [
+    "Fresh-fixtures manifest producer fields refer to local temporary generation directory; responses are compared to the frozen /2 files without modifying them.",
+    "witness-red.json is superseded as a witness test: it selected volume f5 rather than distance f6. witness-red-v2.json exercises the intended distance and fails the old product.",
+    "Authoritative T3 pending; product-route Hybrid E2E not tested because product caller is intentionally absent."
+  ]
+}
