@@ -11,13 +11,15 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import hmac
+import ipaddress
 from datetime import datetime, timezone
 from typing import Literal
 
-from fastapi import Cookie, FastAPI
+from fastapi import Cookie, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 
 from app.persistence.db import (
     SessionLocal,
@@ -846,6 +848,11 @@ class AnalyzeBody(BaseModel):
     input: InputPayload
 
 
+class HybridPreviewBody(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    problem_text: str = Field(min_length=10, max_length=20000)
+
+
 class ImageExtractBody(BaseModel):
     """Ảnh đề bài cho TẦNG A của đường ảnh → mô phỏng.
 
@@ -873,6 +880,8 @@ def _policy_identity(route_policy: RoutePolicy) -> str:
     Mặc định = `CACHE_VERSION`, đúng như trước — hàng hiện có vẫn trúng, không cần bump. Chế độ khác =
     `CACHE_VERSION:<băm 8 của chế độ + phiên bản các tầng>` ⇒ bật hay rollback một chế độ đều MISS (trước đây khoá chỉ
     là băm đề, nên đổi chế độ vẫn trả envelope của chế độ kia). ≤ `String(16)` khi `CACHE_VERSION` ≤ 7 ký tự."""
+    if route_policy.hybrid_preview_enabled:
+        raise ValueError("Route D preview must never use the product cache")
     fp = route_policy.fingerprint()
     return CACHE_VERSION if fp is None else f"{CACHE_VERSION}:{fp}"
 
@@ -972,6 +981,33 @@ def _cong_luot_thu(algosim_session: str | None) -> JSONResponse | None:
             })
         session.commit()
     return None
+
+
+@app.post("/api/preview/hybrid", include_in_schema=False)
+def hybrid_preview(body: HybridPreviewBody, request: Request):
+    """Operator-only offline preview. No production cache, quota, credentials or provider transport."""
+    policy = route_policy_snapshot(preview=True)
+    headers = {"Cache-Control": "no-store"}
+    if not policy.hybrid_preview_enabled:
+        return JSONResponse(status_code=404, headers=headers,
+                            content={"reason_code": "PREVIEW_DISABLED", "error": "Chế độ xem trước đang tắt."})
+    token = os.getenv("HYBRID_ROUTE_D_PREVIEW_TOKEN", "")
+    supplied = request.headers.get("X-AlgoSim-Preview-Token", "")
+    try:
+        local = request.client is not None and ipaddress.ip_address(request.client.host).is_loopback
+    except ValueError:
+        local = False
+    if not local or len(token) < 32 or not hmac.compare_digest(token.encode(), supplied.encode()):
+        return JSONResponse(status_code=403, headers=headers,
+                            content={"reason_code": "PREVIEW_FORBIDDEN", "error": "Không được phép mở chế độ xem trước."})
+    # Declared Route D execution boundary, reached only after the OFF and operator gates.
+    from app.ai.hybrid_preview import run_preview
+
+    result = run_preview(body.problem_text, getattr(request.app.state, "hybrid_preview_fixtures", None), policy)
+    if result is None:
+        return JSONResponse(status_code=503, headers=headers, content={"reason_code": "OFFLINE_FIXTURE_REQUIRED",
+                            "error": "Chế độ xem trước chỉ chạy dữ liệu kiểm thử offline đã cấu hình trên máy chủ."})
+    return JSONResponse(content=result.model_dump(mode="json"), headers=headers)
 
 
 @app.post("/api/analyze")

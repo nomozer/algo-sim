@@ -279,9 +279,17 @@ def runtime_identity() -> dict:
     đoán — doctor sẽ xử lý riêng trường hợp đó."""
     # Nhập muộn: main.py import module này, tránh vòng import.
     from app.main import CACHE_VERSION, semantic_route_mode
+    from app.ai.pipeline import route_policy_snapshot
+    # Diagnostics-only boundary; importing main / running LLM_ONLY does not load Route D.
+    from app.ai.hybrid_preview import preview_runtime_identity
 
     kn = capability_fingerprint()
+    env = dict(os.environ)
+    policy = route_policy_snapshot(env)
     return {
+        "route_policy": {"geometry_compiler_mode": policy.geometry_compiler_mode,
+                         "fingerprint": policy.fingerprint()},
+        "hybrid_route_d_preview": preview_runtime_identity(route_policy_snapshot(env, preview=True)),
         "git_sha": os.getenv("ALGOSIM_GIT_SHA", "unknown"),
         "build_timestamp": os.getenv("ALGOSIM_BUILD_TIME", "unknown"),
         "cache_version": CACHE_VERSION,

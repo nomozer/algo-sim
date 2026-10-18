@@ -48,6 +48,9 @@ class RoutePolicy:
     """
 
     geometry_compiler_mode: str
+    hybrid_preview_enabled: bool = False
+    response_contract: str = "flat"
+    preview_surface: tuple[tuple[str, str], ...] = ()
 
     def env(self) -> dict[str, str]:
         from app.simulation.geometry_compiler.routing import BIEN_MOI_TRUONG
@@ -56,6 +59,9 @@ class RoutePolicy:
 
     def fingerprint(self) -> str | None:
         """`None` ở chế độ mặc định; ngược lại băm 8 ký tự của chế độ + phiên bản các tầng chạy ở chế độ ấy."""
+        if self.hybrid_preview_enabled:
+            source = json.dumps({"route": "HYBRID_ROUTE_D_PREVIEW", **dict(self.preview_surface)}, sort_keys=True)
+            return hashlib.sha256(source.encode("utf-8")).hexdigest()
         from app.simulation.geometry_compiler.routing import dinh_danh_be_mat
 
         be_mat = dinh_danh_be_mat(self.geometry_compiler_mode)
@@ -65,11 +71,21 @@ class RoutePolicy:
         return hashlib.sha256(goc.encode("utf-8")).hexdigest()[:8]
 
 
-def route_policy_snapshot(env: dict[str, str] | None = None) -> RoutePolicy:
+def route_policy_snapshot(env: dict[str, str] | None = None, *, preview: bool = False) -> RoutePolicy:
     """Ảnh chụp từ `env` (mặc định `os.environ`); giá trị lạ ép về mặc định như `routing.che_do`."""
     from app.simulation.geometry_compiler.routing import che_do
 
-    return RoutePolicy(che_do(env))
+    import os
+
+    env = os.environ if env is None else env
+    enabled = preview and env.get("HYBRID_ROUTE_D_PREVIEW") == "1"
+    surface: tuple[tuple[str, str], ...] = ()
+    if enabled:
+        # Declared preview identity boundary; /api/analyze never requests it.
+        from app.ai.hybrid_preview import preview_identity
+
+        surface = tuple(sorted(preview_identity("flat").items()))
+    return RoutePolicy(che_do(env), enabled, "flat", surface)
 
 
 # ── Schema structured output ──────────────────────────────────

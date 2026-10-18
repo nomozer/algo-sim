@@ -689,6 +689,9 @@ _COMPILER = "app.simulation.geometry_compiler"
 #: Cổng compiler DUY NHẤT được phép: (tệp sản phẩm, module nhập). `routing.quyet_dinh_dinh_tuyen` trả `DISABLED`
 #: khi `GEOMETRY_COMPILER_MODE` ≠ `DETERMINISTIC_FIRST`, không chạm `bien_dich`/`build_fact_graph`.
 _CONG_COMPILER = {("ai/pipeline.py", "app.simulation.geometry_compiler.routing")}
+# Explicit D boundaries: request snapshot metadata, guarded preview handler, diagnostics only.
+_CONG_PREVIEW = {("ai/pipeline.py", "app.ai.hybrid_preview"), ("main.py", "app.ai.hybrid_preview"),
+                 ("runtime_identity.py", "app.ai.hybrid_preview")}
 
 _NAP_DONG_TEN = {"__import__", "exec", "eval", "compile", "__builtins__", "__loader__"}
 _NAP_DONG_THUOC_TINH = {"import_module", "__import__", "spec_from_file_location", "spec_from_loader",
@@ -827,6 +830,11 @@ def test_Y_bao_dong_tinh_compiler_chi_qua_cong_routing_va_khong_cham_route_D():
     # compiler từ `app.main` (bắc cầu qua pipeline) — nếu không, các khẳng định trên xanh vô nghĩa.
     assert "app.simulation.semantic_program.ir_builders" in _bao_dong_import(goc, "app.ai.function_route")
     assert "app.simulation.geometry_compiler.routing" in _bao_dong_import(goc, "app.main")
+    # The preview boundary must really reach D; excluding it must not hide a missing runtime implementation.
+    assert "app.ai.fact_extraction" in _bao_dong_import(goc, "app.ai.hybrid_preview")
+    preview_edges = {(p.relative_to(goc).as_posix(), m) for p in goc.rglob("*.py")
+                     for m in _nhap_tu(p) if m == "app.ai.hybrid_preview"}
+    assert preview_edges == _CONG_PREVIEW
     # Tệp sản phẩm nào nhập gói compiler (AST, cả import trong hàm), nhập cái gì: đúng cổng đã khai, không hơn.
     def la_module(m: str) -> bool:
         p = goc.parent.joinpath(*m.split("."))
@@ -917,7 +925,8 @@ def _bao_dong_import(goc, bat_dau: str) -> set[str]:
             continue
         da.add(m)
         goi = m if f.name == "__init__.py" else m.rsplit(".", 1)[0]
-        hang.extend(x for x in _nhap_tu(f, goi) if x.startswith("app"))
+        hang.extend(x for x in _nhap_tu(f, goi) if x.startswith("app")
+                    and (f.relative_to(goc).as_posix(), x) not in _CONG_PREVIEW)
         if f.name != "__init__.py":                       # nhập `a.b.c` kéo theo `a.b.__init__`
             hang.append(m.rsplit(".", 1)[0])
     return da
