@@ -7,6 +7,20 @@
 - **F4:** contract keeps `route_d` outside the envelope, while `SimulationWorkspace` reads only `active.envelope.route_d`. No browser preview client exists; server preview rejects Origin and product routing uses `preview=False`. Before enablement: transport the wrapper deliberately, bind each observation to its relation and construction step, and verify proof semantics. Do not wire the preview endpoint to the browser.
 - **F5:** the legacy `verification_gap` label says executable even for pre-construction refusals; needs neutral, stage-correct wording.
 - **F6:** UNKNOWN hints are neutral but title/category still imply deficient source data; no frozen SOURCE + insufficient-specification fixture exists. Refusal-stage wording also assumes an old response.
+- **update 2026-10-18 (run `hybrid-offline-readiness-finalization`, branch `research/hybrid-offline-readiness-finalization`, not on `main`):**
+  the open items are named **HFOI-F3…F6** to keep them apart from the RESOLVED Scene3D F5/F6
+  (`ISSUE-ARCH-SCENE3D-VERIFICATION-GAP-PRESENTATION`, `ISSUE-ARCH-SCENE3D-INSUFFICIENT-SPEC-HINT`). Done offline:
+  HFOI-F3 (the answer in `a` from `route_d.answers`, joined to `kq_<id>` and checked against the scene value at a = 1;
+  numeric values of an `is_given = false` scene carry "trên hình dựng"); HFOI-F4 (one validated transport boundary
+  `hybrid-preview-adapter.ts::docPhanHoiHybrid` + `validateEnvelope`; the observation names its relation TYPE and is
+  anchored to the step where the figure is complete; never a proof); HFOI-F5 (neutral `verification_gap` label);
+  HFOI-F6 (UNKNOWN wording, refusal-stage wording, synthetic `insufficient_specification` + `SOURCE` fixture with
+  declared provenance). Offline E2E: 41/41 fixture responses regenerate byte-identical, independent oracle 12/12, browser
+  E2E 48/48 through the product shell (`PARTIALLY VERIFIED WITH MOCKED SEGMENTS`: frozen provider, in-process HTTP,
+  injected browser transport).
+- **still open:** naming the OBJECTS of a relation (BC, (SAB)) — adapter `/2` carries no goal-check arguments; needs
+  adapter `/3` and a new fixture set (BLOCKED by contract). No product caller and no live provider by design (Hybrid
+  NO-GO); hybrid view is not persisted in history. Not a GO HYBRID.
 - **evidence:** `evaluation/geometry/runs/scene3d-plane-grid-camera/pre-main-audit.md` §2/§5; correction and scoped gates in `evaluation/geometry/runs/scene3d-metric-boundary/`. Scene3D P0–P3 was accepted visually by the owner on 2026-10-18 (HUMAN_VISUAL_REVIEW_PASS, recorded in the local untracked GO MAIN handoff, not in Git) and fast-forwarded to `main` `551a3541`; that acceptance covers Scene3D only, not F3–F6, and the on-canvas "select result" interaction was not exercised (the sample scenes carry no on-canvas result label). No Product E2E PASS is claimed.
 
 ### ISSUE-ARCH-SCENE3D-ALTITUDE-MARKER-UNCERTIFIED
@@ -62,7 +76,16 @@
 
 ### ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO
 
-- **status:** OPEN — found by the round-2 independent review of `hybrid-preview-contract-hardening`. The defect is in a
+- **status:** RESOLVED on branch `research/hybrid-offline-readiness-finalization` (run
+  `hybrid-offline-readiness-finalization`, 2026-10-18; product `c55374cc` + review fixes `9d17557e`; not on `main`). One
+  predicate `scale_normalization.loai_nhan_doan` labels each `XY = v` as a stand-alone length, an expression (vector, sum,
+  product, dot product, `⋅`, `\cdot`, `x`, `:`) or a conditional ("khi"/"nếu"); every reader routes through it.
+  Expressions give no length (the grounding gate sees a labelled expression, never a bare number); conditional values
+  stay in comparisons but are not premises for `SOURCE`. Locked by `backend/tests/geometry/test_source_length_vector_context.py`
+  (hand expectations, fault injection). Reader parity over 1896 corpus texts: 22 intended changes, 0 regressions.
+  `CACHE_VERSION` 125 → 126 (served → refused for GIVEN lengths whose only evidence was inside an expression;
+  `runs/hybrid-offline-readiness-finalization/cache/decision.json`).
+- **original report:** found by the round-2 independent review of `hybrid-preview-contract-hardening`. The defect is in a
   shared product reader, so the fix needs its own wave (the default route uses the same reader).
 - **what:** `semantic_program/segment_relation.do_dai_trong_de` (through `refusal_cause.do_dai_de_ghi_khong_duong`)
   reads `XY = 0` in vector or dot-product notation as a premise length of 0. Examples: "GA + GB + GC = 0",
@@ -89,6 +112,10 @@
 - **what:** cache rows written before the route-aware cache policy did not record the routing mode. Compiler-mode rows,
   if any, may share the former default identity: **UNKNOWN**. No bump, purge or migration has been done.
 - **acceptance:** an offline audit of the cache rows, or an owner decision to bump `CACHE_VERSION` with a written reason.
+- **update 2026-10-18 (run `hybrid-offline-readiness-finalization`, not on `main`):** the bump 125 → 126 for
+  `ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO` makes every pre-126 row a miss for the default identity, whichever mode
+  wrote it — mitigated once that branch is integrated. The bump's reason is the reader fix, not this issue; closing it
+  formally stays an owner decision.
 
 ### ISSUE-ARCH-HYBRID-ROUTE-D-NOT-WIRED
 

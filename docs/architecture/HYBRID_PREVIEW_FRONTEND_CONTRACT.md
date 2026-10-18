@@ -134,10 +134,10 @@ Các giá trị đều thuộc từ vựng hệ đã có; preview không đặt 
 viện hàm") trên một đề hình học. Nó KHÔNG phải phán quyết "môn học khác" của cổng phạm vi: preview không chạy phát hiện
 miền. Vì vậy preview không bao giờ phát `out_of_scope`.
 
-Giới hạn đã biết của `SOURCE`: bộ đọc độ dài của server (`do_dai_trong_de`, dùng chung với tuyến mặc định) đọc nhầm
-`XY = 0` trong ký hiệu vectơ hay tích vô hướng ("GA + GB + GC = 0", "SA.BC = 0") thành một độ dài bằng 0. Nếu đề có ký
-hiệu như vậy **và** bước trích xuất lại phát một độ dài bằng 0, lời từ chối có thể mang `SOURCE` dù đề hợp lệ
-(`ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO`).
+Bộ đọc độ dài của server (`do_dai_trong_de`, dùng chung với tuyến mặc định) không còn đọc độ dài từ biểu thức
+vectơ/tổng/tích ("GA + GB + GC = 0", "SA.BC = 0", "AB ⋅ CD = 0") và chỉ tính TIỀN ĐỀ khi phân xử `SOURCE` ("MA = 0 khi M
+trùng A" không còn bị quy cho đề) — run `hybrid-offline-readiness-finalization`, `ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO`
+RESOLVED. 41 fixture `/2` sinh lại vẫn trùng byte.
 
 Bảng mã đầy đủ: `backend/app/ai/hybrid_preview.py::_NHOM`. Mã chưa có trong bảng rơi về `geometry_generation_failed` /
 `UNKNOWN`, không bao giờ `capability_gap`. Nhóm là khái niệm phía server; frontend rẽ nhánh theo `failure_category` và
@@ -159,12 +159,25 @@ Bảng mã đầy đủ: `backend/app/ai/hybrid_preview.py::_NHOM`. Mã chưa c�
 ## 8. Tương thích ngược
 
 - Envelope phục vụ có cùng hình dạng với envelope `LLM_ONLY` (`generic.semantic_program` + `config` + `scene3d`).
-  Khoá thêm duy nhất trong `scene3d` là `length_unit`, và frontend hiện bỏ qua nó. `route_d` nằm **ngoài** envelope.
+  Khoá thêm duy nhất trong `scene3d` là `length_unit`; frontend hiện tỉ lệ dựng và ghi chú mọi giá trị số của cảnh ấy
+  là "trên hình dựng, a = 1 đơn vị dựng" (`scene3d-model.ts::ghiChuGiaTriDung`). `route_d` nằm **ngoài** envelope.
 - Frontend không được **đòi** `route_d` hay `length_unit`. Cảnh hiện có không mang chúng và phải chạy như cũ.
-- Run này chưa nạp fixture vào frontend thật, vì không sửa `frontend/src`. Wave frontend phải chứng minh
-  `store.loadEnvelope` nhận mọi `served-*` (vitest) trước khi dựa vào điều đó.
+- **Biên vận chuyển (từ run `hybrid-offline-readiness-finalization`):** `frontend/src/simulations/domains/geometry/
+  hybrid-preview-adapter.ts::docPhanHoiHybrid` là chỗ DUY NHẤT đọc `{schema_version, envelope, route_d}`. Nó không chép
+  `route_d` vào envelope; nó gắn một view đã kiểm (`hybrid_preview`: đáp số ký hiệu nối với `kq_<id>` và đối chiếu giá
+  trị tại a = 1; quan sát có LOẠI quan hệ từ `planner.trace` và bước neo ở hình đã dựng xong), và
+  `semantic/index.ts::validateEnvelope` kiểm lại view ấy trước store. Phản hồi lệch hợp đồng ⇒ từ chối cả phản hồi.
+  Không có caller sản phẩm: biên này chỉ được dùng bởi test/harness offline. Adapter `/2` **không** mang đối số của
+  quan hệ mục tiêu, nên quan sát nêu được loại quan hệ (vd "quan hệ vuông góc giữa đường thẳng và mặt phẳng") nhưng
+  KHÔNG nêu được vật (BC, (SAB)) — cần adapter `/3` cùng bộ fixture mới.
 
 ## 9. Việc frontend còn mở (nghiệm thu cho wave Scene3D)
+
+> **Trạng thái (run `hybrid-offline-readiness-finalization`):** F1/F2 và F5/F6 của bảng dưới là các mục Scene3D đã
+> RESOLVED (`ISSUE-ARCH-SCENE3D-*`). Các mục còn mở về sau mang tên **HFOI-F3…F6**
+> (`ISSUE-ARCH-HYBRID-FRONTEND-OFFLINE-INTEGRATION`): HFOI-F3 đáp số ký hiệu và tỉ lệ dựng, HFOI-F4 biên `route_d`/quan
+> hệ/neo bước, HFOI-F5 nhãn verification-gap không nói "chạy được", HFOI-F6 câu chữ UNKNOWN/SOURCE + fixture tổng hợp
+> `insufficient_specification` + `SOURCE` — đã làm ở run ấy; còn lại là phần ghi ở `OPEN_ISSUES.md`.
 
 | mã | việc | nghiệm thu |
 |---|---|---|

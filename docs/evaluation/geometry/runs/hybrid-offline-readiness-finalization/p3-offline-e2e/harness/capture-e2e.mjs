@@ -54,6 +54,7 @@ const origin = `http://127.0.0.1:${sv.address().port}`;
 const browser = await chromium.launch({ headless: true, args: ["--use-gl=angle", "--use-angle=swiftshader", "--enable-unsafe-swiftshader"] });
 const results = [];
 const apiSeen = new Set();
+const captureImages = process.env.HFOI_CAPTURE_IMAGES === "1";
 
 async function moTrang() {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
@@ -101,6 +102,10 @@ try {
     if (nap.adapter === "ACCEPTED" && nap.active) {
       await page.waitForSelector(".geo3d-buoc-so", { timeout: 30000 });
       const pause = page.getByRole("button", { name: "Tạm dừng" }); if (await pause.count()) await pause.first().click();
+      // Explicit consent before checking answer/timeline integrity; arriving at the last step never grants it.
+      const disclosure = page.getByRole("button", { name: "Xem đáp án", exact: true });
+      rec.initial_answers_hidden = (await chipsDom(page)).answers.length === 0;
+      if (await disclosure.count()) await disclosure.click();
       const [, n] = await buocHien(page);
       const events = resp.envelope.scene3d.events;
       const measureStep = Object.fromEntries(Object.keys(resp.route_d.answers).map((k) =>
@@ -119,7 +124,7 @@ try {
           ok_answers: d.answers.length === expAnswers, ok_observations: d.observations.length === expObs,
           ok_length_unit: (d.lengthUnit.length > 0) === Boolean(resp.envelope.scene3d.length_unit),
           proven_wording: PROVEN.test(d.text), leaks: LEAK.filter((x) => d.text.includes(x)) });
-        if (k === n || (k === 1 && id.includes("H07"))) await page.screenshot({ path: join(out, `${id}__step${k}.png`) });
+        if (captureImages && (k === n || (k === 1 && id.includes("H07")))) await page.screenshot({ path: join(out, `${id}__step${k}.png`) });
       }
     }
     rec.pass = nap.adapter === "ACCEPTED" && nap.active && rec.steps.length > 0 && errors.length === 0 && rec.ui_steps_match_groups
@@ -153,7 +158,7 @@ try {
       leaks: LEAK.filter((x) => dom.text.includes(x)).concat(dom.text.includes(env.reason_code) ? [env.reason_code] : []) };
     rec.pass = rec.ok_eyebrow && rec.ok_no_scene && rec.ok_not_ran_claim && rec.ok_stage_not_old
       && rec.ok_source_hint_only_if_source && rec.leaks.length === 0 && errors.length === 0;
-    if (["refusal-source-object-mismatch", "refusal-missing-ambiguous", "synthetic-insufficient-specification-source"].includes(id)) {
+    if (captureImages && ["refusal-source-object-mismatch", "refusal-missing-ambiguous", "synthetic-insufficient-specification-source"].includes(id)) {
       await page.screenshot({ path: join(out, `${id}.png`) });
     }
     results.push(rec); console.log(`${rec.pass ? "PASS" : "FAIL"} ${id} eyebrow="${dom.eyebrow}" kind="${dom.kind}"`); await ctx.close();
@@ -176,7 +181,7 @@ try {
     const d = await chipsDom(page);
     const rec = { id: "malformed-non-spd-metric", kind: "fail-closed", nap, errors, canvases: d.canvases,
       pass: !nap.active && Boolean(nap.analysisError) && d.canvases === 0 && !document_has_2d(d.text) };
-    await page.screenshot({ path: join(out, "malformed-non-spd-metric.png") });
+    if (captureImages) await page.screenshot({ path: join(out, "malformed-non-spd-metric.png") });
     results.push(rec); console.log(`${rec.pass ? "PASS" : "FAIL"} malformed-non-spd-metric`); await ctx.close();
   }
 
@@ -202,7 +207,7 @@ try {
     const rec = { id, kind: "llm-only-compat", state: st, errors, canvases: d.canvases,
       pass: st.active && errors.length === 0 && d.answers.length === 0 && d.observations.length === 0
         && !d.text.includes("trên hình dựng") && (id === "legacy-2d-sample" ? d.canvases === 0 : d.canvases > 0) };
-    await page.screenshot({ path: join(out, `${id}.png`) });
+    if (captureImages) await page.screenshot({ path: join(out, `${id}.png`) });
     results.push(rec); console.log(`${rec.pass ? "PASS" : "FAIL"} ${id} canvases=${d.canvases}`); await ctx.close();
   }
 } finally {
