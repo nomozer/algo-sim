@@ -23,6 +23,8 @@ import { tangNhanManh } from "./interaction-state";
 export interface AnnotationView {
   /** "Hiện tất cả": mọi nhãn khả dụng ở bước đang xem, không chỉ dữ kiện và vật đang chọn. */
   showAll: boolean;
+  /** Explicit answer disclosure takes precedence over selection and "show all". */
+  hiddenIds?: ReadonlySet<string>;
 }
 
 /** §16.5 (thay U-W17-1): mặc định gọn — tên điểm và dữ kiện đề cho. */
@@ -116,7 +118,7 @@ export function annotationsAt(
   const ra: AnnotationEntry[] = [];
   for (const o of scene.objects) {
     const a = o.annotation;
-    if (!a || a.same_as || o.type !== "quantity" || o.value == null) continue;
+    if (!a || a.same_as || o.type !== "quantity" || o.value == null || view.hiddenIds?.has(o.id)) continue;
     const vai = vaiTro(o, a);
     const khaDung = vai === "result" ? ketLuan.has(o.id) : daTinh.has(o.id) || (o.origin === "free" && coMat.has(o.id));
     if (!khaDung || !a.subject_ids.every((s) => coMat.has(s))) continue;

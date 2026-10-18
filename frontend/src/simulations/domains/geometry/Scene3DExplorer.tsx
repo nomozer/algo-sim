@@ -214,6 +214,12 @@ export function Scene3DExplorer({
   const day = useMemo(() => withSubEntities(scene), [scene]);
   const cay = useMemo(() => semanticTree(day), [day]);
   const [tt, setTt] = useState<InteractionState>(taoTrangThai);
+  // Disclosure belongs to this analysis, never to the timeline or a camera preference.
+  const [dapAnDaMo, setDapAnDaMo] = useState<{ scene: Scene3D; hybrid: HybridPreviewView } | null>(null);
+  const hienDapAn = !!hybrid && dapAnDaMo?.scene === sceneKhung && dapAnDaMo.hybrid === hybrid;
+  const dapAnAn = useMemo(() => new Set(hienDapAn ? [] : (hybrid?.answers ?? []).map((a) => a.quantity_id)),
+    [hybrid, hienDapAn]);
+  useEffect(() => { setDapAnDaMo(null); }, [sceneKhung, hybrid]);
   const [moc, setMoc] = useState<SeenMarks>(CHUA_THAY);
   const [baoDongBo, setBaoDongBo] = useState(false);
   /* W4 (H-W2-3): các BẢNG THÔNG TIN đang mở — mỗi bảng độc lập (mở cái này không đóng cái kia); chỉ giữ TÊN bảng,
@@ -357,6 +363,7 @@ export function Scene3DExplorer({
   const giaTri = (id: string) => {
     const o = day.objects.find((x) => x.id === id);
     if (!o) return ten(id);
+    if (dapAnAn.has(id)) return o.notation || ten(id);
     // F3: đáp số tổng quát (dạng chữ, đã kiểm ở biên `hybrid-preview-adapter`) trước; giá trị số là của hình dựng.
     const dapSo = hybrid?.answers.find((a) => a.quantity_id === id);
     const tongQuat = dapSo ? giaTriDapSo(dapSo) : null;
@@ -469,7 +476,7 @@ export function Scene3DExplorer({
           onInteraction={setTt}
           onSelect={chon}
           fitToken={fitToken}
-          annotationView={xem}
+          annotationView={{ ...xem, hiddenIds: dapAnAn }}
           stepsOpen={moBuoc}
           onStepsOpenChange={setMoBuoc}
           auxiliaryShown={hinhPhu}
@@ -512,7 +519,13 @@ export function Scene3DExplorer({
           {/* F3/F4 — chỉ từ view ĐÃ KIỂM (`hybrid-preview-adapter`), và theo timeline: đáp số hiện từ bước đo đại
               lượng của nó, quan sát từ bước neo (hình dựng xong) — không kết luận nào đứng trước bước chống đỡ nó. */}
           {/* Bước của KHUNG đang hiện (`buocHien` = `geometryAnchor`), cùng một luật với hình (review của run, M2). */}
-          {hybridTaiBuoc(hybrid, day, buocHien).answers
+          {!!hybrid?.answers.length && (
+            <button type="button" className="geo3d-noi-nut" aria-expanded={hienDapAn}
+                    onClick={() => setDapAnDaMo(hienDapAn || !hybrid ? null : { scene: sceneKhung, hybrid })}>
+              {hienDapAn ? "Ẩn đáp án" : "Xem đáp án"}
+            </button>
+          )}
+          {hienDapAn && hybridTaiBuoc(hybrid, day, buocHien).answers
             .map((a) => {
               const q = day.objects.find((o) => o.id === a.quantity_id);
               return (
@@ -552,12 +565,12 @@ export function Scene3DExplorer({
 
             {/* §16.6 → W05: ô soi là nơi DUY NHẤT mang công thức (thẻ lời giải dưới mô phỏng đã gỡ). Đại lượng
                 không có công thức nhất quán (thể tích đo thẳng trên khối) vẫn mang GIÁ TRỊ — W05 để trống ô ấy. */}
-            {formula && (
+            {formula && !dapAnAn.has(dangChon.id) && (
               <p className="geo3d-soi-cong-thuc" data-formula-entity={dangChon.id}>
                 {formula.text}
               </p>
             )}
-            {!formula && laDaiLuong && (
+            {!formula && laDaiLuong && !dapAnAn.has(dangChon.id) && (
               <p className="geo3d-soi-cong-thuc" data-value-entity={dangChon.id}>
                 {giaTri(dangChon.id)}
               </p>

@@ -67,6 +67,14 @@ const ids = (xs: { id: string }[]) => xs.map((x) => x.id).sort();
 const CUOI = 5;
 
 describe("số đo trên hình (§15.4)", () => {
+  it("ẩn đáp án ưu tiên hơn chọn đại lượng và Hiện tất cả; không sửa payload", () => {
+    const scene = canh();
+    const before = JSON.stringify(scene);
+    const view = { showAll: true, hiddenIds: new Set(["the_tich"]) };
+    expect(ids(annotationsAt(scene, CUOI, view, "the_tich"))).not.toContain("the_tich");
+    expect(ids(annotationsAt(scene, CUOI, TAT_CA, "the_tich"))).toContain("the_tich");
+    expect(JSON.stringify(scene)).toBe(before);
+  });
   it("chỉ đại lượng CÓ annotation của backend mới có nhãn — không suy từ tên biến", () => {
     const a = annotationsAt(canh(), CUOI, TAT_CA, null);
     expect(ids(a)).toEqual(["AB_length", "dien_tich", "the_tich"]);
