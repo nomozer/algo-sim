@@ -170,8 +170,8 @@
     chưa xác minh hay thiếu chứng chỉ không còn bị gọi là `capability_gap`. Khoá quét nguồn: mã từ chối mới phải được
     xếp nhóm.
   - Lớp chặn văn bản chứng minh chuẩn hoá NFKC và gộp mọi dấu gạch / dấu trừ (kể cả U+2212).
-  - Hợp đồng dữ liệu cho frontend: `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md`. Bộ 39 fixture xuất từ chính
-    endpoint (`test_hybrid_preview_fixtures.py`).
+  - Hợp đồng dữ liệu cho frontend: `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md`. Bộ 41 fixture adapter `/2`
+    xuất từ chính endpoint (`fixtures-adapter-2/`, khoá ở `test_hybrid_preview_fixtures.py`).
 
 ### D-08: Nối API sau cờ
 - **STATUS:** PROVED cho preview — `POST /api/preview/hybrid`: cờ env + token server ≥ 32 ký tự + header + peer loopback, request có header `Origin` (trình duyệt) bị từ chối; TẮT ⇒ 404 trước mọi import tuyến D, và `/api/health` không nạp tuyến D; cổng trả lời trước khi đọc body; chỉ dữ liệu fixture offline (không transport, kể cả `ALLOW_LIVE_AI=1` có khoá); không cache; ngoài OpenAPI; `LLM_ONLY` của `/api/analyze` khớp băm byte với baseline trước khi nối.

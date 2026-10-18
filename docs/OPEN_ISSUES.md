@@ -13,7 +13,9 @@
 
 ### ISSUE-ARCH-HYBRID-PREVIEW-FAILURE-CATEGORY-COLLAPSED
 
-- **status:** RESOLVED in run `hybrid-preview-contract-hardening` (product `caf21513`, branch, not on `main` until integrated).
+- **status:** RESOLVED in run `hybrid-preview-contract-hardening` (product `caf21513`, corrected after independent review
+  in `bce21d8b`: Route D's escape `OUT_OF_SCOPE` is a capability gap, not "another subject"; `NON_POSITIVE_LENGTH` is SOURCE
+  only when the server reads it in the text; adapter `/2`). On the branch; not on `main` until integrated.
 - **what was wrong:** every Route D preview refusal had `failure_category = capability_gap` and no `refusal_cause`, so an
   integrity fault, an unverified source or a missing certificate read as "the system cannot do this".
 - **fix:** `hybrid_preview.classify_refusal` puts each code in a group and maps it to the existing categories, with a
@@ -38,6 +40,16 @@
   preview now emits `verification_gap` (LLM_ONLY wraps geometry refusals as `geometry_generation_failed`, so this was
   not reachable before).
 - **acceptance:** contract §9 F5; fixtures `refusal-source-*`, `refusal-result-*`, `refusal-inconclusive-*`.
+
+### ISSUE-ARCH-SCENE3D-INSUFFICIENT-SPEC-HINT
+
+- **status:** OPEN — frontend, Scene3D/UI owner (F6 of `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md`; found by
+  the independent review of `hybrid-preview-contract-hardening`).
+- **what:** for `failure_category = insufficient_specification`, `SimulationWorkspace` always shows "Bổ sung dữ liệu còn
+  thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng", whatever `refusal_cause` is. The preview sends that category
+  with `UNKNOWN` (for example `AMBIGUOUS_FACT` when the model flagged ambiguity). The hint then blames the problem and
+  promises support.
+- **acceptance:** contract §9 F6; fixtures `refusal-missing-*`.
 
 ### ISSUE-OPS-CACHE-HISTORICAL-MODE-UNKNOWN
 

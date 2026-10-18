@@ -2,7 +2,8 @@
 
 > Người đọc: agent/nhóm Scene3D (frontend). Nguồn sự thật là mã và fixture; tài liệu này mô tả chúng, không thay chúng.
 > Thiết lập bởi run `hybrid-preview-contract-hardening` (2026-10-18). Phiên bản hợp đồng: `hybrid-route-d-preview/1`
-> (envelope) · `hybrid-preview-adapter/1` (adapter) · `hybrid-preview-envelope-fixture/1` (fixture).
+> (envelope) · `hybrid-preview-adapter/2` (adapter; `/2` = lời từ chối mang `refusal_cause` và `failure_category` đã phân
+> loại) · `hybrid-preview-envelope-fixture/1` (fixture).
 
 ## 0. Phạm vi và giới hạn
 
@@ -14,16 +15,18 @@
 
 ## 1. Fixture — nguồn dữ liệu duy nhất cho frontend
 
-- Thư mục: `docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures/`. File `manifest.json` liệt kê
-  từng fixture (`id`, `kind`, `file`, `sha256`, `response_sha256`, `expected`, `covers`).
+- Thư mục: `docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2/`. File `manifest.json`
+  liệt kê từng fixture (`id`, `kind`, `file`, `sha256`, `response_sha256`, `expected`, `covers`).
+- Thư mục `fixtures/` cùng run **đã bị thay thế, không dùng**. Nó được xuất trước review và mang nhãn adapter `/1`,
+  vốn là nhãn của adapter cũ chưa phân loại lời từ chối.
 - Mỗi fixture là **phản hồi thật** của endpoint, gồm `source` (đề + phản hồi provider giả lập lấy từ corpus đã commit,
   kèm `input_sha256`), `injection` (lỗi tiêm có khai, hoặc `null`), `producer` (commit, product commit, băm mã sản phẩm,
   phiên bản adapter/envelope), `expected` và `response`. Không fixture nào viết tay.
 - Tái tạo và kiểm: `cd backend && python scripts/export_hybrid_preview_fixtures.py --verify <thư mục>`. Lệnh này khoá
   trong `backend/tests/test_hybrid_preview_fixtures.py`. Bộ fixture **bất biến**: nếu hợp đồng đổi, sinh bộ mới ở một
   run mới (`--out` từ chối ghi đè).
-- Loại fixture: `served-*` (12), `refusal-*` (23, trong đó có lỗi tiêm `malformed` / `tampered` / `identity`), và
-  `gate-*` (4 phản hồi HTTP của cổng, chỉ operator thấy).
+- Loại fixture: `served-*` (12), `refusal-*` (25, trong đó 6 có lỗi tiêm `tampered` / `identity`, và có các đầu ra
+  provider `malformed`), và `gate-*` (4 phản hồi HTTP của cổng, chỉ operator thấy).
 
 ## 2. Cấu trúc phản hồi
 
@@ -116,14 +119,18 @@ Các giá trị đều thuộc từ vựng hệ đã có; preview không đặt 
 
 | nhóm (phía server) | `failure_category` | `refusal_cause` | ví dụ `reason_code` | fixture |
 |---|---|---|---|---|
-| hệ thiếu năng lực | `capability_gap` (`out_of_scope` cho đề ngoài môn) | `UNKNOWN` | `UNSUPPORTED_CAPABILITY`, `CONDITIONAL_CLAUSE` | `refusal-capability-*` |
+| hệ thiếu năng lực | `capability_gap` | `UNKNOWN` | `UNSUPPORTED_CAPABILITY`, `CONDITIONAL_CLAUSE`, `OUT_OF_SCOPE` (*) | `refusal-capability-*` |
 | thiếu / mơ hồ dữ kiện | `insufficient_specification` | `UNKNOWN` | `MISSING_DIMENSION`, `AMBIGUOUS_FACT` | `refusal-missing-*` |
-| dữ kiện mâu thuẫn / suy biến | `geometry_generation_failed` | `SOURCE` chỉ với `NON_POSITIVE_LENGTH`, còn lại `UNKNOWN` | `INCONSISTENT_FACTS`, `COLLINEAR_POINTS` | `refusal-invalid-*` |
+| dữ kiện mâu thuẫn / suy biến | `geometry_generation_failed` | `SOURCE` chỉ khi bộ đọc đề của server tự đọc được độ dài ≤ 0 trong giả thiết (`NON_POSITIVE_LENGTH`); còn lại `UNKNOWN` | `INCONSISTENT_FACTS`, `COLLINEAR_POINTS`, `NON_POSITIVE_LENGTH` | `refusal-invalid-*` (`invalid-zero-length` = SOURCE, `invalid-zero-not-in-text` = UNKNOWN) |
 | chưa xác minh được nguồn | `verification_gap` | `UNKNOWN` | `SOURCE_OBJECT_MISMATCH`, `QUOTE_NOT_IN_SOURCE` | `refusal-source-*` |
-| kết quả / chứng nhận chưa qua kiểm | `verification_gap` | `UNKNOWN` | `ENGINE_SELF_CHECK_FAILED`, `PREVIEW_RESULT_INVALID` | `refusal-result-*` |
+| kết quả / chứng nhận chưa qua kiểm (gồm lỗi interpreter/kernel khi dựng) | `verification_gap` | `UNKNOWN` | `ENGINE_SELF_CHECK_FAILED`, `PREVIEW_RESULT_INVALID`, `ENGINE_EXECUTION_FAILED` | `refusal-result-*` |
 | không thể kết luận | `verification_gap` | `UNKNOWN` | `PROOF_UNVERIFIABLE`, `FIGURE_NOT_UNIQUE` | `refusal-inconclusive-*` |
 | trích xuất / provider hỏng | `geometry_generation_failed` | `UNKNOWN` | `JSON_INVALID`, `FACT_INCOMPLETE` | `refusal-extraction-*` |
 | toàn vẹn / identity | `geometry_generation_failed` | `UNKNOWN` | `PREVIEW_IDENTITY_CHANGED`, `PREVIEW_PROOF_STATUS_INVALID` | `refusal-integrity-*` |
+
+(*) `OUT_OF_SCOPE` của Route D là lối thoát `unsupported` của bước trích xuất ("mệnh đề không ánh xạ được vào thư
+viện hàm") trên một đề hình học. Nó KHÔNG phải phán quyết "môn học khác" của cổng phạm vi: preview không chạy phát hiện
+miền. Vì vậy preview không bao giờ phát `out_of_scope`.
 
 Bảng mã đầy đủ: `backend/app/ai/hybrid_preview.py::_NHOM`. Mã chưa có trong bảng rơi về `geometry_generation_failed` /
 `UNKNOWN`, không bao giờ `capability_gap`. Nhóm là khái niệm phía server; frontend rẽ nhánh theo `failure_category` và
@@ -132,8 +139,12 @@ Bảng mã đầy đủ: `backend/app/ai/hybrid_preview.py::_NHOM`. Mã chưa c�
 ## 7. Thứ được phép hiển thị cho người học
 
 - **Hiển thị:** `learner_reason` (tiếng Việt, đã kiểm: không định danh máy, không trường mẫu `{…}`, không trace, không
-  quote của mô hình), nhãn loại vấn đề tra từ `failure_category` qua `NHAN_LOAI_VAN_DE` có sẵn, và gợi ý theo
-  `refusal_cause` như luồng hiện tại (`SOURCE` mới được mời xem lại đề).
+  quote của mô hình), và nhãn loại vấn đề tra từ `failure_category` qua `NHAN_LOAI_VAN_DE` có sẵn.
+- **Luật về gợi ý:** chỉ `refusal_cause == "SOURCE"` mới được mời người học xem lại đề. Luồng hiện tại chỉ áp luật này
+  cho `geometry_generation_failed`. Với `insufficient_specification`, `SimulationWorkspace` luôn hiện "Bổ sung dữ liệu
+  còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng", bất kể `refusal_cause`. Preview phát loại này với
+  `UNKNOWN` (ví dụ `AMBIGUOUS_FACT` khi mô hình tự đánh dấu mơ hồ), nên câu ấy vừa đổ cho đề vừa hứa năng lực. Đây là
+  F6 (§9).
 - **Không bao giờ hiển thị:** `reason_code`, tên nhóm, `runtime_identity`, `fingerprint`, `simulation_id`,
   `provider_mode`, `schema_version`, mã của cổng HTTP, `geometry_ir`, hay `construction_trace` thô. Khoá hiện có:
   `components/ui-hygiene.test.ts`.
@@ -154,4 +165,5 @@ Bảng mã đầy đủ: `backend/app/ai/hybrid_preview.py::_NHOM`. Mã chưa c�
 | F2 | `maTranKhung` tự vệ với ma trận không 3×3 / không đối xứng / không xác định dương | không toạ độ nào không hữu hạn; vitest với năm ma trận của test `Metric` backend |
 | F3 | hiện `length_unit.display_scale` | §4; fixture có / không có `length_unit` |
 | F4 | trình bày `goal_checks` như quan sát | §3; không chuỗi "đã chứng minh" nào trên mọi `served-*` |
+| F6 (mới) | gợi ý của `insufficient_specification` phải đọc `refusal_cause` | với `UNKNOWN`: không mời sửa đề, không hứa "dạng bài này hệ có mô phỏng"; fixture `refusal-missing-*` |
 | F5 (mới) | nhánh hiển thị riêng cho `verification_gap` | hiện nhãn `NHAN_LOAI_VAN_DE` đã có ("chạy được nhưng chưa đủ bằng chứng để phát"), nhưng tiêu đề/gợi ý rơi về mặc định "NGOÀI DANH MỤC MÔ PHỎNG", sai cho loại này; cần tiêu đề và gợi ý không hứa "dạng bài này hệ có mô phỏng" |

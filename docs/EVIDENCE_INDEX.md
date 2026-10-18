@@ -5,7 +5,7 @@
 REPORT = docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/
 CLASSIFICATION = see report.md §0 (owner scope GO_HYBRID_PREVIEW_CONTRACT_HARDENING; preview refusal classification, proof-text backstop, offline envelope fixtures and the frontend data contract; Hybrid product NO-GO, LLM_ONLY default unchanged)
-CODE_COMMIT = caf21513 (product commit); candidate freeze 2a832ae2 (tree_hash 53ea8830e9f0ce48823160335c48cf1b7dd6c82a46e5cc0e2196b5613419a4ea, 111 files); fixtures 0a199aa5
+CODE_COMMIT = caf21513 (round 1) · bce21d8b (review fixes, product commit); candidate freeze f5f483bf (tree_hash 1b7a671326290f0b1da7d213d1399da2fe02ec7765f13f5057525362ff0f08fa, 111 files; earlier freeze 2a832ae2 = 53ea8830… superseded); fixtures aae168e6 (`fixtures-adapter-2/`; `fixtures/` of 0a199aa5 superseded)
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/run.json
 MODEL_REQUEST_COUNT = 0 (offline; fixtures served through the endpoint with the network blocked)
 CORRECTS = NONE
