@@ -221,7 +221,7 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
     ];
 
     it.each(NON_SPD_MATRICES)(
-      "maTranKhung, veKhongGian, hopLeScene3D và loadEnvelope từ chối metric không SPD (%s)",
+      "maTranKhung, veKhongGian và cổng shell hopLeScene3D từ chối metric không SPD (%s)",
       (badMetric, label) => {
         const fx = loadFixture("served-H01_CUBE.json");
         const badScene: Scene3D = {
@@ -230,17 +230,17 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
         };
         expect(() => maTranKhung(badScene), label).toThrow(ChartMetricError);
         expect(() => veKhongGian(badScene), label).toThrow(ChartMetricError);
+        // `App.tsx` và `SimulationWorkspace.tsx` chỉ dựng xưởng 3D khi `hopLeScene3D` đúng ⇒ không toạ độ NaN nào lên màn.
         expect(hopLeScene3D(badScene), label).toBe(false);
-
-        useAppStore.getState().reset();
-        useAppStore.getState().loadEnvelope({
-          ...fx.response.envelope,
-          scene3d: badScene,
-        });
-        expect(useAppStore.getState().active, label).toBeNull();
-        expect(useAppStore.getState().analysisError, label).toBeTruthy();
       },
     );
+
+    /* Store MÙ DOMAIN (M2 #7): kiểm chart_metric là việc của miền hình học (cổng shell `hopLeScene3D`), không của
+       store. Bản F2 đầu tiên import `scene3d-chart` vào store để từ chối ở `loadEnvelope`; không test nào bắt. */
+    it("store không import module miền nào (M2 #7)", () => {
+      const storeSrc = readFileSync(join(__dirname, "..", "state", "store.ts"), "utf8");
+      expect(storeSrc).not.toMatch(/from\s+["'][^"']*simulations\/domains\//);
+    });
   });
 
   describe("F3 — ISSUE-ARCH-HYBRID-ROUTE-D-NOT-WIRED (length_unit.display_scale)", () => {

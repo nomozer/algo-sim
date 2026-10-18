@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { ChartMetricError, hopLeChartMetric, maTranKhung, maTranKhung4, veKhongGian } from "./scene3d-chart";
+import { ChartMetricError, maTranKhung, maTranKhung4, veKhongGian } from "./scene3d-chart";
+import { hopLeChartMetric } from "./scene3d-model";
 import type { Scene3D } from "./scene3d-model";
 import { toVec3 } from "./scene3d-model";
 

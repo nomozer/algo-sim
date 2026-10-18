@@ -11,11 +11,9 @@
  * phép so hay đáp số nào đọc chúng — backend đã tính mọi đại lượng chính xác trong khung.
  */
 import type { Exact, ExactVec3, Scene3D, SceneObject } from "./scene3d-model";
-import { toNumber, toVec3 } from "./scene3d-model";
+import { hopLeChartMetric, toNumber, toVec3 } from "./scene3d-model";
 
 type M3 = [[number, number, number], [number, number, number], [number, number, number]];
-
-const EPS_SPD = 1e-12;
 
 export class ChartMetricError extends Error {
   constructor(message: string) {
@@ -28,62 +26,19 @@ export class ChartMetricError extends Error {
 export function maTranKhung(scene: Pick<Scene3D, "chart_metric">): M3 | null {
   const g = scene.chart_metric;
   if (g == null) return null;
-  if (
-    !Array.isArray(g) ||
-    g.length !== 3 ||
-    g.some((row) => !Array.isArray(row) || row.length !== 3)
-  ) {
-    throw new ChartMetricError("chart_metric phải là ma trận 3×3.");
+  // Thẩm quyền DUY NHẤT về hợp lệ: `scene3d-model.ts::hopLeChartMetric` (cũng là cổng của `hopLeScene3D`).
+  if (!hopLeChartMetric(g)) {
+    throw new ChartMetricError("chart_metric phải là ma trận 3×3 đối xứng xác định dương, phần tử là phân số hữu hạn.");
   }
-  const G = g.map((r) =>
-    r.map((cell) => {
-      if (typeof cell !== "string" || cell.trim() === "") {
-        throw new ChartMetricError("Phần tử chart_metric phải là chuỗi phân số hữu hạn.");
-      }
-      const val = toNumber(cell);
-      if (!Number.isFinite(val)) {
-        throw new ChartMetricError("Phần tử chart_metric không hữu hạn.");
-      }
-      return val;
-    }),
-  );
-  for (let i = 0; i < 3; i++) {
-    for (let j = i + 1; j < 3; j++) {
-      if (Math.abs(G[i][j] - G[j][i]) > EPS_SPD) {
-        throw new ChartMetricError("chart_metric không đối xứng.");
-      }
-    }
-  }
-  const d0 = G[0][0];
-  if (!(d0 > EPS_SPD)) {
-    throw new ChartMetricError("chart_metric không xác định dương (d0 <= 0).");
-  }
-  const l00 = Math.sqrt(d0);
+  const G = g.map((r) => r.map(toNumber));
+  const l00 = Math.sqrt(G[0][0]);
   const l10 = G[1][0] / l00;
   const l20 = G[2][0] / l00;
-  const d1 = G[1][1] - l10 * l10;
-  if (!(d1 > EPS_SPD)) {
-    throw new ChartMetricError("chart_metric không xác định dương (d1 <= 0).");
-  }
-  const l11 = Math.sqrt(d1);
+  const l11 = Math.sqrt(G[1][1] - l10 * l10);
   const l21 = (G[2][1] - l20 * l10) / l11;
-  const d2 = G[2][2] - l20 * l20 - l21 * l21;
-  if (!(d2 > EPS_SPD)) {
-    throw new ChartMetricError("chart_metric không xác định dương (d2 <= 0).");
-  }
-  const l22 = Math.sqrt(d2);
+  const l22 = Math.sqrt(G[2][2] - l20 * l20 - l21 * l21);
   // L tam giác dưới (G = L·Lᵀ) ⇒ T = Lᵀ.
   return [[l00, l10, l20], [0, l11, l21], [0, 0, l22]];
-}
-
-export function hopLeChartMetric(chart_metric: unknown): boolean {
-  if (chart_metric == null) return true;
-  try {
-    maTranKhung({ chart_metric: chart_metric as Exact[][] });
-    return true;
-  } catch {
-    return false;
-  }
 }
 
 const nhan = (m: M3, v: [number, number, number]): [number, number, number] =>
