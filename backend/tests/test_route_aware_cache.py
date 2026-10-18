@@ -148,6 +148,23 @@ def test_pipeline_dinh_tuyen_theo_anh_chup_khong_doc_lai_env(monkeypatch):
     assert env.get("status") == "ok" and goi_provider == [1], env.get("reason")
 
 
+def test_cache_clear_khong_coi_hang_cua_che_do_khac_la_cu():
+    """`scripts/cache_clear.py --cu` từng xoá mọi hàng `!= CACHE_VERSION`, kể cả hàng hợp lệ `CACHE_VERSION:<băm>`
+    của chế độ compiler (review độc lập của run `hybrid-pre-main-hardening`)."""
+    import importlib.util
+    from pathlib import Path
+
+    spec = importlib.util.spec_from_file_location(
+        "cache_clear", Path(__file__).resolve().parents[1] / "scripts" / "cache_clear.py")
+    cc = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cc)
+    gc = main_module._policy_identity(PL.route_policy_snapshot({"GEOMETRY_COMPILER_MODE": "DETERMINISTIC_FIRST"}))
+    assert cc.con_hieu_luc(main_module.CACHE_VERSION, main_module.CACHE_VERSION)
+    assert cc.con_hieu_luc(gc, main_module.CACHE_VERSION)
+    assert not cc.con_hieu_luc("124", "125") and not cc.con_hieu_luc("1250", "125") and not cc.con_hieu_luc(None, "125")
+    assert not cc.con_hieu_luc("124:abcd1234", "125")
+
+
 def test_route_policy_bat_bien():
     rp = PL.route_policy_snapshot({})
     with pytest.raises(Exception):

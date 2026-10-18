@@ -132,7 +132,7 @@
 20 cổng ở §1 viết cho tuyến C (compiler tất định trên `RequestContract`). Tuyến D là đường khác (`backend/app/ai/fact_extraction.py` → `function_route.py` → `simulation/geometry_functions/`), nên cổng §1 không thay được các cổng dưới đây và ngược lại. Đổi bất cứ gì của tuyến D khỏi `NO-GO` cần đủ các cổng D-*; trạng thái đọc từ bằng chứng nêu ở từng cổng, không chép số sống vào đây.
 
 ### D-01: Đường mặc định không chạm tuyến D
-- **STATUS:** PROVED — `backend/tests/geometry/test_structured_geometry_relations.py::test_Y_*`: không nạp động trong mã sản phẩm; bao đóng import tĩnh chỉ với compiler qua cổng `routing`; module nạp thật khi chạy `run_pipeline` ở `LLM_ONLY` (subprocess sạch) ⊆ bao đóng tĩnh, tuyến D không nạp; tiêm lỗi 8 cách lách + 1 import cắt chuỗi lúc chạy.
+- **STATUS:** PROVED trên đường mặc định ĐÃ CHẠY (một fixture, trọn tới envelope `ok`); phần mã probe không chạy chỉ có danh sách cấm cơ chế nạp động đã biết + bao đóng tĩnh — `backend/tests/geometry/test_structured_geometry_relations.py::test_Y_*`: danh sách cấm (không chống được mọi cách viết — review độc lập tìm 11 cách lọt); bao đóng import tĩnh chỉ với compiler qua cổng `routing`; module nạp thật khi chạy `run_pipeline` ở `LLM_ONLY` (subprocess sạch, chặn mạng) ⊆ bao đóng tĩnh, tuyến D không nạp; tiêm lỗi 8 cách lách + import cắt chuỗi ở đầu đường và trong đuôi tất định.
 - **BLOCKER:** —
 - **NEXT_TEST:** khi nối tuyến D, cổng nối phải được KHAI (như `_CONG_COMPILER`), không lách guard.
 

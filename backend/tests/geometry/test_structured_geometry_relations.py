@@ -723,34 +723,46 @@ def _nap_dong(nguon: str) -> list[str]:
 
 def _module_nap_luc_chay(tmp_path, tiem: str = "") -> set[str]:
     """`app.*` có trong `sys.modules` sau khi một tiến trình SẠCH nhập `app.main` và chạy `run_pipeline` ở `LLM_ONLY`
-    tới lượt gọi provider đầu tiên (bị chặn bằng ngoại lệ dừng; 0 mạng, không khoá API). `tiem` = mã chạy ngay trước
-    lượt gọi ấy — phép tiêm lỗi cho lớp (c)."""
+    TRỌN ĐƯỜNG tới envelope `ok`: lượt tổng hợp được giả bằng chính chương trình compiler của đề lăng trụ (tính ở tiến
+    trình cha, truyền qua JSON — tiến trình con không nhập module test nào), nên đuôi tất định (validator, interpreter,
+    kernel, adapter, scene3d) cũng chạy. 0 mạng: provider bị giả, DNS và kết nối bị chặn (không chặn `socket.connect` —
+    vòng proactor asyncio trên Windows cần nó); `load_dotenv` có thể nạp lại khoá, nên chặn ở socket chứ không ở env.
+    `tiem` = mã chạy ngay trong lượt tổng hợp — phép tiêm lỗi cho lớp (c). Review độc lập của run này: bản trước dừng ở
+    lượt provider đầu tiên (đuôi không chạy) và "routing đã nạp" không còn chứng minh dòng định tuyến đã chạy."""
     import os
     import subprocess
     import sys
 
+    from app.simulation.geometry_compiler.routing import quyet_dinh_dinh_tuyen
+
     text, contract = _hop_dong_lang_tru()
     hd = tmp_path / "contract.json"
     hd.write_text(contract.model_dump_json(), encoding="utf-8")
+    ct = tmp_path / "program.json"
+    ct.write_text(json.dumps(quyet_dinh_dinh_tuyen(contract, {"GEOMETRY_COMPILER_MODE": "DETERMINISTIC_FIRST"}).program),
+                  encoding="utf-8")
     ma = (
-        "import asyncio, json, sys\n"
+        "import asyncio, json, socket, sys\n"
+        "def khong_mang(*a, **k):\n    raise RuntimeError('mạng bị chặn trong probe')\n"
+        "socket.getaddrinfo = khong_mang\nsocket.create_connection = khong_mang\n"
         "import app.main  # noqa: F401\n"
         "from app.ai import pipeline as PL\n"
         "from app.simulation.semantic_program.request_contract import RequestContract\n"
         "hd = RequestContract.model_validate_json(open(sys.argv[1], encoding='utf-8').read())\n"
+        "ct = open(sys.argv[4], encoding='utf-8').read()\n"
         "da = []\n"
-        "class Dung(Exception):\n    pass\n"
         "async def analyze(*a, **k):\n    da.append('analyze')\n    return hd, None\n"
-        "async def gemini(*a, **k):\n    exec(sys.argv[3])\n    raise Dung()\n"
+        "async def gemini(*a, **k):\n    da.append('gemini')\n    exec(sys.argv[3])\n    return ct\n"
         "PL.stage_semantic_analyze = analyze\nPL.call_gemini = gemini\n"
-        "try:\n    asyncio.run(PL.run_pipeline(sys.argv[2], 'khoa_gia'))\nexcept Dung:\n    pass\n"
-        "assert da == ['analyze'], da\n"
+        "env = asyncio.run(PL.run_pipeline(sys.argv[2], 'khoa_gia'))\n"
+        "assert da == ['analyze', 'gemini'], da\n"
+        "assert env.get('status') == 'ok', (env.get('status'), env.get('reason'))\n"
         "print(json.dumps(sorted(m for m in sys.modules if m == 'app' or m.startswith('app.'))))\n"
     )
     env = {k: v for k, v in os.environ.items()
            if k not in ("GEOMETRY_COMPILER_MODE", "ALLOW_LIVE_AI", "GEMINI_API_KEY", "SEMANTIC_ROUTE_MODE")}
     env.update(PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1")
-    kq = subprocess.run([sys.executable, "-c", ma, str(hd), text, tiem or "pass"], cwd=_goc_app().parent, env=env,
+    kq = subprocess.run([sys.executable, "-c", ma, str(hd), text, tiem or "pass", str(ct)], cwd=_goc_app().parent, env=env,
                         capture_output=True, text=True, encoding="utf-8", timeout=180)
     assert kq.returncode == 0, kq.stderr[-2000:]
     return set(json.loads(kq.stdout.strip().splitlines()[-1]))
@@ -829,20 +841,40 @@ def test_Y_bao_dong_tinh_compiler_chi_qua_cong_routing_va_khong_cham_route_D():
 
 
 def test_Y_module_nap_luc_chay_nam_trong_bao_dong_tinh_va_route_D_khong_nap(tmp_path):
-    """Lớp (c): đường mặc định CHẠY THẬT. Mọi `app.*` đã nạp phải nằm trong bao đóng tĩnh của `app.main`; route D không
-    nạp; cổng routing có nạp (chứng cứ dòng định tuyến đã chạy — nếu không, phép so rỗng nghĩa)."""
+    """Lớp (c): đường mặc định CHẠY THẬT, trọn tới envelope `ok` (probe tự khẳng định analyze → tổng hợp đã chạy và
+    status `ok`). Mọi `app.*` đã nạp phải nằm trong bao đóng tĩnh của `app.main`; route D không nạp; module của đuôi
+    tất định có nạp (chứng cứ đuôi đã chạy — nếu không, phép so chỉ phủ phần đầu)."""
     goc = _goc_app()
     nap = _module_nap_luc_chay(tmp_path)
-    assert "app.simulation.geometry_compiler.routing" in nap, "dòng định tuyến không chạy — probe vô nghĩa"
+    for duoi in ("app.simulation.semantic_program.interpreter", "app.simulation.semantic_program.scene3d",
+                 "app.simulation.semantic_program.route"):
+        assert duoi in nap, f"đuôi tất định không chạy ({duoi}) — probe chỉ phủ phần đầu"
     assert not any(m.startswith(_ROUTE_D) for m in nap), sorted(m for m in nap if m.startswith(_ROUTE_D))
     tinh = _bao_dong_import(goc, "app.main")
     lot = sorted(nap - tinh)
     assert lot == [], f"nạp lúc chạy nhưng bao đóng tĩnh không thấy (import bị che): {lot}"
 
 
-def test_Y_probe_luc_chay_bat_import_lach_tren_duong_da_chay(tmp_path):
-    """Phép tiêm lỗi cho lớp (c): nạp route D bằng chuỗi cắt ngay trên đường đã chạy ⇒ probe thấy nó."""
-    nap = _module_nap_luc_chay(tmp_path, '__import__("app.ai." + "function_route")')
+_TIEM_DUOI = (
+    "import app.simulation.semantic_program.scene3d as S3\n"
+    "goc = S3.build_scene3d\n"
+    "def boc(*a, **k):\n"
+    "    __import__('app.ai.' + 'function_route')\n"
+    "    return goc(*a, **k)\n"
+    "S3.build_scene3d = boc\n"
+    "import app.ai.pipeline as P\n"
+    "for ten in dir(P):\n"
+    "    if getattr(P, ten) is goc:\n"
+    "        setattr(P, ten, boc)\n"
+)
+
+
+@pytest.mark.parametrize("tiem", ['__import__("app.ai." + "function_route")', _TIEM_DUOI],
+                         ids=["dau-duong", "duoi-tat-dinh"])
+def test_Y_probe_luc_chay_bat_import_lach_tren_duong_da_chay(tmp_path, tiem):
+    """Phép tiêm lỗi cho lớp (c): nạp route D bằng chuỗi cắt ở đầu đường (lượt tổng hợp) hoặc trong ĐUÔI tất định (bọc
+    `build_scene3d`, chỉ chạy sau interpreter) ⇒ probe thấy nó."""
+    nap = _module_nap_luc_chay(tmp_path, tiem)
     assert "app.ai.function_route" in nap
     assert "app.ai.function_route" not in _bao_dong_import(_goc_app(), "app.main")
 
