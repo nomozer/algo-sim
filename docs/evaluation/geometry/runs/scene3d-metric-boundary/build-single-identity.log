@@ -1,0 +1,18 @@
+
+> algo-sim-frontend@0.1.0 build
+> tsc -b && vite build
+
+vite v6.4.3 building for production...
+transforming...
+✓ 94 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.60 kB │ gzip:   0.42 kB
+dist/assets/index-DBFV1VGw.css   56.54 kB │ gzip:  10.24 kB
+dist/assets/index-BMHq5-pj.js   994.71 kB │ gzip: 265.32 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 53.88s

@@ -1,0 +1,7 @@
+DERIVED SUMMARY, raw bytes retained outside docs/git
+Command: npx vitest run scene3d-envelope-boundary + hybrid-preview-contract + scene3d-chart + product-envelope-rendering + store
+Raw SHA256: aa862b3fbc2643bacab36a307d525f573e220f96e13e117f5099aff611e41534
+Test Files  5 passed (5)
+Tests  128 passed (128)
+Start at  18:08:37
+Duration  1.39s (transform 1.44s, setup 212ms, import 1.95s, tests 649ms, environment 1ms)

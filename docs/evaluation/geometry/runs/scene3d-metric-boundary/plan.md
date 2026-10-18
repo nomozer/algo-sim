@@ -13,15 +13,15 @@ Dependencies: store -> registry/types; semantic module -> geometry model. No rev
 History: no migration, deletion or version bump; reject before record; revalidate old records on reopen.
 Excluded: Hybrid runtime, preview/browser wiring, provider requests, main merge/push, cleanup.
 
-- [ ] Add failing tests using real registered module: malformed, non-SPD, overflow; direct store bypass,
+- [x] Add failing tests using real registered module: malformed, non-SPD, overflow; direct store bypass,
   API response, old history, stale active state, forbidden fallback; preserve valid 2D and 3D.
-- [ ] Add optional validateEnvelope to SimulationModule returning ConfigResult; store delegates before init/history.
+- [x] Add optional validateEnvelope to SimulationModule returning ConfigResult; store delegates before init/history.
   Semantic module checks any supplied scene via the existing domain authority then validates config.
-- [ ] Run RED -> GREEN and existing contract/rendering tests; pin domain-blind store architecture.
-- [ ] Independent read-only review: bypass, fallback and F4 locked product path; resolve blockers.
-- [ ] Commit product/tests, refreeze in a fresh clean detached worktree; commit freeze; full T3, build,
+- [x] Run RED -> GREEN and existing contract/rendering tests; pin domain-blind store architecture.
+- [x] Independent read-only review: bypass, fallback and F4 locked product path; resolve blockers.
+- [x] Commit product/tests, refreeze in a fresh clean detached worktree; commit freeze; full T3, build,
   orbit, fixture integrity and negative tests on a fresh clean detached candidate. Retain all worktrees.
-- [ ] Add append-only correction report, machine receipts and evidence index. F3/F4/F5/F6 remain open for
+- [x] Add append-only correction report, machine receipts and evidence index. F3/F4/F5/F6 remain open for
   offline integration / before GO HYBRID. Human visual review remains pending.
 
 Stop conditions: no ready verdict unless boundary and all gates pass. No Product E2E Hybrid claim.

@@ -1,0 +1,127 @@
+{
+  "schema": "SCENE3D_BOUNDARY_BROWSER/1",
+  "candidate_head": "14c26f3f0b95cfae0312e17a6b445ecd51825565",
+  "dist_files": [
+    {
+      "path": "assets/index-BMHq5-pj.js",
+      "sha256": "2eff2a3f1c4a5ff73bddc38a93753e1882148d75f0f33baf1cbfb1853df33d4b"
+    },
+    {
+      "path": "assets/index-DBFV1VGw.css",
+      "sha256": "6f15d756219800f8ca4f95cbb77f9772d62c644f394e2ff3846d11dc1eaa188f"
+    },
+    {
+      "path": "index.html",
+      "sha256": "cabc9909a60976efe91a26db66100f69c7855ea70c7019d14fe646ae789bc1ac"
+    }
+  ],
+  "live_calls": 0,
+  "results": [
+    {
+      "id": "malformed",
+      "input_kind": "synthetic fault",
+      "sent_sha256": "377b740a88b95d98356ed3352dbf54ebdde56ad362829dad231ae97a68ce8a9a",
+      "want": "error",
+      "canvases": 0,
+      "stages2d": 0,
+      "errors": [
+        "Cấu hình mô phỏng không hợp lệ: Dữ liệu hình không vượt qua kiểm tra an toàn. Hãy phân tích lại đề."
+      ],
+      "observations": 0,
+      "history": 0,
+      "page_errors": []
+    },
+    {
+      "id": "non-SPD",
+      "input_kind": "synthetic fault",
+      "sent_sha256": "9f652b95086a37270918cb9d39302edc2d7cbd2cbe08f3e1f270355d5955a930",
+      "want": "error",
+      "canvases": 0,
+      "stages2d": 0,
+      "errors": [
+        "Cấu hình mô phỏng không hợp lệ: Dữ liệu hình không vượt qua kiểm tra an toàn. Hãy phân tích lại đề."
+      ],
+      "observations": 0,
+      "history": 0,
+      "page_errors": []
+    },
+    {
+      "id": "overflow",
+      "input_kind": "synthetic fault",
+      "sent_sha256": "501d841db0e8a29ea2c0b76d6a0e2efe8aa7d4ff8147f438b39e5bd455b91570",
+      "want": "error",
+      "canvases": 0,
+      "stages2d": 0,
+      "errors": [
+        "Cấu hình mô phỏng không hợp lệ: Dữ liệu hình không vượt qua kiểm tra an toàn. Hãy phân tích lại đề."
+      ],
+      "observations": 0,
+      "history": 0,
+      "page_errors": []
+    },
+    {
+      "id": "finite-SPD-overflow",
+      "input_kind": "synthetic fault",
+      "sent_sha256": "3b0b101ad4d1f1c5efaac36c6a320abc8a07cca75941c613ec707c757ea2672d",
+      "want": "error",
+      "canvases": 0,
+      "stages2d": 0,
+      "errors": [
+        "Cấu hình mô phỏng không hợp lệ: Hệ chưa thể hiển thị an toàn dữ liệu hình này. Hãy phân tích lại đề."
+      ],
+      "observations": 0,
+      "history": 0,
+      "page_errors": []
+    },
+    {
+      "id": "fallback-bypass",
+      "input_kind": "synthetic fault",
+      "sent_sha256": "cd95ef0293d98a4235dbe13ea55b5d8ca2c78dbcda6b17278a71f7c759efd065",
+      "want": "error",
+      "canvases": 0,
+      "stages2d": 0,
+      "errors": [
+        "Cấu hình mô phỏng không hợp lệ: Dữ liệu hình không vượt qua kiểm tra an toàn. Hãy phân tích lại đề."
+      ],
+      "observations": 0,
+      "history": 0,
+      "page_errors": []
+    },
+    {
+      "id": "valid-3D",
+      "input_kind": "offline fixture envelope",
+      "sent_sha256": "d0dd93b1e06747236a29ff13450275381cb80c9ec515aafb9fac2c5dba0f3070",
+      "want": "3d",
+      "canvases": 1,
+      "stages2d": 0,
+      "errors": [],
+      "observations": 0,
+      "history": 1,
+      "page_errors": []
+    },
+    {
+      "id": "valid-legacy-2D",
+      "input_kind": "scene omitted from fixture",
+      "sent_sha256": "74d2f712b8cd18ee079f6b02b1cca90a74bb9116e3d6700d4fcafefd972e7961",
+      "want": "2d",
+      "canvases": 0,
+      "stages2d": 1,
+      "errors": [],
+      "observations": 0,
+      "history": 1,
+      "page_errors": []
+    },
+    {
+      "id": "F4-product-locked",
+      "input_kind": "offline fixture envelope",
+      "sent_sha256": "09cafc54f5aaa701dd08f4bb631ae47309aae14051ca171a2ac69acdacfca6a9",
+      "want": "3d",
+      "canvases": 1,
+      "stages2d": 0,
+      "errors": [],
+      "observations": 0,
+      "history": 1,
+      "page_errors": []
+    }
+  ]
+}

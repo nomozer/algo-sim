@@ -1,0 +1,39 @@
+{
+  "schema": "AUTHORITATIVE_T3/1",
+  "candidate_head": "14c26f3f0b95cfae0312e17a6b445ecd51825565",
+  "checkout": ".superpowers/worktrees/t3-scene3d-metric-clean",
+  "clean_before_and_after": true,
+  "command": "node scripts/full-gate.mjs",
+  "cwd": "frontend/",
+  "execution": "same Windows identity throughout; watchdog process-tree permission available; build+rebuild preflight PASS",
+  "env": {
+    "ALLOW_LIVE_AI": "0",
+    "GEMINI_API_KEY": "empty",
+    "PYTHONIOENCODING": "utf-8"
+  },
+  "exit_code": 0,
+  "label": "FULL_PRODUCT_GATE_PASS",
+  "backend": {
+    "passed": 10828,
+    "skipped": 1,
+    "deselected": 2,
+    "xfailed": 9
+  },
+  "frontend": {
+    "files": 70,
+    "passed": 1133
+  },
+  "build": "PASS",
+  "demo": "5/5 plus reduced chain 1/1",
+  "crash_surface": "6/6, 0 uncaught (500)",
+  "summary_log": "t3-summary.log",
+  "raw_log": ".superpowers/diagnostics/scene3d-metric-boundary/t3-complete.raw.log",
+  "raw_sha256": "774cc6092e843dbd0f5d8ec06f81333c01fafcc50839789c2ef6605e1f4d148a",
+  "post_t3_dist_matches_browser_receipt": true,
+  "provider_requests": 0,
+  "earlier_failed_attempts": [
+    "diagnostics.json",
+    "diagnostics-complete.json",
+    "build-acl-attempt.json"
+  ]
+}

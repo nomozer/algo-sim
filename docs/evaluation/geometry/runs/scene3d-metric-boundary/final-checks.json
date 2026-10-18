@@ -1,0 +1,33 @@
+{
+  "schema": "SCENE3D_FINAL_CHECKS/1",
+  "candidate": "14c26f3f0b95cfae0312e17a6b445ecd51825565",
+  "main": "90fe44df9fd600bf0eded87a316b8e6dddc29cc5",
+  "main_tracked_status": "",
+  "main_untracked_preserved": [
+    "?? .vscode/",
+    "?? docs/evaluation/geometry/runs/hybrid-go-main/",
+    "?? docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/",
+    "?? docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/",
+    "?? frontend/public/"
+  ],
+  "source_and_tests_diff_vs_candidate": "",
+  "historical_scene3d_package_diff_vs_preflight": "",
+  "pending_tracked_changes": [
+    "docs/ARCHITECTURE_MAP.md",
+    "docs/CODE_INDEX.md",
+    "docs/CURRENT_STATE.md",
+    "docs/EVIDENCE_INDEX.md",
+    "docs/OPEN_ISSUES.md",
+    "docs/evaluation/geometry/runs/scene3d-metric-boundary/plan.md"
+  ],
+  "allowed_final_commit_scope": "docs/evidence only; git cached name allowlist checked immediately before commit",
+  "freeze": "MATCH",
+  "docs_tests_passed": 42,
+  "visual_review": "HUMAN_VISUAL_REVIEW_PENDING",
+  "human_acceptance": "NOT_GRANTED",
+  "hybrid": "NO-GO",
+  "provider_requests": 0,
+  "merge": "NONE",
+  "push": "NONE",
+  "worktree_db_evidence_deletion": "NONE"
+}

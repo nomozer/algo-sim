@@ -1,5 +1,18 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Scene3D metric acceptance boundary (research/scene3d-plane-grid-camera)
+
+Run `docs/evaluation/geometry/runs/scene3d-metric-boundary/` corrects the previous renderer-only F2 semantics.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `frontend/src/simulations/types.ts::SimulationModule.validateEnvelope?` | Optional whole-envelope validation returning the module's `ConfigResult`; store only delegates | `state/store.test.ts`, `components/hybrid-preview-contract.test.tsx` M2 #7 |
+| `frontend/src/simulations/domains/semantic/index.ts::validateEnvelope` | Supplied Scene3D must pass `hopLeScene3D` and actual `veKhongGian` conversion before config/init/history; absent/null scene uses legacy config validation | `components/scene3d-envelope-boundary.test.tsx`, `geometry/product-envelope-rendering.test.tsx` |
+| `frontend/src/simulations/domains/geometry/scene3d-model.ts::hopLeChartMetric` | Sole metric authority; chart transform delegates; serialization rejects overflow | `geometry/scene3d-chart.test.ts`, boundary negatives |
+| `frontend/src/state/store.ts::loadEnvelope` | Catches module validation errors, clears stale active on failure, returns to visible error; rejected history is retained and not replayed | boundary API/direct/history/2D tests |
+
+No history schema/cache/provider/runtime change; existing Scene3D guard remains shallow, not a full payload schema validator.
+
 ## Hybrid preview contract hardening (research/hybrid-preview-contract-hardening, Hybrid product off)
 
 Run `docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/`; frontend data contract

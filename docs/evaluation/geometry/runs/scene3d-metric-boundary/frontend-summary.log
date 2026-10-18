@@ -1,0 +1,7 @@
+DERIVED SUMMARY; exact raw bytes retained locally
+Raw path: .superpowers/diagnostics/scene3d-metric-boundary/frontend-full.log
+Raw SHA256: fad46599e91ec99d5d1ae4adae8b5b6b30316e4190eab99c90618f93e2fec2bf
+Test Files  70 passed (70)
+Tests  1133 passed (1133)
+Start at  18:59:35
+Duration  5.43s (transform 7.18s, setup 1.78s, import 16.31s, tests 11.95s, environment 13ms)

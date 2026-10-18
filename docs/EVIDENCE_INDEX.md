@@ -1,5 +1,26 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SCENE3D_METRIC_BOUNDARY
+
+REPORT = docs/evaluation/geometry/runs/scene3d-metric-boundary/handoff.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-metric-boundary/
+CLASSIFICATION = F2_METRIC_BOUNDARY_CLOSEOUT (whole-envelope rejection before acceptance/history; M2 #7 domain-blind store retained; Hybrid product NO-GO; HUMAN_VISUAL_REVIEW_PENDING; authoritative gate status in run.json)
+CODE_COMMIT = cb1f4954; test-only lifecycle follow-up 216bbf84; clean refreeze/candidate 14c26f3f (111 measured files, tree 045a8a628c7923d68d6eae6446a30d24be08d900f673293b8e74661a21c44ccc; candidate 2160fbcf superseded after failed T3)
+VERIFICATION = docs/evaluation/geometry/runs/scene3d-metric-boundary/run.json
+MODEL_REQUEST_COUNT = 0 (offline)
+CORRECTS = SCENE3D_PLANE_GRID_CAMERA (pre-main-audit.md §8: renderer fallback is not accepted-data rejection); HYBRID_PREVIEW_CONTRACT_HARDENING (candidate_divergence.json only; historical measurements unchanged)
+CORRECTED_BY = NONE
+
+## WAVE_ID = SCENE3D_PLANE_GRID_CAMERA
+
+REPORT = docs/evaluation/geometry/runs/scene3d-plane-grid-camera/pre-main-audit.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-plane-grid-camera/
+CLASSIFICATION = HISTORICAL_SCENE3D_AUDIT (T3 at 8e2235e7; F2 acceptance semantics superseded by correction below; human visual acceptance not granted)
+VERIFICATION = docs/evaluation/geometry/runs/scene3d-plane-grid-camera/verification/authoritative-t3-8e2235e7.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = NONE
+CORRECTED_BY = SCENE3D_METRIC_BOUNDARY
+
 ## WAVE_ID = HYBRID_PREVIEW_CONTRACT_HARDENING
 
 REPORT = docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/report.md
@@ -9,7 +30,7 @@ CODE_COMMIT = caf21513 (round 1) · bce21d8b (review fixes, product commit); can
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/run.json
 MODEL_REQUEST_COUNT = 0 (offline; fixtures served through the endpoint with the network blocked)
 CORRECTS = NONE
-CORRECTED_BY = NONE
+CORRECTED_BY = SCENE3D_METRIC_BOUNDARY (candidate identity layer; no historical measurement rewrite)
 
 ## WAVE_ID = HYBRID_ROUTE_D_PREVIEW_WIRING
 

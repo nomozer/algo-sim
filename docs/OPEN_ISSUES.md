@@ -1,5 +1,14 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-HYBRID-FRONTEND-OFFLINE-INTEGRATION
+
+- **status:** OPEN — F3/F4/F5/F6 are not product-E2E complete. Blocker before GO HYBRID; not a Scene3D integration blocker while Hybrid stays locked and the current product cannot deliver these observations.
+- **F3:** symbolic answers in `route_d.answers` do not reach the product beside the `a = 1` display-scale chip.
+- **F4:** contract keeps `route_d` outside the envelope, while `SimulationWorkspace` reads only `active.envelope.route_d`. No browser preview client exists; server preview rejects Origin and product routing uses `preview=False`. Before enablement: transport the wrapper deliberately, bind each observation to its relation and construction step, and verify proof semantics. Do not wire the preview endpoint to the browser.
+- **F5:** the legacy `verification_gap` label says executable even for pre-construction refusals; needs neutral, stage-correct wording.
+- **F6:** UNKNOWN hints are neutral but title/category still imply deficient source data; no frozen SOURCE + insufficient-specification fixture exists. Refusal-stage wording also assumes an old response.
+- **evidence:** `evaluation/geometry/runs/scene3d-plane-grid-camera/pre-main-audit.md` §2/§5; correction and scoped gates in `evaluation/geometry/runs/scene3d-metric-boundary/`. Human visual review remains pending. No Product E2E PASS is claimed.
+
 ### ISSUE-ARCH-SCENE3D-ALTITUDE-MARKER-UNCERTIFIED
 
 - **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F1`): `scene3d-view.tsx` no longer inspects `o.id.includes("cao")`, `o.label`/`o.role` `"chiều cao"`, or `a.z <= b.z`; `perp_marker:${o.id}` is drawn on a `segment` only when `o.perpendicular_witness ?? o.annotation?.witness` supplies a valid orthogonal certificate (`|dot(u, v)| <= 1e-4 * ||u|| * ||v||`). Locked in `frontend/src/components/hybrid-preview-contract.test.tsx` and `scene3d-hidden-lines.test.tsx`. Not on `main` until integrated.
@@ -7,6 +16,8 @@
 - **repro / acceptance:** `docs/evaluation/geometry/runs/hybrid-pre-main-hardening/frontend-handoff.md` F1.
 
 ### ISSUE-ARCH-SCENE3D-CHART-METRIC-UNGUARDED
+
+- **correction 2026-10-18, `scene3d-metric-boundary`:** the historical status below predates the owner M2 #7 decision. `hopLeChartMetric` in `scene3d-model.ts` is the sole metric authority; `maTranKhung` delegates. The registered semantic module now checks supplied Scene3D and actual chart conversion through `validateEnvelope` before store acceptance/init/history. Invalid metric or nonrepresentable transformed coordinates reject the whole envelope with a visible error; no silent 2D fallback. Store imports no geometry. Existing absent/null-scene history retains independent config validation and is not migrated/deleted. See the correction run for current candidate and gate receipts.
 
 - **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F2`): `scene3d-chart.ts::maTranKhung` and `scene3d-model.ts::hopLeChartMetric` validate `3×3` shape, finite rational entries, symmetry (`<= 1e-12`), and strictly positive Cholesky pivots (`> 1e-12`), throwing `ChartMetricError` and failing closed in `hopLeScene3D` and `store.loadEnvelope` before `veKhongGian` can emit `NaN` or `Infinity`. Locked in `hybrid-preview-contract.test.tsx` and `scene3d-chart.test.ts`. Not on `main` until integrated.
 - **repro / acceptance:** `frontend-handoff.md` F2.

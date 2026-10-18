@@ -1,0 +1,71 @@
+{
+  "schema": "LOCAL_DIAGNOSTIC_RETENTION/1",
+  "reason": "Preserve raw diagnostics outside docs/git; no deletion or byte edits. These are incomplete/RED attempts, never authoritative PASS.",
+  "attempts": [
+    {
+      "path": ".superpowers/diagnostics/scene3d-metric-boundary/browser.log",
+      "sha256": "4dfbf1cf0cb28d7f1cee542d8f6b4cc0e3bdfac73e3fa93c8fb0c26d8e48222a",
+      "summary": []
+    },
+    {
+      "path": ".superpowers/diagnostics/scene3d-metric-boundary/green-attempt.log",
+      "sha256": "eb94684bbde6ecf22e84082619a2bd21a7f195c364f2d774df649a8348e9eabe",
+      "summary": [
+        "Test Files  1 failed | 4 passed (5)",
+        "Tests  4 failed | 122 passed (126)",
+        "Duration  1.16s (transform 1.27s, setup 180ms, import 1.71s, tests 573ms, environment 1ms)"
+      ]
+    },
+    {
+      "path": ".superpowers/diagnostics/scene3d-metric-boundary/green.log",
+      "sha256": "e48fa2a25146ad60858784356ca66fd2f08c41090cc4d4197529bbfafe812a0f",
+      "summary": [
+        "Test Files  5 passed (5)",
+        "Tests  126 passed (126)",
+        "Duration  1.30s (transform 1.30s, setup 185ms, import 1.83s, tests 697ms, environment 0ms)"
+      ]
+    },
+    {
+      "path": ".superpowers/diagnostics/scene3d-metric-boundary/orbit.log",
+      "sha256": "85e0ada654b2e2a4cd759c4dabd76ff85f09dbd89458d151dcbfbdd71635c966",
+      "summary": []
+    },
+    {
+      "path": ".superpowers/diagnostics/scene3d-metric-boundary/red-confirmed.log",
+      "sha256": "aec648272bd49f64484c133258226c02d63ad5f786c20e8d56af78b9b095bfc7",
+      "summary": [
+        "Test Files  1 failed (1)",
+        "Tests  11 failed (11)",
+        "Duration  540ms (transform 180ms, setup 35ms, import 218ms, tests 82ms, environment 0ms)"
+      ]
+    },
+    {
+      "path": ".superpowers/diagnostics/scene3d-metric-boundary/red-overflow.log",
+      "sha256": "a2040cdde117a5f197b80bbfa02576da463908bb8b0454fd12e375713b997462",
+      "summary": [
+        "Test Files  1 failed (1)",
+        "Tests  13 failed (13)",
+        "Duration  595ms (transform 188ms, setup 33ms, import 236ms, tests 115ms, environment 0ms)"
+      ]
+    },
+    {
+      "path": ".superpowers/diagnostics/scene3d-metric-boundary/red.log",
+      "sha256": "2f08724c9f88c41499c532cb4902b01099d2caa4a6a147463a62a89c658dec7b",
+      "summary": [
+        "Test Files  1 failed (1)",
+        "Tests  11 failed (11)",
+        "Duration  837ms (transform 398ms, setup 35ms, import 522ms, tests 85ms, environment 0ms)"
+      ]
+    },
+    {
+      "path": ".superpowers/diagnostics/scene3d-metric-boundary/t3.log",
+      "sha256": "ab287284d897ad680c251a459888d5f396acb619ab389713663298dc538c82d7",
+      "summary": []
+    }
+  ],
+  "red_confirmed": "11 failed against baseline; all expected acceptance/stale-active failures",
+  "red_overflow": "13 failed against baseline, including finite SPD serializer overflow",
+  "t3_initial": "aborted after sandbox tmp_path PermissionError reproduced independently",
+  "orbit_initial": "CDP Page.enable timeout; final rerun separate",
+  "browser_initial": "wrong legacy selector .simulation-card; corrected to .workspace-card in final harness"
+}

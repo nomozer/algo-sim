@@ -278,6 +278,12 @@ Chi tiết dành cho khoá luận — sơ đồ, vùng LLM/tất định, đư�
 
 ## 3b. Quy tắc RENDERER-NEUTRAL STATE (M7.FREEZE — điều kiện để có 3D)
 
+**Scene3D acceptance boundary (2026-10-18):** module-owned `validateEnvelope` runs before accepted active/init/history.
+The store delegates through `SimulationModule` and stays domain-blind (M2 #7). Supplied invalid chart metrics or failed
+chart conversion reject the whole envelope; missing/null scene retains independently config-validated legacy 2D.
+The shell's scene guard selects layout and is not evidence that a metric failure was safely accepted as 2D.
+History schema/records remain unchanged; reopen revalidates before restoring progress.
+
 **Engine state chỉ chứa sự thật NGỮ NGHĨA. Bố cục là chuyện của renderer.**
 
 - Vị trí trong không gian **mô phỏng** (vd `GenericState.pos`, toạ độ miền 0–100)

@@ -1,0 +1,25 @@
+✔ repo root keeps a Windows path with spaces (no %20) (1.305ms)
+﹣ explicit interpreter is verified and reported (0.2541ms) # SKIP
+✔ missing explicit interpreter fails closed, never falls back to PATH (1.9362ms)
+✔ an executable that is not the backend Python is rejected (125.5101ms)
+﹣ interpreter version mismatch is rejected (0.1422ms) # SKIP
+✔ detached tree without a venv reports every candidate it tried (66.3493ms)
+✔ gate propagates the child exit code and spawn errors (194.2397ms)
+✔ identity is v3 (1.2687ms)
+✔ thresholds are exactly v1's (0.9509ms)
+✔ horizontal drag scales with canvas height (OrbitControls rotates 2π·dx/clientHeight) (0.2702ms)
+✔ settle parameters are the registered ones (0.1246ms)
+✔ axis consistency is angle-weighted: a near-static tail cannot dilute a real rotation (v2 defect) (15.4522ms)
+✔ a genuinely drifting axis still fails consistency (1.2875ms)
+✔ settled = every per-frame rotation in the last 30 animation frames is under 0.01° (3.1739ms)
+✔ a camera that never settled is a named failure, before any angle is trusted (1.2224ms)
+✔ a drag that cannot fit in the canvas is a named failure, never clipped silently (0.3077ms)
+✔ v1 classifications are unchanged (0.33ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 2
+ℹ todo 0
+ℹ duration_ms 632.3618

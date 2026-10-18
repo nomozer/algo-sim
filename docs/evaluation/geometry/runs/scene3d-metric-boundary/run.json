@@ -1,0 +1,93 @@
+{
+  "schema": "RUN/1",
+  "run_id": "scene3d-metric-boundary",
+  "wave": "scene3d-metric-boundary-w01",
+  "date": "2026-10-18",
+  "branch": "research/scene3d-plane-grid-camera",
+  "base_commit": "5f77bfcea4e63aa4bc638d8d9a90eca9d0a74141",
+  "main": "90fe44df9fd600bf0eded87a316b8e6dddc29cc5",
+  "product_commit": "cb1f4954a7243de0561b3e724b7b2e94cb36bffc",
+  "refreeze_commit": "14c26f3f0b95cfae0312e17a6b445ecd51825565",
+  "candidate_head": "14c26f3f0b95cfae0312e17a6b445ecd51825565",
+  "measured_system_sha256": "045a8a628c7923d68d6eae6446a30d24be08d900f673293b8e74661a21c44ccc",
+  "measured_files": 111,
+  "frontend_source_tree": "2404de2129b4d69ce59289b1d8919ba7e8419bb5",
+  "backend_app_tree": "a7aaf0f99e1d6512d8f715f7879c52577f63516e",
+  "default_mode": "LLM_ONLY",
+  "cache_version": 125,
+  "provider_requests": 0,
+  "backend_changed": false,
+  "hybrid_enabled": false,
+  "merge": "NONE",
+  "push": "NONE",
+  "human_visual_review": "HUMAN_VISUAL_REVIEW_PENDING",
+  "human_acceptance": "NOT_GRANTED",
+  "status": "FINAL_SCENE3D_PRE_MAIN_READY",
+  "freeze": "MATCH after full T3, freeze-final.log; 111 files / 045a8a628c7923d6...",
+  "architecture_M2_7": "PASS",
+  "independent_review": "PASS F2/M2 #7, no must-fix; read-only, review.md",
+  "targeted_tests": {
+    "files": 5,
+    "passed": 128,
+    "log": "targeted-tests.log"
+  },
+  "fixture_verification": {
+    "verified": 41,
+    "problems": [],
+    "log": "fixtures-clean.log",
+    "same_source_fingerprint": false,
+    "note": "Frontend measured-system changes; all response bytes independently regenerated unchanged."
+  },
+  "candidate_build": {
+    "status": "PASS",
+    "log": "build-single-identity.log",
+    "rebuild_log": "rebuild-single-identity.log"
+  },
+  "browser": {
+    "status": "PASS",
+    "passed": 8,
+    "failed": 0,
+    "receipt": "browser-clean/boundary-browser.json",
+    "sha256": "cf9c8600439c6a2d354a7ec70e270aabc1ac4141752ad0d25b0771ce5fd1450d"
+  },
+  "t3": {
+    "status": "FULL_PRODUCT_GATE_PASS",
+    "candidate": "14c26f3f0b95cfae0312e17a6b445ecd51825565",
+    "receipt": "authoritative-t3.json",
+    "backend_passed": 10828,
+    "frontend_passed": 1133,
+    "raw_sha256": "774cc6092e843dbd0f5d8ec06f81333c01fafcc50839789c2ef6605e1f4d148a"
+  },
+  "orbit": {
+    "status": "PASS",
+    "cases": [
+      "p1",
+      "p6",
+      "p7"
+    ],
+    "receipt": "orbit-clean/ORBIT_GATE.json",
+    "sha256": "4a60a6d11f0af3d5819ba3e98003b3df1b533bcc25818457e5e5d8513be65baa"
+  },
+  "deferred": [
+    "F3",
+    "F4",
+    "F5",
+    "F6"
+  ],
+  "correction": "scene3d-plane-grid-camera/pre-main-audit.md section 8; historical files unchanged",
+  "test_commit": "216bbf84beb4a2bbd0e6d6c688a4f3e4becf24bc",
+  "documentation_tests": {
+    "passed": 42,
+    "log": "docs-closeout.log"
+  },
+  "post_t3_dist_matches_browser_receipt": true,
+  "historical_scene3d_package": "UNCHANGED from preflight 5f77bfce",
+  "retained_task_worktrees": [
+    "freeze-scene3d-metric-boundary",
+    "t3-scene3d-metric-boundary",
+    "freeze-scene3d-metric-final",
+    "t3-scene3d-metric-final",
+    "t3-scene3d-metric-clean"
+  ],
+  "final_checks": "final-checks.json"
+}

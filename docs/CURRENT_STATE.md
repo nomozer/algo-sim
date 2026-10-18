@@ -1,5 +1,15 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL research — Scene3D metric boundary, 2026-10-18
+
+Branch `research/scene3d-plane-grid-camera`, product `cb1f4954`, final candidate `14c26f3f` (test-only follow-up
+`216bbf84`; freeze 111 files / `045a8a628c7923d6…`, cache 125, LLM_ONLY). The registered module rejects supplied invalid
+Scene3D metrics or failed chart conversion before active/init/history; the store stays domain-blind (M2 #7). Old
+history is retained and revalidated. Gate receipts and final technical verdict:
+[`scene3d-metric-boundary/handoff.md`](evaluation/geometry/runs/scene3d-metric-boundary/handoff.md) and `run.json` beside it.
+Main remains `90fe44df`; no merge/push. F3/F4/F5/F6 remain OPEN before GO HYBRID; Hybrid remains locked.
+Human acceptance is separate: **HUMAN_VISUAL_REVIEW_PENDING**.
+
 ## INTEGRATED ON `main` — Independent NLU extraction evaluation, 2026-10-17
 
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION

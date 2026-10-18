@@ -1,0 +1,30 @@
+{
+  "schema": "LOCAL_DIAGNOSTIC_RETENTION/1",
+  "extends": "diagnostics.json",
+  "retained": [
+    {
+      "raw_path": ".superpowers/diagnostics/scene3d-metric-boundary/green-final.log",
+      "sha256": "aa862b3fbc2643bacab36a307d525f573e220f96e13e117f5099aff611e41534"
+    },
+    {
+      "raw_path": ".superpowers/diagnostics/scene3d-metric-boundary/t3-final.log",
+      "sha256": "b1e2eb155dac9f54e5f3cd3c78ef4ae6cb0464edc7fb9a6b3ac65c0e27bdcd9b"
+    }
+  ],
+  "failed_complete_t3": {
+    "candidate": "2160fbcf",
+    "backend_failed": [
+      "test_watchdog_is_incomplete_runtime_failure_not_geometry_refusal",
+      "test_windows_watchdog_terminates_the_invocation_child_tree"
+    ],
+    "backend_passed": 10826,
+    "frontend_failed": [
+      "workspace-lifecycle: old validateConfig spy"
+    ],
+    "frontend_passed": 1132,
+    "build": "PASS",
+    "demo": "PASS",
+    "crash_surface": "PASS",
+    "disposition": "FAIL retained; sandbox watchdog permission fixed in execution, lifecycle spy fixed in test-only 216bbf84; new clean T3 required"
+  }
+}

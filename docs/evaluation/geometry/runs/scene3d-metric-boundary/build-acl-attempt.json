@@ -1,0 +1,13 @@
+{
+  "schema": "FAILED_T3/1",
+  "candidate": "14c26f3f0b95cfae0312e17a6b445ecd51825565",
+  "status": "FULL_PRODUCT_GATE_FAIL",
+  "raw_sha256": "9869130e5997bcc76e21e3c49ca2a18200ec92ba4be445a2e18ae726160d8a4f",
+  "raw_path": ".superpowers/diagnostics/scene3d-metric-boundary/t3-authoritative.raw.log",
+  "backend": "10828 passed, 1 skipped, 2 deselected, 9 xfailed",
+  "frontend": "70 files / 1133 passed",
+  "build": "FAIL: Vite EPERM deleting dist/assets created by a different Windows identity",
+  "demo": "PASS",
+  "crash": "PASS",
+  "retry": "same candidate, new checkout, one Windows identity throughout; no source changes"
+}
