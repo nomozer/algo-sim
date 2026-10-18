@@ -22,9 +22,7 @@
   adapter `/3` and a new fixture set (BLOCKED by contract). No product caller and no live provider by design (Hybrid
   NO-GO); hybrid view is not persisted in history. Not a GO HYBRID.
 - **continuation 2026-10-19:** HFOI-F4 is **PARTIAL**, not a full exact-relation identity PASS. Direct view revalidation
-  now rejects an earlier existing anchor, not only nonexistent steps. Minimal pedagogical answer disclosure is
-  implemented (product `2af99e0e`): explicit reveal/hide, reset per analysis, unchanged exact data and distance witnesses.
-  Browser checks cover cube/pyramid plus cuboid distance. This does not certify every on-canvas result-selection path.
+  now rejects an earlier existing anchor, not only nonexistent steps. Simulation-First learner UX is implemented (product `aa458cc3`, superseding the Path-B-only disclosure toggle at `2af99e0e`): final problem answers (`tapKetQuaCuoi`) are hidden from default learner simulation UI across both Path A (`index.html`, `/api/analyze`, `GEOMETRY_SAMPLES`) and Path B (`hfoi-harness.html`), while preserving given/intermediate construction quantities, certified 3D distance witnesses, perpendicular markers, and concise observation guidance (`SIMULATION_FIRST_UX_READY_FOR_HUMAN_REVIEW`).
 - **evidence:** `evaluation/geometry/runs/scene3d-plane-grid-camera/pre-main-audit.md` §2/§5; correction and scoped gates in `evaluation/geometry/runs/scene3d-metric-boundary/`. Scene3D P0–P3 was accepted visually by the owner on 2026-10-18 (HUMAN_VISUAL_REVIEW_PASS, recorded in the local untracked GO MAIN handoff, not in Git) and fast-forwarded to `main` `551a3541`; that acceptance covers Scene3D only, not F3–F6, and the on-canvas "select result" interaction was not exercised (the sample scenes carry no on-canvas result label). No Product E2E PASS is claimed.
 
 ### ISSUE-ARCH-SCENE3D-ALTITUDE-MARKER-UNCERTIFIED

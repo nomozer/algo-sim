@@ -1,0 +1,58 @@
+{
+  "schema": "AUTHORITATIVE_T3/1",
+  "candidate_commit": "c2cf643b578ee83ddd661c6c93000985a3358da8",
+  "frozen_commit_in_manifest": "c603b489f3ae7ac2b06095e03799397c6746db50",
+  "product_commit": "aa458cc34e327ac5e42c675e0853870a5ad722c4",
+  "previous_authoritative_candidate": "f8423d4b87f942d3d850970c741bcf4ee6d2c634",
+  "previous_authoritative_receipt": "verification/authoritative-t3.json",
+  "measured_system_sha256": "cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c",
+  "measured_files": 111,
+  "frontend_source_tree": "dbb441c4ecf564905dfe8827f348ec4de5bbcaeb",
+  "backend_app_tree": "1f0bbce73c970f083797df1db7b9c1a4f97df923",
+  "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-hybrid-offline-readiness-final",
+  "detached_clean_tree": true,
+  "freeze_verify_before_and_after": "MATCH",
+  "started_utc": "2026-10-18T19:22:58+00:00",
+  "finished_utc": "2026-10-18T19:30:43+00:00",
+  "duration_sec": 459.5,
+  "exit_code": 0,
+  "status": "FULL_PRODUCT_GATE_PASS",
+  "allow_live_ai": 0,
+  "command": "node frontend/scripts/full-gate.mjs --python D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+  "raw_log_sha256": "06dfdce860d1698604fc7c2928bd9771c2067fd9f3d5a5151a1d03c89f8b076a",
+  "gates": {
+    "backend_pytest": {
+      "status": "PASS",
+      "passed": 10950,
+      "failed": 0,
+      "skipped": 1,
+      "deselected": 2,
+      "xfailed": 9,
+      "duration_sec": 443.4
+    },
+    "frontend_vitest": {
+      "status": "PASS",
+      "files_passed": 70,
+      "tests_passed": 1145,
+      "failed": 0,
+      "duration_sec": 9.9
+    },
+    "frontend_build": {
+      "status": "PASS",
+      "duration_sec": 5.1
+    },
+    "demo_replay": {
+      "status": "PASS",
+      "demo_cases": "5/5",
+      "reduced_chain_cases": "1/1",
+      "duration_sec": 0.6
+    },
+    "crash_surface": {
+      "status": "PASS",
+      "passed": 6,
+      "total": 6,
+      "uncaught_500": 0,
+      "duration_sec": 0.4
+    }
+  }
+}

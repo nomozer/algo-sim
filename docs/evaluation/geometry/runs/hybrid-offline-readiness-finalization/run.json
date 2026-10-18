@@ -6,13 +6,15 @@
   "branch": "research/hybrid-offline-readiness-finalization",
   "base_commit": "f2b00ed3ec1e333e3b5c18c046ac5beec1f7b6fb",
   "main": "f2b00ed3ec1e333e3b5c18c046ac5beec1f7b6fb",
-  "product_commit": "2af99e0eddb67da253adcf6dc0aa7ac4fd08b05d",
-  "refreeze_commit": "f8423d4b87f942d3d850970c741bcf4ee6d2c634",
-  "candidate_head": "f8423d4b87f942d3d850970c741bcf4ee6d2c634",
+  "product_commit": "aa458cc34e327ac5e42c675e0853870a5ad722c4",
+  "previous_product_commit": "2af99e0eddb67da253adcf6dc0aa7ac4fd08b05d",
+  "refreeze_commit": "c2cf643b578ee83ddd661c6c93000985a3358da8",
+  "candidate_head": "c2cf643b578ee83ddd661c6c93000985a3358da8",
+  "previous_authoritative_candidate": "f8423d4b87f942d3d850970c741bcf4ee6d2c634",
   "superseded_candidate_head": "96e2fe1e647ba3d7cb03f16082775219c7712a4f",
   "measured_system_sha256": "cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c",
   "measured_files": 111,
-  "frontend_source_tree": "e7e4d61ece9c4a8c672c3c841aa5a41e84a341f4",
+  "frontend_source_tree": "dbb441c4ecf564905dfe8827f348ec4de5bbcaeb",
   "backend_app_tree": "1f0bbce73c970f083797df1db7b9c1a4f97df923",
   "default_mode": "LLM_ONLY",
   "response_contract": "flat",
@@ -23,11 +25,12 @@
   "hybrid_enabled": false,
   "merge": "NONE",
   "push": "NONE",
-  "human_visual_review": "NOT_CLAIMED_FOR_DISCLOSURE_UI",
+  "human_visual_review": "READY_FOR_HUMAN_REVIEW",
   "human_acceptance": "NOT_GRANTED",
   "status": "HYBRID_OFFLINE_READINESS_PARTIAL",
+  "ux_status": "SIMULATION_FIRST_UX_READY_FOR_HUMAN_REVIEW",
   "freeze": "MATCH before and after full T3; 111 files / cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c",
-  "independent_review": "PASS (Codex continuation review + Gemini independent read-only subagent review 8156e1fc at f8423d4b; 0 critical / 0 important / 0 minor findings; review.md)",
+  "independent_review": "PASS (Codex continuation review + Gemini subagent reviews 8156e1fc at f8423d4b and 11b6ebfd at c2cf643b; 0 critical / 0 important / 0 minor findings; review.md & simulation-first-ux/review.md)",
   "source_length_vector_zero": {
     "status": "PASS",
     "targeted_tests_passed": 185,
@@ -66,7 +69,7 @@
     "sha256": "dbe11edf9d76b9fa80a190f4918677d28a8a609689eb7ab32d1edec5f1cf7a72"
   },
   "pedagogical_disclosure_browser": {
-    "status": "PASS",
+    "status": "PASS_SUPERSEDED_BY_SIMULATION_FIRST_UX",
     "passed": 4,
     "failed": 0,
     "cases": [
@@ -78,13 +81,27 @@
     "receipt": "p2b-disclosure/final-browser.json",
     "sha256": "cd4d418e862869a1b09921bbd534f3c1487608eccbb500e13b5e08b3cf57aed4"
   },
+  "simulation_first_ux": {
+    "status": "SIMULATION_FIRST_UX_READY_FOR_HUMAN_REVIEW",
+    "product_commit": "aa458cc34e327ac5e42c675e0853870a5ad722c4",
+    "candidate_commit": "c2cf643b578ee83ddd661c6c93000985a3358da8",
+    "browser_receipt": "simulation-first-ux/simulation-first-ux-browser-report.json",
+    "browser_sha256": "c872927ce3289a54c99718c602f562bc35239d2c094ae346a1ab417186d12c3d",
+    "handoff": "simulation-first-ux/handoff.md",
+    "review": "simulation-first-ux/review.md",
+    "t3_receipt": "simulation-first-ux/authoritative-t3.json",
+    "t3_raw_sha256": "06dfdce860d1698604fc7c2928bd9771c2067fd9f3d5a5151a1d03c89f8b076a"
+  },
   "t3": {
     "status": "FULL_PRODUCT_GATE_PASS",
-    "candidate": "f8423d4b87f942d3d850970c741bcf4ee6d2c634",
-    "receipt": "verification/authoritative-t3.json",
+    "candidate": "c2cf643b578ee83ddd661c6c93000985a3358da8",
+    "receipt": "simulation-first-ux/authoritative-t3.json",
     "backend_passed": 10950,
-    "frontend_passed": 1143,
-    "raw_sha256": "9ac2bb2f23bc9202bb9b120f7bded5cb97c7646557d11a0c6008e24264190b16"
+    "frontend_passed": 1145,
+    "raw_sha256": "06dfdce860d1698604fc7c2928bd9771c2067fd9f3d5a5151a1d03c89f8b076a",
+    "previous_authoritative_candidate": "f8423d4b87f942d3d850970c741bcf4ee6d2c634",
+    "previous_receipt": "verification/authoritative-t3.json",
+    "previous_raw_sha256": "9ac2bb2f23bc9202bb9b120f7bded5cb97c7646557d11a0c6008e24264190b16"
   },
   "open_boundaries": [
     "HFOI-F4 exact relation operands in Adapter /2 (requires Adapter /3)",

@@ -53,3 +53,19 @@
 | **P3 Offline E2E & Oracle** | `PASS` | `41/41` fixture responses byte-identical (`verification/offline-summary.json`), `12/12` independent oracle + `4/4` mutated-witness catches (`verification/oracle-final.json`), `48/48` browser E2E checks PASS with `0` provider/forbidden calls (`verification/offline-browser-final.json`) |
 | **P4 Authoritative T3 (Clean Detached)** | `FULL_PRODUCT_GATE_PASS` | Detached `.superpowers/worktrees/t3-hybrid-offline-readiness-final` at `f8423d4b`: Backend `10950 passed, 0 failed`, Frontend `70 files / 1143 passed`, Build `PASS`, Demo `5/5`, Crash `6/6` (`verification/authoritative-t3.json`) |
 | **Independent Read-Only Review** | `PASS` | Codex continuation review + Gemini subagent review (`8156e1fc`) at `f8423d4b`: `0` critical, `0` important, `0` minor findings (`review.md`) |
+
+---
+
+## 4. Simulation-First Learner UX Correction (`aa458cc3` → `c2cf643b`, `2026-10-19`)
+
+- **UX Verdict:** **`SIMULATION_FIRST_UX_READY_FOR_HUMAN_REVIEW`** ([`simulation-first-ux/handoff.md`](simulation-first-ux/handoff.md))
+- **Why this follow-up was executed:** Pre-main product UX verification identified that while Path B (`hfoi-harness.html`) hid `[data-hybrid-answer]` cards behind `"Xem đáp án"`, Path A (`index.html`, `/api/analyze`, `GEOMETRY_SAMPLES`) still displayed final-result `.geo3d-so-do` badges (`V = a³`, `d(A, C') = a√3`, `cos² = 1/4`) on the 3D canvas by default, and the owner directed a **Simulation-First** learner experience across both Path A and Path B (no `"Xem đáp án"` toggle or final answer cards/badges in default learner simulation UI, while preserving given/intermediate construction quantities, 3D distance witnesses, perpendicular markers, and concise observation guidance).
+- **Commits & Candidate Refreeze (previous receipts preserved untouched):**
+  - `aa458cc34e327ac5e42c675e0853870a5ad722c4` (`aa458cc3`) — `feat(scene3d): enforce simulation-first learner UX across product and hybrid paths` (**new `product_commit_sha`**)
+  - `c603b489f3ae7ac2b06095e03799397c6746db50` (`c603b489`) — `test(scene3d): verify simulation-first learner UX across product and hybrid browser paths`
+  - `c2cf643b578ee83ddd661c6c93000985a3358da8` (`c2cf643b`) — `chore(eval): refreeze offline readiness candidate after simulation-first UX correction` (**new Authoritative T3 Candidate**)
+- **Verification & Review:**
+  - Dual-path Playwright Chromium verification across Path A (`index.html`) and Path B (`hfoi-harness.html`, `12/12` `served-*` sweep) at desktop (`1440×900`) and compact (`390×844`) viewports: `allPassed: true, failures: []`, `live_ai_calls: 0` ([`simulation-first-ux/simulation-first-ux-browser-report.json`](simulation-first-ux/simulation-first-ux-browser-report.json)).
+  - Clean detached Authoritative Full T3 at `c2cf643b`: **`FULL_PRODUCT_GATE_PASS`** (Backend `10950 passed, 0 failed`, Frontend `70 files / 1145 passed`, Build `PASS`, Demo `5/5`, Crash `6/6`; [`simulation-first-ux/authoritative-t3.json`](simulation-first-ux/authoritative-t3.json)).
+  - Independent read-only review subagent (`11b6ebfd-d5b2-4527-a655-5f1c7a97fec0`): **`PASS` (`0` critical, `0` important, `0` minor findings)** ([`simulation-first-ux/review.md`](simulation-first-ux/review.md)).
+

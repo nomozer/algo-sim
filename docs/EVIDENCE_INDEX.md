@@ -4,8 +4,8 @@
 
 REPORT = docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/handoff.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/
-CLASSIFICATION = HYBRID_OFFLINE_READINESS_PARTIAL (source-length/vector-zero + CACHE_VERSION 126 + HFOI-F3/F5/F6 + minimal learner answer disclosure + 41/41 fixtures + 12/12 independent oracle + 48/48 offline browser E2E + 4/4 disclosure browser + clean detached T3 FULL_PRODUCT_GATE_PASS verified; HFOI-F4 exact relation operands in Adapter /2 and production Hybrid caller remain open by design; LLM_ONLY default unchanged, Hybrid product NO-GO)
-CODE_COMMIT = c55374cc · 479e04d5 · 9d17557e · cc07f512 · 8bcb9d8e · 531b7143 · 794563cb · 8ee9e3eb · 2af99e0e (final product commit); test/receipt alignment 00b7bba4 · efbdc5a7; candidate freeze f8423d4b (tree_hash cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c, 111 files; earlier freeze 96e2fe1e superseded after single test alignment fix)
+CLASSIFICATION = HYBRID_OFFLINE_READINESS_PARTIAL · SIMULATION_FIRST_UX_READY_FOR_HUMAN_REVIEW (source-length/vector-zero + CACHE_VERSION 126 + HFOI-F3/F5/F6 + simulation-first learner UX across Path A & Path B + 41/41 fixtures + 12/12 independent oracle + dual-path desktop/compact browser verification + clean detached T3 FULL_PRODUCT_GATE_PASS verified; HFOI-F4 exact relation operands in Adapter /2 and production Hybrid caller remain open by design; LLM_ONLY default unchanged, Hybrid product NO-GO)
+CODE_COMMIT = c55374cc · 479e04d5 · 9d17557e · cc07f512 · 8bcb9d8e · 531b7143 · 794563cb · 8ee9e3eb · 2af99e0e · aa458cc3 (final product commit); test/receipt alignment 00b7bba4 · efbdc5a7 · c603b489; candidate freeze c2cf643b (tree_hash cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c, 111 files; previous authoritative candidate f8423d4b receipts preserved)
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/run.json
 MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
 CORRECTS = SCENE3D_METRIC_BOUNDARY (candidate_divergence.json only; historical measurements unchanged)

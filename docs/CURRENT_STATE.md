@@ -1,19 +1,17 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL continuation — Hybrid offline readiness, 2026-10-19 (not integrated)
+## LOCAL continuation — Hybrid offline readiness & Simulation-First UX, 2026-10-19 (not integrated)
 
-Branch `research/hybrid-offline-readiness-finalization`; product `2af99e0e`, clean freeze/candidate `f8423d4b` (`96e2fe1e` superseded after test alignment `efbdc5a7`),
+Branch `research/hybrid-offline-readiness-finalization`; product `aa458cc3` (previous product `2af99e0e`), clean freeze/candidate `c2cf643b` (previous authoritative candidate `f8423d4b` receipts preserved untouched),
 111 measured files / `cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c`.
 `main` and local `origin/main` remain `f2b00ed3` (the `551a3541` block below is the earlier product integration).
 Cache **126**, `LLM_ONLY`, response `flat`, Hybrid product **NO-GO**, live calls **0**.
 
 Source/vector-zero fixed with review corrections; HFOI-F3/F5/F6 verified offline; HFOI-F4 wrapper/anchor is verified,
-but exact relation operands remain unavailable in Adapter `/2`. Explicit **Xem đáp án / Ẩn đáp án** hides Hybrid answer
-cards and duplicated value labels by default, resets on replacement, preserves exact data and distance witnesses.
-Offline browser 48/48, disclosure cube/pyramid/cuboid checks 4/4 pass, 41/41 fixture responses identical, independent
-oracle 12/12. Authoritative detached T3 at `f8423d4b` is **`FULL_PRODUCT_GATE_PASS`** (backend 10950/0, frontend 1143/0, build PASS, demo 5/5, crash 6/6; [`handoff.md`](evaluation/geometry/runs/hybrid-offline-readiness-finalization/handoff.md), [`recovery.md`](evaluation/geometry/runs/hybrid-offline-readiness-finalization/recovery.md)).
-Verdict: **`HYBRID_OFFLINE_READINESS_PARTIAL`** (no Product E2E PASS). Historical cache-mode UNKNOWN, altitude certificate and disconnected product route remain open. Prior owner Scene3D
-visual acceptance and `GO_PRESERVE_PARTIAL` are not expanded by these automated checks.
+but exact relation operands remain unavailable in Adapter `/2`. Simulation-First learner UX (`aa458cc3`, `tapKetQuaCuoi`) removes answer toggles/cards/badges from default learner simulation UI across both Path A (`index.html`, `/api/analyze`, `GEOMETRY_SAMPLES`) and Path B (`hfoi-harness.html`, `12/12` `served-*`), preserves given/intermediate construction quantities (`AB = 3`, `AD = 4`, `SA = 6`, `S(ABCD) = 12` in `w11_rectangular_pyramid`), certified 3D distance witnesses (`distance_witness:kq_f6` in `H02`), and perpendicular markers, and adds concise step-synchronized observation guidance (`.geo3d-huong-dan`).
+Dual-path Playwright Chromium verification across desktop (`1440×900`) and compact (`390×844`) viewports passed (`allPassed: true`), 41/41 fixture responses identical, independent
+oracle 12/12. Authoritative detached T3 at `c2cf643b` is **`FULL_PRODUCT_GATE_PASS`** (backend 10950/0, frontend 1145/0, build PASS, demo 5/5, crash 6/6; [`handoff.md`](evaluation/geometry/runs/hybrid-offline-readiness-finalization/handoff.md), [`simulation-first-ux/handoff.md`](evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/handoff.md)).
+Verdict: **`HYBRID_OFFLINE_READINESS_PARTIAL`** + **`SIMULATION_FIRST_UX_READY_FOR_HUMAN_REVIEW`** (no `HUMAN_VISUAL_REVIEW_PASS` claimed before owner review; no Product E2E PASS). Historical cache-mode UNKNOWN, altitude certificate and disconnected product route remain open.
 
 ## INTEGRATED ON `main` — Scene3D plane/grid/camera + metric boundary, 2026-10-18
 

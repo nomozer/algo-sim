@@ -1,0 +1,21 @@
+# Independent Read-Only Review — Simulation-First Learner UX Correction (`c2cf643b`)
+
+- **Reviewer:** Isolated read-only subagent (`11b6ebfd-d5b2-4527-a655-5f1c7a97fec0`, `independent-code-architecture-evidence-reviewer`)
+- **Branch:** `research/hybrid-offline-readiness-finalization`
+- **Candidate Commit:** `c2cf643b578ee83ddd661c6c93000985a3358da8`
+- **Pinned Manifest Commit:** `c603b489f3ae7ac2b06095e03799397c6746db50`
+- **Product Commit:** `aa458cc34e327ac5e42c675e0853870a5ad722c4`
+- **Previous Authoritative Candidate:** `f8423d4b87f942d3d850970c741bcf4ee6d2c634` (receipts preserved untouched)
+- **Measured System (`111` files):** `cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c`
+- **Verdict:** **`PASS` (`0` critical, `0` important, `0` minor defects)**
+
+---
+
+## Reviewed Scope & Findings
+
+| Priority | Area | Verdict | Verification Notes |
+|---|---|---|---|
+| **P1** | Simulation-First Final Answer Suppression & Quantity Classification | `PASS` | `tapKetQuaCuoi(scene, hybrid)` in `scene3d-model.ts` identifies all final-result quantity IDs across `hybrid?.answers`, `solutionAt(scene, cuoi).results`, `FINAL_RESULT` events (`object` + `alias_object`), and `quantity` objects with `annotation.role === "result"`, `annotation.category === "result"`, `formation_roles.includes("FINAL_RESULT")`, or `display_group.includes("target")`, closing bidirectionally over `annotation.same_as` and `alias_of`. `learnerTextIsSafe(scene, text)` blocks raw `"Gán X = ..."` narration strings on untyped `MEASURE` events so `narrationGoc` falls back to `"Tính <label>."` without leaking numeric final answers (e.g., `16/3` and `4` in `GEOMETRY_SAMPLES` `the-tich-chop`). `Scene3DExplorer.tsx` removes `dapAnDaMo` / `hienDapAn`, the `"Xem đáp án"` / `"Ẩn đáp án"` toggle button, and `[data-hybrid-answer]` cards; filters `daiLuong` by `!dapAnAn.has(id)` so `Kết quả` never renders in learner mode while given/intermediate construction quantities (`AB = 3`, `AD = 4`, `SA = 6`, `S(ABCD) = 12` in `w11_rectangular_pyramid`) remain inspectable; and passes `annotationView={{ ...xem, hiddenIds: dapAnAn }}` so final-result `.geo3d-so-do` badges never appear on the 3D canvas while certified 3D distance witness segments (`distance_witness:kq_f6` in `H02`) and perpendicular markers remain visible. Pure model functions (`solutionAt`, `quantityChoices`, `annotationsAt`) and `hybrid-preview-adapter.ts` (`docPhanHoiHybrid`, Adapter `/2` invariants) remain completely untouched. |
+| **P2** | Learner Observation Guidance Bar & Framing/Control Stability | `PASS` | `Scene3DExplorer.tsx` renders concise, step-synchronized observation guidance (`.geo3d-huong-dan` / `[data-learner-guidance]`) with current construction step (`[data-guidance-step]`) and manipulation hint (`[data-guidance-hint]`), alongside `[data-length-unit]` (`Tỉ lệ dựng: a = 1 đơn vị dựng`) and timeline-anchored `[data-route-d-observation]` notes. `global.css` styles use valid tokens from `tokens.css` and hide `.geo3d-huong-dan` on ultra-low landscape viewports (`@media (orientation: landscape) and (max-height: 30rem)`). |
+| **P3** | Dual-Path Browser Verification & Contract Tests | `PASS` | `hybrid-preview-contract.test.tsx` verifies `tapKetQuaCuoi` across `12/12` `served-*` fixtures, `GEOMETRY_SAMPLES` (`the-tich-chop`), and `w11` `rectangular_pyramid_positive.json`, plus SSR assertions on `Scene3DExplorer` across all `12/12` `served-*` fixtures. `simulation-first-ux-browser-report.json` (`sha256: c872927ce3289a54c99718c602f562bc35239d2c094ae346a1ab417186d12c3d`) confirms real-browser Chromium verification across Path A (`index.html`) and Path B (`hfoi-harness.html`, `12/12` `served-*` sweep) at desktop (`1440×900`) and compact (`390×844`) viewports with `allPassed: true, failures: []`, `croppedPointLabels: []`, `guidanceOverlapsCanvas: false`, `orbitCheck.resetWorked: true`, and `live_ai_calls: 0`. |
+| **P4** | Candidate Refreeze & Preservation of Previous Authoritative Receipts | `PASS` | `EVALUATION_CANDIDATE.json` and `candidate_divergence.json` are synchronized to `product_commit_sha = aa458cc34e327ac5e42c675e0853870a5ad722c4` and `measured_system.tree_hash = cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c`. `git diff 302ae67d..c2cf643b` confirms zero modifications to existing `verification/*` and `p2b-disclosure/*` receipts. |
