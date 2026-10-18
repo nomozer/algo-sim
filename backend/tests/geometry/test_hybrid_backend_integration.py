@@ -572,6 +572,249 @@ def test_offline_v3_matrix_parity_on_combined_candidate(tmp_path, monkeypatch):
                 assert replay_score[k] == frozen_replay[k], (f"replay-{arm}-{mode}", k)
 
 
+def _regular_pyramid_facts(measure: str, phrase: str, value: str, base: str = "2") -> tuple[str, dict]:
+    text = (f"Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng {base} và {phrase} bằng {value}. "
+            "Tính thể tích khối chóp S.ABCD.")
+    return text, {"facts": [
+        {"id": "f1", "kind": "solid", "role": "premise", "quotes": ["hình chóp tứ giác đều S.ABCD"],
+         "solid": "S.ABCD", "solid_type": "pyramid", "regular": True},
+        {"id": "f2", "kind": "length", "role": "premise", "quotes": [f"cạnh đáy bằng {base}"], "measure": "base_edge",
+         "solid": "S.ABCD", "value": base},
+        {"id": "f3", "kind": "length", "role": "premise", "quotes": [f"{phrase} bằng {value}"], "measure": measure,
+         "solid": "S.ABCD", "value": value},
+        {"id": "f4", "kind": "question", "role": "question", "quotes": ["Tính thể tích khối chóp S.ABCD"],
+         "quantity": "volume", "solid": "S.ABCD"},
+    ]}
+
+
+@pytest.mark.parametrize("zero", ["0", "√0", "0/5", "0a", "0,0"])
+@pytest.mark.parametrize("measure,phrase", [("height", "chiều cao"), ("lateral_edge", "cạnh bên")])
+def test_zero_length_is_refused_as_a_source_value_not_an_engine_fault(measure, phrase, zero):
+    """Run `hybrid-pre-main-hardening`. `NUMBER_PATTERN` admits 0, and a zero height reached the engine and came back as
+    `ENGINE_SELF_CHECK_FAILED` (an internal-inconsistency code) or `INCONSISTENT_FACTS`/`NON_HOMOGENEOUS_LENGTHS`. A zero
+    length is a degenerate SOURCE value: refuse it as `NON_POSITIVE_LENGTH` (the code route C and the learner messages
+    already use), serving nothing. Controls with a positive value still serve the hand-checked volume."""
+    r = run_fact_route(*_regular_pyramid_facts(measure, phrase, zero))
+    assert (r.status, r.code) == ("REFUSED", "NON_POSITIVE_LENGTH"), (r.status, r.code, r.reason)
+    assert not r.answers and r.scene3d is None
+
+
+@pytest.mark.parametrize("negative", ["-3", "−3", "-a"])
+@pytest.mark.parametrize("measure,phrase", [("height", "chiều cao"), ("lateral_edge", "cạnh bên")])
+def test_negative_length_never_parses_as_a_number(measure, phrase, negative):
+    """The value grammar has no sign: a negative length is refused at the schema, before any arithmetic. Locked as is —
+    reclassifying it is not backed by a defect."""
+    r = run_fact_route(*_regular_pyramid_facts(measure, phrase, negative))
+    assert (r.status, r.code) == ("REFUSED", "SCHEMA_INVALID") and r.scene3d is None
+
+
+@pytest.mark.parametrize("measure,phrase,value,v", [("height", "chiều cao", "3", "4"),
+                                                    ("lateral_edge", "cạnh bên", "3", "4√7/3")])
+def test_positive_controls_still_serve(measure, phrase, value, v):
+    # base 2 ⇒ S_đáy = 4; h = 3 ⇒ V = 4; lateral 3 ⇒ h² = 9 − 2 = 7 ⇒ V = 4√7/3 (hand oracle)
+    r = run_fact_route(*_regular_pyramid_facts(measure, phrase, value))
+    assert r.status == "SERVED" and r.answers == {"f4": v}, (r.code, r.answers)
+
+
+@pytest.mark.parametrize("field", ["side", "value"])
+def test_zero_length_in_function_calls_route_a(field):
+    """Route A (function calls) converges on the same reader: a zero base side or segment length is refused the same way."""
+    case = next(c for c in json.loads((ROOT / "backend/tests/geometry/fixtures/hybrid_holdout_cases.json")
+                                      .read_text(encoding="utf-8"))["cases"] if c["id"].startswith("H03"))
+    calls = deepcopy(case["a_calls"])
+    text = case["text"]
+    c = next(c for c in calls if field in c["args"])
+    old = c["args"][field]
+    c["args"][field] = "0"
+    c["source"]["quotes"] = [q.replace(old, "0") for q in c["source"]["quotes"]]
+    text = text.replace(f"bằng {old}", "bằng 0", 1)
+    r = run_function_route(text, {"calls": calls})
+    assert (r.status, r.code) == ("REFUSED", "NON_POSITIVE_LENGTH"), (r.status, r.code, r.reason)
+
+
+@pytest.mark.parametrize("bad,label", [
+    (((1, 0, 0), (0, -1, 0), (0, 0, 1)), "indefinite"),
+    (((1, 2, 0), (0, 1, 0), (0, 0, 1)), "asymmetric"),
+    (((0, 0, 0), (0, 1, 0), (0, 0, 1)), "singular"),
+    (((1, 2, 0), (2, 1, 0), (0, 0, 1)), "symmetric, det < 0"),
+    (((-1, 0, 0), (0, -1, 0), (0, 0, 1)), "det > 0 but negative definite block"),
+])
+def test_product_metric_type_rejects_non_spd_gram_matrices(bad, label):
+    """Run `hybrid-pre-main-hardening`. `geometry.metric.Metric` documents a symmetric positive definite Gram matrix
+    but accepted any 3×3 (RED: all five constructed). The type now enforces it exactly (Sylvester), so no future
+    constructor can hand the renderer a chart without a Euclidean realisation. The strict parser in this test module
+    only checks scenes; this is the product-side invariant."""
+    from app.simulation.geometry.exact import GeometryError
+    from app.simulation.geometry.metric import ERR_KHONG_EUCLID, Metric
+
+    with pytest.raises(GeometryError) as e:
+        Metric(tuple(tuple(Fraction(x) for x in r) for r in bad))
+    assert e.value.code == ERR_KHONG_EUCLID, label
+    assert Metric(tuple(tuple(Fraction(x) for x in r) for r in ((4, 1, 0), (1, 4, 0), (0, 0, 9)))).det == 135
+
+
+@pytest.mark.parametrize("self_check", [True, False])
+def test_engine_turns_a_non_spd_chart_into_a_coded_refusal(monkeypatch, self_check):
+    """A non-SPD base Gram injected after the layout guard: the layout self-check refuses first; with it disabled, the
+    SPD type is the second line (`kiem_mat_cat` maps it to `METRIC_NOT_EUCLIDEAN`). Either way a coded refusal, never a
+    raise. Measured before the type check: the same injection with the self-check off fell through to the kernel and
+    surfaced late as `ENGINE_EXECUTION_FAILED` (refused, but under an execution-fault code)."""
+    from app.simulation.geometry_functions import engine as Eng
+
+    real = Eng._Dung.bo_cuc_day
+
+    def corrupt(self):
+        real(self)
+        self.G2 = ((Fraction(1), Fraction(2)), (Fraction(2), Fraction(1)))   # det < 0 after the guard at layout time
+
+    monkeypatch.setattr(Eng._Dung, "bo_cuc_day", corrupt)
+    if not self_check:
+        monkeypatch.setattr(Eng._Dung, "kiem", lambda self: None)
+    r = run_fact_route(*_regular_pyramid_facts("height", "chiều cao", "3"))
+    want = "ENGINE_SELF_CHECK_FAILED" if self_check else "METRIC_NOT_EUCLIDEAN"
+    assert (r.status, r.code) == ("REFUSED", want) and r.scene3d is None, (r.status, r.code, r.reason)
+
+
+def test_engine_metric_raises_a_coded_refusal_for_every_caller():
+    """`_Dung.metric()` itself refuses with `TuChoi` (not `GeometryError`), so callers outside `kiem_mat_cat`'s handler —
+    the post-serve goal checkers — cannot leak an uncaught exception."""
+    from app.simulation.geometry_functions import engine as Eng
+    from app.simulation.geometry_functions.registry import TuChoi
+
+    d = Eng._Dung.__new__(Eng._Dung)
+    d.G2, d.h2 = ((Fraction(1), Fraction(2)), (Fraction(2), Fraction(1))), Fraction(1)
+    with pytest.raises(TuChoi) as e:
+        d.metric()
+    assert e.value.code == "METRIC_NOT_EUCLIDEAN"
+
+
+def _timeline_violations(scene: dict) -> list[tuple]:
+    """Dependency closure of a Scene3D timeline: an object first appears (any event) at step k; every dependency must
+    exist, and either be present from the first frame or appear at a step < k. An object present from the first frame
+    may not depend on one that appears later. Independent of the step-math oracle's category 10."""
+    objs = {o["id"]: o for o in scene["objects"]}
+    born: dict[str, int] = {}
+    for e in scene["events"]:
+        if e.get("object"):
+            born.setdefault(e["object"], e["step_index"])
+    bad = [("frame", e["step_index"]) for e in scene["events"] if not 0 <= e["step_index"] < len(scene["formation"]["steps"])]
+    for oid, o in objs.items():
+        for d in o.get("depends") or ():
+            if d not in objs:
+                bad.append(("dangling", oid, d))
+            elif d in born and (oid not in born or born[d] >= born[oid]):
+                bad.append(("order", oid, d, born.get(d), born.get(oid)))
+    return bad
+
+
+def test_timeline_dependency_closure_on_every_served_scene():
+    """Run `hybrid-pre-main-hardening`: 84 served scenes (174 bundle + goal-composition positive/held-out/slice B)."""
+    rows = json.loads((GOAL_COMP_RUN / "baseline/bundle-174.json").read_text(encoding="utf-8"))["rows"]
+    items = [(r["id"], r["text"], {"facts": r["facts"]}) for r in rows]
+    items += [(c["id"], c["text"], c["payload"]) for g in ("positive", "held_out", "angle_line_plane_slice_b")
+              for c in GOAL_CORPUS[g]]
+    served = 0
+    for cid, text, payload in items:
+        r = run_fact_route(text, deepcopy(payload))
+        if r.status == "SERVED":
+            served += 1
+            assert _timeline_violations(r.scene3d) == [], cid
+    assert served == 84
+
+
+def test_timeline_closure_check_detects_a_reordered_dependency():
+    """Fault injection: move a constructed point's first appearance after an object that depends on it ⇒ caught."""
+    case = next(c for c in GOAL_CORPUS["positive"] if c["id"] == "pyramid-shared-midpoint-area-and-distance")
+    scene = deepcopy(run_fact_route(case["text"], deepcopy(case["payload"])).scene3d)
+    assert _timeline_violations(scene) == []
+    dependent = next(o for o in scene["objects"] if any(
+        d in {e["object"] for e in scene["events"] if e.get("object")} for d in o.get("depends") or ())
+        and o["id"] in {e["object"] for e in scene["events"] if e.get("object")})
+    dep = next(d for d in dependent["depends"] if d in {e["object"] for e in scene["events"] if e.get("object")})
+    last = max(e["step_index"] for e in scene["events"])
+    for e in scene["events"]:
+        if e.get("object") == dep:
+            e["step_index"] = last
+    assert any(v[0] == "order" for v in _timeline_violations(scene))
+
+
+def test_two_goals_on_two_different_unnamed_midpoints_keep_separate_operands():
+    """Ownership counterpart of the shared-midpoint dedup: midpoints of SC and SB are two points. Hand oracle:
+    S(0,0,3) B(2,0,0) C(2,2,0) D(0,2,0); (SCD): 3y + 2z = 6; mid SB = (1,0,3/2) ⇒ d² = 9/13. A wrong merge onto the SC
+    midpoint (which lies in (SCD)) would answer 0."""
+    case = next(c for c in GOAL_CORPUS["positive"] if c["id"] == "pyramid-shared-midpoint-area-and-distance")
+    text = case["text"].replace("Tính khoảng cách từ trung điểm của SC đến (SAB).",
+                                "Tính khoảng cách từ trung điểm của SB đến (SCD).")
+    payload = deepcopy(case["payload"])
+    q2 = next(f for f in payload["facts"] if f["id"] == "q2")
+    q2.update(quotes=["Tính khoảng cách từ trung điểm của SB đến (SCD)."], points=["S", "B"], points_b=["S", "C", "D"])
+    r = run_fact_route(text, payload)
+    assert r.status == "SERVED", (r.code, r.reason)
+    mids = sorted(tuple(sorted(c["args"]["segment"])) for c in r.planner["calls"] if c["fn"] == "midpoint")
+    assert mids == [("B", "S"), ("C", "S")]
+    mem = r.exec_result.final_memory
+    assert (squared(mem["kq_q1"]), squared(mem["kq_q2"])) == (Fraction(13, 4), Fraction(9, 13))
+    assert _timeline_violations(r.scene3d) == []
+
+
+#: Rows whose SOURCE corpus records an answer but the production registry refuses (right-or-refuse capability limits,
+#: never a wrong serve). Locked so a change in either direction is visible. Discovery rows need the experimental
+#: centroid contract; B27/B28 are refused by scope / source grounding.
+CAPABILITY_GAPS_174 = {
+    ("new/discovery", "centroid-to-plane"), ("new/discovery", "centroid-to-named-line"),
+    ("new/discovery", "centroid-to-result-line"), ("goal/discovery", "centroid-A"), ("goal/discovery", "centroid-D"),
+    ("benchmark30", "B27"), ("benchmark30", "B28"),
+}
+
+
+def _independent_expectation(expect: dict) -> dict[str, Fraction] | None:
+    """Source-corpus expectation, copied into the bundle by `measure_function_discovery.bundle` /
+    `measure_goal_composition.build_bundle` from preregistered corpora (goal-directed-function-discovery, benchmark30,
+    goal-directed-planner-generalization-audit next-slice, two-line-plane-section inputs) — NOT a product output.
+    Key `_` = one value every served answer must equal."""
+    want = expect.get("expected_squared") or expect.get("answer_sq") or expect.get("area_sq")
+    if want is None:
+        return None
+    return {"_": Fraction(want)} if isinstance(want, str) else {k: Fraction(v) for k, v in want.items()}
+
+
+def test_174_historical_answers_regression_and_independent_source_expectations():
+    """Run `hybrid-pre-main-hardening`. Two separate claims, never merged:
+    REGRESSION — status, code and served squares equal the frozen baseline (`regression-174.json`, product 540fc9d5);
+    INDEPENDENT — every served answer equals its source-corpus expectation (angles are answered as cos², so compared
+    as is; other quantities by their square). Refusals serve nothing; refusals of rows with a known answer are exactly
+    `CAPABILITY_GAPS_174`. Before this test the 174 rows were checked on status/code only."""
+    base = GOAL_COMP_RUN / "baseline"
+    rows = json.loads((base / "bundle-174.json").read_text(encoding="utf-8"))["rows"]
+    reg = json.loads((base / "regression-174.json").read_text(encoding="utf-8"))["rows"]
+    assert len(rows) == len(reg) == 174 and [r["id"] for r in rows] == [r["id"] for r in reg]
+
+    served = independent = 0
+    gaps = set()
+    for row, exp in zip(rows, reg):
+        r = run_fact_route(row["text"], {"facts": deepcopy(row["facts"])})
+        assert (r.status, r.code) == (exp["status"], exp["code"]), row["id"]
+        want = _independent_expectation(row["expect"])
+        if r.status != "SERVED":
+            assert not r.answers and r.scene3d is None, row["id"]
+            if want is not None and row["expect"].get("status", "SERVED") == "SERVED":
+                gaps.add((row["corpus"], row["id"]))
+            continue
+        served += 1
+        mem = r.exec_result.final_memory
+        assert {q: str(squared(mem[f"kq_{q}"])) for q in r.answers} == exp["squares"], row["id"]
+        angle = {f["id"] for f in row["facts"] if f.get("kind") == "question" and f.get("quantity") == "angle"}
+        got = {q: Fraction(mem[f"kq_{q}"]) if q in angle else squared(mem[f"kq_{q}"]) for q in r.answers}
+        assert want is not None, (row["id"], "served row without an independent expectation")
+        if "_" in want:
+            assert set(got.values()) == {want["_"]}, (row["id"], got, want)
+        else:
+            assert got == want, (row["id"], got, want)
+        independent += 1
+    assert (served, independent) == (65, 65)
+    assert gaps == CAPABILITY_GAPS_174
+
+
 def test_full_174_historical_40_slice_ab_and_88_combined_scenes_math_oracle(monkeypatch):
     """P5.1 & P5.3: Verify 174 historical Planner cases, 40 Slice A/B cases, 88 combined scenes, and 10 counterexamples."""
     bundle174 = json.loads((GOAL_COMP_RUN / "baseline/bundle-174.json").read_text(encoding="utf-8"))["rows"]

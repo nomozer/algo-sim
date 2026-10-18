@@ -1106,7 +1106,12 @@ class _Dung:
 
     def metric(self) -> _metric.Metric:
         G2, h2 = self.G2, self.h2 or Fraction(1)
-        return _metric.Metric(((G2[0][0], G2[0][1], Z), (G2[1][0], G2[1][1], Z), (Z, Z, h2)))
+        try:
+            return _metric.Metric(((G2[0][0], G2[0][1], Z), (G2[1][0], G2[1][1], Z), (Z, Z, h2)))
+        except GeometryError as e:
+            # The type enforces SPD. `kiem_mat_cat` already maps it inside its handler, but goal checkers call
+            # `metric()` after serving, outside any handler: refuse with the code here, once, for every caller.
+            raise TuChoi(e.code, f"khung toạ độ không có hình Euclid: {e}") from None
 
 
 #: Independent Gram-metric verifiers keyed by goal contract `verifier` kind.

@@ -79,9 +79,19 @@ def _ap(m: _M3, v: Vec3) -> Vec3:
 
 @dataclass(frozen=True)
 class Metric:
-    """Symmetric positive definite rational Gram matrix of the chart."""
+    """Symmetric positive definite rational Gram matrix of the chart — enforced here, at the type, so no constructor can
+    hand the renderer a chart without a Euclidean realisation (run `hybrid-pre-main-hardening`: it used to accept any
+    3×3, indefinite and singular included)."""
 
     g: _M3
+
+    def __post_init__(self) -> None:
+        g = self.g
+        if any(g[i][j] != g[j][i] for i in range(3) for j in range(i)):
+            raise GeometryError(ERR_KHONG_EUCLID, "Gram matrix is not symmetric")
+        # positive definite ⇔ leading principal minors > 0 (Sylvester) — exact
+        if not (g[0][0] > 0 and g[0][0] * g[1][1] - g[0][1] * g[1][0] > 0 and _det(g) > 0):
+            raise GeometryError(ERR_KHONG_EUCLID, "Gram matrix is not positive definite")
 
     @property
     def det(self) -> Fraction:

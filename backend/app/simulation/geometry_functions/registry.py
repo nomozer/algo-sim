@@ -85,6 +85,11 @@ def doc_so(s: str) -> tuple[Fraction, bool]:
     m = _SO.fullmatch(chuan_hoa(s))
     if not m or (r := _doc(m)) is None:
         raise TuChoi("SCHEMA_INVALID", f"không phải số chính xác: {s!r}")
+    if r[0] == 0:
+        # Văn phạm nhận `0`, `√0`, `0/5`, `0a`; mọi trường dùng bộ đọc này là ĐỘ DÀI (`ExactNumber`: "số dương"). Để lọt
+        # xuống engine thì chiều cao 0 bị bố cục thay bằng 1 rồi mới bị tự kiểm bắt, trả nhầm mã lỗi nội bộ
+        # (run `hybrid-pre-main-hardening`). Mã chung với tuyến C và thông điệp người học.
+        raise TuChoi("NON_POSITIVE_LENGTH", f"độ dài bằng 0 ({s!r}): hình suy biến, không dựng hay tính được")
     return r
 
 
