@@ -1,0 +1,52 @@
+{
+  "schema": "RUN/1",
+  "run_id": "hybrid-preview-contract-hardening",
+  "date": "2026-10-18",
+  "owner_approval": "GO_HYBRID_PREVIEW_CONTRACT_HARDENING",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "branch": "research/hybrid-preview-contract-hardening",
+  "base_commit": "65d6ee97d6f693c6613153d28aaf40fa0f352ba1",
+  "commits": {
+    "product": "caf215139f58e181601b99a649c546724d558d9d",
+    "candidate_freeze": "2a832ae292d5197eeeda33d4f86652bcaf8d29d7",
+    "fixtures": "0a199aa5"
+  },
+  "candidate": {"tree_hash": "53ea8830e9f0ce48823160335c48cf1b7dd6c82a46e5cc0e2196b5613419a4ea", "files": 111,
+                "frozen_in": "clean detached worktree at caf21513 (removed afterwards)", "cay_lam_viec_sach": true},
+  "invariants": {
+    "DEFAULT_MODE": "LLM_ONLY",
+    "RESPONSE_CONTRACT": "flat",
+    "HYBRID_PRODUCT_ENABLEMENT": "NO-GO",
+    "ALLOW_LIVE_AI": "0 in every command",
+    "LIVE_AI_CALLS": 0,
+    "CACHE_VERSION": "125 (no bump: preview never touches the cache; LLM_ONLY byte parity)",
+    "MODEL_SURFACE_CHANGED": false,
+    "FRONTEND_SRC_CHANGED": false,
+    "BROWSER_CALLER": "none"
+  },
+  "p1_failure_classification": {
+    "defect_reproduced": "23/23 representative refusals were capability_gap with no refusal_cause",
+    "groups": ["CAPABILITY", "OUT_OF_SCOPE", "MISSING_DATA", "INVALID_DATA", "SOURCE_UNVERIFIED", "RESULT_UNVERIFIED",
+               "INCONCLUSIVE", "EXTRACTION_FAILED", "INTEGRITY", "FALLBACK"],
+    "categories_used": ["capability_gap", "out_of_scope", "insufficient_specification", "geometry_generation_failed",
+                        "verification_gap"],
+    "new_codes": 0,
+    "coverage_lock_first_run_caught": ["LINE_CONTAINED_IN_PLANE", "RESULT_BINDING_UNVERIFIED", "PREVIEW_DISABLED"]
+  },
+  "p2_proof_text": {"red_variants": ["U+2212", "U+2796", "U+FE63", "U+FF0D", "U+2E3A", "U+02D7", "fullwidth letters"],
+                    "valid_text_served_unchanged": 4, "structural_guard_without_regex": "PASS"},
+  "fault_injection": {"all_capability_gap": 31, "no_minus_fold": 4, "integrity_as_capability": 4,
+                      "drop_adapter_origin": 1, "ignore_negated_observation": 1, "drop_new_code": 1,
+                      "fixture_response_tamper": "--verify exit 1"},
+  "p3_fixtures": {"directory": "fixtures/", "count": 39, "served": 12, "refusal": 23, "gate": 4,
+                  "producer_commit": "2a832ae292d5197eeeda33d4f86652bcaf8d29d7",
+                  "product_commit": "caf215139f58e181601b99a649c546724d558d9d",
+                  "deterministic_two_runs": true, "bytes_approx": 693213},
+  "p4_contract": "docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md",
+  "p5_regression": "verification/p5-regression.log",
+  "independent_review": "PENDING",
+  "authoritative_t3": "PENDING",
+  "verdict": "PENDING",
+  "merge": "NONE",
+  "push": "NONE"
+}

@@ -1,0 +1,12 @@
+preview_api | 89 passed, 1 warning in 6.61s
+preview_contract | 59 passed, 1 warning in 2.28s
+preview_fixtures | 5 passed in 2.91s
+historical_174 | 1 passed in 2.44s
+backend_integration | 52 passed in 9.30s
+source_grounding | 130 passed, 1 xfailed in 2.10s
+safety_negative | 23 passed in 0.85s
+default_route_guard | 71 passed in 12.97s
+cache_isolation | 8 passed, 1 warning in 1.27s
+oracle | 35 passed in 0.78s
+schema_compat | 19 passed, 1 warning in 1.54s
+candidate_freeze | 26 passed in 13.72s

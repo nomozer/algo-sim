@@ -1,5 +1,15 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Hybrid preview contract hardening (research/hybrid-preview-contract-hardening, Hybrid product off)
+
+Run `docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/`; frontend data contract
+`docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md`.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/ai/hybrid_preview.py` | `classify_refusal(code, planner, *, adapter)` → `RefusalClass(group, failure_category, refusal_cause, message)`. The table `_NHOM` groups each refusal code by what failed (CAPABILITY, OUT_OF_SCOPE, MISSING_DATA, INVALID_DATA, SOURCE_UNVERIFIED, RESULT_UNVERIFIED, INCONCLUSIVE, EXTRACTION_FAILED, INTEGRITY) into existing categories only. FALLBACK is `geometry_generation_failed`, never `capability_gap`. Every refusal envelope carries `refusal_cause`. The proof-text backstop matches on a detection copy (`_ban_do`: NFKC, `Cf` dropped, dashes and minus signs folded) and never changes the served text. | `backend/tests/test_hybrid_preview_contract.py` (source-scan lock: every literal Route D / kernel refusal code is classified) |
+| `backend/scripts/export_hybrid_preview_fixtures.py` | `--out` / `--verify` of the offline envelope fixtures. Runs the real endpoint in-process with an ephemeral token, the network blocked and committed inputs only; refuses to overwrite or to export from a dirty `backend/app`. Each fixture records source + `input_sha256`, producer (commit, product commit, `measured_system_hash`, adapter/envelope versions), expected outcome, response + `response_sha256`. | `backend/tests/test_hybrid_preview_fixtures.py` |
+
 ## Route D offline preview (research/hybrid-route-d-preview-wiring, Hybrid product off)
 
 Run `docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/`; contract `docs/architecture/HYBRID_ROUTE_D_PREVIEW.md`.

@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_PREVIEW_CONTRACT_HARDENING
+
+REPORT = docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/
+CLASSIFICATION = see report.md §0 (owner scope GO_HYBRID_PREVIEW_CONTRACT_HARDENING; preview refusal classification, proof-text backstop, offline envelope fixtures and the frontend data contract; Hybrid product NO-GO, LLM_ONLY default unchanged)
+CODE_COMMIT = caf21513 (product commit); candidate freeze 2a832ae2 (tree_hash 53ea8830e9f0ce48823160335c48cf1b7dd6c82a46e5cc0e2196b5613419a4ea, 111 files); fixtures 0a199aa5
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/run.json
+MODEL_REQUEST_COUNT = 0 (offline; fixtures served through the endpoint with the network blocked)
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_ROUTE_D_PREVIEW_WIRING
 
 REPORT = docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/report.md

@@ -11,6 +11,41 @@
 - **status:** OPEN (defensive) — `scene3d-chart.ts::maTranKhung` takes square roots without checks; a non-SPD `chart_metric` becomes `NaN` coordinates, a singular one divides by zero. No current producer: the backend `Metric` type refuses non-SPD Gram matrices since `hybrid-pre-main-hardening`.
 - **repro / acceptance:** `frontend-handoff.md` F2.
 
+### ISSUE-ARCH-HYBRID-PREVIEW-FAILURE-CATEGORY-COLLAPSED
+
+- **status:** RESOLVED in run `hybrid-preview-contract-hardening` (product `caf21513`, branch, not on `main` until integrated).
+- **what was wrong:** every Route D preview refusal had `failure_category = capability_gap` and no `refusal_cause`, so an
+  integrity fault, an unverified source or a missing certificate read as "the system cannot do this".
+- **fix:** `hybrid_preview.classify_refusal` puts each code in a group and maps it to the existing categories, with a
+  FALLBACK that is never `capability_gap`. Locks: `backend/tests/test_hybrid_preview_contract.py`, including a
+  source-scan test that red-fails on an unclassified literal code.
+
+### ISSUE-ARCH-HYBRID-PREVIEW-PROOF-TEXT-U2212
+
+- **status:** RESOLVED in run `hybrid-preview-contract-hardening`.
+- **what was wrong:** the proof-text backstop matched on NFC only, so U+2212 (and U+2796, U+FE63, U+FF0D, U+2E3A,
+  U+02D7, fullwidth letters) between "chứng" and "minh" passed.
+- **fix:** detection runs on an NFKC copy with format characters dropped and every dash or minus folded; the served text
+  is byte-identical. The structural invariant (`proof_status`, `can_present_as_proven`) stays the primary guard.
+- **residual (by design):** spellings without diacritics and cross-script homoglyphs are not matched. Matching them would
+  also catch "chúng mình" (false refusals). The structural invariant covers them.
+
+### ISSUE-ARCH-SCENE3D-VERIFICATION-GAP-PRESENTATION
+
+- **status:** OPEN — frontend, Scene3D/UI owner (F5 of `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md`).
+- **what:** `SimulationWorkspace` labels `verification_gap` through `NHAN_LOAI_VAN_DE`, but its title/hint chain has no
+  branch for it, so a refusal of that category gets the default "NGOÀI DANH MỤC MÔ PHỎNG" and the capability hint. The
+  preview now emits `verification_gap` (LLM_ONLY wraps geometry refusals as `geometry_generation_failed`, so this was
+  not reachable before).
+- **acceptance:** contract §9 F5; fixtures `refusal-source-*`, `refusal-result-*`, `refusal-inconclusive-*`.
+
+### ISSUE-OPS-CACHE-HISTORICAL-MODE-UNKNOWN
+
+- **status:** OPEN (interpretation only) — recorded in the untracked GO MAIN handoff `hybrid-go-main` (2026-10-18).
+- **what:** cache rows written before the route-aware cache policy did not record the routing mode. Compiler-mode rows,
+  if any, may share the former default identity: **UNKNOWN**. No bump, purge or migration has been done.
+- **acceptance:** an offline audit of the cache rows, or an owner decision to bump `CACHE_VERSION` with a written reason.
+
 ### ISSUE-ARCH-HYBRID-ROUTE-D-NOT-WIRED
 
 - **status:** OPEN — route D runs offline only (`run_fact_route`, `run_ai_fact_route` with a test transport); `/api/analyze` never reaches it (guarded by `test_structured_geometry_relations.py::test_Y_*`). Missing for product: a `KetQuaTuyen` → `ValidatedSimulationEnvelope` adapter carrying goal checks (`proof_status`, `can_present_as_proven`) and `length_unit`; a route-D mode in `RoutePolicy` with registry/planner/engine versions and the extraction surface in its fingerprint; refusal-code → learner-message mapping; runtime identity fields.

@@ -165,6 +165,13 @@
 - **STATUS:** PROVED cho preview (`backend/app/ai/hybrid_preview.py::adapt_result`, `hybrid-route-d-preview/1`): envelope ngữ nghĩa đã thẩm định + `route_d` (Geometry IR, đáp số chính xác, provenance, trace, goal checks với `proof_status=UNVERIFIABLE` / `can_present_as_proven=false`, `length_unit`); từ chối giữ mã máy, lời người học tiếng Việt. Khoá: `backend/tests/test_hybrid_preview_api.py`.
 - **BLOCKER:** frontend chưa đọc `route_d` (`frontend-handoff.md` của `hybrid-pre-main-hardening` F3, F4); đây là biểu diễn preview, chưa phải envelope sản phẩm của `/api/analyze`.
 - **NEXT_TEST:** khi UI đọc nó: goal kiểm trên một cấu hình không bao giờ hiển thị là "đã chứng minh".
+- **UPDATE (run `hybrid-preview-contract-hardening`):**
+  - Lời từ chối mang `failure_category` + `refusal_cause` theo từ vựng hiện có (`classify_refusal`). Lỗi toàn vẹn, nguồn
+    chưa xác minh hay thiếu chứng chỉ không còn bị gọi là `capability_gap`. Khoá quét nguồn: mã từ chối mới phải được
+    xếp nhóm.
+  - Lớp chặn văn bản chứng minh chuẩn hoá NFKC và gộp mọi dấu gạch / dấu trừ (kể cả U+2212).
+  - Hợp đồng dữ liệu cho frontend: `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md`. Bộ 39 fixture xuất từ chính
+    endpoint (`test_hybrid_preview_fixtures.py`).
 
 ### D-08: Nối API sau cờ
 - **STATUS:** PROVED cho preview — `POST /api/preview/hybrid`: cờ env + token server ≥ 32 ký tự + header + peer loopback, request có header `Origin` (trình duyệt) bị từ chối; TẮT ⇒ 404 trước mọi import tuyến D, và `/api/health` không nạp tuyến D; cổng trả lời trước khi đọc body; chỉ dữ liệu fixture offline (không transport, kể cả `ALLOW_LIVE_AI=1` có khoá); không cache; ngoài OpenAPI; `LLM_ONLY` của `/api/analyze` khớp băm byte với baseline trước khi nối.
@@ -177,7 +184,7 @@
 - **NEXT_TEST:** —
 
 ### D-10: Trình bày chỉ từ chứng nhận
-- **STATUS:** OPEN — ký hiệu góc vuông theo tên đoạn; `maTranKhung` không tự vệ (`frontend-handoff.md` F1, F2).
+- **STATUS:** OPEN — ký hiệu góc vuông theo tên đoạn; `maTranKhung` không tự vệ (`frontend-handoff.md` F1, F2); `length_unit`, quan sát goal và `verification_gap` chưa được trình bày (F3, F4, F5 — tiêu chí ở `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md` §9).
 - **BLOCKER:** nhánh Scene3D đang sở hữu renderer.
 - **NEXT_TEST:** theo tiêu chí nghiệm thu trong `frontend-handoff.md`.
 
