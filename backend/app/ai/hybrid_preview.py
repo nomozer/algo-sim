@@ -6,7 +6,7 @@ from fractions import Fraction
 import json
 import logging
 import re
-from typing import Any, Literal
+from typing import Any, Literal, NamedTuple
 import unicodedata
 
 from pydantic import BaseModel
@@ -51,40 +51,123 @@ class PreviewInvalid(ValueError):
     pass
 
 
-#: Route D source-grounding refusal codes (registry gate) — the learner is told the data could not be matched to the text.
-_MA_NGUON = {"QUOTE_NOT_IN_SOURCE", "UNKNOWN_LABEL", "PREDICATE_NOT_IN_QUOTE", "PLANE_NOT_IN_QUOTE", "ROLE_NOT_IN_QUOTE",
-             "OBJECT_NOT_IN_QUOTE", "AMBIGUOUS_VALUE_QUOTE", "UNGROUNDED_VALUE", "SOURCE_OBJECT_MISMATCH",
-             "SOURCE_PREMISE_UNREAD", "REQUEST_NOT_ANSWERED", "NOT_ASKED_IN_SOURCE"}
+class RefusalClass(NamedTuple):
+    group: str
+    failure_category: str
+    refusal_cause: str
+    message: str
 
 
-def _refusal(code: str, policy, planner: dict | None = None) -> HybridPreviewEnvelope:
-    if code in {"PROOF_UNVERIFIABLE", "PREVIEW_PROOF_STATUS_INVALID"}:
-        message = "Chưa có chứng chỉ chứng minh tổng quát; kiểm tra trên một hình dựng chưa đủ để kết luận."
-    elif code in _MA_NGUON:
-        message = "Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình."
-    elif code == "NON_POSITIVE_LENGTH":
-        message = learner_reason({"status": "unsupported", "reason_code": code,
-                                  "failure_category": "capability_gap", "refusal_cause": "SOURCE"})
-    else:
-        message = "Hệ chưa đủ dữ kiện hoặc khả năng kiểm chứng để dựng hình và tính kết quả an toàn cho đề này."
+#: Refusal groups (run `hybrid-preview-contract-hardening`): WHAT failed, in the vocabularies the product already emits and
+#: the frontend already labels — `failure_category` of `error_codes.SEMANTIC_FAILURE_CATEGORY` / `pipeline` and
+#: `refusal_cause` of `semantic_program/refusal_cause.py`. The group name is server-side only; `reason_code` stays exact.
+#: `capability_gap` answers "can the machine execute this? — no"; it is never the verdict for a fault in the system's own
+#: output, an unverified source or a missing certificate (`error_codes.py`).
+_NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
+    ("CAPABILITY", "capability_gap", frozenset({
+        "UNSUPPORTED_CAPABILITY", "UNSUPPORTED_BASE_SHAPE", "UNSUPPORTED_CENTROID", "UNSUPPORTED_MULTIPLE_BASES",
+        "UNSUPPORTED_MULTIPLE_HEIGHTS", "UNSUPPORTED_PLANE", "UNSUPPORTED_REGULAR_POLYGON", "QUESTION_CONTEXT_UNSUPPORTED",
+        "PLAN_TOO_LARGE", "NO_SOLID", "NON_HOMOGENEOUS_LENGTHS", "CONDITIONAL_CLAUSE", "NEGATED_CLAUSE",
+        "METRIC_REQUIRES_EUCLIDEAN_CHART"}),
+     "Đề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng."),
+    ("OUT_OF_SCOPE", "out_of_scope", frozenset({"OUT_OF_SCOPE"}),
+     learner_reason({"status": "unsupported", "failure_category": "out_of_scope"})),
+    ("MISSING_DATA", "insufficient_specification", frozenset({
+        "MISSING_DIMENSION", "UNDERDETERMINED_POINT", "PLANE_NOT_UNIQUE", "FOOT_NOT_DETERMINED", "AMBIGUOUS_FACT",
+        "AMBIGUOUS_REFERENCE"}),
+     "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số "
+     "liệu hay cách hiểu thay em, nên không dựng hình."),
+    ("INVALID_DATA", "geometry_generation_failed", frozenset({
+        "INCONSISTENT_FACTS", "NON_POSITIVE_LENGTH", "DEGENERATE_LINE", "PARALLEL_PLANES", "SKEW_NO_INTERSECTION",
+        "NON_COPLANAR_POINTS", "SECTION_EMPTY", "SECTION_PLANE_IS_FACE", "DERIVED_PLANE_IS_REFERENCE",
+        "REGULAR_PYRAMID_NEEDS_REGULAR_BASE", "QUESTION_LOCAL_GIVEN_CONFLICT", "FOOT_NOT_IN_PLANE", "LINE_CONTAINED_IN_PLANE",
+        # polyhedral kernel (`GeometryError` codes Route D passes through unchanged)
+        "DEGENERATE_POINTS", "COLLINEAR_POINTS", "PARALLEL_NO_INTERSECTION", "CONTAINED_INFINITE_INTERSECTION",
+        "ZERO_VECTOR", "PLANE_EQUATION_DEGENERATE", "POLYGON_CHAIN_NOT_CONVEX", "MEASURE_UNDEFINED", "METRIC_NOT_EUCLIDEAN",
+        "PLANE_DOES_NOT_CUT", "PLANE_TOUCHES_VERTEX", "PLANE_TOUCHES_EDGE", "SECTION_INTERSECTION_DEGENERATE"}),
+     "Các dữ kiện dùng để dựng hình mâu thuẫn nhau hoặc làm hình suy biến, nên không có hình nào thoả tất cả. AlgoSim "
+     "dừng lại thay vì dựng một hình sai."),
+    ("SOURCE_UNVERIFIED", "verification_gap", frozenset({
+        "QUOTE_NOT_IN_SOURCE", "UNKNOWN_LABEL", "PREDICATE_NOT_IN_QUOTE", "PLANE_NOT_IN_QUOTE", "ROLE_NOT_IN_QUOTE",
+        "OBJECT_NOT_IN_QUOTE", "AMBIGUOUS_VALUE_QUOTE", "UNGROUNDED_VALUE", "SOURCE_OBJECT_MISMATCH",
+        "SOURCE_PREMISE_UNREAD", "REQUEST_NOT_ANSWERED", "NOT_ASKED_IN_SOURCE", "QUESTION_LOCAL_GIVEN_UNVERIFIED",
+        "GOAL_CLAUSE_NOT_PREMISE", "QUESTION_CLAUSE_NOT_PREMISE", "RESULT_BINDING_UNVERIFIED"}),
+     "Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình."),
+    ("RESULT_UNVERIFIED", "verification_gap", frozenset({
+        "ENGINE_SELF_CHECK_FAILED", "ENGINE_IR_INVALID", "SCENE_BUILD_FAILED", "PREVIEW_RESULT_INVALID",
+        "PREVIEW_METRIC_MISMATCH", "PREVIEW_DEPENDENCY_INVALID", "PREVIEW_ENVELOPE_INVALID", "PREVIEW_LENGTH_UNIT_INVALID",
+        "PREVIEW_PROOF_TEXT_INVALID", "PREVIEW_VALIDATION_FAILED"}),
+     "Hệ đã thử dựng nhưng kết quả chưa qua được khâu kiểm chứng, nên không hiển thị hình chưa được kiểm."),
+    ("INCONCLUSIVE", "verification_gap", frozenset({"PROOF_UNVERIFIABLE", "FIGURE_NOT_UNIQUE"}),
+     "Hệ chưa có chứng chỉ để kết luận từ dữ kiện: kiểm tra trên một hình dựng chưa đủ để kết luận cho mọi hình thoả đề, "
+     "nên hệ không đưa ra kết luận."),
+    ("EXTRACTION_FAILED", "geometry_generation_failed", frozenset({
+        "LIVE_AI_DISABLED", "PROVIDER_ERROR", "PROVIDER_BLOCKED", "PROVIDER_REFUSED", "PROVIDER_RESPONSE_INVALID",
+        "RESPONSE_TRUNCATED", "MAX_TOKENS", "NO_CANDIDATE", "JSON_INVALID", "MALFORMED_RESPONSE_PART",
+        "RESPONSE_CONTRACT_INVALID", "SCHEMA_INVALID", "FACT_INCOMPLETE", "DANGLING_DEPENDENCY", "DUPLICATE_CALL_ID",
+        "DEPENDENCY_CYCLE", "UNKNOWN_DERIVED_REFERENCE", "DERIVED_REFERENCE_TYPE_MISMATCH", "AUXILIARY_LABEL_COLLISION",
+        "AUXILIARY_RULE_MISMATCH", "AUXILIARY_ONLY_FUNCTION", "UNKNOWN_SOLID", "PRECONDITION_FAILED"}),
+     "Hệ chưa chuyển được đề này thành các dữ kiện dựng hình kiểm chứng được, nên không dựng hình."),
+    ("INTEGRITY", "geometry_generation_failed", frozenset({
+        "PREVIEW_IDENTITY_CHANGED", "PREVIEW_SURFACE_CHANGED", "PREVIEW_PROOF_STATUS_INVALID", "PREVIEW_DISABLED",
+        "ENGINE_EXECUTION_FAILED",
+        "MALFORMED_SOLID", "SECTION_CONSTRUCTION_INTERNAL_FAILURE", "POLYHEDRON_BOUNDARY_OPEN",
+        "POLYHEDRON_NON_ORIENTABLE", "POLYHEDRON_DEGENERATE", "POLYHEDRON_FACE_NOT_PLANAR", "POLYHEDRON_FACE_NOT_SIMPLE"}),
+     "Kết quả dựng hình không còn khớp với phiên bản hoặc chứng nhận mà hệ đã kiểm, nên hệ không hiển thị hình."),
+)
+_FALLBACK = RefusalClass("FALLBACK", "geometry_generation_failed", "UNKNOWN",
+                         "Hệ chưa dựng được hình đã kiểm chứng cho đề này, nên không hiển thị hình.")
+
+
+def classify_refusal(code: str, planner: dict | None = None, *, adapter: bool = False) -> RefusalClass:
+    """Group of a refusal from structured data only (never the `reason` prose). `adapter=True`: the preview's own check on
+    a SERVED result raised it, so the code describes the system's output (a non-Euclidean chart there is a tampered scene,
+    not contradictory givens). A `NEGATED_CLAUSE` that carries a negated observation was constructed and has no
+    certificate (`function_route.run_fact_route`); without one the planner refused the clause as unsupported."""
+    if adapter and code == "METRIC_NOT_EUCLIDEAN":
+        code = "PREVIEW_RESULT_INVALID"
+    if code == "NEGATED_CLAUSE" and (planner or {}).get("negated_checks"):
+        code = "PROOF_UNVERIFIABLE"
+    group = next(((name, category, message) for name, category, codes, message in _NHOM if code in codes), None)
+    if group is None:
+        return _FALLBACK
+    name, category, message = group
+    if code == "NON_POSITIVE_LENGTH":
+        # The value passed the source-grounding gate, so the text states it (`refusal_cause.do_dai_khong_duong`).
+        return RefusalClass(name, category, "SOURCE", learner_reason(
+            {"status": "unsupported", "reason_code": code, "failure_category": category, "refusal_cause": "SOURCE"}))
+    return RefusalClass(name, category, "UNKNOWN", message)
+
+
+def _refusal(code: str, policy, planner: dict | None = None, *, adapter: bool = False) -> HybridPreviewEnvelope:
+    kind = classify_refusal(code, planner, adapter=adapter)
     # Only verified observations survive a refusal: calls / trace / auxiliary carry model-supplied quotes that never
     # passed the source check (review of this run).
     kept = {k: deepcopy(v) for k, v in (planner or {}).items() if k in ("version", "goal_checks", "negated_checks")}
-    return HybridPreviewEnvelope(envelope={"status": "unsupported", "reason_code": code, "reason": message,
-                                           "learner_reason": message, "failure_category": "capability_gap"},
+    return HybridPreviewEnvelope(envelope={"status": "unsupported", "reason_code": code, "reason": kind.message,
+                                           "learner_reason": kind.message, "failure_category": kind.failure_category,
+                                           "refusal_cause": kind.refusal_cause},
                                  route_d={"runtime_identity": preview_runtime_identity(policy), "planner": kept})
 
 
-#: Backstop against narrative that presents a one-configuration observation as a proof. Text is NFC-normalised and
-#: stripped of format characters (zero-width etc.) first; hyphens/spaces between the two syllables are equivalent.
-_CHUNG_MINH = r"chứng[\s\-‐-―]*minh"
+#: Backstop against narrative that presents a one-configuration observation as a proof; the primary guard is structural
+#: (`proof_status` / `can_present_as_proven` in `adapt_result`). Matching runs on a DETECTION copy — NFKC (fullwidth
+#: letters, compatibility dashes), format characters (zero-width, soft hyphen) dropped, every dash folded to "-" — and
+#: never changes the text that is served. Minus signs are math symbols (Sm) that NFKC keeps, so they are folded by name.
+_GACH_TRU = frozenset("−➖˗⁃")   # MINUS SIGN, HEAVY MINUS SIGN, MODIFIER LETTER MINUS, HYPHEN BULLET
+_CHUNG_MINH = r"chứng[\s\-]*minh"
 _LOI_CHUNG_MINH = re.compile(
     rf"(?:đã|được)\s*{_CHUNG_MINH}|{_CHUNG_MINH}\s*(?:thành\s*công|được|xong)|điều\s*phải\s*{_CHUNG_MINH}|đpcm")
 
 
+def _ban_do(text: Any) -> str:
+    """Detection copy of `text` (see `_LOI_CHUNG_MINH`)."""
+    return "".join("-" if ch in _GACH_TRU or unicodedata.category(ch) == "Pd" else ch
+                   for ch in unicodedata.normalize("NFKC", str(text)) if unicodedata.category(ch) != "Cf").casefold()
+
+
 def _noi_chung_minh(text: Any) -> bool:
-    s = "".join(ch for ch in unicodedata.normalize("NFC", str(text)) if unicodedata.category(ch) != "Cf")
-    return _LOI_CHUNG_MINH.search(s.casefold()) is not None
+    return _LOI_CHUNG_MINH.search(_ban_do(text)) is not None
 
 
 def _validate_scene(scene: dict) -> Metric:
@@ -185,9 +268,9 @@ def run_preview(problem_text: str, fixtures: Any, policy) -> HybridPreviewEnvelo
         result = run_ai_fact_route(problem_text, lambda payload: deepcopy(body), contract=policy.response_contract)
         return adapt_result(result, policy)
     except PreviewInvalid as exc:
-        return _refusal(str(exc), policy)
+        return _refusal(str(exc), policy, adapter=True)
     except Exception as exc:  # noqa: BLE001
         # The boundary refuses malformed/tampered deterministic output, with no raw error/model text in HTTP; the
         # exception TYPE is logged server-side so an operator can tell an adapter bug from a tampered result.
         _log.warning("Route D preview validation failed: %s", type(exc).__name__)
-        return _refusal("PREVIEW_VALIDATION_FAILED", policy)
+        return _refusal("PREVIEW_VALIDATION_FAILED", policy, adapter=True)
