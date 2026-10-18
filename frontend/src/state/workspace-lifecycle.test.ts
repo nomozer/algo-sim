@@ -126,19 +126,20 @@ describe("đổi bài = 0 gọi AI", () => {
     expect(spy, "đổi bài lại đi gọi mạng").not.toHaveBeenCalled();
   });
 
-  it("mở lại từ Lịch sử KHÔNG chạy lại validateConfig của module", () => {
-    /* `reopenFromHistory` dựng lại từ envelope nên nó PHẢI gọi validateConfig +
+  it("mở lại từ Lịch sử kiểm lại envelope của module, không gọi pipeline", () => {
+    /* `reopenFromHistory` dựng lại từ envelope nên nó PHẢI gọi validateEnvelope +
        init một lần — đó là đúng. Cái phải chặn là gọi PIPELINE. Bài này khoá
        đúng ranh giới đó: có dựng lại engine, không có gọi mạng. */
     const netSpy = vi.fn(globalThis.fetch);
     globalThis.fetch = netSpy as unknown as typeof fetch;
     s().loadEnvelope(ENV_A());
     const mod = getSimulation("generic.semantic_program")!;
-    const spy = vi.spyOn(mod, "validateConfig");
+    const spy = vi.spyOn(mod, "validateEnvelope");
     const before = spy.mock.calls.length;
     s().goHome();
     s().reopenFromHistory(historyStore.list()[0].id);
     expect(spy.mock.calls.length).toBeGreaterThan(before);
+    expect(s().active?.moduleId).toBe("generic.semantic_program");
     expect(netSpy, "mở lại từ Lịch sử lại đi gọi mạng").not.toHaveBeenCalled();
     spy.mockRestore();
   });
