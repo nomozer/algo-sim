@@ -158,7 +158,18 @@ Also found while fixing: `caf21513` changed the refusal envelope without bumping
 RED for the fixes: the updated test file run against the unfixed product (`413df6c4`, throwaway detached worktree)
 failed exactly the 5 new checks.
 
-**Round 2 and authoritative T3:** PENDING.
+**Round 2** (same reviewer, on `413df6c4..1839abe3`): **PASS_WITH_FINDINGS**, 0 blocking. All six round-1 findings were
+confirmed fixed; the reviewer re-ran its probes and the endpoint rows, and the regression set gave 349 passed with freeze
+MATCH.
+
+| # | finding | disposition |
+|---|---|---|
+| 1 NON_BLOCKING | the shared length reader (`do_dai_trong_de`) reads `XY = 0` in vector or dot notation as a zero premise, so a mis-extracted zero on such a valid problem is still SOURCE | RECORDED: `ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO`, contract §6, §9 below. The reader is default-route product code, so fixing it is a separate wave |
+| 2 NIT | `bce21d8b` and `f5f483bf` fail collection (`test_hybrid_preview_fixtures.py` reads a bundle first committed in `aae168e6`) | NOTED: T3 runs on the final docs HEAD (same product tree `1b7a6713…`), not on the freeze commit |
+| 3 NIT | stale `_ban_do` description in CODE_INDEX | FIXED |
+| 4 NIT | "exactly six keys" needs an adapter qualifier | FIXED in contract §6 (six keys from adapter `/2`; `/1` had five; absent `refusal_cause` ⇒ `UNKNOWN`) |
+
+**Authoritative T3:** PENDING.
 
 ## 7. P4 — frontend contract
 
@@ -204,7 +215,9 @@ No `frontend/src` change and no browser caller.
   frontend consumes nothing (F1–F6 open).
 - The groups are a server-side table, and several share a category; `reason_code` and `learner_reason` tell them apart.
 - `refusal_cause` is SOURCE only where the server reads the cause in the text: today only `NON_POSITIVE_LENGTH` through
-  `do_dai_de_ghi_khong_duong`. Other data refusals stay UNKNOWN rather than blame the problem.
+  `do_dai_de_ghi_khong_duong`. Other data refusals stay UNKNOWN rather than blame the problem. That reader misreads
+  vector or dot notation (`GA + GB + GC = 0`) as a zero length. A mis-extracted zero on such a problem is still blamed
+  on the text (`ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO`; shared product reader, separate wave).
 - The source-scan lock covers literal codes and the scanned kernel files. A new pass-through of codes from an unscanned
   module would not be caught (review NIT).
 - The fixtures are bound to adapter `/2`. Any change in served output makes the lock red, so a new contract needs a new

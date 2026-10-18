@@ -41,6 +41,20 @@
   not reachable before).
 - **acceptance:** contract §9 F5; fixtures `refusal-source-*`, `refusal-result-*`, `refusal-inconclusive-*`.
 
+### ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO
+
+- **status:** OPEN — found by the round-2 independent review of `hybrid-preview-contract-hardening`. The defect is in a
+  shared product reader, so the fix needs its own wave (the default route uses the same reader).
+- **what:** `semantic_program/segment_relation.do_dai_trong_de` (through `refusal_cause.do_dai_de_ghi_khong_duong`)
+  reads `XY = 0` in vector or dot-product notation as a premise length of 0. Examples: "GA + GB + GC = 0",
+  "MA + MB = 0 (vectơ)", "SA.BC = 0", "MA = 0 khi M trùng A". The written-out form "vectơ … = vectơ 0" is read
+  correctly.
+- **consequence:** a mis-extracted zero length on such a valid problem is refused as `NON_POSITIVE_LENGTH` with
+  `refusal_cause = SOURCE`, so the learner is told to check the problem. Reproduction is in the round-2 review notes of
+  the run: corpus positive 0 plus "AB + CD = 0 (tổng hai vectơ)" and an extracted `CD = 0`.
+- **acceptance:** the reader ignores `=` inside sums, products and vector contexts; or SOURCE also requires the reader's
+  `reason_subjects` to match the segment of the refused call; with a RED test of the examples above.
+
 ### ISSUE-ARCH-SCENE3D-INSUFFICIENT-SPEC-HINT
 
 - **status:** OPEN — frontend, Scene3D/UI owner (F6 of `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md`; found by

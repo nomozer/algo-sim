@@ -114,7 +114,9 @@ Fixture: `served-H01_CUBE`, `served-H07_…`, `served-H14_REGULAR_TETRAHEDRON` (
 
 ## 6. Từ chối an toàn (`envelope.status == "unsupported"`)
 
-Envelope từ chối có **đúng sáu khoá**: `status, reason_code, reason, learner_reason, failure_category, refusal_cause`.
+Từ `route_d.runtime_identity.adapter_version == "hybrid-preview-adapter/2"`, envelope từ chối có **đúng sáu khoá**:
+`status, reason_code, reason, learner_reason, failure_category, refusal_cause`. Adapter `/1` (`main` `65d6ee97`) có năm
+khoá và mọi lời từ chối đều mang `capability_gap`. Frontend phải coi `refusal_cause` vắng mặt là `UNKNOWN`.
 Các giá trị đều thuộc từ vựng hệ đã có; preview không đặt mã mới.
 
 | nhóm (phía server) | `failure_category` | `refusal_cause` | ví dụ `reason_code` | fixture |
@@ -131,6 +133,11 @@ Các giá trị đều thuộc từ vựng hệ đã có; preview không đặt 
 (*) `OUT_OF_SCOPE` của Route D là lối thoát `unsupported` của bước trích xuất ("mệnh đề không ánh xạ được vào thư
 viện hàm") trên một đề hình học. Nó KHÔNG phải phán quyết "môn học khác" của cổng phạm vi: preview không chạy phát hiện
 miền. Vì vậy preview không bao giờ phát `out_of_scope`.
+
+Giới hạn đã biết của `SOURCE`: bộ đọc độ dài của server (`do_dai_trong_de`, dùng chung với tuyến mặc định) đọc nhầm
+`XY = 0` trong ký hiệu vectơ hay tích vô hướng ("GA + GB + GC = 0", "SA.BC = 0") thành một độ dài bằng 0. Nếu đề có ký
+hiệu như vậy **và** bước trích xuất lại phát một độ dài bằng 0, lời từ chối có thể mang `SOURCE` dù đề hợp lệ
+(`ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO`).
 
 Bảng mã đầy đủ: `backend/app/ai/hybrid_preview.py::_NHOM`. Mã chưa có trong bảng rơi về `geometry_generation_failed` /
 `UNKNOWN`, không bao giờ `capability_gap`. Nhóm là khái niệm phía server; frontend rẽ nhánh theo `failure_category` và
