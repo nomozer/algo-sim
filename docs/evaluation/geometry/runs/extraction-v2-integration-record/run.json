@@ -1,0 +1,23 @@
+{
+  "schema": "RUN/1",
+  "run_id": "extraction-v2-integration-record",
+  "wave": "extraction-v2-integration-record-w01",
+  "date": "2026-10-18",
+  "owner_scope": "GO_DOCS",
+  "branch": "docs/extraction-v2-record-correction",
+  "base_commit": "551a354174e1c213f3ad2bf03d7574ebf75f4d85",
+  "kind": "CORRECTION_LAYER",
+  "corrects": "HYBRID_SEMANTIC_EXTRACTION_V2 (EVIDENCE_INDEX classification/code commit and handoff integration text; original files unchanged)",
+  "integrated_on_main": ["e4fff851", "aa0da02b", "0507cb01"],
+  "not_on_main": ["69fa9be8 (prompt v2, owner NO-GO)", "e3827c00 (patch-equivalent to 0507cb01)", "330a222a (stale refreeze)"],
+  "entry_merge": "a94a54d0",
+  "t3_at_integration_commits": "UNKNOWN (verification/t3-safety.json never existed)",
+  "first_authoritative_t3_containing_all": "1abc0a51 (hybrid-pre-main-hardening/verification/authoritative-t3.json, FULL_PRODUCT_GATE_PASS)",
+  "product_changed": false,
+  "cache_version": 125,
+  "cache_decision": "no bump: docs only",
+  "model_surface_changed": false,
+  "provider_requests": 0,
+  "merge": "NONE",
+  "push": "NONE"
+}

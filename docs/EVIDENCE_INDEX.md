@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = EXTRACTION_V2_INTEGRATION_RECORD
+
+REPORT = docs/evaluation/geometry/runs/extraction-v2-integration-record/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/extraction-v2-integration-record/
+CLASSIFICATION = CORRECTION_LAYER (docs only; records what of Semantic Extraction v2 actually reached main)
+CODE_COMMIT = NONE (records e4fff851 + aa0da02b + 0507cb01 on main via merge a94a54d0; prompt v2 69fa9be8 not on main)
+VERIFICATION = docs/evaluation/geometry/runs/extraction-v2-integration-record/run.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_SEMANTIC_EXTRACTION_V2 (CLASSIFICATION "integration PENDING_OWNER_GO" and CODE_COMMIT 69fa9be8 predate the owner disposition; handoff.md full-branch integration text did not happen; the untracked integration.md draft citing t3-safety.json, 6a4414d5 and e3827c00 is not adopted). Original files unchanged.
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SCENE3D_METRIC_BOUNDARY
 
 REPORT = docs/evaluation/geometry/runs/scene3d-metric-boundary/handoff.md
@@ -114,7 +125,7 @@ CORRECTED_BY = SEMANTIC_EXTRACTION_V3_RUNTIME_REVISION
 REPORT = docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/
 CORRECTS = NONE (scorer /2 reported beside the frozen NLU scorer; its L01 artifact re-checked on the recorded receipt)
-CORRECTED_BY = NONE
+CORRECTED_BY = EXTRACTION_V2_INTEGRATION_RECORD (prompt v2 NO-GO; selective safety integration on main = e4fff851 + aa0da02b + 0507cb01; fields below are the original record)
 CLASSIFICATION = RESEARCH_BRANCH · LIVE PILOT MEASURED (results/live-pilot-analysis.md) · LOCKED NOT RUN · integration PENDING_OWNER_GO
 CODE_COMMIT = 69fa9be8 (route-B prompt v2 + bounded Source Grounding); protocol lock 6ceb2508
 VERIFICATION_COMMIT = candidate b5406c91… MATCH at 108fc086; identities + offline receipts at c640cd14; T3 FULL_PRODUCT_GATE_PASS at fa6d792e and, merged with main 8427c879, at b7b7e89e (verification/t3-merged.json)

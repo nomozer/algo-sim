@@ -7,26 +7,34 @@
 - **F4:** contract keeps `route_d` outside the envelope, while `SimulationWorkspace` reads only `active.envelope.route_d`. No browser preview client exists; server preview rejects Origin and product routing uses `preview=False`. Before enablement: transport the wrapper deliberately, bind each observation to its relation and construction step, and verify proof semantics. Do not wire the preview endpoint to the browser.
 - **F5:** the legacy `verification_gap` label says executable even for pre-construction refusals; needs neutral, stage-correct wording.
 - **F6:** UNKNOWN hints are neutral but title/category still imply deficient source data; no frozen SOURCE + insufficient-specification fixture exists. Refusal-stage wording also assumes an old response.
-- **evidence:** `evaluation/geometry/runs/scene3d-plane-grid-camera/pre-main-audit.md` §2/§5; correction and scoped gates in `evaluation/geometry/runs/scene3d-metric-boundary/`. Human visual review remains pending. No Product E2E PASS is claimed.
+- **evidence:** `evaluation/geometry/runs/scene3d-plane-grid-camera/pre-main-audit.md` §2/§5; correction and scoped gates in `evaluation/geometry/runs/scene3d-metric-boundary/`. Scene3D P0–P3 was accepted visually by the owner on 2026-10-18 (HUMAN_VISUAL_REVIEW_PASS, recorded in the local untracked GO MAIN handoff, not in Git) and fast-forwarded to `main` `551a3541`; that acceptance covers Scene3D only, not F3–F6, and the on-canvas "select result" interaction was not exercised (the sample scenes carry no on-canvas result label). No Product E2E PASS is claimed.
 
 ### ISSUE-ARCH-SCENE3D-ALTITUDE-MARKER-UNCERTIFIED
 
-- **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F1`): `scene3d-view.tsx` no longer inspects `o.id.includes("cao")`, `o.label`/`o.role` `"chiều cao"`, or `a.z <= b.z`; `perp_marker:${o.id}` is drawn on a `segment` only when `o.perpendicular_witness ?? o.annotation?.witness` supplies a valid orthogonal certificate (`|dot(u, v)| <= 1e-4 * ||u|| * ||v||`). Locked in `frontend/src/components/hybrid-preview-contract.test.tsx` and `scene3d-hidden-lines.test.tsx`. Not on `main` until integrated.
+- **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F1`): `scene3d-view.tsx` no longer inspects `o.id.includes("cao")`, `o.label`/`o.role` `"chiều cao"`, or `a.z <= b.z`; `perp_marker:${o.id}` is drawn on a `segment` only when `o.perpendicular_witness ?? o.annotation?.witness` supplies a valid orthogonal certificate (`|dot(u, v)| <= 1e-4 * ||u|| * ||v||`). Locked in `frontend/src/components/hybrid-preview-contract.test.tsx` and `scene3d-hidden-lines.test.tsx`. On `main` since the fast-forward to `551a3541` (2026-10-18).
 - **what:** `scene3d-view.tsx` draws a right-angle mark at an "altitude" when the segment's id contains `cao` or its label/role contains "chiều cao"; the foot is the endpoint with smaller z and the marker plane comes from the x/y axes. No backend certificate is read, although route D emits `perpendicular_witness` and annotations carry witnesses.
 - **repro / acceptance:** `docs/evaluation/geometry/runs/hybrid-pre-main-hardening/frontend-handoff.md` F1.
+- **follow-up:** with the heuristic gone, a true altitude without a certificate gets no mark — `ISSUE-ARCH-SCENE3D-ALTITUDE-CERTIFICATE-MISSING`.
+
+### ISSUE-ARCH-SCENE3D-ALTITUDE-CERTIFICATE-MISSING
+
+- **status:** OPEN (2026-10-18). Owner decision at Scene3D visual acceptance: keep marks certificate-only, do not restore the name heuristic, do not reopen Scene3D for it; fix in a later backend wave.
+- **what:** on the default `LLM_ONLY` route the backend emits no `perpendicular_witness` for a height segment, so "SA vuông góc với đáy" shows no right-angle mark at A although the relation holds on the scene coordinates and is a premise. Example: `docs/evaluation/geometry/rectangular-pyramid-visual-integrity/square_pyramid_envelope.json` (`chieu_cao_SA`, S=(0,0,6), A=0, base z=0) had a mark on `main` before `551a3541` only because of its id/label; now none. Only `backend/app/ai/function_route.py` (route D, not wired) emits the witness.
+- **not a regression of correctness:** the same name heuristic drew a false mark on an oblique edge labelled "chiều cao" (synthetic counterexample in the local visual evidence of 2026-10-18).
+- **acceptance:** the exact kernel certifies segment ⟂ base (foot + two in-plane directions) and the backend emits `perpendicular_witness` for it; the renderer already draws certified marks (`scene3d-hidden-lines.test.tsx`). Touches `backend/app` ⇒ refreeze the candidate and run T3; decide `CACHE_VERSION` on evidence.
 
 ### ISSUE-ARCH-SCENE3D-CHART-METRIC-UNGUARDED
 
 - **correction 2026-10-18, `scene3d-metric-boundary`:** the historical status below predates the owner M2 #7 decision. `hopLeChartMetric` in `scene3d-model.ts` is the sole metric authority; `maTranKhung` delegates. The registered semantic module now checks supplied Scene3D and actual chart conversion through `validateEnvelope` before store acceptance/init/history. Invalid metric or nonrepresentable transformed coordinates reject the whole envelope with a visible error; no silent 2D fallback. Store imports no geometry. Existing absent/null-scene history retains independent config validation and is not migrated/deleted. See the correction run for current candidate and gate receipts.
 
-- **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F2`): `scene3d-chart.ts::maTranKhung` and `scene3d-model.ts::hopLeChartMetric` validate `3×3` shape, finite rational entries, symmetry (`<= 1e-12`), and strictly positive Cholesky pivots (`> 1e-12`), throwing `ChartMetricError` and failing closed in `hopLeScene3D` and `store.loadEnvelope` before `veKhongGian` can emit `NaN` or `Infinity`. Locked in `hybrid-preview-contract.test.tsx` and `scene3d-chart.test.ts`. Not on `main` until integrated.
+- **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F2`): `scene3d-chart.ts::maTranKhung` and `scene3d-model.ts::hopLeChartMetric` validate `3×3` shape, finite rational entries, symmetry (`<= 1e-12`), and strictly positive Cholesky pivots (`> 1e-12`), throwing `ChartMetricError` and failing closed in `hopLeScene3D` and `store.loadEnvelope` before `veKhongGian` can emit `NaN` or `Infinity`. Locked in `hybrid-preview-contract.test.tsx` and `scene3d-chart.test.ts`. On `main` since the fast-forward to `551a3541` (2026-10-18).
 - **repro / acceptance:** `frontend-handoff.md` F2.
 
 ### ISSUE-ARCH-HYBRID-PREVIEW-FAILURE-CATEGORY-COLLAPSED
 
 - **status:** RESOLVED in run `hybrid-preview-contract-hardening` (product `caf21513`, corrected after independent review
   in `bce21d8b`: Route D's escape `OUT_OF_SCOPE` is a capability gap, not "another subject"; `NON_POSITIVE_LENGTH` is SOURCE
-  only when the server reads it in the text; adapter `/2`). On the branch; not on `main` until integrated.
+  only when the server reads it in the text; adapter `/2`). On `main` since `90fe44df` (2026-10-18).
 - **what was wrong:** every Route D refusal had `failure_category = capability_gap` and no `refusal_cause`, so an
   integrity fault, an unverified source or a missing certificate read as "the system cannot do this".
 - **fix:** `hybrid_preview.classify_refusal` puts each code in a group and maps it to the existing categories, with a
@@ -45,7 +53,7 @@
 
 ### ISSUE-ARCH-SCENE3D-VERIFICATION-GAP-PRESENTATION
 
-- **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F5`): `SimulationWorkspace.tsx::UnsupportedNotice` now gives `failure_category === "verification_gap"` its own eyebrow (`"CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG"`) and neutral hint (`"Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả."`), never falling back to `"NGOÀI DANH MỤC MÔ PHỎNG"`, never promising `"dạng bài này hệ có mô phỏng"`, and never blaming the problem. Locked against all 9 `verification_gap` fixtures in `hybrid-preview-contract.test.tsx`. Not on `main` until integrated.
+- **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F5`): `SimulationWorkspace.tsx::UnsupportedNotice` now gives `failure_category === "verification_gap"` its own eyebrow (`"CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG"`) and neutral hint (`"Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả."`), never falling back to `"NGOÀI DANH MỤC MÔ PHỎNG"`, never promising `"dạng bài này hệ có mô phỏng"`, and never blaming the problem. Locked against all 9 `verification_gap` fixtures in `hybrid-preview-contract.test.tsx`. On `main` since the fast-forward to `551a3541` (2026-10-18).
 - **what:** `SimulationWorkspace` labels `verification_gap` through `NHAN_LOAI_VAN_DE`, but its title/hint chain has no
   branch for it, so a refusal of that category gets the default "NGOÀI DANH MỤC MÔ PHỎNG" and the capability hint. The
   preview now emits `verification_gap` (LLM_ONLY wraps geometry refusals as `geometry_generation_failed`, so this was
@@ -68,7 +76,7 @@
 
 ### ISSUE-ARCH-SCENE3D-INSUFFICIENT-SPEC-HINT
 
-- **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F6`): `SimulationWorkspace.tsx::UnsupportedNotice` now checks `unsupported.refusal_cause === "SOURCE"` on `insufficient_specification`, showing `"Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng."` only when `refusal_cause === "SOURCE"`, and a conditional neutral hint (`"Nếu đề thuộc dạng hệ dựng được và đã có đủ giả thiết, em có thể gửi lại để hệ phân tích lại."`) when `refusal_cause` is `"UNKNOWN"` or omitted. Locked against all 3 `refusal-missing-*` fixtures in `hybrid-preview-contract.test.tsx` and `learner-error.test.tsx`. Not on `main` until integrated.
+- **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F6`): `SimulationWorkspace.tsx::UnsupportedNotice` now checks `unsupported.refusal_cause === "SOURCE"` on `insufficient_specification`, showing `"Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng."` only when `refusal_cause === "SOURCE"`, and a conditional neutral hint (`"Nếu đề thuộc dạng hệ dựng được và đã có đủ giả thiết, em có thể gửi lại để hệ phân tích lại."`) when `refusal_cause` is `"UNKNOWN"` or omitted. Locked against all 3 `refusal-missing-*` fixtures in `hybrid-preview-contract.test.tsx` and `learner-error.test.tsx`. On `main` since the fast-forward to `551a3541` (2026-10-18).
 - **what:** for `failure_category = insufficient_specification`, `SimulationWorkspace` always shows "Bổ sung dữ liệu còn
   thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng", whatever `refusal_cause` is. The preview sends that category
   with `UNKNOWN` (for example `AMBIGUOUS_FACT` when the model flagged ambiguity). The hint then blames the problem and
@@ -306,7 +314,7 @@
 - **evidence:** `docs/evaluation/geometry/runs/hybrid-slice-review/report.md` §5; probes and output at `b3e946e9` in `docs/evaluation/geometry/runs/hybrid-slice-review/residual/`.
 - **impact:** A confident wrong answer is possible on the Hybrid routes (A and B) when the AI mis-types a fact, with C and D the most likely. A–C exist on `main` already. The default `LLM_ONLY` route does not use this gate.
 - **scope:** `backend/app/simulation/geometry_functions/registry.py` (`kiem_nguon`, `_kiem_cau_hoi`, `_duoc_hoi`, value grounding, `mat_cat_dung_nguon`).
-- **status:** MOSTLY RESOLVED on branch `research/hybrid-semantic-hardening` (S1, run `hybrid-semantic-hardening`, `23481bda` + review fixes `fda835c3`; not on `main`).
+- **status:** MOSTLY RESOLVED on branch `research/hybrid-semantic-hardening` (S1, run `hybrid-semantic-hardening`, `23481bda` + review fixes `fda835c3`; both reachable from `main` as of `551a3541`).
   - Asks are bound to a closed per-function phrase grammar.
   - Values must be stated as equalities.
   - The clause-role lexicon is extended.
@@ -363,7 +371,7 @@
 - **evidence:** `docs/evaluation/geometry/runs/hybrid-slice-review/report.md` §4; `visual/browser-check/browser-check.json` (`own_pixel_contribution` 0).
 - **impact:** The construction step of an intersection line shows nothing. If the shared renderer path is the cause, LLM_ONLY scenes with such lines may be affected (not checked).
 - **scope:** `frontend/src/simulations/domains/geometry/` line rendering (root cause UNKNOWN).
-- **status:** RESOLVED on branch `research/hybrid-semantic-hardening` (S2, run `hybrid-semantic-hardening`, `33e711f9` + review fix `2db6d64b`; not on `main`).
+- **status:** RESOLVED on branch `research/hybrid-semantic-hardening` (S2, run `hybrid-semantic-hardening`, `33e711f9` + review fix `2db6d64b`; both reachable from `main` as of `551a3541`).
   - **Root cause:** the drawn part of an infinite line was a fixed ±6. In a unit-size scene it passed behind the camera: SwiftShader dropped it (0 px even with the depth test off), and a hardware GPU drew a streak.
   - **Fix:** `doanDuongThang` sizes it by the scene.
   - **Correction of the earlier evidence:** the `hybrid-slice-review` harness skipped the product frame step `veKhongGian`; in product coordinates that scene's line was visible.
