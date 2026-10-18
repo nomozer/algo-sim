@@ -984,8 +984,11 @@ def _cong_luot_thu(algosim_session: str | None) -> JSONResponse | None:
 
 
 @app.post("/api/preview/hybrid", include_in_schema=False)
-def hybrid_preview(body: HybridPreviewBody, request: Request):
-    """Operator-only offline preview. No production cache, quota, credentials or provider transport."""
+async def hybrid_preview(request: Request):
+    """Operator-only offline preview. No production cache, quota, credentials or provider transport.
+
+    The body is read and validated only AFTER the OFF and operator gates (a body parameter would make FastAPI answer
+    422 with the schema to disabled / unauthorized callers first)."""
     policy = route_policy_snapshot(preview=True)
     headers = {"Cache-Control": "no-store"}
     if not policy.hybrid_preview_enabled:
@@ -1000,10 +1003,18 @@ def hybrid_preview(body: HybridPreviewBody, request: Request):
     if not local or len(token) < 32 or not hmac.compare_digest(token.encode(), supplied.encode()):
         return JSONResponse(status_code=403, headers=headers,
                             content={"reason_code": "PREVIEW_FORBIDDEN", "error": "Không được phép mở chế độ xem trước."})
+    try:
+        body = HybridPreviewBody.model_validate_json(await request.body())
+    except ValueError:   # pydantic ValidationError subclasses ValueError
+        return JSONResponse(status_code=422, headers=headers,
+                            content={"reason_code": "PREVIEW_BODY_INVALID", "error": "Yêu cầu xem trước không hợp lệ."})
     # Declared Route D execution boundary, reached only after the OFF and operator gates.
+    from starlette.concurrency import run_in_threadpool
+
     from app.ai.hybrid_preview import run_preview
 
-    result = run_preview(body.problem_text, getattr(request.app.state, "hybrid_preview_fixtures", None), policy)
+    result = await run_in_threadpool(
+        run_preview, body.problem_text, getattr(request.app.state, "hybrid_preview_fixtures", None), policy)
     if result is None:
         return JSONResponse(status_code=503, headers=headers, content={"reason_code": "OFFLINE_FIXTURE_REQUIRED",
                             "error": "Chế độ xem trước chỉ chạy dữ liệu kiểm thử offline đã cấu hình trên máy chủ."})

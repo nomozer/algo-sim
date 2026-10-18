@@ -95,7 +95,14 @@ def _validate_scene(scene: dict) -> Metric:
 
 def adapt_result(result, policy) -> HybridPreviewEnvelope:
     """Retain the complete deterministic result in an explicit preview representation."""
-    planner = deepcopy(result.planner)
+    planner = deepcopy(result.planner or {})
+    # The response reports the snapshot identity; it is only true if the code that ran still has that identity
+    # (a Registry/Planner/Engine/extraction change mid-request, e.g. a hot reload, would otherwise be mislabelled).
+    # A refusal before planning carries no planner version; one that did plan must name the snapshot's.
+    snapshot = dict(policy.preview_surface)
+    ran_planner = planner.get("version", snapshot.get("planner_version"))
+    if preview_identity(policy.response_contract) != snapshot or ran_planner != snapshot.get("planner_version"):
+        raise PreviewInvalid("PREVIEW_IDENTITY_CHANGED")
     for group in ("goal_checks", "negated_checks"):
         for observation in planner.get(group, {}).values():
             if observation.get("proof_status") != "UNVERIFIABLE" or observation.get("can_present_as_proven") is not False:

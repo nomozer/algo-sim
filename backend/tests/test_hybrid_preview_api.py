@@ -224,14 +224,14 @@ def test_endpoint_catches_real_planning_and_engine_tampering(preview, monkeypatc
 
 
 def test_one_request_keeps_its_policy_contract_and_identity_during_env_flip(preview, monkeypatch):
+    # Env and the module-global contract flip mid-request: the request keeps its snapshot. (A Registry/Planner/Engine
+    # version change mid-request is refused instead — `test_route_d_identity_change_during_a_request_refuses`.)
     from app.ai import hybrid_preview as HP, fact_extraction
-    from app.simulation.geometry_functions import registry
     policy = PL.route_policy_snapshot(preview=True)
     real = HP.run_ai_fact_route
     def flip(*a, **kw):
         assert kw['contract'] == 'flat'
         monkeypatch.setenv('HYBRID_ROUTE_D_PREVIEW', '0')
-        monkeypatch.setattr(registry, 'REGISTRY_VERSION', 'changed-mid-request')
         monkeypatch.setattr(fact_extraction, 'RESPONSE_CONTRACT', 'v3')
         return real(*a, **kw)
     monkeypatch.setattr(HP, 'run_ai_fact_route', flip)
@@ -239,9 +239,88 @@ def test_one_request_keeps_its_policy_contract_and_identity_during_env_flip(prev
     assert data['envelope']['status'] == 'ok'
     identity = data['route_d']['runtime_identity']
     assert identity['fingerprint'] == policy.fingerprint()
-    assert identity['registry_version'] != 'changed-mid-request'
     assert identity['response_contract'] == 'flat'
     assert ask(preview, CORPUS['positive'][0]).status_code == 404
+
+
+@pytest.mark.parametrize('module_name,attr', [('registry', 'REGISTRY_VERSION'), ('planner', 'PLANNER_VERSION'),
+                                              ('engine', 'ENGINE_VERSION')])
+def test_route_d_identity_change_during_a_request_refuses(preview, monkeypatch, module_name, attr):
+    """Takeover (Claude): the snapshot names the Registry/Planner/Engine that the response claims to come from. If any
+    of them differs once the request has executed, the served result no longer matches its identity: refuse."""
+    from app.ai import hybrid_preview as HP
+    from app.simulation.geometry_functions import engine, planner, registry
+    module = {'registry': registry, 'planner': planner, 'engine': engine}[module_name]
+    real = HP.run_ai_fact_route
+
+    def change_version(*a, **kw):
+        monkeypatch.setattr(module, attr, getattr(module, attr) + '-changed-mid-request')
+        return real(*a, **kw)
+
+    monkeypatch.setattr(HP, 'run_ai_fact_route', change_version)
+    data = ask(preview, CORPUS['positive'][0]).json()
+    assert data['envelope']['status'] == 'unsupported', data
+    assert data['envelope']['reason_code'] == 'PREVIEW_IDENTITY_CHANGED'
+    assert 'scene3d' not in data['envelope'] and 'answers' not in data['route_d']
+
+
+@pytest.mark.parametrize('state', ['off', 'unauthorized'])
+@pytest.mark.parametrize('body', [{'problem_text': 'x', 'facts': []}, {'unexpected': 1}, 'not-json'])
+def test_gate_answers_before_body_validation(preview, monkeypatch, state, body):
+    """Takeover (Claude): FastAPI validated the body before the handler, so a disabled or unauthorized caller got a
+    422 listing the body schema. The gate must answer first: 404 when off, 403 when not authorized."""
+    if state == 'off':
+        monkeypatch.delenv('HYBRID_ROUTE_D_PREVIEW')
+    else:
+        preview.headers['X-AlgoSim-Preview-Token'] = 'wrong'
+    r = (preview.post(URL, content=body, headers={'content-type': 'application/json'}) if isinstance(body, str)
+         else preview.post(URL, json=body))
+    assert r.status_code == (404 if state == 'off' else 403), r.text
+    assert 'problem_text' not in r.text and 'detail' not in r.json()
+
+
+@pytest.mark.parametrize('body,code', [
+    ({'candidates': [{'finishReason': 'MAX_TOKENS', 'content': {'parts': [{'text': '{}'}]}}]}, 'RESPONSE_TRUNCATED'),
+    ({'candidates': [{'finishReason': 'STOP', 'content': {'parts': [{'text': 'không phải JSON'}]}}]}, 'JSON_INVALID'),
+    ({'candidates': [{'finishReason': 'STOP', 'content': {'parts': [{'text': '{"facts": 3}'}]}}]}, 'MALFORMED_RESPONSE_PART'),
+    ({'candidates': []}, 'NO_CANDIDATE'),
+    ({'candidates': [{'finishReason': 'SAFETY'}]}, 'PROVIDER_REFUSED'),
+])
+def test_invalid_provider_responses_fail_closed_through_http(preview, body, code):
+    """Takeover (Claude): malformed / truncated / refused provider responses keep their machine code and serve nothing."""
+    text = CORPUS['positive'][0]['text']
+    main.app.state.hybrid_preview_fixtures = {text: body}
+    data = preview.post(URL, json={'problem_text': text}).json()
+    assert data['envelope']['status'] == 'unsupported' and data['envelope']['reason_code'] == code, data
+    assert 'scene3d' not in data['envelope'] and 'answers' not in data['route_d']
+
+
+@pytest.mark.parametrize('value', ['0', '√0', '0a'])
+def test_zero_length_source_value_is_refused_with_its_code_and_a_learner_message(preview, value):
+    """Takeover (Claude): a degenerate given keeps NON_POSITIVE_LENGTH end to end; the learner text is Vietnamese with
+    no unfilled template field or technical id."""
+    from tests.geometry.test_hybrid_backend_integration import _regular_pyramid_facts
+    text, payload = _regular_pyramid_facts('height', 'chiều cao', value)
+    main.app.state.hybrid_preview_fixtures = {text: provider_body(payload)}
+    env = preview.post(URL, json={'problem_text': text}).json()['envelope']
+    assert (env['status'], env['reason_code']) == ('unsupported', 'NON_POSITIVE_LENGTH') and 'scene3d' not in env
+    assert '{' not in env['learner_reason'] and 'NON_POSITIVE' not in env['learner_reason']
+
+
+def test_live_flag_and_api_key_still_cannot_reach_a_provider(preview, monkeypatch):
+    """Takeover (Claude): even ALLOW_LIVE_AI=1 with a key present, the preview has only fixture data — no transport."""
+    import socket
+    monkeypatch.setenv('ALLOW_LIVE_AI', '1')
+    monkeypatch.setenv('GEMINI_API_KEY', 'present-but-must-never-be-used')
+
+    def no_network(*a, **k):
+        raise AssertionError('preview attempted network access')
+
+    monkeypatch.setattr(socket, 'getaddrinfo', no_network)
+    monkeypatch.setattr(socket, 'create_connection', no_network)
+    r = preview.post(URL, json={'problem_text': CORPUS['positive'][0]['text']})
+    assert r.status_code == 503 and r.json()['reason_code'] == 'OFFLINE_FIXTURE_REQUIRED'
+    assert ask(preview, CORPUS['positive'][0]).json()['envelope']['status'] == 'ok'
 
 
 def test_preview_policy_does_not_change_analyze_or_default_cache_identity(preview, monkeypatch):
