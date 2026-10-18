@@ -82,8 +82,19 @@
     "codex_review_before_takeover": "UNKNOWN (no output)",
     "modifications_by_reviewer": "none"
   },
-  "authoritative_t3": "PENDING",
-  "verdict": "PENDING",
+  "authoritative_t3": {
+    "status": "FULL_PRODUCT_GATE_PASS",
+    "commit": "eb3ca40637849fef5e11871792d3edfeb9fae762",
+    "receipt": "verification/authoritative-t3.json",
+    "backend_pytest": "10757 passed, 1 skipped, 2 deselected, 9 xfailed",
+    "frontend_vitest": "68 files, 1079 passed",
+    "build": "PASS",
+    "demo_replay": "5/5",
+    "crash_surface": "6/6, 0 uncaught",
+    "candidate_verify": "MATCH 4c1b9a27…",
+    "detached_worktree_removed": true
+  },
+  "verdict": "ROUTE_D_PREVIEW_VERIFIED",
   "push": "NONE",
   "review_findings": {
     "health_loads_route_d_when_off": "CONFIRMED_FIXED",

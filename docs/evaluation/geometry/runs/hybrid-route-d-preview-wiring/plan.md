@@ -24,8 +24,8 @@ Progress (takeover 2026-10-18 09:32 by Claude after Codex hit its usage limit; s
 - [x] GREEN minimal RoutePolicy extension, offline fixture runtime, versioned adapter and guarded endpoint. *(Codex; gate-before-body and identity re-check added by Claude)*
 - [x] RED/GREEN proof/unit/metric/dependency and mathematical/adversarial endpoint tests. *(Codex; provider-response, live-flag, zero-length and identity-change cases added by Claude)*
 - [x] Explicit import guard boundaries and runtime identity tests; run cache/contract/174/grounding/oracle regressions. *(Codex ran 09:27 before its last test edits; re-run by Claude on the frozen candidate)*
-- [ ] Update live documentation, frontend handoff and preservation inventory; independent read-only review and fixes. *(Claude; Codex's review never produced a result — status in `run.json`)*
-- [ ] Commit allowlisted files, new candidate freeze, clean detached authoritative T3, exact final handoff. Never merge/push main. *(Claude — status in `run.json`)*
+- [x] Update live documentation, frontend handoff and preservation inventory; independent read-only review and fixes. *(Claude; Codex's review never produced a result — status in `run.json`)*
+- [x] Commit allowlisted files, new candidate freeze, clean detached authoritative T3, exact final handoff. Never merge/push main. *(Claude — status in `run.json`)*
 
 ## Review focus
 

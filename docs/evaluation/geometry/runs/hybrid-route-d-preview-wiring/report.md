@@ -15,7 +15,10 @@
 
 ## 0. Verdict
 
-See §6 (set from the independent review and the authoritative T3 receipts).
+**`ROUTE_D_PREVIEW_VERIFIED`** — Codex's preview wiring recovered without loss and committed as found; two takeover
+defects and the review's findings fixed from RED tests; independent review PASS in two rounds (0 blocking); authoritative
+T3 `FULL_PRODUCT_GATE_PASS` on a clean detached checkout of `eb3ca406` (§6.2). Not merged, not pushed; Route D product
+enablement and GO LIVE remain NO-GO.
 
 ## 1. Forensic takeover (before any edit)
 
@@ -119,9 +122,13 @@ code that changed afterwards (`93390f58`, `dc8e25ba`): **PASS**, all nine items 
 defect; residuals: the laziness guard checked one import spelling (fixed in this commit, test only) and U+2212 between
 the two syllables passes the proof-text backstop (§7).
 
-### 6.2 Authoritative T3
+### 6.2 Authoritative T3 — `FULL_PRODUCT_GATE_PASS`
 
-Filled from the receipt (`run.json`).
+Clean detached checkout of `eb3ca406` (receipt `verification/authoritative-t3.json`, log SHA-256 `ecb255c7…`): backend
+10757 passed, 1 skipped, 2 deselected, 9 xfailed (the same strict preregistered set as before; none added) · frontend
+68 files / 1079 passed · typecheck + build PASS · demo replay 5/5 · crash surface 6/6, 0 uncaught · candidate `--verify`
+MATCH (111 files, `4c1b9a27…`). The `test_holdout_readiness` failure of §5 (dirty tree) does not occur on the clean
+checkout. The detached checkout was removed afterwards (junction first).
 
 ## 7. Remaining limits
 
