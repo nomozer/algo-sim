@@ -1,0 +1,30 @@
+{
+  "schema": "PEDAGOGICAL_DISCLOSURE_BROWSER/1",
+  "date": "2026-10-18T17:04:51.636Z",
+  "fixture_sha256": {
+    "served-H01_CUBE": "2c3da7de1a9bc5d275daffffcb85a1cfb92599d4a875a1062f4e09ea3e0f4d58",
+    "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS": "227db3511780052f083a50a27cdffc4c95b06d815d19a1b56dbcf674888798f4",
+    "served-H02_CUBOID_DISTANCE": "adfeadc26f76d887348a4c4a9ac5cbd5c2640d3649b999f4f2391682ce8a76fa"
+  },
+  "results": [
+    {
+      "name": "served-H01_CUBE: hidden initially, final, orbit and reset; keyboard reveal/hide; no stale answers",
+      "pass": true
+    },
+    {
+      "name": "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS: hidden initially, final, orbit and reset; keyboard reveal/hide; no stale answers",
+      "pass": true
+    },
+    {
+      "name": "served-H02_CUBOID_DISTANCE: hidden initially, final, orbit and reset; keyboard reveal/hide; no stale answers",
+      "pass": true
+    },
+    {
+      "name": "replacement refusal removes stale answer UI; LLM_ONLY and legacy still render",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "forbiddenRequests": [],
+  "pass": true
+}

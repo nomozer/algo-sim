@@ -2013,12 +2013,15 @@ export function Scene3DWorkspace({
       .filter((a) => a.subject_ids.every((id) => isVisible(tuongTac, id, coMatNhan))),
     [scene, buoc, annotationView, tuongTac, coMatNhan],
   );
+  // Disclosure hides text and hit targets, while distance witnesses still use all certified entries.
+  const nhanChu = useMemo(() => nhanSoDo.filter((a) => !annotationView.hiddenIds?.has(a.id)),
+    [nhanSoDo, annotationView.hiddenIds]);
   const chonHienTai = useRef<string | null>(null);
   chonHienTai.current = tuongTac.selected_id ?? null;
   useEffect(() => {
     // Điểm neo THẾ GIỚI + độ dời trình bày của chủ thể (tách khối), đọc trong vòng vẽ qua ref.
     const m = new Map<string, THREE.Vector3>();
-    for (const a of nhanSoDo) {
+    for (const a of nhanChu) {
       const p = annotationAnchor(scene, a);
       if (!p) continue;
       const doi = a.subject_ids.map((id) => visualTransformOf(tuongTac, scene, id).translate);
@@ -2026,7 +2029,7 @@ export function Scene3DWorkspace({
       m.set(a.id, new THREE.Vector3(p[0] + tb[0], p[1] + tb[1], p[2] + tb[2]));
     }
     viTriSoDo.current = m;
-  }, [scene, nhanSoDo, tuongTac]);
+  }, [scene, nhanChu, tuongTac]);
   const chonRef = useRef(onSelect);
   chonRef.current = onSelect;
   // `id → type`, để luật chọn biết cái nào cụ thể hơn. `ref` vì vòng lặp
@@ -2839,7 +2842,7 @@ export function Scene3DWorkspace({
               W18 §16.5: mặc định chỉ dữ kiện; nhãn là NÚT (bấm/Enter/Space ⇒ chọn đại lượng, chi
               tiết mở ở ô soi), nên lớp này không còn giấu khỏi trình đọc màn hình. */}
           <div ref={soDoRef} className="geo3d-so-do-lop" aria-label="Số đo trên hình">
-            {nhanSoDo.map((a) => {
+            {nhanChu.map((a) => {
               const diu = !a.related && tang !== null && !tang.has(a.id)
                 && !a.subject_ids.some((id) => tang.has(id));
               return (

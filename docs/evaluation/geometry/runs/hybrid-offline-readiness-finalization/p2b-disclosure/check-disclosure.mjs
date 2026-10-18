@@ -9,7 +9,7 @@ const [fe, dist, repo, out] = process.argv.slice(2).map((p) => resolve(p));
 const { chromium } = createRequire(join(fe, "package.json"))("playwright");
 const fx = join(repo, "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2");
 const json = (p) => JSON.parse(readFileSync(p, "utf8"));
-const ids = ["served-H01_CUBE", "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS"];
+const ids = ["served-H01_CUBE", "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS", "served-H02_CUBOID_DISTANCE"];
 const responses = Object.fromEntries(ids.concat("refusal-missing-ambiguous").map((id) => [id, json(join(fx, `${id}.json`)).response]));
 const samples = json(join(fe, "src/data/geometry-samples.json"));
 const sample = (Array.isArray(samples) ? samples : samples.samples).find((s) => s.id === "the-tich-chop").envelope;
@@ -87,9 +87,14 @@ try {
       // Selection and show-all cannot reveal a duplicate result after the answers were hidden.
       await page.getByRole("button", { name: "Khám phá", exact: true }).click();
       await page.getByRole("menuitemcheckbox", { name: "Đại lượng", exact: true }).click();
-      const q = `kq_${Object.keys(answers)[0]}`;
+      const q = responses[id].envelope.scene3d.objects.find((o) =>
+        o.annotation?.witness && Object.keys(answers).some((k) => o.id === `kq_${k}`))?.id ?? `kq_${Object.keys(answers)[0]}`;
       await page.locator(`[data-quantity-id="${q}"]`).click();
       assert.equal(await page.locator(`[data-value-entity="${q}"], [data-formula-entity="${q}"]`).count(), 0);
+      assert.equal(await page.locator(`[data-ann-id="${q}"]`).count(), 0);
+      if (responses[id].envelope.scene3d.objects.find((o) => o.id === q)?.annotation?.witness) {
+        assert.ok(await page.evaluate((q) => window.__geo3d_witness_ids?.includes(q), q), "hidden answer must preserve certified distance witness");
+      }
       await noAnswers();
       // Same problem re-analysis is a new envelope too, not just a different title.
       await page.getByRole("button", { name: "Xem đáp án", exact: true }).click();
