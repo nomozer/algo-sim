@@ -52,3 +52,22 @@ Executed in `D:\Documents\projects\algo-sim\.superpowers\worktrees\scene3d-plane
 5. **`DEFAULT_MODE = LLM_ONLY` Preserved:** **PASS**
 6. **`HUMAN_VISUAL_REVIEW_PENDING` Respected:** **PASS**
 7. **Visual Evidence Package Complete:** **PASS**
+
+---
+
+## 5. Independent Read-Only Review — Hybrid Frontend Readiness (`F1`–`F6` + 41 Fixtures, merged with `main = 90fe44df`)
+
+- **Reviewed Commit:** `ec72eda08f46e79b6720832762df4c44fd13f356` (merged with `main = 90fe44df9fd600bf0eded87a316b8e6dddc29cc5`)
+- **Overall Verdict:** **PASS (8 / 8 Gates PASS)**
+
+| Gate | Requirement | Independent Verification Summary | Verdict |
+| :--- | :--- | :--- | :---: |
+| **Gate 1 — F1 (`ISSUE-ARCH-HYBRID-HEURISTIC-PERP-MARKER`)** | No heuristic `perp_marker` from `"cao"`, `"chiều cao"`, or `a.z <= b.z` | `scene3d-view.tsx` removes all string/coordinate heuristics; `perp_marker:${o.id}` renders only when `o.perpendicular_witness ?? o.annotation?.witness` supplies a valid orthogonal certificate (`\|dot(u, v)\| <= 1e-4 * \|\|u\|\| * \|\|v\|\|`). | **PASS** |
+| **Gate 2 — F2 (`ISSUE-ARCH-HYBRID-CHART-METRIC-UNVALIDATED`)** | Validate `chart_metric` as 3×3 finite rational SPD (Cholesky pivots `> 0`) | `scene3d-chart.ts`, `scene3d-model.ts`, and `store.ts` validate 3×3 finite rational entries, symmetry (`<= 1e-12`), and strictly positive Cholesky pivots (`d0, d1, d2 > 1e-12`), failing closed before scene initialization. | **PASS** |
+| **Gate 3 — F3 (`ISSUE-ARCH-HYBRID-LENGTH-UNIT-IGNORED`)** | Display `scene3d.length_unit.display_scale` honestly | `scene3d-model.ts` (`SceneLengthUnit`) and `Scene3DExplorer.tsx` (`data-length-unit=""`) render `Tỉ lệ dựng: {display_scale}` without fabricating numeric lengths. | **PASS** |
+| **Gate 4 — F4 (`ISSUE-ARCH-HYBRID-ROUTE-D-NOT-WIRED`)** | Honest configuration-only observation copy for `route_d` | `trichQuanSatRouteD` and `nhanQuanSatCauHinh` wire `route_d` through `SimulationWorkspace.tsx` to `Scene3DExplorer.tsx` (`data-route-d-observation=""`), never claiming `"Đã chứng minh"` unless `can_present_as_proven === true && proof_status === "PROVEN"`. | **PASS** |
+| **Gate 5 — F5 (`ISSUE-ARCH-HYBRID-VERIFICATION-GAP-MISLABELED`)** | Distinct neutral copy for `reason_code: "verification_gap"` | `SimulationWorkspace.tsx` renders eyebrow `"CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG"` and neutral hint without blaming learner or problem statement. | **PASS** |
+| **Gate 6 — F6 (`ISSUE-ARCH-HYBRID-INSUFFICIENT-SPEC-BLAMES-USER`)** | Guard missing-premise hint by `refusal_cause === "SOURCE"` | `SimulationWorkspace.tsx` shows the missing-premise hint only when `unsupported.refusal_cause === "SOURCE"`, and shows neutral retry copy when `"UNKNOWN"` or omitted. | **PASS** |
+| **Gate 7 — 41 Frozen Contract Fixtures** | Lock all 41 fixtures in `fixtures-adapter-2/` | `hybrid-preview-contract.test.tsx` (28 tests) verifies SHA-256 canonical JSON hashes against `manifest.json` and exercises all `12` `served-*`, `25` `refusal-*`, and `4` `gate-*` fixtures. | **PASS** |
+| **Gate 8 — Governance & Boundary Invariants** | No browser caller to `/api/preview/hybrid`, no operator token, `DEFAULT_MODE = LLM_ONLY`, backend untouched, `HUMAN_VISUAL_REVIEW_PENDING` | Confirmed via `git grep` and `git diff 90fe44df..HEAD --name-only`. | **PASS** |
+
