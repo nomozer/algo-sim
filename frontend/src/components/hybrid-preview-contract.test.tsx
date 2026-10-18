@@ -21,6 +21,7 @@ import {
 import {
   cauQuanSat,
   docPhanHoiHybrid,
+  giaTriDapSo,
   hybridTaiBuoc,
   hybridViewCua,
   KHOA_HYBRID_VIEW,
@@ -328,6 +329,13 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       }
     });
 
+    it("đáp số góc không lặp ký hiệu: H03 cos²(SA, (ABC)) = 1/4, không phải '= cos²=1/4' (review M1)", () => {
+      const r = docPhanHoiHybrid(loadFixture("served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS.json").response);
+      if (!r.ok) throw new Error(r.reason);
+      const byId = Object.fromEntries(hybridViewCua(r.envelope)!.answers.map((a) => [a.quantity_id, giaTriDapSo(a)]));
+      expect(byId).toEqual({ kq_f4: "a³√6/6", kq_f5: "1/4" });
+    });
+
     it("biên vận chuyển từ chối: hệ số lệch đại lượng cảnh, đơn vị lệch, length_unit lệch, schema lạ, phản hồi cổng", () => {
       const goc = loadFixture("served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED.json").response;
       const lechHeSo = clone(goc); lechHeSo.route_d.answer_exact.f8.coef = "√3/2";
@@ -387,12 +395,21 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       expect(useAppStore.getState().analysisError).toBeNull();
       expect(hybridViewCua(useAppStore.getState().active!.envelope)).not.toBeNull();
 
-      useAppStore.getState().reset();
-      const hong = clone(r.envelope) as any;
-      hong[KHOA_HYBRID_VIEW].observations[0].anchor_step = 99;
-      useAppStore.getState().loadEnvelope(hong);
-      expect(useAppStore.getState().active).toBeNull();
-      expect(useAppStore.getState().analysisError).not.toBeNull();
+      // View tự đến (không qua biên vận chuyển) bị kiểm như lúc dựng: neo lạ, quan hệ chữ tự do, đại lượng trùng.
+      const hongs = [
+        (v: any) => { v.observations[0].anchor_step = 99; },
+        (v: any) => { v.observations[0].relation = "đã chứng minh xong"; },
+        (v: any) => { v.answers.push({ ...v.answers[0] }); },
+        (v: any) => { v.answers[0].unit = "b"; },
+      ];
+      hongs.forEach((hongView, i) => {
+        useAppStore.getState().reset();
+        const hong = clone(r.envelope) as any;
+        hongView(hong[KHOA_HYBRID_VIEW]);
+        useAppStore.getState().loadEnvelope(hong);
+        expect(useAppStore.getState().active, `hỏng ${i}`).toBeNull();
+        expect(useAppStore.getState().analysisError, `hỏng ${i}`).not.toBeNull();
+      });
     });
 
     it("SSR ở bước đầu: không đáp số, không quan sát (không kết luận trước bước chống đỡ)", () => {

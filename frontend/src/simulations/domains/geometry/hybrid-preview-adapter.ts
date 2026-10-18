@@ -47,16 +47,23 @@ export interface HybridPreviewView {
   observations: HybridObservationView[];
 }
 
-/** Loại quan hệ của Registry (`geometry_functions/registry.py`) → tên cho học sinh. Ngoài bảng ⇒ tên chung. */
+/** Hàm loại `fact` của Registry (`geometry_functions/registry.py` — mệnh đề kiểm được trên hình) → tên cho học sinh.
+ *  Ngoài bảng ⇒ tên chung (an toàn: không bịa quan hệ). */
 const TEN_QUAN_HE: Record<string, string> = {
   perpendicular_line_plane: "quan hệ vuông góc giữa đường thẳng và mặt phẳng",
   perpendicular_lines: "quan hệ vuông góc giữa hai đường thẳng",
-  parallel_to: "quan hệ song song",
+  face_perpendicular_base: "quan hệ vuông góc giữa mặt bên và mặt đáy",
   right_angle: "góc vuông",
   equal_length: "hai đoạn bằng nhau",
-  midpoint: "trung điểm",
+  segment_length: "độ dài đoạn thẳng",
+  altitude: "đường cao",
+  height: "chiều cao",
+  orthogonal_projection: "hình chiếu vuông góc",
+  rectangle: "hình chữ nhật",
+  regular_polygon: "đa giác đều",
 };
 const TEN_QUAN_HE_CHUNG = "mệnh đề của đề";
+const TEN_HOP_LE = new Set<string>([...Object.values(TEN_QUAN_HE), TEN_QUAN_HE_CHUNG]);
 
 const TRANG_THAI = new Set<string>(["TRUE_ON_CONFIGURATION", "FALSE_ON_CONFIGURATION", "UNVERIFIABLE"]);
 
@@ -179,15 +186,22 @@ export function kiemHybridView(view: unknown, scene: Scene3D | undefined): strin
   if (!laDoiTuong(view) || view.adapter_version !== HYBRID_PREVIEW_ADAPTER) return "hybrid_preview lạ";
   if (!scene) return "hybrid_preview cần scene3d";
   if (!Array.isArray(view.answers) || !Array.isArray(view.observations)) return "hybrid_preview sai dạng";
+  const daCo = new Set<string>();
   for (const a of view.answers) {
-    if (!laDoiTuong(a) || typeof a.symbolic !== "string" || giaTriCanh(scene, String(a.quantity_id)) == null) {
-      return "đáp số trỏ vào đại lượng không có trong cảnh";
+    // Cùng ràng buộc như lúc dựng (`dungHybridView`): không tin một view tự đến (review của run, M3).
+    if (!laDoiTuong(a) || typeof a.symbolic !== "string" || !a.symbolic.trim()
+      || typeof a.dim !== "number" || !Number.isInteger(a.dim) || a.dim < 0
+      || (a.dim > 0 ? a.unit !== (scene.length_unit?.symbol ?? null) || a.unit == null : a.unit !== null && a.unit !== scene.length_unit?.symbol)
+      || daCo.has(String(a.quantity_id)) || giaTriCanh(scene, String(a.quantity_id)) == null) {
+      return "đáp số trỏ vào đại lượng không có trong cảnh hoặc sai dạng";
     }
+    daCo.add(String(a.quantity_id));
   }
   const buoc = new Set(scene.events.map((e) => e.step_index));
   for (const o of view.observations) {
-    if (!laDoiTuong(o) || !TRANG_THAI.has(String(o.evidence_state)) || !buoc.has(Number(o.anchor_step))) {
-      return "quan sát neo vào bước không có trong cảnh";
+    if (!laDoiTuong(o) || !TRANG_THAI.has(String(o.evidence_state)) || !buoc.has(Number(o.anchor_step))
+      || (o.group !== "goal" && o.group !== "negated") || !TEN_HOP_LE.has(String(o.relation))) {
+      return "quan sát neo vào bước không có trong cảnh hoặc sai dạng";
     }
   }
   return null;
@@ -211,6 +225,12 @@ export function hybridTaiBuoc(
     answers: view.answers.filter((a) => scene.events.some((e) => e.object === a.quantity_id && e.step_index <= buoc)),
     observations: view.observations.filter((o) => buoc >= o.anchor_step),
   };
+}
+
+/** Giá trị của đáp số dạng chữ — `answers` của góc đã mang ký hiệu ("cos²=1/4"): bỏ vế trái để không lặp ký hiệu
+ *  của đại lượng ("cos²(SA, (ABC)) = 1/4", không phải "… = cos²=1/4"; review của run, M1). */
+export function giaTriDapSo(a: HybridAnswerView): string {
+  return a.symbolic.includes("=") ? a.symbolic.slice(a.symbolic.lastIndexOf("=") + 1).trim() : a.symbolic;
 }
 
 /** Câu trình bày MỘT quan sát (§3): luôn nói đây là quan sát trên một hình, không phải chứng minh tổng quát. */

@@ -44,7 +44,7 @@ import {
   hienSo,
   quantityChoices,
 } from "./scene3d-model";
-import { cauQuanSat, hybridTaiBuoc, type HybridPreviewView } from "./hybrid-preview-adapter";
+import { cauQuanSat, giaTriDapSo, hybridTaiBuoc, type HybridPreviewView } from "./hybrid-preview-adapter";
 import {
   type InteractionState,
   type TreeNode,
@@ -358,7 +358,8 @@ export function Scene3DExplorer({
     const o = day.objects.find((x) => x.id === id);
     if (!o) return ten(id);
     // F3: đáp số tổng quát (dạng chữ, đã kiểm ở biên `hybrid-preview-adapter`) trước; giá trị số là của hình dựng.
-    const tongQuat = hybrid?.answers.find((a) => a.quantity_id === id)?.symbolic;
+    const dapSo = hybrid?.answers.find((a) => a.quantity_id === id);
+    const tongQuat = dapSo ? giaTriDapSo(dapSo) : null;
     const soDung = `${hienSo(o.exact, o.value)}${ghiChuGiaTriDung(day)}`;
     return `${o.notation || ten(id)} = ${tongQuat ? `${tongQuat} — ${soDung}` : soDung}`;
   };
@@ -510,16 +511,17 @@ export function Scene3DExplorer({
           )}
           {/* F3/F4 — chỉ từ view ĐÃ KIỂM (`hybrid-preview-adapter`), và theo timeline: đáp số hiện từ bước đo đại
               lượng của nó, quan sát từ bước neo (hình dựng xong) — không kết luận nào đứng trước bước chống đỡ nó. */}
-          {hybridTaiBuoc(hybrid, day, tt.current_step).answers
+          {/* Bước của KHUNG đang hiện (`buocHien` = `geometryAnchor`), cùng một luật với hình (review của run, M2). */}
+          {hybridTaiBuoc(hybrid, day, buocHien).answers
             .map((a) => {
               const q = day.objects.find((o) => o.id === a.quantity_id);
               return (
                 <span key={a.quantity_id} className="geo3d-noi-nut" role="note" data-hybrid-answer={a.quantity_id}>
-                  Đáp số: {q?.notation || q?.label || "kết quả"} = {a.symbolic}
+                  Đáp số: {q?.notation || q?.label || "kết quả"} = {giaTriDapSo(a)}
                 </span>
               );
             })}
-          {hybridTaiBuoc(hybrid, day, tt.current_step).observations
+          {hybridTaiBuoc(hybrid, day, buocHien).observations
             .map((o) => (
               <span key={`${o.group}:${o.check_id}`} className="geo3d-noi-nut" role="note" data-route-d-observation="">
                 {cauQuanSat(o)}
