@@ -55,6 +55,12 @@ KHONG_PHAI_DO_DAI = [
     "Cho →GA + →GB + →GC = →0.",
     "Cho GA→ + GB→ + GC→ = 0→.",
     "Cho vectơ MA = 0→.",
+    # review lượt 2: hệ số trước toán hạng ("2GA + GB = 0") và hệ số căn nhân nhãn — cùng lớp lỗi của issue.
+    "Biết 2GA + GB = 0.",
+    "Biết 2MA + 3MB = 0.",
+    "Biết √2.AB = 2.",
+    "Biết 1 + AB = 5.",
+    "Cho S(ABC) × SA = 10.",
 ]
 
 
@@ -90,6 +96,17 @@ LA_DO_DAI = [
     # điều được sửa là AC — chấm giữa sau một CON SỐ không phải phép nhân giữa hai đoạn.
     ("AB = 3 · AC = 4", {"AC": Fraction(4)}),
     ("Cho hình chóp S.ABC có SA = 3 khi đó tính thể tích.", {"AS": Fraction(3)}),
+    # review lượt 2 (N1): "tích vô hướng" chỉ chiếm ô toán hạng ngay sau nó, không nuốt cả câu.
+    ("Tính tích vô hướng của AB và AC, biết AB = 3, AC = 4.", {"AB": Fraction(3), "AC": Fraction(4)}),
+    ("Cho hai vectơ có tích vô hướng bằng 0 và SA = 3.", {"AS": Fraction(3)}),
+    # (N2): dấu hai chấm giới thiệu, không phải tỉ số.
+    ("Cho hình chóp S.ABCD, đường cao SH: SH = 3.", {"HS": Fraction(3)}),
+    ("Trung tuyến AM: AM = 4.", {"AM": Fraction(4)}),
+    # (N3): ngoặc đóng rồi gạch — gạch nối, không phải phép trừ.
+    ("Cho SA ⊥ (ABC) - SA = 3.", {"AS": Fraction(3)}),
+    # số đứng sau "=" là giá trị của lời trước, không phải hệ số; "x" của kích thước hộp không làm hỏng lời sau.
+    ("Cho x = AB = 3.", {"AB": Fraction(3)}),
+    ("Cho hình hộp kích thước 2 x 3 x 4, AB = 2.", {"AB": Fraction(2)}),
 ]
 
 

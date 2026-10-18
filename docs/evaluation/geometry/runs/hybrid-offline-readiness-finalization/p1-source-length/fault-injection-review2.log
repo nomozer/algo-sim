@@ -1,0 +1,141 @@
+..........................F.FF...........................F.............. [ 62%]
+...........FFFFF...........................                              [100%]
+================================== FAILURES ===================================
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft 2GA + GB = 0.] _
+
+text = 'Biết 2GA + GB = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'BG': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'BG': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:69: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft \u221a2.AB = 2.] _
+
+text = 'Biết √2.AB = 2.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'AB': Fraction(2, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'AB': Fraction(2, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:69: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft 1 + AB = 5.] _
+
+text = 'Biết 1 + AB = 5.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'AB': Fraction(5, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'AB': Fraction(5, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:69: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Bi\u1ebft 2GA + GB = 0.] _
+
+text = 'Biết 2GA + GB = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BG'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BG'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Biết 2GA + GB = 0.'))
+E        +    where namespace(problem_text='Biết 2GA + GB = 0.') = SimpleNamespace(problem_text='Biết 2GA + GB = 0.')
+
+tests\geometry\test_source_length_vector_context.py:74: AssertionError
+_ test_do_dai_dung_mot_minh_van_doc[T\xednh t\xedch v\xf4 h\u01b0\u1edbng c\u1ee7a AB v\xe0 AC, bi\u1ebft AB = 3, AC = 4.-expected16] _
+
+text = 'Tính tích vô hướng của AB và AC, biết AB = 3, AC = 4.'
+expected = {'AB': Fraction(3, 1), 'AC': Fraction(4, 1)}
+
+    @pytest.mark.parametrize(("text", "expected"), LA_DO_DAI)
+    def test_do_dai_dung_mot_minh_van_doc(text, expected):
+>       assert _doc(text) == expected
+E       AssertionError: assert {} == {'AB': Fracti...raction(4, 1)}
+E         
+E         Right contains 2 more items:
+E         {'AB': Fraction(3, 1), 'AC': Fraction(4, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:140: AssertionError
+_ test_do_dai_dung_mot_minh_van_doc[Cho hai vect\u01a1 c\xf3 t\xedch v\xf4 h\u01b0\u1edbng b\u1eb1ng 0 v\xe0 SA = 3.-expected17] _
+
+text = 'Cho hai vectơ có tích vô hướng bằng 0 và SA = 3.'
+expected = {'AS': Fraction(3, 1)}
+
+    @pytest.mark.parametrize(("text", "expected"), LA_DO_DAI)
+    def test_do_dai_dung_mot_minh_van_doc(text, expected):
+>       assert _doc(text) == expected
+E       AssertionError: assert {} == {'AS': Fraction(3, 1)}
+E         
+E         Right contains 1 more item:
+E         {'AS': Fraction(3, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:140: AssertionError
+_ test_do_dai_dung_mot_minh_van_doc[Cho h\xecnh ch\xf3p S.ABCD, \u0111\u01b0\u1eddng cao SH: SH = 3.-expected18] _
+
+text = 'Cho hình chóp S.ABCD, đường cao SH: SH = 3.'
+expected = {'HS': Fraction(3, 1)}
+
+    @pytest.mark.parametrize(("text", "expected"), LA_DO_DAI)
+    def test_do_dai_dung_mot_minh_van_doc(text, expected):
+>       assert _doc(text) == expected
+E       AssertionError: assert {} == {'HS': Fraction(3, 1)}
+E         
+E         Right contains 1 more item:
+E         {'HS': Fraction(3, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:140: AssertionError
+_ test_do_dai_dung_mot_minh_van_doc[Trung tuy\u1ebfn AM: AM = 4.-expected19] __
+
+text = 'Trung tuyến AM: AM = 4.', expected = {'AM': Fraction(4, 1)}
+
+    @pytest.mark.parametrize(("text", "expected"), LA_DO_DAI)
+    def test_do_dai_dung_mot_minh_van_doc(text, expected):
+>       assert _doc(text) == expected
+E       AssertionError: assert {} == {'AM': Fraction(4, 1)}
+E         
+E         Right contains 1 more item:
+E         {'AM': Fraction(4, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:140: AssertionError
+_ test_do_dai_dung_mot_minh_van_doc[Cho SA \u22a5 (ABC) - SA = 3.-expected20] _
+
+text = 'Cho SA ⊥ (ABC) - SA = 3.', expected = {'AS': Fraction(3, 1)}
+
+    @pytest.mark.parametrize(("text", "expected"), LA_DO_DAI)
+    def test_do_dai_dung_mot_minh_van_doc(text, expected):
+>       assert _doc(text) == expected
+E       AssertionError: assert {} == {'AS': Fraction(3, 1)}
+E         
+E         Right contains 1 more item:
+E         {'AS': Fraction(3, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:140: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft 2GA + GB = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft \u221a2.AB = 2.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft 1 + AB = 5.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Bi\u1ebft 2GA + GB = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_do_dai_dung_mot_minh_van_doc[T\xednh t\xedch v\xf4 h\u01b0\u1edbng c\u1ee7a AB v\xe0 AC, bi\u1ebft AB = 3, AC = 4.-expected16]
+FAILED tests/geometry/test_source_length_vector_context.py::test_do_dai_dung_mot_minh_van_doc[Cho hai vect\u01a1 c\xf3 t\xedch v\xf4 h\u01b0\u1edbng b\u1eb1ng 0 v\xe0 SA = 3.-expected17]
+FAILED tests/geometry/test_source_length_vector_context.py::test_do_dai_dung_mot_minh_van_doc[Cho h\xecnh ch\xf3p S.ABCD, \u0111\u01b0\u1eddng cao SH: SH = 3.-expected18]
+FAILED tests/geometry/test_source_length_vector_context.py::test_do_dai_dung_mot_minh_van_doc[Trung tuy\u1ebfn AM: AM = 4.-expected19]
+FAILED tests/geometry/test_source_length_vector_context.py::test_do_dai_dung_mot_minh_van_doc[Cho SA \u22a5 (ABC) - SA = 3.-expected20]
+9 failed, 106 passed in 1.11s

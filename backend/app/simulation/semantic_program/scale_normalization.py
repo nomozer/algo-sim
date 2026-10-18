@@ -116,16 +116,26 @@ _DO_DAI_VECTO = re.compile(rf"độ\s+dài\s+(?:của\s+)?{_VECTO}\s*$", re.I)
 #: TOÁN HẠNG của một phép toán giữa các đoạn/vectơ: ĐÚNG hai ký hiệu điểm (`SA`, `A'B'`; không phải `ABC`, `ABCD`,
 #: `x`), có thể kèm mũi tên, hoặc một ngoặc đóng (`S(ABC) × SA`). Số và tên hình KHÔNG là toán hạng: "Bài 1/ AB = 3",
 #: "AB = 3 · AC = 4", "tam giác ABC - AB = 3" vẫn là lời cho độ dài (review của run, I1).
-_TOAN_HANG = r"(?:(?<![A-Za-z0-9'′])[A-Z]\d*['′]?[A-Z]\d*['′]?(?:→|⃗)?|[)\]}])"
-#: Phép toán: + − – (hiệu), * × · ⋅ ∙ \cdot và "x" đứng riêng (tích), / : (tỉ số), ∧ (tích có hướng).
-_PHEP = r"(?:[+\-−–*×·⋅∙∧/:]|\\cdot|(?<=[ \t])x(?=[ \t]))"
+#: Hệ số đứng trước được (`2GA + GB = 0`, `√3SA`); ngoặc đóng chỉ là toán hạng của TÍCH/THƯƠNG (`_NGOAC_PHEP`).
+_DIEM = r"[A-Z]\d*['′]?[A-Z]\d*['′]?(?:→|⃗)?"
+#: Phép toán: + − – (hiệu), * × · ⋅ ∙ \cdot và "x" đứng riêng (tích), / (tỉ số), ∧ (tích có hướng). Dấu `:` chỉ là
+#: tỉ số khi cân hai bên (`AB:CD`, `AB : CD`) — "đường cao SH: SH = 3" là lời giới thiệu (review N2).
+_PHEP = r"(?:[+\-−–*×·⋅∙∧/]|\\cdot|(?<=[ \t])x(?=[ \t]))"
+_NGOAC_PHEP = r"(?:[*×·⋅∙∧/]|\\cdot|(?<=[ \t])x(?=[ \t]))"
 #: Vế trái là biểu thức — toán hạng và phép toán CÙNG DÒNG (gạch đầu dòng sau xuống dòng "(ABCD)\n- SA = 3" không
-#: phải phép trừ), hoặc tích vô hướng `SA.BC` / `SA . BC` (chấm cuối câu "S.ABCD. SA = 3", "S.ABCD.SA = 3" — tên
-#: hình bốn chữ, không phải toán hạng — KHÔNG thuộc loại này).
+#: phải phép trừ; "(ABC) - SA = 3" cũng không — review N3), hoặc tích vô hướng `SA.BC` / `SA . BC` (chấm cuối câu
+#: "S.ABCD. SA = 3", "S.ABCD.SA = 3" — tên hình bốn chữ, không phải toán hạng — KHÔNG thuộc loại này), hoặc hệ số số
+#: nhân/cộng nhãn (`√2.AB = 2`, `1 + AB = 5`; không phải "1. AB", "1 - AB": đánh số; không phải giá trị vừa cho
+#: "AB = 3 · AC = 4": số đứng sau `=` là vế phải của lời trước).
 _TRUOC_BIEU_THUC = re.compile(
-    rf"(?:{_TOAN_HANG}[ \t]*{_PHEP}[ \t]*|{_TOAN_HANG}\.|{_TOAN_HANG}[ \t]+\.[ \t]*)$")
-#: Ngay trước nhãn: từ/ký hiệu vectơ, hoặc đang ở trong một mệnh đề "tích vô/có hướng" của câu.
-_TRUOC_VECTO = re.compile(rf"(?:{_VECTO}|tích\s+(?:vô|có)\s+hướng[^.;\n]*)\s*$", re.I)
+    rf"(?:(?<![A-Za-z0-9'′√])(?:\d+|√\d+)?{_DIEM}(?:[ \t]*{_PHEP}[ \t]*|\.|[ \t]+\.[ \t]*|:|[ \t]+:[ \t]+)"
+    rf"|[)\]}}](?:[ \t]*{_NGOAC_PHEP}[ \t]*|\.)"
+    rf"|(?<![A-Za-z0-9'′.,√=])(?<!=[ \t])(?:\d+|√\d+)[ \t]*(?:[+*×·⋅∙]|\\cdot)[ \t]*|√\d+\.)$")
+#: Ngay trước nhãn: từ/ký hiệu vectơ, hoặc ô toán hạng của "tích vô/có hướng (của) (hai vectơ) AB và|với|, <nhãn>"
+#: — chỉ ô ấy; "tích vô hướng của AB và AC, biết AB = 3" vẫn cho độ dài (review N1).
+_TRUOC_VECTO = re.compile(
+    rf"(?:{_VECTO}|tích\s+(?:vô|có)\s+hướng\s+(?:của\s+)?(?:hai\s+)?(?:{_VECTO}\s*)?{_DIEM}\s*(?:và|với|,)\s*"
+    rf"(?:{_VECTO})?)\s*$", re.I)
 _TRUOC_DIEU_KIEN = re.compile(r"(?<![A-Za-zÀ-ỹ])(?:khi|nếu)\s*$", re.I)
 #: Ngay sau giá trị: vectơ không (`0→`, `0⃗`) hay chú thích "(vectơ)/(tổng…)".
 _SAU_BIEU_THUC = re.compile(rf"\s*(?:→|⃗|\(\s*(?:{_VECTO}|tổng|hiệu|tích))", re.I)
