@@ -1,0 +1,76 @@
+{
+ "covers": [
+  "refusal"
+ ],
+ "expected": {
+  "envelope_status": "unsupported",
+  "failure_category": "geometry_generation_failed",
+  "http_status": 200,
+  "reason_code": "JSON_INVALID",
+  "refusal_cause": "UNKNOWN"
+ },
+ "id": "refusal-extraction-not-json",
+ "injection": null,
+ "kind": "refusal",
+ "producer": {
+  "adapter_version": "hybrid-preview-adapter/1",
+  "backend_app_dirty": false,
+  "commit": "2a832ae292d5197eeeda33d4f86652bcaf8d29d7",
+  "envelope_version": "hybrid-route-d-preview/1",
+  "product_commit": "caf215139f58e181601b99a649c546724d558d9d",
+  "source_fingerprint": {
+   "files": 111,
+   "measured_system_hash": "53ea8830e9f0ce48823160335c48cf1b7dd6c82a46e5cc0e2196b5613419a4ea",
+   "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+  }
+ },
+ "response": {
+  "envelope": {
+   "failure_category": "geometry_generation_failed",
+   "learner_reason": "Hệ chưa chuyển được đề này thành các dữ kiện dựng hình kiểm chứng được, nên không dựng hình.",
+   "reason": "Hệ chưa chuyển được đề này thành các dữ kiện dựng hình kiểm chứng được, nên không dựng hình.",
+   "reason_code": "JSON_INVALID",
+   "refusal_cause": "UNKNOWN",
+   "status": "unsupported"
+  },
+  "route_d": {
+   "planner": {},
+   "runtime_identity": {
+    "adapter_version": "hybrid-preview-adapter/1",
+    "default_product_mode": "LLM_ONLY",
+    "enabled": true,
+    "engine_version": "geometry-function-engine/5",
+    "envelope_version": "hybrid-route-d-preview/1",
+    "extraction_surface": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "fingerprint": "8ff6d785a8491611b711f2cd980642b9125f5f8fe4d3cefac27128167b36d3b8",
+    "planner_version": "geometry-fact-planner/7",
+    "product_enablement": "NO-GO",
+    "provider_mode": "OFFLINE_FIXTURE_ONLY",
+    "registry_version": "geometry-functions/6",
+    "response_contract": "flat"
+   }
+  },
+  "schema_version": "hybrid-route-d-preview/1"
+ },
+ "response_sha256": "596320f0c583107c9417ba8437d23ef89cb073962434b6f74fff7e7fffe4d606",
+ "schema": "hybrid-preview-envelope-fixture/1",
+ "source": {
+  "input_sha256": "80909ebe93ffc7407e2501c0e9a3479f9cdd08cb0eb17b459ace110e9b584d34",
+  "origin": "tests/test_hybrid_preview_contract.py::CASES[extraction-not-json]",
+  "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+  "provider_body": {
+   "candidates": [
+    {
+     "content": {
+      "parts": [
+       {
+        "text": "không phải JSON"
+       }
+      ]
+     },
+     "finishReason": "STOP"
+    }
+   ]
+  }
+ }
+}
