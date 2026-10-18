@@ -1,0 +1,20 @@
+D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+{
+ "verified": 41,
+ "problems": [],
+ "producer_now": {
+  "commit": "479e04d5bd09b037a8bf0bc30fcff2264f3dd9a9",
+  "product_commit": "479e04d5bd09b037a8bf0bc30fcff2264f3dd9a9",
+  "source_fingerprint": {
+   "measured_system_hash": "42b7ddfa361de0e695b08e3629f8e51d072cb17df185835666d09c79b2d54653",
+   "files": 111,
+   "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+  },
+  "adapter_version": "hybrid-preview-adapter/2",
+  "envelope_version": "hybrid-route-d-preview/1",
+  "backend_app_dirty": false,
+  "inputs_dirty": false
+ },
+ "same_source_fingerprint": false
+}
