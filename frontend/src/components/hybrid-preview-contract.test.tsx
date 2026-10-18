@@ -398,6 +398,8 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       // View tự đến (không qua biên vận chuyển) bị kiểm như lúc dựng: neo lạ, quan hệ chữ tự do, đại lượng trùng.
       const hongs = [
         (v: any) => { v.observations[0].anchor_step = 99; },
+        (v: any) => { v.observations[0].anchor_step = 0; },
+        (v: any) => { v.observations[0].anchor_step = "0"; },
         (v: any) => { v.observations[0].relation = "đã chứng minh xong"; },
         (v: any) => { v.answers.push({ ...v.answers[0] }); },
         (v: any) => { v.answers[0].unit = "b"; },
@@ -421,6 +423,13 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       expect(html).not.toContain("data-hybrid-answer");
       expect(html).not.toContain("data-route-d-observation");
       expect(html).not.toMatch(CHUNG_MINH);
+    });
+
+    it("wrapper hỏng có phần tử scene null bị từ chối thay vì ném lỗi", () => {
+      const raw = clone(loadFixture(H07).response) as any;
+      raw.envelope.scene3d.objects = [null];
+      expect(() => docPhanHoiHybrid(raw)).not.toThrow();
+      expect(docPhanHoiHybrid(raw).ok).toBe(false);
     });
 
     it("workspace không còn đọc route_d thô: chỉ view đã kiểm", () => {

@@ -173,6 +173,9 @@ export function docPhanHoiHybrid(raw: unknown): KetQuaPhanHoiHybrid {
   if (!laDoiTuong(scene) || !Array.isArray(scene.objects) || !Array.isArray(scene.events)) {
     return { ok: false, reason: "envelope phục vụ thiếu scene3d" };
   }
+  if (scene.objects.some((o) => !laDoiTuong(o)) || scene.events.some((e) => !laDoiTuong(e))) {
+    return { ok: false, reason: "scene3d có đối tượng hoặc sự kiện sai dạng" };
+  }
   const r = dungHybridView(raw.route_d, scene);
   if ("reason" in r) return { ok: false, reason: r.reason };
   return { ok: true, envelope: { ...envelope, [KHOA_HYBRID_VIEW]: r.view } };
@@ -197,9 +200,9 @@ export function kiemHybridView(view: unknown, scene: Scene3D | undefined): strin
     }
     daCo.add(String(a.quantity_id));
   }
-  const buoc = new Set(scene.events.map((e) => e.step_index));
+  const buocCuoi = Math.max(0, ...scene.events.map((e) => e.step_index));
   for (const o of view.observations) {
-    if (!laDoiTuong(o) || !TRANG_THAI.has(String(o.evidence_state)) || !buoc.has(Number(o.anchor_step))
+    if (!laDoiTuong(o) || !TRANG_THAI.has(String(o.evidence_state)) || o.anchor_step !== buocCuoi
       || (o.group !== "goal" && o.group !== "negated") || !TEN_HOP_LE.has(String(o.relation))) {
       return "quan sát neo vào bước không có trong cảnh hoặc sai dạng";
     }
