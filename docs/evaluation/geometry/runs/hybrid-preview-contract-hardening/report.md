@@ -19,7 +19,13 @@
 
 ## 0. Verdict
 
-See §6 (set from the second review round and the authoritative T3).
+**`PREVIEW_CONTRACT_HARDENING_VERIFIED`** — preview refusals are classified in the existing vocabularies, the
+proof-text backstop folds every dash and minus, and 41 offline envelope fixtures were exported from the real endpoint
+with a reproduction lock. The frontend data contract is written.
+- Independent review: round 1 FAIL (2 blocking findings), all fixed; round 2 PASS_WITH_FINDINGS (0 blocking).
+- Authoritative T3: `FULL_PRODUCT_GATE_PASS` on a clean detached checkout of `8b17d170` (attempt 2; attempt 1 failed
+  on a missing candidate-divergence declaration, see §6).
+- Not merged, not pushed; Hybrid enablement and GO LIVE remain NO-GO; no `frontend/src` change.
 
 ## 1. P0 — preflight
 
@@ -169,7 +175,23 @@ MATCH.
 | 3 NIT | stale `_ban_do` description in CODE_INDEX | FIXED |
 | 4 NIT | "exactly six keys" needs an adapter qualifier | FIXED in contract §6 (six keys from adapter `/2`; `/1` had five; absent `refusal_cause` ⇒ `UNKNOWN`) |
 
-**Authoritative T3:** PENDING.
+**Authoritative T3 — `FULL_PRODUCT_GATE_PASS`** (receipt `verification/authoritative-t3.json`, log SHA-256
+`31ec9667…`). Clean detached checkout of `8b17d170`, same product tree `1b7a6713…`:
+
+| gate | result |
+|---|---|
+| backend | 10828 passed, 1 skipped, 2 deselected, 9 xfailed (the same preregistered set; none added) |
+| frontend | 68 files / 1079 passed |
+| typecheck + build | PASS |
+| demo replay | 5/5, reduced chain 1/1 |
+| crash surface | 6/6, 0 uncaught |
+| candidate `--verify` in the checkout | MATCH |
+
+The checkout was removed afterwards (junction first).
+
+Attempt 1 at `1763972c` (`verification/t3-attempt-1.json`) failed one test, `test_C2b_candidate_hien_tai_phai_duoc_KHAI`:
+this wave had not added its `candidate_divergence.json` layer. The same test was red in the pre-commit dirty-tree run and
+I had misread it as freeze drift. Fixed docs-only in `8b17d170`; no product change, freeze unchanged.
 
 ## 7. P4 — frontend contract
 

@@ -55,10 +55,24 @@
   "independent_review": {
     "round_1": {"range": "65d6ee97..413df6c4", "verdict": "FAIL", "blocking": 2, "non_blocking": 2, "nits": 2,
                 "all_fixed_in": "bce21d8b (+ contract/doc corrections)", "red_for_fixes": "5 new checks failed on 413df6c4"},
-    "round_2": "PENDING"
+    "round_2": {"range": "413df6c4..1839abe3", "verdict": "PASS_WITH_FINDINGS", "blocking": 0, "non_blocking": 1, "nits": 3,
+                "dispositions": "vector-zero reader residual recorded (ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO); 2 doc NITs fixed; T3 on the docs HEAD"}
   },
-  "authoritative_t3": "PENDING",
-  "verdict": "PENDING",
+  "authoritative_t3": {
+    "status": "FULL_PRODUCT_GATE_PASS",
+    "commit": "8b17d170ffed80628b4193a41a710ab5aac1a29e",
+    "receipt": "verification/authoritative-t3.json",
+    "backend_pytest": "10828 passed, 1 skipped, 2 deselected, 9 xfailed",
+    "frontend_vitest": "68 files, 1079 passed",
+    "build": "PASS",
+    "demo_replay": "5/5",
+    "crash_surface": "6/6, 0 uncaught",
+    "candidate_verify": "MATCH 1b7a6713…",
+    "attempt_1": "verification/t3-attempt-1.json (FAIL at 1763972c: missing candidate_divergence layer; fixed docs-only)",
+    "detached_worktree_removed": true
+  },
+  "candidate_divergence": "candidate_divergence.json (corrects hybrid-route-d-preview-wiring)",
+  "verdict": "PREVIEW_CONTRACT_HARDENING_VERIFIED",
   "merge": "NONE",
   "push": "NONE"
 }
