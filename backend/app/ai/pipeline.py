@@ -8,7 +8,9 @@ không bao giờ trả thẳng JSON của Gemini cho frontend (M3 §6).
 
 from __future__ import annotations
 
+import hashlib
 import json
+from dataclasses import dataclass
 
 from typing import TYPE_CHECKING
 
@@ -32,6 +34,63 @@ def _emit(observer, event_type: str, **data) -> None:
     if observer is not None:
         observer.emit(event_type, data)
 from app.ai.gemini import call_gemini, load_skill
+
+# ── Ảnh chụp tuyến của MỘT lượt (run `hybrid-pre-main-hardening`) ──────────
+
+
+@dataclass(frozen=True)
+class RoutePolicy:
+    """Cấu hình định tuyến BẤT BIẾN của một lượt analyze, đọc env MỘT lần ở biên.
+
+    Tra cache, định tuyến và ghi cache cùng dùng nó: trước đây `main` và `pipeline` mỗi bên tự đọc env, nên đổi env
+    giữa lượt thì hàng cache mang nhãn của chế độ không chạy. Chỉ giữ công tắc THỰC SỰ đổi kết quả —
+    `SEMANTIC_ROUTE_MODE` không còn được `run_pipeline` dùng nên không có mặt.
+    """
+
+    geometry_compiler_mode: str
+    hybrid_preview_enabled: bool = False
+    response_contract: str = "flat"
+    preview_surface: tuple[tuple[str, str], ...] = ()
+
+    def env(self) -> dict[str, str]:
+        from app.simulation.geometry_compiler.routing import BIEN_MOI_TRUONG
+
+        return {BIEN_MOI_TRUONG: self.geometry_compiler_mode}
+
+    def fingerprint(self) -> str | None:
+        """`None` ở chế độ mặc định; ngược lại băm 8 ký tự của chế độ + phiên bản các tầng chạy ở chế độ ấy."""
+        if self.hybrid_preview_enabled:
+            source = json.dumps({"route": "HYBRID_ROUTE_D_PREVIEW", **dict(self.preview_surface)}, sort_keys=True)
+            return hashlib.sha256(source.encode("utf-8")).hexdigest()
+        from app.simulation.geometry_compiler.routing import dinh_danh_be_mat
+
+        be_mat = dinh_danh_be_mat(self.geometry_compiler_mode)
+        if not be_mat:
+            return None
+        goc = json.dumps({"geometry_compiler_mode": self.geometry_compiler_mode, **be_mat}, sort_keys=True)
+        return hashlib.sha256(goc.encode("utf-8")).hexdigest()[:8]
+
+
+#: Minimum length of `HYBRID_ROUTE_D_PREVIEW_TOKEN`; shorter or missing ⇒ every preview request is refused.
+HYBRID_PREVIEW_TOKEN_MIN_LENGTH = 32
+
+
+def route_policy_snapshot(env: dict[str, str] | None = None, *, preview: bool = False) -> RoutePolicy:
+    """Ảnh chụp từ `env` (mặc định `os.environ`); giá trị lạ ép về mặc định như `routing.che_do`."""
+    from app.simulation.geometry_compiler.routing import che_do
+
+    import os
+
+    env = os.environ if env is None else env
+    enabled = preview and env.get("HYBRID_ROUTE_D_PREVIEW") == "1"
+    surface: tuple[tuple[str, str], ...] = ()
+    if enabled:
+        # Declared preview identity boundary; /api/analyze never requests it.
+        from app.ai.hybrid_preview import preview_identity
+
+        surface = tuple(sorted(preview_identity("flat").items()))
+    return RoutePolicy(che_do(env), enabled, "flat", surface)
+
 
 # ── Schema structured output ──────────────────────────────────
 #
@@ -670,7 +729,8 @@ def _envelope_tu_route_sinh(outcome, analysis: dict, plan: dict, observer) -> di
 
 
 async def _semantic_route_attempt(
-    text: str, analysis: dict, api_key: str, observer, domain: str | None = None
+    text: str, analysis: dict, api_key: str, observer, domain: str | None = None,
+    route_policy: RoutePolicy | None = None,
 ) -> "SemanticRouteOutcome | None":
     """Hai lượt LLM + toàn bộ cổng tất định. Trả `None` khi chưa dựng nổi IR.
 
@@ -710,11 +770,12 @@ async def _semantic_route_attempt(
           ])
 
     # ─── ĐỊNH TUYẾN COMPILER TẤT ĐỊNH (OPT-IN) ──────────────────────────
+    # Cổng compiler DUY NHẤT của đường mặc định, nhập tường minh để bao đóng import tĩnh thấy nó (bản cắt chuỗi qua
+    # `__import__` trước đây làm guard đường mặc định xanh sai). `LLM_ONLY` ⇒ `DISABLED`, không chạy compiler.
+    from app.simulation.geometry_compiler.routing import quyet_dinh_dinh_tuyen
     from app.simulation.semantic_program.validator import validate_semantic_program
 
-    _gc_pkg = "app.simulation.geometry" + "_compiler.routing"
-    _gc_mod = __import__(_gc_pkg, fromlist=["quyet_dinh_dinh_tuyen"])
-    qd = _gc_mod.quyet_dinh_dinh_tuyen(contract)
+    qd = quyet_dinh_dinh_tuyen(contract, (route_policy or route_policy_snapshot()).env())
     if qd.decision == "USE_COMPILER" and qd.program is not None:
         val = validate_semantic_program(qd.program)
         if val.ok and val.spec is not None:
@@ -817,7 +878,8 @@ async def _semantic_route_attempt(
     return outcome
 
 
-async def _chay_duong_hinh_hoc(text: str, api_key: str, observer) -> dict:
+async def _chay_duong_hinh_hoc(text: str, api_key: str, observer,
+                               route_policy: RoutePolicy | None = None) -> dict:
     """ĐƯỜNG SẢN PHẨM của miền hình học — hai lượt LLM, không một lượt thừa.
 
         đề → geometry_analyze → RequestContract → tổng hợp Semantic Program
@@ -885,7 +947,7 @@ async def _chay_duong_hinh_hoc(text: str, api_key: str, observer) -> dict:
         }
 
     outcome = await _semantic_route_attempt(text, {}, api_key, observer,
-                                            DOMAIN_HINH_HOC)
+                                            DOMAIN_HINH_HOC, route_policy=route_policy)
     if outcome is not None and outcome.servable:
         return _envelope_tu_route_sinh(outcome, {}, {}, observer)
     # Thất bại phải nói ĐÚNG thứ đã xảy ra — *hệ hiểu đây là hình học, đã thử
@@ -899,6 +961,7 @@ async def run_pipeline(
     pattern_store=None,
     observer=None,
     semantic_route: str = "off",
+    route_policy: RoutePolicy | None = None,
 ) -> dict:
     """Chạy trọn pipeline; trả ValidatedSimulationEnvelope hoặc unsupported.
 
@@ -933,7 +996,8 @@ async def run_pipeline(
     )
 
     if _dò_miền(text) == _DOMAIN_HH:
-        return await _chay_duong_hinh_hoc(text, api_key, observer)
+        # `route_policy`: ảnh chụp của biên API (cùng cái đã dùng tra cache); gọi trực tiếp không truyền ⇒ chụp env lúc vào.
+        return await _chay_duong_hinh_hoc(text, api_key, observer, route_policy or route_policy_snapshot())
 
     # ─── NGOÀI MIỀN ⇒ FAIL CLOSED. Không còn nhánh Tin học nào ở đây ────────
     #

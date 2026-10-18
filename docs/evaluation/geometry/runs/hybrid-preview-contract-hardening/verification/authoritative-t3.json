@@ -1,0 +1,24 @@
+{
+  "schema": "AUTHORITATIVE_T3/1",
+  "run": "hybrid-preview-contract-hardening",
+  "date": "2026-10-18",
+  "attempt": 2,
+  "previous_attempt": "verification/t3-attempt-1.json (FULL_PRODUCT_GATE_FAIL at 1763972c: missing candidate divergence layer; docs-only fix 8b17d170)",
+  "checkout": "clean detached worktree .superpowers/worktrees/t3-hybrid-preview-contract-hardening at 8b17d170ffed80628b4193a41a710ab5aac1a29e (0 changed/untracked files; frontend/node_modules = junction to the main checkout's node_modules)",
+  "command": "node scripts/full-gate.mjs (from frontend/, ALLOW_LIVE_AI=0, empty GEMINI_API_KEY; log kept outside the worktree)",
+  "log_sha256": "31ec966749a2bc2ac483ecaafdc7ffc651f3859ad121efa7750229d408895fa4",
+  "label": "FULL_PRODUCT_GATE_PASS",
+  "exit_code": 0,
+  "gates": {
+    "backend_pytest": "10828 passed, 1 skipped, 2 deselected, 9 xfailed in 391.18s",
+    "frontend_vitest": "68 files, 1079 passed",
+    "typecheck_and_build": "PASS",
+    "demo_replay": "5/5 DEMO_REPLAY_PASS; reduced chain 1/1",
+    "crash_surface": "6/6 boundaries as expected, 0 uncaught (500)"
+  },
+  "candidate_verify_in_checkout": "MATCH (111 files, 1b7a671326290f0b…)",
+  "product_commit": "bce21d8b5390b66302a2b80fd1c9e67f4b0deb16",
+  "xfail_note": "9 strict preregistered xfails, the same set as the hybrid-route-d-preview-wiring T3; none added",
+  "cleanup": "junction removed first, then the detached worktree; main frontend/node_modules intact",
+  "live_ai_calls": 0
+}

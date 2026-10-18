@@ -1,0 +1,22 @@
+{
+  "schema": "AUTHORITATIVE_T3/1",
+  "run": "hybrid-route-d-preview-wiring",
+  "date": "2026-10-18",
+  "checkout": "clean detached worktree .superpowers/worktrees/t3-hybrid-route-d-preview-wiring at eb3ca40637849fef5e11871792d3edfeb9fae762 (0 changed/untracked files; frontend/node_modules = junction to the main checkout's node_modules)",
+  "command": "node scripts/full-gate.mjs (from frontend/; log kept outside the worktree)",
+  "log_sha256": "ecb255c72a1f889e780a3c2ccb8b3e9e967ee08d2f4da2cc85feae93969995fe",
+  "label": "FULL_PRODUCT_GATE_PASS",
+  "exit_code": 0,
+  "gates": {
+    "backend_pytest": "10757 passed, 1 skipped, 2 deselected, 9 xfailed in 394.09s",
+    "frontend_vitest": "68 files, 1079 passed",
+    "typecheck_and_build": "PASS",
+    "demo_replay": "5/5 DEMO_REPLAY_PASS",
+    "crash_surface": "6/6 boundaries as expected, 0 uncaught (500)"
+  },
+  "candidate_verify_in_checkout": "MATCH (111 files, 4c1b9a270430773a…)",
+  "product_commit": "93390f5818382cf27d263689b61f9ec44e02ef1c",
+  "xfail_note": "9 strict preregistered xfails, the same set as the hybrid-pre-main-hardening T3 (B27/B28 gaps, generalized-goal-entry code deviations, centre-label exhaustion, bounded 'và' clause, E05); none added",
+  "cleanup": "junction removed first, then the detached worktree; main frontend/node_modules intact",
+  "live_ai_calls": 0
+}

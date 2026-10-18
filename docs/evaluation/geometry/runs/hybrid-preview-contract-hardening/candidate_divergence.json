@@ -1,0 +1,30 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-preview-contract-hardening",
+  "task": "GO_HYBRID_PREVIEW_CONTRACT_HARDENING — preview refusal classification, proof-text backstop, adapter /2 (caf21513, review fixes bce21d8b)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "1b7a671326290f0b1da7d213d1399da2fe02ec7765f13f5057525362ff0f08fa",
+  "current_candidate_source_commit": "f5f483bf",
+  "current_product_commit": "bce21d8b",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "previous_candidate_hash": "4c1b9a270430773a0bafede1f86120ea92ad066accdd7163cbe405b50253142d",
+  "metadata_only_correction": false,
+  "diverged": true,
+  "reason": "Owner-approved GO_HYBRID_PREVIEW_CONTRACT_HARDENING: the operator-only offline Route D preview classifies its refusals into the existing failure_category / refusal_cause vocabularies (previously every refusal was capability_gap with no cause), folds minus signs and stray combining marks in the proof-text backstop's detection copy, and reports adapter hybrid-preview-adapter/2. /api/analyze under LLM_ONLY is unchanged (full-response byte-hash parity test).",
+  "product_changes_since_previous_candidate": [
+    "backend/app/ai/hybrid_preview.py"
+  ],
+  "historical_effect": "hybrid-route-d-preview-wiring (4c1b9a27…) and earlier receipts untouched; 174 historical rows, grounding probes, safety/negative cases and the oracle re-run on this candidate.",
+  "freeze": "111 measured files, product commit bce21d8b, frozen in a clean detached worktree at f5f483bf, --verify MATCH (earlier freeze 2a832ae2 at caf21513 = 53ea8830…, superseded inside this wave)",
+  "cache_version": 125,
+  "cache_decision": "no bump: the preview never reads or writes the product cache and the default analyze identity is unchanged",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: no frozen measurement is rescored or rewritten; only preview refusal envelopes changed, and the preview has no recorded measurement.",
+    "live_requests": 0
+  },
+  "integration": "owner GO MAIN required; Route D product enablement NO-GO",
+  "push": "NONE"
+}

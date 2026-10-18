@@ -1,0 +1,961 @@
+{
+  "scope": "ENCODING_ONLY_BEFORE_PROMPT_TUNING",
+  "changes": [
+    {
+      "case_id": "dev04",
+      "fact_id": "f2",
+      "before": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "tam giác ABC vuông tại A"
+        ],
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      },
+      "after": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "tam giác ABC vuông tại A"
+        ],
+        "points": [
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      }
+    },
+    {
+      "case_id": "dev05",
+      "fact_id": "f2",
+      "before": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "ABC vuông tại A"
+        ],
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      },
+      "after": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "ABC vuông tại A"
+        ],
+        "points": [
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      }
+    },
+    {
+      "case_id": "dev06",
+      "fact_id": "f2",
+      "before": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "ABC vuông tại A"
+        ],
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      },
+      "after": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "ABC vuông tại A"
+        ],
+        "points": [
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      }
+    },
+    {
+      "case_id": "dev06",
+      "fact_id": "f5",
+      "before": {
+        "kind": "point_def",
+        "role": "premise",
+        "quotes": [
+          "P thuộc tia AB và AP = 6"
+        ],
+        "point": "P",
+        "points": [
+          "A",
+          "B"
+        ],
+        "reason": "P is on ray AB at distance 6 from A",
+        "id": "f5"
+      },
+      "after": {
+        "role": "premise",
+        "quotes": [
+          "P thuộc tia AB và AP = 6"
+        ],
+        "id": "f5",
+        "kind": "unsupported",
+        "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+      }
+    },
+    {
+      "case_id": "dev06",
+      "fact_id": "f7",
+      "before": {
+        "kind": "intersection_line",
+        "role": "premise",
+        "quotes": [
+          "d là đường thẳng BC"
+        ],
+        "points": [
+          "B",
+          "C"
+        ],
+        "reason": "The name d denotes the infinite line BC",
+        "id": "f7"
+      },
+      "after": {
+        "role": "premise",
+        "quotes": [
+          "d là đường thẳng BC"
+        ],
+        "id": "f7",
+        "kind": "unsupported",
+        "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+      }
+    },
+    {
+      "case_id": "dev07",
+      "fact_id": "f4",
+      "before": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "giải thích vì sao BH vuông góc TC"
+        ],
+        "points_a": [
+          "B",
+          "H"
+        ],
+        "points_b": [
+          "T",
+          "C"
+        ],
+        "quantity": "perpendicular",
+        "rid": "r2",
+        "reason": "Construction and explanation are separate obligations; definition of orthogonal projection suffices mathematically, but these are outside numerical-answer scope.",
+        "id": "f4"
+      },
+      "after": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "giải thích vì sao BH vuông góc TC"
+        ],
+        "rid": "r2",
+        "reason": "Construction and explanation are separate obligations; definition of orthogonal projection suffices mathematically, but these are outside numerical-answer scope.",
+        "id": "f4"
+      }
+    },
+    {
+      "case_id": "dev11",
+      "fact_id": "f2",
+      "before": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "Tính diện tích mặt xung quanh hình trụ"
+        ],
+        "description": "Diện tích mặt xung quanh hình trụ tròn xoay bán kính 3, chiều cao 5",
+        "quantity": "unsupported",
+        "rid": "r1",
+        "reason": "Preserve the cylinder surface-area obligation; do not substitute a prism or silently return a polyhedral area.",
+        "id": "f2"
+      },
+      "after": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "Tính diện tích mặt xung quanh hình trụ"
+        ],
+        "rid": "r1",
+        "reason": "Preserve the cylinder surface-area obligation; do not substitute a prism or silently return a polyhedral area.",
+        "id": "f2"
+      }
+    },
+    {
+      "case_id": "dev12",
+      "fact_id": "f4",
+      "before": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "Chứng minh MN song song BC"
+        ],
+        "points_a": [
+          "M",
+          "N"
+        ],
+        "points_b": [
+          "B",
+          "C"
+        ],
+        "quantity": "parallel",
+        "rid": "r1",
+        "reason": "Parallelism is the conclusion to prove, never a given. Simulation is a second request.",
+        "id": "f4"
+      },
+      "after": {
+        "kind": "unsupported",
+        "role": "prove",
+        "quotes": [
+          "Chứng minh MN song song BC"
+        ],
+        "rid": "r1",
+        "reason": "Parallelism is the conclusion to prove, never a given. Simulation is a second request.",
+        "id": "f4"
+      }
+    },
+    {
+      "case_id": "dev12",
+      "fact_id": "f5",
+      "before": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "mô phỏng việc kéo D trong khi A, B, C cố định"
+        ],
+        "description": "Kéo D với A, B, C cố định trong tứ diện ABCD",
+        "quantity": "motion",
+        "rid": "r2",
+        "reason": "Parallelism is the conclusion to prove, never a given. Simulation is a second request.",
+        "id": "f5"
+      },
+      "after": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "mô phỏng việc kéo D trong khi A, B, C cố định"
+        ],
+        "rid": "r2",
+        "reason": "Parallelism is the conclusion to prove, never a given. Simulation is a second request.",
+        "id": "f5"
+      }
+    },
+    {
+      "case_id": "held01",
+      "fact_id": "f3",
+      "before": {
+        "kind": "point_def",
+        "role": "premise",
+        "quotes": [
+          "X thuộc tia AB và AX = 8"
+        ],
+        "point": "X",
+        "points": [
+          "A",
+          "B"
+        ],
+        "reason": "X lies on ray AB at distance 8 from A",
+        "id": "f3"
+      },
+      "after": {
+        "role": "premise",
+        "quotes": [
+          "X thuộc tia AB và AX = 8"
+        ],
+        "id": "f3",
+        "kind": "unsupported",
+        "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+      }
+    },
+    {
+      "case_id": "held01",
+      "fact_id": "f5",
+      "before": {
+        "kind": "intersection_line",
+        "role": "premise",
+        "quotes": [
+          "d là đường thẳng BH"
+        ],
+        "points": [
+          "B",
+          "H"
+        ],
+        "reason": "Named infinite line",
+        "id": "f5"
+      },
+      "after": {
+        "role": "premise",
+        "quotes": [
+          "d là đường thẳng BH"
+        ],
+        "id": "f5",
+        "kind": "unsupported",
+        "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+      }
+    },
+    {
+      "case_id": "held02",
+      "fact_id": "f3",
+      "before": {
+        "kind": "point_def",
+        "role": "premise",
+        "quotes": [
+          "X thuộc tia AB và AX = 8"
+        ],
+        "point": "X",
+        "points": [
+          "A",
+          "B"
+        ],
+        "reason": "X lies on ray AB at distance 8 from A",
+        "id": "f3"
+      },
+      "after": {
+        "role": "premise",
+        "quotes": [
+          "X thuộc tia AB và AX = 8"
+        ],
+        "id": "f3",
+        "kind": "unsupported",
+        "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+      }
+    },
+    {
+      "case_id": "held03",
+      "fact_id": "f3",
+      "before": {
+        "kind": "point_def",
+        "role": "premise",
+        "quotes": [
+          "X thuộc tia AB và AX = 8"
+        ],
+        "point": "X",
+        "points": [
+          "A",
+          "B"
+        ],
+        "reason": "X lies on ray AB at distance 8 from A",
+        "id": "f3"
+      },
+      "after": {
+        "role": "premise",
+        "quotes": [
+          "X thuộc tia AB và AX = 8"
+        ],
+        "id": "f3",
+        "kind": "unsupported",
+        "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+      }
+    },
+    {
+      "case_id": "held09",
+      "fact_id": "f12",
+      "before": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "Giải thích vì sao không được dùng PA làm chiều cao của Q.EFGH"
+        ],
+        "description": "Vì sao PA không phải chiều cao của Q.EFGH",
+        "quantity": "unsupported",
+        "rid": "r1",
+        "reason": "All dimensions belong to the explicitly named solid. In held08 the negative command excludes a P.ABCD request. For the rectangle, consecutive edge order follows the listed sides.",
+        "id": "f12"
+      },
+      "after": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "Giải thích vì sao không được dùng PA làm chiều cao của Q.EFGH"
+        ],
+        "rid": "r1",
+        "reason": "All dimensions belong to the explicitly named solid. In held08 the negative command excludes a P.ABCD request. For the rectangle, consecutive edge order follows the listed sides.",
+        "id": "f12"
+      }
+    },
+    {
+      "case_id": "held10",
+      "fact_id": "f2",
+      "before": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "tam giác ABC vuông cân tại A"
+        ],
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      },
+      "after": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "tam giác ABC vuông cân tại A"
+        ],
+        "points": [
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      }
+    },
+    {
+      "case_id": "held11",
+      "fact_id": "f2",
+      "before": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "tam giác ABC vuông cân tại A"
+        ],
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      },
+      "after": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "tam giác ABC vuông cân tại A"
+        ],
+        "points": [
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      }
+    },
+    {
+      "case_id": "held12",
+      "fact_id": "f2",
+      "before": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "tam giác ABC vuông cân tại A"
+        ],
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      },
+      "after": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "tam giác ABC vuông cân tại A"
+        ],
+        "points": [
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      }
+    },
+    {
+      "case_id": "held13",
+      "fact_id": "f2",
+      "before": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "đáy ABC vuông tại A"
+        ],
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      },
+      "after": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "đáy ABC vuông tại A"
+        ],
+        "points": [
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      }
+    },
+    {
+      "case_id": "held13",
+      "fact_id": "f6",
+      "before": {
+        "kind": "point_def",
+        "role": "premise",
+        "quotes": [
+          "H nằm trên đoạn AB, AH = 3"
+        ],
+        "point": "H",
+        "points": [
+          "A",
+          "B"
+        ],
+        "reason": "H lies on segment AB at distance 3 from A",
+        "id": "f6"
+      },
+      "after": {
+        "role": "premise",
+        "quotes": [
+          "H nằm trên đoạn AB, AH = 3"
+        ],
+        "id": "f6",
+        "kind": "unsupported",
+        "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+      }
+    },
+    {
+      "case_id": "held14",
+      "fact_id": "f2",
+      "before": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "đáy ABC vuông tại A"
+        ],
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      },
+      "after": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "đáy ABC vuông tại A"
+        ],
+        "points": [
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      }
+    },
+    {
+      "case_id": "held14",
+      "fact_id": "f6",
+      "before": {
+        "kind": "point_def",
+        "role": "premise",
+        "quotes": [
+          "H nằm trên đoạn AB, AH = 3"
+        ],
+        "point": "H",
+        "points": [
+          "A",
+          "B"
+        ],
+        "reason": "H lies on segment AB at distance 3 from A",
+        "id": "f6"
+      },
+      "after": {
+        "role": "premise",
+        "quotes": [
+          "H nằm trên đoạn AB, AH = 3"
+        ],
+        "id": "f6",
+        "kind": "unsupported",
+        "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+      }
+    },
+    {
+      "case_id": "held15",
+      "fact_id": "f2",
+      "before": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "đáy ABC vuông tại A"
+        ],
+        "points": [
+          "A",
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      },
+      "after": {
+        "kind": "right_angle",
+        "role": "premise",
+        "quotes": [
+          "đáy ABC vuông tại A"
+        ],
+        "points": [
+          "B",
+          "C"
+        ],
+        "at": "A",
+        "id": "f2"
+      }
+    },
+    {
+      "case_id": "held15",
+      "fact_id": "f6",
+      "before": {
+        "kind": "point_def",
+        "role": "premise",
+        "quotes": [
+          "H nằm trên đoạn AB, AH = 3"
+        ],
+        "point": "H",
+        "points": [
+          "A",
+          "B"
+        ],
+        "reason": "H lies on segment AB at distance 3 from A",
+        "id": "f6"
+      },
+      "after": {
+        "role": "premise",
+        "quotes": [
+          "H nằm trên đoạn AB, AH = 3"
+        ],
+        "id": "f6",
+        "kind": "unsupported",
+        "reason": "Source relation has no faithful TypedFact representation; no substitute invented."
+      }
+    },
+    {
+      "case_id": "held20",
+      "fact_id": "f9",
+      "before": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "Cho phép người xem xoay mô hình quanh VK"
+        ],
+        "description": "Người xem xoay mô hình quanh VK",
+        "quantity": "motion",
+        "rid": "r2",
+        "reason": "Three explicit obligations; the interactive command is not a numerical angle question.",
+        "id": "f9"
+      },
+      "after": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "Cho phép người xem xoay mô hình quanh VK"
+        ],
+        "rid": "r2",
+        "reason": "Three explicit obligations; the interactive command is not a numerical angle question.",
+        "id": "f9"
+      }
+    },
+    {
+      "case_id": "held20",
+      "fact_id": "f10",
+      "before": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "giải thích I nằm ở đâu trong đáy"
+        ],
+        "point": "I",
+        "points": [
+          "K",
+          "L",
+          "M",
+          "N"
+        ],
+        "quantity": "point_location",
+        "rid": "r3",
+        "reason": "Three explicit obligations; the interactive command is not a numerical angle question.",
+        "id": "f10"
+      },
+      "after": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "giải thích I nằm ở đâu trong đáy"
+        ],
+        "rid": "r3",
+        "reason": "Three explicit obligations; the interactive command is not a numerical angle question.",
+        "id": "f10"
+      }
+    },
+    {
+      "case_id": "held21",
+      "fact_id": "f9",
+      "before": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "hãy dựng U"
+        ],
+        "point": "U",
+        "points_a": [
+          "V",
+          "I"
+        ],
+        "points_b": [
+          "K",
+          "L",
+          "M",
+          "N"
+        ],
+        "quantity": "intersection",
+        "rid": "r1",
+        "reason": "Conditional intersection definition must keep its role; the requested coincidence is not a premise.",
+        "id": "f9"
+      },
+      "after": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "hãy dựng U"
+        ],
+        "rid": "r1",
+        "reason": "Conditional intersection definition must keep its role; the requested coincidence is not a premise.",
+        "id": "f9"
+      }
+    },
+    {
+      "case_id": "held21",
+      "fact_id": "f10",
+      "before": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "chứng minh U trùng I"
+        ],
+        "points": [
+          "U",
+          "I"
+        ],
+        "quantity": "coincidence",
+        "rid": "r2",
+        "reason": "Conditional intersection definition must keep its role; the requested coincidence is not a premise.",
+        "id": "f10"
+      },
+      "after": {
+        "kind": "unsupported",
+        "role": "prove",
+        "quotes": [
+          "chứng minh U trùng I"
+        ],
+        "rid": "r2",
+        "reason": "Conditional intersection definition must keep its role; the requested coincidence is not a premise.",
+        "id": "f10"
+      }
+    },
+    {
+      "case_id": "held24",
+      "fact_id": "f4",
+      "before": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "Hãy dựng c"
+        ],
+        "description": "Đường cong c là giao tuyến mặt cầu tâm Z với mặt phẳng ABCD",
+        "quantity": "unsupported",
+        "rid": "r1",
+        "reason": "Preserve both curved-intersection obligations; no sphere radius is supplied and no polygonal approximation is permitted.",
+        "id": "f4"
+      },
+      "after": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "Hãy dựng c"
+        ],
+        "rid": "r1",
+        "reason": "Preserve both curved-intersection obligations; no sphere radius is supplied and no polygonal approximation is permitted.",
+        "id": "f4"
+      }
+    },
+    {
+      "case_id": "held24",
+      "fact_id": "f5",
+      "before": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "tính độ dài c"
+        ],
+        "description": "Độ dài đường cong c là giao tuyến mặt cầu tâm Z với mặt phẳng ABCD",
+        "quantity": "unsupported",
+        "rid": "r2",
+        "reason": "Preserve both curved-intersection obligations; no sphere radius is supplied and no polygonal approximation is permitted.",
+        "id": "f5"
+      },
+      "after": {
+        "kind": "unsupported",
+        "role": "question",
+        "quotes": [
+          "tính độ dài c"
+        ],
+        "rid": "r2",
+        "reason": "Preserve both curved-intersection obligations; no sphere radius is supplied and no polygonal approximation is permitted.",
+        "id": "f5"
+      }
+    },
+    {
+      "case_id": "dev08",
+      "fact_id": "f1",
+      "before": {
+        "kind": "question",
+        "role": "question",
+        "quotes": [
+          "tính khoảng cách từ đỉnh đó đến mặt đáy"
+        ],
+        "description": "Khoảng cách từ đỉnh đó đến mặt đáy của hình chóp ở bài trước",
+        "quantity": "distance",
+        "rid": "r1",
+        "id": "f1"
+      },
+      "after": {
+        "role": "question",
+        "quotes": [
+          "tính khoảng cách từ đỉnh đó đến mặt đáy"
+        ],
+        "rid": "r1",
+        "id": "f1",
+        "kind": "unsupported",
+        "reason": "Source request has no faithful TypedFact representation; no nearby quantity substituted."
+      }
+    },
+    {
+      "case_id": "held02",
+      "fact_id": "f5",
+      "before": {
+        "kind": "question",
+        "role": "question",
+        "quotes": [
+          "khoảng cách ngắn nhất từ X đến đoạn thẳng BH"
+        ],
+        "points_a": [
+          "X"
+        ],
+        "points_b": [
+          "B",
+          "H"
+        ],
+        "domain": "segment",
+        "quantity": "distance",
+        "rid": "r1",
+        "id": "f5"
+      },
+      "after": {
+        "role": "question",
+        "quotes": [
+          "khoảng cách ngắn nhất từ X đến đoạn thẳng BH"
+        ],
+        "rid": "r1",
+        "id": "f5",
+        "kind": "unsupported",
+        "reason": "Source request has no faithful TypedFact representation; no nearby quantity substituted."
+      }
+    },
+    {
+      "case_id": "held03",
+      "fact_id": "f6",
+      "before": {
+        "kind": "question",
+        "role": "question",
+        "quotes": [
+          "khoảng cách từ X đến đoạn BH"
+        ],
+        "points_a": [
+          "X"
+        ],
+        "points_b": [
+          "B",
+          "H"
+        ],
+        "domain": "segment",
+        "quantity": "distance",
+        "rid": "r2",
+        "id": "f6"
+      },
+      "after": {
+        "role": "question",
+        "quotes": [
+          "khoảng cách từ X đến đoạn BH"
+        ],
+        "rid": "r2",
+        "id": "f6",
+        "kind": "unsupported",
+        "reason": "Source request has no faithful TypedFact representation; no nearby quantity substituted."
+      }
+    },
+    {
+      "case_id": "held23",
+      "fact_id": "f9",
+      "before": {
+        "kind": "question",
+        "role": "question",
+        "quotes": [
+          "Tính thể tích của chóp đó"
+        ],
+        "description": "Thể tích của chóp đó: S.ABC hoặc T.DEF",
+        "quantity": "volume",
+        "rid": "r1",
+        "ambiguous": true,
+        "reason": "The singular deictic target has two equally salient solids even though their numeric volumes happen to coincide. The adverb đều means each, not regular pyramid.",
+        "id": "f9"
+      },
+      "after": {
+        "role": "question",
+        "quotes": [
+          "Tính thể tích của chóp đó"
+        ],
+        "rid": "r1",
+        "ambiguous": true,
+        "id": "f9",
+        "kind": "unsupported",
+        "reason": "Source request has no faithful TypedFact representation; no nearby quantity substituted."
+      }
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "SEMANTIC_V3_RUNTIME_REVISION_VERIFICATION/1",
+  "date": "2026-10-18",
+  "branch": "research/semantic-extraction-v3-runtime-revision",
+  "product_commit": "283813b23afd5a3235cd5d944ef30ebbe9d0691a",
+  "review_fix_commit": "da5b407d850e73bf437a0b6c7177df4ab27e114b",
+  "protocol_lock_commit": "2b955ead0b0a1d2190395fe50627b0fc3f75f6da",
+  "offline_receipts_commit": "04b0db373380d980c82e7b7e58cb3fc51b71812f",
+  "detached_t3_commit": "04b0db373380d980c82e7b7e58cb3fc51b71812f",
+  "parent_checkpoint_commit": "7168d26963011433889dc907492df87ac62140f7",
+  "parent_lock_commit": "5c58774dbc57b3416337d97dab7db8ee1932894b",
+  "canonical_protocol_sha256": "4e0ec65e3f93f00c5dc41ebd0df20644661c25e56a50bbd87eb848d813c05a5b",
+  "parent_protocol_sha256": "f97af99e54aeb27bc18d244577ec01e92f137e164ff362339ba02a23247f9c68",
+  "product_sha256": "6ba9033bfca06d671cd27891e2dad06c7d44f365fed45527123c907d664b65ed",
+  "parent_product_sha256": "1ff71da76d999370897edd3a2dfaf161113e4d24f39dd41cda640ce2aa53dbc7",
+  "product_files": 110,
+  "identity_sha256": {
+    "flat-PILOT": "f9cbf39966c9b71280d388890944c678d47e1a6194d3efd515977ee5ce05070b",
+    "flat-LOCKED": "3377169ea0e58e4c8048581e894f8d7c8a52477cf3dd1d035e2c9809ec01aeb5",
+    "v3-PILOT": "6f97a22be91daea8b376dd9302025870be40a6bb83f47d04a81259664147ebe0",
+    "v3-LOCKED": "266c6ffa90adef2e18d9f299eaa61aea60f7027cc5ba33d6a42b105d84600d4f"
+  },
+  "offline_complete": 8,
+  "provider_live_calls": 0,
+  "status": "OFFLINE_COMPLETE_AUTHORITATIVE_T3_PASS_AWAITING_LIVE_PILOT_GO",
+  "targeted": {
+    "exit_code": 0,
+    "passed": 445,
+    "xfailed": 1,
+    "seconds": 46.89
+  },
+  "candidate_and_acceptance_matrix": {
+    "exit_code": 0,
+    "passed": 78,
+    "seconds": 55.53
+  },
+  "frontend_wave": {
+    "exit_code": 0,
+    "test_files": 68,
+    "passed": 1079,
+    "typecheck": "PASS",
+    "build": "PASS",
+    "seconds": 7.73
+  },
+  "demo": {
+    "exit_code": 0,
+    "cases": "5/5",
+    "reduced_chains": "1/1"
+  },
+  "crash_audit": {
+    "exit_code": 0,
+    "boundaries": "6/6",
+    "uncaught": 0
+  },
+  "oracle": {
+    "exit_code": 0,
+    "status": "PASS",
+    "dev": 12,
+    "heldout": 24,
+    "families": 20,
+    "requests": 65,
+    "semantic_mutations": 0
+  },
+  "full_backend_t3": {
+    "status": "PASS",
+    "exit_code": 0,
+    "passed": 10508,
+    "skipped": 1,
+    "deselected": 2,
+    "xfailed": 9,
+    "warnings": 1,
+    "seconds": 386.34,
+    "note": "Initial run with long --basetemp path (.superpowers/test-tmp/full-backend-t3-20261018) hit Windows MAX_PATH on test_runner_executes_both_real_adapters_with_separate_telemetry_and_resume[FULL_AB-288] (10507 passed, 1 failed). Re-verified on clean detached HEAD 04b0db37 with short --basetemp (.superpowers/b2): 10508 passed, 0 failed."
+  },
+  "authoritative_t3": {
+    "status": "FULL_PRODUCT_GATE_PASS",
+    "detached_commit": "04b0db373380d980c82e7b7e58cb3fc51b71812f",
+    "product_commit": "283813b23afd5a3235cd5d944ef30ebbe9d0691a",
+    "product_sha256": "6ba9033bfca06d671cd27891e2dad06c7d44f365fed45527123c907d664b65ed"
+  },
+  "docs_gates": {
+    "backend_information_architecture": {
+      "exit_code": 0,
+      "passed": 42
+    },
+    "frontend_code_index": {
+      "exit_code": 0,
+      "passed": 3
+    }
+  },
+  "local_logs": {
+    "targeted-green-20261018.log": {
+      "path": ".superpowers/targeted-green-20261018.log",
+      "sha256": "171a0f2ef5d9d7a770935e43732d707ec496e931a6dd6a5574e4ce0a3bcc75df",
+      "publication": "IGNORED_LOCAL_ONLY"
+    },
+    "frontend-wave-t3-20261018.log": {
+      "path": ".superpowers/frontend-wave-t3-20261018.log",
+      "sha256": "779e84733e7dc26899ffc50cd15f297a806580a6f15bd3e27ee75ff921bdfbc9",
+      "publication": "IGNORED_LOCAL_ONLY"
+    },
+    "full-backend-t3-20261018.log": {
+      "path": ".superpowers/full-backend-t3-20261018.log",
+      "sha256": "3cf7d2a7109301ff45ddca566a7034dfdc9e451c90e3a2069bba0a5b6f35c4fe",
+      "publication": "IGNORED_LOCAL_ONLY"
+    },
+    "full-backend-t3-clean-20261018.log": {
+      "path": ".superpowers/full-backend-t3-clean-20261018.log",
+      "sha256": "9930b33441dd6cc6b8a4f8ebbcfc2cef2c86b9d2567d312343a4b3808ea44782",
+      "publication": "IGNORED_LOCAL_ONLY"
+    },
+    "docs-gate-t3-20261018.log": {
+      "path": ".superpowers/docs-gate-t3-20261018.log",
+      "sha256": "665dae9e9f2f1e4f93064517f0e35d6b4e9f4e1595aff134e2afc037f08ecb4e",
+      "publication": "IGNORED_LOCAL_ONLY"
+    }
+  }
+}

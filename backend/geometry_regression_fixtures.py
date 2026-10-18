@@ -74,4 +74,9 @@ def locked_runner_surface(request, monkeypatch):
     from app.ai import fact_extraction as b, function_calling as a
 
     monkeypatch.setattr(a, "build_request", lambda text, mode="ANY": _with_text(data["A"], text))
-    monkeypatch.setattr(b, "build_request", lambda text: _with_text(data["B"], text))
+    def frozen_b(text, contract=None):
+        # The frozen surface IS the flat contract; a research contract (v3) must never be answered with it.
+        assert (contract or b.RESPONSE_CONTRACT) == "flat", f"frozen A/B surface is flat-only, got {contract!r}"
+        return _with_text(data["B"], text)
+
+    monkeypatch.setattr(b, "build_request", frozen_b)

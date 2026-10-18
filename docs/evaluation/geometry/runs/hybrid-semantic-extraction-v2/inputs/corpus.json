@@ -1,0 +1,1502 @@
+{
+  "schema": "semantic-extraction-corpus/2",
+  "independence": "INDEPENDENT_AI_AUTHORED_NOT_HUMAN_VALIDATED",
+  "cases": [
+    {
+      "id": "dev01",
+      "split": "dev",
+      "structure_id": "dev_rectangular_box_diagonal",
+      "source_text": "Một hộp chữ nhật ABCD.EFGH có AB = 6, BC = 8, AE = 10. Tính độ dài AG và diện tích mặt ABCD.",
+      "n_source_requests": 2,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "length",
+          "target": {
+            "points": [
+              "A",
+              "G"
+            ]
+          },
+          "source_quote": "độ dài AG",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "200"
+          },
+          "rid": "r1"
+        },
+        {
+          "intent": "calculate",
+          "quantity": "area",
+          "target": {
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "source_quote": "diện tích mặt ABCD",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "2304"
+          },
+          "rid": "r2"
+        }
+      ],
+      "semantic_notes": "Standard corresponding vertex order of a rectangular box; two distinct requested quantities."
+    },
+    {
+      "id": "dev02",
+      "split": "dev",
+      "structure_id": "dev_triorthogonal_tetrahedron",
+      "source_text": "Tứ diện OPQR có OP, OQ, OR đôi một vuông góc; OP = 2, OQ = 3, OR = 6. Hãy tính thể tích OPQR và khoảng cách từ O đến mặt phẳng (PQR).",
+      "n_source_requests": 2,
+      "entities": [
+        "O",
+        "P",
+        "Q",
+        "R"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "volume",
+          "target": {
+            "solid": "OPQR"
+          },
+          "source_quote": "thể tích OPQR",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "36"
+          },
+          "rid": "r1"
+        },
+        {
+          "intent": "calculate",
+          "quantity": "distance",
+          "target": {
+            "points_a": [
+              "O"
+            ],
+            "points_b": [
+              "P",
+              "Q",
+              "R"
+            ]
+          },
+          "source_quote": "khoảng cách từ O đến mặt phẳng (PQR)",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "18/7"
+          },
+          "rid": "r2"
+        }
+      ],
+      "semantic_notes": "All three orthogonality premises are explicit; volume is squared in oracle storage."
+    },
+    {
+      "id": "dev03",
+      "split": "dev",
+      "structure_id": "dev_square_corner_altitude",
+      "source_text": "Cho chóp S.ABCD, đáy ABCD là hình vuông cạnh 4; SA là đường cao của chóp và SA = 3. Tính diện tích tam giác SBC.",
+      "n_source_requests": 1,
+      "entities": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "area",
+          "target": {
+            "points": [
+              "S",
+              "B",
+              "C"
+            ]
+          },
+          "source_quote": "diện tích tam giác SBC",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "100"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "Altitude ownership belongs to S.ABCD and its foot is A."
+    },
+    {
+      "id": "dev04",
+      "split": "dev",
+      "structure_id": "dev_named_midpoint_opposite_edge",
+      "source_text": "Trong chóp S.ABC, tam giác ABC vuông tại A, AB = 6, AC = 8. SA vuông góc (ABC), SA = 5. Gọi M là trung điểm BC. Tính SM.",
+      "n_source_requests": 1,
+      "entities": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "M"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "length",
+          "target": {
+            "points": [
+              "S",
+              "M"
+            ]
+          },
+          "source_quote": "Tính SM",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "50"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "Named midpoint is defined by the source and retained as M."
+    },
+    {
+      "id": "dev05",
+      "split": "dev",
+      "structure_id": "dev_unnamed_base_centroid",
+      "source_text": "Chóp S.ABC có đáy ABC vuông tại A, AB = 9, AC = 12, SA vuông góc đáy và SA = 7. Tính khoảng cách từ trọng tâm tam giác ABC đến mặt phẳng (SAB).",
+      "n_source_requests": 1,
+      "entities": [
+        "S",
+        "A",
+        "B",
+        "C"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "distance",
+          "target": {
+            "point_kind": "centroid",
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "A",
+              "B"
+            ]
+          },
+          "source_quote": "khoảng cách từ trọng tâm tam giác ABC đến mặt phẳng (SAB)",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "16"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "No name is invented for the centroid; the operands are ABC."
+    },
+    {
+      "id": "dev06",
+      "split": "dev",
+      "structure_id": "dev_extension_named_line",
+      "source_text": "Tam giác ABC vuông tại A có AB = 3, AC = 4. P thuộc tia AB và AP = 6. Đặt d là đường thẳng BC. Tính khoảng cách từ P đến d.",
+      "n_source_requests": 1,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "P"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "distance",
+          "target": {
+            "points_a": [
+              "P"
+            ],
+            "points_b": [
+              "B",
+              "C"
+            ]
+          },
+          "source_quote": "khoảng cách từ P đến d",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "144/25"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "d is an infinite line, not the finite edge BC; P lies beyond B."
+    },
+    {
+      "id": "dev07",
+      "split": "dev",
+      "structure_id": "dev_projection_construction",
+      "source_text": "Cho tứ diện T.ABC với TA vuông góc mặt phẳng (ABC). Hãy dựng H là hình chiếu vuông góc của B lên đường thẳng TC, rồi giải thích vì sao BH vuông góc TC.",
+      "n_source_requests": 2,
+      "entities": [
+        "T",
+        "A",
+        "B",
+        "C",
+        "H"
+      ],
+      "requests": [
+        {
+          "intent": "construct",
+          "quantity": "projection",
+          "target": {
+            "point": "B",
+            "at": "H",
+            "points": [
+              "T",
+              "C"
+            ]
+          },
+          "source_quote": "dựng H là hình chiếu vuông góc của B lên đường thẳng TC",
+          "disposition": "capability_gap",
+          "oracle": null,
+          "rid": "r1"
+        },
+        {
+          "intent": "explain",
+          "quantity": "perpendicular",
+          "target": {
+            "points_a": [
+              "B",
+              "H"
+            ],
+            "points_b": [
+              "T",
+              "C"
+            ]
+          },
+          "source_quote": "giải thích vì sao BH vuông góc TC",
+          "disposition": "capability_gap",
+          "oracle": null,
+          "rid": "r2"
+        }
+      ],
+      "semantic_notes": "Construction and explanation are separate obligations; definition of orthogonal projection suffices mathematically, but these are outside numerical-answer scope."
+    },
+    {
+      "id": "dev08",
+      "split": "dev",
+      "structure_id": "dev_unresolved_deictic",
+      "source_text": "Với hình chóp ở bài trước, tính khoảng cách từ đỉnh đó đến mặt đáy.",
+      "n_source_requests": 1,
+      "entities": [],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "distance",
+          "target": {
+            "description": "Khoảng cách từ đỉnh đó đến mặt đáy của hình chóp ở bài trước"
+          },
+          "source_quote": "tính khoảng cách từ đỉnh đó đến mặt đáy",
+          "disposition": "missing_source",
+          "oracle": null,
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "Previous exercise and labels are absent; do not infer them from context outside this text."
+    },
+    {
+      "id": "dev09",
+      "split": "dev",
+      "structure_id": "dev_conditional_square_pyramid",
+      "source_text": "Cho chóp P.ABCD có đáy là hình vuông cạnh 6. Nếu PA là đường cao và PA = 4 thì hãy tính thể tích P.ABCD.",
+      "n_source_requests": 1,
+      "entities": [
+        "P",
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "volume",
+          "target": {
+            "solid": "P.ABCD"
+          },
+          "source_quote": "hãy tính thể tích P.ABCD",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "2304"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "The answer is conditional on the stated antecedent, not an unconditional altitude assertion."
+    },
+    {
+      "id": "dev10",
+      "split": "dev",
+      "structure_id": "dev_negated_regular_assumption",
+      "source_text": "Cho chóp S.ABCD có đáy ABCD là hình vuông cạnh 2 và SA = 5. Không giả sử chóp đều, cũng không biết chân đường cao. Có thể xác định duy nhất thể tích S.ABCD không?",
+      "n_source_requests": 1,
+      "entities": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "volume",
+          "target": {
+            "solid": "S.ABCD"
+          },
+          "source_quote": "Có thể xác định duy nhất thể tích S.ABCD không?",
+          "disposition": "missing_source",
+          "oracle": null,
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "A lateral segment is not a height; no unique volume follows. Negation must not become regular=true."
+    },
+    {
+      "id": "dev11",
+      "split": "dev",
+      "structure_id": "dev_cylinder_curved_surface",
+      "source_text": "Một hình trụ tròn xoay có bán kính đáy 3 và chiều cao 5. Tính diện tích mặt xung quanh hình trụ.",
+      "n_source_requests": 1,
+      "entities": [],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "unsupported",
+          "target": {
+            "description": "Diện tích mặt xung quanh hình trụ tròn xoay bán kính 3, chiều cao 5"
+          },
+          "source_quote": "Tính diện tích mặt xung quanh hình trụ",
+          "disposition": "unsupported",
+          "oracle": null,
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "Preserve the cylinder surface-area obligation; do not substitute a prism or silently return a polyhedral area."
+    },
+    {
+      "id": "dev12",
+      "split": "dev",
+      "structure_id": "dev_prove_not_premise",
+      "source_text": "Cho tứ diện ABCD. M và N lần lượt là trung điểm AB và AC. Chứng minh MN song song BC; sau đó mô phỏng việc kéo D trong khi A, B, C cố định.",
+      "n_source_requests": 2,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "M",
+        "N"
+      ],
+      "requests": [
+        {
+          "intent": "prove",
+          "quantity": "parallel",
+          "target": {
+            "points_a": [
+              "M",
+              "N"
+            ],
+            "points_b": [
+              "B",
+              "C"
+            ]
+          },
+          "source_quote": "Chứng minh MN song song BC",
+          "disposition": "capability_gap",
+          "oracle": null,
+          "rid": "r1"
+        },
+        {
+          "intent": "simulate",
+          "quantity": "motion",
+          "target": {
+            "description": "Kéo D với A, B, C cố định trong tứ diện ABCD"
+          },
+          "source_quote": "mô phỏng việc kéo D trong khi A, B, C cố định",
+          "disposition": "capability_gap",
+          "oracle": null,
+          "rid": "r2"
+        }
+      ],
+      "semantic_notes": "Parallelism is the conclusion to prove, never a given. Simulation is a second request."
+    },
+    {
+      "id": "held01",
+      "split": "heldout",
+      "structure_id": "held_cube_external_line_segment",
+      "source_text": "Cho lập phương ABCD.EFGH cạnh 4. X thuộc tia AB và AX = 8. Gọi d là đường thẳng BH. Tính khoảng cách từ X đến d.",
+      "n_source_requests": 1,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "X"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "distance",
+          "target": {
+            "points_a": [
+              "X"
+            ],
+            "points_b": [
+              "B",
+              "H"
+            ]
+          },
+          "source_quote": "khoảng cách từ X đến d",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "32/3"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "Line BH extends beyond B; the nearest point of the segment is B. Exact segment semantics must be preserved."
+    },
+    {
+      "id": "held02",
+      "split": "heldout",
+      "structure_id": "held_cube_external_line_segment",
+      "source_text": "Cho lập phương ABCD.EFGH cạnh 4. X thuộc tia AB và AX = 8. Tính khoảng cách ngắn nhất từ X đến đoạn thẳng BH.",
+      "n_source_requests": 1,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "X"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "distance",
+          "target": {
+            "points_a": [
+              "X"
+            ],
+            "points_b": [
+              "B",
+              "H"
+            ],
+            "domain": "segment"
+          },
+          "source_quote": "khoảng cách ngắn nhất từ X đến đoạn thẳng BH",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "16"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "Line BH extends beyond B; the nearest point of the segment is B. Exact segment semantics must be preserved."
+    },
+    {
+      "id": "held03",
+      "split": "heldout",
+      "structure_id": "held_cube_external_line_segment",
+      "source_text": "Cho lập phương ABCD.EFGH cạnh 4. X thuộc tia AB và AX = 8. So sánh khoảng cách từ X đến đường thẳng BH với khoảng cách từ X đến đoạn BH: hãy tính cả hai.",
+      "n_source_requests": 2,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "X"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "distance",
+          "target": {
+            "points_a": [
+              "X"
+            ],
+            "points_b": [
+              "B",
+              "H"
+            ]
+          },
+          "source_quote": "khoảng cách từ X đến đường thẳng BH",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "32/3"
+          },
+          "rid": "r1"
+        },
+        {
+          "intent": "calculate",
+          "quantity": "distance",
+          "target": {
+            "points_a": [
+              "X"
+            ],
+            "points_b": [
+              "B",
+              "H"
+            ],
+            "domain": "segment"
+          },
+          "source_quote": "khoảng cách từ X đến đoạn BH",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "16"
+          },
+          "rid": "r2"
+        }
+      ],
+      "semantic_notes": "Line BH extends beyond B; the nearest point of the segment is B. Exact segment semantics must be preserved."
+    },
+    {
+      "id": "held04",
+      "split": "heldout",
+      "structure_id": "held_regular_hexagonal_prism",
+      "source_text": "Lăng trụ đứng ABCDEF.A′B′C′D′E′F′ có đáy là lục giác đều cạnh 2, chiều cao bằng 5. Tính thể tích ABCDEF.A′B′C′D′E′F′.",
+      "n_source_requests": 1,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "A′",
+        "B′",
+        "C′",
+        "D′",
+        "E′",
+        "F′"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "volume",
+          "target": {
+            "solid": "ABCDEF.A′B′C′D′E′F′"
+          },
+          "source_quote": "thể tích ABCDEF.A′B′C′D′E′F′",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "2700"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "Rightness and base shape are independent properties. Six-label plane denotes the entire base; unnamed midpoint receives no fabricated label."
+    },
+    {
+      "id": "held05",
+      "split": "heldout",
+      "structure_id": "held_regular_hexagonal_prism",
+      "source_text": "Lăng trụ đứng ABCDEF.A′B′C′D′E′F′ có đáy là lục giác đều cạnh 2, chiều cao bằng 5. Tính diện tích đáy ABCDEF và độ dài AA′.",
+      "n_source_requests": 2,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "A′",
+        "B′",
+        "C′",
+        "D′",
+        "E′",
+        "F′"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "area",
+          "target": {
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ]
+          },
+          "source_quote": "diện tích đáy ABCDEF",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "108"
+          },
+          "rid": "r1"
+        },
+        {
+          "intent": "calculate",
+          "quantity": "length",
+          "target": {
+            "points": [
+              "A",
+              "A′"
+            ]
+          },
+          "source_quote": "độ dài AA′",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "25"
+          },
+          "rid": "r2"
+        }
+      ],
+      "semantic_notes": "Rightness and base shape are independent properties. Six-label plane denotes the entire base; unnamed midpoint receives no fabricated label."
+    },
+    {
+      "id": "held06",
+      "split": "heldout",
+      "structure_id": "held_regular_hexagonal_prism",
+      "source_text": "Lăng trụ đứng ABCDEF.A′B′C′D′E′F′ có đáy là lục giác đều cạnh 2, chiều cao bằng 5. Tính khoảng cách từ trung điểm AA′ đến mặt phẳng (ABCDEF).",
+      "n_source_requests": 1,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "A′",
+        "B′",
+        "C′",
+        "D′",
+        "E′",
+        "F′"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "distance",
+          "target": {
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "A′"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ]
+          },
+          "source_quote": "khoảng cách từ trung điểm AA′ đến mặt phẳng (ABCDEF)",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "25/4"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "Rightness and base shape are independent properties. Six-label plane denotes the entire base; unnamed midpoint receives no fabricated label."
+    },
+    {
+      "id": "held07",
+      "split": "heldout",
+      "structure_id": "held_two_pyramids_ownership",
+      "source_text": "Hai khối chóp P.ABCD và Q.EFGH có đáy ABCD là hình chữ nhật với AB = 3, BC = 4; đáy EFGH là hình vuông cạnh 6. PA là đường cao của P.ABCD, PA = 8; QE là đường cao của Q.EFGH, QE = 2. Tính thể tích của từng khối chóp.",
+      "n_source_requests": 2,
+      "entities": [
+        "P",
+        "A",
+        "B",
+        "C",
+        "D",
+        "Q",
+        "E",
+        "F",
+        "G",
+        "H"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "volume",
+          "target": {
+            "solid": "P.ABCD"
+          },
+          "source_quote": "thể tích của từng khối chóp",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "1024"
+          },
+          "rid": "r1"
+        },
+        {
+          "intent": "calculate",
+          "quantity": "volume",
+          "target": {
+            "solid": "Q.EFGH"
+          },
+          "source_quote": "thể tích của từng khối chóp",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "576"
+          },
+          "rid": "r2"
+        }
+      ],
+      "semantic_notes": "All dimensions belong to the explicitly named solid. In held08 the negative command excludes a P.ABCD request. For the rectangle, consecutive edge order follows the listed sides."
+    },
+    {
+      "id": "held08",
+      "split": "heldout",
+      "structure_id": "held_two_pyramids_ownership",
+      "source_text": "Hai khối chóp P.ABCD và Q.EFGH có đáy ABCD là hình chữ nhật với AB = 3, BC = 4; đáy EFGH là hình vuông cạnh 6. PA là đường cao của P.ABCD, PA = 8; QE là đường cao của Q.EFGH, QE = 2. Chỉ tính thể tích Q.EFGH; không tính thể tích P.ABCD.",
+      "n_source_requests": 1,
+      "entities": [
+        "P",
+        "A",
+        "B",
+        "C",
+        "D",
+        "Q",
+        "E",
+        "F",
+        "G",
+        "H"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "volume",
+          "target": {
+            "solid": "Q.EFGH"
+          },
+          "source_quote": "Chỉ tính thể tích Q.EFGH",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "576"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "All dimensions belong to the explicitly named solid. In held08 the negative command excludes a P.ABCD request. For the rectangle, consecutive edge order follows the listed sides."
+    },
+    {
+      "id": "held09",
+      "split": "heldout",
+      "structure_id": "held_two_pyramids_ownership",
+      "source_text": "Hai khối chóp P.ABCD và Q.EFGH có đáy ABCD là hình chữ nhật với AB = 3, BC = 4; đáy EFGH là hình vuông cạnh 6. PA là đường cao của P.ABCD, PA = 8; QE là đường cao của Q.EFGH, QE = 2. Giải thích vì sao không được dùng PA làm chiều cao của Q.EFGH; tính diện tích EFGH.",
+      "n_source_requests": 2,
+      "entities": [
+        "P",
+        "A",
+        "B",
+        "C",
+        "D",
+        "Q",
+        "E",
+        "F",
+        "G",
+        "H"
+      ],
+      "requests": [
+        {
+          "intent": "explain",
+          "quantity": "unsupported",
+          "target": {
+            "description": "Vì sao PA không phải chiều cao của Q.EFGH"
+          },
+          "source_quote": "Giải thích vì sao không được dùng PA làm chiều cao của Q.EFGH",
+          "disposition": "capability_gap",
+          "oracle": null,
+          "rid": "r1"
+        },
+        {
+          "intent": "calculate",
+          "quantity": "area",
+          "target": {
+            "points": [
+              "E",
+              "F",
+              "G",
+              "H"
+            ]
+          },
+          "source_quote": "tính diện tích EFGH",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "1296"
+          },
+          "rid": "r2"
+        }
+      ],
+      "semantic_notes": "All dimensions belong to the explicitly named solid. In held08 the negative command excludes a P.ABCD request. For the rectangle, consecutive edge order follows the listed sides."
+    },
+    {
+      "id": "held10",
+      "split": "heldout",
+      "structure_id": "held_tetra_barycentric_targets",
+      "source_text": "Tứ diện TABC có tam giác ABC vuông cân tại A, AB = AC = 6. O là trung điểm BC; TO vuông góc (ABC) và TO = 6. M là trung điểm AB. Tính TM.",
+      "n_source_requests": 1,
+      "entities": [
+        "T",
+        "A",
+        "B",
+        "C",
+        "O",
+        "M"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "length",
+          "target": {
+            "points": [
+              "T",
+              "M"
+            ]
+          },
+          "source_quote": "Tính TM",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "45"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "Named edge midpoint in a tetrahedron whose altitude foot is the opposite-edge midpoint."
+    },
+    {
+      "id": "held11",
+      "split": "heldout",
+      "structure_id": "held_tetra_barycentric_targets",
+      "source_text": "Tứ diện TABC có tam giác ABC vuông cân tại A, AB = AC = 6. O là trung điểm BC; TO vuông góc (ABC) và TO = 6. Tính khoảng cách từ trung điểm AB đến đường thẳng TO.",
+      "n_source_requests": 1,
+      "entities": [
+        "T",
+        "A",
+        "B",
+        "C",
+        "O"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "distance",
+          "target": {
+            "point_kind": "midpoint",
+            "points": [
+              "A",
+              "B"
+            ],
+            "points_b": [
+              "T",
+              "O"
+            ]
+          },
+          "source_quote": "khoảng cách từ trung điểm AB đến đường thẳng TO",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "9"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "Unnamed midpoint uses AB operands, not an invented M."
+    },
+    {
+      "id": "held12",
+      "split": "heldout",
+      "structure_id": "held_tetra_barycentric_targets",
+      "source_text": "Tứ diện TABC có tam giác ABC vuông cân tại A, AB = AC = 6. O là trung điểm BC; TO vuông góc (ABC) và TO = 6. G là trọng tâm tam giác ABC. Tính TG và thể tích TABC.",
+      "n_source_requests": 2,
+      "entities": [
+        "T",
+        "A",
+        "B",
+        "C",
+        "O",
+        "G"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "length",
+          "target": {
+            "points": [
+              "T",
+              "G"
+            ]
+          },
+          "source_quote": "Tính TG",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "38"
+          },
+          "rid": "r1"
+        },
+        {
+          "intent": "calculate",
+          "quantity": "volume",
+          "target": {
+            "solid": "TABC"
+          },
+          "source_quote": "thể tích TABC",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "1296"
+          },
+          "rid": "r2"
+        }
+      ],
+      "semantic_notes": "Centroid and altitude foot O differ; do not collapse them."
+    },
+    {
+      "id": "held13",
+      "split": "heldout",
+      "structure_id": "held_oblique_prism_edge_height",
+      "source_text": "Lăng trụ ABC.A′B′C′ có đáy ABC vuông tại A, AB = 4, AC = 3. Hình chiếu vuông góc của A′ lên (ABC) là H nằm trên đoạn AB, AH = 3; A′H = 4. Tính cạnh bên AA′ và thể tích ABC.A′B′C′.",
+      "n_source_requests": 2,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "A′",
+        "B′",
+        "C′",
+        "H"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "length",
+          "target": {
+            "points": [
+              "A",
+              "A′"
+            ]
+          },
+          "source_quote": "cạnh bên AA′",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "25"
+          },
+          "rid": "r1"
+        },
+        {
+          "intent": "calculate",
+          "quantity": "volume",
+          "target": {
+            "solid": "ABC.A′B′C′"
+          },
+          "source_quote": "thể tích ABC.A′B′C′",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "576"
+          },
+          "rid": "r2"
+        }
+      ],
+      "semantic_notes": "Projection data fixes an oblique prism. AA′=5 while prism height=4; do not infer right=true."
+    },
+    {
+      "id": "held14",
+      "split": "heldout",
+      "structure_id": "held_oblique_prism_edge_height",
+      "source_text": "Lăng trụ ABC.A′B′C′ có đáy ABC vuông tại A, AB = 4, AC = 3. Hình chiếu vuông góc của A′ lên (ABC) là H nằm trên đoạn AB, AH = 3; A′H = 4. Tính góc giữa AA′ và (ABC).",
+      "n_source_requests": 1,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "A′",
+        "B′",
+        "C′",
+        "H"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "angle",
+          "target": {
+            "points_a": [
+              "A",
+              "A′"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          "source_quote": "góc giữa AA′ và (ABC)",
+          "disposition": "answer",
+          "oracle": {
+            "cos_squared": "9/25"
+          },
+          "rid": "r1",
+          "response_form": "angle"
+        }
+      ],
+      "semantic_notes": "Projection data fixes an oblique prism. AA′=5 while prism height=4; do not infer right=true."
+    },
+    {
+      "id": "held15",
+      "split": "heldout",
+      "structure_id": "held_oblique_prism_edge_height",
+      "source_text": "Lăng trụ ABC.A′B′C′ có đáy ABC vuông tại A, AB = 4, AC = 3. Hình chiếu vuông góc của A′ lên (ABC) là H nằm trên đoạn AB, AH = 3; A′H = 4. Tính diện tích mặt bên ABB′A′.",
+      "n_source_requests": 1,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "A′",
+        "B′",
+        "C′",
+        "H"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "area",
+          "target": {
+            "points": [
+              "A",
+              "B",
+              "B′",
+              "A′"
+            ]
+          },
+          "source_quote": "diện tích mặt bên ABB′A′",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "256"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "Projection data fixes an oblique prism. AA′=5 while prism height=4; do not infer right=true."
+    },
+    {
+      "id": "held16",
+      "split": "heldout",
+      "structure_id": "held_cube_four_label_planes",
+      "source_text": "Cho lập phương ABCD.EFGH có cạnh 6. Tính khoảng cách từ B đến mặt phẳng (ACGE).",
+      "n_source_requests": 1,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "distance",
+          "target": {
+            "points_a": [
+              "B"
+            ],
+            "points_b": [
+              "A",
+              "C",
+              "G",
+              "E"
+            ]
+          },
+          "source_quote": "khoảng cách từ B đến mặt phẳng (ACGE)",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "18"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "All four source plane labels must survive extraction. For the angle the oracle stores cos squared, not the angle in degrees."
+    },
+    {
+      "id": "held17",
+      "split": "heldout",
+      "structure_id": "held_cube_four_label_planes",
+      "source_text": "Cho lập phương ABCD.EFGH có cạnh 6. Tính cos² của góc giữa AG và mặt phẳng (ABFE).",
+      "n_source_requests": 1,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "angle",
+          "target": {
+            "points_a": [
+              "A",
+              "G"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "F",
+              "E"
+            ]
+          },
+          "source_quote": "cos² của góc giữa AG và mặt phẳng (ABFE)",
+          "disposition": "answer",
+          "oracle": {
+            "cos_squared": "2/3"
+          },
+          "rid": "r1",
+          "response_form": "cos_squared"
+        }
+      ],
+      "semantic_notes": "All four source plane labels must survive extraction. For the angle the oracle stores cos squared, not the angle in degrees."
+    },
+    {
+      "id": "held18",
+      "split": "heldout",
+      "structure_id": "held_cube_four_label_planes",
+      "source_text": "Cho lập phương ABCD.EFGH có cạnh 6. Mặt phẳng (ACGE) cắt khối lập phương theo tứ giác ACGE. Tính diện tích thiết diện đó.",
+      "n_source_requests": 1,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "area",
+          "target": {
+            "solid": "ABCD.EFGH",
+            "points": [
+              "A",
+              "C",
+              "G",
+              "E"
+            ]
+          },
+          "source_quote": "diện tích thiết diện đó",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "2592"
+          },
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "All four source plane labels must survive extraction. For the angle the oracle stores cos squared, not the angle in degrees."
+    },
+    {
+      "id": "held19",
+      "split": "heldout",
+      "structure_id": "held_rectangle_intersection_workflow",
+      "source_text": "Cho chóp V.KLMN với đáy KLMN là hình chữ nhật, KL = 8, LM = 6, VK vuông góc (KLMN), VK = 4. I là giao điểm KM và LN. Dựng J là hình chiếu của I lên VK; tính VI.",
+      "n_source_requests": 2,
+      "entities": [
+        "V",
+        "K",
+        "L",
+        "M",
+        "N",
+        "I",
+        "J"
+      ],
+      "requests": [
+        {
+          "intent": "construct",
+          "quantity": "projection",
+          "target": {
+            "point": "I",
+            "at": "J",
+            "points": [
+              "V",
+              "K"
+            ]
+          },
+          "source_quote": "Dựng J là hình chiếu của I lên VK",
+          "disposition": "capability_gap",
+          "oracle": null,
+          "rid": "r1"
+        },
+        {
+          "intent": "calculate",
+          "quantity": "length",
+          "target": {
+            "points": [
+              "V",
+              "I"
+            ]
+          },
+          "source_quote": "tính VI",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "41"
+          },
+          "rid": "r2"
+        }
+      ],
+      "semantic_notes": "Projection construction and a computable segment must remain separate requests."
+    },
+    {
+      "id": "held20",
+      "split": "heldout",
+      "structure_id": "held_rectangle_intersection_workflow",
+      "source_text": "Cho chóp V.KLMN với đáy KLMN là hình chữ nhật, KL = 8, LM = 6, VK vuông góc (KLMN), VK = 4. I là giao điểm KM và LN. Tính thể tích V.KLMN. Cho phép người xem xoay mô hình quanh VK và giải thích I nằm ở đâu trong đáy.",
+      "n_source_requests": 3,
+      "entities": [
+        "V",
+        "K",
+        "L",
+        "M",
+        "N",
+        "I"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "volume",
+          "target": {
+            "solid": "V.KLMN"
+          },
+          "source_quote": "Tính thể tích V.KLMN",
+          "disposition": "answer",
+          "oracle": {
+            "value_squared": "4096"
+          },
+          "rid": "r1"
+        },
+        {
+          "intent": "interact",
+          "quantity": "motion",
+          "target": {
+            "description": "Người xem xoay mô hình quanh VK"
+          },
+          "source_quote": "Cho phép người xem xoay mô hình quanh VK",
+          "disposition": "capability_gap",
+          "oracle": null,
+          "rid": "r2"
+        },
+        {
+          "intent": "explain",
+          "quantity": "point_location",
+          "target": {
+            "point": "I",
+            "points": [
+              "K",
+              "L",
+              "M",
+              "N"
+            ]
+          },
+          "source_quote": "giải thích I nằm ở đâu trong đáy",
+          "disposition": "capability_gap",
+          "oracle": null,
+          "rid": "r3"
+        }
+      ],
+      "semantic_notes": "Three explicit obligations; the interactive command is not a numerical angle question."
+    },
+    {
+      "id": "held21",
+      "split": "heldout",
+      "structure_id": "held_rectangle_intersection_workflow",
+      "source_text": "Cho chóp V.KLMN với đáy KLMN là hình chữ nhật, KL = 8, LM = 6, VK vuông góc (KLMN), VK = 4. I là giao điểm KM và LN. Nếu U là giao điểm của đường thẳng VI với mặt phẳng (KLMN), hãy dựng U rồi chứng minh U trùng I.",
+      "n_source_requests": 2,
+      "entities": [
+        "V",
+        "K",
+        "L",
+        "M",
+        "N",
+        "I",
+        "U"
+      ],
+      "requests": [
+        {
+          "intent": "construct",
+          "quantity": "intersection",
+          "target": {
+            "point": "U",
+            "points_a": [
+              "V",
+              "I"
+            ],
+            "points_b": [
+              "K",
+              "L",
+              "M",
+              "N"
+            ]
+          },
+          "source_quote": "hãy dựng U",
+          "disposition": "capability_gap",
+          "oracle": null,
+          "rid": "r1"
+        },
+        {
+          "intent": "prove",
+          "quantity": "coincidence",
+          "target": {
+            "points": [
+              "U",
+              "I"
+            ]
+          },
+          "source_quote": "chứng minh U trùng I",
+          "disposition": "capability_gap",
+          "oracle": null,
+          "rid": "r2"
+        }
+      ],
+      "semantic_notes": "Conditional intersection definition must keep its role; the requested coincidence is not a premise."
+    },
+    {
+      "id": "held22",
+      "split": "heldout",
+      "structure_id": "held_abstention_boundary",
+      "source_text": "Cho lăng trụ đứng ABC.A′B′C′, đáy ABC là tam giác đều cạnh 4. Tính thể tích lăng trụ.",
+      "n_source_requests": 1,
+      "entities": [
+        "A",
+        "B",
+        "C",
+        "A′",
+        "B′",
+        "C′"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "volume",
+          "target": {
+            "solid": "ABC.A′B′C′"
+          },
+          "source_quote": "Tính thể tích lăng trụ",
+          "disposition": "missing_source",
+          "oracle": null,
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "Base area is fixed but prism height is absent; right prism does not mean all edges equal."
+    },
+    {
+      "id": "held23",
+      "split": "heldout",
+      "structure_id": "held_abstention_boundary",
+      "source_text": "Hai chóp S.ABC và T.DEF có đáy là tam giác đều cạnh 3; mỗi chóp đều có chiều cao 4. Tính thể tích của chóp đó.",
+      "n_source_requests": 1,
+      "entities": [
+        "S",
+        "A",
+        "B",
+        "C",
+        "T",
+        "D",
+        "E",
+        "F"
+      ],
+      "requests": [
+        {
+          "intent": "calculate",
+          "quantity": "volume",
+          "target": {
+            "description": "Thể tích của chóp đó: S.ABC hoặc T.DEF"
+          },
+          "source_quote": "Tính thể tích của chóp đó",
+          "disposition": "ambiguous",
+          "oracle": null,
+          "rid": "r1"
+        }
+      ],
+      "semantic_notes": "The singular deictic target has two equally salient solids even though their numeric volumes happen to coincide. The adverb đều means each, not regular pyramid."
+    },
+    {
+      "id": "held24",
+      "split": "heldout",
+      "structure_id": "held_abstention_boundary",
+      "source_text": "Cho chóp Z.ABCD có đáy ABCD là hình vuông. Gọi đường cong c là giao tuyến của mặt cầu tâm Z với mặt phẳng (ABCD). Hãy dựng c và tính độ dài c.",
+      "n_source_requests": 2,
+      "entities": [
+        "Z",
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "requests": [
+        {
+          "intent": "construct",
+          "quantity": "unsupported",
+          "target": {
+            "description": "Đường cong c là giao tuyến mặt cầu tâm Z với mặt phẳng ABCD"
+          },
+          "source_quote": "Hãy dựng c",
+          "disposition": "unsupported",
+          "oracle": null,
+          "rid": "r1"
+        },
+        {
+          "intent": "calculate",
+          "quantity": "unsupported",
+          "target": {
+            "description": "Độ dài đường cong c là giao tuyến mặt cầu tâm Z với mặt phẳng ABCD"
+          },
+          "source_quote": "tính độ dài c",
+          "disposition": "unsupported",
+          "oracle": null,
+          "rid": "r2"
+        }
+      ],
+      "semantic_notes": "Preserve both curved-intersection obligations; no sphere radius is supplied and no polygonal approximation is permitted."
+    }
+  ]
+}

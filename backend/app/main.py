@@ -11,13 +11,15 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import hmac
+import ipaddress
 from datetime import datetime, timezone
 from typing import Literal
 
-from fastapi import Cookie, FastAPI
+from fastapi import Cookie, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field
 
 from app.persistence.db import (
     SessionLocal,
@@ -51,7 +53,7 @@ from app.ingestion.image_extraction import (
     VisionUnavailable,
     extract_problem_from_image,
 )
-from app.ai.pipeline import run_pipeline
+from app.ai.pipeline import HYBRID_PREVIEW_TOKEN_MIN_LENGTH, RoutePolicy, route_policy_snapshot, run_pipeline
 from app.learner_messages import attach_learner_reason, learner_error_message
 from app.runtime_identity import runtime_identity
 from app.accounts import service as accounts_service
@@ -846,6 +848,11 @@ class AnalyzeBody(BaseModel):
     input: InputPayload
 
 
+class HybridPreviewBody(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    problem_text: str = Field(min_length=10, max_length=20000)
+
+
 class ImageExtractBody(BaseModel):
     """Ảnh đề bài cho TẦNG A của đường ảnh → mô phỏng.
 
@@ -867,12 +874,25 @@ def _cache_key(text: str) -> str:
     return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
 
 
-def _cache_lookup(session, key: str) -> SimulationCache | None:
-    """Exact cache hit CHỈ khi version còn tương thích (version-aware)."""
+def _policy_identity(route_policy: RoutePolicy) -> str:
+    """`policy_version` của hàng cache cho ảnh chụp tuyến (run `hybrid-pre-main-hardening`).
+
+    Mặc định = `CACHE_VERSION`, đúng như trước — hàng hiện có vẫn trúng, không cần bump. Chế độ khác =
+    `CACHE_VERSION:<băm 8 của chế độ + phiên bản các tầng>` ⇒ bật hay rollback một chế độ đều MISS (trước đây khoá chỉ
+    là băm đề, nên đổi chế độ vẫn trả envelope của chế độ kia). ≤ `String(16)` khi `CACHE_VERSION` ≤ 7 ký tự."""
+    if route_policy.hybrid_preview_enabled:
+        raise ValueError("Route D preview must never use the product cache")
+    fp = route_policy.fingerprint()
+    return CACHE_VERSION if fp is None else f"{CACHE_VERSION}:{fp}"
+
+
+def _cache_lookup(session, key: str, policy_version: str | None = None) -> SimulationCache | None:
+    """Exact cache hit CHỈ khi version còn tương thích (version-aware) và cùng identity tuyến."""
     row = session.query(SimulationCache).filter_by(key=key).first()
     if row is None:
         return None
-    if row.policy_version != CACHE_VERSION or row.dsl_version not in SUPPORTED_VERSIONS:
+    want = CACHE_VERSION if policy_version is None else policy_version
+    if row.policy_version != want or row.dsl_version not in SUPPORTED_VERSIONS:
         return None  # version lệch → miss, không dùng mù (row giữ lại để dọn)
     return row
 
@@ -963,6 +983,48 @@ def _cong_luot_thu(algosim_session: str | None) -> JSONResponse | None:
     return None
 
 
+@app.post("/api/preview/hybrid", include_in_schema=False)
+async def hybrid_preview(request: Request):
+    """Operator-only offline preview. No production cache, quota, credentials or provider transport.
+
+    The body is read and validated only AFTER the OFF and operator gates (a body parameter would make FastAPI answer
+    422 with the schema to disabled / unauthorized callers first)."""
+    policy = route_policy_snapshot(preview=True)
+    headers = {"Cache-Control": "no-store"}
+    if not policy.hybrid_preview_enabled:
+        return JSONResponse(status_code=404, headers=headers,
+                            content={"reason_code": "PREVIEW_DISABLED", "error": "Chế độ xem trước đang tắt."})
+    token = os.getenv("HYBRID_ROUTE_D_PREVIEW_TOKEN", "")
+    supplied = request.headers.get("X-AlgoSim-Preview-Token", "")
+    try:
+        local = request.client is not None and ipaddress.ip_address(request.client.host).is_loopback
+    except ValueError:
+        local = False
+    # CORS allows any origin and a page in the operator's browser connects from loopback, so loopback alone proves
+    # nothing; an operator tool sends no Origin header — refuse any request that carries one.
+    browser = request.headers.get("origin") is not None
+    if (browser or not local or len(token) < HYBRID_PREVIEW_TOKEN_MIN_LENGTH
+            or not hmac.compare_digest(token.encode(), supplied.encode())):
+        return JSONResponse(status_code=403, headers=headers,
+                            content={"reason_code": "PREVIEW_FORBIDDEN", "error": "Không được phép mở chế độ xem trước."})
+    try:
+        body = HybridPreviewBody.model_validate_json(await request.body())
+    except ValueError:   # pydantic ValidationError subclasses ValueError
+        return JSONResponse(status_code=422, headers=headers,
+                            content={"reason_code": "PREVIEW_BODY_INVALID", "error": "Yêu cầu xem trước không hợp lệ."})
+    # Declared Route D execution boundary, reached only after the OFF and operator gates.
+    from starlette.concurrency import run_in_threadpool
+
+    from app.ai.hybrid_preview import run_preview
+
+    result = await run_in_threadpool(
+        run_preview, body.problem_text, getattr(request.app.state, "hybrid_preview_fixtures", None), policy)
+    if result is None:
+        return JSONResponse(status_code=503, headers=headers, content={"reason_code": "OFFLINE_FIXTURE_REQUIRED",
+                            "error": "Chế độ xem trước chỉ chạy dữ liệu kiểm thử offline đã cấu hình trên máy chủ."})
+    return JSONResponse(content=result.model_dump(mode="json"), headers=headers)
+
+
 @app.post("/api/analyze")
 async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(default=None)):
     """M18 — CỔNG LƯỢT DÙNG THỬ ĐỨNG TRƯỚC MỌI THỨ KHÁC.
@@ -1005,8 +1067,11 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
     # Bước 2 — TẦNG 1 reuse (M7.13B): exact validated cache, version-aware.
     # Hit = 0 call LLM (tiết kiệm tối thiểu analyze + classify + simulate = 3).
     key = _cache_key(text)
+    # MỘT ảnh chụp tuyến cho cả lượt: tra cache, chạy pipeline, ghi cache cùng một chế độ.
+    tuyen = route_policy_snapshot()
+    dinh_danh = _policy_identity(tuyen)
     with SessionLocal() as session:
-        row = _cache_lookup(session, key)
+        row = _cache_lookup(session, key, dinh_danh)
         if row:
             row.hit_count += 1
             row.last_used_at = datetime.now(timezone.utc)
@@ -1071,6 +1136,7 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
             # chạy trong sản phẩm — xem `semantic_route_mode()`. Khoá bởi
             # `tests/test_semantic_route_wired_to_production.py`.
             semantic_route=semantic_route_mode(),
+            route_policy=tuyen,
         )
     except Exception as err:  # pipeline thất bại sau retry → báo người dùng
         # Chốt bản ghi TRƯỚC khi trả lỗi: lượt hỏng mới là lượt cần chẩn đoán,
@@ -1116,7 +1182,7 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
                     simulation_id=str(envelope.get("simulation_id", "")),
                     envelope_json=json.dumps(envelope, ensure_ascii=False),
                     dsl_version=DSL_VERSION,
-                    policy_version=CACHE_VERSION,
+                    policy_version=dinh_danh,
                 )
             )
             session.commit()

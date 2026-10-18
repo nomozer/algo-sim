@@ -1,0 +1,79 @@
+{
+ "covers": [
+  "refusal"
+ ],
+ "expected": {
+  "envelope_status": "unsupported",
+  "failure_category": "verification_gap",
+  "http_status": 200,
+  "reason_code": "GOAL_CLAUSE_NOT_PREMISE",
+  "refusal_cause": "UNKNOWN"
+ },
+ "id": "refusal-source-goal-as-premise",
+ "injection": null,
+ "kind": "refusal",
+ "producer": {
+  "adapter_version": "hybrid-preview-adapter/2",
+  "backend_app_dirty": false,
+  "commit": "f5f483bf093fa64f31f9a90b5ed08426d7bd8482",
+  "envelope_version": "hybrid-route-d-preview/1",
+  "inputs_dirty": false,
+  "product_commit": "bce21d8b5390b66302a2b80fd1c9e67f4b0deb16",
+  "source_fingerprint": {
+   "files": 111,
+   "measured_system_hash": "1b7a671326290f0b1da7d213d1399da2fe02ec7765f13f5057525362ff0f08fa",
+   "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+  }
+ },
+ "response": {
+  "envelope": {
+   "failure_category": "verification_gap",
+   "learner_reason": "Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình.",
+   "reason": "Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình.",
+   "reason_code": "GOAL_CLAUSE_NOT_PREMISE",
+   "refusal_cause": "UNKNOWN",
+   "status": "unsupported"
+  },
+  "route_d": {
+   "planner": {
+    "version": "geometry-fact-planner/7"
+   },
+   "runtime_identity": {
+    "adapter_version": "hybrid-preview-adapter/2",
+    "default_product_mode": "LLM_ONLY",
+    "enabled": true,
+    "engine_version": "geometry-function-engine/5",
+    "envelope_version": "hybrid-route-d-preview/1",
+    "extraction_surface": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "fingerprint": "741f6f6bdea1ae0d70fe324e8fae69b11cb35d6ea5f71a01978c065ee3ff6f8e",
+    "planner_version": "geometry-fact-planner/7",
+    "product_enablement": "NO-GO",
+    "provider_mode": "OFFLINE_FIXTURE_ONLY",
+    "registry_version": "geometry-functions/6",
+    "response_contract": "flat"
+   }
+  },
+  "schema_version": "hybrid-route-d-preview/1"
+ },
+ "response_sha256": "47e132f07778ab6dcd1a86cc38e204ed6fc069bdeafce64cbaf09a0d7e7fa68b",
+ "schema": "hybrid-preview-envelope-fixture/1",
+ "source": {
+  "input_sha256": "0a2243b5c8817d9f7524d9480164d249ba25466daa024407efa822e2129f39ee",
+  "origin": "tests/test_hybrid_preview_contract.py::CASES[source-goal-as-premise]",
+  "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+  "provider_body": {
+   "candidates": [
+    {
+     "content": {
+      "parts": [
+       {
+        "text": "{\"facts\": [{\"id\": \"f1\", \"kind\": \"solid\", \"role\": \"premise\", \"quotes\": [\"Cho hình chóp S.ABCD.\"], \"solid\": \"S.ABCD\", \"solid_type\": \"pyramid\"}, {\"id\": \"f2\", \"kind\": \"polygon_shape\", \"role\": \"premise\", \"quotes\": [\"Đáy ABCD là hình vuông cạnh 2.\"], \"points\": [\"A\", \"B\", \"C\", \"D\"], \"shape\": \"square\", \"value\": \"2\"}, {\"id\": \"f3\", \"kind\": \"perpendicular\", \"role\": \"premise\", \"quotes\": [\"SA vuông góc với (ABCD).\"], \"points_a\": [\"S\", \"A\"], \"points_b\": [\"A\", \"B\", \"C\", \"D\"]}, {\"id\": \"f4\", \"kind\": \"length\", \"role\": \"premise\", \"quotes\": [\"SA = 3.\"], \"points\": [\"S\", \"A\"], \"measure\": \"segment\", \"value\": \"3\"}, {\"id\": \"q\", \"kind\": \"question\", \"role\": \"prove\", \"quotes\": [\"Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.\"], \"quantity\": \"area\", \"point_kind\": \"midpoint\", \"points\": [\"S\", \"C\"], \"points_b\": [\"A\", \"B\"]}]}"
+       }
+      ]
+     },
+     "finishReason": "STOP"
+    }
+   ]
+  }
+ }
+}

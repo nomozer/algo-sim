@@ -1,0 +1,311 @@
+{
+  "schema": "SEMANTIC_V3_TAKEOVER_VERIFICATION/1",
+  "date": "2026-10-18",
+  "verified_commit": "5c58774dbc57b3416337d97dab7db8ee1932894b",
+  "branch": "research/semantic-extraction-v3",
+  "canonical_protocol_sha256": "f97af99e54aeb27bc18d244577ec01e92f137e164ff362339ba02a23247f9c68",
+  "lf_protocol_sha256": "dddb79c90371fe00948ef269ebfdc5a619435b34c8fca3c8cce1ed45853f117b",
+  "product_sha256": "1ff71da76d999370897edd3a2dfaf161113e4d24f39dd41cda640ce2aa53dbc7",
+  "product_files": 110,
+  "lock_checks": {
+    "locked_files": {
+      "count": 137,
+      "mismatches": []
+    },
+    "sources": {
+      "count": 10,
+      "mismatches": []
+    },
+    "reviews": {
+      "gold-oracle": {
+        "status": "PASS",
+        "receipt_matches": true,
+        "reviewed_files_match": true
+      },
+      "scorer": {
+        "status": "PASS",
+        "receipt_matches": true,
+        "reviewed_files_match": true
+      },
+      "candidate": {
+        "status": "PASS",
+        "receipt_matches": true,
+        "reviewed_files_match": true
+      }
+    }
+  },
+  "identity_sha256": {
+    "flat-PILOT": "f8fd924535b11683c3ce0e0dbdc257df497ba44af6df595ef39d02dd151473d2",
+    "flat-LOCKED": "e8557df257ecb41e523f5607405d2bdeca286c5a3bfb24b65b0ac8ab796e0165",
+    "v3-PILOT": "b44d2725a3dc93c115def78f79b25be92ceab1cbd320f80a7c3a868c79bed0c8",
+    "v3-LOCKED": "a63699fbc91ed8a4269e94b0bba1d736437d344a3bbfc3a2f10878bf6b038492"
+  },
+  "offline_complete": 0,
+  "provider_live_calls_this_takeover": 0,
+  "status": "PARTIAL_PROTOCOL_RUNTIME_BLOCKER",
+  "targeted": {
+    "exit_code": 0,
+    "passed": 394,
+    "xfailed": 1
+  },
+  "frontend_wave": {
+    "exit_code": 0,
+    "test_files": 68,
+    "passed": 1079,
+    "typecheck": "PASS",
+    "build": "PASS"
+  },
+  "demo": {
+    "exit_code": 0,
+    "cases": "5/5",
+    "reduced_chains": "1/1"
+  },
+  "crash_audit": {
+    "exit_code": 0,
+    "boundaries": "6/6",
+    "uncaught": 0
+  },
+  "oracle": {
+    "exit_code": 0,
+    "dev": 12,
+    "heldout": 24,
+    "families": 20,
+    "requests": 65,
+    "semantic_mutations": 0
+  },
+  "selfcheck": {
+    "exit_code": 0,
+    "status": "PASS"
+  },
+  "full_backend": {
+    "status": "PASS",
+    "exit_code": 0,
+    "passed": 10455,
+    "skipped": 1,
+    "deselected": 2,
+    "xfailed": 9,
+    "warnings": 1,
+    "seconds": 388.32
+  },
+  "authoritative_t3": {
+    "status": "NOT_RUN",
+    "reason": "Offline prerequisites blocked; no new detached worktree created under the takeover constraint."
+  },
+  "docs_gates": {
+    "frontend_code_index": {
+      "exit_code": 0,
+      "passed": 3
+    },
+    "backend_information_architecture": {
+      "exit_code": 0,
+      "passed": 42
+    }
+  },
+  "regex_probe": {
+    "kind": "SYNTHETIC_RUNTIME_DIAGNOSTIC_NOT_EVALUATION",
+    "provider_calls": 0,
+    "observations": [
+      {
+        "spaces": 10,
+        "seconds": 0.000287,
+        "exit_code": 0
+      },
+      {
+        "spaces": 15,
+        "seconds": 0.009313,
+        "exit_code": 0
+      },
+      {
+        "spaces": 20,
+        "seconds": 0.300077,
+        "exit_code": 0
+      },
+      {
+        "spaces": 25,
+        "status": "TIMEOUT_3_SECONDS"
+      }
+    ]
+  },
+  "original_job": {
+    "task": "bufr6nkj1",
+    "session": "d7fb884f-9be0-4697-9dec-ab6b894d0ec5",
+    "started_local": "2026-10-17T23:18:36+07:00",
+    "status": "RUNNING_STALLED",
+    "pid_chain": [
+      5684,
+      1304,
+      10692,
+      21180,
+      16508
+    ],
+    "active_thread": 18448,
+    "active_frame": "registry.py:1284 _vung_hoi",
+    "case_id": "h07",
+    "split": "heldout",
+    "exit_code": "UNKNOWN",
+    "output_destinations_exist": false,
+    "killed": false,
+    "duplicated": false,
+    "log_path": "C:\\Users\\Bunny\\AppData\\Local\\Temp\\claude\\d--Documents-projects-algo-sim\\d7fb884f-9be0-4697-9dec-ab6b894d0ec5\\tasks\\bufr6nkj1.output",
+    "log_sha256": "08ac45c04abf3617ee722c0483cb1f27d1440202385015e85794cac27903378b",
+    "final_process_snapshot": [
+      {
+        "ProcessId": 5684,
+        "ParentProcessId": 18144,
+        "Name": "bash.exe",
+        "CreationDate": "2026-10-17T23:18:36.911925+07:00",
+        "UserModeTime": 0,
+        "KernelModeTime": 156250,
+        "WriteTransferCount": 0
+      },
+      {
+        "ProcessId": 1304,
+        "ParentProcessId": 5684,
+        "Name": "bash.exe",
+        "CreationDate": "2026-10-17T23:18:36.924138+07:00",
+        "UserModeTime": 156250,
+        "KernelModeTime": 312500,
+        "WriteTransferCount": 787
+      },
+      {
+        "ProcessId": 10692,
+        "ParentProcessId": 1304,
+        "Name": "bash.exe",
+        "CreationDate": "2026-10-17T23:18:36.972534+07:00",
+        "UserModeTime": 156250,
+        "KernelModeTime": 0,
+        "WriteTransferCount": 0
+      },
+      {
+        "ProcessId": 21180,
+        "ParentProcessId": 10692,
+        "Name": "python.exe",
+        "CreationDate": "2026-10-17T23:18:36.994195+07:00",
+        "UserModeTime": 0,
+        "KernelModeTime": 0,
+        "WriteTransferCount": 0
+      },
+      {
+        "ProcessId": 16508,
+        "ParentProcessId": 21180,
+        "Name": "python.exe",
+        "CreationDate": "2026-10-17T23:18:37.008383+07:00",
+        "UserModeTime": 64999218750,
+        "KernelModeTime": 166562500,
+        "WriteTransferCount": 0
+      }
+    ]
+  },
+  "offline_matrix": [
+    {
+      "action": "gold",
+      "arm": "flat",
+      "mode": "PILOT",
+      "status": "RUNNING_STALLED",
+      "exit_code": "UNKNOWN",
+      "score_path": "results/offline/gold-flat-PILOT/score.json",
+      "receipt_exists": false,
+      "metrics": "UNKNOWN"
+    },
+    {
+      "action": "replay",
+      "arm": "flat",
+      "mode": "PILOT",
+      "status": "NOT_STARTED",
+      "exit_code": "NOT_RUN",
+      "score_path": "results/offline/replay-flat-PILOT/score.json",
+      "receipt_exists": false,
+      "metrics": "UNKNOWN"
+    },
+    {
+      "action": "gold",
+      "arm": "v3",
+      "mode": "PILOT",
+      "status": "NOT_STARTED",
+      "exit_code": "NOT_RUN",
+      "score_path": "results/offline/gold-v3-PILOT/score.json",
+      "receipt_exists": false,
+      "metrics": "UNKNOWN"
+    },
+    {
+      "action": "replay",
+      "arm": "v3",
+      "mode": "PILOT",
+      "status": "NOT_STARTED",
+      "exit_code": "NOT_RUN",
+      "score_path": "results/offline/replay-v3-PILOT/score.json",
+      "receipt_exists": false,
+      "metrics": "UNKNOWN"
+    },
+    {
+      "action": "gold",
+      "arm": "flat",
+      "mode": "LOCKED",
+      "status": "NOT_STARTED",
+      "exit_code": "NOT_RUN",
+      "score_path": "results/offline/gold-flat-LOCKED/score.json",
+      "receipt_exists": false,
+      "metrics": "UNKNOWN"
+    },
+    {
+      "action": "replay",
+      "arm": "flat",
+      "mode": "LOCKED",
+      "status": "NOT_STARTED",
+      "exit_code": "NOT_RUN",
+      "score_path": "results/offline/replay-flat-LOCKED/score.json",
+      "receipt_exists": false,
+      "metrics": "UNKNOWN"
+    },
+    {
+      "action": "gold",
+      "arm": "v3",
+      "mode": "LOCKED",
+      "status": "NOT_STARTED",
+      "exit_code": "NOT_RUN",
+      "score_path": "results/offline/gold-v3-LOCKED/score.json",
+      "receipt_exists": false,
+      "metrics": "UNKNOWN"
+    },
+    {
+      "action": "replay",
+      "arm": "v3",
+      "mode": "LOCKED",
+      "status": "NOT_STARTED",
+      "exit_code": "NOT_RUN",
+      "score_path": "results/offline/replay-v3-LOCKED/score.json",
+      "receipt_exists": false,
+      "metrics": "UNKNOWN"
+    }
+  ],
+  "local_logs": {
+    "frontend-wave-20261018.log": {
+      "path": ".superpowers/frontend-wave-20261018.log",
+      "sha256": "5cb259acdf3415f962d3a4bbcb0b69a5952379ebb30fb83007f2ca8ffe205fdc",
+      "publication": "IGNORED_LOCAL_ONLY"
+    },
+    "docs-gate-20261018.log": {
+      "path": ".superpowers/docs-gate-20261018.log",
+      "sha256": "a78ee4fdba166e170e858fefb28a619b5676ba68de83f518635133062bd91b3b",
+      "publication": "IGNORED_LOCAL_ONLY"
+    },
+    "full-backend-20261018.log": {
+      "path": ".superpowers/full-backend-20261018.log",
+      "sha256": "ba0c55198f2a001a5b4ebe9e11c6ed7d86ca25f0f2ce12b36ba6b20c0d41125d",
+      "publication": "IGNORED_LOCAL_ONLY"
+    }
+  },
+  "observed_at": "2026-10-18T01:08:09.040325+07:00",
+  "commands": {
+    "targeted": "python -B -m pytest tests/geometry/test_schema_contract_v3.py tests/geometry/test_schema_contract_evaluation.py tests/geometry/test_semantic_extraction_evaluation.py tests/geometry/test_semantic_extraction_v2_grounding.py tests/geometry/test_nlu_extraction_evaluation.py tests/geometry/test_hybrid_ab_pilot_runner.py tests/geometry/test_source_grounding_review.py tests/geometry/test_source_grounding_reliability.py tests/geometry/test_source_grounding_closure.py -q -p no:cacheprovider --basetemp ../.superpowers/test-tmp/targeted-20261018 --tb=short",
+    "backend": "python -B -m pytest -q -p no:cacheprovider --basetemp ../.superpowers/test-tmp/full-backend-20261018 --tb=short",
+    "frontend": "npm run test:wave",
+    "demo": "python -B scripts/replay_demo_cases.py",
+    "crash": "python -B scripts/audit_demo_crash_surface.py",
+    "oracle": "python -B docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/oracle.py",
+    "selfcheck": "python -B docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/selfcheck_protocol.py",
+    "candidate": "python -B backend/scripts/freeze_evaluation_candidate.py --verify",
+    "docs_frontend": "npx vitest run src/code-index-sync.test.ts",
+    "docs_backend": "python -B -m pytest tests/geometry/test_docs_information_architecture.py -q -p no:cacheprovider --basetemp ../.superpowers/test-tmp/docs-20261018 --tb=short"
+  }
+}

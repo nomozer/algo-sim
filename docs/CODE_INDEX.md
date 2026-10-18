@@ -1,5 +1,53 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Hybrid preview contract hardening (research/hybrid-preview-contract-hardening, Hybrid product off)
+
+Run `docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/`; frontend data contract
+`docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md`.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/ai/hybrid_preview.py` | `ADAPTER_VERSION = hybrid-preview-adapter/2`. `classify_refusal(code, planner, *, adapter, problem_text)` → `RefusalClass(group, failure_category, refusal_cause, message)`. The table `_NHOM` groups each refusal code by what failed (CAPABILITY — including Route D's extraction escape `OUT_OF_SCOPE` —, MISSING_DATA, INVALID_DATA, SOURCE_UNVERIFIED, RESULT_UNVERIFIED, INCONCLUSIVE, EXTRACTION_FAILED, INTEGRITY) into existing categories only; the preview never emits `out_of_scope`. FALLBACK is `geometry_generation_failed`, never `capability_gap`. Every refusal envelope carries `refusal_cause`: SOURCE only via `_de_ghi_do_dai_khong_duong(problem_text)` (`refusal_cause.do_dai_de_ghi_khong_duong`). The proof-text backstop matches on a detection copy (`_ban_do`: NFKC, `Cf` and uncomposed `Mn` dropped, dashes and minus signs folded; `_` counts as a separator) and never changes the served text. | `backend/tests/test_hybrid_preview_contract.py` (source-scan lock: every literal Route D / kernel refusal code is classified) |
+| `backend/scripts/export_hybrid_preview_fixtures.py` | `--out` / `--verify` of the offline envelope fixtures. Runs the real endpoint in-process with an ephemeral token, the network blocked and committed inputs only; refuses to overwrite or to export from an uncommitted `backend/app` or input (`INPUT_PATHS`). The contract bundle is `fixtures-adapter-2/` (`fixtures/` superseded). Each fixture records source + `input_sha256`, producer (commit, product commit, `measured_system_hash`, adapter/envelope versions), expected outcome, response + `response_sha256`. | `backend/tests/test_hybrid_preview_fixtures.py` |
+
+## Route D offline preview (research/hybrid-route-d-preview-wiring, Hybrid product off)
+
+Run `docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/`; contract `docs/architecture/HYBRID_ROUTE_D_PREVIEW.md`.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/ai/hybrid_preview.py` | The ONE Route D preview boundary: `preview_identity(contract)` (Registry/Planner/Engine versions, extraction surface, adapter/envelope versions, `OFFLINE_FIXTURE_ONLY`), `preview_runtime_identity(policy)`, `run_preview(problem_text, fixtures, policy)` (server fixture data only, no transport), `adapt_result` → `HybridPreviewEnvelope` (`hybrid-route-d-preview/1`: validated semantic envelope + `route_d` metadata: Geometry IR, exact answers, provenance, trace, planner goal checks, `length_unit`); refusals `PREVIEW_*` incl. `PREVIEW_IDENTITY_CHANGED`. | `backend/tests/test_hybrid_preview_api.py` |
+| `backend/app/main.py` | `POST /api/preview/hybrid` (async; OFF 404 → operator gate 403 → body validation → threadpool), `HybridPreviewBody`; `_policy_identity` raises for a preview policy (never the product cache). | `test_hybrid_preview_api.py` |
+| `backend/app/ai/pipeline.py` | `RoutePolicy.hybrid_preview_enabled` / `response_contract` / `preview_surface`; `route_policy_snapshot(env, *, preview=False)` — only `preview=True` callers (the endpoint, diagnostics) can enable it. | `test_hybrid_preview_api.py::test_preview_policy_does_not_change_analyze_or_default_cache_identity` |
+| `backend/app/runtime_identity.py` | `route_policy` and `hybrid_route_d_preview` fields of `/api/health` / `/api/diagnostics/runtime`: preview OFF ⇒ `{"enabled": false}` and NO Route D import; ON ⇒ versions, surface, fingerprint, `token_configured` (Route D metadata modules load; extraction/planning never run). `HYBRID_PREVIEW_TOKEN_MIN_LENGTH` lives in `ai/pipeline.py`. | `test_hybrid_preview_api.py::test_health_with_preview_off_never_loads_route_d`, `::test_diagnostics_*` |
+
+## Pre-main hardening of the Hybrid candidate (research/hybrid-pre-main-hardening, Hybrid off)
+
+Run `docs/evaluation/geometry/runs/hybrid-pre-main-hardening/`, on top of `research/hybrid-backend-integration` `2620cffa`.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/ai/pipeline.py` | `RoutePolicy` (frozen route snapshot of one analyze: `geometry_compiler_mode`, `env()`, `fingerprint()` = `None` in the default mode, else 8 hex of mode + compiler-layer versions), `route_policy_snapshot(env=None)`; `run_pipeline(..., route_policy=None)` threads it to `_chay_duong_hinh_hoc` → `_semantic_route_attempt` → `quyet_dinh_dinh_tuyen(contract, route_policy.env())`. The compiler routing gate is imported explicitly (no `__import__`). | `backend/tests/test_route_aware_cache.py`; `backend/tests/geometry/test_structured_geometry_relations.py::test_Y_*` |
+| `backend/app/main.py` | `_policy_identity(route_policy)` (= `CACHE_VERSION` in the default mode; `CACHE_VERSION:<fingerprint>` otherwise); `_cache_lookup(session, key, policy_version=None)`; `/api/analyze` takes ONE snapshot for lookup, pipeline and store. | `backend/tests/test_route_aware_cache.py` |
+| `backend/scripts/cache_clear.py` | `con_hieu_luc(policy_version, cache_version)` — a row is current for SOME route mode (`CACHE_VERSION` or `CACHE_VERSION:<fp>`); `--liet-ke` / `--cu` use it. | `test_route_aware_cache.py::test_cache_clear_khong_coi_hang_cua_che_do_khac_la_cu` |
+| `backend/app/simulation/geometry_compiler/routing.py` | `dinh_danh_be_mat(che)` — versions of the compiler layers that decide output in mode `che` (`{}` unless `DETERMINISTIC_FIRST`), read at call time. | `test_route_aware_cache.py::test_identity_compiler_doi_khi_phien_ban_compiler_doi_va_vua_cot` |
+| `backend/app/ai/fact_extraction.py` | `run_ai_fact_route(problem_text, transport, contract=None)` resolves the response contract once per call (request, surface and v3 gate agree). | `test_hybrid_backend_integration.py::test_response_contract_is_one_snapshot_per_call` |
+| `backend/app/simulation/geometry_functions/registry.py` | `doc_so` refuses a zero length as `NON_POSITIVE_LENGTH` (route A and B). | `test_hybrid_backend_integration.py::test_zero_length_*` |
+| `backend/app/simulation/geometry/metric.py` · `geometry_functions/engine.py` | `Metric.__post_init__` enforces symmetric positive definite (Sylvester, exact; `METRIC_NOT_EUCLIDEAN`); `_Dung.metric()` maps it to a coded refusal for every caller. | `test_hybrid_backend_integration.py::test_product_metric_type_rejects_non_spd_gram_matrices`, `::test_engine_*` |
+| `backend/tests/geometry/test_hybrid_backend_integration.py` | `test_174_historical_answers_regression_and_independent_source_expectations` (regression vs `regression-174.json` SEPARATE from source-corpus expectations; `CAPABILITY_GAPS_174`), `_timeline_violations` + `test_timeline_dependency_closure_on_every_served_scene`, two-different-midpoints ownership case. | itself |
+
+## Hybrid backend integration candidate (research/hybrid-backend-integration, Hybrid off)
+
+Run `docs/evaluation/geometry/runs/hybrid-backend-integration/`; combines `semantic-extraction-v3-runtime-revision` (`bb014eb8`), `contract-driven-goal-composition` (`a629ebee`), and `step-math-validation` (`0dd1da5c`) at product commit `7507312b`.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/registry.py` (`geometry-functions/6`) | Possessive regex `_SAU_HOP_LE` preventing question-tail backtracking (`h07`); `PlanningContract` metadata for `AnswerAngleLinePlane` and `AnswerArea`; multi-goal certificate list validation in `_kiem_result_binding` (`list[dict]`, shared auxiliary bindings, target uniqueness, non-collinear area checks) | `backend/tests/geometry/test_hybrid_backend_integration.py`, `backend/tests/geometry/test_contract_driven_goal_composition.py`, `backend/tests/geometry/test_question_tail_runtime.py` |
+| `backend/app/simulation/geometry_functions/planner.py` (`geometry-fact-planner/7`) | `_cau_hoi_danh_sach`, `_hoach_dinh_danh_sach_muc_tieu` (multi-goal composition with shared construction deduplication and strict budget cap across goals); `_doc_muc_tieu_dien_tich`, `_doc_muc_tieu_goc` | `backend/tests/geometry/test_hybrid_backend_integration.py`, `backend/tests/geometry/test_contract_driven_goal_composition.py` |
+| `backend/app/simulation/geometry_functions/engine.py` (`geometry-function-engine/5`) | `_Dung.goc2_duong_mat`, `_Dung.dt2_tam_giac`, `_Dung.kiem_chuoi_hieu_ung` (per-goal exact Gram verification for `AnswerDistance`, `AnswerLength`, `AnswerAngleLinePlane`, `AnswerArea`) | `backend/tests/geometry/test_hybrid_backend_integration.py`, `backend/tests/geometry/test_contract_driven_goal_composition.py` |
+| `backend/scripts/audit_step_math_validation.py` | Independent exact SymPy/Gram step-by-step mathematical oracle (`kiem_tra_toan_hoc_scene`) auditing 148 baseline scenes + 88 combined/discovery scenes + 10 counterexamples + 10 non-SPD/degenerate metric guards (never falls back to Euclidean `IDENTITY_METRIC`) | `backend/tests/geometry/test_step_math_validation.py`, `backend/tests/geometry/test_hybrid_backend_integration.py` |
+| `backend/scripts/measure_goal_composition.py` · `backend/scripts/run_schema_contract_evaluation.py` · `backend/scripts/run_schema_contract_offline.py` | Slice A/B goal-composition harness (`40/40`); split-before-evaluate `PILOT`/`LOCKED` schema-contract evaluation runner and 8-cell subprocess watchdog offline runner (`ALLOW_LIVE_AI=0`) | `backend/tests/geometry/test_schema_contract_evaluation.py`, `backend/tests/geometry/test_schema_contract_offline.py`, `backend/tests/geometry/test_hybrid_backend_integration.py` |
+
 ## Hybrid semantic grounding reliability (research, Hybrid off)
 
 Run `docs/evaluation/geometry/runs/hybrid-semantic-grounding-reliability/`; frozen corpus/oracle at `2e08922a`.
@@ -1184,7 +1232,8 @@ request thật mang lược đồ gửi ở biên HTTP · hậu kiểm 502 khôn
 FastAPI: `POST /api/analyze`, `POST /api/image/extract`, `GET /api/health`, `GET /api/diagnostics/*`
 (*repo-cleanup:* `/api/edit` gỡ ở LEGACY_INFORMATICS_REMOVAL, `/api/explain` gỡ ở `repo-cleanup` — khoá 404 ở
 `test_api.py::test_endpoint_tutor_flow_da_xoa`; `/api/manifest` không còn). Exports: `app`, `CACHE_VERSION`,
-`_cache_key`, `_cache_lookup`. Tests: `test_api.py` (`test_edit.py` gỡ cùng `/api/edit`).
+`_cache_key`, `_cache_lookup`, `_policy_identity` (cache theo tuyến — run `hybrid-pre-main-hardening`). Tests: `test_api.py`,
+`test_route_aware_cache.py` (`test_edit.py` gỡ cùng `/api/edit`).
 Notes: **bump `CACHE_VERSION`** khi đổi policy classify/manifest/prompt.
 2026-09-13 (PHOTO_PROBLEM_TO_SCENE_END_TO_END): thêm `POST /api/image/extract`
 (`ImageExtractBody`: `content` base64, `mime_type`, `filename` — KHÔNG vào khoá
@@ -3060,7 +3109,8 @@ Tests: `tests/geometry/test_curved_foundation.py` (63)
 ### `backend/app/simulation/geometry/metric.py` · offline (exact-dimensions)
 
 **METRIC CỦA KHUNG** — bố cục chương trình là khung AFFINE ℚ³; độ dài theo ma trận Gram hữu tỉ G (`Metric`: `dot`,
-`vector` = G⁻¹n, `covector` = Gv, `det`, `as_json`). Một metric mỗi lượt chạy, giữ trong context (`using`);
+`vector` = G⁻¹n, `covector` = Gv, `det`, `as_json`; từ `hybrid-pre-main-hardening` chính kiểu `Metric` từ chối G không đối
+xứng / không xác định dương — `METRIC_NOT_EUCLIDEAN`). Một metric mỗi lượt chạy, giữ trong context (`using`);
 mặc định `None` = đồng nhất và mọi helper (`dot`, `norm_sq`, `normal_vector`, `plane_covector`, `conorm_sq`,
 `area_sq_from_cross_sum`, `volume_det_factor_sq`) trả ĐÚNG biểu thức cũ của kernel. `gram_from_lengths` — G duy nhất
 từ bốn điểm khung độc lập affine + sáu độ dài² (G = E⁻ᵀKE⁻¹, Sylvester, tự kiểm sáu cạnh); `require_euclidean` — khối
@@ -6418,6 +6468,34 @@ Run `docs/evaluation/geometry/runs/w17-operation-annotations/`. Thẩm quyền �
 | Fake certification | `backend/scripts/certify_hybrid_ab_pilot.py` | Dùng real adapters, fixture responses; chặn socket/HTTP; 24+288 fake; không đo Gemini | fixtures → `fake-provider/verified/CERTIFICATION.json` | script `--out-dir` thư mục mới |
 | Adversarial safety / mutation | `backend/tests/geometry/test_hybrid_safety_readiness.py`, `backend/tests/geometry/test_hybrid_ab_pilot_mutations.py`, `backend/tests/geometry/fixtures/hybrid_safety_oracles.json` | Literal independent grounding/checker oracles, guard-removal mutants trong bộ nhớ; proof-only/negation boundary | real A/B routes → assertions | pytest 3 hybrid test modules |
 | Current candidate divergence | `docs/evaluation/geometry/runs/hybrid-ab-pilot-readiness/inputs/candidate_divergence.json` | Correction của khai báo hybrid cũ, không sửa historical artifact | measured system hash → `backend/tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI` | exact hash guard + candidate `--verify` |
+
+### Semantic extraction v3 / Schema-Contract — run semantic-extraction-schema-contract (2026-10-17, research branch)
+
+Runtime revision (2026-10-18): run `semantic-extraction-v3-runtime-revision`; shared `_SAU_HOP_LE` uses a possessive
+separator to prevent exponential backtracking without widening the accepted language. `harness(arm, inp, mode)` in
+`run_schema_contract_evaluation.py` selects the schedule's cases before GOLD/replay and reference GOLD routing;
+whole-artifact identity and source order remain. Historical scorer/executor unchanged.
+`backend/scripts/run_schema_contract_offline.py` runs eight offline children sequentially with actual exits, a
+120-second process-tree watchdog and manifest/score/schedule checks; it stops on the first failure and refuses overwrite.
+Tests: `test_question_tail_runtime.py`, `test_schema_contract_evaluation.py`, `test_schema_contract_offline.py`.
+The revision's `inputs/prepare_protocol.py` reuses parent lock/review helpers, copies corpus/gold byte-for-byte, binds
+the unchanged original oracle/scorer plus corrected product/runner, and refuses repeat lock or stale review.
+
+| Thành phần | Path | Purpose · authority | Producer → consumer | Verify |
+|---|---|---|---|---|
+| Response contract v3 (opt-in) | `backend/app/ai/fact_extraction.py` (`facts_response_schema("v3")`, `_contract_v3`, `schema_accepts`, `RESPONSE_CONTRACT`) | `anyOf` 34 biến thể kind/goal: toán hạng bắt buộc + arity, mọi mô tả của hợp đồng flat giữ nguyên, lối thoát `unsupported`/`ambiguous`; vi phạm sau parse ⇒ `RESPONSE_CONTRACT_INVALID`. Mặc định sản phẩm vẫn `flat` (surface `485d3834…`) | runner nghiên cứu đặt `RESPONSE_CONTRACT` theo arm → `build_request` → `run_ai_fact_route` | `tests/geometry/test_schema_contract_v3.py` (mọi biến thể là TypedFact hợp lệ cho `doc_du_kien`, kèm tiêm lỗi) |
+| Ràng buộc nguồn của điểm dựng có tên | `backend/app/simulation/geometry_functions/registry.py` (`_dinh_nghia_diem_dung_nguon` qua `construction_source_bound`; `_doc` từ chối mẫu số 0) | trung điểm / trọng tâm / góc vuông phải khớp đúng mệnh đề định nghĩa (`lần lượt` ghép theo thứ tự, đa giác đúng tập, tia góc vuông = hai đỉnh kề); cách nói khác ⇒ `SOURCE_OBJECT_MISMATCH` | `kiem_nguon` → planner/engine | `tests/geometry/test_semantic_extraction_v2_grounding.py` (C1) |
+| Runner cặp flat/v3 | `backend/scripts/run_schema_contract_evaluation.py` | cùng prompt sản phẩm, khác hợp đồng phản hồi; danh tính gồm arm + surface; trần GOLD của arm v3 từ chối gold mà v3 không chở được | `E.harness` (scorer /3) → `score.json` | `tests/geometry/test_schema_contract_evaluation.py` |
+| Scorer /3 | `backend/scripts/run_semantic_extraction_evaluation.py` (`_request_view`, `_signature`) | `grounded-source-obligations/3`: khoảng cách điểm–điểm = độ dài đoạn được phục vụ; chiều cao thuộc về đỉnh | → `summarize` | `tests/geometry/test_semantic_extraction_evaluation.py` |
+| Inputs + protocol | `docs/evaluation/geometry/runs/semantic-extraction-schema-contract/inputs/` (`prepare_protocol.py`, `oracle.py`, `selfcheck_protocol.py`, `gold_corrections.json`) | 12 dev lộ + 24 heldout mới (AI, chưa người duyệt); đính chính gold trước khoá; khoá một lần sau ba review gate | `prepare_protocol.py --prepare/--lock` → `load_inputs` | `selfcheck_protocol.py`, `oracle.py`, `ABSENT` hash ⇒ dừng |
+
+### Semantic extraction v2 — run hybrid-semantic-extraction-v2 (2026-10-17)
+
+| Thành phần | Path | Purpose · authority | Producer → consumer | Verify |
+|---|---|---|---|---|
+| Scorer /2 + paired-arm runner | `backend/scripts/run_semantic_extraction_evaluation.py` | `grounded-source-obligations/2`: chấm câu trả lời theo toán hạng lời gọi ĐÃ THỰC THI + oracle Fraction độc lập, không qua ghép fact; đếm mọi yêu cầu nguồn; tương đương toán hạng theo vai trò (đoạn, mặt = tập nhãn, đa giác = chu trình, khối = cấu trúc đỉnh); tách từ chối theo GOLD route; arm `baseline`/`v2` mỗi tiến trình một arm; tái dùng executor của `run_nlu_extraction_evaluation.py` qua bản module riêng (bản cũ không đổi byte); LIVE chỉ ghi vào `.superpowers/` | `runs/hybrid-semantic-extraction-v2/inputs/` → `score.json` (chỉ số dẫn xuất + băm) | `pytest tests/geometry/test_semantic_extraction_evaluation.py -q` |
+| Source Grounding regressions + extraction ablation | `backend/tests/geometry/test_semantic_extraction_v2_grounding.py` | Từ vựng `hộp chữ nhật` / `dài bao nhiêu` / mạo từ `Một` / `hình hộp` không tự đứng, kèm phản ví dụ; ablation đột biến trích xuất (0 phục vụ sai) | `geometry_functions/registry.py` (prompt sản phẩm KHÔNG đổi: prompt v2 không tích hợp) | `pytest tests/geometry/test_semantic_extraction_v2_grounding.py -q` |
+| Inputs khoá | `docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/inputs/` | Corpus 36 ca của tác giả AI độc lập, oracle Fraction, gold + 33 đính chính trước khoá, protocol băm | `prepare_protocol.py` (đã chạy, chặn chạy lại) → `load_inputs` | `INPUT_IDENTITY_MISMATCH` / `SOURCE_REQUEST_COVERAGE_MISMATCH` / `SPLIT_FAMILY_LEAK` |
 
 ### NLU extraction evaluation — run independent-nlu-extraction-evaluation (2026-10-17)
 

@@ -1,0 +1,13 @@
+# HEAD aae168e6
+preview_api | 89 passed, 1 warning in 6.59s
+preview_contract | 64 passed, 1 warning in 2.36s
+preview_fixtures | 5 passed in 2.96s
+historical_174 | 1 passed in 2.52s
+backend_integration | 52 passed in 9.12s
+source_grounding | 130 passed, 1 xfailed in 2.10s
+safety_negative | 23 passed in 0.81s
+default_route_guard | 71 passed in 11.68s
+cache_isolation | 8 passed, 1 warning in 1.22s
+oracle | 35 passed in 0.77s
+schema_compat | 19 passed, 1 warning in 1.56s
+candidate_freeze | 26 passed in 12.94s

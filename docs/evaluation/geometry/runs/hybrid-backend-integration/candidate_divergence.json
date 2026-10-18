@@ -1,0 +1,33 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-backend-integration",
+  "task": "Hybrid Backend Integration Candidate (research/hybrid-backend-integration)",
+  "corrects": "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "afab0a3ca3abfe3c3f7692d34be2aeadbd099b8d43b6543d8d234d19b5ef8443",
+  "current_candidate_source_commit": "7507312b",
+  "current_product_commit": "7507312b",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "previous_candidate_hash": "6ba9033bfca06d671cd27891e2dad06c7d44f365fed45527123c907d664b65ed",
+  "metadata_only_correction": false,
+  "diverged": true,
+  "reason": "Owner-authorized combined backend integration candidate (GO_HYBRID_BACKEND_INTEGRATION_CANDIDATE) merging research/semantic-extraction-v3-runtime-revision (bb014eb8, product 283813b2), research/contract-driven-goal-composition (a629ebee, product 1529faa7), and research/step-math-validation (0dd1da5c) onto main (4abc4afb). Historical receipts of semantic-extraction-v3-runtime-revision remain bound to 6ba9033b... and are not rewritten.",
+  "product_changes_since_main": [
+    "backend/app/ai/fact_extraction.py",
+    "backend/app/simulation/geometry_functions/engine.py",
+    "backend/app/simulation/geometry_functions/planner.py",
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "historical_effect": "Historical thesis-final, NLU baseline, extraction-v2, and semantic-extraction-v3-runtime-revision (6ba9033b...) receipts remain untouched; 214/214 Planner/Engine cases and 8/8 offline v3 cells verified on combined candidate.",
+  "freeze": "110 measured files, product commit 7507312b, --verify MATCH",
+  "cache_version": 125,
+  "cache_decision": "no bump: DEFAULT_MODE remains LLM_ONLY, RESPONSE_CONTRACT remains flat, and /api/analyze does not wire Hybrid route D",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical thesis-final, NLU baseline, extraction-v2, and semantic-extraction-v3-runtime-revision (6ba9033b...) keep their source candidates and frozen receipts; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "combined backend candidate verified on research/hybrid-backend-integration; owner GO MAIN INTEGRATION required before merging to main",
+  "push": "NONE"
+}

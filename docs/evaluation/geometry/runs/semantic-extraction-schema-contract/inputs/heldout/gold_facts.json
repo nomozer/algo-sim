@@ -1,0 +1,2412 @@
+{
+  "schema": "independent-heldout-gold/1",
+  "provenance": "INDEPENDENT_AI_AUTHORED_NOT_HUMAN_VALIDATED",
+  "source_corpus_sha256": "23f9ea9c4ec2f41b2418f41afb4dbca9d7c8c9637a4e21726344683f6d37b9ae",
+  "cases": {
+    "h01": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình lập phương ABCD.A'B'C'D'"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "solid_type": "cube",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "cạnh bằng 2"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "2",
+          "measure": "edge",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính độ dài đoạn thẳng AC'"
+          ],
+          "rid": "r1",
+          "quantity": "length",
+          "points": [
+            "A",
+            "C'"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "khoảng cách từ điểm A đến mặt phẳng (A'BD)"
+          ],
+          "rid": "r2",
+          "quantity": "distance",
+          "points_a": [
+            "A"
+          ],
+          "points_b": [
+            "A'",
+            "B",
+            "D"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "h02": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình lập phương ABCD.A′B′C′D′"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "solid_type": "cube",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "cạnh bằng a"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "a",
+          "measure": "edge",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "khoảng cách từ điểm C đến mặt phẳng (B′D′D) bằng bao nhiêu"
+          ],
+          "rid": "r1",
+          "quantity": "distance",
+          "points_a": [
+            "C"
+          ],
+          "points_b": [
+            "B'",
+            "D'",
+            "D"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "h03": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình lập phương ABCD.A'B'C'D'"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "solid_type": "cube",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "cạnh bằng 3"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "3",
+          "measure": "edge",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính khoảng cách từ A' đến đường thẳng BD"
+          ],
+          "rid": "r1",
+          "quantity": "distance",
+          "points_a": [
+            "A'"
+          ],
+          "points_b": [
+            "B",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "Tính bình phương độ dài đoạn thẳng BD'"
+          ],
+          "rid": "r2",
+          "reason": "A squared segment length has no TypedFact quantity or response-form field; do not replace it by length.",
+          "required": true
+        }
+      ]
+    },
+    "h04": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình hộp chữ nhật ABCD.A'B'C'D'"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "solid_type": "cuboid",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 3"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "3",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AD = 4"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "4",
+          "measure": "segment",
+          "points": [
+            "A",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AA' = 12"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "12",
+          "measure": "segment",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính độ dài đường chéo AC'"
+          ],
+          "rid": "r1",
+          "quantity": "length",
+          "points": [
+            "A",
+            "C'"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "thể tích của khối hộp đó"
+          ],
+          "rid": "r2",
+          "quantity": "volume",
+          "solid": "ABCD.A'B'C'D'",
+          "required": true
+        }
+      ]
+    },
+    "h05": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình hộp chữ nhật ABCD.A'B'C'D'"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "solid_type": "cuboid",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 3"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "3",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AD = 4"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "4",
+          "measure": "segment",
+          "points": [
+            "A",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính độ dài đường chéo AC'"
+          ],
+          "rid": "r1",
+          "quantity": "length",
+          "points": [
+            "A",
+            "C'"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "thể tích của khối hộp đó"
+          ],
+          "rid": "r2",
+          "quantity": "volume",
+          "solid": "ABCD.A'B'C'D'",
+          "required": true
+        }
+      ]
+    },
+    "h06": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình hộp chữ nhật ABCD.A'B'C'D'"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "solid_type": "cuboid",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 2"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "2",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AD = 1"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "1",
+          "measure": "segment",
+          "points": [
+            "A",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AA' = 2"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "2",
+          "measure": "segment",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính góc giữa đường thẳng A'C và mặt phẳng (ABCD)"
+          ],
+          "rid": "r1",
+          "quantity": "angle",
+          "points_a": [
+            "A'",
+            "C"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Diện tích tứ giác ACC'A' là bao nhiêu"
+          ],
+          "rid": "r2",
+          "quantity": "area",
+          "points": [
+            "A",
+            "C",
+            "C'",
+            "A'"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "h07": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình chóp tứ giác đều S.ABCD"
+          ],
+          "solid": "S.ABCD",
+          "solid_type": "pyramid",
+          "regular": true,
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "cạnh đáy bằng 2"
+          ],
+          "solid": "S.ABCD",
+          "value": "2",
+          "measure": "base_edge",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "chiều cao bằng 3"
+          ],
+          "solid": "S.ABCD",
+          "value": "3",
+          "measure": "height",
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính thể tích khối chóp S.ABCD"
+          ],
+          "rid": "r1",
+          "quantity": "volume",
+          "solid": "S.ABCD",
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "góc giữa cạnh bên SA với mặt phẳng đáy (ABCD)"
+          ],
+          "rid": "r2",
+          "quantity": "angle",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "h08": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình chóp tứ giác đều S.ABCD"
+          ],
+          "solid": "S.ABCD",
+          "solid_type": "pyramid",
+          "regular": true,
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "cạnh bên bằng 3"
+          ],
+          "solid": "S.ABCD",
+          "value": "3",
+          "measure": "lateral_edge",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "cạnh đáy bằng 2"
+          ],
+          "solid": "S.ABCD",
+          "value": "2",
+          "measure": "base_edge",
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "point_def",
+          "role": "premise",
+          "quotes": [
+            "O là tâm của hình vuông ABCD"
+          ],
+          "point": "O",
+          "point_kind": "intersect_line_line",
+          "points_a": [
+            "A",
+            "C"
+          ],
+          "points_b": [
+            "B",
+            "D"
+          ],
+          "reason": "Faithful definition of the named square centre using its named diagonals; no auxiliary point is invented.",
+          "required": true,
+          "alternatives": [
+            {
+              "point_kind": "midpoint",
+              "points": [
+                "A",
+                "C"
+              ],
+              "points_a": null,
+              "points_b": null
+            },
+            {
+              "point_kind": "midpoint",
+              "points": [
+                "B",
+                "D"
+              ],
+              "points_a": null,
+              "points_b": null
+            }
+          ]
+        },
+        {
+          "id": "f5",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Hãy tính khoảng cách từ O đến mặt phẳng (SCD)"
+          ],
+          "rid": "r1",
+          "quantity": "distance",
+          "points_a": [
+            "O"
+          ],
+          "points_b": [
+            "S",
+            "C",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "thể tích khối chóp đã cho"
+          ],
+          "rid": "r2",
+          "quantity": "volume",
+          "solid": "S.ABCD",
+          "required": true
+        }
+      ]
+    },
+    "h09": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình chóp tứ giác đều S.ABCD"
+          ],
+          "solid": "S.ABCD",
+          "solid_type": "pyramid",
+          "regular": true,
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "cạnh đáy bằng 4"
+          ],
+          "solid": "S.ABCD",
+          "value": "4",
+          "measure": "base_edge",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "chiều cao bằng 2"
+          ],
+          "solid": "S.ABCD",
+          "value": "2",
+          "measure": "height",
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tìm góc giữa mặt phẳng (SBC) và mặt phẳng (ABCD)"
+          ],
+          "rid": "r1",
+          "quantity": "angle",
+          "points_a": [
+            "S",
+            "B",
+            "C"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính diện tích tam giác SBC"
+          ],
+          "rid": "r2",
+          "quantity": "area",
+          "points": [
+            "S",
+            "B",
+            "C"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "h10": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình chóp S.ABCD"
+          ],
+          "solid": "S.ABCD",
+          "solid_type": "pyramid",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "solid": "S.ABCD",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "shape": "square",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ],
+          "solid": "S.ABCD",
+          "value": "a",
+          "measure": "base_edge",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "SA vuông góc với mặt phẳng đáy"
+          ],
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "SA = a"
+          ],
+          "solid": "S.ABCD",
+          "value": "a",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính khoảng cách giữa hai đường thẳng SC và BD"
+          ],
+          "rid": "r1",
+          "quantity": "distance",
+          "points_a": [
+            "S",
+            "C"
+          ],
+          "points_b": [
+            "B",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f7",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "tính khoảng cách từ A đến mặt phẳng (SBD)"
+          ],
+          "rid": "r2",
+          "quantity": "distance",
+          "points_a": [
+            "A"
+          ],
+          "points_b": [
+            "S",
+            "B",
+            "D"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "h11": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình chóp S.ABC"
+          ],
+          "solid": "S.ABC",
+          "solid_type": "pyramid",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "right_angle",
+          "role": "premise",
+          "quotes": [
+            "đáy ABC là tam giác vuông tại B"
+          ],
+          "at": "B",
+          "points": [
+            "A",
+            "C"
+          ],
+          "required": true,
+          "alternatives": [
+            {
+              "kind": "perpendicular",
+              "at": null,
+              "points": null,
+              "points_a": [
+                "B",
+                "A"
+              ],
+              "points_b": [
+                "B",
+                "C"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 3"
+          ],
+          "solid": "S.ABC",
+          "value": "3",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "BC = 4"
+          ],
+          "solid": "S.ABC",
+          "value": "4",
+          "measure": "segment",
+          "points": [
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "SA vuông góc với đáy"
+          ],
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "SA = 4"
+          ],
+          "solid": "S.ABC",
+          "value": "4",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "required": true
+        },
+        {
+          "id": "f7",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính thể tích khối chóp S.ABC"
+          ],
+          "rid": "r1",
+          "quantity": "volume",
+          "solid": "S.ABC",
+          "required": true
+        },
+        {
+          "id": "f8",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Khoảng cách từ A đến mặt phẳng (SBC) bằng bao nhiêu"
+          ],
+          "rid": "r2",
+          "quantity": "distance",
+          "points_a": [
+            "A"
+          ],
+          "points_b": [
+            "S",
+            "B",
+            "C"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "h12": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình chóp S.ABCD"
+          ],
+          "solid": "S.ABCD",
+          "solid_type": "pyramid",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy ABCD là hình chữ nhật"
+          ],
+          "solid": "S.ABCD",
+          "points": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "shape": "rectangle",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 2"
+          ],
+          "solid": "S.ABCD",
+          "value": "2",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AD = 3"
+          ],
+          "solid": "S.ABCD",
+          "value": "3",
+          "measure": "segment",
+          "points": [
+            "A",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "cạnh bên SA vuông góc với đáy"
+          ],
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính khoảng cách từ D đến mặt phẳng (SAB)"
+          ],
+          "rid": "r1",
+          "quantity": "distance",
+          "points_a": [
+            "D"
+          ],
+          "points_b": [
+            "S",
+            "A",
+            "B"
+          ],
+          "required": true
+        },
+        {
+          "id": "f7",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính góc giữa đường thẳng SC và mặt phẳng (ABCD)"
+          ],
+          "rid": "r2",
+          "quantity": "angle",
+          "points_a": [
+            "S",
+            "C"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "h13": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "lăng trụ đứng ABC.A'B'C'"
+          ],
+          "solid": "ABC.A'B'C'",
+          "solid_type": "prism",
+          "right": true,
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "right_angle",
+          "role": "premise",
+          "quotes": [
+            "đáy ABC là tam giác vuông tại A"
+          ],
+          "at": "A",
+          "points": [
+            "B",
+            "C"
+          ],
+          "required": true,
+          "alternatives": [
+            {
+              "kind": "perpendicular",
+              "at": null,
+              "points": null,
+              "points_a": [
+                "A",
+                "B"
+              ],
+              "points_b": [
+                "A",
+                "C"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 3"
+          ],
+          "solid": "ABC.A'B'C'",
+          "value": "3",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AC = 4"
+          ],
+          "solid": "ABC.A'B'C'",
+          "value": "4",
+          "measure": "segment",
+          "points": [
+            "A",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AA' = 6"
+          ],
+          "solid": "ABC.A'B'C'",
+          "value": "6",
+          "measure": "segment",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính thể tích khối lăng trụ ABC.A'B'C'"
+          ],
+          "rid": "r1",
+          "quantity": "volume",
+          "solid": "ABC.A'B'C'",
+          "required": true
+        },
+        {
+          "id": "f7",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "độ dài đoạn thẳng B'C"
+          ],
+          "rid": "r2",
+          "quantity": "length",
+          "points": [
+            "B'",
+            "C"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "h14": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "lăng trụ đứng ABC.A′B′C′"
+          ],
+          "solid": "ABC.A'B'C'",
+          "solid_type": "prism",
+          "right": true,
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy là tam giác đều cạnh 2"
+          ],
+          "solid": "ABC.A'B'C'",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "shape": "equilateral_triangle",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy là tam giác đều cạnh 2"
+          ],
+          "solid": "ABC.A'B'C'",
+          "value": "2",
+          "measure": "base_edge",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "cạnh bên bằng 3"
+          ],
+          "solid": "ABC.A'B'C'",
+          "value": "3",
+          "measure": "lateral_edge",
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Hãy tính góc giữa hai mặt phẳng (A′BC) và (ABC)"
+          ],
+          "rid": "r1",
+          "quantity": "angle",
+          "points_a": [
+            "A'",
+            "B",
+            "C"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "tính diện tích tam giác A′BC"
+          ],
+          "rid": "r2",
+          "quantity": "area",
+          "points": [
+            "A'",
+            "B",
+            "C"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "h15": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "lăng trụ đứng ABC.A'B'C'"
+          ],
+          "solid": "ABC.A'B'C'",
+          "solid_type": "prism",
+          "right": true,
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "right_angle",
+          "role": "premise",
+          "quotes": [
+            "đáy ABC là tam giác vuông cân tại B"
+          ],
+          "at": "B",
+          "points": [
+            "A",
+            "C"
+          ],
+          "required": true,
+          "alternatives": [
+            {
+              "kind": "perpendicular",
+              "at": null,
+              "points": null,
+              "points_a": [
+                "B",
+                "A"
+              ],
+              "points_b": [
+                "B",
+                "C"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "BA = BC = 2"
+          ],
+          "solid": "ABC.A'B'C'",
+          "value": "2",
+          "measure": "segment",
+          "points": [
+            "B",
+            "A"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "BA = BC = 2"
+          ],
+          "solid": "ABC.A'B'C'",
+          "value": "2",
+          "measure": "segment",
+          "points": [
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "cạnh bên AA' = 3"
+          ],
+          "solid": "ABC.A'B'C'",
+          "value": "3",
+          "measure": "segment",
+          "points": [
+            "A",
+            "A'"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "khối chóp A'.BCC'B'"
+          ],
+          "solid": "A'.BCC'B'",
+          "solid_type": "pyramid",
+          "required": true
+        },
+        {
+          "id": "f7",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính thể tích khối lăng trụ ABC.A'B'C'"
+          ],
+          "rid": "r1",
+          "quantity": "volume",
+          "solid": "ABC.A'B'C'",
+          "required": true
+        },
+        {
+          "id": "f8",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "thể tích khối chóp A'.BCC'B'"
+          ],
+          "rid": "r2",
+          "quantity": "volume",
+          "solid": "A'.BCC'B'",
+          "required": true
+        }
+      ]
+    },
+    "h16": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "tứ diện OABC"
+          ],
+          "solid": "OABC",
+          "solid_type": "tetrahedron",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "OA, OB, OC đôi một vuông góc"
+          ],
+          "points_a": [
+            "O",
+            "A"
+          ],
+          "points_b": [
+            "O",
+            "B"
+          ],
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "OA, OB, OC đôi một vuông góc"
+          ],
+          "points_a": [
+            "O",
+            "A"
+          ],
+          "points_b": [
+            "O",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "OA, OB, OC đôi một vuông góc"
+          ],
+          "points_a": [
+            "O",
+            "B"
+          ],
+          "points_b": [
+            "O",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "OA = 1"
+          ],
+          "solid": "OABC",
+          "value": "1",
+          "measure": "segment",
+          "points": [
+            "O",
+            "A"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "OB = 2"
+          ],
+          "solid": "OABC",
+          "value": "2",
+          "measure": "segment",
+          "points": [
+            "O",
+            "B"
+          ],
+          "required": true
+        },
+        {
+          "id": "f7",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "OC = 2"
+          ],
+          "solid": "OABC",
+          "value": "2",
+          "measure": "segment",
+          "points": [
+            "O",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f8",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính khoảng cách từ O đến mặt phẳng (ABC)"
+          ],
+          "rid": "r1",
+          "quantity": "distance",
+          "points_a": [
+            "O"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f9",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "thể tích khối tứ diện OABC"
+          ],
+          "rid": "r2",
+          "quantity": "volume",
+          "solid": "OABC",
+          "required": true
+        }
+      ]
+    },
+    "h17": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "tứ diện đều ABCD"
+          ],
+          "solid": "ABCD",
+          "solid_type": "tetrahedron",
+          "regular": true,
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "cạnh bằng a"
+          ],
+          "solid": "ABCD",
+          "value": "a",
+          "measure": "edge",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính khoảng cách giữa hai đường thẳng AB và CD"
+          ],
+          "rid": "r1",
+          "quantity": "distance",
+          "points_a": [
+            "A",
+            "B"
+          ],
+          "points_b": [
+            "C",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính góc giữa đường thẳng AB và mặt phẳng (BCD)"
+          ],
+          "rid": "r2",
+          "quantity": "angle",
+          "points_a": [
+            "A",
+            "B"
+          ],
+          "points_b": [
+            "B",
+            "C",
+            "D"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "h18": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "tứ diện ABCD"
+          ],
+          "solid": "ABCD",
+          "solid_type": "tetrahedron",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "DA vuông góc với mặt phẳng (ABC)"
+          ],
+          "points_a": [
+            "D",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "right_angle",
+          "role": "premise",
+          "quotes": [
+            "tam giác ABC vuông tại B"
+          ],
+          "at": "B",
+          "points": [
+            "A",
+            "C"
+          ],
+          "required": true,
+          "alternatives": [
+            {
+              "kind": "perpendicular",
+              "at": null,
+              "points": null,
+              "points_a": [
+                "B",
+                "A"
+              ],
+              "points_b": [
+                "B",
+                "C"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "f4",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "AB = 1"
+          ],
+          "solid": "ABCD",
+          "value": "1",
+          "measure": "segment",
+          "points": [
+            "A",
+            "B"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "BC = 2"
+          ],
+          "solid": "ABCD",
+          "value": "2",
+          "measure": "segment",
+          "points": [
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "DA = 2"
+          ],
+          "solid": "ABCD",
+          "value": "2",
+          "measure": "segment",
+          "points": [
+            "D",
+            "A"
+          ],
+          "required": true
+        },
+        {
+          "id": "f7",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính diện tích tam giác BCD"
+          ],
+          "rid": "r1",
+          "quantity": "area",
+          "points": [
+            "B",
+            "C",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f8",
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "Tìm giá trị lớn nhất của khoảng cách từ D đến một đường thẳng thay đổi luôn đi qua B"
+          ],
+          "rid": "r2",
+          "reason": "Optimisation over a variable line cannot be represented as a fixed distance question.",
+          "required": true
+        },
+        {
+          "id": "f9",
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "Giải thích vì sao tam giác BCD vuông"
+          ],
+          "rid": "r3",
+          "reason": "A request to explain why a triangle is right has no faithful TypedFact numerical-question representation; this is not a given right angle.",
+          "required": true
+        }
+      ]
+    },
+    "h19": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "lăng trụ tứ giác đều ABCD.A'B'C'D'"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "solid_type": "prism",
+          "regular": true,
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "cạnh đáy bằng 2"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "2",
+          "measure": "base_edge",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "cạnh bên bằng 4"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "4",
+          "measure": "lateral_edge",
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính góc giữa hai mặt phẳng (A'BD) và (ABCD)"
+          ],
+          "rid": "r1",
+          "quantity": "angle",
+          "points_a": [
+            "A'",
+            "B",
+            "D"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "khoảng cách từ A đến đường thẳng B'D'"
+          ],
+          "rid": "r2",
+          "quantity": "distance",
+          "points_a": [
+            "A"
+          ],
+          "points_b": [
+            "B'",
+            "D'"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "h20": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "lăng trụ tứ giác đều ABCD.A′B′C′D′"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "solid_type": "prism",
+          "regular": true,
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "cạnh đáy 2"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "2",
+          "measure": "base_edge",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "chiều cao 4"
+          ],
+          "solid": "ABCD.A'B'C'D'",
+          "value": "4",
+          "measure": "height",
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "khối tứ diện A′ABD"
+          ],
+          "solid": "A'ABD",
+          "solid_type": "tetrahedron",
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "bình phương côsin của góc giữa mặt phẳng (A′BD) và mặt đáy (ABCD) bằng bao nhiêu"
+          ],
+          "rid": "r1",
+          "quantity": "angle",
+          "points_a": [
+            "A'",
+            "B",
+            "D"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "required": true,
+          "reason": "Source explicitly requests squared cosine of this angle. Preserve that response form from the exact quote and the aligned corpus request; TypedFact has no dedicated response-form field."
+        },
+        {
+          "id": "f6",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính thêm thể tích khối tứ diện A′ABD"
+          ],
+          "rid": "r2",
+          "quantity": "volume",
+          "solid": "A'ABD",
+          "required": true
+        }
+      ]
+    },
+    "h21": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình lập phương ABCD.EFGH"
+          ],
+          "solid": "ABCD.EFGH",
+          "solid_type": "cube",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "hình lập phương ABCD.EFGH cạnh 2"
+          ],
+          "solid": "ABCD.EFGH",
+          "value": "2",
+          "measure": "edge",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình chóp S.ABCD"
+          ],
+          "solid": "S.ABCD",
+          "solid_type": "pyramid",
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "point_def",
+          "role": "premise",
+          "quotes": [
+            "đỉnh S là tâm của hình vuông EFGH"
+          ],
+          "point": "S",
+          "point_kind": "intersect_line_line",
+          "points_a": [
+            "E",
+            "G"
+          ],
+          "points_b": [
+            "F",
+            "H"
+          ],
+          "reason": "Faithful definition of the named square centre using its named diagonals; no claim that the separately named pyramid is regular is added.",
+          "required": true,
+          "alternatives": [
+            {
+              "point_kind": "midpoint",
+              "points": [
+                "E",
+                "G"
+              ],
+              "points_a": null,
+              "points_b": null
+            },
+            {
+              "point_kind": "midpoint",
+              "points": [
+                "F",
+                "H"
+              ],
+              "points_a": null,
+              "points_b": null
+            }
+          ]
+        },
+        {
+          "id": "f5",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính thể tích khối chóp S.ABCD"
+          ],
+          "rid": "r1",
+          "quantity": "volume",
+          "solid": "S.ABCD",
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính góc giữa SA và mặt phẳng (ABCD)"
+          ],
+          "rid": "r2",
+          "quantity": "angle",
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ],
+          "required": true
+        },
+        {
+          "id": "f7",
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "Tính khoảng cách từ S đến mặt bên"
+          ],
+          "rid": "r3",
+          "ambiguous": true,
+          "reason": "The unnamed lateral face may belong to either named solid; no unambiguous plane operand can be encoded without guessing.",
+          "required": true
+        }
+      ]
+    },
+    "h22": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình chóp S.ABC"
+          ],
+          "solid": "S.ABC",
+          "solid_type": "pyramid",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh 2"
+          ],
+          "solid": "S.ABC",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "shape": "equilateral_triangle",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh 2"
+          ],
+          "solid": "S.ABC",
+          "value": "2",
+          "measure": "base_edge",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "SA vuông góc với mặt phẳng (ABC)"
+          ],
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "SA = 2"
+          ],
+          "solid": "S.ABC",
+          "value": "2",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "khoảng cách từ S đến đường thẳng BC bằng bao nhiêu"
+          ],
+          "rid": "r1",
+          "quantity": "distance",
+          "points_a": [
+            "S"
+          ],
+          "points_b": [
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f7",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Đoạn SB dài bao nhiêu"
+          ],
+          "rid": "r2",
+          "quantity": "length",
+          "points": [
+            "S",
+            "B"
+          ],
+          "required": true
+        }
+      ]
+    },
+    "h23": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình chóp S.ABC"
+          ],
+          "solid": "S.ABC",
+          "solid_type": "pyramid",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy là tam giác đều ABC cạnh 2"
+          ],
+          "solid": "S.ABC",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "shape": "equilateral_triangle",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy là tam giác đều ABC cạnh 2"
+          ],
+          "solid": "S.ABC",
+          "value": "2",
+          "measure": "base_edge",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "SA ⊥ (ABC)"
+          ],
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "SA = 2"
+          ],
+          "solid": "S.ABC",
+          "value": "2",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "Tính khoảng cách từ điểm S đến đoạn thẳng BC"
+          ],
+          "rid": "r1",
+          "reason": "The source requests distance to the finite segment, whereas two-point distance operands mean an infinite line; do not substitute the line.",
+          "required": true
+        },
+        {
+          "id": "f7",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "thể tích khối chóp S.ABC"
+          ],
+          "rid": "r2",
+          "quantity": "volume",
+          "solid": "S.ABC",
+          "required": true
+        }
+      ]
+    },
+    "h24": {
+      "facts": [
+        {
+          "id": "f1",
+          "kind": "solid",
+          "role": "premise",
+          "quotes": [
+            "hình chóp S.ABC"
+          ],
+          "solid": "S.ABC",
+          "solid_type": "pyramid",
+          "required": true
+        },
+        {
+          "id": "f2",
+          "kind": "polygon_shape",
+          "role": "premise",
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh 2"
+          ],
+          "solid": "S.ABC",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "shape": "equilateral_triangle",
+          "required": true
+        },
+        {
+          "id": "f3",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "đáy ABC là tam giác đều cạnh 2"
+          ],
+          "solid": "S.ABC",
+          "value": "2",
+          "measure": "base_edge",
+          "points": [
+            "A",
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f4",
+          "kind": "perpendicular",
+          "role": "premise",
+          "quotes": [
+            "SA vuông góc với đáy"
+          ],
+          "points_a": [
+            "S",
+            "A"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f5",
+          "kind": "length",
+          "role": "premise",
+          "quotes": [
+            "SA = 2"
+          ],
+          "solid": "S.ABC",
+          "value": "2",
+          "measure": "segment",
+          "points": [
+            "S",
+            "A"
+          ],
+          "required": true
+        },
+        {
+          "id": "f6",
+          "kind": "question",
+          "role": "question",
+          "quotes": [
+            "Tính góc giữa đường thẳng SB và mặt phẳng (ABC)"
+          ],
+          "rid": "r1",
+          "quantity": "angle",
+          "points_a": [
+            "S",
+            "B"
+          ],
+          "points_b": [
+            "A",
+            "B",
+            "C"
+          ],
+          "required": true
+        },
+        {
+          "id": "f7",
+          "kind": "unsupported",
+          "role": "question",
+          "quotes": [
+            "Tính thể tích khối cầu ngoại tiếp hình chóp S.ABC"
+          ],
+          "rid": "r2",
+          "reason": "The requested circumscribed sphere is a curved solid outside the TypedFact solid types; do not attribute its volume to the pyramid.",
+          "required": true
+        }
+      ]
+    }
+  }
+}

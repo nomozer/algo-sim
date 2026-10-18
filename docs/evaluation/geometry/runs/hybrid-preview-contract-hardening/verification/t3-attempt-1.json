@@ -1,0 +1,20 @@
+{
+  "schema": "T3_ATTEMPT/1",
+  "run": "hybrid-preview-contract-hardening",
+  "date": "2026-10-18",
+  "checkout": "clean detached worktree .superpowers/worktrees/t3-hybrid-preview-contract-hardening at 1763972c060154c2ae5722ca16f56447417abdad (0 changed/untracked; frontend/node_modules = junction to the main checkout's)",
+  "command": "node scripts/full-gate.mjs (from frontend/, ALLOW_LIVE_AI=0, empty GEMINI_API_KEY; log outside the worktree)",
+  "log_sha256": "c7d24c3f1046e26bd43f2339eb43d99651379ebd73b0965ec93384c06018d255",
+  "label": "FULL_PRODUCT_GATE_FAIL",
+  "gates": {
+    "backend_pytest": "1 failed, 10827 passed, 1 skipped, 2 deselected, 9 xfailed",
+    "frontend_vitest": "68 files, 1079 passed",
+    "typecheck_and_build": "PASS",
+    "demo_replay": "5/5",
+    "crash_surface": "6/6, 0 uncaught"
+  },
+  "failure": "tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI — the candidate divergence declaration still named 4c1b9a27… (previous wave); this wave had not added its own candidate_divergence.json layer",
+  "root_cause": "omission in this wave's write-back: the same test was red in the pre-commit full run on the dirty tree and was misread as freeze drift (report §8)",
+  "fix": "docs-only: docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/candidate_divergence.json (corrects the hybrid-route-d-preview-wiring layer; current 1b7a6713…); no product change, freeze unchanged",
+  "live_ai_calls": 0
+}

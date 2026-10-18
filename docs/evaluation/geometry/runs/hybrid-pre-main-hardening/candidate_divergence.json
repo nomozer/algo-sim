@@ -1,0 +1,36 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-pre-main-hardening",
+  "task": "Pre-main backend safety hardening of the combined Hybrid candidate (research/hybrid-pre-main-hardening)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-backend-integration/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "7cd48f8c3d19299e95e5d31b341ec52120f0bc33b0e1ffc9cce03a2e9c37caf4",
+  "current_candidate_source_commit": "3afe2fdd",
+  "current_product_commit": "3afe2fdd",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "previous_candidate_hash": "afab0a3ca3abfe3c3f7692d34be2aeadbd099b8d43b6543d8d234d19b5ef8443",
+  "metadata_only_correction": false,
+  "diverged": true,
+  "reason": "Owner-approved GO_PRE_MAIN_BACKEND_SAFETY_HARDENING on top of research/hybrid-backend-integration 2620cffa: (1) explicit import of the compiler routing gate replacing a string-split __import__ that kept the default-route guard falsely green; (2) route-aware cache identity with one RoutePolicy snapshot per request, and one response-contract snapshot per run_ai_fact_route call; (3) zero lengths refused as NON_POSITIVE_LENGTH at the value reader, and Metric enforcing a symmetric positive definite Gram matrix. Default behaviour of /api/analyze under LLM_ONLY is unchanged.",
+  "product_changes_since_previous_candidate": [
+    "backend/app/ai/pipeline.py",
+    "backend/app/main.py",
+    "backend/app/ai/fact_extraction.py",
+    "backend/app/simulation/geometry_compiler/routing.py",
+    "backend/app/simulation/geometry/metric.py",
+    "backend/app/simulation/geometry_functions/engine.py",
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "historical_effect": "hybrid-backend-integration (afab0a3c…), semantic-extraction-v3-runtime-revision (6ba9033b…) and contract-driven-goal-composition (540fc9d5…) receipts are untouched. 174/174 historical rows keep status, code and served squares; 65/65 served answers equal their source-corpus expectations.",
+  "freeze": "110 measured files, product commit 3afe2fdd, --verify MATCH",
+  "cache_version": 125,
+  "cache_decision": "no bump: the LLM_ONLY policy identity stays exactly CACHE_VERSION, so existing rows remain valid for the mode that wrote them; non-default modes now carry CACHE_VERSION:<digest> and miss rows of the other mode. Rows written earlier while GEOMETRY_COMPILER_MODE was on are indistinguishable from default rows (UNKNOWN whether any exist); they passed the same gates.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: no frozen measurement is rescored, pooled or rewritten; no frozen route-D corpus carries a zero input, so the new NON_POSITIVE_LENGTH code moves no recorded outcome.",
+    "live_requests": 0
+  },
+  "integration": "owner GO MAIN required before merging to main",
+  "push": "NONE"
+}

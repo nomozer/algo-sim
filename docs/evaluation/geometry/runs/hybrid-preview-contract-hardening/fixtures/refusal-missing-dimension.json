@@ -1,0 +1,80 @@
+{
+ "covers": [
+  "refusal"
+ ],
+ "expected": {
+  "envelope_status": "unsupported",
+  "failure_category": "insufficient_specification",
+  "http_status": 200,
+  "reason_code": "MISSING_DIMENSION",
+  "refusal_cause": "UNKNOWN"
+ },
+ "id": "refusal-missing-dimension",
+ "injection": null,
+ "kind": "refusal",
+ "producer": {
+  "adapter_version": "hybrid-preview-adapter/1",
+  "backend_app_dirty": false,
+  "commit": "2a832ae292d5197eeeda33d4f86652bcaf8d29d7",
+  "envelope_version": "hybrid-route-d-preview/1",
+  "product_commit": "caf215139f58e181601b99a649c546724d558d9d",
+  "source_fingerprint": {
+   "files": 111,
+   "measured_system_hash": "53ea8830e9f0ce48823160335c48cf1b7dd6c82a46e5cc0e2196b5613419a4ea",
+   "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+  }
+ },
+ "response": {
+  "envelope": {
+   "failure_category": "insufficient_specification",
+   "learner_reason": "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình.",
+   "reason": "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình.",
+   "reason_code": "MISSING_DIMENSION",
+   "refusal_cause": "UNKNOWN",
+   "status": "unsupported"
+  },
+  "route_d": {
+   "planner": {
+    "goal_checks": {},
+    "negated_checks": {},
+    "version": "geometry-fact-planner/7"
+   },
+   "runtime_identity": {
+    "adapter_version": "hybrid-preview-adapter/1",
+    "default_product_mode": "LLM_ONLY",
+    "enabled": true,
+    "engine_version": "geometry-function-engine/5",
+    "envelope_version": "hybrid-route-d-preview/1",
+    "extraction_surface": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "fingerprint": "8ff6d785a8491611b711f2cd980642b9125f5f8fe4d3cefac27128167b36d3b8",
+    "planner_version": "geometry-fact-planner/7",
+    "product_enablement": "NO-GO",
+    "provider_mode": "OFFLINE_FIXTURE_ONLY",
+    "registry_version": "geometry-functions/6",
+    "response_contract": "flat"
+   }
+  },
+  "schema_version": "hybrid-route-d-preview/1"
+ },
+ "response_sha256": "2a21e93654606d45706886e578a97d0d08e8d1e12236208c60d94408ddb165f9",
+ "schema": "hybrid-preview-envelope-fixture/1",
+ "source": {
+  "input_sha256": "3a03ef3e8b56ca3d86cadee44927f88719f698b6d8704f83aa9de0a7216de35e",
+  "origin": "tests/test_hybrid_preview_contract.py::CASES[missing-dimension]",
+  "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a và AD = 2a. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'.",
+  "provider_body": {
+   "candidates": [
+    {
+     "content": {
+      "parts": [
+       {
+        "text": "{\"facts\": [{\"id\": \"f1\", \"kind\": \"solid\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"hình hộp chữ nhật ABCD.A'B'C'D'\"], \"solid\": \"ABCD.A'B'C'D'\", \"solid_type\": \"cuboid\"}, {\"id\": \"f2\", \"kind\": \"length\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"AB = a\"], \"measure\": \"segment\", \"points\": [\"A\", \"B\"], \"value\": \"a\"}, {\"id\": \"f3\", \"kind\": \"length\", \"role\": \"premise\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"AD = 2a\"], \"measure\": \"segment\", \"points\": [\"A\", \"D\"], \"value\": \"2a\"}, {\"id\": \"f4\", \"kind\": \"question\", \"role\": \"question\", \"negated\": false, \"ambiguous\": false, \"quotes\": [\"Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'\"], \"quantity\": \"volume\", \"solid\": \"ABCD.A'B'C'D'\"}]}"
+       }
+      ]
+     },
+     "finishReason": "STOP"
+    }
+   ]
+  }
+ }
+}

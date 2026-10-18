@@ -1,0 +1,36 @@
+{
+  "schema": "REVISION_REVIEW_GATE/1",
+  "status": "PASS",
+  "reviewer": "independent read-only review subagent (conversation 97bdf04e-97a7-42bc-b677-5f2e61f226e0, Semantic Extraction v3 Runtime Revision code & protocol audit, 2026-10-18)",
+  "reviewed_at": "2026-10-18T01:59:34+07:00",
+  "product_commit": "283813b23afd5a3235cd5d944ef30ebbe9d0691a",
+  "product_sha256": "6ba9033bfca06d671cd27891e2dad06c7d44f365fed45527123c907d664b65ed",
+  "reviewed_sha256": {
+    "backend/app/simulation/geometry_functions/registry.py": "cd18ee025c30605bd99adc782ca429bfe333ceaf894268957ae25f5108661d55",
+    "backend/scripts/run_schema_contract_evaluation.py": "a91f3256ed473656f573ac198b55ad50f65f6f08bfc9c48c56d6e75b5fb6ee80",
+    "backend/scripts/run_schema_contract_offline.py": "06d911ff8533afe472b5464fbb73e34c99423f82cf729795d440a912c580f94c",
+    "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/inputs/prepare_protocol.py": "3b40f74b4577cbb32140f69003020954708a82d0485108716d20b30463340a5e"
+  },
+  "findings": [
+    {
+      "id": "ZERO_BLOCKING_ISSUES",
+      "severity": "NONE",
+      "summary": "Zero blocking or non-blocking defects found across all 4 target implementation files, 3 test suites (55/55 passing), candidate_divergence.json, and EVALUATION_CANDIDATE.json."
+    },
+    {
+      "id": "P4_RUNTIME_REGEX_FIX",
+      "severity": "VERIFIED",
+      "summary": "In backend/app/simulation/geometry_functions/registry.py, _SAU_HOP_LE replaces [\\s,;:]+ with possessive [\\s,;:]++ inside the outer repetition. Accepted language and match spans are 100% preserved while eliminating O(2^N) backtracking on long separator runs followed by an unread suffix. No case IDs (including h07), labels, or problem facts are hardcoded, source grounding is unweakened, no geometry facts are invented, and refusal semantics are unchanged."
+    },
+    {
+      "id": "P5_PILOT_LOCKED_SPLIT_ISOLATION",
+      "severity": "VERIFIED",
+      "summary": "In backend/scripts/run_schema_contract_evaluation.py, harness(arm, inp, mode) filters data via selected(data) BEFORE calling gold_route(data) in run_gold and BEFORE calling evaluate(...) in run_eval, while raising HARNESS_MODE_MISMATCH if run_mode != mode. Registered case order is preserved (12 dev cases for PILOT, 24 heldout cases for LOCKED), and full locked corpus/gold SHA-256 digests in identity are preserved unchanged."
+    },
+    {
+      "id": "P6_P7_OFFLINE_RUNNER_AND_PROTOCOL_LOCK",
+      "severity": "VERIFIED",
+      "summary": "In backend/scripts/run_schema_contract_offline.py, run_matrix enforces protocol lock_status == 'LOCKED', bounded offline_watchdog_seconds (0 < timeout <= 600), ALLOW_LIVE_AI=0 in child environments, process-tree termination on timeout that fails closed with RuntimeError('WATCHDOG_TERMINATION_FAILED') whenever taskkill returns non-zero even if the parent process already exited, collision-free log directories tagged with sha256(str(out))[:12], pre/post-invocation input identity verification, and full receipt checks across all 8 offline cells. In inputs/prepare_protocol.py, prepare() verifies parent protocol lock and hash, parent evidence file hashes under semantic-extraction-schema-contract, original source_sha256, byte-identical corpus/gold copies, unchanged scorer/executor hashes, unchanged prompt/schema surface fingerprints, frozen candidate match, and revision review gate coverage/hashes before locking."
+    }
+  ]
+}

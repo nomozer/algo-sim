@@ -119,10 +119,87 @@
 - **NEXT_TEST:** Bổ sung metric counter cho `compiler_hit`, `compiler_miss`, `fallback_success`.
 
 ### GATE-19: Cache & Version Policy
-- **STATUS:** PRODUCTION_READY
-- **EVIDENCE:** `CACHE_VERSION = 99` với sync-lock trong test suite và candidate verification hash 103 files.
-- **BLOCKER:** Không có.
+- **STATUS:** PRODUCTION_READY cho `LLM_ONLY`; cách ly theo tuyến có từ run `hybrid-pre-main-hardening` (2026-10-18).
+- **EVIDENCE:** giá trị hiện hành đọc ở nguồn (`grep -n 'CACHE_VERSION = ' backend/app/main.py`) và bảng danh tính `docs/CURRENT_STATE.md`, không chép vào đây; sync-lock `backend/tests/test_api.py` + `backend/tests/semantic_program/test_evaluation_candidate.py`. Cách ly theo tuyến: `backend/app/main.py::_policy_identity` + `backend/app/ai/pipeline.py::RoutePolicy`, khoá bởi `backend/tests/test_route_aware_cache.py`.
+- **BLOCKER:** Không có cho `LLM_ONLY`.
 - **NEXT_TEST:** Duy trì kiểm chứng tự động trước mọi commit.
+- **AUDIT (2026-10-18, `hybrid-pre-main-hardening`):** evidence cũ ghi `CACHE_VERSION = 99` và "103 files" — số của thời điểm viết, không phải trạng thái hiện hành. Và chính sách cũ MÙ TUYẾN: khoá cache là băm đề, lookup chỉ so `CACHE_VERSION`, nên bật `GEOMETRY_COMPILER_MODE` phục vụ envelope `LLM_ONLY` cũ và rollback phục vụ envelope compiler. Nay một ảnh chụp tuyến mỗi lượt; mặc định giữ identity = `CACHE_VERSION` (không bump), chế độ khác mang hậu tố băm chế độ + phiên bản các tầng.
+
+---
+
+## 2. Route D (Hybrid: text → typed facts → planner → geometry functions) — checklist RIÊNG
+
+20 cổng ở §1 viết cho tuyến C (compiler tất định trên `RequestContract`). Tuyến D là đường khác (`backend/app/ai/fact_extraction.py` → `function_route.py` → `simulation/geometry_functions/`), nên cổng §1 không thay được các cổng dưới đây và ngược lại. Đổi bất cứ gì của tuyến D khỏi `NO-GO` cần đủ các cổng D-*; trạng thái đọc từ bằng chứng nêu ở từng cổng, không chép số sống vào đây.
+
+### D-01: Đường mặc định không chạm tuyến D
+- **STATUS:** PROVED trên đường mặc định ĐÃ CHẠY (một fixture, trọn tới envelope `ok`); phần mã probe không chạy chỉ có danh sách cấm cơ chế nạp động đã biết + bao đóng tĩnh — `backend/tests/geometry/test_structured_geometry_relations.py::test_Y_*`: danh sách cấm (không chống được mọi cách viết — review độc lập tìm 11 cách lọt); bao đóng import tĩnh chỉ với compiler qua cổng `routing`; module nạp thật khi chạy `run_pipeline` ở `LLM_ONLY` (subprocess sạch, chặn mạng) ⊆ bao đóng tĩnh, tuyến D không nạp; tiêm lỗi 8 cách lách + import cắt chuỗi ở đầu đường và trong đuôi tất định.
+- **BLOCKER:** —
+- **NEXT_TEST:** khi nối tuyến D, cổng nối phải được KHAI (như `_CONG_COMPILER`), không lách guard.
+
+### D-02: Cache identity theo tuyến
+- **STATUS:** PARTIAL — `RoutePolicy` có chế độ preview tuyến D (run `hybrid-route-d-preview-wiring`); `fingerprint()` gồm Registry/Planner/Engine, surface trích xuất, adapter/envelope; preview KHÔNG có cache (`_policy_identity` từ chối policy preview), nên chưa có cache tuyến D nào để cách ly.
+- **BLOCKER:** chỉ khi tuyến D được phục vụ qua `/api/analyze` (chưa được duyệt) mới cần cache tuyến D.
+- **NEXT_TEST:** khi ấy: bộ test hai chiều của `test_route_aware_cache.py` cho chế độ tuyến D.
+
+### D-03: Cấu hình theo lượt, không theo biến toàn cục
+- **STATUS:** PROVED — `RoutePolicy` chụp một lần ở biên API; `run_ai_fact_route(contract=…)` chốt hợp đồng một lần mỗi lượt (`test_response_contract_is_one_snapshot_per_call`: trước đó đổi biến toàn cục giữa request và cổng kiểm làm một phản hồi xin theo v3 được phục vụ mà không qua cổng v3).
+- **BLOCKER:** —
+- **NEXT_TEST:** adapter nối tuyến D nhận hợp đồng từ `RoutePolicy`, không đọc `RESPONSE_CONTRACT`.
+
+### D-04: Hợp đồng trích xuất
+- **STATUS:** flat = hợp đồng sản phẩm; v3 = NO-GO.
+- **BLOCKER:** v3 không diễn đạt được diện tích / góc tại điểm không tên (flat phục vụ được — thoái lui năng lực); 16/24 gold LOCKED lệch v3 vì cách viết gold (`solid` trên đoạn, ghi chú `reason`), không phải đo hành vi mô hình; held-out LOCKED đã tiếp xúc ⇒ không dùng để chỉnh prompt/schema.
+- **NEXT_TEST:** bộ held-out MỚI, tiền đăng ký, trước mọi đổi bề mặt.
+
+### D-05: Đúng toán
+- **STATUS:** PROVED trên corpus hiện có — `test_174_historical_answers_regression_and_independent_source_expectations`: hồi quy (status, mã, bình phương đáp số) với baseline đóng băng TÁCH khỏi đối chiếu độc lập với kỳ vọng của corpus nguồn; khoảng trống năng lực khoá trong `CAPABILITY_GAPS_174`. Oracle step-math là kiểm tự nhất quán của cảnh, không phải đối chiếu với đề.
+- **BLOCKER:** —
+- **NEXT_TEST:** mọi họ mới thêm kỳ vọng độc lập (oracle Fraction viết trước) vào corpus nguồn.
+
+### D-06: Fail-closed với dữ kiện suy biến
+- **STATUS:** PROVED — độ dài 0 ⇒ `NON_POSITIVE_LENGTH` (tuyến A và B); độ dài âm không qua văn phạm; `Metric` từ chối ma trận không đối xứng / không xác định dương; engine đổi thành từ chối có mã.
+- **BLOCKER:** —
+- **NEXT_TEST:** —
+
+### D-07: Adapter envelope
+- **STATUS:** PROVED cho preview (`backend/app/ai/hybrid_preview.py::adapt_result`, `hybrid-route-d-preview/1`): envelope ngữ nghĩa đã thẩm định + `route_d` (Geometry IR, đáp số chính xác, provenance, trace, goal checks với `proof_status=UNVERIFIABLE` / `can_present_as_proven=false`, `length_unit`); từ chối giữ mã máy, lời người học tiếng Việt. Khoá: `backend/tests/test_hybrid_preview_api.py`.
+- **BLOCKER:** frontend chưa đọc `route_d` (`frontend-handoff.md` của `hybrid-pre-main-hardening` F3, F4); đây là biểu diễn preview, chưa phải envelope sản phẩm của `/api/analyze`.
+- **NEXT_TEST:** khi UI đọc nó: goal kiểm trên một cấu hình không bao giờ hiển thị là "đã chứng minh".
+- **UPDATE (run `hybrid-preview-contract-hardening`):**
+  - Lời từ chối mang `failure_category` + `refusal_cause` theo từ vựng hiện có (`classify_refusal`). Lỗi toàn vẹn, nguồn
+    chưa xác minh hay thiếu chứng chỉ không còn bị gọi là `capability_gap`. Khoá quét nguồn: mã từ chối mới phải được
+    xếp nhóm.
+  - Lớp chặn văn bản chứng minh chuẩn hoá NFKC và gộp mọi dấu gạch / dấu trừ (kể cả U+2212).
+  - Hợp đồng dữ liệu cho frontend: `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md`. Bộ 41 fixture adapter `/2`
+    xuất từ chính endpoint (`fixtures-adapter-2/`, khoá ở `test_hybrid_preview_fixtures.py`).
+
+### D-08: Nối API sau cờ
+- **STATUS:** PROVED cho preview — `POST /api/preview/hybrid`: cờ env + token server ≥ 32 ký tự + header + peer loopback, request có header `Origin` (trình duyệt) bị từ chối; TẮT ⇒ 404 trước mọi import tuyến D, và `/api/health` không nạp tuyến D; cổng trả lời trước khi đọc body; chỉ dữ liệu fixture offline (không transport, kể cả `ALLOW_LIVE_AI=1` có khoá); không cache; ngoài OpenAPI; `LLM_ONLY` của `/api/analyze` khớp băm byte với baseline trước khi nối.
+- **BLOCKER:** phục vụ tuyến D qua `/api/analyze` hay qua provider thật chưa được duyệt.
+- **NEXT_TEST:** —
+
+### D-09: Quan sát được
+- **STATUS:** PROVED — `GET /api/diagnostics/runtime` mang `route_policy` và `hybrid_route_d_preview` (phiên bản, surface, fingerprint, trạng thái bật; không lộ token).
+- **BLOCKER:** —
+- **NEXT_TEST:** —
+
+### D-10: Trình bày chỉ từ chứng nhận
+- **STATUS:** OPEN — ký hiệu góc vuông theo tên đoạn; `maTranKhung` không tự vệ (`frontend-handoff.md` F1, F2); `length_unit`, quan sát goal và `verification_gap` chưa được trình bày (F3, F4, F5 — tiêu chí ở `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md` §9).
+- **BLOCKER:** nhánh Scene3D đang sở hữu renderer.
+- **NEXT_TEST:** theo tiêu chí nghiệm thu trong `frontend-handoff.md`.
+
+### D-11: Đo live có ghép cặp với `LLM_ONLY`
+- **STATUS:** NOT_STARTED — cần owner GO, ngân sách + luật dừng tiền đăng ký, `MEASUREMENT_CLASS` · `HELD_OUT_CLAIM` · `EVALUATOR_INDEPENDENCE`.
+- **BLOCKER:** D-04 (held-out mới), D-08.
+- **NEXT_TEST:** —
+
+### D-12: Rollback
+- **STATUS:** PARTIAL — tắt cờ là đủ về hành vi; preview không có cache nên không có gì để phục vụ chéo (D-02); một lượt đang chạy giữ ảnh chụp của nó.
+- **BLOCKER:** D-02 khi tuyến D có cache.
+- **NEXT_TEST:** bật → ghi cache → tắt ⇒ MISS; tắt → bật ⇒ MISS.
+
+### D-13: Quyết định bật
+- **STATUS:** NO-GO — `HYBRID_PRODUCT_ENABLEMENT = NO-GO` cho tới khi D-01…D-12 đạt và owner quyết.
 
 ### GATE-20: User & Pedagogical Evaluation
 - **STATUS:** NOT_STARTED

@@ -1,5 +1,107 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_PREVIEW_CONTRACT_HARDENING
+
+REPORT = docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/
+CLASSIFICATION = PREVIEW_CONTRACT_HARDENING_VERIFIED (owner scope GO_HYBRID_PREVIEW_CONTRACT_HARDENING; review round 1 FAIL → fixed, round 2 PASS_WITH_FINDINGS; T3 FULL_PRODUCT_GATE_PASS at 8b17d170; preview refusal classification, proof-text backstop, offline envelope fixtures and the frontend data contract; Hybrid product NO-GO, LLM_ONLY default unchanged)
+CODE_COMMIT = caf21513 (round 1) · bce21d8b (review fixes, product commit); candidate freeze f5f483bf (tree_hash 1b7a671326290f0b1da7d213d1399da2fe02ec7765f13f5057525362ff0f08fa, 111 files; earlier freeze 2a832ae2 = 53ea8830… superseded); fixtures aae168e6 (`fixtures-adapter-2/`; `fixtures/` of 0a199aa5 superseded)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/run.json
+MODEL_REQUEST_COUNT = 0 (offline; fixtures served through the endpoint with the network blocked)
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## WAVE_ID = HYBRID_ROUTE_D_PREVIEW_WIRING
+
+REPORT = docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/
+CLASSIFICATION = ROUTE_D_PREVIEW_VERIFIED (owner scope GO_HYBRID_ROUTE_D_PREVIEW_WIRING; operator-only OFFLINE Route D preview; Codex GPT-6.1 work recovered at 902730b9, completed by Claude takeover; Hybrid product NO-GO, LLM_ONLY default byte-identical)
+CODE_COMMIT = 902730b9 (Codex work as found) · af4bcf47 (takeover fixes) · 93390f58 (review fixes, product commit); candidate freeze dc8e25ba (tree_hash 4c1b9a270430773a0bafede1f86120ea92ad066accdd7163cbe405b50253142d, 111 files; earlier freeze 8ffa58f4 = 75af7b71… superseded)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/run.json
+MODEL_REQUEST_COUNT = 0 (offline fixture data only; no provider transport exists in the preview)
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## WAVE_ID = HYBRID_PRE_MAIN_HARDENING
+
+REPORT = docs/evaluation/geometry/runs/hybrid-pre-main-hardening/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-pre-main-hardening/
+CLASSIFICATION = PRE_MAIN_HARDENING_VERIFIED (owner-approved GO_PRE_MAIN_BACKEND_SAFETY_HARDENING on research/hybrid-backend-integration 2620cffa; Hybrid off, LLM_ONLY default unchanged; independent review PASS 0 blocking; authoritative T3 FULL_PRODUCT_GATE_PASS at clean detached 1abc0a51 — verification/authoritative-t3.json)
+CODE_COMMIT = 66328d22 (honest default-route guard) · 83e8390a (route-aware cache + per-call response contract) · 3afe2fdd (zero lengths, SPD Metric, 174-case answer regression); candidate freeze 81ba464f (product 3afe2fdd, tree_hash 7cd48f8c3d19299e95e5d31b341ec52120f0bc33b0e1ffc9cce03a2e9c37caf4, 110 files)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-pre-main-hardening/run.json
+MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
+CORRECTS = HYBRID_BACKEND_INTEGRATION (cleanup-inventory.json: nonexistent SHA fdcf201c, research/hybrid-semantic-extraction-v2 wrongly SAFE_TO_DELETE with 14 unique commits, nonexistent nlu-extraction-eval, omitted branches/folders → cleanup-manifest.json; report claims: the "strict SPD metric guard" was test-only, "88/88 VERIFIED" is scene self-consistency not answer correctness, "174/174" locked status/code only; default-route guard test_Y was falsely green). Original files unchanged.
+CORRECTED_BY = NONE
+
+## WAVE_ID = HYBRID_BACKEND_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-backend-integration/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-backend-integration/
+CLASSIFICATION = COMBINED_BACKEND_VERIFIED_PENDING_MAIN_GO (integrating semantic-extraction-v3-runtime-revision bb014eb8, contract-driven-goal-composition a629ebee, and step-math-validation 0dd1da5c onto main 4abc4afb; 174/174 historical + 40/40 Slice A/B + 8/8 offline v3 cells + 148/148 baseline scenes + 88/88 combined scenes + 10/10 counterexamples PASS)
+CODE_COMMIT = 7507312b (merge of semantic-extraction-v3-runtime-revision a94a54d0 + contract-driven-goal-composition 7507312b + step-math-validation f63dae86)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-backend-integration/run.json (product_sha256 afab0a3ca3abfe3c3f7692d34be2aeadbd099b8d43b6543d8d234d19b5ef8443 across 110 files; historical v3 receipts at 6ba9033b… preserved untouched)
+MODEL_REQUEST_COUNT = 0 (offline integration & verification only; ALLOW_LIVE_AI=0)
+CORRECTS = NONE
+CORRECTED_BY = HYBRID_PRE_MAIN_HARDENING
+
+## WAVE_ID = STEP_MATH_VALIDATION
+
+REPORT = docs/evaluation/geometry/runs/step-math-validation/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/step-math-validation/
+CLASSIFICATION = STEP_MATH_VALIDATED_BASELINE_AND_FROZEN_BACKEND (148/148 served scenes verified across 11 mathematical invariant categories, 5,105 checks, 10/10 fault-injection counterexamples caught)
+CODE_COMMIT = 0dd1da5c (independent oracle.py, audit_step_math_validation.py, test_step_math_validation.py)
+VERIFICATION = docs/evaluation/geometry/runs/step-math-validation/run.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## WAVE_ID = CONTRACT_DRIVEN_GOAL_COMPOSITION
+
+REPORT = docs/evaluation/geometry/runs/contract-driven-goal-composition/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/contract-driven-goal-composition/
+CLASSIFICATION = COMPLETE_LOCAL_CANDIDATE_READY_FOR_INTEGRATION_REVIEW (Slice A ask_area + Slice B ask_angle_line_plane contract-driven goal composition; 174/174 baseline + 40/40 new corpus PASS)
+CODE_COMMIT = 1529faa7 (frozen branch HEAD a629ebee; product_sha256 540fc9d58b5ae060711aaacfb329b60f0bf18c44df3b1497faae432989ab1013)
+VERIFICATION = docs/evaluation/geometry/runs/contract-driven-goal-composition/run.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
+## WAVE_ID = SEMANTIC_EXTRACTION_V3_RUNTIME_REVISION
+
+REPORT = docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/
+CLASSIFICATION = OFFLINE_COMPLETE_AUTHORITATIVE_T3_PASS_AWAITING_LIVE_PILOT_GO (8/8 offline receipts COMPLETE; stalled task bufr6nkj1 verified and terminated; held-out split disclosed as REUSED_DIAGNOSTIC_NOT_FRESH_BLIND; stopped at GO_LIVE_PILOT_REQUIRED)
+CODE_COMMIT = 283813b2 (possessive separator in _SAU_HOP_LE + pre-route split isolation in run_schema_contract_evaluation.py); candidate freeze 4fdb6308; offline runner review fix da5b407d; protocol lock 2b955ead; offline receipts 04b0db37
+VERIFICATION = verification/authoritative-t3-20261018.json (candidate 6ba9033b… MATCH; independent review review-gates/revision.json PASS; targeted 445 passed / 1 xfailed; clean detached T3 at 04b0db37 FULL_PRODUCT_GATE_PASS: backend 10508 passed, frontend 68 files / 1079 passed, build PASS, demo 5/5, crash audit 6/6)
+MODEL_REQUEST_COUNT = 0 (offline GOLD/REPLAY only; live authorization NONE)
+CORRECTS = SEMANTIC_EXTRACTION_SCHEMA_CONTRACT (runtime regex backtracking in _SAU_HOP_LE, pre-route PILOT/LOCKED split isolation, and bounded sequential offline runner; original frozen lock at 5c58774d preserved byte-for-byte)
+CORRECTED_BY = NONE
+
+## WAVE_ID = SEMANTIC_EXTRACTION_SCHEMA_CONTRACT
+
+REPORT = docs/evaluation/geometry/runs/semantic-extraction-schema-contract/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/semantic-extraction-schema-contract/
+CLASSIFICATION = PARTIAL_PROTOCOL_RUNTIME_BLOCKER (0/8 completed offline receipts; original Claude task bufr6nkj1 remains active, stalled in frozen shared question grammar)
+CODE_COMMIT = a28c2a19; candidate freeze f82414ce; protocol lock / measured source 5c58774d
+VERIFICATION = verification/takeover-20261018.json (hashes/reviews MATCH; targeted 394 passed / 1 xfailed; full backend 10455 passed; frontend 1079; authoritative T3 NOT_RUN)
+MODEL_REQUEST_COUNT = 0 (v3 takeover; GOLD/REPLAY are not extraction accuracy; no live authorization)
+CORRECTS = NONE (new runtime blocker disclosed; previous reviews and measurements unchanged)
+CORRECTED_BY = SEMANTIC_EXTRACTION_V3_RUNTIME_REVISION
+
+## WAVE_ID = HYBRID_SEMANTIC_EXTRACTION_V2
+
+REPORT = docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/
+CORRECTS = NONE (scorer /2 reported beside the frozen NLU scorer; its L01 artifact re-checked on the recorded receipt)
+CORRECTED_BY = NONE
+CLASSIFICATION = RESEARCH_BRANCH · LIVE PILOT MEASURED (results/live-pilot-analysis.md) · LOCKED NOT RUN · integration PENDING_OWNER_GO
+CODE_COMMIT = 69fa9be8 (route-B prompt v2 + bounded Source Grounding); protocol lock 6ceb2508
+VERIFICATION_COMMIT = candidate b5406c91… MATCH at 108fc086; identities + offline receipts at c640cd14; T3 FULL_PRODUCT_GATE_PASS at fa6d792e and, merged with main 8427c879, at b7b7e89e (verification/t3-merged.json)
+MODEL_REQUEST_COUNT = 24 (paired dev pilot, owner GO pilot only; est. USD 0.123); LOCKED not run
+
+Fresh 36-case corpus (dev 12 / heldout 24, 34 Fraction oracles), scorer grounded-source-obligations/2 (independent
+review NOT_READY → LOCK_READY). GOLD served correct dev 1→2/12, heldout 2→2/24, 0 unsafe; prompt effect NOT_MEASURED.
+
 ## WAVE_ID = SCENE3D_ANNOTATION_CORRECTNESS
 
 REPORT = docs/evaluation/geometry/runs/scene3d-annotation-correctness/report.md

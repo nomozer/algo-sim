@@ -1,0 +1,32 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-semantic-extraction-v2",
+  "task": "extraction-v2-safety (selective integration of the hybrid-semantic-extraction-v2 research branch)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-semantic-grounding-reliability/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "9da80c6f3e8efbf8371b29949d7e03abebf5e3b46a5d090615feea4f7f8f78d8",
+  "current_candidate_source_commit": "e4fff851",
+  "current_product_commit": "e4fff851",
+  "current_candidate_frozen_at": "e4fff851",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "previous_candidate_hash": "57c7f5dbedaa7b21c66345fa4d6f0e1ea461a425293d44035b5678e12d76f96e",
+  "metadata_only_correction": false,
+  "diverged": true,
+  "reason": "Selective integration of reviewed Source Grounding fixes from Semantic Extraction v2: a bare 'hình hộp' no longer certifies a right prism (closes a wrong serve), 'hộp chữ nhật' prism predicate, 'dài bao nhiêu' length ask, sentence-initial article before a solid. Prompt v2 not integrated: product extraction prompt and provider surfaces A/B/declarations unchanged.",
+  "product_changes_since_main": [
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "historical_effect": "Historical NLU GOLD arm: 60 rows, one declared change (L02 REFUSED PREDICATE_NOT_IN_QUOTE -> REFUSED SOURCE_PREMISE_UNREAD), served 10 -> 10 (results/historical-gold-delta.json). Earlier measurement bytes unchanged.",
+  "freeze": "clean worktree at e4fff851, 110 measured files, --verify MATCH",
+  "research_branch_candidate": "b5406c91… (with prompt v2) stays on research/hybrid-semantic-extraction-v2, tag evidence/extraction-v2-pilot; not integrated",
+  "cache_version": 125,
+  "cache_decision": "no bump: research route D (registry, function_route) is not imported by /api/analyze or any cached path",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical thesis-final and NLU baseline measurements keep their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "integration/extraction-v2-safety; owner GO INTEGRATION required",
+  "push": "NONE: no integration approval yet"
+}

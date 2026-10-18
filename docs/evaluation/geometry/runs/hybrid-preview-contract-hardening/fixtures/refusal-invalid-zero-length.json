@@ -1,0 +1,80 @@
+{
+ "covers": [
+  "refusal"
+ ],
+ "expected": {
+  "envelope_status": "unsupported",
+  "failure_category": "geometry_generation_failed",
+  "http_status": 200,
+  "reason_code": "NON_POSITIVE_LENGTH",
+  "refusal_cause": "SOURCE"
+ },
+ "id": "refusal-invalid-zero-length",
+ "injection": null,
+ "kind": "refusal",
+ "producer": {
+  "adapter_version": "hybrid-preview-adapter/1",
+  "backend_app_dirty": false,
+  "commit": "2a832ae292d5197eeeda33d4f86652bcaf8d29d7",
+  "envelope_version": "hybrid-route-d-preview/1",
+  "product_commit": "caf215139f58e181601b99a649c546724d558d9d",
+  "source_fingerprint": {
+   "files": 111,
+   "measured_system_hash": "53ea8830e9f0ce48823160335c48cf1b7dd6c82a46e5cc0e2196b5613419a4ea",
+   "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
+  }
+ },
+ "response": {
+  "envelope": {
+   "failure_category": "geometry_generation_failed",
+   "learner_reason": "Đề bài cho một số liệu bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé.",
+   "reason": "Đề bài cho một số liệu bằng 0 hoặc âm, nên hình suy biến: không có khối nào như vậy để dựng hay tính. Em kiểm tra lại số liệu này trong đề rồi gửi lại nhé.",
+   "reason_code": "NON_POSITIVE_LENGTH",
+   "refusal_cause": "SOURCE",
+   "status": "unsupported"
+  },
+  "route_d": {
+   "planner": {
+    "goal_checks": {},
+    "negated_checks": {},
+    "version": "geometry-fact-planner/7"
+   },
+   "runtime_identity": {
+    "adapter_version": "hybrid-preview-adapter/1",
+    "default_product_mode": "LLM_ONLY",
+    "enabled": true,
+    "engine_version": "geometry-function-engine/5",
+    "envelope_version": "hybrid-route-d-preview/1",
+    "extraction_surface": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "fingerprint": "8ff6d785a8491611b711f2cd980642b9125f5f8fe4d3cefac27128167b36d3b8",
+    "planner_version": "geometry-fact-planner/7",
+    "product_enablement": "NO-GO",
+    "provider_mode": "OFFLINE_FIXTURE_ONLY",
+    "registry_version": "geometry-functions/6",
+    "response_contract": "flat"
+   }
+  },
+  "schema_version": "hybrid-route-d-preview/1"
+ },
+ "response_sha256": "753b61bb1fd05e56e360f4ee50a133df94672aae5cb0bfd5ca79ae644992e3f7",
+ "schema": "hybrid-preview-envelope-fixture/1",
+ "source": {
+  "input_sha256": "3d77a5d4af545bf7a122b464be1afdacf8da819c7ed5ea1b1ef7c2367b6e96c6",
+  "origin": "tests/test_hybrid_preview_contract.py::CASES[invalid-zero-length]",
+  "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 2 và chiều cao bằng 0. Tính thể tích khối chóp S.ABCD.",
+  "provider_body": {
+   "candidates": [
+    {
+     "content": {
+      "parts": [
+       {
+        "text": "{\"facts\": [{\"id\": \"f1\", \"kind\": \"solid\", \"role\": \"premise\", \"quotes\": [\"hình chóp tứ giác đều S.ABCD\"], \"solid\": \"S.ABCD\", \"solid_type\": \"pyramid\", \"regular\": true}, {\"id\": \"f2\", \"kind\": \"length\", \"role\": \"premise\", \"quotes\": [\"cạnh đáy bằng 2\"], \"measure\": \"base_edge\", \"solid\": \"S.ABCD\", \"value\": \"2\"}, {\"id\": \"f3\", \"kind\": \"length\", \"role\": \"premise\", \"quotes\": [\"chiều cao bằng 0\"], \"measure\": \"height\", \"solid\": \"S.ABCD\", \"value\": \"0\"}, {\"id\": \"f4\", \"kind\": \"question\", \"role\": \"question\", \"quotes\": [\"Tính thể tích khối chóp S.ABCD\"], \"quantity\": \"volume\", \"solid\": \"S.ABCD\"}]}"
+       }
+      ]
+     },
+     "finishReason": "STOP"
+    }
+   ]
+  }
+ }
+}

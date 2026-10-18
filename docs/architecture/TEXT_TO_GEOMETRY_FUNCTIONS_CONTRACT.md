@@ -141,7 +141,10 @@ Vân tay bề mặt mô hình của đường này: `surface_fingerprint()` — 
 
 ## 6. Ranh giới
 
-Đường mặc định (`app.main`, `app.ai.pipeline`) không với tới các module trên — bao đóng import khoá ở
-`backend/tests/geometry/test_structured_geometry_relations.py::test_Y_duong_mac_dinh_VAN_khong_tham_chieu_compiler`;
+Đường mặc định (`app.main`, `app.ai.pipeline`) không với tới các module trên — khoá ba lớp ở
+`backend/tests/geometry/test_structured_geometry_relations.py::test_Y_*` (run `hybrid-pre-main-hardening`; thay guard
+`test_Y_duong_mac_dinh_VAN_khong_tham_chieu_compiler`, vốn xanh sai vì `pipeline.py` nạp compiler qua `__import__` cắt
+chuỗi): không nạp động trong mã sản phẩm · bao đóng import tĩnh chỉ với compiler qua cổng `routing` đã khai · module nạp
+thật khi chạy `run_pipeline` ở `LLM_ONLY` ⊆ bao đóng tĩnh và không có module nào ở đây;
 `app/simulation` không nhập `scene3d`/`simulation_state`. Giới hạn hiện tại: một mặt đáy; chóp/lăng trụ đứng; chưa có
 song song, góc nhị diện tổng quát, thiết diện, khối tròn, đáy hình thoi/hình thang.

@@ -1,0 +1,31 @@
+{
+  "schema": "RUNTIME_REVISION_PROVENANCE/1",
+  "task": "semantic-extraction-v3-runtime-revision",
+  "parent_checkpoint": "7168d26963011433889dc907492df87ac62140f7",
+  "parent_lock_commit": "5c58774dbc57b3416337d97dab7db8ee1932894b",
+  "parent_product_sha256": "1ff71da76d999370897edd3a2dfaf161113e4d24f39dd41cda640ce2aa53dbc7",
+  "product_commit": "283813b23afd5a3235cd5d944ef30ebbe9d0691a",
+  "product_sha256": "6ba9033bfca06d671cd27891e2dad06c7d44f365fed45527123c907d664b65ed",
+  "measured_files": 110,
+  "product_change": "possessive separator in shared question-tail regex only",
+  "runner_change": "split-before-route/1; sequential real-exit watchdog receipt launcher",
+  "prompt_schema_scorer_oracle_semantics": "UNCHANGED",
+  "corpus_gold_bytes": {
+    "corpus.json": true,
+    "gold_facts.json": true
+  },
+  "heldout_status": "REUSED_DIAGNOSTIC_NOT_FRESH_BLIND",
+  "cache_version": 125,
+  "default_mode": "LLM_ONLY",
+  "default_response_contract": "flat",
+  "hybrid_enablement": "NO-GO",
+  "live_authorization": "NONE",
+  "integration_authorization": "NONE",
+  "old_attempt": "TERMINATED_BY_OWNER_APPROVAL / INCOMPLETE_RUNTIME_STALL",
+  "targeted_tests": {
+    "passed": 445,
+    "xfailed": 1,
+    "source_commit": "283813b2"
+  },
+  "worktree_lifecycle": "one revision worktree; retain pending approval; use this same checkout detached for authoritative T3"
+}

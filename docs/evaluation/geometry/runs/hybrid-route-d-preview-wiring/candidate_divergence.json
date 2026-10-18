@@ -1,0 +1,33 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-route-d-preview-wiring",
+  "task": "GO_HYBRID_ROUTE_D_PREVIEW_WIRING — operator-only offline Route D preview (Codex GPT-6.1 work 902730b9, Claude takeover af4bcf47, review fixes 93390f58)",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-pre-main-hardening/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "4c1b9a270430773a0bafede1f86120ea92ad066accdd7163cbe405b50253142d",
+  "current_candidate_source_commit": "93390f58",
+  "current_product_commit": "93390f58",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "previous_candidate_hash": "7cd48f8c3d19299e95e5d31b341ec52120f0bc33b0e1ffc9cce03a2e9c37caf4",
+  "metadata_only_correction": false,
+  "diverged": true,
+  "reason": "Owner-approved GO_HYBRID_ROUTE_D_PREVIEW_WIRING: a new operator-only offline endpoint POST /api/preview/hybrid (env flag + >=32-char server token + header + loopback peer; OFF answers 404 before any Route D import; fixture data only, no provider transport; no product cache), a versioned hybrid-route-d-preview/1 adapter, RoutePolicy preview identity, and runtime identity fields. /api/analyze under LLM_ONLY is unchanged (full-response byte-hash parity test against the pre-wiring baseline).",
+  "product_changes_since_previous_candidate": [
+    "backend/app/ai/hybrid_preview.py (new)",
+    "backend/app/ai/pipeline.py",
+    "backend/app/main.py",
+    "backend/app/runtime_identity.py"
+  ],
+  "historical_effect": "hybrid-pre-main-hardening (7cd48f8c…), hybrid-backend-integration (afab0a3c…) and earlier receipts untouched; 174 historical rows, grounding probes and the step-math oracle re-run on this candidate.",
+  "freeze": "111 measured files, product commit 93390f58, --verify MATCH (earlier freeze 8ffa58f4 at af4bcf47 = 75af7b71…, superseded inside this wave)",
+  "cache_version": 125,
+  "cache_decision": "no bump: the default analyze identity is unchanged (preview=False snapshot is the old RoutePolicy) and the preview never reads or writes the product cache (_policy_identity raises for a preview policy)",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: no frozen measurement is rescored or rewritten; the preview is a new offline surface with no recorded measurement.",
+    "live_requests": 0
+  },
+  "integration": "owner GO MAIN required; Route D product enablement NO-GO",
+  "push": "NONE"
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "semantic-extraction-v3-runtime-revision",
+  "task": "Semantic Extraction v3 runtime revision (research/semantic-extraction-v3-runtime-revision)",
+  "corrects": "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "run_candidate_source": "docs/evaluation/geometry/thesis-final-acceptance/IDENTITY_LOCK.json",
+  "current_candidate_hash": "6ba9033bfca06d671cd27891e2dad06c7d44f365fed45527123c907d664b65ed",
+  "current_candidate_source_commit": "283813b2",
+  "current_product_commit": "283813b2",
+  "current_candidate_frozen_at": "4fdb6308",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "previous_candidate_hash": "1ff71da76d999370897edd3a2dfaf161113e4d24f39dd41cda640ce2aa53dbc7",
+  "metadata_only_correction": false,
+  "diverged": true,
+  "reason": "Owner-authorized runtime revision (GO_RUNTIME_RECOVERY_AND_OFFLINE_REVISION) from 7168d269: possessive separator in shared question-tail regex (_SAU_HOP_LE in registry.py) to prevent catastrophic regex backtracking on long whitespace/unread suffixes without changing accepted language or refusal semantics.",
+  "product_changes_since_main": [
+    "backend/app/ai/fact_extraction.py",
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "historical_effect": "Semantics-preserving regex separator fix; historical NLU GOLD arm and earlier measurement bytes unchanged.",
+  "freeze": "110 measured files, product commit 283813b2, --verify MATCH",
+  "cache_version": 125,
+  "cache_decision": "no bump: product prompt and default (flat) response schema unchanged; research route D (registry, function_route) is not imported by /api/analyze or any cached path",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical thesis-final, NLU baseline, extraction-v2 and stalled schema-contract attempt keep their source candidates; no rescoring, pooling or rewriting.",
+    "live_requests": 0
+  },
+  "integration": "not integrated; owner GO INTEGRATION required",
+  "push": "NONE"
+}

@@ -1,5 +1,83 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-SCENE3D-ALTITUDE-MARKER-UNCERTIFIED
+
+- **status:** OPEN — found read-only in run `hybrid-pre-main-hardening` (2026-10-18); frontend not changed (Scene3D renderer owned by `research/scene3d-plane-grid-camera`).
+- **what:** `scene3d-view.tsx` draws a right-angle mark at an "altitude" when the segment's id contains `cao` or its label/role contains "chiều cao"; the foot is the endpoint with smaller z and the marker plane comes from the x/y axes. No backend certificate is read, although route D emits `perpendicular_witness` and annotations carry witnesses.
+- **repro / acceptance:** `docs/evaluation/geometry/runs/hybrid-pre-main-hardening/frontend-handoff.md` F1.
+
+### ISSUE-ARCH-SCENE3D-CHART-METRIC-UNGUARDED
+
+- **status:** OPEN (defensive) — `scene3d-chart.ts::maTranKhung` takes square roots without checks; a non-SPD `chart_metric` becomes `NaN` coordinates, a singular one divides by zero. No current producer: the backend `Metric` type refuses non-SPD Gram matrices since `hybrid-pre-main-hardening`.
+- **repro / acceptance:** `frontend-handoff.md` F2.
+
+### ISSUE-ARCH-HYBRID-PREVIEW-FAILURE-CATEGORY-COLLAPSED
+
+- **status:** RESOLVED in run `hybrid-preview-contract-hardening` (product `caf21513`, corrected after independent review
+  in `bce21d8b`: Route D's escape `OUT_OF_SCOPE` is a capability gap, not "another subject"; `NON_POSITIVE_LENGTH` is SOURCE
+  only when the server reads it in the text; adapter `/2`). On the branch; not on `main` until integrated.
+- **what was wrong:** every Route D preview refusal had `failure_category = capability_gap` and no `refusal_cause`, so an
+  integrity fault, an unverified source or a missing certificate read as "the system cannot do this".
+- **fix:** `hybrid_preview.classify_refusal` puts each code in a group and maps it to the existing categories, with a
+  FALLBACK that is never `capability_gap`. Locks: `backend/tests/test_hybrid_preview_contract.py`, including a
+  source-scan test that red-fails on an unclassified literal code.
+
+### ISSUE-ARCH-HYBRID-PREVIEW-PROOF-TEXT-U2212
+
+- **status:** RESOLVED in run `hybrid-preview-contract-hardening`.
+- **what was wrong:** the proof-text backstop matched on NFC only, so U+2212 (and U+2796, U+FE63, U+FF0D, U+2E3A,
+  U+02D7, fullwidth letters) between "chứng" and "minh" passed.
+- **fix:** detection runs on an NFKC copy with format characters dropped and every dash or minus folded; the served text
+  is byte-identical. The structural invariant (`proof_status`, `can_present_as_proven`) stays the primary guard.
+- **residual (by design):** spellings without diacritics and cross-script homoglyphs are not matched. Matching them would
+  also catch "chúng mình" (false refusals). The structural invariant covers them.
+
+### ISSUE-ARCH-SCENE3D-VERIFICATION-GAP-PRESENTATION
+
+- **status:** OPEN — frontend, Scene3D/UI owner (F5 of `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md`).
+- **what:** `SimulationWorkspace` labels `verification_gap` through `NHAN_LOAI_VAN_DE`, but its title/hint chain has no
+  branch for it, so a refusal of that category gets the default "NGOÀI DANH MỤC MÔ PHỎNG" and the capability hint. The
+  preview now emits `verification_gap` (LLM_ONLY wraps geometry refusals as `geometry_generation_failed`, so this was
+  not reachable before).
+- **acceptance:** contract §9 F5; fixtures `refusal-source-*`, `refusal-result-*`, `refusal-inconclusive-*`.
+
+### ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO
+
+- **status:** OPEN — found by the round-2 independent review of `hybrid-preview-contract-hardening`. The defect is in a
+  shared product reader, so the fix needs its own wave (the default route uses the same reader).
+- **what:** `semantic_program/segment_relation.do_dai_trong_de` (through `refusal_cause.do_dai_de_ghi_khong_duong`)
+  reads `XY = 0` in vector or dot-product notation as a premise length of 0. Examples: "GA + GB + GC = 0",
+  "MA + MB = 0 (vectơ)", "SA.BC = 0", "MA = 0 khi M trùng A". The written-out form "vectơ … = vectơ 0" is read
+  correctly.
+- **consequence:** a mis-extracted zero length on such a valid problem is refused as `NON_POSITIVE_LENGTH` with
+  `refusal_cause = SOURCE`, so the learner is told to check the problem. Reproduction is in the round-2 review notes of
+  the run: corpus positive 0 plus "AB + CD = 0 (tổng hai vectơ)" and an extracted `CD = 0`.
+- **acceptance:** the reader ignores `=` inside sums, products and vector contexts; or SOURCE also requires the reader's
+  `reason_subjects` to match the segment of the refused call; with a RED test of the examples above.
+
+### ISSUE-ARCH-SCENE3D-INSUFFICIENT-SPEC-HINT
+
+- **status:** OPEN — frontend, Scene3D/UI owner (F6 of `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md`; found by
+  the independent review of `hybrid-preview-contract-hardening`).
+- **what:** for `failure_category = insufficient_specification`, `SimulationWorkspace` always shows "Bổ sung dữ liệu còn
+  thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng", whatever `refusal_cause` is. The preview sends that category
+  with `UNKNOWN` (for example `AMBIGUOUS_FACT` when the model flagged ambiguity). The hint then blames the problem and
+  promises support.
+- **acceptance:** contract §9 F6; fixtures `refusal-missing-*`.
+
+### ISSUE-OPS-CACHE-HISTORICAL-MODE-UNKNOWN
+
+- **status:** OPEN (interpretation only) — recorded in the untracked GO MAIN handoff `hybrid-go-main` (2026-10-18).
+- **what:** cache rows written before the route-aware cache policy did not record the routing mode. Compiler-mode rows,
+  if any, may share the former default identity: **UNKNOWN**. No bump, purge or migration has been done.
+- **acceptance:** an offline audit of the cache rows, or an owner decision to bump `CACHE_VERSION` with a written reason.
+
+### ISSUE-ARCH-HYBRID-ROUTE-D-NOT-WIRED
+
+- **status:** OPEN — route D runs offline only (`run_fact_route`, `run_ai_fact_route` with a test transport); `/api/analyze` never reaches it (guarded by `test_structured_geometry_relations.py::test_Y_*`). Missing for product: a `KetQuaTuyen` → `ValidatedSimulationEnvelope` adapter carrying goal checks (`proof_status`, `can_present_as_proven`) and `length_unit`; a route-D mode in `RoutePolicy` with registry/planner/engine versions and the extraction surface in its fingerprint; refusal-code → learner-message mapping; runtime identity fields.
+- **checklist:** `docs/MIGRATION_CHECKLIST.md` §2 (D-02, D-07…D-12); presentation findings in `frontend-handoff.md` F3, F4.
+- **update 2026-10-18 (run `hybrid-route-d-preview-wiring`):** an operator-only OFFLINE preview now exists: `POST /api/preview/hybrid` (env flag + server token + loopback peer; OFF 404; fixture data only, no provider transport; no product cache) with the versioned adapter `hybrid-route-d-preview/1` carrying goal checks, `length_unit`, IR, answers and provenance, a Route D preview identity in `RoutePolicy`, and runtime identity fields. Still open: Route D in `/api/analyze`, a live provider path, a Route D product cache, and UI consumption of `route_d`.
+
 ### ISSUE-ARCH-HYBRID-LIVE-EXTRACTION-BASELINE
 
 - **status:** OPEN — measured baseline, run `independent-nlu-extraction-evaluation` (2026-10-17, gemini-2.5-flash, locked 44 items, owner GO).
@@ -7,6 +85,7 @@
 - **grounding (product):** correct extractions refused for "dài bao nhiêu", "… thì … bằng mấy", "tính cos²", "Tính BD'", L23 ordering; the unlabelled base "đáy là hình vuông" refuses even gold facts. Prompt rule 7 conflicts with the gate on four-label planes.
 - **scorer:** served values are judged through fact pairing (L01 artifact); the next protocol must compare served values with the oracle independently.
 - **next:** a separately approved Semantic Extraction wave (prompt/schema surface ⇒ cache decision) measured on NEW items; then grounding wording coverage. Hybrid product NO-GO.
+- **update 2026-10-17 (run `hybrid-semantic-extraction-v2`; selective integration `extraction-v2-safety`):** scorer artifact fixed by scorer /2 (L01 recorded receipt now `CORRECT_COMPLETE`); `dài bao nhiêu`, `hộp chữ nhật` and a sentence-initial article grounded; bare `hình hộp` no longer certifies a right prism (a wrong-serve path on main, now closed). Prompt v2 was measured on a 24-request paired dev pilot and NOT integrated: operands 2/8, solid 3/6, expressible goals 5/11 unchanged vs baseline, both arms served 0/12 (`disposition.md`). Still open: question operands land in `value` or are omitted under the flat optional response schema (Schema-Contract v3, offline); `… thì … bằng mấy`, `Tính cos²`, repeated `tính`, `rồi suy ra`, projection naming, `ba kích thước`; GOLD ceiling 4/36 on the new corpus is dominated by capability/grounding gaps.
 
 ### ISSUE-ARCH-GENERALIZED-GOAL-ENTRY-COVERAGE
 

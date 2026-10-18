@@ -279,9 +279,25 @@ def runtime_identity() -> dict:
     đoán — doctor sẽ xử lý riêng trường hợp đó."""
     # Nhập muộn: main.py import module này, tránh vòng import.
     from app.main import CACHE_VERSION, semantic_route_mode
+    from app.ai.pipeline import HYBRID_PREVIEW_TOKEN_MIN_LENGTH, route_policy_snapshot
 
     kn = capability_fingerprint()
+    env = dict(os.environ)
+    policy = route_policy_snapshot(env)
+    preview = route_policy_snapshot(env, preview=True)
+    # `/api/health` calls this every few seconds (Docker healthcheck, frontend): with the preview OFF it must not load
+    # Route D at all, or a research import error would make the product container unhealthy.
+    route_d: dict = {"enabled": False}
+    if preview.hybrid_preview_enabled:
+        # Diagnostics-only boundary, reached only with the operator flag on.
+        from app.ai.hybrid_preview import preview_runtime_identity
+
+        route_d = {**preview_runtime_identity(preview), "token_configured":
+                   len(env.get("HYBRID_ROUTE_D_PREVIEW_TOKEN", "")) >= HYBRID_PREVIEW_TOKEN_MIN_LENGTH}
     return {
+        "route_policy": {"geometry_compiler_mode": policy.geometry_compiler_mode,
+                         "fingerprint": policy.fingerprint()},
+        "hybrid_route_d_preview": route_d,
         "git_sha": os.getenv("ALGOSIM_GIT_SHA", "unknown"),
         "build_timestamp": os.getenv("ALGOSIM_BUILD_TIME", "unknown"),
         "cache_version": CACHE_VERSION,

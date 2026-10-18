@@ -37,6 +37,12 @@ BACKEND = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BACKEND))
 
 
+def con_hieu_luc(policy_version: str | None, cache_version: str) -> bool:
+    """Hàng còn hiệu lực ở MỘT chế độ tuyến nào đó: `CACHE_VERSION` (mặc định) hoặc `CACHE_VERSION:<băm tuyến>`
+    (`main._policy_identity`, run `hybrid-pre-main-hardening`). So bằng trước đây coi hàng của chế độ compiler là cũ."""
+    return policy_version == cache_version or (policy_version or "").startswith(f"{cache_version}:")
+
+
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__)
     g = p.add_mutually_exclusive_group(required=True)
@@ -59,7 +65,7 @@ def main() -> int:
             rows = s.query(SimulationCache).all()
             print(f"{len(rows)} row · CACHE_VERSION hiện tại = {CACHE_VERSION}")
             for r in rows:
-                dau = "  " if r.policy_version == CACHE_VERSION else "cũ"
+                dau = "  " if con_hieu_luc(r.policy_version, CACHE_VERSION) else "cũ"
                 print(f" {dau} [{r.policy_version}] {r.simulation_id or '—':<28} "
                       f"hit={r.hit_count} · {(r.problem_text or '')[:70]}")
             return 0
@@ -72,9 +78,10 @@ def main() -> int:
                 print("Không khớp row nào. Khoá băm theo text đã chuẩn hoá — "
                       "chép lại ĐÚNG đề (dùng --liet-ke để xem bản đã lưu).")
         elif a.cu:
-            n = (s.query(SimulationCache)
-                 .filter(SimulationCache.policy_version != CACHE_VERSION)
-                 .delete(synchronize_session=False))
+            cu = [r for r in s.query(SimulationCache).all() if not con_hieu_luc(r.policy_version, CACHE_VERSION)]
+            for r in cu:
+                s.delete(r)
+            n = len(cu)
         else:
             if not a.toi_chac_chan:
                 print("--tat-ca xoá KẾT QUẢ ĐÃ TRẢ CHO NGƯỜI HỌC. "

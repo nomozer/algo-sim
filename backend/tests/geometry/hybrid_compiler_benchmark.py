@@ -385,6 +385,9 @@ REFUSAL_CLASS = {
     # givens conflict
     "INCONSISTENT_FACTS": "contradictory", "PRECONDITION_FAILED": "contradictory", "FOOT_NOT_IN_PLANE": "contradictory",
     "NON_HOMOGENEOUS_LENGTHS": "contradictory",
+    # hybrid-pre-main-hardening: a zero length is a degenerate given (it used to surface as ENGINE_SELF_CHECK_FAILED,
+    # i.e. "system"); no frozen route-D corpus has a zero input, so no recorded score moves.
+    "NON_POSITIVE_LENGTH": "contradictory",
     # the library / compiler has no rule
     "OUT_OF_SCOPE": "unsupported", "UNSUPPORTED_CAPABILITY": "unsupported", "UNSUPPORTED_PLANE": "unsupported",
     "UNSUPPORTED_REGULAR_POLYGON": "unsupported", "UNSUPPORTED_MULTIPLE_HEIGHTS": "unsupported",

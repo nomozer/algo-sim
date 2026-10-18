@@ -54,6 +54,20 @@ class QuyetDinhDinhTuyen:
     diagnostics: tuple[str, ...] = field(default_factory=tuple)
 
 
+def dinh_danh_be_mat(che: str) -> dict[str, str]:
+    """Phiên bản các tầng quyết định đầu ra ở chế độ `che` — `{}` khi compiler không chạy. Đọc thuộc tính module LÚC
+    GỌI (không phải bản re-export của `__init__`), để identity cache đổi ngay khi một tầng đổi phiên bản."""
+    if che != CHE_DO_COMPILER:
+        return {}
+    from .compiler import COMPILER_VERSION
+    from .contract_adapter import ADAPTER_VERSION
+    from .fact_graph import FACT_GRAPH_VERSION
+    from .primitives import PRIMITIVE_REGISTRY_VERSION
+
+    return {"compiler": COMPILER_VERSION, "adapter": ADAPTER_VERSION, "fact_graph": FACT_GRAPH_VERSION,
+            "primitives": PRIMITIVE_REGISTRY_VERSION}
+
+
 def quyet_dinh_dinh_tuyen(contract: Any, env: dict[str, str] | None = None
                           ) -> QuyetDinhDinhTuyen:
     """Có dùng compiler cho hợp đồng này không. KHÔNG gọi provider, KHÔNG mạng."""

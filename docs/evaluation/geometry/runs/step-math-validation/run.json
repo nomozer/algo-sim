@@ -1,0 +1,85 @@
+{
+  "run": "step-math-validation",
+  "branch": "research/step-math-validation",
+  "base_commit": "4abc4afbb976babc4740bf22e42dc368a24c1b13",
+  "frozen_backend_branch": "research/contract-driven-goal-composition",
+  "frozen_backend_commit": "a629ebee346bf0083cf90294ad352640bcc936ce",
+  "live_ai_calls": 0,
+  "allow_live_ai_env": "0",
+  "frontend_reverification_status": "WAITING_FOR_FRONTEND_FINAL_SNAPSHOT",
+  "summary": {
+    "frontend_scenes_total": 13,
+    "frontend_scenes_verified": 13,
+    "frontend_scenes_invalid": 0,
+    "backend_scenes_total": 135,
+    "backend_scenes_verified": 135,
+    "backend_scenes_invalid": 0,
+    "refusal_rows_total": 6,
+    "total_served_scenes_audited": 148,
+    "total_served_scenes_verified": 148,
+    "category_totals": {
+      "1_incidence": {
+        "checked_count": 1901,
+        "passed_scenes": 148,
+        "failed_scenes": 0
+      },
+      "2_midpoint_centroid_ratio": {
+        "checked_count": 87,
+        "passed_scenes": 148,
+        "failed_scenes": 0
+      },
+      "3_orthogonal_projection": {
+        "checked_count": 24,
+        "passed_scenes": 148,
+        "failed_scenes": 0
+      },
+      "4_intersection": {
+        "checked_count": 22,
+        "passed_scenes": 148,
+        "failed_scenes": 0
+      },
+      "5_line_line_perp_parallel": {
+        "checked_count": 368,
+        "passed_scenes": 148,
+        "failed_scenes": 0
+      },
+      "6_line_plane_perp": {
+        "checked_count": 140,
+        "passed_scenes": 148,
+        "failed_scenes": 0
+      },
+      "7_angles": {
+        "checked_count": 13,
+        "passed_scenes": 148,
+        "failed_scenes": 0
+      },
+      "8_distance_area_volume": {
+        "checked_count": 147,
+        "passed_scenes": 148,
+        "failed_scenes": 0
+      },
+      "9_section": {
+        "checked_count": 24,
+        "passed_scenes": 148,
+        "failed_scenes": 0
+      },
+      "10_step_dependency_ordering": {
+        "checked_count": 2078,
+        "passed_scenes": 148,
+        "failed_scenes": 0
+      },
+      "11_conclusion_and_premises": {
+        "checked_count": 301,
+        "passed_scenes": 148,
+        "failed_scenes": 0
+      }
+    }
+  },
+  "counterexamples_detected": "10/10",
+  "hashes": {
+    "oracle.py": "d207c3862c976bda36bae350f07994da6ed18f0e71429770e54c78a2a89d0d85",
+    "catalog-audit.json": "dccd9f64013c8173b21fb9b865b7858846ed996ecef5ab1e1f6baf6f93e46104",
+    "counterexamples.json": "13f6a72ed2d1b0e3dc6600a36f6fad34e55bec9c2cb8d9426b0aa64479691bfb",
+    "report.md": "9242453e602772a2b08156f44c4b671926e70f8cd3b9290fc21486b27e86fec4"
+  }
+}
