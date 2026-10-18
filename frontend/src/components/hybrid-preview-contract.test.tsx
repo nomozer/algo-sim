@@ -352,6 +352,40 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       expect(sourceOut).toContain("dạng bài này hệ có mô phỏng");
     });
 
+    /* Hai test trên dựng `UnsupportedNotice` thẳng từ fixture, bỏ qua store. Đường thật là
+       `ProblemInput → store.loadUnsupported(result) → SimulationWorkspace` (shell trả về
+       `<UnsupportedNotice unsupported={store.unsupported}/>`); SSR không đọc được store sau khi nạp
+       (xem product-envelope-rendering.test.tsx §②), nên ở đây đọc lại `getState().unsupported` rồi dựng
+       đúng phần tử shell dựng. F5 rẽ theo `failure_category`, KHÔNG theo `reason_code`. */
+    it("F5/F6 qua store: loadUnsupported giữ nguyên trường có cấu trúc, tiêu đề/gợi ý theo failure_category + refusal_cause", () => {
+      const tieuDe = (html: string) => html.match(/class="eyebrow">([^<]*)</)?.[1];
+      const goiY = (html: string) => html.match(/class="notes">([^<]*)</)?.[1] ?? null;
+      const maVG = new Set<string>();
+      for (const row of REFUSAL_ROWS) {
+        const env = loadFixture(row.file).response.envelope;
+        if (!["verification_gap", "insufficient_specification"].includes(env.failure_category)) continue;
+        useAppStore.getState().loadUnsupported(env);
+        const u = useAppStore.getState().unsupported!;
+        expect(u, row.id).toEqual(env);
+        expect(useAppStore.getState().active, row.id).toBeNull();
+        const out = renderToString(<UnsupportedNotice unsupported={u} />).replace(/<!--.*?-->/g, "");
+        if (env.failure_category === "verification_gap") {
+          maVG.add(env.reason_code);
+          expect(tieuDe(out), row.id).toBe("CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG");
+          expect(goiY(out), row.id).toBe(
+            "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.");
+        } else {
+          expect(env.refusal_cause, row.id).toBe("UNKNOWN");
+          expect(tieuDe(out), row.id).toBe("CHƯA ĐỦ DỮ KIỆN");
+          expect(goiY(out), row.id).toBe(
+            "Nếu đề thuộc dạng hệ dựng được và đã có đủ giả thiết, em có thể gửi lại để hệ phân tích lại.");
+        }
+        expect(out, row.id).not.toContain(env.reason_code);
+      }
+      // Mỗi reason_code của nhóm verification_gap đi cùng một nhánh — tiêu đề không phụ thuộc mã chi tiết.
+      expect(maVG.size).toBe(9);
+    });
+
     it("toàn bộ 25 fixture refusal-* không lộ mã kỹ thuật và tuân thủ luật refusal_cause", () => {
       for (const row of REFUSAL_ROWS) {
         const fx = loadFixture(row.file);
