@@ -56,8 +56,27 @@
     "step_math_oracle": "88/88 VERIFIED (self-consistency), 10/10 counterexamples",
     "live_ai_calls": 0
   },
-  "independent_review": "PENDING",
-  "authoritative_t3": "PENDING",
-  "verdict": "PENDING",
+  "review_fix_commit": "1abc0a51 (test/script/docs only; product hash unchanged, --verify MATCH)",
+  "independent_review": {
+    "status": "PASS",
+    "blocking": 0,
+    "reviewed_range": "2620cffa..5d8f97a1",
+    "non_blocking_fixed": ["runtime probe proof vacuous", "runtime probe covered only the head of the path", "layer (a) overclaimed as spelling-proof", "probe had no network block", "cache_clear --cu deleted valid other-mode rows", "manifest C2 count"],
+    "recorded_not_changed": ["snapshot outside the pipeline try imports the compiler package on first request", "one row per key evicts on mode alternation; GEMINI_MODEL not in identity (pre-existing)", "3afe2fdd/81ba464f leave 2 tests red, fixed in 5d8f97a1 (bisect)"],
+    "modifications_by_reviewer": "none"
+  },
+  "authoritative_t3": {
+    "status": "FULL_PRODUCT_GATE_PASS",
+    "commit": "1abc0a51ce640243d7864e4639d1f8b6eecf64e6",
+    "receipt": "verification/authoritative-t3.json",
+    "backend_pytest": "10668 passed, 1 skipped, 2 deselected, 9 xfailed (strict, preregistered; same count as base)",
+    "frontend_vitest": "68 files, 1079 passed",
+    "build": "PASS",
+    "demo_replay": "5/5",
+    "crash_surface": "6/6, 0 uncaught",
+    "candidate_verify": "MATCH 7cd48f8c…",
+    "detached_worktree_removed": true
+  },
+  "verdict": "PRE_MAIN_HARDENING_VERIFIED",
   "push": "NONE"
 }

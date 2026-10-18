@@ -1,0 +1,30 @@
+{
+  "schema": "AUTHORITATIVE_T3/1",
+  "run": "hybrid-pre-main-hardening",
+  "date": "2026-10-18",
+  "checkout": "clean detached worktree .superpowers/worktrees/t3-hybrid-pre-main-hardening at 1abc0a51ce640243d7864e4639d1f8b6eecf64e6 (0 changed/untracked files before the run; frontend/node_modules = junction to the main checkout's node_modules)",
+  "command": "node scripts/full-gate.mjs (from frontend/; log kept outside the worktree)",
+  "label": "FULL_PRODUCT_GATE_PASS",
+  "exit_code": 0,
+  "gates": {
+    "backend_pytest": "10668 passed, 1 skipped, 2 deselected, 9 xfailed in 378.74s",
+    "frontend_vitest": "68 files, 1079 passed",
+    "typecheck_and_build": "PASS (tsc -b + vite build)",
+    "demo_replay": "5/5 DEMO_REPLAY_PASS",
+    "crash_surface": "6/6 boundaries as expected, 0 uncaught (500)"
+  },
+  "candidate_verify_in_checkout": "MATCH (110 files, 7cd48f8c3d19299e…)",
+  "xfail_strict_all_preregistered": [
+    "test_generalized_goal_entry.py::test_length_goal_refusal[unread-second-ask] — REQUEST_NOT_ANSWERED vs registered code",
+    "test_generalized_goal_entry.py::test_length_goal_refusal[contradictory-length] — INCONSISTENT_FACTS vs registered INCONSISTENT_CONSTRAINTS",
+    "test_hybrid_compiler_benchmark.py::test_case_outcome[B27-facts] / [B27-pipeline] — GAP: unnamed derived operand",
+    "test_hybrid_compiler_benchmark.py::test_case_outcome[B28-facts] / [B28-pipeline] — GAP: 'tâm' of a square",
+    "test_hybrid_simulation_capability_probes.py::test_centre_label_exhaustion_is_a_coded_outcome — ISSUE-ARCH-ENGINE-CENTRE-LABEL-EXHAUSTION",
+    "test_premise_source_coverage.py::test_goal_fact_quote_does_not_cover_a_hypothesis[…] — bounded 'và' clause",
+    "test_source_grounding_reliability.py::test_targeted_case_meets_its_preregistered_label[E05-unsupported-second-quantity]"
+  ],
+  "xfail_note": "9 strict xfails, same count as the base candidate's T3 (2620cffa); none added by this run. B27/B28 are the same rows as CAPABILITY_GAPS_174.",
+  "outside_t3": "frontend/scripts/*.node-test.mjs on the branch tree: 112 tests, 110 pass, 0 fail, 2 skipped (full-gate.node-test.mjs 'explicit interpreter is verified and reported' / 'interpreter version mismatch is rejected': skip when the worktree has no backend/.venv of its own — the venv lives in the main checkout)",
+  "cleanup": "junction removed first, then the detached worktree; main frontend/node_modules intact",
+  "live_ai_calls": 0
+}

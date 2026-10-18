@@ -8,7 +8,10 @@
 
 ## 0. Verdict
 
-See §8 (filled after the independent review and the authoritative T3).
+**`PRE_MAIN_HARDENING_VERIFIED`** — six confirmed defects fixed with RED → GREEN tests (§1, §2), independent review
+PASS with 0 blocking findings and its non-blocking findings closed or recorded (§8.1), authoritative T3
+`FULL_PRODUCT_GATE_PASS` on a clean detached checkout of `1abc0a51` (§8.2). Not merged, not pushed; GO MAIN and
+GO LIVE remain owner decisions (`handoff.md`).
 
 ## 1. Findings of the preceding review — what was confirmed
 
@@ -171,6 +174,10 @@ A separate read-only review agent (0 live calls, 0 modifications) checked all te
 Also reported, not a defect: a height *derived* as ≤ 0 (base 2, lateral edge 1 or √2) is refused as
 `INCONSISTENT_FACTS`, classed contradictory.
 
-### 8.2 Authoritative T3
+### 8.2 Authoritative T3 — `FULL_PRODUCT_GATE_PASS`
 
-Filled from the receipt (`run.json`).
+Clean detached checkout of `1abc0a51` (receipt `verification/authoritative-t3.json`): backend 10668 passed, 1 skipped,
+2 deselected, 9 xfailed (all strict, preregistered, same count as the base's T3; none added) · frontend 68 files /
+1079 passed · typecheck + build PASS · demo replay 5/5 · crash surface 6/6, 0 uncaught · candidate `--verify` MATCH
+(110 files, `7cd48f8c…`). Outside T3: node harness 112 tests, 110 pass, 2 skipped (no per-worktree venv). The
+detached checkout was removed afterwards (junction first).

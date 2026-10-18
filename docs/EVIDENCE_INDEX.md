@@ -4,7 +4,7 @@
 
 REPORT = docs/evaluation/geometry/runs/hybrid-pre-main-hardening/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-pre-main-hardening/
-CLASSIFICATION = see report.md §0 verdict (owner-approved GO_PRE_MAIN_BACKEND_SAFETY_HARDENING on research/hybrid-backend-integration 2620cffa; Hybrid off, LLM_ONLY default unchanged)
+CLASSIFICATION = PRE_MAIN_HARDENING_VERIFIED (owner-approved GO_PRE_MAIN_BACKEND_SAFETY_HARDENING on research/hybrid-backend-integration 2620cffa; Hybrid off, LLM_ONLY default unchanged; independent review PASS 0 blocking; authoritative T3 FULL_PRODUCT_GATE_PASS at clean detached 1abc0a51 — verification/authoritative-t3.json)
 CODE_COMMIT = 66328d22 (honest default-route guard) · 83e8390a (route-aware cache + per-call response contract) · 3afe2fdd (zero lengths, SPD Metric, 174-case answer regression); candidate freeze 81ba464f (product 3afe2fdd, tree_hash 7cd48f8c3d19299e95e5d31b341ec52120f0bc33b0e1ffc9cce03a2e9c37caf4, 110 files)
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-pre-main-hardening/run.json
 MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
