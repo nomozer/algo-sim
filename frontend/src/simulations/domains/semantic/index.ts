@@ -21,6 +21,8 @@ import {
 import { SemanticWorkspace } from "./ui";
 import { hopLeScene3D } from "../geometry/scene3d-model";
 import { veKhongGian } from "../geometry/scene3d-chart";
+import { KHOA_HYBRID_VIEW, kiemHybridView } from "../geometry/hybrid-preview-adapter";
+import type { Scene3D } from "../geometry/scene3d-model";
 
 const semanticProgramModule: SimulationModule<SemanticConfig, SemanticState> = {
   id: "generic.semantic_program",
@@ -40,6 +42,12 @@ const semanticProgramModule: SimulationModule<SemanticConfig, SemanticState> = {
       } catch {
         return { ok: false, error: "Hệ chưa thể hiển thị an toàn dữ liệu hình này. Hãy phân tích lại đề." };
       }
+    }
+    // HFOI-F4: view Hybrid (do biên `hybrid-preview-adapter` tạo) chỉ được trỏ vào vật/bước có trong chính cảnh.
+    if (KHOA_HYBRID_VIEW in (envelope as object)) {
+      const loi = kiemHybridView((envelope as unknown as Record<string, unknown>)[KHOA_HYBRID_VIEW],
+        scene as Scene3D | undefined);
+      if (loi) return { ok: false, error: "Dữ liệu kiểm chứng đi kèm hình không nhất quán. Hãy phân tích lại đề." };
     }
     return validateSemanticConfig(envelope.config);
   },

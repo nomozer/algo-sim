@@ -17,7 +17,7 @@
  * Không hàm nào tính GIÁ TRỊ hay dựng hình: chữ của nhãn là ký hiệu + giá trị payload.
  */
 import type { QuantityAnnotation, Scene3D, SceneObject, Vec3 } from "./scene3d-model";
-import { clampStep, numericalBasis, objectsAt, toVec3 } from "./scene3d-model";
+import { clampStep, ghiChuGiaTriDung, numericalBasis, objectsAt, toVec3 } from "./scene3d-model";
 import { tangNhanManh } from "./interaction-state";
 
 export interface AnnotationView {
@@ -129,7 +129,8 @@ export function annotationsAt(
     ra.push({
       id: o.id, kind: a.kind, role: vai, subject_ids: [...a.subject_ids], anchor: a.anchor,
       witness: a.witness,
-      text: `${o.notation ?? o.label} = ${o.value}${a.unit ? ` ${a.unit}` : ""}`,
+      // F3: trên cảnh dựng theo ký hiệu, giá trị là của hình tại a = 1 — nói rõ, không để nó đứng như đáp số tổng quát.
+      text: `${o.notation ?? o.label} = ${o.value}${a.unit ? ` ${a.unit}` : ""}${ghiChuGiaTriDung(scene)}`,
       priority: (vai === "result" ? 2 : 1) + (lienQuan ? 10 : 0),
       related: lienQuan,
     });

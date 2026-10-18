@@ -110,7 +110,9 @@ describe("envelope CŨ thiếu trường vẫn render an toàn", () => {
       reason: "Bài này chưa có mô phỏng phù hợp trong danh mục.",
       learner_reason: "Hệ chưa dựng được mô phỏng cho đề này.",
     });
-    expect(out).toContain("Không xác định được từ phản hồi cũ");
+    // HFOI-F6: thiếu trường xảy ra cả ở envelope cũ LẪN envelope từ chối của preview ⇒ không gọi là "phản hồi cũ".
+    expect(out).toContain("Không xác định được");
+    expect(out).not.toContain("phản hồi cũ");
     expect(out).toContain("Dừng ở bước");
   });
 
@@ -123,7 +125,9 @@ describe("envelope CŨ thiếu trường vẫn render an toàn", () => {
     });
     expect(out).not.toContain("mot_giai_doan_chua_co_nhan");
     expect(out).not.toContain("mot_ma_chua_co_nhan");
-    expect(out).toContain("Không xác định được từ phản hồi cũ");
+    // Mã MỚI hơn frontend — gọi nó là "phản hồi cũ" là nói sai (HFOI-F6).
+    expect(out).toContain("Không xác định được");
+    expect(out).not.toContain("phản hồi cũ");
   });
 
   it("không có learner_reason lẫn reason → vẫn có một câu tử tế", () => {

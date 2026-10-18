@@ -1,5 +1,17 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Hybrid offline readiness (research/hybrid-offline-readiness-finalization, Hybrid product off)
+
+Run `docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/`. HFOI-F3…F6 = open items of
+`ISSUE-ARCH-HYBRID-FRONTEND-OFFLINE-INTEGRATION` (distinct from the resolved Scene3D F5/F6 issues).
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/simulation/semantic_program/scale_normalization.py::loai_nhan_doan` | ONE predicate for every "segment label = value" reader of the text: `DO_DAI` / `BIEU_THUC` (operand+operator, scalar product, vector word/arrow, vector zero, "(vectơ)") / `DIEU_KIEN` ("khi/nếu"); `nhan_doan_dung_mot_minh` = `DO_DAI` | `tests/geometry/test_source_length_vector_context.py` (fault-injected) |
+| `backend/app/simulation/semantic_program/segment_relation.py` — `_moi_doan_co_do_dai`, `cac_doan_truoc(tien_to, sau_so)`, `NHAN_BIEU_THUC`, `xoa_cau_do_dai`, `loai_cau_do_dai` | Numeric source lengths skip expressions; a conditional alone gives no length, a conflicting one makes the segment ambiguous; an expression's number is labelled `NHAN_BIEU_THUC` (never a bare number that would evidence any segment); `shape_constraint.phan_chua_doc` removes only real length sentences | same; reader parity over 1889 committed texts in the run |
+| `frontend/src/simulations/domains/geometry/hybrid-preview-adapter.ts` | The single transport boundary for `{schema_version, envelope, route_d}`: `docPhanHoiHybrid` validates the wrapper and builds a `HybridPreviewView` (`hybrid_preview` key: symbolic answers bound to `kq_<id>` and cross-checked with the a = 1 scene value; observations with relation TYPE from `planner.trace` and an anchor step); `kiemHybridView` re-checks it in `semantic/index.ts::validateEnvelope`; `hybridTaiBuoc` = what a timeline step may show; `cauQuanSat` = observation wording. No network call | `components/hybrid-preview-contract.test.tsx` HFOI-F3/F4 |
+| `frontend/src/simulations/domains/geometry/scene3d-model.ts::ghiChuGiaTriDung` | HFOI-F3: one qualifier for every place a value of a symbolic-unit scene is shown (measurement labels, inspector formula, measure-step narration) — values are of the a = 1 construction, not the general answer | same |
+
 ## Scene3D metric acceptance boundary (research/scene3d-plane-grid-camera)
 
 Run `docs/evaluation/geometry/runs/scene3d-metric-boundary/` corrects the previous renderer-only F2 semantics.

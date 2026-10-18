@@ -8,11 +8,24 @@ import { UnsupportedNotice, NHAN_LOAI_VAN_DE } from "./SimulationWorkspace";
 import { useAppStore } from "../state/store";
 import { registerAllSimulations } from "../simulations";
 import {
+  ghiChuGiaTriDung,
   hopLeScene3D,
-  nhanQuanSatCauHinh,
+  narrationAt,
   type Scene3D,
   type SceneObject,
 } from "../simulations/domains/geometry/scene3d-model";
+import {
+  annotationsAt,
+  DEFAULT_ANNOTATION_VIEW,
+} from "../simulations/domains/geometry/scene3d-annotations";
+import {
+  cauQuanSat,
+  docPhanHoiHybrid,
+  hybridTaiBuoc,
+  hybridViewCua,
+  KHOA_HYBRID_VIEW,
+  type HybridPreviewView,
+} from "../simulations/domains/geometry/hybrid-preview-adapter";
 import {
   ChartMetricError,
   maTranKhung,
@@ -72,6 +85,13 @@ function canonicalJson(val: unknown): string {
   );
   return `{${entries.map(([k, v]) => `${JSON.stringify(k)}:${canonicalJson(v)}`).join(",")}}`;
 }
+
+/** Fixture TỔNG HỢP duy nhất của run hybrid-offline-readiness-finalization (provenance trong file). */
+const SYNTHETIC_SOURCE = JSON.parse(readFileSync(join(FIXTURES_DIR, "..", "..",
+  "hybrid-offline-readiness-finalization", "fixtures-synthetic", "synthetic-insufficient-specification-source.json"),
+"utf8"));
+const CHUNG_MINH = /đã\s*chứng\s*minh|được\s*chứng\s*minh|điều\s*phải\s*chứng\s*minh|đpcm|✓/i;
+const clone = <T,>(x: T): T => JSON.parse(JSON.stringify(x));
 
 const SERVED_ROWS = MANIFEST.fixtures.filter((f) => f.kind === "served");
 const REFUSAL_ROWS = MANIFEST.fixtures.filter((f) => f.kind === "refusal");
@@ -265,45 +285,131 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
     });
   });
 
-  describe("F4 — ISSUE-ARCH-HYBRID-ROUTE-D-NOT-WIRED (quan sát trên hình ≠ chứng minh)", () => {
-    it("served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED hiện quan sát trên một hình, không gọi là đã chứng minh", () => {
-      const fx = loadFixture("served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED.json");
-      const html = renderToString(
-        <Scene3DExplorer
-          scene={fx.response.envelope.scene3d}
-          routeD={fx.response.route_d}
-        />,
-      ).replace(/<!--.*?-->/g, "");
-
-      expect(html).toContain("Trên hình đã dựng, điều này đúng");
-      expect(html).toContain("quan sát trên một hình, không phải chứng minh tổng quát");
-      expect(html).not.toMatch(/đã\s*chứng\s*minh|được\s*chứng\s*minh|điều\s*phải\s*chứng\s*minh|đpcm|✓/i);
-      expect(html).not.toContain("TRUE_ON_CONFIGURATION");
-      expect(html).not.toContain("UNVERIFIABLE");
+  /* HFOI-F3 — ISSUE-ARCH-HYBRID-FRONTEND-OFFLINE-INTEGRATION: cảnh dựng ở a = 1 không được trình bày giá trị số như
+     đáp số tổng quát. Kỳ vọng tay: H07 V = a³√3/3 (không phải √3/3), H01 V = a³ (không phải 1). */
+  describe("HFOI-F3 — đáp số ký hiệu và tỉ lệ dựng", () => {
+    it("12/12 served-* qua biên docPhanHoiHybrid; mọi đáp số nối đúng đại lượng kq_<id> của cảnh", () => {
+      for (const row of SERVED_ROWS) {
+        const fx = loadFixture(row.file);
+        const r = docPhanHoiHybrid(fx.response);
+        expect(r.ok, row.id).toBe(true);
+        if (!r.ok) continue;
+        const view = hybridViewCua(r.envelope)!;
+        expect(view, row.id).not.toBeNull();
+        expect(view.answers.map((a) => a.quantity_id).sort(), row.id).toEqual(
+          Object.keys(fx.response.route_d.answers).map((k) => `kq_${k}`).sort());
+      }
     });
 
-    it("nhanQuanSatCauHinh xử lý đủ 3 trạng thái và coi can_present_as_proven thiếu/lạ là false", () => {
-      const t1 = nhanQuanSatCauHinh({
-        evidence_state: "TRUE_ON_CONFIGURATION",
-        proof_status: "UNVERIFIABLE",
-        can_present_as_proven: false,
-      });
-      const t2 = nhanQuanSatCauHinh({
-        evidence_state: "FALSE_ON_CONFIGURATION",
-        proof_status: "UNVERIFIABLE",
-      });
-      const t3 = nhanQuanSatCauHinh({
-        evidence_state: "UNVERIFIABLE",
-      });
+    it("kỳ vọng tay: H07 đáp số a³√3/3, H01 a³ và a√3; cảnh không ký hiệu không có chú thích tỉ lệ", () => {
+      const sym = (file: string) => {
+        const r = docPhanHoiHybrid(loadFixture(file).response);
+        return r.ok ? Object.fromEntries(hybridViewCua(r.envelope)!.answers.map((a) => [a.quantity_id, a.symbolic])) : null;
+      };
+      expect(sym("served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED.json")).toEqual({ kq_f8: "a³√3/3" });
+      expect(sym("served-H01_CUBE.json")).toEqual({ kq_f3: "a³", kq_f4: "a√3" });
+      expect(ghiChuGiaTriDung(loadFixture("served-pyramid-midpoint-area-AB.json").response.envelope.scene3d)).toBe("");
+    });
 
-      expect(t1).toContain("Trên hình đã dựng, điều này đúng");
-      expect(t2).toContain("Trên hình đã dựng, điều này không đúng");
-      expect(t3).toContain("Chưa kiểm được trên hình đã dựng");
-      for (const t of [t1, t2, t3]) {
-        expect(t).toContain("quan sát trên một hình, không phải chứng minh tổng quát");
-        expect(t).not.toMatch(/đã\s*chứng\s*minh|được\s*chứng\s*minh|điều\s*phải\s*chứng\s*minh|đpcm|✓/i);
-        expect(t).not.toContain("đề sai");
+    it("mọi chỗ hiện giá trị trên cảnh ký hiệu đều nói đó là giá trị của hình dựng (lời kể bước đo, nhãn số đo)", () => {
+      for (const row of SERVED_ROWS) {
+        const scene: Scene3D = loadFixture(row.file).response.envelope.scene3d;
+        const chu = ghiChuGiaTriDung(scene);
+        const buocDo = scene.events.filter((e) => e.action === "MEASURE").map((e) => e.step_index);
+        for (const k of buocDo) {
+          const nar = narrationAt(scene, k);
+          if (scene.length_unit?.display_scale) expect(nar, `${row.id}@${k}`).toContain("trên hình dựng, a = 1 đơn vị dựng");
+          else expect(nar, `${row.id}@${k}`).not.toContain("đơn vị dựng");
+        }
+        const cuoi = Math.max(...scene.events.map((e) => e.step_index));
+        for (const a of annotationsAt(scene, cuoi, { ...DEFAULT_ANNOTATION_VIEW, showAll: true }, null)) {
+          expect(a.text.endsWith(chu), `${row.id}:${a.id}`).toBe(true);
+        }
       }
+    });
+
+    it("biên vận chuyển từ chối: hệ số lệch đại lượng cảnh, đơn vị lệch, length_unit lệch, schema lạ, phản hồi cổng", () => {
+      const goc = loadFixture("served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED.json").response;
+      const lechHeSo = clone(goc); lechHeSo.route_d.answer_exact.f8.coef = "√3/2";
+      const lechDonVi = clone(goc); lechDonVi.route_d.answer_exact.f8.unit = "b";
+      const lechLU = clone(goc); lechLU.route_d.length_unit = null;
+      const schema = clone(goc); schema.schema_version = "hybrid-route-d-preview/9";
+      const tuMang = clone(goc); tuMang.envelope[KHOA_HYBRID_VIEW] = { adapter_version: "hybrid-preview-adapter/2" };
+      for (const [ten, x] of Object.entries({ lechHeSo, lechDonVi, lechLU, schema, tuMang })) {
+        expect(docPhanHoiHybrid(x).ok, ten).toBe(false);
+      }
+      for (const row of GATE_ROWS) expect(docPhanHoiHybrid(loadFixture(row.file).response).ok, row.id).toBe(false);
+    });
+  });
+
+  /* HFOI-F4 — `route_d` nằm NGOÀI envelope; một biên vận chuyển đã kiểm, quan sát có tên loại quan hệ và bước neo. */
+  describe("HFOI-F4 — biên route_d, quan hệ, neo timeline", () => {
+    const H07 = "served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED.json";
+
+    it("H07: một quan sát, tên loại quan hệ thật (perpendicular_line_plane), neo ở bước cuối; không hiện trước đó", () => {
+      const r = docPhanHoiHybrid(loadFixture(H07).response);
+      expect(r.ok).toBe(true);
+      if (!r.ok) return;
+      const scene = r.envelope.scene3d as Scene3D;
+      const view = hybridViewCua(r.envelope) as HybridPreviewView;
+      const cuoi = Math.max(...scene.events.map((e) => e.step_index));
+      expect(view.observations).toEqual([{
+        check_id: "f7", group: "goal", relation: "quan hệ vuông góc giữa đường thẳng và mặt phẳng",
+        evidence_state: "TRUE_ON_CONFIGURATION", anchor_step: cuoi,
+      }]);
+      for (let k = 0; k < cuoi; k++) expect(hybridTaiBuoc(view, scene, k).observations, `bước ${k}`).toEqual([]);
+      expect(hybridTaiBuoc(view, scene, cuoi).observations.length).toBe(1);
+      // Đáp số V hiện từ bước ĐO của nó (kq_f8 ở bước cuối), không sớm hơn.
+      expect(hybridTaiBuoc(view, scene, cuoi - 1).answers).toEqual([]);
+      expect(hybridTaiBuoc(view, scene, cuoi).answers.map((a) => a.symbolic)).toEqual(["a³√3/3"]);
+      const cau = cauQuanSat(view.observations[0]);
+      expect(cau).toContain("trên hình đã dựng, điều này đúng");
+      expect(cau).toContain("quan sát trên một hình, không phải chứng minh tổng quát");
+      expect(cau).not.toMatch(CHUNG_MINH);
+    });
+
+    it("biên từ chối mọi quan sát tự xưng chứng minh hoặc trạng thái lạ (hợp đồng §3)", () => {
+      const goc = loadFixture(H07).response;
+      const dsLoi = [
+        (x: any) => { x.route_d.planner.goal_checks.f7.can_present_as_proven = true; },
+        (x: any) => { x.route_d.planner.goal_checks.f7.proof_status = "PROVEN"; },
+        (x: any) => { delete x.route_d.planner.goal_checks.f7.can_present_as_proven; },
+        (x: any) => { x.route_d.planner.goal_checks.f7.evidence_state = "PROVEN_TRUE"; },
+        (x: any) => { x.route_d.runtime_identity.adapter_version = "hybrid-preview-adapter/1"; },
+      ];
+      dsLoi.forEach((hong, i) => { const x = clone(goc); hong(x); expect(docPhanHoiHybrid(x).ok, `lỗi ${i}`).toBe(false); });
+    });
+
+    it("qua store: envelope đã kiểm được nhận; view bị sửa (neo bước không tồn tại) bị validateEnvelope từ chối", () => {
+      const r = docPhanHoiHybrid(loadFixture(H07).response);
+      if (!r.ok) throw new Error(r.reason);
+      useAppStore.getState().loadEnvelope(r.envelope as never);
+      expect(useAppStore.getState().analysisError).toBeNull();
+      expect(hybridViewCua(useAppStore.getState().active!.envelope)).not.toBeNull();
+
+      useAppStore.getState().reset();
+      const hong = clone(r.envelope) as any;
+      hong[KHOA_HYBRID_VIEW].observations[0].anchor_step = 99;
+      useAppStore.getState().loadEnvelope(hong);
+      expect(useAppStore.getState().active).toBeNull();
+      expect(useAppStore.getState().analysisError).not.toBeNull();
+    });
+
+    it("SSR ở bước đầu: không đáp số, không quan sát (không kết luận trước bước chống đỡ)", () => {
+      const r = docPhanHoiHybrid(loadFixture(H07).response);
+      if (!r.ok) throw new Error(r.reason);
+      const html = renderToString(
+        <Scene3DExplorer scene={r.envelope.scene3d as Scene3D} hybrid={hybridViewCua(r.envelope)} />,
+      ).replace(/<!--.*?-->/g, "");
+      expect(html).not.toContain("data-hybrid-answer");
+      expect(html).not.toContain("data-route-d-observation");
+      expect(html).not.toMatch(CHUNG_MINH);
+    });
+
+    it("workspace không còn đọc route_d thô: chỉ view đã kiểm", () => {
+      const src = readFileSync(join(__dirname, "SimulationWorkspace.tsx"), "utf8");
+      expect(src).not.toMatch(/\.route_d\b|route_d\?:/);
+      expect(src).toContain("hybridViewCua(active.envelope)");
     });
   });
 
@@ -320,6 +426,9 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
         ).replace(/<!--.*?-->/g, "");
         expect(out, row.id).toContain("CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG");
         expect(out, row.id).toContain(NHAN_LOAI_VAN_DE.verification_gap);
+        // HFOI-F5: 4/9 mã dừng TRƯỚC khi dựng — nhãn không được nói hệ đã chạy/dựng xong.
+        expect(out, row.id).not.toMatch(/chạy được|đã dựng/i);
+        expect(out, row.id).not.toContain("phản hồi cũ");
         expect(out, row.id).not.toContain("NGOÀI DANH MỤC MÔ PHỎNG");
         expect(out, row.id).not.toMatch(/dạng bài này hệ có mô phỏng/i);
         expect(BAO_SUA_DE.filter((c) => out.includes(c)), row.id).toEqual([]);
@@ -336,19 +445,29 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
         const out = renderToString(
           <UnsupportedNotice unsupported={fx.response.envelope} />,
         ).replace(/<!--.*?-->/g, "");
-        expect(out, row.id).toContain("CHƯA ĐỦ DỮ KIỆN");
+        // HFOI-F6: UNKNOWN ⇒ tiêu đề/nhãn đặt ở phía HỆ, không quy cho đề.
+        expect(out, row.id).toContain("CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN");
+        expect(out, row.id).toContain("hệ chưa xác định được đủ dữ kiện từ đề");
+        expect(out, row.id).not.toContain("đề chưa đủ dữ kiện");
+        expect(out, row.id).not.toContain("phản hồi cũ");
         expect(out, row.id).not.toContain("NGOÀI DANH MỤC MÔ PHỎNG");
         expect(out, row.id).not.toMatch(/dạng bài này hệ có mô phỏng/i);
         expect(BAO_SUA_DE.filter((c) => out.includes(c)), row.id).toEqual([]);
       }
 
-      const sourceEnv = {
-        ...loadFixture("refusal-missing-dimension.json").response.envelope,
-        refusal_cause: "SOURCE" as const,
-      };
+      // Fixture TỔNG HỢP (khai trong file): chỉ đổi refusal_cause UNKNOWN → SOURCE của refusal-missing-dimension.
+      expect(SYNTHETIC_SOURCE.SYNTHETIC).toBe(true);
+      expect(SYNTHETIC_SOURCE.provenance.derived_from_response_sha256).toBe(
+        MANIFEST.fixtures.find((f) => f.id === "refusal-missing-dimension")!.response_sha256);
+      const sourceEnv = SYNTHETIC_SOURCE.response.envelope;
+      expect({ ...sourceEnv, refusal_cause: "UNKNOWN" }).toEqual(
+        loadFixture("refusal-missing-dimension.json").response.envelope);
       const sourceOut = renderToString(
         <UnsupportedNotice unsupported={sourceEnv} />,
       ).replace(/<!--.*?-->/g, "");
+      expect(sourceOut).toContain("CHƯA ĐỦ DỮ KIỆN");
+      expect(sourceOut).not.toContain("CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN");
+      expect(sourceOut).toContain("đề chưa đủ dữ kiện");
       expect(sourceOut).toContain("Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại");
       expect(sourceOut).toContain("dạng bài này hệ có mô phỏng");
     });
@@ -377,7 +496,7 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
             "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả.");
         } else {
           expect(env.refusal_cause, row.id).toBe("UNKNOWN");
-          expect(tieuDe(out), row.id).toBe("CHƯA ĐỦ DỮ KIỆN");
+          expect(tieuDe(out), row.id).toBe("CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN");
           expect(goiY(out), row.id).toBe(
             "Nếu đề thuộc dạng hệ dựng được và đã có đủ giả thiết, em có thể gửi lại để hệ phân tích lại.");
         }

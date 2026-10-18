@@ -21,7 +21,8 @@ import { SimulationInspector } from "./SimulationInspector";
 import { useClassroomStore } from "../state/classroom";
 import { useAuthStore } from "../state/auth";
 import { Scene3DExplorer } from "../simulations/domains/geometry/Scene3DExplorer";
-import { hopLeScene3D, type HybridRouteDPayload } from "../simulations/domains/geometry/scene3d-model";
+import { hopLeScene3D } from "../simulations/domains/geometry/scene3d-model";
+import { hybridViewCua } from "../simulations/domains/geometry/hybrid-preview-adapter";
 
 /**
  * M8: toggle 2D/3D — component THUẦN theo props (export để test SSR được:
@@ -127,14 +128,15 @@ export const NHAN_LOAI_VAN_DE: Record<string, string> = {
   out_of_scope: "đề thuộc môn học khác",
   not_simulation_suitable: "đề không có gì để mô phỏng",
   capability_gap: "hệ chưa mô phỏng chính xác được cơ chế này",
-  verification_gap: "chạy được nhưng chưa đủ bằng chứng để phát",
+  /* HFOI-F5: KHÔNG nói "chạy được" — lời từ chối loại này có thể dừng TRƯỚC khi dựng (preview: đối chiếu nguồn,
+     mệnh đề mục tiêu, hình không duy nhất) và envelope không mang giai đoạn để biết. Nói đúng điều chắc chắn. */
+  verification_gap: "chưa đủ bằng chứng kiểm chứng để hiển thị mô phỏng",
 };
 
-/* Envelope CŨ không mang `stage_reached`/`error_code` (mọi artifact sinh trước
- * wave này). Nói thẳng là không biết — đoán bằng cách dò chuỗi `reason` sẽ cho
- * một nhãn trông đúng mà không có gì bảo đảm, và đó chính là cái frontend
- * không được phép làm. */
-const KHONG_XAC_DINH = "Không xác định được từ phản hồi cũ";
+/* Envelope không mang `stage_reached`/`error_code`: envelope cũ (trước wave PRODUCT_RESPONSE_CONTRACT_ALIGNMENT)
+ * VÀ envelope từ chối của preview (đúng sáu khoá, không có giai đoạn — HYBRID_PREVIEW_FRONTEND_CONTRACT §6). Nói thẳng
+ * là không biết, không đoán bằng chuỗi `reason`, và không gán cho "phản hồi cũ" một phản hồi mới (HFOI-F6). */
+const KHONG_XAC_DINH = "Không xác định được";
 
 export function UnsupportedNotice({
   unsupported,
@@ -209,7 +211,10 @@ export function UnsupportedNotice({
      hành vi fail-closed là ngữ nghĩa do backend sở hữu — không đụng. */
   const ngoaiBaoDong =
     unsupported.error_code === "requested_operation_uncovered";
-  const eyebrow = insufficient ? "CHƯA ĐỦ DỮ KIỆN"
+  /* HFOI-F6: "CHƯA ĐỦ DỮ KIỆN" / "đề chưa đủ dữ kiện" quy cho ĐỀ — chỉ đúng khi backend đã phân xử nguyên nhân là đề
+     (`refusal_cause === "SOURCE"`). UNKNOWN (vd mô hình tự đánh dấu mơ hồ) hay vắng ⇒ phía HỆ chưa xác định được. */
+  const deThieu = insufficient && unsupported.refusal_cause === "SOURCE";
+  const eyebrow = insufficient ? (deThieu ? "CHƯA ĐỦ DỮ KIỆN" : "CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN")
     : verificationGap ? "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG"
     : stageShortfall ? "CHƯA DỰNG ĐỦ CÁC BƯỚC"
     : incomplete ? "TÁCH THÀNH TỪNG YÊU CẦU"
@@ -291,6 +296,8 @@ export function UnsupportedNotice({
      ca lệch đã chứng minh, nên mã chi tiết (có cấu trúc, không hiển thị) được đọc TRƯỚC nguyên nhân. */
   const nhanLoai = unsupported.reason_code === "CONSTRUCTION_REPLACED_BY_COORDINATES"
     ? "chưa kiểm chứng được phép dựng"
+    : insufficient && !deThieu && khoaLoai === "insufficient_specification"
+    ? "hệ chưa xác định được đủ dữ kiện từ đề"
     : unsupported.refusal_cause === "CONSTRUCTION" && khoaLoai === "input_not_grounded"
     ? "hệ dựng lệch với đề bài"
     : unsupported.stage_reached === "construction_binding" && khoaLoai === "input_not_grounded"
@@ -512,7 +519,8 @@ export function SimulationWorkspace() {
           </>
         ) : undefined}
         daiLopTomTat={<LiveClassStrip tomTat />}
-        routeD={(active.envelope as { route_d?: HybridRouteDPayload }).route_d ?? null}
+        // HFOI-F4: chỉ view ĐÃ KIỂM (`hybrid-preview-adapter` + `validateEnvelope`); `route_d` thô không bao giờ tới đây.
+        hybrid={hybridViewCua(active.envelope)}
       />
     );
   }

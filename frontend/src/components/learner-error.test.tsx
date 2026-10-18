@@ -60,7 +60,9 @@ describe("UnsupportedNotice hiển thị thông điệp học sinh", () => {
       learner_reason: "Đề yêu cầu duyệt cây nhưng chưa cho cấu trúc cây cụ thể.",
       failure_category: "insufficient_specification",
     });
-    expect(outUnknown).toContain("CHƯA ĐỦ DỮ KIỆN");
+    // HFOI-F6: không có SOURCE ⇒ hệ chưa xác định được, KHÔNG quy cho đề ("CHƯA ĐỦ DỮ KIỆN" chỉ dành cho SOURCE).
+    expect(outUnknown).toContain("CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN");
+    expect(outUnknown).not.toContain("đề chưa đủ dữ kiện");
     expect(outUnknown).not.toContain("NGOÀI DANH MỤC");
     expect(outUnknown).not.toContain("Bổ sung dữ liệu còn thiếu vào đề");
     expect(outUnknown).not.toContain("dạng bài này hệ có mô phỏng");

@@ -560,69 +560,6 @@ export interface SceneLengthUnit {
   is_given: boolean;
 }
 
-export interface RouteDGoalCheck {
-  kind?: string;
-  evidence_state?: "TRUE_ON_CONFIGURATION" | "FALSE_ON_CONFIGURATION" | "UNVERIFIABLE" | string;
-  proof_status?: string;
-  can_present_as_proven?: boolean;
-  note?: string;
-  [key: string]: unknown;
-}
-
-export type RouteDCheckGroup =
-  | RouteDGoalCheck[]
-  | Record<string, RouteDGoalCheck>
-  | null
-  | undefined;
-
-export interface HybridRouteDPayload {
-  goal_checks?: RouteDCheckGroup;
-  negated_checks?: RouteDCheckGroup;
-  planner?: {
-    goal_checks?: RouteDCheckGroup;
-    negated_checks?: RouteDCheckGroup;
-    [key: string]: unknown;
-  } | null;
-  [key: string]: unknown;
-}
-
-function gomNhomCheck(group: RouteDCheckGroup): RouteDGoalCheck[] {
-  if (!group || typeof group !== "object") return [];
-  if (Array.isArray(group)) return group;
-  return Object.values(group);
-}
-
-export function trichQuanSatRouteD(
-  routeD: HybridRouteDPayload | null | undefined,
-): RouteDGoalCheck[] {
-  if (!routeD || typeof routeD !== "object") return [];
-  return [
-    ...gomNhomCheck(routeD.goal_checks),
-    ...gomNhomCheck(routeD.negated_checks),
-    ...gomNhomCheck(routeD.planner?.goal_checks),
-    ...gomNhomCheck(routeD.planner?.negated_checks),
-  ];
-}
-
-/**
- * Chuỗi trình bày quan sát cấu hình cho mục kiểm mục tiêu/phủ định của Route D (HYBRID_PREVIEW_FRONTEND_CONTRACT §5).
- * Không bao giờ nâng quan sát trên một hình thành chứng minh tổng quát khi chưa có `can_present_as_proven === true && proof_status === "PROVEN"`.
- */
-export function nhanQuanSatCauHinh(check: RouteDGoalCheck): string {
-  const duocChungMinh =
-    check.can_present_as_proven === true && check.proof_status === "PROVEN";
-  if (duocChungMinh) {
-    return "Quan hệ mục tiêu đã được chứng minh hình học.";
-  }
-  if (check.evidence_state === "TRUE_ON_CONFIGURATION") {
-    return "Trên hình đã dựng, điều này đúng — đây là quan sát trên một hình, không phải chứng minh tổng quát.";
-  }
-  if (check.evidence_state === "FALSE_ON_CONFIGURATION") {
-    return "Trên hình đã dựng, điều này không đúng — đây là quan sát trên một hình, không phải chứng minh tổng quát.";
-  }
-  return "Chưa kiểm được trên hình đã dựng — đây là quan sát trên một hình, không phải chứng minh tổng quát.";
-}
-
 export interface Scene3D {
   objects: SceneObject[];
   events: SceneEvent[];
@@ -720,14 +657,32 @@ export function highlightedAt(scene: Scene3D, step: number): string[] {
   return [...objs, ...e.depends];
 }
 
+/**
+ * F3 (ISSUE-ARCH-HYBRID-FRONTEND-OFFLINE-INTEGRATION) — cảnh dựng ở tỉ lệ KÝ HIỆU (`length_unit.is_given === false`,
+ * vd "a = 1 đơn vị dựng"): mọi giá trị số trên cảnh là của MỘT hình tại a = 1, không phải đáp số tổng quát (`a³√3/3`).
+ * MỘT chỗ sinh lời chú thích cho mọi nơi hiện giá trị (nhãn số đo, ô soi, lời kể bước đo). Cảnh không có
+ * `length_unit` (mọi cảnh LLM_ONLY) ⇒ chuỗi rỗng, hành vi cũ giữ nguyên.
+ */
+export function ghiChuGiaTriDung(scene: Pick<Scene3D, "length_unit">): string {
+  const lu = scene.length_unit;
+  return lu && lu.is_given === false && lu.display_scale ? ` (trên hình dựng, ${lu.display_scale})` : "";
+}
+
 /** Lời kể của bước hiện tại — Tier 1, do engine sinh từ trạng thái thật. */
 export function narrationAt(scene: Scene3D, step: number): string {
   const k = clampStep(scene, step);
+  const e = scene.events.find((x) => x.step_index === k);
+  // F3: lời kể của bước ĐO đọc ra giá trị của hình dựng — kèm tỉ lệ dựng khi cảnh dựng theo ký hiệu.
+  const chu = e?.action === "MEASURE" ? ghiChuGiaTriDung(scene) : "";
+  const goc = narrationGoc(scene, k, e);
+  return goc && chu ? `${goc.replace(/\.\s*$/, "")}${chu}.` : goc;
+}
+
+function narrationGoc(scene: Scene3D, k: number, e: SceneEvent | undefined): string {
   const snapshot = scene.formation?.steps[k];
   if (snapshot?.learner_text && learnerTextIsSafe(scene, snapshot.learner_text)) {
     return snapshot.learner_text;
   }
-  const e = scene.events.find((x) => x.step_index === k);
   if (!e) return "";
   const candidate = e.learner_text ?? e.explanation;
   if (candidate && learnerTextIsSafe(scene, candidate)) return candidate;

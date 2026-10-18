@@ -34,17 +34,17 @@ import {
   type ClassroomSession,
   type SeenMarks,
 } from "../../../state/classroom-sync";
-import type { HybridRouteDPayload, Scene3D } from "./scene3d-model";
+import type { Scene3D } from "./scene3d-model";
 import { veKhongGian } from "./scene3d-chart";
 import {
   coherentFormula,
   geometryAnchor,
-  nhanQuanSatCauHinh,
+  ghiChuGiaTriDung,
   objectsAt,
   hienSo,
   quantityChoices,
-  trichQuanSatRouteD,
 } from "./scene3d-model";
+import { cauQuanSat, hybridTaiBuoc, type HybridPreviewView } from "./hybrid-preview-adapter";
 import {
   type InteractionState,
   type TreeNode,
@@ -175,7 +175,7 @@ const nutMoBang = (id: BangThongTin) =>
     : document.querySelector<HTMLElement>(id === "de" ? '[data-mo-bang="de"]' : '[data-mo-nhom="kham-pha"]');
 
 export function Scene3DExplorer({
-  scene: sceneKhung, de, tieuDe, quayLai, phien, onFocus, daiLop, daiLopTomTat, routeD,
+  scene: sceneKhung, de, tieuDe, quayLai, phien, onFocus, daiLop, daiLopTomTat, hybrid,
 }: {
   scene: Scene3D;
   /** Đề bài nguyên văn. Vắng ⇒ không dựng nút «Đề bài». */
@@ -205,7 +205,7 @@ export function Scene3DExplorer({
   /** Trạng thái lớp (chỉ đọc) cho chip của `NhomLop` khi màn chật gom dải lớp lại. */
   daiLopTomTat?: React.ReactNode;
   /** HYBRID_PREVIEW_FRONTEND_CONTRACT §3/§5: thông tin kiểm mục tiêu trên cấu hình của Route D (quan sát trên một hình, không phải chứng minh). */
-  routeD?: HybridRouteDPayload | null;
+  hybrid?: HybridPreviewView | null;
 }) {
   // exact-dimensions: toạ độ KHUNG → không gian Euclid MỘT lần (đồng nhất ⇒ chính cảnh cũ) — `scene3d-chart`.
   const scene = useMemo(() => veKhongGian(sceneKhung), [sceneKhung]);
@@ -356,7 +356,11 @@ export function Scene3DExplorer({
   // `hienSo` đọc số CHÍNH XÁC (căn, π) — cùng cách hiện mà thẻ lời giải (đã gỡ ở W05) dùng; không `toNumber`.
   const giaTri = (id: string) => {
     const o = day.objects.find((x) => x.id === id);
-    return o ? `${o.notation || ten(id)} = ${hienSo(o.exact, o.value)}` : ten(id);
+    if (!o) return ten(id);
+    // F3: đáp số tổng quát (dạng chữ, đã kiểm ở biên `hybrid-preview-adapter`) trước; giá trị số là của hình dựng.
+    const tongQuat = hybrid?.answers.find((a) => a.quantity_id === id)?.symbolic;
+    const soDung = `${hienSo(o.exact, o.value)}${ghiChuGiaTriDung(day)}`;
+    return `${o.notation || ten(id)} = ${tongQuat ? `${tongQuat} — ${soDung}` : soDung}`;
   };
   /* W05 · E: một mục của bảng «Đại lượng» thay dòng của thẻ lời giải: nhãn backend (`label`) rồi `ký hiệu = giá
      trị`. Không dựng tên từ kiểu hay phép dựng — `display_names.py` là thẩm quyền đặt tên duy nhất. */
@@ -504,11 +508,23 @@ export function Scene3DExplorer({
               Tỉ lệ dựng: {day.length_unit.display_scale}
             </span>
           )}
-          {trichQuanSatRouteD(routeD).map((chk, idx) => (
-            <span key={idx} className="geo3d-noi-nut" role="note" data-route-d-observation="">
-              {nhanQuanSatCauHinh(chk)}
-            </span>
-          ))}
+          {/* F3/F4 — chỉ từ view ĐÃ KIỂM (`hybrid-preview-adapter`), và theo timeline: đáp số hiện từ bước đo đại
+              lượng của nó, quan sát từ bước neo (hình dựng xong) — không kết luận nào đứng trước bước chống đỡ nó. */}
+          {hybridTaiBuoc(hybrid, day, tt.current_step).answers
+            .map((a) => {
+              const q = day.objects.find((o) => o.id === a.quantity_id);
+              return (
+                <span key={a.quantity_id} className="geo3d-noi-nut" role="note" data-hybrid-answer={a.quantity_id}>
+                  Đáp số: {q?.notation || q?.label || "kết quả"} = {a.symbolic}
+                </span>
+              );
+            })}
+          {hybridTaiBuoc(hybrid, day, tt.current_step).observations
+            .map((o) => (
+              <span key={`${o.group}:${o.check_id}`} className="geo3d-noi-nut" role="note" data-route-d-observation="">
+                {cauQuanSat(o)}
+              </span>
+            ))}
         </div>
 
         {/* Ô SOI — chỉ khi có vật đang chọn. W4: bảng nổi như mọi bảng thông tin — chọn vật không dành cột, không

@@ -1,0 +1,24 @@
+{
+ "SYNTHETIC": true,
+ "id": "synthetic-insufficient-specification-source",
+ "provenance": {
+  "derived_from": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2/refusal-missing-dimension.json",
+  "derived_from_response_sha256": "d1528fcaeadb0fcb6abbaaefc38d245c7c96b32acb7d6a09aeb22c01e2b9a05e",
+  "learner_reason": "copied unchanged from the source fixture (UNKNOWN wording); not regenerated, no backend text exists for this pair",
+  "not_a_backend_response": true,
+  "only_change": "response.envelope.refusal_cause: UNKNOWN -> SOURCE",
+  "why_synthetic": "no producer emits insufficient_specification + SOURCE (preview MISSING_DATA -> UNKNOWN; LLM_ONLY input_not_grounded -> geometry_generation_failed)"
+ },
+ "response": {
+  "envelope": {
+   "failure_category": "insufficient_specification",
+   "learner_reason": "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình.",
+   "reason": "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình.",
+   "reason_code": "MISSING_DIMENSION",
+   "refusal_cause": "SOURCE",
+   "status": "unsupported"
+  },
+  "schema_version": "hybrid-route-d-preview/1"
+ },
+ "schema": "hybrid-offline-synthetic-fixture/1"
+}
