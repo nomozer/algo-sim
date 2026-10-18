@@ -1,0 +1,19 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "scene3d-metric-boundary",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "045a8a628c7923d68d6eae6446a30d24be08d900f673293b8e74661a21c44ccc",
+  "previous_candidate_hash": "1b7a671326290f0b1da7d213d1399da2fe02ec7765f13f5057525362ff0f08fa",
+  "current_product_commit": "cb1f4954a7243de0561b3e724b7b2e94cb36bffc",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized F2 closeout: the registered semantic module checks supplied Scene3D metric and chart conversion before acceptance/history. Store delegates through the domain-blind module contract. Invalid scenes no longer silently fall back to 2D. No backend/provider/Hybrid runtime changes.",
+  "cache_version": 125,
+  "cache_decision": "No bump: frontend acceptance only; server cache identity and provider surfaces unchanged.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and candidate layers preserved byte-for-byte; no rescore or new coverage claim.",
+    "live_requests": 0
+  }
+}
