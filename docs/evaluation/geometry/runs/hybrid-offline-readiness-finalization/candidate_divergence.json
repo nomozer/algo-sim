@@ -1,0 +1,19 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-offline-readiness-finalization",
+  "corrects": "docs/evaluation/geometry/runs/scene3d-metric-boundary/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c",
+  "previous_candidate_hash": "045a8a628c7923d68d6eae6446a30d24be08d900f673293b8e74661a21c44ccc",
+  "current_product_commit": "2af99e0eddb67da253adcf6dc0aa7ac4fd08b05d",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized continuation: semantic source-length interpretation, validated offline Hybrid wrapper and explicit learner answer disclosure. Historical measurements and Scene3D visual acceptance boundaries remain unchanged; no live provider or product Hybrid route.",
+  "cache_version": 126,
+  "cache_decision": "BUMP 125 -> 126: source reader rejects cached serves grounded only in vector/expression numbers; original decision preserved in cache/decision.json.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and candidate layers preserved byte-for-byte; no rescore or new coverage claim.",
+    "live_requests": 0
+  }
+}
