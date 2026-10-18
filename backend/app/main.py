@@ -51,7 +51,7 @@ from app.ingestion.image_extraction import (
     VisionUnavailable,
     extract_problem_from_image,
 )
-from app.ai.pipeline import run_pipeline
+from app.ai.pipeline import RoutePolicy, route_policy_snapshot, run_pipeline
 from app.learner_messages import attach_learner_reason, learner_error_message
 from app.runtime_identity import runtime_identity
 from app.accounts import service as accounts_service
@@ -867,12 +867,23 @@ def _cache_key(text: str) -> str:
     return hashlib.sha256(normalized.encode("utf-8")).hexdigest()
 
 
-def _cache_lookup(session, key: str) -> SimulationCache | None:
-    """Exact cache hit CHỈ khi version còn tương thích (version-aware)."""
+def _policy_identity(route_policy: RoutePolicy) -> str:
+    """`policy_version` của hàng cache cho ảnh chụp tuyến (run `hybrid-pre-main-hardening`).
+
+    Mặc định = `CACHE_VERSION`, đúng như trước — hàng hiện có vẫn trúng, không cần bump. Chế độ khác =
+    `CACHE_VERSION:<băm 8 của chế độ + phiên bản các tầng>` ⇒ bật hay rollback một chế độ đều MISS (trước đây khoá chỉ
+    là băm đề, nên đổi chế độ vẫn trả envelope của chế độ kia). ≤ `String(16)` khi `CACHE_VERSION` ≤ 7 ký tự."""
+    fp = route_policy.fingerprint()
+    return CACHE_VERSION if fp is None else f"{CACHE_VERSION}:{fp}"
+
+
+def _cache_lookup(session, key: str, policy_version: str | None = None) -> SimulationCache | None:
+    """Exact cache hit CHỈ khi version còn tương thích (version-aware) và cùng identity tuyến."""
     row = session.query(SimulationCache).filter_by(key=key).first()
     if row is None:
         return None
-    if row.policy_version != CACHE_VERSION or row.dsl_version not in SUPPORTED_VERSIONS:
+    want = CACHE_VERSION if policy_version is None else policy_version
+    if row.policy_version != want or row.dsl_version not in SUPPORTED_VERSIONS:
         return None  # version lệch → miss, không dùng mù (row giữ lại để dọn)
     return row
 
@@ -1005,8 +1016,11 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
     # Bước 2 — TẦNG 1 reuse (M7.13B): exact validated cache, version-aware.
     # Hit = 0 call LLM (tiết kiệm tối thiểu analyze + classify + simulate = 3).
     key = _cache_key(text)
+    # MỘT ảnh chụp tuyến cho cả lượt: tra cache, chạy pipeline, ghi cache cùng một chế độ.
+    tuyen = route_policy_snapshot()
+    dinh_danh = _policy_identity(tuyen)
     with SessionLocal() as session:
-        row = _cache_lookup(session, key)
+        row = _cache_lookup(session, key, dinh_danh)
         if row:
             row.hit_count += 1
             row.last_used_at = datetime.now(timezone.utc)
@@ -1071,6 +1085,7 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
             # chạy trong sản phẩm — xem `semantic_route_mode()`. Khoá bởi
             # `tests/test_semantic_route_wired_to_production.py`.
             semantic_route=semantic_route_mode(),
+            route_policy=tuyen,
         )
     except Exception as err:  # pipeline thất bại sau retry → báo người dùng
         # Chốt bản ghi TRƯỚC khi trả lỗi: lượt hỏng mới là lượt cần chẩn đoán,
@@ -1116,7 +1131,7 @@ async def analyze(body: AnalyzeBody, algosim_session: str | None = Cookie(defaul
                     simulation_id=str(envelope.get("simulation_id", "")),
                     envelope_json=json.dumps(envelope, ensure_ascii=False),
                     dsl_version=DSL_VERSION,
-                    policy_version=CACHE_VERSION,
+                    policy_version=dinh_danh,
                 )
             )
             session.commit()

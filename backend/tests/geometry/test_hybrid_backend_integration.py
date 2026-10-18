@@ -220,6 +220,35 @@ def test_flat_contract_to_source_grounding_planner_engine_and_ir_handoff():
     assert audit.verdict == "VERIFIED", audit.errors
 
 
+def test_response_contract_is_one_snapshot_per_call(monkeypatch):
+    """Run `hybrid-pre-main-hardening`: the contract is resolved ONCE per call. Before, `run_ai_fact_route` read the
+    module global when building the request and again when validating, so a flip between the two let a reply requested
+    under v3 skip the v3 gate (served the v3-invalid unnamed-midpoint area payload)."""
+    case = GOAL_CORPUS["positive"][0]   # unnamed midpoint area: flat-servable, v3-invalid
+    body = {"candidates": [{"content": {"parts": [{"text": json.dumps(case["payload"], ensure_ascii=False)}]},
+                            "finishReason": "STOP"}]}
+    asked: list[dict] = []
+
+    def flip_then_answer(request):
+        asked.append(request)
+        monkeypatch.setattr(fact_extraction, "RESPONSE_CONTRACT", "flat")
+        return body
+
+    monkeypatch.setattr(fact_extraction, "RESPONSE_CONTRACT", "v3")
+    r = run_ai_fact_route(case["text"], flip_then_answer)
+    assert asked[0]["generationConfig"]["responseSchema"] == facts_response_schema("v3")
+    assert (r.status, r.code) == ("REFUSED", "RESPONSE_CONTRACT_INVALID"), (r.status, r.code)
+    assert r.ai["surface"] == fact_extraction.surface_fingerprint("v3")
+
+    # An explicit per-call contract governs the request, the surface and the gate; the global is not consulted.
+    monkeypatch.setattr(fact_extraction, "RESPONSE_CONTRACT", "flat")
+    r = run_ai_fact_route(case["text"], lambda req: (asked.append(req), body)[1], contract="v3")
+    assert asked[-1]["generationConfig"]["responseSchema"] == facts_response_schema("v3")
+    assert (r.status, r.code, r.ai["surface"]) == ("REFUSED", "RESPONSE_CONTRACT_INVALID",
+                                                    fact_extraction.surface_fingerprint("v3"))
+    assert run_ai_fact_route(case["text"], lambda req: body).status == "SERVED"   # product default stays flat
+
+
 def test_v3_contract_gate_and_locked_gold_forensic_reconciliation(monkeypatch):
     """P2 & P4.1: Verify v3 contract gate in `run_ai_fact_route` and the exact cause of the 16 LOCKED gold rejections."""
     # 1. Under v3, unnamed midpoint area question is rejected at schema gate (known Slice A v3 gap)
@@ -439,11 +468,16 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
         assert row["status"] == "PASS"
         assert row["input_identity"]["product_sha256"] == "6ba9033bfca06d671cd27891e2dad06c7d44f365fed45527123c907d664b65ed"
 
-    # Combined candidate has its own distinct measured_system_hash
+    # The combined candidate's own receipt stays bound to ITS product hash (historical, immutable) ...
+    hbi = json.loads((RUNS_DIR / "hybrid-backend-integration/run.json").read_text(encoding="utf-8"))
+    assert (hbi["product_sha256"], hbi["measured_files"]) == (
+        "afab0a3ca3abfe3c3f7692d34be2aeadbd099b8d43b6543d8d234d19b5ef8443", 110)
+    # ... while the live tree must equal whichever candidate is frozen NOW. Run `hybrid-pre-main-hardening`: this used to
+    # pin afab0a3c literally, so every later product change (refrozen as a new candidate) read as a broken receipt.
     fz = _load_module("_freeze_eval_cand_int", ROOT / "backend/scripts/freeze_evaluation_candidate.py")
     combined_hash, file_count = fz.measured_system_hash()
-    assert file_count == 110
-    assert combined_hash == "afab0a3ca3abfe3c3f7692d34be2aeadbd099b8d43b6543d8d234d19b5ef8443"
+    frozen = json.loads(fz.OUT.read_text(encoding="utf-8"))["measured_system"]
+    assert (combined_hash, file_count) == (frozen["tree_hash"], frozen["so_file"])
     assert combined_hash != v3_div["current_candidate_hash"]
 
 

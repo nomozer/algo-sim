@@ -234,19 +234,24 @@ def parse_response(body: Any, diag: dict[str, Any]) -> dict[str, Any]:
     return data
 
 
-def run_ai_fact_route(problem_text: str, transport: Callable[[dict[str, Any]], Any]) -> KetQuaTuyen:
-    """Đề → MỘT lượt gọi provider → dữ kiện có kiểu → planner → engine → Scene3D. Hỏng ⇒ REFUSED có mã; không lùi về LLM_ONLY."""
+def run_ai_fact_route(problem_text: str, transport: Callable[[dict[str, Any]], Any],
+                      contract: str | None = None) -> KetQuaTuyen:
+    """Đề → MỘT lượt gọi provider → dữ kiện có kiểu → planner → engine → Scene3D. Hỏng ⇒ REFUSED có mã; không lùi về LLM_ONLY.
+
+    `contract` chốt MỘT lần ở đầu lượt (mặc định `RESPONSE_CONTRACT`): request, surface và cổng kiểm cùng một hợp đồng —
+    đọc biến toàn cục hai lần thì đổi nó giữa chừng để một phản hồi xin theo v3 khỏi qua cổng v3."""
+    contract = contract or RESPONSE_CONTRACT
     diag: dict[str, Any] = {"model_calls": 1, "n_facts": 0, "usage": {}, "finish_reason": None,
-                            "surface": surface_fingerprint()}
+                            "surface": surface_fingerprint(contract)}
     try:
-        body = transport(build_request(problem_text))
+        body = transport(build_request(problem_text, contract))
     except LiveAIDisabled as e:
         return KetQuaTuyen("REFUSED", "LIVE_AI_DISABLED", str(e), ai=diag)
     except Exception as e:  # noqa: BLE001
         return KetQuaTuyen("REFUSED", "PROVIDER_ERROR", type(e).__name__, ai=diag)
     try:
         data = parse_response(body, diag)
-        if RESPONSE_CONTRACT == "v3" and not schema_accepts(facts_response_schema("v3"), data):
+        if contract == "v3" and not schema_accepts(facts_response_schema("v3"), data):
             raise _TuChoiAI("RESPONSE_CONTRACT_INVALID", "phản hồi không đáp ứng hợp đồng dữ kiện/toán hạng v3")
     except _TuChoiAI as e:
         return KetQuaTuyen("REFUSED", e.code, e.reason, ai=diag)
