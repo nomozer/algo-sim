@@ -8,9 +8,9 @@
 
 ## 0. Canonical Next Action
 
-**2026-10-19, continuation of `hybrid-offline-readiness-finalization` (local research):** complete the authoritative
-detached gate and final handoff, then owner review of the existing branch. No GO MAIN/GO HYBRID is implied.
-The vector-zero reader and minimal answer disclosure are implemented; Adapter `/2` exact relation operands and the
+**2026-10-19, continuation of `hybrid-offline-readiness-finalization` (local research, `HYBRID_OFFLINE_READINESS_PARTIAL`):** authoritative
+detached T3 (`f8423d4b`, `FULL_PRODUCT_GATE_PASS`) and final handoff ([`handoff.md`](evaluation/geometry/runs/hybrid-offline-readiness-finalization/handoff.md)) are complete; next action is owner review and priority decision on the existing branch. No GO MAIN/GO HYBRID is implied.
+The vector-zero reader and minimal answer disclosure are implemented (`2af99e0e`); Adapter `/2` exact relation operands and the
 product transport remain separate blockers. Earlier next-action entries below are historical.
 
 Future proposal **ALGOSIM_PEDAGOGICAL_EXPLORATION_UX** (not implemented here): help students explore objects, predict

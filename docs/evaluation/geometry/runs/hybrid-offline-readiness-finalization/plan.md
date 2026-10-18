@@ -48,9 +48,9 @@ commit · P4 đóng băng lại candidate (commit riêng) → T3 trên worktree 
 - [x] Review độc lập P1/P2 — 1 BLOCKING (bump thiếu `cache_identity.lock.json` + danh sách phiên bản), 3 IMPORTANT
   (I1 hồi quy gạch đầu dòng, I2 `⋅`/`\cdot`/`x`/`:`, I3 giả định nới cổng), 4 MINOR; sửa ở `9d17557e` (backend) và
   `cc07f512` (frontend); E2E lại 48/48, 41 fixture lại trùng byte, hồi quy backend rộng 2641 passed.
-- [ ] P4 — đóng băng lại candidate (commit riêng) → T3 trên worktree detached sạch · [ ] P5
+- [x] P4 — đóng băng lại candidate (commit riêng `f8423d4b`) → T3 trên worktree detached sạch (`FULL_PRODUCT_GATE_PASS`) · [x] P5
 
-## Codex continuation checkpoint — 2026-10-19
+## Codex + Gemini continuation checkpoint — 2026-10-19
 
 Owner continuation + minimal disclosure scope, same branch/run. Recovery: `recovery.md`.
 
@@ -65,17 +65,8 @@ Owner continuation + minimal disclosure scope, same branch/run. Recovery: `recov
   1141 passed/2 stale source-contract assertions failed; updated assertions in test-only `00b7bba4` (focus32 passed).
 - [x] Final offline48/48; fixture41/41 responses identical; oracle12/12; parity1896 texts/22 intended changes,
   diff byte-semantically identical to the prior reviewed diff. Final review: `review.md`.
-- [x] Freeze `96e2fe1e`: product `2af99e0eddb67da253adcf6dc0aa7ac4fd08b05d`, 111 files,
-  `cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c`, cache126, clean manifest.
-- [ ] Authoritative T3 RUNNING on clean detached `.superpowers/worktrees/t3-hybrid-offline-readiness-final`
-  at `96e2fe1e647ba3d7cb03f16082775219c7712a4f`. Do not edit that tree or launch another full suite.
-  Command: `node frontend/scripts/full-gate.mjs --python D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe`.
-  Live log in implementation worktree `.superpowers/verification/t3-96e2fe1e.log`, terminal session62334;
-  wrapper writes `t3-96e2fe1e-exit.json` only after completion (actual exit code). Scoped pytest basetemp is
-  `.superpowers/verification/pytest-t3-96e2fe1e`; no xdist, no global ACL changes.
-- [ ] Read final exit/log; verify candidate and clean detached tree again; preserve successful receipt or
-  sanitized failure, with hashes. Finish canonical docs, evidence index, run.json and one final handoff.
+- [x] Initial freeze `96e2fe1e` ran T3 to completion (`verification/t3-96e2fe1e-superseded.json`, 10949 passed / 1 failed in `test_thesis_runner_alignment.py` reading legacy `CANDIDATE_DIVERGENCE.json`). Aligned `test_thesis_runner_alignment.py` to `_khai_lech_hien_hanh()` and `candidate_divergence.json` (`cache_version_hien_tai: 126`) in `efbdc5a7`, then refroze clean candidate `f8423d4b` (`product 2af99e0eddb67da253adcf6dc0aa7ac4fd08b05d`, 111 files, `cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c`).
+- [x] Authoritative T3 `FULL_PRODUCT_GATE_PASS` on clean detached `.superpowers/worktrees/t3-hybrid-offline-readiness-final` at `f8423d4b87f942d3d850970c741bcf4ee6d2c634` (`verification/authoritative-t3.json`, raw log SHA-256 `9ac2bb2f23bc9202bb9b120f7bded5cb97c7646557d11a0c6008e24264190b16`: backend 10950 passed / 0 failed, frontend 70 files / 1143 passed, build PASS, demo 5/5, crash 6/6).
+- [x] Independent read-only review at `f8423d4b` (`8156e1fc`) PASS with 0 critical/important/minor findings. Canonical docs, `EVIDENCE_INDEX.md`, `run.json` and `handoff.md` completed.
 
-No product changes after `2af99e0e`. Only tests/harness/docs/evidence may still be completed. Hybrid stays NO-GO,
-LLM_ONLY/flat/live0. HFOI-F4 exact relation operands and product transport remain absent; no Product E2E PASS.
-No main merge/push, worktree deletion, data cleanup or user-approval assertion authorized.
+No product changes after `2af99e0e`. Hybrid stays NO-GO, LLM_ONLY/flat/live0. HFOI-F4 exact relation operands and product transport remain absent; no Product E2E PASS (`HYBRID_OFFLINE_READINESS_PARTIAL`). No main merge/push, worktree deletion, data cleanup or user-approval assertion authorized.

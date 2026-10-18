@@ -1,0 +1,59 @@
+{
+  "schema": "AUTHORITATIVE_T3/1",
+  "candidate_commit": "f8423d4b87f942d3d850970c741bcf4ee6d2c634",
+  "frozen_commit_in_manifest": "efbdc5a79672f69aa37378ec612cfa2d7d5e0581",
+  "product_commit": "2af99e0eddb67da253adcf6dc0aa7ac4fd08b05d",
+  "measured_system_sha256": "cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c",
+  "measured_files": 111,
+  "worktree": "D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-hybrid-offline-readiness-final",
+  "detached_clean_tree": true,
+  "freeze_verify_before_and_after": "MATCH",
+  "started_utc": "2026-10-18T17:39:08.2957830+00:00",
+  "finished_utc": "2026-10-18T17:49:41.6963596+00:00",
+  "duration_sec": 632.3,
+  "exit_code": 0,
+  "status": "FULL_PRODUCT_GATE_PASS",
+  "allow_live_ai": 0,
+  "command": "node frontend/scripts/full-gate.mjs --python D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+  "raw_log_sha256": "9ac2bb2f23bc9202bb9b120f7bded5cb97c7646557d11a0c6008e24264190b16",
+  "superseded_candidate": {
+    "candidate_commit": "96e2fe1e647ba3d7cb03f16082775219c7712a4f",
+    "receipt": "verification/t3-96e2fe1e-superseded.json",
+    "sha256": "1d59b656f589a374fc5eb392bf9832abfd097f90b35e789e22a31bddedfeb644"
+  },
+  "gates": {
+    "backend_pytest": {
+      "status": "PASS",
+      "passed": 10950,
+      "failed": 0,
+      "skipped": 1,
+      "deselected": 2,
+      "xfailed": 9,
+      "duration_sec": 610.7
+    },
+    "frontend_vitest": {
+      "status": "PASS",
+      "files_passed": 70,
+      "tests_passed": 1143,
+      "failed": 0,
+      "duration_sec": 13.1
+    },
+    "frontend_build": {
+      "status": "PASS",
+      "duration_sec": 7.2
+    },
+    "demo_replay": {
+      "status": "PASS",
+      "demo_cases": "5/5",
+      "reduced_chain_cases": "1/1",
+      "duration_sec": 0.8
+    },
+    "crash_surface": {
+      "status": "PASS",
+      "passed": 6,
+      "total": 6,
+      "uncaught_500": 0,
+      "duration_sec": 0.5
+    }
+  }
+}

@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_OFFLINE_READINESS_FINALIZATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/handoff.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/
+CLASSIFICATION = HYBRID_OFFLINE_READINESS_PARTIAL (source-length/vector-zero + CACHE_VERSION 126 + HFOI-F3/F5/F6 + minimal learner answer disclosure + 41/41 fixtures + 12/12 independent oracle + 48/48 offline browser E2E + 4/4 disclosure browser + clean detached T3 FULL_PRODUCT_GATE_PASS verified; HFOI-F4 exact relation operands in Adapter /2 and production Hybrid caller remain open by design; LLM_ONLY default unchanged, Hybrid product NO-GO)
+CODE_COMMIT = c55374cc · 479e04d5 · 9d17557e · cc07f512 · 8bcb9d8e · 531b7143 · 794563cb · 8ee9e3eb · 2af99e0e (final product commit); test/receipt alignment 00b7bba4 · efbdc5a7; candidate freeze f8423d4b (tree_hash cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c, 111 files; earlier freeze 96e2fe1e superseded after single test alignment fix)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/run.json
+MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
+CORRECTS = SCENE3D_METRIC_BOUNDARY (candidate_divergence.json only; historical measurements unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = EXTRACTION_V2_INTEGRATION_RECORD
 
 REPORT = docs/evaluation/geometry/runs/extraction-v2-integration-record/report.md
@@ -20,7 +31,7 @@ CODE_COMMIT = cb1f4954; test-only lifecycle follow-up 216bbf84; clean refreeze/c
 VERIFICATION = docs/evaluation/geometry/runs/scene3d-metric-boundary/run.json
 MODEL_REQUEST_COUNT = 0 (offline)
 CORRECTS = SCENE3D_PLANE_GRID_CAMERA (pre-main-audit.md §8: renderer fallback is not accepted-data rejection); HYBRID_PREVIEW_CONTRACT_HARDENING (candidate_divergence.json only; historical measurements unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_OFFLINE_READINESS_FINALIZATION (candidate identity layer; no historical measurement rewrite)
 
 ## WAVE_ID = SCENE3D_PLANE_GRID_CAMERA
 

@@ -1,0 +1,96 @@
+{
+  "schema": "RUN/1",
+  "run_id": "hybrid-offline-readiness-finalization",
+  "wave": "hybrid-offline-readiness-finalization-w01",
+  "date": "2026-10-19",
+  "branch": "research/hybrid-offline-readiness-finalization",
+  "base_commit": "f2b00ed3ec1e333e3b5c18c046ac5beec1f7b6fb",
+  "main": "f2b00ed3ec1e333e3b5c18c046ac5beec1f7b6fb",
+  "product_commit": "2af99e0eddb67da253adcf6dc0aa7ac4fd08b05d",
+  "refreeze_commit": "f8423d4b87f942d3d850970c741bcf4ee6d2c634",
+  "candidate_head": "f8423d4b87f942d3d850970c741bcf4ee6d2c634",
+  "superseded_candidate_head": "96e2fe1e647ba3d7cb03f16082775219c7712a4f",
+  "measured_system_sha256": "cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c",
+  "measured_files": 111,
+  "frontend_source_tree": "e7e4d61ece9c4a8c672c3c841aa5a41e84a341f4",
+  "backend_app_tree": "1f0bbce73c970f083797df1db7b9c1a4f97df923",
+  "default_mode": "LLM_ONLY",
+  "response_contract": "flat",
+  "cache_version": 126,
+  "provider_requests": 0,
+  "backend_changed": true,
+  "frontend_changed": true,
+  "hybrid_enabled": false,
+  "merge": "NONE",
+  "push": "NONE",
+  "human_visual_review": "NOT_CLAIMED_FOR_DISCLOSURE_UI",
+  "human_acceptance": "NOT_GRANTED",
+  "status": "HYBRID_OFFLINE_READINESS_PARTIAL",
+  "freeze": "MATCH before and after full T3; 111 files / cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c",
+  "independent_review": "PASS (Codex continuation review + Gemini independent read-only subagent review 8156e1fc at f8423d4b; 0 critical / 0 important / 0 minor findings; review.md)",
+  "source_length_vector_zero": {
+    "status": "PASS",
+    "targeted_tests_passed": 185,
+    "reader_parity_texts": 1896,
+    "reader_parity_changed": 22,
+    "diff_receipt": "verification/reader-parity-final-diff.json",
+    "diff_sha256": "17e78799f9981748144c15e67b5564dc80ccb9a617e7dce221656cfe85d77698"
+  },
+  "cache_policy": {
+    "status": "PASS",
+    "version": 126,
+    "decision": "cache/decision.json",
+    "confirmation": "verification/cache-final.json",
+    "confirmation_sha256": "fef0e03f2354dd9a4f870b88e2aaa1370cbd2d42f0f625d566e624268ccd1d93"
+  },
+  "fixture_verification": {
+    "verified": 41,
+    "response_identical": true,
+    "receipt": "verification/offline-summary.json",
+    "sha256": "ee05458c0ac06396bc027f0dcd69931a2b6df8f27897563d4805e49f8db5d158"
+  },
+  "independent_oracle": {
+    "status": "PASS",
+    "served_verified": 12,
+    "witness_fault_injection": "4/4 caught",
+    "receipt": "verification/oracle-final.json",
+    "sha256": "f72050318d6bf1b730ba982f2672d10cf7acfc5815c64f380744366ad893ff74"
+  },
+  "offline_browser_e2e": {
+    "status": "PASS",
+    "passed": 48,
+    "failed": 0,
+    "provider_calls": 0,
+    "forbidden_calls": 0,
+    "receipt": "verification/offline-browser-final.json",
+    "sha256": "dbe11edf9d76b9fa80a190f4918677d28a8a609689eb7ab32d1edec5f1cf7a72"
+  },
+  "pedagogical_disclosure_browser": {
+    "status": "PASS",
+    "passed": 4,
+    "failed": 0,
+    "cases": [
+      "served-H01_CUBE",
+      "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS",
+      "served-H02_CUBOID_DISTANCE",
+      "replacement-refusal-and-legacy-parity"
+    ],
+    "receipt": "p2b-disclosure/final-browser.json",
+    "sha256": "cd4d418e862869a1b09921bbd534f3c1487608eccbb500e13b5e08b3cf57aed4"
+  },
+  "t3": {
+    "status": "FULL_PRODUCT_GATE_PASS",
+    "candidate": "f8423d4b87f942d3d850970c741bcf4ee6d2c634",
+    "receipt": "verification/authoritative-t3.json",
+    "backend_passed": 10950,
+    "frontend_passed": 1143,
+    "raw_sha256": "9ac2bb2f23bc9202bb9b120f7bded5cb97c7646557d11a0c6008e24264190b16"
+  },
+  "open_boundaries": [
+    "HFOI-F4 exact relation operands in Adapter /2 (requires Adapter /3)",
+    "Production Hybrid frontend caller intentionally absent (Hybrid product NO-GO)",
+    "ISSUE-ARCH-SCENE3D-ALTITUDE-MARKER-UNCERTIFIED",
+    "ISSUE-OPS-CACHE-HISTORICAL-MODE-UNKNOWN"
+  ],
+  "correction": "candidate_divergence.json corrects SCENE3D_METRIC_BOUNDARY candidate identity layer only; historical measurements unchanged"
+}

@@ -30,3 +30,14 @@ Remaining limitations:
   the served fixture values; the frontend does not implement a second symbolic mathematics parser.
 - Production Hybrid transport is intentionally disconnected; the offline browser transport is injected.
 - The owner’s previous P0–P3 visual acceptance is unchanged and applies only to its original sample scenes.
+
+## Final candidate review at `f8423d4b` (`2026-10-19`)
+
+Reviewed by an isolated read-only subagent (`8156e1fc-a36f-42a5-8f02-8ece8e64daf9`) at refrozen candidate `f8423d4b87f942d3d850970c741bcf4ee6d2c634` (`product_commit_sha = 2af99e0eddb67da253adcf6dc0aa7ac4fd08b05d`, `111` files, `measured_system.tree_hash = cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c`).
+
+- **Verdict:** **`PASS` (0 critical, 0 important, 0 minor findings)**.
+- Confirmed:
+  1. `EVALUATION_CANDIDATE.json` matches clean working tree, `cache_version = 126`, `product_commit_sha = 2af99e0e`, and `tree_hash = cb11bc7757466bd6…`.
+  2. `loai_nhan_doan` in `scale_normalization.py` and `segment_relation.py` prevents radical/tuple vector expressions, sums/products, and conditionals from leaking into `SOURCE` premises while keeping ordinary lengths and genuine `= 0` degenerations fail-closed; `test_thesis_runner_alignment.py` reads `_khai_lech_hien_hanh()` without modifying historical divergence files.
+  3. `hybrid-preview-adapter.ts`, `Scene3DExplorer.tsx`, `scene3d-view.tsx`, and `scene3d-annotations.ts` enforce single wrapper validation, final-step observation anchors, `a = 1` construction qualifiers (`ghiChuGiaTriDung`), default-hidden keyboard-accessible answer disclosure (`Xem đáp án` / `Ẩn đáp án`), preserved distance witnesses (`AnnotationView.hiddenIds`), and explicit disclosure that `HFOI-F4` exact relation operands remain unavailable in Adapter `/2`.
+  4. Offline receipts (`offline-summary.json`, `oracle-final.json`, `offline-browser-final.json`, `cache-final.json`, `p2b-disclosure/final-browser.json`) and clean detached Authoritative T3 (`verification/authoritative-t3.json`, `FULL_PRODUCT_GATE_PASS`) are complete and consistent.
