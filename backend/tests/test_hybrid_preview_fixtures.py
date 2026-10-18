@@ -10,7 +10,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures'
+#: Adapter /2 bundle. The first bundle (`fixtures/`, exported at 2a832ae2) is superseded: it predates the review fixes and
+#: is labelled adapter /1, the label of the pre-classification adapter (report §6).
+FIXTURES = ROOT / 'docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2'
 SCRIPT = ROOT / 'backend/scripts/export_hybrid_preview_fixtures.py'
 MANIFEST = json.loads((FIXTURES / 'manifest.json').read_text(encoding='utf-8'))
 
@@ -38,7 +40,7 @@ def test_exporter_refuses_to_overwrite_existing_fixtures():
 def test_fixture_inventory_covers_the_frontend_contract():
     rows = MANIFEST['fixtures']
     kinds = [r['kind'] for r in rows]
-    assert (kinds.count('served'), kinds.count('refusal'), kinds.count('gate')) == (12, 23, 4)
+    assert (kinds.count('served'), kinds.count('refusal'), kinds.count('gate')) == (12, 25, 4)
     covers = {tag for r in rows for tag in r['covers']}
     assert {'multi_goal', 'symbolic_length_unit', 'goal_observation', 'object:section', 'injected_fault'} <= covers
     refusals = [r['expected'] for r in rows if r['kind'] == 'refusal']
@@ -46,8 +48,8 @@ def test_fixture_inventory_covers_the_frontend_contract():
                                                          'geometry_generation_failed', 'verification_gap'}
     assert {e['refusal_cause'] for e in refusals} == {'SOURCE', 'UNKNOWN'}
     producer = MANIFEST['producer']
-    assert producer['backend_app_dirty'] is False and len(producer['commit']) == 40
-    assert producer['adapter_version'] == 'hybrid-preview-adapter/1'
+    assert producer['backend_app_dirty'] is False and producer['inputs_dirty'] is False and len(producer['commit']) == 40
+    assert producer['adapter_version'] == 'hybrid-preview-adapter/2'
     assert producer['envelope_version'] == 'hybrid-route-d-preview/1'
 
 

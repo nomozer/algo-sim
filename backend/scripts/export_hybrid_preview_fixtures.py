@@ -10,7 +10,8 @@ Every fixture is the real response of `POST /api/preview/hybrid`, served in-proc
 - inputs come only from committed corpora, the holdout cases and the declared faults of
   `tests/test_hybrid_preview_contract.py` (no hand-written envelope).
 
-`--out` refuses an existing directory and a dirty `backend/app`, so the producer commit names the code that ran.
+`--out` refuses an existing directory and an uncommitted `backend/app` or input (`INPUT_PATHS`), so the producer commit
+names everything that ran.
 `--verify` regenerates every fixture and exits 1 on any difference in source, expected outcome or response. The producer
 identity is reported, not compared: a later commit may serve the same contract.
 """
@@ -45,6 +46,9 @@ SERVED = (
 )
 CORPUS_FILE = "docs/evaluation/geometry/runs/contract-driven-goal-composition/corpus.json"
 HOLDOUT_FILE = "backend/tests/geometry/fixtures/hybrid_holdout_cases.json"
+#: Everything the fixtures are built from besides `backend/app`: inputs, case/fault definitions and this exporter.
+INPUT_PATHS = ("backend/tests", "backend/scripts/export_hybrid_preview_fixtures.py",
+               "docs/evaluation/geometry/runs/contract-driven-goal-composition")
 
 
 def _canonical(obj) -> str:
@@ -130,7 +134,8 @@ def _producer() -> dict:
             "source_fingerprint": {"measured_system_hash": tree, "files": files,
                                    "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"},
             "adapter_version": ADAPTER_VERSION, "envelope_version": ENVELOPE_VERSION,
-            "backend_app_dirty": bool(_git("status", "--porcelain", "--", "backend/app"))}
+            "backend_app_dirty": bool(_git("status", "--porcelain", "--", "backend/app")),
+            "inputs_dirty": bool(_git("status", "--porcelain", "--", *INPUT_PATHS))}
 
 
 def generate() -> tuple[list[dict], str]:
@@ -202,8 +207,9 @@ def export(out: Path) -> int:
         print(f"refusing to overwrite {out}")
         return 2
     fixtures, token = generate()
-    if fixtures[0]["producer"]["backend_app_dirty"]:
-        print("refusing to export from a dirty backend/app: the producer commit would not name the code that ran")
+    producer = fixtures[0]["producer"]
+    if producer["backend_app_dirty"] or producer["inputs_dirty"]:
+        print("refusing to export from uncommitted backend/app or inputs: the producer commit would not name what ran")
         return 2
     texts = {f["id"]: _text(f) for f in fixtures}
     leaked = {fid: _leaks(t, token) for fid, t in texts.items() if _leaks(t, token)}

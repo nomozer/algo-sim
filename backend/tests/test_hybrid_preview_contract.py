@@ -38,9 +38,27 @@ def proof_only():
     return {'text': text, 'payload': {'facts': [f for f in deepcopy(case['b_facts']) if f['kind'] != 'question']}}
 
 
+BUNDLE = {r['id']: r for r in json.loads(
+    (ROOT / 'docs/evaluation/geometry/runs/contract-driven-goal-composition/baseline/bundle-174.json')
+    .read_text(encoding='utf-8'))['rows']}
+
+
+def bundle(case_id):
+    return {'text': BUNDLE[case_id]['text'], 'payload': {'facts': deepcopy(BUNDLE[case_id]['facts'])}}
+
+
 def zero_height():
     from tests.geometry.test_hybrid_backend_integration import _regular_pyramid_facts
     text, payload = _regular_pyramid_facts('height', 'chiều cao', '0')
+    return {'text': text, 'payload': payload}
+
+
+def zero_not_in_text():
+    """Review of this run: the text says 3, the extraction says 0 — `doc_so` refuses 0 before the source gate compares the
+    value with its quote, so the problem must NOT be blamed."""
+    from tests.geometry.test_hybrid_backend_integration import _regular_pyramid_facts
+    text, payload = _regular_pyramid_facts('height', 'chiều cao', '3')
+    payload['facts'][2]['value'] = '0'
     return {'text': text, 'payload': payload}
 
 
@@ -99,6 +117,8 @@ CASES = [
     ('capability-unsupported', lambda: hold('H08_PLANE_PLANE_NOT_BASE'), None, 'UNSUPPORTED_CAPABILITY', CG, 'UNKNOWN'),
     ('capability-conditional', lambda: corpus('conditional-question'), None, 'CONDITIONAL_CLAUSE', CG, 'UNKNOWN'),
     ('capability-negated-question', lambda: corpus('negated-question'), None, 'NEGATED_CLAUSE', CG, 'UNKNOWN'),
+    # Route D's OUT_OF_SCOPE is the extraction escape `unsupported` on a geometry problem — never "another subject"
+    ('capability-escape-unsupported', lambda: bundle('B25'), None, 'OUT_OF_SCOPE', CG, 'UNKNOWN'),
     # missing / ambiguous data
     ('missing-dimension', lambda: hold('H10_CUBOID_MISSING_HEIGHT'), None, 'MISSING_DIMENSION', IS, 'UNKNOWN'),
     ('missing-underdetermined', lambda: hold('H06_QUANTITY_NOT_UNIQUE'), None, 'UNDERDETERMINED_POINT', IS, 'UNKNOWN'),
@@ -107,6 +127,7 @@ CASES = [
     ('invalid-contradiction', lambda: hold('H09_CUBE_CONTRADICTION'), None, 'INCONSISTENT_FACTS', GG, 'UNKNOWN'),
     ('invalid-collinear', lambda: corpus('collinear-triangle-unnamed-midpoint'), None, 'COLLINEAR_POINTS', GG, 'UNKNOWN'),
     ('invalid-zero-length', zero_height, None, 'NON_POSITIVE_LENGTH', GG, 'SOURCE'),
+    ('invalid-zero-not-in-text', zero_not_in_text, None, 'NON_POSITIVE_LENGTH', GG, 'UNKNOWN'),
     # source not verified
     ('source-object-mismatch', lambda: corpus('wrong-source-target'), None, 'SOURCE_OBJECT_MISMATCH', VG, 'UNKNOWN'),
     ('source-goal-as-premise', lambda: corpus('prove-role'), None, 'GOAL_CLAUSE_NOT_PREMISE', VG, 'UNKNOWN'),
@@ -161,6 +182,18 @@ def test_refusal_is_classified_in_the_existing_vocabulary(preview, monkeypatch, 
     assert '_' not in text and '{' not in text and code not in text
     assert not re.search(r'Error|Exception|Traceback|capability|verification|PREVIEW', text)
     assert not [q for q in _quotes(case) if len(q) > 12 and q in text]
+    # only a cause the server read in the text may send the learner back to the problem, or name another subject
+    if cause != 'SOURCE':
+        assert not re.search(r'Đề bài cho|môn học khác|kiểm tra lại', text), text
+
+
+def test_internal_failures_are_unverified_results_and_integrity_means_identity():
+    from app.ai.hybrid_preview import classify_refusal
+    for code in ('ENGINE_EXECUTION_FAILED', 'MALFORMED_SOLID', 'SECTION_CONSTRUCTION_INTERNAL_FAILURE',
+                 'POLYHEDRON_NON_ORIENTABLE'):
+        assert classify_refusal(code).group == 'RESULT_UNVERIFIED', code
+    for code in ('PREVIEW_IDENTITY_CHANGED', 'PREVIEW_SURFACE_CHANGED', 'PREVIEW_PROOF_STATUS_INVALID'):
+        assert classify_refusal(code, adapter=True).group == 'INTEGRITY', code
 
 
 def test_integrity_and_unknown_codes_are_never_a_capability_verdict():
@@ -239,6 +272,8 @@ def _with_title(monkeypatch, title):
     'Đã ｃｈứｎｇ minh',  # fullwidth Latin letters
     'Chứng minh thành công',        # NO-BREAK SPACE
     'Đã chứng­minh xong',           # SOFT HYPHEN (format character)
+    'Đã chứng͏minh xong',           # COMBINING GRAPHEME JOINER (Mn) — review NIT
+    'Đã chứng_minh xong',                # underscore — review NIT
 ])
 def test_proof_claim_variants_are_refused(preview, monkeypatch, text):
     _with_title(monkeypatch, text)
