@@ -137,9 +137,9 @@
 - **NEXT_TEST:** khi nối tuyến D, cổng nối phải được KHAI (như `_CONG_COMPILER`), không lách guard.
 
 ### D-02: Cache identity theo tuyến
-- **STATUS:** PARTIAL — cơ chế có (`RoutePolicy` + `_policy_identity`, cách ly hai chiều có test). Tuyến D chưa phải một trường của `RoutePolicy` vì chưa được nối.
-- **BLOCKER:** khi nối: `RoutePolicy` thêm chế độ tuyến D; `fingerprint()` phải gồm `REGISTRY_VERSION`, `PLANNER_VERSION`, `ENGINE_VERSION` và `fact_extraction.surface_fingerprint(contract)`.
-- **NEXT_TEST:** cùng bộ test hai chiều của `test_route_aware_cache.py` cho chế độ tuyến D.
+- **STATUS:** PARTIAL — `RoutePolicy` có chế độ preview tuyến D (run `hybrid-route-d-preview-wiring`); `fingerprint()` gồm Registry/Planner/Engine, surface trích xuất, adapter/envelope; preview KHÔNG có cache (`_policy_identity` từ chối policy preview), nên chưa có cache tuyến D nào để cách ly.
+- **BLOCKER:** chỉ khi tuyến D được phục vụ qua `/api/analyze` (chưa được duyệt) mới cần cache tuyến D.
+- **NEXT_TEST:** khi ấy: bộ test hai chiều của `test_route_aware_cache.py` cho chế độ tuyến D.
 
 ### D-03: Cấu hình theo lượt, không theo biến toàn cục
 - **STATUS:** PROVED — `RoutePolicy` chụp một lần ở biên API; `run_ai_fact_route(contract=…)` chốt hợp đồng một lần mỗi lượt (`test_response_contract_is_one_snapshot_per_call`: trước đó đổi biến toàn cục giữa request và cổng kiểm làm một phản hồi xin theo v3 được phục vụ mà không qua cổng v3).
@@ -162,19 +162,19 @@
 - **NEXT_TEST:** —
 
 ### D-07: Adapter envelope
-- **STATUS:** NOT_STARTED.
-- **BLOCKER:** không có ánh xạ `KetQuaTuyen` → `ValidatedSimulationEnvelope`; `proof_status` / `can_present_as_proven` và `length_unit` không có chỗ (`docs/evaluation/geometry/runs/hybrid-pre-main-hardening/frontend-handoff.md` F3, F4); mã từ chối chưa ánh xạ thông điệp người học.
-- **NEXT_TEST:** adapter + test: goal kiểm trên một cấu hình không bao giờ hiển thị là "đã chứng minh".
+- **STATUS:** PROVED cho preview (`backend/app/ai/hybrid_preview.py::adapt_result`, `hybrid-route-d-preview/1`): envelope ngữ nghĩa đã thẩm định + `route_d` (Geometry IR, đáp số chính xác, provenance, trace, goal checks với `proof_status=UNVERIFIABLE` / `can_present_as_proven=false`, `length_unit`); từ chối giữ mã máy, lời người học tiếng Việt. Khoá: `backend/tests/test_hybrid_preview_api.py`.
+- **BLOCKER:** frontend chưa đọc `route_d` (`frontend-handoff.md` của `hybrid-pre-main-hardening` F3, F4); đây là biểu diễn preview, chưa phải envelope sản phẩm của `/api/analyze`.
+- **NEXT_TEST:** khi UI đọc nó: goal kiểm trên một cấu hình không bao giờ hiển thị là "đã chứng minh".
 
 ### D-08: Nối API sau cờ
-- **STATUS:** NOT_STARTED.
-- **BLOCKER:** D-02, D-07.
-- **NEXT_TEST:** endpoint xem trước khoá bằng env (mặc định tắt), không ghi cache, frontend không gọi; test chứng minh `LLM_ONLY` không đổi một byte.
+- **STATUS:** PROVED cho preview — `POST /api/preview/hybrid`: cờ env + token server ≥ 32 ký tự + header + peer loopback; TẮT ⇒ 404 trước mọi import tuyến D; cổng trả lời trước khi đọc body; chỉ dữ liệu fixture offline (không transport, kể cả `ALLOW_LIVE_AI=1` có khoá); không cache; ngoài OpenAPI; `LLM_ONLY` của `/api/analyze` khớp băm byte với baseline trước khi nối.
+- **BLOCKER:** phục vụ tuyến D qua `/api/analyze` hay qua provider thật chưa được duyệt.
+- **NEXT_TEST:** —
 
 ### D-09: Quan sát được
-- **STATUS:** NOT_STARTED — `runtime_identity` chưa phát chế độ tuyến và phiên bản registry/planner/engine.
+- **STATUS:** PROVED — `GET /api/diagnostics/runtime` mang `route_policy` và `hybrid_route_d_preview` (phiên bản, surface, fingerprint, trạng thái bật; không lộ token).
 - **BLOCKER:** —
-- **NEXT_TEST:** `GET /api/diagnostics/runtime` mang `RoutePolicy` và các phiên bản tuyến D.
+- **NEXT_TEST:** —
 
 ### D-10: Trình bày chỉ từ chứng nhận
 - **STATUS:** OPEN — ký hiệu góc vuông theo tên đoạn; `maTranKhung` không tự vệ (`frontend-handoff.md` F1, F2).
@@ -187,8 +187,8 @@
 - **NEXT_TEST:** —
 
 ### D-12: Rollback
-- **STATUS:** PARTIAL — tắt cờ là đủ về hành vi; cache theo tuyến ngăn phục vụ chéo (D-02).
-- **BLOCKER:** D-02 cho chế độ tuyến D.
+- **STATUS:** PARTIAL — tắt cờ là đủ về hành vi; preview không có cache nên không có gì để phục vụ chéo (D-02); một lượt đang chạy giữ ảnh chụp của nó.
+- **BLOCKER:** D-02 khi tuyến D có cache.
 - **NEXT_TEST:** bật → ghi cache → tắt ⇒ MISS; tắt → bật ⇒ MISS.
 
 ### D-13: Quyết định bật

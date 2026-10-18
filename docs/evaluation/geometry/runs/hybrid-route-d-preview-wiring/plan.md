@@ -17,13 +17,15 @@ Branch research/hybrid-route-d-preview-wiring; clean start at main=origin/main=6
 
 ## Tasks
 
-- [ ] Record default endpoint/pipeline parity baseline and clean regression baseline.
-- [ ] RED endpoint authorization/OFF/ON, snapshot, cache isolation and policy identity tests.
-- [ ] GREEN minimal RoutePolicy extension, offline fixture runtime, versioned adapter and guarded endpoint.
-- [ ] RED/GREEN proof/unit/metric/dependency and mathematical/adversarial endpoint tests.
-- [ ] Explicit import guard boundaries and runtime identity tests; run cache/contract/174/grounding/oracle regressions.
-- [ ] Update live documentation, frontend handoff and preservation inventory; independent read-only review and fixes.
-- [ ] Commit allowlisted files, new candidate freeze, clean detached authoritative T3, exact final handoff. Never merge/push main.
+Progress (takeover 2026-10-18 09:32 by Claude after Codex hit its usage limit; see `report.md` §1):
+
+- [x] Record default endpoint/pipeline parity baseline and clean regression baseline. *(Codex, `baseline.log` 09:21)*
+- [x] RED endpoint authorization/OFF/ON, snapshot, cache isolation and policy identity tests. *(Codex, `endpoint-red.log`)*
+- [x] GREEN minimal RoutePolicy extension, offline fixture runtime, versioned adapter and guarded endpoint. *(Codex; gate-before-body and identity re-check added by Claude)*
+- [x] RED/GREEN proof/unit/metric/dependency and mathematical/adversarial endpoint tests. *(Codex; provider-response, live-flag, zero-length and identity-change cases added by Claude)*
+- [x] Explicit import guard boundaries and runtime identity tests; run cache/contract/174/grounding/oracle regressions. *(Codex ran 09:27 before its last test edits; re-run by Claude on the frozen candidate)*
+- [ ] Update live documentation, frontend handoff and preservation inventory; independent read-only review and fixes. *(Claude; Codex's review never produced a result — status in `run.json`)*
+- [ ] Commit allowlisted files, new candidate freeze, clean detached authoritative T3, exact final handoff. Never merge/push main. *(Claude — status in `run.json`)*
 
 ## Review focus
 

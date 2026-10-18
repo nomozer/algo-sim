@@ -1,0 +1,47 @@
+{
+  "schema": "HYBRID_ROUTE_D_PREVIEW_WIRING/1",
+  "run": "hybrid-route-d-preview-wiring",
+  "date": "2026-10-18",
+  "owner_scope": "GO_HYBRID_ROUTE_D_PREVIEW_WIRING (no main merge/push, no live AI, no product enablement, no frontend edit, no deletion)",
+  "branch": "research/hybrid-route-d-preview-wiring",
+  "base": "6592306db9f8851d23bccb1ebccca60b281a35ef (main = origin/main)",
+  "takeover": {
+    "from": "Codex GPT-6.1 Sol High (usage limit, ~09:28 local)",
+    "at": "2026-10-18T09:32+07:00",
+    "snapshot": ".superpowers/takeover-route-d-preview-20261018/ (gitignored; MANIFEST.sha256 sha256 26c0e6db0f74299917d8a177d75c8e1babbe0c2e2c9eaba11b617f831a6746a9, 18 entries)",
+    "codex_files": ["backend/app/ai/hybrid_preview.py (new)", "backend/app/ai/pipeline.py", "backend/app/main.py", "backend/app/runtime_identity.py", "backend/tests/geometry/test_structured_geometry_relations.py", "backend/tests/test_hybrid_preview_api.py (new)", "docs/architecture/HYBRID_ROUTE_D_PREVIEW.md (new)", "docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/plan.md (new)"],
+    "codex_regression_before_takeover": "PARTIAL: last run 09:27:27 = 187 passed, 1 failed (candidate hash pin); test files edited 09:28:01 afterwards; baseline ERRORs were Codex-sandbox PermissionError on pytest-of-Bunny",
+    "codex_review_before_takeover": "UNKNOWN — no output, receipt or process",
+    "writers_active_at_takeover": "none (no python/pytest/reviewer process; mtimes stable)"
+  },
+  "commits": {
+    "codex_work_as_found": "902730b9",
+    "takeover_fixes_product_commit": "af4bcf47",
+    "candidate_freeze": "8ffa58f4"
+  },
+  "product_commit": "af4bcf47145c32a09683f830c51c24a813467ea3",
+  "product_sha256": "75af7b71f21031ec92ec9190624315ea8dfe42882f36e462262faf6df6783ddf",
+  "measured_files": 111,
+  "product_files_changed_vs_base": ["backend/app/ai/hybrid_preview.py", "backend/app/ai/pipeline.py", "backend/app/main.py", "backend/app/runtime_identity.py"],
+  "frontend_src_changed": false,
+  "held_constant": {"DEFAULT_MODE": "LLM_ONLY", "RESPONSE_CONTRACT": "flat", "HYBRID_PRODUCT_ENABLEMENT": "NO-GO", "ALLOW_LIVE_AI": "0", "CACHE_VERSION": "125 (no bump)", "prompts_and_v3_schema": "unchanged"},
+  "takeover_findings": {
+    "identity_change_mid_request_served": "CONFIRMED_FIXED (PREVIEW_IDENTITY_CHANGED)",
+    "gate_after_body_validation": "CONFIRMED_FIXED (404/403 before body; PREVIEW_BODY_INVALID)",
+    "invalid_provider_responses": "ALREADY_CORRECT, locked (5 cases)",
+    "live_flag_with_key": "ALREADY_CORRECT, locked",
+    "zero_length_learner_message": "ALREADY_CORRECT, locked"
+  },
+  "verification_on_tree": {
+    "freeze_verify": "MATCH (111 files, 75af7b71…)",
+    "targeted": "553 passed, 1 failed (candidate hash pin before freeze)",
+    "full_backend_after_freeze_dirty_tree": "10739 passed, 1 skipped, 2 deselected, 9 xfailed, 1 failed = test_holdout_readiness::test_bao_cao_da_sinh_va_KHONG_TROI (only blocker: dirty working tree from uncommitted docs)",
+    "frontend_vitest": "68 files, 1079 passed",
+    "frontend_build": "PASS",
+    "live_ai_calls": 0
+  },
+  "independent_review": "PENDING",
+  "authoritative_t3": "PENDING",
+  "verdict": "PENDING",
+  "push": "NONE"
+}

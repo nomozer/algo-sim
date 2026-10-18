@@ -1,5 +1,16 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Route D offline preview (research/hybrid-route-d-preview-wiring, Hybrid product off)
+
+Run `docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/`; contract `docs/architecture/HYBRID_ROUTE_D_PREVIEW.md`.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/ai/hybrid_preview.py` | The ONE Route D preview boundary: `preview_identity(contract)` (Registry/Planner/Engine versions, extraction surface, adapter/envelope versions, `OFFLINE_FIXTURE_ONLY`), `preview_runtime_identity(policy)`, `run_preview(problem_text, fixtures, policy)` (server fixture data only, no transport), `adapt_result` → `HybridPreviewEnvelope` (`hybrid-route-d-preview/1`: validated semantic envelope + `route_d` metadata: Geometry IR, exact answers, provenance, trace, planner goal checks, `length_unit`); refusals `PREVIEW_*` incl. `PREVIEW_IDENTITY_CHANGED`. | `backend/tests/test_hybrid_preview_api.py` |
+| `backend/app/main.py` | `POST /api/preview/hybrid` (async; OFF 404 → operator gate 403 → body validation → threadpool), `HybridPreviewBody`; `_policy_identity` raises for a preview policy (never the product cache). | `test_hybrid_preview_api.py` |
+| `backend/app/ai/pipeline.py` | `RoutePolicy.hybrid_preview_enabled` / `response_contract` / `preview_surface`; `route_policy_snapshot(env, *, preview=False)` — only `preview=True` callers (the endpoint, diagnostics) can enable it. | `test_hybrid_preview_api.py::test_preview_policy_does_not_change_analyze_or_default_cache_identity` |
+| `backend/app/runtime_identity.py` | `route_policy` and `hybrid_route_d_preview` fields of `/api/diagnostics/runtime` (loads Route D metadata modules only when invoked; never executes extraction/planning). | `test_hybrid_preview_api.py::test_diagnostics_report_versions_and_state_but_no_secret` |
+
 ## Pre-main hardening of the Hybrid candidate (research/hybrid-pre-main-hardening, Hybrid off)
 
 Run `docs/evaluation/geometry/runs/hybrid-pre-main-hardening/`, on top of `research/hybrid-backend-integration` `2620cffa`.

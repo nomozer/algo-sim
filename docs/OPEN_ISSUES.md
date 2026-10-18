@@ -15,6 +15,7 @@
 
 - **status:** OPEN — route D runs offline only (`run_fact_route`, `run_ai_fact_route` with a test transport); `/api/analyze` never reaches it (guarded by `test_structured_geometry_relations.py::test_Y_*`). Missing for product: a `KetQuaTuyen` → `ValidatedSimulationEnvelope` adapter carrying goal checks (`proof_status`, `can_present_as_proven`) and `length_unit`; a route-D mode in `RoutePolicy` with registry/planner/engine versions and the extraction surface in its fingerprint; refusal-code → learner-message mapping; runtime identity fields.
 - **checklist:** `docs/MIGRATION_CHECKLIST.md` §2 (D-02, D-07…D-12); presentation findings in `frontend-handoff.md` F3, F4.
+- **update 2026-10-18 (run `hybrid-route-d-preview-wiring`):** an operator-only OFFLINE preview now exists: `POST /api/preview/hybrid` (env flag + server token + loopback peer; OFF 404; fixture data only, no provider transport; no product cache) with the versioned adapter `hybrid-route-d-preview/1` carrying goal checks, `length_unit`, IR, answers and provenance, a Route D preview identity in `RoutePolicy`, and runtime identity fields. Still open: Route D in `/api/analyze`, a live provider path, a Route D product cache, and UI consumption of `route_d`.
 
 ### ISSUE-ARCH-HYBRID-LIVE-EXTRACTION-BASELINE
 

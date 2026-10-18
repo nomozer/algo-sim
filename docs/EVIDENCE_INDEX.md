@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_ROUTE_D_PREVIEW_WIRING
+
+REPORT = docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/
+CLASSIFICATION = see report.md §0 (owner scope GO_HYBRID_ROUTE_D_PREVIEW_WIRING; operator-only OFFLINE Route D preview; Codex GPT-6.1 work recovered at 902730b9, completed by Claude takeover; Hybrid product NO-GO, LLM_ONLY default byte-identical)
+CODE_COMMIT = 902730b9 (Codex work as found) · af4bcf47 (takeover fixes, product commit); candidate freeze 8ffa58f4 (tree_hash 75af7b71f21031ec92ec9190624315ea8dfe42882f36e462262faf6df6783ddf, 111 files)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/run.json
+MODEL_REQUEST_COUNT = 0 (offline fixture data only; no provider transport exists in the preview)
+CORRECTS = NONE
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_PRE_MAIN_HARDENING
 
 REPORT = docs/evaluation/geometry/runs/hybrid-pre-main-hardening/report.md
