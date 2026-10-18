@@ -40,5 +40,12 @@ commit · P4 đóng băng lại candidate (commit riêng) → T3 trên worktree 
   tổng kết; tiêm lỗi trên bộ cuối: 53 failed/27 passed, `p1-source-length/fault-injection.log`); parity 1889 đề, 0 hồi
   quy; `CACHE_VERSION` 125 → 126 (`cache/decision.json`). Hồi quy liên quan 1756 passed; backend đầy đủ: 11 đỏ đều do
   cây bẩn/candidate chưa đóng băng lại — phải xanh sau P4.
-- [ ] P2 — adapter `hybrid-preview-adapter.ts`, F3 `ghiChuGiaTriDung`, F5/F6 câu chữ, fixture tổng hợp.
-- [ ] P3 · [ ] P4 · [ ] P5
+- [x] P2 — `479e04d5`: adapter `hybrid-preview-adapter.ts`, F3 `ghiChuGiaTriDung`, F5/F6 câu chữ, fixture tổng hợp;
+  vitest 1140 → 1141 sau review, build PASS, tiêm lỗi frontend bắt được (neo bước, đối chiếu hệ số).
+- [x] P3 — `c6693e1e`: 41/41 phản hồi sinh lại trùng byte; oracle độc lập 12/12 (a = 1 và a = 2, cửa sổ chứng 4/4);
+  E2E trình duyệt 48/48, 0 lượt gọi `/api/preview/hybrid` hay `/api/analyze` (lượt đầu 38/48 do kỳ vọng bước của harness
+  sai — giữ ở `receipts-superseded/`); tiêm lỗi "quan sát sớm" ⇒ 47/48.
+- [x] Review độc lập P1/P2 — 1 BLOCKING (bump thiếu `cache_identity.lock.json` + danh sách phiên bản), 3 IMPORTANT
+  (I1 hồi quy gạch đầu dòng, I2 `⋅`/`\cdot`/`x`/`:`, I3 giả định nới cổng), 4 MINOR; sửa ở `9d17557e` (backend) và
+  `cc07f512` (frontend); E2E lại 48/48, 41 fixture lại trùng byte, hồi quy backend rộng 2641 passed.
+- [ ] P4 — đóng băng lại candidate (commit riêng) → T3 trên worktree detached sạch · [ ] P5

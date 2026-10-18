@@ -4,10 +4,10 @@ D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclien
  "verified": 41,
  "problems": [],
  "producer_now": {
-  "commit": "479e04d5bd09b037a8bf0bc30fcff2264f3dd9a9",
-  "product_commit": "479e04d5bd09b037a8bf0bc30fcff2264f3dd9a9",
+  "commit": "cc07f5125d1762628f4ddeac37c14582d695f43c",
+  "product_commit": "cc07f5125d1762628f4ddeac37c14582d695f43c",
   "source_fingerprint": {
-   "measured_system_hash": "42b7ddfa361de0e695b08e3629f8e51d072cb17df185835666d09c79b2d54653",
+   "measured_system_hash": "b5a2cd4fa6825b9ff32ee5d8dc170ff9e4189d5c324bb3b0685722c234452642",
    "files": 111,
    "rule": "scripts/freeze_evaluation_candidate.py::measured_system_hash"
   },

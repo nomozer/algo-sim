@@ -1,5 +1,37 @@
 [
  {
+  "text": "Cho hình chóp S.ABC có SA = 2 và SA.BC = 6. Tính SB.",
+  "lengths": [
+   [
+    [
+     "AS",
+     "2"
+    ],
+    [
+     "BC",
+     "6"
+    ]
+   ],
+   [
+    [
+     "AS",
+     "2"
+    ]
+   ]
+  ],
+  "unread": [
+   [
+    "SA"
+   ],
+   [
+    "SA",
+    "BC",
+    "=",
+    "6"
+   ]
+  ]
+ },
+ {
   "text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3. Nếu SA bằng 4 thì thể tích khối chóp là bao nhiêu?",
   "unread": [
    [
@@ -72,16 +104,106 @@
   ]
  },
  {
-  "text": "Nếu SA bằng 4 thì thể tích khối chóp là bao nhiêu?",
+  "text": "Cho tam giác ABC có trọng tâm G, GA + GB + GC = 0 và AB = 3.",
   "lengths": [
    [
     [
-     "AS",
-     "4"
+     "AB",
+     "3"
+    ],
+    [
+     "CG",
+     "0"
     ]
    ],
-   []
+   [
+    [
+     "AB",
+     "3"
+    ]
+   ]
   ],
+  "nonpositive": [
+   {
+    "cause": "SOURCE",
+    "subjects": [
+     "CG"
+    ]
+   },
+   null
+  ],
+  "unread": [
+   [
+    "tam",
+    "giác",
+    "ABC",
+    "trọng",
+    "tâm",
+    "G",
+    "GA",
+    "+",
+    "GB",
+    "+"
+   ],
+   [
+    "tam",
+    "giác",
+    "ABC",
+    "trọng",
+    "tâm",
+    "G",
+    "GA",
+    "+",
+    "GB",
+    "+",
+    "GC",
+    "=",
+    "0"
+   ]
+  ]
+ },
+ {
+  "text": "Cho tứ diện ABCD có AB = 3 và AB + CD = 5. Tính thể tích.",
+  "lengths": [
+   [
+    [
+     "AB",
+     "3"
+    ],
+    [
+     "CD",
+     "5"
+    ]
+   ],
+   [
+    [
+     "AB",
+     "3"
+    ]
+   ]
+  ],
+  "unread": [
+   [
+    "tứ",
+    "diện",
+    "ABCD",
+    "AB",
+    "+"
+   ],
+   [
+    "tứ",
+    "diện",
+    "ABCD",
+    "AB",
+    "+",
+    "CD",
+    "=",
+    "5"
+   ]
+  ]
+ },
+ {
+  "text": "Nếu SA bằng 4 thì thể tích khối chóp là bao nhiêu?",
   "unread": [
    [
     "Nếu",
