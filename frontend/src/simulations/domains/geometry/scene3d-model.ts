@@ -837,6 +837,32 @@ export function cauTrucGocNhin(objects: SceneObject[]) {
     if (o.perpendicular_witness?.foot) dinh(o.perpendicular_witness.foot);
     if (o.annotation?.witness?.foot) dinh(o.annotation.witness.foot);
   }
+  for (const o of objects) {
+    if (o.render !== "surface" || !o.point || !o.normal || diem.length < 3) continue;
+    const p0 = toVec3(o.point);
+    const n = toVec3(o.normal);
+    const dn = Math.hypot(...n);
+    if (!Number.isFinite(dn) || dn === 0) continue;
+    const tren: number[] = [];
+    for (let i = 0; i < diem.length; i++) {
+      const p = diem[i];
+      const h = ((p[0] - p0[0]) * n[0] + (p[1] - p0[1]) * n[1] + (p[2] - p0[2]) * n[2]) / dn;
+      if (Math.abs(h) <= 1e-3) tren.push(i);
+    }
+    const tapTren = new Set(tren);
+    if (tren.length >= 3 && !mat.some((f) => f.length >= 3 && f.every((idx) => tapTren.has(idx)))) {
+      for (let j = 2; j < tren.length; j++) {
+        const a = diem[tren[0]], b = diem[tren[1]], c = diem[tren[j]];
+        const cx = (b[1] - a[1]) * (c[2] - a[2]) - (b[2] - a[2]) * (c[1] - a[1]);
+        const cy = (b[2] - a[2]) * (c[0] - a[0]) - (b[0] - a[0]) * (c[2] - a[2]);
+        const cz = (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
+        if (Math.hypot(cx, cy, cz) > 1e-5) {
+          mat.push([tren[0], tren[1], tren[j]]);
+          break;
+        }
+      }
+    }
+  }
   return { diem, canh, mat };
 }
 
@@ -921,15 +947,19 @@ export function daGiacMatPhang(
   if (!Number.isFinite(n) || n === 0 || diem.length < 3) return null;
   const u: Vec3 = [phapTuyen[0] / n, phapTuyen[1] / n, phapTuyen[2] / n];
   const [e1, e2] = truc_vuong_goc(u);
+  const dk = duongKinhCanh(diem);
+  const dungSaiMp = Math.max(dk * 1e-4, 1e-9);
+  const dungSaiTrung = Math.max(dk * 1e-6, 1e-11);
+  const dungSaiDienTich = Math.max(dk * dk * 1e-7, 1e-16);
   const trenMp: { p: Vec3; x: number; y: number }[] = [];
   for (const p of diem) {
     if (!p.every(Number.isFinite)) continue;
     const vx = p[0] - diemMp[0], vy = p[1] - diemMp[1], vz = p[2] - diemMp[2];
     const h = vx * u[0] + vy * u[1] + vz * u[2];
-    if (Math.abs(h) > 1e-3) continue;
+    if (Math.abs(h) > dungSaiMp) continue;
     const x = vx * e1[0] + vy * e1[1] + vz * e1[2];
     const y = vx * e2[0] + vy * e2[1] + vz * e2[2];
-    if (trenMp.some((q) => Math.hypot(q.x - x, q.y - y) <= 1e-5)) continue;
+    if (trenMp.some((q) => Math.hypot(q.x - x, q.y - y) <= dungSaiTrung)) continue;
     trenMp.push({ p: [p[0] - h * u[0], p[1] - h * u[1], p[2] - h * u[2]], x, y });
   }
   if (trenMp.length < 3) return null;
@@ -938,13 +968,13 @@ export function daGiacMatPhang(
     (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
   const duoi: typeof trenMp = [];
   for (const pt of trenMp) {
-    while (duoi.length >= 2 && re(duoi[duoi.length - 2], duoi[duoi.length - 1], pt) <= 1e-7) duoi.pop();
+    while (duoi.length >= 2 && re(duoi[duoi.length - 2], duoi[duoi.length - 1], pt) <= dungSaiDienTich) duoi.pop();
     duoi.push(pt);
   }
   const tren: typeof trenMp = [];
   for (let i = trenMp.length - 1; i >= 0; i--) {
     const pt = trenMp[i];
-    while (tren.length >= 2 && re(tren[tren.length - 2], tren[tren.length - 1], pt) <= 1e-7) tren.pop();
+    while (tren.length >= 2 && re(tren[tren.length - 2], tren[tren.length - 1], pt) <= dungSaiDienTich) tren.pop();
     tren.push(pt);
   }
   duoi.pop();
@@ -956,7 +986,205 @@ export function daGiacMatPhang(
     const a = bao[i], b = bao[(i + 1) % bao.length];
     dienTich2 += a.x * b.y - b.x * a.y;
   }
-  return Math.abs(dienTich2) > 1e-5 ? bao.map((b) => b.p) : null;
+  return Math.abs(dienTich2) > dungSaiDienTich * 10 ? bao.map((b) => b.p) : null;
+}
+
+/** Cắt đa giác lồi trong mặt phẳng theo nửa không gian `z >= zMin` (Sutherland–Hodgman). */
+function catDaGiacTheoDay(daGiac: Vec3[], zMin: number): Vec3[] {
+  if (daGiac.length < 3 || !Number.isFinite(zMin)) return daGiac;
+  const span = Math.max(...daGiac.map((p) => Math.hypot(p[0], p[1], p[2])), Math.abs(zMin), 1e-6);
+  const eps = 1e-6 * span;
+  if (daGiac.every((p) => p[2] >= zMin - eps)) return daGiac;
+  const ra: Vec3[] = [];
+  for (let i = 0; i < daGiac.length; i++) {
+    const a = daGiac[i];
+    const b = daGiac[(i + 1) % daGiac.length];
+    const da = a[2] - zMin;
+    const db = b[2] - zMin;
+    const aTrong = da >= -eps;
+    const bTrong = db >= -eps;
+    if (aTrong && bTrong) {
+      ra.push(b);
+    } else if (aTrong && !bTrong) {
+      const t = da / (da - db);
+      ra.push([a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1]), zMin]);
+    } else if (!aTrong && bTrong) {
+      const t = da / (da - db);
+      ra.push([a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1]), zMin]);
+      ra.push(b);
+    }
+  }
+  return ra.length >= 3 ? ra : daGiac;
+}
+
+/**
+ * Miền phẳng mở rộng hữu hạn của một mặt phẳng toán học (`plane3`):
+ * - Khi mặt phẳng đi qua ≥ 3 điểm của hình (`daGiac`), mở rộng bao lồi ra ngoài một lề vừa phải
+ *   trong đúng mặt phẳng đó (và giữ `z >= zMin` khi mặt phẳng không nằm ngang) để mặt phẳng
+ *   không bị mặt bên/mặt đáy của khối đặc nuốt mất.
+ * - Khi mặt phẳng đi qua < 3 điểm của hình (vd mặt phẳng qua B vuông góc với SC), tạo miền phẳng
+ *   từ `khungMatPhang` và cắt theo `z >= zMin` để không thò góc nhọn xuống dưới đáy.
+ */
+export function moRongDaGiacMatPhang(
+  diemMp: Vec3, phapTuyen: Vec3, diem: Vec3[], daGiac?: Vec3[] | null,
+): Vec3[] | null {
+  const n = Math.hypot(...phapTuyen);
+  if (!Number.isFinite(n) || n === 0 || diem.length === 0) return null;
+  const u: Vec3 = [phapTuyen[0] / n, phapTuyen[1] / n, phapTuyen[2] / n];
+  const dk = duongKinhCanh(diem);
+  const dungSaiMp = Math.max(dk * 1e-4, 1e-9);
+  const co = dk > 0 ? dk * 0.10 : 0.5;
+  const zMin = Math.min(...diem.map((p) => p[2]));
+  const zMax = Math.max(...diem.map((p) => p[2]));
+  const ngang = Math.abs(u[2]) > 0.98;
+  const goc = daGiac !== undefined ? daGiac : daGiacMatPhang(diemMp, phapTuyen, diem);
+  if (goc && goc.length >= 3) {
+    const coDiemNgoaiMp = diem.some((p) =>
+      p.every(Number.isFinite)
+      && Math.abs((p[0] - diemMp[0]) * u[0] + (p[1] - diemMp[1]) * u[1] + (p[2] - diemMp[2]) * u[2]) > dungSaiMp,
+    );
+    if (!coDiemNgoaiMp) return null;
+  }
+  if (ngang) {
+    // Xây dựng cơ sở trực chuẩn (e1, e2) nằm ĐÚNG trong mặt phẳng vuông góc với u (dot(e1, u) = 0, dot(e2, u) = 0),
+    // không bao giờ ép mặt phẳng gần ngang (0.98 < |u_z| < 1) thành mặt phẳng XY (z = const).
+    const e1Raw: Vec3 = [1 - u[0] * u[0], -u[0] * u[1], -u[0] * u[2]];
+    const ne1 = Math.hypot(...e1Raw) || 1;
+    const e1: Vec3 = [e1Raw[0] / ne1, e1Raw[1] / ne1, e1Raw[2] / ne1];
+    const e2Raw: Vec3 = [
+      u[1] * e1[2] - u[2] * e1[1],
+      u[2] * e1[0] - u[0] * e1[2],
+      u[0] * e1[1] - u[1] * e1[0],
+    ];
+    const e2: Vec3 = e2Raw[1] >= 0 ? e2Raw : [-e2Raw[0], -e2Raw[1], -e2Raw[2]];
+    const nguon = goc && goc.length >= 3 ? goc : diem;
+    const sList = nguon.map((p) => (p[0] - diemMp[0]) * e1[0] + (p[1] - diemMp[1]) * e1[1] + (p[2] - diemMp[2]) * e1[2]);
+    const tList = nguon.map((p) => (p[0] - diemMp[0]) * e2[0] + (p[1] - diemMp[1]) * e2[1] + (p[2] - diemMp[2]) * e2[2]);
+    const sMin = Math.min(...sList);
+    const sMax = Math.max(...sList);
+    const tMin = Math.min(...tList);
+    const tMax = Math.max(...tList);
+    const spanS = Math.max(sMax - sMin, co);
+    const spanT = Math.max(tMax - tMin, co);
+    const heSoLe = goc && goc.length === 3 ? 0.20 : 0.12;
+    const padS = Math.max(spanS * heSoLe, co * 0.32);
+    const padT = Math.max(spanT * heSoLe, co * 0.32);
+    const s0 = sMin - padS;
+    const s1 = sMax + padS;
+    const t0 = tMin - padT;
+    const t1 = tMax + padT;
+    return [
+      [s0, t0],
+      [s1, t0],
+      [s1, t1],
+      [s0, t1],
+    ].map(([s, t]): Vec3 => [
+      diemMp[0] + s * e1[0] + t * e2[0],
+      diemMp[1] + s * e1[1] + t * e2[1],
+      diemMp[2] + s * e1[2] + t * e2[2],
+    ]);
+  }
+  const nh = Math.hypot(u[0], u[1]) || 1;
+  const e1: Vec3 = [-u[1] / nh, u[0] / nh, 0];
+  const e2Raw: Vec3 = [
+    u[1] * e1[2] - u[2] * e1[1],
+    u[2] * e1[0] - u[0] * e1[2],
+    u[0] * e1[1] - u[1] * e1[0],
+  ];
+  const e2: Vec3 = e2Raw[2] >= 0 ? e2Raw : [-e2Raw[0], -e2Raw[1], -e2Raw[2]];
+  const tFloor = e2[2] > 1e-6 ? (zMin - diemMp[2]) / e2[2] : -Infinity;
+  if (goc && goc.length >= 3) {
+    const sList = goc.map((p) => (p[0] - diemMp[0]) * e1[0] + (p[1] - diemMp[1]) * e1[1] + (p[2] - diemMp[2]) * e1[2]);
+    const tList = goc.map((p) => (p[0] - diemMp[0]) * e2[0] + (p[1] - diemMp[1]) * e2[1] + (p[2] - diemMp[2]) * e2[2]);
+    const sMin = Math.min(...sList);
+    const sMax = Math.max(...sList);
+    const tMin = Math.min(...tList);
+    const tMax = Math.max(...tList);
+    const spanS = Math.max(sMax - sMin, co);
+    const spanT = Math.max(tMax - tMin, co);
+    const padS = Math.max(spanS * 0.12, co * 0.32);
+    const padT = Math.max(spanT * 0.08, co * 0.28);
+    const s0 = sMin - padS;
+    const s1 = sMax + padS;
+    const t0 = Math.max(tFloor, tMin - padT);
+    const t1 = tMax + padT;
+    const hop: Vec3[] = [
+      [s0, t0],
+      [s1, t0],
+      [s1, t1],
+      [s0, t1],
+    ].map(([s, t]): Vec3 => [
+      diemMp[0] + s * e1[0] + t * e2[0],
+      diemMp[1] + s * e1[1] + t * e2[1],
+      diemMp[2] + s * e1[2] + t * e2[2],
+    ]);
+    return catDaGiacTheoDay(hop, zMin);
+  }
+  const sList = diem.map((p) => (p[0] - diemMp[0]) * e1[0] + (p[1] - diemMp[1]) * e1[1] + (p[2] - diemMp[2]) * e1[2]);
+  const tList = diem.map((p) => (p[0] - diemMp[0]) * e2[0] + (p[1] - diemMp[1]) * e2[1] + (p[2] - diemMp[2]) * e2[2]);
+  if (!sList.every(Number.isFinite) || !tList.every(Number.isFinite)) return null;
+  const sMin = Math.min(...sList);
+  const sMax = Math.max(...sList);
+  const tMin = Math.min(...tList);
+  const tMax = Math.max(...tList);
+  const coMin = dk > 0 ? dk * 0.4 : PLANE_PATCH_MIN_SIZE;
+  const spanS = Math.max(sMax - sMin, coMin);
+  const spanT = Math.max(tMax - tMin, coMin * 0.6);
+  const tCeil = e2[2] > 1e-6 && zMax > zMin + dungSaiMp ? (zMax - diemMp[2]) / e2[2] : Infinity;
+  const padS = spanS * 0.08;
+  const s0 = sMin - padS;
+  const s1 = sMax + padS;
+  const t0 = Math.max(tFloor, tMin - spanT * 0.10);
+  const t1 = Math.min(tCeil, Math.max(tMax + spanT * 0.30, t0 + spanS * 0.95));
+  const hop: Vec3[] = [
+    [s0, t0],
+    [s1, t0],
+    [s1, t1],
+    [s0, t1],
+  ].map(([s, t]): Vec3 => [
+    diemMp[0] + s * e1[0] + t * e2[0],
+    diemMp[1] + s * e1[1] + t * e2[1],
+    diemMp[2] + s * e1[2] + t * e2[2],
+  ]);
+  return catDaGiacTheoDay(hop, zMin);
+}
+
+/**
+ * Điểm neo trên lề mở rộng của mặt phẳng toán học để gắn nhãn ký hiệu (vd `(SAB)`, `(MNP)`),
+ * chọn vị trí cách xa các đỉnh của hình nhất để không đè lên chấm đỉnh và tên đỉnh.
+ */
+export function diemNeoNhanMatPhang(
+  diemMp: Vec3, phapTuyen: Vec3, diem: Vec3[],
+): Vec3 | null {
+  const mo = moRongDaGiacMatPhang(diemMp, phapTuyen, diem);
+  if (!mo || mo.length < 3) return null;
+  const m = mo.length;
+  const tam: Vec3 = [
+    mo.reduce((s, p) => s + p[0], 0) / m,
+    mo.reduce((s, p) => s + p[1], 0) / m,
+    mo.reduce((s, p) => s + p[2], 0) / m,
+  ];
+  const ungVien: Vec3[] = [];
+  for (let i = 0; i < m; i++) {
+    const a = mo[i];
+    const b = mo[(i + 1) % m];
+    ungVien.push([0.80 * a[0] + 0.20 * tam[0], 0.80 * a[1] + 0.20 * tam[1], 0.80 * a[2] + 0.20 * tam[2]]);
+    const mid: Vec3 = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2, (a[2] + b[2]) / 2];
+    ungVien.push([0.84 * mid[0] + 0.16 * tam[0], 0.84 * mid[1] + 0.16 * tam[1], 0.84 * mid[2] + 0.16 * tam[2]]);
+  }
+  let tot: Vec3 = ungVien[0];
+  let diemTot = -Infinity;
+  for (const u of ungVien) {
+    const kcMin = diem.length > 0
+      ? Math.min(...diem.map((p) => Math.hypot(u[0] - p[0], u[1] - p[1], u[2] - p[2])))
+      : 1;
+    const diemSo = kcMin + 0.08 * (u[2] - tam[2]);
+    if (diemSo > diemTot) {
+      diemTot = diemSo;
+      tot = u;
+    }
+  }
+  return tot;
 }
 
 /** Điểm nền cho phần vẽ của đường `duongId`: điểm có biên của cảnh + chân (do kernel tính) của mọi nhân chứng vuông
@@ -1375,8 +1603,13 @@ export function solutionAt(scene: Scene3D, step: number): SolutionLayer {
   const ketQua = new Set<string>();
   const results: SolutionItem[] = [];
   for (let k = 0; k <= g.anchor; k += 1) {
-    const id = suKien(k)?.object;
-    if (_loaiSuKien(scene, k) !== "FINAL_RESULT" || !id || !byId.has(id) || ketQua.has(id)) continue;
+    const sk = suKien(k);
+    const id = sk?.object;
+    const o = id ? byId.get(id) : undefined;
+    const loai = _loaiSuKien(scene, k);
+    const laKetQua = loai === "FINAL_RESULT"
+      || (!loai && sk?.action === "MEASURE" && Boolean(o && (o.type === "quantity" || o.value !== undefined) && (o.render === "readout" || o.render === "non_visual")));
+    if (!laKetQua || !id || !o || ketQua.has(id)) continue;
     ketQua.add(id);
     results.push(dong(id, k, narrationAt(scene, k)));
   }

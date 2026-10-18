@@ -298,6 +298,25 @@ describe("H2 · tầng nhấn mạnh causal", () => {
     expect(tang.get("doan_SA")).toBe("dich");
     expect(tang.has("doan_SB")).toBe(false);
   });
+
+  it("đại lượng kết luận không có annotation.subject_ids và dependency_edges đưa trực tiếp đường/mặt phẳng phụ thuộc lên tầng đích", () => {
+    const sab = {
+      id: "sab", label: "(SAB)", type: "plane3", render: "surface", origin: "derived",
+      producer: "plane_through", depends: ["S", "A", "B"],
+    } as unknown as Scene3D["objects"][number];
+    const bc = {
+      id: "bc", label: "BC", type: "line3", render: "line", origin: "derived",
+      producer: "line_through", depends: ["B", "C"],
+    } as unknown as Scene3D["objects"][number];
+    const kl = {
+      id: "kl", label: "cos²(BC, (SAB))", type: "quantity", render: "readout", origin: "derived",
+      producer: "measure.angle_cosine_sq", depends: ["bc", "sab"], value: "0",
+    } as unknown as Scene3D["objects"][number];
+    const tang = tangNhanManh({ ...CANH, objects: [...CANH.objects, sab, bc, kl] }, "kl");
+    expect(tang.get("kl")).toBe("dich");
+    expect(tang.get("bc")).toBe("dich");
+    expect(tang.get("sab")).toBe("dich");
+  });
 });
 
 // ══ I · bao đóng không lặp vô hạn ══════════════════════════════════════

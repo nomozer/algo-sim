@@ -6,12 +6,16 @@ import {
   LINE_DISPLAY_HALF_LENGTH,
   PLANE_DISPLAY_SIZE,
   RENDER_KINDS,
+  cauTrucGocNhin,
   clampStep,
   diemChoDuong,
+  diemNeoNhanMatPhang,
   doanDuongThang,
   highlightedAt,
+  moRongDaGiacMatPhang,
   narrationAt,
   objectsAt,
+  solutionAt,
   stepCount,
   toNumber,
   toVec3,
@@ -23,6 +27,7 @@ import {
   Scene3DWorkspace,
   buildObject3D,
   chonCuThe,
+  dungLuoiNenSuPham,
   semanticIdOf,
   vatNhanChung,
 } from "./scene3d-view";
@@ -939,7 +944,192 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     expect(canhO).toBeLessThanOrEqual(0.14);
     expect(canhO).toBeGreaterThanOrEqual(0.06);
   });
+
+  it("mặt phẳng toán học (SAB) và mặt phẳng phụ dựng tấm tứ giác/hình bình hành 4 đỉnh đồng phẳng cân đối, không đầu nhọn tam giác và không tô chồng 2 lớp", () => {
+    const diem: [number, number, number][] = [
+      [0, 0, 0], [4, 0, 0], [4, 3, 0], [0, 3, 0], [0, 0, 4],
+    ];
+    const p0: [number, number, number] = [0, 0, 0];
+    const n: [number, number, number] = [0, -1, 0];
+    const moRong = moRongDaGiacMatPhang(p0, n, diem);
+    expect(moRong).not.toBeNull();
+    // Phải là tứ giác 4 đỉnh cân đối (hình chữ nhật trong 3D / hình bình hành trên hình chiếu), không phải tam giác 3 đỉnh có đầu nhọn
+    expect(moRong!).toHaveLength(4);
+    for (let i = 0; i < 4; i++) {
+      const p = moRong![i];
+      // Đồng phẳng tuyệt đối với (SAB) (y = 0) và không thò xuống dưới đáy (z >= 0)
+      expect(Math.abs(p[1])).toBeLessThan(1e-6);
+      expect(p[2]).toBeGreaterThanOrEqual(-1e-6);
+      // Kiểm tra góc trong tại mỗi đỉnh không có góc nhọn bất thường (hai cạnh liên tiếp vuông góc trong 3D)
+      const prev = moRong![(i + 3) % 4];
+      const next = moRong![(i + 1) % 4];
+      const ePrev = [p[0] - prev[0], p[1] - prev[1], p[2] - prev[2]];
+      const eNext = [next[0] - p[0], next[1] - p[1], next[2] - p[2]];
+      const dotEdges = ePrev[0] * eNext[0] + ePrev[1] * eNext[1] + ePrev[2] * eNext[2];
+      expect(Math.abs(dotEdges)).toBeLessThan(1e-6);
+    }
+    const xSpan = Math.max(...moRong!.map((p) => p[0])) - Math.min(...moRong!.map((p) => p[0]));
+    expect(xSpan).toBeGreaterThan(4.2);
+
+    // Mặt phẳng phụ qua B(2,0,0) vuông góc với SC (normal = [2, 2, -4]) cũng phải là tấm 4 đỉnh đồng phẳng, không cánh nhọn
+    const mpPhu = moRongDaGiacMatPhang([2, 0, 0], [2, 2, -4], [
+      [0, 0, 0], [2, 0, 0], [2, 2, 0], [0, 2, 0], [0, 0, 4],
+    ]);
+    expect(mpPhu).not.toBeNull();
+    expect(mpPhu!).toHaveLength(4);
+    for (const p of mpPhu!) {
+      expect(Math.abs(2 * (p[0] - 2) + 2 * p[1] - 4 * p[2])).toBeLessThan(1e-6);
+      expect(p[2]).toBeGreaterThanOrEqual(-1e-6);
+    }
+
+    const neo = diemNeoNhanMatPhang(p0, n, diem);
+    expect(neo).not.toBeNull();
+    expect(Math.abs(neo![1])).toBeLessThan(1e-6);
+    for (const d of diem) {
+      expect(Math.hypot(neo![0] - d[0], neo![1] - d[1], neo![2] - d[2])).toBeGreaterThan(0.25);
+    }
+
+    const sabObj = buildObject3D({
+      id: "sab",
+      label: "Mặt phẳng (SAB)",
+      notation: "(SAB)",
+      type: "plane3",
+      render: "surface",
+      origin: "derived",
+      producer: "plane_through",
+      depends: ["S", "A", "B"],
+      point: ["0", "0", "0"],
+      normal: ["0", "-1", "0"],
+    }, false, undefined, diem) as unknown as {
+      material: { opacity: number; colorWrite: boolean };
+      children: { name: string; userData: Record<string, unknown>; children: { name: string }[] }[];
+    };
+    expect(sabObj).not.toBeNull();
+    // Mesh gốc không tô chồng tam giác đậm bên trong tấm tứ giác mở rộng
+    expect(sabObj.material.opacity).toBe(0);
+    expect(sabObj.material.colorWrite).toBe(false);
+    const sheet = sabObj.children.find((c) => c.name === "plane_sheet:sab");
+    expect(sheet).toBeDefined();
+    const border = sheet!.children.find((c) => c.name === "plane_border:sab");
+    expect(border).toBeDefined();
+    expect((sheet!.userData.nonCanonicalLoop as { isPlaneBorder?: boolean })?.isPlaneBorder).toBe(true);
+  });
+
+  it("P1 property test: moRongDaGiacMatPhang luôn đồng phẳng tuyệt đối cho mặt phẳng ngang, đứng, nghiêng, gần ngang (0.98 < |u_z| < 1), gần đứng, đổi quy mô và hoán đổi thứ tự điểm", () => {
+    type Vec = [number, number, number];
+    const kiemDongPhang = (origin: Vec, normal: Vec, diem: Vec[], scale = 1) => {
+      const nLen = Math.hypot(normal[0], normal[1], normal[2]);
+      const u: Vec = [normal[0] / nLen, normal[1] / nLen, normal[2] / nLen];
+      const sheet = moRongDaGiacMatPhang(origin, normal, diem);
+      expect(sheet).not.toBeNull();
+      expect(sheet!.length).toBeGreaterThanOrEqual(3);
+      const tol = 1e-8 * Math.max(scale, 1e-6);
+      for (const v of sheet!) {
+        const dot = (v[0] - origin[0]) * u[0] + (v[1] - origin[1]) * u[1] + (v[2] - origin[2]) * u[2];
+        expect(Math.abs(dot)).toBeLessThanOrEqual(tol);
+      }
+      return sheet!;
+    };
+
+    const khungChuan: Vec[] = [[0, 0, 0], [2, 0, 0], [2, 2, 0], [0, 2, 0], [0, 0, 4]];
+
+    // 1. Mặt phẳng ngang chính xác (z = 2 và z = 0)
+    kiemDongPhang([0, 0, 2], [0, 0, 1], [...khungChuan, [0, 0, 2], [1, 0, 2], [0, 1, 2]]);
+    kiemDongPhang([0, 0, 0], [0, 0, -4], khungChuan);
+
+    // 2. Mặt phẳng đứng (u_z = 0)
+    kiemDongPhang([0, 0, 0], [0, -1, 0], khungChuan);
+    kiemDongPhang([0, 0, 0], [3, -4, 0], [...khungChuan, [4, 3, 2]]);
+
+    // 3. Mặt phẳng nghiêng tổng quát
+    kiemDongPhang([2, 0, 0], [2, 2, -4], khungChuan);
+    kiemDongPhang([1, 1, 1], [1, -2, 3], khungChuan);
+
+    // 4. Mặt phẳng gần ngang: 0.98 < |u_z| < 1 (không được làm phẳng thành mặt XY làm lệch đồng phẳng!)
+    // Với normal = [0.15, -0.08, 1], |u_z| = 1 / sqrt(1.0289) ≈ 0.98585 > 0.98
+    const nGanNgang1: Vec = [0.15, -0.08, 1];
+    const diemGanNgang1: Vec[] = [
+      [0, 0, 1],
+      [2, 0, 1 - 0.30],
+      [0, 2, 1 + 0.16],
+      [0, 0, 0],
+      [0, 0, 4],
+    ];
+    kiemDongPhang([0, 0, 1], nGanNgang1, diemGanNgang1);
+    // Với normal = [0.04, 0.03, -1], |u_z| = 1 / sqrt(1.0025) ≈ 0.99875 > 0.98 (qua < 3 điểm của hình)
+    kiemDongPhang([1, 1, 1.5], [0.04, 0.03, -1], khungChuan);
+
+    // 5. Mặt phẳng gần đứng (0 < |u_z| << 1)
+    kiemDongPhang([1, 0, 1], [1, -1, 0.01], khungChuan);
+    kiemDongPhang([0, 0, 0], [0, -1, 0.005], [
+      [0, 0, 0], [2, 0, 0], [0, 0.02, 4], [2, 2, 0], [0, 2, 0],
+    ]);
+
+    // 6. Thay đổi quy mô (scale = 1e-3, 1, 1e3) và hoán đổi thứ tự điểm xác định / đảo pháp tuyến
+    for (const scale of [1e-3, 1, 1e3]) {
+      const dScaled: Vec[] = khungChuan.map(([x, y, z]) => [x * scale, y * scale, z * scale]);
+      kiemDongPhang([0, 0, 0], [0, -1, 0], dScaled, scale);
+      kiemDongPhang([0, 0, 1 * scale], nGanNgang1, diemGanNgang1.map(([x, y, z]) => [x * scale, y * scale, z * scale]), scale);
+    }
+
+    // Hoán đổi thứ tự điểm và đổi điểm gốc trên mặt phẳng (SAB) phải cho cùng tập 4 đỉnh 3D
+    const s1 = kiemDongPhang([0, 0, 0], [0, -1, 0], [[0, 0, 0], [2, 0, 0], [0, 0, 4], [2, 2, 0], [0, 2, 0]]);
+    const s2 = kiemDongPhang([0, 0, 4], [0, 8, 0], [[0, 0, 4], [0, 2, 0], [2, 0, 0], [0, 0, 0], [2, 2, 0]]);
+    const normSet = (pts: Vec[]) => pts.map((p) => p.map((v) => (Math.abs(v) < 1e-9 ? "0.000000" : v.toFixed(6))).join(",")).sort();
+    expect(normSet(s1)).toEqual(normSet(s2));
+  });
+
+  it("solutionAt nhận diện đối tượng kết quả MEASURE kể cả khi thiếu trường type tường minh", () => {
+    const s: Scene3D = {
+      free_objects: ["A", "B", "S"],
+      objects: [
+        { id: "A", label: "A", type: "point3", render: "point_marker", origin: "free", producer: null, depends: [], xyz: ["0", "0", "0"] },
+        { id: "sbc", label: "Mặt phẳng (SBC)", type: "plane3", render: "surface", origin: "derived", producer: "plane", depends: ["S", "B", "C"] },
+        { id: "kc", label: "d(A,(SBC)) = 12/5", render: "readout", origin: "derived", producer: "distance", depends: ["ah", "sbc"], value: "12/5" } as never,
+      ],
+      events: [
+        { step_index: 0, action: "INIT", object: null, depends: [], explanation: "Đầu." },
+        { step_index: 1, action: "MEASURE", object: "kc", depends: ["ah", "sbc"], explanation: "Kết luận." },
+      ],
+    };
+    expect(solutionAt(s, 0).results).toEqual([]);
+    expect(solutionAt(s, 1).results.map((r) => r.id)).toEqual(["kc"]);
+    expect(solutionAt(s, 1).results[0].text).toBe("Kết luận.");
+  });
+
+  it("lưới nền sư phạm 8x8 nằm dưới đáy hình, vô hiệu raycast và dịu đi khi mặt phẳng toán học nổi bật", () => {
+    const diem: [number, number, number][] = [
+      [0, 0, 0], [4, 0, 0], [4, 3, 0], [0, 3, 0], [0, 0, 4],
+    ];
+    const luoiBinhThuong = dungLuoiNenSuPham(diem, 1);
+    const luoiDiu = dungLuoiNenSuPham(diem, 0.55);
+    expect(luoiBinhThuong).not.toBeNull();
+    expect(luoiBinhThuong!.name).toBe("luoi_nen_su_pham");
+    expect(luoiBinhThuong!.children).toHaveLength(3);
+    for (let i = 0; i < 3; i++) {
+      const segA = luoiBinhThuong!.children[i] as unknown as {
+        geometry: { getAttribute(n: string): { getZ(k: number): number } };
+        material: { opacity: number };
+        raycast: (...args: unknown[]) => void;
+      };
+      const segB = luoiDiu!.children[i] as unknown as { material: { opacity: number } };
+      expect(segA.geometry.getAttribute("position").getZ(0)).toBeLessThan(0);
+      expect(segB.material.opacity).toBeLessThan(segA.material.opacity);
+    }
+  });
+
+  it("cauTrucGocNhin bổ sung mặt phẳng chéo chưa thuộc mặt khối vào danh sách mặt để camera tránh nhìn suy biến", () => {
+    const objects = [
+      { id: "A", label: "A", type: "point3", render: "point_marker", origin: "free", producer: null, depends: [], xyz: ["0", "0", "0"] },
+      { id: "C", label: "C", type: "point3", render: "point_marker", origin: "free", producer: null, depends: [], xyz: ["4", "3", "0"] },
+      { id: "S", label: "S", type: "point3", render: "point_marker", origin: "free", producer: null, depends: [], xyz: ["0", "0", "4"] },
+      {
+        id: "sac", label: "(SAC)", type: "plane3", render: "surface", origin: "derived", producer: "plane_through",
+        depends: ["S", "A", "C"], point: ["0", "0", "0"], normal: ["3", "-4", "0"],
+      },
+    ] as never;
+    const t = cauTrucGocNhin(objects);
+    expect(t.mat).toHaveLength(1);
+    expect(t.mat[0]).toHaveLength(3);
+  });
 });
-
-
-

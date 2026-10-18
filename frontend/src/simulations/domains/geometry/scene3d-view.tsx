@@ -13,6 +13,7 @@ import {
   dayVaDinhChop,
   diemHuuHan,
   diemChoDuong,
+  diemNeoNhanMatPhang,
   doanDuongThang,
   duongKinhCanh,
   geometryHighlightedAt,
@@ -21,6 +22,7 @@ import {
   geometryStepOf,
   huongChanVuongGoc,
   khungMatPhang,
+  moRongDaGiacMatPhang,
   objectsAt,
   toNumber,
   toVec3,
@@ -614,6 +616,7 @@ interface NonCanonicalLoopMeta {
   highlighted: boolean;
   renderOrder: number;
   yieldColinear?: boolean;
+  isPlaneBorder?: boolean;
 }
 
 function updateNonCanonicalVisibility(
@@ -746,7 +749,12 @@ function updateNonCanonicalVisibility(
           const p1 = localA.clone().lerp(localB, span.t1);
           const isHidden = span.visibility === "HIDDEN";
           const mat = canonicalEdgeMaterial(isHidden, loop.highlighted, loop.color, loop.dashSize, loop.color);
-          if (!isHidden) mat.linewidth = loop.highlighted ? 3 : 2;
+          if (loop.isPlaneBorder) {
+            mat.linewidth = 1;
+            mat.opacity = isHidden ? (loop.highlighted ? 0.30 : 0.20) : (loop.highlighted ? 0.48 : 0.32);
+          } else if (!isHidden) {
+            mat.linewidth = loop.highlighted ? 3 : 2;
+          }
           if (node.userData.lamDiu) lamDiuVatLieu(mat, node.userData.lamDiu as number);
           const line = new THREE.Line(acquireSpanGeometry(node, slotIdx++, p0, p1), mat);
           line.name = `section_border:${loop.objectId}:${i}:${idx}`;
@@ -1213,22 +1221,60 @@ export function buildObject3D(
     //
     // ⚠️ TÂM VÀ CỠ lấy từ vùng hình học liên quan (`khungMatPhang`), không còn
     // là ô vuông cố định đặt tại `point`. Khi trên mặt phẳng có ≥ 3 điểm không
-    // thẳng hàng của hình (`daGiacMatPhang`), vẽ đúng đa giác bao lồi của các
-    // điểm đó để không bị góc vuông lệch trục thò xuống dưới mặt đáy.
-    const daGiac = daGiacMatPhang(toVec3(o.point), toVec3(o.normal), diemNen);
+    // thẳng hàng của hình (`daGiacMatPhang`), dựng cả miền đa giác gốc lẫn tấm
+    // mặt phẳng mở rộng (`moRongDaGiacMatPhang`, đã cắt theo mặt đáy z ≥ z_min)
+    // kèm viền mảnh rõ nét để mặt phẳng toán học không hoà lẫn vào mặt bên của khối.
+    const diemMp = toVec3(o.point);
+    const phapTuyen = toVec3(o.normal);
+    const daGiac = daGiacMatPhang(diemMp, phapTuyen, diemNen);
+    const daGiacMoRong = moRongDaGiacMatPhang(diemMp, phapTuyen, diemNen, daGiac);
+    const mauMp = net(MAU.surface);
+    const coNetDut = (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE;
+    const ganVienMatPhang = (target: THREE.Mesh, daGiacVien: Vec3[]) => {
+      const ptsVien = daGiacVien.map((p) => new THREE.Vector3(...p));
+      const vongVien = [...ptsVien, ptsVien[0]];
+      const vienBanDau = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints(vongVien),
+        new THREE.LineBasicMaterial({
+          color: mauMp,
+          linewidth: 1,
+          transparent: true,
+          opacity: noiBat ? 0.48 : 0.32,
+          depthTest: false,
+        }),
+      );
+      vienBanDau.name = `plane_border:${o.id}`;
+      vienBanDau.userData.nonCanonicalBorderLine = true;
+      vienBanDau.renderOrder = THU_TU_DUONG;
+      target.add(vienBanDau);
+      preallocateSpanGeoPool(target, Math.max(8, daGiacVien.length * 4));
+      target.userData.nonCanonicalLoop = {
+        objectId: o.id,
+        pts: ptsVien,
+        closed: true,
+        color: mauMp,
+        dashSize: coNetDut,
+        highlighted: Boolean(noiBat),
+        renderOrder: THU_TU_DUONG,
+        yieldColinear: true,
+        isPlaneBorder: true,
+      } satisfies NonCanonicalLoopMeta;
+    };
     if (daGiac && daGiac.length >= 3) {
       const pos: number[] = [];
       for (const [a, b, c] of chiaTamGiac(daGiac)) {
         for (const j of [a, b, c]) pos.push(...daGiac[j]);
       }
       if (pos.length > 0) {
+        const coMoRong = Boolean(daGiacMoRong && daGiacMoRong.length >= 3);
         const g = new THREE.BufferGeometry();
         g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
         g.computeVertexNormals();
         const m = new THREE.MeshStandardMaterial({
-          color: net(MAU.surface),
+          color: mauMp,
           transparent: true,
-          opacity: noiBat ? 0.24 : 0.11,
+          opacity: coMoRong ? 0 : (noiBat ? 0.22 : 0.11),
+          colorWrite: !coMoRong,
           side: THREE.DoubleSide,
           depthWrite: false,
           depthTest: false,
@@ -1236,34 +1282,74 @@ export function buildObject3D(
         const mesh = new THREE.Mesh(g, m);
         mesh.renderOrder = 1;
         mesh.userData.voHan = true;
-        preallocateSpanGeoPool(mesh, Math.max(8, daGiac.length * 4));
-        mesh.userData.nonCanonicalLoop = {
-          objectId: o.id,
-          pts: daGiac.map((p) => new THREE.Vector3(...p)),
-          closed: true,
-          color: net(MAU.surface),
-          dashSize: (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE,
-          highlighted: Boolean(noiBat),
-          renderOrder: THU_TU_DUONG,
-          yieldColinear: true,
-        };
+        if (daGiacMoRong && daGiacMoRong.length >= 3) {
+          const posMoRong: number[] = [];
+          for (const [a, b, c] of chiaTamGiac(daGiacMoRong)) {
+            for (const j of [a, b, c]) posMoRong.push(...daGiacMoRong[j]);
+          }
+          if (posMoRong.length > 0) {
+            const gMoRong = new THREE.BufferGeometry();
+            gMoRong.setAttribute("position", new THREE.Float32BufferAttribute(posMoRong, 3));
+            gMoRong.computeVertexNormals();
+            const mMoRong = new THREE.MeshStandardMaterial({
+              color: mauMp,
+              transparent: true,
+              opacity: noiBat ? 0.18 : 0.09,
+              side: THREE.DoubleSide,
+              depthWrite: false,
+              depthTest: false,
+            });
+            const mienMoRong = new THREE.Mesh(gMoRong, mMoRong);
+            mienMoRong.name = `plane_sheet:${o.id}`;
+            mienMoRong.renderOrder = 1;
+            mienMoRong.userData.voHan = true;
+            ganVienMatPhang(mienMoRong, daGiacMoRong);
+            mesh.add(mienMoRong);
+          }
+        } else {
+          ganVienMatPhang(mesh, daGiac);
+        }
         return v(mesh, `plane:${o.id}`);
       }
     }
-    const khung = khungMatPhang(toVec3(o.point), toVec3(o.normal), diemNen);
+    if (daGiacMoRong && daGiacMoRong.length >= 3) {
+      const posMoRong: number[] = [];
+      for (const [a, b, c] of chiaTamGiac(daGiacMoRong)) {
+        for (const j of [a, b, c]) posMoRong.push(...daGiacMoRong[j]);
+      }
+      if (posMoRong.length > 0) {
+        const gMoRong = new THREE.BufferGeometry();
+        gMoRong.setAttribute("position", new THREE.Float32BufferAttribute(posMoRong, 3));
+        gMoRong.computeVertexNormals();
+        const mMoRong = new THREE.MeshStandardMaterial({
+          color: mauMp,
+          transparent: true,
+          opacity: noiBat ? 0.18 : 0.09,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+          depthTest: false,
+        });
+        const mesh = new THREE.Mesh(gMoRong, mMoRong);
+        mesh.renderOrder = 1;
+        mesh.userData.voHan = true;
+        ganVienMatPhang(mesh, daGiacMoRong);
+        return v(mesh, `plane:${o.id}`);
+      }
+    }
+    const khung = khungMatPhang(diemMp, phapTuyen, diemNen);
     const canh = khung ? khung.canh : PLANE_DISPLAY_SIZE;
     const g = new THREE.PlaneGeometry(canh, canh);
     const m = new THREE.MeshStandardMaterial({
-      color: net(MAU.surface),
+      color: mauMp,
       transparent: true,
       opacity: noiBat ? 0.32 : 0.1,
       side: THREE.DoubleSide,
       depthWrite: false,
     });
     const mesh = new THREE.Mesh(g, m);
-    const n = new THREE.Vector3(...toVec3(o.normal)).normalize();
+    const n = new THREE.Vector3(...phapTuyen).normalize();
     mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
-    mesh.position.set(...(khung ? khung.tam : toVec3(o.point)));
+    mesh.position.set(...(khung ? khung.tam : diemMp));
     // Mặt phẳng VÔ HẠN: miếng vẽ ra là đại diện do tầng trình bày chọn cỡ, nên
     // nó KHÔNG được tham gia tính khung nhìn — xem `vuaKhungRef`.
     mesh.userData.voHan = true;
@@ -1801,6 +1887,76 @@ function vungCheKhung(goc: DOMRect): LabelRect[] {
   });
 }
 
+/**
+ * Lưới định hướng không gian sư phạm (`Lưới nền`): thưa (`8×8` ô), nhạt dần từ tâm ra biên theo 3 vành bán kính
+ * để không tạo viền cứng cắt khung và không có hai trục đậm giả hệ trục toạ độ ở giữa đáy.
+ * Khi cảnh có mặt phẳng toán học đang hiện/được chọn, `heSoDiu < 1` hạ thêm độ đậm để mặt phẳng bài toán luôn nổi bật hơn.
+ */
+export function dungLuoiNenSuPham(diem: Vec3[], heSoDiu = 1): THREE.Group {
+  const nhom = new THREE.Group();
+  nhom.name = "luoi_nen_su_pham";
+  if (diem.length === 0) return nhom;
+  const lo = [0, 1, 2].map((i) => Math.min(...diem.map((p) => p[i])));
+  const hi = [0, 1, 2].map((i) => Math.max(...diem.map((p) => p[i])));
+  const spanXY = Math.max(hi[0] - lo[0], hi[1] - lo[1], 1);
+  const spanZ = Math.max(hi[2] - lo[2], spanXY, 1);
+  const banKinh = spanXY * 0.92;
+  const cx = (lo[0] + hi[0]) / 2;
+  const cy = (lo[1] + hi[1]) / 2;
+  const z0 = lo[2] - spanZ * 0.012;
+  const soO = 8;
+  const soKhuc = 16;
+  const vanh0: number[] = [];
+  const vanh1: number[] = [];
+  const vanh2: number[] = [];
+  const themDoan = (x0: number, y0: number, x1: number, y1: number) => {
+    for (let s = 0; s < soKhuc; s++) {
+      const t0 = s / soKhuc;
+      const t1 = (s + 1) / soKhuc;
+      const ax = x0 + (x1 - x0) * t0;
+      const ay = y0 + (y1 - y0) * t0;
+      const bx = x0 + (x1 - x0) * t1;
+      const by = y0 + (y1 - y0) * t1;
+      const mx = (ax + bx) / 2 - cx;
+      const my = (ay + by) / 2 - cy;
+      const r = Math.hypot(mx, my) / banKinh;
+      if (r > 1.06) continue;
+      const mang = r <= 0.52 ? vanh0 : r <= 0.82 ? vanh1 : vanh2;
+      mang.push(ax, ay, z0, bx, by, z0);
+    }
+  };
+  for (let i = 0; i <= soO; i++) {
+    const u = -banKinh + (2 * banKinh * i) / soO;
+    themDoan(cx - banKinh, cy + u, cx + banKinh, cy + u);
+    themDoan(cx + u, cy - banKinh, cx + u, cy + banKinh);
+  }
+  const taoVanh = (ten: string, ds: number[], mau: number, doDucGoc: number) => {
+    if (ds.length === 0) return;
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(ds, 3));
+    const m = new THREE.LineBasicMaterial({
+      color: mau,
+      transparent: true,
+      opacity: Number((doDucGoc * heSoDiu).toFixed(4)),
+      depthWrite: false,
+    });
+    const l = new THREE.LineSegments(g, m);
+    l.name = ten;
+    l.renderOrder = -2;
+    l.raycast = () => {};
+    nhom.add(l);
+  };
+  taoVanh("luoi:trong", vanh0, 0x94a3b8, 0.24);
+  taoVanh("luoi:giua", vanh1, 0x94a3b8, 0.14);
+  taoVanh("luoi:ngoai", vanh2, 0xb0bec5, 0.06);
+  nhom.userData = {
+    divisions: soO,
+    z0,
+    heSoDiu,
+  };
+  return nhom;
+}
+
 export function Scene3DWorkspace({
   scene, step, interaction, onSelect, fitToken = 0, annotationView = DEFAULT_ANNOTATION_VIEW,
   auxiliaryShown = false, gridShown = false,
@@ -1879,6 +2035,8 @@ export function Scene3DWorkspace({
   //: `id → vị trí THẾ GIỚI` của nhãn. Ghi trong vòng dựng cảnh, đọc trong
   //: vòng vẽ — hai nhịp khác nhau nên phải đi qua `ref`, không qua state.
   const viTriNhan = useRef(new Map<string, THREE.Vector3>());
+  const nhanMpRef = useRef<HTMLDivElement>(null);
+  const viTriMatPhang = useRef(new Map<string, THREE.Vector3>());
   //: W17 · nhãn SỐ ĐO: lớp DOM thứ hai, cùng vòng chiếu — đặt SAU nhãn điểm để tránh chúng.
   const soDoRef = useRef<HTMLDivElement>(null);
   const viTriSoDo = useRef(new Map<string, THREE.Vector3>());
@@ -2125,12 +2283,54 @@ export function Scene3DWorkspace({
         el.style.transform = `translate(${r.x}px,${r.y}px)`;
         hopSo.push({ id: c.id, box: r, anchor: { x: c.ax, y: c.ay } });
       }
+      // ── NHÃN KÝ HIỆU MẶT PHẲNG (`.geo3d-nhan-mp`) — đặt ở diềm mở rộng của mặt phẳng, tránh nhãn điểm & số đo ──
+      const lopMp = nhanMpRef.current;
+      const hopMatPhang: { id: string; box: LabelRect; anchor: { x: number; y: number } }[] = [];
+      if (lopMp) {
+        const canDatMp: LabelToPlace[] = [];
+        const theMpTheoId = new Map<string, HTMLElement>();
+        for (const el of Array.from(lopMp.children) as HTMLElement[]) {
+          const id = el.dataset.planeId;
+          const v = id ? viTriMatPhang.current.get(id) : undefined;
+          const p3 = v?.clone().applyQuaternion(qRef.current).project(cam);
+          if (!id || !p3 || !(p3.z < 1) || p3.x <= -1.08 || p3.x >= 1.08 || p3.y <= -1.08 || p3.y >= 1.08) {
+            el.style.opacity = "0";
+            continue;
+          }
+          canDatMp.push({
+            id,
+            ax: ((p3.x + 1) / 2) * w,
+            ay: ((1 - p3.y) / 2) * h,
+            w: el.offsetWidth || 44,
+            h: el.offsetHeight || 20,
+            priority: Number(el.dataset.uuTien ?? "1"),
+          });
+          theMpTheoId.set(id, el);
+        }
+        const vatCanMp: LabelRect[] = [
+          ...hopDiem,
+          ...chamDiem,
+          ...gocVuongRects,
+          ...vungChe,
+          ...hopSo.map((x) => x.box),
+        ];
+        const daDatMp = placeAnnotationLabels(canDatMp, vatCanMp, { w, h });
+        for (const c of canDatMp) {
+          const el = theMpTheoId.get(c.id)!;
+          const r = daDatMp.get(c.id);
+          el.style.opacity = r ? "1" : "0";
+          if (!r) continue;
+          el.style.transform = `translate(${r.x}px,${r.y}px)`;
+          hopMatPhang.push({ id: c.id, box: r, anchor: { x: c.ax, y: c.ay } });
+        }
+      }
       if (typeof window !== "undefined") {
         // Móc ĐO của bộ kiểm trình duyệt (§15.5): hộp nhãn số đo đang hiện + hộp nhãn điểm đang hiện.
         (window as any).__geo3d_annotation_boxes = hopSo;
         // W2 · A: nhãn hợp lệ ở bước này mà không đặt được vì thiếu chỗ.
         (window as any).__geo3d_annotation_unplaced = canDat.filter((c) => !daDat.has(c.id)).map((c) => c.id);
         (window as any).__geo3d_point_label_boxes = hopDiem;
+        (window as any).__geo3d_plane_label_boxes = hopMatPhang;
       }
     };
 
@@ -2351,6 +2551,24 @@ export function Scene3DWorkspace({
     veRef.current?.();
   }, [scene, buoc, nhanSoDo, coMatNhan, tuongTac, tang, tapNoiBat]);
 
+  const heSoDiuLuoi = useMemo(() => {
+    const daTonTai = entitiesPresentAt(scene, buoc, objectsAt);
+    const matPhangHien = scene.objects.filter(
+      (o) => o.type === "plane3" && daTonTai.has(o.id) && isVisible(tuongTac, o.id, daTonTai) && !anPhu.has(o.id),
+    );
+    if (matPhangHien.length === 0) return 1;
+    const coMpNgang = matPhangHien.some((o) => {
+      if (!o.normal) return false;
+      const n = xoay(toVec3(o.normal), qHienThi);
+      return Math.hypot(n[0], n[1]) <= 1e-4 * Math.abs(n[2]);
+    });
+    if (coMpNgang) return 0.38;
+    const dangNhanMp = matPhangHien.some(
+      (o) => tuongTac.selected_id === o.id || tapNoiBat.has(o.id) || (tang?.has(o.id) && tang.get(o.id) !== "boi_canh"),
+    );
+    return dangNhanMp ? 0.55 : 0.78;
+  }, [scene, buoc, tuongTac, anPhu, qHienThi, tapNoiBat, tang]);
+
   // W2 · F — LƯỚI NỀN tuỳ chọn: mảnh, nhạt, nằm dưới đáy hình (mặt z thấp nhất của cảnh), ô theo cỡ cảnh — không
   // số toạ độ, không đơn vị. Bật/tắt chỉ thêm/bớt nhóm này rồi vẽ lại một khung: camera, bước, lựa chọn không đổi.
   useEffect(() => {
@@ -2358,30 +2576,23 @@ export function Scene3DWorkspace({
     if (!nhom) return;
     for (const con of [...nhom.children]) {
       nhom.remove(con);
-      const l = con as THREE.LineSegments;
-      l.geometry?.dispose?.();
-      (l.material as THREE.Material | undefined)?.dispose?.();
+      con.traverse((x) => {
+        const l = x as THREE.LineSegments;
+        l.geometry?.dispose?.();
+        (l.material as THREE.Material | undefined)?.dispose?.();
+      });
     }
     // Lưới nằm dưới hình NGƯỜI HỌC THẤY: lấy toạ độ sau phép xoay hiển thị (nhóm lưới không xoay).
     const diem = diemHuuHan(scene.objects).map((p) => xoay(p, qHienThi));
     if (gridShown && diem.length > 0) {
-      const lo = [0, 1, 2].map((i) => Math.min(...diem.map((p) => p[i])));
-      const hi = [0, 1, 2].map((i) => Math.max(...diem.map((p) => p[i])));
-      const canh = Math.max(hi[0] - lo[0], hi[1] - lo[1], 1) * 2;
-      const l = new THREE.GridHelper(canh, 16, 0xc8cdd3, 0xdde1e5);
-      l.rotation.x = Math.PI / 2;             // GridHelper nằm trong XZ; trục lên của bài là z
-      // Hạ lưới một chút dưới đáy: nằm đúng mặt đáy thì tranh độ sâu với mặt đáy (nhấp nháy).
-      l.position.set((lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, lo[2] - canh * 0.002);
-      const m = l.material as THREE.Material;
-      m.transparent = true;
-      m.opacity = 0.55;
-      m.depthWrite = false;
-      l.raycast = () => {};
-      nhom.add(l);
+      nhom.add(dungLuoiNenSuPham(diem, heSoDiuLuoi));
     }
-    if (typeof window !== "undefined") (window as any).__geo3d_grid_visible = nhom.children.length > 0;
+    if (typeof window !== "undefined") {
+      (window as any).__geo3d_grid_visible = nhom.children.length > 0;
+      (window as any).__geo3d_grid_subordinated = heSoDiuLuoi < 1;
+    }
     veRef.current?.();
-  }, [scene, gridShown, qHienThi]);
+  }, [scene, gridShown, qHienThi, heSoDiuLuoi]);
 
   // §16.5 — nhãn số đo BẤM ĐƯỢC (chuột, Enter/Space): bấm là chọn đại lượng, bấm lại là bỏ chọn.
   // Listener gắn bằng lệnh (lớp này không dùng prop sự kiện trong JSX — khoá ở `scene3d.test.tsx`).
@@ -2424,6 +2635,7 @@ export function Scene3DWorkspace({
       });
     }
     viTriNhan.current.clear();
+    viTriMatPhang.current.clear();
     const noiBat = tapNoiBat;
     // MỘT thẩm quyền "vật nào đang có mặt", dùng chung với cây phân rã.
     //
@@ -2483,8 +2695,14 @@ export function Scene3DWorkspace({
         if (!theoBuoc) continue;
         renderObject = theoBuoc;
       }
+      const sangBuoc = noiBat.has(o.id)
+        || (o.type === "point3" && Boolean(o.parent && noiBat.has(o.parent) && progressCha && !progressCha.closed));
+      const coThietDienDong = o.render === "surface" && !sangBuoc && seDung.some((x) =>
+        x.type === "section" && x.depends.includes(o.id)
+        && x.closed !== false && (progressById.get(x.id)?.closed ?? true),
+      );
       const diemMp = o.render === "surface"
-        ? (coHinhCong
+        ? (coHinhCong || coThietDienDong
             ? diemHuuHan(seDung.filter((x) => o.depends.includes(x.id) || (x.type === "section" && x.depends.includes(o.id))))
             : diemHuuHan(seDung.filter((x) => o.depends.includes(x.id) || x.type === "solid" || (x.type === "section" && x.depends.includes(o.id)))))
         : [];
@@ -2493,8 +2711,6 @@ export function Scene3DWorkspace({
         : o.render === "surface" && diemMp.length >= 3
           ? diemMp
           : diemNen;
-      const sangBuoc = noiBat.has(o.id)
-        || (o.type === "point3" && Boolean(o.parent && noiBat.has(o.parent) && progressCha && !progressCha.closed));
       const obj = buildObject3D(renderObject, tang ? tang.get(o.id) ?? false : sangBuoc,
         banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemChoVat, undefined, canonicalHighlights, khucToSang);
       if (!obj) continue;
@@ -2505,12 +2721,19 @@ export function Scene3DWorkspace({
       daDung.push(renderObject.polygon && o.type === "section"
         ? `${o.id}#${renderObject.polygon.length}${renderObject.closed ? "c" : ""}`
           + `${renderObject.fill_visible ? "f" : ""}` : o.id);
-      // Chỉ ĐIỂM mang nhãn. Gắn nhãn cho cạnh và mặt nữa thì một tứ diện đã
-      // có 19 chữ chồng lên nhau, và hình thành một mớ chữ có hình.
+      // Chỉ ĐIỂM mang nhãn `.geo3d-label`. Mặt phẳng có ký hiệu (`notation`) do backend phát
+      // được gắn nhãn `.geo3d-nhan-mp` riêng ở diềm mở rộng của tấm mặt phẳng.
       if (o.type === "point3" && o.xyz) {
         const [x, y, z] = toVec3(o.xyz);
         viTriNhan.current.set(o.id, new THREE.Vector3(
           x + bd.translate[0], y + bd.translate[1], z + bd.translate[2]));
+      }
+      if (o.type === "plane3" && o.point && o.normal && kyHieu(o) !== null) {
+        const neo = diemNeoNhanMatPhang(toVec3(o.point), toVec3(o.normal), diemChoVat);
+        if (neo) {
+          viTriMatPhang.current.set(o.id, new THREE.Vector3(
+            neo[0] + bd.translate[0], neo[1] + bd.translate[1], neo[2] + bd.translate[2]));
+        }
       }
     }
     if (typeof window !== "undefined") {
@@ -2541,15 +2764,23 @@ export function Scene3DWorkspace({
   // Chỉ in nhãn cho vật CÓ ký hiệu do backend phát. Vật không có ký hiệu thì
   // khung không in gì cho nó — trước bản này phía đây tự rút một ký hiệu từ
   // `id`, nên `plane_MNP` hiện thành `MNP` và `V_AMNP` hiện nguyên si.
+  const tapHienId = new Set(hien.map((x) => x.id));
   const ungVienNhan = hien.filter(
     (o) => o.type === "point3"
       && veTrenKhung(o)
       && kyHieu(o) !== null
       && !anPhu.has(o.id)
-      && isVisible(tuongTac, o.id, new Set(hien.map((x) => x.id))),
+      && isVisible(tuongTac, o.id, tapHienId),
   );
   const chuNhanDiem = kyHieuDiem(ungVienNhan);
   const nhanDiem = ungVienNhan.filter((o) => chuNhanDiem.has(o.id));
+  const nhanMatPhang = hien.filter(
+    (o) => o.type === "plane3"
+      && veTrenKhung(o)
+      && kyHieu(o) !== null
+      && !anPhu.has(o.id)
+      && isVisible(tuongTac, o.id, tapHienId),
+  );
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -2581,6 +2812,24 @@ export function Scene3DWorkspace({
                 {chuNhanDiem.get(o.id) ?? kyHieu(o)}
               </span>
             ))}
+          </div>
+          <div ref={nhanMpRef} className="geo3d-plane-labels" aria-hidden="true">
+            {nhanMatPhang.map((o) => {
+              const t = tang?.get(o.id);
+              const chon = tuongTac.selected_id === o.id || t === "dich" || (!tang && tapNoiBat.has(o.id));
+              const diu = tang !== null && !tang.has(o.id);
+              return (
+                <span
+                  key={o.id}
+                  data-plane-id={o.id}
+                  className={`geo3d-nhan-mp${chon ? " la-chon" : diu ? " la-diu" : ""}`}
+                  data-uu-tien={uuTienNhan(o, tuongTac.selected_id)}
+                  title={o.label}
+                >
+                  {kyHieu(o)}
+                </span>
+              );
+            })}
           </div>
           {/* W17 · SỐ ĐO TRÊN HÌNH. W12 gỡ dải số nổi vì một con số không chủ thể đặt ở đâu cũng
               vô nghĩa. Nhãn ở đây khác ở đúng chỗ ấy: mỗi nhãn đứng cạnh CHỦ THỂ backend gắn

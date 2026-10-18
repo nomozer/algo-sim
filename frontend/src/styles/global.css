@@ -2827,6 +2827,47 @@ html {
   background: transparent;
 }
 
+/* ── NHÃN KÝ HIỆU MẶT PHẲNG (`.geo3d-nhan-mp`) ──────────────────────────────
+   Gắn ở diềm mở rộng của tấm mặt phẳng toán học (`(SAB)`, `(MNP)`, `(ABCD)`…),
+   tách riêng khỏi `.geo3d-label` của đỉnh để học sinh phân biệt ngay tên mặt
+   phẳng với tên điểm. Không bắt chuột (`pointer-events: none`). */
+.geo3d-plane-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.geo3d-nhan-mp {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 1px 6px;
+  border: 1px solid rgba(109, 40, 217, 0.35);
+  border-radius: 999px;
+  background: rgba(250, 245, 255, 0.92);
+  color: #5b21b6;
+  font-size: 0.75rem;
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.25;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 120ms ease-out;
+}
+
+.geo3d-nhan-mp.la-chon {
+  border-color: var(--primary);
+  background: var(--accent-sky-tint);
+  color: var(--secondary);
+  font-weight: 700;
+}
+
+.geo3d-nhan-mp.la-diu {
+  border-color: transparent;
+  background: transparent;
+  color: var(--ink-quiet);
+}
+
 /* ── NHÃN SỐ ĐO, cạnh chủ thể của nó (W17 §15.4) ──────────────────────────
    Cùng họ với nhãn điểm (nền giấy gần đặc, bo nhỏ, không bắt chuột) nhưng là
    một CON SỐ, nên đọc khác: số cùng bề rộng và một viền mảnh tách nó khỏi tên

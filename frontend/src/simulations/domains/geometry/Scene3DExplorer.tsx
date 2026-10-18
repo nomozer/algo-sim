@@ -239,10 +239,11 @@ export function Scene3DExplorer({
     void (document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen())
       .catch(() => {});
   };
-  /* W2 · D/F: «Hình phụ» (hiện đường/mặt phẳng phụ đã xong việc) và «Lưới» (lưới nền) — SỞ THÍCH trình bày như
-     `xem`, mặc định TẮT, giữ qua các bài; bật/tắt không đụng `tt` (bước, lựa chọn) hay camera. */
+  /* W2 · D/F: «Hình phụ» (hiện đường/mặt phẳng phụ đã xong việc, mặc định TẮT) và «Lưới nền» (lưới định hướng
+     không gian thưa, nhạt, mặc định BẬT, tự làm dịu khi có mặt phẳng toán học) — SỞ THÍCH trình bày như `xem`,
+     giữ qua các bài; bật/tắt không đụng `tt` (bước, lựa chọn) hay camera. */
   const [hinhPhu, setHinhPhu] = useState(false);
-  const [luoi, setLuoi] = useState(false);
+  const [luoi, setLuoi] = useState(true);
   const coHinhPhu = useMemo(() => auxiliaryObjects(day).size > 0, [day]);
   // «Tách khối» chỉ có nghĩa khi cảnh có mặt để tách (W05: không mặt ⇒ không dựng nút).
   const coMatBung = day.objects.some((o) => o.type === "face");

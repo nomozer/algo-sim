@@ -1,0 +1,30 @@
+{
+  "schema": "RUN/1",
+  "run_id": "scene3d-plane-grid-camera",
+  "wave": "scene3d-plane-grid-camera",
+  "date": "2026-10-18",
+  "environment": "LOCAL Windows 11, Python 3.12, Node, Chromium (D3D11 + SwiftShader WebGL2)",
+  "naming_policy": "docs/evaluation/RUN_NAMING.md",
+  "agents": "frontend mathematical presentation safety check (P0 right-angle marker audit + P1 plane sheet coplanarity audit), test, and browser verification by Gemini (Antigravity); independent read-only review by research subagent (d5b4214c-190a-45e8-b81b-9a42318492e5)",
+  "status": "HUMAN_VISUAL_REVIEW_PENDING",
+  "branch": "research/scene3d-plane-grid-camera",
+  "base_commit": "4abc4afbb976babc4740bf22e42dc368a24c1b13",
+  "cache_version": 125,
+  "default": "LLM_ONLY",
+  "live_calls": 0,
+  "Hybrid_product_enablement": "NO-GO (unchanged)",
+  "provider_surfaces_unchanged": true,
+  "backend_unchanged": true,
+  "results": {
+    "p0_right_angle_marker_audit": "CONFIRMED_BUG -> FIXED (certified activation gate at current step + unprojected raw vector orthogonality check across >=2 non-collinear plane directions + single non-overlapping marker at B)",
+    "p1_plane_sheet_coplanarity_audit": "CONFIRMED_BUG -> FIXED (true in-plane orthonormal basis e1, e2 for nearly horizontal planes 0.98 < |u_z| < 1 + scale-aware tolerances across 1e-3..1e3)",
+    "unit_and_regression_tests": "vitest: 68 files passed (1087 tests), 0 failed; tsc -b && vite build: exit 0",
+    "visual_audit_before": "visual/before/ — 20 baseline screenshots at 4abc4afb (1280x900 + 900x640)",
+    "visual_audit_after": "visual/after/audit-summary.json — 22 AFTER screenshots (1280x900 + 900x640) including P0 steps 3/4/5, P1 nearly-horizontal plane, P0 oblique line SC vs (ABC), and MNP section regression, 0 console/page errors",
+    "comparison_sheets": "visual/comparisons/cmp-01..15-*.png — 15 side-by-side comparison sheets including close-up at vertex B (cmp-13), step 4/5 premature marker suppression (cmp-12), nearly horizontal coplanarity (cmp-14), and oblique line non-activation (cmp-15)",
+    "orbit_gate": "DAT on p1/p6/p7 (vong=449 deg, axis=Z[0,0,1] ||1.000||, cos in [-1.00, 1.00], snap=0, capPhat=0, yen=0.0 deg)",
+    "hybrid_section_browser_check": "8 scenes, failures=[], net_retries=0",
+    "independent_review": "review.md — PASS",
+    "human_visual_review": "HUMAN_VISUAL_REVIEW_PENDING"
+  }
+}

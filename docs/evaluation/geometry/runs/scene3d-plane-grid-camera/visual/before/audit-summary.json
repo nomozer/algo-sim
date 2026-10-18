@@ -1,0 +1,3842 @@
+{
+  "mode": "before",
+  "browserPid": 11164,
+  "errors": [],
+  "results": [
+    {
+      "name": "01-vuong-goc-chop-step0-init",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 1/5",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [],
+      "hidden_edge_ids": [],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          6.762192549839839,
+          4.269671638577325,
+          5.757996371578223
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999997,
+          -0.43301270189221946,
+          0.7500000000000002,
+          0,
+          0.8660254037844388,
+          -0.2499999999999998,
+          0.43301270189221924,
+          0,
+          -5.551115123125783e-17,
+          0.8660254037844387,
+          0.5,
+          0,
+          -0.3165478299059765,
+          -0.9910379563194471,
+          -9.799464650581939,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 596.1509399414062,
+            "y": 510.34271240234375,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 510.34271240234375,
+            "right": 614.8853149414062,
+            "bottom": 527.9364624023438,
+            "left": 596.1509399414062
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 491.068603515625,
+            "y": 612.7697143554688,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 612.7697143554688,
+            "right": 508.927978515625,
+            "bottom": 630.3634643554688,
+            "left": 491.068603515625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 670.1504516601562,
+            "y": 690.728759765625,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.728759765625,
+            "right": 688.2285766601562,
+            "bottom": 708.322509765625,
+            "left": 670.1504516601562
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 755.1868896484375,
+            "y": 565.2822265625,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 565.2822265625,
+            "right": 774.5150146484375,
+            "bottom": 582.8759765625,
+            "left": 755.1868896484375
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 590.0601806640625,
+            "y": 161.01544189453125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.01544189453125,
+            "right": 607.1383056640625,
+            "bottom": 178.60919189453125,
+            "left": 590.0601806640625
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "02-vuong-goc-chop-step2-plane-SAB",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 3/5",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "chop",
+        "sab",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          6.762192549839839,
+          4.269671638577325,
+          5.757996371578223
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999997,
+          -0.43301270189221946,
+          0.7500000000000002,
+          0,
+          0.8660254037844388,
+          -0.2499999999999998,
+          0.43301270189221924,
+          0,
+          -5.551115123125783e-17,
+          0.8660254037844387,
+          0.5,
+          0,
+          -0.3165478299059765,
+          -0.9910379563194471,
+          -9.799464650581939,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 596.1509399414062,
+            "y": 510.34271240234375,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 510.34271240234375,
+            "right": 614.8853149414062,
+            "bottom": 527.9364624023438,
+            "left": 596.1509399414062
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 491.068603515625,
+            "y": 612.7697143554688,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 612.7697143554688,
+            "right": 508.927978515625,
+            "bottom": 630.3634643554688,
+            "left": 491.068603515625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 670.1504516601562,
+            "y": 690.728759765625,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.728759765625,
+            "right": 688.2285766601562,
+            "bottom": 708.322509765625,
+            "left": 670.1504516601562
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 755.1868896484375,
+            "y": 565.2822265625,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 565.2822265625,
+            "right": 774.5150146484375,
+            "bottom": 582.8759765625,
+            "left": 755.1868896484375
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 590.0601806640625,
+            "y": 161.01544189453125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.01544189453125,
+            "right": 607.1383056640625,
+            "bottom": 178.60919189453125,
+            "left": 590.0601806640625
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "03-vuong-goc-chop-step3-line-BC",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 4/5",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "chop",
+        "sab",
+        "bc",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [
+        "chop::edge:B-C"
+      ],
+      "camera_snapshot": {
+        "position": [
+          6.762192549839839,
+          4.269671638577325,
+          5.757996371578223
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999997,
+          -0.43301270189221946,
+          0.7500000000000002,
+          0,
+          0.8660254037844388,
+          -0.2499999999999998,
+          0.43301270189221924,
+          0,
+          -5.551115123125783e-17,
+          0.8660254037844387,
+          0.5,
+          0,
+          -0.3165478299059765,
+          -0.9910379563194471,
+          -9.799464650581939,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 596.1509399414062,
+            "y": 510.34271240234375,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 510.34271240234375,
+            "right": 614.8853149414062,
+            "bottom": 527.9364624023438,
+            "left": 596.1509399414062
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 491.068603515625,
+            "y": 612.7697143554688,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 612.7697143554688,
+            "right": 508.927978515625,
+            "bottom": 630.3634643554688,
+            "left": 491.068603515625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 670.1504516601562,
+            "y": 690.728759765625,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.728759765625,
+            "right": 688.2285766601562,
+            "bottom": 708.322509765625,
+            "left": 670.1504516601562
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 755.1868896484375,
+            "y": 565.2822265625,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 565.2822265625,
+            "right": 774.5150146484375,
+            "bottom": 582.8759765625,
+            "left": 755.1868896484375
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 590.0601806640625,
+            "y": 161.01544189453125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.01544189453125,
+            "right": 607.1383056640625,
+            "bottom": 178.60919189453125,
+            "left": 590.0601806640625
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "04-vuong-goc-chop-step4-final-neutral",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 5/5",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "chop",
+        "sab",
+        "bc",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          6.762192549839839,
+          4.269671638577325,
+          5.757996371578223
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999997,
+          -0.43301270189221946,
+          0.7500000000000002,
+          0,
+          0.8660254037844388,
+          -0.2499999999999998,
+          0.43301270189221924,
+          0,
+          -5.551115123125783e-17,
+          0.8660254037844387,
+          0.5,
+          0,
+          -0.3165478299059765,
+          -0.9910379563194471,
+          -9.799464650581939,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 596.1509399414062,
+            "y": 510.34271240234375,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 510.34271240234375,
+            "right": 614.8853149414062,
+            "bottom": 527.9364624023438,
+            "left": 596.1509399414062
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 491.068603515625,
+            "y": 612.7697143554688,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 612.7697143554688,
+            "right": 508.927978515625,
+            "bottom": 630.3634643554688,
+            "left": 491.068603515625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 670.1504516601562,
+            "y": 690.728759765625,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.728759765625,
+            "right": 688.2285766601562,
+            "bottom": 708.322509765625,
+            "left": 670.1504516601562
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 755.1868896484375,
+            "y": 565.2822265625,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 565.2822265625,
+            "right": 774.5150146484375,
+            "bottom": 582.8759765625,
+            "left": 755.1868896484375
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 590.0601806640625,
+            "y": 161.01544189453125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.01544189453125,
+            "right": 607.1383056640625,
+            "bottom": 178.60919189453125,
+            "left": 590.0601806640625
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "05-vuong-goc-chop-step4-selected-result",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 5/5",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "chop",
+        "sab",
+        "bc",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          6.762192549839839,
+          4.269671638577325,
+          5.757996371578223
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999997,
+          -0.43301270189221946,
+          0.7500000000000002,
+          0,
+          0.8660254037844388,
+          -0.2499999999999998,
+          0.43301270189221924,
+          0,
+          -5.551115123125783e-17,
+          0.8660254037844387,
+          0.5,
+          0,
+          -0.3165478299059765,
+          -0.9910379563194471,
+          -9.799464650581939,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 596.1509399414062,
+            "y": 510.34271240234375,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 510.34271240234375,
+            "right": 614.8853149414062,
+            "bottom": 527.9364624023438,
+            "left": 596.1509399414062
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 491.068603515625,
+            "y": 612.7697143554688,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 612.7697143554688,
+            "right": 508.927978515625,
+            "bottom": 630.3634643554688,
+            "left": 491.068603515625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 670.1504516601562,
+            "y": 690.728759765625,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.728759765625,
+            "right": 688.2285766601562,
+            "bottom": 708.322509765625,
+            "left": 670.1504516601562
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 755.1868896484375,
+            "y": 565.2822265625,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 565.2822265625,
+            "right": 774.5150146484375,
+            "bottom": 582.8759765625,
+            "left": 755.1868896484375
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 590.0601806640625,
+            "y": 161.01544189453125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.01544189453125,
+            "right": 607.1383056640625,
+            "bottom": 178.60919189453125,
+            "left": 590.0601806640625
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "07-vuong-goc-chop-grid-off",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 5/5",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "chop",
+        "sab",
+        "bc",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          6.762192549839839,
+          4.269671638577325,
+          5.757996371578223
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999997,
+          -0.43301270189221946,
+          0.7500000000000002,
+          0,
+          0.8660254037844388,
+          -0.2499999999999998,
+          0.43301270189221924,
+          0,
+          -5.551115123125783e-17,
+          0.8660254037844387,
+          0.5,
+          0,
+          -0.3165478299059765,
+          -0.9910379563194471,
+          -9.799464650581939,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 596.1509399414062,
+            "y": 510.34271240234375,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 510.34271240234375,
+            "right": 614.8853149414062,
+            "bottom": 527.9364624023438,
+            "left": 596.1509399414062
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 491.068603515625,
+            "y": 612.7697143554688,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 612.7697143554688,
+            "right": 508.927978515625,
+            "bottom": 630.3634643554688,
+            "left": 491.068603515625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 670.1504516601562,
+            "y": 690.728759765625,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.728759765625,
+            "right": 688.2285766601562,
+            "bottom": 708.322509765625,
+            "left": 670.1504516601562
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 755.1868896484375,
+            "y": 565.2822265625,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 565.2822265625,
+            "right": 774.5150146484375,
+            "bottom": 582.8759765625,
+            "left": 755.1868896484375
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 590.0601806640625,
+            "y": 161.01544189453125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.01544189453125,
+            "right": 607.1383056640625,
+            "bottom": 178.60919189453125,
+            "left": 590.0601806640625
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "06-vuong-goc-chop-grid-on",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 5/5",
+      "grid_visible": true,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "chop",
+        "sab",
+        "bc",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          6.762192549839839,
+          4.269671638577325,
+          5.757996371578223
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999997,
+          -0.43301270189221946,
+          0.7500000000000002,
+          0,
+          0.8660254037844388,
+          -0.2499999999999998,
+          0.43301270189221924,
+          0,
+          -5.551115123125783e-17,
+          0.8660254037844387,
+          0.5,
+          0,
+          -0.3165478299059765,
+          -0.9910379563194471,
+          -9.799464650581939,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 596.1509399414062,
+            "y": 510.34271240234375,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 510.34271240234375,
+            "right": 614.8853149414062,
+            "bottom": 527.9364624023438,
+            "left": 596.1509399414062
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 491.068603515625,
+            "y": 612.7697143554688,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 612.7697143554688,
+            "right": 508.927978515625,
+            "bottom": 630.3634643554688,
+            "left": 491.068603515625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 670.1504516601562,
+            "y": 690.728759765625,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.728759765625,
+            "right": 688.2285766601562,
+            "bottom": 708.322509765625,
+            "left": 670.1504516601562
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 755.1868896484375,
+            "y": 565.2822265625,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 565.2822265625,
+            "right": 774.5150146484375,
+            "bottom": 582.8759765625,
+            "left": 755.1868896484375
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 590.0601806640625,
+            "y": 161.01544189453125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.01544189453125,
+            "right": 607.1383056640625,
+            "bottom": 178.60919189453125,
+            "left": 590.0601806640625
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "08-vuong-goc-chop-orbit",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 5/5",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-S",
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-D",
+        "chop::edge:C-D",
+        "chop::edge:D-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "chop",
+        "sab",
+        "bc",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          7.509772631208248,
+          -2.812161885674508,
+          3.3506789480746173
+        ],
+        "view_matrix_column_major": [
+          0.505417653602862,
+          -0.1587102176462449,
+          0.848153324724521,
+          0,
+          0.8628748434312923,
+          0.09296243414234123,
+          -0.4967947165698859,
+          0,
+          2.636779683484746e-16,
+          0.9829389872484516,
+          0.18393190953988267,
+          0,
+          -1.3690279155514251,
+          -1.8402099089476787,
+          -8.382802569201242,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 486.7191162109375,
+            "y": 609.2323608398438,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 609.2323608398438,
+            "right": 505.4534912109375,
+            "bottom": 626.8261108398438,
+            "left": 486.7191162109375
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 578.824462890625,
+            "y": 695.4026489257812,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 695.4026489257812,
+            "right": 596.683837890625,
+            "bottom": 712.9963989257812,
+            "left": 578.824462890625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 772.1963500976562,
+            "y": 640.311279296875,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 640.311279296875,
+            "right": 790.2744750976562,
+            "bottom": 657.905029296875,
+            "left": 772.1963500976562
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 654.6140747070312,
+            "y": 573.2388916015625,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 573.2388916015625,
+            "right": 673.9421997070312,
+            "bottom": 590.8326416015625,
+            "left": 654.6140747070312
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 474.4228210449219,
+            "y": 197.41041564941406,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 197.41041564941406,
+            "right": 491.5009460449219,
+            "bottom": 215.00416564941406,
+            "left": 474.4228210449219
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "09-vuong-goc-chop-reset-camera",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 5/5",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "chop",
+        "sab",
+        "bc",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          6.762192549839839,
+          4.269671638577325,
+          5.757996371578223
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999997,
+          -0.43301270189221946,
+          0.7500000000000002,
+          0,
+          0.8660254037844388,
+          -0.2499999999999998,
+          0.43301270189221924,
+          0,
+          -5.551115123125783e-17,
+          0.8660254037844387,
+          0.5,
+          0,
+          -0.3165478299059765,
+          -0.9910379563194471,
+          -9.799464650581939,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 596.1509399414062,
+            "y": 510.34271240234375,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 510.34271240234375,
+            "right": 614.8853149414062,
+            "bottom": 527.9364624023438,
+            "left": 596.1509399414062
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 491.068603515625,
+            "y": 612.7697143554688,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 612.7697143554688,
+            "right": 508.927978515625,
+            "bottom": 630.3634643554688,
+            "left": 491.068603515625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 670.1504516601562,
+            "y": 690.728759765625,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.728759765625,
+            "right": 688.2285766601562,
+            "bottom": 708.322509765625,
+            "left": 670.1504516601562
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 755.1868896484375,
+            "y": 565.2822265625,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 565.2822265625,
+            "right": 774.5150146484375,
+            "bottom": 582.8759765625,
+            "left": 755.1868896484375
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 590.0601806640625,
+            "y": 161.01544189453125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.01544189453125,
+            "right": 607.1383056640625,
+            "bottom": 178.60919189453125,
+            "left": 590.0601806640625
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "10-vuong-goc-chop-compact-900x640",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 5/5",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "chop",
+        "sab",
+        "bc",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          6.762192549839839,
+          4.269671638577325,
+          5.757996371578223
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999997,
+          -0.43301270189221946,
+          0.7500000000000002,
+          0,
+          0.8660254037844388,
+          -0.2499999999999998,
+          0.43301270189221924,
+          0,
+          -5.551115123125783e-17,
+          0.8660254037844387,
+          0.5,
+          0,
+          -0.3165478299059765,
+          -0.9910379563194471,
+          -9.799464650581939,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3078720232014818,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 851,
+        "viewport_height": 519,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 415.1564636230469,
+            "y": 352.1485595703125,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 352.1485595703125,
+            "right": 433.8908386230469,
+            "bottom": 369.7423095703125,
+            "left": 415.1564636230469
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 345.29254150390625,
+            "y": 420.389404296875,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 420.389404296875,
+            "right": 363.15191650390625,
+            "bottom": 437.983154296875,
+            "left": 345.29254150390625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 464.5672912597656,
+            "y": 472.3287353515625,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 472.3287353515625,
+            "right": 482.6454162597656,
+            "bottom": 489.9224853515625,
+            "left": 464.5672912597656
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 521.0132446289062,
+            "y": 388.7514343261719,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 388.7514343261719,
+            "right": 540.3413696289062,
+            "bottom": 406.3451843261719,
+            "left": 521.0132446289062
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 411.37493896484375,
+            "y": 119.4132080078125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 119.4132080078125,
+            "right": 428.45306396484375,
+            "bottom": 137.0069580078125,
+            "left": 411.37493896484375
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "11-thiet-dien-chop-step5-plane-MNP",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 6/11",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "N",
+        "P",
+        "chop",
+        "mp",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          6.021524041342521,
+          3.850605334888059,
+          6.943917722775348
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999999,
+          -0.5566703992264193,
+          0.6634139481689385,
+          0,
+          0.8660254037844385,
+          -0.32139380484326957,
+          0.3830222215594889,
+          0,
+          3.05311331771918e-16,
+          0.7660444431189781,
+          0.6427876096865394,
+          0,
+          -0.3239600192896866,
+          -0.7297846934323563,
+          -9.93309472286163,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 595.890625,
+            "y": 487.2371826171875,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 487.2371826171875,
+            "right": 614.625,
+            "bottom": 504.8309326171875,
+            "left": 595.890625
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 495.0727233886719,
+            "y": 604.7542114257812,
+            "width": 17.859405517578125,
+            "height": 17.59375,
+            "top": 604.7542114257812,
+            "right": 512.93212890625,
+            "bottom": 622.3479614257812,
+            "left": 495.0727233886719
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 666.9382934570312,
+            "y": 690.7141723632812,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.7141723632812,
+            "right": 685.0164184570312,
+            "bottom": 708.3079223632812,
+            "left": 666.9382934570312
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 751.138671875,
+            "y": 550.93505859375,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 550.93505859375,
+            "right": 770.466796875,
+            "bottom": 568.52880859375,
+            "left": 751.138671875
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 587.2044677734375,
+            "y": 161.00875854492188,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.00875854492188,
+            "right": 604.2825927734375,
+            "bottom": 178.60250854492188,
+            "left": 587.2044677734375
+          }
+        },
+        {
+          "id": "M",
+          "kind": "point",
+          "text": "M",
+          "shown": true,
+          "rect": {
+            "x": 590.1922607421875,
+            "y": 348.3721923828125,
+            "width": 22.03125,
+            "height": 17.59375,
+            "top": 348.3721923828125,
+            "right": 612.2235107421875,
+            "bottom": 365.9659423828125,
+            "left": 590.1922607421875
+          }
+        },
+        {
+          "id": "N",
+          "kind": "point",
+          "text": "N",
+          "shown": true,
+          "rect": {
+            "x": 536.3063354492188,
+            "y": 400.1708984375,
+            "width": 19.984375,
+            "height": 17.59375,
+            "top": 400.1708984375,
+            "right": 556.2907104492188,
+            "bottom": 417.7646484375,
+            "left": 536.3063354492188
+          }
+        },
+        {
+          "id": "P",
+          "kind": "point",
+          "text": "P",
+          "shown": true,
+          "rect": {
+            "x": 628.31787109375,
+            "y": 434.19403076171875,
+            "width": 17.609375,
+            "height": 17.59375,
+            "top": 434.19403076171875,
+            "right": 645.92724609375,
+            "bottom": 451.78778076171875,
+            "left": 628.31787109375
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "12-thiet-dien-chop-step10-section",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 11/11",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "N",
+        "P",
+        "chop",
+        "mp",
+        "thiet_dien#4c",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4",
+        "thiet_dien::vertex:2",
+        "thiet_dien::edge:0",
+        "thiet_dien::edge:1",
+        "thiet_dien::edge:2",
+        "thiet_dien::edge:3",
+        "thiet_dien::face:0"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          6.021524041342521,
+          3.850605334888059,
+          6.943917722775348
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999999,
+          -0.5566703992264193,
+          0.6634139481689385,
+          0,
+          0.8660254037844385,
+          -0.32139380484326957,
+          0.3830222215594889,
+          0,
+          3.05311331771918e-16,
+          0.7660444431189781,
+          0.6427876096865394,
+          0,
+          -0.3239600192896866,
+          -0.7297846934323563,
+          -9.93309472286163,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 595.890625,
+            "y": 487.2371826171875,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 487.2371826171875,
+            "right": 614.625,
+            "bottom": 504.8309326171875,
+            "left": 595.890625
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 495.0727233886719,
+            "y": 604.7542114257812,
+            "width": 17.859405517578125,
+            "height": 17.59375,
+            "top": 604.7542114257812,
+            "right": 512.93212890625,
+            "bottom": 622.3479614257812,
+            "left": 495.0727233886719
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 666.9382934570312,
+            "y": 690.7141723632812,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.7141723632812,
+            "right": 685.0164184570312,
+            "bottom": 708.3079223632812,
+            "left": 666.9382934570312
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 751.138671875,
+            "y": 550.93505859375,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 550.93505859375,
+            "right": 770.466796875,
+            "bottom": 568.52880859375,
+            "left": 751.138671875
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 587.2044677734375,
+            "y": 161.00875854492188,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.00875854492188,
+            "right": 604.2825927734375,
+            "bottom": 178.60250854492188,
+            "left": 587.2044677734375
+          }
+        },
+        {
+          "id": "M",
+          "kind": "point",
+          "text": "M",
+          "shown": true,
+          "rect": {
+            "x": 590.1922607421875,
+            "y": 348.3721923828125,
+            "width": 22.03125,
+            "height": 17.59375,
+            "top": 348.3721923828125,
+            "right": 612.2235107421875,
+            "bottom": 365.9659423828125,
+            "left": 590.1922607421875
+          }
+        },
+        {
+          "id": "N",
+          "kind": "point",
+          "text": "N",
+          "shown": true,
+          "rect": {
+            "x": 536.3063354492188,
+            "y": 400.1708984375,
+            "width": 19.984375,
+            "height": 17.59375,
+            "top": 400.1708984375,
+            "right": 556.2907104492188,
+            "bottom": 417.7646484375,
+            "left": 536.3063354492188
+          }
+        },
+        {
+          "id": "P",
+          "kind": "point",
+          "text": "P",
+          "shown": true,
+          "rect": {
+            "x": 628.31787109375,
+            "y": 434.19403076171875,
+            "width": 17.609375,
+            "height": 17.59375,
+            "top": 434.19403076171875,
+            "right": 645.92724609375,
+            "bottom": 451.78778076171875,
+            "left": 628.31787109375
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "13-thiet-dien-chop-orbit",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 11/11",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "M",
+        "N",
+        "P",
+        "chop",
+        "mp",
+        "thiet_dien#4c",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4",
+        "thiet_dien::vertex:2",
+        "thiet_dien::edge:0",
+        "thiet_dien::edge:1",
+        "thiet_dien::edge:2",
+        "thiet_dien::edge:3",
+        "thiet_dien::face:0"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          1.3043474545619278,
+          5.058286706941235,
+          8.437990648038237
+        ],
+        "view_matrix_column_major": [
+          -0.996892473075175,
+          -0.06611909786084726,
+          0.04282128003842371,
+          0,
+          0.07877434306969117,
+          -0.8367398370518452,
+          0.541905017474825,
+          0,
+          0,
+          0.5435942512467543,
+          0.8393481339774818,
+          0,
+          0.9018309473301026,
+          -0.2681309364272102,
+          -9.879376478887202,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 699.3811645507812,
+            "y": 448.5387878417969,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 448.5387878417969,
+            "right": 718.1155395507812,
+            "bottom": 466.1325378417969,
+            "left": 699.3811645507812
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 530.4400024414062,
+            "y": 460.01531982421875,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 460.01531982421875,
+            "right": 548.2993774414062,
+            "bottom": 477.60906982421875,
+            "left": 530.4400024414062
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 533.85107421875,
+            "y": 624.7517700195312,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 624.7517700195312,
+            "right": 551.92919921875,
+            "bottom": 642.3455200195312,
+            "left": 533.85107421875
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 723.441650390625,
+            "y": 610.2570190429688,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 610.2570190429688,
+            "right": 742.769775390625,
+            "bottom": 627.8507690429688,
+            "left": 723.441650390625
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 739.4605102539062,
+            "y": 181.7314453125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 181.7314453125,
+            "right": 756.5386352539062,
+            "bottom": 199.3251953125,
+            "left": 739.4605102539062
+          }
+        },
+        {
+          "id": "M",
+          "kind": "point",
+          "text": "M",
+          "shown": true,
+          "rect": {
+            "x": 713.3409423828125,
+            "y": 342.443115234375,
+            "width": 22.03125,
+            "height": 17.59375,
+            "top": 342.443115234375,
+            "right": 735.3721923828125,
+            "bottom": 360.036865234375,
+            "left": 713.3409423828125
+          }
+        },
+        {
+          "id": "N",
+          "kind": "point",
+          "text": "N",
+          "shown": true,
+          "rect": {
+            "x": 612.7744140625,
+            "y": 348.7751770019531,
+            "width": 19.984375,
+            "height": 17.59375,
+            "top": 348.7751770019531,
+            "right": 632.7587890625,
+            "bottom": 366.3689270019531,
+            "left": 612.7744140625
+          }
+        },
+        {
+          "id": "P",
+          "kind": "point",
+          "text": "P",
+          "shown": true,
+          "rect": {
+            "x": 621.9089965820312,
+            "y": 435.0597229003906,
+            "width": 17.609375,
+            "height": 17.59375,
+            "top": 435.0597229003906,
+            "right": 639.5183715820312,
+            "bottom": 452.6534729003906,
+            "left": 621.9089965820312
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "14-mp-vuong-goc-duong-step3-plane",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 4/6",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "chop",
+        "sc",
+        "mpb",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [
+        "chop::edge:C-S"
+      ],
+      "camera_snapshot": {
+        "position": [
+          6.762192549839839,
+          4.269671638577325,
+          5.757996371578223
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999997,
+          -0.43301270189221946,
+          0.7500000000000002,
+          0,
+          0.8660254037844388,
+          -0.2499999999999998,
+          0.43301270189221924,
+          0,
+          -5.551115123125783e-17,
+          0.8660254037844387,
+          0.5,
+          0,
+          -0.3165478299059765,
+          -0.9910379563194471,
+          -9.799464650581939,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 596.1509399414062,
+            "y": 510.34271240234375,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 510.34271240234375,
+            "right": 614.8853149414062,
+            "bottom": 527.9364624023438,
+            "left": 596.1509399414062
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 491.068603515625,
+            "y": 612.7697143554688,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 612.7697143554688,
+            "right": 508.927978515625,
+            "bottom": 630.3634643554688,
+            "left": 491.068603515625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 670.1504516601562,
+            "y": 690.728759765625,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.728759765625,
+            "right": 688.2285766601562,
+            "bottom": 708.322509765625,
+            "left": 670.1504516601562
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 755.1868896484375,
+            "y": 565.2822265625,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 565.2822265625,
+            "right": 774.5150146484375,
+            "bottom": 582.8759765625,
+            "left": 755.1868896484375
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 590.0601806640625,
+            "y": 161.01544189453125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.01544189453125,
+            "right": 607.1383056640625,
+            "bottom": 178.60919189453125,
+            "left": 590.0601806640625
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "15-mp-vuong-goc-duong-step5-final",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 6/6",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "chop",
+        "sc",
+        "day",
+        "mpb",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          6.762192549839839,
+          4.269671638577325,
+          5.757996371578223
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999997,
+          -0.43301270189221946,
+          0.7500000000000002,
+          0,
+          0.8660254037844388,
+          -0.2499999999999998,
+          0.43301270189221924,
+          0,
+          -5.551115123125783e-17,
+          0.8660254037844387,
+          0.5,
+          0,
+          -0.3165478299059765,
+          -0.9910379563194471,
+          -9.799464650581939,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 596.1509399414062,
+            "y": 510.34271240234375,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 510.34271240234375,
+            "right": 614.8853149414062,
+            "bottom": 527.9364624023438,
+            "left": 596.1509399414062
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 491.068603515625,
+            "y": 612.7697143554688,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 612.7697143554688,
+            "right": 508.927978515625,
+            "bottom": 630.3634643554688,
+            "left": 491.068603515625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 670.1504516601562,
+            "y": 690.728759765625,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.728759765625,
+            "right": 688.2285766601562,
+            "bottom": 708.322509765625,
+            "left": 670.1504516601562
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 755.1868896484375,
+            "y": 565.2822265625,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 565.2822265625,
+            "right": 774.5150146484375,
+            "bottom": 582.8759765625,
+            "left": 755.1868896484375
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 590.0601806640625,
+            "y": 161.01544189453125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.01544189453125,
+            "right": 607.1383056640625,
+            "bottom": 178.60919189453125,
+            "left": 590.0601806640625
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "16-the-tich-chop-step2-plane-ABCD",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 3/5",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "chop",
+        "day",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          6.762192549839839,
+          4.269671638577325,
+          5.757996371578223
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999997,
+          -0.43301270189221946,
+          0.7500000000000002,
+          0,
+          0.8660254037844388,
+          -0.2499999999999998,
+          0.43301270189221924,
+          0,
+          -5.551115123125783e-17,
+          0.8660254037844387,
+          0.5,
+          0,
+          -0.3165478299059765,
+          -0.9910379563194471,
+          -9.799464650581939,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 596.1509399414062,
+            "y": 510.34271240234375,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 510.34271240234375,
+            "right": 614.8853149414062,
+            "bottom": 527.9364624023438,
+            "left": 596.1509399414062
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 491.068603515625,
+            "y": 612.7697143554688,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 612.7697143554688,
+            "right": 508.927978515625,
+            "bottom": 630.3634643554688,
+            "left": 491.068603515625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 670.1504516601562,
+            "y": 690.728759765625,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.728759765625,
+            "right": 688.2285766601562,
+            "bottom": 708.322509765625,
+            "left": 670.1504516601562
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 755.1868896484375,
+            "y": 565.2822265625,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 565.2822265625,
+            "right": 774.5150146484375,
+            "bottom": 582.8759765625,
+            "left": 755.1868896484375
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 590.0601806640625,
+            "y": 161.01544189453125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.01544189453125,
+            "right": 607.1383056640625,
+            "bottom": 178.60919189453125,
+            "left": 590.0601806640625
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "17-the-tich-chop-step4-final",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "Bước 5/5",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "chop::edge:B-C",
+        "chop::edge:B-S",
+        "chop::edge:C-D",
+        "chop::edge:C-S",
+        "chop::edge:D-S"
+      ],
+      "hidden_edge_ids": [
+        "chop::edge:A-B",
+        "chop::edge:A-D",
+        "chop::edge:A-S"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "chop",
+        "day",
+        "chop::face:0",
+        "chop::edge:A-B",
+        "chop::edge:B-C",
+        "chop::edge:C-D",
+        "chop::edge:A-D",
+        "chop::face:1",
+        "chop::edge:B-S",
+        "chop::edge:A-S",
+        "chop::face:2",
+        "chop::edge:C-S",
+        "chop::face:3",
+        "chop::edge:D-S",
+        "chop::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          6.762192549839839,
+          4.269671638577325,
+          5.757996371578223
+        ],
+        "view_matrix_column_major": [
+          -0.4999999999999997,
+          -0.43301270189221946,
+          0.7500000000000002,
+          0,
+          0.8660254037844388,
+          -0.2499999999999998,
+          0.43301270189221924,
+          0,
+          -5.551115123125783e-17,
+          0.8660254037844387,
+          0.5,
+          0,
+          -0.3165478299059765,
+          -0.9910379563194471,
+          -9.799464650581939,
+          1
+        ],
+        "projection_matrix_column_major": [
+          1.3570843956758296,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 779,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 596.1509399414062,
+            "y": 510.34271240234375,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 510.34271240234375,
+            "right": 614.8853149414062,
+            "bottom": 527.9364624023438,
+            "left": 596.1509399414062
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 491.068603515625,
+            "y": 612.7697143554688,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 612.7697143554688,
+            "right": 508.927978515625,
+            "bottom": 630.3634643554688,
+            "left": 491.068603515625
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 670.1504516601562,
+            "y": 690.728759765625,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 690.728759765625,
+            "right": 688.2285766601562,
+            "bottom": 708.322509765625,
+            "left": 670.1504516601562
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 755.1868896484375,
+            "y": 565.2822265625,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 565.2822265625,
+            "right": 774.5150146484375,
+            "bottom": 582.8759765625,
+            "left": 755.1868896484375
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 590.0601806640625,
+            "y": 161.01544189453125,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 161.01544189453125,
+            "right": 607.1383056640625,
+            "bottom": 178.60919189453125,
+            "left": 590.0601806640625
+          }
+        }
+      ],
+      "soDo": []
+    },
+    {
+      "name": "18-pyr-midpoint-to-plane-selected-kq",
+      "qs": "src=scene3d-integration&i=0",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "",
+      "grid_visible": false,
+      "witness_ids": [
+        "kq_q"
+      ],
+      "visible_edge_ids": [
+        "khoi_S_ABCD::edge:B-C",
+        "khoi_S_ABCD::edge:C-D",
+        "khoi_S_ABCD::edge:S-B",
+        "khoi_S_ABCD::edge:S-C",
+        "khoi_S_ABCD::edge:S-D"
+      ],
+      "hidden_edge_ids": [
+        "khoi_S_ABCD::edge:A-B",
+        "khoi_S_ABCD::edge:A-D",
+        "khoi_S_ABCD::edge:S-A"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "S",
+        "khoi_S_ABCD",
+        "M",
+        "mp_q",
+        "day_ABCD",
+        "canh_ben_S_A",
+        "canh_ben_S_B",
+        "canh_ben_S_C",
+        "canh_ben_S_D",
+        "khoi_S_ABCD::face:0",
+        "khoi_S_ABCD::edge:A-B",
+        "khoi_S_ABCD::edge:B-C",
+        "khoi_S_ABCD::edge:C-D",
+        "khoi_S_ABCD::edge:A-D",
+        "khoi_S_ABCD::face:1",
+        "khoi_S_ABCD::edge:S-A",
+        "khoi_S_ABCD::edge:S-B",
+        "khoi_S_ABCD::face:2",
+        "khoi_S_ABCD::edge:S-C",
+        "khoi_S_ABCD::face:3",
+        "khoi_S_ABCD::edge:S-D",
+        "khoi_S_ABCD::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          5.900035487042857,
+          3.7530722372383067,
+          3.910890599931176
+        ],
+        "view_matrix_column_major": [
+          -0.9999999999999994,
+          -0.731996301541333,
+          1.5697711344427925,
+          0,
+          1.7320508075688776,
+          -0.4226182617406985,
+          0.9063077870366499,
+          0,
+          -5.828670879282072e-16,
+          2.7189233611099506,
+          1.267854785222097,
+          0,
+          -0.30023815616504435,
+          -0.5920100946826032,
+          -7.984385784035022,
+          1
+        ],
+        "model_matrix_column_major": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.9058843206051751,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 520,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 602.1663208007812,
+            "y": 397.71044921875,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 397.71044921875,
+            "right": 620.9006958007812,
+            "bottom": 415.30419921875,
+            "left": 602.1663208007812
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 510.5508728027344,
+            "y": 471.45416259765625,
+            "width": 17.859405517578125,
+            "height": 17.59375,
+            "top": 471.45416259765625,
+            "right": 528.4102783203125,
+            "bottom": 489.04791259765625,
+            "left": 510.5508728027344
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 667.170654296875,
+            "y": 533.168701171875,
+            "width": 18.078125,
+            "height": 17.59375,
+            "top": 533.168701171875,
+            "right": 685.248779296875,
+            "bottom": 550.762451171875,
+            "left": 667.170654296875
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 735.626220703125,
+            "y": 436.2955627441406,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 436.2955627441406,
+            "right": 754.954345703125,
+            "bottom": 453.8893127441406,
+            "left": 735.626220703125
+          }
+        },
+        {
+          "id": "S",
+          "kind": "point",
+          "text": "S",
+          "shown": true,
+          "rect": {
+            "x": 599.0366821289062,
+            "y": 179.80337524414062,
+            "width": 17.078125,
+            "height": 17.59375,
+            "top": 179.80337524414062,
+            "right": 616.1148071289062,
+            "bottom": 197.39712524414062,
+            "left": 599.0366821289062
+          }
+        },
+        {
+          "id": "M",
+          "kind": "point",
+          "text": "M",
+          "shown": true,
+          "rect": {
+            "x": 627.4854736328125,
+            "y": 339.02386474609375,
+            "width": 22.03125,
+            "height": 17.59375,
+            "top": 339.02386474609375,
+            "right": 649.5167236328125,
+            "bottom": 356.61761474609375,
+            "left": 627.4854736328125
+          }
+        }
+      ],
+      "soDo": [
+        {
+          "id": "kq_q",
+          "text": "d(M, (SAB)) = 1",
+          "shown": true,
+          "rect": {
+            "x": 492.19921875,
+            "y": 360.9818115234375,
+            "width": 102.0625,
+            "height": 19.59375,
+            "top": 360.9818115234375,
+            "right": 594.26171875,
+            "bottom": 380.5755615234375,
+            "left": 492.19921875
+          }
+        }
+      ]
+    },
+    {
+      "name": "19-prism-midpoint-to-plane-selected-kq",
+      "qs": "src=scene3d-integration&i=2",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "",
+      "grid_visible": false,
+      "witness_ids": [
+        "kq_q"
+      ],
+      "visible_edge_ids": [
+        "khoi_ABC_A_primeB_primeC_prime::edge:A_prime-B_prime",
+        "khoi_ABC_A_primeB_primeC_prime::edge:A_prime-C_prime",
+        "khoi_ABC_A_primeB_primeC_prime::edge:B-B_prime",
+        "khoi_ABC_A_primeB_primeC_prime::edge:B-C",
+        "khoi_ABC_A_primeB_primeC_prime::edge:B_prime-C_prime",
+        "khoi_ABC_A_primeB_primeC_prime::edge:C-C_prime"
+      ],
+      "hidden_edge_ids": [
+        "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+        "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+        "khoi_ABC_A_primeB_primeC_prime::edge:A-C"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "A_prime",
+        "B_prime",
+        "C_prime",
+        "khoi_ABC_A_primeB_primeC_prime",
+        "M",
+        "mp_q",
+        "day_ABC",
+        "day_A_primeB_primeC_prime",
+        "canh_ben_A_A_prime",
+        "canh_ben_B_B_prime",
+        "canh_ben_C_C_prime",
+        "khoi_ABC_A_primeB_primeC_prime::face:0",
+        "khoi_ABC_A_primeB_primeC_prime::edge:A-B",
+        "khoi_ABC_A_primeB_primeC_prime::edge:B-C",
+        "khoi_ABC_A_primeB_primeC_prime::edge:A-C",
+        "khoi_ABC_A_primeB_primeC_prime::face:1",
+        "khoi_ABC_A_primeB_primeC_prime::edge:A_prime-B_prime",
+        "khoi_ABC_A_primeB_primeC_prime::edge:B_prime-C_prime",
+        "khoi_ABC_A_primeB_primeC_prime::edge:A_prime-C_prime",
+        "khoi_ABC_A_primeB_primeC_prime::face:2",
+        "khoi_ABC_A_primeB_primeC_prime::edge:B-B_prime",
+        "khoi_ABC_A_primeB_primeC_prime::edge:A-A_prime",
+        "khoi_ABC_A_primeB_primeC_prime::face:3",
+        "khoi_ABC_A_primeB_primeC_prime::edge:C-C_prime",
+        "khoi_ABC_A_primeB_primeC_prime::face:4"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          4.723135459817796,
+          2.0219144639807394,
+          5.115069823150054
+        ],
+        "view_matrix_column_major": [
+          -0.6840402866513368,
+          -1.2080455471101075,
+          1.4396926207859086,
+          0,
+          1.2855752193730794,
+          -0.9848077530122079,
+          1.17364817766693,
+          0,
+          2.498001805406603e-16,
+          2.2981333293569346,
+          1.9283628290596178,
+          0,
+          -0.28457063474956773,
+          -0.6209789990379908,
+          -7.217582046900134,
+          1
+        ],
+        "model_matrix_column_major": [
+          2,
+          0,
+          0,
+          0,
+          1,
+          1.7320508075688772,
+          0,
+          0,
+          0,
+          0,
+          3,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.9058843206051751,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 520,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 601.149169921875,
+            "y": 404.3405456542969,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 404.3405456542969,
+            "right": 619.883544921875,
+            "bottom": 421.9342956542969,
+            "left": 601.149169921875
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 530.0984497070312,
+            "y": 532.871337890625,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 532.871337890625,
+            "right": 547.9578247070312,
+            "bottom": 550.465087890625,
+            "left": 530.0984497070312
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 715.8067626953125,
+            "y": 504.5075988769531,
+            "width": 18.078125,
+            "height": 17.593719482421875,
+            "top": 504.5075988769531,
+            "right": 733.8848876953125,
+            "bottom": 522.101318359375,
+            "left": 715.8067626953125
+          }
+        },
+        {
+          "id": "A_prime",
+          "kind": "point",
+          "text": "A′",
+          "shown": true,
+          "rect": {
+            "x": 591.4546508789062,
+            "y": 179.56875610351562,
+            "width": 22.09375,
+            "height": 17.59375,
+            "top": 179.56875610351562,
+            "right": 613.5484008789062,
+            "bottom": 197.16250610351562,
+            "left": 591.4546508789062
+          }
+        },
+        {
+          "id": "B_prime",
+          "kind": "point",
+          "text": "B′",
+          "shown": true,
+          "rect": {
+            "x": 481.5954284667969,
+            "y": 288.4222412109375,
+            "width": 21.21875,
+            "height": 17.59375,
+            "top": 288.4222412109375,
+            "right": 502.8141784667969,
+            "bottom": 306.0159912109375,
+            "left": 481.5954284667969
+          }
+        },
+        {
+          "id": "C_prime",
+          "kind": "point",
+          "text": "C′",
+          "shown": true,
+          "rect": {
+            "x": 757.3959350585938,
+            "y": 262.57061767578125,
+            "width": 21.4375,
+            "height": 17.59375,
+            "top": 262.57061767578125,
+            "right": 778.8334350585938,
+            "bottom": 280.16436767578125,
+            "left": 757.3959350585938
+          }
+        },
+        {
+          "id": "M",
+          "kind": "point",
+          "text": "M",
+          "shown": true,
+          "rect": {
+            "x": 623.7520141601562,
+            "y": 275.064697265625,
+            "width": 22.03125,
+            "height": 17.59375,
+            "top": 275.064697265625,
+            "right": 645.7832641601562,
+            "bottom": 292.658447265625,
+            "left": 623.7520141601562
+          }
+        }
+      ],
+      "soDo": [
+        {
+          "id": "kq_q",
+          "text": "d(M, (ABB′)) = √3/2",
+          "shown": true,
+          "rect": {
+            "x": 515.8153076171875,
+            "y": 306.98919677734375,
+            "width": 126.578125,
+            "height": 19.59375,
+            "top": 306.98919677734375,
+            "right": 642.3934326171875,
+            "bottom": 326.58294677734375,
+            "left": 515.8153076171875
+          }
+        }
+      ]
+    },
+    {
+      "name": "20-section-cube-A1BD-aux1",
+      "qs": "i=3&aux=1",
+      "renderer": "ANGLE (Intel, Intel(R) UHD Graphics (0x00009A68) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "step_text": "",
+      "grid_visible": false,
+      "witness_ids": [],
+      "visible_edge_ids": [
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-B_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-D_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-B_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-C",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B_prime-C_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-C_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-D",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C_prime-D_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:D-D_prime"
+      ],
+      "hidden_edge_ids": [
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D"
+      ],
+      "mixed_edge_ids": [],
+      "duplicate_visual_owner_ids": [],
+      "rendered_object_ids": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "A_prime",
+        "B_prime",
+        "C_prime",
+        "D_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime",
+        "mp_td_f3",
+        "td_f3#3cf",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::face:0",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-B",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-C",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-D",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-D",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::face:1",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-B_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B_prime-C_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C_prime-D_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A_prime-D_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::face:2",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:B-B_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:A-A_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::face:3",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:C-C_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::face:4",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::edge:D-D_prime",
+        "khoi_ABCD_A_primeB_primeC_primeD_prime::face:5",
+        "td_f3::face:0"
+      ],
+      "highlighted_ids": [],
+      "camera_snapshot": {
+        "position": [
+          4.719227563304848,
+          3.0429799011207908,
+          3.7612710821996878
+        ],
+        "view_matrix_column_major": [
+          -0.9999999999999997,
+          -0.9934635297843076,
+          1.4188129598324455,
+          0,
+          1.7320508075688772,
+          -0.5735764363510456,
+          0.8191520442889915,
+          0,
+          1.6653345369377343e-16,
+          1.6383040885779836,
+          1.1471528727020919,
+          0,
+          -0.2756841159236409,
+          0.13582812412553294,
+          -6.7515586804527485,
+          1
+        ],
+        "model_matrix_column_major": [
+          2,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          2,
+          0,
+          0,
+          0,
+          0,
+          1
+        ],
+        "projection_matrix_column_major": [
+          0.9058843206051751,
+          0,
+          0,
+          0,
+          0,
+          2.1445069205095586,
+          0,
+          0,
+          0,
+          0,
+          -1.001000500250125,
+          -1,
+          0,
+          0,
+          -0.2001000500250125,
+          0
+        ],
+        "viewport_width": 1231,
+        "viewport_height": 520,
+        "device_pixel_ratio": 1
+      },
+      "labels": [
+        {
+          "id": "A",
+          "kind": "point",
+          "text": "A",
+          "shown": true,
+          "rect": {
+            "x": 600.3656616210938,
+            "y": 321.1514892578125,
+            "width": 18.734375,
+            "height": 17.59375,
+            "top": 321.1514892578125,
+            "right": 619.1000366210938,
+            "bottom": 338.7452392578125,
+            "left": 600.3656616210938
+          }
+        },
+        {
+          "id": "B",
+          "kind": "point",
+          "text": "B",
+          "shown": true,
+          "rect": {
+            "x": 490.1895751953125,
+            "y": 422.03985595703125,
+            "width": 17.859375,
+            "height": 17.59375,
+            "top": 422.03985595703125,
+            "right": 508.0489501953125,
+            "bottom": 439.63360595703125,
+            "left": 490.1895751953125
+          }
+        },
+        {
+          "id": "C",
+          "kind": "point",
+          "text": "C",
+          "shown": true,
+          "rect": {
+            "x": 679.836669921875,
+            "y": 509.1687316894531,
+            "width": 18.078125,
+            "height": 17.593719482421875,
+            "top": 509.1687316894531,
+            "right": 697.914794921875,
+            "bottom": 526.762451171875,
+            "left": 679.836669921875
+          }
+        },
+        {
+          "id": "D",
+          "kind": "point",
+          "text": "D",
+          "shown": true,
+          "rect": {
+            "x": 759.7161254882812,
+            "y": 373.5115966796875,
+            "width": 19.328125,
+            "height": 17.59375,
+            "top": 373.5115966796875,
+            "right": 779.0442504882812,
+            "bottom": 391.1053466796875,
+            "left": 759.7161254882812
+          }
+        },
+        {
+          "id": "A_prime",
+          "kind": "point",
+          "text": "A′",
+          "shown": true,
+          "rect": {
+            "x": 594.0258178710938,
+            "y": 155.86367797851562,
+            "width": 22.09375,
+            "height": 17.59375,
+            "top": 155.86367797851562,
+            "right": 616.1195678710938,
+            "bottom": 173.45742797851562,
+            "left": 594.0258178710938
+          }
+        },
+        {
+          "id": "B_prime",
+          "kind": "point",
+          "text": "B′",
+          "shown": true,
+          "rect": {
+            "x": 451.9540100097656,
+            "y": 228.3741912841797,
+            "width": 21.21875,
+            "height": 17.59375,
+            "top": 228.3741912841797,
+            "right": 473.1727600097656,
+            "bottom": 245.9679412841797,
+            "left": 451.9540100097656
+          }
+        },
+        {
+          "id": "C_prime",
+          "kind": "point",
+          "text": "C′",
+          "shown": true,
+          "rect": {
+            "x": 697.36767578125,
+            "y": 298.06878662109375,
+            "width": 21.4375,
+            "height": 17.59375,
+            "top": 298.06878662109375,
+            "right": 718.80517578125,
+            "bottom": 315.66253662109375,
+            "left": 697.36767578125
+          }
+        },
+        {
+          "id": "D_prime",
+          "kind": "point",
+          "text": "D′",
+          "shown": true,
+          "rect": {
+            "x": 790.8502807617188,
+            "y": 192.4814910888672,
+            "width": 22.6875,
+            "height": 17.59375,
+            "top": 192.4814910888672,
+            "right": 813.5377807617188,
+            "bottom": 210.0752410888672,
+            "left": 790.8502807617188
+          }
+        }
+      ],
+      "soDo": []
+    }
+  ]
+}

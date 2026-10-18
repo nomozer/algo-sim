@@ -200,8 +200,17 @@ export function tangNhanManh(scene: Scene3D, id: string): Map<string, TangNhanMa
   /* regular-triangular-pyramid-w01 · D2: đại lượng không có hình — vật học sinh cần NHÌN là CHỦ THỂ nhãn của nó (đoạn
      SO của chiều cao, đáy ABCD của diện tích) do backend gắn (`annotation.subject_ids`), không phải phụ thuộc tính
      toán (S và mặt phẳng đo). Chủ thể lên tầng đích; không suy từ tên hay toạ độ. */
-  const nhan = theoId.get(id)?.annotation;
-  for (const x of nhan?.subject_ids ?? []) {
+  const chon = theoId.get(id);
+  const nhan = chon?.annotation;
+  const chuThe = nhan?.subject_ids?.length
+    ? nhan.subject_ids
+    : (chon && (chon.render === "readout" || chon.render === "non_visual") && !(chon.dependency_edges?.length))
+      ? (chon.depends ?? []).filter((x) => {
+          const t = theoId.get(x)?.type;
+          return t !== "quantity" && t !== "solid";
+        })
+      : [];
+  for (const x of chuThe) {
     if (theoId.has(x) && theoId.get(x)?.type !== "quantity") ra.set(x, "dich");
   }
   // Nhãn neo ĐOẠN gắn hai ĐIỂM đầu mút: vật cần nhìn là chính đoạn có đúng hai đầu mút ấy (đọc `endpoint_ids`).

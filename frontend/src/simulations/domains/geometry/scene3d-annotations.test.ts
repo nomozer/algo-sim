@@ -396,6 +396,173 @@ describe("nhân chứng hình chiếu (review I1)", () => {
     // Hộp nhãn phải nằm lệch sang bên phải hoặc bên trái đoạn đứng x = 200, không cắt qua x = 200
     expect(r!.x >= 206 || r!.x + r!.w <= 194).toBe(true);
   });
+
+  it("bài toán chứng minh đường thẳng vuông góc với mặt phẳng (BC ⊥ (SAB) tại B) chỉ sinh 1 ký hiệu góc vuông rõ ràng ở bước kết luận sau khi xác minh đủ 2 hướng gốc trong mặt phẳng", () => {
+    const s: Scene3D = {
+      free_objects: ["A", "B", "C", "D", "S"],
+      objects: [
+        P("A", ["0", "0", "0"]),
+        P("B", ["4", "0", "0"]),
+        P("C", ["4", "3", "0"]),
+        P("D", ["0", "3", "0"]),
+        P("S", ["0", "0", "4"]),
+        {
+          id: "sab", label: "Mặt phẳng (SAB)", notation: "(SAB)", type: "plane3", render: "surface",
+          origin: "derived", producer: "plane_through", depends: ["S", "A", "B"],
+          point: ["0", "0", "0"], normal: ["0", "-1", "0"],
+        },
+        {
+          id: "bc", label: "Cạnh BC", notation: "BC", type: "segment3", render: "segment",
+          origin: "derived", producer: "segment", depends: ["B", "C"],
+          endpoints: [["4", "0", "0"], ["4", "3", "0"]],
+        },
+        {
+          id: "kl", label: "BC ⊥ (SAB)", notation: "BC ⊥ (SAB)", render: "non_visual",
+          origin: "derived", producer: "perpendicular_check", depends: ["bc", "sab"], value: "90°",
+        } as never,
+      ],
+      events: [
+        { step_index: 0, action: "INIT", object: null, depends: ["A", "B", "C", "D", "S"], explanation: "Đầu." },
+        { step_index: 1, action: "CREATE", object: "sab", depends: ["S", "A", "B"], explanation: "Xét (SAB)." },
+        { step_index: 2, action: "CREATE", object: "bc", depends: ["B", "C"], explanation: "Xét BC." },
+        { step_index: 3, action: "MEASURE", object: "kl", depends: ["bc", "sab"], explanation: "Kết luận BC ⊥ (SAB)." },
+      ],
+    } as unknown as Scene3D;
+    const presentStep1 = new Set(["A", "B", "C", "D", "S", "sab"]);
+    const presentStep2 = new Set(["A", "B", "C", "D", "S", "sab", "bc"]);
+    const presentStep3 = new Set(["A", "B", "C", "D", "S", "sab", "bc", "kl"]);
+    // Bước 1 (chưa dựng BC) và Bước 2 (mới dựng BC, chưa tới bước kết luận BC ⊥ (SAB)): chưa sinh ký hiệu góc vuông
+    expect(projectionWitnessesAt(s, presentStep1, 1)).toEqual([]);
+    expect(projectionWitnessesAt(s, presentStep2, 2)).toEqual([]);
+    // Bước 3 (đã có kết luận chứng nhận kl): sinh đúng 1 ký hiệu góc vuông rõ ràng tại B, không chồng 2 dấu lên nhau
+    const ws = projectionWitnessesAt(s, presentStep3, 3);
+    expect(ws).toHaveLength(1);
+    const [w] = ws;
+    expect(w.id).toBe("perpendicular:bc");
+    expect(w.foot).toEqual([4, 0, 0]);
+    const dotUV = w.u[0] * w.v[0] + w.u[1] * w.v[1] + w.u[2] * w.v[2];
+    expect(Math.abs(dotUV)).toBeLessThan(1e-9);
+    expect(Math.abs(w.u[1])).toBeLessThan(1e-9);
+    expect(w.v[1]).toBeGreaterThan(0);
+  });
+
+  it("không dùng phép chiếu đại số để giả tạo hướng vuông góc và không phát sinh dấu góc vuông giả cho đường nằm trong mặt phẳng, đường nghiêng, quan hệ chưa chứng nhận hoặc hình suy biến", () => {
+    // 1. Phản ví dụ chiếu Gram-Schmidt: điểm S_lech = (0, 2, 4) khiến BS_lech = (-4, 2, 4) KHÔNG vuông góc với BC = (0, 3, 0).
+    // Nếu dùng phép chiếu lên mặt phẳng vuông góc với BC sẽ tự tạo hướng (-4, 0, 4) và sinh dấu góc vuông giả.
+    const canhLech: Scene3D = {
+      free_objects: ["A", "B", "C", "S_lech"],
+      objects: [
+        P("A", ["0", "0", "0"]),
+        P("B", ["4", "0", "0"]),
+        P("C", ["4", "3", "0"]),
+        P("S_lech", ["0", "2", "4"]),
+        {
+          id: "sab", label: "(SAB)", type: "plane3", render: "surface",
+          origin: "derived", producer: "plane_through", depends: ["S_lech", "A", "B"],
+          point: ["0", "0", "0"], normal: ["0", "-1", "0"],
+        },
+        {
+          id: "bc", label: "BC", type: "line3", render: "line",
+          origin: "derived", producer: "construct_line", depends: ["B", "C"],
+          point: ["4", "0", "0"], direction: ["0", "3", "0"],
+        },
+        {
+          id: "kl", label: "cos²(BC, (SAB))", type: "quantity", render: "readout",
+          origin: "derived", producer: "measure.angle_cos_sq", depends: ["bc", "sab"], value: "0",
+        },
+      ],
+      events: [
+        { step_index: 0, action: "MEASURE", object: "kl", depends: ["bc", "sab"], explanation: "Kết luận." },
+      ],
+    } as unknown as Scene3D;
+    expect(projectionWitnessesAt(canhLech, new Set(["A", "B", "C", "S_lech", "sab", "bc", "kl"]), 0)).toEqual([]);
+
+    // 2. Đường nằm trong mặt phẳng (AB nằm trong (SAB)) và đường nghiêng (SC không vuông góc với (SAB)): không sinh dấu góc vuông
+    const canhNghieng: Scene3D = {
+      free_objects: ["A", "B", "C", "S"],
+      objects: [
+        P("A", ["0", "0", "0"]),
+        P("B", ["2", "0", "0"]),
+        P("C", ["2", "2", "0"]),
+        P("S", ["0", "0", "4"]),
+        {
+          id: "sab", label: "(SAB)", type: "plane3", render: "surface",
+          origin: "derived", producer: "construct_plane", depends: ["A", "B", "S"],
+          point: ["0", "0", "4"], normal: ["0", "-8", "0"],
+        },
+        {
+          id: "ab", label: "AB", type: "line3", render: "line",
+          origin: "derived", producer: "construct_line", depends: ["A", "B"],
+          point: ["0", "0", "0"], direction: ["2", "0", "0"],
+        },
+        {
+          id: "sc", label: "SC", type: "line3", render: "line",
+          origin: "derived", producer: "construct_line", depends: ["S", "C"],
+          point: ["0", "0", "4"], direction: ["2", "2", "-4"],
+        },
+        {
+          id: "goc_sc", label: "cos²(SC, (SAB))", type: "quantity", render: "readout",
+          origin: "derived", producer: "measure.angle_cos_sq", depends: ["sc", "sab"], value: "1/6",
+        },
+      ],
+      events: [
+        { step_index: 0, action: "MEASURE", object: "goc_sc", depends: ["sc", "sab"], explanation: "Góc." },
+      ],
+    } as unknown as Scene3D;
+    expect(projectionWitnessesAt(canhNghieng, new Set(["A", "B", "C", "S", "sab", "ab", "sc", "goc_sc"]), 0)).toEqual([]);
+
+    // 3. Quan hệ chưa được chứng nhận (BC ⊥ (SAB) về tọa độ nhưng bài toán không có kết luận/chứng chỉ vuông góc giữa BC và (SAB))
+    const canhChuaChungNhan: Scene3D = {
+      free_objects: ["A", "B", "C", "S"],
+      objects: [
+        P("A", ["0", "0", "0"]),
+        P("B", ["2", "0", "0"]),
+        P("C", ["2", "2", "0"]),
+        P("S", ["0", "0", "4"]),
+        {
+          id: "sab", label: "(SAB)", type: "plane3", render: "surface",
+          origin: "derived", producer: "construct_plane", depends: ["A", "B", "S"],
+          point: ["0", "0", "4"], normal: ["0", "-8", "0"],
+        },
+        {
+          id: "bc", label: "BC", type: "line3", render: "line",
+          origin: "derived", producer: "construct_line", depends: ["B", "C"],
+          point: ["2", "0", "0"], direction: ["0", "2", "0"],
+        },
+      ],
+      events: [
+        { step_index: 0, action: "CREATE", object: "bc", depends: ["B", "C"], explanation: "Dựng BC." },
+      ],
+    } as unknown as Scene3D;
+    expect(projectionWitnessesAt(canhChuaChungNhan, new Set(["A", "B", "C", "S", "sab", "bc"]), 0)).toEqual([]);
+
+    // 4. Hình học suy biến: 3 điểm xác định mặt phẳng thẳng hàng (A, B, M cùng nằm trên trục Ox)
+    const canhSuyBien: Scene3D = {
+      free_objects: ["A", "B", "M", "C"],
+      objects: [
+        P("A", ["0", "0", "0"]),
+        P("B", ["2", "0", "0"]),
+        P("M", ["1", "0", "0"]),
+        P("C", ["2", "2", "0"]),
+        {
+          id: "sab_suy_bien", label: "(ABM)", type: "plane3", render: "surface",
+          origin: "derived", producer: "construct_plane", depends: ["A", "B", "M"],
+          point: ["0", "0", "0"], normal: ["0", "-1", "0"],
+        },
+        {
+          id: "bc", label: "BC", type: "line3", render: "line",
+          origin: "derived", producer: "construct_line", depends: ["B", "C"],
+          point: ["2", "0", "0"], direction: ["0", "2", "0"],
+        },
+        {
+          id: "kl", label: "BC ⊥ (ABM)", type: "quantity", render: "readout",
+          origin: "derived", producer: "perpendicular_check", depends: ["bc", "sab_suy_bien"], value: "90°",
+        },
+      ],
+      events: [
+        { step_index: 0, action: "MEASURE", object: "kl", depends: ["bc", "sab_suy_bien"], explanation: "Kết luận." },
+      ],
+    } as unknown as Scene3D;
+    expect(projectionWitnessesAt(canhSuyBien, new Set(["A", "B", "M", "C", "sab_suy_bien", "bc", "kl"]), 0)).toEqual([]);
+  });
 });
-
-

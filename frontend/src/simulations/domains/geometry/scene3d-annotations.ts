@@ -103,8 +103,9 @@ export function annotationsAt(
   const ketLuan = new Set<string>();
   for (const e of scene.events) {
     if (e.step_index > k || !e.object) continue;
-    if (e.semantic_kind === "FINAL_RESULT") ketLuan.add(e.object);
-    if (e.semantic_kind === "MEASUREMENT" || e.semantic_kind === "FINAL_RESULT") daTinh.add(e.object);
+    const koLoai = !e.semantic_kind && e.action === "MEASURE";
+    if (e.semantic_kind === "FINAL_RESULT" || koLoai) ketLuan.add(e.object);
+    if (e.semantic_kind === "MEASUREMENT" || e.semantic_kind === "FINAL_RESULT" || koLoai) daTinh.add(e.object);
   }
   const theoId = new Map(scene.objects.map((o) => [o.id, o]));
   const chon = selectedId ? theoId.get(selectedId)?.annotation?.same_as ?? selectedId : null;
@@ -169,15 +170,115 @@ export function projectionWitnessesAt(
         u: toVec3(w.marker.u), v: toVec3(w.marker.v) }]
       : [];
   });
-  if (step === undefined || !scene.events?.length) return tuDiem;
-  const k = clampStep(scene, step);
-  const ketLuan = new Set(
-    scene.events
-      .filter((e) => e.step_index <= k && e.semantic_kind === "FINAL_RESULT" && e.object)
-      .map((e) => e.object as string),
-  );
-  if (ketLuan.size === 0) return tuDiem;
   const daCo = new Set(tuDiem.map((w) => `${w.from.join(",")}|${w.foot.join(",")}`));
+  const k = step !== undefined && scene.events?.length ? clampStep(scene, step) : undefined;
+  const daTinh = new Set<string>();
+  const ketLuan = new Set<string>();
+  if (k !== undefined) {
+    for (const e of scene.events) {
+      if (e.step_index > k || !e.object) continue;
+      const koLoai = !e.semantic_kind && e.action === "MEASURE";
+      if (e.semantic_kind === "FINAL_RESULT" || koLoai) ketLuan.add(e.object);
+      if (e.semantic_kind === "MEASUREMENT" || e.semantic_kind === "FINAL_RESULT" || koLoai) daTinh.add(e.object);
+    }
+  }
+  const chungNhanDuongMp = (d: SceneObject, mp: SceneObject): boolean =>
+    scene.objects.some((q) => {
+      if (!present.has(q.id)) return false;
+      if (k !== undefined && !daTinh.has(q.id) && !ketLuan.has(q.id)) return false;
+      const dep = q.depends ?? [];
+      if (!dep.includes(d.id) || !dep.includes(mp.id)) return false;
+      const chu = `${q.notation ?? ""} ${q.label ?? ""}`;
+      if (chu.includes("⊥") || q.value === "90°" || q.value === "90") return true;
+      const bangKhong = q.value === "0" || (q.exact?.kind === "rational" && q.exact.value === "0");
+      if (chu.includes("cos") && bangKhong) return true;
+      return false;
+    });
+  const duongHien = scene.objects.filter(
+    (o) => present.has(o.id)
+      && ((o.type === "line3" && Boolean(o.direction)) || (o.type === "segment3" && o.endpoints?.length === 2))
+      && (o.depends?.length ?? 0) >= 2,
+  );
+  const mpHien = scene.objects.filter(
+    (o) => present.has(o.id) && o.type === "plane3" && o.normal && (o.depends?.length ?? 0) >= 3,
+  );
+  const tuDuongMp: WitnessShown[] = [];
+  for (const d of duongHien) {
+    const vd: Vec3 = d.direction
+      ? toVec3(d.direction)
+      : (() => {
+          const a = toVec3(d.endpoints![0]);
+          const b = toVec3(d.endpoints![1]);
+          return [b[0] - a[0], b[1] - a[1], b[2] - a[2]];
+        })();
+    const nd = Math.hypot(...vd);
+    if (!Number.isFinite(nd) || nd < 1e-6) continue;
+    for (const mp of mpHien) {
+      if (!chungNhanDuongMp(d, mp)) continue;
+      const np = toVec3(mp.normal!);
+      const nnp = Math.hypot(...np);
+      if (!Number.isFinite(nnp) || nnp < 1e-6) continue;
+      const cx = vd[1] * np[2] - vd[2] * np[1];
+      const cy = vd[2] * np[0] - vd[0] * np[2];
+      const cz = vd[0] * np[1] - vd[1] * np[0];
+      if (Math.hypot(cx, cy, cz) > 1e-4 * nd * nnp) continue;
+      const chungId = (d.depends ?? []).find(
+        (id) => (mp.depends ?? []).includes(id) && present.has(id) && Boolean(theoId.get(id)?.xyz),
+      );
+      if (!chungId) continue;
+      const chan = toVec3(theoId.get(chungId)!.xyz!);
+      const diemKhacD = (d.depends ?? [])
+        .filter((id) => id !== chungId && present.has(id) && Boolean(theoId.get(id)?.xyz))
+        .map((id) => toVec3(theoId.get(id)!.xyz!))[0];
+      const v: Vec3 = diemKhacD
+        ? [diemKhacD[0] - chan[0], diemKhacD[1] - chan[1], diemKhacD[2] - chan[2]]
+        : vd;
+      const nv = Math.hypot(...v);
+      if (!Number.isFinite(nv) || nv < 1e-6) continue;
+      const vcx = v[1] * np[2] - v[2] * np[1];
+      const vcy = v[2] * np[0] - v[0] * np[2];
+      const vcz = v[0] * np[1] - v[1] * np[0];
+      if (Math.hypot(vcx, vcy, vcz) > 1e-4 * nv * nnp) continue;
+      const diemKhacMp = (mp.depends ?? [])
+        .filter((id) => id !== chungId && present.has(id) && Boolean(theoId.get(id)?.xyz))
+        .map((id) => toVec3(theoId.get(id)!.xyz!))
+        .sort((a, b) => Math.abs(a[2] - chan[2]) - Math.abs(b[2] - chan[2]));
+      const daHuong: { raw: Vec3; donVi: Vec3 }[] = [];
+      for (const pMp of diemKhacMp) {
+        const uRaw: Vec3 = [pMp[0] - chan[0], pMp[1] - chan[1], pMp[2] - chan[2]];
+        const nu = Math.hypot(...uRaw);
+        if (!Number.isFinite(nu) || nu < 1e-6) continue;
+        // Kiểm tra trực tiếp trên hướng gốc uRaw (không dùng phép chiếu đại số để giả tạo hướng vuông góc):
+        // 1) uRaw phải thực sự nằm trong mặt phẳng mp (dot(uRaw, np) = 0)
+        // 2) uRaw phải thực sự vuông góc với v và vd (dot(uRaw, v) = 0)
+        const dotUN = uRaw[0] * np[0] + uRaw[1] * np[1] + uRaw[2] * np[2];
+        const dotUV = uRaw[0] * v[0] + uRaw[1] * v[1] + uRaw[2] * v[2];
+        const dotUVd = uRaw[0] * vd[0] + uRaw[1] * vd[1] + uRaw[2] * vd[2];
+        if (Math.abs(dotUN) > 1e-4 * nu * nnp) continue;
+        if (Math.abs(dotUV) > 1e-4 * nu * nv) continue;
+        if (Math.abs(dotUVd) > 1e-4 * nu * nd) continue;
+        const uDonVi: Vec3 = [uRaw[0] / nu, uRaw[1] / nu, uRaw[2] / nu];
+        if (daHuong.some((h) => Math.abs(h.donVi[0] * uDonVi[0] + h.donVi[1] * uDonVi[1] + h.donVi[2] * uDonVi[2]) > 0.98)) continue;
+        daHuong.push({ raw: uRaw, donVi: uDonVi });
+      }
+      // Phải có ít nhất 2 hướng gốc không cùng phương trong mặt phẳng cùng thực sự vuông góc với đường thẳng,
+      // và chỉ phát 1 ký hiệu góc vuông rõ ràng tại điểm giao để tránh chồng chéo 2 ký hiệu trên hình chiếu.
+      if (daHuong.length < 2) continue;
+      const khoa = `${chan.join(",")}|${chan.join(",")}`;
+      if (daCo.has(khoa)) continue;
+      daCo.add(khoa);
+      tuDuongMp.push({
+        id: `perpendicular:${d.id}`,
+        vai: "hinh_chieu",
+        from: chan,
+        foot: chan,
+        u: daHuong[0].raw,
+        v,
+      });
+    }
+  }
+  if (k === undefined) return [...tuDiem, ...tuDuongMp];
+  if (ketLuan.size === 0) return [...tuDiem, ...tuDuongMp];
   const tuKetQua = scene.objects.flatMap((o) => {
     const ann = o.type === "quantity" && ketLuan.has(o.id) ? o.annotation : undefined;
     if (!ann) return [];
@@ -190,7 +291,7 @@ export function projectionWitnessesAt(
     return [{ id: `perpendicular:${o.id}`, vai: "hinh_chieu" as const, from, foot,
       u: toVec3(w.marker.u), v: toVec3(w.marker.v) }];
   });
-  return [...tuDiem, ...tuKetQua];
+  return [...tuDiem, ...tuDuongMp, ...tuKetQua];
 }
 
 /** Ô soi (§16.6): dữ kiện số trong chuỗi của đại lượng (`tangNhanManh`) và đầu vào trực tiếp
