@@ -672,38 +672,179 @@ def test_X_khong_co_request_mang_nao():
             assert cam not in src, (mod.__name__, cam)
 
 
-def test_Y_duong_mac_dinh_VAN_khong_tham_chieu_compiler():
-    """`DEFAULT_MODE` giữ `LLM_ONLY`, và không tệp sản phẩm nào nhập gói ấy."""
+# ── Guard đường mặc định (run `hybrid-pre-main-hardening`) ──────────────────────────────────────────────────────────
+# Bản cũ (`test_Y_duong_mac_dinh_VAN_khong_tham_chieu_compiler`) khẳng định "không tệp sản phẩm nào nhập gói compiler"
+# và XANH, trong khi `pipeline.py` (từ 8724d305) nạp `geometry_compiler.routing` ở MỌI lượt analyze qua
+# `__import__("app.simulation.geometry" + "_compiler.routing")` — AST không thấy lời gọi hàm, phép tìm chuỗi không
+# thấy chuỗi bị cắt. Bất biến THẬT, ba lớp, không lớp nào dựa vào cách đánh vần một import:
+#   (a) mã sản phẩm không có cơ chế nạp động nào (bao đóng tĩnh vì thế mới là toàn bộ đồ thị import);
+#   (b) bao đóng tĩnh từ điểm vào mặc định: compiler CHỈ qua cổng `routing` được khai, route D không với tới;
+#   (c) module `app.*` nạp THẬT khi chạy `run_pipeline` ở `LLM_ONLY` (subprocess sạch) ⊆ bao đóng tĩnh, và route D
+#       không nạp — bắt mọi cách lách mà (a) chưa liệt kê, trên đường đã chạy.
+
+#: Route D (text → geometry functions): đường mặc định KHÔNG được với tới, tĩnh lẫn lúc chạy.
+_ROUTE_D = ("app.simulation.geometry_functions", "app.ai.function_route", "app.ai.function_calling",
+            "app.ai.fact_extraction")
+_COMPILER = "app.simulation.geometry_compiler"
+#: Cổng compiler DUY NHẤT được phép: (tệp sản phẩm, module nhập). `routing.quyet_dinh_dinh_tuyen` trả `DISABLED`
+#: khi `GEOMETRY_COMPILER_MODE` ≠ `DETERMINISTIC_FIRST`, không chạm `bien_dich`/`build_fact_graph`.
+_CONG_COMPILER = {("ai/pipeline.py", "app.simulation.geometry_compiler.routing")}
+
+_NAP_DONG_TEN = {"__import__", "exec", "eval", "compile", "__builtins__", "__loader__"}
+_NAP_DONG_THUOC_TINH = {"import_module", "__import__", "spec_from_file_location", "spec_from_loader",
+                        "module_from_spec", "exec_module", "load_module", "find_spec", "find_module", "reload"}
+_NAP_DONG_MODULE = {"importlib", "imp", "builtins", "runpy", "pkgutil", "zipimport"}
+
+
+def _goc_app():
     from pathlib import Path
-
-    from app.simulation.geometry_compiler import routing as RT
-
-    assert RT.CHE_DO_MAC_DINH == "LLM_ONLY"
-    assert RT.che_do({}) == "LLM_ONLY"
 
     goc = Path(A.__file__).resolve().parents[2]          # backend/app
     assert goc.name == "app", goc
+    return goc
 
-    # (1) BAO ĐÓNG IMPORT (AST, kể cả import trong hàm) từ hai điểm vào mặc định: không với tới compiler, cũng không
-    #     với tới đường nghiên cứu text → geometry functions (ai-function-route: thay phép quét chuỗi + loại trừ cả thư
-    #     mục của bản text-to-geometry-functions, vốn không bắt được tham chiếu bắc cầu).
-    cam = ("app.simulation.geometry_compiler", "app.simulation.geometry_functions",
-           "app.ai.function_route", "app.ai.function_calling", "app.ai.fact_extraction")
+
+def _nap_dong(nguon: str) -> list[str]:
+    """Dấu hiệu nạp module động trong một tệp (AST): builtin nạp/thực thi, API importlib, `sys.modules`, hay nhập các
+    module nạp động. Không đọc chuỗi — phép cắt chuỗi không qua được vì chính CƠ CHẾ nạp bị cấm."""
+    ra = []
+    for n in ast.walk(ast.parse(nguon)):
+        if isinstance(n, ast.Name) and n.id in _NAP_DONG_TEN:
+            ra.append(f"{n.lineno}:{n.id}")
+        elif isinstance(n, ast.Attribute) and (n.attr in _NAP_DONG_THUOC_TINH or (
+                n.attr == "modules" and isinstance(n.value, ast.Name) and n.value.id == "sys")):
+            ra.append(f"{n.lineno}:.{n.attr}")
+        elif isinstance(n, ast.Import) and any(a.name.split(".")[0] in _NAP_DONG_MODULE for a in n.names):
+            ra.append(f"{n.lineno}:import")
+        elif isinstance(n, ast.ImportFrom) and not n.level and (n.module or "").split(".")[0] in _NAP_DONG_MODULE:
+            ra.append(f"{n.lineno}:from-import")
+    return ra
+
+
+def _module_nap_luc_chay(tmp_path, tiem: str = "") -> set[str]:
+    """`app.*` có trong `sys.modules` sau khi một tiến trình SẠCH nhập `app.main` và chạy `run_pipeline` ở `LLM_ONLY`
+    tới lượt gọi provider đầu tiên (bị chặn bằng ngoại lệ dừng; 0 mạng, không khoá API). `tiem` = mã chạy ngay trước
+    lượt gọi ấy — phép tiêm lỗi cho lớp (c)."""
+    import os
+    import subprocess
+    import sys
+
+    text, contract = _hop_dong_lang_tru()
+    hd = tmp_path / "contract.json"
+    hd.write_text(contract.model_dump_json(), encoding="utf-8")
+    ma = (
+        "import asyncio, json, sys\n"
+        "import app.main  # noqa: F401\n"
+        "from app.ai import pipeline as PL\n"
+        "from app.simulation.semantic_program.request_contract import RequestContract\n"
+        "hd = RequestContract.model_validate_json(open(sys.argv[1], encoding='utf-8').read())\n"
+        "da = []\n"
+        "class Dung(Exception):\n    pass\n"
+        "async def analyze(*a, **k):\n    da.append('analyze')\n    return hd, None\n"
+        "async def gemini(*a, **k):\n    exec(sys.argv[3])\n    raise Dung()\n"
+        "PL.stage_semantic_analyze = analyze\nPL.call_gemini = gemini\n"
+        "try:\n    asyncio.run(PL.run_pipeline(sys.argv[2], 'khoa_gia'))\nexcept Dung:\n    pass\n"
+        "assert da == ['analyze'], da\n"
+        "print(json.dumps(sorted(m for m in sys.modules if m == 'app' or m.startswith('app.'))))\n"
+    )
+    env = {k: v for k, v in os.environ.items()
+           if k not in ("GEOMETRY_COMPILER_MODE", "ALLOW_LIVE_AI", "GEMINI_API_KEY", "SEMANTIC_ROUTE_MODE")}
+    env.update(PYTHONIOENCODING="utf-8", PYTHONDONTWRITEBYTECODE="1")
+    kq = subprocess.run([sys.executable, "-c", ma, str(hd), text, tiem or "pass"], cwd=_goc_app().parent, env=env,
+                        capture_output=True, text=True, encoding="utf-8", timeout=180)
+    assert kq.returncode == 0, kq.stderr[-2000:]
+    return set(json.loads(kq.stdout.strip().splitlines()[-1]))
+
+
+def _hop_dong_lang_tru():
+    """Đề lăng trụ đứng đáy vuông — chính fixture của `test_prism_production_route` (đi qua dòng định tuyến)."""
+    from tests.geometry.test_prism_production_route import _prism_p01_contract
+
+    return _prism_p01_contract()
+
+
+def test_Y_che_do_mac_dinh_la_LLM_ONLY_va_routing_khong_chay_compiler(monkeypatch):
+    """`LLM_ONLY` (env rỗng/lạ) ⇒ `DISABLED`, không một hàm compiler nào được gọi."""
+    from app.simulation.geometry_compiler import compiler as Cmp
+    from app.simulation.geometry_compiler import contract_adapter as Ad
+    from app.simulation.geometry_compiler import routing as RT
+
+    assert RT.CHE_DO_MAC_DINH == "LLM_ONLY" and RT.che_do({}) == "LLM_ONLY"
+
+    def cam(*a, **k):
+        raise AssertionError("compiler chạy ở LLM_ONLY")
+
+    monkeypatch.setattr(Cmp, "bien_dich", cam)
+    monkeypatch.setattr(Ad, "build_fact_graph", cam)
+    for env in ({}, {"GEOMETRY_COMPILER_MODE": "LLM_ONLY"}, {"GEOMETRY_COMPILER_MODE": "bat_cu"}):
+        assert RT.quyet_dinh_dinh_tuyen(_hop_dong_lang_tru()[1], env).decision == "DISABLED"
+
+
+def test_Y_ma_san_pham_khong_co_co_che_nap_dong():
+    """Lớp (a): không tệp nào dưới `backend/app` nạp module động."""
+    goc = _goc_app()
+    lo = {str(p.relative_to(goc)): v for p in goc.rglob("*.py") if (v := _nap_dong(p.read_text(encoding="utf-8")))}
+    assert lo == {}, f"nạp động trong mã sản phẩm (bao đóng tĩnh sẽ nói dối): {lo}"
+
+
+@pytest.mark.parametrize("cach_lach", [
+    '__import__("app.ai." + "function_route")',
+    'import importlib\nimportlib.import_module("app.ai." + "function_route")',
+    'from importlib import import_module as nap\nnap("app.ai." + "function_route")',
+    'getattr(__builtins__, "__imp" + "ort__")("app.ai.function_route")',
+    'exec("import app.ai." + "function_route")',
+    'import builtins\nbuiltins.__dict__["__imp" + "ort__"]("app.ai.function_route")',
+    'import sys\nm = sys.modules["builtins"]',
+    'import importlib.util as u\nu.spec_from_file_location("x", "app/ai/function_route.py")',
+])
+def test_Y_bo_do_bat_moi_cach_lach_import(cach_lach):
+    """Phép tiêm lỗi cho lớp (a): chèn từng cách lách vào bản sao `pipeline.py` ⇒ bị bắt; bản gốc vẫn sạch."""
+    goc_nguon = (_goc_app() / "ai" / "pipeline.py").read_text(encoding="utf-8")
+    assert _nap_dong(goc_nguon) == []
+    tiem = goc_nguon + "\n\ndef _lach():\n" + "".join(f"    {d}\n" for d in cach_lach.splitlines())
+    assert _nap_dong(tiem), cach_lach
+
+
+def test_Y_bao_dong_tinh_compiler_chi_qua_cong_routing_va_khong_cham_route_D():
+    """Lớp (b): compiler với tới được CHỈ qua cổng đã khai; route D không với tới từ `app.main`/`app.ai.pipeline`."""
+    goc = _goc_app()
     for diem_vao in ("app.main", "app.ai.pipeline"):
-        lo = sorted(m for m in _bao_dong_import(goc, diem_vao) if m.startswith(cam))
-        assert lo == [], f"đường mặc định {diem_vao} với tới {lo}"
-    # Đối chứng dương: phép tính bao đóng PHẢI thấy một module chỉ với tới được qua hai bậc, một bậc là import TƯƠNG ĐỐI
-    # (`function_route` → `geometry_functions/__init__` → `.engine` → `ir_builders`) — nếu không, (1) xanh vô nghĩa.
+        lo = sorted(m for m in _bao_dong_import(goc, diem_vao) if m.startswith(_ROUTE_D))
+        assert lo == [], f"đường mặc định {diem_vao} với tới route D: {lo}"
+    # Đối chứng dương: bao đóng PHẢI thấy module chỉ tới được qua hai bậc, một bậc là import TƯƠNG ĐỐI, và PHẢI thấy cổng
+    # compiler từ `app.main` (bắc cầu qua pipeline) — nếu không, các khẳng định trên xanh vô nghĩa.
     assert "app.simulation.semantic_program.ir_builders" in _bao_dong_import(goc, "app.ai.function_route")
+    assert "app.simulation.geometry_compiler.routing" in _bao_dong_import(goc, "app.main")
+    # Tệp sản phẩm nào nhập gói compiler (AST, cả import trong hàm), nhập cái gì: đúng cổng đã khai, không hơn.
+    def la_module(m: str) -> bool:
+        p = goc.parent.joinpath(*m.split("."))
+        return p.with_suffix(".py").exists() or (p / "__init__.py").exists()
 
-    # (2) Bất biến gốc, KHÔNG ngoại lệ: ngoài gói compiler, không tệp sản phẩm nào nhắc tới nó. Đường nghiên cứu dùng
-    #     bộ tạo câu lệnh IR trung lập `semantic_program/ir_builders.py` (compiler re-export), không dùng gói compiler.
-    lo = sorted(str(p.relative_to(goc)) for p in goc.rglob("*.py")
-                if "geometry_compiler" not in p.parts and p.name != "__init__.py"
-                and "geometry_compiler" in p.read_text(encoding="utf-8"))
-    assert lo == [], f"đường sản phẩm đã tham chiếu compiler: {lo}"
-    assert not any(m.startswith("app.simulation.geometry_compiler")
-                   for m in _bao_dong_import(goc, "app.ai.function_route")), "đường nghiên cứu kéo theo compiler"
+    cong = {(p.relative_to(goc).as_posix(), m) for p in goc.rglob("*.py")
+            if not p.relative_to(goc).as_posix().startswith("simulation/geometry_compiler/")
+            for m in _nhap_tu(p) if m.startswith(_COMPILER) and la_module(m)}
+    assert cong == _CONG_COMPILER, f"tham chiếu compiler ngoài cổng đã khai: {sorted(cong ^ _CONG_COMPILER)}"
+    assert not any(m.startswith(_COMPILER) for m in _bao_dong_import(goc, "app.ai.function_route")), \
+        "đường nghiên cứu kéo theo compiler"
+
+
+def test_Y_module_nap_luc_chay_nam_trong_bao_dong_tinh_va_route_D_khong_nap(tmp_path):
+    """Lớp (c): đường mặc định CHẠY THẬT. Mọi `app.*` đã nạp phải nằm trong bao đóng tĩnh của `app.main`; route D không
+    nạp; cổng routing có nạp (chứng cứ dòng định tuyến đã chạy — nếu không, phép so rỗng nghĩa)."""
+    goc = _goc_app()
+    nap = _module_nap_luc_chay(tmp_path)
+    assert "app.simulation.geometry_compiler.routing" in nap, "dòng định tuyến không chạy — probe vô nghĩa"
+    assert not any(m.startswith(_ROUTE_D) for m in nap), sorted(m for m in nap if m.startswith(_ROUTE_D))
+    tinh = _bao_dong_import(goc, "app.main")
+    lot = sorted(nap - tinh)
+    assert lot == [], f"nạp lúc chạy nhưng bao đóng tĩnh không thấy (import bị che): {lot}"
+
+
+def test_Y_probe_luc_chay_bat_import_lach_tren_duong_da_chay(tmp_path):
+    """Phép tiêm lỗi cho lớp (c): nạp route D bằng chuỗi cắt ngay trên đường đã chạy ⇒ probe thấy nó."""
+    nap = _module_nap_luc_chay(tmp_path, '__import__("app.ai." + "function_route")')
+    assert "app.ai.function_route" in nap
+    assert "app.ai.function_route" not in _bao_dong_import(_goc_app(), "app.main")
 
 
 def _nhap_tu(f, goi: str | None = None) -> set[str]:

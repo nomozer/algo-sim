@@ -710,11 +710,12 @@ async def _semantic_route_attempt(
           ])
 
     # ─── ĐỊNH TUYẾN COMPILER TẤT ĐỊNH (OPT-IN) ──────────────────────────
+    # Cổng compiler DUY NHẤT của đường mặc định, nhập tường minh để bao đóng import tĩnh thấy nó (bản cắt chuỗi qua
+    # `__import__` trước đây làm guard đường mặc định xanh sai). `LLM_ONLY` ⇒ `DISABLED`, không chạy compiler.
+    from app.simulation.geometry_compiler.routing import quyet_dinh_dinh_tuyen
     from app.simulation.semantic_program.validator import validate_semantic_program
 
-    _gc_pkg = "app.simulation.geometry" + "_compiler.routing"
-    _gc_mod = __import__(_gc_pkg, fromlist=["quyet_dinh_dinh_tuyen"])
-    qd = _gc_mod.quyet_dinh_dinh_tuyen(contract)
+    qd = quyet_dinh_dinh_tuyen(contract)
     if qd.decision == "USE_COMPILER" and qd.program is not None:
         val = validate_semantic_program(qd.program)
         if val.ok and val.spec is not None:
