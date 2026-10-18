@@ -167,7 +167,7 @@
 - **NEXT_TEST:** khi UI đọc nó: goal kiểm trên một cấu hình không bao giờ hiển thị là "đã chứng minh".
 
 ### D-08: Nối API sau cờ
-- **STATUS:** PROVED cho preview — `POST /api/preview/hybrid`: cờ env + token server ≥ 32 ký tự + header + peer loopback; TẮT ⇒ 404 trước mọi import tuyến D; cổng trả lời trước khi đọc body; chỉ dữ liệu fixture offline (không transport, kể cả `ALLOW_LIVE_AI=1` có khoá); không cache; ngoài OpenAPI; `LLM_ONLY` của `/api/analyze` khớp băm byte với baseline trước khi nối.
+- **STATUS:** PROVED cho preview — `POST /api/preview/hybrid`: cờ env + token server ≥ 32 ký tự + header + peer loopback, request có header `Origin` (trình duyệt) bị từ chối; TẮT ⇒ 404 trước mọi import tuyến D, và `/api/health` không nạp tuyến D; cổng trả lời trước khi đọc body; chỉ dữ liệu fixture offline (không transport, kể cả `ALLOW_LIVE_AI=1` có khoá); không cache; ngoài OpenAPI; `LLM_ONLY` của `/api/analyze` khớp băm byte với baseline trước khi nối.
 - **BLOCKER:** phục vụ tuyến D qua `/api/analyze` hay qua provider thật chưa được duyệt.
 - **NEXT_TEST:** —
 

@@ -837,15 +837,27 @@ def test_Y_bao_dong_tinh_compiler_chi_qua_cong_routing_va_khong_cham_route_D():
     assert preview_edges == _CONG_PREVIEW
     # The closure SKIPS these declared edges, so they must stay lazy: an import inside a function body that only the
     # gated code path runs. A module-level import would load Route D at app import and hide behind the skip (review).
+    # Every spelling is resolved like `_nhap_tu` does (`import a.b`, `from a import b`, relative `from .x import y`) —
+    # re-review: checking only `from app.ai.hybrid_preview import …` let three other spellings pass at module level.
     for tep, _ in _CONG_PREVIEW:
         cay = ast.parse((goc / tep).read_text(encoding="utf-8"))
         cha = {con: n for n in ast.walk(cay) for con in ast.iter_child_nodes(n)}
+        goi = ("app." + tep[:-3].replace("/", ".")).rsplit(".", 1)[0]
         for n in ast.walk(cay):
-            if isinstance(n, ast.ImportFrom) and n.module == "app.ai.hybrid_preview":
-                tren = cha.get(n)
-                while tren is not None and not isinstance(tren, (ast.FunctionDef, ast.AsyncFunctionDef)):
-                    tren = cha.get(tren)
-                assert tren is not None, f"{tep}:{n.lineno} imports app.ai.hybrid_preview at module level"
+            if isinstance(n, ast.Import):
+                dich = {a.name for a in n.names}
+            elif isinstance(n, ast.ImportFrom):
+                mod = (".".join(goi.split(".")[: len(goi.split(".")) - (n.level - 1)] + ([n.module] if n.module else []))
+                       if n.level else (n.module or ""))
+                dich = {mod} | {f"{mod}.{a.name}" for a in n.names}
+            else:
+                continue
+            if not any(d.startswith("app.ai.hybrid_preview") for d in dich):
+                continue
+            tren = cha.get(n)
+            while tren is not None and not isinstance(tren, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                tren = cha.get(tren)
+            assert tren is not None, f"{tep}:{n.lineno} imports app.ai.hybrid_preview at module level"
     # Tệp sản phẩm nào nhập gói compiler (AST, cả import trong hàm), nhập cái gì: đúng cổng đã khai, không hơn.
     def la_module(m: str) -> bool:
         p = goc.parent.joinpath(*m.split("."))

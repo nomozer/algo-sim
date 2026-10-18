@@ -5,7 +5,7 @@
 REPORT = docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/
 CLASSIFICATION = see report.md §0 (owner scope GO_HYBRID_ROUTE_D_PREVIEW_WIRING; operator-only OFFLINE Route D preview; Codex GPT-6.1 work recovered at 902730b9, completed by Claude takeover; Hybrid product NO-GO, LLM_ONLY default byte-identical)
-CODE_COMMIT = 902730b9 (Codex work as found) · af4bcf47 (takeover fixes, product commit); candidate freeze 8ffa58f4 (tree_hash 75af7b71f21031ec92ec9190624315ea8dfe42882f36e462262faf6df6783ddf, 111 files)
+CODE_COMMIT = 902730b9 (Codex work as found) · af4bcf47 (takeover fixes) · 93390f58 (review fixes, product commit); candidate freeze dc8e25ba (tree_hash 4c1b9a270430773a0bafede1f86120ea92ad066accdd7163cbe405b50253142d, 111 files; earlier freeze 8ffa58f4 = 75af7b71… superseded)
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-route-d-preview-wiring/run.json
 MODEL_REQUEST_COUNT = 0 (offline fixture data only; no provider transport exists in the preview)
 CORRECTS = NONE
