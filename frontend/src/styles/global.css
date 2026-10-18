@@ -4353,3 +4353,38 @@ html {
     display: none;
   }
 }
+
+/* SIMULATION-FIRST UX (P2 #3): Vùng hướng dẫn quan sát ngắn gọn giữa hàng trên và sân khấu 3D — không che hình,
+   không bóp canvas ngang, và tự được `caoKhungKhaDung` tính vào chiều cao còn lại của khung nhìn. */
+.geo3d-huong-dan {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-xxs) var(--sp-md);
+  padding: 6px var(--sp-sm);
+  border: 1px solid var(--hairline);
+  border-radius: var(--rounded-md);
+  background: var(--canvas-soft);
+  color: var(--ink-secondary);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.geo3d-huong-dan-buoc {
+  font-weight: 600;
+  color: var(--ink);
+  min-width: 0;
+}
+
+.geo3d-huong-dan-goi-y {
+  color: var(--ink-muted);
+  font-size: 0.75rem;
+}
+
+@media (orientation: landscape) and (max-height: 30rem) {
+  .geo3d-huong-dan {
+    display: none;
+  }
+}
+

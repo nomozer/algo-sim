@@ -503,6 +503,7 @@ export interface SceneEvent {
   step_index: number;
   action: EventAction;
   object: string | null;
+  alias_object?: string | null;
   objects?: string[];
   retires?: string[];
   depends: string[];
@@ -697,6 +698,7 @@ function narrationGoc(scene: Scene3D, k: number, e: SceneEvent | undefined): str
 
 /** Kiểm leakage theo chính payload, không theo denylist case cố định. */
 export function learnerTextIsSafe(scene: Scene3D, text: string): boolean {
+  if (/^\s*Gán\s+\S+\s*=/u.test(text)) return false;
   if (/\b[\p{L}\p{N}]+_[\p{L}\p{N}_]+\b/u.test(text)) return false;
   const tokens = new Set<string>();
   for (const obj of scene.objects) {
@@ -1729,3 +1731,60 @@ export function quantityChoices(scene: Scene3D, step: number): { results: string
   });
   return { results: rieng(lg.results), steps: rieng(lg.steps), givens: rieng(lg.givens) };
 }
+
+/**
+ * SIMULATION-FIRST UX (P1): Tập id các ĐẠI LƯỢNG KẾT QUẢ CUỐI của bài toán (cùng bí danh `same_as` hai chiều).
+ *
+ * Phân biệt rõ đại lượng dựng hình/quan sát (`given`, `intermediate` / `MEASUREMENT`) với kết quả cuối của đề
+ * (`status=result` / `role="result"` / `category="result"` / `FINAL_RESULT` / `hybrid.answers`). Các hàm model
+ * thuần (`solutionAt`, `quantityChoices`, `annotationsAt`) giữ nguyên dữ liệu gốc; giao diện mô phỏng học sinh
+ * dùng tập này để không lộ đáp số cuối ở bất kỳ bước nào trong khi vẫn giữ chứng chỉ vuông góc và đoạn nhân chứng 3D.
+ */
+export function tapKetQuaCuoi(
+  scene: Scene3D,
+  hybrid?: { answers?: readonly { quantity_id: string }[] } | null,
+): ReadonlySet<string> {
+  const ra = new Set<string>();
+  for (const a of hybrid?.answers ?? []) {
+    if (a?.quantity_id) ra.add(a.quantity_id);
+  }
+  const cuoi = Math.max(0, stepCount(scene) - 1);
+  for (const r of solutionAt(scene, cuoi).results) {
+    ra.add(r.id);
+  }
+  for (const e of scene.events) {
+    if (e.semantic_kind === "FINAL_RESULT") {
+      if (e.object) ra.add(e.object);
+      if (e.alias_object) ra.add(e.alias_object);
+    }
+  }
+  for (const o of scene.objects) {
+    if (o.type !== "quantity") continue;
+    if (
+      o.annotation?.role === "result"
+      || o.annotation?.category === "result"
+      || o.formation_roles?.includes("FINAL_RESULT")
+      || o.display_group?.includes("target")
+    ) {
+      ra.add(o.id);
+    }
+  }
+  let doi = true;
+  while (doi) {
+    doi = false;
+    for (const o of scene.objects) {
+      for (const s of [o.annotation?.same_as, o.alias_of]) {
+        if (!s) continue;
+        if (ra.has(o.id) && !ra.has(s)) {
+          ra.add(s);
+          doi = true;
+        } else if (ra.has(s) && !ra.has(o.id)) {
+          ra.add(o.id);
+          doi = true;
+        }
+      }
+    }
+  }
+  return ra;
+}
+

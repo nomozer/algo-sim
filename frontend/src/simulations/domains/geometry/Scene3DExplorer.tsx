@@ -39,12 +39,16 @@ import { veKhongGian } from "./scene3d-chart";
 import {
   coherentFormula,
   geometryAnchor,
+  geometryNarrationAt,
+  geometryStepList,
+  geometryStepOf,
   ghiChuGiaTriDung,
   objectsAt,
   hienSo,
   quantityChoices,
+  tapKetQuaCuoi,
 } from "./scene3d-model";
-import { cauQuanSat, giaTriDapSo, hybridTaiBuoc, type HybridPreviewView } from "./hybrid-preview-adapter";
+import { cauQuanSat, hybridTaiBuoc, type HybridPreviewView } from "./hybrid-preview-adapter";
 import {
   type InteractionState,
   type TreeNode,
@@ -214,12 +218,8 @@ export function Scene3DExplorer({
   const day = useMemo(() => withSubEntities(scene), [scene]);
   const cay = useMemo(() => semanticTree(day), [day]);
   const [tt, setTt] = useState<InteractionState>(taoTrangThai);
-  // Disclosure belongs to this analysis, never to the timeline or a camera preference.
-  const [dapAnDaMo, setDapAnDaMo] = useState<{ scene: Scene3D; hybrid: HybridPreviewView } | null>(null);
-  const hienDapAn = !!hybrid && dapAnDaMo?.scene === sceneKhung && dapAnDaMo.hybrid === hybrid;
-  const dapAnAn = useMemo(() => new Set(hienDapAn ? [] : (hybrid?.answers ?? []).map((a) => a.quantity_id)),
-    [hybrid, hienDapAn]);
-  useEffect(() => { setDapAnDaMo(null); }, [sceneKhung, hybrid]);
+  // SIMULATION-FIRST UX (P1): Mọi đại lượng kết quả cuối của bài toán luôn nằm trong `dapAnAn` ở chế độ học sinh.
+  const dapAnAn = useMemo(() => tapKetQuaCuoi(day, hybrid), [day, hybrid]);
   const [moc, setMoc] = useState<SeenMarks>(CHUA_THAY);
   const [baoDongBo, setBaoDongBo] = useState(false);
   /* W4 (H-W2-3): các BẢNG THÔNG TIN đang mở — mỗi bảng độc lập (mở cái này không đóng cái kia); chỉ giữ TÊN bảng,
@@ -364,11 +364,8 @@ export function Scene3DExplorer({
     const o = day.objects.find((x) => x.id === id);
     if (!o) return ten(id);
     if (dapAnAn.has(id)) return o.notation || ten(id);
-    // F3: đáp số tổng quát (dạng chữ, đã kiểm ở biên `hybrid-preview-adapter`) trước; giá trị số là của hình dựng.
-    const dapSo = hybrid?.answers.find((a) => a.quantity_id === id);
-    const tongQuat = dapSo ? giaTriDapSo(dapSo) : null;
     const soDung = `${hienSo(o.exact, o.value)}${ghiChuGiaTriDung(day)}`;
-    return `${o.notation || ten(id)} = ${tongQuat ? `${tongQuat} — ${soDung}` : soDung}`;
+    return `${o.notation || ten(id)} = ${soDung}`;
   };
   /* W05 · E: một mục của bảng «Đại lượng» thay dòng của thẻ lời giải: nhãn backend (`label`) rồi `ký hiệu = giá
      trị`. Không dựng tên từ kiểu hay phép dựng — `display_names.py` là thẩm quyền đặt tên duy nhất. */
@@ -383,9 +380,25 @@ export function Scene3DExplorer({
     );
   };
   const daBung = tt.exploded_groups.includes(NHOM_BUNG);
-  // ROADMAP §0.1-2: mọi đại lượng đã có ở bước này — một lối chọn cho cả đáp số bị ẩn mặc định.
-  const daiLuong = useMemo(() => quantityChoices(day, buocHien), [day, buocHien]);
+  // SIMULATION-FIRST UX (P1 #4, #5, #6, #7): Bảng «Đại lượng» chỉ hiện dữ kiện và đại lượng dựng hình/trung gian,
+  // không đưa đại lượng kết quả cuối ra chế độ mô phỏng học sinh.
+  const daiLuong = useMemo(() => {
+    const q = quantityChoices(day, buocHien);
+    return {
+      results: q.results.filter((id) => !dapAnAn.has(id)),
+      steps: q.steps.filter((id) => !dapAnAn.has(id)),
+      givens: q.givens.filter((id) => !dapAnAn.has(id)),
+    };
+  }, [day, buocHien, dapAnAn]);
   const coDaiLuong = daiLuong.results.length + daiLuong.steps.length + daiLuong.givens.length > 0;
+  // SIMULATION-FIRST UX (P2 #3): Hướng dẫn quan sát ngắn gọn theo bước dựng hiện tại khi có dữ liệu timeline tin cậy.
+  const dsBuoc = useMemo(() => geometryStepList(day), [day]);
+  const chiSoBuoc = dsBuoc.length > 0 ? geometryStepOf(day, buocHien) : 0;
+  const mucBuocHienTai = useMemo(() => {
+    if (day.events.length === 0) return "";
+    const goc = dsBuoc[chiSoBuoc]?.label || geometryNarrationAt(day, buocHien) || "Dữ kiện đề cho";
+    return goc.replace(/Số đo/g, "Độ lớn").replace(/Kết quả/g, "Mục dựng");
+  }, [day, dsBuoc, chiSoBuoc, buocHien]);
   /* W05 · E: vai trò trong chuỗi nhân quả quanh vật đang chọn (W10) tô ở mục bảng «Đại lượng» — trước ở dòng thẻ
      lời giải đã gỡ. Không chọn gì ⇒ trung tính; ngoài chuỗi ⇒ dịu, không biến mất. */
   const tang = useMemo(() => (tt.selected_id ? tangNhanManh(day, tt.selected_id) : null), [day, tt.selected_id]);
@@ -443,7 +456,7 @@ export function Scene3DExplorer({
           <MenuCongCu nhan="Hiển thị" khoa="hien-thi" muc={[
             ...(coAn ? [{ nhan: "Hiện tất cả số đo", chon: xem.showAll, giuMo: true,
               onChon: () => setXem((s) => ({ showAll: !s.showAll })),
-              title: "Hiện mọi số đo và đáp số đã có ở bước này ngay cạnh vật chúng đo" }] : []),
+              title: "Hiện các số đo dựng hình và đại lượng trung gian đã có ở bước này ngay cạnh vật chúng đo" }] : []),
             ...(coHinhPhu ? [{ nhan: "Hình phụ", chon: hinhPhu, giuMo: true, onChon: () => setHinhPhu((x) => !x),
               title: "Hiện các đường và mặt phẳng phụ đã dùng xong (vd đường chéo dựng tâm, mặt phẳng để đo)" }] : []),
             { nhan: "Lưới nền", chon: luoi, giuMo: true, onChon: () => setLuoi((x) => !x),
@@ -467,6 +480,18 @@ export function Scene3DExplorer({
           ]} />
         </div>
       </div>
+
+      {/* SIMULATION-FIRST UX (P2 #3): Vùng hướng dẫn quan sát ngắn gọn theo bước dựng, không suy diễn kết luận, không khóa điều khiển. */}
+      {day.events.length > 0 && (
+        <div className="geo3d-huong-dan" data-learner-guidance="" aria-label="Hướng dẫn quan sát">
+          <span className="geo3d-huong-dan-buoc" data-guidance-step="">
+            Đang dựng (bước {chiSoBuoc + 1}/{Math.max(1, dsBuoc.length)}): {mucBuocHienTai}
+          </span>
+          <span className="geo3d-huong-dan-goi-y" data-guidance-hint="">
+            Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ
+          </span>
+        </div>
+      )}
 
       {/* ── SÂN KHẤU: khung 3D + lớp phủ ───────────────────────────────── */}
       <div className="geo3d-san">
@@ -516,24 +541,8 @@ export function Scene3DExplorer({
               Tỉ lệ dựng: {day.length_unit.display_scale}
             </span>
           )}
-          {/* F3/F4 — chỉ từ view ĐÃ KIỂM (`hybrid-preview-adapter`), và theo timeline: đáp số hiện từ bước đo đại
-              lượng của nó, quan sát từ bước neo (hình dựng xong) — không kết luận nào đứng trước bước chống đỡ nó. */}
-          {/* Bước của KHUNG đang hiện (`buocHien` = `geometryAnchor`), cùng một luật với hình (review của run, M2). */}
-          {!!hybrid?.answers.length && (
-            <button type="button" className="geo3d-noi-nut" aria-expanded={hienDapAn}
-                    onClick={() => setDapAnDaMo(hienDapAn || !hybrid ? null : { scene: sceneKhung, hybrid })}>
-              {hienDapAn ? "Ẩn đáp án" : "Xem đáp án"}
-            </button>
-          )}
-          {hienDapAn && hybridTaiBuoc(hybrid, day, buocHien).answers
-            .map((a) => {
-              const q = day.objects.find((o) => o.id === a.quantity_id);
-              return (
-                <span key={a.quantity_id} className="geo3d-noi-nut" role="note" data-hybrid-answer={a.quantity_id}>
-                  Đáp số: {q?.notation || q?.label || "kết quả"} = {giaTriDapSo(a)}
-                </span>
-              );
-            })}
+          {/* F4 — chỉ từ view ĐÃ KIỂM (`hybrid-preview-adapter`), và theo timeline: quan sát từ bước neo (hình dựng xong) —
+              không kết luận nào đứng trước bước chống đỡ nó. Giao diện học sinh không hiện thẻ Đáp số hay nút mở đáp án (P1). */}
           {hybridTaiBuoc(hybrid, day, buocHien).observations
             .map((o) => (
               <span key={`${o.group}:${o.check_id}`} className="geo3d-noi-nut" role="note" data-route-d-observation="">
