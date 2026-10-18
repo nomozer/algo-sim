@@ -16,6 +16,7 @@ from types import SimpleNamespace
 import pytest
 
 from app.simulation.geometry.radical import parse_exact
+from app.simulation.semantic_program.grounding_gate import _bang_chung_do_dai
 from app.simulation.semantic_program.refusal_cause import do_dai_de_ghi_khong_duong
 from app.simulation.semantic_program.segment_relation import NHAN_BIEU_THUC, cac_doan_truoc, do_dai_trong_de
 from app.simulation.semantic_program.shape_constraint import phan_chua_doc
@@ -44,9 +45,12 @@ KHONG_PHAI_DO_DAI = [
     "Biết AB – CD = 1.",
     "Biết AB - CD = 1.",
     "Biết AB/CD = 2.",
-    "Ta có MA = 0 khi M trùng A.",
-    "MA = 0 nếu M trùng A.",
-    "Khi MA = 0 thì M trùng A.",
+    # review của run (I2): các lối viết tích/tỉ số khác.
+    "Cho AB ⋅ CD = 0.",
+    "Cho AB \\cdot CD = 0.",
+    "Cho AB x CD = 0.",
+    "Biết tích vô hướng của hai vectơ AB và CD bằng 0.",
+    "Biết AB : CD = 2.",
     "Gọi M sao cho vectơ AM = 0.",
     "Cho →GA + →GB + →GC = →0.",
     "Cho GA→ + GB→ + GC→ = 0→.",
@@ -76,7 +80,42 @@ LA_DO_DAI = [
     ("Cho tam giác ABC có AB = 0.", {"AB": Fraction(0)}),
     ("Cho hình chóp S.ABC có SA = 3 và GA + GB + GC = 0.", {"AS": Fraction(3)}),
     ("Cho hình chóp S.ABC có SA = 3, MA + MB = 0 (vectơ).", {"AS": Fraction(3)}),
+    # review của run (I1): gạch đầu dòng, đánh số, dấu chấm dính, tên hình ba chữ, "khi đó" — vẫn là độ dài.
+    ("Cho hình chóp S.ABCD có đáy là hình vuông cạnh 2:\n- SA vuông góc với (ABCD)\n- SA = 3", {"AS": Fraction(3)}),
+    ("Cho tứ diện ABCD có:\n- AB = 3\n- AC = 4", {"AB": Fraction(3), "AC": Fraction(4)}),
+    ("Cho tam giác ABC vuông tại A - AB = 3, AC = 4", {"AB": Fraction(3), "AC": Fraction(4)}),
+    ("Cho hình chóp S.ABCD.SA = 3", {"AS": Fraction(3)}),
+    ("Bài 1/ AB = 3", {"AB": Fraction(3)}),
+    # "3 ·": `_SAU_DO_DAI` (có từ trước, không đổi ở đây) không cắt số ngay trước `*` ⇒ AB không đọc, như trên `main`;
+    # điều được sửa là AC — chấm giữa sau một CON SỐ không phải phép nhân giữa hai đoạn.
+    ("AB = 3 · AC = 4", {"AC": Fraction(4)}),
+    ("Cho hình chóp S.ABC có SA = 3 khi đó tính thể tích.", {"AS": Fraction(3)}),
 ]
+
+
+# ── Giả định "khi/nếu XY = …": vẫn là giá trị đề nêu cho mọi phép ĐỐI CHIẾU (không nới cổng), nhưng không là TIỀN ĐỀ ──
+GIA_DINH = [
+    ("Ta có MA = 0 khi M trùng A.", {"AM": Fraction(0)}),
+    ("MA = 0 nếu M trùng A.", {"AM": Fraction(0)}),
+    ("Khi MA = 0 thì M trùng A.", {"AM": Fraction(0)}),
+    ("Nếu SA bằng 4 thì thể tích khối chóp là bao nhiêu?", {"AS": Fraction(4)}),
+]
+
+
+@pytest.mark.parametrize(("text", "expected"), GIA_DINH)
+def test_gia_dinh_doi_chieu_duoc_nhung_khong_la_tien_de(text, expected):
+    assert _doc(text) == expected
+    assert do_dai_trong_de(text, ca_gia_dinh=False) == {}
+    assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+
+
+def test_gia_dinh_khong_noi_cong_grounding():
+    """review của run (I3): đề chỉ nêu SA trong giả định "nếu SA = 5"; chương trình khai GIVEN SA = 3 (lấy số 3 của
+    "cạnh 3") phải bị bác như trên `main`, không được lọt vì giả định bị bỏ qua."""
+    de = "Cho hình chóp S.ABCD có đáy là hình vuông cạnh 3. Nếu SA = 5 thì thể tích là bao nhiêu?"
+    ma, _bc, _ly_do = _bang_chung_do_dai(de, "SA_length", Fraction(3), None)
+    assert ma == "SOURCE_EVIDENCE_CONFLICT"
+    assert _bang_chung_do_dai(de, "SA_length", Fraction(5), None)[0] is None
 
 
 @pytest.mark.parametrize(("text", "expected"), LA_DO_DAI)
@@ -112,6 +151,8 @@ def test_tron_vecto_va_suy_bien_that_chi_bao_doan_that():
     ("Cho vectơ MA = ", ".", NHAN_BIEU_THUC),
     # Giả định: con số vẫn là của đúng đoạn ấy (không thành số trơn).
     ("Ta có MA = ", " khi M trùng A.", (("M", "A"),)),
+    ("Cho AB ⋅ CD = ", ".", NHAN_BIEU_THUC),
+    ("Cho tứ diện ABCD có:\n- AB = 3\n- AC = ", "", (("A", "C"),)),
 ])
 def test_nhan_truoc_so_cung_luat(tien_to, sau_so, expected):
     """`sau_so` là phần đề NGAY SAU con số (con số không nằm trong hai đối số).
@@ -145,7 +186,8 @@ def test_gia_dinh_trung_tien_de_khong_gay_mo_ho():
 
 
 def test_gia_dinh_mot_minh_khong_la_tien_de():
-    assert _doc("Nếu SA bằng 4 thì thể tích khối chóp là bao nhiêu?") == {}
+    """Không là TIỀN ĐỀ (nguyên nhân từ chối), nhưng vẫn là giá trị đề nêu khi đối chiếu (`test_gia_dinh_khong_noi_cong`)."""
+    assert do_dai_trong_de("Nếu SA bằng 4 thì thể tích khối chóp là bao nhiêu?", ca_gia_dinh=False) == {}
 
 
 def test_do_dai_cua_vecto_la_do_dai_doan():

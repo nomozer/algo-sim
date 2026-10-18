@@ -535,7 +535,7 @@ def phan_chua_doc(problem_text: str | None) -> tuple[str, ...]:
     rb = doc_rang_buoc(problem_text)
     for r in rb:
         con[r.span[0]:r.span[1]] = " " * len(con[r.span[0]:r.span[1]])
-    sot = xoa_cau_do_dai(_chuan("".join(con)))
+    sot = xoa_cau_do_dai(_chuan("".join(con), giu_dong=True))
     ra = [t for t in re.findall(r"[^\W\d_]+|\d+|[^\w\s]", sot) if t.lower() not in _TU_NOI and t not in ",.;:"]
     # "đều" của chóp tứ giác đều (T7), chóp tam giác đều / tứ diện đều / đáy tam giác đều / "tất cả các cạnh đều"
     # (T8, §18.1) ĐÃ được đọc; mọi "đều"/"cân" khác vẫn là chữ bị nuốt.

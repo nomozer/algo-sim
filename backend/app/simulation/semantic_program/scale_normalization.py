@@ -113,15 +113,24 @@ DO_DAI, BIEU_THUC, DIEU_KIEN = "DO_DAI", "BIEU_THUC", "DIEU_KIEN"
 _VECTO = r"(?:vect[oơ]r?|véc[\s-]?tơ|\\vec|overrightarrow|→)"
 #: "độ dài (của) vectơ AB = 3" — độ lớn của vectơ CHÍNH LÀ độ dài đoạn.
 _DO_DAI_VECTO = re.compile(rf"độ\s+dài\s+(?:của\s+)?{_VECTO}\s*$", re.I)
-#: Vế trái là biểu thức: toán hạng + phép toán (tổng/hiệu/tích/tỉ số/tích có hướng), hoặc tích vô hướng
-#: `SA.BC` / `SA . BC` (dấu chấm cuối câu "S.ABCD. SA = 3" — chữ, chấm, cách — KHÔNG thuộc loại này).
+#: TOÁN HẠNG của một phép toán giữa các đoạn/vectơ: ĐÚNG hai ký hiệu điểm (`SA`, `A'B'`; không phải `ABC`, `ABCD`,
+#: `x`), có thể kèm mũi tên, hoặc một ngoặc đóng (`S(ABC) × SA`). Số và tên hình KHÔNG là toán hạng: "Bài 1/ AB = 3",
+#: "AB = 3 · AC = 4", "tam giác ABC - AB = 3" vẫn là lời cho độ dài (review của run, I1).
+_TOAN_HANG = r"(?:(?<![A-Za-z0-9'′])[A-Z]\d*['′]?[A-Z]\d*['′]?(?:→|⃗)?|[)\]}])"
+#: Phép toán: + − – (hiệu), * × · ⋅ ∙ \cdot và "x" đứng riêng (tích), / : (tỉ số), ∧ (tích có hướng).
+_PHEP = r"(?:[+\-−–*×·⋅∙∧/:]|\\cdot|(?<=[ \t])x(?=[ \t]))"
+#: Vế trái là biểu thức — toán hạng và phép toán CÙNG DÒNG (gạch đầu dòng sau xuống dòng "(ABCD)\n- SA = 3" không
+#: phải phép trừ), hoặc tích vô hướng `SA.BC` / `SA . BC` (chấm cuối câu "S.ABCD. SA = 3", "S.ABCD.SA = 3" — tên
+#: hình bốn chữ, không phải toán hạng — KHÔNG thuộc loại này).
 _TRUOC_BIEU_THUC = re.compile(
-    r"(?:(?:[^\W_]|[)\]}'′√])\s*[+\-−–*/×·∙∧]\s*|[A-Z0-9'′)]\.|[A-Z0-9'′)]\s+\.\s*)$")
-_TRUOC_VECTO = re.compile(rf"{_VECTO}\s*$", re.I)
+    rf"(?:{_TOAN_HANG}[ \t]*{_PHEP}[ \t]*|{_TOAN_HANG}\.|{_TOAN_HANG}[ \t]+\.[ \t]*)$")
+#: Ngay trước nhãn: từ/ký hiệu vectơ, hoặc đang ở trong một mệnh đề "tích vô/có hướng" của câu.
+_TRUOC_VECTO = re.compile(rf"(?:{_VECTO}|tích\s+(?:vô|có)\s+hướng[^.;\n]*)\s*$", re.I)
 _TRUOC_DIEU_KIEN = re.compile(r"(?<![A-Za-zÀ-ỹ])(?:khi|nếu)\s*$", re.I)
 #: Ngay sau giá trị: vectơ không (`0→`, `0⃗`) hay chú thích "(vectơ)/(tổng…)".
 _SAU_BIEU_THUC = re.compile(rf"\s*(?:→|⃗|\(\s*(?:{_VECTO}|tổng|hiệu|tích))", re.I)
-_SAU_DIEU_KIEN = re.compile(r"\s*(?:khi|nếu)(?![A-Za-zÀ-ỹ])", re.I)
+#: "khi đó" là "rồi thì" (không phải điều kiện) — "SA = 3 khi đó …" vẫn là tiền đề.
+_SAU_DIEU_KIEN = re.compile(r"\s*(?:khi(?!\s+đó)|nếu)(?![A-Za-zÀ-ỹ])", re.I)
 
 
 def loai_nhan_doan(van: str, dau: int, cuoi: int) -> str:

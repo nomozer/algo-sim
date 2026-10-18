@@ -65,7 +65,8 @@ def do_dai_khong_duong(contract: Any) -> dict[str, Any]:
             am = False
         if am and frozenset(map(_id, d)) not in {frozenset(map(_id, x)) for x in doan}:
             doan.append(d)
-    doc = {frozenset(_id(t) for t in k): v for k, v in do_dai_trong_de(de).items()}
+    # Chỉ TIỀN ĐỀ: "MA = 0 khi M trùng A" là một giả định, không phải đề ghi độ dài ≤ 0 (`ca_gia_dinh=False`).
+    doc = {frozenset(_id(t) for t in k): v for k, v in do_dai_trong_de(de, ca_gia_dinh=False).items()}
     lap_phuong = any(r.kind == "cube_edge" and r.value is not None and sign(r.value) <= 0 for r in doc_rang_buoc(de))
     de_ghi = bool(doan) and all(
         lap_phuong or sign(doc.get(frozenset(_id(t) for t in d), 1)) <= 0 for d in doan)
@@ -87,7 +88,8 @@ def do_dai_de_ghi_khong_duong(contract: Any) -> dict[str, Any] | None:
     độ dài như vậy, nên khi thực thi hỏng thì nguyên nhân chắc chắn là ĐỀ: `NON_POSITIVE_LENGTH` + `SOURCE`. Đề không
     ghi số nào như vậy ⇒ `None` — giữ `UNKNOWN`, không gọi đề sai khi hệ chỉ chưa kiểm chứng được."""
     de = che_muc_tieu(getattr(contract, "problem_text", "") or "")
-    chu = ["".join(dinh_danh_thuc_the(t)[1] for t in sorted(k)) for k, v in do_dai_trong_de(de).items() if sign(v) <= 0]
+    chu = ["".join(dinh_danh_thuc_the(t)[1] for t in sorted(k))
+           for k, v in do_dai_trong_de(de, ca_gia_dinh=False).items() if sign(v) <= 0]
     chu += [_TEN_SO_DO[r.kind] for r in doc_rang_buoc(de)
             if r.kind in _TEN_SO_DO and r.value is not None and sign(r.value) <= 0]
     chu = list(dict.fromkeys(chu))

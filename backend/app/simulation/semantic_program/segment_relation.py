@@ -152,13 +152,16 @@ KIND = "segment_division"
 KIND_CHUA_GIAI = "segment_division_unresolved"
 
 
-def _chuan(s: str) -> str:
+def _chuan(s: str, giu_dong: bool = False) -> str:
     """Chuẩn hoá lối viết, KHÔNG chuẩn hoá ngữ nghĩa.
 
     `bằng` → `=` · `·×*` → `*` · gộp khoảng trắng. Ba phép này chỉ đổi CÁCH
     VIẾT của cùng một quan hệ; không phép nào suy ra thêm thông tin.
+
+    `giu_dong`: một chuỗi khoảng trắng có xuống dòng thành MỘT `\\n` (không phải dấu cách) — bộ đọc độ dài cần biết
+    "- SA = 3" là gạch đầu dòng trên dòng mới, không phải phép trừ của dòng trên (`scale_normalization._TRUOC_BIEU_THUC`).
     """
-    s = re.sub(r"\s+", " ", s or "")
+    s = re.sub(r"\s+", (lambda m: "\n" if "\n" in m.group(0) else " ") if giu_dong else " ", s or "")
     s = re.sub(r"(?<![A-Za-zÀ-ỹ])bằng(?![A-Za-zÀ-ỹ])", "=", s, flags=re.I)
     return s.replace("·", "*").replace("×", "*")
 
@@ -234,7 +237,7 @@ def _van_ban(contract, problem_text: str | None, *,
     hiện mâu thuẫn (`bat_bien_chia_doan`), không bao giờ để dựng quan hệ.
     """
     de = problem_text or getattr(contract, "problem_text", "") or ""
-    ra = [_chuan(de)]
+    ra = [_chuan(de, giu_dong=True)]
     ung_vien = extract_literals(de) if de else ()
     for f in getattr(contract, "input_facts", ()) or ():
         nhan = _chuan(str(getattr(f, "label", "") or ""))
@@ -271,7 +274,7 @@ def _do_dai_doan(manh: list[str], A: str, B: str) -> Optional[Fraction]:
     return v if isinstance(v, Fraction) else None
 
 
-def _moi_doan_co_do_dai(manh: list[str]) -> dict[frozenset, ExactNumber]:
+def _moi_doan_co_do_dai(manh: list[str], ca_gia_dinh: bool = True) -> dict[frozenset, ExactNumber]:
     """Mọi đoạn mà ĐỀ cho ĐỘ DÀI bằng số → `{frozenset({A,B}): L}`.
 
     Hai độ dài khác nhau cho cùng một đoạn ⇒ **bỏ đoạn ấy**: không ai phân xử
@@ -286,18 +289,22 @@ def _moi_doan_co_do_dai(manh: list[str]) -> dict[frozenset, ExactNumber]:
                 continue
             for doan in _cac_doan(m):
                 (gia_dinh if loai == DIEU_KIEN else thay).setdefault(frozenset(doan), set()).add(q)
-    # Giả định ("nếu/khi SA = 4") KHÔNG là tiền đề: một mình nó không cho độ dài; khác giá trị tiền đề ⇒ đoạn mơ hồ.
-    return {k: next(iter(v)) for k, v in thay.items()
-            if len(v) == 1 and len(k) == 2 and gia_dinh.get(k, v) <= v}
+    # Giả định ("nếu/khi SA = 5") vẫn là một giá trị ĐỀ NÊU cho đoạn ấy: mọi phép đối chiếu (cổng grounding, bất biến
+    # nguồn) thấy nó như trước — bỏ nó đi sẽ NỚI cổng (chương trình khai SA = 3 lọt qua; review của run, I3). Chỉ khi
+    # hỏi "TIỀN ĐỀ có ghi độ dài này không" (`ca_gia_dinh=False`, nguyên nhân từ chối) thì giả định không được tính.
+    gop = {k: thay.get(k, set()) | (gia_dinh.get(k, set()) if ca_gia_dinh else set())
+           for k in (thay.keys() | (gia_dinh.keys() if ca_gia_dinh else set()))}
+    return {k: next(iter(v)) for k, v in gop.items() if len(v) == 1 and len(k) == 2}
 
 
-def do_dai_trong_de(problem_text: str | None) -> dict[frozenset, ExactNumber]:
+def do_dai_trong_de(problem_text: str | None, ca_gia_dinh: bool = True) -> dict[frozenset, ExactNumber]:
     """Mọi đoạn mà CHÍNH CÂU ĐỀ cho độ dài bằng số — không đọc `InputFact`.
 
     `bat_bien_do_dai` đọc thêm nhãn + giá trị của `InputFact` để bắt lối viết
     mà mẫu không bắt; bằng chứng NGUỒN của một GIVEN thì chỉ đọc từ đề (W12).
+    `ca_gia_dinh=False`: chỉ TIỀN ĐỀ — câu giả định "khi/nếu XY = …" không tính.
     """
-    return _moi_doan_co_do_dai([_chuan(problem_text)]) if problem_text else {}
+    return _moi_doan_co_do_dai([_chuan(problem_text, giu_dong=True)], ca_gia_dinh) if problem_text else {}
 
 
 def bat_bien_do_dai(contract, problem_text: str | None) -> tuple:
