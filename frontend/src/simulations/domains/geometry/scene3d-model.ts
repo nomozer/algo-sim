@@ -25,6 +25,50 @@ export type Exact = string;
 export type ExactVec3 = [Exact, Exact, Exact];
 export type Vec3 = [number, number, number];
 
+const EPS_CHART_SPD = 1e-12;
+
+export function hopLeChartMetric(chart_metric: unknown): boolean {
+  if (chart_metric == null) return true;
+  if (
+    !Array.isArray(chart_metric) ||
+    chart_metric.length !== 3 ||
+    chart_metric.some((row) => !Array.isArray(row) || row.length !== 3)
+  ) {
+    return false;
+  }
+  const G: number[][] = [];
+  for (const r of chart_metric) {
+    const row: number[] = [];
+    for (const cell of r) {
+      if (typeof cell !== "string" || cell.trim() === "") return false;
+      try {
+        const val = toNumber(cell);
+        if (!Number.isFinite(val)) return false;
+        row.push(val);
+      } catch {
+        return false;
+      }
+    }
+    G.push(row);
+  }
+  for (let i = 0; i < 3; i++) {
+    for (let j = i + 1; j < 3; j++) {
+      if (Math.abs(G[i][j] - G[j][i]) > EPS_CHART_SPD) return false;
+    }
+  }
+  const d0 = G[0][0];
+  if (!(d0 > EPS_CHART_SPD)) return false;
+  const l00 = Math.sqrt(d0);
+  const l10 = G[1][0] / l00;
+  const l20 = G[2][0] / l00;
+  const d1 = G[1][1] - l10 * l10;
+  if (!(d1 > EPS_CHART_SPD)) return false;
+  const l11 = Math.sqrt(d1);
+  const l21 = (G[2][1] - l20 * l10) / l11;
+  const d2 = G[2][2] - l20 * l20 - l21 * l21;
+  return d2 > EPS_CHART_SPD;
+}
+
 /**
  * Loại hình vẽ — **ĐỒNG BỘ CỨNG** với `scene3d.RENDER_HINT` ở backend.
  *
@@ -54,7 +98,8 @@ export function hopLeScene3D(x: unknown): x is Scene3D {
     s.objects.length > 0 &&
     Array.isArray(s.events) &&
     s.events.length > 0 &&
-    Array.isArray(s.free_objects)
+    Array.isArray(s.free_objects) &&
+    hopLeChartMetric(s.chart_metric)
   );
 }
 
@@ -509,6 +554,75 @@ export interface QuantityAnnotation {
   witness?: { from: string; foot: ExactVec3; on: string; marker: { u: ExactVec3; v: ExactVec3 } };
 }
 
+export interface SceneLengthUnit {
+  symbol: string;
+  display_scale: string;
+  is_given: boolean;
+}
+
+export interface RouteDGoalCheck {
+  kind?: string;
+  evidence_state?: "TRUE_ON_CONFIGURATION" | "FALSE_ON_CONFIGURATION" | "UNVERIFIABLE" | string;
+  proof_status?: string;
+  can_present_as_proven?: boolean;
+  note?: string;
+  [key: string]: unknown;
+}
+
+export type RouteDCheckGroup =
+  | RouteDGoalCheck[]
+  | Record<string, RouteDGoalCheck>
+  | null
+  | undefined;
+
+export interface HybridRouteDPayload {
+  goal_checks?: RouteDCheckGroup;
+  negated_checks?: RouteDCheckGroup;
+  planner?: {
+    goal_checks?: RouteDCheckGroup;
+    negated_checks?: RouteDCheckGroup;
+    [key: string]: unknown;
+  } | null;
+  [key: string]: unknown;
+}
+
+function gomNhomCheck(group: RouteDCheckGroup): RouteDGoalCheck[] {
+  if (!group || typeof group !== "object") return [];
+  if (Array.isArray(group)) return group;
+  return Object.values(group);
+}
+
+export function trichQuanSatRouteD(
+  routeD: HybridRouteDPayload | null | undefined,
+): RouteDGoalCheck[] {
+  if (!routeD || typeof routeD !== "object") return [];
+  return [
+    ...gomNhomCheck(routeD.goal_checks),
+    ...gomNhomCheck(routeD.negated_checks),
+    ...gomNhomCheck(routeD.planner?.goal_checks),
+    ...gomNhomCheck(routeD.planner?.negated_checks),
+  ];
+}
+
+/**
+ * Chuỗi trình bày quan sát cấu hình cho mục kiểm mục tiêu/phủ định của Route D (HYBRID_PREVIEW_FRONTEND_CONTRACT §5).
+ * Không bao giờ nâng quan sát trên một hình thành chứng minh tổng quát khi chưa có `can_present_as_proven === true && proof_status === "PROVEN"`.
+ */
+export function nhanQuanSatCauHinh(check: RouteDGoalCheck): string {
+  const duocChungMinh =
+    check.can_present_as_proven === true && check.proof_status === "PROVEN";
+  if (duocChungMinh) {
+    return "Quan hệ mục tiêu đã được chứng minh hình học.";
+  }
+  if (check.evidence_state === "TRUE_ON_CONFIGURATION") {
+    return "Trên hình đã dựng, điều này đúng — đây là quan sát trên một hình, không phải chứng minh tổng quát.";
+  }
+  if (check.evidence_state === "FALSE_ON_CONFIGURATION") {
+    return "Trên hình đã dựng, điều này không đúng — đây là quan sát trên một hình, không phải chứng minh tổng quát.";
+  }
+  return "Chưa kiểm được trên hình đã dựng — đây là quan sát trên một hình, không phải chứng minh tổng quát.";
+}
+
 export interface Scene3D {
   objects: SceneObject[];
   events: SceneEvent[];
@@ -518,6 +632,8 @@ export interface Scene3D {
   diagnostics?: string[];
   /** exact-dimensions: metric KHUNG G (3×3 phân số) khi bố cục là khung affine — vắng ⇒ Euclid. `scene3d-chart`. */
   chart_metric?: Exact[][];
+  /** HYBRID_PREVIEW_FRONTEND_CONTRACT §4: tỉ lệ dựng hình khi chuẩn hoá theo đơn vị độ dài ký hiệu (vd `a = 1 đơn vị dựng`). */
+  length_unit?: SceneLengthUnit | null;
 }
 
 /**

@@ -2,13 +2,13 @@
 
 ### ISSUE-ARCH-SCENE3D-ALTITUDE-MARKER-UNCERTIFIED
 
-- **status:** OPEN — found read-only in run `hybrid-pre-main-hardening` (2026-10-18); frontend not changed (Scene3D renderer owned by `research/scene3d-plane-grid-camera`).
+- **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F1`): `scene3d-view.tsx` no longer inspects `o.id.includes("cao")`, `o.label`/`o.role` `"chiều cao"`, or `a.z <= b.z`; `perp_marker:${o.id}` is drawn on a `segment` only when `o.perpendicular_witness ?? o.annotation?.witness` supplies a valid orthogonal certificate (`|dot(u, v)| <= 1e-4 * ||u|| * ||v||`). Locked in `frontend/src/components/hybrid-preview-contract.test.tsx` and `scene3d-hidden-lines.test.tsx`. Not on `main` until integrated.
 - **what:** `scene3d-view.tsx` draws a right-angle mark at an "altitude" when the segment's id contains `cao` or its label/role contains "chiều cao"; the foot is the endpoint with smaller z and the marker plane comes from the x/y axes. No backend certificate is read, although route D emits `perpendicular_witness` and annotations carry witnesses.
 - **repro / acceptance:** `docs/evaluation/geometry/runs/hybrid-pre-main-hardening/frontend-handoff.md` F1.
 
 ### ISSUE-ARCH-SCENE3D-CHART-METRIC-UNGUARDED
 
-- **status:** OPEN (defensive) — `scene3d-chart.ts::maTranKhung` takes square roots without checks; a non-SPD `chart_metric` becomes `NaN` coordinates, a singular one divides by zero. No current producer: the backend `Metric` type refuses non-SPD Gram matrices since `hybrid-pre-main-hardening`.
+- **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F2`): `scene3d-chart.ts::maTranKhung` and `scene3d-model.ts::hopLeChartMetric` validate `3×3` shape, finite rational entries, symmetry (`<= 1e-12`), and strictly positive Cholesky pivots (`> 1e-12`), throwing `ChartMetricError` and failing closed in `hopLeScene3D` and `store.loadEnvelope` before `veKhongGian` can emit `NaN` or `Infinity`. Locked in `hybrid-preview-contract.test.tsx` and `scene3d-chart.test.ts`. Not on `main` until integrated.
 - **repro / acceptance:** `frontend-handoff.md` F2.
 
 ### ISSUE-ARCH-HYBRID-PREVIEW-FAILURE-CATEGORY-COLLAPSED
@@ -16,7 +16,7 @@
 - **status:** RESOLVED in run `hybrid-preview-contract-hardening` (product `caf21513`, corrected after independent review
   in `bce21d8b`: Route D's escape `OUT_OF_SCOPE` is a capability gap, not "another subject"; `NON_POSITIVE_LENGTH` is SOURCE
   only when the server reads it in the text; adapter `/2`). On the branch; not on `main` until integrated.
-- **what was wrong:** every Route D preview refusal had `failure_category = capability_gap` and no `refusal_cause`, so an
+- **what was wrong:** every Route D refusal had `failure_category = capability_gap` and no `refusal_cause`, so an
   integrity fault, an unverified source or a missing certificate read as "the system cannot do this".
 - **fix:** `hybrid_preview.classify_refusal` puts each code in a group and maps it to the existing categories, with a
   FALLBACK that is never `capability_gap`. Locks: `backend/tests/test_hybrid_preview_contract.py`, including a
@@ -34,7 +34,7 @@
 
 ### ISSUE-ARCH-SCENE3D-VERIFICATION-GAP-PRESENTATION
 
-- **status:** OPEN — frontend, Scene3D/UI owner (F5 of `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md`).
+- **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F5`): `SimulationWorkspace.tsx::UnsupportedNotice` now gives `failure_category === "verification_gap"` its own eyebrow (`"CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG"`) and neutral hint (`"Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả."`), never falling back to `"NGOÀI DANH MỤC MÔ PHỎNG"`, never promising `"dạng bài này hệ có mô phỏng"`, and never blaming the problem. Locked against all 9 `verification_gap` fixtures in `hybrid-preview-contract.test.tsx`. Not on `main` until integrated.
 - **what:** `SimulationWorkspace` labels `verification_gap` through `NHAN_LOAI_VAN_DE`, but its title/hint chain has no
   branch for it, so a refusal of that category gets the default "NGOÀI DANH MỤC MÔ PHỎNG" and the capability hint. The
   preview now emits `verification_gap` (LLM_ONLY wraps geometry refusals as `geometry_generation_failed`, so this was
@@ -57,8 +57,7 @@
 
 ### ISSUE-ARCH-SCENE3D-INSUFFICIENT-SPEC-HINT
 
-- **status:** OPEN — frontend, Scene3D/UI owner (F6 of `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md`; found by
-  the independent review of `hybrid-preview-contract-hardening`).
+- **status:** RESOLVED on branch `research/scene3d-plane-grid-camera` (2026-10-18, `F6`): `SimulationWorkspace.tsx::UnsupportedNotice` now checks `unsupported.refusal_cause === "SOURCE"` on `insufficient_specification`, showing `"Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng."` only when `refusal_cause === "SOURCE"`, and a conditional neutral hint (`"Nếu đề thuộc dạng hệ dựng được và đã có đủ giả thiết, em có thể gửi lại để hệ phân tích lại."`) when `refusal_cause` is `"UNKNOWN"` or omitted. Locked against all 3 `refusal-missing-*` fixtures in `hybrid-preview-contract.test.tsx` and `learner-error.test.tsx`. Not on `main` until integrated.
 - **what:** for `failure_category = insufficient_specification`, `SimulationWorkspace` always shows "Bổ sung dữ liệu còn
   thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng", whatever `refusal_cause` is. The preview sends that category
   with `UNKNOWN` (for example `AMBIGUOUS_FACT` when the model flagged ambiguity). The hint then blames the problem and
@@ -76,7 +75,8 @@
 
 - **status:** OPEN — route D runs offline only (`run_fact_route`, `run_ai_fact_route` with a test transport); `/api/analyze` never reaches it (guarded by `test_structured_geometry_relations.py::test_Y_*`). Missing for product: a `KetQuaTuyen` → `ValidatedSimulationEnvelope` adapter carrying goal checks (`proof_status`, `can_present_as_proven`) and `length_unit`; a route-D mode in `RoutePolicy` with registry/planner/engine versions and the extraction surface in its fingerprint; refusal-code → learner-message mapping; runtime identity fields.
 - **checklist:** `docs/MIGRATION_CHECKLIST.md` §2 (D-02, D-07…D-12); presentation findings in `frontend-handoff.md` F3, F4.
-- **update 2026-10-18 (run `hybrid-route-d-preview-wiring`):** an operator-only OFFLINE preview now exists: `POST /api/preview/hybrid` (env flag + server token + loopback peer; OFF 404; fixture data only, no provider transport; no product cache) with the versioned adapter `hybrid-route-d-preview/1` carrying goal checks, `length_unit`, IR, answers and provenance, a Route D preview identity in `RoutePolicy`, and runtime identity fields. Still open: Route D in `/api/analyze`, a live provider path, a Route D product cache, and UI consumption of `route_d`.
+- **update 2026-10-18 (run `hybrid-route-d-preview-wiring`):** an operator-only OFFLINE preview now exists: `POST /api/preview/hybrid` (env flag + server token + loopback peer; OFF 404; fixture data only, no provider transport; no product cache) with the versioned adapter `hybrid-route-d-preview/1` carrying goal checks, `length_unit`, IR, answers and provenance, a Route D preview identity in `RoutePolicy`, and runtime identity fields.
+- **update 2026-10-18 (branch `research/scene3d-plane-grid-camera`, `F3`/`F4`):** frontend `Scene3DExplorer` and `SimulationWorkspace` now consume `scene3d.length_unit.display_scale` (`F3`) and `route_d` configuration goal/negated checks (`F4`: `nhanQuanSatCauHinh` / `trichQuanSatRouteD`, strictly distinguishing configuration observation from proof when `can_present_as_proven !== true || proof_status !== "PROVEN"`), locked against all 41 fixtures in `fixtures-adapter-2`. Still open: Route D in `/api/analyze`, a live provider path, and a Route D product cache.
 
 ### ISSUE-ARCH-HYBRID-LIVE-EXTRACTION-BASELINE
 

@@ -8,6 +8,7 @@ import type {
   TimelineCapability,
   VisualMode,
 } from "../simulations/types";
+import { hopLeChartMetric } from "../simulations/domains/geometry/scene3d-chart";
 
 /**
  * Store lõi — MÙ DOMAIN (ràng buộc M2 #7): chỉ giữ moduleId + envelope +
@@ -272,6 +273,16 @@ export const useAppStore = create<AppState>((set, get) => {
       if (!result.ok) {
         set({
           analysisError: `Cấu hình mô phỏng không hợp lệ: ${result.error}`,
+          activeSampleId: null,
+        });
+        return;
+      }
+      const chartMetric = (env as { scene3d?: { chart_metric?: unknown } }).scene3d?.chart_metric;
+      if (!hopLeChartMetric(chartMetric)) {
+        set({
+          analysisError:
+            "Mô phỏng này không còn mở được: cấu hình không vượt qua kiểm tra an toàn hiện hành. " +
+            "Hãy phân tích lại đề để tạo mô phỏng mới.",
           activeSampleId: null,
         });
         return;

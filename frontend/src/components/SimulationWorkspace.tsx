@@ -21,7 +21,7 @@ import { SimulationInspector } from "./SimulationInspector";
 import { useClassroomStore } from "../state/classroom";
 import { useAuthStore } from "../state/auth";
 import { Scene3DExplorer } from "../simulations/domains/geometry/Scene3DExplorer";
-import { hopLeScene3D } from "../simulations/domains/geometry/scene3d-model";
+import { hopLeScene3D, type HybridRouteDPayload } from "../simulations/domains/geometry/scene3d-model";
 
 /**
  * M8: toggle 2D/3D — component THUẦN theo props (export để test SSR được:
@@ -191,6 +191,8 @@ export function UnsupportedNotice({
      fail-closed giữ nguyên — chúng là ngữ nghĩa, không phải cách gọi tên. */
   const geometryGenFailed =
     unsupported.failure_category === "geometry_generation_failed";
+  const verificationGap =
+    unsupported.failure_category === "verification_gap";
   /* (PRODUCT_UI_RESULT_RENDERING) NGOÀI BAO ĐÓNG ≠ VIẾT ĐỀ CHƯA GỌN.
      `geometry_generation_failed` gộp hai tình huống ngược nhau, và lời khuyên
      đúng cho cái này là lời hứa sai cho cái kia:
@@ -208,6 +210,7 @@ export function UnsupportedNotice({
   const ngoaiBaoDong =
     unsupported.error_code === "requested_operation_uncovered";
   const eyebrow = insufficient ? "CHƯA ĐỦ DỮ KIỆN"
+    : verificationGap ? "CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG"
     : stageShortfall ? "CHƯA DỰNG ĐỦ CÁC BƯỚC"
     : incomplete ? "TÁCH THÀNH TỪNG YÊU CẦU"
     /* (PRODUCT_RESPONSE_CONTRACT_ALIGNMENT) NGOÀI BAO ĐÓNG có nhãn RIÊNG, và
@@ -221,7 +224,11 @@ export function UnsupportedNotice({
     : notSimulatable ? "BÀI NÀY KHÔNG CẦN MÔ PHỎNG"
     : "NGOÀI DANH MỤC MÔ PHỎNG";
   const hint = insufficient
-    ? "Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng."
+    ? unsupported.refusal_cause === "SOURCE"
+      ? "Bổ sung dữ liệu còn thiếu vào đề rồi gửi lại — dạng bài này hệ có mô phỏng."
+      : "Nếu đề thuộc dạng hệ dựng được và đã có đủ giả thiết, em có thể gửi lại để hệ phân tích lại."
+    : verificationGap
+    ? "Hệ chỉ hiển thị mô phỏng khi đối chiếu và kiểm chứng được đầy đủ từ dữ kiện đến kết quả."
     : stageShortfall
     ? "Nêu rõ từng bước cần làm rồi gửi lại — dạng bài nhiều bước này hệ có mô phỏng."
     : incomplete
@@ -505,6 +512,7 @@ export function SimulationWorkspace() {
           </>
         ) : undefined}
         daiLopTomTat={<LiveClassStrip tomTat />}
+        routeD={(active.envelope as { route_d?: HybridRouteDPayload }).route_d ?? null}
       />
     );
   }

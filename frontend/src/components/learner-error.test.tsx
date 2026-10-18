@@ -18,6 +18,7 @@ function html(unsupported: {
   reason: string;
   learner_reason?: string;
   failure_category?: string;
+  refusal_cause?: "SOURCE" | "CONSTRUCTION" | "UNKNOWN";
 }): string {
   return renderToString(<UnsupportedNotice unsupported={unsupported} />).replace(
     /<!--.*?-->/g,
@@ -43,15 +44,26 @@ describe("UnsupportedNotice hiển thị thông điệp học sinh", () => {
     expect(out).toContain("chưa có mô phỏng phù hợp");
   });
 
-  it("thiếu dữ kiện → tiêu đề 'CHƯA ĐỦ DỮ KIỆN', KHÔNG nói ngoài danh mục", () => {
-    const out = html({
+  it("thiếu dữ kiện → tiêu đề 'CHƯA ĐỦ DỮ KIỆN', KHÔNG nói ngoài danh mục; chỉ SOURCE mới mời bổ sung dữ liệu", () => {
+    const outSource = html({
+      reason: "kỹ thuật",
+      learner_reason: "Đề yêu cầu duyệt cây nhưng chưa cho cấu trúc cây cụ thể.",
+      failure_category: "insufficient_specification",
+      refusal_cause: "SOURCE",
+    });
+    expect(outSource).toContain("CHƯA ĐỦ DỮ KIỆN");
+    expect(outSource).not.toContain("NGOÀI DANH MỤC");
+    expect(outSource).toContain("dạng bài này hệ có mô phỏng");
+
+    const outUnknown = html({
       reason: "kỹ thuật",
       learner_reason: "Đề yêu cầu duyệt cây nhưng chưa cho cấu trúc cây cụ thể.",
       failure_category: "insufficient_specification",
     });
-    expect(out).toContain("CHƯA ĐỦ DỮ KIỆN");
-    expect(out).not.toContain("NGOÀI DANH MỤC");
-    expect(out).toContain("dạng bài này hệ có mô phỏng");
+    expect(outUnknown).toContain("CHƯA ĐỦ DỮ KIỆN");
+    expect(outUnknown).not.toContain("NGOÀI DANH MỤC");
+    expect(outUnknown).not.toContain("Bổ sung dữ liệu còn thiếu vào đề");
+    expect(outUnknown).not.toContain("dạng bài này hệ có mô phỏng");
   });
 
   it("gap thật vẫn giữ tiêu đề ngoài danh mục", () => {

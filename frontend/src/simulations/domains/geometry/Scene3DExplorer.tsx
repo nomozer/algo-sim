@@ -34,14 +34,16 @@ import {
   type ClassroomSession,
   type SeenMarks,
 } from "../../../state/classroom-sync";
-import type { Scene3D } from "./scene3d-model";
+import type { HybridRouteDPayload, Scene3D } from "./scene3d-model";
 import { veKhongGian } from "./scene3d-chart";
 import {
   coherentFormula,
   geometryAnchor,
+  nhanQuanSatCauHinh,
   objectsAt,
   hienSo,
   quantityChoices,
+  trichQuanSatRouteD,
 } from "./scene3d-model";
 import {
   type InteractionState,
@@ -173,7 +175,7 @@ const nutMoBang = (id: BangThongTin) =>
     : document.querySelector<HTMLElement>(id === "de" ? '[data-mo-bang="de"]' : '[data-mo-nhom="kham-pha"]');
 
 export function Scene3DExplorer({
-  scene: sceneKhung, de, tieuDe, quayLai, phien, onFocus, daiLop, daiLopTomTat,
+  scene: sceneKhung, de, tieuDe, quayLai, phien, onFocus, daiLop, daiLopTomTat, routeD,
 }: {
   scene: Scene3D;
   /** Đề bài nguyên văn. Vắng ⇒ không dựng nút «Đề bài». */
@@ -202,6 +204,8 @@ export function Scene3DExplorer({
   daiLop?: React.ReactNode;
   /** Trạng thái lớp (chỉ đọc) cho chip của `NhomLop` khi màn chật gom dải lớp lại. */
   daiLopTomTat?: React.ReactNode;
+  /** HYBRID_PREVIEW_FRONTEND_CONTRACT §3/§5: thông tin kiểm mục tiêu trên cấu hình của Route D (quan sát trên một hình, không phải chứng minh). */
+  routeD?: HybridRouteDPayload | null;
 }) {
   // exact-dimensions: toạ độ KHUNG → không gian Euclid MỘT lần (đồng nhất ⇒ chính cảnh cũ) — `scene3d-chart`.
   const scene = useMemo(() => veKhongGian(sceneKhung), [sceneKhung]);
@@ -495,6 +499,16 @@ export function Scene3DExplorer({
           >
             <IconReset /> Xem lại toàn hình
           </button>
+          {day.length_unit?.display_scale && (
+            <span className="geo3d-noi-nut" data-length-unit="">
+              Tỉ lệ dựng: {day.length_unit.display_scale}
+            </span>
+          )}
+          {trichQuanSatRouteD(routeD).map((chk, idx) => (
+            <span key={idx} className="geo3d-noi-nut" role="note" data-route-d-observation="">
+              {nhanQuanSatCauHinh(chk)}
+            </span>
+          ))}
         </div>
 
         {/* Ô SOI — chỉ khi có vật đang chọn. W4: bảng nổi như mọi bảng thông tin — chọn vật không dành cột, không

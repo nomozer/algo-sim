@@ -67,7 +67,7 @@ import {
   veTrenKhung,
 } from "./scene3d-presentation";
 import {
-  type KhungNhin, chonHuongNhin, hopBaoCuaDiem, huongLenHienThi, khungGocVuong, khungNhinSuPham, khungNhinVua,
+  type KhungNhin, chonHuongNhin, hopBaoCuaDiem, huongLenHienThi, khungNhinSuPham, khungNhinVua,
   tiLeHinhChieu,
 } from "./scene3d-camera";
 import { MAU_VAI_TRO } from "./scene3d-roles";
@@ -1177,39 +1177,41 @@ export function buildObject3D(
       } satisfies NonCanonicalSegmentMeta;
     }
 
-    // Ký hiệu góc vuông (perpendicular marker) tại chân đường cao nếu là chiều cao
-    const laChieuCao =
-      o.id.includes("cao") ||
-      (o.label && /chiều cao/i.test(o.label)) ||
-      (o.role && /chiều cao/i.test(o.role));
-    const chan = a.z <= b.z ? a : b;
-    const k = laChieuCao ? khungGocVuong(chan.toArray(), (chan === a ? b : a).toArray()) : null;
-    if (k) {
-      const s = 0.35;
-      // Theo khung của chính đoạn (`khungGocVuong`): đoạn thẳng đứng ⇒ đúng các điểm trục cũ.
-      const diem = (...cac: [Vec3, number][]) => new THREE.Vector3(...[0, 1, 2].map((i) =>
-        chan.getComponent(i) + cac.reduce((t, [u, h]) => t + u[i] * h, 0)) as Vec3);
-      const ptsMarker = [
-        diem([k.e1, s]),
-        diem([k.e1, s], [k.d, s]),
-        diem([k.d, s]),
-        diem([k.e2, s], [k.d, s]),
-        diem([k.e2, s]),
-      ];
-      const gMarker = new THREE.BufferGeometry().setFromPoints(ptsMarker);
-      const lineMarker = new THREE.Line(
-        gMarker,
-        new THREE.LineBasicMaterial({
-          color: net(MAU.line),
-          linewidth: 1.5,
-        }),
-      );
-      lineMarker.name = `perp_marker:${o.id}`;
+    // Ký hiệu góc vuông (perpendicular marker) CHỈ khi vật mang chứng chỉ vuông góc tường minh từ backend
+    // (`perpendicular_witness` hoặc `annotation.witness`) với hai phương u, v thực sự vuông góc.
+    const chungChi = o.perpendicular_witness ?? o.annotation?.witness;
+    if (chungChi?.foot && chungChi.marker?.u && chungChi.marker?.v) {
+      const [cx, cy, cz] = toVec3(chungChi.foot);
+      const [ux, uy, uz] = toVec3(chungChi.marker.u);
+      const [vx, vy, vz] = toVec3(chungChi.marker.v);
+      const du = Math.hypot(ux, uy, uz);
+      const dv = Math.hypot(vx, vy, vz);
+      const tich = ux * vx + uy * vy + uz * vz;
+      if (du > 1e-6 && dv > 1e-6 && Math.abs(tich) <= 1e-4 * du * dv) {
+        const daiDoan = Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z);
+        const s = Math.min(0.35, Math.max(0.12, 0.22 * daiDoan));
+        const su = s / du;
+        const sv = s / dv;
+        const ptsMarker = [
+          new THREE.Vector3(cx + ux * su, cy + uy * su, cz + uz * su),
+          new THREE.Vector3(cx + ux * su + vx * sv, cy + uy * su + vy * sv, cz + uz * su + vz * sv),
+          new THREE.Vector3(cx + vx * sv, cy + vy * sv, cz + vz * sv),
+        ];
+        const gMarker = new THREE.BufferGeometry().setFromPoints(ptsMarker);
+        const lineMarker = new THREE.Line(
+          gMarker,
+          new THREE.LineBasicMaterial({
+            color: net(MAU.line),
+            linewidth: 1.5,
+          }),
+        );
+        lineMarker.name = `perp_marker:${o.id}`;
 
-      const nhom = new THREE.Group();
-      nhom.add(duong);
-      nhom.add(lineMarker);
-      return v(nhom, `segment:${o.id}`);
+        const nhom = new THREE.Group();
+        nhom.add(duong);
+        nhom.add(lineMarker);
+        return v(nhom, `segment:${o.id}`);
+      }
     }
 
     return v(duong, `segment:${o.id}`);

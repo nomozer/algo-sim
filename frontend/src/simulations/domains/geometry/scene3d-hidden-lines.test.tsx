@@ -138,13 +138,19 @@ describe("hidden-line — cấu trúc cảnh", () => {
   });
 
   /* w10 — một cạnh, MỘT nét. Đoạn `SA` trùng cạnh S-A của khối: khi khối đã có
-     mặt thì cạnh chuẩn vẽ, đoạn chỉ còn là vùng bấm (và dấu góc vuông). Trước
+     mặt thì cạnh chuẩn vẽ, đoạn chỉ còn là vùng bấm (và dấu góc vuông khi có chứng chỉ). Trước
      khi khối xuất hiện thì đoạn vẫn tự vẽ — không mất nét nào giữa các bước. */
   const DOAN: SceneObject = {
     id: "chieu_cao_SA", label: "Chiều cao SA", type: "segment3", render: "segment",
     origin: "derived", producer: "construct_segment", depends: ["A", "S"],
     point_a: ["0", "0", "2"], point_b: ["0", "0", "0"], endpoint_ids: ["S", "A"],
     boundary_edge_ids: ["K::edge:A-S"],
+    perpendicular_witness: {
+      from: "S",
+      foot: ["0", "0", "0"],
+      on: "day_ABC",
+      marker: { u: ["1", "0", "0"], v: ["0", "0", "2"] },
+    },
   } as SceneObject;
   const KHOI_CO_CHU = { ...KHOI, edge_ownership: [
     { edge_id: "K::edge:A-S", endpoint_ids: ["A", "S"], adjacent_surface_ids: [] },
@@ -157,12 +163,17 @@ describe("hidden-line — cấu trúc cảnh", () => {
     expect([...doanNhuongCanh([DOAN, KHOI_CO_CHU], (id) => (id === "K" ? "1" : "0"))]).toEqual([]);
   });
 
-  it("đoạn nhường nét không để lại nét nhìn thấy nào, trừ dấu góc vuông", () => {
+  it("đoạn nhường nét không để lại nét nhìn thấy nào, trừ dấu góc vuông có chứng chỉ", () => {
     const con = gom(buildObject3D({ ...DOAN, display_role: "hit_proxy" } as SceneObject, false)!);
     const thay = con.filter((c) => (c as THREE.Line).isLine
       && ((c as THREE.Line).material as THREE.Material & { colorWrite: boolean }).colorWrite !== false);
     expect(thay.map((c) => c.name)).toEqual(["perp_marker:chieu_cao_SA"]);
     expect(con.some((c) => (c as THREE.Line).isLine && c.name.includes("proxy"))).toBe(true);
+
+    const khongChungChi = gom(
+      buildObject3D({ ...DOAN, perpendicular_witness: undefined, display_role: "hit_proxy" } as SceneObject, false)!,
+    );
+    expect(khongChungChi.filter((c) => c.name.startsWith("perp_marker:"))).toEqual([]);
   });
 
   /* w10 — causal phân tầng: đích đậm nhất, vật ngoài chuỗi làm dịu. Làm dịu

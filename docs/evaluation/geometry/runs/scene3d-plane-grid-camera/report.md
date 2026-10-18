@@ -2,9 +2,9 @@
 
 - **Run ID:** `scene3d-plane-grid-camera`
 - **Nhánh:** `research/scene3d-plane-grid-camera`
-- **Base commit (`main`):** `4abc4afbb976babc4740bf22e42dc368a24c1b13`
+- **Base commit (`main`):** `4abc4afbb976babc4740bf22e42dc368a24c1b13` (đã merge `main = 90fe44df9fd600bf0eded87a316b8e6dddc29cc5` — Backend Hybrid Preview Contract v2)
 - **Trạng thái nghiệm thu thị giác:** `HUMAN_VISUAL_REVIEW_PENDING` (chờ người dùng duyệt trực tiếp, **chưa tích hợp**)
-- **Phạm vi thay đổi:** Chỉ frontend (`frontend/src/simulations/domains/geometry/*`, `frontend/src/styles/global.css`). Backend, Planner, Kernel, Registry, provider prompts không thay đổi (`DEFAULT_MODE = LLM_ONLY`, `Hybrid = NO-GO`).
+- **Phạm vi thay đổi:** Chỉ frontend (`frontend/src/simulations/domains/geometry/*`, `frontend/src/components/*`, `frontend/src/state/store.ts`, `frontend/src/styles/global.css`) + đồng bộ tài liệu `docs/OPEN_ISSUES.md`. Backend, Planner, Kernel, Registry, provider prompts không thay đổi (`DEFAULT_MODE = LLM_ONLY`, `Hybrid = NO-GO`).
 
 ---
 
@@ -57,13 +57,32 @@
 
 ---
 
-## 4. Kết Quả Kiểm Chứng (`P2` & `P3`)
+## 4. Tích Hợp `main` (`90fe44df`) & Sẵn Sàng Hợp Đồng Frontend Hybrid (`F1` – `F6`)
 
-- **Vitest (`npx vitest run`):** `68/68` file test PASS (`1.087/1.087` tests PASS).
+Sau khi commit phần sửa lỗi Scene3D (`c9408d25`) và merge `main = 90fe44df9fd600bf0eded87a316b8e6dddc29cc5` (`57bc0c8c`), toàn bộ 6 hạng mục `F1`–`F6` trong `docs/architecture/HYBRID_PREVIEW_FRONTEND_CONTRACT.md` và `docs/evaluation/geometry/runs/hybrid-pre-main-hardening/frontend-handoff.md` đã được triển khai theo chu trình TDD (RED → GREEN):
+
+| Hạng mục | File thay đổi | Nội dung hoàn thành | Trạng thái |
+| --- | --- | --- | --- |
+| **F1 — Xóa heuristic `"cao"` / `"chiều cao"` & `a.z <= b.z`** | `scene3d-view.tsx`, `scene3d-hidden-lines.test.tsx` | Bỏ hoàn toàn suy đoán từ `o.id.includes("cao")`, `o.label`/`o.role` `"chiều cao"` và nhánh tự dựng `khungGocVuong` theo `a.z <= b.z`. Chỉ vẽ `perp_marker:${o.id}` trên `segment` khi có chứng chỉ tường minh `o.perpendicular_witness ?? o.annotation?.witness` thỏa mãn `\|dot(u, v)\| <= 1e-4 * \|\|u\|\| * \|\|v\|\|`. | **PASS** |
+| **F2 — Kiểm tra SPD cho `chart_metric` (fail-closed)** | `scene3d-chart.ts`, `scene3d-model.ts`, `store.ts`, `scene3d-chart.test.ts` | Thêm `ChartMetricError` và `hopLeChartMetric`: kiểm tra ma trận 3×3, số hữu tỉ hữu hạn (`mau > 0`), đối xứng (`G[i][j] === G[j][i]`), và phân rã Cholesky với cả 3 phần tử trụ dương thực sự (`diag > 1e-12`). `hopLeScene3D` trả về `false` và `store.loadEnvelope` từ chối an toàn (`invalid_envelope`) khi `chart_metric` suy biến/không xác định dương. | **PASS** |
+| **F3 — Hiển thị trung thực `scene3d.length_unit`** | `scene3d-model.ts`, `Scene3DExplorer.tsx` | Mở rộng kiểu `SceneLengthUnit` (`length_unit?: SceneLengthUnit \| null` trên `Scene3D`). Khi `day.length_unit?.display_scale` có mặt (ví dụ `"a = 1"` ở `served-H01_SYMBOLIC_SCALE_PYRAMID.json`), hiển thị badge `Tỉ lệ dựng: a = 1` (`data-length-unit=""`), không áp giá trị số giả cho biến ký hiệu `a`. | **PASS** |
+| **F4 — Hiển thị nhãn trung thực cho `route_d` (`verified_in_configuration`)** | `scene3d-model.ts`, `Scene3DExplorer.tsx`, `SimulationWorkspace.tsx` | Thêm `trichQuanSatRouteD(routeD)` và `nhanQuanSatCauHinh(status)`. Khi `route_d.planner.goal_checks` / `negated_checks` có mục `status === "verified_in_configuration"`, hiển thị rõ nhãn `"Kiểm chứng trong cấu hình cụ thể (không phải chứng minh tổng quát)"`, tuyệt đối không gọi là `"Đã chứng minh"`. | **PASS** |
+| **F5 — Hỗ trợ `reason_code: "verification_gap"`** | `SimulationWorkspace.tsx` | Nhánh riêng trong `UnsupportedNotice` với tiêu đề phụ `"CHƯA ĐỦ BẰNG CHỨNG KIỂM CHỨNG"` và hướng dẫn trung lập, không đổ lỗi cho đề bài hay người học. | **PASS** |
+| **F6 — Phân biệt `refusal_cause` cho `insufficient_specification`** | `SimulationWorkspace.tsx`, `learner-error.test.tsx` | Chỉ hiển thị gợi ý bổ sung dữ kiện đề bài khi `unsupported.refusal_cause === "SOURCE"`; khi `refusal_cause` thiếu hoặc khác `"SOURCE"`, hiển thị thông báo trung lập, không quy lỗi cho đề bài của người dùng. | **PASS** |
+
+---
+
+## 5. Kết Quả Kiểm Chứng Toàn Diện (`P2` & `P3`)
+
+- **41 Fixture Hợp Đồng Hybrid (`frontend/src/components/hybrid-preview-contract.test.tsx`):** `28/28` bài test PASS, khóa toàn bộ 41 fixture tại `docs/evaluation/geometry/runs/hybrid-preview-contract-hardening/fixtures-adapter-2/` (`12` `served-*`, `25` `refusal-*`, `4` `gate-*`).
+- **Vitest toàn bộ (`npx vitest run`):** `69/69` file test PASS (`1.116/1.116` tests PASS).
 - **Build sản phẩm (`npm run build`):** `tsc -b && vite build` thành công (`exit 0`).
+- **Orbit gate (`node scripts/scene3d-orbit-gate.mjs`):** `p1: DAT, p6: DAT, p7: DAT → ĐẠT`.
+- **Backend & TS Sync (`pytest backend/tests/test_hybrid_preview_contract.py backend/tests/geometry/test_product_response_contract.py backend/tests/geometry/test_scene3d_ts_sync.py`):** `84/84` bài test PASS.
 - **Bộ ảnh đối chứng `BEFORE / AFTER`:**
   - `visual/comparisons/cmp-12-p0-sab-steps-3-4-5.png`: Bước 4/5 không lộ dấu vuông góc sớm (`witness_ids = []`).
   - `visual/comparisons/cmp-13-p0-closeup-vertex-B.png`: Cận cảnh 2× tại đỉnh `B` ở Bước 5/5 (Before 2 dấu chồng nhau vs After 1 dấu đơn sắc nét).
   - `visual/comparisons/cmp-14-p1-nearly-horizontal-plane.png`: Mặt phẳng gần ngang (`0.98 < |u_z| < 1`) đồng phẳng tuyệt đối (`max|dot| = 0`).
   - `visual/comparisons/cmp-15-p0-oblique-line-no-false-marker.png`: Đường nghiêng `SC` cắt mặt phẳng `(ABC)` tại `C` không sinh dấu vuông góc giả (`witness_ids = []`).
   - `visual/comparisons/cmp-01` .. `cmp-11`: Toàn bộ các cảnh `(SAB)`, `(MNP)`, thiết diện `MNP` màu hổ phách, `(ABC)`, lưới nền và camera orbit/reset đều giữ nguyên chất lượng.
+

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { maTranKhung, maTranKhung4, veKhongGian } from "./scene3d-chart";
+import { ChartMetricError, hopLeChartMetric, maTranKhung, maTranKhung4, veKhongGian } from "./scene3d-chart";
 import type { Scene3D } from "./scene3d-model";
 import { toVec3 } from "./scene3d-model";
 
@@ -75,6 +75,22 @@ describe("khung → không gian", () => {
     const w2 = veKhongGian(w);
     expect(toVec3(w2.objects.find((o) => o.id === "H")!.xyz!)).toEqual(hXyz);
     expect(toVec3(w2.objects.find((o) => o.id === "H")!.perpendicular_witness!.foot)).toEqual(foot);
+  });
+
+  it("F2: từ chối chart_metric không đối xứng xác định dương 3×3 bằng ChartMetricError, không bao giờ phát NaN/Infinity", () => {
+    expect(hopLeChartMetric(G)).toBe(true);
+    expect(hopLeChartMetric(undefined)).toBe(true);
+    for (const bad of [
+      [["1", "0", "0"], ["0", "-1", "0"], ["0", "0", "1"]],
+      [["1", "2", "0"], ["0", "1", "0"], ["0", "0", "1"]],
+      [["0", "0", "0"], ["0", "1", "0"], ["0", "0", "1"]],
+      [["1", "2", "0"], ["2", "1", "0"], ["0", "0", "1"]],
+      [["1", "0"], ["0", "1"]],
+    ]) {
+      expect(hopLeChartMetric(bad)).toBe(false);
+      expect(() => maTranKhung(canh({ chart_metric: bad }))).toThrow(ChartMetricError);
+      expect(() => veKhongGian(canh({ chart_metric: bad }))).toThrow(ChartMetricError);
+    }
   });
 });
 
