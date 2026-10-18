@@ -1,5 +1,21 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-ARCH-SCENE3D-ALTITUDE-MARKER-UNCERTIFIED
+
+- **status:** OPEN — found read-only in run `hybrid-pre-main-hardening` (2026-10-18); frontend not changed (Scene3D renderer owned by `research/scene3d-plane-grid-camera`).
+- **what:** `scene3d-view.tsx` draws a right-angle mark at an "altitude" when the segment's id contains `cao` or its label/role contains "chiều cao"; the foot is the endpoint with smaller z and the marker plane comes from the x/y axes. No backend certificate is read, although route D emits `perpendicular_witness` and annotations carry witnesses.
+- **repro / acceptance:** `docs/evaluation/geometry/runs/hybrid-pre-main-hardening/frontend-handoff.md` F1.
+
+### ISSUE-ARCH-SCENE3D-CHART-METRIC-UNGUARDED
+
+- **status:** OPEN (defensive) — `scene3d-chart.ts::maTranKhung` takes square roots without checks; a non-SPD `chart_metric` becomes `NaN` coordinates, a singular one divides by zero. No current producer: the backend `Metric` type refuses non-SPD Gram matrices since `hybrid-pre-main-hardening`.
+- **repro / acceptance:** `frontend-handoff.md` F2.
+
+### ISSUE-ARCH-HYBRID-ROUTE-D-NOT-WIRED
+
+- **status:** OPEN — route D runs offline only (`run_fact_route`, `run_ai_fact_route` with a test transport); `/api/analyze` never reaches it (guarded by `test_structured_geometry_relations.py::test_Y_*`). Missing for product: a `KetQuaTuyen` → `ValidatedSimulationEnvelope` adapter carrying goal checks (`proof_status`, `can_present_as_proven`) and `length_unit`; a route-D mode in `RoutePolicy` with registry/planner/engine versions and the extraction surface in its fingerprint; refusal-code → learner-message mapping; runtime identity fields.
+- **checklist:** `docs/MIGRATION_CHECKLIST.md` §2 (D-02, D-07…D-12); presentation findings in `frontend-handoff.md` F3, F4.
+
 ### ISSUE-ARCH-HYBRID-LIVE-EXTRACTION-BASELINE
 
 - **status:** OPEN — measured baseline, run `independent-nlu-extraction-evaluation` (2026-10-17, gemini-2.5-flash, locked 44 items, owner GO).

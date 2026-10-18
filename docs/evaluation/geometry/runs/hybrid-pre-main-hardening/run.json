@@ -1,0 +1,63 @@
+{
+  "schema": "HYBRID_PRE_MAIN_HARDENING/1",
+  "run": "hybrid-pre-main-hardening",
+  "date": "2026-10-18",
+  "owner_approval": "GO_PRE_MAIN_BACKEND_SAFETY_HARDENING (no main merge/push, no live AI, no default change, no frontend edit, no deletion)",
+  "branch": "research/hybrid-pre-main-hardening",
+  "base": {"branch": "research/hybrid-backend-integration", "commit": "2620cffae9ab4b7ac4aa6b3f20939faf2ac976b2", "product_sha256": "afab0a3ca3abfe3c3f7692d34be2aeadbd099b8d43b6543d8d234d19b5ef8443"},
+  "main": "4abc4afbb976babc4740bf22e42dc368a24c1b13 (= origin/main; ancestor of this branch)",
+  "commits": {
+    "guard": "66328d22",
+    "cache_and_contract_snapshot": "83e8390a",
+    "values_metric_regression": "3afe2fdd",
+    "candidate_freeze": "81ba464f"
+  },
+  "product_commit": "3afe2fddfc0760e5d11a74a243058b4f656e701d",
+  "product_sha256": "7cd48f8c3d19299e95e5d31b341ec52120f0bc33b0e1ffc9cce03a2e9c37caf4",
+  "measured_files": 110,
+  "product_files_changed_vs_base": [
+    "backend/app/ai/fact_extraction.py",
+    "backend/app/ai/pipeline.py",
+    "backend/app/main.py",
+    "backend/app/simulation/geometry/metric.py",
+    "backend/app/simulation/geometry_compiler/routing.py",
+    "backend/app/simulation/geometry_functions/engine.py",
+    "backend/app/simulation/geometry_functions/registry.py"
+  ],
+  "frontend_src_changed": false,
+  "held_constant": {
+    "DEFAULT_MODE": "LLM_ONLY", "RESPONSE_CONTRACT": "flat", "HYBRID_PRODUCT_ENABLEMENT": "NO-GO", "ALLOW_LIVE_AI": "0",
+    "CACHE_VERSION": "125 (no bump; report.md §4)",
+    "surface_fingerprints": "unchanged (fact_extraction flat/v3, function_calling, TypedFact schema, function declarations)",
+    "versions": "REGISTRY_VERSION geometry-functions/6, PLANNER_VERSION geometry-fact-planner/7, ENGINE_VERSION geometry-function-engine/5 (unchanged)"
+  },
+  "findings": {
+    "false_green_default_route_guard": "CONFIRMED_FIXED",
+    "route_blind_cache_identity": "CONFIRMED_FIXED",
+    "response_contract_read_twice": "CONFIRMED_FIXED",
+    "zero_length_misclassified": "CONFIRMED_FIXED",
+    "metric_accepts_non_spd": "CONFIRMED_FIXED",
+    "answers_of_174_not_locked": "CONFIRMED_FIXED",
+    "multi_goal_operand_ownership": "NOT_REPRODUCED",
+    "b29_angle_answer": "NOT_A_DEFECT (cos² squared twice by the probe)",
+    "negative_length": "NOT_A_DEFECT (SCHEMA_INVALID, locked)",
+    "cleanup_inventory_errors": "CONFIRMED_CORRECTED (cleanup-manifest.json)"
+  },
+  "verification_on_tree": {
+    "freeze_verify": "MATCH (110 files, 7cd48f8c…)",
+    "backend_full_pytest_after_freeze": "10664 passed, 1 skipped, 2 deselected, 9 xfailed, 2 failed -> both fixed in the docs/taxonomy commit (refusal taxonomy NON_POSITIVE_LENGTH; candidate divergence layer); targeted rerun 198 passed, 4 xfailed",
+    "frontend_vitest": "68 files, 1079 passed",
+    "frontend_build": "PASS",
+    "demo_replay": "5/5 (reduced chain 1/1)",
+    "crash_surface_audit": "6/6, 0 uncaught",
+    "answer_regression_174": "174/174 status+code, 65/65 squares, 65/65 independent source expectations, 7 capability gaps locked",
+    "grounding_safety_probes": "35/35 behavioural (extraction-v2-safety file) · 72/72 in-tree superset",
+    "timeline_closure": "84 served scenes, 0 violations, fault injection caught",
+    "step_math_oracle": "88/88 VERIFIED (self-consistency), 10/10 counterexamples",
+    "live_ai_calls": 0
+  },
+  "independent_review": "PENDING",
+  "authoritative_t3": "PENDING",
+  "verdict": "PENDING",
+  "push": "NONE"
+}

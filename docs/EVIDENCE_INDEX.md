@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_PRE_MAIN_HARDENING
+
+REPORT = docs/evaluation/geometry/runs/hybrid-pre-main-hardening/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-pre-main-hardening/
+CLASSIFICATION = see report.md §0 verdict (owner-approved GO_PRE_MAIN_BACKEND_SAFETY_HARDENING on research/hybrid-backend-integration 2620cffa; Hybrid off, LLM_ONLY default unchanged)
+CODE_COMMIT = 66328d22 (honest default-route guard) · 83e8390a (route-aware cache + per-call response contract) · 3afe2fdd (zero lengths, SPD Metric, 174-case answer regression); candidate freeze 81ba464f (product 3afe2fdd, tree_hash 7cd48f8c3d19299e95e5d31b341ec52120f0bc33b0e1ffc9cce03a2e9c37caf4, 110 files)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-pre-main-hardening/run.json
+MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
+CORRECTS = HYBRID_BACKEND_INTEGRATION (cleanup-inventory.json: nonexistent SHA fdcf201c, research/hybrid-semantic-extraction-v2 wrongly SAFE_TO_DELETE with 14 unique commits, nonexistent nlu-extraction-eval, omitted branches/folders → cleanup-manifest.json; report claims: the "strict SPD metric guard" was test-only, "88/88 VERIFIED" is scene self-consistency not answer correctness, "174/174" locked status/code only; default-route guard test_Y was falsely green). Original files unchanged.
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_BACKEND_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-backend-integration/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 7507312b (merge of semantic-extraction-v3-runtime-revision a94a54d
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-backend-integration/run.json (product_sha256 afab0a3ca3abfe3c3f7692d34be2aeadbd099b8d43b6543d8d234d19b5ef8443 across 110 files; historical v3 receipts at 6ba9033b… preserved untouched)
 MODEL_REQUEST_COUNT = 0 (offline integration & verification only; ALLOW_LIVE_AI=0)
 CORRECTS = NONE
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_PRE_MAIN_HARDENING
 
 ## WAVE_ID = STEP_MATH_VALIDATION
 

@@ -1,5 +1,19 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Pre-main hardening of the Hybrid candidate (research/hybrid-pre-main-hardening, Hybrid off)
+
+Run `docs/evaluation/geometry/runs/hybrid-pre-main-hardening/`, on top of `research/hybrid-backend-integration` `2620cffa`.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/ai/pipeline.py` | `RoutePolicy` (frozen route snapshot of one analyze: `geometry_compiler_mode`, `env()`, `fingerprint()` = `None` in the default mode, else 8 hex of mode + compiler-layer versions), `route_policy_snapshot(env=None)`; `run_pipeline(..., route_policy=None)` threads it to `_chay_duong_hinh_hoc` → `_semantic_route_attempt` → `quyet_dinh_dinh_tuyen(contract, route_policy.env())`. The compiler routing gate is imported explicitly (no `__import__`). | `backend/tests/test_route_aware_cache.py`; `backend/tests/geometry/test_structured_geometry_relations.py::test_Y_*` |
+| `backend/app/main.py` | `_policy_identity(route_policy)` (= `CACHE_VERSION` in the default mode; `CACHE_VERSION:<fingerprint>` otherwise); `_cache_lookup(session, key, policy_version=None)`; `/api/analyze` takes ONE snapshot for lookup, pipeline and store. | `backend/tests/test_route_aware_cache.py` |
+| `backend/app/simulation/geometry_compiler/routing.py` | `dinh_danh_be_mat(che)` — versions of the compiler layers that decide output in mode `che` (`{}` unless `DETERMINISTIC_FIRST`), read at call time. | `test_route_aware_cache.py::test_identity_compiler_doi_khi_phien_ban_compiler_doi_va_vua_cot` |
+| `backend/app/ai/fact_extraction.py` | `run_ai_fact_route(problem_text, transport, contract=None)` resolves the response contract once per call (request, surface and v3 gate agree). | `test_hybrid_backend_integration.py::test_response_contract_is_one_snapshot_per_call` |
+| `backend/app/simulation/geometry_functions/registry.py` | `doc_so` refuses a zero length as `NON_POSITIVE_LENGTH` (route A and B). | `test_hybrid_backend_integration.py::test_zero_length_*` |
+| `backend/app/simulation/geometry/metric.py` · `geometry_functions/engine.py` | `Metric.__post_init__` enforces symmetric positive definite (Sylvester, exact; `METRIC_NOT_EUCLIDEAN`); `_Dung.metric()` maps it to a coded refusal for every caller. | `test_hybrid_backend_integration.py::test_product_metric_type_rejects_non_spd_gram_matrices`, `::test_engine_*` |
+| `backend/tests/geometry/test_hybrid_backend_integration.py` | `test_174_historical_answers_regression_and_independent_source_expectations` (regression vs `regression-174.json` SEPARATE from source-corpus expectations; `CAPABILITY_GAPS_174`), `_timeline_violations` + `test_timeline_dependency_closure_on_every_served_scene`, two-different-midpoints ownership case. | itself |
+
 ## Hybrid backend integration candidate (research/hybrid-backend-integration, Hybrid off)
 
 Run `docs/evaluation/geometry/runs/hybrid-backend-integration/`; combines `semantic-extraction-v3-runtime-revision` (`bb014eb8`), `contract-driven-goal-composition` (`a629ebee`), and `step-math-validation` (`0dd1da5c`) at product commit `7507312b`.
@@ -1196,7 +1210,8 @@ request thật mang lược đồ gửi ở biên HTTP · hậu kiểm 502 khôn
 FastAPI: `POST /api/analyze`, `POST /api/image/extract`, `GET /api/health`, `GET /api/diagnostics/*`
 (*repo-cleanup:* `/api/edit` gỡ ở LEGACY_INFORMATICS_REMOVAL, `/api/explain` gỡ ở `repo-cleanup` — khoá 404 ở
 `test_api.py::test_endpoint_tutor_flow_da_xoa`; `/api/manifest` không còn). Exports: `app`, `CACHE_VERSION`,
-`_cache_key`, `_cache_lookup`. Tests: `test_api.py` (`test_edit.py` gỡ cùng `/api/edit`).
+`_cache_key`, `_cache_lookup`, `_policy_identity` (cache theo tuyến — run `hybrid-pre-main-hardening`). Tests: `test_api.py`,
+`test_route_aware_cache.py` (`test_edit.py` gỡ cùng `/api/edit`).
 Notes: **bump `CACHE_VERSION`** khi đổi policy classify/manifest/prompt.
 2026-09-13 (PHOTO_PROBLEM_TO_SCENE_END_TO_END): thêm `POST /api/image/extract`
 (`ImageExtractBody`: `content` base64, `mime_type`, `filename` — KHÔNG vào khoá
@@ -3072,7 +3087,8 @@ Tests: `tests/geometry/test_curved_foundation.py` (63)
 ### `backend/app/simulation/geometry/metric.py` · offline (exact-dimensions)
 
 **METRIC CỦA KHUNG** — bố cục chương trình là khung AFFINE ℚ³; độ dài theo ma trận Gram hữu tỉ G (`Metric`: `dot`,
-`vector` = G⁻¹n, `covector` = Gv, `det`, `as_json`). Một metric mỗi lượt chạy, giữ trong context (`using`);
+`vector` = G⁻¹n, `covector` = Gv, `det`, `as_json`; từ `hybrid-pre-main-hardening` chính kiểu `Metric` từ chối G không đối
+xứng / không xác định dương — `METRIC_NOT_EUCLIDEAN`). Một metric mỗi lượt chạy, giữ trong context (`using`);
 mặc định `None` = đồng nhất và mọi helper (`dot`, `norm_sq`, `normal_vector`, `plane_covector`, `conorm_sq`,
 `area_sq_from_cross_sum`, `volume_det_factor_sq`) trả ĐÚNG biểu thức cũ của kernel. `gram_from_lengths` — G duy nhất
 từ bốn điểm khung độc lập affine + sáu độ dài² (G = E⁻ᵀKE⁻¹, Sylvester, tự kiểm sáu cạnh); `require_euclidean` — khối

@@ -119,10 +119,80 @@
 - **NEXT_TEST:** Bổ sung metric counter cho `compiler_hit`, `compiler_miss`, `fallback_success`.
 
 ### GATE-19: Cache & Version Policy
-- **STATUS:** PRODUCTION_READY
-- **EVIDENCE:** `CACHE_VERSION = 99` với sync-lock trong test suite và candidate verification hash 103 files.
-- **BLOCKER:** Không có.
+- **STATUS:** PRODUCTION_READY cho `LLM_ONLY`; cách ly theo tuyến có từ run `hybrid-pre-main-hardening` (2026-10-18).
+- **EVIDENCE:** giá trị hiện hành đọc ở nguồn (`grep -n 'CACHE_VERSION = ' backend/app/main.py`) và bảng danh tính `docs/CURRENT_STATE.md`, không chép vào đây; sync-lock `backend/tests/test_api.py` + `backend/tests/semantic_program/test_evaluation_candidate.py`. Cách ly theo tuyến: `backend/app/main.py::_policy_identity` + `backend/app/ai/pipeline.py::RoutePolicy`, khoá bởi `backend/tests/test_route_aware_cache.py`.
+- **BLOCKER:** Không có cho `LLM_ONLY`.
 - **NEXT_TEST:** Duy trì kiểm chứng tự động trước mọi commit.
+- **AUDIT (2026-10-18, `hybrid-pre-main-hardening`):** evidence cũ ghi `CACHE_VERSION = 99` và "103 files" — số của thời điểm viết, không phải trạng thái hiện hành. Và chính sách cũ MÙ TUYẾN: khoá cache là băm đề, lookup chỉ so `CACHE_VERSION`, nên bật `GEOMETRY_COMPILER_MODE` phục vụ envelope `LLM_ONLY` cũ và rollback phục vụ envelope compiler. Nay một ảnh chụp tuyến mỗi lượt; mặc định giữ identity = `CACHE_VERSION` (không bump), chế độ khác mang hậu tố băm chế độ + phiên bản các tầng.
+
+---
+
+## 2. Route D (Hybrid: text → typed facts → planner → geometry functions) — checklist RIÊNG
+
+20 cổng ở §1 viết cho tuyến C (compiler tất định trên `RequestContract`). Tuyến D là đường khác (`backend/app/ai/fact_extraction.py` → `function_route.py` → `simulation/geometry_functions/`), nên cổng §1 không thay được các cổng dưới đây và ngược lại. Đổi bất cứ gì của tuyến D khỏi `NO-GO` cần đủ các cổng D-*; trạng thái đọc từ bằng chứng nêu ở từng cổng, không chép số sống vào đây.
+
+### D-01: Đường mặc định không chạm tuyến D
+- **STATUS:** PROVED — `backend/tests/geometry/test_structured_geometry_relations.py::test_Y_*`: không nạp động trong mã sản phẩm; bao đóng import tĩnh chỉ với compiler qua cổng `routing`; module nạp thật khi chạy `run_pipeline` ở `LLM_ONLY` (subprocess sạch) ⊆ bao đóng tĩnh, tuyến D không nạp; tiêm lỗi 8 cách lách + 1 import cắt chuỗi lúc chạy.
+- **BLOCKER:** —
+- **NEXT_TEST:** khi nối tuyến D, cổng nối phải được KHAI (như `_CONG_COMPILER`), không lách guard.
+
+### D-02: Cache identity theo tuyến
+- **STATUS:** PARTIAL — cơ chế có (`RoutePolicy` + `_policy_identity`, cách ly hai chiều có test). Tuyến D chưa phải một trường của `RoutePolicy` vì chưa được nối.
+- **BLOCKER:** khi nối: `RoutePolicy` thêm chế độ tuyến D; `fingerprint()` phải gồm `REGISTRY_VERSION`, `PLANNER_VERSION`, `ENGINE_VERSION` và `fact_extraction.surface_fingerprint(contract)`.
+- **NEXT_TEST:** cùng bộ test hai chiều của `test_route_aware_cache.py` cho chế độ tuyến D.
+
+### D-03: Cấu hình theo lượt, không theo biến toàn cục
+- **STATUS:** PROVED — `RoutePolicy` chụp một lần ở biên API; `run_ai_fact_route(contract=…)` chốt hợp đồng một lần mỗi lượt (`test_response_contract_is_one_snapshot_per_call`: trước đó đổi biến toàn cục giữa request và cổng kiểm làm một phản hồi xin theo v3 được phục vụ mà không qua cổng v3).
+- **BLOCKER:** —
+- **NEXT_TEST:** adapter nối tuyến D nhận hợp đồng từ `RoutePolicy`, không đọc `RESPONSE_CONTRACT`.
+
+### D-04: Hợp đồng trích xuất
+- **STATUS:** flat = hợp đồng sản phẩm; v3 = NO-GO.
+- **BLOCKER:** v3 không diễn đạt được diện tích / góc tại điểm không tên (flat phục vụ được — thoái lui năng lực); 16/24 gold LOCKED lệch v3 vì cách viết gold (`solid` trên đoạn, ghi chú `reason`), không phải đo hành vi mô hình; held-out LOCKED đã tiếp xúc ⇒ không dùng để chỉnh prompt/schema.
+- **NEXT_TEST:** bộ held-out MỚI, tiền đăng ký, trước mọi đổi bề mặt.
+
+### D-05: Đúng toán
+- **STATUS:** PROVED trên corpus hiện có — `test_174_historical_answers_regression_and_independent_source_expectations`: hồi quy (status, mã, bình phương đáp số) với baseline đóng băng TÁCH khỏi đối chiếu độc lập với kỳ vọng của corpus nguồn; khoảng trống năng lực khoá trong `CAPABILITY_GAPS_174`. Oracle step-math là kiểm tự nhất quán của cảnh, không phải đối chiếu với đề.
+- **BLOCKER:** —
+- **NEXT_TEST:** mọi họ mới thêm kỳ vọng độc lập (oracle Fraction viết trước) vào corpus nguồn.
+
+### D-06: Fail-closed với dữ kiện suy biến
+- **STATUS:** PROVED — độ dài 0 ⇒ `NON_POSITIVE_LENGTH` (tuyến A và B); độ dài âm không qua văn phạm; `Metric` từ chối ma trận không đối xứng / không xác định dương; engine đổi thành từ chối có mã.
+- **BLOCKER:** —
+- **NEXT_TEST:** —
+
+### D-07: Adapter envelope
+- **STATUS:** NOT_STARTED.
+- **BLOCKER:** không có ánh xạ `KetQuaTuyen` → `ValidatedSimulationEnvelope`; `proof_status` / `can_present_as_proven` và `length_unit` không có chỗ (`docs/evaluation/geometry/runs/hybrid-pre-main-hardening/frontend-handoff.md` F3, F4); mã từ chối chưa ánh xạ thông điệp người học.
+- **NEXT_TEST:** adapter + test: goal kiểm trên một cấu hình không bao giờ hiển thị là "đã chứng minh".
+
+### D-08: Nối API sau cờ
+- **STATUS:** NOT_STARTED.
+- **BLOCKER:** D-02, D-07.
+- **NEXT_TEST:** endpoint xem trước khoá bằng env (mặc định tắt), không ghi cache, frontend không gọi; test chứng minh `LLM_ONLY` không đổi một byte.
+
+### D-09: Quan sát được
+- **STATUS:** NOT_STARTED — `runtime_identity` chưa phát chế độ tuyến và phiên bản registry/planner/engine.
+- **BLOCKER:** —
+- **NEXT_TEST:** `GET /api/diagnostics/runtime` mang `RoutePolicy` và các phiên bản tuyến D.
+
+### D-10: Trình bày chỉ từ chứng nhận
+- **STATUS:** OPEN — ký hiệu góc vuông theo tên đoạn; `maTranKhung` không tự vệ (`frontend-handoff.md` F1, F2).
+- **BLOCKER:** nhánh Scene3D đang sở hữu renderer.
+- **NEXT_TEST:** theo tiêu chí nghiệm thu trong `frontend-handoff.md`.
+
+### D-11: Đo live có ghép cặp với `LLM_ONLY`
+- **STATUS:** NOT_STARTED — cần owner GO, ngân sách + luật dừng tiền đăng ký, `MEASUREMENT_CLASS` · `HELD_OUT_CLAIM` · `EVALUATOR_INDEPENDENCE`.
+- **BLOCKER:** D-04 (held-out mới), D-08.
+- **NEXT_TEST:** —
+
+### D-12: Rollback
+- **STATUS:** PARTIAL — tắt cờ là đủ về hành vi; cache theo tuyến ngăn phục vụ chéo (D-02).
+- **BLOCKER:** D-02 cho chế độ tuyến D.
+- **NEXT_TEST:** bật → ghi cache → tắt ⇒ MISS; tắt → bật ⇒ MISS.
+
+### D-13: Quyết định bật
+- **STATUS:** NO-GO — `HYBRID_PRODUCT_ENABLEMENT = NO-GO` cho tới khi D-01…D-12 đạt và owner quyết.
 
 ### GATE-20: User & Pedagogical Evaluation
 - **STATUS:** NOT_STARTED

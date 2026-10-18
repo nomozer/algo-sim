@@ -1,0 +1,56 @@
+{
+  "schema": "CLEANUP_MANIFEST/1",
+  "run": "hybrid-pre-main-hardening",
+  "date": "2026-10-18",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-backend-integration/cleanup-inventory.json (left byte-for-byte unchanged)",
+  "method": "git worktree list --porcelain; for every local branch: tip, ancestry to main and to research/hybrid-pre-main-hardening, rev-list unique counts, git cherry patch-equivalence, upstream; git status of every registered worktree; du / file count / owner / reparse / process scan of unregistered folders under .superpowers/worktrees. Nothing was deleted, moved, restaged or rewritten.",
+  "classes": {
+    "KEEP": "has unique commits, uncommitted work, an active owner, or is a candidate/evidence; no deletion planned",
+    "CONDITIONAL": "deletable only after the stated condition is verified at deletion time",
+    "SAFE_TO_DELETE": "no consumer and fully recoverable; deletable now",
+    "UNKNOWN": "not inspectable or not inventoried in enough detail to classify"
+  },
+  "corrections_to_previous_inventory": [
+    {"id": "C1", "previous": "research/hybrid-semantic-extraction-v2 head fdcf201cc8ec0bc6d1e62614ba243497b04c2c7f", "fact": "no such object in the repository (git: Not a valid object name); the branch tip is dc27009fe9530ced01c3e6d52898d789a62cb36f"},
+    {"id": "C2", "previous": "research/hybrid-semantic-extraction-v2 = SAFE_TO_DELETE_AFTER_MAIN_INTEGRATION, 'ancestor of semantic-extraction-v3 and research/hybrid-backend-integration'", "fact": "14 commits are not contained in research/hybrid-backend-integration nor in main (git cherry: all 14 '+', none patch-equivalent); no upstream. Deleting it would lose the owner-approved paired dev pilot receipts and the restored EVIDENCE_INDEX entries. Reclassified KEEP."},
+    {"id": "C3", "previous": "worktree .superpowers/worktrees/nlu-extraction-eval on research/nlu-extraction-eval (8427c879)", "fact": "neither the worktree nor the branch exists"},
+    {"id": "C4", "previous": "omitted", "fact": "integration/extraction-v2-safety (registered worktree with uncommitted docs, 1 unique commit 330a222a, upstream origin/main), research/compact-geometry-dsl (8 unique commits incl. 1 merge, no upstream), docs/real-model-e2e-readiness and feat/real-model-pilot-tooling (unique commits, pushed), three unregistered folders, backend/.tmp/pytest-05045731f8a046b9ba317bc970ecca11"},
+    {"id": "C5", "previous": "merged research branches 'SAFE_TO_DELETE_AFTER_MAIN_INTEGRATION'", "fact": "correct direction, but today they are contained only in research/hybrid-backend-integration and research/hybrid-pre-main-hardening, not in main or origin; the condition must be checked against pushed origin/main at deletion time"}
+  ],
+  "branches_and_worktrees": [
+    {"ref": "main", "tip": "4abc4afb", "worktree": "D:/Documents/projects/algo-sim", "state": "user untracked .vscode/ and frontend/public/; Vite dev server PID 15680 running from frontend/", "class": "KEEP", "action": "never touch user files"},
+    {"ref": "research/hybrid-pre-main-hardening", "tip": "this run (see run.json)", "worktree": ".superpowers/worktrees/hybrid-pre-main-hardening", "unique_vs_main": "all hardening + combined commits", "class": "KEEP", "action": "candidate pending GO MAIN"},
+    {"ref": "research/hybrid-backend-integration", "tip": "2620cffa", "worktree": ".superpowers/worktrees/hybrid-backend-integration", "unique_vs_new_candidate": 0, "class": "CONDITIONAL", "condition": "after GO MAIN: origin/main contains it (git merge-base --is-ancestor <tip> origin/main), worktree clean, then git worktree remove + git branch -d"},
+    {"ref": "research/semantic-extraction-v3-runtime-revision", "tip": "bb014eb8", "worktree": ".superpowers/worktrees/semantic-extraction-v3-runtime-revision", "unique_vs_new_candidate": 0, "class": "CONDITIONAL", "condition": "same as above, and no live v3 pilot planned to run from this worktree (its protocol locks and receipts are committed and travel with main)"},
+    {"ref": "research/semantic-extraction-v3", "tip": "7168d269", "worktree": ".superpowers/worktrees/semantic-extraction-v3", "unique_vs_new_candidate": 0, "class": "CONDITIONAL", "condition": "same as above"},
+    {"ref": "research/contract-driven-goal-composition", "tip": "a629ebee", "worktree": ".superpowers/worktrees/contract-driven-goal-composition", "unique_vs_new_candidate": 0, "class": "CONDITIONAL", "condition": "same as above"},
+    {"ref": "research/step-math-validation", "tip": "0dd1da5c", "worktree": ".superpowers/worktrees/step-math-validation", "unique_vs_new_candidate": 0, "class": "CONDITIONAL", "condition": "same as above"},
+    {"ref": "research/hybrid-semantic-extraction-v2", "tip": "dc27009f", "worktree": ".superpowers/worktrees/hybrid-semantic-extraction-v2", "unique_vs_new_candidate": 14, "patch_equivalent_present": 0, "upstream": null, "class": "KEEP", "action": "owner decides integration or archival push; never delete while 14 commits are unique and unpushed"},
+    {"ref": "integration/extraction-v2-safety", "tip": "330a222a", "worktree": ".superpowers/worktrees/extraction-v2-safety", "unique_vs_new_candidate": 2, "patch_equivalent_present": 1, "patch_equivalent_note": "e3827c00 (right-prism cue) is present in the candidate as 0507cb01; 330a222a (its candidate refreeze) is unique", "working_tree": ["M docs/EVIDENCE_INDEX.md", "M docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/handoff.md", "?? docs/evaluation/geometry/runs/hybrid-semantic-extraction-v2/integration.md"], "upstream": "origin/main", "hazard": "a bare `git push` from this branch targets origin/main", "class": "KEEP", "action": "preserve the uncommitted files; owner may `git branch --unset-upstream integration/extraction-v2-safety`"},
+    {"ref": "research/compact-geometry-dsl", "tip": "3db08a1e", "worktree": null, "unique_vs_new_candidate": 8, "upstream": null, "class": "KEEP", "action": "NO-GO research record, unique and unpushed"},
+    {"ref": "research/scene3d-plane-grid-camera", "tip": "4abc4afb", "worktree": ".superpowers/worktrees/scene3d-plane-grid-camera", "working_tree": "8 modified frontend/src/simulations/domains/geometry files (active Scene3D agent)", "class": "KEEP", "action": "never touch"},
+    {"ref": "docs/real-model-e2e-readiness", "tip": "4cfa547f", "worktree": null, "unique_vs_main": 1, "upstream": "origin/docs/real-model-e2e-readiness", "class": "KEEP", "action": "not this task's; pushed"},
+    {"ref": "feat/real-model-pilot-tooling", "tip": "471a2c79", "worktree": null, "unique_vs_main": 4, "upstream": "origin/feat/real-model-pilot-tooling", "class": "KEEP", "action": "not this task's; pushed"}
+  ],
+  "unregistered_folders": [
+    {"path": ".superpowers/worktrees/goal-bounded", "size": "1.7G", "files": 14083, "git_link": false, "registered": false, "reparse_point": false, "owner": "DESKTOP-SCQFJL8\\Bunny (folder and sampled file)", "process_holding": "none (Win32_Process command lines scanned)", "source_fingerprint": "EVALUATION_CANDIDATE.json commit 7a583590 (contained in main)", "references": ["generalized-goal-entry/baseline/bounded.json code_root", "hybrid-semantic-grounding-reliability/run.json deferred_environment_cleanup", "independent-nlu-extraction-evaluation/run.json environment_residuals", "scene3d-visual-correctness/report.md environment residuals"], "references_are_consumers": false, "class": "CONDITIONAL", "condition": "owner-run elevated removal; prior receipt (independent-nlu-extraction-evaluation/run.json, 2026-10-17) verified every non-cache file equals a git blob — not re-hashed in this run, re-verify before deleting"},
+    {"path": ".superpowers/worktrees/goal-fixed", "size": "1.7G", "files": 13625, "git_link": false, "registered": false, "reparse_point": false, "owner": "DESKTOP-SCQFJL8\\Bunny (folder and sampled file)", "process_holding": "none", "source_fingerprint": "EVALUATION_CANDIDATE.json commit a5a0797c (contained in main)", "references": ["generalized-goal-entry/baseline/fixed.json code_root", "hybrid-semantic-grounding-reliability/run.json", "independent-nlu-extraction-evaluation/run.json", "scene3d-visual-correctness/report.md"], "references_are_consumers": false, "class": "CONDITIONAL", "condition": "same as goal-bounded"},
+    {"path": ".superpowers/worktrees/semantic-grounding-base-20261017", "size": "1.8G", "files": 14771, "git_link": false, "registered": false, "reparse_point": false, "owner": "DESKTOP-SCQFJL8\\Bunny (folder and sampled file)", "process_holding": "none", "source_fingerprint": "EVALUATION_CANDIDATE.json commit 94b3437b (contained in main)", "references": ["hybrid-semantic-grounding-reliability/plan.md + results/historical-base-1f635ed5.json + verification/t3-attempt3.json", "independent-nlu-extraction-evaluation/run.json environment_residuals"], "references_are_consumers": false, "class": "CONDITIONAL", "condition": "same as goal-bounded"}
+  ],
+  "unknown": [
+    {"path": "backend/.tmp/pytest-05045731f8a046b9ba317bc970ecca11", "reason": "unreadable for the normal user (git status: Permission denied); owned by a Codex sandbox per prior receipt", "class": "UNKNOWN"},
+    {"path": ".superpowers/{brainstorm,browser-tmp,builds,evidence,preserved,result-planning,scratch,sdd} and .superpowers/*.log, goal-comparison.txt", "reason": "gitignored agent drafts not inventoried file by file in this run; AGENTS §4 requires reading before deleting", "class": "UNKNOWN"}
+  ],
+  "always_keep": ["docs/evaluation/** run directories, protocol locks, oracles, manifests, GOLD, raw receipts, reviews", "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json history in git", "user files: .vscode/, frontend/public/"],
+  "safe_to_delete_now": {
+    "items": [],
+    "created_by_this_run": "probe scripts and logs in the session scratchpad (outside the repository) and six git-show exports in D:/tmp, already removed after use; no file inside the repository"
+  },
+  "post_go_main_order": [
+    "1. git fetch origin; confirm origin/main == local main after the fast-forward push (git rev-parse main origin/main) and that the candidate tip is an ancestor of origin/main",
+    "2. for each CONDITIONAL branch: git merge-base --is-ancestor <tip> origin/main; git -C <worktree> status --short is empty; then git worktree remove <path> (rmdir any node_modules junction first) and git branch -d <ref> (never -D)",
+    "3. leave every KEEP item; ask the owner about hybrid-semantic-extraction-v2, extraction-v2-safety (incl. its upstream), compact-geometry-dsl",
+    "4. unregistered folders: owner re-verifies blob equality, then elevated removal of exactly those three paths",
+    "5. record a deletion log (path, SHA, verification) in the run that performs it"
+  ]
+}
