@@ -128,7 +128,8 @@ _NGOAC_PHEP = r"(?:[*×·⋅∙∧/]|\\cdot|(?<=[ \t])x(?=[ \t]))"
 #: nhân/cộng nhãn (`√2.AB = 2`, `1 + AB = 5`; không phải "1. AB", "1 - AB": đánh số; không phải giá trị vừa cho
 #: "AB = 3 · AC = 4": số đứng sau `=` là vế phải của lời trước).
 _TRUOC_BIEU_THUC = re.compile(
-    rf"(?:(?<![A-Za-z0-9'′√])(?:\d+|√\d+)?{_DIEM}(?:[ \t]*{_PHEP}[ \t]*|\.|[ \t]+\.[ \t]*|:|[ \t]+:[ \t]+)"
+    rf"(?:(?<![A-Za-z0-9'′√])(?:\d+(?:√\d+)?|√\d+)?{_DIEM}(?:[ \t]*{_PHEP}[ \t]*|\.|[ \t]+\.[ \t]*|:|[ \t]+:[ \t]+)"
+    rf"|\([+\-\d., \t]+(?:;[+\-\d., \t]+)+\)[ \t]*{_PHEP}[ \t]*"
     rf"|[)\]}}](?:[ \t]*{_NGOAC_PHEP}[ \t]*|\.)"
     rf"|(?<![A-Za-z0-9'′.,√=])(?<!=[ \t])(?:\d+|√\d+)[ \t]*(?:[+*×·⋅∙]|\\cdot)[ \t]*|√\d+\.)$")
 #: Ngay trước nhãn: từ/ký hiệu vectơ, hoặc ô toán hạng của "tích vô/có hướng (của) (hai vectơ) AB và|với|, <nhãn>"
@@ -148,8 +149,10 @@ def loai_nhan_doan(van: str, dau: int, cuoi: int) -> str:
 
     `dau` = vị trí nhãn đầu tiên (đầu chuỗi bằng nhau), `cuoi` = ngay sau giá trị."""
     truoc = van[:dau]
-    if _DO_DAI_VECTO.search(truoc):
-        return DIEU_KIEN if _SAU_DIEU_KIEN.match(van, cuoi) else DO_DAI
+    do_dai_vecto = _DO_DAI_VECTO.search(truoc)
+    if do_dai_vecto:
+        return DIEU_KIEN if (_TRUOC_DIEU_KIEN.search(truoc[:do_dai_vecto.start()])
+                             or _SAU_DIEU_KIEN.match(van, cuoi)) else DO_DAI
     if _TRUOC_BIEU_THUC.search(truoc) or _TRUOC_VECTO.search(truoc) or _SAU_BIEU_THUC.match(van, cuoi):
         return BIEU_THUC
     if _TRUOC_DIEU_KIEN.search(truoc) or _SAU_DIEU_KIEN.match(van, cuoi):

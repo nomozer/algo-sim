@@ -61,6 +61,9 @@ KHONG_PHAI_DO_DAI = [
     "Biết √2.AB = 2.",
     "Biết 1 + AB = 5.",
     "Cho S(ABC) × SA = 10.",
+    "Cho 2√3GA + GB = 0.",
+    "Cho (2;3) + GB = 0.",
+    "Cho vectơ AB = (0; 0; 0).",
 ]
 
 
@@ -112,6 +115,7 @@ LA_DO_DAI = [
 
 # ── Giả định "khi/nếu XY = …": vẫn là giá trị đề nêu cho mọi phép ĐỐI CHIẾU (không nới cổng), nhưng không là TIỀN ĐỀ ──
 GIA_DINH = [
+    ("Nếu độ dài vectơ AB = 0 thì A trùng B.", {"AB": Fraction(0)}),
     ("Ta có MA = 0 khi M trùng A.", {"AM": Fraction(0)}),
     ("MA = 0 nếu M trùng A.", {"AM": Fraction(0)}),
     ("Khi MA = 0 thì M trùng A.", {"AM": Fraction(0)}),
