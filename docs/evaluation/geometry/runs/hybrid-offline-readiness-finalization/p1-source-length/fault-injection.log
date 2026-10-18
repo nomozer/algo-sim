@@ -1,0 +1,856 @@
+FFFFFFFFFFFFFFFFFFFFF..FFFFFFFFFFFFF.....FFFF..F.......FF..F...FFFFFF... [ 90%]
+..F.FFFF                                                                 [100%]
+================================== FAILURES ===================================
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho tam gi\xe1c ABC c\xf3 tr\u1ecdng t\xe2m G tho\u1ea3 GA + GB + GC = 0.] _
+
+text = 'Cho tam giác ABC có trọng tâm G thoả GA + GB + GC = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'CG': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'CG': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+____ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[GA+GB+GC=0] _____
+
+text = 'GA+GB+GC=0'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'CG': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'CG': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[GA  +  GB +  GC =0] _
+
+text = 'GA  +  GB +  GC =0'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'CG': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'CG': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[G\u1ecdi M tho\u1ea3 vect\u01a1 MA + vect\u01a1 MB = 0.] _
+
+text = 'Gọi M thoả vectơ MA + vectơ MB = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'BM': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'BM': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[G\u1ecdi M tho\u1ea3 v\xe9ct\u01a1 MA + v\xe9c t\u01a1 MB = 0.] _
+
+text = 'Gọi M thoả véctơ MA + véc tơ MB = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'BM': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'BM': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[G\u1ecdi M tho\u1ea3 MA + MB = 0 (vect\u01a1).] _
+
+text = 'Gọi M thoả MA + MB = 0 (vectơ).'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'BM': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'BM': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft AB + CD = 0 (t\u1ed5ng hai vect\u01a1).] _
+
+text = 'Biết AB + CD = 0 (tổng hai vectơ).'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'CD': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'CD': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+__ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho SA.BC = 0.] ___
+
+text = 'Cho SA.BC = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'BC': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'BC': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho SA . BC = 0.] __
+
+text = 'Cho SA . BC = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'BC': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'BC': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho SA\xb7BC = 0.] _
+
+text = 'Cho SA·BC = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'BC': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'BC': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho SA \xd7 BC = 0.] _
+
+text = 'Cho SA × BC = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'BC': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'BC': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+__ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho SA*BC = 0.] ___
+
+text = 'Cho SA*BC = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'BC': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'BC': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft AB + CD = 5.] _
+
+text = 'Biết AB + CD = 5.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'CD': Fraction(5, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'CD': Fraction(5, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft AB \u2212 CD = 1.] _
+
+text = 'Biết AB − CD = 1.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'CD': Fraction(1, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'CD': Fraction(1, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft AB \u2013 CD = 1.] _
+
+text = 'Biết AB – CD = 1.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'CD': Fraction(1, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'CD': Fraction(1, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft AB - CD = 1.] _
+
+text = 'Biết AB - CD = 1.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'CD': Fraction(1, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'CD': Fraction(1, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft AB/CD = 2.] _
+
+text = 'Biết AB/CD = 2.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'CD': Fraction(2, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'CD': Fraction(2, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Ta c\xf3 MA = 0 khi M tr\xf9ng A.] _
+
+text = 'Ta có MA = 0 khi M trùng A.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'AM': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'AM': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[MA = 0 n\u1ebfu M tr\xf9ng A.] _
+
+text = 'MA = 0 nếu M trùng A.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'AM': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'AM': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Khi MA = 0 th\xec M tr\xf9ng A.] _
+
+text = 'Khi MA = 0 thì M trùng A.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'AM': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'AM': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[G\u1ecdi M sao cho vect\u01a1 AM = 0.] _
+
+text = 'Gọi M sao cho vectơ AM = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'AM': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'AM': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho vect\u01a1 MA = 0\u2192.] _
+
+text = 'Cho vectơ MA = 0→.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai(text):
+>       assert _doc(text) == {}
+E       AssertionError: assert {'AM': Fraction(0, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'AM': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:59: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho tam gi\xe1c ABC c\xf3 tr\u1ecdng t\xe2m G tho\u1ea3 GA + GB + GC = 0.] _
+
+text = 'Cho tam giác ABC có trọng tâm G thoả GA + GB + GC = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['CG'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['CG'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Cho tam giác ABC có trọng tâm G thoả GA + GB + GC = 0.'))
+E        +    where namespace(problem_text='Cho tam giác ABC có trọng tâm G thoả GA + GB + GC = 0.') = SimpleNamespace(problem_text='Cho tam giác ABC có trọng tâm G thoả GA + GB + GC = 0.')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+__ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[GA+GB+GC=0] ___
+
+text = 'GA+GB+GC=0'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['CG'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['CG'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='GA+GB+GC=0'))
+E        +    where namespace(problem_text='GA+GB+GC=0') = SimpleNamespace(problem_text='GA+GB+GC=0')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[GA  +  GB +  GC =0] _
+
+text = 'GA  +  GB +  GC =0'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['CG'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['CG'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='GA  +  GB +  GC =0'))
+E        +    where namespace(problem_text='GA  +  GB +  GC =0') = SimpleNamespace(problem_text='GA  +  GB +  GC =0')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[G\u1ecdi M tho\u1ea3 vect\u01a1 MA + vect\u01a1 MB = 0.] _
+
+text = 'Gọi M thoả vectơ MA + vectơ MB = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BM'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BM'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Gọi M thoả vectơ MA + vectơ MB = 0.'))
+E        +    where namespace(problem_text='Gọi M thoả vectơ MA + vectơ MB = 0.') = SimpleNamespace(problem_text='Gọi M thoả vectơ MA + vectơ MB = 0.')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[G\u1ecdi M tho\u1ea3 v\xe9ct\u01a1 MA + v\xe9c t\u01a1 MB = 0.] _
+
+text = 'Gọi M thoả véctơ MA + véc tơ MB = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BM'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BM'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Gọi M thoả véctơ MA + véc tơ MB = 0.'))
+E        +    where namespace(problem_text='Gọi M thoả véctơ MA + véc tơ MB = 0.') = SimpleNamespace(problem_text='Gọi M thoả véctơ MA + véc tơ MB = 0.')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[G\u1ecdi M tho\u1ea3 MA + MB = 0 (vect\u01a1).] _
+
+text = 'Gọi M thoả MA + MB = 0 (vectơ).'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BM'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BM'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Gọi M thoả MA + MB = 0 (vectơ).'))
+E        +    where namespace(problem_text='Gọi M thoả MA + MB = 0 (vectơ).') = SimpleNamespace(problem_text='Gọi M thoả MA + MB = 0 (vectơ).')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Bi\u1ebft AB + CD = 0 (t\u1ed5ng hai vect\u01a1).] _
+
+text = 'Biết AB + CD = 0 (tổng hai vectơ).'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['CD'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['CD'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Biết AB + CD = 0 (tổng hai vectơ).'))
+E        +    where namespace(problem_text='Biết AB + CD = 0 (tổng hai vectơ).') = SimpleNamespace(problem_text='Biết AB + CD = 0 (tổng hai vectơ).')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho SA.BC = 0.] _
+
+text = 'Cho SA.BC = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BC'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BC'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Cho SA.BC = 0.'))
+E        +    where namespace(problem_text='Cho SA.BC = 0.') = SimpleNamespace(problem_text='Cho SA.BC = 0.')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho SA . BC = 0.] _
+
+text = 'Cho SA . BC = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BC'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BC'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Cho SA . BC = 0.'))
+E        +    where namespace(problem_text='Cho SA . BC = 0.') = SimpleNamespace(problem_text='Cho SA . BC = 0.')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho SA\xb7BC = 0.] _
+
+text = 'Cho SA·BC = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BC'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BC'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Cho SA·BC = 0.'))
+E        +    where namespace(problem_text='Cho SA·BC = 0.') = SimpleNamespace(problem_text='Cho SA·BC = 0.')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho SA \xd7 BC = 0.] _
+
+text = 'Cho SA × BC = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BC'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BC'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Cho SA × BC = 0.'))
+E        +    where namespace(problem_text='Cho SA × BC = 0.') = SimpleNamespace(problem_text='Cho SA × BC = 0.')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho SA*BC = 0.] _
+
+text = 'Cho SA*BC = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BC'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['BC'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Cho SA*BC = 0.'))
+E        +    where namespace(problem_text='Cho SA*BC = 0.') = SimpleNamespace(problem_text='Cho SA*BC = 0.')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Ta c\xf3 MA = 0 khi M tr\xf9ng A.] _
+
+text = 'Ta có MA = 0 khi M trùng A.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['AM'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['AM'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Ta có MA = 0 khi M trùng A.'))
+E        +    where namespace(problem_text='Ta có MA = 0 khi M trùng A.') = SimpleNamespace(problem_text='Ta có MA = 0 khi M trùng A.')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[MA = 0 n\u1ebfu M tr\xf9ng A.] _
+
+text = 'MA = 0 nếu M trùng A.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['AM'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['AM'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='MA = 0 nếu M trùng A.'))
+E        +    where namespace(problem_text='MA = 0 nếu M trùng A.') = SimpleNamespace(problem_text='MA = 0 nếu M trùng A.')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Khi MA = 0 th\xec M tr\xf9ng A.] _
+
+text = 'Khi MA = 0 thì M trùng A.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['AM'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['AM'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Khi MA = 0 thì M trùng A.'))
+E        +    where namespace(problem_text='Khi MA = 0 thì M trùng A.') = SimpleNamespace(problem_text='Khi MA = 0 thì M trùng A.')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[G\u1ecdi M sao cho vect\u01a1 AM = 0.] _
+
+text = 'Gọi M sao cho vectơ AM = 0.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['AM'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['AM'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Gọi M sao cho vectơ AM = 0.'))
+E        +    where namespace(problem_text='Gọi M sao cho vectơ AM = 0.') = SimpleNamespace(problem_text='Gọi M sao cho vectơ AM = 0.')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho vect\u01a1 MA = 0\u2192.] _
+
+text = 'Cho vectơ MA = 0→.'
+
+    @pytest.mark.parametrize("text", KHONG_PHAI_DO_DAI)
+    def test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto(text):
+>       assert do_dai_de_ghi_khong_duong(SimpleNamespace(problem_text=text)) is None
+E       AssertionError: assert {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['AM'], 'refusal_cause': 'SOURCE'} is None
+E        +  where {'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['AM'], 'refusal_cause': 'SOURCE'} = do_dai_de_ghi_khong_duong(namespace(problem_text='Cho vectơ MA = 0→.'))
+E        +    where namespace(problem_text='Cho vectơ MA = 0→.') = SimpleNamespace(problem_text='Cho vectơ MA = 0→.')
+
+tests\geometry\test_source_length_vector_context.py:64: AssertionError
+_ test_do_dai_dung_mot_minh_van_doc[Cho h\xecnh ch\xf3p S.ABC c\xf3 SA = 3 v\xe0 GA + GB + GC = 0.-expected7] _
+
+text = 'Cho hình chóp S.ABC có SA = 3 và GA + GB + GC = 0.'
+expected = {'AS': Fraction(3, 1)}
+
+    @pytest.mark.parametrize(("text", "expected"), LA_DO_DAI)
+    def test_do_dai_dung_mot_minh_van_doc(text, expected):
+>       assert _doc(text) == expected
+E       AssertionError: assert {'AS': Fracti...raction(0, 1)} == {'AS': Fraction(3, 1)}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'CG': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:84: AssertionError
+_ test_do_dai_dung_mot_minh_van_doc[Cho h\xecnh ch\xf3p S.ABC c\xf3 SA = 3, MA + MB = 0 (vect\u01a1).-expected8] _
+
+text = 'Cho hình chóp S.ABC có SA = 3, MA + MB = 0 (vectơ).'
+expected = {'AS': Fraction(3, 1)}
+
+    @pytest.mark.parametrize(("text", "expected"), LA_DO_DAI)
+    def test_do_dai_dung_mot_minh_van_doc(text, expected):
+>       assert _doc(text) == expected
+E       AssertionError: assert {'AS': Fracti...raction(0, 1)} == {'AS': Fraction(3, 1)}
+E         
+E         Omitting 1 identical items, use -vv to show
+E         Left contains 1 more item:
+E         {'BM': Fraction(0, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:84: AssertionError
+_____________ test_tron_vecto_va_suy_bien_that_chi_bao_doan_that ______________
+
+    def test_tron_vecto_va_suy_bien_that_chi_bao_doan_that():
+        r = do_dai_de_ghi_khong_duong(SimpleNamespace(
+            problem_text="Cho tam giác ABC có AB = 0 và GA + GB + GC = 0. Tính diện tích."))
+>       assert r is not None and r["reason_subjects"] == ["AB"]
+E       AssertionError: assert ({'reason_code': 'NON_POSITIVE_LENGTH', 'reason_subjects': ['AB', 'CG'], 'refusal_cause': 'SOURCE'} is not None and ['AB', 'CG'] == ['AB']
+E         
+E         Left contains one more item: 'CG'
+E         Use -v to get more diff)
+
+tests\geometry\test_source_length_vector_context.py:99: AssertionError
+________ test_nhan_truoc_so_cung_luat[Cho GA + GB + GC = -.-expected3] ________
+
+tien_to = 'Cho GA + GB + GC = ', sau_so = '.', expected = (('∑', '∑'),)
+
+    @pytest.mark.parametrize(("tien_to", "sau_so", "expected"), [
+        ("Cho tam giác ABC có AB = ", ".", (("A", "B"),)),
+        ("SA = SB = ", "", (("S", "A"), ("S", "B"))),
+        ("Cho hình chóp S.ABCD. SA = ", ".", (("S", "A"),)),
+        ("Cho GA + GB + GC = ", ".", NHAN_BIEU_THUC),
+        ("Cho SA.BC = ", ".", NHAN_BIEU_THUC),
+        ("Cho MA + MB = ", " (vectơ).", NHAN_BIEU_THUC),
+        ("Cho MA = ", " (vectơ).", NHAN_BIEU_THUC),
+        ("Cho MA = ", "→.", NHAN_BIEU_THUC),
+        ("Cho vectơ MA = ", ".", NHAN_BIEU_THUC),
+        # Giả định: con số vẫn là của đúng đoạn ấy (không thành số trơn).
+        ("Ta có MA = ", " khi M trùng A.", (("M", "A"),)),
+    ])
+    def test_nhan_truoc_so_cung_luat(tien_to, sau_so, expected):
+        """`sau_so` là phần đề NGAY SAU con số (con số không nằm trong hai đối số).
+    
+        Con số của một biểu thức KHÔNG được thành "số trơn" (`()`): số trơn làm bằng chứng được cho mọi đoạn."""
+>       assert cac_doan_truoc(tien_to, sau_so) == expected
+E       AssertionError: assert (('G', 'C'),) == (('∑', '∑'),)
+E         
+E         At index 0 diff: ('G', 'C') != ('∑', '∑')
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:120: AssertionError
+___________ test_nhan_truoc_so_cung_luat[Cho SA.BC = -.-expected4] ____________
+
+tien_to = 'Cho SA.BC = ', sau_so = '.', expected = (('∑', '∑'),)
+
+    @pytest.mark.parametrize(("tien_to", "sau_so", "expected"), [
+        ("Cho tam giác ABC có AB = ", ".", (("A", "B"),)),
+        ("SA = SB = ", "", (("S", "A"), ("S", "B"))),
+        ("Cho hình chóp S.ABCD. SA = ", ".", (("S", "A"),)),
+        ("Cho GA + GB + GC = ", ".", NHAN_BIEU_THUC),
+        ("Cho SA.BC = ", ".", NHAN_BIEU_THUC),
+        ("Cho MA + MB = ", " (vectơ).", NHAN_BIEU_THUC),
+        ("Cho MA = ", " (vectơ).", NHAN_BIEU_THUC),
+        ("Cho MA = ", "→.", NHAN_BIEU_THUC),
+        ("Cho vectơ MA = ", ".", NHAN_BIEU_THUC),
+        # Giả định: con số vẫn là của đúng đoạn ấy (không thành số trơn).
+        ("Ta có MA = ", " khi M trùng A.", (("M", "A"),)),
+    ])
+    def test_nhan_truoc_so_cung_luat(tien_to, sau_so, expected):
+        """`sau_so` là phần đề NGAY SAU con số (con số không nằm trong hai đối số).
+    
+        Con số của một biểu thức KHÔNG được thành "số trơn" (`()`): số trơn làm bằng chứng được cho mọi đoạn."""
+>       assert cac_doan_truoc(tien_to, sau_so) == expected
+E       AssertionError: assert (('B', 'C'),) == (('∑', '∑'),)
+E         
+E         At index 0 diff: ('B', 'C') != ('∑', '∑')
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:120: AssertionError
+____ test_nhan_truoc_so_cung_luat[Cho MA + MB = - (vect\u01a1).-expected5] ____
+
+tien_to = 'Cho MA + MB = ', sau_so = ' (vectơ).', expected = (('∑', '∑'),)
+
+    @pytest.mark.parametrize(("tien_to", "sau_so", "expected"), [
+        ("Cho tam giác ABC có AB = ", ".", (("A", "B"),)),
+        ("SA = SB = ", "", (("S", "A"), ("S", "B"))),
+        ("Cho hình chóp S.ABCD. SA = ", ".", (("S", "A"),)),
+        ("Cho GA + GB + GC = ", ".", NHAN_BIEU_THUC),
+        ("Cho SA.BC = ", ".", NHAN_BIEU_THUC),
+        ("Cho MA + MB = ", " (vectơ).", NHAN_BIEU_THUC),
+        ("Cho MA = ", " (vectơ).", NHAN_BIEU_THUC),
+        ("Cho MA = ", "→.", NHAN_BIEU_THUC),
+        ("Cho vectơ MA = ", ".", NHAN_BIEU_THUC),
+        # Giả định: con số vẫn là của đúng đoạn ấy (không thành số trơn).
+        ("Ta có MA = ", " khi M trùng A.", (("M", "A"),)),
+    ])
+    def test_nhan_truoc_so_cung_luat(tien_to, sau_so, expected):
+        """`sau_so` là phần đề NGAY SAU con số (con số không nằm trong hai đối số).
+    
+        Con số của một biểu thức KHÔNG được thành "số trơn" (`()`): số trơn làm bằng chứng được cho mọi đoạn."""
+>       assert cac_doan_truoc(tien_to, sau_so) == expected
+E       AssertionError: assert (('M', 'B'),) == (('∑', '∑'),)
+E         
+E         At index 0 diff: ('M', 'B') != ('∑', '∑')
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:120: AssertionError
+______ test_nhan_truoc_so_cung_luat[Cho MA = - (vect\u01a1).-expected6] _______
+
+tien_to = 'Cho MA = ', sau_so = ' (vectơ).', expected = (('∑', '∑'),)
+
+    @pytest.mark.parametrize(("tien_to", "sau_so", "expected"), [
+        ("Cho tam giác ABC có AB = ", ".", (("A", "B"),)),
+        ("SA = SB = ", "", (("S", "A"), ("S", "B"))),
+        ("Cho hình chóp S.ABCD. SA = ", ".", (("S", "A"),)),
+        ("Cho GA + GB + GC = ", ".", NHAN_BIEU_THUC),
+        ("Cho SA.BC = ", ".", NHAN_BIEU_THUC),
+        ("Cho MA + MB = ", " (vectơ).", NHAN_BIEU_THUC),
+        ("Cho MA = ", " (vectơ).", NHAN_BIEU_THUC),
+        ("Cho MA = ", "→.", NHAN_BIEU_THUC),
+        ("Cho vectơ MA = ", ".", NHAN_BIEU_THUC),
+        # Giả định: con số vẫn là của đúng đoạn ấy (không thành số trơn).
+        ("Ta có MA = ", " khi M trùng A.", (("M", "A"),)),
+    ])
+    def test_nhan_truoc_so_cung_luat(tien_to, sau_so, expected):
+        """`sau_so` là phần đề NGAY SAU con số (con số không nằm trong hai đối số).
+    
+        Con số của một biểu thức KHÔNG được thành "số trơn" (`()`): số trơn làm bằng chứng được cho mọi đoạn."""
+>       assert cac_doan_truoc(tien_to, sau_so) == expected
+E       AssertionError: assert (('M', 'A'),) == (('∑', '∑'),)
+E         
+E         At index 0 diff: ('M', 'A') != ('∑', '∑')
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:120: AssertionError
+__________ test_nhan_truoc_so_cung_luat[Cho MA = -\u2192.-expected7] __________
+
+tien_to = 'Cho MA = ', sau_so = '→.', expected = (('∑', '∑'),)
+
+    @pytest.mark.parametrize(("tien_to", "sau_so", "expected"), [
+        ("Cho tam giác ABC có AB = ", ".", (("A", "B"),)),
+        ("SA = SB = ", "", (("S", "A"), ("S", "B"))),
+        ("Cho hình chóp S.ABCD. SA = ", ".", (("S", "A"),)),
+        ("Cho GA + GB + GC = ", ".", NHAN_BIEU_THUC),
+        ("Cho SA.BC = ", ".", NHAN_BIEU_THUC),
+        ("Cho MA + MB = ", " (vectơ).", NHAN_BIEU_THUC),
+        ("Cho MA = ", " (vectơ).", NHAN_BIEU_THUC),
+        ("Cho MA = ", "→.", NHAN_BIEU_THUC),
+        ("Cho vectơ MA = ", ".", NHAN_BIEU_THUC),
+        # Giả định: con số vẫn là của đúng đoạn ấy (không thành số trơn).
+        ("Ta có MA = ", " khi M trùng A.", (("M", "A"),)),
+    ])
+    def test_nhan_truoc_so_cung_luat(tien_to, sau_so, expected):
+        """`sau_so` là phần đề NGAY SAU con số (con số không nằm trong hai đối số).
+    
+        Con số của một biểu thức KHÔNG được thành "số trơn" (`()`): số trơn làm bằng chứng được cho mọi đoạn."""
+>       assert cac_doan_truoc(tien_to, sau_so) == expected
+E       AssertionError: assert (('M', 'A'),) == (('∑', '∑'),)
+E         
+E         At index 0 diff: ('M', 'A') != ('∑', '∑')
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:120: AssertionError
+_______ test_nhan_truoc_so_cung_luat[Cho vect\u01a1 MA = -.-expected8] ________
+
+tien_to = 'Cho vectơ MA = ', sau_so = '.', expected = (('∑', '∑'),)
+
+    @pytest.mark.parametrize(("tien_to", "sau_so", "expected"), [
+        ("Cho tam giác ABC có AB = ", ".", (("A", "B"),)),
+        ("SA = SB = ", "", (("S", "A"), ("S", "B"))),
+        ("Cho hình chóp S.ABCD. SA = ", ".", (("S", "A"),)),
+        ("Cho GA + GB + GC = ", ".", NHAN_BIEU_THUC),
+        ("Cho SA.BC = ", ".", NHAN_BIEU_THUC),
+        ("Cho MA + MB = ", " (vectơ).", NHAN_BIEU_THUC),
+        ("Cho MA = ", " (vectơ).", NHAN_BIEU_THUC),
+        ("Cho MA = ", "→.", NHAN_BIEU_THUC),
+        ("Cho vectơ MA = ", ".", NHAN_BIEU_THUC),
+        # Giả định: con số vẫn là của đúng đoạn ấy (không thành số trơn).
+        ("Ta có MA = ", " khi M trùng A.", (("M", "A"),)),
+    ])
+    def test_nhan_truoc_so_cung_luat(tien_to, sau_so, expected):
+        """`sau_so` là phần đề NGAY SAU con số (con số không nằm trong hai đối số).
+    
+        Con số của một biểu thức KHÔNG được thành "số trơn" (`()`): số trơn làm bằng chứng được cho mọi đoạn."""
+>       assert cac_doan_truoc(tien_to, sau_so) == expected
+E       AssertionError: assert (('M', 'A'),) == (('∑', '∑'),)
+E         
+E         At index 0 diff: ('M', 'A') != ('∑', '∑')
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:120: AssertionError
+___________________ test_gia_dinh_mot_minh_khong_la_tien_de ___________________
+
+    def test_gia_dinh_mot_minh_khong_la_tien_de():
+>       assert _doc("Nếu SA bằng 4 thì thể tích khối chóp là bao nhiêu?") == {}
+E       AssertionError: assert {'AS': Fraction(4, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'AS': Fraction(4, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:148: AssertionError
+_ test_cong_thuc_the_tich_khong_cho_do_dai_doan[V = 1/3 \xd7 S(ABC) \xd7 SA = 10] _
+
+text = 'V = 1/3 × S(ABC) × SA = 10'
+
+    @pytest.mark.parametrize("text", ["V = 1/3 × S(ABC) × SA = 10", "V = S(ABCD) × AA′ = 60",
+                                      "Thể tích S.ABCDV = 1/3 × S(ABCD) × SO = 16Dựa trên: S(ABCD), d(S, (ABC))"])
+    def test_cong_thuc_the_tich_khong_cho_do_dai_doan(text):
+        """Số cuối là THỂ TÍCH, không phải độ dài của thừa số đứng trước dấu `=`."""
+>       assert _doc(text) == {}
+E       AssertionError: assert {'AS': Fraction(10, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'AS': Fraction(10, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:159: AssertionError
+_ test_cong_thuc_the_tich_khong_cho_do_dai_doan[V = S(ABCD) \xd7 AA\u2032 = 60] _
+
+text = 'V = S(ABCD) × AA′ = 60'
+
+    @pytest.mark.parametrize("text", ["V = 1/3 × S(ABC) × SA = 10", "V = S(ABCD) × AA′ = 60",
+                                      "Thể tích S.ABCDV = 1/3 × S(ABCD) × SO = 16Dựa trên: S(ABCD), d(S, (ABC))"])
+    def test_cong_thuc_the_tich_khong_cho_do_dai_doan(text):
+        """Số cuối là THỂ TÍCH, không phải độ dài của thừa số đứng trước dấu `=`."""
+>       assert _doc(text) == {}
+E       AssertionError: assert {'AA′': Fraction(60, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'AA′': Fraction(60, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:159: AssertionError
+_ test_cong_thuc_the_tich_khong_cho_do_dai_doan[Th\u1ec3 t\xedch S.ABCDV = 1/3 \xd7 S(ABCD) \xd7 SO = 16D\u1ef1a tr\xean: S(ABCD), d(S, (ABC))] _
+
+text = 'Thể tích S.ABCDV = 1/3 × S(ABCD) × SO = 16Dựa trên: S(ABCD), d(S, (ABC))'
+
+    @pytest.mark.parametrize("text", ["V = 1/3 × S(ABC) × SA = 10", "V = S(ABCD) × AA′ = 60",
+                                      "Thể tích S.ABCDV = 1/3 × S(ABCD) × SO = 16Dựa trên: S(ABCD), d(S, (ABC))"])
+    def test_cong_thuc_the_tich_khong_cho_do_dai_doan(text):
+        """Số cuối là THỂ TÍCH, không phải độ dài của thừa số đứng trước dấu `=`."""
+>       assert _doc(text) == {}
+E       AssertionError: assert {'OS': Fraction(16, 1)} == {}
+E         
+E         Left contains 1 more item:
+E         {'OS': Fraction(16, 1)}
+E         Use -v to get more diff
+
+tests\geometry\test_source_length_vector_context.py:159: AssertionError
+________________ test_phan_chua_doc_khong_nuot_bieu_thuc_vecto ________________
+
+    def test_phan_chua_doc_khong_nuot_bieu_thuc_vecto():
+        """Đối chứng: cùng đề, thêm mệnh đề vectơ ⇒ phần chưa đọc có thêm đúng các ký hiệu của mệnh đề ấy."""
+        goc = set(phan_chua_doc("Cho tam giác ABC có AB = 3. Tính diện tích."))
+        them = set(phan_chua_doc("Cho tam giác ABC có AB = 3 và GA + GB + GC = 0. Tính diện tích.")) - goc
+>       assert {"GC", "0"} <= them, them
+E       AssertionError: {'+', 'GA', 'GB'}
+E       assert {'0', 'GC'} <= {'+', 'GA', 'GB'}
+E         
+E         Extra items in the left set:
+E         'GC'
+E         '0'
+
+tests\geometry\test_source_length_vector_context.py:167: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho tam gi\xe1c ABC c\xf3 tr\u1ecdng t\xe2m G tho\u1ea3 GA + GB + GC = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[GA+GB+GC=0]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[GA  +  GB +  GC =0]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[G\u1ecdi M tho\u1ea3 vect\u01a1 MA + vect\u01a1 MB = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[G\u1ecdi M tho\u1ea3 v\xe9ct\u01a1 MA + v\xe9c t\u01a1 MB = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[G\u1ecdi M tho\u1ea3 MA + MB = 0 (vect\u01a1).]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft AB + CD = 0 (t\u1ed5ng hai vect\u01a1).]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho SA.BC = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho SA . BC = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho SA\xb7BC = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho SA \xd7 BC = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho SA*BC = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft AB + CD = 5.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft AB \u2212 CD = 1.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft AB \u2013 CD = 1.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft AB - CD = 1.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Bi\u1ebft AB/CD = 2.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Ta c\xf3 MA = 0 khi M tr\xf9ng A.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[MA = 0 n\u1ebfu M tr\xf9ng A.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Khi MA = 0 th\xec M tr\xf9ng A.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[G\u1ecdi M sao cho vect\u01a1 AM = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_bieu_thuc_vecto_tong_tich_dieu_kien_khong_la_do_dai[Cho vect\u01a1 MA = 0\u2192.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho tam gi\xe1c ABC c\xf3 tr\u1ecdng t\xe2m G tho\u1ea3 GA + GB + GC = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[GA+GB+GC=0]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[GA  +  GB +  GC =0]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[G\u1ecdi M tho\u1ea3 vect\u01a1 MA + vect\u01a1 MB = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[G\u1ecdi M tho\u1ea3 v\xe9ct\u01a1 MA + v\xe9c t\u01a1 MB = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[G\u1ecdi M tho\u1ea3 MA + MB = 0 (vect\u01a1).]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Bi\u1ebft AB + CD = 0 (t\u1ed5ng hai vect\u01a1).]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho SA.BC = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho SA . BC = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho SA\xb7BC = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho SA \xd7 BC = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho SA*BC = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Ta c\xf3 MA = 0 khi M tr\xf9ng A.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[MA = 0 n\u1ebfu M tr\xf9ng A.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Khi MA = 0 th\xec M tr\xf9ng A.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[G\u1ecdi M sao cho vect\u01a1 AM = 0.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nguyen_nhan_tu_choi_khong_goi_de_sai_vi_bieu_thuc_vecto[Cho vect\u01a1 MA = 0\u2192.]
+FAILED tests/geometry/test_source_length_vector_context.py::test_do_dai_dung_mot_minh_van_doc[Cho h\xecnh ch\xf3p S.ABC c\xf3 SA = 3 v\xe0 GA + GB + GC = 0.-expected7]
+FAILED tests/geometry/test_source_length_vector_context.py::test_do_dai_dung_mot_minh_van_doc[Cho h\xecnh ch\xf3p S.ABC c\xf3 SA = 3, MA + MB = 0 (vect\u01a1).-expected8]
+FAILED tests/geometry/test_source_length_vector_context.py::test_tron_vecto_va_suy_bien_that_chi_bao_doan_that
+FAILED tests/geometry/test_source_length_vector_context.py::test_nhan_truoc_so_cung_luat[Cho GA + GB + GC = -.-expected3]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nhan_truoc_so_cung_luat[Cho SA.BC = -.-expected4]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nhan_truoc_so_cung_luat[Cho MA + MB = - (vect\u01a1).-expected5]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nhan_truoc_so_cung_luat[Cho MA = - (vect\u01a1).-expected6]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nhan_truoc_so_cung_luat[Cho MA = -\u2192.-expected7]
+FAILED tests/geometry/test_source_length_vector_context.py::test_nhan_truoc_so_cung_luat[Cho vect\u01a1 MA = -.-expected8]
+FAILED tests/geometry/test_source_length_vector_context.py::test_gia_dinh_mot_minh_khong_la_tien_de
+FAILED tests/geometry/test_source_length_vector_context.py::test_cong_thuc_the_tich_khong_cho_do_dai_doan[V = 1/3 \xd7 S(ABC) \xd7 SA = 10]
+FAILED tests/geometry/test_source_length_vector_context.py::test_cong_thuc_the_tich_khong_cho_do_dai_doan[V = S(ABCD) \xd7 AA\u2032 = 60]
+FAILED tests/geometry/test_source_length_vector_context.py::test_cong_thuc_the_tich_khong_cho_do_dai_doan[Th\u1ec3 t\xedch S.ABCDV = 1/3 \xd7 S(ABCD) \xd7 SO = 16D\u1ef1a tr\xean: S(ABCD), d(S, (ABC))]
+FAILED tests/geometry/test_source_length_vector_context.py::test_phan_chua_doc_khong_nuot_bieu_thuc_vecto
+53 failed, 27 passed in 1.89s

@@ -1,0 +1,44 @@
+[
+ {
+  "text": "Cho tứ diện ABCD có AB = 3 và AB + CD = 5. Tính thể tích.",
+  "given": "CD = 5",
+  "verdict": "EVIDENCED",
+  "reason": ""
+ },
+ {
+  "text": "Cho hình chóp S.ABC có SA = 2 và SA.BC = 6. Tính SB.",
+  "given": "BC = 6",
+  "verdict": "EVIDENCED",
+  "reason": ""
+ },
+ {
+  "text": "Cho tam giác ABC có trọng tâm G, GA + GB + GC = 0 và AB = 3.",
+  "given": "GC = 0",
+  "verdict": "EVIDENCED",
+  "reason": ""
+ },
+ {
+  "text": "Cho hình chóp S.ABCD có đáy vuông cạnh 2, SA = 3. Tính lại khi SA = 5.",
+  "given": "SA = 5",
+  "verdict": "EVIDENCED",
+  "reason": ""
+ },
+ {
+  "text": "Cho tam giác ABC có AB = 3, AC = 4. Tính BC.",
+  "given": "AB = 3",
+  "verdict": "EVIDENCED",
+  "reason": ""
+ },
+ {
+  "text": "Cho hình chóp S.ABCD có SA = SB = SC = SD = 2.",
+  "given": "SC = 2",
+  "verdict": "EVIDENCED",
+  "reason": ""
+ },
+ {
+  "text": "Cho hình chóp S.ABCD. SA = 3. Tính thể tích.",
+  "given": "SA = 3",
+  "verdict": "EVIDENCED",
+  "reason": ""
+ }
+]

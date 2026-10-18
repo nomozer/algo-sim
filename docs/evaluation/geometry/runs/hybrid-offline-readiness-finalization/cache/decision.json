@@ -1,0 +1,31 @@
+{
+  "schema": "CACHE_DECISION/1",
+  "run": "hybrid-offline-readiness-finalization",
+  "date": "2026-10-18",
+  "issue": "ISSUE-ARCH-SOURCE-LENGTH-READER-VECTOR-ZERO",
+  "product_commit": "c55374cc",
+  "decision": "BUMP 125 -> 126",
+  "rule_applied": "backend/app/main.py CACHE_VERSION history: only status == ok envelopes are cached; a served -> refused (or served-value) change requires a bump, refused -> served does not",
+  "model_surface_changed": false,
+  "directions": {
+    "served_to_refused": "a GIVEN length whose only textual evidence is a number inside an expression (AB + CD = 5, SA.BC = 6, GA + GB + GC = 0) was EVIDENCED by the grounding gate; now SOURCE_EVIDENCE_CONFLICT (the number is labelled as an expression, never a bare number)",
+    "refused_to_served": "source invariants / NON_POSITIVE_LENGTH SOURCE no longer emitted from expressions; refusals were never cached",
+    "unchanged": "texts whose length statements stand alone"
+  },
+  "probe": {
+    "script": "cache_probe.py (run once per tree with sys.path[0] = <tree>/backend)",
+    "before": "cache-probe-main.json (main f2b00ed3)",
+    "after": "cache-probe-new.json (c55374cc)",
+    "result": "3/3 expression cases EVIDENCED -> SOURCE_EVIDENCE_CONFLICT; 3/3 controls EVIDENCED -> EVIDENCED; 'Tính lại khi SA = 5' EVIDENCED -> EVIDENCED (pre-existing ISSUE-ARCH-HYBRID-QUESTION-LOCAL-GIVENS, unchanged)"
+  },
+  "reader_parity": {
+    "corpus": "every problem-text field of every tracked *.json in the repo (1889 distinct texts)",
+    "changed_texts": 19,
+    "length_changes": "16 solution-formula strings (V = 1/3 × S(ABC) × SA = 10: the number is the volume, not SA) + 1 bare conditional ('Nếu SA bằng 4 thì …' alone): all intended",
+    "unread_only_changes": "2 texts: a conditional clause now stays unread (more conservative for assumption_gate)",
+    "regressions": 0,
+    "diff": "../p1-source-length/reader-parity-diff.json"
+  },
+  "migration_or_purge": "NONE — no database row was read, migrated or deleted; old rows become misses by policy_version",
+  "historical_mode_unknown": "ISSUE-OPS-CACHE-HISTORICAL-MODE-UNKNOWN unchanged (the bump makes every pre-126 row a miss for the default identity, whatever mode wrote it)"
+}
