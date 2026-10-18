@@ -53,7 +53,7 @@ from app.ingestion.image_extraction import (
     VisionUnavailable,
     extract_problem_from_image,
 )
-from app.ai.pipeline import RoutePolicy, route_policy_snapshot, run_pipeline
+from app.ai.pipeline import HYBRID_PREVIEW_TOKEN_MIN_LENGTH, RoutePolicy, route_policy_snapshot, run_pipeline
 from app.learner_messages import attach_learner_reason, learner_error_message
 from app.runtime_identity import runtime_identity
 from app.accounts import service as accounts_service
@@ -1000,7 +1000,11 @@ async def hybrid_preview(request: Request):
         local = request.client is not None and ipaddress.ip_address(request.client.host).is_loopback
     except ValueError:
         local = False
-    if not local or len(token) < 32 or not hmac.compare_digest(token.encode(), supplied.encode()):
+    # CORS allows any origin and a page in the operator's browser connects from loopback, so loopback alone proves
+    # nothing; an operator tool sends no Origin header — refuse any request that carries one.
+    browser = request.headers.get("origin") is not None
+    if (browser or not local or len(token) < HYBRID_PREVIEW_TOKEN_MIN_LENGTH
+            or not hmac.compare_digest(token.encode(), supplied.encode())):
         return JSONResponse(status_code=403, headers=headers,
                             content={"reason_code": "PREVIEW_FORBIDDEN", "error": "Không được phép mở chế độ xem trước."})
     try:

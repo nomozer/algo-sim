@@ -4,8 +4,10 @@ from __future__ import annotations
 from copy import deepcopy
 from fractions import Fraction
 import json
+import logging
 import re
 from typing import Any, Literal
+import unicodedata
 
 from pydantic import BaseModel
 
@@ -16,6 +18,8 @@ from app.simulation.geometry.metric import Metric, using
 from app.simulation.semantic_program.pipeline_adapter import (
     compile_semantic_program_to_envelope, validate_semantic_envelope_config,
 )
+
+_log = logging.getLogger(__name__)
 
 ADAPTER_VERSION = "hybrid-preview-adapter/1"
 ENVELOPE_VERSION = "hybrid-route-d-preview/1"
@@ -47,21 +51,40 @@ class PreviewInvalid(ValueError):
     pass
 
 
+#: Route D source-grounding refusal codes (registry gate) — the learner is told the data could not be matched to the text.
+_MA_NGUON = {"QUOTE_NOT_IN_SOURCE", "UNKNOWN_LABEL", "PREDICATE_NOT_IN_QUOTE", "PLANE_NOT_IN_QUOTE", "ROLE_NOT_IN_QUOTE",
+             "OBJECT_NOT_IN_QUOTE", "AMBIGUOUS_VALUE_QUOTE", "UNGROUNDED_VALUE", "SOURCE_OBJECT_MISMATCH",
+             "SOURCE_PREMISE_UNREAD", "REQUEST_NOT_ANSWERED", "NOT_ASKED_IN_SOURCE"}
+
+
 def _refusal(code: str, policy, planner: dict | None = None) -> HybridPreviewEnvelope:
     if code in {"PROOF_UNVERIFIABLE", "PREVIEW_PROOF_STATUS_INVALID"}:
         message = "Chưa có chứng chỉ chứng minh tổng quát; kiểm tra trên một hình dựng chưa đủ để kết luận."
-    elif code in {"SOURCE_QUOTE_MISSING", "SOURCE_QUOTE_NOT_IN_INPUT", "PREMISE_NOT_COVERED", "SOURCE_MISMATCH"}:
+    elif code in _MA_NGUON:
         message = "Hệ chưa đối chiếu được đầy đủ dữ kiện với đề bài nên tạm dừng dựng hình."
     elif code == "NON_POSITIVE_LENGTH":
         message = learner_reason({"status": "unsupported", "reason_code": code,
-                                  "failure_category": "capability_gap",
-                                  "refusal_cause": "SOURCE" if code == "NON_POSITIVE_LENGTH" else "UNKNOWN"})
+                                  "failure_category": "capability_gap", "refusal_cause": "SOURCE"})
     else:
         message = "Hệ chưa đủ dữ kiện hoặc khả năng kiểm chứng để dựng hình và tính kết quả an toàn cho đề này."
+    # Only verified observations survive a refusal: calls / trace / auxiliary carry model-supplied quotes that never
+    # passed the source check (review of this run).
+    kept = {k: deepcopy(v) for k, v in (planner or {}).items() if k in ("version", "goal_checks", "negated_checks")}
     return HybridPreviewEnvelope(envelope={"status": "unsupported", "reason_code": code, "reason": message,
                                            "learner_reason": message, "failure_category": "capability_gap"},
-                                 route_d={"runtime_identity": preview_runtime_identity(policy),
-                                          "planner": deepcopy(planner or {})})
+                                 route_d={"runtime_identity": preview_runtime_identity(policy), "planner": kept})
+
+
+#: Backstop against narrative that presents a one-configuration observation as a proof. Text is NFC-normalised and
+#: stripped of format characters (zero-width etc.) first; hyphens/spaces between the two syllables are equivalent.
+_CHUNG_MINH = r"chứng[\s\-‐-―]*minh"
+_LOI_CHUNG_MINH = re.compile(
+    rf"(?:đã|được)\s*{_CHUNG_MINH}|{_CHUNG_MINH}\s*(?:thành\s*công|được|xong)|điều\s*phải\s*{_CHUNG_MINH}|đpcm")
+
+
+def _noi_chung_minh(text: Any) -> bool:
+    s = "".join(ch for ch in unicodedata.normalize("NFC", str(text)) if unicodedata.category(ch) != "Cf")
+    return _LOI_CHUNG_MINH.search(s.casefold()) is not None
 
 
 def _validate_scene(scene: dict) -> Metric:
@@ -109,6 +132,8 @@ def adapt_result(result, policy) -> HybridPreviewEnvelope:
                 raise PreviewInvalid("PREVIEW_PROOF_STATUS_INVALID")
     if result.status != "SERVED":
         return _refusal(result.code or "PREVIEW_RESULT_INVALID", policy, planner)
+    if "version" not in planner:   # every served Route D result planned; one without a planner version is unattributable
+        raise PreviewInvalid("PREVIEW_IDENTITY_CHANGED")
     if result.kernel_check is not True or result.spec is None or not result.scene3d:
         raise PreviewInvalid("PREVIEW_RESULT_INVALID")
     scene = deepcopy(result.scene3d)
@@ -136,7 +161,7 @@ def adapt_result(result, policy) -> HybridPreviewEnvelope:
     texts += [frame.get("narration", "") for frame in envelope["config"]["frames"]]
     texts += [event.get(key, "") for event in scene["events"] for key in ("learner_text", "explanation")]
     texts += [step.get("learner_text", "") for step in scene["formation"]["steps"]]
-    if any(re.search(r"đã\s+chứng\s+minh|được\s+chứng\s+minh|chứng\s+minh\s+thành\s+công", str(t).casefold()) for t in texts):
+    if any(_noi_chung_minh(t) for t in texts):
         raise PreviewInvalid("PREVIEW_PROOF_TEXT_INVALID")
     return HybridPreviewEnvelope(envelope=envelope, route_d={
         "runtime_identity": preview_runtime_identity(policy), "geometry_ir": result.spec.model_dump(mode="json"),
@@ -161,6 +186,8 @@ def run_preview(problem_text: str, fixtures: Any, policy) -> HybridPreviewEnvelo
         return adapt_result(result, policy)
     except PreviewInvalid as exc:
         return _refusal(str(exc), policy)
-    except Exception:
-        # The boundary refuses malformed/tampered deterministic output, with no raw error/model text in HTTP.
+    except Exception as exc:  # noqa: BLE001
+        # The boundary refuses malformed/tampered deterministic output, with no raw error/model text in HTTP; the
+        # exception TYPE is logged server-side so an operator can tell an adapter bug from a tampered result.
+        _log.warning("Route D preview validation failed: %s", type(exc).__name__)
         return _refusal("PREVIEW_VALIDATION_FAILED", policy)

@@ -185,6 +185,12 @@ def test_symbolic_unit_and_goal_observation_survive_http_without_proof_promotion
     ('answer_unit', 'PREVIEW_LENGTH_UNIT_INVALID'),
     ('duplicate_object', 'PREVIEW_DEPENDENCY_INVALID'),
     ('surface', 'PREVIEW_SURFACE_CHANGED'),
+    # review finding 3: each of these checks could be removed without any test failing
+    ('proof_status', 'PREVIEW_PROOF_STATUS_INVALID'),
+    ('negated_proven', 'PREVIEW_PROOF_STATUS_INVALID'),
+    ('dependency_order', 'PREVIEW_DEPENDENCY_INVALID'),
+    ('kernel_check', 'PREVIEW_RESULT_INVALID'),
+    ('result_metric', 'PREVIEW_METRIC_MISMATCH'),
 ])
 def test_adapter_refuses_corrupted_outputs_through_http(preview, monkeypatch, fault, code):
     from app.ai import hybrid_preview as HP
@@ -201,6 +207,21 @@ def test_adapter_refuses_corrupted_outputs_through_http(preview, monkeypatch, fa
         if fault == 'answer_unit': result.answer_exact['f8']['unit'] = 'b'
         if fault == 'duplicate_object': result.scene3d['objects'].append(deepcopy(result.scene3d['objects'][0]))
         if fault == 'surface': result.ai['surface'] = 'different-surface'
+        if fault == 'proof_status': result.planner['goal_checks']['f7']['proof_status'] = 'PROVEN'
+        if fault == 'negated_proven':
+            result.planner['negated_checks'] = {'fx': {'evidence_state': 'TRUE_ON_CONFIGURATION',
+                                                       'proof_status': 'UNVERIFIABLE', 'can_present_as_proven': True}}
+        if fault == 'dependency_order':
+            s = result.scene3d
+            born = {e['object'] for e in s['events'] if e.get('object')}
+            o = next(o for o in s['objects'] if o['id'] in born and any(d in born for d in o.get('depends') or ()))
+            dep = next(d for d in o['depends'] if d in born)
+            last = max(e['step_index'] for e in s['events'])
+            for e in s['events']:
+                if e.get('object') == dep:
+                    e['step_index'] = last
+        if fault == 'kernel_check': result.kernel_check = False
+        if fault == 'result_metric': result.metric = [['9', '0', '0'], ['0', '9', '0'], ['0', '0', '9']]
         return result
     monkeypatch.setattr(HP, 'run_ai_fact_route', corrupt)
     data = ask(preview, proof_case()).json()
@@ -244,13 +265,15 @@ def test_one_request_keeps_its_policy_contract_and_identity_during_env_flip(prev
 
 
 @pytest.mark.parametrize('module_name,attr', [('registry', 'REGISTRY_VERSION'), ('planner', 'PLANNER_VERSION'),
-                                              ('engine', 'ENGINE_VERSION')])
+                                              ('engine', 'ENGINE_VERSION'), ('fact_extraction', 'SYSTEM_PROMPT'),
+                                              ('hybrid_preview', 'ADAPTER_VERSION')])
 def test_route_d_identity_change_during_a_request_refuses(preview, monkeypatch, module_name, attr):
-    """Takeover (Claude): the snapshot names the Registry/Planner/Engine that the response claims to come from. If any
-    of them differs once the request has executed, the served result no longer matches its identity: refuse."""
-    from app.ai import hybrid_preview as HP
+    """Takeover (Claude): the snapshot names the Registry/Planner/Engine (and extraction surface / adapter) that the
+    response claims to come from. If any differs once the request has executed, refuse."""
+    from app.ai import fact_extraction, hybrid_preview as HP
     from app.simulation.geometry_functions import engine, planner, registry
-    module = {'registry': registry, 'planner': planner, 'engine': engine}[module_name]
+    module = {'registry': registry, 'planner': planner, 'engine': engine, 'fact_extraction': fact_extraction,
+              'hybrid_preview': HP}[module_name]
     real = HP.run_ai_fact_route
 
     def change_version(*a, **kw):
@@ -305,6 +328,83 @@ def test_zero_length_source_value_is_refused_with_its_code_and_a_learner_message
     env = preview.post(URL, json={'problem_text': text}).json()['envelope']
     assert (env['status'], env['reason_code']) == ('unsupported', 'NON_POSITIVE_LENGTH') and 'scene3d' not in env
     assert '{' not in env['learner_reason'] and 'NON_POSITIVE' not in env['learner_reason']
+
+
+def test_health_with_preview_off_never_loads_route_d():
+    """Review finding 1: `/api/health` (Docker healthcheck every 30 s, frontend) calls `runtime_identity()`, which loaded
+    Route D even with the preview OFF — a research import error would make the product container unhealthy."""
+    import os
+    import subprocess
+    import sys
+    code = '''
+import socket, sys
+def blocked(*a, **kw): raise AssertionError('network forbidden')
+socket.getaddrinfo = socket.create_connection = blocked
+from fastapi.testclient import TestClient
+from app.main import app
+c = TestClient(app)
+assert c.get('/api/health').status_code == 200
+d = c.get('/api/diagnostics/runtime').json()
+assert d['hybrid_route_d_preview'] == {'enabled': False}, d['hybrid_route_d_preview']
+loaded = [m for m in sys.modules if m.startswith(('app.ai.hybrid_preview','app.ai.fact_extraction',
+          'app.ai.function_calling','app.ai.function_route','app.simulation.geometry_functions'))]
+assert not loaded, loaded
+'''
+    env = {k: v for k, v in os.environ.items() if k not in ('HYBRID_ROUTE_D_PREVIEW', 'HYBRID_ROUTE_D_PREVIEW_TOKEN')}
+    env.update(ALLOW_LIVE_AI='0')
+    r = subprocess.run([sys.executable, '-c', code], cwd=ROOT / 'backend', env=env, capture_output=True, text=True,
+                       timeout=120)
+    assert r.returncode == 0, r.stderr[-2000:]
+
+
+def test_diagnostics_say_whether_the_operator_token_is_usable(preview, monkeypatch):
+    """Review finding 8: `enabled: true` with a missing/short token means every request is 403 — say so."""
+    assert preview.get('/api/diagnostics/runtime').json()['hybrid_route_d_preview']['token_configured'] is True
+    monkeypatch.setenv('HYBRID_ROUTE_D_PREVIEW_TOKEN', 'short')
+    assert preview.get('/api/diagnostics/runtime').json()['hybrid_route_d_preview']['token_configured'] is False
+
+
+def test_browser_origin_is_refused_even_with_the_token(preview):
+    """Review finding 6: CORS allows any origin, and a page in the operator's browser connects from loopback; the
+    token is then the only gate. An operator tool sends no Origin: refuse any request that carries one."""
+    r = preview.post(URL, json={'problem_text': CORPUS['positive'][0]['text']},
+                     headers={'Origin': 'https://evil.example'})
+    assert r.status_code == 403 and r.json()['reason_code'] == 'PREVIEW_FORBIDDEN'
+
+
+def test_refusal_does_not_echo_unverified_model_text(preview):
+    """Review finding 2: on refusals the planner metadata carried model-supplied quotes that never passed the source
+    check. A refusal keeps only the planner version and the goal/negated observations."""
+    case = deepcopy(CORPUS['positive'][0])
+    case['payload']['facts'][0]['quotes'] = ['INJECTED_NOT_IN_INPUT <script>']
+    data = ask(preview, case).json()
+    assert data['envelope']['status'] == 'unsupported', data
+    assert 'INJECTED_NOT_IN_INPUT' not in json.dumps(data, ensure_ascii=False)
+    assert set(data['route_d']['planner']) <= {'version', 'goal_checks', 'negated_checks'}
+    # review finding 8: the grounding message branch named codes Route D never emits; it must fire for real ones
+    assert data['envelope']['reason_code'] == 'QUOTE_NOT_IN_SOURCE'
+    assert 'đối chiếu' in data['envelope']['learner_reason']
+
+
+@pytest.mark.parametrize('text', [
+    'Ta chứng minh được khẳng định',
+    'Đã​chứng minh khẳng định',
+    __import__('unicodedata').normalize('NFD', 'Đã chứng minh khẳng định'),
+    'Vậy SC ⊥ BD (đpcm)',
+    'Điều phải chứng minh',
+    'Đã chứng-minh xong',
+])
+def test_proof_text_backstop_catches_variants(preview, monkeypatch, text):
+    """Review finding 4: NFD, zero-width characters and common phrasings slipped past the proof-text backstop."""
+    from app.ai import hybrid_preview as HP
+    real = HP.run_ai_fact_route
+    def corrupt(*a, **kw):
+        result = real(*a, **kw)
+        result.spec = result.spec.model_copy(update={'title': text})
+        return result
+    monkeypatch.setattr(HP, 'run_ai_fact_route', corrupt)
+    data = ask(preview, proof_case()).json()
+    assert data['envelope']['reason_code'] == 'PREVIEW_PROOF_TEXT_INVALID', data['envelope']
 
 
 def test_live_flag_and_api_key_still_cannot_reach_a_provider(preview, monkeypatch):

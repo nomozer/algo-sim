@@ -71,6 +71,10 @@ class RoutePolicy:
         return hashlib.sha256(goc.encode("utf-8")).hexdigest()[:8]
 
 
+#: Minimum length of `HYBRID_ROUTE_D_PREVIEW_TOKEN`; shorter or missing ⇒ every preview request is refused.
+HYBRID_PREVIEW_TOKEN_MIN_LENGTH = 32
+
+
 def route_policy_snapshot(env: dict[str, str] | None = None, *, preview: bool = False) -> RoutePolicy:
     """Ảnh chụp từ `env` (mặc định `os.environ`); giá trị lạ ép về mặc định như `routing.che_do`."""
     from app.simulation.geometry_compiler.routing import che_do

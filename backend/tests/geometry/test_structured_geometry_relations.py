@@ -835,6 +835,17 @@ def test_Y_bao_dong_tinh_compiler_chi_qua_cong_routing_va_khong_cham_route_D():
     preview_edges = {(p.relative_to(goc).as_posix(), m) for p in goc.rglob("*.py")
                      for m in _nhap_tu(p) if m == "app.ai.hybrid_preview"}
     assert preview_edges == _CONG_PREVIEW
+    # The closure SKIPS these declared edges, so they must stay lazy: an import inside a function body that only the
+    # gated code path runs. A module-level import would load Route D at app import and hide behind the skip (review).
+    for tep, _ in _CONG_PREVIEW:
+        cay = ast.parse((goc / tep).read_text(encoding="utf-8"))
+        cha = {con: n for n in ast.walk(cay) for con in ast.iter_child_nodes(n)}
+        for n in ast.walk(cay):
+            if isinstance(n, ast.ImportFrom) and n.module == "app.ai.hybrid_preview":
+                tren = cha.get(n)
+                while tren is not None and not isinstance(tren, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                    tren = cha.get(tren)
+                assert tren is not None, f"{tep}:{n.lineno} imports app.ai.hybrid_preview at module level"
     # Tệp sản phẩm nào nhập gói compiler (AST, cả import trong hàm), nhập cái gì: đúng cổng đã khai, không hơn.
     def la_module(m: str) -> bool:
         p = goc.parent.joinpath(*m.split("."))
