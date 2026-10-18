@@ -303,6 +303,9 @@ export interface SimulationModule<C = unknown, S = unknown> {
   /** Chốt chặn config từ LLM — sai là từ chối, không "cố chạy". */
   validateConfig(raw: unknown): ConfigResult<C>;
 
+  /** Optional: module-owned validation of the whole envelope before acceptance/history. */
+  validateEnvelope?(envelope: SimulationEnvelope): ConfigResult<C>;
+
   /** Engine tất định: progressive tính sẵn TOÀN BỘ timeline ngay tại đây. */
   init(config: C): S;
 

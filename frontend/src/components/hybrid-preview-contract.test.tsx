@@ -235,11 +235,12 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       },
     );
 
-    /* Store MÙ DOMAIN (M2 #7): kiểm chart_metric là việc của miền hình học (cổng shell `hopLeScene3D`), không của
-       store. Bản F2 đầu tiên import `scene3d-chart` vào store để từ chối ở `loadEnvelope`; không test nào bắt. */
+    /* Store delegates envelope validation to the registered module; geometry stays outside the store. */
     it("store không import module miền nào (M2 #7)", () => {
       const storeSrc = readFileSync(join(__dirname, "..", "state", "store.ts"), "utf8");
       expect(storeSrc).not.toMatch(/from\s+["'][^"']*simulations\/domains\//);
+      const code = storeSrc.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/[^\n]*/g, "");
+      expect(code).not.toMatch(/chart_metric|hopLeScene3D|hopLeChartMetric|scene3d-chart|["'][^"']*\/domains\//);
     });
   });
 

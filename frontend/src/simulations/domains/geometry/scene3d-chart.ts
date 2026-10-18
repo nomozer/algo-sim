@@ -51,7 +51,14 @@ function nghichChuyenVi(t: M3): M3 {
   return [[inv[0][0], inv[1][0], inv[2][0]], [inv[0][1], inv[1][1], inv[2][1]], [inv[0][2], inv[1][2], inv[2][2]]];
 }
 
-const xau = (x: number): Exact => `${Math.round(x * 1e9)}/1000000000`;
+const xau = (x: number): Exact => {
+  const scaled = Math.round(x * 1e9);
+  // At 1e21 JS emits exponent notation, outside Exact's integer/fraction contract.
+  if (!Number.isFinite(scaled) || Math.abs(scaled) >= 1e21) {
+    throw new ChartMetricError("Toạ độ vượt giới hạn hiển thị an toàn.");
+  }
+  return `${scaled}/1000000000`;
+};
 
 const _daVe = new WeakSet<Scene3D>();
 

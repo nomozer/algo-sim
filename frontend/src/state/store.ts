@@ -4,6 +4,7 @@ import { getSimulation } from "../simulations/registry";
 import { historyStore, type HistoryItem } from "./history";
 import type {
   SimAction,
+  ConfigResult,
   SimulationEnvelope,
   TimelineCapability,
   VisualMode,
@@ -263,14 +264,21 @@ export const useAppStore = create<AppState>((set, get) => {
       const mod = getSimulation(env.simulation_id);
       if (!mod) {
         set({
+          active: null, activeHistoryId: null, unsupported: null, playing: false, view: "home",
           analysisError: `Hệ thống chưa có mô phỏng "${env.simulation_id}".`,
           activeSampleId: null,
         });
         return;
       }
-      const result = mod.validateConfig(env.config);
+      let result: ConfigResult<unknown>;
+      try {
+        result = mod.validateEnvelope ? mod.validateEnvelope(env) : mod.validateConfig(env.config);
+      } catch {
+        result = { ok: false, error: "Dữ liệu không vượt qua kiểm tra an toàn. Hãy phân tích lại đề." };
+      }
       if (!result.ok) {
         set({
+          active: null, activeHistoryId: null, unsupported: null, playing: false, view: "home",
           analysisError: `Cấu hình mô phỏng không hợp lệ: ${result.error}`,
           activeSampleId: null,
         });
@@ -286,6 +294,7 @@ export const useAppStore = create<AppState>((set, get) => {
         initialState = mod.init(result.config);
       } catch {
         set({
+          active: null, activeHistoryId: null, unsupported: null, playing: false, view: "home",
           analysisError:
             "Mô phỏng này không còn mở được: cấu hình không vượt qua kiểm tra an toàn hiện hành. " +
             "Hãy phân tích lại đề để tạo mô phỏng mới.",

@@ -19,6 +19,8 @@ import {
   type SemanticState,
 } from "./model";
 import { SemanticWorkspace } from "./ui";
+import { hopLeScene3D } from "../geometry/scene3d-model";
+import { veKhongGian } from "../geometry/scene3d-chart";
 
 const semanticProgramModule: SimulationModule<SemanticConfig, SemanticState> = {
   id: "generic.semantic_program",
@@ -28,6 +30,19 @@ const semanticProgramModule: SimulationModule<SemanticConfig, SemanticState> = {
   supportedVisualModes: ["2d"],
 
   validateConfig: validateSemanticConfig,
+  validateEnvelope: (envelope) => {
+    const scene = (envelope as { scene3d?: unknown }).scene3d;
+    // No scene is the legacy 2D contract; a supplied invalid scene is never a 2D fallback.
+    if (scene != null) {
+      if (!hopLeScene3D(scene)) return { ok: false, error: "Dữ liệu hình không vượt qua kiểm tra an toàn. Hãy phân tích lại đề." };
+      try {
+        veKhongGian(scene);
+      } catch {
+        return { ok: false, error: "Hệ chưa thể hiển thị an toàn dữ liệu hình này. Hãy phân tích lại đề." };
+      }
+    }
+    return validateSemanticConfig(envelope.config);
+  },
   init: (config) => buildSemanticState(config),
 
   // Chưa có thao tác học sinh nào trên route này: mô phỏng do chương trình đã

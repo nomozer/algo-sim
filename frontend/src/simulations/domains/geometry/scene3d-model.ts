@@ -81,9 +81,9 @@ export function hopLeChartMetric(chart_metric: unknown): boolean {
  *
  * `envelope.scene3d` đến từ backend, và `SimulationEnvelope.config` cũng khai
  * `unknown` với cùng lý do: qua mạng thì không có gì bảo đảm hình dạng ngoài
- * việc **kiểm tại chỗ nhận**. FAIL-CLOSED: hình dạng lạ ⇒ shell rơi về đường
- * 2D cũ thay vì dựng một khung 3D rỗng. Bày một khung rỗng là mời người học
- * đi tìm thứ không có.
+ * việc **kiểm tại chỗ nhận**. Module dùng guard này trước khi chấp nhận
+ * envelope; shell dùng lại để chọn bố cục. Cảnh đã gửi nhưng hỏng không
+ * được nhận như một mô phỏng 2D hợp lệ.
  *
  * Ở cạnh định nghĩa `Scene3D` chứ không ở component, vì đây là phép kiểm của
  * KIỂU — component nào nhận cảnh cũng cần nó, và trước 2026-08-30 nó nằm trong

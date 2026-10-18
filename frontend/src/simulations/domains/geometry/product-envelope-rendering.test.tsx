@@ -543,22 +543,19 @@ describe("payload hỏng đi vào trạng thái lỗi có kiểm soát", () => {
     expect(s.analysisError).toBeTruthy();
   });
 
-  /* Cảnh HỎNG mà config vẫn hợp lệ: biên nhận fail-closed phải rơi về đường 2D
-     cũ, KHÔNG dựng một khung 3D rỗng. Bày một khung rỗng là mời người học đi
-     tìm thứ không có. `hopLeScene3D` là đúng chỗ shell hỏi câu ấy. */
+  /* Cảnh đã gửi nhưng hỏng phải bị từ chối trước active/history; config hợp lệ
+     không chứng minh rằng dữ liệu 3D hỏng là an toàn. */
   it.each([
     ["cảnh rỗng", { objects: [], events: [], free_objects: [] }],
     ["mất events", { objects: [{ id: "A" }], free_objects: [] }],
     ["events rỗng", { objects: [{ id: "A" }], events: [], free_objects: [] }],
     ["không phải object", "scene3d"],
-  ])("`scene3d` hỏng (%s) ⇒ bài vẫn mở được, nhưng KHÔNG vào nhánh 3D", (_ten, xau) => {
+  ])("`scene3d` hỏng (%s) ⇒ từ chối cả envelope", (_ten, xau) => {
     const env = { ...DUONG[0].envelope, scene3d: xau };
     useAppStore.getState().loadEnvelope(env as SimulationEnvelope);
     const s = useAppStore.getState();
-    expect(s.active).not.toBeNull();
-    expect(s.analysisError).toBeNull();
-    expect(hopLeScene3D((s.active!.envelope as { scene3d?: unknown }).scene3d))
-      .toBe(false);
+    expect(s.active).toBeNull();
+    expect(s.analysisError).toBeTruthy();
   });
 });
 

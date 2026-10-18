@@ -63,6 +63,16 @@ beforeEach(() => {
 });
 
 describe("loadEnvelope fail-closed khi module.init() ném lỗi", () => {
+  it("module envelope validator throws => controlled rejection before init/history", () => {
+    const mod = fakeOkModule("generic.semantic_program");
+    mod.validateEnvelope = () => { throw new Error("invalid transport data"); };
+    mod.init = () => { throw new Error("init must not run"); };
+    registerSimulation(mod);
+    expect(() => useAppStore.getState().loadEnvelope(envelope(mod.id))).not.toThrow();
+    expect(useAppStore.getState().active).toBeNull();
+    expect(useAppStore.getState().analysisError).toContain("Dữ liệu không vượt qua");
+    expect(historyStore.list()).toEqual([]);
+  });
   it("init ném lỗi → analysisError thân thiện, active===null, không crash, không ghi lịch sử", () => {
     registerSimulation(fakeThrowingModule("generic.semantic_program"));
 

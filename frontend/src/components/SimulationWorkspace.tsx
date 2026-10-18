@@ -480,9 +480,9 @@ export function SimulationWorkspace() {
    * lớp phủ gọi theo nhu cầu — `Scene3DExplorer` đã dựng đúng như vậy từ wave
    * STUDENT_3D_WORKSPACE_REDESIGN.
    *
-   * ⚠️ KHÔNG đụng đường 2D. Bài không có `scene3d` đi tiếp xuống dưới, không
-   * đổi một dòng nào — và `hopLeScene3D` fail-closed nên hình dạng lạ cũng rơi
-   * về đúng đường cũ thay vì dựng một khung rỗng.
+   * Bài không có `scene3d` đi tiếp theo đường 2D đã validate config. Scene3D
+   * đã gửi nhưng hỏng bị module từ chối trước active/history; guard dưới chỉ
+   * chọn bố cục, không là thẩm quyền chấp nhận envelope.
    *
    * Vì sao KHÔNG dùng `visual_mode === "3d"`: `visual_mode` là thứ backend
    * KHAI, còn `scene3d` là thứ backend ĐÃ DỰNG RA. Khai được thì khai sai
