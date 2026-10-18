@@ -1,0 +1,3036 @@
+{
+  "schema": "simulation-first-ux-browser-verification/1",
+  "generated_at_utc": "2026-10-18T19:10:05.081Z",
+  "live_ai_calls": 0,
+  "pathA_product_ui": {
+    "desktop": {
+      "offline_sample_the_tich_chop": {
+        "screenshot": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_offline_sample_desktop_final.png",
+        "initial": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 1/5",
+          "guidanceStep": "Đang dựng (bước 1/5): Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 5,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Tính Khoảng cách giữa S và (ABC).",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 5,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Tính Khoảng cách giữa S và (ABC).",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 5,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "served-H01_CUBE": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_cube_desktop_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_cube_desktop_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_cube_desktop_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 1/5",
+          "guidanceStep": "Đang dựng (bước 1/5): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Hình lập phương ABCD.A′B′C′D′",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Hình lập phương ABCD.A′B′C′D′",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_pyramid_desktop_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_pyramid_desktop_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_pyramid_desktop_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 1/6",
+          "guidanceStep": "Đang dựng (bước 1/6): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A, B, C",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A, B, C",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "served-H02_CUBOID_DISTANCE": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_elongated_cuboid_desktop_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_elongated_cuboid_desktop_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_elongated_cuboid_desktop_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 1/6",
+          "guidanceStep": "Đang dựng (bước 1/6): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A′, B, D",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A′, B, D",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "w11_rectangular_pyramid": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_w11_intermediate_pyramid_desktop_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_w11_intermediate_pyramid_desktop_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_w11_intermediate_pyramid_desktop_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 1/5",
+          "guidanceStep": "Đang dựng (bước 1/5): Dữ kiện đề cho: AB = 3, AD = 4, SA = 6.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 5,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Hình chóp S.ABCD",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 5,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Hình chóp S.ABCD",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 5,
+          "croppedPointLabels": [],
+          "quantityItems": [
+            {
+              "id": "dien_tich_day_ABCD",
+              "text": "Diện tích ABCDS(ABCD) = 12"
+            },
+            {
+              "id": "AB_length",
+              "text": "AB = 3"
+            },
+            {
+              "id": "AD_length",
+              "text": "AD = 4"
+            },
+            {
+              "id": "SA_length",
+              "text": "SA = 6"
+            }
+          ],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      }
+    },
+    "compact": {
+      "offline_sample_the_tich_chop": {
+        "screenshot": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_offline_sample_compact_final.png",
+        "initial": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 319,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 419
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 1/5",
+          "guidanceStep": "Đang dựng (bước 1/5): Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 5,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 319,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 419
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Tính Khoảng cách giữa S và (ABC).",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 5,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 319,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 419
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Tính Khoảng cách giữa S và (ABC).",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 5,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "served-H01_CUBE": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_cube_compact_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_cube_compact_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_cube_compact_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 360,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 1/5",
+          "guidanceStep": "Đang dựng (bước 1/5): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 360,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Hình lập phương ABCD.A′B′C′D′",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 360,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Hình lập phương ABCD.A′B′C′D′",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_pyramid_compact_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_pyramid_compact_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_pyramid_compact_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 360,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 1/6",
+          "guidanceStep": "Đang dựng (bước 1/6): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 342,
+            "right": 359,
+            "bottom": 720,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 732,
+            "right": 359,
+            "bottom": 814,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 246,
+            "width": 343,
+            "height": 70
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A, B, C",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 342,
+            "right": 359,
+            "bottom": 720,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 732,
+            "right": 359,
+            "bottom": 814,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 246,
+            "width": 343,
+            "height": 70
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A, B, C",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "served-H02_CUBOID_DISTANCE": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_elongated_cuboid_compact_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_elongated_cuboid_compact_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_elongated_cuboid_compact_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 360,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 1/6",
+          "guidanceStep": "Đang dựng (bước 1/6): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 342,
+            "right": 359,
+            "bottom": 720,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 732,
+            "right": 359,
+            "bottom": 814,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 246,
+            "width": 343,
+            "height": 70
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A′, B, D",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 342,
+            "right": 359,
+            "bottom": 720,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 732,
+            "right": 359,
+            "bottom": 814,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 246,
+            "width": 343,
+            "height": 70
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A′, B, D",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "w11_rectangular_pyramid": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_w11_intermediate_pyramid_compact_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_w11_intermediate_pyramid_compact_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathA_w11_intermediate_pyramid_compact_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 319,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 419
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 1/5",
+          "guidanceStep": "Đang dựng (bước 1/5): Dữ kiện đề cho: AB = 3, AD = 4, SA = 6.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 5,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 301,
+            "right": 359,
+            "bottom": 720,
+            "width": 343,
+            "height": 419
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 732,
+            "right": 359,
+            "bottom": 814,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 246,
+            "width": 343,
+            "height": 70
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Hình chóp S.ABCD",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 5,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": -18,
+            "right": 359,
+            "bottom": 419,
+            "width": 343,
+            "height": 437
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 431,
+            "right": 359,
+            "bottom": 513,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": -143,
+            "right": 359,
+            "bottom": -73,
+            "width": 343,
+            "height": 70
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Hình chóp S.ABCD",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 5,
+          "croppedPointLabels": [],
+          "quantityItems": [
+            {
+              "id": "dien_tich_day_ABCD",
+              "text": "Diện tích ABCDS(ABCD) = 12"
+            },
+            {
+              "id": "AB_length",
+              "text": "AB = 3"
+            },
+            {
+              "id": "AD_length",
+              "text": "AD = 4"
+            },
+            {
+              "id": "SA_length",
+              "text": "SA = 6"
+            }
+          ],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      }
+    }
+  },
+  "pathB_injected_hybrid": {
+    "desktop": {
+      "served-H01_CUBE": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_cube_desktop_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_cube_desktop_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_cube_desktop_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 1/5",
+          "guidanceStep": "Đang dựng (bước 1/5): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Hình lập phương ABCD.A′B′C′D′",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Hình lập phương ABCD.A′B′C′D′",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_pyramid_desktop_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_pyramid_desktop_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_pyramid_desktop_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 1/6",
+          "guidanceStep": "Đang dựng (bước 1/6): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A, B, C",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A, B, C",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "served-H02_CUBOID_DISTANCE": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_elongated_cuboid_desktop_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_elongated_cuboid_desktop_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_elongated_cuboid_desktop_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 1/6",
+          "guidanceStep": "Đang dựng (bước 1/6): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A′, B, D",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A′, B, D",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "served-H11_SKEW_DISTANCE_COMPOSITION": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_elongated_skew_desktop_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_elongated_skew_desktop_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_elongated_skew_desktop_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 1/8",
+          "guidanceStep": "Đang dựng (bước 1/8): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 8/8",
+          "guidanceStep": "Đang dựng (bước 8/8): Đường thẳng qua B′ và C",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 7,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 104,
+            "right": 1409,
+            "bottom": 841,
+            "width": 1393,
+            "height": 737
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 853,
+            "right": 1409,
+            "bottom": 888,
+            "width": 1393,
+            "height": 35
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 60,
+            "right": 1409,
+            "bottom": 92,
+            "width": 1393,
+            "height": 32
+          },
+          "stepText": "Bước 8/8",
+          "guidanceStep": "Đang dựng (bước 8/8): Đường thẳng qua B′ và C",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 7,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      }
+    },
+    "compact": {
+      "served-H01_CUBE": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_cube_compact_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_cube_compact_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_cube_compact_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 360,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 1/5",
+          "guidanceStep": "Đang dựng (bước 1/5): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 360,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Hình lập phương ABCD.A′B′C′D′",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 360,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 5/5",
+          "guidanceStep": "Đang dựng (bước 5/5): Hình lập phương ABCD.A′B′C′D′",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_pyramid_compact_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_pyramid_compact_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_pyramid_compact_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 360,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 1/6",
+          "guidanceStep": "Đang dựng (bước 1/6): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 342,
+            "right": 359,
+            "bottom": 720,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 732,
+            "right": 359,
+            "bottom": 814,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 246,
+            "width": 343,
+            "height": 70
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A, B, C",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 342,
+            "right": 359,
+            "bottom": 720,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 732,
+            "right": 359,
+            "bottom": 814,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 246,
+            "width": 343,
+            "height": 70
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A, B, C",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "served-H02_CUBOID_DISTANCE": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_elongated_cuboid_compact_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_elongated_cuboid_compact_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_elongated_cuboid_compact_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 360,
+            "right": 359,
+            "bottom": 738,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 750,
+            "right": 359,
+            "bottom": 832,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 1/6",
+          "guidanceStep": "Đang dựng (bước 1/6): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 342,
+            "right": 359,
+            "bottom": 720,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 732,
+            "right": 359,
+            "bottom": 814,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 246,
+            "width": 343,
+            "height": 70
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A′, B, D",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 342,
+            "right": 359,
+            "bottom": 720,
+            "width": 343,
+            "height": 378
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 732,
+            "right": 359,
+            "bottom": 814,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 246,
+            "width": 343,
+            "height": 70
+          },
+          "stepText": "Bước 6/6",
+          "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A′, B, D",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 8,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      },
+      "served-H11_SKEW_DISTANCE_COMPOSITION": {
+        "screenshots": {
+          "initial": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_elongated_skew_compact_1_initial.png",
+          "final_default": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_elongated_skew_compact_2_final_default.png",
+          "final_menus": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/screenshots/pathB_elongated_skew_compact_3_final_menus.png"
+        },
+        "initial": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 360,
+            "right": 359,
+            "bottom": 735,
+            "width": 343,
+            "height": 375
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 747,
+            "right": 359,
+            "bottom": 829,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 264,
+            "width": 343,
+            "height": 88
+          },
+          "stepText": "Bước 1/8",
+          "guidanceStep": "Đang dựng (bước 1/8): Đặt các điểm đề cho vào không gian.",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 6,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalDefault": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 342,
+            "right": 359,
+            "bottom": 717,
+            "width": 343,
+            "height": 375
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 729,
+            "right": 359,
+            "bottom": 811,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 246,
+            "width": 343,
+            "height": 70
+          },
+          "stepText": "Bước 8/8",
+          "guidanceStep": "Đang dựng (bước 8/8): Đường thẳng qua B′ và C",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 7,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "finalMenus": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "canvasRect": {
+            "left": 16,
+            "top": 342,
+            "right": 359,
+            "bottom": 717,
+            "width": 343,
+            "height": 375
+          },
+          "controlsRect": {
+            "left": 16,
+            "top": 729,
+            "right": 359,
+            "bottom": 811,
+            "width": 343,
+            "height": 82
+          },
+          "guidanceRect": {
+            "left": 16,
+            "top": 176,
+            "right": 359,
+            "bottom": 246,
+            "width": 343,
+            "height": 70
+          },
+          "stepText": "Bước 8/8",
+          "guidanceStep": "Đang dựng (bước 8/8): Đường thẳng qua B′ và C",
+          "guidanceHint": "Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ",
+          "lengthUnitText": "Tỉ lệ dựng: a = 1 đơn vị dựng",
+          "liveNarration": "",
+          "hasAnswerToggleButton": false,
+          "hasDapSoTextInNoi": false,
+          "hybridAnswerEls": [],
+          "noiItems": [
+            "Tách khối",
+            "Xem lại toàn hình",
+            "Tỉ lệ dựng: a = 1 đơn vị dựng"
+          ],
+          "annBadges": [],
+          "pointLabelsCount": 7,
+          "croppedPointLabels": [],
+          "quantityItems": [],
+          "resultSectionItems": [],
+          "guidanceOverlapsCanvas": false
+        },
+        "orbitCheck": {
+          "orbited": true,
+          "resetWorked": true
+        }
+      }
+    }
+  },
+  "served12Sweep": [
+    {
+      "id": "served-pyramid-midpoint-area-AB",
+      "answerIds": [
+        "kq_q"
+      ],
+      "hasAnswerToggleButton": false,
+      "hybridAnswerElsCount": 0,
+      "resultSectionCount": 0,
+      "leakedBadgesCount": 0,
+      "leakedQuantsCount": 0,
+      "croppedPointLabelsCount": 0,
+      "guidanceStep": "Đang dựng (bước 6/6): Đa giác M, A, B"
+    },
+    {
+      "id": "served-pyramid-shared-midpoint-area-and-distance",
+      "answerIds": [
+        "kq_q1",
+        "kq_q2"
+      ],
+      "hasAnswerToggleButton": false,
+      "hybridAnswerElsCount": 0,
+      "resultSectionCount": 0,
+      "leakedBadgesCount": 0,
+      "leakedQuantsCount": 0,
+      "croppedPointLabelsCount": 0,
+      "guidanceStep": "Đang dựng (bước 7/7): Mặt phẳng qua S, A, B"
+    },
+    {
+      "id": "served-pyramid-projection-and-unnamed-midpoint-area",
+      "answerIds": [
+        "kq_q"
+      ],
+      "hasAnswerToggleButton": false,
+      "hybridAnswerElsCount": 0,
+      "resultSectionCount": 0,
+      "leakedBadgesCount": 0,
+      "leakedQuantsCount": 0,
+      "croppedPointLabelsCount": 0,
+      "guidanceStep": "Đang dựng (bước 8/8): Đa giác M, H, D"
+    },
+    {
+      "id": "served-H01_CUBE",
+      "answerIds": [
+        "kq_f3",
+        "kq_f4"
+      ],
+      "hasAnswerToggleButton": false,
+      "hybridAnswerElsCount": 0,
+      "resultSectionCount": 0,
+      "leakedBadgesCount": 0,
+      "leakedQuantsCount": 0,
+      "croppedPointLabelsCount": 0,
+      "guidanceStep": "Đang dựng (bước 5/5): Hình lập phương ABCD.A′B′C′D′"
+    },
+    {
+      "id": "served-H02_CUBOID_DISTANCE",
+      "answerIds": [
+        "kq_f5",
+        "kq_f6"
+      ],
+      "hasAnswerToggleButton": false,
+      "hybridAnswerElsCount": 0,
+      "resultSectionCount": 0,
+      "leakedBadgesCount": 0,
+      "leakedQuantsCount": 0,
+      "croppedPointLabelsCount": 0,
+      "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A′, B, D"
+    },
+    {
+      "id": "served-H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS",
+      "answerIds": [
+        "kq_f4",
+        "kq_f5"
+      ],
+      "hasAnswerToggleButton": false,
+      "hybridAnswerElsCount": 0,
+      "resultSectionCount": 0,
+      "leakedBadgesCount": 0,
+      "leakedQuantsCount": 0,
+      "croppedPointLabelsCount": 0,
+      "guidanceStep": "Đang dựng (bước 6/6): Mặt phẳng qua A, B, C"
+    },
+    {
+      "id": "served-H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED",
+      "answerIds": [
+        "kq_f8"
+      ],
+      "hasAnswerToggleButton": false,
+      "hybridAnswerElsCount": 0,
+      "resultSectionCount": 0,
+      "leakedBadgesCount": 0,
+      "leakedQuantsCount": 0,
+      "croppedPointLabelsCount": 0,
+      "guidanceStep": "Đang dựng (bước 4/4): Hình chóp S.ABC"
+    },
+    {
+      "id": "served-H11_SKEW_DISTANCE_COMPOSITION",
+      "answerIds": [
+        "kq_f7"
+      ],
+      "hasAnswerToggleButton": false,
+      "hybridAnswerElsCount": 0,
+      "resultSectionCount": 0,
+      "leakedBadgesCount": 0,
+      "leakedQuantsCount": 0,
+      "croppedPointLabelsCount": 0,
+      "guidanceStep": "Đang dựng (bước 8/8): Đường thẳng qua B′ và C"
+    },
+    {
+      "id": "served-H12_PROJECTION_MIDPOINT_ANGLE",
+      "answerIds": [
+        "kq_f6",
+        "kq_f7"
+      ],
+      "hasAnswerToggleButton": false,
+      "hybridAnswerElsCount": 0,
+      "resultSectionCount": 0,
+      "leakedBadgesCount": 0,
+      "leakedQuantsCount": 0,
+      "croppedPointLabelsCount": 0,
+      "guidanceStep": "Đang dựng (bước 7/7): Mặt phẳng qua A, B, C"
+    },
+    {
+      "id": "served-H14_REGULAR_TETRAHEDRON",
+      "answerIds": [
+        "kq_f3"
+      ],
+      "hasAnswerToggleButton": false,
+      "hybridAnswerElsCount": 0,
+      "resultSectionCount": 0,
+      "leakedBadgesCount": 0,
+      "leakedQuantsCount": 0,
+      "croppedPointLabelsCount": 0,
+      "guidanceStep": "Đang dựng (bước 2/2): Hình chóp D.ABC"
+    },
+    {
+      "id": "served-section-MAB-trapezoid",
+      "answerIds": [],
+      "hasAnswerToggleButton": false,
+      "hybridAnswerElsCount": 0,
+      "resultSectionCount": 0,
+      "leakedBadgesCount": 0,
+      "leakedQuantsCount": 0,
+      "croppedPointLabelsCount": 0,
+      "guidanceStep": "Đang dựng (bước 11/11): Thiết diện của S.ABCD cắt bởi (MAB)"
+    },
+    {
+      "id": "served-intersection-SAB-SCD",
+      "answerIds": [],
+      "hasAnswerToggleButton": false,
+      "hybridAnswerElsCount": 0,
+      "resultSectionCount": 0,
+      "leakedBadgesCount": 0,
+      "leakedQuantsCount": 0,
+      "croppedPointLabelsCount": 0,
+      "guidanceStep": "Đang dựng (bước 6/6): (SCD)"
+    }
+  ],
+  "allPassed": true,
+  "failures": []
+}

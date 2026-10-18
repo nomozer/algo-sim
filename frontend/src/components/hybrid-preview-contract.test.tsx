@@ -8,9 +8,12 @@ import { UnsupportedNotice, NHAN_LOAI_VAN_DE } from "./SimulationWorkspace";
 import { useAppStore } from "../state/store";
 import { registerAllSimulations } from "../simulations";
 import {
+  geometryNarrationAt,
   ghiChuGiaTriDung,
   hopLeScene3D,
   narrationAt,
+  solutionAt,
+  tapKetQuaCuoi,
   type Scene3D,
   type SceneObject,
 } from "../simulations/domains/geometry/scene3d-model";
@@ -563,6 +566,107 @@ describe("Hybrid Preview Contract v2 — 41 fixtures & F1–F6", () => {
       expect(clientSrc).not.toContain("/api/preview/hybrid");
       expect(clientSrc).not.toContain("ALGOSIM_HYBRID_PREVIEW");
       expect(clientSrc).not.toContain("X-Hybrid-Preview-Token");
+    });
+  });
+
+  describe("SIMULATION-FIRST UX — không lộ đáp số cuối ở cả Path A và Path B, giữ nguyên đại lượng dựng hình & chứng chỉ", () => {
+    it("tapKetQuaCuoi nhận diện đầy đủ kết quả cuối (cùng bí danh) trên 12/12 served-*, w11 và GEOMETRY_SAMPLES, nhưng giữ dữ kiện và trung gian", () => {
+      for (const row of SERVED_ROWS) {
+        const fx = loadFixture(row.file);
+        const r = docPhanHoiHybrid(fx.response);
+        if (!r.ok) throw new Error(r.reason);
+        const scene = r.envelope.scene3d as Scene3D;
+        const view = hybridViewCua(r.envelope)!;
+        const an = tapKetQuaCuoi(scene, view);
+        for (const a of view.answers) {
+          expect(an.has(a.quantity_id), `${row.id}:${a.quantity_id}`).toBe(true);
+        }
+        // Dữ kiện đề cho (origin === "free") không bị coi là kết quả cuối.
+        const givens = scene.objects.filter(
+          (o) => o.type === "quantity" && o.origin === "free" && o.annotation?.role === "given",
+        );
+        for (const g of givens) {
+          expect(an.has(g.id), `${row.id}:given:${g.id}`).toBe(false);
+        }
+        // Dữ liệu gốc trong model và view vẫn còn nguyên (P1 #8, #9).
+        const cuoi = Math.max(0, scene.events.length - 1);
+        expect(solutionAt(scene, cuoi).results.length).toBe(view.answers.length);
+      }
+
+      // Path A — bài mẫu offline GEOMETRY_SAMPLES: đại lượng đo không gõ loại (V = 16/3, d = 4) nằm trong tapKetQuaCuoi
+      // và lời kể không rò "Gán V = 16/3." hay "Gán d = 4.".
+      const samples = JSON.parse(
+        readFileSync(join(__dirname, "..", "data", "geometry-samples.json"), "utf8"),
+      ).samples as { id: string; envelope: { scene3d?: Scene3D } }[];
+      const chop = samples.find((s) => s.id === "the-tich-chop")!.envelope.scene3d!;
+      const anChop = tapKetQuaCuoi(chop);
+      expect(anChop.has("V")).toBe(true);
+      expect(anChop.has("d")).toBe(true);
+      for (const e of chop.events) {
+        const nar = narrationAt(chop, e.step_index);
+        expect(nar).not.toContain("16/3");
+        expect(nar).not.toMatch(/^Gán\s+/);
+      }
+      expect(geometryNarrationAt(chop, chop.events.length - 1)).not.toContain("16/3");
+
+      // Path A — cảnh có cả dữ kiện, trung gian và kết quả cuối (w11 rectangular_pyramid):
+      const w11Pyr: Scene3D = JSON.parse(
+        readFileSync(
+          join(
+            __dirname,
+            "..",
+            "..",
+            "..",
+            "docs",
+            "evaluation",
+            "geometry",
+            "runs",
+            "w11-pedagogical-polish",
+            "inputs",
+            "fixtures",
+            "rectangular_pyramid_positive.json",
+          ),
+          "utf8",
+        ),
+      ).envelope.scene3d;
+      const anW11 = tapKetQuaCuoi(w11Pyr);
+      expect(anW11.has("the_tich_khoi_chop")).toBe(true);
+      expect(anW11.has("v")).toBe(true);
+      expect(anW11.has("AB_length")).toBe(false);
+      expect(anW11.has("AD_length")).toBe(false);
+      expect(anW11.has("SA_length")).toBe(false);
+      expect(anW11.has("dien_tich_day_ABCD")).toBe(false);
+    });
+
+    it("Scene3DExplorer không dựng nút Xem/Ẩn đáp án hay thẻ Đáp số, lọc kết quả cuối khỏi Đại lượng và nhãn trên hình, và dựng hướng dẫn quan sát", () => {
+      const exSrc = readFileSync(
+        join(__dirname, "..", "simulations", "domains", "geometry", "Scene3DExplorer.tsx"),
+        "utf8",
+      );
+      expect(exSrc).not.toContain("Xem đáp án");
+      expect(exSrc).not.toContain("Ẩn đáp án");
+      expect(exSrc).not.toContain("data-hybrid-answer");
+      expect(exSrc).toContain("tapKetQuaCuoi(day, hybrid)");
+      expect(exSrc).toContain("data-learner-guidance");
+
+      for (const row of SERVED_ROWS) {
+        const fx = loadFixture(row.file);
+        const r = docPhanHoiHybrid(fx.response);
+        if (!r.ok) throw new Error(r.reason);
+        const scene = r.envelope.scene3d as Scene3D;
+        const view = hybridViewCua(r.envelope)!;
+        const html = renderToString(<Scene3DExplorer scene={scene} hybrid={view} />).replace(
+          /<!--.*?-->/g,
+          "",
+        );
+        expect(html, row.id).not.toContain("Xem đáp án");
+        expect(html, row.id).not.toContain("Ẩn đáp án");
+        expect(html, row.id).not.toContain("data-hybrid-answer");
+        expect(html, row.id).toContain("data-learner-guidance");
+        for (const a of view.answers) {
+          expect(html, `${row.id}:${a.quantity_id}`).not.toContain(`data-ann-id="${a.quantity_id}"`);
+        }
+      }
     });
   });
 });
