@@ -44,8 +44,12 @@
     "f4": "component only; product reads envelope.route_d, contract puts route_d outside the envelope",
     "dom_capture": "visual/pre-main-audit/ — 19 states, 17 product-path fixtures served verbatim (manifest SHA-256 checked), 2 component-harness states",
     "independent_review": "F5 CONFIRMED, F6 CONFIRMED (hint only), MATH_HONESTY ISSUES (non-blocking under NO-GO)",
-    "blocker": "store.ts imports simulations/domains/geometry (store domain-blind invariant M2 #7)",
-    "verdict": "NOT_READY: BLOCKER-ARCH + HUMAN_VISUAL_REVIEW_PENDING",
+    "blocker": "store.ts imports simulations/domains/geometry (store domain-blind invariant M2 #7) — RESOLVED c8a2e95e by owner decision",
+    "verdict_at_61668c93": "NOT_READY: BLOCKER-ARCH + HUMAN_VISUAL_REVIEW_PENDING",
+    "fix_commit": "c8a2e95e4de3a9526b18dedd1e117628994cff80",
+    "candidate_head_after_fix": "8e2235e7a540da58c48adf6fcced12624676119c",
+    "t3_after_fix": "FULL_PRODUCT_GATE_PASS at 8e2235e7 (attempt 3) — verification/authoritative-t3-8e2235e7.json; orbit DAT; node harness 0 fail; DOM recapture identical",
+    "verdict": "TECHNICAL_GATES_PASS at 8e2235e7; remaining condition HUMAN_VISUAL_REVIEW_PENDING (owner-only)",
     "cache_version": "125, no bump",
     "live_ai_calls": 0
   }

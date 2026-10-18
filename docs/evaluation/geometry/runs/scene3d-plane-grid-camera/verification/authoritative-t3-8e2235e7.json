@@ -1,0 +1,29 @@
+{
+  "schema": "AUTHORITATIVE_T3/1",
+  "run": "scene3d-plane-grid-camera",
+  "date": "2026-10-18",
+  "attempt": 3,
+  "supersedes": "verification/authoritative-t3.json (PASS at 61668c93, before the M2 #7 fix c8a2e95e)",
+  "reason": "owner decision 2026-10-18: remove the chart_metric check from the store (domain-blind invariant M2 #7); product commit c8a2e95e, refreeze 8e2235e7",
+  "checkout": "clean detached worktree .superpowers/worktrees/t3-scene3d-pre-main-2 at 8e2235e7a540da58c48adf6fcced12624676119c (0 changed/untracked files; frontend/node_modules = junction to the main checkout's node_modules)",
+  "command": "node scripts/full-gate.mjs (from frontend/, ALLOW_LIVE_AI=0, empty GEMINI_API_KEY; log outside the worktree, copied to verification/t3-attempt-3.log)",
+  "log_sha256": "05523c743f4a41b4ed04ae799d9acfac2578ac927ed278813b4cc105146b6de2",
+  "label": "FULL_PRODUCT_GATE_PASS",
+  "exit_code": 0,
+  "gates": {
+    "backend_pytest": "10828 passed, 1 skipped, 2 deselected, 9 xfailed in 444.26s",
+    "frontend_vitest": "69 files, 1118 passed",
+    "typecheck_and_build": "PASS",
+    "demo_replay": "5/5 DEMO_REPLAY_PASS; reduced chain 1/1",
+    "crash_surface": "6/6 boundaries as expected, 0 uncaught (500)"
+  },
+  "outside_t3_same_checkout": {
+    "scene3d_orbit_gate": "DAT p1/p6/p7 (vong=449 deg, axis Z, snap=0, capPhat=0, yen=0.0 deg); receipt visual/receipts/orbit-gate-8e2235e7.json, commit field = 8e2235e7",
+    "node_harness": "tests 112, pass 110, fail 0 (2 skipped); log verification/node-harness-8e2235e7.log sha256 702e36d6e588270e9411ace1ebf570177f09b1d7690d27dfdcdea6069ced6f95",
+    "dom_capture": "visual/pre-main-audit/8e2235e7/ — 19 states; DOM fields identical to the 61668c93 capture; 17/17 product fixtures served verbatim, 2/2 harness SHA-256 match, 0 page errors, 0 leaks, 0 proven wording"
+  },
+  "candidate_verify_in_checkout": "MATCH (111 files, 1b7a671326290f0b…; product_commit_sha c8a2e95e)",
+  "xfail_note": "9 xfails, unchanged",
+  "cleanup": "NONE (owner instruction); both T3 worktrees kept, harness sources added after all gates finished",
+  "live_ai_calls": 0
+}

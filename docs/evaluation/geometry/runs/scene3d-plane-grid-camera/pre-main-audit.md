@@ -102,3 +102,23 @@ Không sửa ở lượt này (ngoài quyền "sửa tối thiểu nếu F5 đ�
 2. **Duyệt thị giác:** `HUMAN_VISUAL_REVIEW_PENDING` — chỉ chủ sở hữu ghi được.
 
 Không chặn (Hybrid NO-GO): §5 mục 1–5, F4 chưa nối, F6-SOURCE không có fixture.
+
+## 8. Lớp sau — gỡ blocker M2 #7 (cùng ngày, quyết định của chủ sở hữu)
+
+§1–§7 ở trên giữ nguyên làm bản ghi tại `61668c93`. Chủ sở hữu chọn **gỡ check khỏi store**.
+
+- `c8a2e95e` `fix(scene3d)`: `store.ts` trở về đúng bản trước wave (`git diff 57bc0c8c` rỗng). `scene3d-model.ts::
+  hopLeChartMetric` là thẩm quyền hợp lệ DUY NHẤT; `maTranKhung` uỷ cho nó và vẫn ném `ChartMetricError`; bản trùng trong
+  `scene3d-chart.ts` bị xoá. Test mới "store không import module miền nào (M2 #7)" — tiêm lại import ⇒ đỏ.
+- Hệ quả hành vi (đã nêu khi hỏi): envelope có `chart_metric` hỏng nay được store nhận và ghi lịch sử; shell không dựng
+  xưởng 3D (`hopLeScene3D` sai) nên không toạ độ NaN nào lên màn, người học thấy đường 2D cũ thay vì câu "không còn mở
+  được". Backend `Metric` không phát ma trận như vậy (handoff F2: "no current producer").
+- `8e2235e7` `chore(eval)`: đóng băng lại trong worktree detached sạch; `measured_system` không đổi (111 file,
+  `1b7a6713…`), `product_commit_sha` `ec72eda0 → c8a2e95e`.
+- **T3 lượt 3 tại `8e2235e7`: `FULL_PRODUCT_GATE_PASS`** — pytest 10828 passed / 9 xfailed; vitest 69 / 1118; build;
+  demo 5/5 + 1/1; crash surface 6/6, 0 lỗi 500 (`verification/authoritative-t3-8e2235e7.json`, thay thế bản `61668c93`).
+  Orbit **ĐẠT** p1/p6/p7; node harness 112, 0 fail; 19 trạng thái DOM chụp lại (`visual/pre-main-audit/8e2235e7/`),
+  trường DOM trùng khớp bản `61668c93`.
+
+**Phán quyết mới:** cổng kỹ thuật + blocker kiến trúc đã đóng ở candidate `8e2235e7`. Điều kiện còn lại duy nhất:
+**`HUMAN_VISUAL_REVIEW_PENDING`** — chỉ chủ sở hữu ghi. Các mục §5 (trung thực toán học khi Hybrid GO) vẫn mở, không chặn.
