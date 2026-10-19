@@ -16,6 +16,8 @@ r = KetQuaTuyen(status='REFUSED', code='FACT_INCOMPLETE', reason='reference cầ
 E        +  where 'FACT_INCOMPLETE' = KetQuaTuyen(status='REFUSED', code='FACT_INCOMPLETE', reason='reference cần hai mặt có đúng ba nhãn phân biệt', failed...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/9'}, declared_topology=None, targets=()).code
 r = KetQuaTuyen(status='REFUSED', code='FACT_INCOMPLETE', reason='reference cần hai mặt có đúng ba nhãn phân biệt', failed...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/9'}, declared_topology=None, targets=())
 E        +  where 'FACT_INCOMPLETE' = KetQuaTuyen(status='REFUSED', code='FACT_INCOMPLETE', reason='reference cần hai mặt có đúng ba nhãn phân biệt', failed...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/9'}, declared_topology=None, targets=()).code
+r = KetQuaTuyen(status='REFUSED', code='FACT_INCOMPLETE', reason='reference cần hai mặt có đúng ba nhãn phân biệt', failed...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/9'}, declared_topology=None, targets=())
+r = KetQuaTuyen(status='REFUSED', code='NOT_ASKED_IN_SOURCE', reason='nguồn không hỏi khoảng cách này', failed_calls=('q1'...ce': 'DERIVED', 'binding': 'AUXILIARY'}], 'goal_checks': {}, 'negated_checks': {}}, declared_topology=None, targets=())
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg1_spoofed_or_swapped_segment_values_are_refused[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh ch\u1eef nh\u1eadt v\u1edbi AB = 2.-lengths0-codes0]
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg1_spoofed_or_swapped_segment_values_are_refused[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh ch\u1eef nh\u1eadt v\u1edbi AB = 2 v\xe0 BC = 3.-lengths1-codes1]
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg2_a_restated_measure_that_drops_or_adds_the_parameter_is_refused[2a-2-3a]
@@ -84,4 +86,9 @@ FAILED tests/geometry/test_source_gate_hardening.py::test_sg6_undetermined_degen
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg6_undetermined_degenerate_or_unbound_intersections_are_refused[T\xednh kho\u1ea3ng c\xe1ch t\u1eeb A \u0111\u1ebfn giao tuy\u1ebfn c\u1ee7a (SCD) v\xe0 (ABCD).-SBC-ABCD-A-codes2]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg6_undetermined_degenerate_or_unbound_intersections_are_refused[T\xednh kho\u1ea3ng c\xe1ch t\u1eeb A \u0111\u1ebfn giao tuy\u1ebfn c\u1ee7a (SCD) v\xe0 (ABCD).-SCD-ABCD-B-codes3]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg6_undetermined_degenerate_or_unbound_intersections_are_refused[T\xednh kho\u1ea3ng c\xe1ch t\u1eeb A \u0111\u1ebfn giao tuy\u1ebfn c\u1ee7a (SCD) v\xe0 (ABCD) khi SA = 4.-SCD-ABCD-A-codes4]
-42 failed, 26 passed in 2.76s
+FAILED tests/geometry/test_source_gate_hardening.py::test_sg6_inline_intersection_from_a_described_point
+FAILED tests/geometry/test_source_gate_hardening.py::test_sg3_a_number_owned_by_a_segment_label_does_not_make_a_role_ambiguous
+FAILED tests/geometry/test_source_gate_hardening.py::test_sg3_regular_base_side_next_to_a_segment_value[3-3\u221a3/2-None]
+FAILED tests/geometry/test_source_gate_hardening.py::test_sg3_regular_base_side_next_to_a_segment_value[2-None-codes1]
+FAILED tests/geometry/test_source_gate_hardening.py::test_sg5_a_right_triangle_base_is_a_preserved_premise_of_a_two_request_sentence
+47 failed, 26 passed in 2.90s

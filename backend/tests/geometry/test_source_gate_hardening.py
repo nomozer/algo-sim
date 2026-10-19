@@ -294,3 +294,60 @@ def test_sg6_undetermined_degenerate_or_unbound_intersections_are_refused(ask, a
 def test_sg6_an_inline_intersection_needs_an_ask_that_reads_it():
     ask = "Tính khoảng cách từ A đến giao tuyến của (SCD) và (ABCD)."
     refused(distance_to_intersection(ask, "SCD", "ABCD", consumer_line_ref=False))
+
+
+# ── BH2A known regression (P4-D) exposed three more cases of the same groups; renamed wordings here ─────────────────
+def inline_described(points, ask="Tính khoảng cách từ trọng tâm của tam giác SAB đến giao tuyến của hai mặt phẳng "
+                                 "(SCD) và (ABCD)."):
+    return run(SQ + ask, SQF + [f("g", "intersection_line", ask, role="question", points_a=list("SCD"), points_b=list("ABCD")),
+                                q("q", ask, quantity="distance", point_kind="centroid", points=list(points), line_ref="g")])
+
+
+def test_sg6_inline_intersection_from_a_described_point():
+    served(inline_described("SAB"), {"q": "√5"})        # G = (2/3, 0, 1); line CD: y = 2, z = 0 ⇒ d² = 2² + 1² = 5
+    refused(inline_described("SAD"), "SOURCE_OBJECT_MISMATCH")      # the fact describes another centroid
+
+
+def test_sg3_a_number_owned_by_a_segment_label_does_not_make_a_role_ambiguous():
+    s = "Cho hình lăng trụ tam giác đều MNP.M'N'P' có cạnh đáy bằng 4 và cạnh bên MM' = 2."
+    ask = "Tính thể tích khối lăng trụ MNP.M'N'P'."
+    facts = [f("f1", "solid", s, solid="MNP.M'N'P'", solid_type="prism", regular=True),
+             f("f2", "length", s, measure="base_edge", solid="MNP.M'N'P'", value="4"),
+             f("f3", "length", s, points=["M", "M'"], measure="segment", value="2"),
+             q("q", ask, quantity="volume", solid="MNP.M'N'P'")]
+    served(run(s + " " + ask, facts), {"q": "8√3"})                 # (√3/4 · 16) · 2
+    facts[1]["value"] = "2"                                          # the 2 belongs to MM', not to the base edge
+    refused(run(s + " " + ask, facts), "UNGROUNDED_VALUE")
+
+
+@pytest.mark.parametrize("fact_side,v,codes", [
+    ("3", "3√3/2", None),                                            # V = ⅓ · (9√3/4) · 2
+    ("2", None, ("UNGROUNDED_VALUE",)),                              # borrows SA's number: not the side
+])
+def test_sg3_regular_base_side_next_to_a_segment_value(fact_side, v, codes):
+    s = "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 3, SA vuông góc với mặt phẳng (ABC) và SA = 2."
+    sa = "2"
+    ask = "Tính thể tích khối chóp S.ABC."
+    facts = [f("f1", "solid", s, solid="S.ABC", solid_type="pyramid"),
+             f("f2", "polygon_shape", s, points=list("ABC"), shape="equilateral_triangle", value=fact_side),
+             f("f3", "perpendicular", s, points_a=["S", "A"], points_b=list("ABC")),
+             f("f4", "length", s, points=["S", "A"], measure="segment", value=sa), q("q", ask, quantity="volume", solid="S.ABC")]
+    r = run(s + " " + ask, facts)
+    served(r, {"q": v}) if v else refused(r, *codes)
+
+
+def test_sg5_a_right_triangle_base_is_a_preserved_premise_of_a_two_request_sentence():
+    s0 = "Cho hình chóp T.MNP có đáy MNP là tam giác vuông tại M với MN = 4, MP = 4."
+    s1 = "Gọi K là trung điểm của cạnh NP, biết TK vuông góc với MN, TK vuông góc với MP và TK = 3."
+    s2 = ("Tính khoảng cách từ trọng tâm của tam giác TMN đến mặt phẳng (MNP) và tính góc giữa hai đường thẳng TK và "
+          "NP.")
+    facts = [f("f0", "solid", s0, solid="T.MNP", solid_type="pyramid"), f("f1", "right_angle", s0, at="M", points=["N", "P"]),
+             f("f2", "length", s0, points=["M", "N"], measure="segment", value="4"),
+             f("f3", "length", s0, points=["M", "P"], measure="segment", value="4"),
+             f("f4", "point_def", s1, point="K", point_kind="midpoint", points=["N", "P"]),
+             f("f5", "perpendicular", s1, points_a=["T", "K"], points_b=["M", "N"]),
+             f("f6", "perpendicular", s1, points_a=["T", "K"], points_b=["M", "P"]),
+             f("f7", "length", s1, points=["T", "K"], measure="segment", value="3"),
+             q("q1", s2, quantity="distance", point_kind="centroid", points=list("TMN"), points_b=list("MNP")),
+             q("q2", s2, quantity="angle", points_a=["T", "K"], points_b=["N", "P"])]
+    served(run(" ".join((s0, s1, s2)), facts), {"q1": "1", "q2": "cos²=0"})     # TK ⊥ base: z_G = 3/3; TK ⊥ NP

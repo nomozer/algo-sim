@@ -855,6 +855,12 @@ def _so_theo_vai_tro(quotes: tuple[str, ...], fn: str, field: str) -> tuple[Frac
             nxt = next((s for s in so if s.start() >= m.end()), None)
             if nxt is not None and nxt.start() == m.end() and _DUOI_BANG.match(qn[nxt.end():]):
                 bound[nxt.start()] = re.sub(r"\s+", " ", m["vai"].lower())
+        # a number a segment label owns by an equality ("SA = 3a", "cạnh bên AA' = a") belongs to that segment, not here
+        for dau, cuoi, phan in _tu_nhan(qn):
+            nxt = next((s for s in so if s.start() >= cuoi), None)
+            if (len(phan) == 1 and len(phan[0]) == 2 and nxt is not None and _NOI_BANG.fullmatch(qn[cuoi:nxt.start()])
+                    and _DUOI_BANG.match(qn[nxt.end():])):
+                bound.setdefault(nxt.start(), "đoạn")
         if len(bound) != len(so):
             return None
         gan += [_doc(s) for s in so if bound[s.start()] in vai_o]
@@ -1066,7 +1072,11 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
         # SG-6: the intersection named only as the TARGET of a distance question ("Tính khoảng cách từ A đến giao tuyến của
         # (SCD) và (ABCD).") — accepted only when that very sentence is the quote of an ask that reads it through this
         # `line_ref`; the ask's own `derived` binding below checks the point and both planes.
-        inline_form = (rf'(?:(?i:tính|tìm|xác định)\s+)?(?i:khoảng cách\s+từ\s+(?:điểm\s+)?){_P1}\s*(?i:đến|tới)\s*'
+        # The point is a label or a point the Registry's own descriptor contracts describe ("trọng tâm của tam giác SAB").
+        desc = [re.sub(r"\(\?P<[^>]+>", "(?:", p.phrase).replace('{P}', _P1)
+                for s in REGISTRY.values() for p in planning_contracts(s) if p.descriptor and isinstance(p.phrase, str)]
+        inline_form = (rf'(?:(?i:tính|tìm|xác định)\s+)?(?i:khoảng cách\s+từ\s+)(?:(?i:điểm\s+)?{_P1}|'
+                       + '|'.join(f'(?i:{d})' for d in desc) + rf')\s*(?i:đến|tới)\s*'
                        rf'(?i:giao tuyến của)\s*{_MAT_TOAN_HANG}\s*(?i:và)\s*{_MAT_TOAN_HANG}\s*[.?]?\s*')
         consumers = {chuan_hoa(x) for d in calls if getattr(d.args, 'line_ref', None) == ref for x in d.quotes}
         for q in c.quotes:
@@ -2158,6 +2168,8 @@ def _rang_buoc_cuc_bo_khop(r: Any, c: LoiGoi, de: str) -> bool:
         return ids([a.apex]) == e[:1] and _cung_da_giac(list(ids(a.base)), list(e[1:]))
     if r.kind == "line_perp_plane" and c.fn == "perpendicular_line_plane":
         return set(ids(a.line)) == set(e[:2]) and _cung_mat(frozenset(e[2:]), list(ids(a.plane)))
+    if r.kind == "right_triangle" and c.fn == "right_angle":     # (vertex, other two): the right angle at that vertex
+        return ids([a.vertex]) == e[:1] and set(ids(a.rays)) == set(e[1:])
     if r.kind == "line_perp_line" and c.fn in ("perpendicular_lines", "right_angle"):
         pair = (a.line1, a.line2) if c.fn == "perpendicular_lines" else ([a.vertex, a.rays[0]], [a.vertex, a.rays[1]])
         return {frozenset(ids(x)) for x in pair} == {frozenset(e[:2]), frozenset(e[2:])}

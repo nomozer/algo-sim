@@ -14,6 +14,10 @@
                                         "r3": {"value_squared": "4/5", "exact": "2√5/5"},
                                         "source": "inputs/corpus-authoring/corpus.json expected_values (computed_by agent1_oracle.py, preregistered); gold_disposition answer_all"},
             "hand_check": "A(0,0,0), B(1,0,0), D(0,2,0), A'(0,0,2), D'(0,2,2): BD'² = 1 + 4 + 4 = 9; V = 1·2·2 = 4; AA' ∥ (0,0,1), BD' ∥ (−1,2,2), n = (−2,−1,0), d = |n·AB|/|n| = 2/√5 ⇒ d² = 4/5",
-            "reading": "Rectangular box AB = 1, AD = 2, AA' = 2; three requests in one sentence, all three preregistered values reproduced."}
+            "reading": "Rectangular box AB = 1, AD = 2, AA' = 2; three requests in one sentence, all three preregistered values reproduced."},
+    "L28": {"before": {"status": "REFUSED", "code": "QUESTION_LOCAL_GIVEN_UNVERIFIED", "values": {}},
+            "after": {"status": "REFUSED", "code": "QUESTION_CONTEXT_UNSUPPORTED", "values": {}},
+            "added": "with the BH2A-derived fix (product 2nd SG pass): a 'right_triangle' premise is matched by its right_angle call",
+            "reading": "Still refused, one layer later: the base 'tam giác vuông cân tại A' is now recognised as a preserved premise; the request 'dựa vào SM tính diện tích tam giác SBC' (a method instruction) stays unread ⇒ QUESTION_CONTEXT_UNSUPPORTED. Refusal-code change only; served count unchanged."}
   }
 }
