@@ -1,17 +1,30 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL continuation — Hybrid offline readiness & Simulation-First UX, 2026-10-19 (not integrated)
+## LOCAL — Hybrid Architecture Wave 1 (Exact Certificates + Dependency-Aware Planner), 2026-10-19 (not integrated)
 
+Branch `research/hybrid-architecture-wave1-exact-certificates-planner` from `main` = `origin/main` = `f0560449`;
+product `681e0473` (Wave 1A `29a7b8c8`, initial Wave 1 `222cd541`; previous product `aa458cc3`),
+112 measured files / `4c9181bc30e0e511b22ebb25d781d68e3947428986e2838670504350e6eaa263`.
+Cache **126** (no bump required), `LLM_ONLY`, response `flat`, `ADAPTER_VERSION = "hybrid-preview-adapter/2"`, Hybrid product **NO-GO**, live calls **0**.
+
+- **Batch B Conditional Cleanup (`BATCH_B_CLEANUP_VERIFIED`):** Removed `3/3` eligible worktrees (`B2: hybrid-pre-main-hardening`, `B3: hybrid-preview-contract-hardening`, `B4: extraction-v2-record-correction`) via `git worktree remove` without `--force` (local branches preserved), reclaiming `5,655,400,448` bytes (`5.2670 GiB`) in Batch B (`7,469,133,824` bytes / `6.9562 GiB` cumulative with A1; `D:` free space `19,207,282,688` → `24,862,683,136` bytes / `23.1552 GiB`).
+- **Wave 1A — Exact Geometry Certificates (`ISSUE-ARCH-SCENE3D-ALTITUDE-CERTIFICATE-MISSING`):** Added `backend/app/simulation/geometry_functions/certificates.py` (`validate_gram_metric_spd`, `certify_line_plane_perpendicularity`, `certify_deductive_line_plane_perpendicularity`, `verify_perpendicular_witness`, `attach_scene_perpendicular_certificates`) certifying line-plane perpendicularity in exact `Fraction` Gram arithmetic ($\langle h, u \rangle_G = 0$, $\langle h, v \rangle_G = 0$, $\det(\text{Gram}(u, v)) > 0$, SPD metric), preserved certified `witness` on coinciding segment annotations in `quantity_annotations._bam_doan_da_dung` (`square_pyramid_envelope.json` `chieu_cao_SA`), and guarded `scene3d-annotations.ts` (`o.type === "point3"`) so `segment3` altitude witnesses render right-angle markers in `scene3d-view.tsx` without duplicating dashed projection lines (`18/18` backend tests incl. `8` tamper vectors, `34/34` frontend annotation tests, `41/41` Adapter `/2` fixtures).
+- **Wave 1B — Dependency-Aware Planner Ordering (`GAP-C1` / `ISSUE-RESEARCH-HYBRID-AUXILIARY-BEFORE-SOLID`):** Implemented `planner.py::_sap_xep_phu_thuoc_loi_goi` enforcing an explicit directed dependency graph and tiered topological call order (`Tier 0` solid $\to$ `Tier 1` base $\to$ `Tier 2` apex-foot $\to$ `Tier 3` apex/solid premises $\to$ `Tier 4` post-solid auxiliaries $\to$ `Tier 5` asks) with fail-closed dangling/cycle rejection (`DANGLING_DEPENDENCY`, `UNKNOWN_DERIVED_REFERENCE`, `UNKNOWN_SOLID`, `DEPENDENCY_CYCLE`), locked in `test_hybrid_wave1_dependency_planner.py` (`10/10` pass, RED `4` failed $\to$ GREEN `10` passed; `392/392` targeted backend regression tests).
+- **Receipts:** [`handoff.md`](evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/handoff.md), [`report.md`](evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/report.md), [`run.json`](evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/run.json).
+
+## INTEGRATED ON `main` — Hybrid offline readiness & Simulation-First UX, 2026-10-19
+
+Fast-forwarded to `main` = `origin/main` = `f0560449` (owner `HUMAN_VISUAL_REVIEW_PASS` + `GO_MAIN_SESSION_A` in session, 2026-10-19).
 Branch `research/hybrid-offline-readiness-finalization`; product `aa458cc3` (previous product `2af99e0e`), clean freeze/candidate `c2cf643b` (previous authoritative candidate `f8423d4b` receipts preserved untouched),
 111 measured files / `cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c`.
-`main` and local `origin/main` remain `f2b00ed3` (the `551a3541` block below is the earlier product integration).
+Earlier baseline was `f2b00ed3` (the `551a3541` block below is the earlier product integration).
 Cache **126**, `LLM_ONLY`, response `flat`, Hybrid product **NO-GO**, live calls **0**.
 
 Source/vector-zero fixed with review corrections; HFOI-F3/F5/F6 verified offline; HFOI-F4 wrapper/anchor is verified,
 but exact relation operands remain unavailable in Adapter `/2`. Simulation-First learner UX (`aa458cc3`, `tapKetQuaCuoi`) removes answer toggles/cards/badges from default learner simulation UI across both Path A (`index.html`, `/api/analyze`, `GEOMETRY_SAMPLES`) and Path B (`hfoi-harness.html`, `12/12` `served-*`), preserves given/intermediate construction quantities (`AB = 3`, `AD = 4`, `SA = 6`, `S(ABCD) = 12` in `w11_rectangular_pyramid`), certified 3D distance witnesses (`distance_witness:kq_f6` in `H02`), and perpendicular markers, and adds concise step-synchronized observation guidance (`.geo3d-huong-dan`).
 Dual-path Playwright Chromium verification across desktop (`1440×900`) and compact (`390×844`) viewports passed (`allPassed: true`), 41/41 fixture responses identical, independent
 oracle 12/12. Authoritative detached T3 at `c2cf643b` is **`FULL_PRODUCT_GATE_PASS`** (backend 10950/0, frontend 1145/0, build PASS, demo 5/5, crash 6/6; [`handoff.md`](evaluation/geometry/runs/hybrid-offline-readiness-finalization/handoff.md), [`simulation-first-ux/handoff.md`](evaluation/geometry/runs/hybrid-offline-readiness-finalization/simulation-first-ux/handoff.md)).
-Verdict: **`HYBRID_OFFLINE_READINESS_PARTIAL`** + **`SIMULATION_FIRST_UX_READY_FOR_HUMAN_REVIEW`** (no `HUMAN_VISUAL_REVIEW_PASS` claimed before owner review; no Product E2E PASS). Historical cache-mode UNKNOWN, altitude certificate and disconnected product route remain open.
+Verdict: **`HYBRID_OFFLINE_READINESS_PARTIAL`** + **`SIMULATION_FIRST_UX_READY_FOR_HUMAN_REVIEW`**. Historical cache-mode UNKNOWN, altitude certificate and disconnected product route remain open at `f0560449` (altitude certificate resolved on `research/hybrid-architecture-wave1-exact-certificates-planner` above).
 
 ## INTEGRATED ON `main` — Scene3D plane/grid/camera + metric boundary, 2026-10-18
 

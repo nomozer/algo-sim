@@ -1,6 +1,18 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
-## Hybrid offline readiness (research/hybrid-offline-readiness-finalization, Hybrid product off)
+## Hybrid Architecture Wave 1 — exact Gram-metric certificates & dependency-aware planner (research/hybrid-architecture-wave1-exact-certificates-planner, Hybrid product off)
+
+Run `docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/`. Resolves `ISSUE-ARCH-SCENE3D-ALTITUDE-CERTIFICATE-MISSING` (Wave 1A) and `GAP-C1` / `ISSUE-RESEARCH-HYBRID-AUXILIARY-BEFORE-SOLID` (Wave 1B) on branch.
+
+| Module | Owns | Verification |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/certificates.py` | Exact `Fraction` Gram-metric perpendicularity certification: `validate_gram_metric_spd` (Sylvester positive-definiteness, never falls back to $I_3$), `certify_line_plane_perpendicularity` ($\langle h, u \rangle_G = 0$, $\langle h, v \rangle_G = 0$, $\det(\text{Gram}(u, v)) > 0$, exact endpoint incidence), `certify_deductive_line_plane_perpendicularity` (`LINE_PERP_TWO_INTERSECTING_LINES_IN_PLANE`), `verify_perpendicular_witness` (tamper verifier), `attach_scene_perpendicular_certificates` (`segment3.perpendicular_witness` on right altitudes & right prism lateral edges across Euclidean and oblique Gram charts) | `backend/tests/geometry/test_hybrid_wave1_exact_certificates.py` (`18/18` incl. `8` tamper vectors) |
+| `backend/app/ai/function_route.py::_gan_nhan_chung_duong_cao_chinh_xac` | Delegates post-build Scene3D perpendicular certificate attachment to `certificates.attach_scene_perpendicular_certificates` | same; `backend/tests/test_hybrid_preview_fixtures.py` (`41/41`) |
+| `backend/app/simulation/semantic_program/quantity_annotations.py::_bam_doan_da_dung` | Preserves certified `witness` when merging coinciding height/distance segment annotations onto an existing `segment3` (`cung_doan`), restoring certified right-angle markers on Path A (`square_pyramid_envelope.json`) | `backend/tests/geometry/test_hybrid_wave1_exact_certificates.py` |
+| `frontend/src/simulations/domains/geometry/scene3d-annotations.ts` | Guards `o.type === "point3"` before emitting dashed projection witness lines (`nhan_chung:${o.id}`), so `segment3.perpendicular_witness` feeds `scene3d-view.tsx` right-angle markers without duplicating dashed projection lines | `frontend/src/simulations/domains/geometry/scene3d-annotations.test.ts` (`34/34`) |
+| `backend/app/simulation/geometry_functions/planner.py::_sap_xep_phu_thuoc_loi_goi`, `_phan_tang_loi_goi` | Explicit directed dependency graph (`direct_deps` + `ordering_deps` across `Tier 0` solid declarations $\to$ `Tier 1` base foundation $\to$ `Tier 2` apex-foot point constructors $\to$ `Tier 3` apex/solid premises $\to$ `Tier 4` post-solid auxiliaries $\to$ `Tier 5` asks), fail-closed dangling/cycle rejection (`DANGLING_DEPENDENCY`, `UNKNOWN_DERIVED_REFERENCE`, `UNKNOWN_SOLID`, `DEPENDENCY_CYCLE`), and deterministic min-heap Kahn topological sort preserving valid existing call sequences (`H12` and all `41/41` Adapter `/2` fixtures) | `backend/tests/geometry/test_hybrid_wave1_dependency_planner.py` (`10/10`) |
+
+## Hybrid offline readiness (research/hybrid-offline-readiness-finalization, integrated on main f0560449, Hybrid product off)
 
 Run `docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/`. HFOI-F3…F6 = open items of
 `ISSUE-ARCH-HYBRID-FRONTEND-OFFLINE-INTEGRATION` (distinct from the resolved Scene3D F5/F6 issues).

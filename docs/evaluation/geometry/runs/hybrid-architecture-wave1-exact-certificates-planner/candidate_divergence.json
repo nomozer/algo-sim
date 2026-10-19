@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-architecture-wave1-exact-certificates-planner",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "4c9181bc30e0e511b22ebb25d781d68e3947428986e2838670504350e6eaa263",
+  "previous_candidate_hash": "cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c",
+  "current_product_commit": "681e047335595acbd091ebcbbc673075f18ca5b0",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized Hybrid Architecture Wave 1 (`GO_BATCH_B_CONDITIONAL_CLEANUP_AND_HYBRID_WAVE1_IMPLEMENTATION`): (1) Wave 1A exact Gram-metric perpendicularity certificates (`certificates.py`), deductive perpendicularity certificate validator, witness preservation in `quantity_annotations._bam_doan_da_dung`, and `point3` witness guard in `scene3d-annotations.ts`; (2) Wave 1B dependency-aware deterministic planner call ordering (`_sap_xep_phu_thuoc_loi_goi` in `planner.py`) with fail-closed dangling/cycle rejection. Default `LLM_ONLY` route, `CACHE_VERSION = 126`, `RESPONSE_CONTRACT = flat`, and Adapter `/2` (`hybrid-preview-adapter/2`) remain unchanged.",
+  "cache_version": 126,
+  "cache_version_hien_tai": 126,
+  "cache_decision": "NO_BUMP (remains 126): Default LLM_ONLY `/api/analyze` acceptance/refusal decisions and numerical answers are unchanged; `certificates.py`, `function_route.py`, and `planner.py` are Route D only, and `quantity_annotations._bam_doan_da_dung` only preserves an already-certified `witness` on coinciding segment annotations.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and candidate layers preserved byte-for-byte; no rescore or new coverage claim.",
+    "live_requests": 0
+  }
+}

@@ -1,15 +1,26 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_ARCHITECTURE_WAVE1_EXACT_CERTIFICATES_PLANNER
+
+REPORT = docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/
+CLASSIFICATION = BATCH_B_AND_ARCH_WAVE1_READY_FOR_REVIEW (Batch B 3/3 worktrees safely removed reclaiming 5.2670 GiB / 6.9562 GiB cumulative; Wave 1A exact Fraction Gram-metric perpendicularity certificates + witness preservation + point3 guard; Wave 1B dependency-aware deterministic planner call ordering with fail-closed dangling/cycle rejection; 41/41 Adapter /2 fixtures preserved; CACHE_VERSION 126, LLM_ONLY default unchanged, Hybrid product NO-GO)
+CODE_COMMIT = 222cd541 · 29a7b8c8 · 681e0473 (final product commit; measured_system tree_hash 4c9181bc30e0e511b22ebb25d781d68e3947428986e2838670504350e6eaa263 across 112 files)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/run.json
+MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
+CORRECTS = HYBRID_OFFLINE_READINESS_FINALIZATION (candidate_divergence.json only; historical measurements unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_OFFLINE_READINESS_FINALIZATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/handoff.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/
-CLASSIFICATION = HYBRID_OFFLINE_READINESS_PARTIAL · SIMULATION_FIRST_UX_READY_FOR_HUMAN_REVIEW (source-length/vector-zero + CACHE_VERSION 126 + HFOI-F3/F5/F6 + simulation-first learner UX across Path A & Path B + 41/41 fixtures + 12/12 independent oracle + dual-path desktop/compact browser verification + clean detached T3 FULL_PRODUCT_GATE_PASS verified; HFOI-F4 exact relation operands in Adapter /2 and production Hybrid caller remain open by design; LLM_ONLY default unchanged, Hybrid product NO-GO)
+CLASSIFICATION = HYBRID_OFFLINE_READINESS_PARTIAL · SIMULATION_FIRST_UX_READY_FOR_HUMAN_REVIEW (source-length/vector-zero + CACHE_VERSION 126 + HFOI-F3/F5/F6 + simulation-first learner UX across Path A & Path B + 41/41 fixtures + 12/12 independent oracle + dual-path desktop/compact browser verification + clean detached T3 FULL_PRODUCT_GATE_PASS verified; integrated on main f0560449; HFOI-F4 exact relation operands in Adapter /2 and production Hybrid caller remain open by design; LLM_ONLY default unchanged, Hybrid product NO-GO)
 CODE_COMMIT = c55374cc · 479e04d5 · 9d17557e · cc07f512 · 8bcb9d8e · 531b7143 · 794563cb · 8ee9e3eb · 2af99e0e · aa458cc3 (final product commit); test/receipt alignment 00b7bba4 · efbdc5a7 · c603b489; candidate freeze c2cf643b (tree_hash cb11bc7757466bd6c52cd063e975c4540514bac6c49acc70c4d4dfca7fff660c, 111 files; previous authoritative candidate f8423d4b receipts preserved)
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-offline-readiness-finalization/run.json
 MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
 CORRECTS = SCENE3D_METRIC_BOUNDARY (candidate_divergence.json only; historical measurements unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_ARCHITECTURE_WAVE1_EXACT_CERTIFICATES_PLANNER (candidate identity layer; no historical measurement rewrite)
 
 ## WAVE_ID = EXTRACTION_V2_INTEGRATION_RECORD
 
