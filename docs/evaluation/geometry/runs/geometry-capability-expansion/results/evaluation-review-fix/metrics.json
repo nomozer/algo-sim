@@ -1,0 +1,302 @@
+{
+ "schema": "geometry-capability-metrics/1",
+ "model_calls": 0,
+ "arms": {
+  "expansion": {
+   "verified_coverage": {
+    "n": 12,
+    "d": 12
+   },
+   "goals_solved": {
+    "n": 16,
+    "d": 16
+   },
+   "correct_refusals": {
+    "n": 8,
+    "d": 8
+   },
+   "refused_other_code": {
+    "n": 0,
+    "d": 8
+   },
+   "false_serves": {
+    "n": 0,
+    "d": 20
+   },
+   "by_success_source": {
+    "new_composition": {
+     "n": 5,
+     "d": 5
+    },
+    "new_configuration": {
+     "n": 5,
+     "d": 5
+    },
+    "new_primitive": {
+     "n": 2,
+     "d": 2
+    }
+   },
+   "scene_timeline_ok": {
+    "n": 12,
+    "d": 12
+   },
+   "refusal_codes": {
+    "SOURCE_OBJECT_MISMATCH": 2,
+    "INVALID_RATIO": 1,
+    "UNSUPPORTED_IRRATIONAL_LAYOUT": 1,
+    "UNSUPPORTED_BASE_SHAPE": 1,
+    "UNDERDETERMINED_POINT": 1,
+    "PLANE_NOT_UNIQUE": 1,
+    "PLANE_TOUCHES_VERTEX": 1
+   },
+   "distinct_chains_verified": [
+    "ask_angle_line_plane",
+    "ask_distance_point_plane | centroid->ask_distance_point_plane",
+    "ask_length | orthogonal_projection_line->ask_length",
+    "ask_section_area",
+    "ask_volume",
+    "ask_volume | ask_angle_line_plane",
+    "midpoint->ask_area",
+    "midpoint->ask_distance_point_plane | ask_angle_line_plane",
+    "orthogonal_projection_line->ask_length"
+   ]
+  },
+  "pre-expansion-main": {
+   "verified_coverage": {
+    "n": 0,
+    "d": 12
+   },
+   "goals_solved": {
+    "n": 0,
+    "d": 16
+   },
+   "correct_refusals": {
+    "n": 3,
+    "d": 8
+   },
+   "refused_other_code": {
+    "n": 5,
+    "d": 8
+   },
+   "false_serves": {
+    "n": 0,
+    "d": 20
+   },
+   "by_success_source": {
+    "new_composition": {
+     "n": 0,
+     "d": 5
+    },
+    "new_configuration": {
+     "n": 0,
+     "d": 5
+    },
+    "new_primitive": {
+     "n": 0,
+     "d": 2
+    }
+   },
+   "scene_timeline_ok": {
+    "n": 0,
+    "d": 0
+   },
+   "refusal_codes": {
+    "SCHEMA_INVALID": 6,
+    "UNSUPPORTED_BASE_SHAPE": 5,
+    "UNDERDETERMINED_POINT": 3,
+    "PLANE_NOT_UNIQUE": 6
+   },
+   "distinct_chains_verified": []
+  }
+ },
+ "changed_vs_pre_expansion_main": [
+  {
+   "id": "W2-EXP-03",
+   "before": [
+    "REFUSED",
+    "SCHEMA_INVALID"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ]
+  },
+  {
+   "id": "dev-ratio-angle",
+   "before": [
+    "REFUSED",
+    "SCHEMA_INVALID"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ]
+  },
+  {
+   "id": "dev-ratio-midpoint-area",
+   "before": [
+    "REFUSED",
+    "SCHEMA_INVALID"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ]
+  },
+  {
+   "id": "W2-EXP-06A",
+   "before": [
+    "REFUSED",
+    "UNSUPPORTED_BASE_SHAPE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ]
+  },
+  {
+   "id": "dev-trapezoid-distances",
+   "before": [
+    "REFUSED",
+    "UNSUPPORTED_BASE_SHAPE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ]
+  },
+  {
+   "id": "dev-trapezoid-AD",
+   "before": [
+    "REFUSED",
+    "UNSUPPORTED_BASE_SHAPE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ]
+  },
+  {
+   "id": "W2-EXP-06B",
+   "before": [
+    "REFUSED",
+    "UNDERDETERMINED_POINT"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ]
+  },
+  {
+   "id": "dev-oblique-prism-compositions",
+   "before": [
+    "REFUSED",
+    "UNDERDETERMINED_POINT"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ]
+  },
+  {
+   "id": "W2-EXP-07",
+   "before": [
+    "REFUSED",
+    "PLANE_NOT_UNIQUE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ]
+  },
+  {
+   "id": "dev-perp-square-A-SC",
+   "before": [
+    "REFUSED",
+    "PLANE_NOT_UNIQUE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ]
+  },
+  {
+   "id": "dev-perp-square-S-BD",
+   "before": [
+    "REFUSED",
+    "PLANE_NOT_UNIQUE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ]
+  },
+  {
+   "id": "dev-ratio-then-perp-section",
+   "before": [
+    "REFUSED",
+    "SCHEMA_INVALID"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ]
+  },
+  {
+   "id": "neg-ratio-mismatch",
+   "before": [
+    "REFUSED",
+    "SCHEMA_INVALID"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ]
+  },
+  {
+   "id": "neg-ratio-outside",
+   "before": [
+    "REFUSED",
+    "SCHEMA_INVALID"
+   ],
+   "after": [
+    "REFUSED",
+    "INVALID_RATIO"
+   ]
+  },
+  {
+   "id": "neg-trapezoid-irrational",
+   "before": [
+    "REFUSED",
+    "UNSUPPORTED_BASE_SHAPE"
+   ],
+   "after": [
+    "REFUSED",
+    "UNSUPPORTED_IRRATIONAL_LAYOUT"
+   ]
+  },
+  {
+   "id": "neg-perp-touches-apex",
+   "before": [
+    "REFUSED",
+    "PLANE_NOT_UNIQUE"
+   ],
+   "after": [
+    "REFUSED",
+    "PLANE_TOUCHES_VERTEX"
+   ]
+  },
+  {
+   "id": "neg-perp-wrong-line",
+   "before": [
+    "REFUSED",
+    "PLANE_NOT_UNIQUE"
+   ],
+   "after": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ]
+  }
+ ]
+}

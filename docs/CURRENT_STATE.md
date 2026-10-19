@@ -3,7 +3,7 @@
 ## LOCAL — Hybrid Wave 2B: geometry capability expansion, 2026-10-19 (not integrated)
 
 Branch `research/hybrid-wave2b-geometry-expansion` from `main` = `origin/main` = `224328a2` (Wave 2A integrated); product
-`08596652`, candidate freeze `56eff5c3` (112 measured files / `233de8906b8b3308d5042eccffe6fef94ad8ba540b94452900c4fb559cecbf08`).
+`08596652` + review fixes `e9ec0f40`, candidate freeze `b8e3f112` (112 measured files / `520d414423788f3e9eabfcc5813968a50209b155f560baad8994b1747444730c`).
 Route D gains ratio points (`divide_segment`), the section by a plane through a point ⊥ a line (existing primitives), a
 right-trapezoid base and oblique prisms; versions `geometry-functions/8` · `geometry-fact-planner/9` ·
 `geometry-function-engine/7`. Dev corpus 12/12 VERIFIED (pre-run main 0/12), 8/8 correct refusals, 0 false serves. Cache

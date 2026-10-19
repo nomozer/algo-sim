@@ -34,7 +34,7 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 Cập nhật 2026-10-19 — mới hơn khối "LOCAL override" ở đầu file; tường thuật cũ ở đó và §5–§6 có thể lỗi thời (việc mở: `OPEN_ISSUES.md`; việc kế tiếp: `ROADMAP.md` §0).
 ```text
 MAIN = origin/main = 224328a2ee58a23f369b1eddb3e7d79e6afc4ec8 (Wave 2A goal-directed composition, GO_MAIN_HYBRID_WAVE2A, push không force)
-LOCAL_WAVE2B = research/hybrid-wave2b-geometry-expansion · product 08596652 · candidate 56eff5c3 (112 file 233de890…) · điểm chia, thiết diện ⊥ đường, hình thang vuông, lăng trụ xiên · dev 12/12 · chờ owner GO MAIN (runs/geometry-capability-expansion/handoff.md)
+LOCAL_WAVE2B = research/hybrid-wave2b-geometry-expansion · product 08596652 + sửa review e9ec0f40 · candidate b8e3f112 (112 file 520d4144…) · điểm chia, thiết diện ⊥ đường, hình thang vuông, lăng trụ xiên · dev 12/12 · chờ owner GO MAIN (runs/geometry-capability-expansion/handoff.md)
 PRODUCT_STATE = CACHE_VERSION 127 · DEFAULT_MODE LLM_ONLY · response contract flat (bề mặt không đổi) · Hybrid product NO-GO · route D versions functions/8 · planner/9 · engine/7 (nhánh 2B)
 SCENE3D = M2 #7, F1, F2 xong; P0–P3 owner duyệt hình trên bộ cảnh mẫu (chỉ phạm vi đó); "chọn kết quả" trên canvas chưa kiểm; KHÔNG Product E2E PASS
 HYBRID = product enablement NO-GO · không frontend caller /api/preview/hybrid · không tích hợp provider live · không GO LIVE

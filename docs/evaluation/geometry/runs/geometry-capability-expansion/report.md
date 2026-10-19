@@ -2,7 +2,7 @@
 
 - **Run:** `geometry-capability-expansion` · nhánh `research/hybrid-wave2b-geometry-expansion` từ `main` = `origin/main` = `224328a2`
 - **Ủy quyền:** `GO_HYBRID_WAVE2B_LOCAL_IMPLEMENTATION` (không merge/push, không GO LIVE, không bật Hybrid, không Wave 2C)
-- **Commit:** product `08596652` · corpus/oracle/harness `8090e8e8` · candidate freeze `56eff5c3` (112 file, `233de8906b8b3308d5042eccffe6fef94ad8ba540b94452900c4fb559cecbf08`)
+- **Commit:** product `08596652` · corpus/oracle/harness `8090e8e8` · sửa sau review `e9ec0f40` · candidate freeze `b8e3f112` (112 file, `520d414423788f3e9eabfcc5813968a50209b155f560baad8994b1747444730c`; bản trước `56eff5c3` / `233de890…`)
 - **Version:** `geometry-functions/8` · `geometry-fact-planner/9` · `geometry-function-engine/7`; TypedFact schema `aa9d93ee…`, `flat` `485d3834…`, v3 `4bff35bb…`, khai báo hàm tuyến A `5ceb0f99…` — **không đổi**
 - **Live provider calls:** 0 · `CACHE_VERSION` 127 (không bump, §8) · `LLM_ONLY` · Hybrid product NO-GO
 - **T3 / review độc lập:** `handoff.md` (ghi sau khi chạy)
@@ -76,3 +76,15 @@ Không bump (127): `/api/analyze` mặc định không nạp module nào run nà
 ## 9. Khoảng trống còn lại → Wave 2C (PROPOSED)
 
 Mặt ⊥ đường trên **lăng trụ** (cần luật chọn điểm neo theo mặt); điểm chia **không tên** ("điểm chia đoạn … theo tỉ số"); tỉ số viết dạng khác (`SM/SA = 2/3`, "chia theo tỉ số"); đáy hình thang không vuông / tỉ số vô tỉ; lăng trụ xiên với đỉnh trên cho bằng góc cạnh bên–đáy; khối con, khoảng cách đường–mặt, Adapter /3 (đã hoãn từ 2A); `flat` chưa có điểm chia (đo lại bề mặt trước mọi lượt live).
+
+## 10. Review độc lập trên candidate `56eff5c3` → sửa → đóng băng lại
+
+Reviewer chỉ-đọc (agent riêng, không sửa kho) ra **REQUEST_CHANGES**, tái hiện được cả ba:
+
+| # | Mức | Phát hiện | Sửa (`e9ec0f40`) |
+|---|---|---|---|
+| 1 | MAJOR | Mặt qua M ⊥ d trùng **một mặt biên** (vd. qua B ⊥ SA = (ABC); qua A ⊥ BC = (SAB)) được PHỤC VỤ như thiết diện — `_kiem_mat_phu` trả về sớm cho `MAT_VUONG_DUONG`, bỏ qua kiểm `SECTION_PLANE_IS_FACE` mà luật ∥ có; oracle cũng nhận mọi đa giác ≥ 3 đỉnh nên corpus không bắt được | chứng chỉ ⊥ chạy trước, rồi kiểm mặt biên + bước trace `construct_plane` DÙNG CHUNG với luật ∥; 2 ca test mới ⇒ `SECTION_PLANE_IS_FACE` |
+| 2 | MINOR | Tỉ số mẫu 0 (`"1/0"` ở tuyến A; "SM = 1/0MA" trong đề) ném `ZeroDivisionError` thay vì từ chối có mã | validator ⇒ `ValidationError` (`SCHEMA_INVALID`); cổng nguồn bỏ qua phương trình mẫu 0 ⇒ từ chối có mã |
+| 3 | MINOR | Hai góc vuông nêu tại cùng một đỉnh (đáy DAB + "Góc SAB vuông") che góc đáy ⇒ `UNSUPPORTED_BASE_SHAPE` (fail-closed, mất phủ) | góc vuông khoá theo (đỉnh, hai tia) |
+
+Test đích **32/32** (4 test mới, đỏ trên `56eff5c3`). Candidate đóng băng lại trong worktree tạm sạch (`b8e3f112`, lớp `inputs/candidate_divergence.json` đính chính lớp đầu). Đo lại nhánh `expansion` trên candidate mới: `results/evaluation-review-fix/` — `metrics.json` **trùng từng byte nội dung** với lần đo đầu (12/12 · 16/16 · 8/8 · 0/20), `arm-expansion.json` chỉ khác `route_ms` và `code_root_head`; nhánh `pre-expansion-main` là bản chép nguyên của lần đo đầu (cùng mã `224328a2`, cùng corpus — không chạy lại). Kết luận §3 không đổi; con số "0/20 phục vụ sai" chỉ nói về corpus — lớp lỗi #1 nằm ngoài nó, nay khoá bằng test.

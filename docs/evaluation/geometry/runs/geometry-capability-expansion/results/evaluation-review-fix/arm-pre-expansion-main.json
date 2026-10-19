@@ -1,0 +1,616 @@
+{
+ "schema": "geometry-capability-arm/1",
+ "arm": "pre-expansion-main",
+ "code_root_head": "224328a2ee58a23f369b1eddb3e7d79e6afc4ec8",
+ "registry_version": "geometry-functions/7",
+ "planner_version": "geometry-fact-planner/8",
+ "model_calls": 0,
+ "rows": [
+  {
+   "id": "W2-EXP-03",
+   "kind": "positive",
+   "source": "W2-EXP-03",
+   "success_source": "new_primitive",
+   "composition_declared": "divide_segment -> ask_length | divide_segment -> orthogonal_projection_line -> ask_length",
+   "status": "REFUSED",
+   "code": "SCHEMA_INVALID",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q1": "9/4",
+    "q2": "9/5"
+   },
+   "expected_codes": null,
+   "goals": 2,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.11,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "dev-ratio-angle",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_primitive",
+   "composition_declared": "divide_segment -> ask_angle_line_plane",
+   "status": "REFUSED",
+   "code": "SCHEMA_INVALID",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "1/3"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.089,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "dev-ratio-midpoint-area",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_composition",
+   "composition_declared": "divide_segment -> midpoint -> ask_area",
+   "status": "REFUSED",
+   "code": "SCHEMA_INVALID",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "1/8"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.084,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "W2-EXP-06A",
+   "kind": "positive",
+   "source": "W2-EXP-06A",
+   "success_source": "new_configuration",
+   "composition_declared": "ask_volume | ask_angle_line_plane",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_BASE_SHAPE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q1": "1/4",
+    "q2": "2/3"
+   },
+   "expected_codes": null,
+   "goals": 2,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 10,
+   "constructs": {
+    "pyramid": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 20.071,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "dev-trapezoid-distances",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_configuration",
+   "composition_declared": "ask_distance_point_plane | centroid -> ask_distance_point_plane",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_BASE_SHAPE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q1": "2/3",
+    "q2": "1/9"
+   },
+   "expected_codes": null,
+   "goals": 2,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 11,
+   "constructs": {
+    "pyramid": 1,
+    "centroid": 1
+   },
+   "auxiliary_points": 1,
+   "search": {
+    "needs": 7,
+    "candidates": 3,
+    "depth_max": 2
+   },
+   "route_ms": 7.673,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "dev-trapezoid-AD",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_configuration",
+   "composition_declared": "orthogonal_projection_line -> ask_length",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_BASE_SHAPE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "9/2"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 10,
+   "constructs": {
+    "pyramid": 1,
+    "orthogonal_projection_line": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 5,
+    "candidates": 2,
+    "depth_max": 2
+   },
+   "route_ms": 5.293,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "W2-EXP-06B",
+   "kind": "positive",
+   "source": "W2-EXP-06B",
+   "success_source": "new_configuration",
+   "composition_declared": "ask_volume",
+   "status": "REFUSED",
+   "code": "UNDERDETERMINED_POINT",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "3/64"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 6,
+   "constructs": {
+    "prism": 1,
+    "midpoint": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 7.59,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "dev-oblique-prism-compositions",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_configuration",
+   "composition_declared": "midpoint -> ask_distance_point_plane | ask_angle_line_plane",
+   "status": "REFUSED",
+   "code": "UNDERDETERMINED_POINT",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q1": "1/4",
+    "q2": "1/2"
+   },
+   "expected_codes": null,
+   "goals": 2,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 8,
+   "constructs": {
+    "prism": 1,
+    "midpoint": 2
+   },
+   "auxiliary_points": 1,
+   "search": {
+    "needs": 6,
+    "candidates": 3,
+    "depth_max": 2
+   },
+   "route_ms": 6.237,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "W2-EXP-07",
+   "kind": "positive",
+   "source": "W2-EXP-07",
+   "success_source": "new_composition",
+   "composition_declared": "orthogonal_projection_line x2 -> translate_point x2 -> ask_section_area",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "1/48"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.259,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "dev-perp-square-A-SC",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_composition",
+   "composition_declared": "orthogonal_projection_line x2 -> translate_point x2 -> ask_section_area",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "4/3"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.218,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "dev-perp-square-S-BD",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_composition",
+   "composition_declared": "orthogonal_projection_line x2 -> translate_point x2 -> ask_section_area",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "8"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.215,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "dev-ratio-then-perp-section",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_composition",
+   "composition_declared": "divide_segment -> (orthogonal_projection_line x2 -> translate_point x2) -> ask_section_area",
+   "status": "REFUSED",
+   "code": "SCHEMA_INVALID",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "1/12"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.091,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-ratio-mismatch",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "SCHEMA_INVALID",
+   "verdict": "REFUSED_OTHER_CODE",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.092,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-ratio-outside",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "SCHEMA_INVALID",
+   "verdict": "REFUSED_OTHER_CODE",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "INVALID_RATIO"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.085,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-trapezoid-irrational",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_BASE_SHAPE",
+   "verdict": "REFUSED_OTHER_CODE",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "UNSUPPORTED_IRRATIONAL_LAYOUT"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 9,
+   "constructs": {
+    "pyramid": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 4.245,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-trapezoid-one-right-angle",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_BASE_SHAPE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "UNSUPPORTED_BASE_SHAPE"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 8,
+   "constructs": {
+    "pyramid": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 3.657,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-oblique-prism-underdetermined",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "UNDERDETERMINED_POINT",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "UNDERDETERMINED_POINT"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 5,
+   "constructs": {
+    "prism": 1,
+    "midpoint": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 3.135,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-perp-plane-not-unique",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "PLANE_NOT_UNIQUE"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.225,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-perp-touches-apex",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "REFUSED_OTHER_CODE",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "PLANE_DOES_NOT_CUT",
+    "PLANE_TOUCHES_VERTEX"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.257,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-perp-wrong-line",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "REFUSED_OTHER_CODE",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.243,
+   "scene_timeline_ok": null,
+   "has_section": null
+  }
+ ]
+}
