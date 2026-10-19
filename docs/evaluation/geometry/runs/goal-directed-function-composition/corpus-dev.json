@@ -1,0 +1,3250 @@
+{
+ "schema": "goal-directed-composition-corpus/1",
+ "run": "goal-directed-function-composition",
+ "split": "dev",
+ "provenance": "AGENT_AUTHORED_WITH_INDEPENDENT_ORACLE_NOT_HUMAN_VALIDATED",
+ "cases": [
+  {
+   "id": "dev-sq-centroid-area",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "composition": "centroid->ask_area",
+   "novelty": "novel_function_combination",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trọng tâm của tam giác SBC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trọng tâm của tam giác SBC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      2,
+      0,
+      0
+     ],
+     "C": [
+      2,
+      2,
+      0
+     ],
+     "D": [
+      0,
+      2,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      3
+     ]
+    },
+    "gram": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "area",
+     "point": {
+      "desc": "centroid",
+      "of": [
+       "S",
+       "B",
+       "C"
+      ]
+     },
+     "target": [
+      "A",
+      "B"
+     ]
+    }
+   }
+  },
+  {
+   "id": "dev-sq-centroid-length",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "composition": "centroid->ask_length",
+   "novelty": "novel_function_combination",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính độ dài đoạn nối trọng tâm của tam giác SBC với điểm A.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính độ dài đoạn nối trọng tâm của tam giác SBC với điểm A."
+      ],
+      "quantity": "length",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "A"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      2,
+      0,
+      0
+     ],
+     "C": [
+      2,
+      2,
+      0
+     ],
+     "D": [
+      0,
+      2,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      3
+     ]
+    },
+    "gram": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "length",
+     "point": {
+      "desc": "centroid",
+      "of": [
+       "S",
+       "B",
+       "C"
+      ]
+     },
+     "target": "A"
+    }
+   }
+  },
+  {
+   "id": "dev-sq-centroid-dist-plane",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "composition": "centroid->ask_distance_point_plane",
+   "novelty": "novel_function_combination",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trọng tâm của tam giác SBC đến (SAD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trọng tâm của tam giác SBC đến (SAD)."
+      ],
+      "quantity": "distance",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "D"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      2,
+      0,
+      0
+     ],
+     "C": [
+      2,
+      2,
+      0
+     ],
+     "D": [
+      0,
+      2,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      3
+     ]
+    },
+    "gram": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "distance_plane",
+     "point": {
+      "desc": "centroid",
+      "of": [
+       "S",
+       "B",
+       "C"
+      ]
+     },
+     "target": [
+      "S",
+      "A",
+      "D"
+     ]
+    }
+   }
+  },
+  {
+   "id": "dev-sq-centroid-dist-line",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "composition": "centroid+orthogonal_projection_line->ask_length",
+   "novelty": "novel_function_combination",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trọng tâm của tam giác SBC đến AD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trọng tâm của tam giác SBC đến AD."
+      ],
+      "quantity": "distance",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "D"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      2,
+      0,
+      0
+     ],
+     "C": [
+      2,
+      2,
+      0
+     ],
+     "D": [
+      0,
+      2,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      3
+     ]
+    },
+    "gram": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "distance_line",
+     "point": {
+      "desc": "centroid",
+      "of": [
+       "S",
+       "B",
+       "C"
+      ]
+     },
+     "target": [
+      "A",
+      "D"
+     ]
+    }
+   }
+  },
+  {
+   "id": "dev-sq-centroid-angle-plane",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "composition": "centroid->ask_angle_line_plane",
+   "novelty": "novel_function_combination",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD)."
+      ],
+      "quantity": "angle",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      2,
+      0,
+      0
+     ],
+     "C": [
+      2,
+      2,
+      0
+     ],
+     "D": [
+      0,
+      2,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      3
+     ]
+    },
+    "gram": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "cos2_line_plane",
+     "point": {
+      "desc": "centroid",
+      "of": [
+       "S",
+       "B",
+       "C"
+      ]
+     },
+     "partner": "A",
+     "target": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    }
+   }
+  },
+  {
+   "id": "dev-sq-centroid-angle-lines",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "composition": "centroid->ask_angle_lines",
+   "novelty": "novel_function_combination",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và đường thẳng BD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và đường thẳng BD."
+      ],
+      "quantity": "angle",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "B",
+       "D"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      2,
+      0,
+      0
+     ],
+     "C": [
+      2,
+      2,
+      0
+     ],
+     "D": [
+      0,
+      2,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      3
+     ]
+    },
+    "gram": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "cos2_lines",
+     "point": {
+      "desc": "centroid",
+      "of": [
+       "S",
+       "B",
+       "C"
+      ]
+     },
+     "partner": "A",
+     "target": [
+      "B",
+      "D"
+     ]
+    }
+   }
+  },
+  {
+   "id": "dev-sq-midpoint-angle-plane",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "composition": "midpoint->ask_angle_line_plane",
+   "novelty": "novel_function_combination",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính góc giữa đường thẳng nối trung điểm của SC với điểm A và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng nối trung điểm của SC với điểm A và (ABCD)."
+      ],
+      "quantity": "angle",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      2,
+      0,
+      0
+     ],
+     "C": [
+      2,
+      2,
+      0
+     ],
+     "D": [
+      0,
+      2,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      3
+     ]
+    },
+    "gram": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "cos2_line_plane",
+     "point": {
+      "desc": "midpoint",
+      "of": [
+       "S",
+       "C"
+      ]
+     },
+     "partner": "A",
+     "target": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    }
+   }
+  },
+  {
+   "id": "dev-sq-midpoint-angle-lines",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "composition": "midpoint->ask_angle_lines",
+   "novelty": "novel_function_combination",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính góc giữa đường thẳng nối B với trung điểm của SC và đường thẳng AC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng nối B với trung điểm của SC và đường thẳng AC."
+      ],
+      "quantity": "angle",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_a": [
+       "B"
+      ],
+      "points_b": [
+       "A",
+       "C"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      2,
+      0,
+      0
+     ],
+     "C": [
+      2,
+      2,
+      0
+     ],
+     "D": [
+      0,
+      2,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      3
+     ]
+    },
+    "gram": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "cos2_lines",
+     "point": {
+      "desc": "midpoint",
+      "of": [
+       "S",
+       "C"
+      ]
+     },
+     "partner": "B",
+     "target": [
+      "A",
+      "C"
+     ]
+    }
+   }
+  },
+  {
+   "id": "dev-sq-named-angle-lines",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "composition": "ask_angle_lines",
+   "novelty": "new_primitive",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính góc giữa SB và AC.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa SB và AC."
+      ],
+      "quantity": "angle",
+      "points_a": [
+       "S",
+       "B"
+      ],
+      "points_b": [
+       "A",
+       "C"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      2,
+      0,
+      0
+     ],
+     "C": [
+      2,
+      2,
+      0
+     ],
+     "D": [
+      0,
+      2,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      3
+     ]
+    },
+    "gram": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "cos2_lines",
+     "point": "S",
+     "partner": "B",
+     "target": [
+      "A",
+      "C"
+     ]
+    }
+   }
+  },
+  {
+   "id": "dev-sq-midpoint-area-control",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "composition": "midpoint->ask_area",
+   "novelty": "existing_capability_control",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trung điểm của SC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      2,
+      0,
+      0
+     ],
+     "C": [
+      2,
+      2,
+      0
+     ],
+     "D": [
+      0,
+      2,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      3
+     ]
+    },
+    "gram": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "area",
+     "point": {
+      "desc": "midpoint",
+      "of": [
+       "S",
+       "C"
+      ]
+     },
+     "target": [
+      "A",
+      "B"
+     ]
+    }
+   }
+  },
+  {
+   "id": "dev-sq-midpoint-dist-line-control",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "composition": "midpoint+orthogonal_projection_line->ask_length",
+   "novelty": "existing_capability_control",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ trung điểm của SC đến AD.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trung điểm của SC đến AD."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "D"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      2,
+      0,
+      0
+     ],
+     "C": [
+      2,
+      2,
+      0
+     ],
+     "D": [
+      0,
+      2,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      3
+     ]
+    },
+    "gram": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "distance_line",
+     "point": {
+      "desc": "midpoint",
+      "of": [
+       "S",
+       "C"
+      ]
+     },
+     "target": [
+      "A",
+      "D"
+     ]
+    }
+   }
+  },
+  {
+   "id": "W2-EXP-01",
+   "split": "dev",
+   "kind": "positive",
+   "source": "W2-EXP-01",
+   "composition": "centroid->ask_area",
+   "novelty": "novel_function_combination",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a. SA vuông góc với (ABC). SA = a. Tính diện tích tam giác tạo bởi trọng tâm của tam giác SBC và hai điểm A, B.",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a."
+      ],
+      "solid": "S.ABC",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C"
+      ],
+      "shape": "equilateral_triangle",
+      "value": "a"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABC)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = a."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "a"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính diện tích tam giác tạo bởi trọng tâm của tam giác SBC và hai điểm A, B."
+      ],
+      "quantity": "area",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      1,
+      0,
+      0
+     ],
+     "C": [
+      0,
+      1,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      1
+     ]
+    },
+    "gram": [
+     [
+      1,
+      "1/2",
+      0
+     ],
+     [
+      "1/2",
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "area",
+     "point": {
+      "desc": "centroid",
+      "of": [
+       "S",
+       "B",
+       "C"
+      ]
+     },
+     "target": [
+      "A",
+      "B"
+     ]
+    }
+   }
+  },
+  {
+   "id": "W2-EXP-02",
+   "split": "dev",
+   "kind": "positive",
+   "source": "W2-EXP-02",
+   "composition": "midpoint->ask_angle_line_plane",
+   "novelty": "novel_function_combination",
+   "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a và chiều cao bằng a. Tính góc giữa đường thẳng nối A với trung điểm của SC và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a và chiều cao bằng a."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid",
+      "regular": true
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a và chiều cao bằng a."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "a"
+     },
+     {
+      "id": "f3",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a và chiều cao bằng a."
+      ],
+      "solid": "S.ABCD",
+      "measure": "height",
+      "value": "a"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng nối A với trung điểm của SC và (ABCD)."
+      ],
+      "quantity": "angle",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      1,
+      0,
+      0
+     ],
+     "C": [
+      1,
+      1,
+      0
+     ],
+     "D": [
+      0,
+      1,
+      0
+     ],
+     "S": [
+      "1/2",
+      "1/2",
+      1
+     ]
+    },
+    "gram": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "cos2_line_plane",
+     "point": {
+      "desc": "midpoint",
+      "of": [
+       "S",
+       "C"
+      ]
+     },
+     "partner": "A",
+     "target": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    }
+   }
+  },
+  {
+   "id": "W2-EXP-02-split",
+   "split": "dev",
+   "kind": "positive",
+   "source": "W2-EXP-02 (premises split one value per sentence)",
+   "composition": "midpoint->ask_angle_line_plane",
+   "novelty": "novel_function_combination",
+   "text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a. Chiều cao của hình chóp bằng a. Tính góc giữa đường thẳng nối A với trung điểm của SC và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid",
+      "regular": true
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng a."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "a"
+     },
+     {
+      "id": "f3",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "Chiều cao của hình chóp bằng a."
+      ],
+      "solid": "S.ABCD",
+      "measure": "height",
+      "value": "a"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng nối A với trung điểm của SC và (ABCD)."
+      ],
+      "quantity": "angle",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      1,
+      0,
+      0
+     ],
+     "C": [
+      1,
+      1,
+      0
+     ],
+     "D": [
+      0,
+      1,
+      0
+     ],
+     "S": [
+      "1/2",
+      "1/2",
+      1
+     ]
+    },
+    "gram": [
+     [
+      1,
+      0,
+      0
+     ],
+     [
+      0,
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "cos2_line_plane",
+     "point": {
+      "desc": "midpoint",
+      "of": [
+       "S",
+       "C"
+      ]
+     },
+     "partner": "A",
+     "target": [
+      "A",
+      "B",
+      "C",
+      "D"
+     ]
+    }
+   }
+  },
+  {
+   "id": "W2-EXP-15",
+   "split": "dev",
+   "kind": "positive",
+   "source": "W2-EXP-15",
+   "composition": "ask_angle_lines | ask_volume | centroid->ask_distance_point_plane",
+   "novelty": "novel_function_combination",
+   "text": "Cho hình chóp S.ABC. AB = 3. AC = 5. BC = 7. SA vuông góc với (ABC). SA = 2. Tính góc giữa SB và AC. Tính thể tích khối chóp S.ABC. Tính khoảng cách từ trọng tâm của tam giác SBC đến (ABC).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABC."
+      ],
+      "solid": "S.ABC",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AB = 3."
+      ],
+      "points": [
+       "A",
+       "B"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "f3",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "AC = 5."
+      ],
+      "points": [
+       "A",
+       "C"
+      ],
+      "measure": "segment",
+      "value": "5"
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "BC = 7."
+      ],
+      "points": [
+       "B",
+       "C"
+      ],
+      "measure": "segment",
+      "value": "7"
+     },
+     {
+      "id": "f5",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABC)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "id": "f6",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 2."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "2"
+     },
+     {
+      "id": "q1",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa SB và AC."
+      ],
+      "quantity": "angle",
+      "points_a": [
+       "S",
+       "B"
+      ],
+      "points_b": [
+       "A",
+       "C"
+      ]
+     },
+     {
+      "id": "q2",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính thể tích khối chóp S.ABC."
+      ],
+      "quantity": "volume",
+      "solid": "S.ABC"
+     },
+     {
+      "id": "q3",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ trọng tâm của tam giác SBC đến (ABC)."
+      ],
+      "quantity": "distance",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      1,
+      0,
+      0
+     ],
+     "C": [
+      0,
+      1,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      1
+     ]
+    },
+    "gram": [
+     [
+      9,
+      "-15/2",
+      0
+     ],
+     [
+      "-15/2",
+      25,
+      0
+     ],
+     [
+      0,
+      0,
+      4
+     ]
+    ]
+   },
+   "goals": {
+    "q1": {
+     "measure": "cos2_lines",
+     "point": "S",
+     "partner": "B",
+     "target": [
+      "A",
+      "C"
+     ]
+    },
+    "q2": {
+     "measure": "volume_tetrahedron",
+     "point": "S",
+     "target": [
+      "A",
+      "B",
+      "C"
+     ]
+    },
+    "q3": {
+     "measure": "distance_plane",
+     "point": {
+      "desc": "centroid",
+      "of": [
+       "S",
+       "B",
+       "C"
+      ]
+     },
+     "target": [
+      "A",
+      "B",
+      "C"
+     ]
+    }
+   }
+  },
+  {
+   "id": "W2-EXP-10A-2",
+   "split": "dev",
+   "kind": "positive",
+   "source": "W2-EXP-10A-2",
+   "composition": "ask_angle_line_plane",
+   "novelty": "existing_capability_control",
+   "text": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a. SA vuông góc với (ABC). SA = a. Tính góc giữa AB và (ABC).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a."
+      ],
+      "solid": "S.ABC",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C"
+      ],
+      "shape": "equilateral_triangle",
+      "value": "a"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABC)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = a."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "a"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa AB và (ABC)."
+      ],
+      "quantity": "angle",
+      "points_a": [
+       "A",
+       "B"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "geometry": {
+    "points": {
+     "A": [
+      0,
+      0,
+      0
+     ],
+     "B": [
+      1,
+      0,
+      0
+     ],
+     "C": [
+      0,
+      1,
+      0
+     ],
+     "S": [
+      0,
+      0,
+      1
+     ]
+    },
+    "gram": [
+     [
+      1,
+      "1/2",
+      0
+     ],
+     [
+      "1/2",
+      1,
+      0
+     ],
+     [
+      0,
+      0,
+      1
+     ]
+    ]
+   },
+   "goals": {
+    "q": {
+     "measure": "cos2_line_plane",
+     "point": "A",
+     "partner": "B",
+     "target": [
+      "A",
+      "B",
+      "C"
+     ]
+    }
+   }
+  },
+  {
+   "id": "dev-neg-two-partners",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD)."
+      ],
+      "quantity": "angle",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_a": [
+       "A",
+       "B"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ],
+   "note": ""
+  },
+  {
+   "id": "dev-neg-partner-in-target",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD)."
+      ],
+      "quantity": "angle",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_b": [
+       "A",
+       "A",
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ],
+   "note": ""
+  },
+  {
+   "id": "dev-neg-centroid-of-four",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD)."
+      ],
+      "quantity": "angle",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "A",
+       "B",
+       "C"
+      ],
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ],
+   "note": ""
+  },
+  {
+   "id": "dev-neg-negated",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD)."
+      ],
+      "quantity": "angle",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "negated": true
+     }
+    ]
+   },
+   "expected_codes": [
+    "NEGATED_CLAUSE"
+   ],
+   "note": ""
+  },
+  {
+   "id": "dev-neg-condition",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "condition",
+      "quotes": [
+       "Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD)."
+      ],
+      "quantity": "angle",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "CONDITIONAL_CLAUSE"
+   ],
+   "note": ""
+  },
+  {
+   "id": "dev-neg-wrong-descriptor",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD)."
+      ],
+      "quantity": "angle",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "C"
+      ],
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "note": ""
+  },
+  {
+   "id": "dev-neg-wrong-target",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD)."
+      ],
+      "quantity": "angle",
+      "point_kind": "centroid",
+      "points": [
+       "S",
+       "B",
+       "C"
+      ],
+      "points_a": [
+       "A"
+      ],
+      "points_b": [
+       "S",
+       "B",
+       "C"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "note": ""
+  },
+  {
+   "id": "W2-EXP-13A",
+   "split": "dev",
+   "kind": "negative",
+   "source": "W2-EXP-13A",
+   "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. Tính khoảng cách từ A đến (SAD).",
+   "payload": {
+    "facts": [
+     {
+      "id": "f1",
+      "kind": "solid",
+      "role": "premise",
+      "quotes": [
+       "Cho hình chóp S.ABCD."
+      ],
+      "solid": "S.ABCD",
+      "solid_type": "pyramid"
+     },
+     {
+      "id": "f2",
+      "kind": "polygon_shape",
+      "role": "premise",
+      "quotes": [
+       "Đáy ABCD là hình vuông cạnh 2."
+      ],
+      "points": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "shape": "square",
+      "value": "2"
+     },
+     {
+      "id": "f3",
+      "kind": "perpendicular",
+      "role": "premise",
+      "quotes": [
+       "SA vuông góc với (ABCD)."
+      ],
+      "points_a": [
+       "S",
+       "A"
+      ],
+      "points_b": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ]
+     },
+     {
+      "id": "f4",
+      "kind": "length",
+      "role": "premise",
+      "quotes": [
+       "SA = 3."
+      ],
+      "points": [
+       "S",
+       "A"
+      ],
+      "measure": "segment",
+      "value": "3"
+     },
+     {
+      "id": "q",
+      "kind": "question",
+      "role": "question",
+      "quotes": [
+       "Tính khoảng cách từ A đến (SAD)."
+      ],
+      "quantity": "distance",
+      "point_kind": "midpoint",
+      "points": [
+       "S",
+       "B"
+      ],
+      "points_b": [
+       "S",
+       "A",
+       "D"
+      ]
+     }
+    ]
+   },
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "note": "descriptor fact attached to a quote that names a point, not a description"
+  }
+ ]
+}

@@ -1,0 +1,47 @@
+{
+ "schema": "w2-exp-audit/1",
+ "source": {
+  "document": "ALGOSIM_GEMINI_WAVE2_RESEARCH_HANDOFF_20261019.md (Gemini 4 Argon report + owner's correction notes)",
+  "provenance": "pasted into the Claude session by the owner on 2026-10-19; the stated path D:\\Documents\\AlgoSim-Research\\ does not exist on disk (NOT_RECOVERABLE as a file); not committed (not a GOLD, not locked)",
+  "status_vocabulary": ["PROPOSED", "MATH_REVIEWED", "MATH_CORRECTED", "EXECUTED_PASS", "EXECUTED_REFUSED_OTHER_CODE", "EXECUTED_FAIL", "NOT_EXECUTED_OUT_OF_SCOPE", "NOT_EXECUTED_EXISTING_CAPABILITY"],
+  "rule": "the report's SERVED/REFUSED columns are EXPECTED outcomes, never evidence of execution; execution states come only from w2-exp-execution.json and the dev arm of measure_goal_directed_composition.py"
+ },
+ "vector_count": {
+  "report_claim": 22,
+  "report_claim_status": "REJECTED — the report's own lists give 12 positive ids + 12 negative ids + 2 property families",
+  "recount_by_row_id": {"positive_ids": ["W2-EXP-01", "W2-EXP-02", "W2-EXP-03", "W2-EXP-04", "W2-EXP-05", "W2-EXP-06A", "W2-EXP-06B", "W2-EXP-07", "W2-EXP-08", "W2-EXP-10A-2", "W2-EXP-12A", "W2-EXP-15"],
+                        "negative_ids": ["W2-EXP-09A", "W2-EXP-09B", "W2-EXP-10A-1", "W2-EXP-10B", "W2-EXP-11A", "W2-EXP-11B", "W2-EXP-11C", "W2-EXP-12B", "W2-EXP-13A", "W2-EXP-13B", "W2-EXP-14A", "W2-EXP-14B"],
+                        "property_families": ["W2-EXP-16 on W2-EXP-01", "W2-EXP-16 on W2-EXP-15"]},
+  "units": {"positive_ids": 12, "negative_ids": 12, "property_families": 2, "total_by_this_count": 26,
+            "positive_goals": 16, "positive_goals_note": "03 has 2 goals, 06A 2, 15 3, the other 9 ids 1 each"}
+ },
+ "experiments": [
+  {"id": "W2-EXP-01", "scope": "WAVE_2A", "math": "MATH_REVIEWED", "recomputed": "chart G=[[1,1/2,0],[1/2,1,0],[0,0,1]]·a²; AB=(1,0,0), AG=(1/3,1/3,1/3): ⟨AB,AB⟩=1, ⟨AG,AG⟩=4/9, ⟨AB,AG⟩=1/2 ⇒ det=7/36 ⇒ S²=7/144 a⁴", "expected": {"SERVE": "a²√7/12"}, "executed_in": "corpus-dev.json#W2-EXP-01"},
+  {"id": "W2-EXP-02", "scope": "WAVE_2A", "math": "MATH_REVIEWED", "recomputed": "A(0,0,0), M=mid SC=(3/4,3/4,1/2): sin²=(1/4)/(11/8)=2/11 ⇒ cos²=9/11 (cos=3√11/11 is NOT what the engine returns)", "expected": {"SERVE": "cos²=9/11"},
+   "executed_in": ["corpus-dev.json#W2-EXP-02 (report wording: two values 'a' in one premise sentence)", "corpus-dev.json#W2-EXP-02-split (one value per sentence)"],
+   "finding": "the report's 'standard' wording 'cạnh đáy bằng a và chiều cao bằng a' is refused by the source gate (AMBIGUOUS_VALUE_QUOTE: a value quote must hold exactly ONE number) — a premise-grounding limit, independent of composition"},
+  {"id": "W2-EXP-03", "scope": "WAVE_2B (divide_segment)", "math": "MATH_REVIEWED", "recomputed": "M=(0,0,1), N=(1,1/2,0), D=(0,1,0) Euclid (a=1): MN²=1+1/4+1=9/4; DN=(1,-1/2,0) |DN|²=5/4, DM=(0,-1,1) |DM|²=2, DM·DN=1/2 ⇒ d²=2−(1/4)/(5/4)=9/5 (report correction 29/20→9/5 confirmed)", "expected": {"SERVE": ["3a/2", "3a√5/5"]}, "state": "NOT_EXECUTED_OUT_OF_SCOPE", "why": "TypedFact has no ratio point kind; divide_segment is Wave 2B"},
+  {"id": "W2-EXP-04", "scope": "EXISTING (midpoint → distance to a declared intersection line)", "math": "MATH_REVIEWED", "recomputed": "d(A,BC)²=(AB²·AC²)/BC²=3/4, MA²=1/4, MA ⊥ base ⇒ d(M,BC)²=1 ⇒ a", "expected": {"SERVE": "a"}, "state": "NOT_EXECUTED_EXISTING_CAPABILITY", "why": "composition already shipped before this run (result-line binding); covered by the 174-row regression"},
+  {"id": "W2-EXP-05", "scope": "WAVE_2C (sub-solid)", "math": "MATH_REVIEWED", "recomputed": "S_ABC=a², d(M,(ABC))=3a/2 ⇒ V=a³/2", "expected": {"SERVE": "a³/2"}, "state": "NOT_EXECUTED_OUT_OF_SCOPE"},
+  {"id": "W2-EXP-06A", "scope": "WAVE_2B (right trapezoid base)", "math": "MATH_REVIEWED", "recomputed": "S=(2+1)/2=3/2 ⇒ V=1/2 a³; SC=(1,1,-1), (SAD): x=0 ⇒ sin²=1/3, cos²=2/3", "expected": {"SERVE": ["a³/2", "cos²=2/3"]}, "state": "NOT_EXECUTED_OUT_OF_SCOPE"},
+  {"id": "W2-EXP-06B", "scope": "WAVE_2B (oblique prism)", "math": "MATH_REVIEWED", "recomputed": "AH²=3/4, A'H²=1−3/4=1/4 ⇒ V=(√3/4)(1/2)=√3/8 a³", "expected": {"SERVE": "a³√3/8"}, "state": "NOT_EXECUTED_OUT_OF_SCOPE"},
+  {"id": "W2-EXP-07", "scope": "WAVE_2B (plane through a point ⊥ a line)", "math": "MATH_REVIEWED", "recomputed": "M=(1/2,0,1/2), N=(1/3,1/3,2/3): |AM|²=1/2, |AN|²=2/3, AM·AN=1/2 ⇒ det=1/12 ⇒ S²=1/48 (report correction 1/24→1/48 confirmed)", "expected": {"SERVE": "a²√3/12"}, "state": "NOT_EXECUTED_OUT_OF_SCOPE", "compatibility": "PLANE_NOT_UNIQUE for a plane ⊥ a PLANE stays (test_plane_perpendicular_to_a_plane_stays_not_unique)"},
+  {"id": "W2-EXP-08", "scope": "EXISTING (two-line plane section)", "math": "MATH_REVIEWED", "recomputed": "square of side a/2 ⇒ a²/4", "expected": {"SERVE": "a²/4"}, "state": "NOT_EXECUTED_EXISTING_CAPABILITY", "why": "run two-line-plane-section corpora in the 174-row regression"},
+  {"id": "W2-EXP-09A", "scope": "EXISTING", "math": "MATH_REVIEWED", "recomputed": "A, S, M collinear (M ∈ SA)", "expected": {"REFUSE": "COLLINEAR_POINTS"}, "executed_in": "w2-exp-execution.json"},
+  {"id": "W2-EXP-09B", "scope": "EXISTING", "math": "MATH_REVIEWED", "recomputed": "plane z = h meets the pyramid only at S", "expected": {"REFUSE": "PLANE_TOUCHES_VERTEX"}, "executed_in": "w2-exp-execution.json"},
+  {"id": "W2-EXP-10A-1", "scope": "WAVE_2A (ask_angle_lines degenerate)", "math": "MATH_REVIEWED", "recomputed": "line through A, A has no direction", "expected": {"REFUSE": ["DEGENERATE_POINTS", "DEGENERATE_LINE"]}, "executed_in": "w2-exp-execution.json"},
+  {"id": "W2-EXP-10A-2", "scope": "EXISTING (named line–plane angle)", "math": "MATH_REVIEWED", "recomputed": "AB ⊂ (ABC) ⇒ sin²=0 ⇒ cos²=1", "expected": {"SERVE": "cos²=1"}, "executed_in": "corpus-dev.json#W2-EXP-10A-2"},
+  {"id": "W2-EXP-10B", "scope": "EXISTING", "math": "MATH_REVIEWED", "recomputed": "SA and BC skew", "expected": {"REFUSE": "PARALLEL_NO_INTERSECTION"}, "executed_in": "w2-exp-execution.json", "finding": "report code wrong: the kernel refuses skew lines with the more specific SKEW_NO_INTERSECTION"},
+  {"id": "W2-EXP-11A", "scope": "EXISTING", "math": "MATH_CORRECTED", "recomputed": "AB·AC=(1+16−4)/2=13/2 ⇒ det Gram(AB,AC)=1·16−169/4=−105/4 a⁴ (report: −45/4, wrong; owner correction confirmed)", "expected": {"REFUSE": "INCONSISTENT_FACTS"}, "executed_in": "w2-exp-execution.json (numeric variant AB=1, BC=2, AC=4)"},
+  {"id": "W2-EXP-11B", "scope": "EXISTING", "math": "MATH_REVIEWED", "recomputed": "h²=SA²−OA²=1/4−1/2=−1/4 (report, side a, SA=a/2); executed as side 2, SA=1: h²=1−2=−1", "expected": {"REFUSE": "INCONSISTENT_FACTS"}, "executed_in": "w2-exp-execution.json"},
+  {"id": "W2-EXP-11C", "scope": "EXISTING", "math": "MATH_REVIEWED", "recomputed": "no length fixes the height", "expected": {"REFUSE": "MISSING_DIMENSION"}, "executed_in": "w2-exp-execution.json"},
+  {"id": "W2-EXP-12A", "scope": "WAVE_2C (ask_distance_line_plane)", "math": "MATH_REVIEWED", "recomputed": "BC ∥ (SAD) ⇒ d=d(B,(SAD))=AB=a", "expected": {"SERVE_AFTER_2C": "a", "NOW": "REFUSE UNSUPPORTED_CAPABILITY"}, "executed_in": "w2-exp-execution.json (current refusal)"},
+  {"id": "W2-EXP-12B", "scope": "WAVE_2C", "math": "MATH_REVIEWED", "recomputed": "SB ∩ (ABCD) = {B}: set distance 0; a point-plane reduction would answer d(S,(ABCD)) = 3 — must be guarded by parallel_line_plane", "expected": {"NOW": "REFUSE UNSUPPORTED_CAPABILITY"}, "executed_in": "w2-exp-execution.json (current refusal)"},
+  {"id": "W2-EXP-13A", "scope": "WAVE_2A (described-operand provenance)", "math": "N/A", "expected": {"REFUSE": "SOURCE_OBJECT_MISMATCH"}, "executed_in": "corpus-dev.json#W2-EXP-13A"},
+  {"id": "W2-EXP-13B", "scope": "EXISTING", "math": "N/A", "expected": {"REFUSE": "REQUEST_NOT_ANSWERED"}, "executed_in": "w2-exp-execution.json", "finding": "refused with NOT_ASKED_IN_SOURCE for this encoding (one question fact quoting a sentence that asks two things)"},
+  {"id": "W2-EXP-14A", "scope": "EXISTING (Wave 1 certificates)", "math": "MATH_REVIEWED", "recomputed": "⟨SB, AB⟩_G = a² ≠ 0", "expected": {"REFUSE": "NON_ZERO_INNER_PRODUCT_U"}, "executed_in": "w2-exp-execution.json", "finding": "code NON_ZERO_INNER_PRODUCT_U does not exist in certificates.py; the moved altitude certificate is rejected as TAMPERED_WITNESS_FOOT"},
+  {"id": "W2-EXP-14B", "scope": "EXISTING (Wave 1 planner)", "math": "N/A", "expected": {"REFUSE": "DEPENDENCY_CYCLE"}, "executed_in": "w2-exp-execution.json"},
+  {"id": "W2-EXP-15", "scope": "WAVE_2A (ask_angle_lines on a non-orthogonal metric + centroid→distance)", "math": "MATH_REVIEWED", "recomputed": "G=[[9,−15/2,0],[−15/2,25,0],[0,0,4]]: SB=(1,0,−1), AC=(0,1,0): ⟨SB,AC⟩=−15/2, |SB|²=13, |AC|²=25 ⇒ cos²=9/52; V=(1/3)(15√3/4)(2)=5√3/2 ⇒ V²=75/4; d(G,(ABC))=2/3 ⇒ 4/9", "expected": {"SERVE": ["cos²=9/52", "5√3/2", "2/3"]}, "executed_in": "corpus-dev.json#W2-EXP-15 (numeric a=1)"},
+  {"id": "W2-EXP-16", "scope": "WAVE_2A property family", "math": "MATH_REVIEWED", "recomputed": "cos² invariant (degree 0); lengths/areas/volumes scale with degree 1/2/3; label renaming and fact order invariant", "expected": {"PROPERTY": "invariance"}, "executed_in": "backend/tests/geometry/test_goal_directed_function_composition.py::test_compositions_are_invariant — 8 compositions × 4 transforms (fact order, descriptor order, renaming, ×2 scaling) on the square-pyramid family, NOT on W2-EXP-01/15 themselves (deviation from the report's family; recorded)"}
+ ]
+}

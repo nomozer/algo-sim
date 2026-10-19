@@ -1,0 +1,67 @@
+{
+ "schema": "holdout-lock/1",
+ "run": "goal-directed-function-composition",
+ "locked_at_utc": "2026-10-19T12:14:26Z",
+ "branch_head_at_lock": "ce5b25750afba6ccd574165c3d73648ea0746b7a",
+ "product_code_at_lock": "the uncommitted working tree, committed unchanged right after the lock as a45a043f5c2831ce3f991f3d990041e7a487c971",
+ "corpus_holdout_sha256": "b0ce86a2865e7852a737ebdf879242538a9b95e1de019cb2506fa63bc444f419",
+ "oracle_sha256": "0a686e320653dc90febdebfd50e3ff552f87e820763bb1f99e84387e1936c2b6",
+ "build_corpus_sha256": "d6013372c22a33c55f45992aef897daf9afe23e735e81c4b7166e2a5f9b13061",
+ "cases": 24,
+ "positives": 16,
+ "negatives": 8,
+ "goals": 16,
+ "oracle_expected": {
+  "ho-cube-centroid-angle-plane": {
+   "q": "2/3"
+  },
+  "ho-cube-centroid-dist-line": {
+   "q": "4/9"
+  },
+  "ho-cube-midpoint-angle-lines": {
+   "q": "1/18"
+  },
+  "ho-cuboid-centroid-dist-plane": {
+   "q": "1"
+  },
+  "ho-cuboid-named-angle-lines": {
+   "q": "36/145"
+  },
+  "ho-prism-centroid-area": {
+   "q": "28/3"
+  },
+  "ho-prism-midpoint-angle-plane": {
+   "q": "3/4"
+  },
+  "ho-regpyr-centroid-angle-lines-reversed": {
+   "q": "9/41"
+  },
+  "ho-regpyr-centroid-length": {
+   "q": "41/9"
+  },
+  "ho-rightb-centroid-angle-plane": {
+   "q": "25/169"
+  },
+  "ho-rightb-midpoint-area-control": {
+   "q": "25/4"
+  },
+  "ho-t120-midpoint-angle-lines": {
+   "q": "7/20"
+  },
+  "ho-t120-named-angle-lines": {
+   "q": "25/116"
+  },
+  "ho-tetra-centroid-angle-plane": {
+   "q": "0"
+  },
+  "ho-tetra-centroid-dist-plane": {
+   "q": "8/27"
+  },
+  "ho-tetra-midpoint-angle-lines": {
+   "q": "1/12"
+  }
+ },
+ "pre_lock_checks": "authoring hygiene only: TypedFact schema validation and quote ⊂ text (no planner, no route, no engine run on these cases)",
+ "rule": "Locked before any evaluation of these cases. No planner/registry/engine/grammar change after this lock is justified by holdout outcomes; a holdout failure is reported as measured.",
+ "provenance": "AGENT_AUTHORED_WITH_INDEPENDENT_ORACLE_NOT_HUMAN_VALIDATED"
+}
