@@ -1,5 +1,20 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-RESEARCH-HYBRID-COMPOSITION-WORDING-AND-OPERAND-GAPS
+
+- **status:** OPEN (run `goal-directed-function-composition`, branch `research/hybrid-wave2a-function-composition`, not on
+  `main`). Composition of Registry functions by typed goal slots is measured (locked holdout 16/16); these remain refused
+  with a code, never guessed:
+- a question with TWO described points (no structured slot for an unnamed second operand; a schema change ⇒ re-measure);
+- "khoảng cách … đến (điểm/đỉnh) X" read as a length, and the described point named second (NLU gold D09, L19);
+- anaphora "hai đường thẳng đó/này" (D12, L29); two equal values in one premise sentence (`AMBIGUOUS_VALUE_QUOTE`,
+  W2-EXP-02 as worded);
+- the v3 research schema grew to 40 variants (~29.7k characters): provider acceptance NOT_MEASURED before any live run;
+- `_EffectResolver.distance` still names `orthogonal_projection_line` when writing the foot certificate (pre-existing
+  coupling, outside the search).
+- Out of Wave 2A scope (PROPOSED 2B/2C): ratio points, plane through a point ⊥ a line, line–plane distance, sub-solids,
+  right-trapezoid base, oblique prism.
+
 ### ISSUE-ARCH-HYBRID-FRONTEND-OFFLINE-INTEGRATION
 
 - **status:** OPEN — F3/F4/F5/F6 are not product-E2E complete. Blocker before GO HYBRID; not a Scene3D integration blocker while Hybrid stays locked and the current product cannot deliver these observations.

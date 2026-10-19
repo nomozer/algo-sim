@@ -31,10 +31,11 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 
 ## 2. Repository state hiện tại
 
-Cập nhật 2026-10-18 — mới hơn khối "LOCAL override" ở đầu file; tường thuật cũ ở đó và §5–§6 có thể lỗi thời (việc mở: `OPEN_ISSUES.md`; việc kế tiếp: `ROADMAP.md` §0).
+Cập nhật 2026-10-19 — mới hơn khối "LOCAL override" ở đầu file; tường thuật cũ ở đó và §5–§6 có thể lỗi thời (việc mở: `OPEN_ISSUES.md`; việc kế tiếp: `ROADMAP.md` §0).
 ```text
-MAIN = origin/main = 551a354174e1c213f3ad2bf03d7574ebf75f4d85 (fast-forward research/scene3d-plane-grid-camera từ 90fe44df, push không force; owner HUMAN_VISUAL_REVIEW_PASS + GO_MAIN_SCENE3D; hồ sơ local untracked runs/scene3d-go-main/handoff.md)
-PRODUCT_STATE = product cb1f4954 · T3 có thẩm quyền tại candidate 14c26f3f FULL_PRODUCT_GATE_PASS (backend 10828, frontend 1133) · freeze 111 file 045a8a62… · sau candidate chỉ đổi docs · CACHE_VERSION 125 · DEFAULT_MODE LLM_ONLY · response contract flat
+MAIN = origin/main = ce5b25750afba6ccd574165c3d73648ea0746b7a (Wave 1 exact certificates + dependency planner, GO_MAIN_HYBRID_WAVE1, push không force)
+LOCAL_WAVE2A = research/hybrid-wave2a-function-composition · product a45a043f · candidate 594870fc (112 file cddd83b8…) · goal-directed composition theo slot có kiểu · holdout khoá 16/16 · chờ owner GO MAIN (runs/goal-directed-function-composition/handoff.md)
+PRODUCT_STATE = CACHE_VERSION 127 · DEFAULT_MODE LLM_ONLY · response contract flat · Hybrid product NO-GO · route D versions geometry-functions/7 · planner/8 · engine/6 (chỉ trên nhánh 2A)
 SCENE3D = M2 #7, F1, F2 xong; P0–P3 owner duyệt hình trên bộ cảnh mẫu (chỉ phạm vi đó); "chọn kết quả" trên canvas chưa kiểm; KHÔNG Product E2E PASS
 HYBRID = product enablement NO-GO · không frontend caller /api/preview/hybrid · không tích hợp provider live · không GO LIVE
 OPEN = F3–F6 + thiếu fixture insufficient_specification+SOURCE · SOURCE-LENGTH-READER-VECTOR-ZERO · CACHE-HISTORICAL-MODE-UNKNOWN · SCENE3D-ALTITUDE-CERTIFICATE-MISSING · offline Product E2E chưa đạt (OPEN_ISSUES.md)

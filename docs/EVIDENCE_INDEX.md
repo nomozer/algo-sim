@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = GOAL_DIRECTED_FUNCTION_COMPOSITION
+
+REPORT = docs/evaluation/geometry/runs/goal-directed-function-composition/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/goal-directed-function-composition/
+CLASSIFICATION = Hybrid Wave 2A goal-directed function composition (local, not integrated): centroid producer contract + angle goal contracts + route-B-only ask_angle_lines composed by typed slots; locked holdout 16/16 VERIFIED against an independent oracle (13/13 novel-combination problems, 8 signatures), 8/8 correct refusals, 0/24 false positives; rule-based and no-composition 2/16, pre-run main 1/16; supplementary 174-row depth ablation 70/61/41; Adapter /2 41/41 (declared identity pairs only); CACHE_VERSION 127 kept, LLM_ONLY default, flat surface unchanged, Hybrid product NO-GO
+CODE_COMMIT = a45a043f (product); holdout lock 50ac258a; candidate freeze 594870fc (measured_system tree_hash cddd83b85df3e38a090882c13621b4d41ece0d2bee635c680db476a55e69cec0 across 112 files); evaluation 5f2e8390
+VERIFICATION = docs/evaluation/geometry/runs/goal-directed-function-composition/handoff.md (T3 + independent review receipts)
+MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
+CORRECTS = CONTRACT_DRIVEN_GOAL_COMPOSITION and INDEPENDENT_NLU_EXTRACTION_EVALUATION baselines by DECLARED re-measured deltas only (results/historical-regression-delta.json: 6/174 rows, dev05 in 4 PILOT cells; results/historical-gold-delta.json: D09, D12, L19, L29 refusal codes); no frozen file edited
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SEGMENT_WITNESS_CACHE_INVALIDATION
 
 REPORT = docs/evaluation/geometry/runs/segment-witness-cache-invalidation/report.md

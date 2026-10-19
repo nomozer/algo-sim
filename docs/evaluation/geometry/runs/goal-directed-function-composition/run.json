@@ -1,0 +1,39 @@
+{
+ "schema": "run/1",
+ "run": "goal-directed-function-composition",
+ "task_code": "HYBRID_WAVE2A",
+ "date": "2026-10-19",
+ "owner_authorization": "GO_HYBRID_WAVE2A_LOCAL_IMPLEMENTATION",
+ "branch": "research/hybrid-wave2a-function-composition",
+ "base": {"main": "ce5b25750afba6ccd574165c3d73648ea0746b7a", "origin_main": "ce5b25750afba6ccd574165c3d73648ea0746b7a"},
+ "commits": {
+  "product": "a45a043f5c2831ce3f991f3d990041e7a487c971",
+  "holdout_lock": "50ac258a3cc8fdb7d3744ec85300bff55a5ad0a6",
+  "candidate_freeze": "594870fcf528def44fa9edc5ee841d08e0f3d6b6",
+  "evaluation": "5f2e839017c0ab26ebff7c1b8b5ac9a565871489"
+ },
+ "measured_system": {"so_file": 112, "tree_hash": "cddd83b85df3e38a090882c13621b4d41ece0d2bee635c680db476a55e69cec0"},
+ "versions": {"registry": "geometry-functions/7", "planner": "geometry-fact-planner/8", "engine": "geometry-function-engine/6",
+              "adapter": "hybrid-preview-adapter/2", "envelope": "hybrid-route-d-preview/1"},
+ "cache_version": "127",
+ "cache_decision": "NO_BUMP — default /api/analyze imports no changed module at module level; preview is not cached",
+ "default_mode": "LLM_ONLY",
+ "response_contract": "flat",
+ "surfaces": {"function_declarations": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169 (unchanged)",
+              "route_a": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25 (unchanged)",
+              "flat": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a (unchanged)",
+              "v3": "90bf8f039df830062e068adcf1d243643c8ebebfde5b4a5cf9ec340078ea7aab -> 4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f (research contract)"},
+ "model_calls": 0,
+ "hybrid_product_enablement": "NO-GO",
+ "inputs": {"corpus-dev.json": "5e3a35d81e47aba1d764e3e2613087add36196e9d77bd07a12da8216cf1d3cbd",
+            "corpus-holdout.json": "b0ce86a2865e7852a737ebdf879242538a9b95e1de019cb2506fa63bc444f419",
+            "oracle.py": "0a686e320653dc90febdebfd50e3ff552f87e820763bb1f99e84387e1936c2b6",
+            "hash_rule": "sha256 of bytes with CRLF normalized to LF"},
+ "temporary_worktrees": [
+  {"path": ".superpowers/worktrees/tmp-composition-base", "head": "ce5b2575", "use": "RED replay + pre-composition-main arm", "removed": true},
+  {"path": ".superpowers/worktrees/tmp-composition-freeze", "head": "50ac258a", "use": "clean candidate freeze", "removed": true}
+ ],
+ "external_reference": {"document": "ALGOSIM_GEMINI_WAVE2_RESEARCH_HANDOFF_20261019.md",
+                        "state": "pasted into the session; stated path D:\\Documents\\AlgoSim-Research\\ does not exist (NOT_RECOVERABLE as a file); audited in w2-exp-audit.json"},
+ "verdict_at_report": "PENDING_T3_AND_INDEPENDENT_REVIEW"
+}

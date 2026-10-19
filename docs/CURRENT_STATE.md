@@ -1,6 +1,22 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL — Hybrid Architecture Wave 1 (Exact Certificates + Dependency-Aware Planner), 2026-10-19 (not integrated)
+## LOCAL — Hybrid Wave 2A: goal-directed function composition, 2026-10-19 (not integrated)
+
+Branch `research/hybrid-wave2a-function-composition` from `main` = `origin/main` = `ce5b2575` (Wave 1 integrated);
+product `a45a043f`, holdout lock `50ac258a`, candidate freeze `594870fc` (112 measured files /
+`cddd83b85df3e38a090882c13621b4d41ece0d2bee635c680db476a55e69cec0`). The planner composes Registry functions by typed goal
+slots: `centroid` producer contract, angle goal contracts, route-B-only primitive `ask_angle_lines`; versions
+`geometry-functions/7` · `geometry-fact-planner/8` · `geometry-function-engine/6`. Locked holdout 16/16 VERIFIED against an
+independent oracle (13/13 novel combinations), 8/8 correct refusals, 0 false positives; rule-based / no-composition 2/16.
+Cache **127** (no bump: the default analyze path imports no changed module), `LLM_ONLY`, response `flat` (surface
+unchanged), Adapter `/2` 41/41, Hybrid product **NO-GO**, live calls **0**. Receipts:
+[`goal-directed-function-composition/report.md`](evaluation/geometry/runs/goal-directed-function-composition/report.md),
+[`handoff.md`](evaluation/geometry/runs/goal-directed-function-composition/handoff.md).
+
+## INTEGRATED ON `main` (`ce5b2575`) — Hybrid Architecture Wave 1 (Exact Certificates + Dependency-Aware Planner), 2026-10-19
+
+Fast-forwarded and pushed `main` = `origin/main` = `ce5b2575` (owner `GO_MAIN_HYBRID_WAVE1`, 2026-10-19); the narrative below
+was written before integration.
 
 Branch `research/hybrid-architecture-wave1-exact-certificates-planner` from `main` = `origin/main` = `f0560449`;
 product `fd310cd9` (Wave 1B `681e0473`, Wave 1A `29a7b8c8`, initial Wave 1 `222cd541`; previous product `aa458cc3`),

@@ -8,6 +8,12 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-19, `goal-directed-function-composition` (Hybrid Wave 2A, local branch `research/hybrid-wave2a-function-composition`
+from `main` `ce5b2575`):** goal-directed composition of Registry functions by typed slots (product `a45a043f`, candidate
+`594870fc`). `CANONICAL_NEXT_ACTION` = owner GO MAIN review on the receipts in
+`evaluation/geometry/runs/goal-directed-function-composition/handoff.md`; Wave 2B is not opened before that. Wave 1 is
+integrated (`GO_MAIN_HYBRID_WAVE1`, `ce5b2575`); the entries below are historical.
+
 **2026-10-19, `segment-witness-cache-invalidation` (same branch, corrects Wave 1):** `CACHE_VERSION = 127` (products
 `2635cbd6` · `008918cb`) so the Wave 1 segment witness reaches previously cached problems, prism lateral edges included. `CANONICAL_NEXT_ACTION` = owner decision
 `GO_MAIN_HYBRID_WAVE1` on the receipts in `evaluation/geometry/runs/segment-witness-cache-invalidation/handoff.md`; Wave 2
