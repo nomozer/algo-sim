@@ -38,98 +38,17 @@ def _gan_nhan_chung_hinh_chieu(canh: dict[str, Any], spec: Any, mem: dict[str, A
         o["perpendicular_witness"] = w
 
 
-def _gan_nhan_chung_duong_cao_chinh_xac(canh: dict[str, Any], chart_metric: Any = None) -> None:
-    """Gắn chứng chỉ vuông góc chính xác (`perpendicular_witness`) theo hệ đo Gram cho các đoạn thẳng
-    là đường cao hoặc cạnh bên vuông góc với mặt đáy (POC-2, GAP-D1).
-    Điều kiện:
-      v_seg = P_from - P_foot (với foot nằm trên đáy z=0 hoặc vertex đáy)
-      u1, u2 là hai cạnh đáy xuất phát từ chân đường cao (nếu foot là đỉnh đáy) hoặc hai cạnh đáy
-      dot_G(v_seg, u1) == 0 và dot_G(v_seg, u2) == 0
-      norm_G(v_seg)^2 > 0 và det Gram_G(u1, u2) > 0
-    Nếu thoả mãn, gán `perpendicular_witness` vào segment3."""
-    objects = canh.get("objects") or []
-    if chart_metric is None:
-        g_mat = [[Fraction(1 if i == j else 0) for j in range(3)] for i in range(3)]
-    elif hasattr(chart_metric, "g"):
-        g_mat = [[Fraction(str(x)) for x in row] for row in chart_metric.g]
-    elif isinstance(chart_metric, (list, tuple)):
-        g_mat = [[Fraction(str(x)) for x in row] for row in chart_metric]
-    else:
-        g_mat = [[Fraction(1 if i == j else 0) for j in range(3)] for i in range(3)]
+def _gan_nhan_chung_duong_cao_chinh_xac(
+    canh: dict[str, Any],
+    chart_metric: Any = None,
+    *,
+    trace: list[dict[str, Any]] | None = None,
+) -> None:
+    """Gắn chứng chỉ vuông góc chính xác (`perpendicular_witness`) theo hệ đo Gram đối xứng xác định dương (SPD)
+    và nguồn gốc dựng hình cho các đoạn thẳng vuông góc với mặt đáy (`certificates.py`)."""
+    from app.simulation.geometry_functions.certificates import attach_scene_perpendicular_certificates
 
-    points_by_id: dict[str, list[Fraction]] = {}
-    for o in objects:
-        if isinstance(o, dict) and o.get("type") == "point3" and isinstance(o.get("xyz"), list):
-            points_by_id[o["id"]] = [Fraction(str(x)) for x in o["xyz"]]
-
-    base_polys = [
-        o
-        for o in objects
-        if isinstance(o, dict)
-        and o.get("type") == "polygon3"
-        and "CONSTRUCT_BASE" in (o.get("formation_roles") or [])
-    ]
-    if not base_polys:
-        return
-
-    base = base_polys[0]
-    base_vids = list(base.get("vertex_ids") or [])
-    base_pts = [points_by_id[vid] for vid in base_vids if vid in points_by_id]
-    if len(base_pts) < 3:
-        return
-
-    segments = [o for o in objects if isinstance(o, dict) and o.get("type") == "segment3"]
-
-    def _gram_dot(u: list[Fraction], v: list[Fraction]) -> Fraction:
-        return sum(u[i] * g_mat[i][j] * v[j] for i in range(3) for j in range(3))
-
-    def _frac_sub(a: list[Fraction], b: list[Fraction]) -> list[Fraction]:
-        return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
-
-    for seg in segments:
-        if seg.get("perpendicular_witness") is not None:
-            continue
-        ep_ids = seg.get("endpoint_ids") or []
-        if len(ep_ids) != 2 or ep_ids[0] not in points_by_id or ep_ids[1] not in points_by_id:
-            continue
-        p0_id, p1_id = ep_ids[0], ep_ids[1]
-        p0_in_base = p0_id in base_vids or points_by_id[p0_id][2] == 0
-        p1_in_base = p1_id in base_vids or points_by_id[p1_id][2] == 0
-        if p0_in_base == p1_in_base:
-            continue
-
-        foot_id = p1_id if p1_in_base else p0_id
-        from_id = p0_id if p1_in_base else p1_id
-        foot_pt = points_by_id[foot_id]
-        from_pt = points_by_id[from_id]
-        v_seg = _frac_sub(from_pt, foot_pt)
-
-        if foot_id in base_vids and len(base_vids) >= 3:
-            idx = base_vids.index(foot_id)
-            next_pt = points_by_id[base_vids[(idx + 1) % len(base_vids)]]
-            prev_pt = points_by_id[base_vids[(idx - 1) % len(base_vids)]]
-            u1 = _frac_sub(next_pt, foot_pt)
-            u2 = _frac_sub(prev_pt, foot_pt)
-        else:
-            u1 = _frac_sub(base_pts[1], base_pts[0])
-            u2 = _frac_sub(base_pts[-1], base_pts[0])
-
-        dot1 = _gram_dot(v_seg, u1)
-        dot2 = _gram_dot(v_seg, u2)
-        norm_seg_sq = _gram_dot(v_seg, v_seg)
-        gram_det_base = _gram_dot(u1, u1) * _gram_dot(u2, u2) - (_gram_dot(u1, u2) ** 2)
-
-        if norm_seg_sq > 0 and gram_det_base > 0 and dot1 == 0 and dot2 == 0:
-            seg["perpendicular_witness"] = {
-                "from": from_id,
-                "foot": [str(x) for x in foot_pt],
-                "on": base["id"],
-                "marker": {
-                    "u": [str(x) for x in u1],
-                    "v": [str(x) for x in v_seg],
-                },
-                "certificate": "exact-gram-line-plane-orthogonality/1",
-            }
+    attach_scene_perpendicular_certificates(canh, chart_metric, trace=trace)
 
 
 def _ke_diem_dung(canh: dict[str, Any], vai: dict[str, str]) -> None:
@@ -195,7 +114,7 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
                         semantic_kind='GEOMETRY_CONSTRUCTION',learner_text=text)
             _ke_diem_dung(canh, vai)
             _gan_nhan_chung_hinh_chieu(canh, r.spec, r.exec_result.final_memory)
-            _gan_nhan_chung_duong_cao_chinh_xac(canh, r.chart_metric)
+            _gan_nhan_chung_duong_cao_chinh_xac(canh, r.chart_metric, trace=r.trace)
     except Exception as e:  # noqa: BLE001 — cảnh hỏng ⇒ từ chối có mã, không phục vụ nửa vời
         return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", f"{type(e).__name__}: {e}", trace=r.trace)
     if not canh.get("objects"):

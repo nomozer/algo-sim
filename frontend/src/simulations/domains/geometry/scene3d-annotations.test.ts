@@ -572,4 +572,33 @@ describe("nhân chứng hình chiếu (review I1)", () => {
     } as unknown as Scene3D;
     expect(projectionWitnessesAt(canhSuyBien, new Set(["A", "B", "M", "C", "sab_suy_bien", "bc", "kl"]), 0)).toEqual([]);
   });
+
+  it("không sinh trùng đoạn hình chiếu phụ từ `perpendicular_witness` gắn trên `segment3` (đã có `perp_marker` của đoạn)", () => {
+    const canh: Scene3D = {
+      free_objects: ["A", "B", "C", "S"],
+      objects: [
+        P("A", ["0", "0", "0"]),
+        P("B", ["1", "0", "0"]),
+        P("C", ["0", "1", "0"]),
+        P("S", ["0", "0", "1"]),
+        {
+          id: "day_ABC", label: "Đáy ABC", type: "polygon3", render: "surface",
+          origin: "derived", producer: "construct_polygon", depends: ["A", "B", "C"],
+          vertex_ids: ["A", "B", "C"], vertices: [["0", "0", "0"], ["1", "0", "0"], ["0", "1", "0"]],
+          formation_roles: ["CONSTRUCT_BASE"],
+        },
+        {
+          id: "canh_ben_S_A", label: "Cạnh bên SA", type: "segment3", render: "line",
+          origin: "derived", producer: "construct_segment", depends: ["S", "A"],
+          endpoint_ids: ["S", "A"], endpoints: [["0", "0", "1"], ["0", "0", "0"]],
+          perpendicular_witness: {
+            from: "S", foot: ["0", "0", "0"], on: "day_ABC",
+            marker: { u: ["1", "0", "0"], v: ["0", "0", "1"] },
+          },
+        },
+      ],
+      events: [],
+    } as unknown as Scene3D;
+    expect(projectionWitnessesAt(canh, new Set(["A", "B", "C", "S", "day_ABC", "canh_ben_S_A"]))).toEqual([]);
+  });
 });

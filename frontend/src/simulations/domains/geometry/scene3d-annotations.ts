@@ -75,7 +75,7 @@ function doanCoMat(coMat: SceneObject[]): Set<string> {
     for (const e of o.edge_ownership ?? []) {
       if (e.endpoint_ids?.length === 2) ra.add(capDiem(e.endpoint_ids[0], e.endpoint_ids[1]));
     }
-    if (o.perpendicular_witness?.from && ids.has(o.perpendicular_witness.from)) {
+    if (o.type === "point3" && o.perpendicular_witness?.from && ids.has(o.perpendicular_witness.from)) {
       ra.add(capDiem(o.id, o.perpendicular_witness.from));
     }
   }
@@ -166,7 +166,7 @@ export function projectionWitnessesAt(
 ): WitnessShown[] {
   const theoId = new Map(scene.objects.map((o) => [o.id, o]));
   const tuDiem = scene.objects.flatMap((o) => {
-    const w = present.has(o.id) ? o.perpendicular_witness : undefined;
+    const w = o.type === "point3" && present.has(o.id) ? o.perpendicular_witness : undefined;
     const tu = w ? theoId.get(w.from)?.xyz : undefined;
     return w && tu && present.has(w.from)
       ? [{ id: `perpendicular:${o.id}`, vai: "hinh_chieu" as const, from: toVec3(tu), foot: toVec3(w.foot),

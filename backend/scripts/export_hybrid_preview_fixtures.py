@@ -232,6 +232,41 @@ def export(out: Path) -> int:
     return 0
 
 
+def _strip_verified_wave1_segment_certificates(response: dict, stored_response: dict) -> dict | None:
+    """When verifying against an Adapter /2 bundle recorded before Wave 1 segment3 certificates,
+    validate every additive `segment3.perpendicular_witness` with `verify_perpendicular_witness` and
+    return a copy with only those additive fields removed so the historical `response_sha256` can be checked."""
+    from copy import deepcopy
+    from app.simulation.geometry_functions.certificates import CERTIFICATE_SCHEMA, verify_perpendicular_witness
+
+    f_scene = (response.get("envelope") or {}).get("scene3d") or {}
+    s_scene = (stored_response.get("envelope") or {}).get("scene3d") or {}
+    f_objs = f_scene.get("objects") or []
+    s_objs = {o["id"]: o for o in (s_scene.get("objects") or []) if isinstance(o, dict) and "id" in o}
+    if not f_objs or not s_objs:
+        return None
+    copy_resp = deepcopy(response)
+    copy_objs = copy_resp["envelope"]["scene3d"]["objects"]
+    stripped_any = False
+    for obj in copy_objs:
+        if not isinstance(obj, dict) or obj.get("type") != "segment3":
+            continue
+        w = obj.get("perpendicular_witness")
+        s_obj = s_objs.get(obj.get("id"))
+        if (
+            isinstance(w, dict)
+            and w.get("certificate") == CERTIFICATE_SCHEMA
+            and isinstance(s_obj, dict)
+            and "perpendicular_witness" not in s_obj
+        ):
+            ok, _ = verify_perpendicular_witness(w, f_scene, f_scene.get("chart_metric"), segment_obj=obj)
+            if not ok:
+                return None
+            obj.pop("perpendicular_witness", None)
+            stripped_any = True
+    return copy_resp if stripped_any else None
+
+
 def verify(directory: Path) -> int:
     manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
     problems = []
@@ -247,9 +282,16 @@ def verify(directory: Path) -> int:
         problems.append(f"fixture set differs: missing {sorted(set(stored) - set(fresh))}, "
                         f"new {sorted(set(fresh) - set(stored))}")
     for fid in sorted(set(fresh) & set(stored)):
-        for key in ("source", "expected", "response", "response_sha256", "covers", "injection"):
+        for key in ("source", "expected", "covers", "injection"):
             if fresh[fid][key] != stored[fid][key]:
                 problems.append(f"{fid}: {key} differs")
+        if fresh[fid]["response"] != stored[fid]["response"] or fresh[fid]["response_sha256"] != stored[fid]["response_sha256"]:
+            stripped = _strip_verified_wave1_segment_certificates(fresh[fid]["response"], stored[fid]["response"])
+            if stripped is None or stripped != stored[fid]["response"] or _sha(_canonical(stripped)) != stored[fid]["response_sha256"]:
+                if fresh[fid]["response"] != stored[fid]["response"]:
+                    problems.append(f"{fid}: response differs")
+                if fresh[fid]["response_sha256"] != stored[fid]["response_sha256"]:
+                    problems.append(f"{fid}: response_sha256 differs")
         if _leaks(_text(stored[fid]), token):
             problems.append(f"{fid}: secret material")
     producer = fixtures[0]["producer"]
