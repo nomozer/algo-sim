@@ -7,12 +7,13 @@
   "base_commit": "f0560449ec36a37afc7a769ebf965171fff283a0",
   "main": "f0560449ec36a37afc7a769ebf965171fff283a0",
   "session_b_research_commit": "4f1d1a4886ae47c452fb533f21faa883918d175d",
-  "product_commit": "681e047335595acbd091ebcbbc673075f18ca5b0",
+  "product_commit": "fd310cd96379e5c9ae37d25b73fcf00d95ebc4ff",
+  "wave1b_commit": "681e047335595acbd091ebcbbc673075f18ca5b0",
   "wave1a_commit": "29a7b8c801151da43683566fd39e8655e5bb3cc4",
   "initial_wave1_commit": "222cd541c85fb36fa72df16e49b036c218d2b453",
   "previous_product_commit": "aa458cc34e327ac5e42c675e0853870a5ad722c4",
   "previous_authoritative_candidate": "c2cf643b578ee83ddd661c6c93000985a3358da8",
-  "measured_system_sha256": "4c9181bc30e0e511b22ebb25d781d68e3947428986e2838670504350e6eaa263",
+  "measured_system_sha256": "534c726a4379700be0035752f4925d1ee5573e6d2db1718c07053f2e14ab7bfa",
   "measured_files": 112,
   "default_mode": "LLM_ONLY",
   "response_contract": "flat",
@@ -61,7 +62,7 @@
     "issue": "ISSUE-ARCH-SCENE3D-ALTITUDE-CERTIFICATE-MISSING",
     "status": "RESOLVED_ON_BRANCH",
     "module": "backend/app/simulation/geometry_functions/certificates.py",
-    "backend_tests_passed": 18,
+    "backend_tests_passed": 10,
     "frontend_tests_passed": 34,
     "served_fixtures_certified_segments": 17,
     "oblique_segments_rejected": "24/24",
@@ -78,7 +79,7 @@
     "fixture_parity": "41/41 Adapter /2 fixtures preserved"
   },
   "targeted_regression": {
-    "backend_targeted_passed": 392,
+    "backend_targeted_passed": 417,
     "frontend_vitest_passed": 1146,
     "frontend_build": "PASS"
   },

@@ -9,8 +9,9 @@
 - **Product Commits:**
   - `222cd541` — `feat(geometry): exact altitude certificates, witness preservation, and canonical planner phase ordering`
   - `29a7b8c8` — `feat(geometry): harden exact Gram-metric perpendicular certificates and tamper verifier`
-  - `681e0473` (`681e047335595acbd091ebcbbc673075f18ca5b0`) — `feat(planner): enforce deterministic dependency-aware call ordering` (**final `product_commit_sha`**)
-- **Measured System Identity:** `112` files, `tree_hash = 4c9181bc30e0e511b22ebb25d781d68e3947428986e2838670504350e6eaa263`
+  - `681e0473` — `feat(planner): enforce deterministic dependency-aware call ordering`
+  - `fd310cd9` (`fd310cd96379e5c9ae37d25b73fcf00d95ebc4ff`) — `fix(geometry): resolve wave 1 independent review findings on certificates and planner` (**final `product_commit_sha`**)
+- **Measured System Identity:** `112` files, `tree_hash = 534c726a4379700be0035752f4925d1ee5573e6d2db1718c07053f2e14ab7bfa`
 - **Safety Boundaries Unchanged:** `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 126`, `RESPONSE_CONTRACT = flat`, `ADAPTER_VERSION = "hybrid-preview-adapter/2"`, `HYBRID_PRODUCT_ENABLEMENT = NO-GO`, `ALLOW_LIVE_AI = 0` (`0` live model requests).
 
 ---
@@ -41,21 +42,22 @@ All three audited Batch B worktree targets passed pre-removal verification (`sta
    - `validate_gram_metric_spd(chart_metric)`: Enforces exact rational $3 \times 3$ symmetry ($G_{ij} == G_{ji}$) and Sylvester's positive-definiteness criterion ($m_1 > 0, m_2 > 0, \det(G) > 0$) using `fractions.Fraction`. Never falls back to Euclidean $I_3$ on malformed or singular metrics.
    - `certify_line_plane_perpendicularity(...)`: Given a candidate segment $AB$ and a target plane/polygon with vertices $P_0, P_1, \dots, P_{k-1}$:
      - Verifies exact endpoint incidence ($A$ or $B$ coincides with a plane vertex or satisfies exact coplanarity $\det(\text{Gram}(u, v, w)) = 0$ while the other endpoint is strictly off-plane with non-zero segment norm $\langle h, h \rangle_G > 0$).
-     - Selects two non-collinear in-plane basis vectors $u, v$ ($\det(\text{Gram}(u, v)) > 0$), prioritizing edges incident to the foot vertex when the foot is a polygon vertex.
+     - Selects two non-collinear in-plane basis vectors $u, v$ ($\det(\text{Gram}(u, v)) > 0$), prioritizing edges incident to the foot vertex when the foot is a polygon vertex, and scanning vertex pairs when $P_1 - P_0$ and $P_{k-1} - P_0$ are collinear.
      - Certifies perpendicularity **if and only if** both exact rational Gram inner products vanish:
        $$\langle h, u \rangle_G = 0 \quad \text{and} \quad \langle h, v \rangle_G = 0.$$
-   - `certify_deductive_line_plane_perpendicularity(...)`: Certifies deductive line-plane perpendicularity (`LINE_PERP_TWO_INTERSECTING_LINES_IN_PLANE`) only when two non-parallel in-plane lines ($\det(\text{Gram}(d_1, d_2)) > 0$) are each exactly orthogonal to the line ($\langle h, d_1 \rangle_G = 0, \langle h, d_2 \rangle_G = 0$) and the metric is SPD.
-   - `verify_perpendicular_witness(scene, seg_obj)`: Independently re-verifies any attached `segment3.perpendicular_witness` against `scene["objects"]` and `scene["chart_metric"]`, rejecting missing feet, non-incident feet, oblique segments, collinear plane bases, and non-SPD metrics fail-closed.
-   - `attach_scene_perpendicular_certificates(scene)`: Attaches `perpendicular_witness` to every `segment3` orthogonal to the base face (`face_id == "base"` or `id == "mp_day"`), covering right altitudes (`SA`, `SO`, `SH`) and right prism lateral edges (`AA'`, `BB'`, `CC'`, `DD'`) across both Euclidean and oblique Gram charts (`H03`, `H05`, `H11`) without name/label heuristics.
+   - `certify_deductive_line_plane_perpendicularity(...)`: Certifies deductive line-plane perpendicularity (`LINE_PERP_TWO_INTERSECTING_LINES_IN_PLANE`) only when two non-parallel in-plane premise lines ($\det(\text{Gram}(d_1, d_2)) > 0$) are each exactly orthogonal to the line ($\langle h, d_1 \rangle_G = 0, \langle h, d_2 \rangle_G = 0$) and the metric is SPD, strictly excluding `goal_call` and any non-premise (`role="prove"`, `negated=True`, `conditional=True`) calls from self-certification.
+   - `verify_perpendicular_witness(...)`: Independently re-verifies any attached `segment3.perpendicular_witness` against `scene["objects"]` and `scene["chart_metric"]`, rejecting missing feet, non-incident feet, oblique segments, collinear plane bases, and non-SPD metrics fail-closed.
+   - `attach_scene_perpendicular_certificates(scene, trace=..., chart_metric=...)`: Attaches `perpendicular_witness` to every `segment3` with verified provenance and exact Gram orthogonality to the base face (`CONSTRUCT_BASE` or `solid.faces[0]` fallback), covering right altitudes (`SA`, `SO`, `SH`) and right prism lateral edges (`AA'`, `BB'`, `CC'`, `DD'`) across both Euclidean and oblique Gram charts (`H03`, `H14`) without name/label heuristics.
 
-2. **Default-Route Witness Preservation (`backend/app/simulation/semantic_program/quantity_annotations.py`):**
-   - In `_bam_doan_da_dung`, when a height/distance annotation with a certified `witness` merges onto an already-constructed `segment3` with identical endpoints (`cung_doan`), the `witness` is preserved on the target segment's annotation (`"witness": d["witness"]`) so `scene3d-view.tsx` renders the right-angle marker on Path A (`w11_rectangular_pyramid`, `square_pyramid_envelope.json`) as well as Path B.
+2. **Default-Route (`Path A`) Segment3 Certificate Emission (`backend/app/simulation/semantic_program/quantity_annotations.py` & `scene3d.py`):**
+   - `quantity_annotations._gan_chung_chi_vuong_goc_doan` attaches `perpendicular_witness` (`exact-gram-line-plane-orthogonality/1`) directly to `segment3` objects carrying `CONSTRUCT_HEIGHT` (or `CONSTRUCT_LATERAL_BOUNDARY` on `PRISM_LIKE` solids) when exact Gram inner products `_m.dot(v, u) == 0` and `_m.dot(v, w) == 0` hold, without importing `_ROUTE_D` (`geometry_functions`).
+   - `scene3d.py` includes `"perpendicular_witness"` in `_TRUONG["segment3"]` so `build_scene3d` preserves certified `segment3.perpendicular_witness` on Path A (`S1_side_height_volume` `SO`), while `_bam_doan_da_dung` keeps `"witness" not in quantity.annotation` so coinciding segments do not duplicate dashed witness lines.
 
 3. **Frontend Point-vs-Segment Witness Guard (`frontend/src/simulations/domains/geometry/scene3d-annotations.ts`):**
    - Added `o.type === "point3"` before pushing point-projection dashed witness entries (`nhan_chung:${o.id}`), so `segment3.perpendicular_witness` feeds the right-angle marker in `scene3d-view.tsx` without duplicating dashed projection lines or measurement pills.
 
-4. **Test & Fixture Verification (`18/18` Backend + `34/34` Frontend + `41/41` Adapter `/2` Fixtures):**
-   - `backend/tests/geometry/test_hybrid_wave1_exact_certificates.py`: `18/18` passing, covering all `12` served Hybrid fixtures (`17` certified perpendicular segments across `H01`–`H12`, `24/24` oblique segments rejected), Path A `square_pyramid_envelope.json` (`chieu_cao_SA`), deductive perpendicularity, and `8` tamper/negative vectors (oblique edge labelled `"chiều cao"`, only-1-line perpendicularity, parallel non-intersecting lines, missing foot, off-plane foot, non-SPD metric, collinear basis, tampered marker vector).
+4. **Test & Fixture Verification (`10/10` Backend Pytest Functions + `34/34` Frontend + `41/41` Adapter `/2` Fixtures):**
+   - `backend/tests/geometry/test_hybrid_wave1_exact_certificates.py`: `10/10` pytest functions passing, covering all `12` served Hybrid fixtures (`17` certified perpendicular segments across `H01`–`H12`, `24/24` oblique segments rejected), Path A `S1_side_height_volume` (`SO`) and `N2` non-regular rejection, `square_pyramid_envelope.json` (`chieu_cao_SA`), deductive perpendicularity (`H07` `BC ⊥ (SAB)` + non-self-certification check), and `8` tamper/negative vectors.
 
 ---
 
@@ -64,28 +66,20 @@ All three audited Batch B worktree targets passed pre-removal verification (`sta
 ### 4.1 Explicit Dependency Graph & Tiered Topological Sort
 
 Implemented `_sap_xep_phu_thuoc_loi_goi(k: KeHoach)` in `backend/app/simulation/geometry_functions/planner.py`:
+- **Root-Solid vs Derived Composite Sub-Solid Classification:** Solids whose vertices have zero overlap with explicit point-producer outputs (`raw_point_outputs`) are classified as `root_solids` (`Tier 0`), while derived composite sub-solids (`M.ABC` in `COMP1` or `M.ABCD` where `M = midpoint(S, C)`) depend on their vertex producers and execute in `Tier 4` before `ask_volume(M.ABC)` in `Tier 5`.
 - **Tier Classification (`_phan_tang_loi_goi`):**
-  - `Tier 0`: Solid declarations (`pyramid`, `regular_pyramid`, `prism`, `cuboid`, `cube`)
-  - `Tier 1`: Base foundation (`base_shape`, `base_edge`, `right_angle_at`, `segment_length` on base edges)
+  - `Tier 0`: Root solid declarations (`pyramid`, `regular_pyramid`, `prism`, `cuboid`, `cube`)
+  - `Tier 1`: Base foundation (`regular_polygon`, `rectangle`, `right_angle`, base `segment_length`, base `equal_length`)
   - `Tier 2`: Apex-foot point constructors (derived points consumed by `Tier 3` apex projection/altitude calls, such as `H = midpoint(AB)` in `H12` when `SH ⊥ (ABC)`)
-  - `Tier 3`: Apex & solid metric/perpendicularity premises (`altitude`, `lateral_edge`, `perpendicular_line_plane`, apex `orthogonal_projection`, apex `segment_length`)
-  - `Tier 4`: Post-solid auxiliary constructions (`midpoint`, `centroid`, `point_on_segment`, `translate_point`, `intersection_*`, `section`, `perpendicular_Line_line`, `perpendicular_planes`)
+  - `Tier 3`: Apex & solid metric/perpendicularity premises (`altitude`, `perpendicular_line_plane`, `face_perpendicular_base`, apex `orthogonal_projection`, apex `segment_length`)
+  - `Tier 4`: Post-solid auxiliary constructions and derived composite sub-solids (`midpoint`, `centroid`, `translate_point`, `intersect_*`, `intersection_line`, `section`, `perpendicular_lines`, derived `solid`)
   - `Tier 5`: Queries & escapes (`ask_*`, `unsupported`)
 - **Explicit Dependency Edges & Fail-Closed Validation:**
-  - Validates that every `line_ref` (`UNKNOWN_DERIVED_REFERENCE`), every referenced `solid` (`UNKNOWN_SOLID`), and every non-solid point operand (`DANGLING_DEPENDENCY`) is defined before use.
-  - Detects cycles in `direct_deps` via Kahn's algorithm and refuses fail-closed with `DEPENDENCY_CYCLE`.
-  - Runs on **all** plans (both direct plans and `_EffectResolver` plans).
+  - Validates that every `line_ref` (`UNKNOWN_DERIVED_REFERENCE`), every referenced `solid` (`UNKNOWN_SOLID`), every `depends_on` target (`DANGLING_DEPENDENCY`), and every undeclared point operand (`UNDERDETERMINED_POINT` in `engine.py::giai_phu_thuoc`) is rejected fail-closed.
+  - Detects goal-reachable cycles in `direct_deps` and refuses fail-closed with `DEPENDENCY_CYCLE`, while preserving Route A / Route B parity (`UNDERDETERMINED_POINT`) on unreferenced dead point cycles.
   - Preserves `k.calls` in its exact original order whenever no prerequisite edge is violated (preserving all `41/41` committed Adapter `/2` fixtures, including `served-H12_PROJECTION_MIDPOINT_ANGLE`), and otherwise reorders deterministically via min-heap Kahn topological sort keyed by `(tier, original_index, call_id)`.
 
 ### 4.2 RED $\to$ GREEN Verification (`10/10` Passed)
 
-- **RED Receipt (before `_sap_xep_phu_thuoc_loi_goi`):** `4 failed, 6 passed` in `backend/tests/geometry/test_hybrid_wave1_dependency_planner.py` (out-of-order `midpoint` before `pyramid` when resolver was unused, dangling point reference in `ask_length`, cyclic point dependencies, and `H12` apex-foot ordering).
-- **GREEN Receipt (at `681e0473`):** `10/10 passed` in `backend/tests/geometry/test_hybrid_wave1_dependency_planner.py`, covering all 8 required scenarios:
-  1. Auxiliary point fact before solid fact $\to$ solid emitted first (`Tier 0` before `Tier 4`).
-  2. Multi-step chain (`solid` $\to$ `midpoint M` $\to$ `projection H of M` $\to$ `distance/area/angle ask`) $\to$ topological order.
-  3. Two-line parallel plane section (`M` + `translate_point` + `section` + `ask_section_area`) $\to$ solid before auxiliary points before section before ask.
-  4. Permuted input facts (`6` permutations) $\to$ identical canonical call sequence and identical exact answers.
-  5. Shared auxiliary point across multiple questions $\to$ constructed once before all dependent asks.
-  6. Missing/dangling dependency $\to$ fail-closed refusal (`DANGLING_DEPENDENCY` / `UNKNOWN_DERIVED_REFERENCE` / `UNKNOWN_SOLID`).
-  7. Cyclic dependency injection $\to$ fail-closed refusal (`DEPENDENCY_CYCLE`).
-  8. Existing regression corpus (`174/174` historical + `40/40` Slice A/B + `41/41` Adapter `/2` fixtures) $\to$ `0` answer drift, `0` timeline violations.
+- **RED Receipt (before `_sap_xep_phu_thuoc_loi_goi`):** `4 failed, 6 passed` in `backend/tests/geometry/test_hybrid_wave1_dependency_planner.py`.
+- **GREEN Receipt (at `fd310cd9`):** `10/10 passed` in `backend/tests/geometry/test_hybrid_wave1_dependency_planner.py`, and `417/417 passed` across the 8 targeted backend geometry test suites (`test_hybrid_wave1_exact_certificates.py` `10`, `test_hybrid_wave1_dependency_planner.py` `10`, `test_hybrid_preview_contract.py` `64`, `test_hybrid_backend_integration.py` `52`, `test_hybrid_compiler_selection.py` `107`, `test_geometry_library_expansion.py` `91`, `test_regular_square_pyramid_height.py` `20`, `test_structured_geometry_relations.py` `63`).
