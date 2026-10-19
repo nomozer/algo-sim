@@ -329,22 +329,22 @@ class _Dung:
         fourth side, if given, is checked later like every fact. None when no such pair exists (not this shape)."""
         if len(vong) != 4:
             return None
-        goc = {c.args.vertex: (frozenset(c.args.rays), c.id) for c in self.of("right_angle")}
+        goc = {(c.args.vertex, frozenset(c.args.rays)): c.id for c in self.of("right_angle")}   # several per vertex allowed
         for i in range(4):
             vi, vj, vp, vn = vong[i], vong[(i + 1) % 4], vong[(i - 1) % 4], vong[(i + 2) % 4]
-            gi, gj = goc.get(vi), goc.get(vj)
-            if not (gi and gj and gi[0] == {vp, vj} and gj[0] == {vi, vn}):
+            gi, gj = goc.get((vi, frozenset((vp, vj)))), goc.get((vj, frozenset((vi, vn))))
+            if not (gi and gj):
                 continue
             ab, ad, bc = self.do_dai(vi, vj), self.do_dai(vi, vp), self.do_dai(vj, vn)
             if thieu := [s for s, l in ((vi + vj, ab), (vi + vp, ad), (vj + vn, bc)) if not l]:
-                raise TuChoi("MISSING_DIMENSION", f"đáy có góc vuông tại {vi}, {vj} nhưng chưa biết {thieu}", (gi[1], gj[1]))
+                raise TuChoi("MISSING_DIMENSION", f"đáy có góc vuông tại {vi}, {vj} nhưng chưa biết {thieu}", (gi, gj))
             r = _sqrt_q(sorted(bc)[0][0] / sorted(ad)[0][0])
             if r is None:
                 raise TuChoi("UNSUPPORTED_IRRATIONAL_LAYOUT", f"{vj}{vn} : {vi}{vp} vô tỉ — chưa dựng đáy chính xác trong ℚ",
-                             (gi[1], gj[1]))
+                             (gi, gj))
             o = Fraction(1)
             dat = {vi: (Z, Z), vj: (o, Z), vp: (Z, o), vn: (o, r)}
-            dung = {gi[1], gj[1], *sorted(ab)[0][1], *sorted(ad)[0][1], *sorted(bc)[0][1]}
+            dung = {gi, gj, *sorted(ab)[0][1], *sorted(ad)[0][1], *sorted(bc)[0][1]}
             return vong, tuple(dat[v] for v in vong), ((sorted(ab)[0][0], Z), (Z, sorted(ad)[0][0])), dung
         return None
 
@@ -1020,10 +1020,10 @@ class _Dung:
         """Postconditions of a derived plane, independent of how the planner built it. It passes through the point by
         construction (built through it); checked here: parallel to the reference plane (normals, `predicates.parallel_planes`),
         not that plane, and not a face of the solid it cuts (a boundary plane is not a cutting section — no silent M4)."""
-        if d["rule"] == MAT_VUONG_DUONG:
-            return self._kiem_mat_vuong_duong(d)
-        p, q, (x1, x2), ids = d["point"], d["parallel_to"], d["labels"], tuple(d["constructs"]) + tuple(d["targets"])
-        two = d['rule'] == MAT_HAI_DUONG
+        vuong, two = d["rule"] == MAT_VUONG_DUONG, d["rule"] == MAT_HAI_DUONG
+        p, q, (x1, x2), ids = d["point"], d.get("parallel_to"), d["labels"], tuple(d["constructs"]) + tuple(d["targets"])
+        if vuong:                                          # ⊥ certificate first; the face check below is shared
+            self._kiem_mat_vuong_duong(d)
         if two:
             if any(self.pts[a] == self.pts[b] for a,b in d['lines']):
                 raise TuChoi('DEGENERATE_LINE', 'hai đầu mút của đường trùng tọa độ đã xác minh', ids)
@@ -1039,7 +1039,7 @@ class _Dung:
                     raise TuChoi('LINE_CONTAINED_IN_PLANE','đường nằm trong mặt phẳng, không song song nghiêm ngặt',ids)
                 if not parallel_line_plane(line,mat):
                     raise TuChoi('ENGINE_SELF_CHECK_FAILED','mặt dẫn xuất không song song với cả hai đường',ids)
-        else:
+        elif not vuong:
             goc=self._plane(q)
             if not parallel_planes(mat, goc):
                 raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"mặt dẫn xuất qua {p} không song song ({''.join(q)})", ids)
@@ -1055,7 +1055,9 @@ class _Dung:
             if sum(x == 0 for x in dau) >= 3 and not ({x > 0 for x in dau if x != 0} == {True, False}):
                 raise TuChoi("SECTION_PLANE_IS_FACE", f"{c.id}: mặt dẫn xuất chứa một mặt biên của {k.name} — mặt biên không "
                              "phải thiết diện cắt xuyên", ids)
-        self.trace.append({"step": "construct_plane", "object": f"({d['plane_name']})" if two else f"({p} ∥ {''.join(q)})", "rule": d['rule'],
+        ten = (f"({d['plane_name']})" if two else f"({p} ⊥ {''.join(d['perpendicular_to'])})" if vuong
+               else f"({p} ∥ {''.join(q)})")
+        self.trace.append({"step": "construct_plane", "object": ten, "rule": d['rule'],
                            "calls": list(d["constructs"]), "dependencies": [p, x1, x2], "relation_verified": True,
                            "provenance": "DERIVED", "binding": "AUXILIARY"})
 

@@ -175,6 +175,17 @@ def test_right_trapezoid_refusals(name, patch, code):
         assert r.code == code, (name, r.code, r.reason)
 
 
+def test_right_trapezoid_with_a_second_right_angle_at_the_same_vertex():
+    """A right angle SAB stated next to the base angle DAB must not hide it (review, finding 3)."""
+    extra = "Góc SAB vuông. "
+    ask = "Tính thể tích khối chóp S.ABCD."
+    facts = C_FACTS + [f("rs", "right_angle", "Góc SAB vuông.", at="A", points=["S", "B"]),
+                       f("q", "question", ask, role="question", quantity="volume", solid="S.ABCD")]
+    r = run(C_TEXT + extra + ask, facts)
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert sq(r, "q") == (F(1, 3) * (2 + 1) / 2 * 1 * 1) ** 2 == F(1, 4)    # V = ⅓ · (AD + BC)/2 · AB · SA
+
+
 def test_right_trapezoid_irrational_leg_ratio_is_refused_not_approximated():
     text = C_TEXT.replace("BC = 1.", "BC = √2.")
     facts = [{**x, "quotes": ["BC = √2."], "value": "√2"} if x["id"] == "l3" else x for x in C_FACTS]
@@ -249,7 +260,21 @@ def test_ratio_point_fails_closed(name, patch, codes):
     assert r.status == "REFUSED" and r.code in codes, (name, r.code, r.reason)
 
 
-# ── Slice B: plane through a point ⊥ a line, its section (W2-EXP-07, a = 1) ────────────────────────────────────────────
+def test_zero_denominator_ratio_is_a_coded_refusal_not_an_exception():
+    from pydantic import ValidationError
+
+    from app.simulation.geometry_functions.registry import DivideSegmentArgs
+
+    with pytest.raises(ValidationError):
+        DivideSegmentArgs(point="M", segment=["S", "A"], ratio="1/0")
+    text = A_TEXT.replace("SM = 2MA", "SM = 1/0MA")
+    facts = [{**x, "quotes": [x["quotes"][0].replace("SM = 2MA", "SM = 1/0MA")]} if x["id"] == "m" else x for x in A_FACTS]
+    ask = "Tính độ dài MN."
+    r = run(text + ask, facts + [f("q", "question", ask, role="question", quantity="length", points=["M", "N"])])
+    assert r.status == "REFUSED" and r.code, (r.code, r.reason)
+
+
+# ── Slice B: plane through a point ⊥ a line, its section (W2-EXP-07, a = 1)────────────────────────────────────────────
 B_Q1 = "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại B."
 B_DEF = "Dựng mặt phẳng (P) đi qua A và vuông góc với SC."
 B_ASK = "Tính diện tích thiết diện của hình chóp S.ABC với (P)."
@@ -292,6 +317,10 @@ def test_plane_perpendicular_to_a_plane_is_still_not_unique():
     ("wrong-line-vs-source", "vuông góc với SC", "vuông góc với SB", {}, {"SOURCE_OBJECT_MISMATCH"}),
     ("plane-only-touches-apex", "đi qua A và", "đi qua S và", {"point": "S"}, {"PLANE_TOUCHES_VERTEX", "PLANE_DOES_NOT_CUT"}),
     ("point-on-the-line", "đi qua A và", "đi qua C và", {"point": "C"}, {"PLANE_TOUCHES_VERTEX", "PLANE_DOES_NOT_CUT"}),
+    # the plane IS a face — (ABC) and (SAB): a boundary plane is not a cutting section (review, finding 1)
+    ("plane-is-the-base-face", "qua A và vuông góc với SC", "qua B và vuông góc với SA", {"point": "B", "points_b": ["S", "A"]},
+     {"SECTION_PLANE_IS_FACE"}),
+    ("plane-is-a-lateral-face", "vuông góc với SC", "vuông góc với BC", {"points_b": ["B", "C"]}, {"SECTION_PLANE_IS_FACE"}),
 ])
 def test_perpendicular_plane_section_fails_closed(name, text_from, text_to, patch, codes):
     facts = deepcopy(B_FACTS)

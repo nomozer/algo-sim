@@ -198,7 +198,10 @@ class DivideSegmentArgs(_Args):
 
     @model_validator(mode="after")
     def _trong_doan(self):
-        t = Fraction(self.ratio)
+        try:
+            t = Fraction(self.ratio)
+        except ZeroDivisionError:
+            raise ValueError("divide_segment: tỉ số có mẫu 0") from None
         if not 0 < t < 1 or len(set(self.segment)) != 2:
             raise ValueError("divide_segment: cần hai đầu mút phân biệt và 0 < t < 1")
         return self
@@ -3071,6 +3074,8 @@ def _ty_so_dung_nguon(c: LoiGoi, q: str) -> bool:
               frozenset((x, y)): (Fraction(1), Fraction(0))}
         doan = [frozenset(re.findall(r"[A-Z][0-9]*'?", m[g])) for g in ("l", "r")]
         if any(d not in he for d in doan):
+            continue
+        if re.fullmatch(r"\d+/0+", m["k"] or ""):          # "1/0" states no ratio: not this binding
             continue
         (al, bl), (ar, br), k = he[doan[0]], he[doan[1]], Fraction(m["k"] or 1)
         if bl == k * br:
