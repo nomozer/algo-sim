@@ -738,7 +738,7 @@ def test_cache_version_9_cu_bi_invalidate_sau_bump_10():
     # finalization/cache/decision.json.
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): be mat mo hinh KHONG doi; envelope phuc vu
     # doi noi dung (segment3 duong cao mang perpendicular_witness -> ky hieu goc vuong). Row v126 THAT do main f0560449
-    # ghi khong co witness va van HIT: runs/hybrid-architecture-wave1-exact-certificates-planner/cache/decision.json
+    # ghi khong co witness va van HIT: runs/segment-witness-cache-invalidation/cache/decision.json
     # (khoa bang tests/test_cache_segment_witness_invalidation.py).
     assert main_module.CACHE_VERSION == "127"
     init_db()

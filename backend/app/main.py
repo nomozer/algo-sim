@@ -819,8 +819,8 @@ MISSING_KEY_MSG = (
 #       PHỤC VỤ của tuyến mặc định đổi nội dung (tiền lệ 103/112–116): `segment3` đường cao / cạnh bên lăng trụ đứng nay
 #       mang `perpendicular_witness` (chứng chỉ Gram chính xác, `quantity_annotations._gan_chung_chi_vuong_goc_doan`) ⇒
 #       Scene3D vẽ ký hiệu góc vuông. Row v126 THẬT do `main` f0560449 ghi cho cùng đề không có witness nào và vẫn HIT
-#       (`runs/hybrid-architecture-wave1-exact-certificates-planner/cache/decision.json`); ngoài witness, envelope trùng
-#       byte. Quyết định "không bump" trước đó của Wave 1 bị thay thế.
+#       (`runs/segment-witness-cache-invalidation/cache/decision.json`, 9 đề chóp/lăng trụ/hộp/lập phương); ngoài
+#       witness, envelope trùng byte. Quyết định "không bump" trước đó của Wave 1 bị thay thế.
 CACHE_VERSION = "127"
 
 #: Ba chế độ của route sinh ngữ nghĩa, SERVER sở hữu — không phải cờ của client,

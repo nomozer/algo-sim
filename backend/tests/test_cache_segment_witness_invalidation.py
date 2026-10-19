@@ -3,10 +3,12 @@
 
 `/api/analyze` returns a cache hit's `envelope_json` as is, without rebuilding the scene. The legacy rows below are the
 genuine rows that `main` f0560449 (v126) wrote for the same requests through the same endpoint
-(`runs/hybrid-architecture-wave1-exact-certificates-planner/cache/cache_probe.py`); they carry no segment witness, so a
-v126 hit would keep serving a scene without the right-angle marker. The bump must make every such row a MISS, the
-re-analysis must store a v127 row that keeps the witness through the JSON round trip, and nothing but the witness may
-change: answers, provenance, formation steps and refusals stay byte-identical. 0 model calls (both LLM stages are stubs).
+(`runs/segment-witness-cache-invalidation/cache/cache_probe.py`); they carry no segment witness, so a v126 hit would keep
+serving a scene without the right-angle marker. The bump must make every such row a MISS, the re-analysis must store a
+v127 row that keeps the witness through the JSON round trip, and nothing but the witness may change: answers,
+provenance, formation steps and refusals stay byte-identical. The expected witnesses are written by hand from the
+problem statements (altitude of a regular pyramid, a given SA ⟂ base, every lateral edge of a right prism / cuboid /
+cube), never derived from the output. 0 model calls (both LLM stages are stubs).
 """
 from __future__ import annotations
 
@@ -27,8 +29,7 @@ from tests.geometry import route_cases as W
 from tests.geometry import test_regular_square_pyramid as RSP
 
 LEGACY = json.loads((Path(__file__).resolve().parents[2] / "docs/evaluation/geometry/runs"
-                     / "hybrid-architecture-wave1-exact-certificates-planner/cache/legacy-v126-rows.json")
-                    .read_text(encoding="utf-8"))
+                     / "segment-witness-cache-invalidation/cache/legacy-v126-rows.json").read_text(encoding="utf-8"))
 
 
 def _rsp(ca):
@@ -40,13 +41,23 @@ def _compiled(text, contract):
     return text, contract, W.chuong_trinh(contract)
 
 
-#: case -> (builder, segment that must carry the witness as {endpoints}, foot, oblique segments that must not).
+_PYR, _PRISM = "formation_construct_height", "prism_lateral_altitude"
+_HOP = {"A_prime": "A", "B_prime": "B", "C_prime": "C", "D_prime": "D"}  # ABCD.A'B'C'D': top vertex -> base foot
+
+#: case -> (builder, rule, {top/apex endpoint: foot}). EXACTLY these segments carry a witness; every other segment3
+#: (oblique lateral edges SB/SC/SD, base and top edges) must carry none.
 SERVED = {
-    "S1_side_height_volume": (lambda: _rsp("S1_side_height_volume"), {"S", "O"}, "O", "ABCD"),
-    "S6_renamed_vertices": (lambda: _rsp("S6_renamed_vertices"), {"S", "O"}, "O", "MNPQ"),
-    "S7_named_centre": (lambda: _rsp("S7_named_centre"), {"S", "O"}, "O", "ABCD"),
-    # Not regular, A is not the base centre: SA ⊥ (ABC) is GIVEN; SB, SC are oblique.
-    "SA_given_right_triangle_pyramid": (lambda: _compiled(*W.chop_tam_giac()), {"S", "A"}, "A", "BC"),
+    "S1_side_height_volume": (lambda: _rsp("S1_side_height_volume"), _PYR, {"S": "O"}),
+    "S6_renamed_vertices": (lambda: _rsp("S6_renamed_vertices"), _PYR, {"S": "O"}),
+    "S7_named_centre": (lambda: _rsp("S7_named_centre"), _PYR, {"S": "O"}),
+    # Not regular, A is not the base centre: SA ⊥ (ABC) / (ABCD) is GIVEN; the other lateral edges are oblique.
+    "SA_given_right_triangle_pyramid": (lambda: _compiled(*W.chop_tam_giac()), _PYR, {"S": "A"}),
+    "SA_given_rectangular_pyramid": (lambda: _compiled(*W.chop_chu_nhat()), _PYR, {"S": "A"}),
+    # "lăng trụ đứng ABC.DEF": lateral edges AD, BE, CF.
+    "right_triangular_prism": (lambda: _compiled(*W.lang_tru_tam_giac()), _PRISM, {"D": "A", "E": "B", "F": "C"}),
+    "cuboid": (lambda: _compiled(*W.hop_chu_nhat()), _PRISM, _HOP),
+    "cube": (lambda: _compiled(*W.lap_phuong()), _PRISM, _HOP),
+    "square_prism": (lambda: _compiled(*W.lang_tru_day_vuong()), _PRISM, _HOP),
 }
 
 
@@ -95,7 +106,7 @@ def test_cache_version_is_127():
 
 @pytest.mark.parametrize("ca", sorted(SERVED))
 def test_legacy_v126_row_misses_and_v127_row_keeps_the_witness(ca, stub_llm):
-    make, seg_ends, foot, oblique = SERVED[ca]
+    make, rule, expected = SERVED[ca]
     text, contract, prog = make()
     legacy = LEGACY["rows"][ca]
     key = _cache_key(text)
@@ -122,19 +133,18 @@ def test_legacy_v126_row_misses_and_v127_row_keeps_the_witness(ca, stub_llm):
     assert (fresh["status"], fresh.get("cached", False), fresh["source"]) == ("ok", False, "semantic_program")
     assert calls == {"analyze": 1, "program": 1}
 
-    # B: the re-analysed scene carries exactly one certified witness, on the altitude, verified independently.
+    # B: exactly the expected segments carry a certified witness (none on oblique, base or top edges), each verified
+    # independently; provenance says only what was checked (formation role + exact Gram orthogonality).
     sc = fresh["scene3d"]
     segs = _seg_witnesses(fresh)
-    assert [set(o["endpoint_ids"]) for o in segs] == [seg_ends]
-    w = segs[0]["perpendicular_witness"]
-    assert (w["certificate"], w["from"], w["foot_id"]) == (CERTIFICATE_SCHEMA, "S", foot)
-    # Provenance says only what was checked: the formation role + exact Gram orthogonality (never "regular pyramid").
-    assert (w["rule"], w["status"]) == ("formation_construct_height", "ENGINE_VERIFIED")
-    ok, code = verify_perpendicular_witness(w, sc, sc.get("chart_metric"), segment_obj=segs[0])
-    assert ok, code
-    for v in oblique:  # no false marker on an oblique lateral edge
-        assert not [o for o in sc["objects"] if o["type"] == "segment3" and set(o.get("endpoint_ids") or ()) == {"S", v}
-                    and "perpendicular_witness" in o]
+    got = {o["perpendicular_witness"]["from"]: o["perpendicular_witness"]["foot_id"] for o in segs}
+    assert got == expected and len(segs) == len(expected)
+    for o in segs:
+        w = o["perpendicular_witness"]
+        assert set(o["endpoint_ids"]) == {w["from"], w["foot_id"]}
+        assert (w["certificate"], w["rule"], w["status"]) == (CERTIFICATE_SCHEMA, rule, "ENGINE_VERIFIED")
+        ok, code = verify_perpendicular_witness(w, sc, sc.get("chart_metric"), segment_obj=o)
+        assert ok, (o["id"], code)
     # C: nothing but the witness changed — answers, provenance, steps identical to the genuine v126 envelope.
     assert _strip(fresh) == _strip(legacy_env)
 
@@ -190,18 +200,29 @@ def test_hybrid_preview_never_reaches_the_product_cache():
         _policy_identity(_Preview())
 
 
-def _base_and_segment(apex: Vec3) -> tuple[list[dict], dict]:
-    mem = {"A": Vec3(0, 0, 0), "B": Vec3(4, 0, 0), "C": Vec3(0, 3, 0), "S": apex}
+def _base_and_segment(top: Vec3, shape_class: str, role: str) -> tuple[list[dict], dict]:
+    # Same fields as a real Path A scene: the solid's class is `shape_class` (formation), not any other key.
+    mem = {"A": Vec3(0, 0, 0), "B": Vec3(4, 0, 0), "C": Vec3(0, 3, 0), "S": top}
     objs = [{"id": "day_ABC", "type": "polygon3", "vertex_ids": ["A", "B", "C"], "formation_roles": ["CONSTRUCT_BASE"]},
-            {"id": "khoi", "type": "solid", "solid_family": "PYRAMID_LIKE"},
-            {"id": "SA", "type": "segment3", "endpoint_ids": ["S", "A"], "formation_roles": ["CONSTRUCT_HEIGHT"]}]
+            {"id": "khoi", "type": "solid", "shape_class": shape_class},
+            {"id": "SA", "type": "segment3", "endpoint_ids": ["S", "A"], "formation_roles": [role]}]
     return objs, mem
 
 
-def test_a_construct_height_segment_that_is_oblique_never_gets_a_marker():
-    objs, mem = _base_and_segment(Vec3(1, 0, 5))  # role says "height", coordinates say oblique
+@pytest.mark.parametrize("shape_class, role, rule", [
+    ("PYRAMID_LIKE", "CONSTRUCT_HEIGHT", "formation_construct_height"),
+    ("PRISM_LIKE", "CONSTRUCT_LATERAL_BOUNDARY", "prism_lateral_altitude"),
+])
+def test_an_oblique_height_or_lateral_edge_never_gets_a_marker(shape_class, role, rule):
+    objs, mem = _base_and_segment(Vec3(1, 0, 5), shape_class, role)  # role says "height"/"lateral", coordinates oblique
     _gan_chung_chi_vuong_goc_doan(objs, mem)
     assert "perpendicular_witness" not in objs[2]
-    objs, mem = _base_and_segment(Vec3(0, 0, 5))  # injected fault reversed: exactly perpendicular
+    objs, mem = _base_and_segment(Vec3(0, 0, 5), shape_class, role)  # injected fault reversed: exactly perpendicular
     _gan_chung_chi_vuong_goc_doan(objs, mem)
-    assert objs[2]["perpendicular_witness"]["foot_id"] == "A"
+    assert (objs[2]["perpendicular_witness"]["foot_id"], objs[2]["perpendicular_witness"]["rule"]) == ("A", rule)
+
+
+def test_a_pyramid_lateral_edge_is_never_a_prism_edge():
+    objs, mem = _base_and_segment(Vec3(0, 0, 5), "PYRAMID_LIKE", "CONSTRUCT_LATERAL_BOUNDARY")
+    _gan_chung_chi_vuong_goc_doan(objs, mem)
+    assert "perpendicular_witness" not in objs[2]  # only CONSTRUCT_HEIGHT qualifies on a pyramid

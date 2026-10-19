@@ -96,11 +96,11 @@ def _gan_chung_chi_vuong_goc_doan(objects: list[dict[str, Any]], mem: dict[str, 
     n_base = (day_pts[1] - day_pts[0]).cross(day_pts[-1] - day_pts[0])
     if n_base.is_zero():
         return
-    is_prism_like = any(
-        o.get("type") == "solid" and o.get("solid_family") == "PRISM_LIKE" for o in objects
-    )
-    # Nhãn chỉ nói điều ĐÃ KIỂM: vai trò dựng + trực giao Gram chính xác do engine kiểm (từ vựng tuyến D,
-    # `certificates._infer_segment_provenance`). Không suy "chóp đều / tâm đáy": SA ⊥ (ABC) của đề cũng đi qua đây.
+    # Lớp khối do `formation` gắn vào `shape_class` (cùng trường tuyến D đọc trong `certificates`).
+    is_prism_like = any(o.get("type") == "solid" and o.get("shape_class") == "PRISM_LIKE" for o in objects)
+    # Nhãn chỉ nói điều ĐÃ KIỂM: vai trò dựng + trực giao Gram chính xác do engine kiểm. Tên quy tắc mượn của
+    # `certificates._infer_segment_provenance`, nhưng trạng thái luôn ENGINE_VERIFIED (tuyến D ghi GIVEN cho đường cao
+    # theo vai trò). Không suy "chóp đều / tâm đáy": SA ⊥ (ABC) của đề cũng đi qua đây.
     status = "ENGINE_VERIFIED"
     for seg in objects:
         if seg.get("type") != "segment3":

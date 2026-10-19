@@ -1,0 +1,611 @@
+{
+ "cache_version": "127",
+ "cases": {
+  "REFUSED_oblique_prism": {
+   "answers": {},
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "30afc1f00a5b78bee15afdbe693b77be41aba3e7343db8ae8d5b4f88c9aec41c",
+   "envelope_sha256_fresh": "30afc1f00a5b78bee15afdbe693b77be41aba3e7343db8ae8d5b4f88c9aec41c",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": null
+   },
+   "request2": {
+    "cached": false,
+    "source": null
+   },
+   "row_policy_version": null,
+   "rows_for_key": 0,
+   "scene3d_bytes": 2,
+   "segment3_perpendicular_witness": {},
+   "segment3_perpendicular_witness_cached": {},
+   "status": "unsupported"
+  },
+  "S1_side_height_volume": {
+   "answers": {
+    "V": "16",
+    "canh_day": "4",
+    "chieu_cao": "3",
+    "chieu_cao_SO": "3",
+    "dien_tich_day_ABCD": "16"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "d620f3ca0614c91aeffac52cefaa63daa26ff55a4b4611e81b567c66a3a47bd3",
+   "envelope_sha256_fresh": "d620f3ca0614c91aeffac52cefaa63daa26ff55a4b4611e81b567c66a3a47bd3",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "scene3d_bytes": 28166,
+   "segment3_perpendicular_witness": {
+    "chieu_cao_SO_2": {
+     "foot_id": "O",
+     "from": "S",
+     "on": "day_ABCD",
+     "rule": "formation_construct_height",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "segment3_perpendicular_witness_cached": {
+    "chieu_cao_SO_2": {
+     "foot_id": "O",
+     "from": "S",
+     "on": "day_ABCD",
+     "rule": "formation_construct_height",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "status": "ok"
+  },
+  "S6_renamed_vertices": {
+   "answers": {
+    "V": "16",
+    "canh_day": "4",
+    "chieu_cao": "3",
+    "chieu_cao_SO": "3",
+    "dien_tich_day_MNPQ": "16"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "73f215f123b94979c0f565787ca599bc7f6969be9cac7c8ad997e84e0e9420ad",
+   "envelope_sha256_fresh": "73f215f123b94979c0f565787ca599bc7f6969be9cac7c8ad997e84e0e9420ad",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "scene3d_bytes": 28166,
+   "segment3_perpendicular_witness": {
+    "chieu_cao_SO_2": {
+     "foot_id": "O",
+     "from": "S",
+     "on": "day_MNPQ",
+     "rule": "formation_construct_height",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "segment3_perpendicular_witness_cached": {
+    "chieu_cao_SO_2": {
+     "foot_id": "O",
+     "from": "S",
+     "on": "day_MNPQ",
+     "rule": "formation_construct_height",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "status": "ok"
+  },
+  "S7_named_centre": {
+   "answers": {
+    "AB_length": "4",
+    "SO_length": "3",
+    "V": "16",
+    "chieu_cao_SO": "3",
+    "dien_tich_day_ABCD": "16"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "ba34db2f651d6ee58ad2c709f7901ca4a6527f78057527d746c0c272cfda2e80",
+   "envelope_sha256_fresh": "ba34db2f651d6ee58ad2c709f7901ca4a6527f78057527d746c0c272cfda2e80",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "scene3d_bytes": 28365,
+   "segment3_perpendicular_witness": {
+    "chieu_cao_SO_2": {
+     "foot_id": "O",
+     "from": "S",
+     "on": "day_ABCD",
+     "rule": "formation_construct_height",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "segment3_perpendicular_witness_cached": {
+    "chieu_cao_SO_2": {
+     "foot_id": "O",
+     "from": "S",
+     "on": "day_ABCD",
+     "rule": "formation_construct_height",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "status": "ok"
+  },
+  "SA_given_rectangular_pyramid": {
+   "answers": {
+    "AB_length": "3",
+    "AD_length": "4",
+    "SA_length": "6",
+    "dien_tich_day_ABCD": "12",
+    "the_tich_khoi_chop": "24",
+    "v": "24"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "c1a316874b2e82a984b920473a07c832447a0ced787096364af23dadf77af371",
+   "envelope_sha256_fresh": "c1a316874b2e82a984b920473a07c832447a0ced787096364af23dadf77af371",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "scene3d_bytes": 22516,
+   "segment3_perpendicular_witness": {
+    "chieu_cao_SA": {
+     "foot_id": "A",
+     "from": "S",
+     "on": "day_ABCD",
+     "rule": "formation_construct_height",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "segment3_perpendicular_witness_cached": {
+    "chieu_cao_SA": {
+     "foot_id": "A",
+     "from": "S",
+     "on": "day_ABCD",
+     "rule": "formation_construct_height",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "status": "ok"
+  },
+  "SA_given_right_triangle_pyramid": {
+   "answers": {
+    "AB_length": "3",
+    "AC_length": "4",
+    "SA_length": "5",
+    "dien_tich_day_ABC": "6",
+    "the_tich_khoi": "10",
+    "the_tich_khoi_chop": "10"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "67ffb082aa1e4f4efd87069bf382d4d0161f976e70f0b5d64f425e721a4f45a0",
+   "envelope_sha256_fresh": "67ffb082aa1e4f4efd87069bf382d4d0161f976e70f0b5d64f425e721a4f45a0",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "scene3d_bytes": 20497,
+   "segment3_perpendicular_witness": {
+    "chieu_cao_SA": {
+     "foot_id": "A",
+     "from": "S",
+     "on": "day_ABC",
+     "rule": "formation_construct_height",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "segment3_perpendicular_witness_cached": {
+    "chieu_cao_SA": {
+     "foot_id": "A",
+     "from": "S",
+     "on": "day_ABC",
+     "rule": "formation_construct_height",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "status": "ok"
+  },
+  "cube": {
+   "answers": {
+    "AA_prime_length": "4",
+    "AB_length": "4",
+    "AD_length": "4",
+    "V": "64",
+    "chieu_cao_AA_prime": "4",
+    "dien_tich_day_ABCD": "16",
+    "the_tich_khoi_hop": "64"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "c2f270575b30dec745f1868fa730829b6a836cf3b356f8c53b8b9152971f538b",
+   "envelope_sha256_fresh": "c2f270575b30dec745f1868fa730829b6a836cf3b356f8c53b8b9152971f538b",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "scene3d_bytes": 32793,
+   "segment3_perpendicular_witness": {
+    "canh_ben_A_A_prime": {
+     "foot_id": "A",
+     "from": "A_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_B_B_prime": {
+     "foot_id": "B",
+     "from": "B_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_C_C_prime": {
+     "foot_id": "C",
+     "from": "C_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_D_D_prime": {
+     "foot_id": "D",
+     "from": "D_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "segment3_perpendicular_witness_cached": {
+    "canh_ben_A_A_prime": {
+     "foot_id": "A",
+     "from": "A_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_B_B_prime": {
+     "foot_id": "B",
+     "from": "B_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_C_C_prime": {
+     "foot_id": "C",
+     "from": "C_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_D_D_prime": {
+     "foot_id": "D",
+     "from": "D_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "status": "ok"
+  },
+  "cuboid": {
+   "answers": {
+    "AA_prime_length": "5",
+    "AB_length": "3",
+    "AD_length": "4",
+    "V": "60",
+    "chieu_cao_AA_prime": "5",
+    "dien_tich_day_ABCD": "12",
+    "the_tich_khoi_hop": "60"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "acc34e351a3d0c1707abc8167260676bca79e41b4f0d5965d721620760e5e0b8",
+   "envelope_sha256_fresh": "acc34e351a3d0c1707abc8167260676bca79e41b4f0d5965d721620760e5e0b8",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "scene3d_bytes": 31894,
+   "segment3_perpendicular_witness": {
+    "canh_ben_A_A_prime": {
+     "foot_id": "A",
+     "from": "A_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_B_B_prime": {
+     "foot_id": "B",
+     "from": "B_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_C_C_prime": {
+     "foot_id": "C",
+     "from": "C_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_D_D_prime": {
+     "foot_id": "D",
+     "from": "D_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "segment3_perpendicular_witness_cached": {
+    "canh_ben_A_A_prime": {
+     "foot_id": "A",
+     "from": "A_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_B_B_prime": {
+     "foot_id": "B",
+     "from": "B_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_C_C_prime": {
+     "foot_id": "C",
+     "from": "C_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_D_D_prime": {
+     "foot_id": "D",
+     "from": "D_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "status": "ok"
+  },
+  "right_triangular_prism": {
+   "answers": {
+    "AB_length": "3",
+    "AC_length": "4",
+    "AD_length": "5",
+    "dien_tich_day_ABC": "6",
+    "the_tich_lang_tru": "30",
+    "the_tich_solid_ABCDEF": "30"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "b7ef5ac166310bc8d7708f609b8ea660d49c948f8c797fc3864dc797318863f0",
+   "envelope_sha256_fresh": "b7ef5ac166310bc8d7708f609b8ea660d49c948f8c797fc3864dc797318863f0",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "scene3d_bytes": 24744,
+   "segment3_perpendicular_witness": {
+    "canh_ben_A_D": {
+     "foot_id": "A",
+     "from": "D",
+     "on": "day_ABC",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_B_E": {
+     "foot_id": "B",
+     "from": "E",
+     "on": "day_ABC",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_C_F": {
+     "foot_id": "C",
+     "from": "F",
+     "on": "day_ABC",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "segment3_perpendicular_witness_cached": {
+    "canh_ben_A_D": {
+     "foot_id": "A",
+     "from": "D",
+     "on": "day_ABC",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_B_E": {
+     "foot_id": "B",
+     "from": "E",
+     "on": "day_ABC",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_C_F": {
+     "foot_id": "C",
+     "from": "F",
+     "on": "day_ABC",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "status": "ok"
+  },
+  "square_prism": {
+   "answers": {
+    "AA_prime_length": "7",
+    "AB_length": "3",
+    "AD_length": "3",
+    "V": "63",
+    "chieu_cao_AA_prime": "7",
+    "dien_tich_day_ABCD": "9",
+    "the_tich_khoi_lang_tru": "63"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "a063f918ad4aadf1384baf2c2621a7058ac0706128c2f484c6c8f7eac656c949",
+   "envelope_sha256_fresh": "a063f918ad4aadf1384baf2c2621a7058ac0706128c2f484c6c8f7eac656c949",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "127",
+   "rows_for_key": 1,
+   "scene3d_bytes": 32853,
+   "segment3_perpendicular_witness": {
+    "canh_ben_A_A_prime": {
+     "foot_id": "A",
+     "from": "A_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_B_B_prime": {
+     "foot_id": "B",
+     "from": "B_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_C_C_prime": {
+     "foot_id": "C",
+     "from": "C_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_D_D_prime": {
+     "foot_id": "D",
+     "from": "D_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "segment3_perpendicular_witness_cached": {
+    "canh_ben_A_A_prime": {
+     "foot_id": "A",
+     "from": "A_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_B_B_prime": {
+     "foot_id": "B",
+     "from": "B_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_C_C_prime": {
+     "foot_id": "C",
+     "from": "C_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    },
+    "canh_ben_D_D_prime": {
+     "foot_id": "D",
+     "from": "D_prime",
+     "on": "day_ABCD",
+     "rule": "prism_lateral_altitude",
+     "status": "ENGINE_VERIFIED"
+    }
+   },
+   "status": "ok"
+  }
+ },
+ "llm_stage_stub_calls": {
+  "analyze": 11,
+  "program": 11
+ },
+ "provider_requests": 0
+}

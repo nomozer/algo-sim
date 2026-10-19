@@ -1,0 +1,43 @@
+{
+  "schema": "CACHE_DECISION/1",
+  "run": "segment-witness-cache-invalidation",
+  "date": "2026-10-19",
+  "issue": "ISSUE-ARCH-SCENE3D-ALTITUDE-CERTIFICATE-MISSING (Wave 1A on the default LLM_ONLY route)",
+  "decision": "BUMP 126 -> 127",
+  "supersedes": [
+    "Wave 1 'CACHE_VERSION = 126 (no bump required)' at fd310cd9 / 77b05def / 14cc4eb4 (stated without evidence). Those receipts stay unchanged.",
+    "docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/cache/decision.json (first decision of this run, committed at 2635cbd6): its decision stands, but its claim that right-prism lateral edges gain a witness was false at 2635cbd6 — the prism branch keyed on `solid_family`, a field no scene carries (independent review IMPORTANT-1). Kept unchanged as written."
+  ],
+  "rule_applied": "backend/app/main.py CACHE_VERSION history 95/97/103/104/112-116: a change of SERVED envelope content requires a bump, because /api/analyze returns a cache hit's envelope_json as is without rebuilding the scene",
+  "model_surface_changed": false,
+  "semantic_environment_hash": "b1714b566e25c91280094c1a431228eac01e8a25a9efaa11ba638dd3de87d5a5 (unchanged; backend/cache_identity.lock.json re-locked for the version only)",
+  "directions": {
+    "served_content_changed": "served Path A scenes gain segment3.perpendicular_witness (exact-gram-line-plane-orthogonality/1) on a pyramid's CONSTRUCT_HEIGHT segment (regular-pyramid altitude, a given SA ⟂ base) and on every lateral edge of a right prism / cuboid / cube (solid shape_class PRISM_LIKE); Scene3D draws the right-angle marker from it",
+    "served_to_refused": "none",
+    "refused_to_served": "none (the refused control stays refused and uncached)",
+    "unchanged": "every other byte of the envelope: answers, provenance, formation steps, labels (IDENTICAL_AFTER_STRIP on 9/9 served cases)"
+  },
+  "probe": {
+    "script": "cache_probe.py (v2 of the Wave 1 run's cache/cache_probe.py, + rectangular pyramid and the prism family; real POST /api/analyze per tree; only the two LLM stages stubbed; temp SQLite; outbound sockets refused; 0 provider requests)",
+    "before": "cache-probe-main.json + legacy-v126-rows.json (main f0560449, CACHE_VERSION 126: genuine rows written by v126 code)",
+    "after": "cache-probe-new.json (corrective product commit with the shape_class fix)",
+    "result": {
+      "S1_side_height_volume / S6_renamed_vertices / S7_named_centre": "v126: 0 segment witnesses; v127: S->O (formation_construct_height); hit keeps it",
+      "SA_given_right_triangle_pyramid / SA_given_rectangular_pyramid": "v126: 0; v127: S->A only; oblique lateral edges none",
+      "right_triangular_prism": "v126: 0; v127: D->A, E->B, F->C (prism_lateral_altitude)",
+      "cuboid / cube / square_prism": "v126: 0; v127: A'->A, B'->B, C'->C, D'->D (prism_lateral_altitude); base and top edges none",
+      "REFUSED_oblique_prism": "unsupported on both trees, never cached"
+    }
+  },
+  "provenance": "rule formation_construct_height (pyramid CONSTRUCT_HEIGHT) / prism_lateral_altitude (PRISM_LIKE height or lateral edge), status ENGINE_VERIFIED: only what is checked (formation role + exact Gram orthogonality). Rule names are borrowed from certificates._infer_segment_provenance; route D pairs formation_construct_height with GIVEN, Path A deliberately uses ENGINE_VERIFIED.",
+  "regression": {
+    "test": "backend/tests/test_cache_segment_witness_invalidation.py (16 tests)",
+    "red_stage_1": "Wave 1 code at 126: genuine v126 rows are valid hits",
+    "red_stage_2": "after the bump: provenance label regular_pyramid_altitude_to_base_center/DERIVED",
+    "red_stage_3": "after review: 4 prism cases get 0 witnesses + prism unit fault injection (solid_family never set)",
+    "green": "16 passed"
+  },
+  "migration_or_purge": "NONE — no database row was read, migrated or deleted; old rows become misses by policy_version",
+  "not_regenerated": "frontend/src/data/geometry-samples.json (offline UI samples, last built 2026-10-02, no drift lock) still has no segment witness; it is not served by /api/analyze",
+  "historical_mode_unknown": "ISSUE-OPS-CACHE-HISTORICAL-MODE-UNKNOWN unchanged"
+}

@@ -1,0 +1,313 @@
+{
+ "cache_version": "126",
+ "cases": {
+  "REFUSED_oblique_prism": {
+   "answers": {},
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "30afc1f00a5b78bee15afdbe693b77be41aba3e7343db8ae8d5b4f88c9aec41c",
+   "envelope_sha256_fresh": "30afc1f00a5b78bee15afdbe693b77be41aba3e7343db8ae8d5b4f88c9aec41c",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": null
+   },
+   "request2": {
+    "cached": false,
+    "source": null
+   },
+   "row_policy_version": null,
+   "rows_for_key": 0,
+   "scene3d_bytes": 2,
+   "segment3_perpendicular_witness": {},
+   "segment3_perpendicular_witness_cached": {},
+   "status": "unsupported"
+  },
+  "S1_side_height_volume": {
+   "answers": {
+    "V": "16",
+    "canh_day": "4",
+    "chieu_cao": "3",
+    "chieu_cao_SO": "3",
+    "dien_tich_day_ABCD": "16"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "86d7f2c3ffe7e1fff5a642f93b36605e8039ef3c53faf417871d7a49723c62a2",
+   "envelope_sha256_fresh": "86d7f2c3ffe7e1fff5a642f93b36605e8039ef3c53faf417871d7a49723c62a2",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "126",
+   "rows_for_key": 1,
+   "scene3d_bytes": 27598,
+   "segment3_perpendicular_witness": {},
+   "segment3_perpendicular_witness_cached": {},
+   "status": "ok"
+  },
+  "S6_renamed_vertices": {
+   "answers": {
+    "V": "16",
+    "canh_day": "4",
+    "chieu_cao": "3",
+    "chieu_cao_SO": "3",
+    "dien_tich_day_MNPQ": "16"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "bc7c2b9fb3fdbe5c3a821ff20d2520b30a0ea5213a8fa2fc4279d7150a5253cf",
+   "envelope_sha256_fresh": "bc7c2b9fb3fdbe5c3a821ff20d2520b30a0ea5213a8fa2fc4279d7150a5253cf",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "126",
+   "rows_for_key": 1,
+   "scene3d_bytes": 27598,
+   "segment3_perpendicular_witness": {},
+   "segment3_perpendicular_witness_cached": {},
+   "status": "ok"
+  },
+  "S7_named_centre": {
+   "answers": {
+    "AB_length": "4",
+    "SO_length": "3",
+    "V": "16",
+    "chieu_cao_SO": "3",
+    "dien_tich_day_ABCD": "16"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "235b072fcda62e3c03036b6dcc895ed5f57578074a302cd4fe897e7ef49f6bde",
+   "envelope_sha256_fresh": "235b072fcda62e3c03036b6dcc895ed5f57578074a302cd4fe897e7ef49f6bde",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "126",
+   "rows_for_key": 1,
+   "scene3d_bytes": 27797,
+   "segment3_perpendicular_witness": {},
+   "segment3_perpendicular_witness_cached": {},
+   "status": "ok"
+  },
+  "SA_given_rectangular_pyramid": {
+   "answers": {
+    "AB_length": "3",
+    "AD_length": "4",
+    "SA_length": "6",
+    "dien_tich_day_ABCD": "12",
+    "the_tich_khoi_chop": "24",
+    "v": "24"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "0176c89e7030b6b974de8f8f7331d209ce61690839f1821ee28ffc29dd659548",
+   "envelope_sha256_fresh": "0176c89e7030b6b974de8f8f7331d209ce61690839f1821ee28ffc29dd659548",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "126",
+   "rows_for_key": 1,
+   "scene3d_bytes": 21948,
+   "segment3_perpendicular_witness": {},
+   "segment3_perpendicular_witness_cached": {},
+   "status": "ok"
+  },
+  "SA_given_right_triangle_pyramid": {
+   "answers": {
+    "AB_length": "3",
+    "AC_length": "4",
+    "SA_length": "5",
+    "dien_tich_day_ABC": "6",
+    "the_tich_khoi": "10",
+    "the_tich_khoi_chop": "10"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "c7fc1d8ababf74b5f946c731c695b350fe3c209f87c299dd4fb4e8594ecc6b8e",
+   "envelope_sha256_fresh": "c7fc1d8ababf74b5f946c731c695b350fe3c209f87c299dd4fb4e8594ecc6b8e",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "126",
+   "rows_for_key": 1,
+   "scene3d_bytes": 19935,
+   "segment3_perpendicular_witness": {},
+   "segment3_perpendicular_witness_cached": {},
+   "status": "ok"
+  },
+  "cube": {
+   "answers": {
+    "AA_prime_length": "4",
+    "AB_length": "4",
+    "AD_length": "4",
+    "V": "64",
+    "chieu_cao_AA_prime": "4",
+    "dien_tich_day_ABCD": "16",
+    "the_tich_khoi_hop": "64"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "ecee14def1d22db19bf6f8c60420647172c82a92754c3c23e02b102d5a669ac9",
+   "envelope_sha256_fresh": "ecee14def1d22db19bf6f8c60420647172c82a92754c3c23e02b102d5a669ac9",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "126",
+   "rows_for_key": 1,
+   "scene3d_bytes": 30507,
+   "segment3_perpendicular_witness": {},
+   "segment3_perpendicular_witness_cached": {},
+   "status": "ok"
+  },
+  "cuboid": {
+   "answers": {
+    "AA_prime_length": "5",
+    "AB_length": "3",
+    "AD_length": "4",
+    "V": "60",
+    "chieu_cao_AA_prime": "5",
+    "dien_tich_day_ABCD": "12",
+    "the_tich_khoi_hop": "60"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "07b1532dff42a3177f870a3f5a1bf8d99d0aec48fde390ee4983a3728dde047b",
+   "envelope_sha256_fresh": "07b1532dff42a3177f870a3f5a1bf8d99d0aec48fde390ee4983a3728dde047b",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "126",
+   "rows_for_key": 1,
+   "scene3d_bytes": 29608,
+   "segment3_perpendicular_witness": {},
+   "segment3_perpendicular_witness_cached": {},
+   "status": "ok"
+  },
+  "right_triangular_prism": {
+   "answers": {
+    "AB_length": "3",
+    "AC_length": "4",
+    "AD_length": "5",
+    "dien_tich_day_ABC": "6",
+    "the_tich_lang_tru": "30",
+    "the_tich_solid_ABCDEF": "30"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "6ac27a574539946e394456e571126245eb87b5b148609b9499b5302972d2beb9",
+   "envelope_sha256_fresh": "6ac27a574539946e394456e571126245eb87b5b148609b9499b5302972d2beb9",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "126",
+   "rows_for_key": 1,
+   "scene3d_bytes": 23064,
+   "segment3_perpendicular_witness": {},
+   "segment3_perpendicular_witness_cached": {},
+   "status": "ok"
+  },
+  "square_prism": {
+   "answers": {
+    "AA_prime_length": "7",
+    "AB_length": "3",
+    "AD_length": "3",
+    "V": "63",
+    "chieu_cao_AA_prime": "7",
+    "dien_tich_day_ABCD": "9",
+    "the_tich_khoi_lang_tru": "63"
+   },
+   "cached_equals_fresh": true,
+   "envelope_sha256_cached": "fd24ba4ea2a1756f69489efe6a492ef1682145efd7e80b5725be3d5fb1b0c770",
+   "envelope_sha256_fresh": "fd24ba4ea2a1756f69489efe6a492ef1682145efd7e80b5725be3d5fb1b0c770",
+   "http": [
+    200,
+    200
+   ],
+   "request1": {
+    "cached": false,
+    "source": "semantic_program"
+   },
+   "request2": {
+    "cached": true,
+    "source": "exact_cache"
+   },
+   "row_policy_version": "126",
+   "rows_for_key": 1,
+   "scene3d_bytes": 30567,
+   "segment3_perpendicular_witness": {},
+   "segment3_perpendicular_witness_cached": {},
+   "status": "ok"
+  }
+ },
+ "llm_stage_stub_calls": {
+  "analyze": 11,
+  "program": 11
+ },
+ "provider_requests": 0
+}

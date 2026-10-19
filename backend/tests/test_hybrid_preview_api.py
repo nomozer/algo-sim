@@ -125,7 +125,17 @@ def test_llm_only_byte_parity_against_pre_wiring_baseline(monkeypatch):
         assert r.status_code == 200 and r.json()['status'] == 'ok', r.text
         replies.append(r.json())
     assert replies[0] == replies[1]
-    digest = hashlib.sha256(json.dumps(replies[0], ensure_ascii=False, sort_keys=True).encode()).hexdigest()
+    # Run `segment-witness-cache-invalidation` (CACHE_VERSION 127): the served prism scene now carries a certified
+    # `segment3.perpendicular_witness` on each lateral edge AD, BE, CF — the ONLY intended difference from the
+    # pre-wiring baseline. The historical digest is unchanged; it is compared with the witness removed.
+    seg = [o for o in replies[0]['scene3d']['objects'] if o['type'] == 'segment3']
+    assert {o['perpendicular_witness']['from']: o['perpendicular_witness']['foot_id']
+            for o in seg if 'perpendicular_witness' in o} == {'D': 'A', 'E': 'B', 'F': 'C'}
+    baseline = json.loads(json.dumps(replies[0]))
+    for o in baseline['scene3d']['objects']:
+        if o['type'] == 'segment3':
+            o.pop('perpendicular_witness', None)
+    digest = hashlib.sha256(json.dumps(baseline, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
     print('PRE_WIRING_LLM_ONLY_SHA256=' + digest)
     # Captured on clean 6592306d before any product edit (canonical full HTTP response).
     assert digest == 'e6695fe6f9dfe2cdce9c005bd2b61fe42853b6eef87e6d6deae7d0250ad39f05'
