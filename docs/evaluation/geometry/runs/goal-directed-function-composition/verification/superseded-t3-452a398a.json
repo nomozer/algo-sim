@@ -24,9 +24,10 @@
   "log": {
     "path": "verification/superseded-t3-452a398a.log",
     "sha256_raw_bytes_as_written": "6f6c39a3a909f008b57af07f626f5eca3d89cf8b6edb5d56d299363228d5ee57",
-    "sha256_lf_normalized": "e62e944a23eb1315211b69d1f08e2e441a467d02c0d784407faef11265deb41b",
-    "hash_note": "the log was written with LF only (0 CR), so both hashes describe the committed blob; a checkout with core.autocrlf=true converts it on disk — use the LF-normalized hash",
-    "lines": 253
+    "hash_note": "the gate writes mixed line endings (201 CR); the committed blob is LF-normalized. Verify with `git show <commit>:<path> | sha256sum` = sha256_committed_blob; sha256_raw_bytes_as_written is the file as the gate wrote it (the copy on a core.autocrlf=true checkout may differ again)",
+    "lines": 253,
+    "sha256_committed_blob": "e62e944a23eb1315211b69d1f08e2e441a467d02c0d784407faef11265deb41b",
+    "correction": "the note claiming 0 CR was wrong (201 CR); the LF-normalized hash it recorded equals the committed blob hash"
   },
   "gates": {
     "backend_pytest": {

@@ -24,15 +24,44 @@
   "log": {
     "path": "verification/t3-authoritative.log",
     "sha256_raw_bytes_as_written": "24b18e159239774d71d0f750a9317be85e6ad5524747819292fff897f19e8d80",
-    "hash_note": "written with LF only (0 CR), so this is also the hash of the committed blob; a checkout with core.autocrlf=true converts the file on disk — hash `git show <commit>:<path>`",
-    "lines": 253
+    "sha256_committed_blob": "d2cd4fb6ac745d4838326752b27d867d53478c4821c673c41433a5d86420b989",
+    "hash_note": "the gate writes mixed line endings (201 CR); the committed blob is LF-normalized. Verify with `git show <commit>:<path> | sha256sum` = sha256_committed_blob; sha256_raw_bytes_as_written is the file as the gate wrote it (the copy on a core.autocrlf=true checkout may differ again)",
+    "lines": 253,
+    "correction": "the first version of this receipt (4a480b96) said the log held 0 CR and the raw hash was the blob hash — wrong (a shell CR count returned 0); corrected here before any use"
   },
   "gates": {
-    "backend_pytest": {"status": "PASS", "passed": 11076, "failed": 0, "skipped": 1, "deselected": 2, "xfailed": 9, "duration_seconds": 528.6},
-    "frontend_vitest": {"status": "PASS", "test_files_passed": 70, "tests_passed": 1146, "failed": 0, "duration_seconds": 11.9},
-    "frontend_typecheck_and_build": {"status": "PASS", "duration_seconds": 8.3},
-    "thesis_demo_replay": {"status": "PASS", "demo_cases": "5/5", "reduced_chain_cases": "1/1", "duration_seconds": 0.7},
-    "demo_crash_surface": {"status": "PASS", "expected_boundaries": "6/6", "unhandled_500": 0, "duration_seconds": 0.4}
+    "backend_pytest": {
+      "status": "PASS",
+      "passed": 11076,
+      "failed": 0,
+      "skipped": 1,
+      "deselected": 2,
+      "xfailed": 9,
+      "duration_seconds": 528.6
+    },
+    "frontend_vitest": {
+      "status": "PASS",
+      "test_files_passed": 70,
+      "tests_passed": 1146,
+      "failed": 0,
+      "duration_seconds": 11.9
+    },
+    "frontend_typecheck_and_build": {
+      "status": "PASS",
+      "duration_seconds": 8.3
+    },
+    "thesis_demo_replay": {
+      "status": "PASS",
+      "demo_cases": "5/5",
+      "reduced_chain_cases": "1/1",
+      "duration_seconds": 0.7
+    },
+    "demo_crash_surface": {
+      "status": "PASS",
+      "expected_boundaries": "6/6",
+      "unhandled_500": 0,
+      "duration_seconds": 0.4
+    }
   },
   "total_duration_seconds": 549.9,
   "provider_requests": 0,

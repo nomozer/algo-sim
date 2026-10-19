@@ -7,12 +7,31 @@
  "started_at_utc": "2026-10-19T13:22:51Z",
  "finished_at_utc": "2026-10-19T13:30:08Z",
  "detached_worktree": ".superpowers/worktrees/tmp-composition-t3 (temporary)",
- "gates": {"backend_pytest": {"status": "FAIL", "passed": 11071, "failed": 1, "skipped": 1, "deselected": 2, "xfailed": 9},
-           "frontend_vitest": {"status": "PASS", "test_files_passed": 70, "tests_passed": 1146},
-           "frontend_typecheck_and_build": "PASS", "thesis_demo_replay": "PASS", "demo_crash_surface": "PASS"},
+ "gates": {
+  "backend_pytest": {
+   "status": "FAIL",
+   "passed": 11071,
+   "failed": 1,
+   "skipped": 1,
+   "deselected": 2,
+   "xfailed": 9
+  },
+  "frontend_vitest": {
+   "status": "PASS",
+   "test_files_passed": 70,
+   "tests_passed": 1146
+  },
+  "frontend_typecheck_and_build": "PASS",
+  "thesis_demo_replay": "PASS",
+  "demo_crash_surface": "PASS"
+ },
  "failure": "tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI — the product left the measured candidate without a candidate_divergence layer for this run (the declared hash was still 8cb9857f…, the system is cddd83b8…)",
  "fix": "docs-only: candidate_divergence.json layer of this run (corrects segment-witness-cache-invalidation's); product and candidate freeze unchanged",
  "log": "verification/superseded-t3-54db7183.log",
  "provider_requests": 0,
- "not_evidence_for": "the next candidate"
+ "not_evidence_for": "the next candidate",
+ "log_sha256": {
+  "raw_bytes_as_written": "ee988fcba8d52da0dd71f55bc9242cfbcd60b7942bfa2a4c9ef6af1bf54b24fb",
+  "committed_blob": "6476f62f7341a0575d091485a42ede2d153f94a0ed471cea20fc5ff77db4256a"
+ }
 }
