@@ -5,8 +5,8 @@
 REPORT = docs/evaluation/geometry/runs/segment-witness-cache-invalidation/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/segment-witness-cache-invalidation/
 CLASSIFICATION = CACHE_VERSION 126 -> 127 for Wave 1 served segment3.perpendicular_witness (genuine v126 rows from main f0560449 were stale valid hits; cache decision + probe v2 in this run's cache/, first decision kept in the Wave 1 run's cache/) + Path A witness provenance labels corrected + dead Path A prism branch revived (review IMPORTANT-1); LLM_ONLY default, Adapter /2, model surface unchanged, Hybrid product NO-GO
-CODE_COMMIT = 2635cbd6 · 008918cb (final product commit; measured 8cb9857f… across 112 files); superseded candidate f8ac1ec7 (verification/superseded-t3-f8ac1ec7.json); final candidate freeze and T3 in the run handoff
-VERIFICATION = docs/evaluation/geometry/runs/segment-witness-cache-invalidation/handoff.md
+CODE_COMMIT = 2635cbd6 · 008918cb (final product commit; measured 8cb9857f… across 112 files); superseded candidate f8ac1ec7 (verification/superseded-t3-f8ac1ec7.json); final candidate freeze 1117cfd4 (clean detached T3 FULL_PRODUCT_GATE_PASS 10986/0 backend + 1146/0 frontend; independent review round 2 INDEPENDENT_REVIEW_PASS)
+VERIFICATION = docs/evaluation/geometry/runs/segment-witness-cache-invalidation/authoritative-t3.json
 MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
 CORRECTS = HYBRID_ARCHITECTURE_WAVE1_EXACT_CERTIFICATES_PLANNER (cache decision NO_BUMP and candidate_divergence.json; its measurements at fd310cd9 / 77b05def unchanged)
 CORRECTED_BY = NONE

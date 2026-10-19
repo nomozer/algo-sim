@@ -35,7 +35,24 @@
     "green": "16 passed"
   },
   "independent_review_round1": "INDEPENDENT_REVIEW_FAIL (IMPORTANT-1 dead prism branch; NONBLOCKING 1-4) at f8ac1ec7",
+  "independent_review_round2": "INDEPENDENT_REVIEW_PASS (0 blockers, 0 important; NB-A/B/C) at 1117cfd4",
+  "candidate_commit": "1117cfd4a2f3fea9c4c6524009eca9fee8300285",
+  "authoritative_t3": {
+    "verdict": "FULL_PRODUCT_GATE_PASS",
+    "candidate_commit": "1117cfd4a2f3fea9c4c6524009eca9fee8300285",
+    "backend_passed": 10986,
+    "backend_failed": 0,
+    "frontend_files_passed": 70,
+    "frontend_tests_passed": 1146,
+    "frontend_build": "PASS",
+    "demo_replay": "5/5",
+    "reduced_chain": "1/1",
+    "crash_surface": "6/6",
+    "log_sha256": "e2fcbcee5e9a25d5f4a4ad7b5965faae036cf927a80ce78410490daae4a25d0a",
+    "receipt": "docs/evaluation/geometry/runs/segment-witness-cache-invalidation/authoritative-t3.json"
+  },
+  "temporary_t3_worktree": "removed (git worktree remove without --force, junction removed first)",
   "merge": "NONE",
   "push": "NONE",
-  "status": "PENDING_FINAL_T3_AND_REVIEW"
+  "status": "WAVE1_CACHE127_READY_FOR_GO_MAIN"
 }

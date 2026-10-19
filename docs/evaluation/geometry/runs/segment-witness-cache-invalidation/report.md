@@ -67,8 +67,9 @@ segment witness, `point3` guard) and Wave 1B planner scope (dependency-aware tie
 `DANGLING_DEPENDENCY` / `UNKNOWN_DERIVED_REFERENCE` / `UNKNOWN_SOLID` / `DEPENDENCY_CYCLE` / `UNDERDETERMINED_POINT`)
 are those of the corrected run's report; the planner is untouched here. Limits: on Path A only a pyramid's
 `CONSTRUCT_HEIGHT` segment or a `PRISM_LIKE` height / lateral edge, against the `CONSTRUCT_BASE` polygon, can carry a
-marker — other perpendicularities (face ⟂ face, a line ⟂ a non-base face, an altitude without the formation role) get
-none; the offline UI samples (`frontend/src/data/geometry-samples.json`, last built 2026-10-02, no drift lock) were not
+marker — other perpendicularities (face ⟂ face, a line ⟂ a non-base face, an altitude without the formation role, e.g.
+regular hexagonal pyramids) get none; in a composite scene with a `PRISM_LIKE` solid a pyramid height would be labelled
+`prism_lateral_altitude` (status still `ENGINE_VERIFIED`; no such scene exists — review NB-A); the offline UI samples (`frontend/src/data/geometry-samples.json`, last built 2026-10-02, no drift lock) were not
 rebuilt and show no segment marker; Adapter `/2` still lacks exact relation operands (HFOI-F4); route D stays unwired;
 `ISSUE-OPS-CACHE-HISTORICAL-MODE-UNKNOWN` unchanged.
 

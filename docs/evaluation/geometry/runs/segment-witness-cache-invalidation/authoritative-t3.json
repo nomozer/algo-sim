@@ -1,0 +1,63 @@
+{
+  "schema": "AUTHORITATIVE_T3_RECEIPT/1",
+  "run_id": "segment-witness-cache-invalidation",
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "started_at_utc": "2026-10-19T09:31:41Z",
+  "verified_at_utc": "2026-10-19T09:39:59Z",
+  "command": "cd frontend && node scripts/full-gate.mjs",
+  "detached_worktree": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-verify-wave1-cache127",
+  "detached_worktree_clean_at_start": true,
+  "detached_worktree_cleaned_up": true,
+  "candidate_commit": "1117cfd4a2f3fea9c4c6524009eca9fee8300285",
+  "candidate_commit_evidence": "verification/t3-head.txt (git rev-parse HEAD in the detached worktree immediately before the gate)",
+  "product_commit_sha": "008918cb916ff3e4f9fb49492889da3b5c636849",
+  "cache_version": "127",
+  "measured_system": {
+    "so_file": 112,
+    "tree_hash": "8cb9857f10f4a62788f7ddc099133eb31d903a36abccea5e5432b8b7e8e37f7d",
+    "verify_command": "python backend/scripts/freeze_evaluation_candidate.py --verify",
+    "verify_status": "MATCH"
+  },
+  "log": {
+    "path": "verification/t3-authoritative.log",
+    "sha256": "e2fcbcee5e9a25d5f4a4ad7b5965faae036cf927a80ce78410490daae4a25d0a",
+    "lines": 252
+  },
+  "gates": {
+    "backend_pytest": {
+      "status": "PASS",
+      "passed": 10986,
+      "failed": 0,
+      "skipped": 1,
+      "deselected": 2,
+      "xfailed": 9,
+      "duration_seconds": 482.2
+    },
+    "frontend_vitest": {
+      "status": "PASS",
+      "test_files_passed": 70,
+      "tests_passed": 1146,
+      "failed": 0,
+      "duration_seconds": 8.3
+    },
+    "frontend_typecheck_and_build": {
+      "status": "PASS",
+      "duration_seconds": 5.4
+    },
+    "thesis_demo_replay": {
+      "status": "PASS",
+      "demo_cases": "5/5",
+      "reduced_chain_cases": "1/1",
+      "duration_seconds": 0.7
+    },
+    "demo_crash_surface": {
+      "status": "PASS",
+      "expected_boundaries": "6/6",
+      "unhandled_500": 0,
+      "duration_seconds": 0.4
+    }
+  },
+  "total_duration_seconds": 497.1,
+  "provider_requests": 0,
+  "not_reused": "neither the Wave 1 receipt at 77b05def nor this run's superseded receipt at f8ac1ec7 (verification/superseded-t3-f8ac1ec7.json) is evidence for this candidate"
+}
