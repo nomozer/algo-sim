@@ -1,0 +1,1512 @@
+{
+ "schema": "goal-directed-composition-arm/1",
+ "arm": "no-composition",
+ "code_root_head": "594870fcf528def44fa9edc5ee841d08e0f3d6b6",
+ "registry_version": "geometry-functions/7",
+ "planner_version": "geometry-fact-planner/8",
+ "max_effect_depth": 1,
+ "model_calls": 0,
+ "rows": [
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-sq-centroid-area",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_area",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "13/9"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.74,
+   "route_ms": 0.309,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-sq-centroid-length",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_length",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "29/9"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.268,
+   "route_ms": 0.251,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-sq-centroid-dist-plane",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_distance_point_plane",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "16/9"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.243,
+   "route_ms": 0.246,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-sq-centroid-dist-line",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid+orthogonal_projection_line->ask_length",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "25/9"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.241,
+   "route_ms": 1.006,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-sq-centroid-angle-plane",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_angle_line_plane",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "20/29"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.354,
+   "route_ms": 0.292,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-sq-centroid-angle-lines",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_angle_lines",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "2/29"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.293,
+   "route_ms": 0.28,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-sq-midpoint-angle-plane",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "midpoint->ask_angle_line_plane",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "8/17"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.27,
+   "route_ms": 0.301,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-sq-midpoint-angle-lines",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "midpoint->ask_angle_lines",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "0"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.282,
+   "route_ms": 0.265,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-sq-named-angle-lines",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "new_primitive",
+   "composition_declared": "ask_angle_lines",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "2/13"
+   },
+   "expected": {
+    "q": "2/13"
+   },
+   "expected_codes": null,
+   "signature": "ask_angle_lines",
+   "goals": 1,
+   "goals_verified": 1,
+   "calls": 5,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "plan_error": null,
+   "plan_ms": 1.921,
+   "route_ms": 27.3,
+   "scene_timeline_ok": true
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-sq-midpoint-area-control",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "existing_capability_control",
+   "composition_declared": "midpoint->ask_area",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "13/4"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.357,
+   "route_ms": 0.331,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-sq-midpoint-dist-line-control",
+   "split": "dev",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "existing_capability_control",
+   "composition_declared": "midpoint+orthogonal_projection_line->ask_length",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "13/4"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.249,
+   "route_ms": 0.23,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "W2-EXP-01",
+   "split": "dev",
+   "kind": "positive",
+   "source": "W2-EXP-01",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_area",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "7/144"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.259,
+   "route_ms": 0.247,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "W2-EXP-02",
+   "split": "dev",
+   "kind": "positive",
+   "source": "W2-EXP-02",
+   "novelty": "novel_function_combination",
+   "composition_declared": "midpoint->ask_angle_line_plane",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "9/11"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.247,
+   "route_ms": 0.243,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "W2-EXP-02-split",
+   "split": "dev",
+   "kind": "positive",
+   "source": "W2-EXP-02 (premises split one value per sentence)",
+   "novelty": "novel_function_combination",
+   "composition_declared": "midpoint->ask_angle_line_plane",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "9/11"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.257,
+   "route_ms": 0.238,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "W2-EXP-15",
+   "split": "dev",
+   "kind": "positive",
+   "source": "W2-EXP-15",
+   "novelty": "novel_function_combination",
+   "composition_declared": "ask_angle_lines | ask_volume | centroid->ask_distance_point_plane",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q1": "9/52",
+    "q2": "75/4",
+    "q3": "4/9"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 3,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.451,
+   "route_ms": 0.451,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "W2-EXP-10A-2",
+   "split": "dev",
+   "kind": "positive",
+   "source": "W2-EXP-10A-2",
+   "novelty": "existing_capability_control",
+   "composition_declared": "ask_angle_line_plane",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "1"
+   },
+   "expected": {
+    "q": "1"
+   },
+   "expected_codes": null,
+   "signature": "ask_angle_line_plane",
+   "goals": 1,
+   "goals_verified": 1,
+   "calls": 5,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "plan_error": null,
+   "plan_ms": 0.305,
+   "route_ms": 8.298,
+   "scene_timeline_ok": true
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-neg-two-partners",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "FACT_INCOMPLETE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "FACT_INCOMPLETE",
+   "plan_ms": 0.153,
+   "route_ms": 0.142,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-neg-partner-in-target",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "FACT_INCOMPLETE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "FACT_INCOMPLETE",
+   "plan_ms": 0.101,
+   "route_ms": 0.107,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-neg-centroid-of-four",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "FACT_INCOMPLETE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "FACT_INCOMPLETE",
+   "plan_ms": 0.1,
+   "route_ms": 0.096,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-neg-negated",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "NEGATED_CLAUSE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "NEGATED_CLAUSE"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "NEGATED_CLAUSE",
+   "plan_ms": 0.247,
+   "route_ms": 0.219,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-neg-condition",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "CONDITIONAL_CLAUSE"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "CONDITIONAL_CLAUSE",
+   "plan_ms": 0.189,
+   "route_ms": 0.186,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-neg-wrong-descriptor",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED_OTHER_CODE",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.248,
+   "route_ms": 0.24,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "dev-neg-wrong-target",
+   "split": "dev",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED_OTHER_CODE",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.237,
+   "route_ms": 0.257,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-dev.json",
+   "id": "W2-EXP-13A",
+   "split": "dev",
+   "kind": "negative",
+   "source": "W2-EXP-13A",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED_OTHER_CODE",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.203,
+   "route_ms": 0.198,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-cube-centroid-angle-plane",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_angle_line_plane",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "2/3"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.426,
+   "route_ms": 0.249,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-cube-midpoint-angle-lines",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "midpoint->ask_angle_lines",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "1/18"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.226,
+   "route_ms": 0.202,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-tetra-centroid-angle-plane",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_angle_line_plane",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "0"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.191,
+   "route_ms": 0.184,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-tetra-midpoint-angle-lines",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "midpoint->ask_angle_lines",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "1/12"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.181,
+   "route_ms": 0.191,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-prism-centroid-area",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_area",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "28/3"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.221,
+   "route_ms": 0.207,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-cuboid-centroid-dist-plane",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_distance_point_plane",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "1"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.201,
+   "route_ms": 0.196,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-regpyr-centroid-length",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_length",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "41/9"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.268,
+   "route_ms": 0.212,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-rightb-centroid-angle-plane",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_angle_line_plane",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "25/169"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.312,
+   "route_ms": 0.283,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-t120-midpoint-angle-lines",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "midpoint->ask_angle_lines",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "7/20"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.266,
+   "route_ms": 0.262,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-cube-centroid-dist-line",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid+orthogonal_projection_line->ask_length",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "4/9"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.173,
+   "route_ms": 0.161,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-prism-midpoint-angle-plane",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "midpoint->ask_angle_line_plane",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "3/4"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.275,
+   "route_ms": 0.277,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-regpyr-centroid-angle-lines-reversed",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_angle_lines",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "9/41"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.276,
+   "route_ms": 0.262,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-t120-named-angle-lines",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "new_primitive",
+   "composition_declared": "ask_angle_lines",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "25/116"
+   },
+   "expected": {
+    "q": "25/116"
+   },
+   "expected_codes": null,
+   "signature": "ask_angle_lines",
+   "goals": 1,
+   "goals_verified": 1,
+   "calls": 7,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "plan_error": null,
+   "plan_ms": 0.298,
+   "route_ms": 7.655,
+   "scene_timeline_ok": true
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-cuboid-named-angle-lines",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "new_primitive",
+   "composition_declared": "ask_angle_lines",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "36/145"
+   },
+   "expected": {
+    "q": "36/145"
+   },
+   "expected_codes": null,
+   "signature": "ask_angle_lines",
+   "goals": 1,
+   "goals_verified": 1,
+   "calls": 6,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "plan_error": null,
+   "plan_ms": 0.314,
+   "route_ms": 9.941,
+   "scene_timeline_ok": true
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-rightb-midpoint-area-control",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "existing_capability_control",
+   "composition_declared": "midpoint->ask_area",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "25/4"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.345,
+   "route_ms": 0.303,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-tetra-centroid-dist-plane",
+   "split": "holdout",
+   "kind": "positive",
+   "source": "authored",
+   "novelty": "novel_function_combination",
+   "composition_declared": "centroid->ask_distance_point_plane",
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED",
+   "values": {},
+   "expected": {
+    "q": "8/27"
+   },
+   "expected_codes": null,
+   "signature": null,
+   "goals": 1,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.168,
+   "route_ms": 0.171,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-neg-cube-wrong-partner",
+   "split": "holdout",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED_OTHER_CODE",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.216,
+   "route_ms": 0.186,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-neg-tetra-centroid-of-two",
+   "split": "holdout",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "FACT_INCOMPLETE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "FACT_INCOMPLETE",
+   "plan_ms": 0.066,
+   "route_ms": 0.057,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-neg-prism-unknown-plane-label",
+   "split": "holdout",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "PLAN_TOO_LARGE",
+   "verdict": "REFUSED_OTHER_CODE",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH",
+    "UNKNOWN_LABEL"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "PLAN_TOO_LARGE",
+   "plan_ms": 0.214,
+   "route_ms": 0.217,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-neg-regpyr-negated",
+   "split": "holdout",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "NEGATED_CLAUSE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "NEGATED_CLAUSE"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "NEGATED_CLAUSE",
+   "plan_ms": 0.197,
+   "route_ms": 0.187,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-neg-t120-lines-vs-planes",
+   "split": "holdout",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "NOT_ASKED_IN_SOURCE",
+    "REQUEST_NOT_ANSWERED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 7,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "plan_error": null,
+   "plan_ms": 0.269,
+   "route_ms": 1.458,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-neg-cube-two-partners",
+   "split": "holdout",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "FACT_INCOMPLETE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "FACT_INCOMPLETE"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "FACT_INCOMPLETE",
+   "plan_ms": 0.085,
+   "route_ms": 0.068,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-neg-rightb-condition",
+   "split": "holdout",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "CONDITIONAL_CLAUSE"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "CONDITIONAL_CLAUSE",
+   "plan_ms": 0.229,
+   "route_ms": 0.217,
+   "scene_timeline_ok": null
+  },
+  {
+   "corpus": "corpus-holdout.json",
+   "id": "ho-neg-cube-ambiguous",
+   "split": "holdout",
+   "kind": "negative",
+   "source": "authored",
+   "novelty": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "AMBIGUOUS_FACT",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "AMBIGUOUS_FACT"
+   ],
+   "signature": null,
+   "goals": 0,
+   "goals_verified": 0,
+   "calls": 0,
+   "fresh_constructions": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "plan_error": "AMBIGUOUS_FACT",
+   "plan_ms": 0.135,
+   "route_ms": 0.13,
+   "scene_timeline_ok": null
+  }
+ ]
+}

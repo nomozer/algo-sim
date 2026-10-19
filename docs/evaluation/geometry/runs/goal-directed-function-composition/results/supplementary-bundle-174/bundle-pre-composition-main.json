@@ -1,0 +1,1399 @@
+{
+ "schema": "goal-directed-composition-bundle-arm/1",
+ "arm": "pre-composition-main",
+ "code_root_head": "ce5b25750afba6ccd574165c3d73648ea0746b7a",
+ "rows": [
+  {
+   "corpus": "new/positive",
+   "id": "pyr-midpoint-to-plane",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_distance_point_plane"
+  },
+  {
+   "corpus": "new/positive",
+   "id": "pyr-midpoint-to-named-line",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->orthogonal_projection_line->ask_length"
+  },
+  {
+   "corpus": "new/positive",
+   "id": "pyr-midpoint-to-result-line",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->intersection_line->orthogonal_projection_line->ask_length"
+  },
+  {
+   "corpus": "new/positive",
+   "id": "cube-midpoint-to-plane",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_distance_point_plane"
+  },
+  {
+   "corpus": "new/positive",
+   "id": "cuboid-midpoint-to-result-line",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->intersection_line->orthogonal_projection_line->ask_length"
+  },
+  {
+   "corpus": "new/positive",
+   "id": "prism-midpoint-to-plane",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_distance_point_plane"
+  },
+  {
+   "corpus": "new/positive",
+   "id": "pyr-reuse-named-midpoint",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_distance_point_plane"
+  },
+  {
+   "corpus": "new/positive",
+   "id": "pyr-two-goals-shared-point",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_distance_point_plane | midpoint->orthogonal_projection_line->ask_length"
+  },
+  {
+   "corpus": "new/positive",
+   "id": "pyr-zero-distance",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_distance_point_plane"
+  },
+  {
+   "corpus": "new/negative",
+   "id": "label-not-in-source",
+   "status": "REFUSED",
+   "code": "UNKNOWN_LABEL",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "descriptor-operands-mismatch",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "descriptor-kind-mismatch",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "conditional-question",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "asserted-not-asked",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "proof-goal",
+   "status": "REFUSED",
+   "code": "GOAL_CLAUSE_NOT_PREMISE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "negated-question",
+   "status": "REFUSED",
+   "code": "NEGATED_CLAUSE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "centroid-without-contract",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "named-descriptor",
+   "status": "REFUSED",
+   "code": "SCHEMA_INVALID",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "descriptor-arity",
+   "status": "REFUSED",
+   "code": "FACT_INCOMPLETE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "degenerate-descriptor",
+   "status": "REFUSED",
+   "code": "FACT_INCOMPLETE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "underdetermined-figure",
+   "status": "REFUSED",
+   "code": "MISSING_DIMENSION",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "contradictory-givens",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "unread-modifier",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "parallel-result-line",
+   "status": "REFUSED",
+   "code": "PARALLEL_NO_INTERSECTION",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/negative",
+   "id": "segment-is-not-a-line",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "new/discovery",
+   "id": "centroid-to-plane",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "verdict": "REFUSED",
+   "signature": null
+  },
+  {
+   "corpus": "new/discovery",
+   "id": "centroid-to-named-line",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "verdict": "REFUSED",
+   "signature": null
+  },
+  {
+   "corpus": "new/discovery",
+   "id": "centroid-to-result-line",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "verdict": "REFUSED",
+   "signature": null
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B01",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_volume"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B02",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_volume"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B03",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_distance_point_plane"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B04",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_volume"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B05",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_length"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B06",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_distance_point_plane"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B07",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_length"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B08",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_length"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B09",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_length"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B10",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_length"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B11",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_length"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B12",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_length"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B13",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_length"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B14",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_length"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B15",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_length"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B16",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_length"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B17",
+   "status": "REFUSED",
+   "code": "MISSING_DIMENSION",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B18",
+   "status": "REFUSED",
+   "code": "MISSING_DIMENSION",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B19",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B20",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B21",
+   "status": "REFUSED",
+   "code": "FIGURE_NOT_UNIQUE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B22",
+   "status": "REFUSED",
+   "code": "UNDERDETERMINED_POINT",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B23",
+   "status": "REFUSED",
+   "code": "OUT_OF_SCOPE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B24",
+   "status": "REFUSED",
+   "code": "OUT_OF_SCOPE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B25",
+   "status": "REFUSED",
+   "code": "OUT_OF_SCOPE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B26",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "orthogonal_projection_line->ask_length"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B27",
+   "status": "REFUSED",
+   "code": "OUT_OF_SCOPE",
+   "verdict": "REFUSED",
+   "signature": null
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B28",
+   "status": "REFUSED",
+   "code": "PREDICATE_NOT_IN_QUOTE",
+   "verdict": "REFUSED",
+   "signature": null
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B29",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_angle_line_plane"
+  },
+  {
+   "corpus": "benchmark30",
+   "id": "B30",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_length"
+  },
+  {
+   "corpus": "result_binding/positive",
+   "id": "derived-line-pyramid",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "orthogonal_projection_line->ask_length"
+  },
+  {
+   "corpus": "result_binding/positive",
+   "id": "derived-line-cuboid",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "orthogonal_projection_line->ask_length"
+  },
+  {
+   "corpus": "result_binding/positive",
+   "id": "derived-line-prism",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "orthogonal_projection_line->ask_length"
+  },
+  {
+   "corpus": "result_binding/positive",
+   "id": "different-direction-decomposition",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "orthogonal_projection_line->ask_length"
+  },
+  {
+   "corpus": "result_binding/positive",
+   "id": "zero-distance",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "orthogonal_projection_line->ask_length"
+  },
+  {
+   "corpus": "result_binding/positive",
+   "id": "shared-line-foot-two-goals",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "orthogonal_projection_line->ask_length | orthogonal_projection_line->ask_length"
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "unknown-reference",
+   "status": "REFUSED",
+   "code": "UNKNOWN_DERIVED_REFERENCE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "wrong-reference-type",
+   "status": "REFUSED",
+   "code": "DERIVED_REFERENCE_TYPE_MISMATCH",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "producer-source-mismatch",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "conditional-producer",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "proof-producer",
+   "status": "REFUSED",
+   "code": "GOAL_CLAUSE_NOT_PREMISE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "negated-producer",
+   "status": "REFUSED",
+   "code": "NEGATED_CLAUSE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "parallel-planes",
+   "status": "REFUSED",
+   "code": "PARALLEL_NO_INTERSECTION",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "coincident-planes",
+   "status": "REFUSED",
+   "code": "CONTAINED_INFINITE_INTERSECTION",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "long-quote-nonnumeric",
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "and-song-unread-premise",
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "unverified-goal-value",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "result_binding/negative",
+   "id": "cycle",
+   "status": "REFUSED",
+   "code": "DEPENDENCY_CYCLE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-0",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-1",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-2",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-3",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-4",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-5",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-6",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-7",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-8",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-9",
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-10",
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-11",
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-12",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-13",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-14",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-15",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-16",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-17",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-18",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-19",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-20",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-21",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-22",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-23",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-24",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-25",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-26",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-27",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-28",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-29",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-30",
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-31",
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-32",
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_EDGE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-33",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-34",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-35",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-36",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-37",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-38",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-39",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-40",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-41",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-42",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-43",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/development",
+   "id": "development-44",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-0",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-1",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-2",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-3",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-4",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-5",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-6",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-7",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-8",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-9",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-10",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-11",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-12",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-13",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-14",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-15",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-16",
+   "status": "REFUSED",
+   "code": "SECTION_PLANE_IS_FACE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-17",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-18",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-19",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-20",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-21",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-22",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-23",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-24",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-25",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-26",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-27",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-28",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-29",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "ask_section_area"
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-30",
+   "status": "REFUSED",
+   "code": "LINE_CONTAINED_IN_PLANE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "two_line/heldout",
+   "id": "heldout-31",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "NO_INDEPENDENT_EXPECTATION",
+   "signature": null
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "pyramid-midpoint-A",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_length"
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "pyramid-midpoint-B",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_length"
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "cube-midpoint-A",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_length"
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "cube-midpoint-B",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_length"
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "cuboid-midpoint-A",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_length"
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "cuboid-midpoint-B",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_length"
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "prism-midpoint-A",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_length"
+  },
+  {
+   "corpus": "goal/positive",
+   "id": "prism-midpoint-B",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "signature": "midpoint->ask_length"
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "ambiguous",
+   "status": "REFUSED",
+   "code": "AMBIGUOUS_FACT",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "conditional",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "prove",
+   "status": "REFUSED",
+   "code": "GOAL_CLAUSE_NOT_PREMISE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "negated",
+   "status": "REFUSED",
+   "code": "NEGATED_CLAUSE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "missing-target",
+   "status": "REFUSED",
+   "code": "FACT_INCOMPLETE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "extra-target",
+   "status": "REFUSED",
+   "code": "FACT_INCOMPLETE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "duplicate-descriptor",
+   "status": "REFUSED",
+   "code": "FACT_INCOMPLETE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "wrong-source-target",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "squared-request",
+   "status": "REFUSED",
+   "code": "NOT_ASKED_IN_SOURCE",
+   "verdict": "CORRECT_REFUSAL",
+   "signature": null
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "unread-second-ask",
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "verdict": "REFUSED_OTHER_CODE",
+   "signature": null
+  },
+  {
+   "corpus": "goal/negative",
+   "id": "contradictory-length",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "verdict": "REFUSED_OTHER_CODE",
+   "signature": null
+  },
+  {
+   "corpus": "goal/discovery",
+   "id": "centroid-A",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "verdict": "REFUSED",
+   "signature": null
+  },
+  {
+   "corpus": "goal/discovery",
+   "id": "centroid-D",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "verdict": "REFUSED",
+   "signature": null
+  }
+ ]
+}

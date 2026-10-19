@@ -1,0 +1,470 @@
+{
+ "schema": "goal-directed-composition-metrics/1",
+ "model_calls": 0,
+ "novelty_reference": "signatures VERIFIED by `pre-composition-main` on the same inputs are not counted as novel",
+ "inputs": {
+  "corpus-dev.json": "5e3a35d81e47aba1d764e3e2613087add36196e9d77bd07a12da8216cf1d3cbd",
+  "corpus-holdout.json": "b0ce86a2865e7852a737ebdf879242538a9b95e1de019cb2506fa63bc444f419",
+  "oracle.py": "0a686e320653dc90febdebfd50e3ff552f87e820763bb1f99e84387e1936c2b6"
+ },
+ "arms": {
+  "goal-directed": {
+   "dev": {
+    "verified_problem_coverage": {
+     "n": 15,
+     "d": 16
+    },
+    "novel_combination_problems_verified": {
+     "n": 11,
+     "d": 12
+    },
+    "novel_function_combinations_solved": {
+     "count": 9,
+     "signatures": [
+      "ask_angle_lines | ask_volume | centroid->ask_distance_point_plane",
+      "centroid->ask_angle_line_plane",
+      "centroid->ask_angle_lines",
+      "centroid->ask_area",
+      "centroid->ask_distance_point_plane",
+      "centroid->ask_length",
+      "centroid->orthogonal_projection_line->ask_length",
+      "midpoint->ask_angle_line_plane",
+      "midpoint->ask_angle_lines"
+     ]
+    },
+    "goals_solved": {
+     "n": 17,
+     "d": 18
+    },
+    "correct_refusal_rate": {
+     "n": 8,
+     "d": 8
+    },
+    "refused_with_other_code": {
+     "n": 0,
+     "d": 8
+    },
+    "false_positive_rate": {
+     "n": 0,
+     "d": 24
+    },
+    "intermediate_constructions_on_verified": 15,
+    "search_max": {
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 2
+    },
+    "plan_ms_median_verified": 0.803,
+    "scene_timeline_ok": {
+     "n": 15,
+     "d": 15
+    }
+   },
+   "holdout": {
+    "verified_problem_coverage": {
+     "n": 16,
+     "d": 16
+    },
+    "novel_combination_problems_verified": {
+     "n": 13,
+     "d": 13
+    },
+    "novel_function_combinations_solved": {
+     "count": 8,
+     "signatures": [
+      "centroid->ask_angle_line_plane",
+      "centroid->ask_angle_lines",
+      "centroid->ask_area",
+      "centroid->ask_distance_point_plane",
+      "centroid->ask_length",
+      "centroid->orthogonal_projection_line->ask_length",
+      "midpoint->ask_angle_line_plane",
+      "midpoint->ask_angle_lines"
+     ]
+    },
+    "goals_solved": {
+     "n": 16,
+     "d": 16
+    },
+    "correct_refusal_rate": {
+     "n": 8,
+     "d": 8
+    },
+    "refused_with_other_code": {
+     "n": 0,
+     "d": 8
+    },
+    "false_positive_rate": {
+     "n": 0,
+     "d": 24
+    },
+    "intermediate_constructions_on_verified": 15,
+    "search_max": {
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 2
+    },
+    "plan_ms_median_verified": 0.766,
+    "scene_timeline_ok": {
+     "n": 16,
+     "d": 16
+    }
+   }
+  },
+  "single-step": {
+   "dev": {
+    "verified_problem_coverage": {
+     "n": 15,
+     "d": 16
+    },
+    "novel_combination_problems_verified": {
+     "n": 11,
+     "d": 12
+    },
+    "novel_function_combinations_solved": {
+     "count": 9,
+     "signatures": [
+      "ask_angle_lines | ask_volume | centroid->ask_distance_point_plane",
+      "centroid->ask_angle_line_plane",
+      "centroid->ask_angle_lines",
+      "centroid->ask_area",
+      "centroid->ask_distance_point_plane",
+      "centroid->ask_length",
+      "centroid->orthogonal_projection_line->ask_length",
+      "midpoint->ask_angle_line_plane",
+      "midpoint->ask_angle_lines"
+     ]
+    },
+    "goals_solved": {
+     "n": 17,
+     "d": 18
+    },
+    "correct_refusal_rate": {
+     "n": 8,
+     "d": 8
+    },
+    "refused_with_other_code": {
+     "n": 0,
+     "d": 8
+    },
+    "false_positive_rate": {
+     "n": 0,
+     "d": 24
+    },
+    "intermediate_constructions_on_verified": 15,
+    "search_max": {
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 2
+    },
+    "plan_ms_median_verified": 1.041,
+    "scene_timeline_ok": {
+     "n": 15,
+     "d": 15
+    }
+   },
+   "holdout": {
+    "verified_problem_coverage": {
+     "n": 16,
+     "d": 16
+    },
+    "novel_combination_problems_verified": {
+     "n": 13,
+     "d": 13
+    },
+    "novel_function_combinations_solved": {
+     "count": 8,
+     "signatures": [
+      "centroid->ask_angle_line_plane",
+      "centroid->ask_angle_lines",
+      "centroid->ask_area",
+      "centroid->ask_distance_point_plane",
+      "centroid->ask_length",
+      "centroid->orthogonal_projection_line->ask_length",
+      "midpoint->ask_angle_line_plane",
+      "midpoint->ask_angle_lines"
+     ]
+    },
+    "goals_solved": {
+     "n": 16,
+     "d": 16
+    },
+    "correct_refusal_rate": {
+     "n": 8,
+     "d": 8
+    },
+    "refused_with_other_code": {
+     "n": 0,
+     "d": 8
+    },
+    "false_positive_rate": {
+     "n": 0,
+     "d": 24
+    },
+    "intermediate_constructions_on_verified": 15,
+    "search_max": {
+     "needs": 7,
+     "candidates": 3,
+     "depth_max": 2
+    },
+    "plan_ms_median_verified": 0.865,
+    "scene_timeline_ok": {
+     "n": 16,
+     "d": 16
+    }
+   }
+  },
+  "no-composition": {
+   "dev": {
+    "verified_problem_coverage": {
+     "n": 2,
+     "d": 16
+    },
+    "novel_combination_problems_verified": {
+     "n": 0,
+     "d": 12
+    },
+    "novel_function_combinations_solved": {
+     "count": 0,
+     "signatures": []
+    },
+    "goals_solved": {
+     "n": 2,
+     "d": 18
+    },
+    "correct_refusal_rate": {
+     "n": 5,
+     "d": 8
+    },
+    "refused_with_other_code": {
+     "n": 3,
+     "d": 8
+    },
+    "false_positive_rate": {
+     "n": 0,
+     "d": 24
+    },
+    "intermediate_constructions_on_verified": 0,
+    "search_max": {
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0
+    },
+    "plan_ms_median_verified": 1.921,
+    "scene_timeline_ok": {
+     "n": 2,
+     "d": 2
+    }
+   },
+   "holdout": {
+    "verified_problem_coverage": {
+     "n": 2,
+     "d": 16
+    },
+    "novel_combination_problems_verified": {
+     "n": 0,
+     "d": 13
+    },
+    "novel_function_combinations_solved": {
+     "count": 0,
+     "signatures": []
+    },
+    "goals_solved": {
+     "n": 2,
+     "d": 16
+    },
+    "correct_refusal_rate": {
+     "n": 6,
+     "d": 8
+    },
+    "refused_with_other_code": {
+     "n": 2,
+     "d": 8
+    },
+    "false_positive_rate": {
+     "n": 0,
+     "d": 24
+    },
+    "intermediate_constructions_on_verified": 0,
+    "search_max": {
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0
+    },
+    "plan_ms_median_verified": 0.314,
+    "scene_timeline_ok": {
+     "n": 2,
+     "d": 2
+    }
+   }
+  },
+  "rule-based": {
+   "dev": {
+    "verified_problem_coverage": {
+     "n": 2,
+     "d": 16
+    },
+    "novel_combination_problems_verified": {
+     "n": 0,
+     "d": 12
+    },
+    "novel_function_combinations_solved": {
+     "count": 0,
+     "signatures": []
+    },
+    "goals_solved": {
+     "n": 2,
+     "d": 18
+    },
+    "correct_refusal_rate": {
+     "n": 5,
+     "d": 8
+    },
+    "refused_with_other_code": {
+     "n": 3,
+     "d": 8
+    },
+    "false_positive_rate": {
+     "n": 0,
+     "d": 24
+    },
+    "intermediate_constructions_on_verified": 0,
+    "search_max": {
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0
+    },
+    "plan_ms_median_verified": 1.542,
+    "scene_timeline_ok": {
+     "n": 2,
+     "d": 2
+    }
+   },
+   "holdout": {
+    "verified_problem_coverage": {
+     "n": 2,
+     "d": 16
+    },
+    "novel_combination_problems_verified": {
+     "n": 0,
+     "d": 13
+    },
+    "novel_function_combinations_solved": {
+     "count": 0,
+     "signatures": []
+    },
+    "goals_solved": {
+     "n": 2,
+     "d": 16
+    },
+    "correct_refusal_rate": {
+     "n": 6,
+     "d": 8
+    },
+    "refused_with_other_code": {
+     "n": 2,
+     "d": 8
+    },
+    "false_positive_rate": {
+     "n": 0,
+     "d": 24
+    },
+    "intermediate_constructions_on_verified": 0,
+    "search_max": {
+     "needs": 0,
+     "candidates": 0,
+     "depth_max": 0
+    },
+    "plan_ms_median_verified": 0.382,
+    "scene_timeline_ok": {
+     "n": 2,
+     "d": 2
+    }
+   }
+  },
+  "pre-composition-main": {
+   "dev": {
+    "verified_problem_coverage": {
+     "n": 3,
+     "d": 16
+    },
+    "novel_combination_problems_verified": {
+     "n": 0,
+     "d": 12
+    },
+    "novel_function_combinations_solved": {
+     "count": 0,
+     "signatures": []
+    },
+    "goals_solved": {
+     "n": 3,
+     "d": 18
+    },
+    "correct_refusal_rate": {
+     "n": 1,
+     "d": 8
+    },
+    "refused_with_other_code": {
+     "n": 7,
+     "d": 8
+    },
+    "false_positive_rate": {
+     "n": 0,
+     "d": 24
+    },
+    "intermediate_constructions_on_verified": 3,
+    "search_max": {
+     "needs": 6,
+     "candidates": 3,
+     "depth_max": 2
+    },
+    "plan_ms_median_verified": 1.187,
+    "scene_timeline_ok": {
+     "n": 3,
+     "d": 3
+    }
+   },
+   "holdout": {
+    "verified_problem_coverage": {
+     "n": 1,
+     "d": 16
+    },
+    "novel_combination_problems_verified": {
+     "n": 0,
+     "d": 13
+    },
+    "novel_function_combinations_solved": {
+     "count": 0,
+     "signatures": []
+    },
+    "goals_solved": {
+     "n": 1,
+     "d": 16
+    },
+    "correct_refusal_rate": {
+     "n": 0,
+     "d": 8
+    },
+    "refused_with_other_code": {
+     "n": 8,
+     "d": 8
+    },
+    "false_positive_rate": {
+     "n": 0,
+     "d": 24
+    },
+    "intermediate_constructions_on_verified": 1,
+    "search_max": {
+     "needs": 6,
+     "candidates": 2,
+     "depth_max": 2
+    },
+    "plan_ms_median_verified": 0.733,
+    "scene_timeline_ok": {
+     "n": 1,
+     "d": 1
+    }
+   }
+  }
+ }
+}

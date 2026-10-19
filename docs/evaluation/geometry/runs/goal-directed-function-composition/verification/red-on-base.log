@@ -1,0 +1,7 @@
+# RED: backend/tests/geometry/test_goal_directed_function_composition.py run on base ce5b2575 (temporary detached worktree, removed)
+FAILED tests/geometry/test_goal_directed_function_composition.py::test_scene_timeline_builds_dependencies_first[midpoint->angle-lines]
+FAILED tests/geometry/test_goal_directed_function_composition.py::test_route_a_and_flat_extraction_surfaces_are_unchanged
+FAILED tests/geometry/test_goal_directed_function_composition.py::test_route_a_refuses_a_function_it_was_not_offered
+77 failed, 6 passed in 3.24s
+# tests passing on base (compatibility guards):
+test_named_angles_keep_their_direct_rule x2, test_plane_perpendicular_to_a_plane_stays_not_unique, test_described_angle_fails_closed[named-point-field], test_described_area_still_rejects_a_partner_field, test_a_typed_need_depending_on_itself_is_a_cycle

@@ -1,0 +1,140 @@
+{
+ "schema": "w2-exp-execution/1",
+ "model_calls": 0,
+ "rows": [
+  {
+   "id": "W2-EXP-09A",
+   "expected_by_report": [
+    "COLLINEAR_POINTS"
+   ],
+   "executed_status": "REFUSED",
+   "executed_code": "COLLINEAR_POINTS",
+   "served_nothing": true,
+   "state": "EXECUTED_PASS",
+   "reason": "COLLINEAR_POINTS: ba điểm THẲNG HÀNG (hoặc có hai điểm trùng) — không xác định được mặt phẳng"
+  },
+  {
+   "id": "W2-EXP-09B",
+   "expected_by_report": [
+    "PLANE_TOUCHES_VERTEX",
+    "PLANE_DOES_NOT_CUT"
+   ],
+   "executed_status": "REFUSED",
+   "executed_code": "PLANE_TOUCHES_VERTEX",
+   "served_nothing": true,
+   "state": "EXECUTED_PASS",
+   "reason": "PLANE_TOUCHES_VERTEX: mặt phẳng chỉ CHẠM khối ở đúng một đỉnh (đỉnh thứ 1) — thiết diện suy biến thành một điểm, không phải đa giác"
+  },
+  {
+   "id": "W2-EXP-10A-1",
+   "expected_by_report": [
+    "DEGENERATE_POINTS",
+    "DEGENERATE_LINE"
+   ],
+   "executed_status": "REFUSED",
+   "executed_code": "DEGENERATE_POINTS",
+   "served_nothing": true,
+   "state": "EXECUTED_PASS",
+   "reason": "DEGENERATE_POINTS: không dựng được đường thẳng qua hai điểm TRÙNG nhau"
+  },
+  {
+   "id": "W2-EXP-10B",
+   "expected_by_report": [
+    "PARALLEL_NO_INTERSECTION"
+   ],
+   "executed_status": "REFUSED",
+   "executed_code": "SKEW_NO_INTERSECTION",
+   "served_nothing": true,
+   "state": "EXECUTED_REFUSED_OTHER_CODE",
+   "reason": "SKEW_NO_INTERSECTION: hai đường chéo nhau không có giao điểm"
+  },
+  {
+   "id": "W2-EXP-11A",
+   "expected_by_report": [
+    "INCONSISTENT_FACTS"
+   ],
+   "executed_status": "REFUSED",
+   "executed_code": "INCONSISTENT_FACTS",
+   "served_nothing": true,
+   "state": "EXECUTED_PASS",
+   "reason": "các độ dài đáy không tạo thành một đa giác (vi phạm bất đẳng thức tam giác)"
+  },
+  {
+   "id": "W2-EXP-11B",
+   "expected_by_report": [
+    "INCONSISTENT_FACTS"
+   ],
+   "executed_status": "REFUSED",
+   "executed_code": "INCONSISTENT_FACTS",
+   "served_nothing": true,
+   "state": "EXECUTED_PASS",
+   "reason": "SA không dài hơn khoảng cách từ chân O tới A"
+  },
+  {
+   "id": "W2-EXP-11C",
+   "expected_by_report": [
+    "MISSING_DIMENSION"
+   ],
+   "executed_status": "REFUSED",
+   "executed_code": "MISSING_DIMENSION",
+   "served_nothing": true,
+   "state": "EXECUTED_PASS",
+   "reason": "chưa có dữ kiện cho chiều cao của S"
+  },
+  {
+   "id": "W2-EXP-12A",
+   "expected_by_report": [
+    "UNSUPPORTED_CAPABILITY"
+   ],
+   "executed_status": "REFUSED",
+   "executed_code": "UNSUPPORTED_CAPABILITY",
+   "served_nothing": true,
+   "state": "EXECUTED_PASS",
+   "reason": "q: câu hỏi distance giữa ('line', 'plane') chưa có hàm"
+  },
+  {
+   "id": "W2-EXP-12B",
+   "expected_by_report": [
+    "UNSUPPORTED_CAPABILITY"
+   ],
+   "executed_status": "REFUSED",
+   "executed_code": "UNSUPPORTED_CAPABILITY",
+   "served_nothing": true,
+   "state": "EXECUTED_PASS",
+   "reason": "q: câu hỏi distance giữa ('line', 'plane') chưa có hàm"
+  },
+  {
+   "id": "W2-EXP-13B",
+   "expected_by_report": [
+    "REQUEST_NOT_ANSWERED"
+   ],
+   "executed_status": "REFUSED",
+   "executed_code": "NOT_ASKED_IN_SOURCE",
+   "served_nothing": true,
+   "state": "EXECUTED_REFUSED_OTHER_CODE",
+   "reason": "q: 'Tính độ dài SC và tính khoảng cách từ A đến (SBC).' không hỏi đối tượng này nguyên vẹn (không có từ hỏi gắn với nó, đã gán giá trị, hay bị bổ nghĩa / đặt điều kiện) — không trả lời điều đề không h"
+  },
+  {
+   "id": "W2-EXP-14B",
+   "expected_by_report": [
+    "DEPENDENCY_CYCLE"
+   ],
+   "executed_status": "REFUSED",
+   "executed_code": "DEPENDENCY_CYCLE",
+   "served_nothing": true,
+   "state": "EXECUTED_PASS",
+   "reason": "phụ thuộc vòng qua n → m"
+  },
+  {
+   "id": "W2-EXP-14A",
+   "expected_by_report": [
+    "NON_ZERO_INNER_PRODUCT_U"
+   ],
+   "executed_status": "VERIFIER",
+   "executed_code": "TAMPERED_WITNESS_FOOT",
+   "served_nothing": true,
+   "state": "EXECUTED_REFUSED_OTHER_CODE",
+   "reason": "the true SA altitude certificate moved onto the oblique lateral edge SB"
+  }
+ ]
+}

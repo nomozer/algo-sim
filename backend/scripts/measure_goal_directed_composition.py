@@ -155,6 +155,41 @@ def arm(name: str, out: Path, code_root: Path, corpora: tuple[str, ...] = CORPOR
         encoding="utf-8")
 
 
+BUNDLE = ROOT / "docs/evaluation/geometry/runs/contract-driven-goal-composition/baseline/bundle-174.json"
+
+
+def bundle_arm(name: str, out: Path, code_root: Path) -> None:
+    """Supplementary split: the preregistered 174-row bundle (expectations from its SOURCE corpora, not product output).
+    Added after the main evaluation to separate depth 2 from depth 3 — the run's corpora hold no depth-2 composition."""
+    sys.path.insert(0, str(code_root / "backend"))
+    os.chdir(code_root / "backend")
+    from app.ai.function_route import run_fact_route
+
+    _apply(name)
+    rows = []
+    for row in json.loads(BUNDLE.read_text(encoding="utf-8"))["rows"]:
+        e = row["expect"]
+        want = e.get("expected_squared") or e.get("answer_sq") or e.get("area_sq")
+        r = run_fact_route(row["text"], {"facts": deepcopy(row["facts"])})
+        got = {q: _value(r, q) for q in r.answers} if r.status == "SERVED" else {}
+        if want is not None and e.get("status", "SERVED") == "SERVED":
+            want = {"_": want} if isinstance(want, str) else want
+            ok = r.status == "SERVED" and all(
+                v == Fraction(want["_"] if "_" in want else want[q]) for q, v in got.items()) and bool(got)
+            verdict = "VERIFIED" if ok else "WRONG_SERVE" if r.status == "SERVED" else "REFUSED"
+        elif e.get("expected_codes"):
+            verdict = ("FALSE_SERVE" if r.status == "SERVED" else
+                       "CORRECT_REFUSAL" if r.code in e["expected_codes"] else "REFUSED_OTHER_CODE")
+        else:
+            verdict = "NO_INDEPENDENT_EXPECTATION"
+        rows.append({"corpus": row["corpus"], "id": row["id"], "status": r.status, "code": r.code, "verdict": verdict,
+                     "signature": _signature(r)})
+    out.mkdir(parents=True, exist_ok=True)
+    (out / f"bundle-{name}.json").write_text(json.dumps({"schema": "goal-directed-composition-bundle-arm/1", "arm": name,
+                                                         "code_root_head": _head(code_root), "rows": rows},
+                                                        ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+
+
 def _head(code_root: Path) -> str:
     return subprocess.run(["git", "-C", str(code_root), "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
 
@@ -202,7 +237,7 @@ def compare(out: Path) -> None:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("cmd", choices=("run-all", "arm", "compare"))
+    ap.add_argument("cmd", choices=("run-all", "arm", "compare", "bundle-arm"))
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--arm", choices=ARMS)
     ap.add_argument("--code-root", type=Path, default=ROOT)
@@ -215,6 +250,9 @@ def main() -> int:
         return 0
     if a.cmd == "compare":
         compare(out)
+        return 0
+    if a.cmd == "bundle-arm":
+        bundle_arm(a.arm, out, a.code_root.resolve())
         return 0
     if out.exists():
         print(f"refusing to overwrite {out}")
