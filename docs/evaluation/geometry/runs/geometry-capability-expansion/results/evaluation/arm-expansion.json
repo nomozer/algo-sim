@@ -1,0 +1,685 @@
+{
+ "schema": "geometry-capability-arm/1",
+ "arm": "expansion",
+ "code_root_head": "56eff5c3c13e017edf17bee060c0aca17dab6c0f",
+ "registry_version": "geometry-functions/8",
+ "planner_version": "geometry-fact-planner/9",
+ "model_calls": 0,
+ "rows": [
+  {
+   "id": "W2-EXP-03",
+   "kind": "positive",
+   "source": "W2-EXP-03",
+   "success_source": "new_primitive",
+   "composition_declared": "divide_segment -> ask_length | divide_segment -> orthogonal_projection_line -> ask_length",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q2": "9/5",
+    "q1": "9/4"
+   },
+   "expected": {
+    "q1": "9/4",
+    "q2": "9/5"
+   },
+   "expected_codes": null,
+   "goals": 2,
+   "goals_verified": 2,
+   "signature": "ask_length | orthogonal_projection_line->ask_length",
+   "calls": 9,
+   "constructs": {
+    "pyramid": 1,
+    "divide_segment": 1,
+    "midpoint": 1,
+    "orthogonal_projection_line": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 8,
+    "candidates": 3,
+    "depth_max": 2
+   },
+   "route_ms": 30.212,
+   "scene_timeline_ok": true,
+   "has_section": false
+  },
+  {
+   "id": "dev-ratio-angle",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_primitive",
+   "composition_declared": "divide_segment -> ask_angle_line_plane",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "1/3"
+   },
+   "expected": {
+    "q": "1/3"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "signature": "ask_angle_line_plane",
+   "calls": 6,
+   "constructs": {
+    "pyramid": 1,
+    "divide_segment": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 10.311,
+   "scene_timeline_ok": true,
+   "has_section": false
+  },
+  {
+   "id": "dev-ratio-midpoint-area",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_composition",
+   "composition_declared": "divide_segment -> midpoint -> ask_area",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "1/8"
+   },
+   "expected": {
+    "q": "1/8"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "signature": "midpoint->ask_area",
+   "calls": 7,
+   "constructs": {
+    "pyramid": 1,
+    "divide_segment": 1,
+    "midpoint": 1
+   },
+   "auxiliary_points": 1,
+   "search": {
+    "needs": 6,
+    "candidates": 2,
+    "depth_max": 2
+   },
+   "route_ms": 14.009,
+   "scene_timeline_ok": true,
+   "has_section": false
+  },
+  {
+   "id": "W2-EXP-06A",
+   "kind": "positive",
+   "source": "W2-EXP-06A",
+   "success_source": "new_configuration",
+   "composition_declared": "ask_volume | ask_angle_line_plane",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q2": "2/3",
+    "q1": "1/4"
+   },
+   "expected": {
+    "q1": "1/4",
+    "q2": "2/3"
+   },
+   "expected_codes": null,
+   "goals": 2,
+   "goals_verified": 2,
+   "signature": "ask_volume | ask_angle_line_plane",
+   "calls": 10,
+   "constructs": {
+    "pyramid": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 10.951,
+   "scene_timeline_ok": true,
+   "has_section": false
+  },
+  {
+   "id": "dev-trapezoid-distances",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_configuration",
+   "composition_declared": "ask_distance_point_plane | centroid -> ask_distance_point_plane",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q2": "1/9",
+    "q1": "2/3"
+   },
+   "expected": {
+    "q1": "2/3",
+    "q2": "1/9"
+   },
+   "expected_codes": null,
+   "goals": 2,
+   "goals_verified": 2,
+   "signature": "ask_distance_point_plane | centroid->ask_distance_point_plane",
+   "calls": 11,
+   "constructs": {
+    "pyramid": 1,
+    "centroid": 1
+   },
+   "auxiliary_points": 1,
+   "search": {
+    "needs": 7,
+    "candidates": 3,
+    "depth_max": 2
+   },
+   "route_ms": 12.807,
+   "scene_timeline_ok": true,
+   "has_section": false
+  },
+  {
+   "id": "dev-trapezoid-AD",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_configuration",
+   "composition_declared": "orthogonal_projection_line -> ask_length",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "9/2"
+   },
+   "expected": {
+    "q": "9/2"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "signature": "orthogonal_projection_line->ask_length",
+   "calls": 10,
+   "constructs": {
+    "pyramid": 1,
+    "orthogonal_projection_line": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 5,
+    "candidates": 2,
+    "depth_max": 2
+   },
+   "route_ms": 10.338,
+   "scene_timeline_ok": true,
+   "has_section": false
+  },
+  {
+   "id": "W2-EXP-06B",
+   "kind": "positive",
+   "source": "W2-EXP-06B",
+   "success_source": "new_configuration",
+   "composition_declared": "ask_volume",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "3/64"
+   },
+   "expected": {
+    "q": "3/64"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "signature": "ask_volume",
+   "calls": 6,
+   "constructs": {
+    "prism": 1,
+    "midpoint": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 17.121,
+   "scene_timeline_ok": true,
+   "has_section": false
+  },
+  {
+   "id": "dev-oblique-prism-compositions",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_configuration",
+   "composition_declared": "midpoint -> ask_distance_point_plane | ask_angle_line_plane",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q2": "1/2",
+    "q1": "1/4"
+   },
+   "expected": {
+    "q1": "1/4",
+    "q2": "1/2"
+   },
+   "expected_codes": null,
+   "goals": 2,
+   "goals_verified": 2,
+   "signature": "midpoint->ask_distance_point_plane | ask_angle_line_plane",
+   "calls": 8,
+   "constructs": {
+    "prism": 1,
+    "midpoint": 2
+   },
+   "auxiliary_points": 1,
+   "search": {
+    "needs": 6,
+    "candidates": 3,
+    "depth_max": 2
+   },
+   "route_ms": 16.282,
+   "scene_timeline_ok": true,
+   "has_section": false
+  },
+  {
+   "id": "W2-EXP-07",
+   "kind": "positive",
+   "source": "W2-EXP-07",
+   "success_source": "new_composition",
+   "composition_declared": "orthogonal_projection_line x2 -> translate_point x2 -> ask_section_area",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "1/48"
+   },
+   "expected": {
+    "q": "1/48"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "signature": "ask_section_area",
+   "calls": 11,
+   "constructs": {
+    "pyramid": 1,
+    "orthogonal_projection_line": 2,
+    "translate_point": 2
+   },
+   "auxiliary_points": 4,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 19.656,
+   "scene_timeline_ok": true,
+   "has_section": true
+  },
+  {
+   "id": "dev-perp-square-A-SC",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_composition",
+   "composition_declared": "orthogonal_projection_line x2 -> translate_point x2 -> ask_section_area",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "4/3"
+   },
+   "expected": {
+    "q": "4/3"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "signature": "ask_section_area",
+   "calls": 9,
+   "constructs": {
+    "pyramid": 1,
+    "orthogonal_projection_line": 2,
+    "translate_point": 2
+   },
+   "auxiliary_points": 4,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 18.907,
+   "scene_timeline_ok": true,
+   "has_section": true
+  },
+  {
+   "id": "dev-perp-square-S-BD",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_composition",
+   "composition_declared": "orthogonal_projection_line x2 -> translate_point x2 -> ask_section_area",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "8"
+   },
+   "expected": {
+    "q": "8"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "signature": "ask_section_area",
+   "calls": 9,
+   "constructs": {
+    "pyramid": 1,
+    "orthogonal_projection_line": 2,
+    "translate_point": 2
+   },
+   "auxiliary_points": 4,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 15.079,
+   "scene_timeline_ok": true,
+   "has_section": true
+  },
+  {
+   "id": "dev-ratio-then-perp-section",
+   "kind": "positive",
+   "source": "authored",
+   "success_source": "new_composition",
+   "composition_declared": "divide_segment -> (orthogonal_projection_line x2 -> translate_point x2) -> ask_section_area",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "1/12"
+   },
+   "expected": {
+    "q": "1/12"
+   },
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "signature": "ask_section_area",
+   "calls": 10,
+   "constructs": {
+    "pyramid": 1,
+    "divide_segment": 1,
+    "orthogonal_projection_line": 2,
+    "translate_point": 2
+   },
+   "auxiliary_points": 4,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 17.103,
+   "scene_timeline_ok": true,
+   "has_section": true
+  },
+  {
+   "id": "neg-ratio-mismatch",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 7,
+   "constructs": {
+    "pyramid": 1,
+    "divide_segment": 1,
+    "midpoint": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 3,
+    "candidates": 1,
+    "depth_max": 1
+   },
+   "route_ms": 1.796,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-ratio-outside",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "INVALID_RATIO",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "INVALID_RATIO"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.295,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-trapezoid-irrational",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_IRRATIONAL_LAYOUT",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "UNSUPPORTED_IRRATIONAL_LAYOUT"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 9,
+   "constructs": {
+    "pyramid": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 4.517,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-trapezoid-one-right-angle",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_BASE_SHAPE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "UNSUPPORTED_BASE_SHAPE"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 8,
+   "constructs": {
+    "pyramid": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 3.898,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-oblique-prism-underdetermined",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "UNDERDETERMINED_POINT",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "UNDERDETERMINED_POINT"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 5,
+   "constructs": {
+    "prism": 1,
+    "midpoint": 1
+   },
+   "auxiliary_points": 0,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 3.118,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-perp-plane-not-unique",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "PLANE_NOT_UNIQUE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "PLANE_NOT_UNIQUE"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 0,
+   "constructs": {},
+   "auxiliary_points": 0,
+   "search": {
+    "needs": null,
+    "candidates": null,
+    "depth_max": null
+   },
+   "route_ms": 0.22,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-perp-touches-apex",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "PLANE_TOUCHES_VERTEX",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "PLANE_DOES_NOT_CUT",
+    "PLANE_TOUCHES_VERTEX"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 11,
+   "constructs": {
+    "pyramid": 1,
+    "orthogonal_projection_line": 2,
+    "translate_point": 2
+   },
+   "auxiliary_points": 4,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 10.169,
+   "scene_timeline_ok": null,
+   "has_section": null
+  },
+  {
+   "id": "neg-perp-wrong-line",
+   "kind": "negative",
+   "source": "authored",
+   "success_source": null,
+   "composition_declared": null,
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "signature": null,
+   "calls": 11,
+   "constructs": {
+    "pyramid": 1,
+    "orthogonal_projection_line": 2,
+    "translate_point": 2
+   },
+   "auxiliary_points": 4,
+   "search": {
+    "needs": 0,
+    "candidates": 0,
+    "depth_max": 0
+   },
+   "route_ms": 1.603,
+   "scene_timeline_ok": null,
+   "has_section": null
+  }
+ ]
+}

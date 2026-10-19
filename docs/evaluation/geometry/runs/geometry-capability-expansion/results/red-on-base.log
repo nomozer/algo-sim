@@ -1,0 +1,11 @@
+PASSED tests/geometry/test_geometry_capability_expansion.py::test_oblique_prism_refusals[no-top-vertex-fixed-<lambda>-UNDERDETERMINED_POINT]
+PASSED tests/geometry/test_geometry_capability_expansion.py::test_oblique_prism_refusals[degenerate-height-<lambda>-INCONSISTENT_FACTS]
+PASSED tests/geometry/test_geometry_capability_expansion.py::test_right_trapezoid_refusals[one-right-angle-<lambda>-UNSUPPORTED_BASE_SHAPE]
+PASSED tests/geometry/test_geometry_capability_expansion.py::test_right_trapezoid_refusals[non-consecutive-right-angles-<lambda>-SOURCE_OBJECT_MISMATCH]
+PASSED tests/geometry/test_geometry_capability_expansion.py::test_right_trapezoid_refusals[wrong-vertices-vs-source-<lambda>-SOURCE_OBJECT_MISMATCH]
+PASSED tests/geometry/test_geometry_capability_expansion.py::test_ratio_point_fails_closed[ratio-zero-patch1-codes1]
+PASSED tests/geometry/test_geometry_capability_expansion.py::test_ratio_point_fails_closed[ratio-one-patch2-codes2]
+PASSED tests/geometry/test_geometry_capability_expansion.py::test_ratio_point_fails_closed[ratio-outside-patch3-codes3]
+PASSED tests/geometry/test_geometry_capability_expansion.py::test_ratio_point_fails_closed[same-endpoints-patch5-codes5]
+PASSED tests/geometry/test_geometry_capability_expansion.py::test_plane_perpendicular_to_a_plane_is_still_not_unique
+18 failed, 10 passed in 2.65s

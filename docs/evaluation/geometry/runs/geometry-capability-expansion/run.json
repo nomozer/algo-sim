@@ -1,0 +1,31 @@
+{
+ "schema": "run/1",
+ "run": "geometry-capability-expansion",
+ "task_code": "HYBRID_WAVE2B",
+ "date": "2026-10-19",
+ "owner_authorization": "GO_HYBRID_WAVE2B_LOCAL_IMPLEMENTATION",
+ "branch": "research/hybrid-wave2b-geometry-expansion",
+ "base": {"main": "224328a2ee58a23f369b1eddb3e7d79e6afc4ec8", "origin_main": "224328a2ee58a23f369b1eddb3e7d79e6afc4ec8"},
+ "commits": {"product": "08596652f50449817b112b255f99ce54ff910814",
+             "corpus_oracle_harness": "8090e8e8f818c4242f2cc09abaf30a965e09b234",
+             "candidate_freeze": "56eff5c3c13e017edf17bee060c0aca17dab6c0f"},
+ "measured_system": {"so_file": 112, "tree_hash": "233de8906b8b3308d5042eccffe6fef94ad8ba540b94452900c4fb559cecbf08"},
+ "versions": {"registry": "geometry-functions/8", "planner": "geometry-fact-planner/9", "engine": "geometry-function-engine/7",
+              "adapter": "hybrid-preview-adapter/2", "envelope": "hybrid-route-d-preview/1"},
+ "surfaces_unchanged": {"typed_fact_schema": "aa9d93eeac9f1659af8e5acd42af1904b7aaed674a8ab0f56f0c7dd8b2ad4ee8",
+                        "flat": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+                        "v3": "4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f",
+                        "function_declarations": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"},
+ "owner_decisions": ["versions bumped with a declared identity chain (as in Wave 2A)",
+                     "flat provider surface kept frozen; TypedFact accepts divide_segment, its provider schema does not"],
+ "cache_version": "127",
+ "cache_decision": "NO_BUMP — default /api/analyze imports no changed module at module level; preview is not cached",
+ "model_calls": 0,
+ "hybrid_product_enablement": "NO-GO",
+ "blind_holdout": "Gemini BH2A-01..18 not used (held for independent evaluation)",
+ "temporary_worktrees": [
+  {"path": ".superpowers/worktrees/tmp-capability-freeze", "head": "8090e8e8", "use": "clean candidate freeze", "removed": true},
+  {"path": ".superpowers/worktrees/tmp-capability-base", "head": "224328a2", "use": "RED replay + pre-expansion-main arm", "removed": true}
+ ],
+ "verdict_at_report": "PENDING_T3_AND_INDEPENDENT_REVIEW"
+}

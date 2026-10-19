@@ -8,6 +8,11 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-19, `geometry-capability-expansion` (Hybrid Wave 2B, local branch `research/hybrid-wave2b-geometry-expansion` from
+`main` `224328a2`):** ratio points, ⊥-line sections, right-trapezoid base, oblique prism (product `08596652`, candidate
+`56eff5c3`). `CANONICAL_NEXT_ACTION` = owner GO MAIN review on `evaluation/geometry/runs/geometry-capability-expansion/handoff.md`;
+Wave 2C is not opened before that. Wave 2A is integrated (`224328a2`); the entries below are historical.
+
 **2026-10-19, `goal-directed-function-composition` (Hybrid Wave 2A, local branch `research/hybrid-wave2a-function-composition`
 from `main` `ce5b2575`):** goal-directed composition of Registry functions by typed slots (product `b70e4769`, candidate
 `3a57f5d3`). `CANONICAL_NEXT_ACTION` = owner GO MAIN review on the receipts in

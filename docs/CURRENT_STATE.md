@@ -1,6 +1,17 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL — Hybrid Wave 2A: goal-directed function composition, 2026-10-19 (not integrated)
+## LOCAL — Hybrid Wave 2B: geometry capability expansion, 2026-10-19 (not integrated)
+
+Branch `research/hybrid-wave2b-geometry-expansion` from `main` = `origin/main` = `224328a2` (Wave 2A integrated); product
+`08596652`, candidate freeze `56eff5c3` (112 measured files / `233de8906b8b3308d5042eccffe6fef94ad8ba540b94452900c4fb559cecbf08`).
+Route D gains ratio points (`divide_segment`), the section by a plane through a point ⊥ a line (existing primitives), a
+right-trapezoid base and oblique prisms; versions `geometry-functions/8` · `geometry-fact-planner/9` ·
+`geometry-function-engine/7`. Dev corpus 12/12 VERIFIED (pre-run main 0/12), 8/8 correct refusals, 0 false serves. Cache
+**127**, `LLM_ONLY`, `flat` surface unchanged (owner decision), Adapter `/2`, Hybrid product **NO-GO**, live calls **0**.
+Receipts: [`geometry-capability-expansion/report.md`](evaluation/geometry/runs/geometry-capability-expansion/report.md),
+[`handoff.md`](evaluation/geometry/runs/geometry-capability-expansion/handoff.md).
+
+## INTEGRATED ON `main` (`224328a2`) — Hybrid Wave 2A: goal-directed function composition, 2026-10-19
 
 Branch `research/hybrid-wave2a-function-composition` from `main` = `origin/main` = `ce5b2575` (Wave 1 integrated);
 product `b70e4769` (first product `a45a043f`; review N-1 request-coverage fix), holdout lock `50ac258a`, candidate freeze

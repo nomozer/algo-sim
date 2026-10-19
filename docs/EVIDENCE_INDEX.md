@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = GEOMETRY_CAPABILITY_EXPANSION
+
+REPORT = docs/evaluation/geometry/runs/geometry-capability-expansion/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometry-capability-expansion/
+CLASSIFICATION = Hybrid Wave 2B geometry capability expansion (local, not integrated): divide_segment ratio points, plane through a point ⊥ a line + section (declared decomposition over existing primitives), right-trapezoid base, oblique prism; dev corpus 12/12 VERIFIED against an independent oracle (16/16 goals), 8/8 correct refusals, 0/20 false serves vs pre-run main 0/12; 174-row regression unchanged, NLU gold D04 served √6 (declared layer); flat/TypedFact/v3/route A surfaces unchanged; CACHE_VERSION 127 kept, LLM_ONLY default, Hybrid product NO-GO
+CODE_COMMIT = 08596652 (product); candidate freeze 56eff5c3 (measured_system tree_hash 233de8906b8b3308d5042eccffe6fef94ad8ba540b94452900c4fb559cecbf08 across 112 files)
+VERIFICATION = docs/evaluation/geometry/runs/geometry-capability-expansion/handoff.md (T3 + independent review receipts)
+MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
+CORRECTS = INDEPENDENT_NLU_EXTRACTION_EVALUATION gold by a declared layer only (results/historical-gold-delta.json: D04); no frozen file edited
+CORRECTED_BY = NONE
+
 ## WAVE_ID = GOAL_DIRECTED_FUNCTION_COMPOSITION
 
 REPORT = docs/evaluation/geometry/runs/goal-directed-function-composition/report.md

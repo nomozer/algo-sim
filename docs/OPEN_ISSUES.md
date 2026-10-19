@@ -1,5 +1,15 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-RESEARCH-HYBRID-GEOMETRY-CAPABILITY-GAPS
+
+- **status:** OPEN (run `geometry-capability-expansion`, branch `research/hybrid-wave2b-geometry-expansion`, not on `main`).
+  Ratio points, ⊥-line sections (pyramids), right-trapezoid bases and oblique prisms are served; still refused with a code:
+- the `flat` provider surface does not offer `divide_segment` (owner kept it frozen): a live `flat` extraction cannot
+  produce a ratio point until that surface is re-measured;
+- plane through a point ⊥ a line on a PRISM (no structural anchor rule); unnamed ratio points; other ratio wordings
+  (`SM/SA = 2/3`, "chia theo tỉ số"); right trapezoid with an irrational leg ratio (`UNSUPPORTED_IRRATIONAL_LAYOUT`);
+  oblique prism fixed by a lateral-edge angle; the ⊥-line plane is a declared planner rule, not a search result.
+
 ### ISSUE-RESEARCH-HYBRID-COMPOSITION-WORDING-AND-OPERAND-GAPS
 
 - **status:** OPEN (run `goal-directed-function-composition`, branch `research/hybrid-wave2a-function-composition`, not on
