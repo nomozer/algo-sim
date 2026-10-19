@@ -140,7 +140,8 @@ def test_mau_thuan_do_dai_neu_du_hai_menh_de():
 
 def test_cu_27_fixture_van_dung_nguyen():
     # labels stay historical; NEG2 is now refused one layer earlier (unread premise) — see test_text_to_geometry_functions
-    ma_hien_hanh = {"NEG2": "SOURCE_PREMISE_UNREAD"}
+    # run source-gate-hardening: the roles after NEG2's negated clause bind to nothing (see test_text_to_geometry_functions)
+    ma_hien_hanh = {"NEG2": "UNGROUNDED_VALUE"}
     for c in OLD.values():
         r = _chay(c)
         e = KET_CUC_HIEN_HANH.get(c["id"], c["expect"])

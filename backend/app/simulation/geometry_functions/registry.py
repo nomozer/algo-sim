@@ -831,109 +831,152 @@ def _gia_tri_la_phep_bang(de: str, vts: list[tuple[int, int]], seg: list[str]) -
     return False
 
 
-#: SG-3: a number bound to the ROLE noun written right before it ("cạnh đáy bằng 4a", "chiều cao = 5a"). Closed table of the
-#: value slots a role noun can fill; longest noun first, so "cạnh đáy"/"cạnh bên" never read as a bare "cạnh".
-_VAI_TRO_SO = re.compile(r"(?<!\w)(?P<vai>cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|cạnh)(?!\w)"
-                         r"\s*(?:(?:có\s+)?độ\s+dài\s*)?(?:(?:=|bằng|là)\s*)?", re.IGNORECASE)
-_VAI_CUA_O = {("regular_polygon", "side"): ("cạnh đáy", "cạnh"), ("height", "value"): ("chiều cao", "đường cao"),
-              ("segment_length", "value"): ("cạnh bên", "cạnh đáy", "cạnh")}
-_MOI_CANH_BANG_NHAU = re.compile(r"(?<!\w)(?:lập\s+phương|tứ\s+diện\s+đều)(?!\w)", re.IGNORECASE)
-#: An object noun between a role noun and the label before it: the role belongs to THAT object ("tam giác SAB có chiều cao",
-#: "mặt bên có đường cao", "hình vuông MNPQ có cạnh"). "là <noun>" is a predicate of the labelled object, not another one.
-_VAT_KHAC = re.compile(r"(?<!\w)(?P<la>là\s+(?:một\s+)?)?(?:mặt\s+bên|mặt\s+phẳng|mặt\s+đáy|mặt|tam\s+giác|hình\s+vuông|"
-                       r"hình\s+chữ\s+nhật|hình\s+thoi|hình\s+thang|hình\s+bình\s+hành|đa\s+giác|lục\s+giác|đoạn\s+thẳng|"
-                       r"đoạn|đường\s+thẳng|đường\s+tròn)(?!\w)", re.IGNORECASE)
+#: SG-1/SG-3 (rewritten after two review rounds): a measure's number is bound to a ROLE only inside a sentence that parses
+#: COMPLETELY in a closed clause grammar about one solid and its base. Any other object, qualifier or wording that carries a
+#: number or a role noun leaves the sentence unparsed and its numbers unbound — the value is then refused. No owner is ever
+#: inferred from free prose (the review found "SAB là tam giác cân có chiều cao…", "khối hộp có chiều cao…", "của mặt bên").
+_L1 = r"(?-i:[A-Z][0-9]*'?)"
+_NHAN = rf"{_L1}+"
 
 
-_VAI_CAP_KHOI = ("cạnh bên", "cạnh đáy", "chiều cao", "đường cao")
-CHUA_RO_CHU = object()        # sentinel: the role's owner is not resolved in its sentence
+def _so_nhom(g: str) -> str:
+    """The number grammar with group names of its own (one per clause) and an optional length unit."""
+    # never empty, and case-sensitive: the parameter is "a", never the label "A" (the clauses are case-insensitive)
+    return (f"(?P<{g}>(?=[0-9√]|(?-i:a)(?![\\w']))(?-i:" + _SO.pattern.replace("(?P<", f"(?P<{g}_") + "))"
+            r"(?:\s*(?:cm|dm|mm|m|đvđd)(?![\w']))?"
+            r"(?:\s*\((?:đơn\s+vị[^()]*|cm|dm|mm|m|đvđd)\))?")
 
 
-def _chu_vai_tro(de: str, pos: int, vai: str, calls: tuple[LoiGoi, ...]) -> set[str] | str | None:
-    """Owner of the role noun `vai` at `de[pos]`, read in its sentence: a solid-level role (cạnh bên · cạnh đáy · chiều cao ·
-    đường cao) belongs to the nearest SOLID label before it, a bare "cạnh" to the nearest label of any object. An object
-    noun after that label and before the role (`_VAT_KHAC`, not a "là <noun>" predicate) means the role is that other
-    object's ⇒ None. No label at all in the sentence ⇒ `CHUA_RO_CHU` (unresolved, never treated as a match)."""
-    a = _bien_cau(de, pos)[0]
-    khoi = [_nhan_khoi(k) for k in calls if k.fn in ("pyramid", "regular_pyramid", "prism")]
-    words = [(y, {n for p in phan for n in p}, len(phan)) for _x, y, phan in _tu_nhan(de[a:pos])]
-    if vai in _VAI_CAP_KHOI:
-        words = [w for w in words if w[2] > 1 or w[1] in khoi]
-    if not words:
-        return None if any(not m["la"] for m in _VAT_KHAC.finditer(de, a, pos)) else CHUA_RO_CHU
-    y, owner, _n = words[-1]
-    if any(not m["la"] for m in _VAT_KHAC.finditer(de, a + y, pos)):
-        return None
-    return owner
+_HINH = (rf"(?:tam\s+giác(?:\s+(?:đều|vuông\s+cân|vuông|cân))?(?:\s+tại\s+{_L1})?|hình\s+vuông|hình\s+chữ\s+nhật|hình\s+thoi|"
+         rf"lục\s+giác\s+đều|hình\s+thang(?:\s+vuông)?(?:\s+tại\s+{_L1}(?:\s+và\s+{_L1})?)?)")
+_C_KHOI = re.compile(rf"(?:(?:cho|xét)\s+)?(?:một\s+)?(?:(?:hình|khối)\s+)?(?P<kn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)"
+                     rf"(?P<km>(?:\s+(?:đứng|đều|xiên|tam\s+giác|tứ\s+giác|ngũ\s+giác|lục\s+giác|chữ\s+nhật))*)"
+                     rf"\s+(?P<k>{_NHAN}(?:\.{_NHAN})?)(?![\w'])", re.IGNORECASE)
+_C_DAY = re.compile(rf"(?:có\s+)?(?:mặt\s+)?đáy(?:\s+(?P<d>{_NHAN}))?\s+(?:là\s+(?:một\s+)?{_HINH}(?:\s+(?P<d2>{_NHAN}))?|đều)(?![\w'])"
+                    rf"(?:\s+(?:có\s+)?cạnh\s*(?:(?:bằng|=|là)\s*)?{_so_nhom('ds')})?", re.IGNORECASE)
+_C_VAI = re.compile(rf"(?:(?:có|với)\s+)?(?P<vai>cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|cạnh)(?:\s+của\s+(?:(?:hình|khối)\s+)?"
+                    rf"(?:chóp|lăng\s+trụ|hộp|lập\s+phương|tứ\s+diện)(?:\s+{_NHAN}(?:\.{_NHAN})?)?)?"
+                    rf"\s*(?:(?:có\s+)?độ\s+dài\s*)?(?:(?:=|bằng|là)\s*)?{_so_nhom('vs')}", re.IGNORECASE)
+_C_DOAN = re.compile(rf"(?:có\s+)?(?:(?:cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|độ\s+dài|đường\s+chéo)\s+)?(?P<seg>{_L1}{_L1})(?![\w'])"
+                     rf"(?:\s*=\s*{_L1}{_L1}(?![\w']))*\s*(?:=|bằng|(?:có\s+)?độ\s+dài(?:\s+bằng)?)\s*{_so_nhom('ss')}",
+                     re.IGNORECASE)
+_C_VUONG = re.compile(rf"(?:(?:có\s+)?cạnh\s+bên\s+)?{_L1}{_L1}\s+vuông\s+góc\s+với\s+(?:mặt\s+phẳng\s+|mp\s*)?"
+                      rf"(?:\({_NHAN}\)|{_NHAN}(?![\w'])|(?:mặt\s+)?đáy(?!\w))", re.IGNORECASE)
+_C_NOI = re.compile(r"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=(?:có|với|cạnh)\s)", re.IGNORECASE)
+_C_DAU = re.compile(r"\s*(?:biết\s+(?:rằng\s+)?)?", re.IGNORECASE)
+_C_HET = re.compile(r"\s*[.;]?\s*")
+_DANH_VAI = re.compile(r"(?<!\w)(?:cạnh|chiều\s+cao|đường\s+cao)(?!\w)", re.IGNORECASE)
+_KHOI_FN = ("pyramid", "regular_pyramid", "prism")
 
 
 def _nhan_khoi(k: LoiGoi) -> set[str]:
     return {*([k.args.apex] if k.fn in ("pyramid", "regular_pyramid") else []), *k.args.base, *(getattr(k.args, "top", None) or [])}
 
 
-def _chu_dung(c: LoiGoi, calls: tuple[LoiGoi, ...], vai: str, owner, cau: str) -> bool | None:
-    """The role `vai` of `owner` fills THIS call's slot — never another object's height or side, never one lateral edge of
-    a solid whose lateral edges need not be equal. None when the owner is unresolved (`CHUA_RO_CHU`)."""
-    if owner is CHUA_RO_CHU:
-        return None
-    if owner is None:
+def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
+    """Clauses of sentence `s` when ALL of it parses, else None. A clause outside the grammar is tolerated only when it
+    carries no number ("SA ⊥ (ABC)", "SA là đường cao của hình chóp"); it is recorded as opaque ("mo") and no role or
+    unlabelled base AFTER it is bound (`_lien_ket_cau`)."""
+    p, out = _C_DAU.match(s).end(), []
+    while True:
+        for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("vuong", _C_VUONG), ("doan", _C_DOAN), ("vai", _C_VAI)):
+            if m := rx.match(s, p):
+                out.append((kind, m))
+                p = m.end()
+                break
+        else:
+            j = _C_NOI.search(s, p)
+            seg = s[p:j.start()] if j else s[p:].rstrip(" .;")
+            if not seg.strip() or any(_doc(x) is not None for x in _SO.finditer(seg)):
+                return None
+            out.append(("mo", None))
+            p += len(seg)
+        if _C_HET.fullmatch(s, p):
+            return out
+        j = _C_NOI.match(s, p)
+        if j is None or j.end() == p:
+            return None
+        p = _C_DAU.match(s, j.end()).end()
+
+
+def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[int, tuple]:
+    """number start (in `de`) → its binding, for the numbers of `de[a:b]`, read from the parse of each sentence they lie in:
+    ("side", base labels) · ("vai", role, solid call, every-edge-equal) · ("seg", segment). Unparsed ⇒ no entry."""
+    out: dict[int, tuple] = {}
+    khoi_goi = [k for k in calls if k.fn in _KHOI_FN]
+    p = a
+    while p < b:
+        x, y = _bien_cau(de, p)
+        cau = _phan_tich_cau(de[x:y])
+        if cau is not None:
+            khoi, moi, mo = (khoi_goi[0] if len(khoi_goi) == 1 else None), False, False
+            for kind, m in cau:
+                if kind == "mo":
+                    mo = True
+                elif kind == "khoi":
+                    nhan = set(re.findall(r"[A-Z][0-9]*'?", m["k"]))
+                    khoi = next((k for k in khoi_goi if _nhan_khoi(k) == nhan), None)
+                    tu = re.sub(r"\s+", " ", m["kn"].lower())
+                    moi = tu == "lập phương" or tu == "tứ diện" and "đều" in m["km"].lower()
+                elif kind == "day" and m["ds"] and (m["d"] or m["d2"] or not mo):
+                    day = m["d"] or m["d2"]
+                    nhan = re.findall(r"[A-Z][0-9]*'?", day) if day else (list(khoi.args.base) if khoi else [])
+                    out[x + m.start("ds")] = ("side", frozenset(nhan))
+                elif kind == "doan":
+                    out[x + m.start("ss")] = ("seg", frozenset(re.findall(r"[A-Z][0-9]*'?", m["seg"])))
+                elif kind == "vai" and not mo:     # after an opaque clause a role may be another object's: unbound
+                    out[x + m.start("vs")] = ("vai", re.sub(r"\s+", " ", m["vai"].lower()), khoi, moi)
+        p = y + 1 if y > p else b
+    return out
+
+
+def _canh_cua(v) -> set[frozenset]:
+    v = list(v)
+    return {frozenset((x, v[(i + 1) % len(v)])) for i, x in enumerate(v)}
+
+
+def _lien_ket_khop(c: LoiGoi, bd: tuple, calls: tuple[LoiGoi, ...]) -> bool:
+    """A parsed binding fills THIS call's value slot: the height of its own solid; a side of its own regular polygon; an
+    unnamed segment by its structural role only where every segment of that role is equal."""
+    deu = {frozenset(d.args.vertices) for d in calls if d.fn == "regular_polygon"}
+    if bd[0] == "vai":
+        _t, vai, k, moi = bd
+        if k is None:
+            return False
+        base = frozenset(k.args.base)
+        if c.fn == "height":
+            return vai in ("chiều cao", "đường cao") and _nhan_khoi(k) == set(re.findall(r"[A-Z][0-9]*'?", c.args.solid))
+        if c.fn == "regular_polygon":
+            return frozenset(c.args.vertices) == base and (vai == "cạnh đáy" or vai == "cạnh" and moi)
+        if c.fn == "segment_length":
+            s = frozenset(c.args.segment)
+            ben = ({frozenset((k.args.apex, x)) for x in k.args.base} if k.fn != "prism"
+                   else {frozenset(p) for p in zip(k.args.base, k.args.top)})
+            return (vai == "cạnh bên" and s in ben and k.fn in ("regular_pyramid", "prism")
+                    or vai == "cạnh đáy" and s in _canh_cua(k.args.base) and base in deu
+                    or vai == "cạnh" and moi and s in ben | _canh_cua(k.args.base))
         return False
-    khoi = [k for k in calls if k.fn in ("pyramid", "regular_pyramid", "prism") and _nhan_khoi(k) == owner]
-    moi_canh = bool(_MOI_CANH_BANG_NHAU.search(cau))
-    if c.fn == "height":
-        return owner == set(re.findall(r"[A-Z][0-9]*'?", c.args.solid))
-    if c.fn == "regular_polygon":
-        v = set(c.args.vertices)
-        return (owner == v or any(set(k.args.base) == v for k in khoi)
-                and (vai == "cạnh đáy" or vai == "cạnh" and moi_canh))
-    if c.fn == "segment_length":
-        s = frozenset(c.args.segment)
-        for k in khoi:
-            b = list(k.args.base)
-            ben = ({frozenset((k.args.apex, x)) for x in b} if k.fn != "prism" else {frozenset(p) for p in zip(b, k.args.top)})
-            day = {frozenset((x, b[(i + 1) % len(b)])) for i, x in enumerate(b)}
-            deu = any(d.fn == "regular_polygon" and set(d.args.vertices) == set(b) for d in calls)
-            if (vai == "cạnh bên" and s in ben and k.fn in ("regular_pyramid", "prism")
-                    or vai == "cạnh đáy" and s in day and deu or vai == "cạnh" and moi_canh and s in ben | day):
-                return True
-        return vai == "cạnh" and any(
-            d.fn == "regular_polygon" and set(d.args.vertices) == owner
-            and s in {frozenset((x, d.args.vertices[(i + 1) % len(d.args.vertices)])) for i, x in enumerate(d.args.vertices)}
-            for d in calls)
+    if bd[0] == "side":
+        poly = bd[1]
+        if c.fn == "regular_polygon":
+            return frozenset(c.args.vertices) == poly
+        if c.fn == "segment_length":
+            return poly in deu and any(frozenset(c.args.segment) in _canh_cua(d.args.vertices) for d in calls
+                                       if d.fn == "regular_polygon" and frozenset(d.args.vertices) == poly)
     return False
 
 
-def _so_theo_vai_tro(c: LoiGoi, calls: tuple[LoiGoi, ...], field: str, de: str):
-    """Role binding of a value slot over the quotes' sentences in `de` (SG-1/SG-3, reviewed): a number belongs to a role noun
-    written RIGHT before it by an equality, ending its clause; to a segment label owning it by an equality ("SA = 3a",
-    "cạnh bên AA' = a"); or to nobody. Returns (values this slot's role holds for ITS owner, values a role of this slot's
-    kind holds for ANOTHER owner, every number bound)."""
-    vai_o = _VAI_CUA_O.get((c.fn, field), ())
-    own, foreign, complete = [], [], True
+def _so_theo_vai_tro(c: LoiGoi, calls: tuple[LoiGoi, ...], de: str) -> list[tuple[Fraction, bool]]:
+    """Values the quotes give THIS call's role slot (height, regular-polygon side, unnamed segment) through a parsed
+    sentence (`_lien_ket_cau`) — the only source of such a value."""
+    own = []
     for q in c.quotes:
-        vt = _vi_tri(de, q)
-        if vt is None:
-            return [], [], False
-        a, b = vt
-        so = [m for m in _SO.finditer(de, a, b) if _doc(m) is not None]
-        bound = {}
-        for m in _VAI_TRO_SO.finditer(de, a, b):
-            nxt = next((s for s in so if s.start() >= m.end()), None)
-            if nxt is not None and nxt.start() == m.end() and _DUOI_BANG.match(de[nxt.end():]):
-                vai = re.sub(r"\s+", " ", m["vai"].lower())
-                bound[nxt.start()] = (vai, _chu_dung(c, calls, vai, _chu_vai_tro(de, m.start(), vai, calls),
-                                                     de[slice(*_bien_cau(de, a))]))
-        for _x, cuoi, phan in _tu_nhan(de[a:b]):
-            nxt = next((s for s in so if s.start() >= a + cuoi), None)
-            if (len(phan) == 1 and len(phan[0]) == 2 and nxt is not None and _NOI_BANG.fullmatch(de[a + cuoi:nxt.start()])
-                    and _DUOI_BANG.match(de[nxt.end():])):
-                bound.setdefault(nxt.start(), ("đoạn", False))
-        complete = complete and len(bound) == len(so)
-        for s in so:
-            vai, ok = bound.get(s.start(), (None, False))
-            if vai in vai_o and ok is not None:          # an unresolved owner is neither this slot's nor another's
-                (own if ok else foreign).append(_doc(s))
-    return own, foreign, complete
+        if (vt := _vi_tri(de, q)) is None:
+            return []
+        lk = _lien_ket_cau(de, *vt, calls)
+        own += [_doc(m) for m in _SO.finditer(de, *vt) if _doc(m) is not None and m.start() in lk
+                and _lien_ket_khop(c, lk[m.start()], calls)]
+    return own
 
 
 def _so_neo(quotes: tuple[str, ...], seg: list[str] | None) -> list[tuple[Fraction, bool]]:
@@ -1665,13 +1708,16 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
                 continue
             gt = doc_so(v)
             seg = getattr(c.args, "segment", None)
-            own, foreign, complete = _so_theo_vai_tro(c, calls, f, de)
-            # A segment's value needs the source to name THAT segment (atomic label) or bind it to its structural role
-            # of its own solid / regular polygon: a quote naming only AB never grounds BC (SG-1, adversarial + review).
-            if seg and not _co_doan(c.quotes, seg):
+            # A role slot — a height, a regular polygon's side, a segment the quote does not name (SG-1/SG-3, reviewed
+            # twice) — takes its value ONLY from a sentence that parses in the closed clause grammar about its own solid.
+            if c.fn in ("height", "regular_polygon") or seg and not _co_doan(c.quotes, seg):
+                own = _so_theo_vai_tro(c, calls, de)
+                if len(own) != 1 and len([x for q in c.quotes for x in so_trong(q)]) > 1:
+                    raise TuChoi("AMBIGUOUS_VALUE_QUOTE", f"{c.id}: quote nhiều số mà không số nào gắn duy nhất với vai trò "
+                                 "của ô này", (c.id,))
                 if own != [gt]:
-                    raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: {c.quote!r} không nêu đoạn {''.join(seg)} hay vai trò của nó "
-                                 f"bằng {v}", (c.id,))
+                    raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: {c.quote!r} không gắn {v} với vai trò của ô này trong một câu "
+                                 "đọc trọn", (c.id,))
                 continue
             neo = _so_neo(c.quotes, seg)
             if neo:
@@ -1682,13 +1728,6 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
                                  "(bất đẳng thức, phủ định, xấp xỉ, bội số, tuyển hay điều kiện) — không làm dữ kiện", (c.id,))
                 continue
             so = [(x, s) for q in c.quotes for _vt, x, s in so_trong(q)]
-            if len(so) != 1 and complete and len(own) == 1:
-                if gt != own[0]:
-                    raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: giá trị {v} không phải số gắn với vai trò của nó trong {c.quote!r}",
-                                 (c.id,))
-                continue
-            if foreign and not own:            # the only number is another object's height / side ("tam giác SAB có chiều cao 5")
-                raise TuChoi("UNGROUNDED_VALUE", f"{c.id}: số trong {c.quote!r} là vai trò của đối tượng khác", (c.id,))
             if len(so) != 1:
                 raise TuChoi("AMBIGUOUS_VALUE_QUOTE", f"{c.id}: quote cho ô số phải chứa đúng MỘT số, có {len(so)}", (c.id,))
             if gt != so[0]:

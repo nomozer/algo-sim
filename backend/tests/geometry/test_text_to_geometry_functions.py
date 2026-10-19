@@ -50,7 +50,9 @@ def _len_sq(scene: dict, a: str, b: str) -> F:
 
 #: The fixture's labels are historical evidence and stay as recorded. Run source-grounding-completeness refuses NEG2
 #: one layer earlier: its "có cạnh đáy bằng 2" is a premise no call reads. Same verdict (REFUSED), another code.
-MA_HIEN_HANH = {"NEG2": "SOURCE_PREMISE_UNREAD"}
+#: Run `source-gate-hardening` (closed role grammar, after review): NEG2's "không phải là hình chóp lục giác đều …" is an
+#: opaque clause, so the roles after it bind to nothing — refused at its value, one layer earlier still. Same verdict.
+MA_HIEN_HANH = {"NEG2": "UNGROUNDED_VALUE"}
 #: Run `source-gate-hardening` (SG-3): "có cạnh đáy bằng 2, chiều cao bằng 3" binds each number to its own role noun, so
 #: G7's height quote is no longer ambiguous — side 2, height 3 ⇒ V = (3√3/2 · 2²) · 3 = 18√3 (hand-derived).
 KET_CUC_HIEN_HANH = {"G7_AMBIGUOUS_VALUE_QUOTE": {"status": "SERVED", "answers": {"c4": "18√3"}}}

@@ -360,7 +360,7 @@ def test_sg5_a_right_triangle_base_is_a_preserved_premise_of_a_two_request_sente
     ("Cho hình chóp tứ giác đều S.ABCD có đường cao bằng 5, hình vuông MNPQ có cạnh bằng 4.", "4", "5"),     # another square
 ])
 def test_review_a_role_of_another_object_never_fills_the_slot(sentence, base, height):
-    refused(regular(sentence, base, height), "UNGROUNDED_VALUE")
+    refused(regular(sentence, base, height), "UNGROUNDED_VALUE", "AMBIGUOUS_VALUE_QUOTE")
 
 
 def test_review_a_single_number_of_another_objects_height_is_refused():
@@ -387,7 +387,32 @@ def test_review_a_segment_value_needs_its_own_role(sentence, facts_extra):
              *[f(f"l{i}", "length", sentence, points=list(p), measure="segment", value=v) for i, (p, v) in enumerate(facts_extra)],
              f("f5", "perpendicular", "SA vuông góc với (ABCD).", points_a=["S", "A"], points_b=list("ABCD")),
              q("q", "Tính độ dài SC.", quantity="length", points=["S", "C"])]
-    refused(run(sentence + " SA vuông góc với (ABCD). Tính độ dài SC.", facts), "UNGROUNDED_VALUE")
+    refused(run(sentence + " SA vuông góc với (ABCD). Tính độ dài SC.", facts), "UNGROUNDED_VALUE", "AMBIGUOUS_VALUE_QUOTE")
+
+
+@pytest.mark.parametrize("sentence", [   # review round 2: no owner inferred from free prose — the sentence must parse
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, SAB là tam giác cân có chiều cao bằng 5.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4 và biết SAB là tam giác có đường cao bằng 5.",
+    "Cho hình chóp tứ giác đều S.ABCD có chiều cao bằng 5, SAC là tam giác cân có cạnh đáy bằng 4.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4 và khối hộp có chiều cao bằng 5.",
+    "Cho hình chóp tứ giác đều S.ABCD có chiều cao bằng 5 và hình lăng trụ có cạnh đáy bằng 4.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4 và khối nón đỉnh S có chiều cao bằng 5.",
+    "Cho hình chóp tứ giác đều S.ABCD có chiều cao bằng 5 và (SAB) có cạnh đáy bằng 4.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh bằng 4 và chiều cao bằng 5, đặt cạnh một hình lập phương.",
+])
+def test_review_round2_a_role_inside_unparsed_prose_binds_nothing(sentence):
+    refused(regular(sentence, "4", "5"), "UNGROUNDED_VALUE", "AMBIGUOUS_VALUE_QUOTE")
+
+
+@pytest.mark.parametrize("height_sentence", ["Đường cao của mặt bên bằng 5.", "Chiều cao của tam giác SAB bằng 5."])
+def test_review_round2_a_height_of_another_object_is_refused(height_sentence):
+    s0 = "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4."
+    ask = "Tính thể tích khối chóp S.ABCD."
+    refused(run(f"{s0} {height_sentence} {ask}", [
+        f("f1", "solid", s0, solid="S.ABCD", solid_type="pyramid", regular=True),
+        f("f2", "length", s0, measure="base_edge", solid="S.ABCD", value="4"),
+        f("f3", "length", height_sentence, measure="height", solid="S.ABCD", value="5"),
+        q("q", ask, quantity="volume", solid="S.ABCD")]), "UNGROUNDED_VALUE")
 
 
 def test_review_lateral_edge_of_a_regular_pyramid_still_serves():
