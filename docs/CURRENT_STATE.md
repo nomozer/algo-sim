@@ -1,6 +1,16 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL — Hybrid Wave 2B: geometry capability expansion, 2026-10-19 (not integrated)
+## LOCAL — Route D source gate hardening (SG-1..SG-6), 2026-10-20 (not integrated)
+
+Branch `research/hybrid-source-gate-hardening` from `main` = `origin/main` = `6973c4b6` (Wave 2B integrated); product
+`24103909` · `3509b705` · `ee50e87b`, candidate freeze `c228bf4e` (112 measured files /
+`b71487235f29fb12881506b619452a58806c9278768611dd80e3769460788e3a`). Versions `geometry-functions/9` ·
+`geometry-fact-planner/10` · engine `/7`. Locked corpus 18/18 (main 1/18), 12/12 correct refusals, 0 wrong serves; BH2A
+known regression 11/12 + sentinel served, 0 false serves. Cache **127**, `LLM_ONLY`, `flat` unchanged, Adapter `/2`, Hybrid
+product **NO-GO**, live calls **0**. Receipts: [`source-gate-hardening/report.md`](evaluation/geometry/runs/source-gate-hardening/report.md),
+[`handoff.md`](evaluation/geometry/runs/source-gate-hardening/handoff.md).
+
+## INTEGRATED ON `main` (`6973c4b6`) — Hybrid Wave 2B: geometry capability expansion, 2026-10-19
 
 Branch `research/hybrid-wave2b-geometry-expansion` from `main` = `origin/main` = `224328a2` (Wave 2A integrated); product
 `08596652` + review fixes `e9ec0f40`, candidate freeze `b8e3f112` (112 measured files / `520d414423788f3e9eabfcc5813968a50209b155f560baad8994b1747444730c`).

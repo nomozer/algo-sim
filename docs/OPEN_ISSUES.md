@@ -1,5 +1,13 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+### ISSUE-RESEARCH-HYBRID-SOURCE-GATE-REMAINING-GAPS
+
+- **status:** OPEN (run `source-gate-hardening`, branch `research/hybrid-source-gate-hardening`, not on `main`).
+  SG-1..SG-6 are served on the locked corpus and BH2A (11/12); still refused with a code:
+- compound premise sentences on the closed line_ref slice (`ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE`; BH2A-03 with (ABCD));
+- "giao tuyến đó" (anaphora), "lần lượt bằng" (respective binding), a three-label plane for a four-label face of the
+  source (BH2A-03 as specified), method instructions inside a request ("dựa vào SM tính …", NLU L28).
+
 ### ISSUE-RESEARCH-HYBRID-GEOMETRY-CAPABILITY-GAPS
 
 - **status:** OPEN (run `geometry-capability-expansion`, branch `research/hybrid-wave2b-geometry-expansion`, not on `main`).
