@@ -8,8 +8,8 @@
 
 ## 0. Canonical Next Action
 
-**2026-10-19, `segment-witness-cache-invalidation` (same branch, corrects Wave 1):** `CACHE_VERSION = 127` (product
-`2635cbd6`) so the Wave 1 segment witness reaches previously cached problems. `CANONICAL_NEXT_ACTION` = owner decision
+**2026-10-19, `segment-witness-cache-invalidation` (same branch, corrects Wave 1):** `CACHE_VERSION = 127` (products
+`2635cbd6` · `008918cb`) so the Wave 1 segment witness reaches previously cached problems, prism lateral edges included. `CANONICAL_NEXT_ACTION` = owner decision
 `GO_MAIN_HYBRID_WAVE1` on the receipts in `evaluation/geometry/runs/segment-witness-cache-invalidation/handoff.md`; Wave 2
 is not opened before that.
 

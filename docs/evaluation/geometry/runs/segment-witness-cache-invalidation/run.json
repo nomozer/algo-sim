@@ -9,13 +9,17 @@
   "main": "f0560449ec36a37afc7a769ebf965171fff283a0",
   "previous_product_commit": "fd310cd96379e5c9ae37d25b73fcf00d95ebc4ff",
   "previous_authoritative_candidate": "77b05def59d5d39ec1a1e5100f06bab13b4cdd8e",
-  "product_commit": "2635cbd672d6b146cbd237912ee9d254860e80cf",
-  "intermediate_unmeasured_freeze": "96cf9e6f321cd36e3e862c4806cae3d1ba1ef42a",
-  "measured_system_sha256": "0fd9ffe5e5e43ffd427bed1f629de540b3692ada807b74fdc4799baa3c1a3981",
+  "product_commits": ["2635cbd672d6b146cbd237912ee9d254860e80cf", "008918cb916ff3e4f9fb49492889da3b5c636849"],
+  "product_commit": "008918cb916ff3e4f9fb49492889da3b5c636849",
+  "superseded_candidates": {
+    "96cf9e6f321cd36e3e862c4806cae3d1ba1ef42a": "not measured (divergence layer missing; T3 stopped, no receipt)",
+    "f8ac1ec7ea02f87f40457573df942ebcda4e8500": "T3 FULL_PRODUCT_GATE_PASS at product 2635cbd6 (verification/superseded-t3-f8ac1ec7.json); superseded by review IMPORTANT-1"
+  },
+  "measured_system_sha256": "8cb9857f10f4a62788f7ddc099133eb31d903a36abccea5e5432b8b7e8e37f7d",
   "measured_files": 112,
   "cache_version": 127,
   "cache_version_previous": 126,
-  "cache_decision": "docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/cache/decision.json",
+  "cache_decision": "docs/evaluation/geometry/runs/segment-witness-cache-invalidation/cache/decision.json",
   "semantic_environment_hash": "b1714b566e25c91280094c1a431228eac01e8a25a9efaa11ba638dd3de87d5a5",
   "model_surface_changed": false,
   "default_mode": "LLM_ONLY",
@@ -27,9 +31,11 @@
   "red_green": {
     "stage1_wave1_code_at_126": "5 failed, 4 passed (genuine v126 rows are valid hits)",
     "stage2_after_bump": "4 failed, 5 passed (provenance label regular_pyramid_altitude_to_base_center/DERIVED)",
-    "green": "9 passed"
+    "stage3_after_review": "5 failed, 11 passed (4 prism problems get 0 witnesses; prism unit fault injection)",
+    "green": "16 passed"
   },
+  "independent_review_round1": "INDEPENDENT_REVIEW_FAIL (IMPORTANT-1 dead prism branch; NONBLOCKING 1-4) at f8ac1ec7",
   "merge": "NONE",
   "push": "NONE",
-  "status": "PENDING_T3_AND_REVIEW"
+  "status": "PENDING_FINAL_T3_AND_REVIEW"
 }

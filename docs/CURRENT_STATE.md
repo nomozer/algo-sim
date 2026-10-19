@@ -11,8 +11,10 @@ At `fd310cd9` the cache stayed **126** ("no bump required"); pre-main verificati
 **`CACHE_VERSION = 127`**: genuine v126 rows written by `main` `f0560449` carry no `segment3.perpendicular_witness` and were
 still valid hits (an `/api/analyze` hit returns `envelope_json` without rebuilding the scene). It also corrects the Path A
 witness labels to what is checked (`formation_construct_height` / `prism_lateral_altitude`, `ENGINE_VERIFIED`; the old
-`regular_pyramid_altitude_to_base_center`/`DERIVED` was false for a given SA ⟂ (ABC) on a non-regular base). 112 measured
-files / `0fd9ffe5e5e43ffd427bed1f629de540b3692ada807b74fdc4799baa3c1a3981`; candidate, T3 and review receipts:
+`regular_pyramid_altitude_to_base_center`/`DERIVED` was false for a given SA ⟂ (ABC) on a non-regular base). The
+independent review then found the Path A prism branch dead since `fd310cd9` (keyed on `solid_family`, which no scene
+carries): product `008918cb` reads `shape_class`, so right prisms / cuboids / cubes get one witness per lateral edge.
+112 measured files / `8cb9857f10f4a62788f7ddc099133eb31d903a36abccea5e5432b8b7e8e37f7d`; candidate, T3 and review receipts:
 [`segment-witness-cache-invalidation/handoff.md`](evaluation/geometry/runs/segment-witness-cache-invalidation/handoff.md).
 Cache **127**, `LLM_ONLY`, response `flat`, `ADAPTER_VERSION = "hybrid-preview-adapter/2"`, Hybrid product **NO-GO**, live calls **0**.
 

@@ -1,0 +1,63 @@
+{
+  "schema": "AUTHORITATIVE_T3_RECEIPT/1",
+  "run_id": "segment-witness-cache-invalidation",
+  "status": "SUPERSEDED — a valid measurement of candidate f8ac1ec7 (product 2635cbd6); the independent review then found the dead Path A prism branch, fixed in product 008918cb, so this receipt is not evidence for the final candidate. Numbers below unchanged; only the file and log were renamed from authoritative-t3.json / verification/t3-authoritative.log.",
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "started_at_utc": "2026-10-19T08:51:35Z",
+  "verified_at_utc": "2026-10-19T09:00:58Z",
+  "command": "cd frontend && node scripts/full-gate.mjs",
+  "detached_worktree": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-verify-wave1-cache127",
+  "detached_worktree_clean_at_start": true,
+  "candidate_commit": "f8ac1ec7ea02f87f40457573df942ebcda4e8500",
+  "product_commit_sha": "2635cbd672d6b146cbd237912ee9d254860e80cf",
+  "cache_version": "127",
+  "measured_system": {
+    "so_file": 112,
+    "tree_hash": "0fd9ffe5e5e43ffd427bed1f629de540b3692ada807b74fdc4799baa3c1a3981",
+    "verify_command": "python backend/scripts/freeze_evaluation_candidate.py --verify",
+    "verify_status": "MATCH"
+  },
+  "log": {
+    "path": "verification/superseded-t3-f8ac1ec7.log",
+    "sha256": "db1d3ff31bce05f7cde1a929f5c949c20e055090e0d0c2a867b792ac33f2d477",
+    "lines": 252
+  },
+  "gates": {
+    "backend_pytest": {
+      "status": "PASS",
+      "passed": 10979,
+      "failed": 0,
+      "skipped": 1,
+      "deselected": 2,
+      "xfailed": 9,
+      "duration_seconds": 547.6
+    },
+    "frontend_vitest": {
+      "status": "PASS",
+      "test_files_passed": 70,
+      "tests_passed": 1146,
+      "failed": 0,
+      "duration_seconds": 7.2
+    },
+    "frontend_typecheck_and_build": {
+      "status": "PASS",
+      "duration_seconds": 6.6
+    },
+    "thesis_demo_replay": {
+      "status": "PASS",
+      "demo_cases": "5/5",
+      "reduced_chain_cases": "1/1",
+      "duration_seconds": 0.6
+    },
+    "demo_crash_surface": {
+      "status": "PASS",
+      "expected_boundaries": "6/6",
+      "unhandled_500": 0,
+      "duration_seconds": 0.4
+    }
+  },
+  "total_duration_seconds": 562.4,
+  "provider_requests": 0,
+  "not_reused": "the Wave 1 receipt at 77b05def (hybrid-architecture-wave1-exact-certificates-planner/authoritative-t3.json) measured different source and is not evidence for this candidate",
+  "stopped_attempt": "a first T3 on the intermediate freeze 96cf9e6f was stopped before completion (the newest candidate_divergence layer still declared 534c726a…, so test_C2b would fail); no receipt was produced from it"
+}
