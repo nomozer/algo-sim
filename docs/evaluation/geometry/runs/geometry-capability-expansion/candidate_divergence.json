@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "geometry-capability-expansion",
+  "corrects": "docs/evaluation/geometry/runs/goal-directed-function-composition/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "233de8906b8b3308d5042eccffe6fef94ad8ba540b94452900c4fb559cecbf08",
+  "previous_candidate_hash": "e2109ef1cde5deaf9624acd19d19a622dc8d8e5747b749e146ad93996e728766",
+  "current_product_commit": "08596652f50449817b112b255f99ce54ff910814",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized Hybrid Wave 2B (`GO_HYBRID_WAVE2B_LOCAL_IMPLEMENTATION`): route D geometry capability expansion — divide_segment ratio points, plane through a point ⊥ a line and its section from existing primitives, right-angle-chain (right trapezoid) base, oblique prism lateral vector; question-context gate masks validated construction definitions; versions geometry-functions/8, geometry-fact-planner/9, geometry-function-engine/7. The default /api/analyze path imports none of the changed modules at module level, so `CACHE_VERSION` stays 127; `RESPONSE_CONTRACT = flat` surface 485d3834… and the TypedFact schema aa9d93ee… are unchanged (owner decision), Adapter `/2` unchanged.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP (report.md)",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every candidate layer are preserved byte-for-byte; the NLU gold moves only through the declared layer results/historical-gold-delta.json (D04).",
+    "live_requests": 0
+  }
+}
