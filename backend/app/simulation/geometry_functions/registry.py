@@ -1326,7 +1326,9 @@ def _duoc_hoi(de: str, p: int, het: int) -> bool:
     if _CO_KHONG.search(gan) and not re.search(r"bao\s+nhiêu|(?<!\w)mấy(?!\w)", gan, re.IGNORECASE):
         return False
     truoc = de[a:p]
-    moc_du_kien = [m.end() for m in _DUNG_GAN.finditer(truoc)]
+    # Given markers are read OUTSIDE the listed object phrases (`_bo_cum`, length-preserving): the "với" of
+    # "đoạn nối M với S" is part of an object, not "với <dữ kiện>" (review N-1, run goal-directed-function-composition).
+    moc_du_kien = [m.end() for m in _DUNG_GAN.finditer(_bo_cum(truoc))]
     dong_tu = list(_DONG_TU_HOI.finditer(truoc[moc_du_kien[-1] if moc_du_kien else 0:]))
     # Động từ hỏi chỉ chi phối đối tượng khi giữa chúng không có từ chặn tân ngữ (second re-verification, N2).
     qua_dong_tu = bool(dong_tu) and not _CHAN_TAN_NGU.search(truoc[(moc_du_kien[-1] if moc_du_kien else 0) + dong_tu[-1].end():])
@@ -1374,7 +1376,7 @@ def _vung_hoi(de: str, a: int, b: int) -> tuple[int, int] | None:
         return None
     c0, c1 = _bien_cau(de, a)
     truoc = de[c0:a]
-    moc = [m.end() for m in _DUNG_GAN.finditer(truoc)]
+    moc = [m.end() for m in _DUNG_GAN.finditer(_bo_cum(truoc))]      # same reading as `_duoc_hoi`
     dong_tu = list(_DONG_TU_HOI.finditer(truoc, moc[-1] if moc else 0))
     tu = c0 + dong_tu[-1].start() if dong_tu else _bien_menh_de(de, a)[0]
     giua = truoc[dong_tu[-1].end():] if dong_tu else de[tu:a]

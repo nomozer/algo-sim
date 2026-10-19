@@ -171,6 +171,29 @@ def test_removing_one_contract_removes_exactly_that_composition(monkeypatch, dro
     assert r.status == "REFUSED" and r.code in ("UNSUPPORTED_CAPABILITY", "FACT_INCOMPLETE"), (r.code, r.reason)
 
 
+@pytest.mark.parametrize("ask,q", [
+    ("Tính góc giữa đường thẳng nối S với trung điểm của BC và (ABCD), và độ dài SC.",
+     dict(quantity="angle", point_kind="midpoint", points=["B", "C"], points_a=["S"], points_b=list("ABCD"))),
+    ("Tính độ dài đoạn nối trung điểm của BC với điểm S, và góc giữa SC và (ABCD).",
+     dict(quantity="length", point_kind="midpoint", points=["B", "C"], points_b=["S"])),
+    ("Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và đường thẳng BD, và độ dài SC.",
+     dict(quantity="angle", point_kind="centroid", points=["S", "B", "C"], points_a=["A"], points_b=["B", "D"])),
+])
+def test_a_second_ask_after_a_described_goal_is_never_dropped(ask, q):
+    """Review N-1 (run goal-directed-function-composition): "với" INSIDE a listed object phrase ("nối S với …") is not a
+    given marker; the object asked after it must be covered — refuse REQUEST_NOT_ANSWERED, never serve part."""
+    r = run(*problem(ask, **q))
+    assert r.status == "REFUSED" and r.code == "REQUEST_NOT_ANSWERED", (r.code, r.reason, r.answers)
+
+
+def test_a_single_described_goal_with_a_partner_still_serves():
+    """Control for the fix above: masking listed object phrases does not stop a lone described goal."""
+    ask = "Tính góc giữa đường thẳng nối A với trọng tâm của tam giác SBC và (ABCD)."
+    r = run(*problem(ask, quantity="angle", point_kind="centroid", points=["S", "B", "C"], points_a=["A"],
+                     points_b=list("ABCD")))
+    assert r.status == "SERVED", (r.code, r.reason)
+
+
 # ── named angles: direct rules unchanged (trap 1); new line–line primitive ────────────────────────────────────────────
 @pytest.mark.parametrize("ask,a,b,want", [
     ("Tính góc giữa SB và AC.", ["S", "B"], ["A", "C"], _oracle.cos2_lines(PTS["S"], PTS["B"], PTS["A"], PTS["C"])),
