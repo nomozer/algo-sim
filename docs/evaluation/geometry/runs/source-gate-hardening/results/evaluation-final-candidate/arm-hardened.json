@@ -1,0 +1,695 @@
+{
+ "schema": "source-gate-arm/1",
+ "arm": "hardened",
+ "code_root_head": "668932053565f8966af26e73be85abfacd5b1fdf",
+ "registry_version": "geometry-functions/9",
+ "planner_version": "geometry-fact-planner/10",
+ "model_calls": 0,
+ "rows": [
+  {
+   "id": "A-SG1",
+   "group": "A",
+   "sg": "SG-1",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "4"
+   },
+   "expected": {
+    "q": "4"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "ask_volume",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "A-SG2",
+   "group": "A",
+   "sg": "SG-2",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "17"
+   },
+   "expected": {
+    "q": "17"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "ask_length",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "A-SG3",
+   "group": "A",
+   "sg": "SG-3",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "6400/9"
+   },
+   "expected": {
+    "q": "6400/9"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "ask_volume",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "A-SG4",
+   "group": "A",
+   "sg": "SG-4",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "14"
+   },
+   "expected": {
+    "q": "14"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 1,
+   "signature": "midpoint->ask_length",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "A-SG5",
+   "group": "A",
+   "sg": "SG-5",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q1": "13",
+    "q2": "17"
+   },
+   "expected": {
+    "q1": "13",
+    "q2": "17"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 2,
+   "goals_verified": 2,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "ask_length | ask_length",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "A-SG6",
+   "group": "A",
+   "sg": "SG-6",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "4"
+   },
+   "expected": {
+    "q": "4"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "orthogonal_projection_line->ask_length",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "B-SG1-renamed",
+   "group": "B",
+   "sg": "SG-1",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "64"
+   },
+   "expected": {
+    "q": "64"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "ask_volume",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "B-SG1-AD-length",
+   "group": "B",
+   "sg": "SG-1",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "17"
+   },
+   "expected": {
+    "q": "17"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "ask_length",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "B-SG2-distance",
+   "group": "B",
+   "sg": "SG-2",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "1/2"
+   },
+   "expected": {
+    "q": "1/2"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "ask_distance_point_plane",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "B-SG3-triangular",
+   "group": "B",
+   "sg": "SG-3",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "108"
+   },
+   "expected": {
+    "q": "108"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "ask_volume",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "B-SG3-lateral-and-base",
+   "group": "B",
+   "sg": "SG-3",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "25"
+   },
+   "expected": {
+    "q": "25"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "ask_length",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "B-SG4-angle",
+   "group": "B",
+   "sg": "SG-4",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "20/29"
+   },
+   "expected": {
+    "q": "20/29"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 1,
+   "signature": "centroid->ask_angle_line_plane",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "B-SG4-area-three-vertices",
+   "group": "B",
+   "sg": "SG-4",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "13/4"
+   },
+   "expected": {
+    "q": "13/4"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 1,
+   "signature": "midpoint->ask_area",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "B-SG5-hay-dong-thoi",
+   "group": "B",
+   "sg": "SG-5",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q1": "13",
+    "q2": "13"
+   },
+   "expected": {
+    "q1": "13",
+    "q2": "13"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 2,
+   "goals_verified": 2,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "ask_length | ask_length",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "B-SG5-mixed",
+   "group": "B",
+   "sg": "SG-5",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q2": "36/13",
+    "q1": "16"
+   },
+   "expected": {
+    "q1": "16",
+    "q2": "36/13"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 2,
+   "goals_verified": 2,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "ask_volume | ask_distance_point_plane",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "B-SG6-renamed-base-face",
+   "group": "B",
+   "sg": "SG-6",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "4"
+   },
+   "expected": {
+    "q": "4"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "orthogonal_projection_line->ask_length",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "B-SG6-renamed-apex-line",
+   "group": "B",
+   "sg": "SG-6",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "5"
+   },
+   "expected": {
+    "q": "5"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "orthogonal_projection_line->ask_length",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "B-SG6-mat-phang-toi",
+   "group": "B",
+   "sg": "SG-6",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "verdict": "VERIFIED",
+   "values": {
+    "q": "4"
+   },
+   "expected": {
+    "q": "4"
+   },
+   "powers_ok": true,
+   "expected_codes": null,
+   "goals": 1,
+   "goals_verified": 1,
+   "provenance_verbatim": true,
+   "effect_chains": 0,
+   "signature": "orthogonal_projection_line->ask_length",
+   "scene_timeline_ok": true
+  },
+  {
+   "id": "C-SG1-spoof-renamed",
+   "group": "C",
+   "sg": "SG-1",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "powers_ok": null,
+   "expected_codes": [
+    "UNGROUNDED_VALUE"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "provenance_verbatim": null,
+   "effect_chains": null,
+   "signature": null,
+   "scene_timeline_ok": null
+  },
+  {
+   "id": "C-SG1-respectively",
+   "group": "C",
+   "sg": "SG-1",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "powers_ok": null,
+   "expected_codes": [
+    "UNGROUNDED_VALUE",
+    "AMBIGUOUS_VALUE_QUOTE"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "provenance_verbatim": null,
+   "effect_chains": null,
+   "signature": null,
+   "scene_timeline_ok": null
+  },
+  {
+   "id": "C-SG2-parameter-dropped-in-ask",
+   "group": "C",
+   "sg": "SG-2",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "QUESTION_LOCAL_GIVEN_UNVERIFIED",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "powers_ok": null,
+   "expected_codes": [
+    "QUESTION_LOCAL_GIVEN_UNVERIFIED",
+    "QUESTION_LOCAL_GIVEN_CONFLICT",
+    "NON_HOMOGENEOUS_LENGTHS"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "provenance_verbatim": null,
+   "effect_chains": null,
+   "signature": null,
+   "scene_timeline_ok": null
+  },
+  {
+   "id": "C-SG3-swapped-triangular",
+   "group": "C",
+   "sg": "SG-3",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "powers_ok": null,
+   "expected_codes": [
+    "UNGROUNDED_VALUE"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "provenance_verbatim": null,
+   "effect_chains": null,
+   "signature": null,
+   "scene_timeline_ok": null
+  },
+  {
+   "id": "C-SG3-overdetermined-inconsistent",
+   "group": "C",
+   "sg": "SG-3",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "powers_ok": null,
+   "expected_codes": [
+    "INCONSISTENT_FACTS",
+    "HEIGHT_CONFLICT",
+    "OVERDETERMINED"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "provenance_verbatim": null,
+   "effect_chains": null,
+   "signature": null,
+   "scene_timeline_ok": null
+  },
+  {
+   "id": "C-SG4-other-midpoint",
+   "group": "C",
+   "sg": "SG-4",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "powers_ok": null,
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "provenance_verbatim": null,
+   "effect_chains": null,
+   "signature": null,
+   "scene_timeline_ok": null
+  },
+  {
+   "id": "C-SG4-swapped-vertex",
+   "group": "C",
+   "sg": "SG-4",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "powers_ok": null,
+   "expected_codes": [
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "provenance_verbatim": null,
+   "effect_chains": null,
+   "signature": null,
+   "scene_timeline_ok": null
+  },
+  {
+   "id": "C-SG5-first-dropped",
+   "group": "C",
+   "sg": "SG-5",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "powers_ok": null,
+   "expected_codes": [
+    "REQUEST_NOT_ANSWERED"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "provenance_verbatim": null,
+   "effect_chains": null,
+   "signature": null,
+   "scene_timeline_ok": null
+  },
+  {
+   "id": "C-SG5-unknown-point",
+   "group": "C",
+   "sg": "SG-5",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "REQUEST_NOT_ANSWERED",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "powers_ok": null,
+   "expected_codes": [
+    "REQUEST_NOT_ANSWERED",
+    "NOT_ASKED_IN_SOURCE",
+    "UNKNOWN_LABEL",
+    "QUESTION_CONTEXT_UNSUPPORTED"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "provenance_verbatim": null,
+   "effect_chains": null,
+   "signature": null,
+   "scene_timeline_ok": null
+  },
+  {
+   "id": "C-SG6-parallel-faces",
+   "group": "C",
+   "sg": "SG-6",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "PARALLEL_NO_INTERSECTION",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "powers_ok": null,
+   "expected_codes": [
+    "PARALLEL_PLANES",
+    "PARALLEL_NO_INTERSECTION",
+    "NO_INTERSECTION"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "provenance_verbatim": null,
+   "effect_chains": null,
+   "signature": null,
+   "scene_timeline_ok": null
+  },
+  {
+   "id": "C-SG6-non-coplanar-face",
+   "group": "C",
+   "sg": "SG-6",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "NON_COPLANAR_POINTS",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "powers_ok": null,
+   "expected_codes": [
+    "NON_COPLANAR_POINTS"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "provenance_verbatim": null,
+   "effect_chains": null,
+   "signature": null,
+   "scene_timeline_ok": null
+  },
+  {
+   "id": "C-SG6-conditional",
+   "group": "C",
+   "sg": "SG-6",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "CONDITIONAL_CLAUSE",
+   "verdict": "CORRECT_REFUSAL",
+   "values": {},
+   "expected": {},
+   "powers_ok": null,
+   "expected_codes": [
+    "CONDITIONAL_CLAUSE",
+    "SOURCE_OBJECT_MISMATCH",
+    "QUESTION_CONTEXT_UNSUPPORTED",
+    "SOURCE_PREMISE_UNREAD"
+   ],
+   "goals": 0,
+   "goals_verified": 0,
+   "provenance_verbatim": null,
+   "effect_chains": null,
+   "signature": null,
+   "scene_timeline_ok": null
+  }
+ ]
+}
