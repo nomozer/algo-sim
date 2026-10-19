@@ -1,0 +1,24 @@
+{
+ "source": "original_holdout_report.md (GEMINI 4 ARGON, protocol wave2a-blind-holdout-protocol/1.0), §1.2 'Đề bài' of each case, transcribed verbatim",
+ "status": "KNOWN_REGRESSION — not a blind evaluation (the set was disclosed after Wave 2A and is now read before this run's review)",
+ "texts": {
+  "BH2A-01": "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A, AB = 3a, AC = 3a và cạnh bên AA' = 2a. Tính độ dài đoạn nối đỉnh A' với trọng tâm của tam giác ABC.",
+  "BH2A-02": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 3a, BC = 6a, cạnh bên SA vuông góc với mặt phẳng (ABCD) và SA = 3a. Tính khoảng cách từ trọng tâm của tam giác SCD đến đường thẳng AB.",
+  "BH2A-03": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3a, SA vuông góc với mặt phẳng (ABCD) và SA = 3a. Tính khoảng cách từ trọng tâm của tam giác SAB đến giao tuyến của hai mặt phẳng (SCD) và (ABCD).",
+  "BH2A-04": "Cho hình chóp lục giác đều S.ABCDEF có cạnh đáy bằng 3a và chiều cao bằng 3a. Tính diện tích tam giác tạo bởi trọng tâm của tam giác SAB và hai điểm C, D.",
+  "BH2A-05": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = a, AD = 2a, AA' = 2a. Gọi M là trung điểm của cạnh AD. Tính góc giữa hai đường thẳng A'M và BD'.",
+  "BH2A-06": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 5a, BC = 3a. Mặt bên (SAB) là tam giác vuông tại S có SA = 3a, SB = 4a và nằm trong mặt phẳng vuông góc với mặt phẳng (ABCD). Tính góc giữa hai đường thẳng SC và BD.",
+  "BH2A-07": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3a, AC = 3a, SA vuông góc với mặt phẳng (ABC) và SA = 3a. Tính góc giữa đường thẳng nối đỉnh A với trọng tâm của tam giác SBC và mặt phẳng (SAC).",
+  "BH2A-08": "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 2a và cạnh bên AA' = a. Tính góc giữa đường thẳng nối đỉnh A' với trung điểm của cạnh BC và mặt phẳng (ABC).",
+  "BH2A-09": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3a, AC = 3a, SA vuông góc với mặt phẳng (ABC) và SA = 3a. Tính góc giữa đường thẳng nối đỉnh S với trọng tâm của tam giác ABC và đường thẳng SB.",
+  "BH2A-10": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 3a, SA vuông góc với mặt phẳng (ABC) và SA = 3a. Gọi G là trọng tâm của tam giác SBC. Tính khoảng cách từ trọng tâm của tam giác SBC đến mặt phẳng (ABC) và tính góc giữa hai đường thẳng AG và BC.",
+  "BH2A-11": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A với AB = 6a, AC = 6a. Gọi H là trung điểm của cạnh BC, biết SH vuông góc với AB, SH vuông góc với AC và SH = 3a. Tính khoảng cách từ trọng tâm của tam giác SAB đến mặt phẳng (ABC) và tính góc giữa hai đường thẳng SH và BC.",
+  "BH2A-12": "Cho hình chóp S.ABC có đáy ABC là tam giác với AB = 5a, AC = 8a, BC = 7a, cạnh bên SA vuông góc với mặt phẳng (ABC) và SA = 3a. Tính góc giữa hai đường thẳng SB và AC, và tính diện tích tam giác tạo bởi trung điểm của cạnh AB với hai điểm S, C.",
+  "BH2A-13": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 3a, SA vuông góc với mặt phẳng (ABC) và SA = 3a. Gọi M là điểm trên cạnh SA sao cho SM = 2MA. Mặt phẳng (P) đi qua M và vuông góc với đường thẳng SA. Tính diện tích thiết diện của hình chóp S.ABC cắt bởi mặt phẳng (P).",
+  "BH2A-14": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2a, SA vuông góc với mặt phẳng (ABCD) và SA = 2a. Tính khoảng cách từ trọng tâm của tứ giác ABCD đến mặt phẳng (SBC).",
+  "BH2A-15": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 3a, SA vuông góc với mặt phẳng (ABC) và SA = 3a. Gọi M là trung điểm của cạnh BC. Tính diện tích tam giác tạo bởi trọng tâm của tam giác SBC với hai điểm S, M.",
+  "BH2A-16": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 2a, AC = 3, SA vuông góc với mặt phẳng (ABC) và SA = 2a. Tính góc giữa hai đường thẳng SB và AC.",
+  "BH2A-17": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 3a, SA vuông góc với mặt phẳng (ABC) và SA = 3a. Gọi M là trung điểm của cạnh BC. Tính khoảng cách từ điểm M đến mặt phẳng (SAB).",
+  "BH2A-18": "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 3a, biết SA vuông góc với BC và SA = 3a. Tính góc giữa hai đường thẳng SB và AC."
+ }
+}
