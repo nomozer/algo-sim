@@ -458,9 +458,10 @@ def test_safe_refusals_tampered_facts_and_question_tail_runtime_guard(monkeypatc
 def test_version_constants_surface_fingerprints_and_historical_receipt_preservation():
     """P3, P4.8 & P4.9: Verify versions, surface fingerprints, LLM_ONLY default, and untouched v3 receipts."""
     # /6, /7, /5 -> /7, /8, /6 (goal-directed-function-composition): ask_angle_lines, centroid + angle goal contracts.
-    assert REGISTRY_VERSION == "geometry-functions/7"
-    assert PLANNER_VERSION == "geometry-fact-planner/8"
-    assert ENGINE_VERSION == "geometry-function-engine/6"
+    # -> /8, /9, /7 (geometry-capability-expansion): divide_segment, MAT_VUONG_DUONG, right-angle chain, prism vector.
+    assert REGISTRY_VERSION == "geometry-functions/8"
+    assert PLANNER_VERSION == "geometry-fact-planner/9"
+    assert ENGINE_VERSION == "geometry-function-engine/7"
     # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định.
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness.
     assert main_module.CACHE_VERSION == "127"
@@ -475,7 +476,8 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     # Surface fingerprints must remain identical to locked evaluation pins
     assert surface_fingerprint("flat") == "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a"
     # research contract v3 only (flat, the default, is unchanged): described-point questions are generated from the
-    # Registry goal contracts (area, angle) in goal-directed-function-composition; was 90bf8f03…
+    # Registry goal contracts (area, angle) in goal-directed-function-composition; was 90bf8f03…. Unchanged by
+    # geometry-capability-expansion (the ratio point_def stays out of v3 and of the frozen `flat` surface 485d3834…).
     assert surface_fingerprint("v3") == "4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f"
     assert function_calling.surface_fingerprint() == "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25"
 

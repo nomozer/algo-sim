@@ -1,0 +1,17 @@
+{
+  "schema": "HISTORICAL_GOLD_REMEASURE/1",
+  "measured_receipt": "docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/results/gold/gold_rows.json",
+  "applies_after": "docs/evaluation/geometry/runs/goal-directed-function-composition/results/historical-gold-delta.json",
+  "cause": "Geometry capability expansion (Hybrid Wave 2B): a quadrilateral base with right angles at two consecutive vertices (right trapezoid) is laid out exactly (`right_angle_chain_chart`), so this row is no longer refused for an unsupported base shape",
+  "model_calls": 0,
+  "rows_compared": 60,
+  "served_before": 10,
+  "served_after": 11,
+  "changed": {
+    "D04": {"before": {"status": "REFUSED", "code": "UNSUPPORTED_BASE_SHAPE", "values": {}},
+            "after": {"status": "SERVED", "code": null, "values": {"f9": "6"}},
+            "independent_expectation": {"value_squared": "6", "exact": "√6", "source": "inputs/corpus.json expected_values.r1 (computed_by agent1_oracle.py, preregistered)"},
+            "hand_check": "A(0,0,0), D(0,2,0), B(2,0,0), C(4,2,0), S(0,0,2): BC = (2,2,0), BS = (−2,0,2); d² = 8 − (−4)²/8 = 6",
+            "reading": "Right trapezoid at A and D, AB = AD = 2, CD = 4, SA ⊥ base, SA = 2; distance from S to BC is √6 — the preregistered expectation."}
+  }
+}

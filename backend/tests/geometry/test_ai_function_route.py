@@ -166,8 +166,9 @@ class _Gia:
 def test_khai_bao_ham_gemini_dung_tap_con_openapi():
     decl = FC.gemini_function_declarations()
     # the provider sees the library minus planner-only auxiliaries — and exactly these (a new one is a decision)
-    # Wave 2A decision: `ask_angle_lines` is route B only (planner), not offered to the route A provider.
-    assert {d["name"] for d in decl} == set(GF.PROVIDER_FUNCTIONS) == set(GF.REGISTRY) - {"translate_point", "ask_angle_lines"}
+    # Wave 2A / 2B decisions: `ask_angle_lines`, `divide_segment` are route B only (planner), not offered to route A.
+    assert {d["name"] for d in decl} == set(GF.PROVIDER_FUNCTIONS) == set(GF.REGISTRY) - {"translate_point", "ask_angle_lines",
+                                                                                         "divide_segment"}
     txt = json.dumps(decl)
     for cam in ('"$ref"', '"$defs"', '"anyOf"', '"title"', '"additionalProperties"', '"xyz"', '"coord'):
         assert cam not in txt, cam

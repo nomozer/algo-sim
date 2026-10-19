@@ -68,6 +68,7 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
     ("CAPABILITY", "capability_gap", frozenset({
         "UNSUPPORTED_CAPABILITY", "UNSUPPORTED_BASE_SHAPE", "UNSUPPORTED_CENTROID", "UNSUPPORTED_MULTIPLE_BASES",
         "UNSUPPORTED_MULTIPLE_HEIGHTS", "UNSUPPORTED_PLANE", "UNSUPPORTED_REGULAR_POLYGON", "QUESTION_CONTEXT_UNSUPPORTED",
+        "UNSUPPORTED_IRRATIONAL_LAYOUT",
         "PLAN_TOO_LARGE", "NO_SOLID", "NON_HOMOGENEOUS_LENGTHS", "CONDITIONAL_CLAUSE", "NEGATED_CLAUSE",
         "METRIC_REQUIRES_EUCLIDEAN_CHART",
         # Route D's OUT_OF_SCOPE is the extraction escape `unsupported` ("this clause does not map to the function
@@ -81,7 +82,7 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
      "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số "
      "liệu hay cách hiểu thay em, nên không dựng hình."),
     ("INVALID_DATA", "geometry_generation_failed", frozenset({
-        "INCONSISTENT_FACTS", "NON_POSITIVE_LENGTH", "DEGENERATE_LINE", "PARALLEL_PLANES", "SKEW_NO_INTERSECTION",
+        "INCONSISTENT_FACTS", "NON_POSITIVE_LENGTH", "INVALID_RATIO", "DEGENERATE_LINE", "PARALLEL_PLANES", "SKEW_NO_INTERSECTION",
         "NON_COPLANAR_POINTS", "SECTION_EMPTY", "SECTION_PLANE_IS_FACE", "DERIVED_PLANE_IS_REFERENCE",
         "REGULAR_PYRAMID_NEEDS_REGULAR_BASE", "QUESTION_LOCAL_GIVEN_CONFLICT", "FOOT_NOT_IN_PLANE", "LINE_CONTAINED_IN_PLANE",
         # polyhedral kernel (`GeometryError` codes Route D passes through unchanged)

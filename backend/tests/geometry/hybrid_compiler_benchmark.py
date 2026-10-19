@@ -388,6 +388,9 @@ REFUSAL_CLASS = {
     # hybrid-pre-main-hardening: a zero length is a degenerate given (it used to surface as ENGINE_SELF_CHECK_FAILED,
     # i.e. "system"); no frozen route-D corpus has a zero input, so no recorded score moves.
     "NON_POSITIVE_LENGTH": "contradictory",
+    # geometry-capability-expansion: a ratio point outside its segment is a degenerate given; an irrational leg ratio of a
+    # right trapezoid has no exact ℚ chart yet. Taxonomy only — no frozen corpus has either input, no recorded score moves.
+    "INVALID_RATIO": "contradictory", "UNSUPPORTED_IRRATIONAL_LAYOUT": "unsupported",
     # the library / compiler has no rule
     "OUT_OF_SCOPE": "unsupported", "UNSUPPORTED_CAPABILITY": "unsupported", "UNSUPPORTED_PLANE": "unsupported",
     "UNSUPPORTED_REGULAR_POLYGON": "unsupported", "UNSUPPORTED_MULTIPLE_HEIGHTS": "unsupported",

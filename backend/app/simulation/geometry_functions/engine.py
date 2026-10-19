@@ -35,10 +35,11 @@ from app.simulation.geometry import kernel as K
 from app.simulation.geometry.predicates import parallel_planes, point_on_line, point_on_plane, parallel_line_plane, line_in_plane
 from app.simulation.semantic_program import ir_builders as P
 
-from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de, nhom_mat_nguon
+from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de, nhom_mat_nguon
 
 #: /6 (run `goal-directed-function-composition`): `ask_angle_lines` IR + independent line–line Gram verifier.
-ENGINE_VERSION = "geometry-function-engine/6"
+#: /7 (run `geometry-capability-expansion`): ratio points, right-angle-chain base, prism lateral vector, ⊥-line plane check.
+ENGINE_VERSION = "geometry-function-engine/7"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -193,6 +194,7 @@ class _Dung:
         self.khoi: dict[str, _Khoi] = {}
         self.tam: str | None = None
         self.midpoints: dict[str, tuple[str, str]] = {}
+        self.divisions: dict[str, tuple[str, str, Fraction]] = {}   # P = (1 − t)A + tB (`divide_segment`)
         self.constructions: dict[str, LoiGoi] = {}
         self.lines: dict[str, Line3] = {}       # existing entity store: verified source-bound line results
         self.line_refs = {c.args.line_ref for c in calls if c.fn=='orthogonal_projection_line' and c.args.line_ref}
@@ -306,6 +308,9 @@ class _Dung:
             vong = next(iter(self.khoi.values())).base
             khung, G2, dung = self._tam_giac(vong)
             luat = "triangle_by_sides"
+        elif (chuoi := self._chuoi_goc_vuong(next(iter(self.khoi.values())).base)) is not None:
+            vong, khung, G2, dung = chuoi
+            luat = "right_angle_chain_chart"
         else:
             raise TuChoi("UNSUPPORTED_BASE_SHAPE",
                          f"đáy {len(dat)} đỉnh không có lời gọi xác định hình (đa giác đều / hình chữ nhật)")
@@ -315,6 +320,33 @@ class _Dung:
         self.G2, self.dung = G2, self.dung | dung
         for v, (x, y) in zip(vong, khung):
             self._dat(v, (x, y, Z), luat, dung)
+
+    def _chuoi_goc_vuong(self, vong: tuple[str, ...]):
+        """Quadrilateral base with right angles at two CONSECUTIVE vertices Vi, Vj (right trapezoid), each angle between the
+        polygon's own two sides there. Both legs ViVp, VjVn are ⊥ ViVj, hence parallel, and on the SAME side of ViVj (any
+        other side makes ABCD self-intersecting). Chart: Vi origin, e1 = ViVj, e2 = ViVp, G2 = diag(|ViVj|², |ViVp|²),
+        Vn = Vj + (|VjVn| / |ViVp|)·e2 — exact only when that ratio is rational. Missing length ⇒ MISSING_DIMENSION; the
+        fourth side, if given, is checked later like every fact. None when no such pair exists (not this shape)."""
+        if len(vong) != 4:
+            return None
+        goc = {c.args.vertex: (frozenset(c.args.rays), c.id) for c in self.of("right_angle")}
+        for i in range(4):
+            vi, vj, vp, vn = vong[i], vong[(i + 1) % 4], vong[(i - 1) % 4], vong[(i + 2) % 4]
+            gi, gj = goc.get(vi), goc.get(vj)
+            if not (gi and gj and gi[0] == {vp, vj} and gj[0] == {vi, vn}):
+                continue
+            ab, ad, bc = self.do_dai(vi, vj), self.do_dai(vi, vp), self.do_dai(vj, vn)
+            if thieu := [s for s, l in ((vi + vj, ab), (vi + vp, ad), (vj + vn, bc)) if not l]:
+                raise TuChoi("MISSING_DIMENSION", f"đáy có góc vuông tại {vi}, {vj} nhưng chưa biết {thieu}", (gi[1], gj[1]))
+            r = _sqrt_q(sorted(bc)[0][0] / sorted(ad)[0][0])
+            if r is None:
+                raise TuChoi("UNSUPPORTED_IRRATIONAL_LAYOUT", f"{vj}{vn} : {vi}{vp} vô tỉ — chưa dựng đáy chính xác trong ℚ",
+                             (gi[1], gj[1]))
+            o = Fraction(1)
+            dat = {vi: (Z, Z), vj: (o, Z), vp: (Z, o), vn: (o, r)}
+            dung = {gi[1], gj[1], *sorted(ab)[0][1], *sorted(ad)[0][1], *sorted(bc)[0][1]}
+            return vong, tuple(dat[v] for v in vong), ((sorted(ab)[0][0], Z), (Z, sorted(ad)[0][0])), dung
+        return None
 
     def _tam_giac(self, vong: tuple[str, ...]):
         """Ba cạnh² từ độ dài + góc vuông (Pythagore khi biết hai trong ba). Gram từ định lý cos (hữu tỉ)."""
@@ -448,6 +480,14 @@ class _Dung:
                     raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{c.id}: quan hệ dựng không được thỏa", (c.id,))
                 self.dung.add(c.id)
                 return True
+        for c in self.of("divide_segment"):
+            p, (a, b), t = c.args.point, c.args.segment, Fraction(c.args.ratio)
+            if p not in self.pts and a in self.pts and b in self.pts:
+                self.divisions[p] = (a, b, t)
+                self._dat(p, tuple((1 - t) * self.pts[a][i] + t * self.pts[b][i] for i in range(3)), f"divide_segment_t={t}",
+                          {c.id}, "DERIVED")
+                self.dung.add(c.id)
+                return True
         for c in self.of("midpoint"):
             p, (a, b) = c.args.point, c.args.segment
             if p not in self.pts and a in self.pts and b in self.pts:
@@ -519,6 +559,22 @@ class _Dung:
                     else:
                         f = self.pts[b]
                         self._dat(t, (f[0], f[1], self.pts[k.top[0]][2]), "right_prism_translate", {k.call} | cs)
+                return True
+        # Any prism (oblique included): once the base is placed and ONE top vertex is fixed by the facts (projection, an
+        # edge), every other top vertex is its base vertex + that same lateral vector — the definition of a prism, exact in
+        # ℚ³. The prism fact check (`_dung_khong`: one vector for all pairs) still verifies a top vertex placed otherwise.
+        for k in sorted(self.khoi.values(), key=lambda k: k.name):
+            if k.kind != "prism" or not all(b in self.pts for b in k.base):
+                continue
+            biet = [(b, t) for b, t in zip(k.base, k.top) if t in self.pts]
+            if biet and len(biet) < len(k.top):
+                b0, t0 = biet[0]
+                v = tuple(self.pts[t0][i] - self.pts[b0][i] for i in range(3))
+                if v[2] == 0:
+                    raise TuChoi("INCONSISTENT_FACTS", f"{k.name}: đỉnh {t0} nằm trên mặt đáy — lăng trụ suy biến", (k.call,))
+                b, t = next((b, t) for b, t in zip(k.base, k.top) if t not in self.pts)
+                self._dat(t, tuple(self.pts[b][i] + v[i] for i in range(3)), f"prism_lateral_vector_{b0}{t0}", {k.call},
+                          "DERIVED")
                 return True
         return False
 
@@ -736,6 +792,9 @@ class _Dung:
             return all(2 * self.pts[p][i] == self.pts[x][i] + self.pts[y][i] for i in range(3))
         if c.fn == "centroid":
             return all(3 * self.pts[a.point][i] == sum(self.pts[v][i] for v in a.polygon) for i in range(3))
+        if c.fn == "divide_segment":
+            t, (x, y) = Fraction(a.ratio), a.segment
+            return all(self.pts[a.point][i] == (1 - t) * self.pts[x][i] + t * self.pts[y][i] for i in range(3))
         if c.fn == "equal_length":
             return self.d2(*a.segment_a) == self.d2(*a.segment_b)
         if c.fn == "perpendicular_lines":
@@ -823,6 +882,11 @@ class _Dung:
                 a, b = self.midpoints[t]
                 lenh.append({"kind": "construct_point", "target_var": ir_name(t), "label": t,
                              "expr": {"kind": "midpoint", "a": ir_name(a), "b": ir_name(b)}})
+                khai.append(P.memory_declaration(ir_name(t), "point3"))
+            elif t in self.divisions:                        # the IR's own expression, exact ratio
+                a, b, r = self.divisions[t]
+                lenh.append({"kind": "construct_point", "target_var": ir_name(t), "label": t,
+                             "expr": {"kind": "divide_segment", "a": ir_name(a), "b": ir_name(b), "ratio": str(r)}})
                 khai.append(P.memory_declaration(ir_name(t), "point3"))
             elif t in self.centroids:                        # trọng tâm = chia đoạn từ đỉnh tới trung điểm cạnh đối, 2/3
                 a, b, c3 = self.centroids[t]
@@ -935,10 +999,29 @@ class _Dung:
         except GeometryError as e:
             raise TuChoi(e.code, str(e), cur_id or tuple(c.id for c in self.of("section", "ask_section_area", "intersection_line", "ask_area", "ask_angle_line_plane")))
 
+    def _kiem_mat_vuong_duong(self, d: dict) -> None:
+        """Postconditions of the plane through p ⊥ d (`MAT_VUONG_DUONG`), independent of how it was assembled: both
+        auxiliary directions ⊥ d in the chart Gram metric, independent (a plane), and the same plane as the kernel's own
+        `plane_through_point_perpendicular_to(p, d)` — the operation the IR's `PlanePerpendicularToLineExpr` evaluates."""
+        p, (x1, x2), (a, b) = d["point"], d["labels"], d["perpendicular_to"]
+        ids = tuple(d["constructs"]) + tuple(d["targets"])
+        dv = self._vec(a, b)
+        if self.g(dv, dv) == 0:
+            raise TuChoi("DEGENERATE_LINE", "hai đầu mút của đường trùng tọa độ đã xác minh", ids)
+        u1, u2 = self._vec(p, x1), self._vec(p, x2)
+        if self.g(u1, dv) != 0 or self.g(u2, dv) != 0:
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"phương phụ của mặt qua {p} không vuông góc {a}{b}", ids)
+        mat = self._plane([p, x1, x2])                     # independent directions, else the kernel's own code
+        ref = K.plane_through_point_perpendicular_to(Vec3(*self.pts[p]), self._line([a, b]))
+        if not all(ref.signed_eval(Vec3(*self.pts[x])) == 0 for x in (p, x1, x2)) or not mat.normal.cross(ref.normal).is_zero():
+            raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"mặt dẫn xuất qua {p} khác mặt qua {p} vuông góc {a}{b} của kernel", ids)
+
     def _kiem_mat_phu(self, d: dict) -> None:
         """Postconditions of a derived plane, independent of how the planner built it. It passes through the point by
         construction (built through it); checked here: parallel to the reference plane (normals, `predicates.parallel_planes`),
         not that plane, and not a face of the solid it cuts (a boundary plane is not a cutting section — no silent M4)."""
+        if d["rule"] == MAT_VUONG_DUONG:
+            return self._kiem_mat_vuong_duong(d)
         p, q, (x1, x2), ids = d["point"], d["parallel_to"], d["labels"], tuple(d["constructs"]) + tuple(d["targets"])
         two = d['rule'] == MAT_HAI_DUONG
         if two:
@@ -1254,7 +1337,7 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         for s in dung.trace:                             # điểm phụ: DẪN XUẤT, không phải nhãn của đề — ghi rõ ràng buộc
             if s["step"] == "place_point" and s["object"] in phu:
                 s.update(binding="AUXILIARY", auxiliary_rule=phu[s["object"]]["rule"], goal=phu[s["object"]]["goal"])
-        dung.mat_phu = [d for d in auxiliary if d.get("rule") in (MAT_SONG_SONG, MAT_HAI_DUONG)]
+        dung.mat_phu = [d for d in auxiliary if d.get("rule") in (MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG)]
         dung.ten_mat_phu = ten_mat_phu
         dung.kiem()
         dung.kiem_mat_cat()

@@ -26,13 +26,14 @@ import re
 from dataclasses import dataclass, field
 from typing import Annotated, Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, ValidationError
+from pydantic import BaseModel, ConfigDict, Field, ValidationError, WithJsonSchema
 
-from .registry import AUXILIARY_RULES, MAT_SONG_SONG, MAT_HAI_DUONG, ExactNumber, Label, TuChoi, nhan_cua_de, nhan_phu_da_dung
-from .registry import REGISTRY, doc_ke_hoach, goal_slots, render_call, same_call, planning_contracts
+from .registry import AUXILIARY_RULES, MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, ExactNumber, Label, TuChoi, nhan_cua_de, nhan_phu_da_dung
+from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, render_call, same_call, planning_contracts
 
 #: /8 (run `goal-directed-function-composition`): goal entry by typed slots (`_toan_hang_muc_tieu`), line partner operand.
-PLANNER_VERSION = "geometry-fact-planner/8"
+#: /9 (run `geometry-capability-expansion`): `divide_segment` point_def, plane through a point ⊥ a line (`MAT_VUONG_DUONG`).
+PLANNER_VERSION = "geometry-fact-planner/9"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
 def _nhan_tuoi(stem: str) -> tuple[str, ...]:
@@ -48,6 +49,9 @@ MAX_EFFECT_NEEDS = 32
 MAX_EFFECT_CANDIDATES = 8
 MAX_RESULT_LINES = 4
 MAX_RESULT_FEET = 8
+
+#: Point kinds the frozen `flat` provider surface offers (485d3834…). The planner accepts more (`TypedFact.point_kind`).
+FLAT_POINT_KINDS = ("midpoint", "centroid", "intersect_line_line", "intersect_line_plane")
 
 FactKind = Literal["solid", "polygon_shape", "right_angle", "length", "equal_lengths", "perpendicular", "altitude",
                    "projection", "point_def", "section", "intersection_line", "question", "unsupported"]
@@ -72,7 +76,10 @@ class TypedFact(BaseModel):
     shape: Literal["equilateral_triangle", "square", "regular_hexagon", "regular_polygon", "rectangle", "triangle"] | None = None
     at: Label | None = Field(None, description="đỉnh góc vuông · ảnh hình chiếu")
     point: Label | None = None
-    point_kind: Literal["midpoint", "centroid", "intersect_line_line", "intersect_line_plane"] | None = None
+    # The planner also accepts `divide_segment` (Wave 2B); the provider schema stays the frozen `flat` surface (owner
+    # decision): a live `flat` extraction cannot emit it until that surface is re-measured (`FLAT_POINT_KINDS`).
+    point_kind: Annotated[Literal["midpoint", "centroid", "intersect_line_line", "intersect_line_plane", "divide_segment"],
+                          WithJsonSchema({"enum": list(FLAT_POINT_KINDS), "type": "string"})] | None = None
     value: ExactNumber | None = None
     measure: Literal["segment", "base_edge", "lateral_edge", "height", "edge"] | None = Field(
         None, description="độ dài này là của gì: một đoạn có tên, cạnh đáy, cạnh bên, chiều cao, mọi cạnh (lập phương, tứ diện đều)")
@@ -185,6 +192,8 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: line_ref chỉ cho distance / projection", (f.id,))
         if f.kind == "point_def" and f.point_kind in ("intersect_line_line", "intersect_line_plane"):
             required = ("point", "point_kind", "points_a", "points_b")
+        if f.kind == "point_def" and f.point_kind == "divide_segment":       # the ratio t = AP/AB rides on `value`
+            required = ("point", "point_kind", "points", "value")
         if f.plane_relation is not None:                # mặt cắt cho bằng quan hệ: điểm đi qua + mặt tham chiếu, không ba điểm
             if f.kind not in ("section", "question") or f.points:
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: plane_relation chỉ cho thiết diện, và thay cho `points`", (f.id,))
@@ -408,7 +417,7 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
     raw_point_outputs: set[str] = set()
     for c in calls:
         fn, a = c["fn"], c.get("args") or {}
-        if fn in ("midpoint", "centroid", "intersect_line_line", "intersect_line_plane") and isinstance(a.get("point"), str):
+        if fn in POINT_PRODUCERS and isinstance(a.get("point"), str):
             raw_point_outputs.add(a["point"])
         elif fn in ("orthogonal_projection", "orthogonal_projection_line", "translate_point") and isinstance(a.get("image"), str):
             raw_point_outputs.add(a["image"])
@@ -432,7 +441,7 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
     explicit_point_producers: dict[str, list[str]] = {}
     for c in calls:
         fn, a = c["fn"], c.get("args") or {}
-        if fn in ("midpoint", "centroid", "intersect_line_line", "intersect_line_plane") and isinstance(a.get("point"), str):
+        if fn in POINT_PRODUCERS and isinstance(a.get("point"), str):
             pt = a["point"]
             if pt not in solid_vertices:
                 explicit_point_producers.setdefault(pt, []).append(c["id"])
@@ -729,6 +738,9 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
             return phat(f.id, f.point_kind, {"point": f.point, "line1": f.points_a, "line2": f.points_b}, q, "point_def(line–line)")
         if f.point_kind == "intersect_line_plane":
             return phat(f.id, f.point_kind, {"point": f.point, "line": f.points_a, "plane": f.points_b}, q, "point_def(line–plane)")
+        if f.point_kind == "divide_segment":
+            return phat(f.id, "divide_segment", {"point": f.point, "segment": f.points, "ratio": _ty_so(f)}, q,
+                        "point_def(divide_segment)")
         fn = "midpoint" if f.point_kind == "midpoint" else "centroid"
         args = {"point": f.point, ("segment" if fn == "midpoint" else "polygon"): f.points}
         return phat(f.id, fn, args, q, f"point_def({f.point_kind})")
@@ -741,6 +753,21 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
     if f.kind == "question":
         return _cau_hoi(f, q, k, khoi_cua, phat)
     raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: loại dữ kiện {f.kind} chưa có luật", (f.id,))
+
+
+def _ty_so(f: TypedFact) -> str:
+    """The fact's ratio t = AP/AB as an exact "p/q": rational, strictly between 0 and 1, on two distinct endpoints."""
+    from fractions import Fraction
+
+    if len(f.points or []) != 2 or len(set(f.points)) != 2:
+        raise TuChoi("FACT_INCOMPLETE", f"{f.id}: điểm chia cần đúng hai đầu mút phân biệt", (f.id,))
+    try:
+        t = Fraction(str(f.value).replace(",", "."))
+    except (ValueError, ZeroDivisionError):
+        raise TuChoi("INVALID_RATIO", f"{f.id}: tỉ số {f.value!r} không phải số hữu tỉ", (f.id,)) from None
+    if not 0 < t < 1:
+        raise TuChoi("INVALID_RATIO", f"{f.id}: tỉ số AP/AB = {t} phải nằm giữa 0 và 1 (điểm trong đoạn)", (f.id,))
+    return f"{t.numerator}/{t.denominator}"
 
 
 def _do_dai(f: TypedFact, q: list[str], deu: dict, khoi_cua, phat) -> dict:
@@ -864,8 +891,12 @@ def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: s
     hậu điều kiện độc lập (qua M, song song (Q), không trùng (Q), không phải mặt biên). Một mặt dẫn xuất chỉ dựng MỘT lần
     dù được dùng để dựng và để hỏi diện tích. Mặt qua một điểm VUÔNG GÓC với một mặt phẳng không duy nhất ⇒ từ chối."""
     if f.plane_relation == "perpendicular":
-        raise TuChoi("PLANE_NOT_UNIQUE", f"{f.id}: mặt qua {f.point} vuông góc với ({''.join(f.points_b)}) có vô số — cần "
-                     "thêm một ràng buộc để xác định duy nhất", (f.id,))
+        if len(set(f.points_b)) >= 3:                 # ⊥ a PLANE: infinitely many planes through the point
+            raise TuChoi("PLANE_NOT_UNIQUE", f"{f.id}: mặt qua {f.point} vuông góc với ({''.join(f.points_b)}) có vô số — cần "
+                         "thêm một ràng buộc để xác định duy nhất", (f.id,))
+        if len(set(f.points_b)) != 2:
+            raise TuChoi("FACT_INCOMPLETE", f"{f.id}: đường vuông góc với mặt cần đúng hai điểm phân biệt", (f.id,))
+        return _mat_vuong_duong(f, q, k, phat, khoi, fn)          # ⊥ a LINE: exactly one plane
     if f.role not in ("premise", "question") or f.negated:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt dựng từ quan hệ chỉ cho thiết diện được yêu cầu", (f.id,))
     two = f.plane_relation == "parallel_two_lines"
@@ -915,6 +946,72 @@ def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: s
                     "calls": d["constructs"] + [f.id], "auxiliary": d["labels"],
                     "reason": f"mặt qua {m} và hai ảnh tịnh tiến theo " + ', '.join(''.join(v)+'→' for v in directions)
                               + " (IR sẵn có; engine kiểm các quan hệ trên hình đã dựng)",
+                    "provenance": "DERIVED", "binding": "AUXILIARY"})
+    return c
+
+
+def _mat_vuong_duong(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: str) -> dict:
+    """PHÂN RÃ MỤC TIÊU (`MAT_VUONG_DUONG`): Section(khối, mặt qua M ⊥ d) from EXISTING primitives only.
+
+    For a solid vertex Z off d, F = foot of Z on d (`orthogonal_projection_line`) and X = M + F→Z (`translate_point`) lies on
+    the plane through M ⊥ d. Two anchors Z₁, Z₂ chosen from the solid's STRUCTURE (no coordinates): with d through the apex,
+    two base vertices off d; otherwise one base vertex off d and the apex — either way d ∪ {Z₁, Z₂} spans space, so the two
+    directions are independent. Pyramids only (a prism needs a face-plane rule this run does not have). The engine re-checks
+    ⊥ in the Gram metric and against the kernel's `plane_through_point_perpendicular_to`."""
+    if f.role not in ("premise", "question") or f.negated:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt dựng từ quan hệ chỉ cho thiết diện được yêu cầu", (f.id,))
+    m, d = f.point, list(f.points_b)
+    kh = next(x for x in k.solids.values() if x.ten == khoi)
+    if kh.loai != "pyramid":
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: mặt qua {m} vuông góc {''.join(d)} — bản này chỉ chọn điểm neo trên khối "
+                     "chóp", (f.id,))
+    if not set(d) <= set(kh.day) | {kh.dinh}:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: đường {''.join(d)} phải nối hai đỉnh của {khoi}", (f.id,))
+    ngoai = [v for v in kh.day if v not in d]
+    moc = ngoai[:2] if kh.dinh in d else [ngoai[0], kh.dinh]
+    khoa = (khoi, m, "perpendicular_line", frozenset(d))
+    dd = k.derived_planes.get(khoa)
+    if dd is None:
+        if len(k.derived_planes) >= MAX_DERIVED_PLANES:
+            raise TuChoi("PLAN_TOO_LARGE", f"{f.id}: quá {MAX_DERIVED_PLANES} mặt dẫn xuất", (f.id,))
+        nhan = [ten for ten in _NHAN_PHU if ten not in k.taken][:4]
+        if len(nhan) < 4:
+            raise TuChoi("PLAN_TOO_LARGE", f"{f.id}: hết nhãn điểm phụ", (f.id,))
+        k.taken |= set(nhan)
+        chan, xs, cids = nhan[:2], nhan[2:], []
+
+        def moi(goc: str) -> str:
+            dung = {c["id"] for c in k.calls}
+            return next(j for j in (goc, *(f"{goc}_{n}" for n in range(2, 1000))) if j not in k.fact_ids | dung)
+
+        for i, (z, foot) in enumerate(zip(moc, chan), 1):
+            cids.append(moi(f"{f.id}_perp{i}_foot"))
+            phat(cids[-1], "orthogonal_projection_line", {"point": z, "line": d, "image": foot}, q,
+                 f"{MAT_VUONG_DUONG}→orthogonal_projection_line (chân {foot} của {z} trên {''.join(d)})")
+            k.trace[-1]["fact"] = f.id
+        for i, (z, foot, x) in enumerate(zip(moc, chan, xs), 1):
+            cids.append(moi(f"{f.id}_perp{i}"))
+            phat(cids[-1], "translate_point", {"point": m, "vector": [foot, z], "image": x}, q,
+                 f"{MAT_VUONG_DUONG}→translate_point (điểm phụ {x} = {m} + {foot}{z}→)")
+            k.trace[-1]["fact"] = f.id
+        dd = {"labels": xs, "feet": chan, "anchors": moc, "rule": MAT_VUONG_DUONG, "goal": f.id, "constructs": cids,
+              "targets": [], "point": m, "perpendicular_to": d, "solid": khoi, "quotes": list(dict.fromkeys(q)),
+              "provenance": "DERIVED", "binding": "AUXILIARY"}
+        k.derived_planes[khoa] = dd
+        k.auxiliary.append(dd)
+    dd["quotes"] = list(dict.fromkeys(dd["quotes"] + q))
+    c = phat(f.id, fn, {"solid": khoi, "plane": [m, *dd["labels"]]}, dd["quotes"], f"{MAT_VUONG_DUONG}→{fn}")
+    k.trace[-1]["fact"] = f.id
+    dd["targets"].append(f.id)
+    for call in k.calls:
+        if call["id"] in dd["constructs"] + dd["targets"]:
+            call["source"]["quotes"] = list(dd["quotes"])
+    k.trace.append({"fact": f.id, "step": "decompose_goal", "rule": MAT_VUONG_DUONG,
+                    "goal": f"Section({khoi}, Plane({m} ⊥ {''.join(d)}))",
+                    "dependencies": [f"VerifiedPoint {m}", f"VerifiedLine {''.join(d)}", *(f"Vertex {z}" for z in dd["anchors"])],
+                    "calls": dd["constructs"] + [f.id], "auxiliary": dd["feet"] + dd["labels"],
+                    "reason": f"mặt qua {m} và hai điểm {m} + (đỉnh − chân của đỉnh trên {''.join(d)}) (IR sẵn có: project_onto, "
+                              "translate; engine kiểm vuông góc chính xác)",
                     "provenance": "DERIVED", "binding": "AUXILIARY"})
     return c
 
@@ -1198,7 +1295,7 @@ def _bind_result_dependencies(k):
     for c in k.calls:
         a, fn = c['args'], c['fn']
         label = (a.get('image') if fn in ('orthogonal_projection_line','orthogonal_projection','translate_point')
-                 else a.get('point') if fn in ('midpoint','centroid','intersect_line_line','intersect_line_plane') else None)
+                 else a.get('point') if fn in POINT_PRODUCERS else None)
         if label:
             producers.setdefault(label, []).append(c['id'])
     for c in k.calls:
@@ -1206,7 +1303,7 @@ def _bind_result_dependencies(k):
         points = [x for v in a.values() if isinstance(v,list) for x in v]
         if c['fn'].startswith('orthogonal_projection') or c['fn']=='translate_point' or c['fn'].startswith('ask_'):
             points += [a['point']] if isinstance(a.get('point'), str) else []
-        output = a.get('image') or (a.get('point') if c['fn'] in ('midpoint','centroid','intersect_line_line','intersect_line_plane') else None)
+        output = a.get('image') or (a.get('point') if c['fn'] in POINT_PRODUCERS else None)
         if output:
             points = [x for x in points if x != output]
         deps = {p for x in points for p in producers.get(x,()) if p != c['id']}
