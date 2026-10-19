@@ -24,3 +24,8 @@
 3. **Wave 1B — Dependency-Aware Planner Ordering (`GAP-C1` / `ISSUE-RESEARCH-HYBRID-AUXILIARY-BEFORE-SOLID`):**
    - Implemented `_sap_xep_phu_thuoc_loi_goi` in `backend/app/simulation/geometry_functions/planner.py` with explicit directed dependency edges, root-solid vs derived composite sub-solid classification, tiered topological ordering (`Tier 0` root solid $\to$ `Tier 1` base $\to$ `Tier 2` apex-foot $\to$ `Tier 3` apex/solid premises $\to$ `Tier 4` post-solid auxiliaries & composite sub-solids $\to$ `Tier 5` asks), and fail-closed dangling/cycle rejection (`DANGLING_DEPENDENCY`, `UNKNOWN_DERIVED_REFERENCE`, `UNKNOWN_SOLID`, `DEPENDENCY_CYCLE`, `UNDERDETERMINED_POINT`).
    - Verified `10/10` tests in `backend/tests/geometry/test_hybrid_wave1_dependency_planner.py` (`RED` 4 failed $\to$ `GREEN` 10 passed) and `417/417` targeted backend regression tests.
+4. **Independent Review, Candidate Refreeze & Authoritative Full T3 (`P7`):**
+   - Independent Mathematical & Architecture Review (`review.md`): **`INDEPENDENT_REVIEW_PASS`** (`0` Blockers, `0` Important findings).
+   - Candidate Refreeze (`77b05def59d5d39ec1a1e5100f06bab13b4cdd8e`): `112` measured files, `tree_hash = 534c726a4379700be0035752f4925d1ee5573e6d2db1718c07053f2e14ab7bfa`, `product_commit_sha = fd310cd96379e5c9ae37d25b73fcf00d95ebc4ff`.
+   - Authoritative Detached Full T3 (`authoritative-t3.json` at `77b05def`): **`FULL_PRODUCT_GATE_PASS`** (backend `10970 passed, 0 failed`, frontend `70 files / 1146 passed`, production build `PASS`, demo replay `5/5` + `1/1`, crash surface `6/6` + `0` 500s).
+

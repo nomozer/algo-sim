@@ -83,3 +83,18 @@ Implemented `_sap_xep_phu_thuoc_loi_goi(k: KeHoach)` in `backend/app/simulation/
 
 - **RED Receipt (before `_sap_xep_phu_thuoc_loi_goi`):** `4 failed, 6 passed` in `backend/tests/geometry/test_hybrid_wave1_dependency_planner.py`.
 - **GREEN Receipt (at `fd310cd9`):** `10/10 passed` in `backend/tests/geometry/test_hybrid_wave1_dependency_planner.py`, and `417/417 passed` across the 8 targeted backend geometry test suites (`test_hybrid_wave1_exact_certificates.py` `10`, `test_hybrid_wave1_dependency_planner.py` `10`, `test_hybrid_preview_contract.py` `64`, `test_hybrid_backend_integration.py` `52`, `test_hybrid_compiler_selection.py` `107`, `test_geometry_library_expansion.py` `91`, `test_regular_square_pyramid_height.py` `20`, `test_structured_geometry_relations.py` `63`).
+
+---
+
+## 5. Independent Review & Authoritative Full T3 Verification (`P7`)
+
+- **Independent Mathematical & Architecture Review (`review.md`):** **`INDEPENDENT_REVIEW_PASS`** (`0` Blockers, `0` Important findings after resolving Round 1 findings in `fd310cd9`).
+- **Candidate Freeze (`77b05def59d5d39ec1a1e5100f06bab13b4cdd8e`):** `112` measured files, `tree_hash = 534c726a4379700be0035752f4925d1ee5573e6d2db1718c07053f2e14ab7bfa`, `product_commit_sha = fd310cd96379e5c9ae37d25b73fcf00d95ebc4ff` (`freeze_evaluation_candidate.py --verify` MATCH).
+- **Authoritative Full T3 Gate (`authoritative-t3.json`, clean detached worktree at `77b05def`):** **`FULL_PRODUCT_GATE_PASS`** (`487.1s` total):
+  - Backend Pytest: `10,970 passed, 1 skipped, 2 deselected, 9 xfailed, 0 failed` (`470.7s`)
+  - Frontend Vitest: `70 passed (70)` test files, `1,146 passed (1,146)` tests (`8.9s`)
+  - Frontend Typecheck + Production Build (`tsc -b && vite build`): `PASS` (`6.1s`)
+  - Thesis Demo Replay: `5/5` (`DEMO_REPLAY_PASS`), `1/1` (`REDUCED_CHAIN_CASES`) (`0.9s`)
+  - Demo Crash Surface: `6/6` expected boundaries, `0` unhandled 500s (`0.6s`)
+- **Temporary Detached Worktree Cleanup:** Removed junction `frontend\node_modules` via `cmd /c rmdir` and unregistered `t3-verify-wave1` via `git worktree remove` without `--force`.
+

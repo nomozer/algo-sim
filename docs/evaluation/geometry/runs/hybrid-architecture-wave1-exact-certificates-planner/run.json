@@ -83,5 +83,22 @@
     "frontend_vitest_passed": 1146,
     "frontend_build": "PASS"
   },
+  "independent_review": {
+    "verdict": "INDEPENDENT_REVIEW_PASS",
+    "receipt": "docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/review.md"
+  },
+  "candidate_commit": "77b05def59d5d39ec1a1e5100f06bab13b4cdd8e",
+  "authoritative_t3": {
+    "verdict": "FULL_PRODUCT_GATE_PASS",
+    "candidate_commit": "77b05def59d5d39ec1a1e5100f06bab13b4cdd8e",
+    "backend_passed": 10970,
+    "backend_failed": 0,
+    "frontend_files_passed": 70,
+    "frontend_tests_passed": 1146,
+    "frontend_build": "PASS",
+    "demo_replay": "5/5",
+    "crash_surface": "6/6",
+    "receipt": "docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/authoritative-t3.json"
+  },
   "correction": "candidate_divergence.json chains from hybrid-offline-readiness-finalization/candidate_divergence.json; historical measurements unchanged"
 }

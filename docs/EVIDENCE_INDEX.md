@@ -4,9 +4,9 @@
 
 REPORT = docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/
-CLASSIFICATION = BATCH_B_AND_ARCH_WAVE1_READY_FOR_REVIEW (Batch B 3/3 worktrees safely removed reclaiming 5.2670 GiB / 6.9562 GiB cumulative; Wave 1A exact Fraction Gram-metric perpendicularity certificates + Path A segment3 witness emission + point3 guard; Wave 1B dependency-aware deterministic planner call ordering with fail-closed dangling/cycle rejection; 41/41 Adapter /2 fixtures preserved; CACHE_VERSION 126, LLM_ONLY default unchanged, Hybrid product NO-GO)
-CODE_COMMIT = 222cd541 · 29a7b8c8 · 681e0473 · fd310cd9 (final product commit; measured_system tree_hash 534c726a4379700be0035752f4925d1ee5573e6d2db1718c07053f2e14ab7bfa across 112 files)
-VERIFICATION = docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/run.json
+CLASSIFICATION = BATCH_B_AND_ARCH_WAVE1_READY_FOR_REVIEW (Batch B 3/3 worktrees safely removed reclaiming 5.2670 GiB / 6.9562 GiB cumulative; Wave 1A exact Fraction Gram-metric perpendicularity certificates + Path A segment3 witness emission + point3 guard; Wave 1B dependency-aware deterministic planner call ordering with fail-closed dangling/cycle rejection; 41/41 Adapter /2 fixtures preserved; independent review INDEPENDENT_REVIEW_PASS; clean detached T3 FULL_PRODUCT_GATE_PASS 10970/0 backend + 1146/0 frontend; CACHE_VERSION 126, LLM_ONLY default unchanged, Hybrid product NO-GO)
+CODE_COMMIT = 222cd541 · 29a7b8c8 · 681e0473 · fd310cd9 (final product commit); candidate freeze 77b05def (measured_system tree_hash 534c726a4379700be0035752f4925d1ee5573e6d2db1718c07053f2e14ab7bfa across 112 files)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/authoritative-t3.json
 MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
 CORRECTS = HYBRID_OFFLINE_READINESS_FINALIZATION (candidate_divergence.json only; historical measurements unchanged)
 CORRECTED_BY = NONE

@@ -1,0 +1,52 @@
+{
+  "schema": "AUTHORITATIVE_T3_RECEIPT/1",
+  "run_id": "hybrid-architecture-wave1-exact-certificates-planner",
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "verified_at_utc": "2026-10-19T08:01:47Z",
+  "detached_worktree": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-verify-wave1",
+  "detached_worktree_cleaned_up": true,
+  "candidate_commit": "77b05def59d5d39ec1a1e5100f06bab13b4cdd8e",
+  "product_commit_sha": "fd310cd96379e5c9ae37d25b73fcf00d95ebc4ff",
+  "measured_system": {
+    "so_file": 112,
+    "tree_hash": "534c726a4379700be0035752f4925d1ee5573e6d2db1718c07053f2e14ab7bfa",
+    "verify_command": "python backend/scripts/freeze_evaluation_candidate.py --verify",
+    "verify_status": "MATCH"
+  },
+  "gates": {
+    "backend_pytest": {
+      "status": "PASS",
+      "passed": 10970,
+      "failed": 0,
+      "skipped": 1,
+      "deselected": 2,
+      "xfailed": 9,
+      "duration_seconds": 470.7
+    },
+    "frontend_vitest": {
+      "status": "PASS",
+      "test_files_passed": 70,
+      "tests_passed": 1146,
+      "failed": 0,
+      "duration_seconds": 8.9
+    },
+    "frontend_typecheck_and_build": {
+      "status": "PASS",
+      "duration_seconds": 6.1
+    },
+    "thesis_demo_replay": {
+      "status": "PASS",
+      "demo_cases": "5/5",
+      "reduced_chain_cases": "1/1",
+      "duration_seconds": 0.9
+    },
+    "demo_crash_surface": {
+      "status": "PASS",
+      "expected_boundaries": "6/6",
+      "unhandled_500": 0,
+      "duration_seconds": 0.6
+    }
+  },
+  "total_duration_seconds": 487.1,
+  "provider_requests": 0
+}
