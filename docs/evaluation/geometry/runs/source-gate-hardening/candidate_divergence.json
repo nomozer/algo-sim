@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "source-gate-hardening",
+  "corrects": "docs/evaluation/geometry/runs/geometry-capability-expansion/inputs/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "73f4d47d2883a9b690f07b9181f53b0887178c2bbdc20b0c8ed9951634e6dd9e",
+  "previous_candidate_hash": "520d414423788f3e9eabfcc5813968a50209b155f560baad8994b1747444730c",
+  "current_product_commit": "2410390998c4193751c3afa508da9f789a83f517",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized source gate hardening (`GO_HYBRID_SOURCE_GATE_HARDENING_LOCAL`), findings SG-1..SG-6 on route D's source gate: atomic segment labels and role-bound segment values, shape values that keep their parameter (2a ≠ 2), several role-bound values in one sentence, shared goal wording tokens, request lists in one sentence, line_ref faces of ≥ 3 labels and the intersection named as the target of a distance question. Versions geometry-functions/9, geometry-fact-planner/10 (engine /7 unchanged). The default /api/analyze path imports none of the changed modules at module level, so `CACHE_VERSION` stays 127; `RESPONSE_CONTRACT = flat` 485d3834…, TypedFact aa9d93ee…, Adapter `/2` unchanged.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP (report.md)",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every candidate layer are preserved byte-for-byte; the NLU gold moves only through the declared layer results/historical-gold-delta.json (L27).",
+    "live_requests": 0
+  }
+}
