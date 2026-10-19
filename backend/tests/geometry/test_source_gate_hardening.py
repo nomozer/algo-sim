@@ -351,3 +351,49 @@ def test_sg5_a_right_triangle_base_is_a_preserved_premise_of_a_two_request_sente
              q("q1", s2, quantity="distance", point_kind="centroid", points=list("TMN"), points_b=list("MNP")),
              q("q2", s2, quantity="angle", points_a=["T", "K"], points_b=["N", "P"])]
     served(run(" ".join((s0, s1, s2)), facts), {"q1": "1", "q2": "cos²=0"})     # TK ⊥ base: z_G = 3/3; TK ⊥ NP
+
+
+# ── independent review (REQUEST: INDEPENDENT_REVIEW_FAIL on c228bf4e): a role noun belongs to ONE owner ──────────────────
+@pytest.mark.parametrize("sentence,base,height", [
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4 và tam giác SAB có chiều cao bằng 5.", "4", "5"),   # slant height
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, mặt bên có đường cao bằng 5.", "4", "5"),
+    ("Cho hình chóp tứ giác đều S.ABCD có đường cao bằng 5, hình vuông MNPQ có cạnh bằng 4.", "4", "5"),     # another square
+])
+def test_review_a_role_of_another_object_never_fills_the_slot(sentence, base, height):
+    refused(regular(sentence, base, height), "UNGROUNDED_VALUE")
+
+
+def test_review_a_single_number_of_another_objects_height_is_refused():
+    s0, s1 = "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4.", "Tam giác SAB có chiều cao bằng 5."
+    ask = "Tính thể tích khối chóp S.ABCD."
+    refused(run(f"{s0} {s1} {ask}", [f("f1", "solid", s0, solid="S.ABCD", solid_type="pyramid", regular=True),
+                                     f("f2", "length", s0, measure="base_edge", solid="S.ABCD", value="4"),
+                                     f("f3", "length", s1, measure="height", solid="S.ABCD", value="5"),
+                                     q("q", ask, quantity="volume", solid="S.ABCD")]), "UNGROUNDED_VALUE")
+
+
+@pytest.mark.parametrize("sentence,facts_extra", [
+    # "cạnh" followed by a segment label is not the square's side (P2)
+    ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông, cạnh SA bằng 3.", [("AB", "3"), ("SA", "3")]),
+    # "cạnh bên SB" grounds SB only, never SA (P1)
+    ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2 và cạnh bên SB bằng 3.", [("SA", "3")]),
+    # "cạnh bên bằng 3" on a pyramid not stated regular: lateral edges need not be equal (P3)
+    ("Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2 và cạnh bên bằng 3.", [("SA", "3")]),
+])
+def test_review_a_segment_value_needs_its_own_role(sentence, facts_extra):
+    shape = dict(value="2") if "cạnh 2" in sentence else {}
+    facts = [f("f1", "solid", sentence, solid="S.ABCD", solid_type="pyramid"),
+             f("f2", "polygon_shape", sentence, points=list("ABCD"), shape="square", **shape),
+             *[f(f"l{i}", "length", sentence, points=list(p), measure="segment", value=v) for i, (p, v) in enumerate(facts_extra)],
+             f("f5", "perpendicular", "SA vuông góc với (ABCD).", points_a=["S", "A"], points_b=list("ABCD")),
+             q("q", "Tính độ dài SC.", quantity="length", points=["S", "C"])]
+    refused(run(sentence + " SA vuông góc với (ABCD). Tính độ dài SC.", facts), "UNGROUNDED_VALUE")
+
+
+def test_review_lateral_edge_of_a_regular_pyramid_still_serves():
+    s = "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 2 và cạnh bên bằng 3."
+    r = run(s + " Tính độ dài SC.", [f("f1", "solid", s, solid="S.ABCD", solid_type="pyramid", regular=True),
+                                     f("f2", "length", s, measure="base_edge", solid="S.ABCD", value="2"),
+                                     f("f3", "length", s, measure="lateral_edge", solid="S.ABCD", value="3"),
+                                     q("q", "Tính độ dài SC.", quantity="length", points=["S", "C"])])
+    served(r, {"q": "3"})

@@ -18,6 +18,7 @@ r = KetQuaTuyen(status='REFUSED', code='FACT_INCOMPLETE', reason='reference cầ
 E        +  where 'FACT_INCOMPLETE' = KetQuaTuyen(status='REFUSED', code='FACT_INCOMPLETE', reason='reference cần hai mặt có đúng ba nhãn phân biệt', failed...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/9'}, declared_topology=None, targets=()).code
 r = KetQuaTuyen(status='REFUSED', code='FACT_INCOMPLETE', reason='reference cần hai mặt có đúng ba nhãn phân biệt', failed...ength_unit=None, ai={}, details={}, planner={'version': 'geometry-fact-planner/9'}, declared_topology=None, targets=())
 r = KetQuaTuyen(status='REFUSED', code='NOT_ASKED_IN_SOURCE', reason='nguồn không hỏi khoảng cách này', failed_calls=('q1'...ce': 'DERIVED', 'binding': 'AUXILIARY'}], 'goal_checks': {}, 'negated_checks': {}}, declared_topology=None, targets=())
+r = KetQuaTuyen(status='SERVED', code=None, reason=None, failed_calls=(), answers={'q': '80/3'}, scene3d={'objects': [{'id...ramid', apex='S', base_cycle=('A', 'B', 'C', 'D'), base_shape=None), problem_text=''), targets=('khoi_S_ABCD', 'kq_q'))
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg1_spoofed_or_swapped_segment_values_are_refused[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh ch\u1eef nh\u1eadt v\u1edbi AB = 2.-lengths0-codes0]
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg1_spoofed_or_swapped_segment_values_are_refused[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh ch\u1eef nh\u1eadt v\u1edbi AB = 2 v\xe0 BC = 3.-lengths1-codes1]
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg2_a_restated_measure_that_drops_or_adds_the_parameter_is_refused[2a-2-3a]
@@ -44,6 +45,7 @@ PASSED tests/geometry/test_source_gate_hardening.py::test_sg5_missing_unasked_or
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg6_undetermined_degenerate_or_unbound_intersections_are_refused[Kh\xf4ng t\xednh kho\u1ea3ng c\xe1ch t\u1eeb A \u0111\u1ebfn giao tuy\u1ebfn c\u1ee7a (SCD) v\xe0 (ABCD).-SCD-ABCD-A-codes5]
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg6_undetermined_degenerate_or_unbound_intersections_are_refused[T\xednh kho\u1ea3ng c\xe1ch t\u1eeb A \u0111\u1ebfn giao tuy\u1ebfn c\u1ee7a (SCD) v\xe0 (ABCA).-SCD-ABCA-A-codes6]
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg6_an_inline_intersection_needs_an_ask_that_reads_it
+PASSED tests/geometry/test_source_gate_hardening.py::test_review_a_segment_value_needs_its_own_role[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh vu\xf4ng, c\u1ea1nh SA b\u1eb1ng 3.-facts_extra0]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg1_segment_values_bind_to_the_atomic_label[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh ch\u1eef nh\u1eadt v\u1edbi AB = 2 v\xe0 BC = 3.-lengths0]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg1_segment_values_bind_to_the_atomic_label[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh ch\u1eef nh\u1eadt, BC = 3, AB = 2.-lengths1]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg1_segment_values_bind_to_the_atomic_label[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh ch\u1eef nh\u1eadt v\u1edbi AB = 2, BC = 3, CD = 2, DA = 3.-lengths2]
@@ -91,4 +93,11 @@ FAILED tests/geometry/test_source_gate_hardening.py::test_sg3_a_number_owned_by_
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg3_regular_base_side_next_to_a_segment_value[3-3\u221a3/2-None]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg3_regular_base_side_next_to_a_segment_value[2-None-codes1]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg5_a_right_triangle_base_is_a_preserved_premise_of_a_two_request_sentence
-47 failed, 26 passed in 2.90s
+FAILED tests/geometry/test_source_gate_hardening.py::test_review_a_role_of_another_object_never_fills_the_slot[Cho h\xecnh ch\xf3p t\u1ee9 gi\xe1c \u0111\u1ec1u S.ABCD c\xf3 c\u1ea1nh \u0111\xe1y b\u1eb1ng 4 v\xe0 tam gi\xe1c SAB c\xf3 chi\u1ec1u cao b\u1eb1ng 5.-4-5]
+FAILED tests/geometry/test_source_gate_hardening.py::test_review_a_role_of_another_object_never_fills_the_slot[Cho h\xecnh ch\xf3p t\u1ee9 gi\xe1c \u0111\u1ec1u S.ABCD c\xf3 c\u1ea1nh \u0111\xe1y b\u1eb1ng 4, m\u1eb7t b\xean c\xf3 \u0111\u01b0\u1eddng cao b\u1eb1ng 5.-4-5]
+FAILED tests/geometry/test_source_gate_hardening.py::test_review_a_role_of_another_object_never_fills_the_slot[Cho h\xecnh ch\xf3p t\u1ee9 gi\xe1c \u0111\u1ec1u S.ABCD c\xf3 \u0111\u01b0\u1eddng cao b\u1eb1ng 5, h\xecnh vu\xf4ng MNPQ c\xf3 c\u1ea1nh b\u1eb1ng 4.-4-5]
+FAILED tests/geometry/test_source_gate_hardening.py::test_review_a_single_number_of_another_objects_height_is_refused
+FAILED tests/geometry/test_source_gate_hardening.py::test_review_a_segment_value_needs_its_own_role[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 v\xe0 c\u1ea1nh b\xean SB b\u1eb1ng 3.-facts_extra1]
+FAILED tests/geometry/test_source_gate_hardening.py::test_review_a_segment_value_needs_its_own_role[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh vu\xf4ng c\u1ea1nh 2 v\xe0 c\u1ea1nh b\xean b\u1eb1ng 3.-facts_extra2]
+FAILED tests/geometry/test_source_gate_hardening.py::test_review_lateral_edge_of_a_regular_pyramid_still_serves
+54 failed, 27 passed in 3.14s
