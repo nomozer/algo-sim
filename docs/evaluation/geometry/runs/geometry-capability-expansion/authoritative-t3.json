@@ -1,0 +1,42 @@
+{
+  "schema": "AUTHORITATIVE_T3_RECEIPT/1",
+  "run_id": "geometry-capability-expansion",
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "started_at_utc": "2026-10-19T18:18:55Z",
+  "verified_at_utc": "2026-10-19T18:26:12Z",
+  "command": "cd frontend && node scripts/full-gate.mjs (VIRTUAL_ENV=main checkout backend/.venv, PYTHONIOENCODING=utf-8, ALLOW_LIVE_AI=0, timeout 2400)",
+  "detached_worktree": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-capability-t3",
+  "detached_worktree_clean_at_start": true,
+  "detached_worktree_clean_at_end": true,
+  "detached_worktree_cleaned_up": true,
+  "node_modules": "junction to the main checkout's frontend/node_modules, removed alone before `git worktree remove` (target 68 entries before and after)",
+  "candidate_commit": "a52839ae791a487e732a57edff32e1a53021c380",
+  "candidate_commit_evidence": "verification/t3-head.txt (git rev-parse HEAD in the detached worktree immediately before the gate)",
+  "candidate_freeze_commit": "b8e3f112722748cf95cc5c2f8b3bd5056ad454c5",
+  "candidate_to_head_changes": "docs/evidence only (report, run.json, handoff, indices, re-measurement results)",
+  "product_commit_sha": "e9ec0f40febb09c5c2ca3557a54173a6671384d5",
+  "cache_version": "127",
+  "measured_system": {
+    "so_file": 112,
+    "tree_hash": "520d414423788f3e9eabfcc5813968a50209b155f560baad8994b1747444730c",
+    "verify_command": "python backend/scripts/freeze_evaluation_candidate.py --verify (run in the detached worktree after the gate)",
+    "verify_status": "MATCH"
+  },
+  "log": {
+    "path": "verification/t3-authoritative.log",
+    "sha256_raw_bytes_as_written": "2c51cc46e5d50f190522e2417e01ea575c8bd80849c43a48e05fef4d9470441e",
+    "sha256_committed_blob": "852899f2e11f9ee2e7fc31b749b538c2f69e975548ca591286933857b8a210fb",
+    "hash_note": "the gate writes mixed line endings (202 CR, counted on bytes with Python); the committed blob is LF-normalized (0 CR). Verify with `git show <commit>:<path> | sha256sum` = sha256_committed_blob",
+    "lines": 254
+  },
+  "gates": {
+    "backend_pytest": {"status": "PASS", "passed": 11110, "failed": 0, "skipped": 1, "deselected": 2, "xfailed": 9, "duration_seconds": 413.0},
+    "frontend_vitest": {"status": "PASS", "test_files_passed": 70, "tests_passed": 1146, "failed": 0, "duration_seconds": 15.9},
+    "frontend_typecheck_and_build": {"status": "PASS", "duration_seconds": 6.4},
+    "thesis_demo_replay": {"status": "PASS", "demo_cases": "5/5", "reduced_chain_cases": "1/1", "duration_seconds": 0.6},
+    "demo_crash_surface": {"status": "PASS", "expected_boundaries": "6/6", "unhandled_500": 0, "duration_seconds": 0.4}
+  },
+  "total_duration_seconds": 436.3,
+  "provider_requests": 0,
+  "not_reused": "no earlier T3 receipt of this run exists; the main-checkout full pytest (11105 passed, 1 failed test_holdout_readiness on the user's untracked receipts) is not gate evidence"
+}

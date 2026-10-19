@@ -64,6 +64,8 @@
   }
  ],
  "verdict_at_report": "PENDING_T3_AND_INDEPENDENT_REVIEW",
+ "authoritative_t3": {"head": "a52839ae", "verdict": "FULL_PRODUCT_GATE_PASS", "receipt": "authoritative-t3.json"},
+ "final_verdict": "WAVE2B_READY_FOR_GO_MAIN_REVIEW",
  "independent_review": {
   "candidate": "56eff5c3",
   "verdict": "REQUEST_CHANGES",
