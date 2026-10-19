@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "goal-directed-function-composition",
+  "corrects": "docs/evaluation/geometry/runs/segment-witness-cache-invalidation/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "cddd83b85df3e38a090882c13621b4d41ece0d2bee635c680db476a55e69cec0",
+  "previous_candidate_hash": "8cb9857f10f4a62788f7ddc099133eb31d903a36abccea5e5432b8b7e8e37f7d",
+  "current_product_commit": "a45a043f5c2831ce3f991f3d990041e7a487c971",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized Hybrid Wave 2A (`GO_HYBRID_WAVE2A_LOCAL_IMPLEMENTATION`): route D goal-directed function composition — centroid producer contract, angle goal contracts, route-B-only ask_angle_lines, typed goal-slot entry in the planner, independent line–line Gram verifier, route A refuses unoffered functions, v3 research schema generated from goal contracts; versions geometry-functions/7, geometry-fact-planner/8, geometry-function-engine/6. The default /api/analyze path imports none of the changed modules at module level, so `CACHE_VERSION` stays 127; default `LLM_ONLY`, `RESPONSE_CONTRACT = flat` (surface 485d3834… unchanged) and Adapter `/2` are unchanged.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP (report.md §9)",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every candidate layer are preserved byte-for-byte; frozen baselines move only through declared re-measured deltas (results/historical-regression-delta.json, results/historical-gold-delta.json).",
+    "live_requests": 0
+  }
+}
