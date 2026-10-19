@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "source-gate-hardening",
+  "corrects": "docs/evaluation/geometry/runs/source-gate-hardening/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "d11fdd714e952009e8e3fbaa271fb1419bb9cf685cf67e5f9f9561381becc2aa",
+  "previous_candidate_hash": "73f4d47d2883a9b690f07b9181f53b0887178c2bbdc20b0c8ed9951634e6dd9e",
+  "current_product_commit": "3509b705ab48c2ddcce890ca15748aa1aedfaf53",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "The locked-corpus measurement on the first candidate (73f4d47d…) left two false refusals: a regular base side written without a coefficient (\"cạnh a\", which the shape reader keeps no value for) and the triangle wording \"có ba đỉnh là\" (a pre-existing regex that demanded whitespace twice). Both fixed in the same source authority; the side is read and compared as (value², parameter), never skipped. Versions unchanged from the first candidate (geometry-functions/9, geometry-fact-planner/10, engine /7); CACHE_VERSION 127, flat 485d3834…, TypedFact aa9d93ee…, Adapter /2 unchanged.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP (report.md)",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every candidate layer are preserved byte-for-byte; the first measurement of this run (results/evaluation/) is kept, the final candidate is re-measured under results/evaluation-final-candidate/.",
+    "live_requests": 0
+  }
+}
