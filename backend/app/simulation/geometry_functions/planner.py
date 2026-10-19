@@ -329,6 +329,7 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
         elif c["fn"] not in ("segment_length", "height"):
             gon[khoa]["source"]["quotes"] = list(dict.fromkeys(gon[khoa]["source"]["quotes"] + c["source"]["quotes"]))
     k.calls = list(gon.values())
+    k.calls.sort(key=lambda c: _thu_tu_pha_loi_goi(c["fn"]))
     for c in k.calls:
         if c['fn']=='orthogonal_projection_line' and c['args'].get('line_ref') and c['id'] in k.fact_ids:
             k.auxiliary.append({'rule':'result-line-reference', 'consumer':c['id'], 'line_ref':c['args']['line_ref']})
@@ -339,6 +340,32 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     if k.resolver.used:
         _bind_result_dependencies(k)
     return k
+
+
+def _thu_tu_pha_loi_goi(fn: str) -> int:
+    """Canonical pedagogical phase ordering for timeline monotonicity (ISSUE-RESEARCH-HYBRID-AUXILIARY-BEFORE-SOLID):
+    Phase 1: Solid constructors (pyramid, regular_pyramid, prism)
+    Phase 2: Base and metric premise facts
+    Phase 3: Named and auxiliary constructions (midpoint, centroid, orthogonal_projection, ...)
+    Phase 4: Goal queries (ask_*) and unsupported escapes.
+    """
+    if fn in ("pyramid", "regular_pyramid", "prism"):
+        return 1
+    if fn in (
+        "regular_polygon", "rectangle", "right_angle", "perpendicular_line_plane",
+        "altitude", "perpendicular_lines", "equal_length", "face_perpendicular_base",
+        "segment_length", "height", "parallel_planes", "parallel_lines"
+    ):
+        return 2
+    if fn in (
+        "midpoint", "centroid", "orthogonal_projection", "orthogonal_projection_line",
+        "intersect_line_line", "intersect_line_plane", "intersection_line",
+        "translate_point", "section"
+    ):
+        return 3
+    if fn.startswith("ask_") or fn == "unsupported":
+        return 4
+    return 2
 
 
 def _toan_hang(p: list[str] | None) -> str:

@@ -89,7 +89,7 @@ def _bam_doan_da_dung(kq: dict[str, Any], loai: dict[str, str], mem: dict[str, A
     for p, kieu in loai.items():
         if (kieu == "point3" and p != w["from"] and isinstance(mem.get(p), Vec3) and mem[p] == chan
                 and frozenset((w["from"], p)) in doan):
-            return {"kind": "length", "subject_ids": [w["from"], p], "anchor": "segment", "unit": kq.get("unit")}
+            return {"kind": "length", "subject_ids": [w["from"], p], "anchor": "segment", "unit": kq.get("unit"), "witness": w}
     return kq
 
 
