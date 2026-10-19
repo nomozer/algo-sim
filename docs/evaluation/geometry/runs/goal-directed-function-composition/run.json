@@ -7,12 +7,15 @@
  "branch": "research/hybrid-wave2a-function-composition",
  "base": {"main": "ce5b25750afba6ccd574165c3d73648ea0746b7a", "origin_main": "ce5b25750afba6ccd574165c3d73648ea0746b7a"},
  "commits": {
-  "product": "a45a043f5c2831ce3f991f3d990041e7a487c971",
+  "product_first": "a45a043f5c2831ce3f991f3d990041e7a487c971",
+  "product": "b70e4769acb34ab44815229ae8dc404e0f66a3ba",
   "holdout_lock": "50ac258a3cc8fdb7d3744ec85300bff55a5ad0a6",
-  "candidate_freeze": "594870fcf528def44fa9edc5ee841d08e0f3d6b6",
-  "evaluation": "5f2e839017c0ab26ebff7c1b8b5ac9a565871489"
+  "candidate_freeze_superseded": "594870fcf528def44fa9edc5ee841d08e0f3d6b6",
+  "candidate_freeze": "3a57f5d3c7395e41304d075a3203c43d76dae59c",
+  "evaluation": "5f2e839017c0ab26ebff7c1b8b5ac9a565871489",
+  "evaluation_rerun_on_final_candidate": "results/evaluation-final-candidate/ (identical metrics except timing)"
  },
- "measured_system": {"so_file": 112, "tree_hash": "cddd83b85df3e38a090882c13621b4d41ece0d2bee635c680db476a55e69cec0"},
+ "measured_system": {"so_file": 112, "tree_hash": "e2109ef1cde5deaf9624acd19d19a622dc8d8e5747b749e146ad93996e728766", "superseded_tree_hash": "cddd83b85df3e38a090882c13621b4d41ece0d2bee635c680db476a55e69cec0"},
  "versions": {"registry": "geometry-functions/7", "planner": "geometry-fact-planner/8", "engine": "geometry-function-engine/6",
               "adapter": "hybrid-preview-adapter/2", "envelope": "hybrid-route-d-preview/1"},
  "cache_version": "127",
@@ -30,6 +33,8 @@
             "oracle.py": "0a686e320653dc90febdebfd50e3ff552f87e820763bb1f99e84387e1936c2b6",
             "hash_rule": "sha256 of bytes with CRLF normalized to LF"},
  "temporary_worktrees": [
+  {"path": ".superpowers/worktrees/tmp-composition-t3", "head": "54db7183 then 452a398a", "use": "T3 (superseded FAIL, then PASS at 452a398a)", "removed": true},
+  {"path": ".superpowers/worktrees/tmp-composition-freeze2", "head": "b70e4769", "use": "clean candidate refreeze after review N-1", "removed": true},
   {"path": ".superpowers/worktrees/tmp-composition-base", "head": "ce5b2575", "use": "RED replay + pre-composition-main arm", "removed": true},
   {"path": ".superpowers/worktrees/tmp-composition-freeze", "head": "50ac258a", "use": "clean candidate freeze", "removed": true}
  ],

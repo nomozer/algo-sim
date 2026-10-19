@@ -3,8 +3,8 @@
 ## LOCAL — Hybrid Wave 2A: goal-directed function composition, 2026-10-19 (not integrated)
 
 Branch `research/hybrid-wave2a-function-composition` from `main` = `origin/main` = `ce5b2575` (Wave 1 integrated);
-product `a45a043f`, holdout lock `50ac258a`, candidate freeze `594870fc` (112 measured files /
-`cddd83b85df3e38a090882c13621b4d41ece0d2bee635c680db476a55e69cec0`). The planner composes Registry functions by typed goal
+product `b70e4769` (first product `a45a043f`; review N-1 request-coverage fix), holdout lock `50ac258a`, candidate freeze
+`3a57f5d3` (112 measured files / `e2109ef1cde5deaf9624acd19d19a622dc8d8e5747b749e146ad93996e728766`). The planner composes Registry functions by typed goal
 slots: `centroid` producer contract, angle goal contracts, route-B-only primitive `ask_angle_lines`; versions
 `geometry-functions/7` · `geometry-fact-planner/8` · `geometry-function-engine/6`. Locked holdout 16/16 VERIFIED against an
 independent oracle (13/13 novel combinations), 8/8 correct refusals, 0 false positives; rule-based / no-composition 2/16.

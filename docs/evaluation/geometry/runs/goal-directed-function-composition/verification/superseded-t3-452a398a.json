@@ -1,0 +1,69 @@
+{
+  "schema": "SUPERSEDED_T3_RECEIPT/1",
+  "run_id": "goal-directed-function-composition",
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "started_at_utc": "2026-10-19T13:31:17Z",
+  "verified_at_utc": "2026-10-19T13:39:14Z",
+  "command": "cd frontend && node scripts/full-gate.mjs (PYTHONIOENCODING=utf-8, ALLOW_LIVE_AI=0)",
+  "detached_worktree": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-composition-t3",
+  "detached_worktree_clean_at_start": true,
+  "detached_worktree_cleaned_up": true,
+  "node_modules": "junction to the main checkout's frontend/node_modules, removed alone before `git worktree remove` (target 73 entries before and after)",
+  "candidate_commit": "452a398a15af07b8553d28c59b58b0e8d360f1f8",
+  "candidate_commit_evidence": "verification/superseded-t3-452a398a-head.txt",
+  "candidate_freeze_commit": "594870fcf528def44fa9edc5ee841d08e0f3d6b6",
+  "candidate_to_head_changes": "harness backend/scripts/measure_goal_directed_composition.py (outside MEASURED_SYSTEM_PATHS) and docs/evidence only",
+  "product_commit_sha": "a45a043f5c2831ce3f991f3d990041e7a487c971",
+  "cache_version": "127",
+  "measured_system": {
+    "so_file": 112,
+    "tree_hash": "cddd83b85df3e38a090882c13621b4d41ece0d2bee635c680db476a55e69cec0",
+    "verify_command": "python backend/scripts/freeze_evaluation_candidate.py --verify",
+    "verify_status": "MATCH"
+  },
+  "log": {
+    "path": "verification/superseded-t3-452a398a.log",
+    "sha256_raw_bytes_as_written": "6f6c39a3a909f008b57af07f626f5eca3d89cf8b6edb5d56d299363228d5ee57",
+    "sha256_lf_normalized": "e62e944a23eb1315211b69d1f08e2e441a467d02c0d784407faef11265deb41b",
+    "hash_note": "the log was written with LF only (0 CR), so both hashes describe the committed blob; a checkout with core.autocrlf=true converts it on disk — use the LF-normalized hash",
+    "lines": 253
+  },
+  "gates": {
+    "backend_pytest": {
+      "status": "PASS",
+      "passed": 11072,
+      "failed": 0,
+      "skipped": 1,
+      "deselected": 2,
+      "xfailed": 9,
+      "duration_seconds": 457.4
+    },
+    "frontend_vitest": {
+      "status": "PASS",
+      "test_files_passed": 70,
+      "tests_passed": 1146,
+      "failed": 0,
+      "duration_seconds": 9.8
+    },
+    "frontend_typecheck_and_build": {
+      "status": "PASS",
+      "duration_seconds": 8.0
+    },
+    "thesis_demo_replay": {
+      "status": "PASS",
+      "demo_cases": "5/5",
+      "reduced_chain_cases": "1/1",
+      "duration_seconds": 0.8
+    },
+    "demo_crash_surface": {
+      "status": "PASS",
+      "expected_boundaries": "6/6",
+      "unhandled_500": 0,
+      "duration_seconds": 0.5
+    }
+  },
+  "total_duration_seconds": 476.5,
+  "provider_requests": 0,
+  "not_reused": "the superseded receipt at 54db7183 (verification/superseded-t3-54db7183.json, FULL_PRODUCT_GATE_FAIL on test_C2b) is not evidence for this candidate",
+  "superseded_because": "review N-1 led to product b70e4769 (request coverage); this PASS at 452a398a (product a45a043f) is not evidence for the final candidate"
+}

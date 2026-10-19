@@ -2,7 +2,7 @@
 
 - **Run:** `goal-directed-function-composition` · nhánh `research/hybrid-wave2a-function-composition` từ `main` = `origin/main` = `ce5b2575`
 - **Ủy quyền:** `GO_HYBRID_WAVE2A_LOCAL_IMPLEMENTATION` (không merge/push, không GO LIVE, không bật Hybrid)
-- **Commit:** product `a45a043f` · holdout lock `50ac258a` · candidate freeze `594870fc` (112 file, `cddd83b85df3e38a090882c13621b4d41ece0d2bee635c680db476a55e69cec0`) · evaluation `5f2e8390`
+- **Commit:** product `a45a043f` → `b70e4769` (sửa review N-1) · holdout lock `50ac258a` · candidate freeze `594870fc` (thay thế) → **`3a57f5d3`** (112 file, `e2109ef1cde5deaf9624acd19d19a622dc8d8e5747b749e146ad93996e728766`) · evaluation `5f2e8390`, chạy lại trên candidate cuối ở `results/evaluation-final-candidate/` (mọi chỉ số trùng, trừ thời gian)
 - **Live provider calls:** 0 (`ALLOW_LIVE_AI=0` mọi lượt) · `CACHE_VERSION` 127 (không bump, §9) · `DEFAULT_MODE` `LLM_ONLY` · response contract `flat`
 - **T3 có thẩm quyền và review độc lập:** xem `handoff.md` (ghi sau khi chạy; báo cáo này không tự nhận PASS trước biên nhận)
 
@@ -11,14 +11,25 @@
 > Planner có tự tìm, chọn và phối hợp các Geometry Functions đã khai báo để giải mục tiêu dựng hình mới, không cần LLM
 > sinh mã dựng hình và không cần chuỗi xử lý viết riêng cho từng dạng đề không?
 
-Trong phạm vi đã đo: **có**, với giới hạn nêu ở §7. Trên holdout khoá trước (24 ca, 6 cấu hình khối khác bộ dev, metric
-không trực chuẩn), planner goal-directed phục vụ **16/16** bài dương với đáp số trùng oracle độc lập, trong đó **13/13**
-bài cần một tổ hợp hàm chưa từng được giải trước run này (**8** chữ ký tổ hợp khác nhau), từ chối đúng mã **8/8** bài âm,
-**0/24** dương tính giả. Cùng đầu vào, cùng Registry, cùng engine: planner rule-based và planner không phối hợp chỉ giải
-**2/16** (hai câu hỏi mọi đối tượng đều có tên), `main` trước run giải **1/16**. Không một dòng nào trong phần tìm kiếm /
-nhận mục tiêu của planner gọi tên một cặp hàm (khoá bằng `test_no_planner_branch_names_a_composed_pair`).
+Trong phạm vi đã đo: **có, theo nghĩa hẹp sau**, với giới hạn ở §10. Run này THÊM dữ liệu vào Registry (contract
+producer `centroid`, contract mục tiêu góc, primitive `ask_angle_lines`) và một lần tổng quát hoá phần nhận mục tiêu theo
+slot; sau đó **cùng một mã planner, không có nhánh nào gọi tên một cặp hàm**, tự phối hợp các contract ấy với các
+contract đã có. Tính "mới" của các tổ hợp đến từ contract thêm trong chính wave này — bằng chứng là về **phối hợp từ
+contract**, không phải về việc không cần contract mới.
 
-## 1. Cái gì đã IMPLEMENTED (product `a45a043f`)
+- So với **baseline thật duy nhất** — `main` trước run (`pre-composition-main`, mã `ce5b2575`, cùng đầu vào, oracle độc
+  lập): holdout khoá trước (24 ca, 6 cấu hình khối khác bộ dev, có metric không trực chuẩn) **16/16** so với **1/16**;
+  **13/13** bài cần một tổ hợp mà `main` không giải (8 chữ ký), từ chối đúng mã **8/8**, **0/24** dương tính giả.
+- **Bật/tắt dữ liệu, cùng mã:** gỡ contract `centroid` (chỉ dữ liệu) ⇒ cùng planner từ chối; đặt lại ⇒ phục vụ
+  (`test_slice_a_zero_planner_edit_discovery_centroid_to_area`, `test_removing_one_contract_removes_exactly_that_composition`).
+  Không dòng nào trong phần tìm kiếm / nhận mục tiêu gọi tên một hàm (`test_no_planner_branch_names_a_composed_pair`).
+- Các nhánh `rule-based` và `no-composition` là **ablation**, không phải baseline độc lập: `rule-based` = planner
+  production với mọi điểm mô tả bị cấm (review I-1: trùng `no-composition` ở mọi tổng, khác mã từ chối ở 33/48 dòng), nên
+  2/16 của chúng đúng theo cấu tạo. Không có baseline "luật viết tay cho từng tổ hợp" nào được xây (PROPOSED nếu cần).
+- Ngôn từ holdout là chính văn phạm đóng mà cùng tác giả viết vào Registry: 16/16 chứng minh phối hợp chạy đúng trên
+  những cách viết ấy, **không** chứng minh khái quát ngôn ngữ (review N-2).
+
+## 1. Cái gì đã IMPLEMENTED (product `a45a043f` + `b70e4769`)
 
 | Thành phần | Thay đổi | File |
 |---|---|---|
@@ -83,7 +94,8 @@ Cùng TypedFact, cùng Registry (không nhánh nào bị bớt hàm), cùng engi
   cao bằng a" mang hai số; luật: quote của một ô số giữ đúng MỘT số). Biến thể tách câu `W2-EXP-02-split` VERIFIED cos²=9/11.
   Đây là giới hạn grounding tiền đề, không phải composition.
 - Nhánh "khác mã" của rule-based/no-composition là từ chối an toàn với mã khác (vd. `UNSUPPORTED_CAPABILITY` thay vì
-  `SOURCE_OBJECT_MISMATCH`): chúng dừng trước khi tới cổng nguồn.
+  `SOURCE_OBJECT_MISMATCH`): chúng dừng trước khi tới cổng nguồn. Hai nhánh này là ablation (xem §0), id nhánh giữ nguyên
+  trong `results/` để truy vết.
 - **Độ sâu 2 = độ sâu 3 trên corpus của run**: không ca dev/holdout nào cần hai tầng producer. Để tách hai mức, đo
   **bổ sung (sau đánh giá chính, không đổi thuật toán)** trên bundle 174 dòng đăng ký trước, kỳ vọng từ corpus nguồn
   (`results/supplementary-bundle-174/`): VERIFIED **70** (độ sâu 3) · **61** (độ sâu 2) · **41** (độ sâu 1) · **48**
@@ -117,6 +129,11 @@ Cùng TypedFact, cùng Registry (không nhánh nào bị bớt hàm), cùng engi
 - Fail-closed đã khoá: hai partner, partner giấu trong `points_b`, nhãn đích trùng, đích 1 nhãn, `point`, trọng tâm 4
   điểm, phủ định, `prove`, `condition`, `ambiguous`, partner lạ (`UNKNOWN_LABEL`), sai mô tả / sai mặt đích / sai partner
   so với nguồn (`SOURCE_OBJECT_MISMATCH`), verifier nói dối, đường suy biến, nhu cầu tự phụ thuộc (`DEPENDENCY_CYCLE`).
+- **Sửa sau review (N-1, product `b70e4769`):** một mục tiêu mô tả loại độ dài hoặc góc theo sau bởi câu hỏi thứ hai trong
+  cùng câu ("…, và độ dài SC.") từng được PHỤC VỤ MỘT PHẦN — câu hỏi sau bị bỏ im lặng (có từ trước run cho độ dài, run này
+  mở rộng sang góc). Gốc: `_duoc_hoi`/`_vung_hoi` đọc dấu dữ kiện "với" trên văn bản thô, nên "với" BÊN TRONG cụm đối tượng
+  ("nối S với …") cắt động từ hỏi. Nay đọc trên `_bo_cum(...)` (giữ độ dài) ⇒ `REQUEST_NOT_ANSWERED`. ĐỎ 3/3 → XANH; hồi
+  quy 174, ma trận v3, NLU gold không đổi; đánh giá chạy lại trên candidate cuối trùng mọi chỉ số.
 - Bẫy 1: góc hai mặt / đường–mặt có tên giữ luật trực tiếp, không chứng chỉ chuỗi, không `effect_resolution`.
   Bẫy 2: mặt qua điểm ⊥ **mặt** vẫn `PLANE_NOT_UNIQUE`.
 - **Adapter /2: 41/41** fixture tái sinh trùng byte **ngoài** cặp version/fingerprint đã khai; trước khi bump: trùng byte
@@ -160,7 +177,10 @@ UNSUPPORTED (từ chối có mã, không đoán): hai điểm mô tả trong m�
 tên); khoảng cách tới một **điểm** viết "khoảng cách … đến điểm X" (D09, L19); phép thế "hai đường thẳng đó/này" (D12,
 L29); hai giá trị trong một câu tiền đề (W2-EXP-02); chia đoạn theo tỉ số, mặt ⊥ đường, đường–mặt, khối con, đáy hình
 thang, lăng trụ xiên; `_EffectResolver.distance` vẫn gọi tên `orthogonal_projection_line` khi viết chứng chỉ chân vuông
-góc (coupling có từ trước run, ngoài phần tìm kiếm).
+góc (coupling có từ trước run, ngoài phần tìm kiếm). Review N-3: chốt `FUNCTION_NOT_OFFERED` chỉ ở `parse_response` của
+tuyến A; `dung_tu_loi_goi` nhận `ask_angle_lines` từ mọi kế hoạch (vô hại khi tuyến A chưa nối preview) và mã này chưa có
+lớp từ chối preview riêng. Review N-4: mã mới của ca blocker được ghi đè ở ba test bằng dict riêng thay vì một file delta
+(mọi chỗ vẫn đòi REFUSED, không đáp số, không cảnh).
 
 PROPOSED cho 2B: (1) `divide_segment` producer contract + ngữ pháp tỉ số đóng (Bẫy 4); (2) mặt qua điểm ⊥ đường
 (`PlanePerpendicularToLineExpr`) giữ `PLANE_NOT_UNIQUE`; (3) mục tiêu độ dài viết "khoảng cách … đến điểm" như một

@@ -10,8 +10,8 @@ only in what the planner may compose:
     goal-directed        production planner (bounded backward search, MAX_EFFECT_DEPTH = 3)
     single-step          same, MAX_EFFECT_DEPTH = 2 (one producer level under a goal)
     no-composition       same, MAX_EFFECT_DEPTH = 1 (a goal on objects the source names; no producer)
-    rule-based           no rule constructs an object the source does not name (described points refused); the Registry is
-                         NOT reduced — named facts, named-line feet and declared intersections keep their rules
+    rule-based           ABLATION, not an independent baseline (review I-1): the production planner with every described
+                         point refused; the Registry is NOT reduced. Its aggregates equal `no-composition`.
     pre-composition-main the production planner of `--base-root` (the commit before this run), same inputs
 """
 from __future__ import annotations
