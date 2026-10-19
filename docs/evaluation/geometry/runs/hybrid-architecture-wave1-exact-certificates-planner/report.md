@@ -67,7 +67,7 @@ All three audited Batch B worktree targets passed pre-removal verification (`sta
 
 Implemented `_sap_xep_phu_thuoc_loi_goi(k: KeHoach)` in `backend/app/simulation/geometry_functions/planner.py`:
 - **Root-Solid vs Derived Composite Sub-Solid Classification:** Solids whose vertices have zero overlap with explicit point-producer outputs (`raw_point_outputs`) are classified as `root_solids` (`Tier 0`), while derived composite sub-solids (`M.ABC` in `COMP1` or `M.ABCD` where `M = midpoint(S, C)`) depend on their vertex producers and execute in `Tier 4` before `ask_volume(M.ABC)` in `Tier 5`.
-- **Tier Classification (`_phan_tang_loi_goi`):**
+- **Tier Classification (`tier_of` in `_sap_xep_phu_thuoc_loi_goi`):**
   - `Tier 0`: Root solid declarations (`pyramid`, `regular_pyramid`, `prism`, `cuboid`, `cube`)
   - `Tier 1`: Base foundation (`regular_polygon`, `rectangle`, `right_angle`, base `segment_length`, base `equal_length`)
   - `Tier 2`: Apex-foot point constructors (derived points consumed by `Tier 3` apex projection/altitude calls, such as `H = midpoint(AB)` in `H12` when `SH ⊥ (ABC)`)
