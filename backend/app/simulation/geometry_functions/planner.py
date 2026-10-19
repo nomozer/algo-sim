@@ -329,7 +329,6 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
         elif c["fn"] not in ("segment_length", "height"):
             gon[khoa]["source"]["quotes"] = list(dict.fromkeys(gon[khoa]["source"]["quotes"] + c["source"]["quotes"]))
     k.calls = list(gon.values())
-    k.calls.sort(key=lambda c: _thu_tu_pha_loi_goi(c["fn"]))
     for c in k.calls:
         if c['fn']=='orthogonal_projection_line' and c['args'].get('line_ref') and c['id'] in k.fact_ids:
             k.auxiliary.append({'rule':'result-line-reference', 'consumer':c['id'], 'line_ref':c['args']['line_ref']})
@@ -337,35 +336,240 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     for alias, canonical in k.resolver.aliases.items():
         if alias!=canonical and canonical in k.resolver.lines:
             k.auxiliary.append({'rule':'result-line-alias','producer':alias,'canonical':canonical,'line_ref':canonical})
+    _sap_xep_phu_thuoc_loi_goi(k)
     if k.resolver.used:
         _bind_result_dependencies(k)
     return k
 
 
-def _thu_tu_pha_loi_goi(fn: str) -> int:
-    """Canonical pedagogical phase ordering for timeline monotonicity (ISSUE-RESEARCH-HYBRID-AUXILIARY-BEFORE-SOLID):
-    Phase 1: Solid constructors (pyramid, regular_pyramid, prism)
-    Phase 2: Base and metric premise facts
-    Phase 3: Named and auxiliary constructions (midpoint, centroid, orthogonal_projection, ...)
-    Phase 4: Goal queries (ask_*) and unsupported escapes.
+_NON_POINT_ARG_KEYS = frozenset({"line_ref", "solid", "value", "side", "reason", "right"})
+
+
+def _diem_cua_loi_goi(c: dict[str, Any]) -> list[str]:
+    a = c.get("args") or {}
+    pts: list[str] = []
+    for key, val in a.items():
+        if key in _NON_POINT_ARG_KEYS:
+            continue
+        if isinstance(val, list):
+            pts.extend(x for x in val if isinstance(x, str))
+        elif isinstance(val, str):
+            pts.append(val)
+    return pts
+
+
+def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
+    """Dependency-aware topological ordering over `k.calls` (`GAP-C1` / `ISSUE-RESEARCH-HYBRID-AUXILIARY-BEFORE-SOLID`).
+
+    Builds an explicit directed dependency graph `prereq_id -> call_id`:
+    - Data dependencies (`direct_deps`) from derived point producers (`midpoint`, `centroid`, `intersect_*`,
+      `orthogonal_projection_line`, `translate_point`, and forward `orthogonal_projection`), `intersection_line`
+      `line_ref` producers, and `section -> ask_section_area`.
+    - Pedagogical foundation tiers (`Tier 0` solid declarations -> `Tier 1` base foundation -> `Tier 2` apex-foot
+      point constructors -> `Tier 3` apex/solid metric & perpendicularity premises -> `Tier 4` auxiliary point/line/
+      section constructions -> `Tier 5` `ask_*` / `unsupported` queries).
+    - Fail-closed rejection on dangling dependencies (`DANGLING_DEPENDENCY`) and cycles (`DEPENDENCY_CYCLE`).
+    - Preserves `k.calls` in its exact original order whenever no dependency edge is violated.
     """
-    if fn in ("pyramid", "regular_pyramid", "prism"):
-        return 1
-    if fn in (
-        "regular_polygon", "rectangle", "right_angle", "perpendicular_line_plane",
-        "altitude", "perpendicular_lines", "equal_length", "face_perpendicular_base",
-        "segment_length", "height", "parallel_planes", "parallel_lines"
-    ):
-        return 2
-    if fn in (
-        "midpoint", "centroid", "orthogonal_projection", "orthogonal_projection_line",
-        "intersect_line_line", "intersect_line_plane", "intersection_line",
-        "translate_point", "section"
-    ):
-        return 3
-    if fn.startswith("ask_") or fn == "unsupported":
-        return 4
-    return 2
+    import heapq
+
+    calls = k.calls
+    if not calls:
+        return
+    by_id = {c["id"]: c for c in calls}
+    idx_of = {c["id"]: i for i, c in enumerate(calls)}
+    base_vertices = {v for kh in k.solids.values() for v in kh.day}
+    apex_vertices = {kh.dinh for kh in k.solids.values() if kh.dinh} | {v for kh in k.solids.values() for v in kh.tren}
+    solid_vertices = base_vertices | apex_vertices
+
+    explicit_point_producers: dict[str, list[str]] = {}
+    for c in calls:
+        fn, a = c["fn"], c.get("args") or {}
+        if fn in ("midpoint", "centroid", "intersect_line_line", "intersect_line_plane") and isinstance(a.get("point"), str):
+            explicit_point_producers.setdefault(a["point"], []).append(c["id"])
+        elif fn in ("orthogonal_projection_line", "translate_point") and isinstance(a.get("image"), str):
+            explicit_point_producers.setdefault(a["image"], []).append(c["id"])
+
+    point_producers: dict[str, list[str]] = {p: list(ids) for p, ids in explicit_point_producers.items()}
+    produced_point_of_call: dict[str, str] = {
+        cid: pt for pt, cids in explicit_point_producers.items() for cid in cids
+    }
+    for c in calls:
+        fn, a = c["fn"], c.get("args") or {}
+        if fn == "orthogonal_projection" and isinstance(a.get("image"), str):
+            is_apex_foot_proj = (
+                a.get("point") in apex_vertices
+                and set(a.get("plane") or ()) <= base_vertices
+                and (a["image"] in base_vertices or a["image"] in explicit_point_producers)
+            )
+            if not is_apex_foot_proj:
+                point_producers.setdefault(a["image"], []).append(c["id"])
+                produced_point_of_call[c["id"]] = a["image"]
+
+    direct_deps: dict[str, set[str]] = {c["id"]: set() for c in calls}
+    consumed_points_of_call: dict[str, list[str]] = {}
+    for c in calls:
+        cid, fn, a = c["id"], c["fn"], c.get("args") or {}
+        out_pt = produced_point_of_call.get(cid)
+        pts = [p for p in _diem_cua_loi_goi(c) if p != out_pt]
+        consumed_points_of_call[cid] = pts
+        for pt in pts:
+            for p_cid in point_producers.get(pt, ()):
+                if p_cid != cid:
+                    direct_deps[cid].add(p_cid)
+        if a.get("line_ref"):
+            ref = a["line_ref"]
+            if ref not in by_id:
+                raise TuChoi("DANGLING_DEPENDENCY", f"{cid} phụ thuộc lời gọi không tồn tại {[ref]}", (cid,))
+            direct_deps[cid].add(ref)
+        for dep_id in c.get("depends_on") or ():
+            if dep_id not in by_id:
+                raise TuChoi("DANGLING_DEPENDENCY", f"{cid} phụ thuộc lời gọi không tồn tại {[dep_id]}", (cid,))
+            direct_deps[cid].add(dep_id)
+
+    for u in calls:
+        if u["fn"] == "section":
+            u_solid = (u.get("args") or {}).get("solid")
+            u_plane = frozenset((u.get("args") or {}).get("plane") or ())
+            for v in calls:
+                if (
+                    v["fn"] == "ask_section_area"
+                    and (v.get("args") or {}).get("solid") == u_solid
+                    and frozenset((v.get("args") or {}).get("plane") or ()) == u_plane
+                ):
+                    direct_deps[v["id"]].add(u["id"])
+
+    # Cycle detection on direct_deps (fail-closed)
+    state: dict[str, int] = {}
+
+    def _visit(u_id: str) -> None:
+        state[u_id] = 1
+        for v_id in sorted(direct_deps[u_id]):
+            if state.get(v_id) == 1:
+                raise TuChoi("DEPENDENCY_CYCLE", f"phụ thuộc vòng qua {u_id} → {v_id}", (u_id, v_id))
+            if v_id not in state:
+                _visit(v_id)
+        state[u_id] = 2
+
+    for cid in sorted(by_id):
+        if cid not in state:
+            _visit(cid)
+
+    # Identify derived points that serve as the foot of a solid's apex
+    apex_foot_points: set[str] = set()
+    for c in calls:
+        cid, fn, a = c["id"], c["fn"], c.get("args") or {}
+        if fn == "perpendicular_line_plane":
+            line_pts = set(a.get("line") or ())
+            plane_pts = set(a.get("plane") or ())
+            if (line_pts & apex_vertices) and plane_pts <= base_vertices:
+                apex_foot_points |= (line_pts - apex_vertices) & set(point_producers)
+        elif fn == "altitude" and a.get("apex") in apex_vertices and a.get("foot") in point_producers:
+            apex_foot_points.add(a["foot"])
+        elif fn == "orthogonal_projection" and cid not in produced_point_of_call and a.get("image") in point_producers:
+            apex_foot_points.add(a["image"])
+
+    # Close apex_foot_points transitively over point_producers
+    queue = list(apex_foot_points)
+    while queue:
+        pt = queue.pop()
+        for p_cid in point_producers.get(pt, ()):
+            for in_pt in consumed_points_of_call.get(p_cid, ()):
+                if in_pt in point_producers and in_pt not in apex_foot_points:
+                    apex_foot_points.add(in_pt)
+                    queue.append(in_pt)
+
+    apex_foot_calls = {p_cid for pt in apex_foot_points for p_cid in point_producers.get(pt, ())}
+
+    tier_of: dict[str, int] = {}
+    for c in calls:
+        cid, fn = c["id"], c["fn"]
+        pts = set(_diem_cua_loi_goi(c))
+        if fn in ("pyramid", "regular_pyramid", "prism"):
+            tier_of[cid] = 0
+        elif fn.startswith("ask_") or fn == "unsupported":
+            tier_of[cid] = 5
+        elif cid in apex_foot_calls:
+            tier_of[cid] = 2
+        elif (
+            fn in ("regular_polygon", "rectangle", "right_angle", "segment_length", "equal_length")
+            and pts
+            and pts <= base_vertices
+            and not direct_deps[cid]
+        ):
+            tier_of[cid] = 1
+        elif (
+            cid not in produced_point_of_call
+            and fn
+            in (
+                "regular_polygon",
+                "rectangle",
+                "right_angle",
+                "perpendicular_line_plane",
+                "altitude",
+                "orthogonal_projection",
+                "perpendicular_lines",
+                "face_perpendicular_base",
+                "height",
+                "segment_length",
+                "equal_length",
+                "parallel_lines",
+                "parallel_planes",
+            )
+            and pts <= (solid_vertices | apex_foot_points)
+        ):
+            tier_of[cid] = 3
+        else:
+            tier_of[cid] = 4
+
+    tiers: dict[int, list[str]] = {t: [] for t in range(6)}
+    for c in calls:
+        tiers[tier_of[c["id"]]].append(c["id"])
+
+    ordering_deps: dict[str, set[str]] = {cid: set(deps) for cid, deps in direct_deps.items()}
+    for cid in calls:
+        u_id = cid["id"]
+        t = tier_of[u_id]
+        if t >= 1:
+            ordering_deps[u_id].update(tiers[0])
+        if t >= 2:
+            ordering_deps[u_id].update(tiers[1])
+        if t >= 3:
+            ordering_deps[u_id].update(tiers[2])
+        if t >= 4:
+            ordering_deps[u_id].update(tiers[3])
+        if t >= 5:
+            ordering_deps[u_id].update(tiers[4])
+        ordering_deps[u_id].discard(u_id)
+
+    # Preserve exact original order if all prerequisites already precede their dependents
+    if all(idx_of[prereq] < idx_of[cid] for cid, deps in ordering_deps.items() for prereq in deps):
+        return
+
+    in_degree = {cid: len(ordering_deps[cid]) for cid in by_id}
+    dependents: dict[str, list[str]] = {cid: [] for cid in by_id}
+    for cid, deps in ordering_deps.items():
+        for prereq in deps:
+            dependents[prereq].append(cid)
+
+    heap: list[tuple[int, int, str]] = [
+        (tier_of[cid], idx_of[cid], cid) for cid, deg in in_degree.items() if deg == 0
+    ]
+    heapq.heapify(heap)
+    ordered_ids: list[str] = []
+    while heap:
+        _t, _i, u_id = heapq.heappop(heap)
+        ordered_ids.append(u_id)
+        for v_id in dependents[u_id]:
+            in_degree[v_id] -= 1
+            if in_degree[v_id] == 0:
+                heapq.heappush(heap, (tier_of[v_id], idx_of[v_id], v_id))
+
+    if len(ordered_ids) != len(calls):
+        rem = sorted(cid for cid, deg in in_degree.items() if deg > 0)
+        raise TuChoi("DEPENDENCY_CYCLE", f"phụ thuộc vòng trong kế hoạch lời gọi {rem}", tuple(rem[:2]))
+
+    k.calls = [by_id[cid] for cid in ordered_ids]
 
 
 def _toan_hang(p: list[str] | None) -> str:
