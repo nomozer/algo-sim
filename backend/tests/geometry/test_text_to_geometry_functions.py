@@ -149,7 +149,8 @@ def test_scene3d_co_khoi_dung_cau_truc_va_metric(cid):
 # ── hợp đồng: registry đóng, không toạ độ, có nguồn ─────────────────────────
 def test_registry_dong_va_khai_bao_ham_khong_co_toa_do():
     decl = GF.function_declarations()
-    assert {d["name"] for d in decl} == set(GF.REGISTRY) - {"translate_point"}      # planner-only, never declared
+    # planner-only, never declared: the auxiliary, and `ask_angle_lines` (route B only, goal-directed-function-composition)
+    assert {d["name"] for d in decl} == set(GF.REGISTRY) - {"translate_point", "ask_angle_lines"}
     txt = json.dumps(decl, ensure_ascii=False).lower()
     for cam in ("xyz", "coord", "toạ độ", "tọa độ", "\"x\"", "position"):
         assert cam not in txt, cam

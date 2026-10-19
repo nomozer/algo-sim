@@ -77,7 +77,10 @@ _DEVIATION: dict[str, str] = {}
 
 @pytest.mark.parametrize("case", [pytest.param(c, marks=pytest.mark.xfail(strict=True, reason=_DEVIATION[c["id"]]))
                                   if c["id"] in _DEVIATION else c for c in CORPUS["negative"]], ids=lambda c: c["id"])
-def test_negative_is_refused_with_a_registered_code(case):
+def test_negative_is_refused_with_a_registered_code(case, monkeypatch):
+    if case["id"] == "centroid-without-contract":    # its premise since Wave 2A ships the contract: remove it (data only)
+        from app.simulation.geometry_functions import registry
+        monkeypatch.setitem(registry.REGISTRY, "centroid", replace(registry.REGISTRY["centroid"], planning=None))
     r = run(case)
     assert r.status == "REFUSED", (case["id"], r.answers)
     assert not r.answers and r.scene3d is None
@@ -129,8 +132,10 @@ def test_scene_shows_the_unnamed_point_before_its_witness_and_after_the_solid():
 def test_new_contract_is_discovered_without_planner_change(case, monkeypatch):
     from app.simulation.geometry_functions import engine, planner, registry
     code = {m.__name__: Path(m.__file__).read_bytes() for m in (planner, registry, engine)}
-    assert run(case).code == "UNSUPPORTED_CAPABILITY"              # production catalog: no effect produces a centroid
-    monkeypatch.setitem(registry.REGISTRY, "centroid", experimental_centroid_contract(registry))
+    assert registry.REGISTRY["centroid"].planning == experimental_centroid_contract(registry).planning  # promoted as is
+    with monkeypatch.context() as m:                                   # without it no effect produces a centroid
+        m.setitem(registry.REGISTRY, "centroid", replace(registry.REGISTRY["centroid"], planning=None))
+        assert run(case).code == "UNSUPPORTED_CAPABILITY"
     r = run(case)
     assert_served_exactly(r, case)
     assert {Path(m.__file__).read_bytes() for m in (planner, registry, engine)} == set(code.values())
@@ -143,6 +148,8 @@ def test_lying_contract_is_caught_by_engine_semantics_not_trusted(monkeypatch):
     from app.simulation.geometry_functions import registry
     lie = replace(experimental_centroid_contract(registry).planning, call=(("point", "G"), ("segment", ("A", "B"))))
     monkeypatch.setitem(registry.REGISTRY, "midpoint", replace(registry.REGISTRY["midpoint"], planning=lie))
+    # the honest centroid contract (Wave 2A) would win the tie by name: remove it so the lie is the only producer
+    monkeypatch.setitem(registry.REGISTRY, "centroid", replace(registry.REGISTRY["centroid"], planning=None))
     r = run(by_id("discovery", "centroid-to-plane"))
     assert r.status == "REFUSED" and r.code == "ENGINE_SELF_CHECK_FAILED", (r.code, r.reason)
 

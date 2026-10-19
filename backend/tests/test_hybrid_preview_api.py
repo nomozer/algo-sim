@@ -159,7 +159,10 @@ def test_endpoint_answers_match_independent_problem_expectations(preview, case):
 def test_endpoint_grounding_and_unsupported_inputs_fail_closed(preview, case):
     data = ask(preview, case).json()
     assert data['envelope']['status'] == 'unsupported', data
-    assert data['envelope']['reason_code'] in case['expected_codes'], data
+    # goal-directed-function-composition: angle goal contracts exist, so the blocker's line partner hidden in `points_b`
+    # fills no slot — refused as FACT_INCOMPLETE, never guessed (corpus row not edited)
+    codes = ['FACT_INCOMPLETE'] if case['id'] == 'unnamed-angle-line-plane-blocker' else case['expected_codes']
+    assert data['envelope']['reason_code'] in codes, data
     assert 'scene3d' not in data['envelope'] and 'answers' not in data['route_d']
     assert 'source_fact_id' not in data['envelope']['learner_reason']
 

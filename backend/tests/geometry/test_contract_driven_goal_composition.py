@@ -86,10 +86,14 @@ def test_slice_a_held_out_area_composition(case):
 
 @pytest.mark.parametrize("case", CORPUS["discovery"], ids=lambda c: c["id"])
 def test_slice_a_zero_planner_edit_discovery_centroid_to_area(monkeypatch, case):
+    # Wave 2A promoted the experimental contract into the Registry unchanged; the claim stays a DATA toggle: without the
+    # contract the same code refuses, with it the same code serves.
+    assert registry.REGISTRY["centroid"].planning == experimental_centroid_contract(registry).planning
     code = {m.__name__: Path(m.__file__).read_bytes() for m in (planner, registry, engine)}
-    r_before = run(case)
+    with monkeypatch.context() as m:
+        m.setitem(registry.REGISTRY, "centroid", replace(registry.REGISTRY["centroid"], planning=None))
+        r_before = run(case)
     assert r_before.status == "REFUSED" and r_before.code == "UNSUPPORTED_CAPABILITY"
-    monkeypatch.setitem(registry.REGISTRY, "centroid", experimental_centroid_contract(registry))
     r_after = run(case)
     exact_area(r_after, case)
     assert {x["fn"] for x in r_after.planner["calls"]} >= {"centroid", "ask_area"}
@@ -99,12 +103,17 @@ def test_slice_a_zero_planner_edit_discovery_centroid_to_area(monkeypatch, case)
     assert all(3 * r_after.points[g_lbl][i] == r_after.points[a][i] + r_after.points[b][i] + r_after.points[c][i] for i in range(3))
 
 
+#: Wave 2A supersedes the expected code of the frozen blocker row (corpus not edited): goal contracts for angles now exist,
+#: so a line partner hidden inside `points_b` is refused as operands filling no contract slot — still never guessed.
+_WAVE2A_CODE = {"unnamed-angle-line-plane-blocker": ["FACT_INCOMPLETE"]}
+
+
 @pytest.mark.parametrize("case", CORPUS["negative"], ids=lambda c: c["id"])
 def test_negative_cases_fail_closed(case):
     r = run(case)
     assert r.status == "REFUSED", (case["id"], r.answers)
     assert not r.answers and r.scene3d is None
-    assert r.code in case["expected_codes"], (case["id"], r.code, r.reason)
+    assert r.code in _WAVE2A_CODE.get(case["id"], case["expected_codes"]), (case["id"], r.code, r.reason)
 
 
 @pytest.mark.parametrize("case", CORPUS["angle_line_plane_slice_b"], ids=lambda c: c["id"])
@@ -130,8 +139,16 @@ def test_slice_b_verifier_table_and_degenerate_refusals():
 
 
 def test_slice_b_unnamed_point_kind_schema_representation_blocker(monkeypatch):
-    # Even if a speculative contract attempts to declare goal="angle" with heterogeneous inputs (Point + Plane),
-    # _doc_toan_hang_mo_ta refuses to guess positional splits of points_b under the frozen TypedFact schema.
+    # Wave 2A: the representation blocker is lifted by STRUCTURE, not by guessing — the line partner is `points_a`, the
+    # plane `points_b`. The blocker row (partner hidden in `points_b`) still fills no slot and is refused.
+    blocker_case = next(c for c in CORPUS["negative"] if c["id"] == "unnamed-angle-line-plane-blocker")
+    q = next(f for f in blocker_case["payload"]["facts"] if f["kind"] == "question")
+    assert planner._toan_hang_muc_tieu(planner.TypedFact(**q), registry.REGISTRY["ask_angle_line_plane"].planning) is None
+    assert run(blocker_case).code == "FACT_INCOMPLETE"
+    structured = planner.TypedFact(**{**q, "points_a": ["A"], "points_b": ["A", "B", "C", "D"]})
+    assert planner._toan_hang_muc_tieu(structured, registry.REGISTRY["ask_angle_line_plane"].planning) == (
+        ("desc", "midpoint", ("C", "S")), "A", ("A", "B", "C", "D"))
+    # A speculative contract with heterogeneous inputs and a wrong effect still cannot serve the blocker.
     spec = registry.REGISTRY["ask_angle_line_plane"]
     bad_contract = registry.PlanningContract(
         inputs=(
@@ -145,9 +162,8 @@ def test_slice_b_unnamed_point_kind_schema_representation_blocker(monkeypatch):
         goal="angle",
     )
     monkeypatch.setitem(registry.REGISTRY, "ask_angle_line_plane", replace(spec, planning=bad_contract))
-    blocker_case = next(c for c in CORPUS["negative"] if c["id"] == "unnamed-angle-line-plane-blocker")
     r = run(blocker_case)
-    assert r.status == "REFUSED" and r.code == "UNSUPPORTED_CAPABILITY"
+    assert r.status == "REFUSED" and r.code in ("UNSUPPORTED_CAPABILITY", "FACT_INCOMPLETE")
 
 
 def test_ablation_goal_and_producer_contracts_and_registry_reversal(monkeypatch):
@@ -236,6 +252,8 @@ def test_lying_descriptor_contract_on_area_caught_by_engine(monkeypatch):
     c = CORPUS["discovery"][0]
     lie = replace(experimental_centroid_contract(registry).planning, call=(("point", "G"), ("segment", ("A", "B"))))
     monkeypatch.setitem(registry.REGISTRY, "midpoint", replace(registry.REGISTRY["midpoint"], planning=lie))
+    # the honest centroid contract (Wave 2A) would win the tie by name: remove it so the lie is the only producer
+    monkeypatch.setitem(registry.REGISTRY, "centroid", replace(registry.REGISTRY["centroid"], planning=None))
     r = run(c)
     assert r.status == "REFUSED" and r.code == "ENGINE_SELF_CHECK_FAILED"
 

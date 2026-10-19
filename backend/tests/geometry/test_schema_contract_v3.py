@@ -133,8 +133,11 @@ def test_v3_uses_only_the_documented_schema_subset_and_stays_bounded():
     # Regression ceiling on the STRUCTURE the provider must compile (descriptions repeat per variant by design, see the
     # next test; this subset has no $ref). The earlier "< 7 x flat" compared v3-without-descriptions to flat-with-them;
     # like for like the structure was always ~11.7 x flat. Whether Gemini accepts it is NOT_MEASURED (HTTP 400 stops a run).
-    assert len(ITEM["anyOf"]) == 34
-    assert len(json.dumps(_structure(V3), ensure_ascii=False)) <= 24_500
+    # 34 -> 40 (goal-directed-function-composition): questions on a described point now come from the Registry goal
+    # contracts — area ×2 descriptors, angle–line ×2, angle–plane ×2 (length kept). Structure 24.5k -> ~29.7k characters;
+    # provider acceptance of the larger schema stays NOT_MEASURED (v3 is a research contract, flat is the default).
+    assert len(ITEM["anyOf"]) == 40
+    assert len(json.dumps(_structure(V3), ensure_ascii=False)) <= 30_000
 
 
 def test_v3_keeps_every_flat_field_description():

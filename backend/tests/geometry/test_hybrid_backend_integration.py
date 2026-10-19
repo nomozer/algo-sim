@@ -66,6 +66,14 @@ GOAL_COMP_RUN = RUNS_DIR / "contract-driven-goal-composition"
 STEP_MATH_RUN = RUNS_DIR / "step-math-validation"
 V3_REV_RUN = RUNS_DIR / "semantic-extraction-v3-runtime-revision"
 V3_PARENT_RUN = RUNS_DIR / "semantic-extraction-schema-contract"
+#: Declared, re-measured delta of the frozen baselines (run `goal-directed-function-composition`): the rows a later product
+#: change moves, with before/after and the independent expectation of each served row. Every other row must be unchanged.
+REGRESSION_DELTA = json.loads((RUNS_DIR / "goal-directed-function-composition/results/historical-regression-delta.json")
+                              .read_text(encoding="utf-8"))
+DELTA_174 = {(d["corpus"], d["id"]): d for d in REGRESSION_DELTA["bundle_174"]["changed"]}
+#: Unnamed-angle blocker row: goal contracts for angles now exist, so a line partner hidden in `points_b` fills no
+#: contract slot (FACT_INCOMPLETE) — still refused, never guessed.
+BLOCKER_CODE = {"unnamed-angle-line-plane-blocker": ["FACT_INCOMPLETE"]}
 
 
 def _load_module(name: str, path: Path):
@@ -221,11 +229,21 @@ def test_flat_contract_to_source_grounding_planner_engine_and_ir_handoff():
     assert audit.verdict == "VERIFIED", audit.errors
 
 
+def _flat_only_case() -> dict:
+    case = deepcopy(GOAL_CORPUS["positive"][0])
+    seg = next(f for f in case["payload"]["facts"] if f["kind"] == "length" and f.get("measure") == "segment")
+    seg["solid"] = "S.ABCD"
+    assert not schema_accepts(facts_response_schema("v3"), case["payload"])
+    return case
+
+
 def test_response_contract_is_one_snapshot_per_call(monkeypatch):
     """Run `hybrid-pre-main-hardening`: the contract is resolved ONCE per call. Before, `run_ai_fact_route` read the
     module global when building the request and again when validating, so a flip between the two let a reply requested
     under v3 skip the v3 gate (served the v3-invalid unnamed-midpoint area payload)."""
-    case = GOAL_CORPUS["positive"][0]   # unnamed midpoint area: flat-servable, v3-invalid
+    # flat-servable, v3-invalid: a segment length carrying its `solid` (open v3 gap, POC-3 #2). The unnamed-midpoint area
+    # used before became v3-valid in goal-directed-function-composition.
+    case = _flat_only_case()
     body = {"candidates": [{"content": {"parts": [{"text": json.dumps(case["payload"], ensure_ascii=False)}]},
                             "finishReason": "STOP"}]}
     asked: list[dict] = []
@@ -252,14 +270,20 @@ def test_response_contract_is_one_snapshot_per_call(monkeypatch):
 
 def test_v3_contract_gate_and_locked_gold_forensic_reconciliation(monkeypatch):
     """P2 & P4.1: Verify v3 contract gate in `run_ai_fact_route` and the exact cause of the 16 LOCKED gold rejections."""
-    # 1. Under v3, unnamed midpoint area question is rejected at schema gate (known Slice A v3 gap)
+    # 1. The Slice A v3 gap (unnamed-midpoint area) is closed by goal-directed-function-composition (v3 questions on a
+    #    described point come from the Registry goal contracts); the remaining gap (`solid` on a segment) still refuses.
     case_area = GOAL_CORPUS["positive"][0]
     body_area = {
         "candidates": [{"content": {"parts": [{"text": json.dumps(case_area["payload"], ensure_ascii=False)}]}, "finishReason": "STOP"}]
     }
     monkeypatch.setattr(fact_extraction, "RESPONSE_CONTRACT", "v3")
     res_area_v3 = run_ai_fact_route(case_area["text"], lambda _: body_area)
-    assert (res_area_v3.status, res_area_v3.code) == ("REFUSED", "RESPONSE_CONTRACT_INVALID")
+    assert res_area_v3.status == "SERVED", (res_area_v3.code, res_area_v3.reason)
+    assert squared(res_area_v3.exec_result.final_memory["kq_q"]) == Fraction(case_area["expected_squared"]["q"])
+    gap = _flat_only_case()
+    res_gap = run_ai_fact_route(gap["text"], lambda _: {"candidates": [{"content": {"parts": [
+        {"text": json.dumps(gap["payload"], ensure_ascii=False)}]}, "finishReason": "STOP"}]})
+    assert (res_gap.status, res_gap.code) == ("REFUSED", "RESPONSE_CONTRACT_INVALID")
 
     # 2. Under v3, named midpoint + angle_line_plane (Slice B) is accepted by v3 schema and served!
     case_angle = GOAL_CORPUS["angle_line_plane_slice_b"][2]  # angle-oblique-midpoint-line-plane
@@ -398,7 +422,7 @@ def test_safe_refusals_tampered_facts_and_question_tail_runtime_guard(monkeypatc
     for neg in GOAL_CORPUS["negative"]:
         r = run_fact_route(neg["text"], deepcopy(neg["payload"]))
         assert r.status == "REFUSED", (neg["id"], r.answers)
-        assert r.code in neg["expected_codes"], (neg["id"], r.code, neg["expected_codes"])
+        assert r.code in BLOCKER_CODE.get(neg["id"], neg["expected_codes"]), (neg["id"], r.code, neg["expected_codes"])
 
     # 2a. Lying contract verifier on ask_area is caught by contract consistency guard
     pos0 = GOAL_CORPUS["positive"][0]
@@ -433,9 +457,10 @@ def test_safe_refusals_tampered_facts_and_question_tail_runtime_guard(monkeypatc
 
 def test_version_constants_surface_fingerprints_and_historical_receipt_preservation():
     """P3, P4.8 & P4.9: Verify versions, surface fingerprints, LLM_ONLY default, and untouched v3 receipts."""
-    assert REGISTRY_VERSION == "geometry-functions/6"
-    assert PLANNER_VERSION == "geometry-fact-planner/7"
-    assert ENGINE_VERSION == "geometry-function-engine/5"
+    # /6, /7, /5 -> /7, /8, /6 (goal-directed-function-composition): ask_angle_lines, centroid + angle goal contracts.
+    assert REGISTRY_VERSION == "geometry-functions/7"
+    assert PLANNER_VERSION == "geometry-fact-planner/8"
+    assert ENGINE_VERSION == "geometry-function-engine/6"
     # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định.
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness.
     assert main_module.CACHE_VERSION == "127"
@@ -449,7 +474,9 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
 
     # Surface fingerprints must remain identical to locked evaluation pins
     assert surface_fingerprint("flat") == "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a"
-    assert surface_fingerprint("v3") == "90bf8f039df830062e068adcf1d243643c8ebebfde5b4a5cf9ec340078ea7aab"
+    # research contract v3 only (flat, the default, is unchanged): described-point questions are generated from the
+    # Registry goal contracts (area, angle) in goal-directed-function-composition; was 90bf8f03…
+    assert surface_fingerprint("v3") == "4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f"
     assert function_calling.surface_fingerprint() == "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25"
 
     typed_fact_sha = hashlib.sha256(
@@ -562,7 +589,8 @@ def test_offline_v3_matrix_parity_on_combined_candidate(tmp_path, monkeypatch):
             h = R.harness(arm, inp, mode)
             gold_rows = h.run_gold(inp)
             gold_score = R.E.summarize(inp, gold_rows, gold_rows)
-            frozen_gold = json.loads((V3_REV_RUN / f"results/offline/gold-{arm}-{mode}/score.json").read_text(encoding="utf-8"))
+            frozen_gold = _after_delta(f"gold-{arm}-{mode}", json.loads(
+                (V3_REV_RUN / f"results/offline/gold-{arm}-{mode}/score.json").read_text(encoding="utf-8")))
             for k in ("e2e", "refusal_codes", "counts", "multi_goal", "rows"):
                 assert gold_score[k] == frozen_gold[k], (f"gold-{arm}-{mode}", k)
 
@@ -570,9 +598,27 @@ def test_offline_v3_matrix_parity_on_combined_candidate(tmp_path, monkeypatch):
             replay_out.mkdir(parents=True, exist_ok=True)
             replay_state = h.run_eval(inp, mode, h.ReplayProvider(inp), replay_out)
             replay_score = R.E.summarize(inp, replay_state["rows"], gold_rows)
-            frozen_replay = json.loads((V3_REV_RUN / f"results/offline/replay-{arm}-{mode}/score.json").read_text(encoding="utf-8"))
+            frozen_replay = _after_delta(f"replay-{arm}-{mode}", json.loads(
+                (V3_REV_RUN / f"results/offline/replay-{arm}-{mode}/score.json").read_text(encoding="utf-8")))
             for k in ("e2e", "refusal_codes", "counts", "multi_goal", "rows"):
                 assert replay_score[k] == frozen_replay[k], (f"replay-{arm}-{mode}", k)
+
+
+def _after_delta(cell: str, frozen: dict) -> dict:
+    """The frozen score of `cell` with the declared re-measured delta applied: each changed row must be exactly its
+    recorded `before` in the frozen receipt; aggregates move to the recorded `after`. LOCKED cells declare no change."""
+    d = REGRESSION_DELTA["v3_matrix"]["changed_cells"].get(cell)
+    if d is None:
+        return frozen
+    rows = []
+    for row in frozen["rows"]:
+        change = d["rows"].get(row["case_id"])
+        if change:
+            assert row == change["before"], (cell, row["case_id"])
+            row = change["after"]
+        rows.append(row)
+    assert {k: frozen[k] for k in d["before"]} == d["before"], cell
+    return {**frozen, **d["after"], "rows": rows}
 
 
 def _regular_pyramid_facts(measure: str, phrase: str, value: str, base: str = "2") -> tuple[str, dict]:
@@ -711,7 +757,8 @@ def _timeline_violations(scene: dict) -> list[tuple]:
 
 
 def test_timeline_dependency_closure_on_every_served_scene():
-    """Run `hybrid-pre-main-hardening`: 84 served scenes (174 bundle + goal-composition positive/held-out/slice B)."""
+    """Run `hybrid-pre-main-hardening`: 84 served scenes (174 bundle + goal-composition positive/held-out/slice B);
+    90 since `goal-directed-function-composition` serves the 6 declared rows of `DELTA_174`."""
     rows = json.loads((GOAL_COMP_RUN / "baseline/bundle-174.json").read_text(encoding="utf-8"))["rows"]
     items = [(r["id"], r["text"], {"facts": r["facts"]}) for r in rows]
     items += [(c["id"], c["text"], c["payload"]) for g in ("positive", "held_out", "angle_line_plane_slice_b")
@@ -722,7 +769,7 @@ def test_timeline_dependency_closure_on_every_served_scene():
         if r.status == "SERVED":
             served += 1
             assert _timeline_violations(r.scene3d) == [], cid
-    assert served == 84
+    assert served == 84 + len(DELTA_174)
 
 
 def test_timeline_closure_check_detects_a_reordered_dependency():
@@ -796,8 +843,13 @@ def test_174_historical_answers_regression_and_independent_source_expectations()
     gaps = set()
     for row, exp in zip(rows, reg):
         r = run_fact_route(row["text"], {"facts": deepcopy(row["facts"])})
+        delta = DELTA_174.get((row["corpus"], row["id"]))
+        if delta:                                      # declared, re-measured change: frozen `before` must be what it was
+            assert {k: exp[k] for k in ("status", "code", "squares")} == delta["before"], row["id"]
+            exp = {**exp, **delta["after"]}
         assert (r.status, r.code) == (exp["status"], exp["code"]), row["id"]
-        want = _independent_expectation(row["expect"])
+        want = _independent_expectation(row["expect"]) or (
+            _independent_expectation(delta["independent_expectation"]) if delta else None)
         if r.status != "SERVED":
             assert not r.answers and r.scene3d is None, row["id"]
             if want is not None and row["expect"].get("status", "SERVED") == "SERVED":
@@ -814,8 +866,8 @@ def test_174_historical_answers_regression_and_independent_source_expectations()
         else:
             assert got == want, (row["id"], got, want)
         independent += 1
-    assert (served, independent) == (65, 65)
-    assert gaps == CAPABILITY_GAPS_174
+    assert (served, independent) == (65 + len(DELTA_174), 65 + len(DELTA_174))
+    assert gaps == CAPABILITY_GAPS_174 - set(DELTA_174)                # the centroid gaps closed; B27/B28 remain
 
 
 def test_full_174_historical_40_slice_ab_and_88_combined_scenes_math_oracle(monkeypatch):
@@ -827,13 +879,15 @@ def test_full_174_historical_40_slice_ab_and_88_combined_scenes_math_oracle(monk
     served_174 = 0
     for row, exp in zip(bundle174, reg174):
         r = run_fact_route(row["text"], {"facts": deepcopy(row["facts"])})
+        if (delta := DELTA_174.get((row["corpus"], row["id"]))):
+            exp = {**exp, **delta["after"]}
         assert r.status == exp["status"] and r.code == exp["code"], (row["id"], r.status, exp["status"])
         if r.status == "SERVED":
             served_174 += 1
             rep = verify_integrated_scene_mathematics(r.scene3d, scene_id=f"b174::{row['corpus']}::{row['id']}")
             assert rep.verdict == "VERIFIED", (row["id"], rep.errors)
 
-    assert served_174 == 65
+    assert served_174 == 65 + len(DELTA_174)
 
     slice_ab_served = 0
     slice_ab_refused = 0
@@ -846,7 +900,7 @@ def test_full_174_historical_40_slice_ab_and_88_combined_scenes_math_oracle(monk
             assert rep.verdict == "VERIFIED", (c["id"], rep.errors)
     for c in GOAL_CORPUS["negative"]:
         r = run_fact_route(c["text"], deepcopy(c["payload"]))
-        assert r.status == "REFUSED" and r.code in c["expected_codes"], c["id"]
+        assert r.status == "REFUSED" and r.code in BLOCKER_CODE.get(c["id"], c["expected_codes"]), c["id"]
         slice_ab_refused += 1
 
     assert slice_ab_served == 19
@@ -865,7 +919,7 @@ def test_full_174_historical_40_slice_ab_and_88_combined_scenes_math_oracle(monk
     assert disc_served == 4
     assert slice_ab_served + disc_served == 23
     assert slice_ab_served + disc_served + slice_ab_refused == 40
-    assert served_174 + slice_ab_served + disc_served == 88
+    assert served_174 + slice_ab_served + disc_served == 88 + len(DELTA_174)
 
     counterexamples = STEP_ORACLE.run_counterexample_suite()
     assert len(counterexamples) == 10

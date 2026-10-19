@@ -33,7 +33,7 @@ import os
 from typing import Any, Callable
 
 from app.ai.function_route import run_function_route
-from app.simulation.geometry_functions import PROVIDER_FUNCTIONS, KetQuaTuyen, function_declarations
+from app.simulation.geometry_functions import PROVIDER_FUNCTIONS, REGISTRY, KetQuaTuyen, function_declarations
 
 MODES = ("ANY", "VALIDATED")
 #: Trần output gồm cả thinking (tài liệu Gemini) — trần TOKEN CỨNG mỗi lượt, bài học R1 của pilot G05. Cần đo lại.
@@ -157,6 +157,8 @@ def parse_response(body: Any, diag: dict[str, Any]) -> dict[str, Any]:
     for fc in fcs:
         if not isinstance(fc.get("args", {}), dict):
             raise _TuChoiAI("MALFORMED_RESPONSE_PART", "functionCall.args phải là đối tượng JSON")
+        if (spec := REGISTRY.get(fc.get("name"))) is not None and not spec.provider_offered:
+            raise _TuChoiAI("FUNCTION_NOT_OFFERED", f"hàm {fc.get('name')!r} không được mời cho tuyến A (chỉ planner nhánh B)")
         args = dict(fc.get("args", {}))
         cid = args.pop("call_id", None)
         if not isinstance(cid, str) or not cid.strip():

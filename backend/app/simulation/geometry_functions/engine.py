@@ -37,7 +37,8 @@ from app.simulation.semantic_program import ir_builders as P
 
 from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de, nhom_mat_nguon
 
-ENGINE_VERSION = "geometry-function-engine/5"
+#: /6 (run `goal-directed-function-composition`): `ask_angle_lines` IR + independent line–line Gram verifier.
+ENGINE_VERSION = "geometry-function-engine/6"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -883,12 +884,12 @@ class _Dung:
                     lenh.append({"kind": "construct_plane", "target_var": m, "through": [ir_name(x) for x in mp[:3]]})
                     khai.append(P.memory_declaration(m, "plane3"))
                 lenh.append(P.measure_quantity(kq, "angle_cos_sq", m1, m2))
-            elif c.fn == "ask_distance_lines":
+            elif c.fn in ("ask_distance_lines", "ask_angle_lines"):
                 d1, d2 = f"dt1_{c.id}", f"dt2_{c.id}"
                 for d, ln in ((d1, a.line1), (d2, a.line2)):
                     lenh.append(P.construct_line(d, ir_name(ln[0]), ir_name(ln[1])))
                     khai.append(P.memory_declaration(d, "line3"))
-                lenh.append(P.measure_quantity(kq, "distance", d1, d2))
+                lenh.append(P.measure_quantity(kq, "distance" if c.fn == "ask_distance_lines" else "angle_cos_sq", d1, d2))
             elif c.fn == "ask_section_area":
                 lenh.append(P.measure_quantity(kq, "area", td[self._khoa_mat_cat(c)]))
             else:
@@ -921,6 +922,10 @@ class _Dung:
                     cur_id = (c.id,)
                     self._line(c.args.line)
                     self._plane(c.args.plane[:3])
+                for c in self.of("ask_angle_lines"):              # a line through two coincident points ⇒ kernel code
+                    cur_id = (c.id,)
+                    self._line(c.args.line1)
+                    self._line(c.args.line2)
                 for c in self.of("intersection_line"):
                     cur_id = (c.id,)
                     p1, p2 = self._plane(c.args.plane1), self._plane(c.args.plane2)
@@ -1061,6 +1066,17 @@ class _Dung:
         sin2 = d3 / (ww * det2)
         return Fraction(1) - sin2
 
+    def _goc_hai_duong_cos2(self, line1: tuple[str, ...], line2: tuple[str, ...]) -> Fraction:
+        """Line–line angle cos²(θ) = ⟨u,v⟩²_G / (⟨u,u⟩_G ⟨v,v⟩_G) from the chart Gram metric, independent of the kernel."""
+        u, v = self._vec(*line1), self._vec(*line2)
+        uu, vv = self.g(u, u), self.g(v, v)
+        if uu == 0 or vv == 0:
+            raise TuChoi("DEGENERATE_LINE", "đường thẳng suy biến (hai đầu mút trùng nhau)")
+        return self.g(u, v) ** 2 / (uu * vv)
+
+    def _kc2_goc_hai_duong(self, d: dict) -> Fraction:
+        return self._goc_hai_duong_cos2((d["operand"]["label"], d["target"]["point"]), tuple(d["target"]["line"]))
+
     def _kc2_khoang_cach(self, d: dict) -> Fraction:
         p, t = d["operand"]["label"], d["target"]
         if "plane" in t:
@@ -1088,9 +1104,10 @@ class _Dung:
     def kc2_dich(self, d: dict) -> Fraction:
         """Direct Gram-metric target verifier dispatched by `_KIEM_DICH` from the certified goal contract —
         independent of the chain whose measurement answered the question."""
-        t = d["target"]
-        verifier = ("area" if "points" in t else "angle_line_plane" if "point" in t and "plane" in t
-                    else "length" if "point" in t else "distance")
+        from .registry import GOAL_VERIFIER_TARGET
+
+        # the verifier is the one whose target the certificate carries (one table with the gate); otherwise a distance
+        verifier = next((v for v, keys in GOAL_VERIFIER_TARGET.items() if keys == frozenset(d["target"])), "distance")
         ask_call = next((c for c in self.calls if c.id == d.get("ask")), None)
         if ask_call is not None and d.get("chain"):
             from .registry import planning_contract
@@ -1120,12 +1137,14 @@ _KIEM_DICH = {
     "length": _Dung._kc2_do_dai,
     "area": _Dung._kc2_dien_tich,
     "angle_line_plane": _Dung._kc2_goc_duong_mat,
+    "angle_lines": _Dung._kc2_goc_hai_duong,
 }
 
 
 #: Bậc theo độ dài của mỗi đại lượng được hỏi — đáp số với độ dài ký hiệu a là (hệ số tại a = 1) · a^bậc.
 BAC_DAI_LUONG = {"ask_volume": 3, "ask_length": 1, "ask_distance_point_plane": 1, "ask_angle_line_plane": 0,
-                 "ask_area": 2, "ask_angle_plane_plane": 0, "ask_distance_lines": 1, "ask_section_area": 2}
+                 "ask_area": 2, "ask_angle_plane_plane": 0, "ask_distance_lines": 1, "ask_section_area": 2,
+                 "ask_angle_lines": 0}
 
 
 #: Definitions of the unnamed points a planner `effect-chain` may introduce (affine: valid in chart coordinates). A
@@ -1281,6 +1300,9 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         for c in dung.of("ask_angle_line_plane"):
             if fm.get(hoi.get(c.id, "")) != dung._goc_duong_mat_cos2(tuple(c.args.line), tuple(c.args.plane[:3])):
                 raise TuChoi("ENGINE_SELF_CHECK_FAILED", "góc đường–mặt thực thi khác công thức Gram độc lập", (c.id,))
+        for c in dung.of("ask_angle_lines"):
+            if fm.get(hoi.get(c.id, "")) != dung._goc_hai_duong_cos2(tuple(c.args.line1), tuple(c.args.line2)):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "góc hai đường thực thi khác công thức Gram độc lập", (c.id,))
         if hong := [t for t in dung.sections if not fm[t].is_closed]:
             raise TuChoi("SECTION_EMPTY", f"mặt phẳng không cắt khối thành một đa giác ({hong}) — không có thiết diện để dựng")
         tra, chinh_xac = {}, {}

@@ -34,7 +34,8 @@ from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationError, model_validator
 
-REGISTRY_VERSION = "geometry-functions/6"
+#: /7 (run `goal-directed-function-composition`): `ask_angle_lines`, the `centroid` producer contract, angle goal contracts.
+REGISTRY_VERSION = "geometry-functions/7"
 
 
 class TuChoi(Exception):
@@ -233,6 +234,11 @@ class AskAngleLinePlaneArgs(_Args):
     plane: Poly
 
 
+class AskAngleLinesArgs(_Args):
+    line1: Seg
+    line2: Seg
+
+
 class AskAnglePlanePlaneArgs(_Args):
     plane1: Poly
     plane2: Poly
@@ -265,7 +271,8 @@ class TranslatePointArgs(_Args):
 @dataclass(frozen=True)
 class PlanningTerm:
     """Internal typed role slots; not an expression language or provider program."""
-    kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance", "AnswerLength", "AnswerArea", "AnswerAngleLinePlane"]
+    kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance", "AnswerLength", "AnswerArea", "AnswerAngleLinePlane",
+                  "AnswerAngleLines"]
     operands: tuple[str, ...]
 
 
@@ -331,10 +338,35 @@ class FunctionSpec:
     auxiliary_only: bool = False
     planning: PlanningContract | None = None  # internal; function_declarations never serializes it
     planning_extra: tuple[PlanningContract, ...] = ()  # another mathematical meaning of the same function
+    #: False: the planner (route B) may emit it from typed facts, but it is not offered to the provider of route A —
+    #: a new function does not widen the route A model surface without its own decision (Wave 2A, P3.4).
+    provider_offered: bool = True
 
 
 def planning_contracts(spec: FunctionSpec) -> tuple[PlanningContract, ...]:
     return ((spec.planning,) if spec.planning else ()) + spec.planning_extra
+
+
+def goal_slots(contract: PlanningContract) -> tuple[tuple[str, str], ...]:
+    """(slot, kind) of a contract's effect operands, kinds read from its typed inputs — one reader for the planner (which
+    fills them from a fact) and the gate (which re-binds them to the source)."""
+    kinds = {t.operands[0]: t.kind for t in contract.inputs}
+    return tuple((s, kinds.get(s, "")) for s in contract.effect.operands)
+
+
+def goal_target_keys(contract: PlanningContract) -> frozenset[str]:
+    """Certificate target keys of a goal contract, from the kinds of its slots after the measured point: one point →
+    `point`, several → `points`, a plane → `plane`, a line → `line`."""
+    rest = [k for _s, k in goal_slots(contract)[1:]]
+    n = rest.count("Point")
+    return frozenset(({"point"} if n == 1 else {"points"} if n > 1 else set())
+                     | ({"plane"} if "Plane" in rest else set()) | ({"line"} if "Line" in rest else set()))
+
+
+#: The target a goal verifier measures (independent check in the engine): the gate refuses a contract whose declared
+#: verifier does not measure the target its slots describe (a lying `verifier`), the engine dispatches on it.
+GOAL_VERIFIER_TARGET = {"length": frozenset({"point"}), "area": frozenset({"points"}),
+                        "angle_line_plane": frozenset({"point", "plane"}), "angle_lines": frozenset({"point", "line"})}
 
 
 def planning_contract(spec: FunctionSpec, effect: str | None = None) -> PlanningContract | None:
@@ -388,7 +420,13 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
                                  "derived_point", "midpoint", call=(("point", "M"), ("segment", ("A", "B"))), fresh="M",
                                  descriptor="midpoint",
                                  phrase=r"trung điểm\s+(?:của\s+)?(?:(?:đoạn thẳng|đoạn|cạnh)\s+)?(?P<ops>{P}{P})(?![\w'])")),
-    _F("centroid", CentroidArgs, "construct", "Gọi một điểm là trọng tâm của một đa giác.", (("trọng tâm",),)),
+    # Wave 2A: the existing function gains ONE producer contract (data only) — the planner then composes it with every goal
+    # contract, as the experimental arm `measure_function_discovery.experimental_centroid_contract` first showed.
+    _F("centroid", CentroidArgs, "construct", "Gọi một điểm là trọng tâm của một đa giác.", (("trọng tâm",),),
+       planning=PlanningContract((PlanningTerm("Point", ("A",)), PlanningTerm("Point", ("B",)), PlanningTerm("Point", ("C",))),
+                                 PlanningTerm("Point", ("G",)), "derived_point", "centroid",
+                                 call=(("point", "G"), ("polygon", ("A", "B", "C"))), fresh="G", descriptor="centroid",
+                                 phrase=r"trọng tâm\s+(?:của\s+)?(?:(?:tam giác|Δ)\s*)?(?P<ops>{P}{P}{P})(?![\w'])")),
     _F("pyramid", PyramidArgs, "construct", "Khối chóp với đỉnh và đáy đã nêu.", (("chóp", "tứ diện"),)),
     _F("regular_pyramid", PyramidArgs, "construct", "Khối chóp ĐỀU: đáy đa giác đều, chân đường cao tại tâm đáy.",
        (("chóp", "tứ diện"), ("đều",))),
@@ -412,9 +450,30 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
                                  call=(("point", "P"), ("plane", "Q")))),
     _F("ask_distance_lines", AskDistanceLinesArgs, "ask", "Đề hỏi khoảng cách giữa hai đường thẳng (chéo nhau).",
        (("khoảng cách",),)),
+    # Goal contracts of the angle asks (Wave 2A): the line is (described point P, named point Q), the target `{M}` a plane /
+    # `{L}` a line, in closed wordings (both orders of "nối … với …"). Named angles keep their direct rule (`_cau_hoi`).
     _F("ask_angle_line_plane", AskAngleLinePlaneArgs, "ask", "Đề hỏi góc giữa đường thẳng và mặt phẳng (trả cos²).",
-       (("góc",),)),
+       (("góc",),),
+       planning=PlanningContract(
+           (PlanningTerm("Point", ("P",)), PlanningTerm("Point", ("Q",)), PlanningTerm("Plane", ("R",))),
+           PlanningTerm("AnswerAngleLinePlane", ("P", "Q", "R")), "goal_answer", "angle_line_plane",
+           call=(("line", ("P", "Q")), ("plane", "R")), goal="angle",
+           phrase=(r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đoạn thẳng|đoạn)\s+nối\s+(?:(?:điểm|đỉnh)\s+)?(?P<t>{P})"
+                   r"\s+với\s+(?:{D})\s+(?:và|với)\s+{M}",
+                   r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đoạn thẳng|đoạn)\s+nối\s+(?:{D})\s+với\s+"
+                   r"(?:(?:điểm|đỉnh)\s+)?(?P<t>{P})\s+(?:và|với)\s+{M}"))),
     _F("ask_angle_plane_plane", AskAnglePlanePlaneArgs, "ask", "Đề hỏi góc giữa hai mặt phẳng (trả cos²).", (("góc",),)),
+    # Wave 2A primitive: kernel/IR already measure `angle_cos_sq(line3, line3)`; this exposes it to route B only.
+    _F("ask_angle_lines", AskAngleLinesArgs, "ask", "Đề hỏi góc giữa hai đường thẳng (trả cos²).", (("góc",),),
+       provider_offered=False,
+       planning=PlanningContract(
+           (PlanningTerm("Point", ("P",)), PlanningTerm("Point", ("Q",)), PlanningTerm("Line", ("L",))),
+           PlanningTerm("AnswerAngleLines", ("P", "Q", "L")), "goal_answer", "angle_lines",
+           call=(("line1", ("P", "Q")), ("line2", "L")), goal="angle",
+           phrase=(r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đoạn thẳng|đoạn)\s+nối\s+(?:(?:điểm|đỉnh)\s+)?(?P<t>{P})"
+                   r"\s+với\s+(?:{D})\s+(?:và|với)\s+{L}",
+                   r"góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:đường thẳng|đoạn thẳng|đoạn)\s+nối\s+(?:{D})\s+với\s+"
+                   r"(?:(?:điểm|đỉnh)\s+)?(?P<t>{P})\s+(?:và|với)\s+{L}"))),
     _F("ask_area", AskAreaArgs, "ask", "Đề hỏi diện tích một đa giác.", (("diện tích",),),
        planning=PlanningContract(
            (PlanningTerm("Point", ("P",)), PlanningTerm("Point", ("Q",)), PlanningTerm("Point", ("R",))),
@@ -440,7 +499,7 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
        "điểm đã có.", auxiliary_only=True),
 )}
 #: The functions offered to the provider of route A — the library minus planner-only auxiliaries.
-PROVIDER_FUNCTIONS = tuple(n for n, s in REGISTRY.items() if not s.auxiliary_only)
+PROVIDER_FUNCTIONS = tuple(n for n, s in REGISTRY.items() if not s.auxiliary_only and s.provider_offered)
 
 #: Dấu phủ định — xét trong quote VÀ phần mệnh đề đứng ngay trước nó.
 PHU_DINH = ("không phải", "không là", "không vuông góc", "không ⊥", "không đều", "không song song", "chưa chắc")
@@ -1016,22 +1075,31 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'toán hạng mô tả không khớp chứng chỉ', (ask.id,))
         if set(ops) - nhan:
             raise TuChoi('UNKNOWN_LABEL', 'toán hạng của điểm được mô tả không có trong nguồn', (ask.id,))
-        want = (tuple(target['points']) if 'points' in target else (target['point'],) if 'point' in target
-                else (('result', target['line_ref']),) if 'line_ref' in target
-                else (('named', tuple(sorted(target['line']))),) if 'line' in target else (term(target.get('plane')),))
+        goal_kind = ans[0].goal
+        slots = goal_slots(ans[0])[1:]
+        if goal_kind is not None:            # target re-read slot by slot from the contract's typed inputs (one reader)
+            pts = list(target.get('points') or ([target['point']] if 'point' in target else []))
+            want = tuple(pts.pop(0) if k == 'Point' else term(target['plane']) if k == 'Plane'
+                         else ('named', tuple(sorted(target['line']))) for _s, k in slots)
+            if pts:
+                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'đích của mục tiêu không khớp chứng chỉ', (ask.id,))
+        else:
+            want = ((('result', target['line_ref']),) if 'line_ref' in target
+                    else (('named', tuple(sorted(target['line']))),) if 'line' in target else (term(target.get('plane')),))
         if rest != want:
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'đích của mục tiêu không khớp chứng chỉ', (ask.id,))
-        goal_kind = ans[0].goal
-        if goal_kind == 'length':
-            if (ask.fn != 'ask_length' or ans[0].verifier != 'length' or ans[0].effect.kind != 'AnswerLength'
-                    or len(rest) != 1 or not isinstance(rest[0], str) or set(target) != {'point'} or rest[0] not in nhan):
-                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mục tiêu độ dài cần đúng một điểm đích có nguồn', (ask.id,))
-        elif goal_kind == 'area':
-            if (ask.fn != 'ask_area' or ans[0].verifier != 'area' or ans[0].effect.kind != 'AnswerArea'
-                    or len(rest) != 2 or not all(isinstance(v, str) for v in rest) or len(set(rest)) != 2
-                    or set(target) != {'points'} or set(rest) - nhan):
-                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'mục tiêu diện tích cần đúng hai điểm đích phân biệt có nguồn', (ask.id,))
-        elif goal_kind is not None or len(rest) != 1 or ans[0].verifier != 'distance' or ans[0].effect.kind != 'AnswerDistance':
+        if goal_kind is not None:
+            keys = goal_target_keys(ans[0])
+            pts = [v for (_s, k), v in zip(slots, rest) if k == 'Point']
+            if (set(target) != keys or GOAL_VERIFIER_TARGET.get(ans[0].verifier) != keys
+                    or not all(isinstance(v, str) for v in pts) or len(set(pts)) != len(pts) or set(pts) - nhan
+                    or any(k == 'Plane' and (len(v) < 3 or set(v) - nhan) for (_s, k), v in zip(slots, rest))
+                    or any(k == 'Line' and (v[0] != 'named' or len(set(v[1])) != 2 or set(v[1]) - nhan)
+                           for (_s, k), v in zip(slots, rest))
+                    or any(k not in ('Point', 'Plane', 'Line') for _s, k in slots)):
+                raise TuChoi('AUXILIARY_RULE_MISMATCH', 'đích của mục tiêu không đúng kiểu hợp đồng, hoặc không có nguồn',
+                             (ask.id,))
+        elif len(rest) != 1 or ans[0].verifier != 'distance' or ans[0].effect.kind != 'AnswerDistance':
             raise TuChoi('AUXILIARY_RULE_MISMATCH', 'loại mục tiêu không hợp lệ trong chứng chỉ chuỗi', (ask.id,))
         x = rest[0]
         g = producer(x[1]) if goal_kind is None and x[0] == 'result' else None
@@ -1042,10 +1110,13 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
         def binds(m):
             if sorted(_nhan_cum(m['ops'])) != sorted(ops):
                 return False
-            if goal_kind == 'length':
-                return m['t'] == x
-            if goal_kind == 'area':
-                return {m['t1'], m['t2']} == set(rest) and m['t1'] != m['t2']
+            if goal_kind is not None:        # wording groups by slot kind: t / t1,t2 points, m plane, l line
+                pts = [v for (_s, k), v in zip(slots, rest) if k == 'Point']
+                said = [m['t']] if len(pts) == 1 else [m['t1'], m['t2']] if len(pts) == 2 else []
+                return (len(pts) <= 2 and sorted(said) == sorted(pts) and len(set(said)) == len(said)
+                        and all(_cung_mat(_mat_cua(m, 'm', khoi), list(v)) if k == 'Plane'
+                                else sorted(_nhan_cum(m['l'])) == sorted(v[1]) if k == 'Line' else True
+                                for (_s, k), v in zip(slots, rest)))
             if x[0] == 'result':
                 return bool(m['a'] and m['b']) and matches_planes(m, g)
             if x[0] == 'named':
@@ -2075,6 +2146,11 @@ _CUM_HOI = {
          lambda m, a, k: set(_nhan_cum(m["l"])) == set(a.line) and _cung_mat(_mat_cua(m, "m", k), a.plane))],
     "ask_angle_plane_plane": [
         (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+{_mat_cum('a')}\s+(?:và|với)\s+{_mat_cum('b')}"), _hai_mat)],
+    # two named lines: each operand exactly two labels (`_doan_cum`), never a plane group — disjoint from the two above
+    "ask_angle_lines": [
+        (_cum(rf"(?:số đo\s+(?:của\s+)?)?góc\s+(?:giữa|tạo bởi|hợp bởi)\s+(?:hai\s+đường thẳng\s+)?{_doan_cum('a')}"
+              rf"\s+(?:và|với)\s+{_doan_cum('b')}"),
+         lambda m, a, k: {frozenset(_nhan_cum(m["a"])), frozenset(_nhan_cum(m["b"]))} == {frozenset(a.line1), frozenset(a.line2)})],
     "ask_area": [
         (_cum(rf"diện tích(?:\s+của)?\s+(?:(?:tam giác|tứ giác|hình vuông|hình chữ nhật|hình thoi|hình bình hành|hình thang"
               rf"|đa giác|mặt bên|mặt đáy|đáy|mặt)\s+)?(?:\((?P<gp>{_NHOM_NHAN})\)|(?<![\w'.])(?P<gb>{_NHOM_NHAN})"
@@ -2106,7 +2182,10 @@ def _mau_khoang_cach_mo_ta(phrase: str) -> re.Pattern[str]:
 
 @functools.lru_cache(maxsize=None)
 def _mau_muc_tieu_mo_ta(goal_phrase: str, descriptor_phrase: str) -> re.Pattern[str]:
-    return re.compile(goal_phrase.replace('{D}', descriptor_phrase).replace('{P}', _P1), re.IGNORECASE)
+    """Goal wording with its slot groups: `{D}` the described point, `{P}` a label, `{M}` a plane (group m, the ask
+    grammar's own `_mat_cum`), `{L}` a line (group l, `_doan_cum`)."""
+    return re.compile(goal_phrase.replace('{D}', descriptor_phrase).replace('{P}', _P1)
+                      .replace('{M}', _mat_cum('m')).replace('{L}', _doan_cum('l')), re.IGNORECASE)
 
 
 def _cac_cau(phrase: str | tuple[str, ...] | None) -> tuple[str, ...]:
@@ -2223,6 +2302,7 @@ _CHIEU_HAM_HOI = {
     "ask_volume": "volume",
     "ask_angle_line_plane": "angle",
     "ask_angle_plane_plane": "angle",
+    "ask_angle_lines": "angle",
 }
 _LOAI_DON_VI_MAP = {
     "độ dài": "length",

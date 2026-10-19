@@ -45,8 +45,11 @@ def test_length_goal_refusal(c):
 
 @pytest.mark.parametrize('c',C['discovery'],ids=lambda c:c['id'])
 def test_new_producer_contract_needs_no_planner_change(monkeypatch,c):
-    assert run(c).status=='REFUSED'
-    monkeypatch.setitem(registry.REGISTRY,'centroid',experimental_centroid_contract(registry))
+    # Wave 2A promoted the contract unchanged: the claim stays a data toggle on the same code.
+    assert registry.REGISTRY['centroid'].planning==experimental_centroid_contract(registry).planning
+    with monkeypatch.context() as m:
+        m.setitem(registry.REGISTRY,'centroid',replace(registry.REGISTRY['centroid'],planning=None))
+        assert run(c).status=='REFUSED'
     exact(run(c),c)
     assert {x['fn'] for x in run(c).planner['calls']} >= {'centroid','ask_length'}
 
@@ -150,6 +153,8 @@ def test_lying_descriptor_contract_is_caught_independently(monkeypatch):
     c=experimental_centroid_contract(registry).planning
     lie=replace(c,call=(('point','G'),('segment',('A','B'))))
     monkeypatch.setitem(registry.REGISTRY,'midpoint',replace(registry.REGISTRY['midpoint'],planning=lie))
+    # the honest centroid contract (Wave 2A) would win the tie by name: remove it so the lie is the only producer
+    monkeypatch.setitem(registry.REGISTRY,'centroid',replace(registry.REGISTRY['centroid'],planning=None))
     assert run(C['discovery'][0]).code=='ENGINE_SELF_CHECK_FAILED'
 
 

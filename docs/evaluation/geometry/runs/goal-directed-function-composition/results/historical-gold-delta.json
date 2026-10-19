@@ -1,0 +1,24 @@
+{
+  "schema": "HISTORICAL_GOLD_REMEASURE/1",
+  "measured_receipt": "docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/results/gold/gold_rows.json",
+  "applies_after": "docs/evaluation/geometry/runs/semantic-extraction-schema-contract/results/historical-gold-delta.json",
+  "cause": "Goal-directed function composition (Hybrid Wave 2A): the Registry gains the `centroid` producer contract, angle goal contracts and the `ask_angle_lines` primitive, so these rows are no longer refused for a missing capability; their wording (anaphora 'hai đường thẳng đó/này', a distance to a POINT, reversed operand order) is outside the closed source grammar and the binding gate refuses it — never guessed",
+  "model_calls": 0,
+  "rows_compared": 60,
+  "served_before": 10,
+  "served_after": 10,
+  "changed": {
+    "D09": {"before": {"status": "REFUSED", "code": "UNSUPPORTED_CAPABILITY", "values": {}},
+            "after": {"status": "REFUSED", "code": "SOURCE_OBJECT_MISMATCH", "values": {}},
+            "reading": "'khoảng cách từ trọng tâm tam giác A'BD đến đỉnh C'' is a length to a point; the closed length goal grammar reads 'độ dài đoạn nối … với …' only. Centroid now exists; the wording stops at the binding gate. Still refused; no unsafe change."},
+    "D12": {"before": {"status": "REFUSED", "code": "UNSUPPORTED_CAPABILITY", "values": {}},
+            "after": {"status": "REFUSED", "code": "SOURCE_OBJECT_MISMATCH", "values": {}},
+            "reading": "The named line-line angle now has a function; the third request 'khoảng cách giữa hai đường thẳng đó' is an anaphora the distance grammar does not bind. Still refused (the whole request is not served partially); no unsafe change."},
+    "L19": {"before": {"status": "REFUSED", "code": "UNSUPPORTED_CAPABILITY", "values": {}},
+            "after": {"status": "REFUSED", "code": "SOURCE_OBJECT_MISMATCH", "values": {}},
+            "reading": "'khoảng cách từ O đến trọng tâm của tam giác ABC' names the described point second; the closed grammar reads it first. Still refused; no unsafe change."},
+    "L29": {"before": {"status": "REFUSED", "code": "UNSUPPORTED_CAPABILITY", "values": {}},
+            "after": {"status": "REFUSED", "code": "SOURCE_OBJECT_MISMATCH", "values": {}},
+            "reading": "The line-line angle exists now; 'hai đường thẳng này hợp với nhau một góc bao nhiêu?' refers to the lines by anaphora, which the ask grammar does not bind. Still refused; no unsafe change."}
+  }
+}

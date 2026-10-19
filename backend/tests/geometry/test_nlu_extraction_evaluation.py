@@ -315,7 +315,7 @@ def test_locked_inputs_keep_their_registered_hashes_and_gold_outcomes():
     # Re-measured, not absorbed: each later product change that moves a row declares it in its own run's delta layer,
     # applied in order; every layer's `before` must be the state the earlier layers left.
     state = {c: (s, code, v) for c, s, code, v in map(key, rec)}
-    for layer in ("hybrid-semantic-extraction-v2", "semantic-extraction-schema-contract"):
+    for layer in ("hybrid-semantic-extraction-v2", "semantic-extraction-schema-contract", "goal-directed-function-composition"):
         delta = json.loads((E.RUN.parent / layer / "results/historical-gold-delta.json").read_bytes())
         for c, d in delta["changed"].items():
             assert state[c] == (d["before"]["status"], d["before"]["code"], d["before"]["values"]), (layer, c)

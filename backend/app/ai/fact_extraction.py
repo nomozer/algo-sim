@@ -19,7 +19,7 @@ from app.ai.function_calling import MAX_OUTPUT_TOKENS, TEMPERATURE, LiveAIDisabl
 from app.ai.function_route import run_fact_route
 from app.simulation.geometry_functions import KetQuaTuyen
 from app.simulation.geometry_functions.planner import TypedFact
-from app.simulation.geometry_functions.registry import NUMBER_PATTERN
+from app.simulation.geometry_functions.registry import NUMBER_PATTERN, REGISTRY, goal_slots, planning_contracts
 
 SYSTEM_PROMPT = (
     "Bạn đọc một đề hình học không gian và CHỈ trích dữ kiện theo lược đồ; KHÔNG chọn phép dựng, KHÔNG tính.\n"
@@ -129,9 +129,14 @@ def _contract_v3() -> dict[str, Any]:
         v("intersection_line", ("points_a", "points_b"), points_a=labels(3), points_b=labels(3)),
         # questions: the quantity fixes which operands must be present
         v("question", ("quantity", "points"), quantity=one("length"), points=labels(2, 2)),
-        *[v("question", ("quantity", "point_kind", "points", "points_b"), quantity=one(quantity),
-            point_kind=one(kind), points=described[kind], points_b=labels(1, 1) if quantity == "length" else labels(2))
-          for kind in described for quantity in ("length", "distance")],
+        *[v("question", ("quantity", "point_kind", "points", "points_b"), quantity=one("distance"),
+            point_kind=one(kind), points=described[kind], points_b=labels(2)) for kind in described],
+        # Questions on a described point for every Registry GOAL contract: the operands its typed slots take (Wave 2A),
+        # so the schema expresses exactly what `planner._toan_hang_muc_tieu` accepts — no second list of goals here.
+        *[v("question", ("quantity", "point_kind", "points", *(("points_a",) if partner else ()), "points_b"),
+            quantity=one(goal), point_kind=one(kind), points=described[kind],
+            **({"points_a": labels(1, 1)} if partner else {}), points_b=labels(*target))
+          for goal, partner, target in _described_goal_operands() for kind in described],
         *[v("question", ("quantity", "point_kind", "points", "line_ref"), quantity=one("distance"),
             point_kind=one(kind), points=described[kind], line_ref=ref)
           for kind in described],
@@ -158,6 +163,21 @@ def _contract_v3() -> dict[str, Any]:
         ])
     return {"type": "OBJECT", "properties": {"facts": {"type": "ARRAY", "items": {"description": item["description"], "anyOf": variants}}},
             "required": ["facts"]}
+
+
+def _described_goal_operands() -> list[tuple[str, bool, tuple[int, int]]]:
+    """(quantity, has a line partner in `points_a`, (min, max) labels of `points_b`) for each Registry goal contract,
+    read from its typed slots after the described point: n point slots → exactly n labels; a line → 2; a plane → ≥ 3."""
+    out = []
+    for c in (c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal):
+        kinds = [k for _s, k in goal_slots(c)[1:]]
+        partner = len(kinds) > 1 and kinds[0] == "Point" and kinds[-1] in ("Line", "Plane")
+        rest = kinds[1:] if partner else kinds
+        target = ((len(rest), len(rest)) if all(k == "Point" for k in rest) else (2, 2) if rest == ["Line"]
+                  else (3, 0) if rest == ["Plane"] else None)
+        if target and (c.goal, partner, target) not in out:
+            out.append((c.goal, partner, target))
+    return sorted(out)
 
 
 def schema_accepts(schema: dict[str, Any], value: Any) -> bool:

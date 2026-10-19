@@ -267,6 +267,51 @@ def _strip_verified_wave1_segment_certificates(response: dict, stored_response: 
     return copy_resp if stripped_any else None
 
 
+#: Declared runtime-identity deltas, in order: a later product revision that bumps a route D version names the exact
+#: old → new pair here. `--verify` maps a fresh response back ONLY through these pairs (and the preview fingerprint they
+#: determine, recomputed on both sides); every other byte must still equal the stored fixture.
+IDENTITY_DELTAS = (
+    {"run": "goal-directed-function-composition",
+     "versions": {"registry_version": ("geometry-functions/6", "geometry-functions/7"),
+                  "planner_version": ("geometry-fact-planner/7", "geometry-fact-planner/8"),
+                  "engine_version": ("geometry-function-engine/5", "geometry-function-engine/6")}},
+)
+
+
+def _preview_fingerprint(identity: dict) -> str:
+    from app.ai.hybrid_preview import preview_identity
+
+    source = {"route": "HYBRID_ROUTE_D_PREVIEW", **{k: identity.get(k) for k in preview_identity()}}
+    return hashlib.sha256(json.dumps(source, sort_keys=True).encode("utf-8")).hexdigest()
+
+
+def _restore_declared_identity(response: dict, stored_response: dict) -> dict | None:
+    """A copy of `response` whose route D identity is mapped back through `IDENTITY_DELTAS` to the stored one, or None
+    when an identity field differs other than by a declared pair, or a fingerprint is not the hash of its own identity."""
+    from copy import deepcopy
+
+    fresh, stored = deepcopy(response), stored_response
+    rd, srd = fresh.get("route_d") or {}, stored.get("route_d") or {}
+    ident, sident = rd.get("runtime_identity"), srd.get("runtime_identity")
+    pairs = {}
+    for delta in IDENTITY_DELTAS:
+        for key, (old, new) in delta["versions"].items():
+            pairs.setdefault(key, {})[new] = old
+    if isinstance(ident, dict) and isinstance(sident, dict):
+        if ident.get("fingerprint") != _preview_fingerprint(ident) or sident.get("fingerprint") != _preview_fingerprint(sident):
+            return None
+        for key, back in pairs.items():
+            while ident.get(key) in back and ident.get(key) != sident.get(key):
+                ident[key] = back[ident[key]]
+        ident["fingerprint"] = _preview_fingerprint(ident)
+    planner = rd.get("planner")
+    if isinstance(planner, dict) and "version" in planner:
+        back = pairs["planner_version"]
+        while planner["version"] in back and planner["version"] != (srd.get("planner") or {}).get("version"):
+            planner["version"] = back[planner["version"]]
+    return fresh
+
+
 def verify(directory: Path) -> int:
     manifest = json.loads((directory / "manifest.json").read_text(encoding="utf-8"))
     problems = []
@@ -285,6 +330,11 @@ def verify(directory: Path) -> int:
         for key in ("source", "expected", "covers", "injection"):
             if fresh[fid][key] != stored[fid][key]:
                 problems.append(f"{fid}: {key} differs")
+        restored = _restore_declared_identity(fresh[fid]["response"], stored[fid]["response"])
+        if restored is None:
+            problems.append(f"{fid}: runtime identity differs other than by a declared pair")
+            continue
+        fresh[fid] = {**fresh[fid], "response": restored, "response_sha256": _sha(_canonical(restored))}
         if fresh[fid]["response"] != stored[fid]["response"] or fresh[fid]["response_sha256"] != stored[fid]["response_sha256"]:
             stripped = _strip_verified_wave1_segment_certificates(fresh[fid]["response"], stored[fid]["response"])
             if stripped is None or stripped != stored[fid]["response"] or _sha(_canonical(stripped)) != stored[fid]["response_sha256"]:

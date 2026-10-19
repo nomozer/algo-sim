@@ -29,9 +29,10 @@ from typing import Annotated, Any, Literal
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from .registry import AUXILIARY_RULES, MAT_SONG_SONG, MAT_HAI_DUONG, ExactNumber, Label, TuChoi, nhan_cua_de, nhan_phu_da_dung
-from .registry import REGISTRY, doc_ke_hoach, render_call, same_call, planning_contracts
+from .registry import REGISTRY, doc_ke_hoach, goal_slots, render_call, same_call, planning_contracts
 
-PLANNER_VERSION = "geometry-fact-planner/7"
+#: /8 (run `goal-directed-function-composition`): goal entry by typed slots (`_toan_hang_muc_tieu`), line partner operand.
+PLANNER_VERSION = "geometry-fact-planner/8"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
 def _nhan_tuoi(stem: str) -> tuple[str, ...]:
@@ -218,13 +219,42 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
     return facts
 
 
+def _doi_tac(contract) -> bool:
+    """A goal contract whose measured object is a LINE through the described point and one named point (its partner,
+    `points_a`), measured against a line or plane target — the only place a described question carries `points_a`."""
+    kinds = [k for _s, k in goal_slots(contract)]
+    return kinds[:2] == ["Point", "Point"] and any(k in ("Line", "Plane") for k in kinds[2:])
+
+
+def _toan_hang_muc_tieu(f: TypedFact, contract) -> tuple | None:
+    """Typed operands of a question on a DESCRIBED point for ONE goal contract, or None when the fact does not fill its
+    slots. The described point fills the first slot; `points_a` (its named partner on a line, one label) the next Point
+    slot; `points_b` the rest — one label per Point slot, exactly two labels for a Line slot, ≥ 3 for a Plane slot. Each
+    list fills only the slots of its own operand: a position is never guessed inside a list."""
+    kinds = [k for _s, k in goal_slots(contract)]
+    head = [("desc", f.point_kind, tuple(sorted(f.points or [])))] + list(f.points_a or [])
+    if len(head) >= len(kinds) or any(k != "Point" for k in kinds[:len(head)]):
+        return None
+    rest, b = kinds[len(head):], list(f.points_b or [])
+    if len(set(b)) != len(b) or (f.points_a and not _doi_tac(contract)):
+        return None
+    if all(k == "Point" for k in rest):
+        return (*head, *b) if len(b) == len(rest) else None
+    if rest == ["Line"]:
+        return (*head, ("named", tuple(sorted(b)))) if len(b) == 2 else None
+    if rest == ["Plane"]:
+        return (*head, tuple(b)) if len(b) >= 3 else None
+    return None
+
+
 def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
-    """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`,
-    no `points_a`/`point`. Which descriptions exist and their arity come from Registry contracts, not from a planner table."""
-    if f.points_a or f.point or f.plane_relation:
-        raise TuChoi("SCHEMA_INVALID", f"{f.id}: điểm không tên cần hợp đồng mục tiêu đã hỗ trợ "
-                     "(point_kind + points; không points_a, không point)", (f.id,))
+    """A question whose first operand is a point the source DESCRIBES but does not name: `point_kind` + `points`, no
+    `point`; `points_a` only as the named partner of a line through it. Which descriptions and goals exist, and the
+    operands each goal takes, come from Registry contracts (`goal_slots`), not from a planner table."""
     goals = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == f.quantity]
+    if f.point or f.plane_relation or (f.points_a and not any(_doi_tac(c) for c in goals)):
+        raise TuChoi("SCHEMA_INVALID", f"{f.id}: điểm không tên cần hợp đồng mục tiêu đã hỗ trợ "
+                     "(point_kind + points; points_a chỉ là điểm thứ hai của một đường; không point)", (f.id,))
     if f.quantity != "distance" and not goals:
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: chưa có hợp đồng mục tiêu cho {f.quantity} với điểm được mô tả", (f.id,))
     contracts = [s.planning for s in REGISTRY.values() if s.planning is not None and s.planning.descriptor == f.point_kind]
@@ -235,13 +265,9 @@ def _doc_toan_hang_mo_ta(f: TypedFact) -> None:
         raise TuChoi("FACT_INCOMPLETE", f"{f.id}: {f.point_kind} cần {sorted({len(c.inputs) for c in contracts})} điểm "
                      "phân biệt", (f.id,))
     if goals:
-        point_arities = {len(c.inputs) - 1 for c in goals
-                         if c.inputs and all(t.kind == "Point" and len(t.operands) == 1 for t in c.inputs)}
-        if not point_arities:
-            raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: hợp đồng mục tiêu {f.quantity} cần toán hạng phân biệt vai trò", (f.id,))
-        b = f.points_b or []
-        if f.line_ref or len(set(b)) != len(b) or len(b) not in point_arities:
-            raise TuChoi('FACT_INCOMPLETE', f'{f.id}: mục tiêu {f.quantity} cần {sorted(point_arities)} điểm đích phân biệt', (f.id,))
+        if f.line_ref or not any(_toan_hang_muc_tieu(f, c) for c in goals):
+            raise TuChoi('FACT_INCOMPLETE', f'{f.id}: toán hạng của mục tiêu {f.quantity} không điền đúng ô của hợp đồng '
+                         'mục tiêu nào (điểm đích phân biệt, đường hai điểm, mặt ≥ 3 điểm)', (f.id,))
     elif f.line_ref is None and len(set(f.points_b or [])) < 2:
         raise TuChoi("FACT_INCOMPLETE", f"{f.id}: thiếu đích của khoảng cách (đường, mặt hay line_ref)", (f.id,))
 
@@ -778,9 +804,15 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
         return phat(f.id, "ask_section_area", {"solid": khoi_cua(f.solid, f).ten, "plane": f.points}, q,
                     "question(area of section)")
     entries = [c for s in REGISTRY.values() for c in planning_contracts(s) if c.goal == n]
-    if entries and f.role == 'question' and not f.negated and (
-            f.point_kind is not None or len(f.points or []) <= max(len(c.effect.operands) for c in entries)):
-        return k.resolver.goal(f, entries)
+    if entries and f.role == 'question' and not f.negated:
+        if f.point_kind is not None:                  # a described operand: the goal contracts decide which slots it fills
+            return k.resolver.goal(f, entries)
+        # A NAMED question enters by goal contract only when every slot is a point read from one flat label list (length,
+        # area). A goal with a line / plane slot (angles) keeps its direct rule below: all its objects are named, nothing
+        # to search, and `points_a`/`points_b` would otherwise be read against the wrong contract (Wave 2A, trap 1).
+        flat = [c for c in entries if all(kind == 'Point' for _s, kind in goal_slots(c))]
+        if flat and len(f.points or []) <= max(len(c.effect.operands) for c in flat):
+            return k.resolver.goal(f, flat)
     if f.point_kind is not None:                       # distance from an unnamed, described point: one typed goal
         if f.role == "prove":
             raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{f.id}: điểm không tên chỉ cho câu hỏi được hỏi", (f.id,))
@@ -819,6 +851,8 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
             return phat(f.id, "ask_angle_line_plane", {"line": a, "plane": b}, q, "question(angle line–plane)")
         if loai == ("plane", "plane"):
             return phat(f.id, "ask_angle_plane_plane", {"plane1": a, "plane2": b}, q, "question(angle plane–plane)")
+        if loai == ("line", "line"):
+            return phat(f.id, "ask_angle_lines", {"line1": a, "line2": b}, q, "question(angle line–line)")
     raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: câu hỏi {n} giữa {loai} chưa có hàm", (f.id,))
 
 
@@ -1063,22 +1097,25 @@ class _EffectResolver:
                 self.trail[-1]['effect'] = contract.effect.kind
 
     def goal(self, fact, entries):
-        """Typed semantic entry: quantity selects a contract effect; operands carry no function recipe."""
+        """Typed semantic entry: quantity + the typed slots its operands fill select ONE contract effect (several ⇒
+        ambiguous, none ⇒ incomplete); operands carry no function recipe."""
+        if fact.point_kind:
+            parsed = [(c, ops) for c in entries if (ops := _toan_hang_muc_tieu(fact, c)) is not None]
+            if not parsed:
+                raise TuChoi('FACT_INCOMPLETE', 'số toán hạng không khớp hợp đồng mục tiêu', (fact.id,))
+            entries, operands = [c for c, _ops in parsed], parsed[0][1]
+        else:
+            operands = tuple(fact.points or (fact.points_a or []) + (fact.points_b or []))
         kinds = {c.effect.kind for c in entries}
         if len(kinds) != 1:
             raise TuChoi('AMBIGUOUS_FACT', 'mục tiêu có nhiều cách hiểu kiểu', (fact.id,))
-        if fact.point_kind:
-            operands = (('desc', fact.point_kind, tuple(sorted(fact.points))), *fact.points_b)
-        else:
-            operands = tuple(fact.points or (fact.points_a or []) + (fact.points_b or []))
         if not any(len(c.effect.operands) == len(operands) for c in entries):
             raise TuChoi('FACT_INCOMPLETE', 'số toán hạng không khớp hợp đồng mục tiêu', (fact.id,))
         self.used, self.trail = True, []
         choice = self._resolve(next(iter(kinds)), operands)
         env = self._emit(choice, fact)
         if fact.point_kind:
-            target = operands[1] if len(operands) == 2 else ('points', operands[1:])
-            return self._chuoi(fact, operands[0], target, choice, env)
+            return self._chuoi(fact, operands[0], _dich_muc_tieu(choice.contract, operands), choice, env)
         return next(c for c in self.plan.calls if c['id'] == fact.id)
 
     def distance(self, fact, point, line):
@@ -1117,7 +1154,7 @@ class _EffectResolver:
         fresh = [e for e in self.trail if e['fresh'] and REGISTRY[e['fn']].planning and REGISTRY[e['fn']].planning.fresh]
         cert = {'rule': 'effect-chain', 'effect_binding': True, 'goal': fact.id, 'ask': fact.id,
                 'operand': {'descriptor': point[1], 'points': list(fact.points), 'label': env[answer.effect.operands[0]]},
-                'target': ({'point': target} if isinstance(target, str)
+                'target': (target if isinstance(target, dict) else {'point': target} if isinstance(target, str)
                            else {'points': list(target[1])} if target[0] == 'points'
                            else {'line_ref': target[1]} if target[0] == 'result'
                            else {'line': list(target[1])} if target[0] == 'named'
@@ -1125,7 +1162,7 @@ class _EffectResolver:
                 'chain': self.trail,
                 'labels': [e['env'][REGISTRY[e['fn']].planning.effect.operands[0]] for e in fresh],
                 'quotes': list(dict.fromkeys(fact.quotes)), 'provenance': 'DERIVED', 'binding': 'AUXILIARY'}
-        if not isinstance(target, str) and target[0] == 'result':
+        if isinstance(target, tuple) and target[0] == 'result':
             cert['line_ref'] = target[1]
         self.plan.auxiliary.append(cert)
         self.plan.trace.append({'fact': fact.id, 'step': 'decompose_goal', 'rule': cert['rule'],
@@ -1135,6 +1172,17 @@ class _EffectResolver:
                                 'new_constructions': len([e for e in self.trail if e['fresh'] and e['call'] != fact.id]),
                                 'needs': self.needs, 'candidates': self.candidates, 'depth': self.depth_max})
         return next(c for c in self.plan.calls if c['id'] == fact.id)
+
+
+def _dich_muc_tieu(contract, operands) -> dict:
+    """Certificate target of a goal contract from its typed slots after the measured point (`registry.goal_target_keys`
+    names the same keys): one point / several points / a plane / a named line."""
+    rest = list(zip((k for _s, k in goal_slots(contract)[1:]), operands[1:]))
+    pts = [v for k, v in rest if k == "Point"]
+    t: dict = {"point": pts[0]} if len(pts) == 1 else {"points": list(pts)} if pts else {}
+    t.update({"plane": list(v) for k, v in rest if k == "Plane"})
+    t.update({"line": list(v[1]) for k, v in rest if k == "Line"})
+    return t
 
 
 def _nhan_ra(c: _Choice) -> str:

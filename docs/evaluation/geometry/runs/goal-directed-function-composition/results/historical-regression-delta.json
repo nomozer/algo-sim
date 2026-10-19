@@ -1,0 +1,806 @@
+{
+ "schema": "HISTORICAL_REGRESSION_DELTA/1",
+ "run": "goal-directed-function-composition",
+ "model_calls": 0,
+ "cause": "Hybrid Wave 2A promotes the centroid producer contract and adds angle goal contracts + ask_angle_lines; every other row of these frozen baselines is unchanged",
+ "bundle_174": {
+  "baseline": "docs/evaluation/geometry/runs/contract-driven-goal-composition/baseline/regression-174.json",
+  "rows_compared": 174,
+  "changed": [
+   {
+    "corpus": "new/negative",
+    "id": "centroid-without-contract",
+    "before": {
+     "status": "REFUSED",
+     "code": "UNSUPPORTED_CAPABILITY",
+     "squares": {}
+    },
+    "after": {
+     "status": "SERVED",
+     "code": null,
+     "squares": {
+      "q": "16/9"
+     }
+    },
+    "independent_expectation": {
+     "from_twin": [
+      "new/discovery",
+      "centroid-to-plane"
+     ],
+     "expected_squared": {
+      "q": "16/9"
+     },
+     "reason": "identical text and facts; this row was negative only because the Registry had no centroid contract"
+    }
+   },
+   {
+    "corpus": "new/discovery",
+    "id": "centroid-to-plane",
+    "before": {
+     "status": "REFUSED",
+     "code": "UNSUPPORTED_CAPABILITY",
+     "squares": {}
+    },
+    "after": {
+     "status": "SERVED",
+     "code": null,
+     "squares": {
+      "q": "16/9"
+     }
+    },
+    "independent_expectation": {
+     "expected_squared": {
+      "q": "16/9"
+     },
+     "reason": "preregistered source-corpus expectation of this row"
+    }
+   },
+   {
+    "corpus": "new/discovery",
+    "id": "centroid-to-named-line",
+    "before": {
+     "status": "REFUSED",
+     "code": "UNSUPPORTED_CAPABILITY",
+     "squares": {}
+    },
+    "after": {
+     "status": "SERVED",
+     "code": null,
+     "squares": {
+      "q": "25/9"
+     }
+    },
+    "independent_expectation": {
+     "expected_squared": {
+      "q": "25/9"
+     },
+     "reason": "preregistered source-corpus expectation of this row"
+    }
+   },
+   {
+    "corpus": "new/discovery",
+    "id": "centroid-to-result-line",
+    "before": {
+     "status": "REFUSED",
+     "code": "UNSUPPORTED_CAPABILITY",
+     "squares": {}
+    },
+    "after": {
+     "status": "SERVED",
+     "code": null,
+     "squares": {
+      "q": "40/9"
+     }
+    },
+    "independent_expectation": {
+     "expected_squared": {
+      "q": "40/9"
+     },
+     "reason": "preregistered source-corpus expectation of this row"
+    }
+   },
+   {
+    "corpus": "goal/discovery",
+    "id": "centroid-A",
+    "before": {
+     "status": "REFUSED",
+     "code": "UNSUPPORTED_CAPABILITY",
+     "squares": {}
+    },
+    "after": {
+     "status": "SERVED",
+     "code": null,
+     "squares": {
+      "q": "29/9"
+     }
+    },
+    "independent_expectation": {
+     "expected_squared": {
+      "q": "29/9"
+     },
+     "reason": "preregistered source-corpus expectation of this row"
+    }
+   },
+   {
+    "corpus": "goal/discovery",
+    "id": "centroid-D",
+    "before": {
+     "status": "REFUSED",
+     "code": "UNSUPPORTED_CAPABILITY",
+     "squares": {}
+    },
+    "after": {
+     "status": "SERVED",
+     "code": null,
+     "squares": {
+      "q": "41/9"
+     }
+    },
+    "independent_expectation": {
+     "expected_squared": {
+      "q": "41/9"
+     },
+     "reason": "preregistered source-corpus expectation of this row"
+    }
+   }
+  ]
+ },
+ "v3_matrix": {
+  "baseline": "docs/evaluation/geometry/runs/semantic-extraction-v3-runtime-revision/results/offline",
+  "cells_compared": 8,
+  "changed_cells": {
+   "gold-flat-PILOT": {
+    "rows": {
+     "dev05": {
+      "before": {
+       "case_id": "dev05",
+       "extraction": {
+        "ambiguous_flags": 0,
+        "complete_goals": true,
+        "correct": true,
+        "extra_premises": 0,
+        "extra_questions": 0,
+        "goal_match": 1,
+        "goal_match_expressible": 1,
+        "intent_match": 1,
+        "invented_entities": [],
+        "n_live": 7,
+        "non_dict_facts": 0,
+        "operand_correct": 1,
+        "operand_required": 1,
+        "parse_ok": true,
+        "premise_live_matched": 6,
+        "premise_match": 6,
+        "premises_live": 6,
+        "premises_required": 6,
+        "requests_expressible": 1,
+        "requests_gold": 1,
+        "schema_gap_approximated": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_requests": 0,
+        "solid_correct": 0,
+        "solid_required": 0,
+        "ungrounded_quote_facts": 0
+       },
+       "route_code": "UNSUPPORTED_CAPABILITY",
+       "served": {
+        "classification": "FALSE_REFUSAL_CAPABILITY_GAP",
+        "extra_count": 0,
+        "matched": [],
+        "missing": []
+       }
+      },
+      "after": {
+       "case_id": "dev05",
+       "extraction": {
+        "parse_ok": true,
+        "n_live": 7,
+        "non_dict_facts": 0,
+        "requests_gold": 1,
+        "intent_match": 1,
+        "goal_match": 1,
+        "requests_expressible": 1,
+        "goal_match_expressible": 1,
+        "premises_required": 6,
+        "premise_match": 6,
+        "premises_live": 6,
+        "premise_live_matched": 6,
+        "extra_questions": 0,
+        "extra_premises": 0,
+        "ungrounded_quote_facts": 0,
+        "ambiguous_flags": 0,
+        "schema_gap_requests": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_approximated": 0,
+        "complete_goals": true,
+        "correct": true,
+        "invented_entities": [],
+        "operand_required": 1,
+        "operand_correct": 1,
+        "solid_required": 0,
+        "solid_correct": 0
+       },
+       "served": {
+        "classification": "CORRECT_COMPLETE",
+        "matched": [
+         "r1"
+        ],
+        "missing": [],
+        "extra_count": 0
+       },
+       "route_code": null
+      }
+     }
+    },
+    "after": {
+     "e2e": {
+      "CORRECT_COMPLETE": 3,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 4,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "MISSING_DIMENSION": 1,
+      "SOURCE_PREMISE_UNREAD": 1,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "OUT_OF_SCOPE": 4,
+      "CONDITIONAL_CLAUSE": 1,
+      "NOT_ASKED_IN_SOURCE": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "premise_match": 53,
+      "premises_required": 53,
+      "premise_live_matched": 53,
+      "premises_live": 53,
+      "schema_gap_flagged": 1,
+      "operand_correct": 8,
+      "solid_correct": 6,
+      "intent_match": 16,
+      "requests_gold": 16,
+      "requests_expressible": 11,
+      "schema_gap_requests": 1,
+      "operand_required": 8,
+      "solid_required": 6,
+      "rows": 12,
+      "parsed_rows": 12,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 4,
+      "complete": 4
+     }
+    },
+    "before": {
+     "e2e": {
+      "CORRECT_COMPLETE": 2,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 5,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "CONDITIONAL_CLAUSE": 1,
+      "MISSING_DIMENSION": 1,
+      "NOT_ASKED_IN_SOURCE": 1,
+      "OUT_OF_SCOPE": 4,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "SOURCE_PREMISE_UNREAD": 1,
+      "UNSUPPORTED_CAPABILITY": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "hallucinated_entity_rows": 0,
+      "intent_match": 16,
+      "operand_correct": 8,
+      "operand_required": 8,
+      "parsed_rows": 12,
+      "premise_live_matched": 53,
+      "premise_match": 53,
+      "premises_live": 53,
+      "premises_required": 53,
+      "requests_expressible": 11,
+      "requests_gold": 16,
+      "rows": 12,
+      "schema_gap_flagged": 1,
+      "schema_gap_requests": 1,
+      "solid_correct": 6,
+      "solid_required": 6
+     },
+     "multi_goal": {
+      "complete": 4,
+      "total": 4
+     }
+    }
+   },
+   "replay-flat-PILOT": {
+    "rows": {
+     "dev05": {
+      "before": {
+       "case_id": "dev05",
+       "extraction": {
+        "ambiguous_flags": 0,
+        "complete_goals": true,
+        "correct": true,
+        "extra_premises": 0,
+        "extra_questions": 0,
+        "goal_match": 1,
+        "goal_match_expressible": 1,
+        "intent_match": 1,
+        "invented_entities": [],
+        "n_live": 7,
+        "non_dict_facts": 0,
+        "operand_correct": 1,
+        "operand_required": 1,
+        "parse_ok": true,
+        "premise_live_matched": 6,
+        "premise_match": 6,
+        "premises_live": 6,
+        "premises_required": 6,
+        "requests_expressible": 1,
+        "requests_gold": 1,
+        "schema_gap_approximated": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_requests": 0,
+        "solid_correct": 0,
+        "solid_required": 0,
+        "ungrounded_quote_facts": 0
+       },
+       "route_code": "UNSUPPORTED_CAPABILITY",
+       "served": {
+        "classification": "FALSE_REFUSAL_CAPABILITY_GAP",
+        "extra_count": 0,
+        "matched": [],
+        "missing": []
+       }
+      },
+      "after": {
+       "case_id": "dev05",
+       "extraction": {
+        "parse_ok": true,
+        "n_live": 7,
+        "non_dict_facts": 0,
+        "requests_gold": 1,
+        "intent_match": 1,
+        "goal_match": 1,
+        "requests_expressible": 1,
+        "goal_match_expressible": 1,
+        "premises_required": 6,
+        "premise_match": 6,
+        "premises_live": 6,
+        "premise_live_matched": 6,
+        "extra_questions": 0,
+        "extra_premises": 0,
+        "ungrounded_quote_facts": 0,
+        "ambiguous_flags": 0,
+        "schema_gap_requests": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_approximated": 0,
+        "complete_goals": true,
+        "correct": true,
+        "invented_entities": [],
+        "operand_required": 1,
+        "operand_correct": 1,
+        "solid_required": 0,
+        "solid_correct": 0
+       },
+       "served": {
+        "classification": "CORRECT_COMPLETE",
+        "matched": [
+         "r1"
+        ],
+        "missing": [],
+        "extra_count": 0
+       },
+       "route_code": null
+      }
+     }
+    },
+    "after": {
+     "e2e": {
+      "CORRECT_COMPLETE": 3,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 4,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "MISSING_DIMENSION": 1,
+      "SOURCE_PREMISE_UNREAD": 1,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "OUT_OF_SCOPE": 4,
+      "CONDITIONAL_CLAUSE": 1,
+      "NOT_ASKED_IN_SOURCE": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "premise_match": 53,
+      "premises_required": 53,
+      "premise_live_matched": 53,
+      "premises_live": 53,
+      "schema_gap_flagged": 1,
+      "operand_correct": 8,
+      "solid_correct": 6,
+      "intent_match": 16,
+      "requests_gold": 16,
+      "requests_expressible": 11,
+      "schema_gap_requests": 1,
+      "operand_required": 8,
+      "solid_required": 6,
+      "rows": 12,
+      "parsed_rows": 12,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 4,
+      "complete": 4
+     }
+    },
+    "before": {
+     "e2e": {
+      "CORRECT_COMPLETE": 2,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 5,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "CONDITIONAL_CLAUSE": 1,
+      "MISSING_DIMENSION": 1,
+      "NOT_ASKED_IN_SOURCE": 1,
+      "OUT_OF_SCOPE": 4,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "SOURCE_PREMISE_UNREAD": 1,
+      "UNSUPPORTED_CAPABILITY": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "hallucinated_entity_rows": 0,
+      "intent_match": 16,
+      "operand_correct": 8,
+      "operand_required": 8,
+      "parsed_rows": 12,
+      "premise_live_matched": 53,
+      "premise_match": 53,
+      "premises_live": 53,
+      "premises_required": 53,
+      "requests_expressible": 11,
+      "requests_gold": 16,
+      "rows": 12,
+      "schema_gap_flagged": 1,
+      "schema_gap_requests": 1,
+      "solid_correct": 6,
+      "solid_required": 6
+     },
+     "multi_goal": {
+      "complete": 4,
+      "total": 4
+     }
+    }
+   },
+   "gold-v3-PILOT": {
+    "rows": {
+     "dev05": {
+      "before": {
+       "case_id": "dev05",
+       "extraction": {
+        "ambiguous_flags": 0,
+        "complete_goals": true,
+        "correct": true,
+        "extra_premises": 0,
+        "extra_questions": 0,
+        "goal_match": 1,
+        "goal_match_expressible": 1,
+        "intent_match": 1,
+        "invented_entities": [],
+        "n_live": 7,
+        "non_dict_facts": 0,
+        "operand_correct": 1,
+        "operand_required": 1,
+        "parse_ok": true,
+        "premise_live_matched": 6,
+        "premise_match": 6,
+        "premises_live": 6,
+        "premises_required": 6,
+        "requests_expressible": 1,
+        "requests_gold": 1,
+        "schema_gap_approximated": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_requests": 0,
+        "solid_correct": 0,
+        "solid_required": 0,
+        "ungrounded_quote_facts": 0
+       },
+       "route_code": "UNSUPPORTED_CAPABILITY",
+       "served": {
+        "classification": "FALSE_REFUSAL_CAPABILITY_GAP",
+        "extra_count": 0,
+        "matched": [],
+        "missing": []
+       }
+      },
+      "after": {
+       "case_id": "dev05",
+       "extraction": {
+        "parse_ok": true,
+        "n_live": 7,
+        "non_dict_facts": 0,
+        "requests_gold": 1,
+        "intent_match": 1,
+        "goal_match": 1,
+        "requests_expressible": 1,
+        "goal_match_expressible": 1,
+        "premises_required": 6,
+        "premise_match": 6,
+        "premises_live": 6,
+        "premise_live_matched": 6,
+        "extra_questions": 0,
+        "extra_premises": 0,
+        "ungrounded_quote_facts": 0,
+        "ambiguous_flags": 0,
+        "schema_gap_requests": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_approximated": 0,
+        "complete_goals": true,
+        "correct": true,
+        "invented_entities": [],
+        "operand_required": 1,
+        "operand_correct": 1,
+        "solid_required": 0,
+        "solid_correct": 0
+       },
+       "served": {
+        "classification": "CORRECT_COMPLETE",
+        "matched": [
+         "r1"
+        ],
+        "missing": [],
+        "extra_count": 0
+       },
+       "route_code": null
+      }
+     }
+    },
+    "after": {
+     "e2e": {
+      "CORRECT_COMPLETE": 3,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 4,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "MISSING_DIMENSION": 1,
+      "SOURCE_PREMISE_UNREAD": 1,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "OUT_OF_SCOPE": 4,
+      "CONDITIONAL_CLAUSE": 1,
+      "NOT_ASKED_IN_SOURCE": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "premise_match": 53,
+      "premises_required": 53,
+      "premise_live_matched": 53,
+      "premises_live": 53,
+      "schema_gap_flagged": 1,
+      "operand_correct": 8,
+      "solid_correct": 6,
+      "intent_match": 16,
+      "requests_gold": 16,
+      "requests_expressible": 11,
+      "schema_gap_requests": 1,
+      "operand_required": 8,
+      "solid_required": 6,
+      "rows": 12,
+      "parsed_rows": 12,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 4,
+      "complete": 4
+     }
+    },
+    "before": {
+     "e2e": {
+      "CORRECT_COMPLETE": 2,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 5,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "CONDITIONAL_CLAUSE": 1,
+      "MISSING_DIMENSION": 1,
+      "NOT_ASKED_IN_SOURCE": 1,
+      "OUT_OF_SCOPE": 4,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "SOURCE_PREMISE_UNREAD": 1,
+      "UNSUPPORTED_CAPABILITY": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "hallucinated_entity_rows": 0,
+      "intent_match": 16,
+      "operand_correct": 8,
+      "operand_required": 8,
+      "parsed_rows": 12,
+      "premise_live_matched": 53,
+      "premise_match": 53,
+      "premises_live": 53,
+      "premises_required": 53,
+      "requests_expressible": 11,
+      "requests_gold": 16,
+      "rows": 12,
+      "schema_gap_flagged": 1,
+      "schema_gap_requests": 1,
+      "solid_correct": 6,
+      "solid_required": 6
+     },
+     "multi_goal": {
+      "complete": 4,
+      "total": 4
+     }
+    }
+   },
+   "replay-v3-PILOT": {
+    "rows": {
+     "dev05": {
+      "before": {
+       "case_id": "dev05",
+       "extraction": {
+        "ambiguous_flags": 0,
+        "complete_goals": true,
+        "correct": true,
+        "extra_premises": 0,
+        "extra_questions": 0,
+        "goal_match": 1,
+        "goal_match_expressible": 1,
+        "intent_match": 1,
+        "invented_entities": [],
+        "n_live": 7,
+        "non_dict_facts": 0,
+        "operand_correct": 1,
+        "operand_required": 1,
+        "parse_ok": true,
+        "premise_live_matched": 6,
+        "premise_match": 6,
+        "premises_live": 6,
+        "premises_required": 6,
+        "requests_expressible": 1,
+        "requests_gold": 1,
+        "schema_gap_approximated": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_requests": 0,
+        "solid_correct": 0,
+        "solid_required": 0,
+        "ungrounded_quote_facts": 0
+       },
+       "route_code": "UNSUPPORTED_CAPABILITY",
+       "served": {
+        "classification": "FALSE_REFUSAL_CAPABILITY_GAP",
+        "extra_count": 0,
+        "matched": [],
+        "missing": []
+       }
+      },
+      "after": {
+       "case_id": "dev05",
+       "extraction": {
+        "parse_ok": true,
+        "n_live": 7,
+        "non_dict_facts": 0,
+        "requests_gold": 1,
+        "intent_match": 1,
+        "goal_match": 1,
+        "requests_expressible": 1,
+        "goal_match_expressible": 1,
+        "premises_required": 6,
+        "premise_match": 6,
+        "premises_live": 6,
+        "premise_live_matched": 6,
+        "extra_questions": 0,
+        "extra_premises": 0,
+        "ungrounded_quote_facts": 0,
+        "ambiguous_flags": 0,
+        "schema_gap_requests": 0,
+        "schema_gap_flagged": 0,
+        "schema_gap_approximated": 0,
+        "complete_goals": true,
+        "correct": true,
+        "invented_entities": [],
+        "operand_required": 1,
+        "operand_correct": 1,
+        "solid_required": 0,
+        "solid_correct": 0
+       },
+       "served": {
+        "classification": "CORRECT_COMPLETE",
+        "matched": [
+         "r1"
+        ],
+        "missing": [],
+        "extra_count": 0
+       },
+       "route_code": null
+      }
+     }
+    },
+    "after": {
+     "e2e": {
+      "CORRECT_COMPLETE": 3,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 4,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "MISSING_DIMENSION": 1,
+      "SOURCE_PREMISE_UNREAD": 1,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "OUT_OF_SCOPE": 4,
+      "CONDITIONAL_CLAUSE": 1,
+      "NOT_ASKED_IN_SOURCE": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "premise_match": 53,
+      "premises_required": 53,
+      "premise_live_matched": 53,
+      "premises_live": 53,
+      "schema_gap_flagged": 1,
+      "operand_correct": 8,
+      "solid_correct": 6,
+      "intent_match": 16,
+      "requests_gold": 16,
+      "requests_expressible": 11,
+      "schema_gap_requests": 1,
+      "operand_required": 8,
+      "solid_required": 6,
+      "rows": 12,
+      "parsed_rows": 12,
+      "hallucinated_entity_rows": 0
+     },
+     "multi_goal": {
+      "total": 4,
+      "complete": 4
+     }
+    },
+    "before": {
+     "e2e": {
+      "CORRECT_COMPLETE": 2,
+      "FALSE_REFUSAL_CAPABILITY_GAP": 5,
+      "SAFE_REFUSAL": 5
+     },
+     "refusal_codes": {
+      "CONDITIONAL_CLAUSE": 1,
+      "MISSING_DIMENSION": 1,
+      "NOT_ASKED_IN_SOURCE": 1,
+      "OUT_OF_SCOPE": 4,
+      "SOURCE_OBJECT_MISMATCH": 1,
+      "SOURCE_PREMISE_UNREAD": 1,
+      "UNSUPPORTED_CAPABILITY": 1
+     },
+     "counts": {
+      "goal_match": 16,
+      "goal_match_expressible": 11,
+      "hallucinated_entity_rows": 0,
+      "intent_match": 16,
+      "operand_correct": 8,
+      "operand_required": 8,
+      "parsed_rows": 12,
+      "premise_live_matched": 53,
+      "premise_match": 53,
+      "premises_live": 53,
+      "premises_required": 53,
+      "requests_expressible": 11,
+      "requests_gold": 16,
+      "rows": 12,
+      "schema_gap_flagged": 1,
+      "schema_gap_requests": 1,
+      "solid_correct": 6,
+      "solid_required": 6
+     },
+     "multi_goal": {
+      "complete": 4,
+      "total": 4
+     }
+    }
+   }
+  }
+ }
+}

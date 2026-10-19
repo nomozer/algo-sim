@@ -74,3 +74,37 @@ def test_served_fixtures_never_present_an_observation_as_a_proof():
             for observation in response['route_d']['planner'].get(group, {}).values():
                 assert observation['proof_status'] == 'UNVERIFIABLE' and observation['can_present_as_proven'] is False
         assert 'đã chứng minh' not in json.dumps(response['envelope'], ensure_ascii=False).lower()
+
+
+def _exporter():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location('export_hybrid_preview_fixtures', SCRIPT)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_identity_restore_maps_only_declared_version_pairs():
+    """Run `goal-directed-function-composition`: the bundle predates the route D version bump. `--verify` may map a
+    fresh identity back ONLY through the declared old → new pairs; anything else stays different or is refused."""
+    import copy
+    X = _exporter()
+    stored = json.loads((FIXTURES / 'served-H01_CUBE.json').read_text(encoding='utf-8'))['response']
+    fresh = copy.deepcopy(stored)
+    ident = fresh['route_d']['runtime_identity']
+    for key, (old, new) in X.IDENTITY_DELTAS[-1]['versions'].items():
+        assert ident[key] == old
+        ident[key] = new
+    fresh['route_d']['planner']['version'] = X.IDENTITY_DELTAS[-1]['versions']['planner_version'][1]
+    ident['fingerprint'] = X._preview_fingerprint(ident)
+    assert X._restore_declared_identity(fresh, stored) == stored                     # declared pairs only: restored
+    undeclared = copy.deepcopy(fresh)
+    undeclared['route_d']['runtime_identity']['registry_version'] = 'geometry-functions/99'
+    undeclared['route_d']['runtime_identity']['fingerprint'] = X._preview_fingerprint(undeclared['route_d']['runtime_identity'])
+    assert X._restore_declared_identity(undeclared, stored) != stored                # undeclared: still differs
+    forged = copy.deepcopy(fresh)
+    forged['route_d']['runtime_identity']['fingerprint'] = '0' * 64
+    assert X._restore_declared_identity(forged, stored) is None                      # fingerprint not of its identity
+    other = copy.deepcopy(fresh)
+    other['envelope']['status'] = 'unsupported'
+    assert X._restore_declared_identity(other, stored) != stored                     # identity restore never hides content
