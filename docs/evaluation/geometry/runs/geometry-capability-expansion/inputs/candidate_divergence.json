@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "geometry-capability-expansion",
+  "corrects": "docs/evaluation/geometry/runs/geometry-capability-expansion/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "520d414423788f3e9eabfcc5813968a50209b155f560baad8994b1747444730c",
+  "previous_candidate_hash": "233de8906b8b3308d5042eccffe6fef94ad8ba540b94452900c4fb559cecbf08",
+  "current_product_commit": "e9ec0f40febb09c5c2ca3557a54173a6671384d5",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Independent review of the Wave 2B candidate (REQUEST_CHANGES): a plane through a point ⊥ a line that is a face of the solid is now refused SECTION_PLANE_IS_FACE like the ∥ rules (was served as a section); a zero-denominator ratio is a coded refusal instead of an uncaught ZeroDivisionError; a right-trapezoid base keeps several right angles per vertex. Versions geometry-functions/8, geometry-fact-planner/9, geometry-function-engine/7 kept (not yet on main); CACHE_VERSION 127, flat 485d3834…, TypedFact aa9d93ee…, Adapter /2 unchanged.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP (report.md §8)",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every candidate layer are preserved byte-for-byte; the Wave 2B dev comparison is re-measured on this candidate under results/evaluation-review-fix/ (the first measurement stays).",
+    "live_requests": 0
+  }
+}
