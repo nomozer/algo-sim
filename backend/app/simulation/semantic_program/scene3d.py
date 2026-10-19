@@ -95,7 +95,7 @@ _TRUONG: dict[str, tuple[str, ...]] = {
     # không còn ở việc đoán `producer`.
     "vector3": ("xyz",),
     "line3": ("point", "direction"),
-    "segment3": ("point_a", "point_b", "endpoints", "endpoint_ids"),
+    "segment3": ("point_a", "point_b", "endpoints", "endpoint_ids", "perpendicular_witness"),
     "plane3": ("point", "normal"),
     # `shape_class` + `formation_requirements`: lớp hình và vai trò bắt buộc, do
     # PRODUCER (`simulation_state` ← `formation`) gắn — tầng này chỉ chở (W14).

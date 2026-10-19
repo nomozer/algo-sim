@@ -76,7 +76,105 @@ def gan_so_do(spec: Any, final_memory: dict[str, Any], contract: Any,
             gan[q]["same_as"] = da_co[k]
         else:
             da_co[k] = q
+    _gan_chung_chi_vuong_goc_doan(objects, final_memory)
     return gan, chan_doan
+
+
+def _gan_chung_chi_vuong_goc_doan(objects: list[dict[str, Any]], mem: dict[str, Any]) -> None:
+    """Wave 1A: Gắn `perpendicular_witness` có chứng chỉ Gram chính xác cho đoạn đường cao / cạnh đứng đã dựng
+    trên Path A (`CONSTRUCT_HEIGHT` hoặc `CONSTRUCT_LATERAL_BOUNDARY` của khối lăng trụ đứng)."""
+    day_poly = next(
+        (o for o in objects if o.get("type") == "polygon3" and "CONSTRUCT_BASE" in (o.get("formation_roles") or ())),
+        None,
+    )
+    if day_poly is None:
+        return
+    day_vids = [v for v in (day_poly.get("vertex_ids") or ()) if isinstance(mem.get(v), Vec3)]
+    if len(day_vids) < 3:
+        return
+    day_pts = [mem[v] for v in day_vids]
+    n_base = (day_pts[1] - day_pts[0]).cross(day_pts[-1] - day_pts[0])
+    if n_base.is_zero():
+        return
+    is_prism_like = any(
+        o.get("type") == "solid" and o.get("solid_family") == "PRISM_LIKE" for o in objects
+    )
+    for seg in objects:
+        if seg.get("type") != "segment3":
+            continue
+        roles = set(seg.get("formation_roles") or ())
+        if "CONSTRUCT_HEIGHT" in roles:
+            rule = "regular_pyramid_altitude_to_base_center" if not is_prism_like else "prism_vertical_lateral_edge"
+            status = "DERIVED" if not is_prism_like else "ENGINE_VERIFIED"
+        elif "CONSTRUCT_LATERAL_BOUNDARY" in roles and is_prism_like:
+            rule = "prism_vertical_lateral_edge"
+            status = "ENGINE_VERIFIED"
+        else:
+            continue
+        eps = seg.get("endpoint_ids") or ()
+        if len(eps) != 2 or not all(isinstance(mem.get(p), Vec3) for p in eps):
+            continue
+        p_a, p_b = eps[0], eps[1]
+        a_on = p_a in day_vids or n_base.dot(mem[p_a] - day_pts[0]) == 0
+        b_on = p_b in day_vids or n_base.dot(mem[p_b] - day_pts[0]) == 0
+        if a_on and not b_on:
+            foot_id, from_id = p_a, p_b
+        elif b_on and not a_on:
+            foot_id, from_id = p_b, p_a
+        else:
+            continue
+        foot_pt, from_pt = mem[foot_id], mem[from_id]
+        v_vec = from_pt - foot_pt
+        if v_vec.is_zero():
+            continue
+        n_v = len(day_vids)
+        if foot_id in day_vids:
+            idx = day_vids.index(foot_id)
+            u_vec = day_pts[(idx + 1) % n_v] - foot_pt
+            w_vec = day_pts[(idx - 1) % n_v] - foot_pt
+        else:
+            u_vec = day_pts[1] - day_pts[0]
+            w_vec = day_pts[-1] - day_pts[0]
+            uu, ww, uw = _m.dot(u_vec, u_vec), _m.dot(w_vec, w_vec), _m.dot(u_vec, w_vec)
+            if uu <= 0 or ww <= 0 or uu * ww - uw * uw <= 0:
+                p0 = day_pts[0]
+                for i in range(1, n_v):
+                    cand_u = day_pts[i] - p0
+                    if _m.dot(cand_u, cand_u) <= 0:
+                        continue
+                    found = False
+                    for j in range(i + 1, n_v):
+                        cand_w = day_pts[j] - p0
+                        cuu, cww, cuw = _m.dot(cand_u, cand_u), _m.dot(cand_w, cand_w), _m.dot(cand_u, cand_w)
+                        if cww > 0 and cuu * cww - cuw * cuw > 0:
+                            u_vec, w_vec = cand_u, cand_w
+                            found = True
+                            break
+                    if found:
+                        break
+        uu, ww, uw = _m.dot(u_vec, u_vec), _m.dot(w_vec, w_vec), _m.dot(u_vec, w_vec)
+        if uu <= 0 or ww <= 0 or uu * ww - uw * uw <= 0:
+            continue
+        if _m.dot(v_vec, u_vec) != 0 or _m.dot(v_vec, w_vec) != 0:
+            continue
+        seg["perpendicular_witness"] = {
+            "certificate": "exact-gram-line-plane-orthogonality/1",
+            "relation": "line_perpendicular_plane",
+            "status": status,
+            "rule": rule,
+            "from": from_id,
+            "foot_id": foot_id,
+            "foot": _xau(foot_pt),
+            "on": day_poly["id"],
+            "plane_vertex_ids": list(day_vids),
+            "line_direction": _xau(v_vec),
+            "plane_directions": [_xau(u_vec), _xau(w_vec)],
+            "supporting_calls": [],
+            "supporting_step_index": None,
+            "conclusion_step_index": None,
+            "can_present_as_proven": True,
+            "marker": {"u": _xau(u_vec), "v": _xau(v_vec)},
+        }
 
 
 def _bam_doan_da_dung(kq: dict[str, Any], loai: dict[str, str], mem: dict[str, Any],
@@ -89,7 +187,7 @@ def _bam_doan_da_dung(kq: dict[str, Any], loai: dict[str, str], mem: dict[str, A
     for p, kieu in loai.items():
         if (kieu == "point3" and p != w["from"] and isinstance(mem.get(p), Vec3) and mem[p] == chan
                 and frozenset((w["from"], p)) in doan):
-            return {"kind": "length", "subject_ids": [w["from"], p], "anchor": "segment", "unit": kq.get("unit"), "witness": w}
+            return {"kind": "length", "subject_ids": [w["from"], p], "anchor": "segment", "unit": kq.get("unit")}
     return kq
 
 

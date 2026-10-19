@@ -181,6 +181,14 @@ def certify_line_plane_perpendicularity(
     else:
         u1 = vec_sub(plane_pts[1], plane_pts[0])
         u2 = vec_sub(plane_pts[-1], plane_pts[0])
+        if gram_dot(g_mat, u1, u1) * gram_dot(g_mat, u2, u2) - (gram_dot(g_mat, u1, u2) ** 2) <= 0:
+            for i_pt in range(1, len(plane_pts)):
+                cand_u1 = vec_sub(plane_pts[i_pt], plane_pts[0])
+                for j_pt in range(i_pt + 1, len(plane_pts)):
+                    cand_u2 = vec_sub(plane_pts[j_pt], plane_pts[0])
+                    if gram_dot(g_mat, cand_u1, cand_u1) * gram_dot(g_mat, cand_u2, cand_u2) - (gram_dot(g_mat, cand_u1, cand_u2) ** 2) > 0:
+                        u1, u2 = cand_u1, cand_u2
+                        break
 
     gram_det_plane = gram_dot(g_mat, u1, u1) * gram_dot(g_mat, u2, u2) - (gram_dot(g_mat, u1, u2) ** 2)
     if gram_det_plane <= 0:
@@ -254,9 +262,16 @@ def certify_deductive_line_plane_perpendicularity(
     foot_id = in_plane[0]
     from_id = line[0] if line[1] == foot_id else line[1]
     line_set = frozenset(line)
+    goal_id = goal_call.get("id")
 
     dir_candidates: list[tuple[tuple[str, str], str]] = []
     for c in calls:
+        if c is goal_call or (isinstance(goal_id, str) and goal_id and c.get("id") == goal_id):
+            continue
+        if c.get("role") not in (None, "premise"):
+            continue
+        if c.get("negated") is True or c.get("conditional") is True:
+            continue
         cid = c.get("id") or ""
         fn = c.get("fn") or ""
         cargs = c.get("args") or {}
@@ -280,7 +295,12 @@ def certify_deductive_line_plane_perpendicularity(
         elif fn == "perpendicular_line_plane":
             pline = tuple(cargs.get("line") or [])
             pplane = set(cargs.get("plane") or [])
-            if len(pline) == 2 and line_set <= pplane and set(pline) <= plane_set:
+            if (
+                len(pline) == 2
+                and line_set <= pplane
+                and set(pline) <= plane_set
+                and not (frozenset(pline) == line_set and pplane == plane_set)
+            ):
                 dir_candidates.append(((pline[0], pline[1]), cid))
 
     g_mat = validate_gram_metric_spd(chart_metric)
@@ -459,7 +479,7 @@ def _infer_segment_provenance(
     """Determine epistemic status and rule for a candidate perpendicular segment.
 
     Returns ("UNVERIFIABLE", ..., []) if the segment or its apex is explicitly marked as
-    unjustified layout-derived coordinates.
+    unjustified layout-derived coordinates or lacks justified height provenance on Path A.
     """
     for obj in (seg, objects_by_id.get(from_id) or {}, objects_by_id.get(foot_id) or {}):
         src = obj.get("source") or {}
@@ -480,6 +500,19 @@ def _infer_segment_provenance(
                 ):
                     return "ENGINE_VERIFIED", rule, calls
 
+    if "formation_roles" in seg:
+        roles = set(seg.get("formation_roles") or ())
+        if "CONSTRUCT_HEIGHT" in roles:
+            return "GIVEN", "formation_construct_height", []
+        if "CONSTRUCT_LATERAL_BOUNDARY" in roles and any(
+            o.get("shape_class") == "PRISM_LIKE" for o in objects_by_id.values() if isinstance(o, dict)
+        ):
+            return "ENGINE_VERIFIED", "prism_lateral_altitude", []
+        if trace is None and any(
+            o.get("shape_class") == "PYRAMID_LIKE" for o in objects_by_id.values() if isinstance(o, dict)
+        ):
+            return "UNVERIFIABLE", "missing_height_provenance", []
+
     return "ENGINE_VERIFIED", "exact_gram_base_altitude", []
 
 
@@ -492,8 +525,9 @@ def attach_scene_perpendicular_certificates(
     """Attach exact Gram-metric `perpendicular_witness` certificates onto `segment3` objects that are
     mathematically orthogonal to the base polygon under an SPD `chart_metric` and have valid provenance."""
     objects = canh.get("objects") or []
+    metric_src = chart_metric if chart_metric is not None else canh.get("chart_metric")
     try:
-        g_mat = validate_gram_metric_spd(chart_metric)
+        g_mat = validate_gram_metric_spd(metric_src)
     except CertificateError:
         return
 
@@ -515,6 +549,23 @@ def attach_scene_perpendicular_certificates(
         and o.get("type") == "polygon3"
         and "CONSTRUCT_BASE" in (o.get("formation_roles") or [])
     ]
+    if not base_polys:
+        solid_base_faces: list[frozenset[str]] = []
+        for o in objects:
+            if isinstance(o, dict) and o.get("type") == "solid":
+                vids = o.get("vertex_ids") or []
+                faces = o.get("faces") or []
+                if vids and faces and isinstance(faces[0], list) and len(faces[0]) >= 3:
+                    if all(isinstance(idx, int) and 0 <= idx < len(vids) for idx in faces[0]):
+                        solid_base_faces.append(frozenset(vids[idx] for idx in faces[0]))
+        if solid_base_faces:
+            base_polys = [
+                o
+                for o in objects
+                if isinstance(o, dict)
+                and o.get("type") == "polygon3"
+                and frozenset(o.get("vertex_ids") or ()) in solid_base_faces
+            ]
     if not base_polys:
         return
 

@@ -94,6 +94,36 @@ def test_auxiliary_midpoint_placed_after_solid_and_base_foundation():
     assert idx["f3"] < idx["f1"]
     assert idx["f2"] < idx["f1"]
 
+    # Also verify a derived composite sub-solid (M.ABCD) is placed AFTER midpoint M and BEFORE ask_volume(M.ABCD)
+    text_comp = (
+        "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD), SA = 3. "
+        "Gọi M là trung điểm của SC. Tính thể tích khối chóp M.ABCD."
+    )
+    payload_comp = deepcopy(payload)
+    payload_comp["facts"].insert(
+        0,
+        {
+            "id": "f0_subsolid",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": ["Tính thể tích khối chóp M.ABCD."],
+            "solid": "M.ABCD",
+            "solid_type": "pyramid",
+        },
+    )
+    payload_comp["facts"][-1] = {
+        "id": "f6",
+        "kind": "question",
+        "role": "question",
+        "quotes": ["Tính thể tích khối chóp M.ABCD."],
+        "quantity": "volume",
+        "solid": "M.ABCD",
+    }
+    res_comp = run_fact_route(text_comp, payload_comp)
+    assert res_comp.status == "SERVED", (res_comp.code, res_comp.reason)
+    idx_comp = {c["id"]: i for i, c in enumerate(res_comp.calls)}
+    assert idx_comp["f5"] < idx_comp["f1"] < idx_comp["f0_subsolid"] < idx_comp["f6"]
+
 
 def test_apex_foot_midpoint_placed_after_base_and_before_apex_perpendicular():
     """1b. When midpoint `M` of `AB` is the foot of the altitude `SM ⊥ (ABC)`, `M` must be constructed
@@ -399,6 +429,37 @@ def test_missing_dependency_rejected_fail_closed():
     with pytest.raises(TuChoi) as exc_solid:
         lap_ke_hoach(payload_unknown_solid, text)
     assert exc_solid.value.code == "UNKNOWN_SOLID"
+
+    # Also verify undeclared point operand (e.g. midpoint M of S and undeclared Z) fails closed with UNDERDETERMINED_POINT
+    text_undec = (
+        "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD), SA = 3. "
+        "Gọi M là trung điểm của SZ. Tính độ dài đoạn AM."
+    )
+    payload_undec = {
+        "facts": [
+            *payload_dangling_question["facts"][:4],
+            {
+                "id": "f5",
+                "kind": "point_def",
+                "role": "premise",
+                "quotes": ["Gọi M là trung điểm của SZ."],
+                "point": "M",
+                "point_kind": "midpoint",
+                "points": ["S", "Z"],
+            },
+            {
+                "id": "q1",
+                "kind": "question",
+                "role": "question",
+                "quotes": ["Tính độ dài đoạn AM."],
+                "quantity": "length",
+                "points": ["A", "M"],
+            },
+        ]
+    }
+    res_undec = run_fact_route(text_undec, payload_undec)
+    assert res_undec.status == "REFUSED"
+    assert res_undec.code == "UNDERDETERMINED_POINT"
 
 
 def test_multi_goal_composition_places_all_auxiliary_constructions_before_asks():

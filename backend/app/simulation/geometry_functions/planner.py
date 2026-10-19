@@ -364,10 +364,10 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
     Builds an explicit directed dependency graph `prereq_id -> call_id`:
     - Data dependencies (`direct_deps`) from derived point producers (`midpoint`, `centroid`, `intersect_*`,
       `orthogonal_projection_line`, `translate_point`, and forward `orthogonal_projection`), `intersection_line`
-      `line_ref` producers, and `section -> ask_section_area`.
-    - Pedagogical foundation tiers (`Tier 0` solid declarations -> `Tier 1` base foundation -> `Tier 2` apex-foot
+      `line_ref` producers, sub-solids (`M.ABC`), and `section -> ask_section_area`.
+    - Pedagogical foundation tiers (`Tier 0` root solid declarations -> `Tier 1` base foundation -> `Tier 2` apex-foot
       point constructors -> `Tier 3` apex/solid metric & perpendicularity premises -> `Tier 4` auxiliary point/line/
-      section constructions -> `Tier 5` `ask_*` / `unsupported` queries).
+      section/sub-solid constructions -> `Tier 5` `ask_*` / `unsupported` queries).
     - Fail-closed rejection on dangling dependencies (`DANGLING_DEPENDENCY`) and cycles (`DEPENDENCY_CYCLE`).
     - Preserves `k.calls` in its exact original order whenever no dependency edge is violated.
     """
@@ -378,17 +378,42 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
         return
     by_id = {c["id"]: c for c in calls}
     idx_of = {c["id"]: i for i, c in enumerate(calls)}
-    base_vertices = {v for kh in k.solids.values() for v in kh.day}
-    apex_vertices = {kh.dinh for kh in k.solids.values() if kh.dinh} | {v for kh in k.solids.values() for v in kh.tren}
+
+    raw_point_outputs: set[str] = set()
+    for c in calls:
+        fn, a = c["fn"], c.get("args") or {}
+        if fn in ("midpoint", "centroid", "intersect_line_line", "intersect_line_plane") and isinstance(a.get("point"), str):
+            raw_point_outputs.add(a["point"])
+        elif fn in ("orthogonal_projection", "orthogonal_projection_line", "translate_point") and isinstance(a.get("image"), str):
+            raw_point_outputs.add(a["image"])
+
+    solids_list = list(k.solids.values())
+    if solids_list:
+        unproduced_solids = [
+            kh
+            for kh in solids_list
+            if not ((set(kh.day) | ({kh.dinh} if kh.dinh else set()) | set(kh.tren)) & raw_point_outputs)
+        ]
+        root_solids = unproduced_solids if unproduced_solids else [solids_list[0]]
+    else:
+        root_solids = []
+
+    base_vertices = {v for kh in root_solids for v in kh.day}
+    apex_vertices = {kh.dinh for kh in root_solids if kh.dinh} | {v for kh in root_solids for v in kh.tren}
     solid_vertices = base_vertices | apex_vertices
+    root_solid_call_ids = {kh.fact for kh in root_solids}
 
     explicit_point_producers: dict[str, list[str]] = {}
     for c in calls:
         fn, a = c["fn"], c.get("args") or {}
         if fn in ("midpoint", "centroid", "intersect_line_line", "intersect_line_plane") and isinstance(a.get("point"), str):
-            explicit_point_producers.setdefault(a["point"], []).append(c["id"])
+            pt = a["point"]
+            if pt not in solid_vertices:
+                explicit_point_producers.setdefault(pt, []).append(c["id"])
         elif fn in ("orthogonal_projection_line", "translate_point") and isinstance(a.get("image"), str):
-            explicit_point_producers.setdefault(a["image"], []).append(c["id"])
+            pt = a["image"]
+            if pt not in solid_vertices:
+                explicit_point_producers.setdefault(pt, []).append(c["id"])
 
     point_producers: dict[str, list[str]] = {p: list(ids) for p, ids in explicit_point_producers.items()}
     produced_point_of_call: dict[str, str] = {
@@ -397,14 +422,15 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
     for c in calls:
         fn, a = c["fn"], c.get("args") or {}
         if fn == "orthogonal_projection" and isinstance(a.get("image"), str):
+            pt = a["image"]
             is_apex_foot_proj = (
                 a.get("point") in apex_vertices
                 and set(a.get("plane") or ()) <= base_vertices
-                and (a["image"] in base_vertices or a["image"] in explicit_point_producers)
+                and (pt in base_vertices or pt in explicit_point_producers)
             )
-            if not is_apex_foot_proj:
-                point_producers.setdefault(a["image"], []).append(c["id"])
-                produced_point_of_call[c["id"]] = a["image"]
+            if not is_apex_foot_proj and pt not in solid_vertices:
+                point_producers.setdefault(pt, []).append(c["id"])
+                produced_point_of_call[c["id"]] = pt
 
     direct_deps: dict[str, set[str]] = {c["id"]: set() for c in calls}
     consumed_points_of_call: dict[str, list[str]] = {}
@@ -427,6 +453,12 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
                 raise TuChoi("DANGLING_DEPENDENCY", f"{cid} phụ thuộc lời gọi không tồn tại {[dep_id]}", (cid,))
             direct_deps[cid].add(dep_id)
 
+    for kh in k.solids.values():
+        if kh.fact in by_id and kh.fact not in root_solid_call_ids:
+            for v in calls:
+                if v["id"] != kh.fact and (v.get("args") or {}).get("solid") == kh.ten:
+                    direct_deps[v["id"]].add(kh.fact)
+
     for u in calls:
         if u["fn"] == "section":
             u_solid = (u.get("args") or {}).get("solid")
@@ -439,23 +471,50 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
                 ):
                     direct_deps[v["id"]].add(u["id"])
 
-    # Cycle detection on direct_deps (fail-closed)
+    # Determine goal-reachable calls (ask_*, section, explicit line_ref / depends_on)
+    goal_roots = [
+        c["id"]
+        for c in calls
+        if c["fn"].startswith("ask_")
+        or c["fn"] == "section"
+        or bool(c.get("depends_on"))
+        or bool((c.get("args") or {}).get("line_ref"))
+    ]
+    reachable_from_goals: set[str] = set(goal_roots) if goal_roots else set(by_id)
+    if k.resolver.used:
+        reachable_from_goals = set(by_id)
+    else:
+        r_queue = list(reachable_from_goals)
+        while r_queue:
+            curr = r_queue.pop()
+            for prereq in direct_deps.get(curr, ()):
+                if prereq not in reachable_from_goals:
+                    reachable_from_goals.add(prereq)
+                    r_queue.append(prereq)
+
+    # Cycle detection on direct_deps (fail-closed on goal-reachable or explicit cycles)
     state: dict[str, int] = {}
+    back_edges_to_drop: list[tuple[str, str]] = []
 
     def _visit(u_id: str) -> None:
         state[u_id] = 1
         for v_id in sorted(direct_deps[u_id]):
             if state.get(v_id) == 1:
-                raise TuChoi("DEPENDENCY_CYCLE", f"phụ thuộc vòng qua {u_id} → {v_id}", (u_id, v_id))
-            if v_id not in state:
+                if u_id in reachable_from_goals or v_id in reachable_from_goals:
+                    raise TuChoi("DEPENDENCY_CYCLE", f"phụ thuộc vòng qua {u_id} → {v_id}", (u_id, v_id))
+                back_edges_to_drop.append((u_id, v_id))
+            elif v_id not in state:
                 _visit(v_id)
         state[u_id] = 2
 
-    for cid in sorted(by_id):
+    for cid in [c["id"] for c in calls]:
         if cid not in state:
             _visit(cid)
 
-    # Identify derived points that serve as the foot of a solid's apex
+    for u_id, v_id in back_edges_to_drop:
+        direct_deps[u_id].discard(v_id)
+
+    # Identify derived points that serve as the foot of a root solid's apex
     apex_foot_points: set[str] = set()
     for c in calls:
         cid, fn, a = c["id"], c["fn"], c.get("args") or {}
@@ -485,7 +544,7 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
     for c in calls:
         cid, fn = c["id"], c["fn"]
         pts = set(_diem_cua_loi_goi(c))
-        if fn in ("pyramid", "regular_pyramid", "prism"):
+        if fn in ("pyramid", "regular_pyramid", "prism") and cid in root_solid_call_ids and not direct_deps[cid]:
             tier_of[cid] = 0
         elif fn.startswith("ask_") or fn == "unsupported":
             tier_of[cid] = 5
@@ -517,6 +576,7 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
                 "parallel_planes",
             )
             and pts <= (solid_vertices | apex_foot_points)
+            and not direct_deps[cid]
         ):
             tier_of[cid] = 3
         else:

@@ -38,26 +38,131 @@ from app.simulation.geometry_functions.certificates import (
     validate_gram_metric_spd,
     verify_perpendicular_witness,
 )
-from app.simulation.semantic_program.quantity_annotations import _bam_doan_da_dung
+from pathlib import Path
+import json
 
 
-def test_bam_doan_da_dung_preserves_witness():
-    """Kiểm tra _bam_doan_da_dung bảo toàn trường witness của khoảng cách trùng đoạn đã dựng."""
-    w = {
-        "from": "S",
-        "foot": ["1/2", "1/2", "0"],
-        "on": "day_ABCD",
-        "marker": {"u": ["1", "0", "0"], "v": ["0", "0", "1"]},
-    }
-    kq = {"witness": w, "unit": "a"}
-    loai = {"S": "point3", "O": "point3"}
-    mem = {"S": Vec3.of(Fraction(1, 2), Fraction(1, 2), 1), "O": Vec3.of(Fraction(1, 2), Fraction(1, 2), 0)}
-    doan = {frozenset(("S", "O"))}
+def test_path_a_and_square_pyramid_envelope_certify_segment3_altitude_witness():
+    """Kiểm tra Path A (build_scene3d) và square_pyramid_envelope.json gắn perpendicular_witness
+    lên đối tượng segment3 đường cao mà không thêm trường witness vào quantity.annotation."""
+    from tests.geometry.test_regular_square_pyramid_height import ket_qua
 
-    annot = _bam_doan_da_dung(kq, loai, mem, doan)
-    assert annot["anchor"] == "segment"
-    assert annot["subject_ids"] == ["S", "O"]
-    assert annot.get("witness") == w
+    # 1. Path A regular square pyramid (S1_side_height_volume)
+    sc = ket_qua("S1_side_height_volume")["scene"]
+    objs = {o["id"]: o for o in sc["objects"]}
+    assert "witness" not in objs["chieu_cao_SO"]["annotation"]
+    so_segs = [o for o in sc["objects"] if o["type"] == "segment3" and set(o.get("endpoint_ids") or ()) == {"S", "O"}]
+    assert len(so_segs) == 1
+    so_seg = so_segs[0]
+    assert "perpendicular_witness" in so_seg
+    w_so = so_seg["perpendicular_witness"]
+    assert w_so["certificate"] == CERTIFICATE_SCHEMA
+    assert w_so["from"] == "S"
+    assert w_so["foot_id"] == "O"
+    ok, code = verify_perpendicular_witness(w_so, sc, sc.get("chart_metric"), segment_obj=so_seg)
+    assert ok is True, code
+    for v_base in ("A", "B", "C", "D"):
+        for seg in [o for o in sc["objects"] if o["type"] == "segment3" and set(o.get("endpoint_ids") or ()) == {"S", v_base}]:
+            assert "perpendicular_witness" not in seg
+
+    # 2. Path A non-regular pyramid without CONSTRUCT_HEIGHT role must NOT emit perpendicular_witness on segment3
+    sc_n2 = copy.deepcopy(sc)
+    for o in sc_n2["objects"]:
+        if o["type"] == "segment3":
+            o.pop("perpendicular_witness", None)
+            if "CONSTRUCT_HEIGHT" in (o.get("formation_roles") or ()):
+                o["formation_roles"] = ["CONSTRUCT_LATERAL_BOUNDARY"]
+    _gan_nhan_chung_duong_cao_chinh_xac(sc_n2)
+    for o in sc_n2["objects"]:
+        if o["type"] == "segment3":
+            assert "perpendicular_witness" not in o
+
+    # 3. Rectangular pyramid replay envelope (square_pyramid_envelope.json)
+    repo_root = Path(__file__).resolve().parents[3]
+    env_path = repo_root / "docs" / "evaluation" / "geometry" / "rectangular-pyramid-replay" / "square_pyramid_envelope.json"
+    env_data = json.loads(env_path.read_text(encoding="utf-8"))
+    scene = copy.deepcopy(env_data["scene3d"])
+    _gan_nhan_chung_duong_cao_chinh_xac(scene)
+    seg_by_id = {o["id"]: o for o in scene["objects"] if o["type"] == "segment3"}
+    assert "perpendicular_witness" in seg_by_id["chieu_cao_SA"]
+    w_sa = seg_by_id["chieu_cao_SA"]["perpendicular_witness"]
+    assert w_sa["certificate"] == CERTIFICATE_SCHEMA
+    assert w_sa["from"] == "S"
+    assert w_sa["foot_id"] == "A"
+    assert w_sa["on"] == "day_ABCD"
+    ok_sa, code_sa = verify_perpendicular_witness(w_sa, scene, segment_obj=seg_by_id["chieu_cao_SA"])
+    assert ok_sa is True, code_sa
+    for oblique_id in ("canh_ben_SB", "canh_ben_SC", "canh_ben_SD"):
+        assert "perpendicular_witness" not in seg_by_id[oblique_id]
+
+
+def test_all_12_served_hybrid_fixtures_certify_17_perpendicular_and_reject_24_oblique_segments():
+    """Kiểm tra toàn bộ 12 fixture SERVED của Hybrid Preview:
+    17 đoạn vuông góc (đường cao / cạnh bên đứng) được chứng nhận hợp lệ,
+    24 cạnh bên xiên bị từ chối (không có perpendicular_witness)."""
+    from tests import test_hybrid_preview_contract as C
+    from tests.geometry import hybrid_compiler_benchmark as HB
+
+    served_specs = (
+        ("pyramid-midpoint-area-AB", "corpus:positive"),
+        ("pyramid-shared-midpoint-area-and-distance", "corpus:positive"),
+        ("pyramid-projection-and-unnamed-midpoint-area", "corpus:positive"),
+        ("H01_CUBE", "holdout"),
+        ("H02_CUBOID_DISTANCE", "holdout"),
+        ("H03_REGULAR_SQUARE_PYRAMID_ROLE_LENGTHS", "holdout"),
+        ("H07_PROOF_GOAL_NOT_PREMISE_BUT_CHECKED", "holdout"),
+        ("H11_SKEW_DISTANCE_COMPOSITION", "holdout"),
+        ("H12_PROJECTION_MIDPOINT_ANGLE", "holdout"),
+        ("H14_REGULAR_TETRAHEDRON", "holdout"),
+        ("section-MAB-trapezoid", "benchmark"),
+        ("intersection-SAB-SCD", "benchmark"),
+    )
+    certified_count = 0
+    rejected_oblique_count = 0
+    for case_id, origin in served_specs:
+        if origin == "corpus:positive":
+            case = C.corpus(case_id, "positive")
+        elif origin == "holdout":
+            case = C.hold(case_id)
+        else:
+            sq = HB._square()
+            if case_id == "section-MAB-trapezoid":
+                quote = "Xác định thiết diện của hình chóp S.ABCD cắt bởi mặt phẳng (MAB)."
+                sentences, facts = HB._with(
+                    sq,
+                    HB._mid("f5", "M", "S", "C"),
+                    HB._f("f6", "section", quote, role="question", solid="S.ABCD", points=list("MAB")),
+                )
+            else:
+                sentences, facts = HB._with(
+                    sq,
+                    HB._f(
+                        "f5",
+                        "intersection_line",
+                        "Tìm giao tuyến của (SAB) và (SCD).",
+                        role="question",
+                        points_a=list("SAB"),
+                        points_b=list("SCD"),
+                    ),
+                )
+            case = {"text": " ".join(sentences), "payload": {"facts": facts}}
+
+        r = run_fact_route(case["text"], case["payload"])
+        assert r.status == "SERVED", case_id
+        for obj in r.scene3d["objects"]:
+            if obj.get("type") != "segment3":
+                continue
+            w = obj.get("perpendicular_witness")
+            if w is not None:
+                ok, code = verify_perpendicular_witness(w, r.scene3d, r.chart_metric, segment_obj=obj)
+                assert ok is True, (case_id, obj["id"], code)
+                certified_count += 1
+            elif obj["id"].startswith("canh_ben_"):
+                rejected_oblique_count += 1
+
+    assert certified_count == 17
+    assert rejected_oblique_count == 24
+
 
 
 def test_positive_sa_perpendicular_to_pyramid_base():
@@ -257,6 +362,40 @@ def test_positive_h07_bc_perpendicular_sab_deductive_certificate():
     assert cert["supporting_step_index"] == 2
     assert cert["conclusion_step_index"] == 4
     assert len(cert["plane_directions"]) == 2
+
+    # When goal_call itself is present in calls (as in ke_hoach.calls), it must be ignored as a premise
+    cert_with_goal_in_calls = certify_deductive_line_plane_perpendicularity(
+        goal_call=goal_call,
+        calls=[*calls, goal_call],
+        points_by_id=pts,
+        chart_metric=chart_metric,
+        supporting_step_index=2,
+        conclusion_step_index=4,
+    )
+    assert cert_with_goal_in_calls["supporting_calls"] == ["f1", "f4"]
+
+    # Without f4 (or if f4 is role="prove" / negated=True), goal_call in calls must NOT self-certify
+    for non_premise_calls in (
+        [{"id": "f1", "fn": "right_angle", "args": {"vertex": "B", "rays": ["A", "C"]}}, goal_call],
+        [
+            {"id": "f1", "fn": "right_angle", "args": {"vertex": "B", "rays": ["A", "C"]}},
+            {"id": "f4", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]}, "role": "prove"},
+            goal_call,
+        ],
+        [
+            {"id": "f1", "fn": "right_angle", "args": {"vertex": "B", "rays": ["A", "C"]}},
+            {"id": "f4", "fn": "perpendicular_line_plane", "args": {"line": ["S", "A"], "plane": ["A", "B", "C"]}, "negated": True},
+            goal_call,
+        ],
+    ):
+        with pytest.raises(CertificateError) as exc_self:
+            certify_deductive_line_plane_perpendicularity(
+                goal_call=goal_call,
+                calls=non_premise_calls,
+                points_by_id=pts,
+                chart_metric=chart_metric,
+            )
+        assert exc_self.value.code == "MISSING_PROVENANCE"
 
 
 def test_negative_degenerate_directions_and_non_spd_metric():
