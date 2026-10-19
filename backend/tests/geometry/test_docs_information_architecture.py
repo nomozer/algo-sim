@@ -210,7 +210,8 @@ def test_inv_20_candidate_and_cache_verify_only():
     # 123 -> 124 (regular-hexagonal-pyramid): chóp lục giác đều đọc + T11 (giá trị đã phục vụ đổi, served -> refused C0).
     # 124 -> 125 (regular-prisms): lăng trụ tam/lục giác đều đọc + T12 (served -> refused C0).
     # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định (served -> refused).
-    assert str(CACHE_VERSION) == "126"
+    # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness (envelope phục vụ đổi).
+    assert str(CACHE_VERSION) == "127"
 
 
 def test_inv_21_favicon_not_in_staged_changes():

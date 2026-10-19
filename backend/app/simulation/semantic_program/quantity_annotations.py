@@ -99,16 +99,17 @@ def _gan_chung_chi_vuong_goc_doan(objects: list[dict[str, Any]], mem: dict[str, 
     is_prism_like = any(
         o.get("type") == "solid" and o.get("solid_family") == "PRISM_LIKE" for o in objects
     )
+    # Nhãn chỉ nói điều ĐÃ KIỂM: vai trò dựng + trực giao Gram chính xác do engine kiểm (từ vựng tuyến D,
+    # `certificates._infer_segment_provenance`). Không suy "chóp đều / tâm đáy": SA ⊥ (ABC) của đề cũng đi qua đây.
+    status = "ENGINE_VERIFIED"
     for seg in objects:
         if seg.get("type") != "segment3":
             continue
         roles = set(seg.get("formation_roles") or ())
-        if "CONSTRUCT_HEIGHT" in roles:
-            rule = "regular_pyramid_altitude_to_base_center" if not is_prism_like else "prism_vertical_lateral_edge"
-            status = "DERIVED" if not is_prism_like else "ENGINE_VERIFIED"
-        elif "CONSTRUCT_LATERAL_BOUNDARY" in roles and is_prism_like:
-            rule = "prism_vertical_lateral_edge"
-            status = "ENGINE_VERIFIED"
+        if is_prism_like and roles & {"CONSTRUCT_HEIGHT", "CONSTRUCT_LATERAL_BOUNDARY"}:
+            rule = "prism_lateral_altitude"
+        elif "CONSTRUCT_HEIGHT" in roles:
+            rule = "formation_construct_height"
         else:
             continue
         eps = seg.get("endpoint_ids") or ()

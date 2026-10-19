@@ -1,0 +1,39 @@
+{
+  "schema": "CACHE_DECISION/1",
+  "run": "hybrid-architecture-wave1-exact-certificates-planner",
+  "date": "2026-10-19",
+  "issue": "ISSUE-ARCH-SCENE3D-ALTITUDE-CERTIFICATE-MISSING (Wave 1A on the default LLM_ONLY route)",
+  "decision": "BUMP 126 -> 127",
+  "supersedes": "Wave 1 report/handoff/run.json/CURRENT_STATE 'CACHE_VERSION = 126 (no bump required)' at fd310cd9 / 77b05def / 14cc4eb4 (stated without evidence; pre-main verification 2026-10-19 found the stale-row path). Those receipts stay unchanged as the record of what was measured.",
+  "rule_applied": "backend/app/main.py CACHE_VERSION history 95/97/103/104/112-116: a change of SERVED envelope content requires a bump, because /api/analyze returns a cache hit's envelope_json as is without rebuilding the scene",
+  "model_surface_changed": false,
+  "semantic_environment_hash": "b1714b566e25c91280094c1a431228eac01e8a25a9efaa11ba638dd3de87d5a5 (unchanged; backend/cache_identity.lock.json re-locked for the version only)",
+  "directions": {
+    "served_content_changed": "served Path A scenes with a CONSTRUCT_HEIGHT segment (or a right-prism lateral edge) gain segment3.perpendicular_witness (exact-gram-line-plane-orthogonality/1); Scene3D draws the right-angle marker from it",
+    "served_to_refused": "none",
+    "refused_to_served": "none (the refused control stays refused and uncached)",
+    "unchanged": "every other byte of the envelope: answers, provenance, formation steps, labels (IDENTICAL_AFTER_STRIP on 4/4 served cases)"
+  },
+  "probe": {
+    "script": "cache_probe.py (real POST /api/analyze per tree; only the two LLM stages stubbed; temp SQLite; outbound sockets refused; 0 provider requests)",
+    "before": "cache-probe-main.json + legacy-v126-rows.json (main f0560449, CACHE_VERSION 126: genuine rows written by v126 code)",
+    "after": "cache-probe-new.json (Wave 1 + cache 127 corrective product commit)",
+    "result": {
+      "S1_side_height_volume": "v126 row: 0 segment witnesses; v127: chieu_cao_SO_2 S->O on day_ABCD; cache hit keeps it",
+      "S6_renamed_vertices": "v126 row: 0; v127: chieu_cao_SO_2 S->O on day_MNPQ; hit keeps it",
+      "S7_named_centre": "v126 row: 0; v127: chieu_cao_SO_2 S->O on day_ABCD; hit keeps it",
+      "SA_given_right_triangle_pyramid": "v126 row: 0; v127: chieu_cao_SA S->A on day_ABC (GIVEN SA ⊥ (ABC)); oblique SB, SC carry none",
+      "REFUSED_oblique_prism": "unsupported on both trees, never cached"
+    },
+    "stale_hit_before_bump": "with the Wave 1 code at 126, _cache_lookup returned each genuine v126 row as a valid hit (RED stage 1 of tests/test_cache_segment_witness_invalidation.py)"
+  },
+  "provenance_correction": {
+    "found_by": "this probe (SA_given_right_triangle_pyramid)",
+    "before": "Path A labelled every CONSTRUCT_HEIGHT witness rule=regular_pyramid_altitude_to_base_center, status=DERIVED, also for a non-regular pyramid whose GIVEN SA ⊥ (ABC) has A off the base centre",
+    "after": "rule=formation_construct_height (pyramid) / prism_lateral_altitude (prism), status=ENGINE_VERIFIED: only what was checked (formation role + exact Gram orthogonality); Route D vocabulary of certificates._infer_segment_provenance",
+    "effect": "witness metadata only; geometry, marker vectors and all other envelope bytes unchanged (RED stage 2 -> GREEN)"
+  },
+  "regression": "backend/tests/test_cache_segment_witness_invalidation.py (9 tests: v126 row miss, v127 write + hit with witness, byte identity after strip, no duplicate row, refusal uncached, cross-identity isolation, Hybrid preview never uses the product cache, oblique CONSTRUCT_HEIGHT fault injection)",
+  "migration_or_purge": "NONE — no database row was read, migrated or deleted; old rows become misses by policy_version",
+  "historical_mode_unknown": "ISSUE-OPS-CACHE-HISTORICAL-MODE-UNKNOWN unchanged"
+}
