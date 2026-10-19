@@ -1,0 +1,545 @@
+{
+ "schema": "source-gate-metrics/1",
+ "model_calls": 0,
+ "arms": {
+  "hardened": {
+   "positive_served": {
+    "n": 18,
+    "d": 18
+   },
+   "exact_answer_match": {
+    "n": 18,
+    "d": 18
+   },
+   "goal_coverage": {
+    "n": 21,
+    "d": 21
+   },
+   "correct_refusals": {
+    "n": 12,
+    "d": 12
+   },
+   "refused_other_code": {
+    "n": 0,
+    "d": 12
+   },
+   "wrong_serves": {
+    "n": 0,
+    "d": 30
+   },
+   "false_refusals_remaining": [],
+   "provenance_verbatim": {
+    "n": 18,
+    "d": 18
+   },
+   "served_with_effect_chain": 3,
+   "scene_timeline_ok": {
+    "n": 18,
+    "d": 18
+   },
+   "by_group": {
+    "A": {
+     "positive_verified": {
+      "n": 6,
+      "d": 6
+     },
+     "negative_correct": {
+      "n": 0,
+      "d": 0
+     }
+    },
+    "B": {
+     "positive_verified": {
+      "n": 12,
+      "d": 12
+     },
+     "negative_correct": {
+      "n": 0,
+      "d": 0
+     }
+    },
+    "C": {
+     "positive_verified": {
+      "n": 0,
+      "d": 0
+     },
+     "negative_correct": {
+      "n": 12,
+      "d": 12
+     }
+    }
+   },
+   "by_sg": {
+    "SG-1": {
+     "n": 3,
+     "d": 3
+    },
+    "SG-2": {
+     "n": 2,
+     "d": 2
+    },
+    "SG-3": {
+     "n": 3,
+     "d": 3
+    },
+    "SG-4": {
+     "n": 3,
+     "d": 3
+    },
+    "SG-5": {
+     "n": 3,
+     "d": 3
+    },
+    "SG-6": {
+     "n": 4,
+     "d": 4
+    }
+   },
+   "refusal_codes": {
+    "UNGROUNDED_VALUE": 3,
+    "QUESTION_LOCAL_GIVEN_UNVERIFIED": 1,
+    "INCONSISTENT_FACTS": 1,
+    "SOURCE_OBJECT_MISMATCH": 2,
+    "REQUEST_NOT_ANSWERED": 2,
+    "PARALLEL_NO_INTERSECTION": 1,
+    "NON_COPLANAR_POINTS": 1,
+    "CONDITIONAL_CLAUSE": 1
+   }
+  },
+  "baseline-main": {
+   "positive_served": {
+    "n": 1,
+    "d": 18
+   },
+   "exact_answer_match": {
+    "n": 1,
+    "d": 18
+   },
+   "goal_coverage": {
+    "n": 1,
+    "d": 21
+   },
+   "correct_refusals": {
+    "n": 6,
+    "d": 12
+   },
+   "refused_other_code": {
+    "n": 6,
+    "d": 12
+   },
+   "wrong_serves": {
+    "n": 0,
+    "d": 30
+   },
+   "false_refusals_remaining": [
+    "A-SG1",
+    "A-SG2",
+    "A-SG3",
+    "A-SG4",
+    "A-SG5",
+    "A-SG6",
+    "B-SG1-renamed",
+    "B-SG2-distance",
+    "B-SG3-lateral-and-base",
+    "B-SG3-triangular",
+    "B-SG4-angle",
+    "B-SG4-area-three-vertices",
+    "B-SG5-hay-dong-thoi",
+    "B-SG5-mixed",
+    "B-SG6-mat-phang-toi",
+    "B-SG6-renamed-apex-line",
+    "B-SG6-renamed-base-face"
+   ],
+   "provenance_verbatim": {
+    "n": 1,
+    "d": 1
+   },
+   "served_with_effect_chain": 0,
+   "scene_timeline_ok": {
+    "n": 1,
+    "d": 1
+   },
+   "by_group": {
+    "A": {
+     "positive_verified": {
+      "n": 0,
+      "d": 6
+     },
+     "negative_correct": {
+      "n": 0,
+      "d": 0
+     }
+    },
+    "B": {
+     "positive_verified": {
+      "n": 1,
+      "d": 12
+     },
+     "negative_correct": {
+      "n": 0,
+      "d": 0
+     }
+    },
+    "C": {
+     "positive_verified": {
+      "n": 0,
+      "d": 0
+     },
+     "negative_correct": {
+      "n": 6,
+      "d": 12
+     }
+    }
+   },
+   "by_sg": {
+    "SG-1": {
+     "n": 1,
+     "d": 3
+    },
+    "SG-2": {
+     "n": 0,
+     "d": 2
+    },
+    "SG-3": {
+     "n": 0,
+     "d": 3
+    },
+    "SG-4": {
+     "n": 0,
+     "d": 3
+    },
+    "SG-5": {
+     "n": 0,
+     "d": 3
+    },
+    "SG-6": {
+     "n": 0,
+     "d": 4
+    }
+   },
+   "refusal_codes": {
+    "UNGROUNDED_VALUE": 4,
+    "QUESTION_LOCAL_GIVEN_UNVERIFIED": 2,
+    "AMBIGUOUS_VALUE_QUOTE": 5,
+    "SOURCE_OBJECT_MISMATCH": 6,
+    "NOT_ASKED_IN_SOURCE": 4,
+    "FACT_INCOMPLETE": 6,
+    "QUESTION_CONTEXT_UNSUPPORTED": 2
+   }
+  }
+ },
+ "changed_vs_baseline_main": [
+  {
+   "id": "A-SG1",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "UNGROUNDED_VALUE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "A-SG2",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "QUESTION_LOCAL_GIVEN_UNVERIFIED"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "A-SG3",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "AMBIGUOUS_VALUE_QUOTE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "A-SG4",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "A-SG5",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "NOT_ASKED_IN_SOURCE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "A-SG6",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "FACT_INCOMPLETE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "B-SG1-renamed",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "UNGROUNDED_VALUE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "B-SG2-distance",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "QUESTION_CONTEXT_UNSUPPORTED"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "B-SG3-triangular",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "AMBIGUOUS_VALUE_QUOTE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "B-SG3-lateral-and-base",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "AMBIGUOUS_VALUE_QUOTE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "B-SG4-angle",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "B-SG4-area-three-vertices",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "B-SG5-hay-dong-thoi",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "NOT_ASKED_IN_SOURCE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "B-SG5-mixed",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "NOT_ASKED_IN_SOURCE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "B-SG6-renamed-base-face",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "FACT_INCOMPLETE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "B-SG6-renamed-apex-line",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "SOURCE_OBJECT_MISMATCH"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "B-SG6-mat-phang-toi",
+   "kind": "positive",
+   "before": [
+    "REFUSED",
+    "FACT_INCOMPLETE"
+   ],
+   "after": [
+    "SERVED",
+    null
+   ],
+   "class": "newly_served"
+  },
+  {
+   "id": "C-SG3-swapped-triangular",
+   "kind": "negative",
+   "before": [
+    "REFUSED",
+    "AMBIGUOUS_VALUE_QUOTE"
+   ],
+   "after": [
+    "REFUSED",
+    "UNGROUNDED_VALUE"
+   ],
+   "class": "refusal_code_changed"
+  },
+  {
+   "id": "C-SG3-overdetermined-inconsistent",
+   "kind": "negative",
+   "before": [
+    "REFUSED",
+    "AMBIGUOUS_VALUE_QUOTE"
+   ],
+   "after": [
+    "REFUSED",
+    "INCONSISTENT_FACTS"
+   ],
+   "class": "refusal_code_changed"
+  },
+  {
+   "id": "C-SG5-first-dropped",
+   "kind": "negative",
+   "before": [
+    "REFUSED",
+    "QUESTION_CONTEXT_UNSUPPORTED"
+   ],
+   "after": [
+    "REFUSED",
+    "REQUEST_NOT_ANSWERED"
+   ],
+   "class": "refusal_code_changed"
+  },
+  {
+   "id": "C-SG5-unknown-point",
+   "kind": "negative",
+   "before": [
+    "REFUSED",
+    "NOT_ASKED_IN_SOURCE"
+   ],
+   "after": [
+    "REFUSED",
+    "REQUEST_NOT_ANSWERED"
+   ],
+   "class": "refusal_code_changed"
+  },
+  {
+   "id": "C-SG6-parallel-faces",
+   "kind": "negative",
+   "before": [
+    "REFUSED",
+    "FACT_INCOMPLETE"
+   ],
+   "after": [
+    "REFUSED",
+    "PARALLEL_NO_INTERSECTION"
+   ],
+   "class": "refusal_code_changed"
+  },
+  {
+   "id": "C-SG6-non-coplanar-face",
+   "kind": "negative",
+   "before": [
+    "REFUSED",
+    "FACT_INCOMPLETE"
+   ],
+   "after": [
+    "REFUSED",
+    "NON_COPLANAR_POINTS"
+   ],
+   "class": "refusal_code_changed"
+  },
+  {
+   "id": "C-SG6-conditional",
+   "kind": "negative",
+   "before": [
+    "REFUSED",
+    "FACT_INCOMPLETE"
+   ],
+   "after": [
+    "REFUSED",
+    "CONDITIONAL_CLAUSE"
+   ],
+   "class": "refusal_code_changed"
+  }
+ ]
+}
