@@ -2,9 +2,9 @@
 
 - **Run:** `goal-directed-function-composition` · nhánh `research/hybrid-wave2a-function-composition` từ `main` = `origin/main` = `ce5b2575`
 - **Ủy quyền:** `GO_HYBRID_WAVE2A_LOCAL_IMPLEMENTATION` (không merge/push, không GO LIVE, không bật Hybrid)
-- **Commit:** product `a45a043f` → `b70e4769` (sửa review N-1) · holdout lock `50ac258a` · candidate freeze `594870fc` (thay thế) → **`3a57f5d3`** (112 file, `e2109ef1cde5deaf9624acd19d19a622dc8d8e5747b749e146ad93996e728766`) · evaluation `5f2e8390`, chạy lại trên candidate cuối ở `results/evaluation-final-candidate/` (mọi chỉ số trùng, trừ thời gian)
+- **Commit:** product `a45a043f` → `b70e4769` (sửa review N-1) · holdout lock `50ac258a` · candidate freeze `594870fc` (thay thế) → **`3a57f5d3`** (112 file, `e2109ef1cde5deaf9624acd19d19a622dc8d8e5747b749e146ad93996e728766`) · evaluation `5f2e8390`, chạy lại trên candidate cuối ở `results/evaluation-final-candidate/` (4 nhánh chạy trên mã cuối: mọi chỉ số trùng, trừ thời gian; nhánh `pre-composition-main` chạy mã `ce5b2575` mà bản sửa không chạm, nên được MANG SANG nguyên byte, không chạy lại — review R2-N1)
 - **Live provider calls:** 0 (`ALLOW_LIVE_AI=0` mọi lượt) · `CACHE_VERSION` 127 (không bump, §9) · `DEFAULT_MODE` `LLM_ONLY` · response contract `flat`
-- **T3 có thẩm quyền và review độc lập:** xem `handoff.md` (ghi sau khi chạy; báo cáo này không tự nhận PASS trước biên nhận)
+- **T3 có thẩm quyền:** `FULL_PRODUCT_GATE_PASS` tại `9f46a637` (backend 11076/0, frontend 1146/0, build, demo 5/5, crash 6/6; `authoritative-t3.json`) · **review độc lập:** vòng 1 FAIL (I-1) → vòng 2 `INDEPENDENT_REVIEW_PASS` (`review.md`)
 
 ## 0. Câu hỏi nghiên cứu và trả lời ngắn
 

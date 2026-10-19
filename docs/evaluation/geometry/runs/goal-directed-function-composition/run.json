@@ -13,7 +13,7 @@
   "candidate_freeze_superseded": "594870fcf528def44fa9edc5ee841d08e0f3d6b6",
   "candidate_freeze": "3a57f5d3c7395e41304d075a3203c43d76dae59c",
   "evaluation": "5f2e839017c0ab26ebff7c1b8b5ac9a565871489",
-  "evaluation_rerun_on_final_candidate": "results/evaluation-final-candidate/ (identical metrics except timing)"
+  "evaluation_rerun_on_final_candidate": "results/evaluation-final-candidate/ (4 arms re-run on the final code, identical metrics except timing; pre-composition-main carried over byte-for-byte: it runs ce5b2575, untouched by the fix)"
  },
  "measured_system": {"so_file": 112, "tree_hash": "e2109ef1cde5deaf9624acd19d19a622dc8d8e5747b749e146ad93996e728766", "superseded_tree_hash": "cddd83b85df3e38a090882c13621b4d41ece0d2bee635c680db476a55e69cec0"},
  "versions": {"registry": "geometry-functions/7", "planner": "geometry-fact-planner/8", "engine": "geometry-function-engine/6",
@@ -40,5 +40,7 @@
  ],
  "external_reference": {"document": "ALGOSIM_GEMINI_WAVE2_RESEARCH_HANDOFF_20261019.md",
                         "state": "pasted into the session; stated path D:\\Documents\\AlgoSim-Research\\ does not exist (NOT_RECOVERABLE as a file); audited in w2-exp-audit.json"},
- "verdict_at_report": "PENDING_T3_AND_INDEPENDENT_REVIEW"
+ "authoritative_t3": {"candidate": "9f46a63777e51c85dab05a500b42b2f5788a9020", "verdict": "FULL_PRODUCT_GATE_PASS"},
+ "independent_review": "round 1 INDEPENDENT_REVIEW_FAIL (I-1) -> round 2 INDEPENDENT_REVIEW_PASS",
+ "verdict": "WAVE2A_READY_FOR_GO_MAIN_REVIEW"
 }

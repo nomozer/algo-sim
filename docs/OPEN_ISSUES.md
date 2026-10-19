@@ -12,6 +12,8 @@
 - the v3 research schema grew to 40 variants (~29.7k characters): provider acceptance NOT_MEASURED before any live run;
 - `_EffectResolver.distance` still names `orthogonal_projection_line` when writing the foot certificate (pre-existing
   coupling, outside the search).
+- Shared ask grammar (also on `main`, review R2-N2): "Tính độ dài SC rồi so sánh với SA." serves √17 and drops the
+  comparison task (`rồi …` passes `_SAU_HOP_LE`).
 - Out of Wave 2A scope (PROPOSED 2B/2C): ratio points, plane through a point ⊥ a line, line–plane distance, sub-solids,
   right-trapezoid base, oblique prism.
 

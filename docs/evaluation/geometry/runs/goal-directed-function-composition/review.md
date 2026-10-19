@@ -16,6 +16,15 @@ oracle hashes match the lock, 0 `Co-Authored-By` trailers.
 | N-3 | NONBLOCKING | `FUNCTION_NOT_OFFERED` only in route A `parse_response`; no preview refusal class | recorded in report §10 |
 | N-4 | NONBLOCKING | The blocker-row code override lives in three ad-hoc dicts | recorded in report §10; every override still requires REFUSED with no answer and no scene |
 
-## Round 2
+## Round 2 — at HEAD `9f46a637` (product `b70e4769`, candidate `3a57f5d3`): `INDEPENDENT_REVIEW_PASS` (0 blocker, 0 important)
 
-Pending — re-review of the fixes on the final candidate.
+- I-1 resolved: report §0 compares against `pre-composition-main` only (16/16 vs 1/16), names `rule-based` / `no-composition` ablations, attributes novelty to this wave's contracts and makes no language-generalisation claim.
+- N-1 resolved and general: markers read on `_bo_cum(...)`; conditionals and value assignments still read on raw text. Probes at HEAD vs a `git archive` of `452a398a`: 6 partial serves now `REQUEST_NOT_ANSWERED` (incl. a NAMED-ask hole that existed before), 2 former false refusals now serve correct values when both facts are present, 16 given/condition/value probes unchanged; controls still serve.
+- Scope: `b70e4769` = `registry.py` (+4/−2) + new tests; `3a57f5d3` = candidate files only; `3a57f5d3..9f46a637` = docs + a 2-line harness docstring; 0 `Co-Authored-By`.
+- Checks: 2006 targeted tests passed (22 files), freeze `--verify` MATCH (`e2109ef1…`), T3 receipt read (not re-run).
+
+| # | Severity | Finding | Disposition |
+|---|---|---|---|
+| R2-N1 | NONBLOCKING | `evaluation-final-candidate/arm-pre-composition-main.json` is a byte copy of the first run (that arm runs `ce5b2575`, untouched by the fix); the final-candidate bundle has no pre arm | stated in report header and `run.json` |
+| R2-N2 | NONBLOCKING (on `main`) | "Tính độ dài SC rồi so sánh với SA." serves √17 and drops the comparison (shared-ask-grammar `rồi`) at `ce5b2575`, `452a398a` and HEAD | outside this wave; recorded in `OPEN_ISSUES` |
+| R2-N3 | NONBLOCKING | T3 receipt, review round 2 and handoff were uncommitted | committed with this record |
