@@ -33,7 +33,8 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, rende
 
 #: /8 (run `goal-directed-function-composition`): goal entry by typed slots (`_toan_hang_muc_tieu`), line partner operand.
 #: /9 (run `geometry-capability-expansion`): `divide_segment` point_def, plane through a point ⊥ a line (`MAT_VUONG_DUONG`).
-PLANNER_VERSION = "geometry-fact-planner/9"
+#: /10 (run `source-gate-hardening`): a `line_ref` producer may name a face by ≥ 3 distinct labels ((ABCD)).
+PLANNER_VERSION = "geometry-fact-planner/10"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
 def _nhan_tuoi(stem: str) -> tuple[str, ...]:
@@ -223,8 +224,9 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
                 raise TuChoi("CONDITIONAL_CLAUSE", "reference không dùng điều kiện", (obj.id,))
             if obj.negated:
                 raise TuChoi("NEGATED_CLAUSE", "reference không dùng phủ định", (obj.id,))
-        if any(len(p or []) != 3 or len(set(p or [])) != 3 for p in (producer.points_a, producer.points_b)):
-            raise TuChoi("FACT_INCOMPLETE", "reference cần hai mặt có đúng ba nhãn phân biệt", (producer.id,))
+        # SG-6: a face may be named by all its vertices ((ABCD)); coplanarity is the engine's check (NON_COPLANAR_POINTS)
+        if any(len(p or []) < 3 or len(set(p or [])) != len(p or []) for p in (producer.points_a, producer.points_b)):
+            raise TuChoi("FACT_INCOMPLETE", "reference cần hai mặt, mỗi mặt ít nhất ba nhãn phân biệt", (producer.id,))
     return facts
 
 

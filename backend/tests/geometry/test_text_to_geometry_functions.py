@@ -51,19 +51,23 @@ def _len_sq(scene: dict, a: str, b: str) -> F:
 #: The fixture's labels are historical evidence and stay as recorded. Run source-grounding-completeness refuses NEG2
 #: one layer earlier: its "có cạnh đáy bằng 2" is a premise no call reads. Same verdict (REFUSED), another code.
 MA_HIEN_HANH = {"NEG2": "SOURCE_PREMISE_UNREAD"}
+#: Run `source-gate-hardening` (SG-3): "có cạnh đáy bằng 2, chiều cao bằng 3" binds each number to its own role noun, so
+#: G7's height quote is no longer ambiguous — side 2, height 3 ⇒ V = (3√3/2 · 2²) · 3 = 18√3 (hand-derived).
+KET_CUC_HIEN_HANH = {"G7_AMBIGUOUS_VALUE_QUOTE": {"status": "SERVED", "answers": {"c4": "18√3"}}}
 
 
 # ── mọi ca fixture: kết cục + mã + đáp số chính xác ─────────────────────────
 @pytest.mark.parametrize("cid", sorted(BY_ID))
 def test_ket_cuc_dung_nhan(cid):
     c = BY_ID[cid]
+    e = KET_CUC_HIEN_HANH.get(cid, c["expect"])
     r = _chay(c)
-    assert r.status == c["expect"]["status"], (r.code, r.reason)
+    assert r.status == e["status"], (r.code, r.reason)
     if r.status == "REFUSED":
-        assert r.code == MA_HIEN_HANH.get(cid, c["expect"]["code"]), r.reason
+        assert r.code == MA_HIEN_HANH.get(cid, e["code"]), r.reason
         assert r.scene3d is None and not r.answers
         return
-    for call_id, nhan in c["expect"]["answers"].items():
+    for call_id, nhan in e["answers"].items():
         may = r.answers[call_id]
         if nhan.startswith("cos²="):
             assert may == nhan

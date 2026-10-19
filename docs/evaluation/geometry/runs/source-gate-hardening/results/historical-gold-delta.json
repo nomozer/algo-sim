@@ -1,0 +1,19 @@
+{
+  "schema": "HISTORICAL_GOLD_REMEASURE/1",
+  "measured_receipt": "docs/evaluation/geometry/runs/independent-nlu-extraction-evaluation/results/gold/gold_rows.json",
+  "applies_after": "docs/evaluation/geometry/runs/geometry-capability-expansion/results/historical-gold-delta.json",
+  "cause": "Source gate hardening (SG-5): a list of requests in one sentence (\"Tính BD', tính thể tích khối hộp, và tính khoảng cách …\") — the closed ask tail now reads the next request verb before another recognised ask phrase, so the first request is no longer read as unasked; every request is answered (no partial serve)",
+  "model_calls": 0,
+  "rows_compared": 60,
+  "served_before": 11,
+  "served_after": 12,
+  "changed": {
+    "L27": {"before": {"status": "REFUSED", "code": "NOT_ASKED_IN_SOURCE", "values": {}},
+            "after": {"status": "SERVED", "code": null, "values": {"f7": "4/5", "f5": "9", "f6": "16"}},
+            "independent_expectation": {"r1": {"value_squared": "9", "exact": "3"}, "r2": {"value_squared": "16", "exact": "4"},
+                                        "r3": {"value_squared": "4/5", "exact": "2√5/5"},
+                                        "source": "inputs/corpus-authoring/corpus.json expected_values (computed_by agent1_oracle.py, preregistered); gold_disposition answer_all"},
+            "hand_check": "A(0,0,0), B(1,0,0), D(0,2,0), A'(0,0,2), D'(0,2,2): BD'² = 1 + 4 + 4 = 9; V = 1·2·2 = 4; AA' ∥ (0,0,1), BD' ∥ (−1,2,2), n = (−2,−1,0), d = |n·AB|/|n| = 2/√5 ⇒ d² = 4/5",
+            "reading": "Rectangular box AB = 1, AD = 2, AA' = 2; three requests in one sentence, all three preregistered values reproduced."}
+  }
+}

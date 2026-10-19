@@ -48,8 +48,15 @@ def _len_sq(scene, a, b):
     return sum(d[i] * G[i][j] * d[j] for i in range(3) for j in range(3))
 
 
+#: Fixture labels stay historical. Run `source-gate-hardening` (SG-3) binds each number of "có cạnh đáy bằng 2, chiều cao
+#: bằng 3" to its own role noun, so the height quote is no longer ambiguous: hexagonal prism, side 2, height 3 ⇒
+#: V = (3√3/2 · 2²) · 3 = 18√3 (hand-derived). Both locked cases share that text and calls.
+KET_CUC_HIEN_HANH = {cid: {"status": "SERVED", "answers": {"c4": "18√3"}}
+                     for cid in ("N13_HEIGHT_QUOTE_TWO_NUMBERS_NO_LABEL", "G7_AMBIGUOUS_VALUE_QUOTE")}
+
+
 def _kiem(c, r):
-    e = c["expect"]
+    e = KET_CUC_HIEN_HANH.get(c["id"], c["expect"])
     assert r.status == e["status"], (c["id"], r.code, r.reason)
     if r.status == "REFUSED":
         assert r.code == e["code"], (c["id"], r.code, r.reason)
@@ -136,8 +143,11 @@ def test_cu_27_fixture_van_dung_nguyen():
     ma_hien_hanh = {"NEG2": "SOURCE_PREMISE_UNREAD"}
     for c in OLD.values():
         r = _chay(c)
-        ma = ma_hien_hanh.get(c["id"], c["expect"].get("code"))
-        assert r.status == c["expect"]["status"] and (r.code == ma if r.status == "REFUSED" else True), c["id"]
+        e = KET_CUC_HIEN_HANH.get(c["id"], c["expect"])
+        ma = ma_hien_hanh.get(c["id"], e.get("code"))
+        assert r.status == e["status"] and (r.code == ma if r.status == "REFUSED" else True), c["id"]
+        if c["id"] in KET_CUC_HIEN_HANH:
+            assert r.answers == e["answers"], (c["id"], r.answers)
 
 
 # ── D · adapter Gemini function calling (provider giả) ───────────────────────

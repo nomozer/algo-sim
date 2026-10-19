@@ -92,10 +92,12 @@ def test_identity_restore_maps_only_declared_version_pairs():
     stored = json.loads((FIXTURES / 'served-H01_CUBE.json').read_text(encoding='utf-8'))['response']
     fresh = copy.deepcopy(stored)
     ident = fresh['route_d']['runtime_identity']
+    def newest(key):                                                   # a later run may bump only some versions
+        return [d['versions'][key][1] for d in X.IDENTITY_DELTAS if key in d['versions']][-1]
     for key in X.IDENTITY_DELTAS[0]['versions']:                       # the whole declared chain, oldest -> newest
         assert ident[key] == X.IDENTITY_DELTAS[0]['versions'][key][0]
-        ident[key] = X.IDENTITY_DELTAS[-1]['versions'][key][1]
-    fresh['route_d']['planner']['version'] = X.IDENTITY_DELTAS[-1]['versions']['planner_version'][1]
+        ident[key] = newest(key)
+    fresh['route_d']['planner']['version'] = newest('planner_version')
     ident['fingerprint'] = X._preview_fingerprint(ident)
     assert X._restore_declared_identity(fresh, stored) == stored                     # declared pairs only: restored
     undeclared = copy.deepcopy(fresh)

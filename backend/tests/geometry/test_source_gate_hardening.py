@@ -1,0 +1,277 @@
+"""Source gate hardening (run `source-gate-hardening`): six finding groups SG-1..SG-6 on route D's source gate.
+
+Each group: the minimal reproducer (RED on `6973c4b6`), unseen valid variants, and adversarial negatives that must stay
+refused. Expected values are hand-derived from Euclidean coordinates written here, never read from the engine.
+Base pyramid (`SQ`): A(0,0,0) B(2,0,0) C(2,2,0) D(0,2,0) S(0,0,3).
+"""
+from __future__ import annotations
+
+import json
+
+import pytest
+
+from app.ai.function_route import run_fact_route
+
+
+def f(fid, kind, quote, role="premise", **kw):
+    return {"id": fid, "kind": kind, "role": role, "quotes": [quote], **kw}
+
+
+def q(fid, quote, **kw):
+    return f(fid, "question", quote, role="question", **kw)
+
+
+def run(text, facts):
+    return run_fact_route(text, {"facts": json.loads(json.dumps(facts))})
+
+
+SQ = "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). SA = 3. "
+SQF = [f("f1", "solid", "Cho hình chóp S.ABCD.", solid="S.ABCD", solid_type="pyramid"),
+       f("f2", "polygon_shape", "Đáy ABCD là hình vuông cạnh 2.", points=list("ABCD"), shape="square", value="2"),
+       f("f3", "perpendicular", "SA vuông góc với (ABCD).", points_a=["S", "A"], points_b=list("ABCD")),
+       f("f4", "length", "SA = 3.", points=["S", "A"], measure="segment", value="3")]
+
+
+def served(r, answers):
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert r.answers == answers, r.answers
+
+
+def refused(r, *codes):
+    assert r.status == "REFUSED" and not r.answers and r.scene3d is None, (r.status, r.answers)
+    assert not codes or r.code in codes, (r.code, r.reason)
+
+
+# ── SG-1: a segment label is a whole word, never two letters inside S.ABCD / ABCD ─────────────────────────────────────
+RECT_TAIL = " SA vuông góc với (ABCD) và SA = 1. Tính thể tích khối chóp S.ABCD."
+
+
+def rect(sentence, lengths):
+    return run(sentence + RECT_TAIL, [
+        f("f1", "solid", sentence, solid="S.ABCD", solid_type="pyramid"),
+        f("f2", "polygon_shape", sentence, points=list("ABCD"), shape="rectangle"),
+        *[f(f"l{i}", "length", sentence, points=list(p), measure="segment", value=v) for i, (p, v) in enumerate(lengths)],
+        f("f5", "perpendicular", "SA vuông góc với (ABCD)", points_a=["S", "A"], points_b=list("ABCD")),
+        f("f6", "length", "SA = 1", points=["S", "A"], measure="segment", value="1"),
+        q("q", "Tính thể tích khối chóp S.ABCD.", quantity="volume", solid="S.ABCD")])
+
+
+@pytest.mark.parametrize("sentence,lengths", [
+    ("Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 2 và BC = 3.", [("AB", "2"), ("BC", "3")]),
+    ("Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, BC = 3, AB = 2.", [("AB", "2"), ("BC", "3")]),
+    ("Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 2, BC = 3, CD = 2, DA = 3.",
+     [("AB", "2"), ("BC", "3"), ("CD", "2"), ("DA", "3")]),
+])
+def test_sg1_segment_values_bind_to_the_atomic_label(sentence, lengths):
+    served(rect(sentence, lengths), {"q": "2"})                       # V = ⅓ · 2 · 3 · 1
+
+
+@pytest.mark.parametrize("sentence,lengths,codes", [
+    # BC never named on its own in the quote: no value may borrow AB's number. Refused on 6973c4b6; the atomic-label change
+    # alone SERVED it (one-number fallback) until the role guard `_doan_theo_vai_tro` — this case caught that regression.
+    ("Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 2.", [("AB", "2"), ("BC", "2")], ("UNGROUNDED_VALUE",)),
+    ("Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 2 và BC = 3.", [("AB", "3"), ("BC", "2")],
+     ("UNGROUNDED_VALUE",)),
+    ("Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 2, BC = 3, CD = 5, DA = 3.",
+     [("AB", "2"), ("BC", "3"), ("CD", "5"), ("DA", "3")], ("INCONSISTENT_FACTS",)),
+])
+def test_sg1_spoofed_or_swapped_segment_values_are_refused(sentence, lengths, codes):
+    refused(rect(sentence, lengths), *codes)
+
+
+@pytest.mark.parametrize("quote,seg,codes", [
+    ("Đáy ABCD là hình vuông cạnh 2.", ["S", "A"], ("UNGROUNDED_VALUE",)),   # a lateral edge is not the base's "cạnh"
+    ("Cạnh bên bằng 2.", ["A", "B"], ("UNGROUNDED_VALUE",)),                 # "cạnh bên" is not a base side
+])
+def test_sg1_a_role_noun_grounds_only_segments_of_that_role(quote, seg, codes):
+    t = "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 2. SA vuông góc với (ABCD). Cạnh bên bằng 2. "
+    facts = SQF[:3] + [f("x", "length", quote, points=seg, measure="segment", value="2"),
+                       q("q", "Tính độ dài SC.", quantity="length", points=["S", "C"])]
+    refused(run(t + "Tính độ dài SC.", facts), *codes)
+
+
+# ── SG-2: 2a is not 2 — the shape reader's coefficient keeps its parameter ────────────────────────────────────────────
+def local_given(premise_side, ask_side, sa):
+    t = f"Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh {premise_side}, SA vuông góc với (ABCD), SA = {sa}. "
+    ask = f"Biết đáy ABCD là hình vuông cạnh {ask_side}, tính độ dài SC."
+    return run(t + ask, [f("f1", "solid", "Cho hình chóp S.ABCD", solid="S.ABCD", solid_type="pyramid"),
+                         f("f2", "polygon_shape", f"đáy ABCD là hình vuông cạnh {premise_side}", points=list("ABCD"),
+                           shape="square", value=premise_side),
+                         f("f3", "perpendicular", "SA vuông góc với (ABCD)", points_a=["S", "A"], points_b=list("ABCD")),
+                         f("f4", "length", f"SA = {sa}", points=["S", "A"], measure="segment", value=sa),
+                         q("q", ask, quantity="length", points=["S", "C"])])
+
+
+def test_sg2_symbolic_local_given_is_read_like_its_numeric_twin():
+    served(local_given("2", "2", "3"), {"q": "√17"})                 # SC² = 4 + 4 + 9
+    served(local_given("2a", "2a", "3a"), {"q": "a√17"})
+
+
+@pytest.mark.parametrize("premise,ask,sa", [("2a", "2", "3a"), ("2", "2a", "3")])
+def test_sg2_a_restated_measure_that_drops_or_adds_the_parameter_is_refused(premise, ask, sa):
+    refused(local_given(premise, ask, sa), "QUESTION_LOCAL_GIVEN_UNVERIFIED")
+
+
+def test_sg2_a_fact_value_without_the_source_parameter_is_refused():
+    t = "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2a, SA vuông góc với (ABCD), SA = 3a. "
+    r = run(t + "Tính độ dài SC.", [
+        f("f1", "solid", "Cho hình chóp S.ABCD", solid="S.ABCD", solid_type="pyramid"),
+        f("f2", "polygon_shape", "đáy ABCD là hình vuông cạnh 2a", points=list("ABCD"), shape="square", value="2"),
+        f("f3", "perpendicular", "SA vuông góc với (ABCD)", points_a=["S", "A"], points_b=list("ABCD")),
+        f("f4", "length", "SA = 3a", points=["S", "A"], measure="segment", value="3a"),
+        q("q", "Tính độ dài SC.", quantity="length", points=["S", "C"])])
+    refused(r, "UNGROUNDED_VALUE")
+
+
+def cube_line_ref(text_edge, fact_edge):
+    cube = f"Cho hình lập phương ABCD.A'B'C'D' cạnh {text_edge}."
+    gt = "Tìm giao tuyến của (A'BD) và (ABCD)."
+    ask = "Tính khoảng cách từ C đến giao tuyến của (A'BD) và (ABCD)."
+    return run(f"{cube} {gt} {ask}", [
+        f("f1", "solid", cube, solid="ABCD.A'B'C'D'", solid_type="cube"),
+        f("f2", "length", cube, solid="ABCD.A'B'C'D'", measure="edge", value=fact_edge),
+        f("g", "intersection_line", gt, role="question", points_a=["A'", "B", "D"], points_b=list("ABCD")),
+        q("q", ask, quantity="distance", points_a=["C"], line_ref="g")])
+
+
+def test_sg2_cube_edge_with_a_parameter_on_the_line_ref_path():
+    served(cube_line_ref("2", "2"), {"q": "√2"})                     # (A'BD) ∩ (ABCD) = BD; d(C, BD) = half the diagonal
+    served(cube_line_ref("2a", "2a"), {"q": "a√2"})
+    refused(cube_line_ref("2a", "2"))                                # the closed slice compares (value², parameter)
+
+
+# ── SG-3: several values in one sentence, each bound to its own role noun ─────────────────────────────────────────────
+def regular(sentence, base, height):
+    return run(sentence + " Tính thể tích khối chóp S.ABCD.", [
+        f("f1", "solid", sentence, solid="S.ABCD", solid_type="pyramid", regular=True),
+        f("f2", "length", sentence, measure="base_edge", value=base, solid="S.ABCD"),
+        f("f3", "length", sentence, measure="height", value=height, solid="S.ABCD"),
+        q("q", "Tính thể tích khối chóp S.ABCD.", quantity="volume", solid="S.ABCD")])
+
+
+@pytest.mark.parametrize("sentence,base,height,v", [
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4a và chiều cao bằng 5a.", "4a", "5a", "80a³/3"),
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4 và chiều cao bằng 5.", "4", "5", "80/3"),
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4a, chiều cao bằng 5a.", "4a", "5a", "80a³/3"),
+    ("Cho hình chóp tứ giác đều S.ABCD có chiều cao bằng 5a và cạnh đáy bằng 4a.", "4a", "5a", "80a³/3"),
+])
+def test_sg3_each_number_binds_to_its_role(sentence, base, height, v):
+    served(regular(sentence, base, height), {"q": v})                 # V = ⅓ · 16 · 5
+
+
+@pytest.mark.parametrize("sentence,base,height,codes", [
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4a và chiều cao bằng 5a.", "5a", "4a", ("UNGROUNDED_VALUE",)),
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4a và chiều cao bằng 5a.", "4", "5a", ("UNGROUNDED_VALUE",)),
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy và chiều cao lần lượt bằng 4a, 5a.", "4a", "5a", ("AMBIGUOUS_VALUE_QUOTE",)),
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4a và chiều cao lớn hơn 5a.", "4a", "5a", ("AMBIGUOUS_VALUE_QUOTE",)),
+    ("Cho hình chóp tứ giác đều S.ABCD có chiều cao bằng 5a và chiều cao bằng 6a.", "4a", "5a", ("AMBIGUOUS_VALUE_QUOTE",)),
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4a và chiều cao bằng 5a hoặc 6a.", "4a", "5a", ()),
+    ("Nếu hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4a và chiều cao bằng 5a.", "4a", "5a", ("CONDITIONAL_CLAUSE",)),
+])
+def test_sg3_swapped_unbound_or_conflicting_values_are_refused(sentence, base, height, codes):
+    refused(regular(sentence, base, height), *codes)
+
+
+# ── SG-4: "đỉnh"/"điểm" before a named point, "với"/"và" between operands, in every goal contract ──────────────────────
+MID_S = dict(quantity="length", point_kind="midpoint", points=["B", "C"], points_b=["S"])
+TRI_SA = dict(quantity="area", point_kind="midpoint", points=["B", "C"], points_b=["S", "A"])
+
+
+@pytest.mark.parametrize("ask,kw,v", [
+    ("Tính độ dài đoạn nối đỉnh S với trung điểm của BC.", MID_S, "√14"),           # M(2,1,0): 4 + 1 + 9
+    ("Tính độ dài đoạn nối trung điểm của BC với đỉnh S.", MID_S, "√14"),
+    ("Tính độ dài đoạn nối trung điểm của BC và điểm S.", MID_S, "√14"),
+    ("Tính độ dài đoạn thẳng nối điểm S và trung điểm của BC.", MID_S, "√14"),
+    ("Tính diện tích tam giác tạo bởi trung điểm của BC với hai điểm S, A.", TRI_SA, "3√5/2"),   # ½|(2,1,0)×(0,0,3)|
+    ("Tính diện tích tam giác tạo bởi trung điểm của BC cùng với hai đỉnh S và A.", TRI_SA, "3√5/2"),
+])
+def test_sg4_wording_alternatives_bind_the_same_operands(ask, kw, v):
+    served(run(SQ + ask, SQF + [q("q", ask, **kw)]), {"q": v})
+
+
+@pytest.mark.parametrize("ask,kw,codes", [
+    ("Tính độ dài đoạn nối đỉnh S với trung điểm của BC.", {**MID_S, "points_b": ["A"]}, ("SOURCE_OBJECT_MISMATCH",)),
+    ("Tính độ dài đoạn nối đỉnh S với trung điểm của BC.", {**MID_S, "points": ["C", "D"]}, ("SOURCE_OBJECT_MISMATCH",)),
+    ("Tính độ dài đoạn nối đỉnh S với trung điểm của BC.",
+     {**MID_S, "point_kind": "centroid", "points": ["S", "B", "C"]}, ("SOURCE_OBJECT_MISMATCH",)),
+    ("Tính diện tích tam giác tạo bởi trung điểm của BC với hai điểm S, A.", {**TRI_SA, "points_b": ["S", "D"]},
+     ("SOURCE_OBJECT_MISMATCH",)),
+    ("Tính độ dài đoạn nối đỉnh S với trung điểm của BC.", {**MID_S, "points_b": ["S", "A"]}, ("FACT_INCOMPLETE",)),
+    ("Tính độ dài đoạn nối mặt phẳng (SAB) với trung điểm của BC.", MID_S, ("SOURCE_OBJECT_MISMATCH",)),
+    ("Không cần tính độ dài đoạn nối đỉnh S với trung điểm của BC.", MID_S, ()),
+])
+def test_sg4_unasked_or_mistyped_operands_are_refused(ask, kw, codes):
+    refused(run(SQ + ask, SQF + [q("q", ask, **kw)]), *codes)
+
+
+# ── SG-5: several requests, each answered or the whole problem refused ────────────────────────────────────────────────
+def asks(ask, items):
+    return run(SQ + ask, SQF + [q(i, ask, **kw) for i, kw in items])
+
+
+L = lambda *p: dict(quantity="length", points=list(p))  # noqa: E731
+
+
+@pytest.mark.parametrize("ask,items,answers", [
+    ("Tính độ dài SB và tính độ dài SC.", [("q1", L("S", "B")), ("q2", L("S", "C"))], {"q1": "√13", "q2": "√17"}),
+    ("Tính độ dài SB, đồng thời tính độ dài SC.", [("q1", L("S", "B")), ("q2", L("S", "C"))], {"q1": "√13", "q2": "√17"}),
+    ("Tính độ dài SB và hãy tính độ dài SC.", [("q1", L("S", "B")), ("q2", L("S", "C"))], {"q1": "√13", "q2": "√17"}),
+    ("Tính độ dài SB và SC.", [("q1", L("S", "B")), ("q2", L("S", "C"))], {"q1": "√13", "q2": "√17"}),
+    ("Tính độ dài SB. Tính độ dài SC.", [("q1", L("S", "B")), ("q2", L("S", "C"))], {"q1": "√13", "q2": "√17"}),
+    ("Tính độ dài SB, tính độ dài SC và tính độ dài SD.", [("q1", L("S", "B")), ("q2", L("S", "C")), ("q3", L("S", "D"))],
+     {"q1": "√13", "q2": "√17", "q3": "√13"}),
+    ("Tính độ dài SB và tính thể tích khối chóp S.ABCD.",
+     [("q1", L("S", "B")), ("q2", dict(quantity="volume", solid="S.ABCD"))], {"q1": "√13", "q2": "4"}),
+])
+def test_sg5_every_request_of_a_list_is_answered(ask, items, answers):
+    served(asks(ask, items), answers)
+
+
+@pytest.mark.parametrize("ask,items,codes", [
+    ("Tính độ dài SB và tính độ dài SC.", [("q1", L("S", "B"))], ("REQUEST_NOT_ANSWERED",)),        # no partial serve
+    ("Tính độ dài SB và tính độ dài SC.", [("q1", L("S", "B")), ("q2", L("S", "D"))], ("SOURCE_OBJECT_MISMATCH",)),
+    ("Tính độ dài SB và tính bình phương độ dài SC.", [("q1", L("S", "B")), ("q2", L("S", "C"))], ()),
+    ("Tính độ dài SB và tính độ dài SC nếu SC = 5.", [("q1", L("S", "B")), ("q2", L("S", "C"))], ()),
+    ("Tính độ dài SB và chứng minh SC vuông góc với BD.", [("q1", L("S", "B"))], ()),
+])
+def test_sg5_missing_unasked_or_conditional_requests_are_refused(ask, items, codes):
+    refused(asks(ask, items), *codes)
+
+
+# ── SG-6: line_ref with a four-vertex face, the intersection named as the target of the question ─────────────────────
+def distance_to_intersection(ask, a, b, point="A", consumer_line_ref=True):
+    target = dict(line_ref="g") if consumer_line_ref else dict(points_b=list("SCD"))
+    return run(SQ + ask, SQF + [f("g", "intersection_line", ask, role="question", points_a=list(a), points_b=list(b)),
+                                q("q", ask, quantity="distance", points_a=[point], **target)])
+
+
+@pytest.mark.parametrize("ask,a,b,point,v", [
+    ("Tính khoảng cách từ A đến giao tuyến của (SCD) và (ABCD).", "SCD", "ABCD", "A", "2"),       # line CD: y = 2, z = 0
+    ("Tính khoảng cách từ A đến giao tuyến của (SBC) và (ABCD).", "SBC", "ABCD", "A", "2"),       # line BC: x = 2, z = 0
+    ("Tính khoảng cách từ A đến giao tuyến của (SAB) và (SCD).", "SAB", "SCD", "A", "3"),         # through S, ∥ AB
+    ("Tính khoảng cách từ điểm A tới giao tuyến của (SCD) và (ABCD).", "SCD", "ABCD", "A", "2"),
+    ("Tính khoảng cách từ A đến giao tuyến của mặt phẳng (SCD) và mặt phẳng (ABCD).", "SCD", "ABCD", "A", "2"),
+    ("Tính khoảng cách từ S đến giao tuyến của (ABCD) và (SBC).", "ABCD", "SBC", "S", "√13"),     # 2² + 3²
+])
+def test_sg6_intersection_named_in_the_question_with_a_four_vertex_face(ask, a, b, point, v):
+    r = distance_to_intersection(ask, a, b, point)
+    served(r, {"q": v})
+    assert any(o["type"] == "line3" and o["id"].startswith("gt_") for o in r.scene3d["objects"])
+
+
+@pytest.mark.parametrize("ask,a,b,point,codes", [
+    ("Tính khoảng cách từ S đến giao tuyến của (ABC) và (ABCD).", "ABC", "ABCD", "S", ("CONTAINED_INFINITE_INTERSECTION",)),
+    ("Tính khoảng cách từ D đến giao tuyến của (SABC) và (SCD).", "SABC", "SCD", "D", ("NON_COPLANAR_POINTS",)),
+    ("Tính khoảng cách từ A đến giao tuyến của (SCD) và (ABCD).", "SBC", "ABCD", "A", ("SOURCE_OBJECT_MISMATCH",)),
+    ("Tính khoảng cách từ A đến giao tuyến của (SCD) và (ABCD).", "SCD", "ABCD", "B", ("SOURCE_OBJECT_MISMATCH",)),
+    ("Tính khoảng cách từ A đến giao tuyến của (SCD) và (ABCD) khi SA = 4.", "SCD", "ABCD", "A", ("CONDITIONAL_CLAUSE",)),
+    ("Không tính khoảng cách từ A đến giao tuyến của (SCD) và (ABCD).", "SCD", "ABCD", "A", ()),
+    ("Tính khoảng cách từ A đến giao tuyến của (SCD) và (ABCA).", "SCD", "ABCA", "A", ("FACT_INCOMPLETE",)),
+])
+def test_sg6_undetermined_degenerate_or_unbound_intersections_are_refused(ask, a, b, point, codes):
+    refused(distance_to_intersection(ask, a, b, point), *codes)
+
+
+def test_sg6_an_inline_intersection_needs_an_ask_that_reads_it():
+    ask = "Tính khoảng cách từ A đến giao tuyến của (SCD) và (ABCD)."
+    refused(distance_to_intersection(ask, "SCD", "ABCD", consumer_line_ref=False))
