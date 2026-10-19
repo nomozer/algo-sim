@@ -8,6 +8,11 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-19, `segment-witness-cache-invalidation` (same branch, corrects Wave 1):** `CACHE_VERSION = 127` (product
+`2635cbd6`) so the Wave 1 segment witness reaches previously cached problems. `CANONICAL_NEXT_ACTION` = owner decision
+`GO_MAIN_HYBRID_WAVE1` on the receipts in `evaluation/geometry/runs/segment-witness-cache-invalidation/handoff.md`; Wave 2
+is not opened before that.
+
 **2026-10-19, `hybrid-architecture-wave1-exact-certificates-planner` (local research from `main` `f0560449`, `BATCH_B_AND_ARCH_WAVE1_READY_FOR_REVIEW`):**
 Batch B conditional storage cleanup (`3/3` eligible worktrees removed without `--force`, reclaiming `5.2670 GiB` / `6.9562 GiB` cumulative), Wave 1A exact `Fraction` Gram-metric perpendicularity certificates (`ISSUE-ARCH-SCENE3D-ALTITUDE-CERTIFICATE-MISSING` resolved on branch; `certificates.py`, `quantity_annotations._gan_chung_chi_vuong_goc_doan`, `scene3d._TRUONG["segment3"]`, `scene3d-annotations.ts`, `10/10` backend + `34/34` frontend tests), and Wave 1B dependency-aware deterministic planner call ordering (`GAP-C1` / `ISSUE-RESEARCH-HYBRID-AUXILIARY-BEFORE-SOLID`; `planner.py::_sap_xep_phu_thuoc_loi_goi`, `10/10` tests, `41/41` Adapter `/2` fixtures preserved) are complete on `research/hybrid-architecture-wave1-exact-certificates-planner` (product `fd310cd9`; [`handoff.md`](evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/handoff.md)). Next action is owner review and integration/Wave 2 priority decision. `DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 126`, Hybrid product enablement NO-GO.
 

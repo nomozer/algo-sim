@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "segment-witness-cache-invalidation",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "0fd9ffe5e5e43ffd427bed1f629de540b3692ada807b74fdc4799baa3c1a3981",
+  "previous_candidate_hash": "534c726a4379700be0035752f4925d1ee5573e6d2db1718c07053f2e14ab7bfa",
+  "current_product_commit": "2635cbd672d6b146cbd237912ee9d254860e80cf",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized Wave 1 cache correction (`GO_WAVE1_CACHE127_FIX_AND_FINALIZATION`): `CACHE_VERSION` 126 -> 127 because Wave 1A changed SERVED Path A Scene3D content (`segment3.perpendicular_witness`) and genuine v126 rows were still valid cache hits; Path A witness provenance now states only what is checked (`formation_construct_height` / `prism_lateral_altitude`, `ENGINE_VERIFIED`). Supersedes the Wave 1 `cache_decision` NO_BUMP of the corrected layer. Default `LLM_ONLY`, `RESPONSE_CONTRACT = flat`, Adapter `/2` and the semantic environment hash `b1714b56…` are unchanged.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "BUMP 126 -> 127 (docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/cache/decision.json)",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements, the Wave 1 receipts at fd310cd9/77b05def and every candidate layer are preserved byte-for-byte; no rescore or new coverage claim.",
+    "live_requests": 0
+  }
+}

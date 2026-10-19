@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SEGMENT_WITNESS_CACHE_INVALIDATION
+
+REPORT = docs/evaluation/geometry/runs/segment-witness-cache-invalidation/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/segment-witness-cache-invalidation/
+CLASSIFICATION = CACHE_VERSION 126 -> 127 for Wave 1 served segment3.perpendicular_witness (genuine v126 rows from main f0560449 were stale valid hits; cache decision + probe in the Wave 1 run's cache/ directory) + Path A witness provenance labels corrected; LLM_ONLY default, Adapter /2, model surface unchanged, Hybrid product NO-GO
+CODE_COMMIT = 2635cbd6 (product); candidate freeze and T3 in the run handoff
+VERIFICATION = docs/evaluation/geometry/runs/segment-witness-cache-invalidation/handoff.md
+MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
+CORRECTS = HYBRID_ARCHITECTURE_WAVE1_EXACT_CERTIFICATES_PLANNER (cache decision NO_BUMP and candidate_divergence.json; its measurements at fd310cd9 / 77b05def unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_ARCHITECTURE_WAVE1_EXACT_CERTIFICATES_PLANNER
 
 REPORT = docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 222cd541 · 29a7b8c8 · 681e0473 · fd310cd9 (final product commit
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/authoritative-t3.json
 MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
 CORRECTS = HYBRID_OFFLINE_READINESS_FINALIZATION (candidate_divergence.json only; historical measurements unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = SEGMENT_WITNESS_CACHE_INVALIDATION (cache decision NO_BUMP superseded by 127; candidate identity layer; no historical measurement rewrite)
 
 ## WAVE_ID = HYBRID_OFFLINE_READINESS_FINALIZATION
 

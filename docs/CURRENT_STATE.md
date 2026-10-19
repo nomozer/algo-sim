@@ -5,7 +5,16 @@
 Branch `research/hybrid-architecture-wave1-exact-certificates-planner` from `main` = `origin/main` = `f0560449`;
 product `fd310cd9` (Wave 1B `681e0473`, Wave 1A `29a7b8c8`, initial Wave 1 `222cd541`; previous product `aa458cc3`),
 112 measured files / `534c726a4379700be0035752f4925d1ee5573e6d2db1718c07053f2e14ab7bfa`.
-Cache **126** (no bump required), `LLM_ONLY`, response `flat`, `ADAPTER_VERSION = "hybrid-preview-adapter/2"`, Hybrid product **NO-GO**, live calls **0**.
+At `fd310cd9` the cache stayed **126** ("no bump required"); pre-main verification found that wrong — see the correction below.
+
+**Correction — `segment-witness-cache-invalidation` (same branch, 2026-10-19):** product `2635cbd6` sets
+**`CACHE_VERSION = 127`**: genuine v126 rows written by `main` `f0560449` carry no `segment3.perpendicular_witness` and were
+still valid hits (an `/api/analyze` hit returns `envelope_json` without rebuilding the scene). It also corrects the Path A
+witness labels to what is checked (`formation_construct_height` / `prism_lateral_altitude`, `ENGINE_VERIFIED`; the old
+`regular_pyramid_altitude_to_base_center`/`DERIVED` was false for a given SA ⟂ (ABC) on a non-regular base). 112 measured
+files / `0fd9ffe5e5e43ffd427bed1f629de540b3692ada807b74fdc4799baa3c1a3981`; candidate, T3 and review receipts:
+[`segment-witness-cache-invalidation/handoff.md`](evaluation/geometry/runs/segment-witness-cache-invalidation/handoff.md).
+Cache **127**, `LLM_ONLY`, response `flat`, `ADAPTER_VERSION = "hybrid-preview-adapter/2"`, Hybrid product **NO-GO**, live calls **0**.
 
 - **Batch B Conditional Cleanup (`BATCH_B_CLEANUP_VERIFIED`):** Removed `3/3` eligible worktrees (`B2: hybrid-pre-main-hardening`, `B3: hybrid-preview-contract-hardening`, `B4: extraction-v2-record-correction`) via `git worktree remove` without `--force` (local branches preserved), reclaiming `5,655,400,448` bytes (`5.2670 GiB`) in Batch B (`7,469,133,824` bytes / `6.9562 GiB` cumulative with A1; `D:` free space `19,207,282,688` → `24,862,683,136` bytes / `23.1552 GiB`).
 - **Wave 1A — Exact Geometry Certificates (`ISSUE-ARCH-SCENE3D-ALTITUDE-CERTIFICATE-MISSING`):** Added `backend/app/simulation/geometry_functions/certificates.py` (`validate_gram_metric_spd`, `certify_line_plane_perpendicularity`, `certify_deductive_line_plane_perpendicularity`, `verify_perpendicular_witness`, `attach_scene_perpendicular_certificates`) certifying line-plane perpendicularity in exact `Fraction` Gram arithmetic ($\langle h, u \rangle_G = 0$, $\langle h, v \rangle_G = 0$, $\det(\text{Gram}(u, v)) > 0$, SPD metric), added Path A `segment3.perpendicular_witness` emission in `quantity_annotations._gan_chung_chi_vuong_goc_doan` + `scene3d._TRUONG["segment3"]` (`S1_side_height_volume` `SO`, `square_pyramid_envelope.json` `chieu_cao_SA`), and guarded `scene3d-annotations.ts` (`o.type === "point3"`) so `segment3` altitude witnesses render right-angle markers in `scene3d-view.tsx` without duplicating dashed projection lines (`10/10` backend pytest functions covering `17` certified perpendicular segments + `24/24` oblique rejections + `8` tamper vectors, `34/34` frontend annotation tests, `41/41` Adapter `/2` fixtures).
