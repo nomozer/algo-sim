@@ -112,6 +112,24 @@ def test_sg2_a_restated_measure_that_drops_or_adds_the_parameter_is_refused(prem
     refused(local_given(premise, ask, sa), "QUESTION_LOCAL_GIVEN_UNVERIFIED")
 
 
+@pytest.mark.parametrize("premise,ask,serve", [
+    # "cạnh a" (no coefficient): the shape reader keeps no value; the side token is read and compared all the same
+    ("a", "a", "a√2/2"), ("2", "a", None), ("a", "2a", None), ("a", "1", None)])
+def test_sg2_a_side_written_without_a_coefficient(premise, ask, serve):
+    t = f"Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh {premise}, SA vuông góc với (ABCD), SA = {premise}. "
+    a = f"Biết đáy ABCD là hình vuông cạnh {ask}, tính khoảng cách từ A đến (SBC)."
+    r = run(t + a, [f("f1", "solid", "Cho hình chóp S.ABCD", solid="S.ABCD", solid_type="pyramid"),
+                    f("f2", "polygon_shape", f"đáy ABCD là hình vuông cạnh {premise}", points=list("ABCD"), shape="square",
+                      value=premise),
+                    f("f3", "perpendicular", "SA vuông góc với (ABCD)", points_a=["S", "A"], points_b=list("ABCD")),
+                    f("f4", "length", f"SA = {premise}", points=["S", "A"], measure="segment", value=premise),
+                    q("q", a, quantity="distance", points_a=["A"], points_b=["S", "B", "C"])])
+    if serve:
+        served(r, {"q": serve})                                        # d²(A, (SBC)) = 1/2 at a = 1
+    else:
+        refused(r, "QUESTION_LOCAL_GIVEN_UNVERIFIED")
+
+
 def test_sg2_a_fact_value_without_the_source_parameter_is_refused():
     t = "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2a, SA vuông góc với (ABCD), SA = 3a. "
     r = run(t + "Tính độ dài SC.", [
@@ -184,6 +202,7 @@ TRI_SA = dict(quantity="area", point_kind="midpoint", points=["B", "C"], points_
     ("Tính độ dài đoạn thẳng nối điểm S và trung điểm của BC.", MID_S, "√14"),
     ("Tính diện tích tam giác tạo bởi trung điểm của BC với hai điểm S, A.", TRI_SA, "3√5/2"),   # ½|(2,1,0)×(0,0,3)|
     ("Tính diện tích tam giác tạo bởi trung điểm của BC cùng với hai đỉnh S và A.", TRI_SA, "3√5/2"),
+    ("Tính diện tích tam giác có ba đỉnh là trung điểm của BC, điểm S và điểm A.", TRI_SA, "3√5/2"),
 ])
 def test_sg4_wording_alternatives_bind_the_same_operands(ask, kw, v):
     served(run(SQ + ask, SQF + [q("q", ask, **kw)]), {"q": v})

@@ -503,8 +503,8 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
            PlanningTerm("AnswerArea", ("P", "Q", "R")), "goal_answer", "area",
            call=(("polygon", ("P", "Q", "R")),), goal="area",
            phrase=(
-               r"diện tích\s+(?:của\s+)?tam giác\s+(?:tạo bởi|có\s+(?:ba\s+)?đỉnh\s+(?:là\s+)?|qua)\s+(?:{D}){K}(?:hai\s+(?:điểm|đỉnh)\s+)?{N}(?P<t1>{P})\s*(?:,\s*|\s+và\s+){N}(?P<t2>{P})(?![\w'])",
-               r"diện tích\s+(?:của\s+)?tam giác\s+(?:tạo bởi|có\s+(?:ba\s+)?đỉnh\s+(?:là\s+)?|qua)\s+(?:hai\s+(?:điểm|đỉnh)\s+)?{N}(?P<t1>{P})\s*(?:,\s*|\s+và\s+){N}(?P<t2>{P}){K}(?:{D})",
+               r"diện tích\s+(?:của\s+)?tam giác\s+(?:tạo bởi|có\s+(?:ba\s+)?đỉnh(?:\s+là)?|qua)\s+(?:{D}){K}(?:hai\s+(?:điểm|đỉnh)\s+)?{N}(?P<t1>{P})\s*(?:,\s*|\s+và\s+){N}(?P<t2>{P})(?![\w'])",
+               r"diện tích\s+(?:của\s+)?tam giác\s+(?:tạo bởi|có\s+(?:ba\s+)?đỉnh(?:\s+là)?|qua)\s+(?:hai\s+(?:điểm|đỉnh)\s+)?{N}(?P<t1>{P})\s*(?:,\s*|\s+và\s+){N}(?P<t2>{P}){K}(?:{D})",
            ))),
     # Slice 1 (run `hybrid-section-slice`): cửa vào cho phép dựng engine chung ĐÃ có (`construct_section`, `intersect_plane_plane`).
     _F("section", SectionArgs, "construct", "Dựng THIẾT DIỆN của một khối với mặt phẳng qua ba điểm đã có tên.",
@@ -2110,14 +2110,31 @@ def _gia_tri_rang_buoc(r: Any, de: str) -> tuple[Fraction, bool] | None:
     return _doc(toks[-1]) if toks else None
 
 
+#: "… hình vuông cạnh a": the side right after a regular-base span the reader left without a value (no coefficient).
+_CANH_SAU_DAY = re.compile(r"\s*,?\s*(?:có\s+)?(?:độ\s+dài\s+)?cạnh\s*(?:(?:bằng|=|là)\s*)?", re.IGNORECASE)
+_DAY_CO_CANH = ("base_square", "base_equilateral", "base_regular_hexagon")
+
+
 def _token_rang_buoc(r: Any, de: str) -> list[re.Match]:
-    """Source number tokens starting inside a shape assertion's span with the coefficient the reader kept."""
+    """Source number tokens of a shape assertion's measure: those starting inside its span with the coefficient the reader
+    kept, or — when the reader kept no value of a regular base — the side written right after the span ("cạnh a")."""
     from ..geometry.radical import display
 
     if r.value is None:
-        return []
+        m = _CANH_SAU_DAY.match(de, r.span[1]) if r.kind in _DAY_CO_CANH else None
+        s = _SO.match(de, m.end()) if m else None
+        return [s] if s and _doc(s) is not None else []
     want, (a, b) = doc_so(display(r.value))[0], r.span
     return [m for m in _SO.finditer(de, a) if m.start() < b and (x := _doc(m)) is not None and x[0] == want]
+
+
+def _canh_khop(r: Any, side: str | None, de: str) -> bool:
+    """The call's side equals the measure the source states for this assertion — (value², parameter) both — or the
+    source states none. A measure the reader kept but whose token is not found never matches (fail closed)."""
+    gv = _gia_tri_rang_buoc(r, de)
+    if gv is None and r.value is None:
+        return True
+    return side is not None and gv is not None and gv == doc_so(side)
 
 
 def _span_rang_buoc(r: Any, de: str) -> tuple[int, int]:
@@ -2147,7 +2164,7 @@ def _rang_buoc_cuc_bo_khop(r: Any, c: LoiGoi, de: str) -> bool:
     if r.kind in ("base_square", "base_equilateral", "base_regular_hexagon") and c.fn == "regular_polygon":
         n = {"base_square": 4, "base_equilateral": 3, "base_regular_hexagon": 6}[r.kind]
         return (len(a.vertices) == n and _cung_da_giac(list(ids(a.vertices)), list(e))
-                and (r.value is None or a.side is not None and _gia_tri_rang_buoc(r, de) == doc_so(a.side)))
+                and _canh_khop(r, a.side, de))
     if r.kind == "base_rectangle" and c.fn == "rectangle":
         return _cung_da_giac(list(ids(a.vertices)), list(e))
     return False
@@ -3350,9 +3367,9 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
             return False
         # cube / cube_edge (M4): square base; the stated edge is the base side — (value², parameter) both compared (SG-2).
         # Same structure, other value: the call's value is not the source's — the value refusal, not an unread premise.
-        if kind == 'cuboid' or assertion.value is None or d.args.side is None:
-            return kind == 'cuboid' or assertion.value is None
-        if _gia_tri_rang_buoc(assertion, de) != doc_so(d.args.side):
+        if kind == 'cuboid' or (assertion.value is None and _gia_tri_rang_buoc(assertion, de) is None):
+            return True
+        if not _canh_khop(assertion, d.args.side, de):
             raise TuChoi('UNGROUNDED_VALUE', f'{d.id}: cạnh {d.args.side} không phải số đo nguồn nêu cho khối', (d.id,))
         return True
     for assertion in doc_rang_buoc(de):

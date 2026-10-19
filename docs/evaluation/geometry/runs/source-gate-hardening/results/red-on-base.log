@@ -19,6 +19,8 @@ E        +  where 'FACT_INCOMPLETE' = KetQuaTuyen(status='REFUSED', code='FACT_I
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg1_spoofed_or_swapped_segment_values_are_refused[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh ch\u1eef nh\u1eadt v\u1edbi AB = 2.-lengths0-codes0]
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg1_spoofed_or_swapped_segment_values_are_refused[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh ch\u1eef nh\u1eadt v\u1edbi AB = 2 v\xe0 BC = 3.-lengths1-codes1]
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg2_a_restated_measure_that_drops_or_adds_the_parameter_is_refused[2a-2-3a]
+PASSED tests/geometry/test_source_gate_hardening.py::test_sg2_a_side_written_without_a_coefficient[a-2a-None]
+PASSED tests/geometry/test_source_gate_hardening.py::test_sg2_a_side_written_without_a_coefficient[a-1-None]
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg2_a_fact_value_without_the_source_parameter_is_refused
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg3_swapped_unbound_or_conflicting_values_are_refused[Cho h\xecnh ch\xf3p t\u1ee9 gi\xe1c \u0111\u1ec1u S.ABCD c\xf3 c\u1ea1nh \u0111\xe1y v\xe0 chi\u1ec1u cao l\u1ea7n l\u01b0\u1ee3t b\u1eb1ng 4a, 5a.-4a-5a-codes2]
 PASSED tests/geometry/test_source_gate_hardening.py::test_sg3_swapped_unbound_or_conflicting_values_are_refused[Cho h\xecnh ch\xf3p t\u1ee9 gi\xe1c \u0111\u1ec1u S.ABCD c\xf3 c\u1ea1nh \u0111\xe1y b\u1eb1ng 4a v\xe0 chi\u1ec1u cao l\u1edbn h\u01a1n 5a.-4a-5a-codes3]
@@ -48,6 +50,8 @@ FAILED tests/geometry/test_source_gate_hardening.py::test_sg1_a_role_noun_ground
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg1_a_role_noun_grounds_only_segments_of_that_role[C\u1ea1nh b\xean b\u1eb1ng 2.-seg1-codes1]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg2_symbolic_local_given_is_read_like_its_numeric_twin
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg2_a_restated_measure_that_drops_or_adds_the_parameter_is_refused[2-2a-3]
+FAILED tests/geometry/test_source_gate_hardening.py::test_sg2_a_side_written_without_a_coefficient[a-a-a\u221a2/2]
+FAILED tests/geometry/test_source_gate_hardening.py::test_sg2_a_side_written_without_a_coefficient[2-a-None]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg2_cube_edge_with_a_parameter_on_the_line_ref_path
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg3_each_number_binds_to_its_role[Cho h\xecnh ch\xf3p t\u1ee9 gi\xe1c \u0111\u1ec1u S.ABCD c\xf3 c\u1ea1nh \u0111\xe1y b\u1eb1ng 4a v\xe0 chi\u1ec1u cao b\u1eb1ng 5a.-4a-5a-80a\xb3/3]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg3_each_number_binds_to_its_role[Cho h\xecnh ch\xf3p t\u1ee9 gi\xe1c \u0111\u1ec1u S.ABCD c\xf3 c\u1ea1nh \u0111\xe1y b\u1eb1ng 4 v\xe0 chi\u1ec1u cao b\u1eb1ng 5.-4-5-80/3]
@@ -61,6 +65,7 @@ FAILED tests/geometry/test_source_gate_hardening.py::test_sg4_wording_alternativ
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg4_wording_alternatives_bind_the_same_operands[T\xednh \u0111\u1ed9 d\xe0i \u0111o\u1ea1n th\u1eb3ng n\u1ed1i \u0111i\u1ec3m S v\xe0 trung \u0111i\u1ec3m c\u1ee7a BC.-kw3-\u221a14]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg4_wording_alternatives_bind_the_same_operands[T\xednh di\u1ec7n t\xedch tam gi\xe1c t\u1ea1o b\u1edfi trung \u0111i\u1ec3m c\u1ee7a BC v\u1edbi hai \u0111i\u1ec3m S, A.-kw4-3\u221a5/2]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg4_wording_alternatives_bind_the_same_operands[T\xednh di\u1ec7n t\xedch tam gi\xe1c t\u1ea1o b\u1edfi trung \u0111i\u1ec3m c\u1ee7a BC c\xf9ng v\u1edbi hai \u0111\u1ec9nh S v\xe0 A.-kw5-3\u221a5/2]
+FAILED tests/geometry/test_source_gate_hardening.py::test_sg4_wording_alternatives_bind_the_same_operands[T\xednh di\u1ec7n t\xedch tam gi\xe1c c\xf3 ba \u0111\u1ec9nh l\xe0 trung \u0111i\u1ec3m c\u1ee7a BC, \u0111i\u1ec3m S v\xe0 \u0111i\u1ec3m A.-kw6-3\u221a5/2]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg5_every_request_of_a_list_is_answered[T\xednh \u0111\u1ed9 d\xe0i SB v\xe0 t\xednh \u0111\u1ed9 d\xe0i SC.-items0-answers0]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg5_every_request_of_a_list_is_answered[T\xednh \u0111\u1ed9 d\xe0i SB, \u0111\u1ed3ng th\u1eddi t\xednh \u0111\u1ed9 d\xe0i SC.-items1-answers1]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg5_every_request_of_a_list_is_answered[T\xednh \u0111\u1ed9 d\xe0i SB v\xe0 h\xe3y t\xednh \u0111\u1ed9 d\xe0i SC.-items2-answers2]
@@ -79,4 +84,4 @@ FAILED tests/geometry/test_source_gate_hardening.py::test_sg6_undetermined_degen
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg6_undetermined_degenerate_or_unbound_intersections_are_refused[T\xednh kho\u1ea3ng c\xe1ch t\u1eeb A \u0111\u1ebfn giao tuy\u1ebfn c\u1ee7a (SCD) v\xe0 (ABCD).-SBC-ABCD-A-codes2]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg6_undetermined_degenerate_or_unbound_intersections_are_refused[T\xednh kho\u1ea3ng c\xe1ch t\u1eeb A \u0111\u1ebfn giao tuy\u1ebfn c\u1ee7a (SCD) v\xe0 (ABCD).-SCD-ABCD-B-codes3]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg6_undetermined_degenerate_or_unbound_intersections_are_refused[T\xednh kho\u1ea3ng c\xe1ch t\u1eeb A \u0111\u1ebfn giao tuy\u1ebfn c\u1ee7a (SCD) v\xe0 (ABCD) khi SA = 4.-SCD-ABCD-A-codes4]
-39 failed, 24 passed in 3.04s
+42 failed, 26 passed in 2.76s
