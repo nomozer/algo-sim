@@ -863,11 +863,15 @@ _LOAI_KHOI = {"chóp": ("pyramid", "regular_pyramid"), "tứ diện": ("pyramid"
 #: Number-free clauses of the grammar: "SA là đường cao của hình chóp" (altitude statement).
 _C_DCAO = re.compile(rf"{_L1}{_L1}\s+là\s+đường\s+cao(?:\s+của\s+(?:(?:hình|khối)\s+)?(?:chóp|lăng\s+trụ)(?:\s+{_NHAN}(?:\.{_NHAN})?)?)?"
                      rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
-#: A number-free clause that only DEFINES a new named point ("gọi O là tâm của hình vuông ABCD", "M là điểm trên cạnh CD")
-#: cannot re-attribute a role of its sentence — unless it itself names a height/side role or points back ("đó", "này").
-_DINH_NGHIA = re.compile(rf"(?:gọi\s+)?{_L1}(?:\s*,\s*{_L1})*\s+(?:lần\s+lượt\s+)?là\s+", re.IGNORECASE)
-_VAI_TRONG_MO = re.compile(rf"(?<!\w)(?:chiều\s+cao|đường\s+cao|cạnh(?!\s+{_L1}{_L1}))(?!\w)|(?<!\w)(?:đó|này|ấy)(?!\w)",
-                           re.IGNORECASE)
+#: Number-free CLOSED point definition (review round 4: no word-list exemption): "(gọi) X là trung điểm / tâm / trọng tâm /
+#: giao điểm / hình chiếu (vuông góc) … của <labelled object>", "X là điểm (di động) trên/thuộc cạnh XY" — the whole clause.
+_DOI_TUONG_NHAN = (rf"(?:(?:cạnh|đoạn(?:\s+thẳng)?|đường\s+thẳng|tam\s+giác|hình\s+vuông|hình\s+chữ\s+nhật|mặt\s+phẳng|"
+                   rf"mặt\s+đáy|đáy|mp)\s*)?\(?{_NHAN}\)?")
+_C_DIEM = re.compile(rf"(?:gọi\s+)?{_L1}\s+là\s+(?:(?:trung\s+điểm|tâm|trọng\s+tâm)\s+(?:của\s+)?{_DOI_TUONG_NHAN}"
+                     rf"|giao\s+điểm\s+(?:của\s+)?{_DOI_TUONG_NHAN}\s+(?:và|với)\s+{_DOI_TUONG_NHAN}"
+                     rf"|hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}"
+                     rf"|điểm(?:\s+di\s+động)?\s+(?:nằm\s+)?(?:trên|thuộc)\s+{_DOI_TUONG_NHAN})"
+                     rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
 _C_DOAN = re.compile(rf"(?:có\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?:cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo)\s+)?"
                      rf"(?P<seg>{_L1}{_L1})(?![\w'])"
                      rf"(?:\s*=\s*{_L1}{_L1}(?![\w']))*\s*(?:=|bằng|(?:có\s+)?độ\s+dài(?:\s+bằng)?)\s*{_so_nhom('ss')}",
@@ -876,7 +880,18 @@ _C_VUONG = re.compile(rf"(?:(?:có\s+)?(?:cạnh\s+bên|đường\s+thẳng)\s+)
                       rf"(?:mặt\s+phẳng\s+|mp\s*)?(?:\({_NHAN}\)|{_L1}{_L1}\s+và\s+{_L1}{_L1}(?![\w'])(?!\s*(?:=|bằng))|{_NHAN}(?![\w'])"
                       rf"|(?:mặt\s+(?:phẳng\s+)?)?đáy(?!\w))", re.IGNORECASE)
 #: "cạnh CD" (a named edge) continues its clause; only a role "cạnh" ("… cạnh 2", "… cạnh bên") opens a new one
-_C_NOI = re.compile(rf"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=(?:có|với)\s|cạnh\s+(?!{_L1}{_L1}(?![\w'])))", re.IGNORECASE)
+_C_NOI = re.compile(rf"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=có\s|với\s+(?:cạnh|chiều\s+cao|đường\s+cao)(?!\w)"
+                    rf"|cạnh\s+(?!{_L1}{_L1}(?![\w'])))", re.IGNORECASE)
+#: Number-free CLOSED premise clauses (review round 4): a face ⊥ a face, the shape of a named triangle/face (optionally
+#: lying in a plane ⊥ the base), equal named segments. They bind nothing; they only keep their sentence parseable.
+_MAT_NHAN = rf"(?:(?:mặt\s+bên|mặt\s+phẳng|mặt|mp)\s*\(?{_L1}{_L1}{_NHAN}\)?|\({_L1}{_L1}{_NHAN}\))"
+_MAT_DICH = rf"(?:mặt\s+phẳng\s+|mặt\s+|mp\s*)?(?:\({_NHAN}\)|{_NHAN}(?![\w'])|đáy(?!\w))"
+_C_MAT = re.compile(rf"(?:{_MAT_NHAN}\s+(?:và\s+)?(?:nằm\s+trong\s+mặt\s+phẳng\s+)?vuông\s+góc\s+với\s+{_MAT_DICH}"
+                    rf"|(?:(?:mặt\s+bên|tam\s+giác)\s+)?{_L1}{_L1}{_NHAN}\s+(?:là\s+(?:một\s+)?)?(?:tam\s+giác\s+)?"
+                    rf"(?:đều|vuông(?:\s+cân)?(?:\s+tại\s+{_L1})?|cân(?:\s+tại\s+{_L1})?)(?![\w'])"
+                    rf"(?:\s+(?:và\s+)?(?:nằm\s+)?trong\s+mặt\s+phẳng\s+vuông\s+góc\s+với\s+{_MAT_DICH})?"
+                    rf"|{_L1}{_L1}(?:\s*=\s*{_L1}{_L1})+(?![\w'])(?!\s*=))"
+                    rf"(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
 _C_DAU = re.compile(r"\s*(?:biết\s+(?:rằng\s+)?)?", re.IGNORECASE)
 _C_HET = re.compile(r"\s*[.;]?\s*")
 _DANH_VAI = re.compile(r"(?<!\w)(?:cạnh|chiều\s+cao|đường\s+cao)(?!\w)", re.IGNORECASE)
@@ -889,12 +904,11 @@ def _nhan_khoi(k: LoiGoi) -> set[str]:
 
 def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
     """Clauses of sentence `s` when ALL of it parses, else None. A clause outside the grammar is tolerated only when it
-    carries no number ("SA ⊥ (ABC)", "SA là đường cao của hình chóp"); it is recorded as opaque ("mo") and no role or
-    unlabelled base AFTER it is bound (`_lien_ket_cau`)."""
+    carries no number; it is recorded as opaque ("mo") and its whole sentence then binds no role (`_lien_ket_cau`)."""
     p, out = _C_DAU.match(s).end(), []
     while True:
-        for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dcao", _C_DCAO), ("vuong", _C_VUONG), ("doan", _C_DOAN),
-                         ("vai", _C_VAI)):
+        for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dcao", _C_DCAO), ("diem", _C_DIEM), ("mat", _C_MAT),
+                         ("vuong", _C_VUONG), ("doan", _C_DOAN), ("vai", _C_VAI)):
             if m := rx.match(s, p):
                 out.append((kind, m))
                 p = m.end()
@@ -904,7 +918,7 @@ def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
             seg = s[p:j.start()] if j else s[p:].rstrip(" .;")
             if not seg.strip() or any(_doc(x) is not None for x in _SO.finditer(seg)):
                 return None
-            out.append(("dinh_nghia" if _DINH_NGHIA.match(seg) and not _VAI_TRONG_MO.search(seg) else "mo", None))
+            out.append(("mo", None))
             p += len(seg)
         if _C_HET.fullmatch(s, p):
             return out
@@ -923,10 +937,10 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
     while p < b:
         x, y = _bien_cau(de, p)
         cau = _phan_tich_cau(de[x:y])
-        # review round 3: an opaque clause may re-attribute a role written BEFORE it too ("…, đường cao bằng 5, hạ từ S
-        # xuống cạnh AB"): any opaque clause other than a plain point definition unbinds every unlabelled role of the
-        # sentence (solid roles, an unlabelled base). Labelled bindings ("đáy ABC là … cạnh n", "SA = n") stay.
-        if cau is not None:
+        # reviews round 3–4: an opaque clause may re-attribute ANY role of its sentence, before or after it ("…, đường cao
+        # bằng 5, H là chân của nó trên cạnh AB", "…cạnh 3, nhưng đó là cạnh của tam giác khác"): a sentence with any
+        # opaque clause binds nothing. No exemption list — point definitions are closed grammar clauses (`_C_DIEM`).
+        if cau is not None and not any(kind == "mo" for kind, _m in cau):
             khoi, moi = (khoi_goi[0] if len(khoi_goi) == 1 else None), False
             mo = any(kind == "mo" for kind, _m in cau)
             for kind, m in cau:
@@ -951,7 +965,8 @@ def _cua_khop(m: re.Match, khoi: LoiGoi | None) -> bool:
     """A role clause's "của <solid>" names the bound solid itself: its kind, and its label when one is written."""
     if not m["qn"]:
         return True
-    if khoi is None or khoi.fn not in _LOAI_KHOI.get(re.sub(r"\s+", " ", m["qn"].lower()), ()):
+    tu = re.sub(r"\s+", " ", m["qn"].lower())
+    if khoi is None or khoi.fn not in _LOAI_KHOI.get(tu, ()) or tu == "tứ diện" and len(khoi.args.base) != 3:
         return False
     return not m["ql"] or set(re.findall(r"[A-Z][0-9]*'?", m["ql"])) == _nhan_khoi(khoi)
 

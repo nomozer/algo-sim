@@ -425,6 +425,36 @@ def test_review_round3_height_of_another_solid_in_its_own_sentence():
                                      q("q", ask, quantity="volume", solid="S.ABCD")]))
 
 
+@pytest.mark.parametrize("sentence", [   # review round 4: any clause outside the closed grammar unbinds the sentence
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, đường cao bằng 5, H là chân của nó trên cạnh AB.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, đường cao bằng 5 và M là điểm nó hạ xuống trên AB.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, đường cao bằng 5, H là chân của đoạn vừa nêu trên cạnh AB.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, đường cao bằng 5, H là chân của đường vuông góc hạ từ S xuống AB.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao của tứ diện bằng 5.",
+])
+def test_review_round4_no_exemption_for_unread_clauses(sentence):
+    refused(regular(sentence, "4", "5"), "UNGROUNDED_VALUE", "AMBIGUOUS_VALUE_QUOTE")
+
+
+@pytest.mark.parametrize("tail", [", nhưng đó là cạnh của tam giác khác", ", đó là ảnh thu nhỏ"])
+def test_review_round4_a_labelled_base_side_is_unbound_by_an_unread_clause(tail):
+    s = f"Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 3{tail}, SA vuông góc với (ABC) và SA = 2."
+    ask = "Tính thể tích khối chóp S.ABC."
+    refused(run(s + " " + ask, [f("f1", "solid", s, solid="S.ABC", solid_type="pyramid"),
+                                f("f2", "polygon_shape", s, points=list("ABC"), shape="equilateral_triangle", value="3"),
+                                f("f3", "perpendicular", s, points_a=["S", "A"], points_b=list("ABC")),
+                                f("f4", "length", s, points=["S", "A"], measure="segment", value="2"),
+                                q("q", ask, quantity="volume", solid="S.ABC")]))
+
+
+@pytest.mark.parametrize("sentence,v", [   # controls: closed point definitions keep the sentence readable
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao bằng 5, H là trung điểm của cạnh AB.", "80/3"),
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao bằng 5, gọi O là tâm của đáy ABCD.", "80/3"),
+])
+def test_review_round4_closed_point_definitions_keep_roles(sentence, v):
+    served(regular(sentence, "4", "5"), {"q": v})
+
+
 @pytest.mark.parametrize("sentence,v", [   # controls: the solid's own roles still bind
     ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao của hình chóp bằng 5.", "80/3"),
     ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao của hình chóp S.ABCD bằng 5.", "80/3"),

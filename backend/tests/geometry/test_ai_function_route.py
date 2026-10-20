@@ -53,6 +53,11 @@ def _len_sq(scene, a, b):
 #: V = (3√3/2 · 2²) · 3 = 18√3 (hand-derived). Both locked cases share that text and calls.
 KET_CUC_HIEN_HANH = {cid: {"status": "SERVED", "answers": {"c4": "18√3"}}
                      for cid in ("N13_HEIGHT_QUOTE_TWO_NUMBERS_NO_LABEL", "G7_AMBIGUOUS_VALUE_QUOTE")}
+#: Same verdict (REFUSED), one layer earlier: a sentence with a clause outside the closed role grammar ("AH là đường cao của
+#: tam giác ABC", "SA không vuông góc với (ABC)") binds no role value, so the base side is refused at its value
+#: (run `source-gate-hardening`, review rounds 3–4).
+KET_CUC_HIEN_HANH |= {cid: {"status": "REFUSED", "code": "UNGROUNDED_VALUE"}
+                      for cid in ("N03_TRIANGLE_ALTITUDE_NOT_PYRAMID", "N07_NEGATION_OUTSIDE_QUOTE")}
 
 
 def _kiem(c, r):
