@@ -890,7 +890,7 @@ def test_p5_p6_development_corpus_and_demos_oracle() -> None:
     for demo_meta in summary["demos"]:
         demo_path = run_dir / demo_meta["file"]
         assert demo_path.exists()
-        raw_bytes = demo_path.read_bytes()
+        raw_bytes = demo_path.read_bytes().replace(b"\r\n", b"\n")
         assert hashlib.sha256(raw_bytes).hexdigest() == demo_meta["sha256"]
 
     for case in corpus["cases"]:
