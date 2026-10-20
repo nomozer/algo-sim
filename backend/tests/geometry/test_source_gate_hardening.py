@@ -627,3 +627,72 @@ def test_review_t3c_a_consistent_unlabelled_base_noun_is_still_served(sentence, 
         f("f2", "length", sentence, measure="base_edge", value=base, solid=solid),
         f("f3", "length", sentence, measure="height", value=height, solid=solid),
         q("q", ask, quantity="volume", solid=solid)]), {"q": v})
+
+
+# ── review of 6f58c0f5: the vertex-count check is a SOURCE-level gate, whatever path grounds the values ─────────────────
+PRISM_T3 = "Cho lăng trụ đứng ABC.A'B'C' có AA' = 3. "
+ASK_T3 = "Tính thể tích khối lăng trụ ABC.A'B'C'."
+
+
+def prism_t3(body, extra, solid_quotes=("Cho lăng trụ đứng ABC.A'B'C'",)):
+    return run(PRISM_T3 + body + ASK_T3, [
+        {"id": "f1", "kind": "solid", "role": "premise", "quotes": list(solid_quotes), "solid": "ABC.A'B'C'",
+         "solid_type": "prism", "right": True},
+        f("f4", "length", "AA' = 3", points=["A", "A'"], measure="segment", value="3"), *extra,
+        q("q", ASK_T3, quantity="volume", solid="ABC.A'B'C'")])
+
+
+def test_review_t3d_contradicting_base_noun_with_labelled_segment_values():
+    s = "Đáy ABC là tam giác đều và đáy là hình vuông, AB = 2. "
+    refused(prism_t3(s, [f("f2", "polygon_shape", s.strip(), points=list("ABC"), shape="equilateral_triangle"),
+                         f("f3", "length", s.strip(), points=["A", "B"], measure="segment", value="2")]))
+    s1, s2 = "Đáy ABC là tam giác đều và đáy là hình vuông.", "AB = 2."
+    refused(prism_t3(f"{s1} {s2} ", [f("f2", "polygon_shape", s1, points=list("ABC"), shape="equilateral_triangle"),
+                                     f("f3", "length", s2, points=["A", "B"], measure="segment", value="2")]))
+
+
+def test_review_t3d_contradicting_base_noun_in_another_quoted_sentence():
+    s1, s2 = "Đáy ABC là tam giác đều cạnh 2.", "Đáy là hình vuông."
+    refused(prism_t3(f"{s1} {s2} ", [f("f2", "polygon_shape", s1, points=list("ABC"), shape="equilateral_triangle",
+                                       value="2")], solid_quotes=("Cho lăng trụ đứng ABC.A'B'C'", s2)))
+    refused(prism_t3(f"{s1} {s2} ", [{"id": "f2", "kind": "polygon_shape", "role": "premise", "quotes": [s1, s2],
+                                      "points": list("ABC"), "shape": "equilateral_triangle", "value": "2"}]))
+
+
+@pytest.mark.parametrize("s,solid,segs,ask,quantity", [
+    ("Cho hình chóp tam giác đều S.ABC có đáy là hình vuông, AB = 2 và SA = 3.", "S.ABC", [("AB", "2"), ("SA", "3")],
+     "Tính thể tích khối chóp S.ABC.", {"quantity": "volume", "solid": "S.ABC"}),
+    ("Cho hình chóp tứ giác đều S.ABCD có đáy là tam giác đều, AB = 4 và SA = 5.", "S.ABCD", [("AB", "4"), ("SA", "5")],
+     "Tính độ dài SC.", {"quantity": "length", "points": ["S", "C"]}),
+])
+def test_review_t3d_regular_pyramid_with_labelled_segments_and_a_contradicting_base(s, solid, segs, ask, quantity):
+    refused(run(f"{s} {ask}", [f("f1", "solid", s, solid=solid, solid_type="pyramid", regular=True),
+                               *[f(f"l{i}", "length", s, points=list(p), measure="segment", value=v)
+                                 for i, (p, v) in enumerate(segs)],
+                               q("q", ask, **quantity)]))
+
+
+@pytest.mark.parametrize("second", ["Đáy là hình vuông.", "Mặt đáy của nó là hình vuông."])
+def test_review_t3d_regular_pyramid_with_a_contradicting_second_sentence(second):
+    s1 = "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 2 và chiều cao bằng 3."
+    ask = "Tính thể tích khối chóp S.ABC."
+    refused(run(f"{s1} {second} {ask}", [
+        {"id": "f1", "kind": "solid", "role": "premise", "quotes": [s1, second], "solid": "S.ABC", "solid_type": "pyramid",
+         "regular": True},
+        f("f2", "length", s1, measure="base_edge", value="2", solid="S.ABC"),
+        f("f3", "length", s1, measure="height", value="3", solid="S.ABC"),
+        q("q", ask, quantity="volume", solid="S.ABC")]))
+
+
+def test_review_t3d_consistent_wordings_still_served():
+    s1, s2 = "Đáy ABC là tam giác đều.", "AB = 2."
+    served(prism_t3(f"{s1} {s2} ", [f("f2", "polygon_shape", s1, points=list("ABC"), shape="equilateral_triangle"),
+                                    f("f3", "length", s2, points=["A", "B"], measure="segment", value="2")]), {"q": "3√3"})
+    s1 = "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 2 và chiều cao bằng 3."
+    ask = "Tính thể tích khối chóp S.ABC."
+    served(run(f"{s1} Đáy là tam giác đều. {ask}", [
+        {"id": "f1", "kind": "solid", "role": "premise", "quotes": [s1, "Đáy là tam giác đều."], "solid": "S.ABC",
+         "solid_type": "pyramid", "regular": True},
+        f("f2", "length", s1, measure="base_edge", value="2", solid="S.ABC"),
+        f("f3", "length", s1, measure="height", value="3", solid="S.ABC"),
+        q("q", ask, quantity="volume", solid="S.ABC")]), {"q": "√3"})

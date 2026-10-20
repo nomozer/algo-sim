@@ -1028,6 +1028,48 @@ def _so_dinh_cau_khop(cau: list[tuple[str, re.Match | None]], khoi_goi: list[Loi
     return True
 
 
+_DEM = r"(?i:(?:tam|tứ|ngũ|lục)\s+giác|hình\s+vuông)(?!\w)"
+_KHOI_DEM = re.compile(rf"(?i:(?:hình|khối)\s+(?P<kn>chóp|lăng\s+trụ))(?P<km>(?i:\s+(?:đứng|đều|xiên|(?:tam|tứ|ngũ|lục)\s+giác)"
+                       rf"(?!\w))*)\s+(?P<k>{_NHAN}(?:\.{_NHAN})?)(?![\w'])")
+_KHOI_4 = re.compile(rf"(?i:hộp|lập\s+phương)(?:\s+(?i:chữ\s+nhật))?\s+{_NHAN}\.{_NHAN}(?![\w'])")
+_TU_DIEN = re.compile(rf"(?i:tứ\s+diện)(?:\s+(?i:đều))?\s+{_NHAN}(?![\w'])")
+_DAY_DEM = re.compile(rf"(?<!\w)(?i:(?:mặt\s+)?đáy)(?:\s+\(?(?P<d>{_NHAN})\)?(?![\w']))?"
+                      rf"(?:\s+(?i:của\s+(?:nó|(?:hình|khối)\s+(?:chóp|lăng\s+trụ)))(?:\s+{_NHAN}(?:\.{_NHAN})?)?)?"
+                      rf"\s+(?i:(?:(?:cũng|đều)\s+)?là\s+(?:một\s+)?)?{_DEM}")
+_DA_GIAC_NHAN = re.compile(rf"{_DEM}(?:\s+(?i:đều))?\s+\(?(?P<p>{_L1}{_L1}{_NHAN}?)(?![\w'.])")
+_NHAN_LA_DA_GIAC = re.compile(rf"(?<![\w'.])(?P<p>{_L1}{_L1}{_NHAN}?)\s+(?i:là\s+(?:một\s+)?){_DEM}")
+
+
+def _kiem_so_dinh_nguon(de: str) -> None:
+    """Source-level vertex-count gate (reviews of the T3 fix, rounds 1-4): every count-bearing shape noun the source
+    attaches to a solid ("hình chóp tam giác đều S.ABC"), to a base — labelled, or unlabelled and owned by the source's
+    solid(s) ("đáy là hình vuông", "mặt đáy của nó là …") — or to a named polygon ("hình vuông ABC", "ABC là tam giác")
+    names as many vertices as that polygon. Checked on the WHOLE text, whatever a value's grounding path."""
+    def dem(lb: str) -> int:
+        return len(re.findall(r"[A-Z][0-9]*'?", lb))
+    so_day: set[int] = set()
+    for m in _KHOI_DEM.finditer(de):
+        dau, _, sau = m["k"].partition(".")
+        n = dem(dau) if "lăng" in m["kn"].lower() else (dem(sau) if sau else dem(dau) - 1)
+        so_day.add(n)
+        if not _so_dinh_khop(m["km"], n):
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{m.group()!r}: tên khối nêu số đỉnh đáy khác nhãn của nó")
+    so_day |= {4 for _ in _KHOI_4.finditer(de)} | {3 for _ in _TU_DIEN.finditer(de)}
+    for m in _DAY_DEM.finditer(de):
+        if m["d"]:
+            ok = _so_dinh_khop(m.group(), dem(m["d"]))
+        elif len(so_day) != 1:
+            raise TuChoi("AMBIGUOUS_REFERENCE", f"{m.group()!r}: không xác định được đáy của khối nào")
+        else:
+            ok = _so_dinh_khop(m.group(), next(iter(so_day)))
+        if not ok:
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{m.group()!r}: hình của đáy không khớp số đỉnh đáy")
+    for rx in (_DA_GIAC_NHAN, _NHAN_LA_DA_GIAC):
+        for m in rx.finditer(de):
+            if not _so_dinh_khop(m.group(), dem(m["p"])):
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{m.group()!r}: tên hình nêu số đỉnh khác nhãn")
+
+
 def _cua_khop(m: re.Match, khoi: LoiGoi | None) -> bool:
     """A role clause's "của <solid>" names the bound solid itself: its kind, and its label when one is written."""
     if not m["qn"]:
@@ -1741,6 +1783,7 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
     don_vi_de = _don_vi_met_cua_de(de)
     if len(don_vi_de) > 1:
         raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED", "đơn vị độ dài trong đề không đồng nhất; chưa hỗ trợ đổi đơn vị")
+    _kiem_so_dinh_nguon(de)
     ten_mat_phu: dict[str, str | None] = {}              # derived plane (first construct id) → name the source gave it
     buoc: list[tuple[int, int]] = []                     # descriptor ask phrases an `effect-chain` certificate bound
     phu = _kiem_phu(tuple(auxiliary), calls, de, nhan, ten_mat_phu, don_vi_de, buoc)
