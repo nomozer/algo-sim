@@ -14,7 +14,7 @@
   "superseded_candidates": [],
   "measured_system_hash": "42f6ae2c8e290d00be2e11b439ca2499f58fe74cd84ab999e2cae2824c4b65d2",
   "measured_file_count": 114,
-  "authoritative_t3_commit": "80f47de9a285bac19676428f2b0c7b2b01b0fbd9",
+  "authoritative_t3_commit": "7eadd56ba0480516accb9ec136594cb45176fda1",
   "authoritative_t3_verdict": "FULL_PRODUCT_GATE_PASS",
   "authoritative_t3_receipt": "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/verification/authoritative-t3.json",
   "independent_review": "INDEPENDENT_REVIEW_PASS (09f97a28; verification/independent-review.md)",

@@ -6,7 +6,7 @@
 - **Product Commits:** `54e61480` (Session 1: contract, Adapter `/3`, Slices A & B) → `61d6f44b` (Session 2: two-phase IR section folding)
 - **Candidate Freeze:** `09f97a287dcaef10db30e1fcb1fcb98781107989`, measured system hash `42f6ae2c8e290d00be2e11b439ca2499f58fe74cd84ab999e2cae2824c4b65d2` (`114` files)
 - **Independent Review:** `INDEPENDENT_REVIEW_PASS` ([`independent-review.md`](verification/independent-review.md))
-- **Authoritative Full T3:** `FULL_PRODUCT_GATE_PASS` at `80f47de9a285bac19676428f2b0c7b2b01b0fbd9` ([`authoritative-t3.json`](verification/authoritative-t3.json))
+- **Authoritative Full T3:** `FULL_PRODUCT_GATE_PASS` at `7eadd56ba0480516accb9ec136594cb45176fda1` ([`authoritative-t3.json`](verification/authoritative-t3.json))
 - **Architecture Contract:** [`TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md`](../../../architecture/TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md)
 
 ---

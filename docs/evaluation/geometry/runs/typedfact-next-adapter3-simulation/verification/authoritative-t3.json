@@ -5,7 +5,7 @@
   "baseline_main": "1613e0d3ebe16f0f2fe4be755052491ff581e51b",
   "product_commit": "61d6f44b7d8dffd69fbda51979686ced5b00efd2",
   "candidate_freeze_commit": "09f97a287dcaef10db30e1fcb1fcb98781107989",
-  "t3_target_commit": "80f47de9a285bac19676428f2b0c7b2b01b0fbd9",
+  "t3_target_commit": "7eadd56ba0480516accb9ec136594cb45176fda1",
   "measured_system_hash": "42f6ae2c8e290d00be2e11b439ca2499f58fe74cd84ab999e2cae2824c4b65d2",
   "measured_file_count": 114,
   "measured_paths_changed_between_product_and_t3_target": 0,
@@ -78,6 +78,45 @@
       },
       "freeze_verify_after_t3": "MATCH (114 files, 42f6ae2c8e290d00…)",
       "raw_logs": ["t3/attempt3-pass.stdout.log", "t3/attempt3-pass.stderr.log"]
+    },
+    {
+      "attempt": 4,
+      "started_utc": "2026-10-20T17:25:21Z",
+      "exit_code": 0,
+      "verdict": "FULL_PRODUCT_GATE_PASS",
+      "duration_seconds": 448.03,
+      "note": "Re-run on 7eadd56b after normalizing CRLF->LF in test_typedfact_next_adapter3.py:893 so Windows core.autocrlf=true checkouts pass identically.",
+      "gates": {
+        "pytest_backend": {
+          "status": "PASS",
+          "passed": 11410,
+          "failed": 0,
+          "skipped": 1,
+          "deselected": 2,
+          "xfailed": 9
+        },
+        "vitest_frontend": {
+          "status": "PASS",
+          "test_files": 71,
+          "passed": 1150,
+          "failed": 0
+        },
+        "typecheck_and_build": {
+          "status": "PASS"
+        },
+        "thesis_demo_replay": {
+          "status": "PASS",
+          "demo_replay_pass": "5/5",
+          "reduced_chain_cases": "1/1"
+        },
+        "demo_crash_surface": {
+          "status": "PASS",
+          "expected_boundaries": "6/6",
+          "uncaught_500": 0
+        }
+      },
+      "freeze_verify_after_t3": "MATCH (114 files, 42f6ae2c8e290d00…)",
+      "raw_logs": ["t3/attempt4-pass.stdout.log", "t3/attempt4-pass.stderr.log"]
     }
   ],
   "raw_log_sha256": {
@@ -86,7 +125,9 @@
     "t3/attempt2-fail.stdout.log": "8ad6ba7c2e0666cf6bed78e55dd9af90b6146f1aba3d06c55941ff85f42f1029",
     "t3/attempt2-fail.stderr.log": "4bf1cf938d676ce1fca43d4de12f342b55effdd5f48b5d3f65b673610b0b85a6",
     "t3/attempt3-pass.stdout.log": "568b9846f07fe50b262872fb54066d746c439fbf45e2d04de895fb46b7ac1047",
-    "t3/attempt3-pass.stderr.log": "b482ae02fba47b708527a8f4a26c4cb51f090ef7613dd5f856f946d020bbcb0a"
+    "t3/attempt3-pass.stderr.log": "b482ae02fba47b708527a8f4a26c4cb51f090ef7613dd5f856f946d020bbcb0a",
+    "t3/attempt4-pass.stdout.log": "398586ab0f8d186b02bd1c8523dfe12da647c27c6be40606c08fde645e177a28",
+    "t3/attempt4-pass.stderr.log": "11183d3c7a61862fb432a99972189215bac26b38694c0e969672ec6731132711"
   },
   "verdict": "FULL_PRODUCT_GATE_PASS",
   "live_requests": 0
