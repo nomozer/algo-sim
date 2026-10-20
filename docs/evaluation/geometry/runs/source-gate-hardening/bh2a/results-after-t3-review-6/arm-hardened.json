@@ -1,0 +1,277 @@
+{
+ "schema": "bh2a-regression-arm/1",
+ "arm": "hardened",
+ "code_root_head": "72753afcd7900e9c319adc77e95dff0a9a78d123",
+ "registry_version": "geometry-functions/9",
+ "model_calls": 0,
+ "facts": "RECONSTRUCTED_FROM_REPORT",
+ "rows": [
+  {
+   "id": "BH2A-01",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "q1": "a√6"
+   },
+   "oracle": {
+    "q1": "a√6"
+   },
+   "verdict": "EXACT",
+   "payload_sha256_16": "c698edc27b932c2d"
+  },
+  {
+   "id": "BH2A-02",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "q1": "a√17"
+   },
+   "oracle": {
+    "q1": "a√17"
+   },
+   "verdict": "EXACT",
+   "payload_sha256_16": "21da8dfc7ad1ac5f"
+  },
+  {
+   "id": "BH2A-03",
+   "kind": "positive",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "hai mặt producer không khớp nguồn",
+   "answers": {},
+   "oracle": {
+    "q1": "a√10"
+   },
+   "verdict": "REFUSED",
+   "payload_sha256_16": "714031457b80e801"
+  },
+  {
+   "id": "BH2A-04",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "q1": "3a²√13/2"
+   },
+   "oracle": {
+    "q1": "3a²√13/2"
+   },
+   "verdict": "EXACT",
+   "payload_sha256_16": "a7c751fb05dae513"
+  },
+  {
+   "id": "BH2A-05",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "q1": "cos²=4/45"
+   },
+   "oracle": {
+    "q1": "cos²=4/45"
+   },
+   "verdict": "EXACT",
+   "payload_sha256_16": "b17104d825afbd39"
+  },
+  {
+   "id": "BH2A-06",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "q1": "cos²=49/850"
+   },
+   "oracle": {
+    "q1": "cos²=49/850"
+   },
+   "verdict": "EXACT",
+   "payload_sha256_16": "8b8e9f5499c207b6"
+  },
+  {
+   "id": "BH2A-07",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "q1": "cos²=2/3"
+   },
+   "oracle": {
+    "q1": "cos²=2/3"
+   },
+   "verdict": "EXACT",
+   "payload_sha256_16": "bce7e114b1979abf"
+  },
+  {
+   "id": "BH2A-08",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "q1": "cos²=3/4"
+   },
+   "oracle": {
+    "q1": "cos²=3/4"
+   },
+   "verdict": "EXACT",
+   "payload_sha256_16": "4a2949ddd2ecfeed"
+  },
+  {
+   "id": "BH2A-09",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "q1": "cos²=8/11"
+   },
+   "oracle": {
+    "q1": "cos²=8/11"
+   },
+   "verdict": "EXACT",
+   "payload_sha256_16": "c68e945965280679"
+  },
+  {
+   "id": "BH2A-10",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "q2": "cos²=0",
+    "q1": "a"
+   },
+   "oracle": {
+    "q1": "a",
+    "q2": "cos²=0"
+   },
+   "verdict": "EXACT",
+   "payload_sha256_16": "203f8d3d43b4068b"
+  },
+  {
+   "id": "BH2A-11",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "q2": "cos²=0",
+    "q1": "a"
+   },
+   "oracle": {
+    "q1": "a",
+    "q2": "cos²=0"
+   },
+   "verdict": "EXACT",
+   "payload_sha256_16": "f952ee1651a47e37"
+  },
+  {
+   "id": "BH2A-12",
+   "kind": "positive",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "q1": "cos²=25/136",
+    "q2": "a²√3009/4"
+   },
+   "oracle": {
+    "q1": "cos²=25/136",
+    "q2": "a²√3009/4"
+   },
+   "verdict": "EXACT",
+   "payload_sha256_16": "9cd3bec46671fbcf"
+  },
+  {
+   "id": "BH2A-13",
+   "kind": "sentinel",
+   "status": "SERVED",
+   "code": null,
+   "reason": null,
+   "answers": {
+    "q1": "a²√3"
+   },
+   "oracle": {
+    "q1": "a²√3"
+   },
+   "verdict": "EXACT",
+   "payload_sha256_16": "3819221f2089ee79"
+  },
+  {
+   "id": "BH2A-14",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "FACT_INCOMPLETE",
+   "reason": "q1: centroid cần [3] điểm phân biệt",
+   "answers": {},
+   "oracle": {},
+   "verdict": "REFUSED",
+   "payload_sha256_16": "adb52c059415f608"
+  },
+  {
+   "id": "BH2A-15",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "COLLINEAR_POINTS",
+   "reason": "COLLINEAR_POINTS: ba điểm THẲNG HÀNG (hoặc có hai điểm trùng) — không xác định được mặt phẳng",
+   "answers": {},
+   "oracle": {},
+   "verdict": "REFUSED",
+   "payload_sha256_16": "6a5b3c25e29f86e5"
+  },
+  {
+   "id": "BH2A-16",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "NON_HOMOGENEOUS_LENGTHS",
+   "reason": "đề trộn độ dài theo a với độ dài là số — chưa dựng được một hình chung cho mọi a",
+   "answers": {},
+   "oracle": {},
+   "verdict": "REFUSED",
+   "payload_sha256_16": "7ff1d537d3f1fc8f"
+  },
+  {
+   "id": "BH2A-17",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "reason": "nguồn không hỏi khoảng cách từ đúng điểm được mô tả tới đúng đích",
+   "answers": {},
+   "oracle": {},
+   "verdict": "REFUSED",
+   "payload_sha256_16": "71a090591b5777e3"
+  },
+  {
+   "id": "BH2A-18",
+   "kind": "negative",
+   "status": "REFUSED",
+   "code": "UNDERDETERMINED_POINT",
+   "reason": "không lời gọi nào xác định vị trí của ['S'] (thiếu quan hệ vuông góc / trung điểm / khối đều)",
+   "answers": {},
+   "oracle": {},
+   "verdict": "REFUSED",
+   "payload_sha256_16": "f376ab7a2acc85ff"
+  },
+  {
+   "id": "BH2A-03-variant-ABCD",
+   "kind": "diagnostic",
+   "status": "REFUSED",
+   "code": "SOURCE_PREMISE_UNREAD",
+   "reason": "quote tiền đề ghép chưa được đọc độc lập trên lát hai đường",
+   "answers": {},
+   "oracle": {
+    "q1": "a√10"
+   },
+   "verdict": "REFUSED",
+   "payload_sha256_16": "a517f61b9d86e617"
+  }
+ ]
+}
