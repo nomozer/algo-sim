@@ -444,6 +444,9 @@ def test_review_round4_no_exemption_for_unread_clauses(sentence):
     "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, mặt bên SAB là tam giác đều và chiều cao bằng 5.",
     "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, tam giác SAB cân, chiều cao bằng 5.",
     "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, đường cao bằng 5, H là hình chiếu của S lên AB.",
+    # review round 6 (debatable, hardened): "và có <role>" right after a point definition
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, G là trọng tâm của tam giác SAB và có đường cao bằng 5.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, M là trung điểm của AB và có chiều cao bằng 5.",
 ])
 def test_review_round5_a_subject_changing_clause_unbinds_the_sentence(sentence):
     refused(regular(sentence, "4", "5"), "UNGROUNDED_VALUE", "AMBIGUOUS_VALUE_QUOTE")

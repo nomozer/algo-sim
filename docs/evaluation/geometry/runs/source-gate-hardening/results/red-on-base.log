@@ -80,6 +80,8 @@ PASSED tests/geometry/test_source_gate_hardening.py::test_review_round5_a_subjec
 PASSED tests/geometry/test_source_gate_hardening.py::test_review_round5_a_subject_changing_clause_unbinds_the_sentence[Cho h\xecnh ch\xf3p t\u1ee9 gi\xe1c \u0111\u1ec1u S.ABCD c\xf3 c\u1ea1nh \u0111\xe1y b\u1eb1ng 4, m\u1eb7t b\xean SAB l\xe0 tam gi\xe1c \u0111\u1ec1u v\xe0 chi\u1ec1u cao b\u1eb1ng 5.]
 PASSED tests/geometry/test_source_gate_hardening.py::test_review_round5_a_subject_changing_clause_unbinds_the_sentence[Cho h\xecnh ch\xf3p t\u1ee9 gi\xe1c \u0111\u1ec1u S.ABCD c\xf3 c\u1ea1nh \u0111\xe1y b\u1eb1ng 4, tam gi\xe1c SAB c\xe2n, chi\u1ec1u cao b\u1eb1ng 5.]
 PASSED tests/geometry/test_source_gate_hardening.py::test_review_round5_a_subject_changing_clause_unbinds_the_sentence[Cho h\xecnh ch\xf3p t\u1ee9 gi\xe1c \u0111\u1ec1u S.ABCD c\xf3 c\u1ea1nh \u0111\xe1y b\u1eb1ng 4, \u0111\u01b0\u1eddng cao b\u1eb1ng 5, H l\xe0 h\xecnh chi\u1ebfu c\u1ee7a S l\xean AB.]
+PASSED tests/geometry/test_source_gate_hardening.py::test_review_round5_a_subject_changing_clause_unbinds_the_sentence[Cho h\xecnh ch\xf3p t\u1ee9 gi\xe1c \u0111\u1ec1u S.ABCD c\xf3 c\u1ea1nh \u0111\xe1y b\u1eb1ng 4, G l\xe0 tr\u1ecdng t\xe2m c\u1ee7a tam gi\xe1c SAB v\xe0 c\xf3 \u0111\u01b0\u1eddng cao b\u1eb1ng 5.]
+PASSED tests/geometry/test_source_gate_hardening.py::test_review_round5_a_subject_changing_clause_unbinds_the_sentence[Cho h\xecnh ch\xf3p t\u1ee9 gi\xe1c \u0111\u1ec1u S.ABCD c\xf3 c\u1ea1nh \u0111\xe1y b\u1eb1ng 4, M l\xe0 trung \u0111i\u1ec3m c\u1ee7a AB v\xe0 c\xf3 chi\u1ec1u cao b\u1eb1ng 5.]
 PASSED tests/geometry/test_source_gate_hardening.py::test_review_round4_a_labelled_base_side_is_unbound_by_an_unread_clause[, nh\u01b0ng \u0111\xf3 l\xe0 c\u1ea1nh c\u1ee7a tam gi\xe1c kh\xe1c]
 PASSED tests/geometry/test_source_gate_hardening.py::test_review_round4_a_labelled_base_side_is_unbound_by_an_unread_clause[, \u0111\xf3 l\xe0 \u1ea3nh thu nh\u1ecf]
 FAILED tests/geometry/test_source_gate_hardening.py::test_sg1_segment_values_bind_to_the_atomic_label[Cho h\xecnh ch\xf3p S.ABCD c\xf3 \u0111\xe1y ABCD l\xe0 h\xecnh ch\u1eef nh\u1eadt v\u1edbi AB = 2 v\xe0 BC = 3.-lengths0]
@@ -138,4 +140,4 @@ FAILED tests/geometry/test_source_gate_hardening.py::test_review_round3_own_soli
 FAILED tests/geometry/test_source_gate_hardening.py::test_review_round2_a_height_of_another_object_is_refused[\u0110\u01b0\u1eddng cao c\u1ee7a m\u1eb7t b\xean b\u1eb1ng 5.]
 FAILED tests/geometry/test_source_gate_hardening.py::test_review_round2_a_height_of_another_object_is_refused[Chi\u1ec1u cao c\u1ee7a tam gi\xe1c SAB b\u1eb1ng 5.]
 FAILED tests/geometry/test_source_gate_hardening.py::test_review_lateral_edge_of_a_regular_pyramid_still_serves
-56 failed, 60 passed in 4.17s
+56 failed, 62 passed in 9.64s

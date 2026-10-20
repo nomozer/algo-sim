@@ -949,6 +949,10 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
             # encoded by no call: no unlabelled role of such a sentence is bound. A plain point definition (midpoint,
             # centre, centroid, intersection, point on an object) names no height or side and changes nothing.
             mo = any(kind in ("chieu", "mat", "dcao") for kind, _m in cau)
+            # review round 6 (N1/N2): "G là trọng tâm của tam giác SAB và có đường cao bằng 5" — a "có/với <role>" right
+            # after a point definition may predicate that definition's object: the sentence's roles are not bound.
+            mo = mo or any(k0 == "diem" and k1 == "vai" and re.match(r"(?:có|với)\s", m1.group(), re.IGNORECASE)
+                           for (k0, _m0), (k1, m1) in zip(cau, cau[1:]))
             for kind, m in cau:
                 if kind == "khoi":
                     nhan = set(re.findall(r"[A-Z][0-9]*'?", m["k"]))
