@@ -1,0 +1,1969 @@
+{
+  "measurement_class": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "code_root": "D:\\Documents\\projects\\algo-sim",
+  "full_sha": "78bd68764a69c513086b844ab3ed5e29ae18ce04",
+  "live_provider_calls": 0,
+  "rows": [
+    {
+      "id": "section-wording-0",
+      "kind": "positive",
+      "slice": "section",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "3"
+      },
+      "got": {
+        "volume0": "3"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 1,
+      "goals_exact": 1,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.MNP",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "3",
+          "dependencies": [
+            "S",
+            "M",
+            "N",
+            "P"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 41.86
+    },
+    {
+      "id": "section-wording-1",
+      "kind": "positive",
+      "slice": "section",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "3"
+      },
+      "got": {
+        "volume0": "3"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 1,
+      "goals_exact": 1,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.MNP",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "3",
+          "dependencies": [
+            "S",
+            "M",
+            "N",
+            "P"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 25.472
+    },
+    {
+      "id": "section-wording-2",
+      "kind": "positive",
+      "slice": "section",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "3"
+      },
+      "got": {
+        "volume0": "3"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 1,
+      "goals_exact": 1,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "Z.DEF",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "3",
+          "dependencies": [
+            "Z",
+            "D",
+            "E",
+            "F"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "Z.UVW",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "Z",
+            "U",
+            "V",
+            "W"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 25.377
+    },
+    {
+      "id": "section-ratio-1",
+      "kind": "positive",
+      "slice": "section",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "64/243"
+      },
+      "got": {
+        "volume0": "64/243"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 1,
+      "goals_exact": 1,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "divide_segment",
+        "divide_segment",
+        "divide_segment",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.MNP",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "64/243",
+          "dependencies": [
+            "S",
+            "M",
+            "N",
+            "P"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 23.498
+    },
+    {
+      "id": "section-ratio-2",
+      "kind": "positive",
+      "slice": "section",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "4096/243"
+      },
+      "got": {
+        "volume0": "4096/243"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 1,
+      "goals_exact": 1,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "divide_segment",
+        "divide_segment",
+        "divide_segment",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.MNP",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "4096/243",
+          "dependencies": [
+            "S",
+            "M",
+            "N",
+            "P"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 22.13
+    },
+    {
+      "id": "section-multi-goal",
+      "kind": "positive",
+      "slice": "section",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "3",
+        "area": "3",
+        "length": "4"
+      },
+      "got": {
+        "area": "3",
+        "length": "4",
+        "volume0": "3"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 3,
+      "goals_exact": 3,
+      "calls": 11,
+      "search": {
+        "needs": 7,
+        "candidates": 2,
+        "depth": 1
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "ask_area",
+        "ask_length",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.MNP",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "3",
+          "dependencies": [
+            "S",
+            "M",
+            "N",
+            "P"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 28.144
+    },
+    {
+      "id": "section-scaled",
+      "kind": "positive",
+      "slice": "section",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "3/64"
+      },
+      "got": {
+        "volume0": "3/64"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 1,
+      "goals_exact": 1,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "3",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.MNP",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "3/64",
+          "dependencies": [
+            "S",
+            "M",
+            "N",
+            "P"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 22.937
+    },
+    {
+      "id": "shared-wording-0",
+      "kind": "positive",
+      "slice": "shared",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "48",
+        "volume1": "48"
+      },
+      "got": {
+        "volume0": "48",
+        "volume1": "48"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 2,
+      "goals_exact": 2,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "pyramid",
+        "pyramid",
+        "ask_volume",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.ABM",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "48",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "M"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.AMC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child1"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "48",
+          "dependencies": [
+            "S",
+            "A",
+            "M",
+            "C"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 23.98
+    },
+    {
+      "id": "shared-wording-1",
+      "kind": "positive",
+      "slice": "shared",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "48",
+        "volume1": "48"
+      },
+      "got": {
+        "volume0": "48",
+        "volume1": "48"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 2,
+      "goals_exact": 2,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "pyramid",
+        "pyramid",
+        "ask_volume",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.ABM",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "48",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "M"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.AMC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child1"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "48",
+          "dependencies": [
+            "S",
+            "A",
+            "M",
+            "C"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 25.605
+    },
+    {
+      "id": "shared-wording-2",
+      "kind": "positive",
+      "slice": "shared",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "48",
+        "volume1": "48"
+      },
+      "got": {
+        "volume1": "48",
+        "volume0": "48"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 2,
+      "goals_exact": 2,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "pyramid",
+        "pyramid",
+        "ask_volume",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "Z.UDW",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child1"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "48",
+          "dependencies": [
+            "Z",
+            "U",
+            "D",
+            "W"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "Z.UVD",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "48",
+          "dependencies": [
+            "Z",
+            "U",
+            "V",
+            "D"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "Z.UVW",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "Z",
+            "U",
+            "V",
+            "W"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 25.012
+    },
+    {
+      "id": "shared-ratio-1",
+      "kind": "positive",
+      "slice": "shared",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "64/3",
+        "volume1": "256/3"
+      },
+      "got": {
+        "volume0": "64/3",
+        "volume1": "256/3"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 2,
+      "goals_exact": 2,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "divide_segment",
+        "pyramid",
+        "pyramid",
+        "ask_volume",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.ABM",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "64/3",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "M"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.AMC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child1"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "256/3",
+          "dependencies": [
+            "S",
+            "A",
+            "M",
+            "C"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 22.957
+    },
+    {
+      "id": "shared-ratio-2",
+      "kind": "positive",
+      "slice": "shared",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "256/3",
+        "volume1": "64/3"
+      },
+      "got": {
+        "volume0": "256/3",
+        "volume1": "64/3"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 2,
+      "goals_exact": 2,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "divide_segment",
+        "pyramid",
+        "pyramid",
+        "ask_volume",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.ABM",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "256/3",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "M"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.AMC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child1"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "64/3",
+          "dependencies": [
+            "S",
+            "A",
+            "M",
+            "C"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 21.745
+    },
+    {
+      "id": "shared-explicit-face",
+      "kind": "positive",
+      "slice": "shared",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "48",
+        "volume1": "48"
+      },
+      "got": {
+        "volume0": "48",
+        "volume1": "48"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 2,
+      "goals_exact": 2,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "pyramid",
+        "pyramid",
+        "ask_volume",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.ABM",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "48",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "M"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.AMC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child1"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "48",
+          "dependencies": [
+            "S",
+            "A",
+            "M",
+            "C"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 34.219
+    },
+    {
+      "id": "shared-scaled",
+      "kind": "positive",
+      "slice": "shared",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "3/4",
+        "volume1": "3/4"
+      },
+      "got": {
+        "volume0": "3/4",
+        "volume1": "3/4"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 2,
+      "goals_exact": 2,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "pyramid",
+        "pyramid",
+        "ask_volume",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "3",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.ABM",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "3/4",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "M"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.AMC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child1"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "3/4",
+          "dependencies": [
+            "S",
+            "A",
+            "M",
+            "C"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 21.713
+    },
+    {
+      "id": "section-nested-dag",
+      "kind": "positive",
+      "slice": "section",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "3/64"
+      },
+      "got": {
+        "volume0": "3/64"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 1,
+      "goals_exact": 1,
+      "calls": 13,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.MNP",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "3",
+          "dependencies": [
+            "S",
+            "M",
+            "N",
+            "P"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.XYZ",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "nested_solid"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "3/64",
+          "dependencies": [
+            "S",
+            "X",
+            "Y",
+            "Z"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 31.792
+    },
+    {
+      "id": "section-topology-and-area",
+      "kind": "positive",
+      "slice": "section",
+      "status": "SERVED",
+      "code": null,
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {
+        "volume0": "3",
+        "area": "3"
+      },
+      "got": {
+        "area": "3",
+        "volume0": "3"
+      },
+      "exact_served": true,
+      "correct_refusal": false,
+      "false_serve": false,
+      "goals": 2,
+      "goals_exact": 2,
+      "calls": 10,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": true,
+      "scene_topology_valid": true,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "ask_section_area",
+        "ask_volume"
+      ],
+      "volume_certificates": [
+        {
+          "step": "verify_solid",
+          "object": "S.ABC",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "root"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "192",
+          "dependencies": [
+            "S",
+            "A",
+            "B",
+            "C"
+          ],
+          "base_coplanar": true
+        },
+        {
+          "step": "verify_solid",
+          "object": "S.MNP",
+          "rule": "gram_base_area_squared_times_height_squared_over_9",
+          "calls": [
+            "child0"
+          ],
+          "provenance": "DERIVED",
+          "volume_squared": "3",
+          "dependencies": [
+            "S",
+            "M",
+            "N",
+            "P"
+          ],
+          "base_coplanar": true
+        }
+      ],
+      "duration_ms": 29.302
+    },
+    {
+      "id": "missing-point_P",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "UNDERDETERMINED_POINT",
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": 8,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [],
+      "duration_ms": 10.258
+    },
+    {
+      "id": "missing-height",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "MISSING_DIMENSION",
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": 8,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [],
+      "duration_ms": 10.36
+    },
+    {
+      "id": "missing-perp",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "UNDERDETERMINED_POINT",
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": 8,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [],
+      "duration_ms": 11.21
+    },
+    {
+      "id": "spoof-point-operand",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": false,
+      "source_code": "SOURCE_OBJECT_MISMATCH",
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [],
+      "duration_ms": 4.574
+    },
+    {
+      "id": "spoof-source-number",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "UNGROUNDED_VALUE",
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": false,
+      "source_code": "UNGROUNDED_VALUE",
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [],
+      "duration_ms": 3.074
+    },
+    {
+      "id": "unread",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "SOURCE_PREMISE_UNREAD",
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": false,
+      "source_code": "SOURCE_PREMISE_UNREAD",
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [],
+      "duration_ms": 8.283
+    },
+    {
+      "id": "goal",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "REQUEST_NOT_ANSWERED",
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": false,
+      "source_code": "REQUEST_NOT_ANSWERED",
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [],
+      "duration_ms": 12.146
+    },
+    {
+      "id": "conflict",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "INCONSISTENT_FACTS",
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": 10,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "segment_length",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [],
+      "duration_ms": 12.936
+    },
+    {
+      "id": "false-shared-face-SAB",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "INCONSISTENT_FACTS",
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": false,
+      "source_code": "INCONSISTENT_FACTS",
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "pyramid",
+        "pyramid",
+        "ask_volume",
+        "ask_volume"
+      ],
+      "volume_certificates": [],
+      "duration_ms": 1.958
+    },
+    {
+      "id": "false-shared-face-ABC",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "INCONSISTENT_FACTS",
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": false,
+      "source_code": "INCONSISTENT_FACTS",
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "pyramid",
+        "pyramid",
+        "ask_volume",
+        "ask_volume"
+      ],
+      "volume_certificates": [],
+      "duration_ms": 1.879
+    },
+    {
+      "id": "degenerate-base",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "COLLINEAR_POINTS",
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": 7,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "pyramid",
+        "ask_volume"
+      ],
+      "volume_certificates": [],
+      "duration_ms": 8.723
+    },
+    {
+      "id": "cycle",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "DEPENDENCY_CYCLE",
+      "planner_resolved": false,
+      "planner_code": "DEPENDENCY_CYCLE",
+      "source_gate_success": false,
+      "source_code": null,
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": null,
+      "search": {
+        "needs": null,
+        "candidates": null,
+        "depth": null
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [],
+      "volume_certificates": [],
+      "duration_ms": 1.059
+    },
+    {
+      "id": "independent-second-root",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "UNSUPPORTED_MULTIPLE_BASES",
+      "planner_resolved": true,
+      "planner_code": null,
+      "source_gate_success": true,
+      "source_code": null,
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": 9,
+      "search": {
+        "needs": 0,
+        "candidates": 0,
+        "depth": 0
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [
+        "pyramid",
+        "pyramid",
+        "regular_polygon",
+        "segment_length",
+        "perpendicular_line_plane",
+        "midpoint",
+        "midpoint",
+        "midpoint",
+        "ask_volume"
+      ],
+      "volume_certificates": [],
+      "duration_ms": 13.512
+    },
+    {
+      "id": "conditional-construction",
+      "kind": "negative",
+      "slice": null,
+      "status": "REFUSED",
+      "code": "CONDITIONAL_CLAUSE",
+      "planner_resolved": false,
+      "planner_code": "CONDITIONAL_CLAUSE",
+      "source_gate_success": false,
+      "source_code": null,
+      "expected": {},
+      "got": {},
+      "exact_served": false,
+      "correct_refusal": true,
+      "false_serve": false,
+      "goals": 0,
+      "goals_exact": 0,
+      "calls": null,
+      "search": {
+        "needs": null,
+        "candidates": null,
+        "depth": null
+      },
+      "scene_timeline_valid": null,
+      "scene_topology_valid": null,
+      "functions": [],
+      "volume_certificates": [],
+      "duration_ms": 0.657
+    }
+  ],
+  "metrics": {
+    "positive_exact_served": [
+      16,
+      16
+    ],
+    "planner_resolved": [
+      16,
+      16
+    ],
+    "source_gate_success": [
+      16,
+      16
+    ],
+    "goal_coverage": [
+      26,
+      26
+    ],
+    "correct_refusal": [
+      14,
+      14
+    ],
+    "false_serves": 0,
+    "scene_valid": [
+      16,
+      16
+    ],
+    "max_calls": 13
+  }
+}

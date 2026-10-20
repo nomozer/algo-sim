@@ -1,5 +1,22 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Composite geometry — Wave 2C local research
+
+Run `docs/evaluation/geometry/runs/composite-geometry/`; contract `docs/architecture/COMPOSITE_GEOMETRY_CONTRACT.md`.
+`backend/app/simulation/geometry_functions/engine.py` (`geometry-function-engine/8`) extends existing pyramid construction
+to determined derived bases in one root Gram chart, emits per-solid point prerequisites, checks base coplanarity/simple
+faces, and cross-checks composite volumes with `_the_tich2_chop` (Gram area × altitude). `hop_dong_to_po_da_khai` emits
+internal vertex-set-bound topology maps for multiple source-declared solids; `backend/app/simulation/semantic_program/formation.py::lop_khoi`
+resolves each map entry without guessing an apex. `backend/app/simulation/geometry_functions/registry.py::_kiem_mat_chung`
+(`geometry-functions/10`) verifies explicit named common-face membership in both pyramids. Planner /10 and its budgets
+are reused unchanged. No new provider function or TypedFact field.
+
+`backend/tests/geometry/test_composite_geometry.py` owns exact oracle, shared-face, degeneracy, source-tamper, timeline,
+renaming, ordering and corpus regression checks. `backend/scripts/measure_composite_geometry.py` measures planner,
+source gate, exact served, goal coverage and scene validity separately on the same locked development corpus with an
+independent similarity/area-ratio oracle; it refuses to overwrite output. Adapter /2 verification adds only declared
+Registry /9→/10 and Engine /7→/8 identity pairs in `backend/scripts/export_hybrid_preview_fixtures.py`.
+
 ## Hybrid Architecture Wave 1 — exact Gram-metric certificates & dependency-aware planner (research/hybrid-architecture-wave1-exact-certificates-planner, Hybrid product off)
 
 Run `docs/evaluation/geometry/runs/hybrid-architecture-wave1-exact-certificates-planner/`. Resolves `ISSUE-ARCH-SCENE3D-ALTITUDE-CERTIFICATE-MISSING` (Wave 1A) and `GAP-C1` / `ISSUE-RESEARCH-HYBRID-AUXILIARY-BEFORE-SOLID` (Wave 1B) on branch.

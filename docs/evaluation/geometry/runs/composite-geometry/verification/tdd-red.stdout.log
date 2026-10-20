@@ -1,0 +1,134 @@
+FFFFFF.                                                                  [100%]
+================================== FAILURES ===================================
+__ test_composite_pyramids_have_exact_independent_volumes[section-expected0] __
+
+slice = 'section', expected = [Fraction(3, 1)]
+
+    @pytest.mark.parametrize("slice,expected", [("section", [F(3)]), ("shared", [F(48), F(48)])])
+    def test_composite_pyramids_have_exact_independent_volumes(slice, expected):
+        # Euclidean base area = 4√3, altitude = 6: V(root) = 8√3.
+        # Half-scale section: V(child) = V(root)/8; median split: each V(root)/2.
+        text, payload = problem(slice)
+        r = run_fact_route(text, payload)
+>       assert r.status == "SERVED", (r.code, r.reason)
+E       AssertionError: ('UNSUPPORTED_MULTIPLE_BASES', 'các khối không chung một mặt đáy (bản này dựng một mặt đáy)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+tests\geometry\test_composite_geometry.py:50: AssertionError
+__ test_composite_pyramids_have_exact_independent_volumes[shared-expected1] ___
+
+slice = 'shared', expected = [Fraction(48, 1), Fraction(48, 1)]
+
+    @pytest.mark.parametrize("slice,expected", [("section", [F(3)]), ("shared", [F(48), F(48)])])
+    def test_composite_pyramids_have_exact_independent_volumes(slice, expected):
+        # Euclidean base area = 4√3, altitude = 6: V(root) = 8√3.
+        # Half-scale section: V(child) = V(root)/8; median split: each V(root)/2.
+        text, payload = problem(slice)
+        r = run_fact_route(text, payload)
+>       assert r.status == "SERVED", (r.code, r.reason)
+E       AssertionError: ('UNSUPPORTED_MULTIPLE_BASES', 'các khối không chung một mặt đáy (bản này dựng một mặt đáy)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+tests\geometry\test_composite_geometry.py:50: AssertionError
+_ test_composite_results_do_not_depend_on_fact_order_or_vertex_names[section] _
+
+slice = 'section'
+
+    @pytest.mark.parametrize("slice", ["section", "shared"])
+    def test_composite_results_do_not_depend_on_fact_order_or_vertex_names(slice):
+        text, payload = problem(slice)
+        # Rename the root so its name sorts after the child; no alphabetical root selection.
+        names = dict(zip("SABCMNP", "ZUVWDEF"))
+        import re
+        def rename(v):
+            if isinstance(v, str):
+                return re.sub(r"[A-Z]", lambda m: names.get(m[0], m[0]), v)
+            if isinstance(v, list):
+                return [rename(x) for x in v]
+            if isinstance(v, dict):
+                return {k: (x if k in ("id", "kind", "role") else rename(x)) for k, x in v.items()}
+            return v
+        payload = rename(payload)
+        payload["facts"].reverse()
+        r = run_fact_route(rename(text), payload)
+>       assert r.status == "SERVED", (r.code, r.reason)
+E       AssertionError: ('UNSUPPORTED_MULTIPLE_BASES', 'các khối không chung một mặt đáy (bản này dựng một mặt đáy)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+tests\geometry\test_composite_geometry.py:71: AssertionError
+_ test_composite_results_do_not_depend_on_fact_order_or_vertex_names[shared] __
+
+slice = 'shared'
+
+    @pytest.mark.parametrize("slice", ["section", "shared"])
+    def test_composite_results_do_not_depend_on_fact_order_or_vertex_names(slice):
+        text, payload = problem(slice)
+        # Rename the root so its name sorts after the child; no alphabetical root selection.
+        names = dict(zip("SABCMNP", "ZUVWDEF"))
+        import re
+        def rename(v):
+            if isinstance(v, str):
+                return re.sub(r"[A-Z]", lambda m: names.get(m[0], m[0]), v)
+            if isinstance(v, list):
+                return [rename(x) for x in v]
+            if isinstance(v, dict):
+                return {k: (x if k in ("id", "kind", "role") else rename(x)) for k, x in v.items()}
+            return v
+        payload = rename(payload)
+        payload["facts"].reverse()
+        r = run_fact_route(rename(text), payload)
+>       assert r.status == "SERVED", (r.code, r.reason)
+E       AssertionError: ('UNSUPPORTED_MULTIPLE_BASES', 'các khối không chung một mặt đáy (bản này dựng một mặt đáy)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+tests\geometry\test_composite_geometry.py:71: AssertionError
+______ test_shared_face_uses_the_same_point_ids_and_solid_owned_topology ______
+
+    def test_shared_face_uses_the_same_point_ids_and_solid_owned_topology():
+        text, payload = problem("shared")
+        r = run_fact_route(text, payload)
+>       assert r.status == "SERVED", (r.code, r.reason)
+E       AssertionError: ('UNSUPPORTED_MULTIPLE_BASES', 'các khối không chung một mặt đáy (bản này dựng một mặt đáy)')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+tests\geometry\test_composite_geometry.py:78: AssertionError
+_____ test_composite_missing_point_refuses_instead_of_inventing_a_section _____
+
+    def test_composite_missing_point_refuses_instead_of_inventing_a_section():
+        text, payload = problem()
+        text = text.replace("Gọi P là trung điểm của SC. ", "")
+        payload["facts"] = [f for f in payload["facts"] if f["id"] != "point_P"]
+        r = run_fact_route(text, payload)
+>       assert r.status == "REFUSED" and r.code == "UNDERDETERMINED_POINT", (r.code, r.reason)
+E       AssertionError: ('UNSUPPORTED_MULTIPLE_BASES', 'các khối không chung một mặt đáy (bản này dựng một mặt đáy)')
+E       assert ('REFUSED' == 'REFUSED'
+E         
+E           REFUSED and 'UNSUPPORTED_MULTIPLE_BASES' == 'UNDERDETERMINED_POINT'
+E         
+E         - UNDERDETERMINED_POINT
+E         + UNSUPPORTED_MULTIPLE_BASES)
+
+tests\geometry\test_composite_geometry.py:94: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_composite_geometry.py::test_composite_pyramids_have_exact_independent_volumes[section-expected0]
+FAILED tests/geometry/test_composite_geometry.py::test_composite_pyramids_have_exact_independent_volumes[shared-expected1]
+FAILED tests/geometry/test_composite_geometry.py::test_composite_results_do_not_depend_on_fact_order_or_vertex_names[section]
+FAILED tests/geometry/test_composite_geometry.py::test_composite_results_do_not_depend_on_fact_order_or_vertex_names[shared]
+FAILED tests/geometry/test_composite_geometry.py::test_shared_face_uses_the_same_point_ids_and_solid_owned_topology
+FAILED tests/geometry/test_composite_geometry.py::test_composite_missing_point_refuses_instead_of_inventing_a_section
+6 failed, 1 passed in 0.96s

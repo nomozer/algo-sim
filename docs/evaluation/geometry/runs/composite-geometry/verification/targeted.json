@@ -1,0 +1,22 @@
+{
+  "command": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "tests/geometry/test_composite_geometry.py",
+    "tests/geometry/test_hybrid_backend_integration.py::test_174_historical_answers_regression_and_independent_source_expectations",
+    "tests/test_hybrid_preview_fixtures.py",
+    "tests/geometry/test_hybrid_wave1_exact_certificates.py",
+    "tests/geometry/test_hybrid_wave1_dependency_planner.py",
+    "tests/geometry/test_goal_directed_function_composition.py",
+    "tests/geometry/test_geometry_capability_expansion.py",
+    "tests/geometry/test_source_gate_hardening.py",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=D:\\Documents\\projects\\algo-sim\\.superpowers\\tmp\\composite-regression"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\backend",
+  "exit_code": 0,
+  "duration_seconds": 10.5780565999994
+}

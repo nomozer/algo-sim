@@ -316,6 +316,9 @@ def lop_khoi(vertex_ids: list[str], faces: list[list[int]], contract: Any = None
                     else (LOP_LANG_TRU, None, ten_a, ten_b))
     if not cach:
         return KHONG_HO_TRO, None, None, (), ()
+    # Route D may supply several source-declared contracts. Pick by the complete vertex set, never face/label order.
+    if isinstance(contract, dict):
+        contract = contract.get(frozenset(vertex_ids))
     topo = getattr(contract, "solid_topology", None)
     if topo is not None:
         dinh_topo = set(_ten_trong(topo.base_cycle)) | set(_ten_trong(getattr(topo, "top_cycle", None)))

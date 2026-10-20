@@ -1,0 +1,13 @@
+{
+  "command": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "tests/geometry/test_composite_geometry.py",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "exit_code": 1,
+  "duration_seconds": 1.6896761000025435
+}

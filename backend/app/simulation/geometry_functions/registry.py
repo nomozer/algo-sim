@@ -38,7 +38,8 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: /8 (run `geometry-capability-expansion`): `divide_segment` + ratio grammar, `MAT_VUONG_DUONG`, `POINT_PRODUCERS`.
 #: /9 (run `source-gate-hardening`): atomic segment labels, role-bound values, shape values keep their parameter, shared goal
 #: wording tokens, request lists in one sentence, line_ref faces of ≥ 3 labels and the intersection named in the question.
-REGISTRY_VERSION = "geometry-functions/9"
+#: /10 (run `composite-geometry`): explicit shared-face membership in two declared pyramid topologies.
+REGISTRY_VERSION = "geometry-functions/10"
 
 
 class TuChoi(Exception):
@@ -1858,6 +1859,27 @@ def _moc_menh_de(c: LoiGoi, de: str, dau: int, cuoi: int) -> list[int]:
     return moc
 
 
+def _kiem_mat_chung(de: str, calls: tuple[LoiGoi, ...]) -> None:
+    """A declared common face must be the SAME named face in both declared pyramids, not just a coplanar triangle."""
+    solids = {c.args.apex + "." + "".join(c.args.base): c for c in calls if c.fn in ("pyramid", "regular_pyramid")}
+    pattern = (rf"Hai\s+hình\s+chóp\s+(?P<a>{_NHAN}\.{_NHAN})\s+và\s+(?P<b>{_NHAN}\.{_NHAN})"
+               rf"\s+có\s+mặt\s+chung\s+\(?(?P<f>{_NHAN})\)?\s*[.!?]?")
+    for token in re.finditer(r"mặt\s+chung", de, re.IGNORECASE):
+        start, end = _bien_cau(de, token.start())
+        match = re.fullmatch(pattern, de[start:end].strip(), re.IGNORECASE)
+        if not match or match["a"] == match["b"] or any(match[x] not in solids for x in ("a", "b")):
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", "quan hệ mặt chung cần hai khối chóp và một mặt được khai tường minh")
+        face = re.findall(r"[A-Z][0-9]*'?", match["f"])
+        if len(face) != len(set(face)):
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", "mặt chung lặp tên đỉnh")
+        for name in (match["a"], match["b"]):
+            c = solids[name]
+            a = c.args
+            faces = {frozenset(a.base), *(frozenset((a.apex, p, q)) for p, q in zip(a.base, a.base[1:] + a.base[:1]))}
+            if frozenset(face) not in faces:
+                raise TuChoi("INCONSISTENT_FACTS", "mặt chung không thuộc bảng mặt của cả hai khối", (c.id,))
+
+
 def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...] = (),
                read_quotes: tuple[str, ...] = ()) -> dict[str, str | None]:
     """Cổng nguồn tất định — xem docstring module. Ném `TuChoi` ở lời gọi đầu tiên hỏng (theo thứ tự id).
@@ -1869,6 +1891,7 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
     if len(don_vi_de) > 1:
         raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED", "đơn vị độ dài trong đề không đồng nhất; chưa hỗ trợ đổi đơn vị")
     _kiem_so_dinh_nguon(de, calls)
+    _kiem_mat_chung(de, calls)
     ten_mat_phu: dict[str, str | None] = {}              # derived plane (first construct id) → name the source gave it
     buoc: list[tuple[int, int]] = []                     # descriptor ask phrases an `effect-chain` certificate bound
     phu = _kiem_phu(tuple(auxiliary), calls, de, nhan, ten_mat_phu, don_vi_de, buoc)

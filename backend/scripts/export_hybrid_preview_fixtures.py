@@ -282,6 +282,9 @@ IDENTITY_DELTAS = (
     {"run": "source-gate-hardening",                       # engine unchanged (/7)
      "versions": {"registry_version": ("geometry-functions/8", "geometry-functions/9"),
                   "planner_version": ("geometry-fact-planner/9", "geometry-fact-planner/10")}},
+    {"run": "composite-geometry",
+     "versions": {"registry_version": ("geometry-functions/9", "geometry-functions/10"),
+                  "engine_version": ("geometry-function-engine/7", "geometry-function-engine/8")}},
 )
 
 

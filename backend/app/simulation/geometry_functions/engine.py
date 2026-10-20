@@ -39,7 +39,8 @@ from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, LoiGoi, TuC
 
 #: /6 (run `goal-directed-function-composition`): `ask_angle_lines` IR + independent line–line Gram verifier.
 #: /7 (run `geometry-capability-expansion`): ratio points, right-angle-chain base, prism lateral vector, ⊥-line plane check.
-ENGINE_VERSION = "geometry-function-engine/7"
+#: /8 (run `composite-geometry`): determined derived bases, per-solid formation, independent volume certificates.
+ENGINE_VERSION = "geometry-function-engine/8"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -114,10 +115,10 @@ class KetQuaTuyen:
 def hop_dong_to_po_da_khai(calls: tuple[LoiGoi, ...]) -> Any:
     """Tô-pô khối ĐỀ ĐÃ KHAI → `RequestContract(solid_topology=…)`, thẩm quyền ① của `formation.lop_khoi`.
 
-    Chỉ khi có đúng một khối và câu nguồn của nó viết ký hiệu chấm khớp lời gọi: chóp `S.ABC` (đỉnh + đáy), lăng trụ
+    Khi câu nguồn viết ký hiệu chấm khớp lời gọi: chóp `S.ABC` (đỉnh + đáy), lăng trụ
     `ABC.A'B'C'` (đáy + đáy trên, ′ ’ ≡ ').
     "Tứ diện ABCD" không nêu đỉnh — đỉnh trong lời gọi là lựa chọn của mô hình/planner ⇒ None, không bịa tô-pô.
-    Thiếu tô-pô, formation đọc khối từ quan hệ có kiểu, và phép chiếu `project_onto` A→(SBC) từng đổi gốc S.ABC thành A.SBC.
+    Nhiều khối trả map theo tập đỉnh IR; thiếu tô-pô trả None. Không đoán đỉnh từ bảng mặt của tứ diện.
     """
     from app.simulation.semantic_program.request_contract import PyramidTopologySpec, RequestContract
 
@@ -125,7 +126,17 @@ def hop_dong_to_po_da_khai(calls: tuple[LoiGoi, ...]) -> Any:
 
     khoi = [c for c in calls if c.fn in ("pyramid", "regular_pyramid", "prism")]   # the calls `thu_khoi` builds solids from
     if len(khoi) != 1:
-        return None
+        # Internal per-solid contracts, never a provider/schema extension. Formation resolves by exact vertex identity.
+        result = {}
+        for c in khoi:
+            contract = hop_dong_to_po_da_khai((c,))
+            if contract is None:
+                continue
+            key = frozenset(map(ir_name, _labels(c)))
+            if key in result and result[key] != contract:
+                raise TuChoi("AMBIGUOUS_REFERENCE", "cùng tập đỉnh nhận hai tô-pô khối khác nhau", (c.id,))
+            result[key] = contract
+        return result or None
     a, nhan = khoi[0].args, r"A-Za-z0-9'′"
     phay = lambda s: s.replace("′", "'").replace("’", "'")    # A′, A’ and A' are the same source name
     dau = list(a.base) if khoi[0].fn == "prism" else [a.apex]
@@ -234,8 +245,19 @@ class _Dung:
         for c in self.of("height", "ask_volume"):
             if c.args.solid not in self.khoi:
                 raise TuChoi("UNKNOWN_SOLID", f"{c.id}: khối {c.args.solid} chưa được dựng bằng lời gọi nào", (c.id,))
-        if len({frozenset(k.base) for k in self.khoi.values()}) != 1:
-            raise TuChoi("UNSUPPORTED_MULTIPLE_BASES", "các khối không chung một mặt đáy (bản này dựng một mặt đáy)")
+        self.root = next(iter(self.khoi.values()))
+        self.composite = len({frozenset(k.base) for k in self.khoi.values()}) != 1
+        if self.composite:
+            # A new base is admitted only as a derived object in the SAME chart. Never lay out an independent base.
+            outputs = {c.args.point for c in self.of("midpoint", "centroid", "divide_segment", "intersect_line_line",
+                                                    "intersect_line_plane")}
+            outputs |= {c.args.image for c in self.of("orthogonal_projection", "orthogonal_projection_line", "translate_point")}
+            roots = [k for k in self.khoi.values() if not (set(k.base) | set(k.top) | {k.apex}) & outputs]
+            if not roots or len({frozenset(k.base) for k in roots}) != 1:
+                raise TuChoi("UNSUPPORTED_MULTIPLE_BASES", "cần một đáy gốc; các đáy khác phải dùng đỉnh đã dựng duy nhất")
+            self.root = roots[0]
+            if any(k.kind != "pyramid" for k in self.khoi.values() if k not in roots):
+                raise TuChoi("UNSUPPORTED_MULTIPLE_BASES", "khối có đáy dẫn xuất hiện chỉ hỗ trợ hình chóp")
 
     # ── độ dài ──────────────────────────────────────────────────────────────
     def _lop_bang(self, s: frozenset) -> list[tuple[frozenset, tuple[str, ...]]]:
@@ -280,7 +302,7 @@ class _Dung:
 
     # ── đáy ─────────────────────────────────────────────────────────────────
     def bo_cuc_day(self) -> None:
-        dat = frozenset(next(iter(self.khoi.values())).base)
+        dat = frozenset(self.root.base)
         reg = [c for c in self.of("regular_polygon") if frozenset(c.args.vertices) == dat]
         rect = [c for c in self.of("rectangle") if frozenset(c.args.vertices) == dat]
         if reg:
@@ -305,10 +327,10 @@ class _Dung:
             khung = ((Z, Z), (Fraction(1), Z), (Fraction(1), Fraction(1)), (Z, Fraction(1)))
             G2, dung, luat = ((a[0][0], Z), (Z, b[0][0])), {c.id, *a[0][1], *b[0][1]}, "rectangle_chart"
         elif len(dat) == 3:
-            vong = next(iter(self.khoi.values())).base
+            vong = self.root.base
             khung, G2, dung = self._tam_giac(vong)
             luat = "triangle_by_sides"
-        elif (chuoi := self._chuoi_goc_vuong(next(iter(self.khoi.values())).base)) is not None:
+        elif (chuoi := self._chuoi_goc_vuong(self.root.base)) is not None:
             vong, khung, G2, dung = chuoi
             luat = "right_angle_chain_chart"
         else:
@@ -498,6 +520,8 @@ class _Dung:
                 return True
         for k in sorted(self.khoi.values(), key=lambda k: k.name):
             if k.kind == "pyramid" and k.regular and k.apex not in self.pts:
+                if frozenset(k.base) != frozenset(self.root.base):
+                    continue  # Derived solids consume known vertices; they never seed another chart or choose an apex.
                 reg = [c for c in self.of("regular_polygon") if frozenset(c.args.vertices) == frozenset(k.base)]
                 if not reg:
                     raise TuChoi("REGULAR_PYRAMID_NEEDS_REGULAR_BASE", f"chóp đều {k.name} nhưng đáy chưa được khai là đa giác đều",
@@ -542,7 +566,7 @@ class _Dung:
                     if (a in self.pts and not self.trong_day(a)) or (b in self.pts and not self.trong_day(b)):
                         raise TuChoi("FOOT_NOT_DETERMINED", f"{c.id}: không đầu nào của {a}{b} nằm trên mặt đáy", (c.id,))
                     continue                                   # chân chưa dựng (vd trung điểm chưa có) ⇒ đợi
-            ten_khoi = [k.name for k in self.khoi.values() if k.apex == dinh]
+            ten_khoi = [k.name for k in self.khoi.values() if k.apex == dinh and frozenset(k.base) == frozenset(self.root.base)]
             h2, cs = self._chieu_cao(dinh, chan, ten_khoi)
             self._dat_ngoai_day(dinh, chan, h2, luat + chan, {c.id} | cs)
             return True
@@ -745,6 +769,12 @@ class _Dung:
             raise TuChoi(e.code, str(e), (c.id,)) from None
 
     def kiem(self) -> None:
+        # Establish a real, coplanar base before any Gram distance divides by its area.
+        for k in self.khoi.values():
+            try:
+                self._plane(k.base)
+            except GeometryError as e:
+                raise TuChoi(e.code, str(e), (k.call,)) from None
         hong = [c for c in self.calls if not self._dung_khong(c)]
         tu_hong = [c for c in hong if c.id in self.dung]
         if tu_hong:
@@ -753,6 +783,34 @@ class _Dung:
         if hong:
             raise TuChoi("INCONSISTENT_FACTS", "dữ kiện mâu thuẫn với phần còn lại của đề: "
                          + "; ".join(f"{c.id} {c.quote!r}" for c in hong), tuple(c.id for c in hong))
+        self.volume_certificates = {}
+        if self.composite:
+            from app.simulation.geometry.section import Polyhedron, kiem_mat_phang_don
+            for k in self.khoi.values():
+                if k.kind != "pyramid":
+                    continue
+                labels = [k.apex, *k.base]
+                faces = P.construct_pyramid("solid", k.apex, k.base)["faces"]
+                try:
+                    kiem_mat_phang_don(Polyhedron(tuple(Vec3(*self.pts[p]) for p in labels),
+                                                 tuple(tuple(labels.index(p) for p in face) for face in faces)))
+                except GeometryError as e:
+                    raise TuChoi(e.code, str(e), (k.call,)) from None
+                v2 = self._the_tich2_chop(k)
+                self.volume_certificates[k.name] = v2
+                self.trace.append({"step": "verify_solid", "object": k.name, "rule": "gram_base_area_squared_times_height_squared_over_9",
+                                   "calls": [k.call], "provenance": "DERIVED", "volume_squared": str(v2),
+                                   "dependencies": labels, "base_coplanar": True})
+
+    def _the_tich2_chop(self, k: _Khoi) -> Fraction:
+        """Independent of the interpreter's oriented boundary-volume sum: Gram base area × altitude / 3, squared."""
+        u, v = self._vec(k.base[0], k.base[1]), self._vec(k.base[0], k.base[2])
+        i, j = next((i, j) for i, j in combinations(range(3), 2) if u[i] * v[j] != u[j] * v[i])
+        proj = sum(self.pts[a][i] * self.pts[b][j] - self.pts[a][j] * self.pts[b][i]
+                   for a, b in zip(k.base, (*k.base[1:], k.base[0])))
+        scale = proj / (u[i] * v[j] - u[j] * v[i])
+        area2 = (self.g(u, u) * self.g(v, v) - self.g(u, v) ** 2) * scale ** 2 / 4
+        return area2 * self._kc2_mat(k.apex, k.base[:3]) / 9
 
     def _vec(self, a: str, b: str) -> V3:
         return tuple(self.pts[b][i] - self.pts[a][i] for i in range(3))
@@ -901,18 +959,24 @@ class _Dung:
                 khai.append(P.memory_declaration(ir_name(t), "point3", provenance="LAYOUT_DERIVED"))
         # Learner order (run `pedagogical-construction-sequencing`): the points a solid needs, then the solid, then the
         # auxiliary points — a topological split of the same statements, values unchanged.
-        dinh = {ir_name(x) for k in self.khoi.values() for x in (*k.base, *k.top, *([k.apex] if k.apex else []))}
         # The height foot of a pyramid belongs to the solid's formation (base → height → lateral edges): ask the formation
         # authority itself which points it would accept as the foot, with the same declared topology it receives.
         from app.simulation.semantic_program.formation import _chan_ung_vien
         tat_ca, to_po = [st for _, l, _ in khoi_diem for st in l], hop_dong_to_po_da_khai(self.calls)
-        dinh |= {f for k in self.khoi.values() if k.apex
-                 for f in _chan_ung_vien(tat_ca, to_po, ir_name(k.apex), tuple(map(ir_name, k.base)))}
-        truoc, sau = thu_tu_su_pham([(t, l) for t, l, _ in khoi_diem], dinh)
         khai_cua = {t: k for t, _, k in khoi_diem}
-        lenh = [st for _, l in truoc for st in l]
-        khai = [d for t, _ in truoc for d in khai_cua[t]]
-        for k in sorted(self.khoi.values(), key=lambda k: k.name):
+        lenh, khai = [], []
+        sau = [(t, l) for t, l, _ in khoi_diem]
+        point_order = {t: i for i, (t, _, _) in enumerate(khoi_diem)}
+        # Original solid first; each later solid consumes only its own transitive point prerequisites.
+        solid_order = sorted(self.khoi.values(), key=lambda k: (
+            max(point_order[ir_name(x)] for x in (*k.base, *k.top, *([k.apex] if k.apex else []))), k.name))
+        for k in solid_order:
+            dinh = {ir_name(x) for x in (*k.base, *k.top, *([k.apex] if k.apex else []))}
+            if k.apex:
+                dinh |= set(_chan_ung_vien(tat_ca, to_po, ir_name(k.apex), tuple(map(ir_name, k.base))))
+            truoc, sau = thu_tu_su_pham(sau, dinh)
+            lenh += [st for _, l in truoc for st in l]
+            khai += [d for t, _ in truoc for d in khai_cua[t]]
             ten = "khoi_" + ir_name(k.name.replace(".", "_"))
             st = (P.construct_pyramid(ten, ir_name(k.apex), tuple(map(ir_name, k.base)), k.name) if k.kind == "pyramid"
                   else {**P.construct_prism(ten, tuple(map(ir_name, k.base)), tuple(map(ir_name, k.top)),
@@ -1362,6 +1426,10 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
                 raise TuChoi(e.code, str(e)) from None
             raise TuChoi("ENGINE_EXECUTION_FAILED", f"{type(e).__name__}: {e}") from None
         fm = ket.final_memory
+        for c in dung.of("ask_volume"):
+            expected = dung.volume_certificates.get(c.args.solid)
+            if expected is not None and _binh_phuong(fm.get(hoi[c.id])) != expected:
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "thể tích thực thi khác chứng chỉ diện tích Gram × đường cao", (c.id,))
         kernel_ok = all((lambda v: v is not None and (v.x, v.y, v.z) == dung.pts[t])(fm.get(ir_name(t)))
                         for t in dung.pts)
         kernel_ok = kernel_ok and all(isinstance(fm.get(f'gt_{ref}'),Line3)

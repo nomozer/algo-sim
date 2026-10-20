@@ -459,9 +459,10 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     """P3, P4.8 & P4.9: Verify versions, surface fingerprints, LLM_ONLY default, and untouched v3 receipts."""
     # /6, /7, /5 -> /7, /8, /6 (goal-directed-function-composition): ask_angle_lines, centroid + angle goal contracts.
     # -> /8, /9, /7 (geometry-capability-expansion): divide_segment, MAT_VUONG_DUONG, right-angle chain, prism vector.
-    assert REGISTRY_VERSION == "geometry-functions/9"
+    # composite-geometry: shared-face source check + constructed-base pyramids; provider schemas unchanged.
+    assert REGISTRY_VERSION == "geometry-functions/10"
     assert PLANNER_VERSION == "geometry-fact-planner/10"
-    assert ENGINE_VERSION == "geometry-function-engine/7"
+    assert ENGINE_VERSION == "geometry-function-engine/8"
     # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định.
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness.
     assert main_module.CACHE_VERSION == "127"

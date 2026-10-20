@@ -1,0 +1,15 @@
+{
+  "bh2a": {
+    "rows": 19,
+    "changed": []
+  },
+  "sg1_sg6": {
+    "rows": 30,
+    "changed": []
+  },
+  "nlu_gold": {
+    "rows": 60,
+    "changed": [],
+    "historical_oracles_modified": false
+  }
+}
