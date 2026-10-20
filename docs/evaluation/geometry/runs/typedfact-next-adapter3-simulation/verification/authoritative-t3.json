@@ -1,0 +1,93 @@
+{
+  "schema": "authoritative-t3-receipt/2",
+  "run": "typedfact-next-adapter3-simulation",
+  "branch": "research/typedfact-next-adapter3-simulation",
+  "baseline_main": "1613e0d3ebe16f0f2fe4be755052491ff581e51b",
+  "product_commit": "61d6f44b7d8dffd69fbda51979686ced5b00efd2",
+  "candidate_freeze_commit": "09f97a287dcaef10db30e1fcb1fcb98781107989",
+  "t3_target_commit": "80f47de9a285bac19676428f2b0c7b2b01b0fbd9",
+  "measured_system_hash": "42f6ae2c8e290d00be2e11b439ca2499f58fe74cd84ab999e2cae2824c4b65d2",
+  "measured_file_count": 114,
+  "measured_paths_changed_between_product_and_t3_target": 0,
+  "worktree": ".superpowers/worktrees/typedfact-next-adapter3-simulation (isolated research worktree on branch research/typedfact-next-adapter3-simulation, tracked tree clean before run)",
+  "command": "ALLOW_LIVE_AI=0 node frontend/scripts/full-gate.mjs",
+  "environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "node": "v24.13.0",
+    "python": "Python 3.12.10 (D:\\Documents\\projects\\algo-sim\\backend\\.venv)"
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "started_utc": "2026-10-20T16:20:09Z",
+      "exit_code": 1,
+      "verdict": "FULL_PRODUCT_GATE_FAIL",
+      "duration_seconds": 504.03,
+      "pytest_backend": "1 failed (test_C2b_candidate_hien_tai_phai_duoc_KHAI), 11409 passed, 1 skipped, 2 deselected, 9 xfailed",
+      "vitest_frontend": "71 passed (1150 tests)",
+      "typecheck_and_build": "FAIL (test-only TS6133/TS2345 in adapter3-simulation-demos.test.tsx)",
+      "cause": "HARNESS/DECLARATION: candidate_divergence.json had not yet been added to docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/, and adapter3-simulation-demos.test.tsx had an unused import and 2nd argument to VIEW.buildObject3D. Zero product files modified to resolve.",
+      "raw_logs": ["t3/attempt1-fail.stdout.log", "t3/attempt1-fail.stderr.log"]
+    },
+    {
+      "attempt": 2,
+      "started_utc": "2026-10-20T16:31:14Z",
+      "exit_code": 1,
+      "verdict": "FULL_PRODUCT_GATE_FAIL",
+      "duration_seconds": 459.02,
+      "pytest_backend": "11410 passed, 1 skipped, 2 deselected, 9 xfailed",
+      "vitest_frontend": "1 failed (sectionEdgeId(secObj.id, 0) in adapter3-simulation-demos.test.tsx), 70 passed (1149 passed)",
+      "typecheck_and_build": "PASS",
+      "cause": "TEST-ONLY: sectionEdgeId takes 1-based vertex pair (secObj.id, 1, 2); removed unused sectionEdgeId import from adapter3-simulation-demos.test.tsx. Zero product files modified.",
+      "raw_logs": ["t3/attempt2-fail.stdout.log", "t3/attempt2-fail.stderr.log"]
+    },
+    {
+      "attempt": 3,
+      "started_utc": "2026-10-20T16:41:11Z",
+      "exit_code": 0,
+      "verdict": "FULL_PRODUCT_GATE_PASS",
+      "duration_seconds": 461.04,
+      "gates": {
+        "pytest_backend": {
+          "status": "PASS",
+          "passed": 11410,
+          "failed": 0,
+          "skipped": 1,
+          "deselected": 2,
+          "xfailed": 9
+        },
+        "vitest_frontend": {
+          "status": "PASS",
+          "test_files": 71,
+          "passed": 1150,
+          "failed": 0
+        },
+        "typecheck_and_build": {
+          "status": "PASS"
+        },
+        "thesis_demo_replay": {
+          "status": "PASS",
+          "demo_replay_pass": "5/5",
+          "reduced_chain_cases": "1/1"
+        },
+        "demo_crash_surface": {
+          "status": "PASS",
+          "expected_boundaries": "6/6",
+          "uncaught_500": 0
+        }
+      },
+      "freeze_verify_after_t3": "MATCH (114 files, 42f6ae2c8e290d00…)",
+      "raw_logs": ["t3/attempt3-pass.stdout.log", "t3/attempt3-pass.stderr.log"]
+    }
+  ],
+  "raw_log_sha256": {
+    "t3/attempt1-fail.stdout.log": "50a4e13c443c26c09294378bb9e5107f7a8b53fd60ba437e4fea41a0cab13748",
+    "t3/attempt1-fail.stderr.log": "77644b95cdf473350f4437a9fad81c96f01e65de1802469bfddd51b1a372ac5f",
+    "t3/attempt2-fail.stdout.log": "8ad6ba7c2e0666cf6bed78e55dd9af90b6146f1aba3d06c55941ff85f42f1029",
+    "t3/attempt2-fail.stderr.log": "4bf1cf938d676ce1fca43d4de12f342b55effdd5f48b5d3f65b673610b0b85a6",
+    "t3/attempt3-pass.stdout.log": "568b9846f07fe50b262872fb54066d746c439fbf45e2d04de895fb46b7ac1047",
+    "t3/attempt3-pass.stderr.log": "b482ae02fba47b708527a8f4a26c4cb51f090ef7613dd5f856f946d020bbcb0a"
+  },
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "live_requests": 0
+}

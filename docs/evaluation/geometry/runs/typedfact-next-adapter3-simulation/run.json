@@ -1,0 +1,62 @@
+{
+  "run": "typedfact-next-adapter3-simulation",
+  "wave": "TypedFactNext + Adapter /3 — Simulation-First Contract Expansion",
+  "date": "2026-10-20",
+  "authorization": "GO_TYPEDFACT_NEXT_ADAPTER3_OFFLINE_RESEARCH_IMPLEMENTATION (local research only; no GO MAIN)",
+  "branch": "research/typedfact-next-adapter3-simulation",
+  "base_commit": "1613e0d3ebe16f0f2fe4be755052491ff581e51b",
+  "product_commits": [
+    "54e61480a7712b17d633cf08c09ca056c24ec52f",
+    "61d6f44b7d8dffd69fbda51979686ced5b00efd2"
+  ],
+  "product_commit": "61d6f44b7d8dffd69fbda51979686ced5b00efd2",
+  "candidate_commit": "09f97a287dcaef10db30e1fcb1fcb98781107989",
+  "superseded_candidates": [],
+  "measured_system_hash": "42f6ae2c8e290d00be2e11b439ca2499f58fe74cd84ab999e2cae2824c4b65d2",
+  "measured_file_count": 114,
+  "authoritative_t3_commit": "80f47de9a285bac19676428f2b0c7b2b01b0fbd9",
+  "authoritative_t3_verdict": "FULL_PRODUCT_GATE_PASS",
+  "authoritative_t3_receipt": "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/verification/authoritative-t3.json",
+  "independent_review": "INDEPENDENT_REVIEW_PASS (09f97a28; verification/independent-review.md)",
+  "versions": {
+    "typed_fact_next": "typed-fact-next/1",
+    "adapter_3": "hybrid-simulation-adapter/3",
+    "route_d_simulation": "hybrid-route-d-simulation/3",
+    "registry": "geometry-functions/10",
+    "planner": "geometry-fact-planner/10",
+    "engine": "geometry-function-engine/8",
+    "adapter_2": "hybrid-preview-adapter/2"
+  },
+  "cache_version": 127,
+  "cache_decision": "NO_BUMP (default LLM_ONLY route and Adapter /2 never invoke TypedFactNext or Adapter /3; offline research isolated)",
+  "default_mode": "LLM_ONLY",
+  "response_contract": "flat",
+  "hybrid_product_enablement": "NO-GO",
+  "live_requests": 0,
+  "results": {
+    "development_corpus": {
+      "evaluation_mode": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+      "total_cases": 16,
+      "positive_exact_served": "10/10",
+      "negative_exact_refusal": "6/6",
+      "wrong_serves": 0,
+      "scene3d_valid": "10/10",
+      "corpus_artifact": "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/corpus-dev.json",
+      "summary_artifact": "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/eval-summary.json",
+      "oracle_script": "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/oracle_eval.py"
+    },
+    "executable_demos": {
+      "demo1_unnamed_section_pyramid": "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/demos/demo1-unnamed-section-pyramid.json",
+      "demo2_multi_solid_shared_geometry": "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/demos/demo2-multi-solid-shared-geometry.json",
+      "demo3_step_by_step_construction_highlight": "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/demos/demo3-step-by-step-construction-highlight.json",
+      "demo4_negative_underdetermined_refusal": "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/demos/demo4-negative-underdetermined-refusal.json",
+      "frontend_scene3d_test": "frontend/src/simulations/domains/geometry/adapter3-simulation-demos.test.tsx (4/4 passed)"
+    },
+    "regressions": {
+      "backend_full_t3": "11410 passed, 1 skipped, 2 deselected, 9 xfailed",
+      "frontend_full_t3": "71 test files, 1150 passed",
+      "historical_174_and_adapter_2_fixtures": "PASS inside Full T3 backend suite"
+    }
+  },
+  "verdict": "ADAPTER3_SIMULATION_RESEARCH_READY_FOR_GO_MAIN_REVIEW"
+}
