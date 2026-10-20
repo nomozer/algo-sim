@@ -1,0 +1,724 @@
+{
+  "adapter_version": "hybrid-simulation-adapter/3",
+  "comparison": {
+    "answer_agreement": "NOT_APPLICABLE",
+    "scene3d_bucket": "NEITHER",
+    "status_pair": "NONE_VS_REFUSED"
+  },
+  "contract_version": "typed-fact-next/1",
+  "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh a và cạnh bên SA = 2a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD. Hãy dựng hình chóp và thiết diện.",
+  "route_a": null,
+  "route_b": {
+    "answer_exact": {},
+    "answers": {},
+    "calls": [
+      {
+        "args": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "fn": "pyramid",
+        "id": "solid1",
+        "source": {
+          "quotes": [
+            "Cho hình chóp S.ABCD",
+            "S.ABCD"
+          ]
+        }
+      },
+      {
+        "args": {
+          "side": "a",
+          "vertices": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "fn": "regular_polygon",
+        "id": "p1",
+        "source": {
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ]
+        }
+      },
+      {
+        "args": {
+          "segment": [
+            "S",
+            "A"
+          ],
+          "value": "2a"
+        },
+        "fn": "segment_length",
+        "id": "p2",
+        "source": {
+          "quotes": [
+            "SA = 2a"
+          ]
+        }
+      },
+      {
+        "args": {
+          "point": "M",
+          "segment": [
+            "S",
+            "A"
+          ]
+        },
+        "fn": "midpoint",
+        "id": "p3",
+        "source": {
+          "quotes": [
+            "Gọi M là trung điểm của SA"
+          ]
+        }
+      },
+      {
+        "args": {
+          "image": "X1",
+          "point": "M",
+          "vector": [
+            "A",
+            "B"
+          ]
+        },
+        "fn": "translate_point",
+        "id": "tp3",
+        "source": {
+          "quotes": [
+            "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+          ]
+        }
+      },
+      {
+        "args": {
+          "image": "X2",
+          "point": "M",
+          "vector": [
+            "A",
+            "C"
+          ]
+        },
+        "fn": "translate_point",
+        "id": "tp4",
+        "source": {
+          "quotes": [
+            "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+          ]
+        }
+      },
+      {
+        "args": {
+          "plane": [
+            "M",
+            "X1",
+            "X2"
+          ],
+          "solid": "S.ABCD"
+        },
+        "fn": "section",
+        "id": "sec2",
+        "source": {
+          "quotes": [
+            "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+          ]
+        }
+      },
+      {
+        "args": {
+          "line": [
+            "S",
+            "B"
+          ],
+          "plane": [
+            "M",
+            "X1",
+            "X2"
+          ],
+          "point": "I1"
+        },
+        "fn": "intersect_line_plane",
+        "id": "ip5",
+        "source": {
+          "quotes": [
+            "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+          ]
+        }
+      },
+      {
+        "args": {
+          "line": [
+            "S",
+            "C"
+          ],
+          "plane": [
+            "M",
+            "X1",
+            "X2"
+          ],
+          "point": "I2"
+        },
+        "fn": "intersect_line_plane",
+        "id": "ip6",
+        "source": {
+          "quotes": [
+            "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+          ]
+        }
+      },
+      {
+        "args": {
+          "line": [
+            "S",
+            "D"
+          ],
+          "plane": [
+            "M",
+            "X1",
+            "X2"
+          ],
+          "point": "I3"
+        },
+        "fn": "intersect_line_plane",
+        "id": "ip7",
+        "source": {
+          "quotes": [
+            "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+          ]
+        }
+      }
+    ],
+    "kernel_check": false,
+    "length_unit": null,
+    "metric": null,
+    "planner": {
+      "calls": [
+        {
+          "args": {
+            "apex": "S",
+            "base": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "fn": "pyramid",
+          "id": "solid1",
+          "source": {
+            "quotes": [
+              "Cho hình chóp S.ABCD",
+              "S.ABCD"
+            ]
+          }
+        },
+        {
+          "args": {
+            "side": "a",
+            "vertices": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          "fn": "regular_polygon",
+          "id": "p1",
+          "source": {
+            "quotes": [
+              "đáy ABCD là hình vuông cạnh a"
+            ]
+          }
+        },
+        {
+          "args": {
+            "segment": [
+              "S",
+              "A"
+            ],
+            "value": "2a"
+          },
+          "fn": "segment_length",
+          "id": "p2",
+          "source": {
+            "quotes": [
+              "SA = 2a"
+            ]
+          }
+        },
+        {
+          "args": {
+            "point": "M",
+            "segment": [
+              "S",
+              "A"
+            ]
+          },
+          "fn": "midpoint",
+          "id": "p3",
+          "source": {
+            "quotes": [
+              "Gọi M là trung điểm của SA"
+            ]
+          }
+        },
+        {
+          "args": {
+            "image": "X1",
+            "point": "M",
+            "vector": [
+              "A",
+              "B"
+            ]
+          },
+          "fn": "translate_point",
+          "id": "tp3",
+          "source": {
+            "quotes": [
+              "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+            ]
+          }
+        },
+        {
+          "args": {
+            "image": "X2",
+            "point": "M",
+            "vector": [
+              "A",
+              "C"
+            ]
+          },
+          "fn": "translate_point",
+          "id": "tp4",
+          "source": {
+            "quotes": [
+              "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+            ]
+          }
+        },
+        {
+          "args": {
+            "plane": [
+              "M",
+              "X1",
+              "X2"
+            ],
+            "solid": "S.ABCD"
+          },
+          "fn": "section",
+          "id": "sec2",
+          "source": {
+            "quotes": [
+              "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+            ]
+          }
+        },
+        {
+          "args": {
+            "line": [
+              "S",
+              "B"
+            ],
+            "plane": [
+              "M",
+              "X1",
+              "X2"
+            ],
+            "point": "I1"
+          },
+          "fn": "intersect_line_plane",
+          "id": "ip5",
+          "source": {
+            "quotes": [
+              "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+            ]
+          }
+        },
+        {
+          "args": {
+            "line": [
+              "S",
+              "C"
+            ],
+            "plane": [
+              "M",
+              "X1",
+              "X2"
+            ],
+            "point": "I2"
+          },
+          "fn": "intersect_line_plane",
+          "id": "ip6",
+          "source": {
+            "quotes": [
+              "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+            ]
+          }
+        },
+        {
+          "args": {
+            "line": [
+              "S",
+              "D"
+            ],
+            "plane": [
+              "M",
+              "X1",
+              "X2"
+            ],
+            "point": "I3"
+          },
+          "fn": "intersect_line_plane",
+          "id": "ip7",
+          "source": {
+            "quotes": [
+              "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+            ]
+          }
+        }
+      ],
+      "goal_checks": {},
+      "negated_checks": {},
+      "trace": [
+        {
+          "calls": [
+            "p1"
+          ],
+          "object": "A",
+          "provenance": "LAYOUT_DERIVED",
+          "rule": "regular_polygon_chart",
+          "step": "place_point"
+        },
+        {
+          "calls": [
+            "p1"
+          ],
+          "object": "B",
+          "provenance": "LAYOUT_DERIVED",
+          "rule": "regular_polygon_chart",
+          "step": "place_point"
+        },
+        {
+          "calls": [
+            "p1"
+          ],
+          "object": "C",
+          "provenance": "LAYOUT_DERIVED",
+          "rule": "regular_polygon_chart",
+          "step": "place_point"
+        },
+        {
+          "calls": [
+            "p1"
+          ],
+          "object": "D",
+          "provenance": "LAYOUT_DERIVED",
+          "rule": "regular_polygon_chart",
+          "step": "place_point"
+        }
+      ],
+      "version": "hybrid-simulation-adapter/3"
+    },
+    "points": {},
+    "refusal": {
+      "calls": [],
+      "code": "UNDERDETERMINED_POINT",
+      "detail": "không lời gọi nào xác định vị trí của ['I1', 'I2', 'I3', 'M', 'S', 'X1', 'X2'] (thiếu quan hệ vuông góc / trung điểm / khối đều)"
+    },
+    "scene3d": null,
+    "status": "REFUSED",
+    "trace": [
+      {
+        "calls": [
+          "p1"
+        ],
+        "object": "A",
+        "provenance": "LAYOUT_DERIVED",
+        "rule": "regular_polygon_chart",
+        "step": "place_point"
+      },
+      {
+        "calls": [
+          "p1"
+        ],
+        "object": "B",
+        "provenance": "LAYOUT_DERIVED",
+        "rule": "regular_polygon_chart",
+        "step": "place_point"
+      },
+      {
+        "calls": [
+          "p1"
+        ],
+        "object": "C",
+        "provenance": "LAYOUT_DERIVED",
+        "rule": "regular_polygon_chart",
+        "step": "place_point"
+      },
+      {
+        "calls": [
+          "p1"
+        ],
+        "object": "D",
+        "provenance": "LAYOUT_DERIVED",
+        "rule": "regular_polygon_chart",
+        "step": "place_point"
+      }
+    ]
+  },
+  "route_d": {
+    "adapter_version": "hybrid-simulation-adapter/3",
+    "answer_exact": {},
+    "answers": {},
+    "calls": [
+      {
+        "args": {
+          "apex": "S",
+          "base": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "fn": "pyramid",
+        "id": "solid1",
+        "source": {
+          "quotes": [
+            "Cho hình chóp S.ABCD",
+            "S.ABCD"
+          ]
+        }
+      },
+      {
+        "args": {
+          "side": "a",
+          "vertices": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        "fn": "regular_polygon",
+        "id": "p1",
+        "source": {
+          "quotes": [
+            "đáy ABCD là hình vuông cạnh a"
+          ]
+        }
+      },
+      {
+        "args": {
+          "segment": [
+            "S",
+            "A"
+          ],
+          "value": "2a"
+        },
+        "fn": "segment_length",
+        "id": "p2",
+        "source": {
+          "quotes": [
+            "SA = 2a"
+          ]
+        }
+      },
+      {
+        "args": {
+          "point": "M",
+          "segment": [
+            "S",
+            "A"
+          ]
+        },
+        "fn": "midpoint",
+        "id": "p3",
+        "source": {
+          "quotes": [
+            "Gọi M là trung điểm của SA"
+          ]
+        }
+      },
+      {
+        "args": {
+          "image": "X1",
+          "point": "M",
+          "vector": [
+            "A",
+            "B"
+          ]
+        },
+        "fn": "translate_point",
+        "id": "tp3",
+        "source": {
+          "quotes": [
+            "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+          ]
+        }
+      },
+      {
+        "args": {
+          "image": "X2",
+          "point": "M",
+          "vector": [
+            "A",
+            "C"
+          ]
+        },
+        "fn": "translate_point",
+        "id": "tp4",
+        "source": {
+          "quotes": [
+            "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+          ]
+        }
+      },
+      {
+        "args": {
+          "plane": [
+            "M",
+            "X1",
+            "X2"
+          ],
+          "solid": "S.ABCD"
+        },
+        "fn": "section",
+        "id": "sec2",
+        "source": {
+          "quotes": [
+            "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+          ]
+        }
+      },
+      {
+        "args": {
+          "line": [
+            "S",
+            "B"
+          ],
+          "plane": [
+            "M",
+            "X1",
+            "X2"
+          ],
+          "point": "I1"
+        },
+        "fn": "intersect_line_plane",
+        "id": "ip5",
+        "source": {
+          "quotes": [
+            "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+          ]
+        }
+      },
+      {
+        "args": {
+          "line": [
+            "S",
+            "C"
+          ],
+          "plane": [
+            "M",
+            "X1",
+            "X2"
+          ],
+          "point": "I2"
+        },
+        "fn": "intersect_line_plane",
+        "id": "ip6",
+        "source": {
+          "quotes": [
+            "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+          ]
+        }
+      },
+      {
+        "args": {
+          "line": [
+            "S",
+            "D"
+          ],
+          "plane": [
+            "M",
+            "X1",
+            "X2"
+          ],
+          "point": "I3"
+        },
+        "fn": "intersect_line_plane",
+        "id": "ip7",
+        "source": {
+          "quotes": [
+            "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+          ]
+        }
+      }
+    ],
+    "contract_version": "typed-fact-next/1",
+    "derived_identities": [],
+    "kernel_check": false,
+    "length_unit": null,
+    "math_goals": [],
+    "metric": null,
+    "points": {},
+    "refusal": {
+      "calls": [],
+      "code": "UNDERDETERMINED_POINT",
+      "detail": "không lời gọi nào xác định vị trí của ['I1', 'I2', 'I3', 'M', 'S', 'X1', 'X2'] (thiếu quan hệ vuông góc / trung điểm / khối đều)"
+    },
+    "scene3d": null,
+    "schema_version": "hybrid-route-d-simulation/3",
+    "simulation_goals": [],
+    "solids": [],
+    "status": "REFUSED",
+    "trace": [
+      {
+        "calls": [
+          "p1"
+        ],
+        "object": "A",
+        "provenance": "LAYOUT_DERIVED",
+        "rule": "regular_polygon_chart",
+        "step": "place_point"
+      },
+      {
+        "calls": [
+          "p1"
+        ],
+        "object": "B",
+        "provenance": "LAYOUT_DERIVED",
+        "rule": "regular_polygon_chart",
+        "step": "place_point"
+      },
+      {
+        "calls": [
+          "p1"
+        ],
+        "object": "C",
+        "provenance": "LAYOUT_DERIVED",
+        "rule": "regular_polygon_chart",
+        "step": "place_point"
+      },
+      {
+        "calls": [
+          "p1"
+        ],
+        "object": "D",
+        "provenance": "LAYOUT_DERIVED",
+        "rule": "regular_polygon_chart",
+        "step": "place_point"
+      }
+    ],
+    "verified_relations": []
+  },
+  "schema_version": "hybrid-Flat-preview/1"
+}

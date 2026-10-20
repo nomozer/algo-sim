@@ -1,0 +1,349 @@
+{
+  "adapter_version": "hybrid-simulation-adapter/3",
+  "contract_version": "typed-fact-next/1",
+  "corpus_sha256": "ab9727fc73928a8659f26d3be30d8f4be09abf9a7a331944420059aeee8f34a1",
+  "demos": [
+    {
+      "file": "demos/demo1-unnamed-section-pyramid.json",
+      "refusal_code": null,
+      "sha256": "73bf114b1943279a09f12f996cd6e62a28e840547e1398c62c650c8238c60969",
+      "status": "SERVED"
+    },
+    {
+      "file": "demos/demo2-multi-solid-shared-geometry.json",
+      "refusal_code": null,
+      "sha256": "29822a29df8d1982a6ad3902a76555a5af4bbdf7386105ebd9a5847fa690d03a",
+      "status": "SERVED"
+    },
+    {
+      "file": "demos/demo3-step-by-step-construction-highlight.json",
+      "refusal_code": null,
+      "sha256": "fd43aa4f803cb0d5f5d04c275001ae758aedce2a6ea158a9921305b249d345e0",
+      "status": "SERVED"
+    },
+    {
+      "file": "demos/demo4-negative-underdetermined-refusal.json",
+      "refusal_code": "UNDERDETERMINED_POINT",
+      "sha256": "3de90522086b6a94d0eb071a036764ab3ee538352e95a75878e229196151e801",
+      "status": "REFUSED"
+    }
+  ],
+  "measurement_class": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "negative_passed": 6,
+  "negative_total": 6,
+  "positive_passed": 10,
+  "positive_total": 10,
+  "results": [
+    {
+      "actual_status": "SERVED",
+      "answer_exact": {
+        "math_res_vol": {
+          "coef": "7/12",
+          "dim": 3,
+          "unit": "a"
+        },
+        "math_sec_area": {
+          "coef": "1/4",
+          "dim": 2,
+          "unit": "a"
+        },
+        "math_vol_ratio": {
+          "coef": "1/8",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "answers": {
+        "math_res_vol": "7a³/12",
+        "math_sec_area": "a²/4",
+        "math_vol_ratio": "1/8"
+      },
+      "case_id": "A3-DEV-01",
+      "expected_status": "SERVED",
+      "oracle_match": true,
+      "scene3d_objects": 26,
+      "slice": "Slice-A"
+    },
+    {
+      "actual_status": "SERVED",
+      "answer_exact": {
+        "m_vol_pyr1": {
+          "coef": "1/3",
+          "dim": 3,
+          "unit": "a"
+        },
+        "m_vol_ratio": {
+          "coef": "1/2",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "answers": {
+        "m_vol_pyr1": "a³/3",
+        "m_vol_ratio": "1/2"
+      },
+      "case_id": "A3-DEV-02",
+      "expected_status": "SERVED",
+      "oracle_match": true,
+      "scene3d_objects": 17,
+      "slice": "Slice-B"
+    },
+    {
+      "actual_status": "SERVED",
+      "answer_exact": {
+        "m_ratio": {
+          "coef": "1/27",
+          "dim": 0,
+          "unit": null
+        },
+        "m_res_vol": {
+          "coef": "13√3/162",
+          "dim": 3,
+          "unit": "a"
+        }
+      },
+      "answers": {
+        "m_ratio": "1/27",
+        "m_res_vol": "13a³√3/162"
+      },
+      "case_id": "A3-DEV-03",
+      "expected_status": "SERVED",
+      "oracle_match": true,
+      "scene3d_objects": 21,
+      "slice": "Slice-A"
+    },
+    {
+      "actual_status": "SERVED",
+      "answer_exact": {
+        "m_ratio_p": {
+          "coef": "1/27",
+          "dim": 0,
+          "unit": null
+        },
+        "m_res_p": {
+          "coef": "26/81",
+          "dim": 3,
+          "unit": "a"
+        }
+      },
+      "answers": {
+        "m_ratio_p": "1/27",
+        "m_res_p": "26a³/81"
+      },
+      "case_id": "A3-DEV-04",
+      "expected_status": "SERVED",
+      "oracle_match": true,
+      "scene3d_objects": 21,
+      "slice": "Slice-A"
+    },
+    {
+      "actual_status": "SERVED",
+      "answer_exact": {
+        "math_res_vol": {
+          "coef": "7/2",
+          "dim": 3,
+          "unit": "a"
+        },
+        "math_sec_area": {
+          "coef": "1",
+          "dim": 2,
+          "unit": "a"
+        },
+        "math_vol_ratio": {
+          "coef": "1/8",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "answers": {
+        "math_res_vol": "7a³/2",
+        "math_sec_area": "a²",
+        "math_vol_ratio": "1/8"
+      },
+      "case_id": "A3-DEV-05",
+      "expected_status": "SERVED",
+      "oracle_match": true,
+      "scene3d_objects": 26,
+      "slice": "Slice-A"
+    },
+    {
+      "actual_status": "SERVED",
+      "answer_exact": {
+        "m_ratio": {
+          "coef": "8/27",
+          "dim": 0,
+          "unit": null
+        },
+        "m_res_vol": {
+          "coef": "19√3/162",
+          "dim": 3,
+          "unit": "a"
+        }
+      },
+      "answers": {
+        "m_ratio": "8/27",
+        "m_res_vol": "19a³√3/162"
+      },
+      "case_id": "A3-DEV-06",
+      "expected_status": "SERVED",
+      "oracle_match": true,
+      "scene3d_objects": 21,
+      "slice": "Slice-A"
+    },
+    {
+      "actual_status": "SERVED",
+      "answer_exact": {
+        "m_ratio": {
+          "coef": "1/8",
+          "dim": 0,
+          "unit": null
+        },
+        "m_res_vol": {
+          "coef": "7√3/96",
+          "dim": 3,
+          "unit": "a"
+        }
+      },
+      "answers": {
+        "m_ratio": "1/8",
+        "m_res_vol": "7a³√3/96"
+      },
+      "case_id": "A3-DEV-07",
+      "expected_status": "SERVED",
+      "oracle_match": true,
+      "scene3d_objects": 21,
+      "slice": "Slice-A"
+    },
+    {
+      "actual_status": "SERVED",
+      "answer_exact": {
+        "m_half_ratio": {
+          "coef": "1/2",
+          "dim": 0,
+          "unit": null
+        },
+        "m_half_res": {
+          "coef": "√3/2",
+          "dim": 3,
+          "unit": "a"
+        }
+      },
+      "answers": {
+        "m_half_ratio": "1/2",
+        "m_half_res": "a³√3/2"
+      },
+      "case_id": "A3-DEV-08",
+      "expected_status": "SERVED",
+      "oracle_match": true,
+      "scene3d_objects": 15,
+      "slice": "Slice-B"
+    },
+    {
+      "actual_status": "SERVED",
+      "answer_exact": {
+        "m_reg_ratio": {
+          "coef": "1/8",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "answers": {
+        "m_reg_ratio": "1/8"
+      },
+      "case_id": "A3-DEV-09",
+      "expected_status": "SERVED",
+      "oracle_match": true,
+      "scene3d_objects": 26,
+      "slice": "Slice-A"
+    },
+    {
+      "actual_status": "SERVED",
+      "answer_exact": {
+        "m_prism_sec_area": {
+          "coef": "√3/4",
+          "dim": 2,
+          "unit": "a"
+        }
+      },
+      "answers": {
+        "m_prism_sec_area": "a²√3/4"
+      },
+      "case_id": "A3-DEV-10",
+      "expected_status": "SERVED",
+      "oracle_match": true,
+      "scene3d_objects": 18,
+      "slice": "Slice-A"
+    },
+    {
+      "actual_code": "UNDERDETERMINED_POINT",
+      "actual_status": "REFUSED",
+      "case_id": "A3-DEV-11",
+      "expected_codes": [
+        "UNDERDETERMINED_POINT"
+      ],
+      "expected_status": "REFUSED",
+      "refusal_match": true,
+      "slice": "Negative"
+    },
+    {
+      "actual_code": "AMBIGUOUS_REFERENCE",
+      "actual_status": "REFUSED",
+      "case_id": "A3-DEV-12",
+      "expected_codes": [
+        "AMBIGUOUS_REFERENCE"
+      ],
+      "expected_status": "REFUSED",
+      "refusal_match": true,
+      "slice": "Negative"
+    },
+    {
+      "actual_code": "SHARED_ENTITY_MISMATCH",
+      "actual_status": "REFUSED",
+      "case_id": "A3-DEV-13",
+      "expected_codes": [
+        "SHARED_ENTITY_MISMATCH"
+      ],
+      "expected_status": "REFUSED",
+      "refusal_match": true,
+      "slice": "Negative"
+    },
+    {
+      "actual_code": "DERIVED_PLANE_IS_REFERENCE",
+      "actual_status": "REFUSED",
+      "case_id": "A3-DEV-14",
+      "expected_codes": [
+        "DEGENERATE_DERIVED_SOLID",
+        "DERIVED_PLANE_IS_REFERENCE",
+        "SECTION_PLANE_IS_FACE"
+      ],
+      "expected_status": "REFUSED",
+      "refusal_match": true,
+      "slice": "Negative"
+    },
+    {
+      "actual_code": "COLLINEAR_POINTS",
+      "actual_status": "REFUSED",
+      "case_id": "A3-DEV-15",
+      "expected_codes": [
+        "COLLINEAR_POINTS",
+        "PLANE_NOT_UNIQUE"
+      ],
+      "expected_status": "REFUSED",
+      "refusal_match": true,
+      "slice": "Negative"
+    },
+    {
+      "actual_code": "SOURCE_NUMBER_MISMATCH",
+      "actual_status": "REFUSED",
+      "case_id": "A3-DEV-16",
+      "expected_codes": [
+        "SOURCE_NUMBER_MISMATCH"
+      ],
+      "expected_status": "REFUSED",
+      "refusal_match": true,
+      "slice": "Negative"
+    }
+  ],
+  "total_cases": 16,
+  "wrong_serves": 0
+}

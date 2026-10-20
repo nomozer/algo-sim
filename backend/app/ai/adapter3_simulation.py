@@ -427,13 +427,32 @@ class _Adapter3Compiler:
             elif kind == "right_prism":
                 base = [R(x) for x in a["base"]]
                 top = [R(x) for x in a["top"]]
-                self.calls.append(
-                    {
-                        "id": pid,
-                        "fn": "prism",
-                        "args": {"base": base, "top": top, "right": True},
-                        "source": {"quotes": [prem.quote]},
-                    }
+                updated = False
+                for existing in self.calls:
+                    if (
+                        existing["fn"] == "prism"
+                        and existing["args"]["base"] == base
+                        and existing["args"]["top"] == top
+                    ):
+                        existing["args"]["right"] = True
+                        updated = True
+                if not updated:
+                    self.calls.append(
+                        {
+                            "id": pid,
+                            "fn": "prism",
+                            "args": {"base": base, "top": top, "right": True},
+                            "source": {"quotes": [prem.quote]},
+                        }
+                    )
+                key = frozenset(map(ir_name, [*base, *top]))
+                self.solid_topology_contracts[key] = RequestContract(
+                    solid_topology=PrismTopologySpec(
+                        base_cycle=tuple(base),
+                        top_cycle=tuple(top),
+                        correspondence=tuple(zip(base, top)),
+                        lateral_structure="right",
+                    )
                 )
             elif kind in ("regular_polygon", "base_is_square", "base_is_equilateral_triangle", "base_is_regular_polygon"):
                 verts = [R(x) for x in a["vertices"]]

@@ -862,3 +862,45 @@ def test_p4_scene3d_topology_edges_surfaces_and_timeline() -> None:
     seq_goal = next(g for g in res.simulation_goals if g["goal_id"] == "sim_sequence")
     assert seq_goal["status"] == "SEQUENCED"
     assert len(seq_goal["construction_steps"]) == len(scene["events"])
+
+
+
+def test_p5_p6_development_corpus_and_demos_oracle() -> None:
+    import hashlib
+    import json
+    from pathlib import Path
+
+    run_dir = (
+        Path(__file__).resolve().parents[3]
+        / "docs"
+        / "evaluation"
+        / "geometry"
+        / "runs"
+        / "typedfact-next-adapter3-simulation"
+    )
+    corpus = json.loads((run_dir / "corpus-dev.json").read_text(encoding="utf-8"))
+    summary = json.loads((run_dir / "eval-summary.json").read_text(encoding="utf-8"))
+
+    assert corpus["measurement_class"] == "DEVELOPMENT_EVALUATION_NOT_BLIND"
+    assert summary["measurement_class"] == "DEVELOPMENT_EVALUATION_NOT_BLIND"
+    assert summary["wrong_serves"] == 0
+    assert summary["positive_passed"] == summary["positive_total"] == 10
+    assert summary["negative_passed"] == summary["negative_total"] == 6
+
+    for demo_meta in summary["demos"]:
+        demo_path = run_dir / demo_meta["file"]
+        assert demo_path.exists()
+        raw_bytes = demo_path.read_bytes()
+        assert hashlib.sha256(raw_bytes).hexdigest() == demo_meta["sha256"]
+
+    for case in corpus["cases"]:
+        res = run_typed_fact_next_route(case["payload"])
+        assert res.status == case["expected_status"], f"Case {case['case_id']} failed: {res.code}"
+        if case["expected_status"] == "SERVED":
+            assert res.scene3d is not None
+            assert res.kernel_check is True
+            for k, expected_exact in case["oracle_exact"].items():
+                assert res.answer_exact.get(k) == expected_exact, f"Case {case['case_id']} goal {k} mismatch"
+        else:
+            assert res.scene3d is None
+            assert res.code in set(case["expected_codes"])
