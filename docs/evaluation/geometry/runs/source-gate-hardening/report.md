@@ -2,16 +2,19 @@
 
 - **Run:** `source-gate-hardening` · nhánh `research/hybrid-source-gate-hardening` từ `main` = `origin/main` = `6973c4b6`
 - **Ủy quyền:** `GO_HYBRID_SOURCE_GATE_HARDENING_LOCAL` (không merge/push, không bật Hybrid, không Wave 2C, không Adapter /3)
-- **Commit sản phẩm (9):** `24103909` SG-1..SG-6 → `3509b705` (2 false refusal lộ trên corpus khoá) → `ee50e87b` (3 lỗ cùng
+- **Commit sản phẩm (20):** `24103909` SG-1..SG-6 → `3509b705` (2 false refusal lộ trên corpus khoá) → `ee50e87b` (3 lỗ cùng
   nhóm lộ trên BH2A) → `aded2fbf` · `0cefe720` · `6c910a51` · `85e6dd86` · `b3c850e2` · `b6b61061` (review độc lập vòng 1–6)
+  → `81e91ebb` · `b6a9fcc6` · `08bad12f` · `6f58c0f5` · `57701200` · `c6592ac2` · `c3b1f905` · `c7b79cce` · `26e1040a` ·
+  `07da444c` · `602316ed` (sửa Full T3 và cổng đếm đỉnh nguồn `_kiem_so_dinh_nguon`, review T3-1..T3-11)
 - **Đánh giá khoá trước khi đo:** corpus/oracle/harness `53c66941` · BH2A tái dựng `8b6f6316`
-- **Candidate cuối:** **`1beeec0b`** (112 file, `663342b0df90c805291fcc057846b31fe5e62b0035eeac13dea785f984502ab9`); 8 candidate
-  trước đó bị thay thế (chuỗi trong `inputs/candidate_divergence.json`)
+- **Candidate cuối:** **`c5a83b74`** (product `602316ed`, 112 file, `0512dbc53e09696dfecee4cec8ed360af4ad66d8816c782c2993c3617a0d2583`);
+  19 candidate trước đó bị thay thế (chuỗi trong `inputs/candidate_divergence.json`)
 - **Version:** `geometry-functions/9` · `geometry-fact-planner/10` · engine `/7` (không đổi); TypedFact `aa9d93ee…`, `flat`
   `485d3834…`, v3 `4bff35bb…`, tuyến A `5ceb0f99…` / `7ea511a6…` — **không đổi**
 - **Live provider calls:** 0 · `CACHE_VERSION` 127 (không bump, §8) · `LLM_ONLY` · Hybrid product NO-GO
-- **Review độc lập:** `verification/independent-review.md` — FAIL ở vòng 1–5, **PASS** ở vòng 6 và xác nhận phần chênh lệch cuối
-- **T3:** `handoff.md`
+- **Review độc lập:** `verification/independent-review.md` — FAIL ở vòng 1–5, **PASS** ở vòng 6 (`1beeec0b`); tiếp nối sau Full T3
+  qua vòng T3-1..T3-11, kết thúc bằng **`INDEPENDENT_REVIEW_PASS`** trên candidate `c5a83b74`
+- **T3:** **`FULL_PRODUCT_GATE_PASS`** trên `2d0641f4` (`handoff.md` — pytest 11.338 passed, vitest 1.146 passed, build, demo 5/5 + 6/6)
 
 ## 1. Sáu nhóm lỗi: nguyên nhân → sửa (đúng một thẩm quyền: cổng nguồn `registry.py`, một dòng planner)
 
@@ -29,7 +32,7 @@ Không `if/else` theo mã ca; không đổi lược đồ, prompt hay bề mặt
 
 ## 2. Corpus khoá (A repro · B biến thể chưa có trong test · C âm) — `results/`
 
-| | `main` `6973c4b6` | candidate đầu `73f4d47d` | **candidate cuối `663342b0`** (`results/evaluation-final/`) |
+| | `main` `6973c4b6` | candidate đầu `73f4d47d` | **candidate cuối `0512dbc5`** (`results/evaluation-after-t3-review-10/`, trùng số với `evaluation-final/`) |
 |---|---|---|---|
 | Dương phục vụ đúng tuyệt đối | 1/18 | 16/18 | **18/18** |
 | Mục tiêu đúng | 1/21 | 19/21 | **21/21** |
@@ -55,7 +58,7 @@ mã đăng ký trước): cổng nguồn `UNGROUNDED_VALUE`, `CONDITIONAL_CLAUSE
 | Wave 2A `224328a2` | 3/12 (3/15) | REFUSED `SCHEMA_INVALID` | 5/5 | 0 |
 | `main` `6973c4b6` (sau 2B) | 3/12 (3/15) | REFUSED `AMBIGUOUS_VALUE_QUOTE` | 5/5 | 0 |
 | trước bản sửa BH2A | 8/12 (9/15) | REFUSED | 5/5 | 0 |
-| **candidate cuối** (`bh2a/results-final/`) | **11/12 (14/15)** | **SERVED `a²√3` = oracle** | **5/5** | **0** |
+| **candidate cuối** (`bh2a/results-after-t3-review-10/`, trùng số với `bh2a/results-final/`) | **11/12 (14/15)** | **SERVED `a²√3` = oracle** | **5/5** | **0** |
 
 BH2A-03 còn REFUSED, ngoài SG: đặc tả fact ghi mặt đáy `["A","B","C"]` cho đề (ABCD) ⇒ `SOURCE_OBJECT_MISMATCH`; bản trung
 thực (ABCD) dừng ở văn phạm đóng của lát line_ref với câu tiền đề ghép (`ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE`). Sentinel
@@ -67,7 +70,7 @@ BH2A-13 bị SG-3 chặn trên `main` sau 2B, nay phục vụ đúng. BH2A-15 na
 Vòng 1–5 FAIL với phục vụ sai TÁI HIỆN được, cùng một lớp: gắn số vào vai trò từ văn xuôi tự do (chủ sở hữu suy ra sai,
 ngoại lệ theo danh sách từ, mệnh đề đổi chủ ngữ). Kết thúc bằng văn phạm đóng không ngoại lệ (§1, SG-3). Vòng 6 PASS; ca còn
 tranh luận N1/N2 vẫn được siết; xác nhận phần chênh lệch cuối PASS. Mọi probe tái hiện của mọi vòng là test âm
-(`test_source_gate_hardening.py`: 118 test; 56 ĐỎ trên `6973c4b6`).
+(`test_source_gate_hardening.py`: 226 test sau vòng T3-1..T3-11; 56 ĐỎ của vòng 1–6 trên `6973c4b6`).
 
 ## 5. Tương thích ngược
 

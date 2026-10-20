@@ -19,7 +19,18 @@
    "6c910a51a650c9614b8dd8e4dd7b5368c22f475f",
    "85e6dd86176954ac903d3c8907cbc2a8cbb3d7cf",
    "b3c850e2e56dcb997c683d2aaf7667db5776e1d2",
-   "b6b610612563418947d38a2e4f9f10b22754b65f"
+   "b6b610612563418947d38a2e4f9f10b22754b65f",
+   "81e91ebb1bd780376813c49dd52253d5c47e1baf",
+   "b6a9fcc6ab7a443afee31fd4e441b5187cca1782",
+   "08bad12f81abc30633f8d995129a2142e8cbc0c1",
+   "6f58c0f50865ba51607f1624ab45d5065ab8b07b",
+   "577012000fba62c8c748479cf0aa1183a48bc2cd",
+   "c6592ac20bbb9106285fac2bdd78f126599d1b37",
+   "c3b1f9057eed0d2f2b0b292c85d095cb31cebc94",
+   "c7b79ccedcaeaa87c2785ef7ce42d601feddc605",
+   "26e1040af8cebe076f142f3c61053058eaf89b5d",
+   "07da444c4c1be67749dd2062a56d375212684a14",
+   "602316ed909ad75b10c46283624e1d753187e371"
   ],
   "corpus_oracle_harness_lock": "53c669410be9ef98fcf06638423dd24b9c4bac50",
   "bh2a_reconstruction_lock": "8b6f6316",
@@ -32,7 +43,18 @@
    "707b0538",
    "cbb23016",
    "2f12ea11",
-   "1beeec0b98cb6098bd304cd4aae92ca597d89327"
+   "1beeec0b",
+   "a6671e9f",
+   "948f6980",
+   "5ba30b85",
+   "67cae953",
+   "6c833d75",
+   "79713e1b",
+   "72753afc",
+   "7b83cb17",
+   "f9e012d0",
+   "4629760e",
+   "c5a83b745d14f7321cb8593d9190a53e459a34bb"
   ],
   "results": [
    "9e66d047",
@@ -42,12 +64,23 @@
    "e05606ce",
    "8a399112",
    "66790613",
-   "d398ed73"
+   "d398ed73",
+   "1f26741d",
+   "45b7015f",
+   "19f70e8c",
+   "42bca28c",
+   "83b7890d",
+   "8d4ee1e8",
+   "d975ec39",
+   "4cadcab4",
+   "95b29442",
+   "15782e84",
+   "2d0641f43b1e977fbe1eec554603da494313a12b"
   ]
  },
  "measured_system": {
   "so_file": 112,
-  "tree_hash": "663342b0df90c805291fcc057846b31fe5e62b0035eeac13dea785f984502ab9",
+  "tree_hash": "0512dbc53e09696dfecee4cec8ed360af4ad66d8816c782c2993c3617a0d2583",
   "superseded": [
    "73f4d47d",
    "d11fdd71",
@@ -56,7 +89,18 @@
    "9da3bb3e",
    "21c9baa6",
    "140e604b",
-   "31206eb8"
+   "31206eb8",
+   "663342b0",
+   "49ee14fd",
+   "00f8e826",
+   "f4829385",
+   "c8c5ab6c",
+   "882b8168",
+   "f5f26445",
+   "7b817ba2",
+   "1904d097",
+   "23a9aa5c",
+   "f1c791aa"
   ]
  },
  "versions": {
@@ -95,7 +139,7 @@
     "goals": "21/21",
     "correct_refusals": "12/12",
     "wrong_serves": "0/30",
-    "receipt": "results/evaluation-final/"
+    "receipt": "results/evaluation-after-t3-review-10/"
    },
    "blind": false
   },
@@ -129,13 +173,33 @@
    "removed": true
   },
   {
+   "path": ".superpowers/worktrees/tmp-sgh-w2a",
+   "heads": [
+    "224328a2"
+   ],
+   "use": "wave2a BH2A arm",
+   "removed": true
+  },
+  {
    "path": ".superpowers/worktrees/tmp-sgh-freeze",
-   "heads": "one per freeze (9), each removed",
+   "heads": "one per freeze (19), each removed",
    "use": "clean candidate freezes",
+   "removed": true
+  },
+  {
+   "path": ".superpowers/worktrees/tmp-sgh-t3",
+   "heads": [
+    "72d1595f",
+    "42bca28c",
+    "d975ec39",
+    "15782e84",
+    "2d0641f4"
+   ],
+   "use": "authoritative Full T3 gate in clean detached worktree",
    "removed": true
   }
  ],
- "verdict_at_report": "PENDING_T3",
+ "verdict_at_report": "SOURCE_GATE_HARDENING_READY_FOR_GO_MAIN_REVIEW",
  "independent_review": {
   "rounds": [
    [
@@ -165,6 +229,50 @@
    [
     "1beeec0b",
     "PASS (delta)"
+   ],
+   [
+    "a6671e9f",
+    "FAIL (T3-1)"
+   ],
+   [
+    "948f6980",
+    "FAIL (T3-2)"
+   ],
+   [
+    "5ba30b85",
+    "FAIL (T3-3)"
+   ],
+   [
+    "67cae953",
+    "FAIL (T3-4)"
+   ],
+   [
+    "6c833d75",
+    "FAIL (T3-5)"
+   ],
+   [
+    "79713e1b",
+    "FAIL (T3-6)"
+   ],
+   [
+    "72753afc",
+    "FAIL (T3-7)"
+   ],
+   [
+    "7b83cb17",
+    "FAIL (T3-8)"
+   ],
+   [
+    "f9e012d0",
+    "FAIL (T3-9)"
+   ],
+   [
+    "4629760e",
+    "PASS (T3-10)"
+   ],
+   [
+    "c5a83b74",
+    "PASS (T3-11 delta)"
    ]
   ],
   "receipt": "verification/independent-review.md"
@@ -174,5 +282,16 @@
   "NEG2": "SOURCE_PREMISE_UNREAD→UNGROUNDED_VALUE",
   "N03": "PREDICATE_NOT_IN_QUOTE→UNGROUNDED_VALUE",
   "N07": "NEGATED_CLAUSE→UNGROUNDED_VALUE"
+ },
+ "full_t3": {
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "commit": "2d0641f43b1e977fbe1eec554603da494313a12b",
+  "product_commit": "602316ed909ad75b10c46283624e1d753187e371",
+  "candidate_freeze_commit": "c5a83b745d14f7321cb8593d9190a53e459a34bb",
+  "pytest": "11338 passed, 1 skipped, 2 deselected, 9 xfailed in 514.8s",
+  "vitest": "1146 passed in 9.6s",
+  "typecheck_build": "PASS in 6.2s",
+  "demo_replay": "5/5 PASS, reduced chain 1/1 PASS in 0.8s",
+  "demo_crash_surface": "6/6 PASS, 0 unhandled 500s in 0.5s"
  }
 }

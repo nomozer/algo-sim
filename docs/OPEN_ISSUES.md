@@ -12,6 +12,12 @@
 - pre-existing premise-coverage limit (not from this run): a premise inside a sentence a fact quotes WHOLE counts as read
   even when no call encodes it (review K1/K2/K5, e.g. "mặt bên SAB là tam giác đều" beside SA ⊥ (ABC)); `6973c4b6` serves
   the same premise when the quote holds one number.
+- source-level vertex-count gate (`_kiem_so_dinh_nguon`, Full-T3 follow-up, review rounds T3-1..T3-11): deliberate safe
+  over-refusal of an UNLABELLED "tam giác"/"hình vuông" in a sentence about the solid ("Hai đường chéo chia đáy thành bốn
+  tam giác vuông cân.", "… trùng với tâm của hình vuông.", "H là trọng tâm tam giác."); not covered: a vertex count written
+  as a word ("hình có bốn đỉnh"), a face predicate whose dimensions contradict the numbers ("các mặt bên là hình vuông"
+  with lateral edge ≠ base edge) and a positional premise on a lateral face ("mặt bên ở dưới") — unencoded predicates
+  of the premise-coverage class above, not vertex-count mismatches.
 
 ### ISSUE-RESEARCH-HYBRID-GEOMETRY-CAPABILITY-GAPS
 
