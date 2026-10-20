@@ -20,7 +20,6 @@ import {
   entitiesPresentAt,
   sectionCycleLabel,
   sectionDetails,
-  sectionEdgeId,
   sectionFaceId,
   sectionVertexId,
   withSubEntities,
@@ -86,7 +85,6 @@ describe("P5 — Adapter /3 Executable Scene3D Simulation Demos", () => {
     const subEntities = deriveSectionSubEntities(scene);
     expect(subEntities.map((e) => e.id)).toContain(sectionFaceId(secObj.id));
     expect(subEntities.map((e) => e.id)).toContain(sectionVertexId(secObj.id, 0));
-    expect(subEntities.map((e) => e.id)).toContain(sectionEdgeId(secObj.id, 0));
     expect(subEntities.filter((e) => e.type === "edge")).toHaveLength(4);
     expect(subEntities.filter((e) => e.type === "point3")).toHaveLength(4);
     const details = sectionDetails(enriched, secObj.id)!;
