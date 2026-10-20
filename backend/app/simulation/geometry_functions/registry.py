@@ -760,33 +760,40 @@ def _co_doi_tuong_hinh(c: LoiGoi, de: str = "") -> bool:
     """Bind hai cue định nghĩa mới (`lập phương`, `chữ nhật`) vào đúng đa giác, không mượn keyword của đối tượng khác."""
     vertices = list(c.args.vertices)
     if c.fn == "regular_polygon":
+        # review of b6a9fcc6: EVERY mention is checked before the polygon is accepted ("Đáy ABC đều cạnh 2, và đáy ABC là
+        # hình vuông"); a cube's faces are squares; the legacy "đáy là … giác đều" names its count too
+        n, ok = len(vertices), False
         for q in c.quotes:
             if _mat_cua_khoi_sau_cum(q, _LAP_PHUONG, vertices):
-                return True
+                if n != 4:
+                    return False
+                ok = True
             for dau, cuoi, phan in _tu_nhan(q):
                 if any(_cung_da_giac(p, vertices) for p in phan):
                     # the shape noun written right before or after the polygon must name as many vertices as it has
                     truoc = re.search(rf"(?:{_DA_GIAC_SO.pattern})(?:\s+đều)?\s*$", q[:dau], re.IGNORECASE)
                     sau = re.match(rf"\s+(?:là\s+(?:một\s+)?)?(?:{_DA_GIAC_SO.pattern})", q[cuoi:], re.IGNORECASE)
-                    if not all(_so_dinh_khop(t.group(), len(vertices)) for t in (truoc, sau) if t):
+                    if not all(_so_dinh_khop(t.group(), n) for t in (truoc, sau) if t):
                         return False
                     if re.match(r"\s+(?:là\s+)?(?:(?:tam|tứ|ngũ|lục|đa)\s+giác\s+)?đều\b|\s+(?:là\s+)?hình\s+vuông\b",
                                 q[cuoi:], re.IGNORECASE):
-                        return True
+                        ok = True
                     if re.search(r"(?:(?:tam|tứ|ngũ|lục|đa)\s+giác\s+đều|hình\s+vuông)\s*$",
                                  q[:dau], re.IGNORECASE):
-                        return True
+                        ok = True
                 # Every triangular face of the explicitly named regular tetrahedron is regular.
-                if len(vertices) == 3 and len(phan) == 1 and len(phan[0]) == 4 and set(vertices) <= set(phan[0]):
+                if n == 3 and len(phan) == 1 and len(phan[0]) == 4 and set(vertices) <= set(phan[0]):
                     if re.search(r"\btứ\s+diện\s+đều\s*$", q[:dau], re.IGNORECASE):
-                        return True
+                        ok = True
             # Legacy multi-sentence "đáy là tam giác đều": resolve only a unique explicitly named base in the source.
             if re.fullmatch(r"đáy\s+(?:là\s+)?(?:tam|tứ|ngũ|lục|đa)\s+giác\s+đều", q.strip(), re.IGNORECASE):
+                if not _so_dinh_khop(q, n):
+                    return False
                 bases = {tuple(p[1]) for dau, _cuoi, p in _tu_nhan(de) if len(p) == 2 and
                          re.search(r"(?:chóp|lăng\s+trụ)\s*$", de[:dau], re.IGNORECASE)}
                 if len(bases) == 1 and _cung_da_giac(list(next(iter(bases))), vertices):
-                    return True
-        return False
+                    ok = True
+        return ok
     if c.fn != "rectangle":
         return True
     for q in c.quotes:

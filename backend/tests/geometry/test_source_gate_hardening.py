@@ -552,3 +552,32 @@ def test_review_t3_a_shape_noun_with_the_wrong_vertex_count_is_refused(sentence,
 ])
 def test_review_t3_a_shape_noun_with_the_right_vertex_count_is_served(sentence, spec, v):
     served(right_prism(sentence, *spec), {"q": v})
+
+
+def test_review_t3b_legacy_unlabelled_base_shape_must_match_the_base():
+    """Review of b6a9fcc6 (a): "Đáy là tam giác đều" resolved to the 4-vertex base S.ABCD (and "tứ giác đều" to ABC)."""
+    for solid, base, shape, noun in (("S.ABCD", "ABCD", "square", "tam giác"), ("S.ABC", "ABC", "equilateral_triangle", "tứ giác")):
+        s1, s2 = f"Cho hình chóp {solid} có cạnh đáy bằng 2", f"Đáy là {noun} đều"
+        ask = f"Tính thể tích khối chóp {solid}."
+        r = run(f"{s1}. {s2}. SA vuông góc với ({base}) và SA = 3. {ask}", [
+            f("f1", "solid", f"Cho hình chóp {solid}", solid=solid, solid_type="pyramid"),
+            {"id": "f2", "kind": "polygon_shape", "role": "premise", "quotes": [s1, s2], "points": list(base), "shape": shape,
+             "value": "2"},
+            f("f3", "perpendicular", f"SA vuông góc với ({base})", points_a=["S", "A"], points_b=list(base)),
+            f("f4", "length", "SA = 3", points=["S", "A"], measure="segment", value="3"),
+            q("q", ask, quantity="volume", solid=solid)])
+        refused(r)
+
+
+def test_review_t3b_a_cube_does_not_have_triangular_faces():
+    s = "Cho hình lập phương ABC.A'B'C' cạnh 2."
+    ask = "Tính thể tích khối lăng trụ ABC.A'B'C'."
+    refused(run(f"{s} {ask}", [
+        f("f1", "solid", s, solid="ABC.A'B'C'", solid_type="prism", right=True),
+        f("f2", "polygon_shape", s, points=list("ABC"), shape="equilateral_triangle", value="2"),
+        f("f3", "length", s, points=["A", "A'"], measure="segment", value="2"),
+        q("q", ask, quantity="volume", solid="ABC.A'B'C'")]))
+
+
+def test_review_t3b_every_mention_of_the_polygon_is_count_checked():
+    refused(right_prism("Đáy ABC đều cạnh 2, và đáy ABC là hình vuông.", *TRI))
