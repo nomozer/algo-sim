@@ -8,6 +8,10 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-21, `volume-reasoning` (Hybrid Wave 3A, local branch `research/hybrid-wave3a-volume-reasoning` from `main` `1613e0d3`):**
+exact composite volume ratio (`ask_volume_ratio`, `bac = 0`) and certified residual volume reasoning (`ask_residual_volume`, `bac = 3`, 5-part `ResidualVolumeCertificate` with outward half-space containment, shared boundary face, and 3D SAT interior disjointness) over verified composite solids (product `4c282ecd`, candidate `0a4b6d70` / `df262376…`, review round 2 `INDEPENDENT_REVIEW_PASS`, Full T3 `373116d2` `FULL_PRODUCT_GATE_PASS`, dev 18/18 positive / 20/20 goals / 14/14 negative / 0 wrong serves; BH2C, Wave 2C, SGH, SG-1..SG-6, BH2A, NLU GOLD all 0 diffs). `CANONICAL_NEXT_ACTION` = owner GO MAIN review on `evaluation/geometry/runs/volume-reasoning/handoff.md`; Adapter /3 and live Hybrid remain unopened. Wave 2C is integrated (`1613e0d3`); the entries below are historical.
+
+
 **2026-10-20, `composite-geometry` (Hybrid Wave 2C, local branch `research/hybrid-wave2c-composite-geometry` from `main` `78bd6876`):**
 derived sub-pyramids / parallel sections and shared-face sub-pyramids in one exact chart (product `050bb353`, candidate `962b9723` / `3e6c403c…`, review PASS, Full T3 `0acfa9e9` PASS; development 16/16, 0 false serves; SGH/SG/BH2A known regressions unchanged). `CANONICAL_NEXT_ACTION` = owner GO MAIN review on `evaluation/geometry/runs/composite-geometry/handoff.md`; Wave 3 and Adapter /3 are not opened. Source Gate Follow-up A+B is integrated (`78bd6876`); the entries below are historical.
 

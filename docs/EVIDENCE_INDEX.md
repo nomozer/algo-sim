@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = VOLUME_REASONING
+
+REPORT = docs/evaluation/geometry/runs/volume-reasoning/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/volume-reasoning/
+CLASSIFICATION = Hybrid Wave 3A exact composite volume reasoning (local, not integrated; GO_HYBRID_WAVE3A_LOCAL_RESEARCH): ask_volume_ratio (bac=0, dimensionless ordered ratio with VolumeRatioCertificate) and ask_residual_volume (bac=3, certified subtraction with ResidualVolumeCertificate: strict convexity, outward half-space containment, shared boundary face, 3D SAT interior disjointness, positive residual check; no fabricated residual 3D solid mesh in Scene3D); controlled development corpus (DEVELOPMENT_EVALUATION_NOT_BLIND, 32 cases) 18/18 positive exact (12/12 volume_ratio, 6/6 residual_volume, 20/20 goals), 14/14 negative refusals, 0 wrong serves; BH2C external holdout (untouched) 11/11 positive on both routes, 13/13 negative refusals, 0 diffs; Wave 2C dev 16/16, SGH-01..18 10/10, SG-1..SG-6 30/30, BH2A 11/12 + sentinel + variant, NLU GOLD 60 rows all 0 diffs; Registry /11, Planner /11, Engine /9, Adapter /2, all 5 provider surface fingerprints unchanged; CACHE_VERSION 127 NO_BUMP, LLM_ONLY, flat, Hybrid product NO-GO
+CODE_COMMIT = 2e277e6e · 4c282ecd (final product; review round 1 IMPORTANT-01 self-ratio refusal); superseded freeze 817b1730 (99cef1a9…); final candidate freeze 0a4b6d70 (measured_system tree_hash df262376b3f2de7bcb0c295932c7c867a7ee2bf268ed9408071e5953ee9fc821 across 112 files)
+VERIFICATION = docs/evaluation/geometry/runs/volume-reasoning/verification/authoritative-t3.json (FULL_PRODUCT_GATE_PASS at 373116d2, attempt 2; attempt 1 test-taxonomy registration retained) + verification/independent-review.md (round 2 INDEPENDENT_REVIEW_PASS)
+MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
+CORRECTS = COMPOSITE_GEOMETRY (candidate_divergence.json only; historical measurements and BH2C blind receipts unchanged)
+CORRECTED_BY = NONE
+
+
 ## WAVE_ID = COMPOSITE_GEOMETRY
 
 REPORT = docs/evaluation/geometry/runs/composite-geometry/report.md

@@ -1,5 +1,22 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Exact composite volume reasoning — Wave 3A local research
+
+Run `docs/evaluation/geometry/runs/volume-reasoning/`; contract `docs/architecture/WAVE3A_CONTRACT_DECISION.md`.
+`backend/app/simulation/geometry_functions/registry.py` (`geometry-functions/11`) registers internal (`provider_offered=False`)
+`ask_volume_ratio` (`AskVolumeRatioArgs`, distinct solids enforced) and `ask_residual_volume` (`AskResidualVolumeArgs`, 1–2 subtracted solids),
+closed Vietnamese question grammars (`_CUM_HOI`), ordered solid operand binding (`_ten_khoi_khop`, `_ds_khoi_khop`), and dimensionless unit
+rejection on `"ratio"` (`QUESTION_CONTEXT_UNSUPPORTED`). `backend/app/simulation/geometry_functions/planner.py` (`geometry-fact-planner/11`)
+accepts `volume_ratio` and `residual_volume` via `WithJsonSchema(FLAT_QUANTITIES)` (preserving `FLAT_EXTRACTION_SCHEMA_SHA256`), resolves solid
+operands via `_khoi_tu_toan_hang`, and places composite volume asks in `Tier 5` after all referenced solid construction calls.
+`backend/app/simulation/geometry_functions/engine.py` (`geometry-function-engine/9`) computes `_the_tich2_khoi`, `_mat_ngoai_khoi` (strict
+convexity + outward face planes), `_kiem_phan_con_lai` (outward half-space containment, shared boundary face, 3D SAT interior disjointness over
+face normals + edge-pair cross products, positive residual check), `ratio_certificates`, `residual_certificates`, and post-execution self-checks.
+`backend/app/simulation/semantic_program/interpreter.py` supports `Radical` arithmetic (`+`, `-`, `*`) and `parse_exact` rational string literals;
+`simulation_state.py` and `display_names.py` support `"assign.volume_ratio"` and `"assign.residual_volume"` without fabricating residual 3D solid
+meshes in `Scene3D.objects`. Tested in `backend/tests/geometry/test_wave3a_volume_reasoning.py`.
+
+
 ## Composite geometry — Wave 2C local research
 
 Run `docs/evaluation/geometry/runs/composite-geometry/`; contract `docs/architecture/COMPOSITE_GEOMETRY_CONTRACT.md`.
