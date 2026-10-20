@@ -905,3 +905,235 @@ def test_review_t3i_a_parenthesised_face_label_is_served():
     served(regular_two_sentences("Tam giác ΔSBC là tam giác đều."), {"q": "√3"})
     for bad in ("Tam giác ΔABCD là tam giác đều.", "Hình vuông ΔSBC là tam giác đều.", "ΔSBC là hình vuông."):
         refused(regular_two_sentences(bad))
+
+
+# ── Follow-up A (P1): multi-goal question boundaries with unnamed-point contracts (SGH-04, SGH-09) ────────────────────
+def _seg(fid, quote, seg, v):
+    return f(fid, "length", quote, points=list(seg), measure="segment", value=v)
+
+
+def _sgh04_case(ask_sentence: str | None = None, goals: list[dict] | None = None):
+    s0 = "Cho hình lăng trụ tam giác đều ABC.A'B'C' có cạnh đáy bằng 6a và cạnh bên AA' = 3a."
+    s1 = ask_sentence or (
+        "Tính khoảng cách từ trọng tâm của tam giác A'B'C' đến mặt phẳng (ABC) "
+        "và tính góc giữa đường thẳng nối đỉnh A' với trung điểm của cạnh BC và mặt phẳng (ABC)."
+    )
+    qs = goals if goals is not None else [
+        q("q1", s1, quantity="distance", point_kind="centroid", points=["A'", "B'", "C'"], points_b=list("ABC")),
+        q("q2", s1, quantity="angle", point_kind="midpoint", points=["B", "C"], points_a=["A'"], points_b=list("ABC")),
+    ]
+    return f"{s0} {s1}", [
+        f("f1", "solid", s0, solid="ABC.A'B'C'", solid_type="prism", regular=True),
+        f("f2", "length", s0, solid="ABC.A'B'C'", measure="base_edge", value="6a"),
+        _seg("f3", s0, ["A", "A'"], "3a"),
+        *qs,
+    ]
+
+
+def _sgh09_case(ask_sentence: str | None = None, goals: list[dict] | None = None):
+    s0 = "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A với AB = 3a, AC = 3a."
+    s0b = "Gọi H là trung điểm của cạnh AB, biết SH vuông góc với AB, SH vuông góc với AC và SH = 6a."
+    s1 = ask_sentence or (
+        "Tính khoảng cách từ trọng tâm của tam giác SBC đến mặt phẳng (ABC) "
+        "và tính góc giữa đường thẳng nối đỉnh A với trọng tâm của tam giác SBC và mặt phẳng (ABC)."
+    )
+    qs = goals if goals is not None else [
+        q("q1", s1, quantity="distance", point_kind="centroid", points=list("SBC"), points_b=list("ABC")),
+        q("q2", s1, quantity="angle", point_kind="centroid", points=list("SBC"), points_a=["A"], points_b=list("ABC")),
+    ]
+    return f"{s0} {s0b} {s1}", [
+        f("f1", "solid", s0, solid="S.ABC", solid_type="pyramid"),
+        f("f1_ra", "right_angle", s0, at="A", points=["B", "C"]),
+        _seg("f2", s0, "AB", "3a"),
+        _seg("f3", s0, "AC", "3a"),
+        f("f4", "point_def", s0b, point="H", point_kind="midpoint", points=["A", "B"]),
+        f("f5", "perpendicular", s0b, points_a=["S", "H"], points_b=["A", "B"]),
+        f("f6", "perpendicular", s0b, points_a=["S", "H"], points_b=["A", "C"]),
+        _seg("f7", s0b, "SH", "6a"),
+        *qs,
+    ]
+
+
+@pytest.mark.parametrize("ask_sgh04", [
+    "Tính khoảng cách từ trọng tâm của tam giác A'B'C' đến mặt phẳng (ABC) và tính góc giữa đường thẳng nối đỉnh A' với trung điểm của cạnh BC và mặt phẳng (ABC).",
+    "Tính khoảng cách từ trọng tâm của tam giác A'B'C' đến mặt phẳng (ABC) và góc giữa đường thẳng nối đỉnh A' với trung điểm của cạnh BC và mặt phẳng (ABC).",
+    "Hãy tính khoảng cách từ trọng tâm của tam giác A'B'C' đến mặt phẳng (ABC), đồng thời tính góc giữa đường thẳng nối đỉnh A' với trung điểm của cạnh BC và mặt phẳng (ABC).",
+])
+def test_followup_a_sgh04_multi_goal_boundaries_served(ask_sgh04):
+    text, facts = _sgh04_case(ask_sgh04)
+    served(run(text, facts), {"q1": "3a", "q2": "cos²=3/4"})
+
+
+@pytest.mark.parametrize("ask_sgh09", [
+    "Tính khoảng cách từ trọng tâm của tam giác SBC đến mặt phẳng (ABC) và tính góc giữa đường thẳng nối đỉnh A với trọng tâm của tam giác SBC và mặt phẳng (ABC).",
+    "Tính khoảng cách từ trọng tâm của tam giác SBC đến mặt phẳng (ABC) và góc giữa đường thẳng nối đỉnh A với trọng tâm của tam giác SBC và mặt phẳng (ABC).",
+    "Hãy tính khoảng cách từ trọng tâm của tam giác SBC đến mặt phẳng (ABC), đồng thời tính góc giữa đường thẳng nối đỉnh A với trọng tâm của tam giác SBC và mặt phẳng (ABC).",
+])
+def test_followup_a_sgh09_multi_goal_boundaries_served(ask_sgh09):
+    text, facts = _sgh09_case(ask_sgh09)
+    served(run(text, facts), {"q1": "2a", "q2": "cos²=13/29"})
+
+
+def test_followup_a_negative_controls_stay_refused():
+    # 1. Invalid degree unit note on multi-goal sentence -> QUESTION_CONTEXT_UNSUPPORTED
+    s_deg = (
+        "Tính khoảng cách từ trọng tâm của tam giác A'B'C' đến mặt phẳng (ABC) "
+        "và tính góc giữa đường thẳng nối đỉnh A' với trung điểm của cạnh BC và mặt phẳng (ABC) (đơn vị: độ)."
+    )
+    refused(run(*_sgh04_case(s_deg)), "QUESTION_CONTEXT_UNSUPPORTED")
+
+    # 2. Rounding note on multi-goal sentence -> QUESTION_CONTEXT_UNSUPPORTED
+    s_round = (
+        "Tính khoảng cách từ trọng tâm của tam giác A'B'C' đến mặt phẳng (ABC) "
+        "và tính góc giữa đường thẳng nối đỉnh A' với trung điểm của cạnh BC và mặt phẳng (ABC), làm tròn đến hàng phần mười."
+    )
+    refused(run(*_sgh04_case(s_round)), "QUESTION_CONTEXT_UNSUPPORTED")
+
+    # 3. 2 goals in source text, only 1 question extracted in payload -> REQUEST_NOT_ANSWERED
+    s_two = (
+        "Tính khoảng cách từ trọng tâm của tam giác A'B'C' đến mặt phẳng (ABC) "
+        "và tính góc giữa đường thẳng nối đỉnh A' với trung điểm của cạnh BC và mặt phẳng (ABC)."
+    )
+    only_q1 = [q("q1", s_two, quantity="distance", point_kind="centroid", points=["A'", "B'", "C'"], points_b=list("ABC"))]
+    refused(run(*_sgh04_case(s_two, goals=only_q1)), "REQUEST_NOT_ANSWERED")
+
+    # 4. Spoofed plane (A'BC) instead of (ABC) on second goal -> SOURCE_OBJECT_MISMATCH
+    spoofed_q2 = [
+        q("q1", s_two, quantity="distance", point_kind="centroid", points=["A'", "B'", "C'"], points_b=list("ABC")),
+        q("q2", s_two, quantity="angle", point_kind="midpoint", points=["B", "C"], points_a=["A'"], points_b=["A'", "B", "C"]),
+    ]
+    refused(run(*_sgh04_case(s_two, goals=spoofed_q2)), "SOURCE_OBJECT_MISMATCH")
+
+
+# ── Follow-up B (P2): compound premise with line_ref (SGH-02, SGH-10, BH2A-03-variant-ABCD) ──────────────────────────
+def _sgh02_exact_case():
+    p0 = "Cho hình chóp S.MNPQ có đáy MNPQ là hình vuông cạnh 6a, cạnh bên SM vuông góc với mặt phẳng (MNPQ) và SM = 3a."
+    p1 = "Tính khoảng cách từ trọng tâm của tam giác SMN đến giao tuyến của hai mặt phẳng (SPQ) và (MNPQ)."
+    return f"{p0} {p1}", [
+        f("f1", "solid", p0, solid="S.MNPQ", solid_type="pyramid"),
+        f("f2", "polygon_shape", "Cho hình chóp S.MNPQ có đáy MNPQ là hình vuông cạnh 6a", points=list("MNPQ"), shape="square", value="6a"),
+        f("f3", "perpendicular", "cạnh bên SM vuông góc với mặt phẳng (MNPQ)", points_a=["S", "M"], points_b=list("MNPQ")),
+        _seg("f4", "SM = 3a.", "SM", "3a"),
+        f("f_gt", "intersection_line", p1, points_a=list("SPQ"), points_b=list("MNPQ")),
+        q("q1", p1, quantity="distance", point_kind="centroid", points=list("SMN"), line_ref="f_gt"),
+    ]
+
+
+def _sgh10_exact_case():
+    p0 = "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4a, cạnh bên SA vuông góc với mặt phẳng (ABCD) và SA = 4a."
+    p1 = "Tính khoảng cách từ trung điểm của cạnh SC đến giao tuyến của hai mặt phẳng (SAB) và (ABCD)."
+    return f"{p0} {p1}", [
+        f("f1", "solid", p0, solid="S.ABCD", solid_type="pyramid"),
+        f("f2", "polygon_shape", p0, points=list("ABCD"), shape="square", value="4a"),
+        f("f3", "perpendicular", p0, points_a=["S", "A"], points_b=list("ABCD")),
+        _seg("f4", p0, "SA", "4a"),
+        f("f_gt", "intersection_line", p1, points_a=list("SAB"), points_b=list("ABCD")),
+        q("q1", p1, quantity="distance", point_kind="midpoint", points=["S", "C"], line_ref="f_gt"),
+    ]
+
+
+def _rect_compound_line_ref_case(s0: str | None = None, s1: str | None = None, ab="4a", ad="2a", sa="6a",
+                                 planes=(("S", "B", "C"), ("S", "C", "D"))):
+    p0 = s0 or "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 4a, AD = 2a, cạnh bên SA vuông góc với mặt phẳng (ABCD) và SA = 6a."
+    p1 = s1 or "Tính khoảng cách từ trung điểm của cạnh SA đến giao tuyến của hai mặt phẳng (SBC) và (SCD)."
+    return f"{p0} {p1}", [
+        f("f1", "solid", p0, solid="S.ABCD", solid_type="pyramid"),
+        f("f2", "polygon_shape", p0, points=list("ABCD"), shape="rectangle"),
+        _seg("f3", p0, "AB", ab),
+        _seg("f4", p0, "AD", ad),
+        f("f5", "perpendicular", p0, points_a=["S", "A"], points_b=list("ABCD")),
+        _seg("f6", p0, "SA", sa),
+        f("f7", "intersection_line", p1, points_a=list(planes[0]), points_b=list(planes[1])),
+        q("q1", p1, quantity="distance", point_kind="midpoint", points=["S", "A"], line_ref="f7"),
+    ]
+
+
+def _right_prism_compound_line_ref_case():
+    p0 = "Cho hình lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác vuông tại A với AB = 4a, AC = 4a và cạnh bên AA' = 4a."
+    p1 = "Tính khoảng cách từ trung điểm của cạnh A'C' đến giao tuyến của hai mặt phẳng (A'BC) và (ABC)."
+    return f"{p0} {p1}", [
+        f("f1", "solid", p0, solid="ABC.A'B'C'", solid_type="prism", right=True),
+        f("f2", "right_angle", p0, at="A", points=["B", "C"]),
+        _seg("f3", p0, "AB", "4a"),
+        _seg("f4", p0, "AC", "4a"),
+        _seg("f5", p0, ["A", "A'"], "4a"),
+        f("f6", "intersection_line", p1, points_a=["A'", "B", "C"], points_b=list("ABC")),
+        q("q1", p1, quantity="distance", point_kind="midpoint", points=["A'", "C'"], line_ref="f6"),
+    ]
+
+
+def _bh2a03_case(base_plane=("A", "B", "C", "D")):
+    p0 = "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 3a, cạnh bên SA vuông góc với mặt phẳng (ABCD) và SA = 3a."
+    p1 = "Tính khoảng cách từ trọng tâm của tam giác SAB đến giao tuyến của hai mặt phẳng (SCD) và (ABCD)."
+    return f"{p0} {p1}", [
+        f("f1", "solid", p0, solid="S.ABCD", solid_type="pyramid"),
+        f("f2", "polygon_shape", p0, points=list("ABCD"), shape="square", value="3a"),
+        f("f3", "perpendicular", p0, points_a=["S", "A"], points_b=list("ABCD")),
+        _seg("f4", p0, "SA", "3a"),
+        f("f_gt", "intersection_line", p1, points_a=list("SCD"), points_b=list(base_plane)),
+        q("q1", p1, quantity="distance", point_kind="centroid", points=list("SAB"), line_ref="f_gt"),
+    ]
+
+
+def test_followup_b_sgh02_sgh10_bh2a03_compound_premise_with_line_ref_served():
+    served(run(*_sgh02_exact_case()), {"q1": "a√37"})
+    served(run(*_sgh10_exact_case()), {"q1": "2a√2"})
+    served(run(*_bh2a03_case(base_plane=("A", "B", "C", "D"))), {"q1": "a√10"})
+    served(run(*_rect_compound_line_ref_case()), {"q1": "3a√70/14"})
+    served(run(*_right_prism_compound_line_ref_case()), {"q1": "3a√2"})
+
+    # Explicit intersection_line sentence + distance question after a compound premise sentence:
+    p0 = "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 4a, AD = 2a, cạnh bên SA vuông góc với mặt phẳng (ABCD) và SA = 6a."
+    p_gt = "Tìm giao tuyến của (SBC) và (SCD)."
+    p_q = "Tính khoảng cách từ trung điểm của cạnh SA đến giao tuyến của (SBC) và (SCD)."
+    served(run(f"{p0} {p_gt} {p_q}", [
+        f("f1", "solid", p0, solid="S.ABCD", solid_type="pyramid"),
+        f("f2", "polygon_shape", p0, points=list("ABCD"), shape="rectangle"),
+        _seg("f3", p0, "AB", "4a"),
+        _seg("f4", p0, "AD", "2a"),
+        f("f5", "perpendicular", p0, points_a=["S", "A"], points_b=list("ABCD")),
+        _seg("f6", p0, "SA", "6a"),
+        f("f7", "intersection_line", p_gt, points_a=list("SBC"), points_b=list("SCD")),
+        q("q1", p_q, quantity="distance", point_kind="midpoint", points=["S", "A"], line_ref="f7"),
+    ]), {"q1": "3a√70/14"})
+
+
+def test_followup_b_negative_controls_stay_refused():
+    # 1. Unread clause in compound premise ("và mặt bên SBC là tam giác đều") -> SOURCE_PREMISE_UNREAD
+    s0_unread = (
+        "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 4a, AD = 2a, "
+        "cạnh bên SA vuông góc với mặt phẳng (ABCD), SA = 6a và mặt bên SBC là tam giác đều."
+    )
+    refused(run(*_rect_compound_line_ref_case(s0=s0_unread)), "SOURCE_PREMISE_UNREAD")
+
+    # 2. Swapped values AB = 2a, AD = 4a -> UNGROUNDED_VALUE
+    refused(run(*_rect_compound_line_ref_case(ab="2a", ad="4a")), "UNGROUNDED_VALUE")
+
+    # 3. Parameter 'a' mismatch (4 instead of 4a) -> UNGROUNDED_VALUE
+    refused(run(*_rect_compound_line_ref_case(ab="4")), "UNGROUNDED_VALUE")
+
+    # 4. Spoofed line_ref planes -> SOURCE_OBJECT_MISMATCH
+    refused(run(*_rect_compound_line_ref_case(planes=(("S", "A", "B"), ("S", "C", "D")))), "SOURCE_OBJECT_MISMATCH")
+
+    # 5. 3-label base plane ["A", "B", "C"] when source writes (ABCD) -> SOURCE_OBJECT_MISMATCH
+    refused(run(*_bh2a03_case(base_plane=("A", "B", "C"))), "SOURCE_OBJECT_MISMATCH")
+
+    # 6. Cross-sentence point construction must not validate an unencoded/contradictory point or projection clause in compound premise (Review B-1)
+    s_m = "Gọi M là trung điểm của SA."
+    p_gt = "Tìm giao tuyến của (SBC) và (SCD)."
+    p_q = "Tính khoảng cách từ điểm M đến giao tuyến của (SBC) và (SCD)."
+    for bad_clause in (
+        "và M là điểm di động trên cạnh SC",
+        "và M là trung điểm của SB",
+        "và M là hình chiếu vuông góc của S lên BD",
+    ):
+        s0_bad = f"Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 4a, SA vuông góc với mặt phẳng (ABCD), SA = 4a {bad_clause}."
+        refused(run(f"{s0_bad} {s_m} {p_gt} {p_q}", [
+            f("f1", "solid", s0_bad, solid="S.ABCD", solid_type="pyramid"),
+            f("f2", "polygon_shape", s0_bad, points=list("ABCD"), shape="square", value="4a"),
+            f("f3", "perpendicular", s0_bad, points_a=["S", "A"], points_b=list("ABCD")),
+            _seg("f4", s0_bad, "SA", "4a"),
+            f("f_m", "point_def", s_m, point="M", point_kind="midpoint", points=["S", "A"]),
+            f("f_gt", "intersection_line", p_gt, points_a=list("SBC"), points_b=list("SCD")),
+            q("q1", p_q, quantity="distance", points_a=["M"], line_ref="f_gt"),
+        ]), "SOURCE_PREMISE_UNREAD")

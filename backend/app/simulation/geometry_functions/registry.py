@@ -897,15 +897,15 @@ _C_DIEM = re.compile(rf"(?:gọi\s+)?{_L1}\s+là\s+(?:(?:trung\s+điểm|tâm|tr
 #: A projection may be read as the foot of a height stated in the same sentence: kept readable, but a subject change.
 _C_CHIEU = re.compile(rf"(?:gọi\s+)?{_L1}\s+là\s+hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}"
                       rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
-_C_DOAN = re.compile(rf"(?:có\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?:cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo)\s+)?"
+_C_DOAN = re.compile(rf"(?:(?:có|với)\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?:cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo)\s+)?"
                      rf"(?P<seg>{_L1}{_L1})(?![\w'])"
                      rf"(?:\s*=\s*{_L1}{_L1}(?![\w']))*\s*(?:=|bằng|(?:có\s+)?độ\s+dài(?:\s+bằng)?)\s*{_so_nhom('ss')}",
                      re.IGNORECASE)
-_C_VUONG = re.compile(rf"(?:(?:có\s+)?(?:cạnh\s+bên|đường\s+thẳng)\s+)?{_L1}{_L1}\s*(?:vuông\s+góc\s+với|vuông|⊥)\s*"
+_C_VUONG = re.compile(rf"(?:(?:có|với)\s+)?(?:(?:cạnh\s+bên|đường\s+thẳng)\s+)?{_L1}{_L1}\s*(?:vuông\s+góc\s+với|vuông|⊥)\s*"
                       rf"(?:mặt\s+phẳng\s+|mp\s*)?(?:\({_NHAN}\)|{_L1}{_L1}\s+và\s+{_L1}{_L1}(?![\w'])(?!\s*(?:=|bằng))|{_NHAN}(?![\w'])"
                       rf"|(?:mặt\s+(?:phẳng\s+)?)?đáy(?!\w))", re.IGNORECASE)
 #: "cạnh CD" (a named edge) continues its clause; only a role "cạnh" ("… cạnh 2", "… cạnh bên") opens a new one
-_C_NOI = re.compile(rf"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=có\s|với\s+(?:cạnh|chiều\s+cao|đường\s+cao)(?!\w)"
+_C_NOI = re.compile(rf"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=có\s|với\s+(?:(?:cạnh|chiều\s+cao|đường\s+cao|độ\s+dài|đoạn(?:\s+thẳng)?|đường\s+chéo)(?!\w)|{_L1}{_L1}(?![\w']))"
                     rf"|cạnh\s+(?!{_L1}{_L1}(?![\w'])))", re.IGNORECASE)
 #: Number-free CLOSED premise clauses (review round 4): a face ⊥ a face, the shape of a named triangle/face (optionally
 #: lying in a plane ⊥ the base), equal named segments. They bind nothing; they only keep their sentence parseable.
@@ -2053,14 +2053,13 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         return "".join(residue), found
 
     phep_dung_spans: list[tuple[int, int]] = []
-    questions = {_bien_cau(de, m.start()) for m in request_verb.finditer(de)}
+    questions = {_bien_cau(de, m.start()) for m in request_verb.finditer(de)} | {_bien_cau(de, a) for a, _b in buoc}
     for c in calls:
         if c.spec.kind == "ask":
             for q in c.quotes:
                 if (vt := _vi_tri(de, q)) is not None:
                     questions |= {_bien_cau(de, p) for p, h in _cum_hoi(c, de, *vt, calls) if _hoi_dung_cum(de, p, h)}
-                    questions |= {_bien_cau(de, m.start()) for pattern in (
-                        _KHOANG_CACH_DIEM_DUONG, _KHOANG_CACH_GIAO_TUYEN, _CUM_HOI_THIET_DIEN_PHU)
+                    questions |= {_bien_cau(de, m.start()) for pattern in _mau_hoi_tat_ca()
                                   for m in pattern.finditer(de, *vt) if _hoi_dung_cum(de, m.start(), m.end())}
     request_contexts = set(questions)
     construction_contexts = {_bien_cau(de, vt[0]) for c in calls
@@ -2897,8 +2896,7 @@ def _kiem_don_vi_hoi(fn: str, de: str, a: int, b: int, don_vi_de: set[str],
     if chieu == "angle" and re.match(r"số\s+đo\b", de[a:b], re.IGNORECASE):
         return False
     duoi_raw = de[b:vung[1]]
-    patterns = (*(mau for ds in _CUM_HOI.values() for mau, _b in ds), _KHOANG_CACH_DIEM_DUONG,
-                _KHOANG_CACH_GIAO_TUYEN, _CUM_HOI_THIET_DIEN_PHU)
+    patterns = _mau_hoi_tat_ca()
     other = sorted((m.start(), m.end()) for mau in patterns for m in mau.finditer(duoi_raw) if m.end() > m.start())
     before_next = duoi_raw[:other[0][0]] if other else duoi_raw
     after_last = duoi_raw[max(y for _x, y in other):] if other else ""
@@ -3629,6 +3627,147 @@ def function_declarations() -> list[dict[str, Any]]:
     return ra
 
 
+def _doc_nhom(s: str | None) -> tuple[Fraction, bool] | None:
+    m = _SO.fullmatch(chuan_hoa(s)) if s else None
+    return _doc(m) if m else None
+
+
+def _cau_tien_de_dong_hop_le(s: str, s_start: int, de: str, calls: tuple[LoiGoi, ...], allow_single: bool = False) -> bool:
+    """Verify that a compound premise span `s` parses completely in SG-3 (`_phan_tich_cau`) with zero opaque clauses
+    and every clause is backed 1-to-1 by a validated call in `calls`."""
+    cau = _phan_tich_cau(s)
+    khoi_goi = [k for k in calls if k.fn in _KHOI_FN]
+    if not cau or (not allow_single and len(cau) < 2) or any(k == "mo" for k, _m in cau) or not any(k != "khoi" for k, _m in cau) or not _so_dinh_cau_khop(cau, khoi_goi):
+        return False
+    khoi = khoi_goi[0] if len(khoi_goi) == 1 else None
+    for kind, m in cau:
+        if kind == "khoi":
+            nhan = set(re.findall(r"[A-Z][0-9]*'?", m["k"]))
+            khoi = next((k for k in khoi_goi if _nhan_khoi(k) == nhan), None)
+            tu = re.sub(r"\s+", " ", m["kn"].lower())
+            km = m["km"].lower()
+            if khoi is None or khoi.fn not in _LOAI_KHOI.get(tu, ()):
+                return False
+            if ("đứng" in km or "chữ nhật" in km or "chữ nhật" in tu or tu == "lập phương") and khoi.fn == "prism" and not khoi.args.right:
+                return False
+            if "đều" in km:
+                if tu in ("chóp", "tứ diện") and khoi.fn != "regular_pyramid":
+                    return False
+                if not any(d.fn == "regular_polygon" and _cung_da_giac(list(d.args.vertices), list(khoi.args.base)) for d in calls):
+                    return False
+            if ("chữ nhật" in km or "chữ nhật" in tu) and not any(d.fn == "rectangle" and _cung_da_giac(list(d.args.vertices), list(khoi.args.base)) for d in calls):
+                return False
+            if tu == "lập phương" and not any(d.fn == "regular_polygon" and len(d.args.vertices) == 4 and _cung_da_giac(list(d.args.vertices), list(khoi.args.base)) for d in calls):
+                return False
+        elif kind == "day":
+            day_lbl = m["d"] or m["d2"]
+            verts = re.findall(r"[A-Z][0-9]*'?", day_lbl) if day_lbl else (list(khoi.args.base) if khoi else [])
+            if khoi is None or not verts or not _cung_da_giac(verts, list(khoi.args.base)):
+                return False
+            txt = re.sub(r"\s+", " ", m.group().lower())
+            if "hình chữ nhật" in txt:
+                if m["ds"] is not None or not any(d.fn == "rectangle" and _cung_da_giac(list(d.args.vertices), verts) for d in calls):
+                    return False
+            elif "hình vuông" in txt or "đều" in txt:
+                matches = [d for d in calls if d.fn == "regular_polygon" and _cung_da_giac(list(d.args.vertices), verts)]
+                if not matches:
+                    return False
+                if m["ds"] is not None:
+                    want = _doc_nhom(m["ds"])
+                    if want is None:
+                        return False
+                    if any(d.args.side is not None for d in matches) and not any(d.args.side is not None and doc_so(d.args.side) == want for d in matches):
+                        raise TuChoi("UNGROUNDED_VALUE", f"{matches[0].id}: cạnh {matches[0].args.side} không phải số đo nguồn nêu cho khối", (matches[0].id,))
+                    if not any(d.args.side is not None and doc_so(d.args.side) == want for d in matches) and not any(
+                            v == want for seg in _canh_cua(verts) for v, _cid in _nguon_do_dai_cuc_bo(calls, list(seg))):
+                        return False
+            elif "vuông" in txt and "cân" not in txt and "hình thang" not in txt:
+                m_tai = re.search(rf"tại\s+(?P<v>{_L1})(?![\w'])", m.group(), re.IGNORECASE)
+                if m["ds"] is not None or not m_tai or len(verts) != 3 or m_tai["v"] not in verts:
+                    return False
+                v = m_tai["v"]
+                rays = set(verts) - {v}
+                if not any(d.fn == "right_angle" and d.args.vertex == v and set(d.args.rays) == rays for d in calls):
+                    return False
+            else:
+                return False
+        elif kind == "dagiac":
+            verts = re.findall(r"[A-Z][0-9]*'?", m["p"])
+            matches = [d for d in calls if d.fn == "regular_polygon" and _cung_da_giac(list(d.args.vertices), verts)]
+            want = _doc_nhom(m["ps"])
+            if not matches or want is None:
+                return False
+            if not any(d.args.side is not None and doc_so(d.args.side) == want for d in matches):
+                raise TuChoi("UNGROUNDED_VALUE", f"{matches[0].id}: cạnh {matches[0].args.side} không phải số đo nguồn nêu cho đa giác", (matches[0].id,))
+        elif kind == "vuong":
+            lhs, rhs = re.split(r"(?:vuông\s+góc\s+với|vuông|⊥)\s*", m.group(), maxsplit=1, flags=re.IGNORECASE)
+            line = re.findall(r"[A-Z][0-9]*'?", lhs)
+            if len(line) != 2:
+                return False
+            if re.search(r"(?<!\w)đáy(?!\w)", rhs, re.IGNORECASE):
+                plane = list(khoi.args.base) if khoi else []
+                if not plane or not any(d.fn == "perpendicular_line_plane" and set(d.args.line) == set(line) and _cung_mat(frozenset(plane), list(d.args.plane)) for d in calls):
+                    return False
+            elif m_two := re.fullmatch(rf"(?:mặt\s+phẳng\s+|mp\s*)?(?P<a>{_L1}{_L1})\s+và\s+(?P<b>{_L1}{_L1})", rhs.strip(), re.IGNORECASE):
+                for g in ("a", "b"):
+                    pts = re.findall(r"[A-Z][0-9]*'?", m_two[g])
+                    if not any((d.fn == "perpendicular_lines" and {frozenset(d.args.line1), frozenset(d.args.line2)} == {frozenset(line), frozenset(pts)})
+                               or (d.fn == "right_angle" and {frozenset((d.args.vertex, d.args.rays[0])), frozenset((d.args.vertex, d.args.rays[1]))} == {frozenset(line), frozenset(pts)})
+                               for d in calls):
+                        return False
+            else:
+                pts = re.findall(r"[A-Z][0-9]*'?", rhs)
+                if len(pts) >= 3:
+                    if not any(d.fn == "perpendicular_line_plane" and set(d.args.line) == set(line) and _cung_mat(frozenset(pts), list(d.args.plane)) for d in calls):
+                        return False
+                elif len(pts) == 2:
+                    if not any((d.fn == "perpendicular_lines" and {frozenset(d.args.line1), frozenset(d.args.line2)} == {frozenset(line), frozenset(pts)})
+                               or (d.fn == "right_angle" and {frozenset((d.args.vertex, d.args.rays[0])), frozenset((d.args.vertex, d.args.rays[1]))} == {frozenset(line), frozenset(pts)})
+                               for d in calls):
+                        return False
+                else:
+                    return False
+        elif kind == "doan":
+            segs = [p for _x, _y, parts in _tu_nhan(m.group()[:m.start("ss") - m.start()]) for p in parts if len(p) == 2]
+            want = _doc_nhom(m["ss"])
+            if not segs or want is None:
+                return False
+            for seg in segs:
+                cands = _nguon_do_dai_cuc_bo(calls, seg)
+                if not cands:
+                    return False
+                if not any(v == want for v, _cid in cands):
+                    raise TuChoi("UNGROUNDED_VALUE", f"{cands[0][1]}: độ dài {''.join(seg)} không khớp số đo nguồn", (cands[0][1],))
+        elif kind == "vai":
+            want = _doc_nhom(m["vs"])
+            pos = s_start + m.start("vs")
+            lk = _lien_ket_cau(de, s_start, s_start + len(s), calls)
+            if want is None or pos not in lk:
+                return False
+            matched = [d for d in calls if _lien_ket_khop(d, lk[pos], calls)]
+            vals = [doc_so(getattr(d.args, f)) for d in matched for f in d.spec.value_fields if getattr(d.args, f, None) is not None]
+            if not matched or not vals:
+                return False
+            if want not in vals:
+                raise TuChoi("UNGROUNDED_VALUE", f"{matched[0].id}: giá trị vai trò không khớp số đo nguồn", (matched[0].id,))
+        elif kind == "diem":
+            pt = re.findall(r"[A-Z][0-9]*'?", m.group())[0]
+            if not any(d.fn in ("midpoint", "centroid", "divide_segment", "intersect_line_line", "intersect_line_plane") and getattr(d.args, "point", None) == pt
+                       and construction_source_bound(replace(d, quotes=(m.group(),)), de) for d in calls):
+                return False
+        elif kind == "dcao":
+            seg = re.findall(r"[A-Z][0-9]*'?", m.group())[:2]
+            if len(seg) != 2 or khoi is None or not any(
+                    (d.fn == "perpendicular_line_plane" and set(d.args.line) == set(seg) and set(d.args.plane) <= set(khoi.args.base))
+                    or (d.fn == "altitude" and {d.args.apex, d.args.foot} == set(seg))
+                    or (d.fn == "orthogonal_projection" and {d.args.point, d.args.image} == set(seg) and set(d.args.plane) <= set(khoi.args.base))
+                    for d in calls):
+                return False
+        else:
+            return False
+    return True
+
+
 def _kiem_nguon_dong(calls, de, phu, read_quotes):
     """Shared closed source subset: refusal only, never a second semantic authority."""
     # New-rule source subset: no proof/inference exemption and no compound quote may hide a second hypothesis.
@@ -3646,17 +3785,30 @@ def _kiem_nguon_dong(calls, de, phu, read_quotes):
             continue
         for q in c.quotes:
             vt = _vi_tri(de, q)
-            spans = (q, de[slice(*_bien_cau(de, vt[0]))].strip()) if vt else (q,)
+            if vt:
+                cs, ce = _bien_cau(de, vt[0])
+                sent_raw = de[cs:ce]
+                sent_s = sent_raw.strip()
+                sent_start = cs + (len(sent_raw) - len(sent_raw.lstrip()))
+                spans = ((q, vt[0]), (sent_s, sent_start))
+            else:
+                spans = ((q, 0),)
             if c.fn == 'intersection_line':
-                if not all(re.fullmatch(intersection_form, s, re.I) for s in spans):
+                if not all(re.fullmatch(intersection_form, s, re.I) for s, _st in spans):
                     raise TuChoi('SOURCE_PREMISE_UNREAD','quote giao tuyến có phần chưa được đọc',(c.id,))
                 continue
-            for s in spans:
+            for s, s_start in spans:
                 if c.fn in ('prism', 'regular_polygon', 'segment_length') and re.fullmatch(cube_form, s, re.I):
                     continue
                 atomic = re.sub(r'(?<!\w)song\s+song(?!\w)',' ',s,flags=re.I)
-                if re.search(r'[,;]|(?<!\w)(?:và|song|đổi|thay|gấp|nhân đôi)(?!\w)',atomic,re.I):
+                if re.search(r';|(?<!\w)(?:song|đổi|thay|gấp|nhân đôi|nhân ba)(?!\w)',atomic,re.I):
                     raise TuChoi('SOURCE_PREMISE_UNREAD','quote tiền đề ghép chưa được đọc độc lập trên lát hai đường',(c.id,))
+                if re.search(r',|(?<!\w)và(?!\w)',atomic,re.I):
+                    if c.spec.kind != 'ask' and _cau_tien_de_dong_hop_le(s, s_start, de, calls, allow_single=True):
+                        continue
+                    raise TuChoi('SOURCE_PREMISE_UNREAD','quote tiền đề ghép chưa được đọc độc lập trên lát hai đường',(c.id,))
+                if c.spec.kind != 'ask' and _cau_tien_de_dong_hop_le(s, s_start, de, calls, allow_single=False):
+                    continue
                 # Read the complete accepted span, not just its first keyword/object. These two premise forms carry
                 # the geometry/length anchors of this slice; unparsed suffixes never acquire authority from a quote.
                 if c.fn == 'perpendicular_line_plane' and not re.fullmatch(
