@@ -1,0 +1,21 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "typedfact-next-adapter3-simulation",
+  "corrects": "docs/evaluation/geometry/runs/composite-geometry/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "previous_candidate_hash": "3e6c403cff0e2c4ae96c4a541f97ecbe92f1efd821e08d5fdb1572d4ee823ab9",
+  "current_candidate_hash": "42f6ae2c8e290d00be2e11b439ca2499f58fe74cd84ab999e2cae2824c4b65d2",
+  "current_product_commit": "61d6f44b7d8dffd69fbda51979686ced5b00efd2",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized local research campaign (GO_TYPEDFACT_NEXT_ADAPTER3_OFFLINE_RESEARCH_IMPLEMENTATION): adds versioned TypedFactNext (typed-fact-next/1) contract and offline research Adapter /3 (hybrid-simulation-adapter/3) for simulation-first unnamed section vertices, derived sub-solids, and solid-qualified multi-solid geometry. Original TypedFact, flat/v3/provider surfaces, Adapter /2, Registry /10, Planner /10, and Engine /8 are unchanged.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP: default LLM_ONLY route and Adapter /2 never invoke TypedFactNext or Adapter /3; new files are isolated offline research modules.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every earlier candidate layer are preserved byte-for-byte; TypedFactNext + Adapter /3 development evaluation is recorded separately in docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/ as DEVELOPMENT_EVALUATION_NOT_BLIND."
+  }
+}

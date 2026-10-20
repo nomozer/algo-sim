@@ -86,6 +86,7 @@ describe("P5 — Adapter /3 Executable Scene3D Simulation Demos", () => {
     const subEntities = deriveSectionSubEntities(scene);
     expect(subEntities.map((e) => e.id)).toContain(sectionFaceId(secObj.id));
     expect(subEntities.map((e) => e.id)).toContain(sectionVertexId(secObj.id, 0));
+    expect(subEntities.map((e) => e.id)).toContain(sectionEdgeId(secObj.id, 0));
     expect(subEntities.filter((e) => e.type === "edge")).toHaveLength(4);
     expect(subEntities.filter((e) => e.type === "point3")).toHaveLength(4);
     const details = sectionDetails(enriched, secObj.id)!;
@@ -94,7 +95,7 @@ describe("P5 — Adapter /3 Executable Scene3D Simulation Demos", () => {
     // 4. Real Three.js Object3D construction succeeds for all visual objects
     for (const obj of enriched.objects) {
       if (obj.render === "non_visual" || obj.render === "readout") continue;
-      const threeNode = VIEW.buildObject3D(obj, enriched);
+      const threeNode = VIEW.buildObject3D(obj, false);
       expect(threeNode).toBeInstanceOf(THREE.Object3D);
     }
 
