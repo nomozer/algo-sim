@@ -1037,7 +1037,7 @@ _KHOI_4 = re.compile(rf"(?i:hộp|lập\s+phương)(?:\s+(?i:chữ\s+nhật))?\s
 _TU_DIEN = re.compile(rf"(?i:tứ\s+diện)(?:\s+(?i:đều))?\s+{_NHAN}(?![\w'])")
 #: a polygon label right after the noun, past its modifiers; a sentence-final period ends it, "ABC.A'B'C'" is a solid
 _DEM_SAU_NHAN = re.compile(rf"(?i:\s+(?:đều|vuông|cân|nhọn|tù)(?!\w))*\s+\(?(?P<p>{_L1}{_L1}{_NHAN}?)\)?(?![\w']|\.\w)")
-_NHAN_LA = re.compile(rf"(?<![\w'.])(?P<p>{_L1}{_L1}{_NHAN}?)\s+(?i:là\s+(?:một\s+)?)$")
+_NHAN_LA = re.compile(rf"(?<![\w'.])(?P<p>{_L1}{_L1}{_NHAN}?)\s+(?i:là\s+(?:(?:một|các|những)\s+)?)$")
 #: base clause right before the noun: "(hai) (mặt) đáy (ABCD) (là (một|hai))"
 _DAY_TRUOC = re.compile(rf"(?<!\w)(?i:(?:hai\s+)?(?:mặt\s+)?đáy)(?:\s+\(?{_NHAN}\)?)?\s+(?i:(?:là\s+(?:(?:một|hai)\s+)?)?)$")
 #: base named right after the noun (or its label): "tam giác đáy", "hình vuông SABC làm đáy", "… là đáy"
@@ -1066,7 +1066,7 @@ def _so_cua_dem(noun: str) -> int:
     return _SO_DINH[t.group(1).lower()] if t else 4
 
 
-def _kiem_so_dinh_nguon(de: str) -> None:
+def _kiem_so_dinh_nguon(de: str, calls: tuple[LoiGoi, ...] = ()) -> None:
     """Source-level, FAIL-CLOSED vertex-count gate (reviews of the T3 fix, rounds 1-7). Every count-bearing shape noun of
     the text must be positively attributed and agree with what it names: the solid name it is part of ("hình chóp tam
     giác đều S.ABC"); a polygon label right after it ("trọng tâm tam giác vuông cân ABC."); a label it predicates ("ABCD
@@ -1078,9 +1078,15 @@ def _kiem_so_dinh_nguon(de: str) -> None:
     def dem(lb: str) -> int:
         return len(re.findall(r"[A-Z][0-9]*'?", lb))
     def mot(xs: set[int]) -> int | None:
-        # no single owner (no solid, or solids with different counts): the multi-solid / unknown-solid gates downstream
-        # own that refusal (`UNSUPPORTED_MULTIPLE_BASES`, `UNKNOWN_SOLID`); this gate does not re-code it
-        return next(iter(xs)) if len(xs) == 1 else None
+        # the owner is the DECLARED solid (review of c7b79cce: a sub-solid merely named in the text must not defer the
+        # check). Several declared solids: the multi-solid gate downstream owns that refusal (`UNSUPPORTED_MULTIPLE_BASES`)
+        # — deferred, never passed: None. No owner at all in a text that names a solid: refused.
+        if len(xs) == 1:
+            return next(iter(xs))
+        if len(khoi_goi) > 1:
+            return None
+        raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{de[max(0, m.start() - 30):m.end() + 12]!r}: không xác định được đa giác "
+                                               "nào của khối mà hình này gọi tên")
     so_day, ben, mat = set(), set(), set()
     da_xet: set[int] = set()
     for m in _KHOI_DEM.finditer(de):
@@ -1098,6 +1104,10 @@ def _kiem_so_dinh_nguon(de: str) -> None:
     for _ in _TU_DIEN.finditer(de):
         so_day.add(3), mat.add(3)
     co_khoi = bool(so_day)
+    khoi_goi = [c for c in calls if c.fn in _KHOI_FN]
+    if khoi_goi:                                   # ownership from the declared solids, not from names in the text
+        so_day = {len(c.args.base) for c in khoi_goi}
+        ben = {3 if c.fn in ("pyramid", "regular_pyramid") else 4 for c in khoi_goi}
     truoc_do: dict[int, list[int]] = {}            # sentence start → the previous noun's attributions
     for m in _DEM_RX.finditer(de):
         if m.start() in da_xet:
@@ -1120,6 +1130,10 @@ def _kiem_so_dinh_nguon(de: str) -> None:
             elif not can:
                 continue                           # base of an unresolved solid: deferred (see `mot`)
         elif not can and (x := _MAT_TRUOC.search(truoc)):
+            # a lateral face ("mặt bên"), or a face of a solid whose faces are all alike (tetrahedron, box, cube); any
+            # other "mặt … là" ("mặt nằm dưới", "mặt chứa A, B, C") is a face this gate cannot identify: refused
+            if not x["ben"] and not mat:
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{doan!r}: không xác định được mặt nào của khối")
             if (n := mot(ben if x["ben"] else mat)) is None:
                 continue
             can.append(n)
@@ -1854,7 +1868,7 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
     don_vi_de = _don_vi_met_cua_de(de)
     if len(don_vi_de) > 1:
         raise TuChoi("QUESTION_CONTEXT_UNSUPPORTED", "đơn vị độ dài trong đề không đồng nhất; chưa hỗ trợ đổi đơn vị")
-    _kiem_so_dinh_nguon(de)
+    _kiem_so_dinh_nguon(de, calls)
     ten_mat_phu: dict[str, str | None] = {}              # derived plane (first construct id) → name the source gave it
     buoc: list[tuple[int, int]] = []                     # descriptor ask phrases an `effect-chain` certificate bound
     phu = _kiem_phu(tuple(auxiliary), calls, de, nhan, ten_mat_phu, don_vi_de, buoc)

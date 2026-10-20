@@ -850,3 +850,37 @@ def test_review_t3g_cube_section_and_face_wordings_are_served(second):
         f("f2", "length", s1, solid="ABCD.A'B'C'D'", measure="edge", value="2"),
         q("q", ask, quantity="volume", solid="ABCD.A'B'C'D'")])
     served(r, {"q": "8"})
+
+
+# ── review of c7b79cce: ownership from the declared solid; an unidentified face is refused, never passed ───────────────
+@pytest.mark.parametrize("s", ["Cho hình chóp tam giác đều S.ABC có AB = 2 và SA = 3, mặt nằm dưới là hình vuông.",
+                               "Cho hình chóp tam giác đều S.ABC có AB = 2, SA = 3 và mặt chứa A, B, C là một hình vuông."])
+def test_review_t3h_an_unidentified_face_is_refused(s):
+    refused(regular_segments(s))
+
+
+@pytest.mark.parametrize("second", ["Mặt nằm dưới là hình vuông.", "Mặt chứa ba điểm A, B, C là hình vuông.",
+                                    "Mặt tiếp đất của nó là một hình vuông.", "Mặt không chứa S là tứ giác đều."])
+def test_review_t3h_unidentified_faces_of_a_pyramid(second):
+    refused(regular_two_sentences(second))
+
+
+@pytest.mark.parametrize("second", ["Mặt nằm trên là hình vuông.", "Mặt chứa M, N, P là hình vuông."])
+def test_review_t3h_unidentified_faces_of_a_prism(second):
+    refused(regular_prism_two_sentences(second))
+
+
+def test_review_t3h_a_sub_solid_named_in_the_text_does_not_defer_the_base_check():
+    s1 = "Cho hình chóp tứ giác đều S.ABCD có đáy là tam giác đều, AB = 4 và SA = 5."
+    s2 = "Mặt phẳng (SAC) chia khối chóp thành hai khối chóp S.ABC và S.ACD."
+    ask = "Tính độ dài SC."
+    refused(run(f"{s1} {s2} {ask}", [
+        {"id": "f1", "kind": "solid", "role": "premise", "quotes": [s1, s2], "solid": "S.ABCD", "solid_type": "pyramid",
+         "regular": True},
+        f("l1", "length", s1, points=["A", "B"], measure="segment", value="4"),
+        f("l2", "length", s1, points=["S", "A"], measure="segment", value="5"),
+        q("q", ask, quantity="length", points=["S", "C"])]))
+
+
+def test_review_t3h_an_enumeration_of_labelled_triangles_is_served():
+    served(regular_two_sentences("Tam giác SAB, SBC, SCA là các tam giác cân."), {"q": "√3"})
