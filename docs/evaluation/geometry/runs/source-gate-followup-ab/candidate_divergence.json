@@ -1,7 +1,7 @@
 {
   "schema": "CANDIDATE_DIVERGENCE/1",
   "wave": "source-gate-followup-ab",
-  "corrects": "docs/evaluation/geometry/runs/source-gate-hardening/candidate_divergence.json",
+  "corrects": "docs/evaluation/geometry/runs/source-gate-hardening/inputs/candidate_divergence.json",
   "run_id": "thesis-final-20260908T160224Z",
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "current_candidate_hash": "de66bd5ca6ee798dab043a1a1a7e79fc635aff5b2c5259de8878fe8f66bcae50",
