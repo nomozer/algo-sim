@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SOURCE_GATE_FOLLOWUP_AB
+
+REPORT = docs/evaluation/geometry/runs/source-gate-followup-ab/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-gate-followup-ab/
+CLASSIFICATION = Source Gate Follow-up A+B targeted defect closure (local branch research/hybrid-source-gate-followup-ab from main 97cfff9c; owner scope GO_SOURCE_GATE_FOLLOWUP_AB_LOCAL_IMPLEMENTATION): Fix A (_kiem_don_vi_hoi and _kiem_du_kien_cau_hoi include _mau_hoi_tat_ca() and auxiliary effect-chain goal spans buoc so multi-goal sentences with unnamed described-point contracts do not misparse a subsequent goal's plane operand as an invalid unit annotation QUESTION_CONTEXT_UNSUPPORTED: SGH-04, SGH-09) and Fix B (_C_DOAN/_C_VUONG/_C_NOI accept "với", and _kiem_nguon_dong + _cau_tien_de_dong_hop_le validate compound premise spans on the line_ref / MAT_HAI_DUONG slice when every clause is parsed by _phan_tich_cau with zero opaque "mo" clauses and backed 1-to-1 by validated calls in calls: SGH-02, SGH-10, diagnostic BH2A-03-variant-ABCD); SGH-01..18 post-feedback regression (POST_FEEDBACK_REGRESSION, not blind; original blind SGH receipt preserved untouched): 10/10 positive served (16/16 math goals exact, 14/16 strict tuple), 5/5 negative exact refusal, 1/2 ambiguous (SGH-16 refused, SGH-17 oracle discrepancy unchanged), 1/1 out-of-scope refused, 0 false serves; BH2A-01..18 known regression: 11/12 positive + sentinel BH2A-13 (a²√3) + diagnostic BH2A-03-variant-ABCD served a√10, 5/5 negative refused; SG-1..SG-6 locked corpus 18/18 positive (21/21 goals), 12/12 negative refused; 174-row regression and 41/41 Adapter /2 fixtures unchanged; versions geometry-functions/9, geometry-fact-planner/10, geometry-function-engine/7, hybrid-preview-adapter/2 unchanged; CACHE_VERSION 127 (NO_BUMP), LLM_ONLY default, flat surface unchanged, Hybrid product NO-GO
+CODE_COMMIT = 68acc140 (product commit on research/hybrid-source-gate-followup-ab; measured_system tree_hash de66bd5ca6ee798dab043a1a1a7e79fc635aff5b2c5259de8878fe8f66bcae50 across 112 files; supersedes 0512dbc53e09696dfecee4cec8ed360af4ad66d8816c782c2993c3617a0d2583); independent review PASS (verification/independent-review.md)
+VERIFICATION = docs/evaluation/geometry/runs/source-gate-followup-ab/handoff.md
+MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
+CORRECTS = SOURCE_GATE_HARDENING (candidate_divergence.json only; historical measurements and first official SGH blind evaluation record unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SOURCE_GATE_HARDENING
 
 REPORT = docs/evaluation/geometry/runs/source-gate-hardening/report.md

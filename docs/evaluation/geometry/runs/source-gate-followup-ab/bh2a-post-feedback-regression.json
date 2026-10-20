@@ -1,0 +1,325 @@
+{
+  "schema": "bh2a-post-feedback-regression/1",
+  "evaluation_mode": "KNOWN_REGRESSION_NOT_BLIND",
+  "blind_holdout": false,
+  "model_calls": 0,
+  "summary": {
+    "positive_exact": "11/12",
+    "positive_goals_exact": "14/15",
+    "negative_refused": "5/5",
+    "sentinel_BH2A_13": {
+      "status": "SERVED",
+      "answers": {
+        "q1": "a²√3"
+      },
+      "verdict": "EXACT"
+    },
+    "diagnostic_BH2A_03_variant_ABCD": {
+      "before": [
+        "REFUSED",
+        "SOURCE_PREMISE_UNREAD"
+      ],
+      "after": [
+        "SERVED",
+        null,
+        {
+          "q1": "a√10"
+        }
+      ],
+      "verdict": "EXACT"
+    },
+    "changed_ids": [
+      "BH2A-03-variant-ABCD"
+    ]
+  },
+  "rows": [
+    {
+      "id": "BH2A-01",
+      "kind": "positive",
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "a√6"
+      },
+      "oracle": {
+        "q1": "a√6"
+      },
+      "verdict": "EXACT",
+      "changed": false
+    },
+    {
+      "id": "BH2A-02",
+      "kind": "positive",
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "a√17"
+      },
+      "oracle": {
+        "q1": "a√17"
+      },
+      "verdict": "EXACT",
+      "changed": false
+    },
+    {
+      "id": "BH2A-03",
+      "kind": "positive",
+      "before_status": "REFUSED",
+      "before_code": "SOURCE_OBJECT_MISMATCH",
+      "after_status": "REFUSED",
+      "after_code": "SOURCE_OBJECT_MISMATCH",
+      "answers": {},
+      "oracle": {
+        "q1": "a√10"
+      },
+      "verdict": "REFUSED",
+      "changed": false
+    },
+    {
+      "id": "BH2A-04",
+      "kind": "positive",
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "3a²√13/2"
+      },
+      "oracle": {
+        "q1": "3a²√13/2"
+      },
+      "verdict": "EXACT",
+      "changed": false
+    },
+    {
+      "id": "BH2A-05",
+      "kind": "positive",
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "cos²=4/45"
+      },
+      "oracle": {
+        "q1": "cos²=4/45"
+      },
+      "verdict": "EXACT",
+      "changed": false
+    },
+    {
+      "id": "BH2A-06",
+      "kind": "positive",
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "cos²=49/850"
+      },
+      "oracle": {
+        "q1": "cos²=49/850"
+      },
+      "verdict": "EXACT",
+      "changed": false
+    },
+    {
+      "id": "BH2A-07",
+      "kind": "positive",
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "cos²=2/3"
+      },
+      "oracle": {
+        "q1": "cos²=2/3"
+      },
+      "verdict": "EXACT",
+      "changed": false
+    },
+    {
+      "id": "BH2A-08",
+      "kind": "positive",
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "cos²=3/4"
+      },
+      "oracle": {
+        "q1": "cos²=3/4"
+      },
+      "verdict": "EXACT",
+      "changed": false
+    },
+    {
+      "id": "BH2A-09",
+      "kind": "positive",
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "cos²=8/11"
+      },
+      "oracle": {
+        "q1": "cos²=8/11"
+      },
+      "verdict": "EXACT",
+      "changed": false
+    },
+    {
+      "id": "BH2A-10",
+      "kind": "positive",
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q2": "cos²=0",
+        "q1": "a"
+      },
+      "oracle": {
+        "q1": "a",
+        "q2": "cos²=0"
+      },
+      "verdict": "EXACT",
+      "changed": false
+    },
+    {
+      "id": "BH2A-11",
+      "kind": "positive",
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q2": "cos²=0",
+        "q1": "a"
+      },
+      "oracle": {
+        "q1": "a",
+        "q2": "cos²=0"
+      },
+      "verdict": "EXACT",
+      "changed": false
+    },
+    {
+      "id": "BH2A-12",
+      "kind": "positive",
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "cos²=25/136",
+        "q2": "a²√3009/4"
+      },
+      "oracle": {
+        "q1": "cos²=25/136",
+        "q2": "a²√3009/4"
+      },
+      "verdict": "EXACT",
+      "changed": false
+    },
+    {
+      "id": "BH2A-13",
+      "kind": "sentinel",
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "a²√3"
+      },
+      "oracle": {
+        "q1": "a²√3"
+      },
+      "verdict": "EXACT",
+      "changed": false
+    },
+    {
+      "id": "BH2A-14",
+      "kind": "negative",
+      "before_status": "REFUSED",
+      "before_code": "FACT_INCOMPLETE",
+      "after_status": "REFUSED",
+      "after_code": "FACT_INCOMPLETE",
+      "answers": {},
+      "oracle": {},
+      "verdict": "REFUSED",
+      "changed": false
+    },
+    {
+      "id": "BH2A-15",
+      "kind": "negative",
+      "before_status": "REFUSED",
+      "before_code": "COLLINEAR_POINTS",
+      "after_status": "REFUSED",
+      "after_code": "COLLINEAR_POINTS",
+      "answers": {},
+      "oracle": {},
+      "verdict": "REFUSED",
+      "changed": false
+    },
+    {
+      "id": "BH2A-16",
+      "kind": "negative",
+      "before_status": "REFUSED",
+      "before_code": "NON_HOMOGENEOUS_LENGTHS",
+      "after_status": "REFUSED",
+      "after_code": "NON_HOMOGENEOUS_LENGTHS",
+      "answers": {},
+      "oracle": {},
+      "verdict": "REFUSED",
+      "changed": false
+    },
+    {
+      "id": "BH2A-17",
+      "kind": "negative",
+      "before_status": "REFUSED",
+      "before_code": "SOURCE_OBJECT_MISMATCH",
+      "after_status": "REFUSED",
+      "after_code": "SOURCE_OBJECT_MISMATCH",
+      "answers": {},
+      "oracle": {},
+      "verdict": "REFUSED",
+      "changed": false
+    },
+    {
+      "id": "BH2A-18",
+      "kind": "negative",
+      "before_status": "REFUSED",
+      "before_code": "UNDERDETERMINED_POINT",
+      "after_status": "REFUSED",
+      "after_code": "UNDERDETERMINED_POINT",
+      "answers": {},
+      "oracle": {},
+      "verdict": "REFUSED",
+      "changed": false
+    },
+    {
+      "id": "BH2A-03-variant-ABCD",
+      "kind": "diagnostic",
+      "before_status": "REFUSED",
+      "before_code": "SOURCE_PREMISE_UNREAD",
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "a√10"
+      },
+      "oracle": {
+        "q1": "a√10"
+      },
+      "verdict": "EXACT",
+      "changed": true
+    }
+  ]
+}

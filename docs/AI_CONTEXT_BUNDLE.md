@@ -34,7 +34,7 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 Cập nhật 2026-10-19 — mới hơn khối "LOCAL override" ở đầu file; tường thuật cũ ở đó và §5–§6 có thể lỗi thời (việc mở: `OPEN_ISSUES.md`; việc kế tiếp: `ROADMAP.md` §0).
 ```text
 MAIN = origin/main = source-gate-hardening integrated via GO_MAIN_SOURCE_GATE_HARDENING_CONDITIONAL (offline research only; from 6973c4b6)
-SGH_STATE = product 602316ed · candidate c5a83b74 (112 file 0512dbc5…) · review PASS · T3 2d0641f4 PASS · corpus 18/18, BH2A 11/12 · SGH blind 6/10 pos (10/16 math, 8/16 tuple, 5/5 neg, threshold NOT MET; 2 defect classes A/B -> follow-up task)
+SGH_STATE = product 602316ed · candidate c5a83b74 (112 file 0512dbc5…) · review PASS · T3 2d0641f4 PASS · corpus 18/18, BH2A 11/12 · SGH blind 6/10 pos (10/16 math, 8/16 tuple, 5/5 neg, threshold NOT MET); FOLLOWUP_AB (`research/hybrid-source-gate-followup-ab`, product `68acc140`, `de66bd5c…`, review PASS): fixes Defect Classes A (`_kiem_don_vi_hoi`/`_kiem_du_kien_cau_hoi` unnamed-point multi-goal boundary) & B (`_kiem_nguon_dong`/`_cau_tien_de_dong_hop_le` compound premises on `line_ref` slice) -> SGH post-feedback regression 10/10 pos (16/16 math), 5/5 neg, 0 false serves; BH2A 11/12 + `BH2A-03-variant-ABCD` served `a√10` (`runs/source-gate-followup-ab/handoff.md`)
 PRODUCT_STATE = CACHE_VERSION 127 · DEFAULT_MODE LLM_ONLY · response contract flat (bề mặt không đổi) · Hybrid product NO-GO · route D versions functions/9 · planner/10 · engine/7 (nhánh SGH)
 SCENE3D = M2 #7, F1, F2 xong; P0–P3 owner duyệt hình trên bộ cảnh mẫu (chỉ phạm vi đó); "chọn kết quả" trên canvas chưa kiểm; KHÔNG Product E2E PASS
 HYBRID = product enablement NO-GO · không frontend caller /api/preview/hybrid · không tích hợp provider live · không GO LIVE

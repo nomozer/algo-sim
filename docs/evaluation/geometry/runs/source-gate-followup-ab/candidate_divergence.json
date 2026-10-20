@@ -1,0 +1,20 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "source-gate-followup-ab",
+  "corrects": "docs/evaluation/geometry/runs/source-gate-hardening/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "current_candidate_hash": "de66bd5ca6ee798dab043a1a1a7e79fc635aff5b2c5259de8878fe8f66bcae50",
+  "previous_candidate_hash": "0512dbc53e09696dfecee4cec8ed360af4ad66d8816c782c2993c3617a0d2583",
+  "current_product_commit": "68acc140a7d956e494f3bc847d01d20e394e2830",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized Source Gate Follow-up A+B (`GO_SOURCE_GATE_FOLLOWUP_AB_LOCAL_IMPLEMENTATION`) on `backend/app/simulation/geometry_functions/registry.py`: Fix A (`_kiem_don_vi_hoi` and `_kiem_du_kien_cau_hoi` use `_mau_hoi_tat_ca()` and auxiliary goal spans `buoc` so multi-goal sentences with unnamed described-point contracts do not misparse a subsequent goal's plane operand `(ABC)` as an invalid unit annotation `QUESTION_CONTEXT_UNSUPPORTED`); Fix B (`_kiem_nguon_dong` and `_cau_tien_de_dong_hop_le` validate compound premise spans on the `line_ref` / `MAT_HAI_DUONG` slice when every clause in the span is parsed by `_phan_tich_cau` with zero opaque `\"mo\"` clauses and backed 1-to-1 by validated calls in `calls`). Versions `geometry-functions/9`, `geometry-fact-planner/10`, `geometry-function-engine/7`, `hybrid-preview-adapter/2` unchanged; `CACHE_VERSION` stays 127 (`NO_BUMP`); `DEFAULT_MODE = LLM_ONLY`, `RESPONSE_CONTRACT = flat` 485d3834…, TypedFact aa9d93ee…, v3 4bff35bb…, function_declarations 5ceb0f99… unchanged.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP (report.md)",
+  "hieu_luc_len_ket_qua_da_do": {
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every candidate layer are preserved byte-for-byte; SGH-01..18 first official blind holdout receipt is preserved untouched while post-feedback SGH-01..18 (10/10 positive, 16/16 goals, 5/5 negative, 0 false serves) and BH2A-01..18 (11/12 positive + diagnostic BH2A-03-variant-ABCD served a√10) are recorded separately as POST_FEEDBACK_REGRESSION / KNOWN_REGRESSION.",
+    "live_requests": 0
+  }
+}

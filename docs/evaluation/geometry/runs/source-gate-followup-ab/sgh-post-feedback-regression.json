@@ -1,0 +1,357 @@
+{
+  "schema": "sgh-post-feedback-regression/1",
+  "evaluation_mode": "POST_FEEDBACK_REGRESSION",
+  "blind_holdout": false,
+  "model_calls": 0,
+  "locked_manifest_sha256": "268c5d666fe19133f9f5a2f523942fcc612f4ee98efe8a6d56aee9e4ea572641",
+  "first_blind_results_sha256": "9962178ccd6b8b1c3c6f5bf964475ffe2d791a761c41651890d9521e36082f7b",
+  "summary": {
+    "positive_served_exact": "10/10",
+    "positive_goals_exact": "16/16",
+    "negative_exact_refusal": "5/5",
+    "ambiguous_locked_expectation": "1/2",
+    "sgh_17_adjudication": "oracle design discrepancy adjudicated separately; original manifest not modified (SERVED 2a, unchanged)",
+    "out_of_scope_exact_refusal": "1/1",
+    "non_positive_valid_refusals_exact": "7/7",
+    "false_serves": 0,
+    "exceptions": 0,
+    "newly_served_positive_ids": [
+      "SGH-02",
+      "SGH-04",
+      "SGH-09",
+      "SGH-10"
+    ]
+  },
+  "rows": [
+    {
+      "id": "SGH-01",
+      "category": "POSITIVE",
+      "target_gates": [
+        "SG-1",
+        "SG-4"
+      ],
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "2a√14"
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "verdict": "SERVED_EXACT",
+      "transition": "SERVED(None) -> SERVED(None)"
+    },
+    {
+      "id": "SGH-02",
+      "category": "POSITIVE",
+      "target_gates": [
+        "SG-2",
+        "SG-6"
+      ],
+      "before_status": "REFUSED",
+      "before_code": "SOURCE_PREMISE_UNREAD",
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "a√37"
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "verdict": "SERVED_EXACT",
+      "transition": "REFUSED(SOURCE_PREMISE_UNREAD) -> SERVED(None)"
+    },
+    {
+      "id": "SGH-03",
+      "category": "POSITIVE",
+      "target_gates": [
+        "SG-3",
+        "SG-4"
+      ],
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "7a²"
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "verdict": "SERVED_EXACT",
+      "transition": "SERVED(None) -> SERVED(None)"
+    },
+    {
+      "id": "SGH-04",
+      "category": "POSITIVE",
+      "target_gates": [
+        "SG-3",
+        "SG-5"
+      ],
+      "before_status": "REFUSED",
+      "before_code": "QUESTION_CONTEXT_UNSUPPORTED",
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q2": "cos²=3/4",
+        "q1": "3a"
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "verdict": "SERVED_EXACT",
+      "transition": "REFUSED(QUESTION_CONTEXT_UNSUPPORTED) -> SERVED(None)"
+    },
+    {
+      "id": "SGH-05",
+      "category": "POSITIVE",
+      "target_gates": [
+        "SG-1",
+        "SG-4",
+        "SG-5"
+      ],
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q2": "cos²=49/81",
+        "q1": "2a√6"
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "verdict": "SERVED_EXACT",
+      "transition": "SERVED(None) -> SERVED(None)"
+    },
+    {
+      "id": "SGH-06",
+      "category": "POSITIVE",
+      "target_gates": [
+        "SG-1",
+        "SG-4",
+        "SG-5"
+      ],
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q2": "9√2",
+        "q1": "2√11"
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "verdict": "SERVED_EXACT",
+      "transition": "SERVED(None) -> SERVED(None)"
+    },
+    {
+      "id": "SGH-07",
+      "category": "POSITIVE",
+      "target_gates": [
+        "SG-1",
+        "SG-5"
+      ],
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q2": "cos²=64/343",
+        "q1": "2a"
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "verdict": "SERVED_EXACT",
+      "transition": "SERVED(None) -> SERVED(None)"
+    },
+    {
+      "id": "SGH-08",
+      "category": "POSITIVE",
+      "target_gates": [
+        "SG-3",
+        "SG-4",
+        "SG-5"
+      ],
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q2": "3a²√3/2",
+        "q1": "2a√3"
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "verdict": "SERVED_EXACT",
+      "transition": "SERVED(None) -> SERVED(None)"
+    },
+    {
+      "id": "SGH-09",
+      "category": "POSITIVE",
+      "target_gates": [
+        "SG-1",
+        "SG-5"
+      ],
+      "before_status": "REFUSED",
+      "before_code": "QUESTION_CONTEXT_UNSUPPORTED",
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q2": "cos²=13/29",
+        "q1": "2a"
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "verdict": "SERVED_EXACT",
+      "transition": "REFUSED(QUESTION_CONTEXT_UNSUPPORTED) -> SERVED(None)"
+    },
+    {
+      "id": "SGH-10",
+      "category": "POSITIVE",
+      "target_gates": [
+        "SG-1",
+        "SG-2",
+        "SG-6"
+      ],
+      "before_status": "REFUSED",
+      "before_code": "SOURCE_PREMISE_UNREAD",
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "2a√2"
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "verdict": "SERVED_EXACT",
+      "transition": "REFUSED(SOURCE_PREMISE_UNREAD) -> SERVED(None)"
+    },
+    {
+      "id": "SGH-11",
+      "category": "NEGATIVE",
+      "target_gates": [
+        "SG-1_ANTI_REGRESSION_SWAPPED_SEGMENT_VALUE"
+      ],
+      "before_status": "REFUSED",
+      "before_code": "UNGROUNDED_VALUE",
+      "after_status": "REFUSED",
+      "after_code": "UNGROUNDED_VALUE",
+      "answers": {},
+      "expected_status": "REFUSED",
+      "expected_code": "UNGROUNDED_VALUE",
+      "verdict": "REFUSED_EXACT",
+      "transition": "REFUSED(UNGROUNDED_VALUE) -> REFUSED(UNGROUNDED_VALUE)"
+    },
+    {
+      "id": "SGH-12",
+      "category": "NEGATIVE",
+      "target_gates": [
+        "SG-4_ANTI_REGRESSION_SPOOFED_PRODUCER_OPERANDS"
+      ],
+      "before_status": "REFUSED",
+      "before_code": "SOURCE_OBJECT_MISMATCH",
+      "after_status": "REFUSED",
+      "after_code": "SOURCE_OBJECT_MISMATCH",
+      "answers": {},
+      "expected_status": "REFUSED",
+      "expected_code": "SOURCE_OBJECT_MISMATCH",
+      "verdict": "REFUSED_EXACT",
+      "transition": "REFUSED(SOURCE_OBJECT_MISMATCH) -> REFUSED(SOURCE_OBJECT_MISMATCH)"
+    },
+    {
+      "id": "SGH-13",
+      "category": "NEGATIVE",
+      "target_gates": [
+        "SG-5_ANTI_REGRESSION_UNANSWERED_SECOND_QUESTION"
+      ],
+      "before_status": "REFUSED",
+      "before_code": "REQUEST_NOT_ANSWERED",
+      "after_status": "REFUSED",
+      "after_code": "REQUEST_NOT_ANSWERED",
+      "answers": {},
+      "expected_status": "REFUSED",
+      "expected_code": "REQUEST_NOT_ANSWERED",
+      "verdict": "REFUSED_EXACT",
+      "transition": "REFUSED(REQUEST_NOT_ANSWERED) -> REFUSED(REQUEST_NOT_ANSWERED)"
+    },
+    {
+      "id": "SGH-14",
+      "category": "NEGATIVE",
+      "target_gates": [
+        "INCONSISTENT_FACTS_SQUARE_SIDE_CONFLICT"
+      ],
+      "before_status": "REFUSED",
+      "before_code": "INCONSISTENT_FACTS",
+      "after_status": "REFUSED",
+      "after_code": "INCONSISTENT_FACTS",
+      "answers": {},
+      "expected_status": "REFUSED",
+      "expected_code": "INCONSISTENT_FACTS",
+      "verdict": "REFUSED_EXACT",
+      "transition": "REFUSED(INCONSISTENT_FACTS) -> REFUSED(INCONSISTENT_FACTS)"
+    },
+    {
+      "id": "SGH-15",
+      "category": "NEGATIVE",
+      "target_gates": [
+        "UNDERDETERMINED_APEX_SINGLE_PERP_LINE"
+      ],
+      "before_status": "REFUSED",
+      "before_code": "UNDERDETERMINED_POINT",
+      "after_status": "REFUSED",
+      "after_code": "UNDERDETERMINED_POINT",
+      "answers": {},
+      "expected_status": "REFUSED",
+      "expected_code": "UNDERDETERMINED_POINT",
+      "verdict": "REFUSED_EXACT",
+      "transition": "REFUSED(UNDERDETERMINED_POINT) -> REFUSED(UNDERDETERMINED_POINT)"
+    },
+    {
+      "id": "SGH-16",
+      "category": "AMBIGUOUS",
+      "target_gates": [
+        "SG-3_ANTI_REGRESSION_SWAPPED_BASE_EDGE_AND_HEIGHT"
+      ],
+      "before_status": "REFUSED",
+      "before_code": "UNGROUNDED_VALUE",
+      "after_status": "REFUSED",
+      "after_code": "UNGROUNDED_VALUE",
+      "answers": {},
+      "expected_status": "REFUSED",
+      "expected_code": "UNGROUNDED_VALUE|AMBIGUOUS_VALUE_QUOTE",
+      "verdict": "REFUSED_EXACT",
+      "transition": "REFUSED(UNGROUNDED_VALUE) -> REFUSED(UNGROUNDED_VALUE)"
+    },
+    {
+      "id": "SGH-17",
+      "category": "AMBIGUOUS",
+      "target_gates": [
+        "AMBIGUOUS_PRISM_BASE_REFERENCE"
+      ],
+      "before_status": "SERVED",
+      "before_code": null,
+      "after_status": "SERVED",
+      "after_code": null,
+      "answers": {
+        "q1": "2a"
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "SOURCE_OBJECT_MISMATCH",
+      "verdict": "ADJUDICATED_ORACLE_DISCREPANCY_UNCHANGED",
+      "transition": "SERVED(None) -> SERVED(None)"
+    },
+    {
+      "id": "SGH-18",
+      "category": "OUT_OF_SCOPE",
+      "target_gates": [
+        "WAVE2B_PARALLEL_SECTION_SENTINEL"
+      ],
+      "before_status": "REFUSED",
+      "before_code": "SCHEMA_INVALID",
+      "after_status": "REFUSED",
+      "after_code": "SCHEMA_INVALID",
+      "answers": {},
+      "expected_status": "REFUSED",
+      "expected_code": "UNSUPPORTED_CAPABILITY|SCHEMA_INVALID|SOURCE_OBJECT_MISMATCH",
+      "verdict": "REFUSED_EXACT",
+      "transition": "REFUSED(SCHEMA_INVALID) -> REFUSED(SCHEMA_INVALID)"
+    }
+  ]
+}

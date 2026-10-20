@@ -1,0 +1,66 @@
+{
+  "run": "source-gate-followup-ab",
+  "date": "2026-10-20",
+  "branch": "research/hybrid-source-gate-followup-ab",
+  "base_commit": "97cfff9c3085ec00a236f87587c2e4144b38836c",
+  "product_commit": "68acc140a7d956e494f3bc847d01d20e394e2830",
+  "candidate_commit": "PENDING_COMMIT",
+  "measured_system_hash": "de66bd5ca6ee798dab043a1a1a7e79fc635aff5b2c5259de8878fe8f66bcae50",
+  "measured_file_count": 112,
+  "previous_measured_system_hash": "0512dbc53e09696dfecee4cec8ed360af4ad66d8816c782c2993c3617a0d2583",
+  "versions": {
+    "registry": "geometry-functions/9",
+    "planner": "geometry-fact-planner/10",
+    "engine": "geometry-function-engine/7",
+    "adapter": "hybrid-preview-adapter/2"
+  },
+  "cache_version": 127,
+  "cache_decision": "NO_BUMP",
+  "default_mode": "LLM_ONLY",
+  "response_contract": "flat",
+  "hybrid_product_enablement": "NO-GO",
+  "live_requests": 0,
+  "provider_surfaces": {
+    "typed_fact_json_schema_sha256": "aa9d93eeac9f1659af8e5acd42af1904b7aaed674a8ab0f56f0c7dd8b2ad4ee8",
+    "flat_extraction_surface_sha256": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "v3_extraction_surface_sha256": "4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f",
+    "function_declarations_surface_sha256": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169",
+    "function_calling_surface_sha256": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25"
+  },
+  "results": {
+    "sgh_post_feedback_regression": {
+      "evaluation_mode": "POST_FEEDBACK_REGRESSION",
+      "blind_holdout": false,
+      "manifest_file_sha256": "268c5d666fe19133f9f5a2f523942fcc612f4ee98efe8a6d56aee9e4ea572641",
+      "canonical_manifest_lock": "fe3356847140000add09f20cfd3f598849c54992751ff70f101a79a1ae039ab2",
+      "positive_served_exact": "10/10",
+      "positive_goals_exact": "16/16",
+      "positive_goals_strict_tuple": "14/16",
+      "negative_exact_refusal": "5/5",
+      "ambiguous_locked_expectation": "1/2",
+      "out_of_scope_exact_refusal": "1/1",
+      "non_positive_valid_refusals_exact": "7/7",
+      "false_serves": 0,
+      "artifact": "docs/evaluation/geometry/runs/source-gate-followup-ab/sgh-post-feedback-regression.json"
+    },
+    "bh2a_post_feedback_regression": {
+      "evaluation_mode": "KNOWN_REGRESSION_NOT_BLIND",
+      "blind_holdout": false,
+      "positive_exact": "11/12",
+      "positive_goals_exact": "14/15",
+      "negative_refused": "5/5",
+      "sentinel_BH2A_13": "SERVED (a²√3)",
+      "diagnostic_BH2A_03_variant_ABCD": "SERVED (a√10)",
+      "false_serves": 0,
+      "artifact": "docs/evaluation/geometry/runs/source-gate-followup-ab/bh2a-post-feedback-regression.json"
+    },
+    "sg1_sg6_locked_corpus": {
+      "positive_exact": "18/18",
+      "positive_goals_exact": "21/21",
+      "negative_refused": "12/12",
+      "false_serves": 0,
+      "artifact": "docs/evaluation/geometry/runs/source-gate-followup-ab/sg1-sg6-regression.json"
+    }
+  },
+  "verdict": "SOURCE_GATE_FOLLOWUP_AB_READY_FOR_GO_MAIN_REVIEW"
+}

@@ -1,0 +1,421 @@
+{
+  "schema": "sg1-sg6-post-feedback-regression/1",
+  "evaluation_mode": "LOCKED_CORPUS_REGRESSION",
+  "blind_holdout": false,
+  "model_calls": 0,
+  "summary": {
+    "positive_served": "18/18",
+    "negative_refused": "12/12",
+    "identical_to_sgh_final_candidate": "30/30"
+  },
+  "rows": [
+    {
+      "id": "A-SG1",
+      "group": "A",
+      "sg": "SG-1",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "4"
+      },
+      "answers": {
+        "q": "2"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "A-SG2",
+      "group": "A",
+      "sg": "SG-2",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "17"
+      },
+      "answers": {
+        "q": "a√17"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "A-SG3",
+      "group": "A",
+      "sg": "SG-3",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "6400/9"
+      },
+      "answers": {
+        "q": "80a³/3"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "A-SG4",
+      "group": "A",
+      "sg": "SG-4",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "14"
+      },
+      "answers": {
+        "q": "√14"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "A-SG5",
+      "group": "A",
+      "sg": "SG-5",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q1": "13",
+        "q2": "17"
+      },
+      "answers": {
+        "q1": "√13",
+        "q2": "√17"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "A-SG6",
+      "group": "A",
+      "sg": "SG-6",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "4"
+      },
+      "answers": {
+        "q": "2"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "B-SG1-renamed",
+      "group": "B",
+      "sg": "SG-1",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "64"
+      },
+      "answers": {
+        "q": "8"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "B-SG1-AD-length",
+      "group": "B",
+      "sg": "SG-1",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "17"
+      },
+      "answers": {
+        "q": "√17"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "B-SG2-distance",
+      "group": "B",
+      "sg": "SG-2",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "1/2"
+      },
+      "answers": {
+        "q": "a√2/2"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "B-SG3-triangular",
+      "group": "B",
+      "sg": "SG-3",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "108"
+      },
+      "answers": {
+        "q": "6√3"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "B-SG3-lateral-and-base",
+      "group": "B",
+      "sg": "SG-3",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "25"
+      },
+      "answers": {
+        "q": "5"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "B-SG4-angle",
+      "group": "B",
+      "sg": "SG-4",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "20/29"
+      },
+      "answers": {
+        "q": "cos²=20/29"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "B-SG4-area-three-vertices",
+      "group": "B",
+      "sg": "SG-4",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "13/4"
+      },
+      "answers": {
+        "q": "√13/2"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "B-SG5-hay-dong-thoi",
+      "group": "B",
+      "sg": "SG-5",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q1": "13",
+        "q2": "13"
+      },
+      "answers": {
+        "q1": "√13",
+        "q2": "√13"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "B-SG5-mixed",
+      "group": "B",
+      "sg": "SG-5",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q2": "36/13",
+        "q1": "16"
+      },
+      "answers": {
+        "q2": "6√13/13",
+        "q1": "4"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "B-SG6-renamed-base-face",
+      "group": "B",
+      "sg": "SG-6",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "4"
+      },
+      "answers": {
+        "q": "2"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "B-SG6-renamed-apex-line",
+      "group": "B",
+      "sg": "SG-6",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "5"
+      },
+      "answers": {
+        "q": "√5"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "B-SG6-mat-phang-toi",
+      "group": "B",
+      "sg": "SG-6",
+      "kind": "positive",
+      "status": "SERVED",
+      "code": null,
+      "values": {
+        "q": "4"
+      },
+      "answers": {
+        "q": "2"
+      },
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "C-SG1-spoof-renamed",
+      "group": "C",
+      "sg": "SG-1",
+      "kind": "negative",
+      "status": "REFUSED",
+      "code": "UNGROUNDED_VALUE",
+      "values": {},
+      "answers": {},
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "C-SG1-respectively",
+      "group": "C",
+      "sg": "SG-1",
+      "kind": "negative",
+      "status": "REFUSED",
+      "code": "UNGROUNDED_VALUE",
+      "values": {},
+      "answers": {},
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "C-SG2-parameter-dropped-in-ask",
+      "group": "C",
+      "sg": "SG-2",
+      "kind": "negative",
+      "status": "REFUSED",
+      "code": "QUESTION_LOCAL_GIVEN_UNVERIFIED",
+      "values": {},
+      "answers": {},
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "C-SG3-swapped-triangular",
+      "group": "C",
+      "sg": "SG-3",
+      "kind": "negative",
+      "status": "REFUSED",
+      "code": "UNGROUNDED_VALUE",
+      "values": {},
+      "answers": {},
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "C-SG3-overdetermined-inconsistent",
+      "group": "C",
+      "sg": "SG-3",
+      "kind": "negative",
+      "status": "REFUSED",
+      "code": "INCONSISTENT_FACTS",
+      "values": {},
+      "answers": {},
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "C-SG4-other-midpoint",
+      "group": "C",
+      "sg": "SG-4",
+      "kind": "negative",
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "values": {},
+      "answers": {},
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "C-SG4-swapped-vertex",
+      "group": "C",
+      "sg": "SG-4",
+      "kind": "negative",
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "values": {},
+      "answers": {},
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "C-SG5-first-dropped",
+      "group": "C",
+      "sg": "SG-5",
+      "kind": "negative",
+      "status": "REFUSED",
+      "code": "REQUEST_NOT_ANSWERED",
+      "values": {},
+      "answers": {},
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "C-SG5-unknown-point",
+      "group": "C",
+      "sg": "SG-5",
+      "kind": "negative",
+      "status": "REFUSED",
+      "code": "REQUEST_NOT_ANSWERED",
+      "values": {},
+      "answers": {},
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "C-SG6-parallel-faces",
+      "group": "C",
+      "sg": "SG-6",
+      "kind": "negative",
+      "status": "REFUSED",
+      "code": "PARALLEL_NO_INTERSECTION",
+      "values": {},
+      "answers": {},
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "C-SG6-non-coplanar-face",
+      "group": "C",
+      "sg": "SG-6",
+      "kind": "negative",
+      "status": "REFUSED",
+      "code": "NON_COPLANAR_POINTS",
+      "values": {},
+      "answers": {},
+      "matches_prior_final_candidate": true
+    },
+    {
+      "id": "C-SG6-conditional",
+      "group": "C",
+      "sg": "SG-6",
+      "kind": "negative",
+      "status": "REFUSED",
+      "code": "CONDITIONAL_CLAUSE",
+      "values": {},
+      "answers": {},
+      "matches_prior_final_candidate": true
+    }
+  ]
+}
