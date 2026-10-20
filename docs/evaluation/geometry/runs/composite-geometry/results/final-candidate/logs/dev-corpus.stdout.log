@@ -1,0 +1,28 @@
+{
+  "positive_exact_served": [
+    16,
+    16
+  ],
+  "planner_resolved": [
+    16,
+    16
+  ],
+  "source_gate_success": [
+    16,
+    16
+  ],
+  "goal_coverage": [
+    26,
+    26
+  ],
+  "correct_refusal": [
+    14,
+    14
+  ],
+  "false_serves": 0,
+  "scene_valid": [
+    16,
+    16
+  ],
+  "max_calls": 13
+}

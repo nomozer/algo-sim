@@ -1,0 +1,65 @@
+{
+  "schema": "composite-final-measurement/1",
+  "worktree_head": "af26fd03ad9b18b258cd5fedb5e7b216b346762d",
+  "live_provider_calls": 0,
+  "jobs": {
+    "dev-corpus": {
+      "command": [
+        "d:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+        "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-wave2c-measure\\backend\\scripts\\measure_composite_geometry.py",
+        "--code-root",
+        "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-wave2c-measure",
+        "--out",
+        "d:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\runs\\composite-geometry\\results\\final-candidate\\dev-corpus.json"
+      ],
+      "cwd": "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-wave2c-measure\\backend",
+      "exit_code": 0,
+      "duration_seconds": 2.57
+    },
+    "sgh-known-regression": {
+      "command": [
+        "d:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+        "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-wave2c-measure\\docs\\evaluation\\geometry\\runs\\composite-geometry\\verification\\sgh-runner.py",
+        "--code-root",
+        "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-wave2c-measure",
+        "--out",
+        "d:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\runs\\composite-geometry\\results\\final-candidate\\sgh-known-regression.json"
+      ],
+      "cwd": "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-wave2c-measure\\backend",
+      "exit_code": 0,
+      "duration_seconds": 1.2
+    },
+    "sg1-sg6": {
+      "command": [
+        "d:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+        "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-wave2c-measure\\backend\\scripts\\measure_source_gate_hardening.py",
+        "arm",
+        "--arm",
+        "hardened",
+        "--code-root",
+        "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-wave2c-measure",
+        "--out",
+        "d:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\runs\\composite-geometry\\results\\final-candidate\\sg1-sg6"
+      ],
+      "cwd": "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-wave2c-measure\\backend",
+      "exit_code": 0,
+      "duration_seconds": 1.56
+    },
+    "bh2a-known-regression": {
+      "command": [
+        "d:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+        "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-wave2c-measure\\docs\\evaluation\\geometry\\runs\\source-gate-hardening\\bh2a\\bh2a_regression.py",
+        "arm",
+        "--name",
+        "hardened",
+        "--code-root",
+        "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-wave2c-measure",
+        "--out",
+        "d:\\Documents\\projects\\algo-sim\\docs\\evaluation\\geometry\\runs\\composite-geometry\\results\\final-candidate\\bh2a"
+      ],
+      "cwd": "d:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\tmp-wave2c-measure\\backend",
+      "exit_code": 0,
+      "duration_seconds": 1.09
+    }
+  }
+}
