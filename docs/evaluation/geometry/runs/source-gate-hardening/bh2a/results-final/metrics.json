@@ -1,0 +1,164 @@
+{
+ "schema": "bh2a-regression-metrics/1",
+ "status": "KNOWN_REGRESSION_NOT_BLIND",
+ "facts": "RECONSTRUCTED_FROM_REPORT",
+ "model_calls": 0,
+ "arms": {
+  "baseline-main": {
+   "positive_exact": "3/12",
+   "positive_goals_exact": "3/15",
+   "negative_refused": "5/5",
+   "wrong_or_false_serves": 0,
+   "exceptions": 0,
+   "sentinel_BH2A-13": [
+    "REFUSED",
+    "AMBIGUOUS_VALUE_QUOTE",
+    {}
+   ],
+   "still_refused_positive": {
+    "BH2A-01": "SOURCE_OBJECT_MISMATCH",
+    "BH2A-02": "UNGROUNDED_VALUE",
+    "BH2A-03": "SOURCE_OBJECT_MISMATCH",
+    "BH2A-04": "AMBIGUOUS_VALUE_QUOTE",
+    "BH2A-06": "UNGROUNDED_VALUE",
+    "BH2A-08": "AMBIGUOUS_VALUE_QUOTE",
+    "BH2A-10": "NOT_ASKED_IN_SOURCE",
+    "BH2A-11": "NOT_ASKED_IN_SOURCE",
+    "BH2A-12": "SOURCE_OBJECT_MISMATCH"
+   }
+  },
+  "hardened": {
+   "positive_exact": "11/12",
+   "positive_goals_exact": "14/15",
+   "negative_refused": "5/5",
+   "wrong_or_false_serves": 0,
+   "exceptions": 0,
+   "sentinel_BH2A-13": [
+    "SERVED",
+    null,
+    {
+     "q1": "a²√3"
+    }
+   ],
+   "still_refused_positive": {
+    "BH2A-03": "SOURCE_OBJECT_MISMATCH"
+   }
+  },
+  "wave2a": {
+   "positive_exact": "3/12",
+   "positive_goals_exact": "3/15",
+   "negative_refused": "5/5",
+   "wrong_or_false_serves": 0,
+   "exceptions": 0,
+   "sentinel_BH2A-13": [
+    "REFUSED",
+    "SCHEMA_INVALID",
+    {}
+   ],
+   "still_refused_positive": {
+    "BH2A-01": "SOURCE_OBJECT_MISMATCH",
+    "BH2A-02": "UNGROUNDED_VALUE",
+    "BH2A-03": "SOURCE_OBJECT_MISMATCH",
+    "BH2A-04": "AMBIGUOUS_VALUE_QUOTE",
+    "BH2A-06": "UNGROUNDED_VALUE",
+    "BH2A-08": "AMBIGUOUS_VALUE_QUOTE",
+    "BH2A-10": "NOT_ASKED_IN_SOURCE",
+    "BH2A-11": "NOT_ASKED_IN_SOURCE",
+    "BH2A-12": "SOURCE_OBJECT_MISMATCH"
+   }
+  }
+ },
+ "reconciliation_vs_gemini_wave2a": {
+  "BH2A-01": {
+   "gemini": "SOURCE_OBJECT_MISMATCH",
+   "reconstructed": "SOURCE_OBJECT_MISMATCH",
+   "same": true
+  },
+  "BH2A-02": {
+   "gemini": "UNGROUNDED_VALUE",
+   "reconstructed": "UNGROUNDED_VALUE",
+   "same": true
+  },
+  "BH2A-03": {
+   "gemini": "SOURCE_OBJECT_MISMATCH",
+   "reconstructed": "SOURCE_OBJECT_MISMATCH",
+   "same": true
+  },
+  "BH2A-04": {
+   "gemini": "AMBIGUOUS_VALUE_QUOTE",
+   "reconstructed": "AMBIGUOUS_VALUE_QUOTE",
+   "same": true
+  },
+  "BH2A-05": {
+   "gemini": null,
+   "reconstructed": null,
+   "same": true
+  },
+  "BH2A-06": {
+   "gemini": "UNGROUNDED_VALUE",
+   "reconstructed": "UNGROUNDED_VALUE",
+   "same": true
+  },
+  "BH2A-07": {
+   "gemini": null,
+   "reconstructed": null,
+   "same": true
+  },
+  "BH2A-08": {
+   "gemini": "AMBIGUOUS_VALUE_QUOTE",
+   "reconstructed": "AMBIGUOUS_VALUE_QUOTE",
+   "same": true
+  },
+  "BH2A-09": {
+   "gemini": null,
+   "reconstructed": null,
+   "same": true
+  },
+  "BH2A-10": {
+   "gemini": "NOT_ASKED_IN_SOURCE",
+   "reconstructed": "NOT_ASKED_IN_SOURCE",
+   "same": true
+  },
+  "BH2A-11": {
+   "gemini": "NOT_ASKED_IN_SOURCE",
+   "reconstructed": "NOT_ASKED_IN_SOURCE",
+   "same": true
+  },
+  "BH2A-12": {
+   "gemini": "SOURCE_OBJECT_MISMATCH",
+   "reconstructed": "SOURCE_OBJECT_MISMATCH",
+   "same": true
+  },
+  "BH2A-13": {
+   "gemini": "PLANE_NOT_UNIQUE",
+   "reconstructed": "SCHEMA_INVALID",
+   "same": false
+  },
+  "BH2A-14": {
+   "gemini": "FACT_INCOMPLETE",
+   "reconstructed": "FACT_INCOMPLETE",
+   "same": true
+  },
+  "BH2A-15": {
+   "gemini": "SOURCE_OBJECT_MISMATCH",
+   "reconstructed": "SOURCE_OBJECT_MISMATCH",
+   "same": true
+  },
+  "BH2A-16": {
+   "gemini": "NON_HOMOGENEOUS_LENGTHS",
+   "reconstructed": "NON_HOMOGENEOUS_LENGTHS",
+   "same": true
+  },
+  "BH2A-17": {
+   "gemini": "SOURCE_OBJECT_MISMATCH",
+   "reconstructed": "SOURCE_OBJECT_MISMATCH",
+   "same": true
+  },
+  "BH2A-18": {
+   "gemini": "UNDERDETERMINED_POINT",
+   "reconstructed": "AMBIGUOUS_VALUE_QUOTE",
+   "same": false
+  }
+ },
+ "reconciled": "16/18"
+}
