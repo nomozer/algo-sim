@@ -15,7 +15,8 @@
   "cache_decision": "NO_BUMP: default route never supplies the internal topology map; new geometry and source changes are isolated Route D research.",
   "hieu_luc_len_ket_qua_da_do": {
     "historical_measurements": "UNCHANGED",
-    "live_requests": 0
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every earlier candidate layer are preserved byte-for-byte; Wave 2C development, SGH-01..18 and BH2A-01..18 results are recorded separately in the composite-geometry run as DEVELOPMENT_EVALUATION_NOT_BLIND / KNOWN_REGRESSION_NOT_BLIND."
   },
   "superseded_candidates": [
     {
