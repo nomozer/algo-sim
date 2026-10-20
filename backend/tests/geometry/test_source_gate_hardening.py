@@ -743,3 +743,50 @@ def test_review_t3e_square_pyramid_with_triangular_lateral_faces_still_served():
         f("f2", "length", s1, measure="base_edge", value="4", solid="S.ABCD"),
         f("f3", "length", s1, measure="height", value="5", solid="S.ABCD"),
         q("q", ask, quantity="volume", solid="S.ABCD")]), {"q": "80/3"})
+
+
+# ── review of c6592ac2: fail-closed attribution — a base noun agrees with its label AND the solid; unattributed refuses ──
+def regular_segments(s, ask="Tính thể tích khối chóp S.ABC."):
+    return run(f"{s} {ask}", [f("f1", "solid", s, solid="S.ABC", solid_type="pyramid", regular=True),
+                              f("l1", "length", s, points=["A", "B"], measure="segment", value="2"),
+                              f("l2", "length", s, points=["S", "A"], measure="segment", value="3"),
+                              q("q", ask, quantity="volume", solid="S.ABC")])
+
+
+@pytest.mark.parametrize("s", [
+    "Cho hình chóp tam giác đều S.ABC có đáy là hình vuông ABCD, AB = 2 và SA = 3.",
+    "Cho hình chóp tam giác đều S.ABC có đáy là hình vuông MNPQ, AB = 2 và SA = 3.",
+    "Cho hình chóp tam giác đều S.ABC có AB = 2 và SA = 3 và đáy bên dưới là hình tứ giác đều.",
+    "Cho hình chóp tam giác đều S.ABC với hình vuông làm đáy, AB = 2 và SA = 3.",
+    "Cho hình chóp tam giác đều S.ABC có AB = 2 và SA = 3, hình vuông là đáy của nó.",
+    "Cho hình chóp tam giác đều S.ABC có hình tứ giác đều làm đáy, AB = 2 và SA = 3.",
+])
+def test_review_t3f_single_sentence_contradictions(s):
+    refused(regular_segments(s))
+
+
+@pytest.mark.parametrize("second", [
+    "Hình vuông là đáy của nó.", "Đáy, như đã nói, là hình vuông.", "Đáy bên dưới là hình vuông.",
+    "Đáy là tam giác đều và cũng là hình vuông.", "Mặt dưới của khối chóp là hình vuông.", "Phần đáy: hình vuông.",
+    "Nó có một hình vuông làm đáy.", "Đáy của nó, thực ra, là tứ giác đều.", "Mặt đáy ở phía bên dưới là hình vuông."])
+def test_review_t3f_unattributed_base_nouns_are_refused(second):
+    refused(regular_two_sentences(second))
+
+
+def square_two_sentences(second):
+    s1 = "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4 và chiều cao bằng 5."
+    ask = "Tính thể tích khối chóp S.ABCD."
+    return run(f"{s1} {second} {ask}", [
+        {"id": "f1", "kind": "solid", "role": "premise", "quotes": [s1, second], "solid": "S.ABCD", "solid_type": "pyramid",
+         "regular": True},
+        f("f2", "length", s1, measure="base_edge", value="4", solid="S.ABCD"),
+        f("f3", "length", s1, measure="height", value="5", solid="S.ABCD"),
+        q("q", ask, quantity="volume", solid="S.ABCD")])
+
+
+@pytest.mark.parametrize("second", [
+    "Hình chiếu của S lên đáy là trọng tâm tam giác ABD.", "Đáy gồm hai tam giác vuông cân ABC và ACD.",
+    "Mặt phẳng đáy chứa tam giác ABC.", "Tâm O của đáy là trung điểm cạnh huyền của tam giác vuông cân ABC.",
+    "Mặt đáy là hình vuông ABCD.", "Các mặt bên là tam giác cân."])
+def test_review_t3f_labelled_or_face_nouns_in_a_base_sentence_are_still_served(second):
+    served(square_two_sentences(second), {"q": "80/3"})
