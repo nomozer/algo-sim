@@ -1,0 +1,17 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "composite-geometry",
+  "corrects": "docs/evaluation/geometry/runs/source-gate-followup-ab/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "previous_candidate_hash": "de66bd5ca6ee798dab043a1a1a7e79fc635aff5b2c5259de8878fe8f66bcae50",
+  "current_candidate_hash": "c1453c297b026525e8a90c6c0fbf5070653fe87cd355cdfcf705ce0d20d439cd",
+  "current_product_commit": "739a833a1cdaff2a6b03a5bcc3df075dc6c0235f",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized local Wave 2C: verified constructed-base pyramids, explicit common-face check, exact volume certificates and per-solid formation. TypedFact, flat/v3/provider declarations, Adapter /2 unchanged. Historical measurements remain bound to their original candidates.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP: default route never supplies the internal topology map; new geometry and source changes are isolated Route D research.",
+  "hieu_luc_len_ket_qua_da_do": {"historical_measurements": "UNCHANGED", "live_requests": 0}
+}

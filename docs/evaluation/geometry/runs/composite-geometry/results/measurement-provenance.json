@@ -1,0 +1,8 @@
+{
+  "schema": "composite-measurement-provenance/1",
+  "exploratory_files": ["candidate-dev.json", "candidate-gold/gold_rows.json", "bh2a/arm-candidate.json", "source-gates/arm-hardened.json"],
+  "exploratory_context": "Measured the uncommitted Wave 2C working tree while HEAD still pointed at baseline 78bd68764a69c513086b844ab3ed5e29ae18ce04. The full_sha in candidate-dev.json identifies that Git HEAD, not the candidate source. These are development observations, not clean-snapshot evidence. Do not use that SHA to reproduce the candidate result.",
+  "authoritative_development_measurement": "Will be recorded separately on the committed frozen candidate; no exploratory evidence file is rewritten.",
+  "corpus_class": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "oracle": "independent similarity and base-area-ratio identities, no product imports"
+}
