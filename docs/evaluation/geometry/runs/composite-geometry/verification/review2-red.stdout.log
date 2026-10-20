@@ -1,0 +1,55 @@
+.FF                                                                      [100%]
+================================== FAILURES ===================================
+_ test_review2_face_perpendicular_base_uses_the_root_regardless_of_labels[XYZ] _
+
+labels = 'XYZ'
+
+    @pytest.mark.parametrize("labels", ["ABC", "XYZ"])
+    def test_review2_face_perpendicular_base_uses_the_root_regardless_of_labels(labels):
+        # Review 2, IMPORTANT-1: (SAB) \u27c2 base must bind to the ROOT base even when the derived solid sorts first.
+        # Equilateral side 4, SA = SB = 4 \u21d2 h\xb2 = 16 \u2212 4 = 12, V(root)\xb2 = (4\u221a3\xb7\u221a12/3)\xb2 = 64; half-scale child V\xb2 = 1.
+        A, B, C = labels
+        T = labels
+        spec = [("root", "pyramid", f"Cho hình chóp S.{T}.", dict(apex="S", base=list(T))),
+                ("base", "regular_polygon", f"\u0110\xe1y {T} l\xe0 tam gi\xe1c \u0111\u1ec1u c\u1ea1nh 4.", dict(vertices=list(T), side="4")),
+                ("fp", "face_perpendicular_base", f"M\u1eb7t ph\u1eb3ng (S{A}{B}) vu\xf4ng g\xf3c v\u1edbi ({T}).", dict(face=["S", A, B], base=list(T))),
+                ("sa", "segment_length", f"S{A} = 4.", dict(segment=["S", A], value="4")),
+                ("sb", "segment_length", f"S{B} = 4.", dict(segment=["S", B], value="4")),
+                *[("point_" + p, "midpoint", f"G\u1ecdi {p} l\xe0 trung \u0111i\u1ec3m c\u1ee7a S{b}.", dict(point=p, segment=["S", b]))
+                  for p, b in zip("MNP", T)],
+                ("child", "pyramid", "Xét hình chóp S.MNP.", dict(apex="S", base=list("MNP"))),
+                ("vol", "ask_volume", "T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.MNP.", dict(solid="S.MNP"))]
+        r = _direct(spec)
+>       assert r.status == "SERVED", (r.code, r.reason)
+E       AssertionError: ('UNSUPPORTED_PLANE', 'fp: m\u1eb7t XYZ kh\xf4ng ph\u1ea3i m\u1eb7t \u0111\xe1y \u0111\xe3 d\u1ef1ng')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+backend\tests\geometry\test_composite_geometry.py:438: AssertionError
+_________ test_review2_skew_equilateral_quadrilateral_is_not_a_square _________
+
+    def test_review2_skew_equilateral_quadrilateral_is_not_a_square():
+        # Review 2, IMPORTANT-2: a regular tetrahedron's SABC has four equal sides and equal centroid distances but is
+        # skew; declaring it a square is an impossible premise and must refuse.
+        spec = [("root", "regular_pyramid", "Cho h\xecnh ch\xf3p \u0111\u1ec1u S.ABC.", dict(apex="S", base=list("ABC"))),
+                ("base", "regular_polygon", "\u0110\xe1y ABC l\xe0 tam gi\xe1c \u0111\u1ec1u c\u1ea1nh 2.", dict(vertices=list("ABC"), side="2")),
+                ("sa", "segment_length", "SA = 2.", dict(segment=list("SA"), value="2")),
+                ("fake", "regular_polygon", "T\u1ee9 gi\xe1c SABC l\xe0 h\xecnh vu\xf4ng.", dict(vertices=list("SABC"))),
+                ("vol", "ask_volume", "T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.ABC.", dict(solid="S.ABC"))]
+        r = _direct(spec)
+>       assert r.status == "REFUSED" and r.code == "INCONSISTENT_FACTS", (r.code, r.reason)
+E       AssertionError: (None, None)
+E       assert ('SERVED' == 'REFUSED'
+E         
+E         - REFUSED
+E         + SERVED)
+
+backend\tests\geometry\test_composite_geometry.py:451: AssertionError
+=================================== PASSES ====================================
+=========================== short test summary info ===========================
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review2_face_perpendicular_base_uses_the_root_regardless_of_labels[ABC]
+FAILED backend\tests\geometry\test_composite_geometry.py::test_review2_face_perpendicular_base_uses_the_root_regardless_of_labels[XYZ]
+FAILED backend\tests\geometry\test_composite_geometry.py::test_review2_skew_equilateral_quadrilateral_is_not_a_square
+2 failed, 1 passed, 39 deselected in 1.02s

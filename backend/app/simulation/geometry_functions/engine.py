@@ -638,7 +638,8 @@ class _Dung:
             for q, ds in sorted(theo_chan.items()):
                 for (d1, c1), (d2, c2) in combinations(ds, 2):
                     if d1[0] * d2[1] - d1[1] * d2[0] != 0:
-                        h2, cs = self._chieu_cao(p, q, [k.name for k in self.khoi.values() if k.apex == p])
+                        h2, cs = self._chieu_cao(p, q, [k.name for k in self.khoi.values()
+                                                        if k.apex == p and frozenset(k.base) == frozenset(self.root.base)])
                         self._dat_ngoai_day(p, q, h2, "line_perpendicular_to_two_intersecting_lines_foot_at_" + q,
                                             {c1, c2} | cs)
                         return True
@@ -648,7 +649,7 @@ class _Dung:
         """(SAB) ⊥ đáy, A, B trên đáy: S nằm trong mặt phẳng qua AB vuông góc đáy. Chân F = hình chiếu của S lên AB —
         DẪN XUẤT từ SA², SB², AB² (t = (SA² − SB² + AB²)/2AB²), KHÔNG giả định là trung điểm; h² = SA² − t²AB²."""
         for c in self.of("face_perpendicular_base"):
-            k = next(iter(self.khoi.values()))
+            k = self.root                      # the sole root base, not whichever solid sorts first (review 2)
             if frozenset(c.args.base) != frozenset(k.base):
                 raise TuChoi("UNSUPPORTED_PLANE", f"{c.id}: mặt {''.join(c.args.base)} không phải mặt đáy đã dựng", (c.id,))
             ngoai = [v for v in c.args.face if v not in k.base]
@@ -829,7 +830,13 @@ class _Dung:
         canh = {self.d2(v[i], v[(i + 1) % n]) for i in range(n)}
         O = tuple(sum(self.pts[x][i] for x in v) / n for i in range(3))
         r = {self.g(*(tuple(self.pts[x][i] - O[i] for i in range(3)),) * 2) for x in v}
-        return next(iter(canh)) if len(canh) == 1 and len(r) == 1 and canh != {Z} else None
+        if len(canh) != 1 or len(r) != 1 or canh == {Z}:
+            return None
+        # Planar too: a regular tetrahedron's SABC has equal sides and centroid distances but is skew (review 2).
+        u, w = self._vec(v[0], v[1]), self._vec(v[0], v[2])
+        if self.g(u, u) * self.g(w, w) - self.g(u, w) ** 2 == 0 or any(self._kc2_mat(x, v[:3]) != 0 for x in v[3:]):
+            return None
+        return next(iter(canh))
 
     def _dung_khong(self, c: LoiGoi) -> bool:
         a = c.args

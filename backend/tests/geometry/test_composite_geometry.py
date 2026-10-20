@@ -411,3 +411,42 @@ def test_review_regular_flag_with_equilateral_base_but_oblique_apex_refuses_in_t
     next(f for f in payload["facts"] if f["id"] == "child0")["regular"] = True
     r = run_fact_route(text, payload)
     assert r.status == "REFUSED" and r.code == "INCONSISTENT_FACTS", (r.code, r.reason)
+
+
+def _direct(spec):
+    from app.ai.function_route import run_function_route
+    calls = [dict(id=cid, fn=fn, args=args, source={"quotes": [quote]}) for cid, fn, quote, args in spec]
+    return run_function_route(" ".join(q for _, _, q, _ in spec), {"calls": calls})
+
+
+@pytest.mark.parametrize("labels", ["ABC", "XYZ"])
+def test_review2_face_perpendicular_base_uses_the_root_regardless_of_labels(labels):
+    # Review 2, IMPORTANT-1: (SAB) ⟂ base must bind to the ROOT base even when the derived solid sorts first.
+    # Equilateral side 4, SA = SB = 4 ⇒ h² = 16 − 4 = 12, V(root)² = (4√3·√12/3)² = 64; half-scale child V² = 1.
+    A, B, C = labels
+    T = labels
+    spec = [("root", "pyramid", f"Cho hình chóp S.{T}.", dict(apex="S", base=list(T))),
+            ("base", "regular_polygon", f"Đáy {T} là tam giác đều cạnh 4.", dict(vertices=list(T), side="4")),
+            ("fp", "face_perpendicular_base", f"Mặt phẳng (S{A}{B}) vuông góc với ({T}).", dict(face=["S", A, B], base=list(T))),
+            ("sa", "segment_length", f"S{A} = 4.", dict(segment=["S", A], value="4")),
+            ("sb", "segment_length", f"S{B} = 4.", dict(segment=["S", B], value="4")),
+            *[("point_" + p, "midpoint", f"Gọi {p} là trung điểm của S{b}.", dict(point=p, segment=["S", b]))
+              for p, b in zip("MNP", T)],
+            ("child", "pyramid", "Xét hình chóp S.MNP.", dict(apex="S", base=list("MNP"))),
+            ("vol", "ask_volume", "Tính thể tích khối chóp S.MNP.", dict(solid="S.MNP"))]
+    r = _direct(spec)
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert squared(r, "vol") == 1
+
+
+def test_review2_skew_equilateral_quadrilateral_is_not_a_square():
+    # Review 2, IMPORTANT-2: a regular tetrahedron's SABC has four equal sides and equal centroid distances but is
+    # skew; declaring it a square is an impossible premise and must refuse.
+    spec = [("root", "regular_pyramid", "Cho hình chóp đều S.ABC.", dict(apex="S", base=list("ABC"))),
+            ("base", "regular_polygon", "Đáy ABC là tam giác đều cạnh 2.", dict(vertices=list("ABC"), side="2")),
+            ("sa", "segment_length", "SA = 2.", dict(segment=list("SA"), value="2")),
+            ("fake", "regular_polygon", "Tứ giác SABC là hình vuông.", dict(vertices=list("SABC"))),
+            ("vol", "ask_volume", "Tính thể tích khối chóp S.ABC.", dict(solid="S.ABC"))]
+    r = _direct(spec)
+    # The forged premise was consumed for equal-side classes, so the post-layout check reports it as a used fact.
+    assert r.status == "REFUSED" and r.code in {"INCONSISTENT_FACTS", "ENGINE_SELF_CHECK_FAILED"}, (r.code, r.reason)
