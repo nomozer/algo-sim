@@ -1,0 +1,65 @@
+{
+  "schema": "wave3a-regression-summary/1",
+  "wave": "volume-reasoning",
+  "evaluation_mode": "KNOWN_REGRESSION_NOT_BLIND",
+  "blind_holdout": false,
+  "live_requests": 0,
+  "suites": {
+    "wave2c_dev_corpus": {
+      "evaluation_mode": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+      "cases": 30,
+      "positive_exact_served": "16/16",
+      "goal_coverage": "26/26",
+      "correct_refusal": "14/14",
+      "false_serves": 0,
+      "changed_vs_wave2c": 0
+    },
+    "bh2c_known_regression": {
+      "evaluation_mode": "KNOWN_REGRESSION_NOT_BLIND",
+      "blind_holdout": false,
+      "external_manifest_dir": "D:\\Documents\\AlgoSim-Research\\BH2C (READ-ONLY UNTOUCHED)",
+      "cases": 24,
+      "fact_route_positive_exact_served": "11/11",
+      "function_route_positive_exact_served": "11/11",
+      "negative_refusals": "13/13",
+      "false_serves": 0,
+      "diffs_vs_wave2c_bh2c_receipt": 0
+    },
+    "sgh_known_regression": {
+      "evaluation_mode": "KNOWN_REGRESSION_NOT_BLIND",
+      "blind_holdout": false,
+      "manifest_file_sha256": "268c5d666fe19133f9f5a2f523942fcc612f4ee98efe8a6d56aee9e4ea572641",
+      "canonical_manifest_lock": "fe3356847140000add09f20cfd3f598849c54992751ff70f101a79a1ae039ab2",
+      "positive_exact_served": "10/10",
+      "positive_goals_exact": "16/16",
+      "negative_exact_refusal": "5/5",
+      "ambiguous_original_expectation": "1/2",
+      "changed_vs_wave2c": 0
+    },
+    "sg1_sg6_regression": {
+      "rows": 30,
+      "positive_served": "18/18",
+      "negative_refused": "12/12",
+      "false_serves": 0,
+      "changed_vs_wave2c": 0
+    },
+    "bh2a_known_regression": {
+      "evaluation_mode": "KNOWN_REGRESSION_NOT_BLIND",
+      "blind_holdout": false,
+      "positive_served": "11/12",
+      "sentinel_BH2A_13": "SERVED",
+      "diagnostic_BH2A_03_variant_ABCD": "SERVED",
+      "negative_refused": "5/5",
+      "changed_vs_wave2c": 0
+    },
+    "nlu_gold_60": {
+      "rows": 60,
+      "changed": 0,
+      "verified_by": "backend/tests/geometry/test_hybrid_backend_integration.py::TestGoldBenchmarkProtection"
+    },
+    "historical_174_and_adapter_2_fixtures": {
+      "historical_174_parity": "PASS (test_offline_v3_matrix_parity_on_combined_candidate)",
+      "adapter_2_fixtures": "PASS (41/41 fixtures in test_hybrid_preview_fixtures.py)"
+    }
+  }
+}
