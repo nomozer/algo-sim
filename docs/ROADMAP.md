@@ -8,6 +8,10 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-20, `composite-geometry` (Hybrid Wave 2C, local branch `research/hybrid-wave2c-composite-geometry` from `main` `78bd6876`):**
+derived sub-pyramids / parallel sections and shared-face sub-pyramids in one exact chart (product `050bb353`, candidate `962b9723` / `3e6c403c…`, review PASS, Full T3 `0acfa9e9` PASS; development 16/16, 0 false serves; SGH/SG/BH2A known regressions unchanged). `CANONICAL_NEXT_ACTION` = owner GO MAIN review on `evaluation/geometry/runs/composite-geometry/handoff.md`; Wave 3 and Adapter /3 are not opened. Source Gate Follow-up A+B is integrated (`78bd6876`); the entries below are historical.
+
+
 **2026-10-20, `source-gate-followup-ab` (local branch `research/hybrid-source-gate-followup-ab` from `main` `97cfff9c`):**
 closes the two remaining source-gate defect classes from `source-gate-hardening` — (A) `_kiem_don_vi_hoi` / `_kiem_du_kien_cau_hoi` goal boundary before unnamed described-point contracts (`SGH-04`, `SGH-09`), and (B) `_kiem_nguon_dong` + `_cau_tien_de_dong_hop_le` compound premise validation on the `line_ref` / `MAT_HAI_DUONG` slice (`SGH-02`, `SGH-10`, diagnostic `BH2A-03-variant-ABCD`); product `68acc140`, candidate `b5e80380` / `de66bd5c…` (112 files), independent review PASS, Full T3 `b0b2a3c3` PASS, SGH post-feedback regression 10/10 positive (`16/16` math goals), 5/5 negative, 0 false serves; BH2A known regression 11/12 + sentinel + `BH2A-03-variant-ABCD` served `a√10`; SG-1..SG-6 18/18 positive, 12/12 negative ([`handoff.md`](evaluation/geometry/runs/source-gate-followup-ab/handoff.md)). `CANONICAL_NEXT_ACTION` = owner GO MAIN review on `evaluation/geometry/runs/source-gate-followup-ab/handoff.md`; Wave 2C and Adapter /3 are not opened.
 

@@ -43,6 +43,7 @@ EXTRACTION_V2 = prompt v2 NO-GO, không ở main; phần an toàn trên main = e
 LOCAL_ONLY = nhánh research/hybrid-semantic-extraction-v2, research/compact-geometry-dsl, integration/extraction-v2-safety, commit 471a2c79, tag evidence/extraction-v2-pilot — chưa push
 PRESERVATION = bundle + bản sao non-Git ngoài repo D:/algo-sim-preservation-20261018 (GO_PRESERVE_PARTIAL: 20 thư mục khoá ACL và secret chưa chép; cùng một SSD) — chưa cleanup
 NEXT_ACTION = owner chọn ưu tiên giữa các wave cần duyệt riêng (vector-zero, chứng nhận chiều cao, F3–F6 offline); ROADMAP §0
+WAVE2C = local `research/hybrid-wave2c-composite-geometry` from main `78bd6876`: product `050bb353`, candidate `962b9723` (`3e6c403c…`), review PASS, T3 `0acfa9e9` PASS; dev 16/16, 0 false serves; next = owner GO MAIN review (`runs/composite-geometry/handoff.md`)
 ```
 
 Thay đổi chưa commit của người dùng: không restore, sửa, stage hoặc commit khi chưa được cho phép rõ ràng (xoá favicon đã

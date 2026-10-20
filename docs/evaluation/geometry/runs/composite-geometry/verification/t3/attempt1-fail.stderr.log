@@ -1,0 +1,94 @@
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Suites 70 [49m[22m[31m⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m src/code-index-sync.test.ts[2m [ src/code-index-sync.test.ts ][22m
+[41m[1m FAIL [22m[49m src/evidence-provenance.test.ts[2m [ src/evidence-provenance.test.ts ][22m
+[41m[1m FAIL [22m[49m src/public-assets-hygiene.test.ts[2m [ src/public-assets-hygiene.test.ts ][22m
+[41m[1m FAIL [22m[49m src/rules-hygiene.test.ts[2m [ src/rules-hygiene.test.ts ][22m
+[41m[1m FAIL [22m[49m src/test-tiers.test.ts[2m [ src/test-tiers.test.ts ][22m
+[41m[1m FAIL [22m[49m src/llm/extract-image.test.ts[2m [ src/llm/extract-image.test.ts ][22m
+[41m[1m FAIL [22m[49m src/llm/input.test.ts[2m [ src/llm/input.test.ts ][22m
+[41m[1m FAIL [22m[49m src/llm/offline-guard.test.ts[2m [ src/llm/offline-guard.test.ts ][22m
+[41m[1m FAIL [22m[49m src/components/assignment-open.test.ts[2m [ src/components/assignment-open.test.ts ][22m
+[41m[1m FAIL [22m[49m src/components/canvas-first-shell.test.tsx[2m [ src/components/canvas-first-shell.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/components/control-layout.test.ts[2m [ src/components/control-layout.test.ts ][22m
+[41m[1m FAIL [22m[49m src/components/error-boundary.test.tsx[2m [ src/components/error-boundary.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/components/header-identity.test.ts[2m [ src/components/header-identity.test.ts ][22m
+[41m[1m FAIL [22m[49m src/components/home-work-strip.test.tsx[2m [ src/components/home-work-strip.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/components/hybrid-preview-contract.test.tsx[2m [ src/components/hybrid-preview-contract.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/components/learner-error.test.tsx[2m [ src/components/learner-error.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/components/live-classroom.test.tsx[2m [ src/components/live-classroom.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/components/photo-problem-flow.test.ts[2m [ src/components/photo-problem-flow.test.ts ][22m
+[41m[1m FAIL [22m[49m src/components/photo-problem-panel.test.tsx[2m [ src/components/photo-problem-panel.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/components/refusal-contract.test.tsx[2m [ src/components/refusal-contract.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/components/scene3d-envelope-boundary.test.tsx[2m [ src/components/scene3d-envelope-boundary.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/components/transport-policy.test.tsx[2m [ src/components/transport-policy.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/components/ui-hygiene.test.ts[2m [ src/components/ui-hygiene.test.ts ][22m
+[41m[1m FAIL [22m[49m src/components/ux-shell.test.tsx[2m [ src/components/ux-shell.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/no-verdict.test.ts[2m [ src/simulations/no-verdict.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/registry.test.ts[2m [ src/simulations/registry.test.ts ][22m
+[41m[1m FAIL [22m[49m src/state/classroom-sync.test.ts[2m [ src/state/classroom-sync.test.ts ][22m
+[41m[1m FAIL [22m[49m src/state/history.test.ts[2m [ src/state/history.test.ts ][22m
+[41m[1m FAIL [22m[49m src/state/store.test.ts[2m [ src/state/store.test.ts ][22m
+[41m[1m FAIL [22m[49m src/state/view-history.test.tsx[2m [ src/state/view-history.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/state/workspace-lifecycle.test.ts[2m [ src/state/workspace-lifecycle.test.ts ][22m
+[41m[1m FAIL [22m[49m src/styles/class-coverage.test.ts[2m [ src/styles/class-coverage.test.ts ][22m
+[41m[1m FAIL [22m[49m src/styles/scrollbar-ownership.test.ts[2m [ src/styles/scrollbar-ownership.test.ts ][22m
+[41m[1m FAIL [22m[49m src/styles/tokens.test.ts[2m [ src/styles/tokens.test.ts ][22m
+[41m[1m FAIL [22m[49m src/styles/transition-semantics.test.ts[2m [ src/styles/transition-semantics.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/semantic/semantic.test.ts[2m [ src/simulations/domains/semantic/semantic.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/exact-number.test.ts[2m [ src/simulations/domains/geometry/exact-number.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/geometry-library-expansion.test.ts[2m [ src/simulations/domains/geometry/geometry-library-expansion.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/interaction-state.test.ts[2m [ src/simulations/domains/geometry/interaction-state.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/pick-target.test.ts[2m [ src/simulations/domains/geometry/pick-target.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/point-placement.test.ts[2m [ src/simulations/domains/geometry/point-placement.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/polygon-triangulate.test.ts[2m [ src/simulations/domains/geometry/polygon-triangulate.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/prism-ui-integration.test.tsx[2m [ src/simulations/domains/geometry/prism-ui-integration.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/product-envelope-rendering.test.tsx[2m [ src/simulations/domains/geometry/product-envelope-rendering.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/rectangular-pyramid-ui-integration.test.tsx[2m [ src/simulations/domains/geometry/rectangular-pyramid-ui-integration.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-annotations.test.ts[2m [ src/simulations/domains/geometry/scene3d-annotations.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-auxiliary.test.ts[2m [ src/simulations/domains/geometry/scene3d-auxiliary.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-camera.test.ts[2m [ src/simulations/domains/geometry/scene3d-camera.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-causal-colors.test.tsx[2m [ src/simulations/domains/geometry/scene3d-causal-colors.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-causal-selection.test.ts[2m [ src/simulations/domains/geometry/scene3d-causal-selection.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-chart.test.ts[2m [ src/simulations/domains/geometry/scene3d-chart.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-focus-mode.test.tsx[2m [ src/simulations/domains/geometry/scene3d-focus-mode.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx[2m [ src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx[2m [ src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-label-formation.test.ts[2m [ src/simulations/domains/geometry/scene3d-label-formation.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-learner-formation.test.ts[2m [ src/simulations/domains/geometry/scene3d-learner-formation.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-occlusion-gates.test.ts[2m [ src/simulations/domains/geometry/scene3d-occlusion-gates.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-page.test.tsx[2m [ src/simulations/domains/geometry/scene3d-page.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-panels.test.tsx[2m [ src/simulations/domains/geometry/scene3d-panels.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-playback.test.tsx[2m [ src/simulations/domains/geometry/scene3d-playback.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-presentation.test.ts[2m [ src/simulations/domains/geometry/scene3d-presentation.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-roles.test.ts[2m [ src/simulations/domains/geometry/scene3d-roles.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-section.test.ts[2m [ src/simulations/domains/geometry/scene3d-section.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-steps-panel.test.tsx[2m [ src/simulations/domains/geometry/scene3d-steps-panel.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-sub-edge.test.ts[2m [ src/simulations/domains/geometry/scene3d-sub-edge.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-subentities.test.ts[2m [ src/simulations/domains/geometry/scene3d-subentities.test.ts ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d-zup-lifecycle.test.tsx[2m [ src/simulations/domains/geometry/scene3d-zup-lifecycle.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/scene3d.test.tsx[2m [ src/simulations/domains/geometry/scene3d.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/Scene3DExplorer.test.tsx[2m [ src/simulations/domains/geometry/Scene3DExplorer.test.tsx ][22m
+[41m[1m FAIL [22m[49m src/simulations/domains/geometry/semantic-dumb-frontend.test.ts[2m [ src/simulations/domains/geometry/semantic-dumb-frontend.test.ts ][22m
+[31m[1mError[22m: Vitest failed to find the runner. One of the following is possible:
+- "vitest" is imported directly without running "vitest" command
+- "vitest" is imported inside "globalSetup" (to fix this, use "setupFiles" instead, because "globalSetup" runs in a different context)
+- "vitest" is imported inside Vite / Vitest config file
+- Otherwise, it might be a Vitest bug. Please report it to https://github.com/vitest-dev/vitest/issues
+[39m
+[36m [2m❯[22m src/test-setup.ts:[2m13:1[22m[39m
+    [90m 11|[39m export const BLOCK_MESSAGE = "Network call blocked during offline vite…
+    [90m 12|[39m
+    [90m 13|[39m [34mbeforeEach[39m(() [33m=>[39m {
+    [90m   |[39m [31m^[39m
+    [90m 14|[39m   globalThis[33m.[39mfetch [33m=[39m ([35masync[39m (input[33m:[39m [33mRequestInfo[39m [33m|[39m [33mURL[39m) [33m=>[39m {
+    [90m 15|[39m     [35mthrow[39m [35mnew[39m [33mError[39m([32m`[39m[36m${[39m[33mBLOCK_MESSAGE[39m[36m}[39m[32m ([39m[36m${[39m[33mString[39m(input)[36m}[39m[32m)`[39m)[33m;[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/70]⎯[22m[39m
+
+[33m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m

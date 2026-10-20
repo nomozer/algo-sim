@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = COMPOSITE_GEOMETRY
+
+REPORT = docs/evaluation/geometry/runs/composite-geometry/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/composite-geometry/
+CLASSIFICATION = Hybrid Wave 2C composite geometry (local, not integrated; GO_HYBRID_WAVE2C_LOCAL_RESEARCH): derived sub-pyramids on constructed bases in one root Gram chart + explicit shared-face sub-pyramids, independent Gram volume certificates; development corpus (not blind) 16/16 exact vs main 0/16, 14/14 correct refusals, 0 false serves; SGH-01..18 KNOWN_REGRESSION 10/10 positive, 16/16 goals, 5/5 negative; SG-1..SG-6 30/30 and BH2A unchanged; NLU GOLD 0 changed; review BLOCKER (regular derived pyramid on a rectangle) fixed; CACHE_VERSION 127 NO_BUMP, LLM_ONLY, flat, Adapter /2, Hybrid product NO-GO
+CODE_COMMIT = 739a833a · deeb1748 · 050bb353 (final product); superseded freezes 503c9d6e (c1453c29…), af26fd03 (cbec8970…); final candidate freeze 962b9723 (measured_system tree_hash 3e6c403cff0e2c4ae96c4a541f97ecbe92f1efd821e08d5fdb1572d4ee823ab9 across 112 files)
+VERIFICATION = docs/evaluation/geometry/runs/composite-geometry/verification/authoritative-t3.json (FULL_PRODUCT_GATE_PASS at 0acfa9e9, attempt 2; attempt 1 harness failure retained) + verification/independent-review.md (round 2 INDEPENDENT_REVIEW_PASS)
+MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
+CORRECTS = SOURCE_GATE_FOLLOWUP_AB (candidate_divergence.json only; historical measurements unchanged)
+CORRECTED_BY = NONE
+
+
 ## WAVE_ID = SOURCE_GATE_FOLLOWUP_AB
 
 REPORT = docs/evaluation/geometry/runs/source-gate-followup-ab/report.md

@@ -1,0 +1,72 @@
+{
+  "run": "composite-geometry",
+  "wave": "Hybrid Wave 2C — composite geometry",
+  "date": "2026-10-20",
+  "authorization": "GO_HYBRID_WAVE2C_LOCAL_RESEARCH (local only; no GO MAIN)",
+  "branch": "research/hybrid-wave2c-composite-geometry",
+  "base_commit": "78bd68764a69c513086b844ab3ed5e29ae18ce04",
+  "product_commits": [
+    "739a833a1cdaff2a6b03a5bcc3df075dc6c0235f",
+    "deeb1748b2d00cafdae74dacef0fec026cf5ff47",
+    "050bb35377b40146d4862afe050a40228821a758"
+  ],
+  "product_commit": "050bb35377b40146d4862afe050a40228821a758",
+  "candidate_commit": "962b97237246b65bb2d4abc6ebed9bc5b971f5fd",
+  "superseded_candidates": [
+    {"freeze_commit": "503c9d6e1b4bf60a54b1179b6299598b27b0d8f7", "tree_hash": "c1453c297b026525e8a90c6c0fbf5070653fe87cd355cdfcf705ce0d20d439cd", "reason": "review BLOCKER (regular derived pyramid on a rectangle)"},
+    {"freeze_commit": "af26fd03ad9b18b258cd5fedb5e7b216b346762d", "tree_hash": "cbec89705f77ead0a71e81f94bcc9b10b013e77009faae697100deeaed303ec0", "reason": "review round 1 IMPORTANT-1/2"}
+  ],
+  "measured_system_hash": "3e6c403cff0e2c4ae96c4a541f97ecbe92f1efd821e08d5fdb1572d4ee823ab9",
+  "measured_file_count": 112,
+  "authoritative_t3_commit": "0acfa9e96fc41d8ca6ba79983f49391553349a3a",
+  "authoritative_t3_verdict": "FULL_PRODUCT_GATE_PASS",
+  "authoritative_t3_receipt": "docs/evaluation/geometry/runs/composite-geometry/verification/authoritative-t3.json",
+  "independent_review": "INDEPENDENT_REVIEW_PASS (round 2, 962b9723; verification/independent-review.md)",
+  "versions": {
+    "registry": "geometry-functions/10",
+    "planner": "geometry-fact-planner/10",
+    "engine": "geometry-function-engine/8",
+    "adapter": "hybrid-preview-adapter/2"
+  },
+  "cache_version": 127,
+  "cache_decision": "NO_BUMP (default /api/analyze path never supplies the internal topology map; Route D research isolated)",
+  "default_mode": "LLM_ONLY",
+  "response_contract": "flat",
+  "hybrid_product_enablement": "NO-GO",
+  "live_requests": 0,
+  "results": {
+    "development_corpus": {
+      "evaluation_mode": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+      "positive_exact_served": "16/16",
+      "planner_resolved": "16/16",
+      "source_gate_success": "16/16",
+      "goal_coverage": "26/26",
+      "correct_refusal": "14/14",
+      "false_serves": 0,
+      "scene_valid": "16/16",
+      "max_calls": 13,
+      "baseline_main_78bd6876": "0/16 served, 0/26 goals, 14/14 refusals, 0 false serves (results/baseline-dev.json)",
+      "artifact": "docs/evaluation/geometry/runs/composite-geometry/results/final-candidate-2/dev-corpus.json"
+    },
+    "sgh_known_regression": {
+      "evaluation_mode": "KNOWN_REGRESSION_NOT_BLIND",
+      "blind_holdout": false,
+      "manifest_file_sha256": "268c5d666fe19133f9f5a2f523942fcc612f4ee98efe8a6d56aee9e4ea572641",
+      "canonical_manifest_lock": "fe3356847140000add09f20cfd3f598849c54992751ff70f101a79a1ae039ab2",
+      "positive_exact_served": "10/10",
+      "positive_goals_exact": "16/16",
+      "positive_strict_tuple": "14/16",
+      "negative_exact_refusal": "5/5",
+      "ambiguous_original_expectation": "1/2",
+      "artifact": "docs/evaluation/geometry/runs/composite-geometry/results/final-candidate-2/sgh-known-regression.json"
+    },
+    "sg1_sg6": {"rows": 30, "positive_served": "18/18", "negative_refused": "12/12", "changed_vs_source_gate_followup": 0,
+                "artifact": "docs/evaluation/geometry/runs/composite-geometry/results/final-candidate-2/sg1-sg6/arm-hardened.json"},
+    "bh2a_known_regression": {"evaluation_mode": "KNOWN_REGRESSION_NOT_BLIND", "positive": "11/12", "sentinel_BH2A_13": "SERVED",
+                              "diagnostic_BH2A_03_variant_ABCD": "SERVED", "negative_refused": "5/5", "changed_vs_source_gate_followup": 0,
+                              "artifact": "docs/evaluation/geometry/runs/composite-geometry/results/final-candidate-2/bh2a/arm-hardened.json"},
+    "nlu_gold": {"rows": 60, "changed": 0, "artifact": "docs/evaluation/geometry/runs/composite-geometry/results/gold-delta.json"},
+    "historical_174_and_adapter_2_fixtures": "PASS inside Full T3 backend suite (11391 passed)"
+  },
+  "verdict": "WAVE2C_READY_FOR_GO_MAIN_REVIEW"
+}
