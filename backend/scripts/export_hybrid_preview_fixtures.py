@@ -285,6 +285,10 @@ IDENTITY_DELTAS = (
     {"run": "composite-geometry",
      "versions": {"registry_version": ("geometry-functions/9", "geometry-functions/10"),
                   "engine_version": ("geometry-function-engine/7", "geometry-function-engine/8")}},
+    {"run": "volume-reasoning",
+     "versions": {"registry_version": ("geometry-functions/10", "geometry-functions/11"),
+                  "planner_version": ("geometry-fact-planner/10", "geometry-fact-planner/11"),
+                  "engine_version": ("geometry-function-engine/8", "geometry-function-engine/9")}},
 )
 
 

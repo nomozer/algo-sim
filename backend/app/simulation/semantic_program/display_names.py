@@ -254,6 +254,12 @@ _CACH_GOI: dict[str, tuple[Callable[[list[str]], str],
     "measure.lateral_area": (
         lambda s: f"Diện tích mặt cong của {s[0]}",
         lambda k: _ghep("S_xq(", k[0], ")")),
+    "assign.volume_ratio": (
+        lambda s: f"Tỉ số của {s[0]} và {s[1]}",
+        lambda k: _ghep(k[0], "/", k[1])),
+    "assign.residual_volume": (
+        lambda s: f"Hiệu của {s[0]} trừ {', '.join(s[1:])}",
+        lambda k: _ghep(k[0], *(f" - {x}" for x in k[1:]))),
     # ── hình cong ─────────────────────────────────────────────────────────
     "intersect_plane_curved": (
         lambda s: f"Đường tròn giao của {s[0]} và {s[1]}", None),
@@ -331,6 +337,8 @@ _VAI_DAI_LUONG = {
     "measure.distance": "Khoảng cách", "measure.angle_cos_sq": "Côsin bình phương của góc",
     "measure.angle_cos": "Côsin của góc", "measure.radius": "Bán kính",
     "measure.lateral_area": "Diện tích mặt cong",
+    "assign.volume_ratio": "Tỉ số thể tích",
+    "assign.residual_volume": "Thể tích phần còn lại",
 }
 
 

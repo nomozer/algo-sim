@@ -34,7 +34,7 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, rende
 #: /8 (run `goal-directed-function-composition`): goal entry by typed slots (`_toan_hang_muc_tieu`), line partner operand.
 #: /9 (run `geometry-capability-expansion`): `divide_segment` point_def, plane through a point ⊥ a line (`MAT_VUONG_DUONG`).
 #: /10 (run `source-gate-hardening`): a `line_ref` producer may name a face by ≥ 3 distinct labels ((ABCD)).
-PLANNER_VERSION = "geometry-fact-planner/10"
+PLANNER_VERSION = "geometry-fact-planner/11"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
 def _nhan_tuoi(stem: str) -> tuple[str, ...]:
@@ -53,6 +53,7 @@ MAX_RESULT_FEET = 8
 
 #: Point kinds the frozen `flat` provider surface offers (485d3834…). The planner accepts more (`TypedFact.point_kind`).
 FLAT_POINT_KINDS = ("midpoint", "centroid", "intersect_line_line", "intersect_line_plane")
+FLAT_QUANTITIES = ("volume", "area", "length", "distance", "angle")
 
 FactKind = Literal["solid", "polygon_shape", "right_angle", "length", "equal_lengths", "perpendicular", "altitude",
                    "projection", "point_def", "section", "intersection_line", "question", "unsupported"]
@@ -87,7 +88,8 @@ class TypedFact(BaseModel):
     points_a: list[Label] | None = Field(None, description="toán hạng 1: 1 điểm, 2 điểm = đường thẳng, ≥3 = mặt phẳng")
     points_b: list[Label] | None = Field(None, description="toán hạng 2")
     line_ref: str | None = Field(None, min_length=1, description="ID dữ kiện intersection_line có nguồn, cho distance/projection; không phải nhãn điểm hay chương trình")
-    quantity: Literal["volume", "area", "length", "distance", "angle"] | None = None
+    quantity: Annotated[Literal["volume", "area", "length", "distance", "angle", "volume_ratio", "residual_volume"],
+                        WithJsonSchema({"enum": list(FLAT_QUANTITIES), "type": "string"})] | None = None
     plane_relation: Literal["parallel", "perpendicular", "parallel_two_lines"] | None = Field(
         None, description="thiết diện / diện tích thiết diện với mặt cắt cho bằng QUAN HỆ: mặt qua `point`, song song "
         "(parallel) hay vuông góc (perpendicular) với mặt `points_b`; khi đó không có `points`")
@@ -379,7 +381,10 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     return k
 
 
-_NON_POINT_ARG_KEYS = frozenset({"line_ref", "solid", "value", "side", "reason", "right"})
+_NON_POINT_ARG_KEYS = frozenset({
+    "line_ref", "solid", "numerator_solid", "denominator_solid",
+    "original_solid", "subtracted_solids", "value", "side", "reason", "right",
+})
 
 
 def _diem_cua_loi_goi(c: dict[str, Any]) -> list[str]:
@@ -493,7 +498,12 @@ def _sap_xep_phu_thuoc_loi_goi(k: KeHoach) -> None:
     for kh in k.solids.values():
         if kh.fact in by_id and kh.fact not in root_solid_call_ids:
             for v in calls:
-                if v["id"] != kh.fact and (v.get("args") or {}).get("solid") == kh.ten:
+                va = v.get("args") or {}
+                v_solids = {
+                    x for x in (va.get("solid"), va.get("numerator_solid"), va.get("denominator_solid"), va.get("original_solid"))
+                    if isinstance(x, str)
+                } | {x for x in (va.get("subtracted_solids") or ()) if isinstance(x, str)}
+                if v["id"] != kh.fact and kh.ten in v_solids:
                     direct_deps[v["id"]].add(kh.fact)
 
     for u in calls:
@@ -719,6 +729,7 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
                          "chưa có phép dựng", (f.id,))
         raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: vuông góc giữa {ta} và {tb}", (f.id,))
     if f.kind == "altitude":
+        pass
         kh = khoi_cua(f.solid, f)
         x, y = f.points
         dinh, chan = (x, y) if x == kh.dinh else (y, x)
@@ -817,6 +828,30 @@ _DIEN_TICH_THIET_DIEN = re.compile(r"diện tích\s+(?:của\s+)?thiết diện"
 _DIEN_TICH_DA_GIAC = re.compile(r"(?i:diện tích)\s+(?:(?i:của)\s+)?(?:(?i:tam giác|tứ giác|hình|đa giác|mặt|đáy)|[A-Z])")
 
 
+def _khoi_tu_toan_hang(pts: list[str] | None, k: KeHoach, f: TypedFact, khoi_cua) -> _Khoi:
+    if not pts or len(pts) < 4 or len(set(pts)) != len(pts):
+        raise TuChoi("FACT_INCOMPLETE", f"{f.id}: toán hạng khối cần ít nhất 4 đỉnh phân biệt", (f.id,))
+    cands = [f"{pts[0]}.{''.join(pts[1:])}", "".join(pts)]
+    if len(pts) >= 6 and len(pts) % 2 == 0:
+        half = len(pts) // 2
+        cands.insert(1, f"{''.join(pts[:half])}.{''.join(pts[half:])}")
+    for sym in cands:
+        kh = k.solids.get(sym) or next((x for x in k.solids.values() if x.ten == sym), None)
+        if kh is not None:
+            return kh
+    for kh in k.solids.values():
+        if kh.loai == "pyramid" and kh.dinh == pts[0] and len(kh.day) == len(pts) - 1 and set(kh.day) == set(pts[1:]):
+            return kh
+    if len(pts) == 4:
+        tets = [
+            kh for kh in k.solids.values()
+            if kh.loai == "pyramid" and len(kh.day) == 3 and ({kh.dinh} | set(kh.day)) == set(pts)
+        ]
+        if len(tets) == 1:
+            return tets[0]
+    raise TuChoi("UNKNOWN_SOLID", f"{f.id}: khối từ các đỉnh {pts} không có trong dữ kiện", (f.id,))
+
+
 def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
     n = f.quantity
     # Diện tích THIẾT DIỆN chỉ khi câu hỏi gọi tên đúng đối tượng ấy ("diện tích (của) thiết diện"); "diện tích tam giác MAB"
@@ -853,9 +888,33 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
     if f.line_ref:
         return k.resolver.distance(f, f.points_a[0], ("result", f.line_ref))
     if n == "volume":
-        kh = khoi_cua(f.solid, f)
-        k.volume_asks[f.id] = kh.ten
-        return phat(f.id, "ask_volume", {"solid": kh.ten}, q, "question(volume)")
+        pass
+
+    if n == "volume_ratio" or (n == "volume" and not f.solid and len(f.points_a or []) >= 4 and len(f.points_b or []) >= 4):
+        if f.role == "prove":
+            raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{f.id}: tỉ số thể tích là điều phải chứng minh, chưa hỗ trợ", (f.id,))
+        if f.negated:
+            raise TuChoi("NEGATED_CLAUSE", f"{f.id}: câu hỏi tỉ số thể tích bị phủ định", (f.id,))
+        kh_a = khoi_cua(f.solid, f) if (f.solid and not f.points_a) else _khoi_tu_toan_hang(f.points_a, k, f, khoi_cua)
+        kh_b = _khoi_tu_toan_hang(f.points_b, k, f, khoi_cua)
+        return phat(f.id, "ask_volume_ratio", {"numerator_solid": kh_a.ten, "denominator_solid": kh_b.ten}, q,
+                    "question(volume_ratio)")
+    if n == "residual_volume" or (n == "volume" and f.solid and (len(f.points_a or []) >= 4 or len(f.points_b or []) >= 4)):
+        if f.role == "prove":
+            raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{f.id}: thể tích phần còn lại là điều phải chứng minh, chưa hỗ trợ", (f.id,))
+        if f.negated:
+            raise TuChoi("NEGATED_CLAUSE", f"{f.id}: câu hỏi thể tích phần còn lại bị phủ định", (f.id,))
+        kh_orig = khoi_cua(f.solid, f) if f.solid else _khoi_tu_toan_hang(f.points, k, f, khoi_cua)
+        sub_lists = [pts for pts in (f.points_a, f.points_b) if pts] or ([f.points] if f.solid and f.points else [])
+        if not sub_lists:
+            raise TuChoi("FACT_INCOMPLETE", f"{f.id}: thể tích phần còn lại thiếu khối bị cắt bỏ", (f.id,))
+        sub_tens = [_khoi_tu_toan_hang(pts, k, f, khoi_cua).ten for pts in sub_lists]
+        return phat(f.id, "ask_residual_volume", {"original_solid": kh_orig.ten, "subtracted_solids": sub_tens}, q,
+                    "question(residual_volume)")
+    if n == "volume":
+        kh_v = khoi_cua(f.solid, f)
+        k.volume_asks[f.id] = kh_v.ten
+        return phat(f.id, "ask_volume", {"solid": kh_v.ten}, q, "question(volume)")
     if n == "area":
         return phat(f.id, "ask_area", {"polygon": f.points}, q, "question(area)")
     if n == "length" or (n == "distance" and _toan_hang(f.points_a) == _toan_hang(f.points_b) == "point"):

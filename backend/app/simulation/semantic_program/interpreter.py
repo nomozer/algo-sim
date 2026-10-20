@@ -250,6 +250,10 @@ class SemanticProgramInterpreter:
                 from .source_entities import dinh_danh_thuc_the
                 narration = "Lấy vectơ {}{}.".format(*(dinh_danh_thuc_the(p)[1] for p in (
                     stmt.expr.from_point, stmt.expr.to_point)))
+            if not narration and self._compiler_geometry and getattr(stmt, "label", None):
+                lbl = str(stmt.label).strip()
+                if lbl:
+                    narration = f"Tính {lbl[:1].lower() + lbl[1:]}: {val}."
             if not narration:
                 from .display_names import ky_hieu_dai_luong
                 target_symbol = ky_hieu_dai_luong(stmt.target_var)
@@ -686,6 +690,25 @@ class SemanticProgramInterpreter:
         elif isinstance(expr, BinaryArithExpr):
             l = self._eval_value(expr.left)
             r = self._eval_value(expr.right)
+            from fractions import Fraction
+            from ..geometry.radical import Radical, add as _rad_add, multiply as _rad_mul, negate as _rad_neg, parse_exact as _parse_exact
+            if isinstance(l, (Fraction, Radical)) and isinstance(r, str):
+                rp = _parse_exact(r)
+                if rp is not None:
+                    r = rp
+            elif isinstance(r, (Fraction, Radical)) and isinstance(l, str):
+                lp = _parse_exact(l)
+                if lp is not None:
+                    l = lp
+            if isinstance(l, Radical) or isinstance(r, Radical):
+                if expr.op == "+":
+                    if isinstance(l, str) or isinstance(r, str):
+                        return str(l) + str(r)
+                    return _rad_add(l, r)
+                elif expr.op == "-":
+                    return _rad_add(l, _rad_neg(r))
+                elif expr.op == "*":
+                    return _rad_mul(l, r)
             if expr.op == "+":
                 if isinstance(l, str) or isinstance(r, str):
                     return str(l) + str(r)
@@ -701,6 +724,9 @@ class SemanticProgramInterpreter:
             return 0
         elif isinstance(expr, UnaryArithExpr):
             v = self._eval_value(expr.expr)
+            from ..geometry.radical import Radical, negate as _rad_neg
+            if expr.op == "-" and isinstance(v, Radical):
+                return _rad_neg(v)
             return -v if expr.op == "-" else v
         elif isinstance(expr, LengthExpr):
             # `get(..., [])` rồi `else 0` là HAI lớp bịa chồng nhau: tên sai →

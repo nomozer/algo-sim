@@ -1,0 +1,570 @@
+{
+  "schema": "algosim.eval.volume_reasoning_dev_results.v1",
+  "evaluation_class": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "blind_holdout": false,
+  "corpus_sha256": "b37a02a25aad0a91f6fcae799d8db4a25cadb274ba563b4134874d50511cdfc4",
+  "oracle_sha256": "0a2eb471b8e6893ace4a54d91f68127643076a969efd54c4169748702d51bbfc",
+  "summary": {
+    "total_cases": 32,
+    "positive_cases": "18/18",
+    "positive_volume_ratio_cases": "12/12",
+    "positive_residual_volume_cases": "6/6",
+    "mathematical_goals": "20/20",
+    "negative_refusals": "14/14",
+    "wrong_serves": 0
+  },
+  "cases": [
+    {
+      "id": "VR-01-equilateral-midpoint-section-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_homothetic_midpoint",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_ratio": {
+          "display": "1/8",
+          "squared": "1/64"
+        }
+      },
+      "actual": {
+        "q_ratio": {
+          "display": "1/8",
+          "squared": "1/64"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "VR-02-inverse-ordered-ratio-symbolic-v",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_ordered_inverse",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_ratio": {
+          "display": "8",
+          "squared": "64"
+        }
+      },
+      "actual": {
+        "q_ratio": {
+          "display": "8",
+          "squared": "64"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "VR-03-rational-third-section-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_rational_division",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_ratio": {
+          "display": "1/27",
+          "squared": "1/729"
+        }
+      },
+      "actual": {
+        "q_ratio": {
+          "display": "1/27",
+          "squared": "1/729"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "VR-04-mixed-simson-lateral-ratios",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_mixed_simson",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_ratio": {
+          "display": "1/12",
+          "squared": "1/144"
+        }
+      },
+      "actual": {
+        "q_ratio": {
+          "display": "1/12",
+          "squared": "1/144"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "VR-05-shared-face-median-sibling-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_shared_face_siblings",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_ratio": {
+          "display": "1",
+          "squared": "1"
+        }
+      },
+      "actual": {
+        "q_ratio": {
+          "display": "1",
+          "squared": "1"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "VR-06-shared-face-unequal-sibling-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_shared_face_siblings",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_ratio": {
+          "display": "1/2",
+          "squared": "1/4"
+        }
+      },
+      "actual": {
+        "q_ratio": {
+          "display": "1/2",
+          "squared": "1/4"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "VR-07-shared-face-child-to-root-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_shared_face_to_root",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_ratio": {
+          "display": "2/3",
+          "squared": "4/9"
+        }
+      },
+      "actual": {
+        "q_ratio": {
+          "display": "2/3",
+          "squared": "4/9"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "VR-08-square-pyramid-midpoint-section-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_quadrilateral_base",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_ratio": {
+          "display": "1/8",
+          "squared": "1/64"
+        }
+      },
+      "actual": {
+        "q_ratio": {
+          "display": "1/8",
+          "squared": "1/64"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "VR-09-rectangle-pyramid-midpoint-base-subpyramid-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_quadrilateral_base",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_ratio": {
+          "display": "1/4",
+          "squared": "1/16"
+        }
+      },
+      "actual": {
+        "q_ratio": {
+          "display": "1/4",
+          "squared": "1/16"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "VR-10-prism-corner-pyramid-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_prism_pyramid",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_ratio": {
+          "display": "1/3",
+          "squared": "1/9"
+        }
+      },
+      "actual": {
+        "q_ratio": {
+          "display": "1/3",
+          "squared": "1/9"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "VR-11-symbolic-parameter-a-multigoal-ratio-and-volume",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_symbolic_multigoal",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_ratio": {
+          "display": "1/8",
+          "squared": "1/64"
+        },
+        "q_vol": {
+          "display": "a³√3/4",
+          "squared": "3/16"
+        }
+      },
+      "actual": {
+        "q_ratio": {
+          "display": "1/8",
+          "squared": "1/64"
+        },
+        "q_vol": {
+          "display": "a³√3/4",
+          "squared": "3/16"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "VR-12-renamed-vertices-reordered-premises",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_invariance",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_ratio": {
+          "display": "1/8",
+          "squared": "1/64"
+        }
+      },
+      "actual": {
+        "q_ratio": {
+          "display": "1/8",
+          "squared": "1/64"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "RV-01-equilateral-pyramid-cut-midpoint-apex",
+      "kind": "positive",
+      "capability": "residual_volume",
+      "slice": "residual_single_apex_cut",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_res": {
+          "display": "7√3",
+          "squared": "147"
+        }
+      },
+      "actual": {
+        "q_res": {
+          "display": "7√3",
+          "squared": "147"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "RV-02-right-triangle-pyramid-cut-third-apex",
+      "kind": "positive",
+      "capability": "residual_volume",
+      "slice": "residual_single_apex_cut",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_res": {
+          "display": "104/9",
+          "squared": "10816/81"
+        }
+      },
+      "actual": {
+        "q_res": {
+          "display": "104/9",
+          "squared": "10816/81"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "RV-03-square-pyramid-frustum-residual-volume",
+      "kind": "positive",
+      "capability": "residual_volume",
+      "slice": "residual_quadrilateral_frustum",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_res": {
+          "display": "84",
+          "squared": "7056"
+        }
+      },
+      "actual": {
+        "q_res": {
+          "display": "84",
+          "squared": "7056"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "RV-04-shared-face-complement-residual-volume",
+      "kind": "positive",
+      "capability": "residual_volume",
+      "slice": "residual_shared_face_complement",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_res": {
+          "display": "16√3",
+          "squared": "768"
+        }
+      },
+      "actual": {
+        "q_res": {
+          "display": "16√3",
+          "squared": "768"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "RV-05-two-disjoint-subtracted-pyramids-residual",
+      "kind": "positive",
+      "capability": "residual_volume",
+      "slice": "residual_two_disjoint_cuts",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_res": {
+          "display": "24",
+          "squared": "576"
+        }
+      },
+      "actual": {
+        "q_res": {
+          "display": "24",
+          "squared": "576"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "RV-06-prism-cut-corner-pyramid-multigoal",
+      "kind": "positive",
+      "capability": "residual_volume",
+      "slice": "residual_prism_corner_cut",
+      "status": "SERVED",
+      "reason_code": null,
+      "oracle_expected": {
+        "q_ratio": {
+          "display": "1/3",
+          "squared": "1/9"
+        },
+        "q_res": {
+          "display": "24",
+          "squared": "576"
+        }
+      },
+      "actual": {
+        "q_ratio": {
+          "display": "1/3",
+          "squared": "1/9"
+        },
+        "q_res": {
+          "display": "24",
+          "squared": "576"
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "NEG-01-swapped-ratio-operands",
+      "kind": "negative",
+      "slice": "negative_swapped_ratio_order",
+      "status": "REFUSED",
+      "reason_code": "SOURCE_OBJECT_MISMATCH",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "pass": true
+    },
+    {
+      "id": "NEG-02-undeclared-solid-in-ratio",
+      "kind": "negative",
+      "slice": "negative_undeclared_solid",
+      "status": "REFUSED",
+      "reason_code": "UNKNOWN_SOLID",
+      "expected_codes": [
+        "UNKNOWN_SOLID"
+      ],
+      "pass": true
+    },
+    {
+      "id": "NEG-03-spoofed-residual-operand",
+      "kind": "negative",
+      "slice": "negative_operand_spoofing",
+      "status": "REFUSED",
+      "reason_code": "SOURCE_OBJECT_MISMATCH",
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH",
+        "UNKNOWN_SOLID"
+      ],
+      "pass": true
+    },
+    {
+      "id": "NEG-04-overlapping-subtracted-solids",
+      "kind": "negative",
+      "slice": "negative_overlapping_subtraction",
+      "status": "REFUSED",
+      "reason_code": "OVERLAPPING_SUBTRACTED_SOLIDS",
+      "expected_codes": [
+        "OVERLAPPING_SUBTRACTED_SOLIDS"
+      ],
+      "pass": true
+    },
+    {
+      "id": "NEG-05-duplicate-subtracted-solid",
+      "kind": "negative",
+      "slice": "negative_duplicate_subtraction",
+      "status": "REFUSED",
+      "reason_code": "SOURCE_OBJECT_MISMATCH",
+      "expected_codes": [
+        "INCONSISTENT_FACTS",
+        "SOURCE_OBJECT_MISMATCH"
+      ],
+      "pass": true
+    },
+    {
+      "id": "NEG-06-zero-residual-volume-exhaustive-split",
+      "kind": "negative",
+      "slice": "negative_non_positive_residual",
+      "status": "REFUSED",
+      "reason_code": "NON_POSITIVE_RESIDUAL_VOLUME",
+      "expected_codes": [
+        "NON_POSITIVE_RESIDUAL_VOLUME"
+      ],
+      "pass": true
+    },
+    {
+      "id": "NEG-07-uncontained-subtracted-solid",
+      "kind": "negative",
+      "slice": "negative_uncontained_subtraction",
+      "status": "REFUSED",
+      "reason_code": "RESIDUAL_CONTAINMENT_UNPROVED",
+      "expected_codes": [
+        "RESIDUAL_CONTAINMENT_UNPROVED"
+      ],
+      "pass": true
+    },
+    {
+      "id": "NEG-08-unit-annotation-on-dimensionless-ratio",
+      "kind": "negative",
+      "slice": "negative_ratio_unit_annotation",
+      "status": "REFUSED",
+      "reason_code": "QUESTION_CONTEXT_UNSUPPORTED",
+      "expected_codes": [
+        "QUESTION_CONTEXT_UNSUPPORTED"
+      ],
+      "pass": true
+    },
+    {
+      "id": "NEG-09-missing-height-dimension",
+      "kind": "negative",
+      "slice": "negative_missing_dimension",
+      "status": "REFUSED",
+      "reason_code": "MISSING_DIMENSION",
+      "expected_codes": [
+        "MISSING_DIMENSION"
+      ],
+      "pass": true
+    },
+    {
+      "id": "NEG-10-contradictory-midsegment-length",
+      "kind": "negative",
+      "slice": "negative_contradictory_facts",
+      "status": "REFUSED",
+      "reason_code": "INCONSISTENT_FACTS",
+      "expected_codes": [
+        "INCONSISTENT_FACTS"
+      ],
+      "pass": true
+    },
+    {
+      "id": "NEG-11-omitted-second-goal-in-source",
+      "kind": "negative",
+      "slice": "negative_omitted_goal",
+      "status": "REFUSED",
+      "reason_code": "REQUEST_NOT_ANSWERED",
+      "expected_codes": [
+        "REQUEST_NOT_ANSWERED"
+      ],
+      "pass": true
+    },
+    {
+      "id": "NEG-12-unread-premise-in-source",
+      "kind": "negative",
+      "slice": "negative_unread_premise",
+      "status": "REFUSED",
+      "reason_code": "SOURCE_PREMISE_UNREAD",
+      "expected_codes": [
+        "SOURCE_PREMISE_UNREAD"
+      ],
+      "pass": true
+    },
+    {
+      "id": "NEG-13-noncoplanar-derived-base-in-ratio",
+      "kind": "negative",
+      "slice": "negative_noncoplanar_base",
+      "status": "REFUSED",
+      "reason_code": "NON_COPLANAR_POINTS",
+      "expected_codes": [
+        "NON_COPLANAR_POINTS"
+      ],
+      "pass": true
+    },
+    {
+      "id": "NEG-14-collinear-derived-base-in-residual",
+      "kind": "negative",
+      "slice": "negative_collinear_base",
+      "status": "REFUSED",
+      "reason_code": "COLLINEAR_POINTS",
+      "expected_codes": [
+        "COLLINEAR_POINTS",
+        "DEGENERATE_POINTS",
+        "INCONSISTENT_FACTS"
+      ],
+      "pass": true
+    }
+  ]
+}

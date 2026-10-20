@@ -1,0 +1,4846 @@
+{
+  "schema": "algosim.eval.volume_reasoning_dev_corpus.v1",
+  "evaluation_class": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "blind_holdout": false,
+  "wave": "wave3a-volume-reasoning",
+  "counts": {
+    "total": 32,
+    "positive": 18,
+    "positive_volume_ratio": 12,
+    "positive_residual_volume": 6,
+    "negative": 14
+  },
+  "cases": [
+    {
+      "id": "VR-01-equilateral-midpoint-section-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_homothetic_midpoint",
+      "text": "Cho hình chóp P.UVW. Đáy UVW là tam giác đều cạnh 6. PW vuông góc với (UVW). PW = 9. Gọi E là trung điểm của PU. Gọi F là trung điểm của PV. Gọi G là trung điểm của PW. Xét hình chóp P.EFG. Tính tỉ số thể tích của hai khối chóp P.EFG và P.UVW.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp P.UVW."
+            ],
+            "solid": "P.UVW",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy UVW là tam giác đều cạnh 6."
+            ],
+            "points": [
+              "U",
+              "V",
+              "W"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "PW vuông góc với (UVW)."
+            ],
+            "points_a": [
+              "P",
+              "W"
+            ],
+            "points_b": [
+              "U",
+              "V",
+              "W"
+            ]
+          },
+          {
+            "id": "h",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "PW = 9."
+            ],
+            "points": [
+              "P",
+              "W"
+            ],
+            "measure": "segment",
+            "value": "9"
+          },
+          {
+            "id": "pE",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi E là trung điểm của PU."
+            ],
+            "point": "E",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "U"
+            ]
+          },
+          {
+            "id": "pF",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi F là trung điểm của PV."
+            ],
+            "point": "F",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "V"
+            ]
+          },
+          {
+            "id": "pG",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi G là trung điểm của PW."
+            ],
+            "point": "G",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "W"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp P.EFG."
+            ],
+            "solid": "P.EFG",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp P.EFG và P.UVW."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "P",
+              "E",
+              "F",
+              "G"
+            ],
+            "points_b": [
+              "P",
+              "U",
+              "V",
+              "W"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "P.UVW",
+        "root_kind": "pyramid",
+        "base_kind": "equilateral_triangle",
+        "side": "6",
+        "height": "9",
+        "solid_scales": {
+          "P.EFG": "1/8"
+        },
+        "goals": {
+          "q_ratio": {
+            "kind": "volume_ratio",
+            "numerator": "P.EFG",
+            "denominator": "P.UVW"
+          }
+        }
+      }
+    },
+    {
+      "id": "VR-02-inverse-ordered-ratio-symbolic-v",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_ordered_inverse",
+      "text": "Cho hình chóp P.UVW. Đáy UVW là tam giác đều cạnh 6. PW vuông góc với (UVW). PW = 9. Gọi E là trung điểm của PU. Gọi F là trung điểm của PV. Gọi G là trung điểm của PW. Xét hình chóp P.EFG. Tính tỉ số V_{P.UVW} / V_{P.EFG}.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp P.UVW."
+            ],
+            "solid": "P.UVW",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy UVW là tam giác đều cạnh 6."
+            ],
+            "points": [
+              "U",
+              "V",
+              "W"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "PW vuông góc với (UVW)."
+            ],
+            "points_a": [
+              "P",
+              "W"
+            ],
+            "points_b": [
+              "U",
+              "V",
+              "W"
+            ]
+          },
+          {
+            "id": "h",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "PW = 9."
+            ],
+            "points": [
+              "P",
+              "W"
+            ],
+            "measure": "segment",
+            "value": "9"
+          },
+          {
+            "id": "pE",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi E là trung điểm của PU."
+            ],
+            "point": "E",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "U"
+            ]
+          },
+          {
+            "id": "pF",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi F là trung điểm của PV."
+            ],
+            "point": "F",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "V"
+            ]
+          },
+          {
+            "id": "pG",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi G là trung điểm của PW."
+            ],
+            "point": "G",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "W"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp P.EFG."
+            ],
+            "solid": "P.EFG",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số V_{P.UVW} / V_{P.EFG}."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "P",
+              "U",
+              "V",
+              "W"
+            ],
+            "points_b": [
+              "P",
+              "E",
+              "F",
+              "G"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "P.UVW",
+        "root_kind": "pyramid",
+        "base_kind": "equilateral_triangle",
+        "side": "6",
+        "height": "9",
+        "solid_scales": {
+          "P.EFG": "1/8"
+        },
+        "goals": {
+          "q_ratio": {
+            "kind": "volume_ratio",
+            "numerator": "P.UVW",
+            "denominator": "P.EFG"
+          }
+        }
+      }
+    },
+    {
+      "id": "VR-03-rational-third-section-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_rational_division",
+      "text": "Cho hình chóp P.UVW. Đáy UVW là tam giác đều cạnh 6. PW vuông góc với (UVW). PW = 9. Gọi E là điểm thuộc cạnh PU sao cho EU = 2PE. Gọi F là điểm thuộc cạnh PV sao cho FV = 2PF. Gọi G là điểm thuộc cạnh PW sao cho GW = 2PG. Xét hình chóp P.EFG. Tính tỉ số thể tích giữa khối chóp P.EFG và khối chóp P.UVW.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp P.UVW."
+            ],
+            "solid": "P.UVW",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy UVW là tam giác đều cạnh 6."
+            ],
+            "points": [
+              "U",
+              "V",
+              "W"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "PW vuông góc với (UVW)."
+            ],
+            "points_a": [
+              "P",
+              "W"
+            ],
+            "points_b": [
+              "U",
+              "V",
+              "W"
+            ]
+          },
+          {
+            "id": "h",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "PW = 9."
+            ],
+            "points": [
+              "P",
+              "W"
+            ],
+            "measure": "segment",
+            "value": "9"
+          },
+          {
+            "id": "pE",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi E là điểm thuộc cạnh PU sao cho EU = 2PE."
+            ],
+            "point": "E",
+            "point_kind": "divide_segment",
+            "points": [
+              "P",
+              "U"
+            ],
+            "value": "1/3"
+          },
+          {
+            "id": "pF",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi F là điểm thuộc cạnh PV sao cho FV = 2PF."
+            ],
+            "point": "F",
+            "point_kind": "divide_segment",
+            "points": [
+              "P",
+              "V"
+            ],
+            "value": "1/3"
+          },
+          {
+            "id": "pG",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi G là điểm thuộc cạnh PW sao cho GW = 2PG."
+            ],
+            "point": "G",
+            "point_kind": "divide_segment",
+            "points": [
+              "P",
+              "W"
+            ],
+            "value": "1/3"
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp P.EFG."
+            ],
+            "solid": "P.EFG",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích giữa khối chóp P.EFG và khối chóp P.UVW."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "P",
+              "E",
+              "F",
+              "G"
+            ],
+            "points_b": [
+              "P",
+              "U",
+              "V",
+              "W"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "P.UVW",
+        "root_kind": "pyramid",
+        "base_kind": "equilateral_triangle",
+        "side": "6",
+        "height": "9",
+        "solid_scales": {
+          "P.EFG": "1/27"
+        },
+        "goals": {
+          "q_ratio": {
+            "kind": "volume_ratio",
+            "numerator": "P.EFG",
+            "denominator": "P.UVW"
+          }
+        }
+      }
+    },
+    {
+      "id": "VR-04-mixed-simson-lateral-ratios",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_mixed_simson",
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. SA vuông góc với (ABC). SA = 12. Gọi M là trung điểm của SA. Gọi N là điểm thuộc cạnh SB sao cho NB = 2SN. Gọi P là trung điểm của SC. Xét hình chóp S.MNP. Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "ra",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 12."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "12"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của SA."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "A"
+            ]
+          },
+          {
+            "id": "pN",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi N là điểm thuộc cạnh SB sao cho NB = 2SN."
+            ],
+            "point": "N",
+            "point_kind": "divide_segment",
+            "points": [
+              "S",
+              "B"
+            ],
+            "value": "1/3"
+          },
+          {
+            "id": "pP",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi P là trung điểm của SC."
+            ],
+            "point": "P",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "C"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.MNP."
+            ],
+            "solid": "S.MNP",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "S",
+              "M",
+              "N",
+              "P"
+            ],
+            "points_b": [
+              "S",
+              "A",
+              "B",
+              "C"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "S.ABC",
+        "root_kind": "pyramid",
+        "base_kind": "right_triangle",
+        "leg_a": "6",
+        "leg_b": "8",
+        "height": "12",
+        "solid_scales": {
+          "S.MNP": "1/12"
+        },
+        "goals": {
+          "q_ratio": {
+            "kind": "volume_ratio",
+            "numerator": "S.MNP",
+            "denominator": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "VR-05-shared-face-median-sibling-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_shared_face_siblings",
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh 4. SA vuông góc với (ABC). SA = 6. Gọi M là trung điểm của BC. Xét hình chóp S.ABM. Xét hình chóp S.AMC. Hai hình chóp S.ABM và S.AMC có mặt chung (SAM). Tính tỉ số thể tích của hai khối chóp S.ABM và S.AMC.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác đều cạnh 4."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "4"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 6."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "c1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.ABM.",
+              "Hai hình chóp S.ABM và S.AMC có mặt chung (SAM)."
+            ],
+            "solid": "S.ABM",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "c2",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.AMC.",
+              "Hai hình chóp S.ABM và S.AMC có mặt chung (SAM)."
+            ],
+            "solid": "S.AMC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp S.ABM và S.AMC."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "S",
+              "A",
+              "B",
+              "M"
+            ],
+            "points_b": [
+              "S",
+              "A",
+              "M",
+              "C"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "S.ABC",
+        "root_kind": "pyramid",
+        "base_kind": "equilateral_triangle",
+        "side": "4",
+        "height": "6",
+        "solid_scales": {
+          "S.ABM": "1/2",
+          "S.AMC": "1/2"
+        },
+        "goals": {
+          "q_ratio": {
+            "kind": "volume_ratio",
+            "numerator": "S.ABM",
+            "denominator": "S.AMC"
+          }
+        }
+      }
+    },
+    {
+      "id": "VR-06-shared-face-unequal-sibling-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_shared_face_siblings",
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh 6. SA vuông góc với (ABC). SA = 8. Gọi M là điểm thuộc cạnh BC sao cho MC = 2BM. Xét hình chóp S.ABM. Xét hình chóp S.AMC. Tính tỉ số thể tích của hai khối chóp S.ABM và S.AMC.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác đều cạnh 6."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 8."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là điểm thuộc cạnh BC sao cho MC = 2BM."
+            ],
+            "point": "M",
+            "point_kind": "divide_segment",
+            "points": [
+              "B",
+              "C"
+            ],
+            "value": "1/3"
+          },
+          {
+            "id": "c1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.ABM."
+            ],
+            "solid": "S.ABM",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "c2",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.AMC."
+            ],
+            "solid": "S.AMC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp S.ABM và S.AMC."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "S",
+              "A",
+              "B",
+              "M"
+            ],
+            "points_b": [
+              "S",
+              "A",
+              "M",
+              "C"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "S.ABC",
+        "root_kind": "pyramid",
+        "base_kind": "equilateral_triangle",
+        "side": "6",
+        "height": "8",
+        "solid_scales": {
+          "S.ABM": "1/3",
+          "S.AMC": "2/3"
+        },
+        "goals": {
+          "q_ratio": {
+            "kind": "volume_ratio",
+            "numerator": "S.ABM",
+            "denominator": "S.AMC"
+          }
+        }
+      }
+    },
+    {
+      "id": "VR-07-shared-face-child-to-root-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_shared_face_to_root",
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh 6. SA vuông góc với (ABC). SA = 8. Gọi M là điểm thuộc cạnh BC sao cho MC = 2BM. Xét hình chóp S.AMC. Tính tỉ số V(S.AMC) / V(S.ABC).",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác đều cạnh 6."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 8."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là điểm thuộc cạnh BC sao cho MC = 2BM."
+            ],
+            "point": "M",
+            "point_kind": "divide_segment",
+            "points": [
+              "B",
+              "C"
+            ],
+            "value": "1/3"
+          },
+          {
+            "id": "c2",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.AMC."
+            ],
+            "solid": "S.AMC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số V(S.AMC) / V(S.ABC)."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "S",
+              "A",
+              "M",
+              "C"
+            ],
+            "points_b": [
+              "S",
+              "A",
+              "B",
+              "C"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "S.ABC",
+        "root_kind": "pyramid",
+        "base_kind": "equilateral_triangle",
+        "side": "6",
+        "height": "8",
+        "solid_scales": {
+          "S.AMC": "2/3"
+        },
+        "goals": {
+          "q_ratio": {
+            "kind": "volume_ratio",
+            "numerator": "S.AMC",
+            "denominator": "S.ABC"
+          }
+        }
+      }
+    },
+    {
+      "id": "VR-08-square-pyramid-midpoint-section-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_quadrilateral_base",
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 6. SA vuông góc với (ABCD). SA = 8. Gọi M là trung điểm của SA. Gọi N là trung điểm của SB. Gọi P là trung điểm của SC. Gọi Q là trung điểm của SD. Xét hình chóp S.MNPQ. Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 6."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 8."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của SA."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "A"
+            ]
+          },
+          {
+            "id": "pN",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi N là trung điểm của SB."
+            ],
+            "point": "N",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "B"
+            ]
+          },
+          {
+            "id": "pP",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi P là trung điểm của SC."
+            ],
+            "point": "P",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "C"
+            ]
+          },
+          {
+            "id": "pQ",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi Q là trung điểm của SD."
+            ],
+            "point": "Q",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "D"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.MNPQ."
+            ],
+            "solid": "S.MNPQ",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "S",
+              "M",
+              "N",
+              "P",
+              "Q"
+            ],
+            "points_b": [
+              "S",
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "S.ABCD",
+        "root_kind": "pyramid",
+        "base_kind": "square",
+        "side": "6",
+        "height": "8",
+        "solid_scales": {
+          "S.MNPQ": "1/8"
+        },
+        "goals": {
+          "q_ratio": {
+            "kind": "volume_ratio",
+            "numerator": "S.MNPQ",
+            "denominator": "S.ABCD"
+          }
+        }
+      }
+    },
+    {
+      "id": "VR-09-rectangle-pyramid-midpoint-base-subpyramid-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_quadrilateral_base",
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình chữ nhật. AB = 4. AD = 6. SA vuông góc với (ABCD). SA = 9. Gọi M là trung điểm của BC. Xét hình chóp S.ABM. Tính tỉ số thể tích của hai khối chóp S.ABM và S.ABCD.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình chữ nhật."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "rectangle"
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 4."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "4"
+          },
+          {
+            "id": "ad",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AD = 6."
+            ],
+            "points": [
+              "A",
+              "D"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 9."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "9"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.ABM."
+            ],
+            "solid": "S.ABM",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp S.ABM và S.ABCD."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "S",
+              "A",
+              "B",
+              "M"
+            ],
+            "points_b": [
+              "S",
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "S.ABCD",
+        "root_kind": "pyramid",
+        "base_kind": "rectangle",
+        "side_a": "4",
+        "side_b": "6",
+        "height": "9",
+        "solid_scales": {
+          "S.ABM": "1/4"
+        },
+        "goals": {
+          "q_ratio": {
+            "kind": "volume_ratio",
+            "numerator": "S.ABM",
+            "denominator": "S.ABCD"
+          }
+        }
+      }
+    },
+    {
+      "id": "VR-10-prism-corner-pyramid-ratio",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_prism_pyramid",
+      "text": "Cho hình lăng trụ đứng ABC.DEF. Đáy ABC là tam giác vuông tại A. AB = 3. AC = 4. AD = 6. Xét hình chóp D.ABC. Tính tỉ số thể tích của hai khối D.ABC và ABC.DEF.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình lăng trụ đứng ABC.DEF."
+            ],
+            "solid": "ABC.DEF",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "ra",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 3."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 4."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "4"
+          },
+          {
+            "id": "ad",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AD = 6."
+            ],
+            "points": [
+              "A",
+              "D"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp D.ABC."
+            ],
+            "solid": "D.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối D.ABC và ABC.DEF."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "D",
+              "A",
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "ABC.DEF",
+        "root_kind": "prism",
+        "base_kind": "right_triangle",
+        "leg_a": "3",
+        "leg_b": "4",
+        "height": "6",
+        "solid_scales": {
+          "D.ABC": "1/3"
+        },
+        "goals": {
+          "q_ratio": {
+            "kind": "volume_ratio",
+            "numerator": "D.ABC",
+            "denominator": "ABC.DEF"
+          }
+        }
+      }
+    },
+    {
+      "id": "VR-11-symbolic-parameter-a-multigoal-ratio-and-volume",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_symbolic_multigoal",
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh 2a. SA vuông góc với (ABC). SA = 6a. Gọi M là trung điểm của SA. Gọi N là trung điểm của SB. Gọi P là trung điểm của SC. Xét hình chóp S.MNP. Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC. Tính thể tích khối chóp S.MNP.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác đều cạnh 2a."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "2a"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 6a."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "6a"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của SA."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "A"
+            ]
+          },
+          {
+            "id": "pN",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi N là trung điểm của SB."
+            ],
+            "point": "N",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "B"
+            ]
+          },
+          {
+            "id": "pP",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi P là trung điểm của SC."
+            ],
+            "point": "P",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "C"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.MNP."
+            ],
+            "solid": "S.MNP",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "S",
+              "M",
+              "N",
+              "P"
+            ],
+            "points_b": [
+              "S",
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "q_vol",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích khối chóp S.MNP."
+            ],
+            "quantity": "volume",
+            "solid": "S.MNP"
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "S.ABC",
+        "root_kind": "pyramid",
+        "base_kind": "equilateral_triangle",
+        "side": "2",
+        "height": "6",
+        "symbolic_power": 1,
+        "solid_scales": {
+          "S.MNP": "1/8"
+        },
+        "goals": {
+          "q_ratio": {
+            "kind": "volume_ratio",
+            "numerator": "S.MNP",
+            "denominator": "S.ABC"
+          },
+          "q_vol": {
+            "kind": "volume",
+            "solid": "S.MNP"
+          }
+        }
+      }
+    },
+    {
+      "id": "VR-12-renamed-vertices-reordered-premises",
+      "kind": "positive",
+      "capability": "volume_ratio",
+      "slice": "ratio_invariance",
+      "text": "Cho hình chóp K.LMN. Đáy LMN là tam giác đều cạnh 4. KL vuông góc với (LMN). KL = 6. Gọi H là trung điểm của KL. Gọi I là trung điểm của KM. Gọi J là trung điểm của KN. Xét hình chóp K.HIJ. Tính tỉ số thể tích của hai khối chóp K.HIJ và K.LMN.",
+      "payload": {
+        "facts": [
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp K.HIJ và K.LMN."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "K",
+              "H",
+              "I",
+              "J"
+            ],
+            "points_b": [
+              "K",
+              "L",
+              "M",
+              "N"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp K.HIJ."
+            ],
+            "solid": "K.HIJ",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "pJ",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi J là trung điểm của KN."
+            ],
+            "point": "J",
+            "point_kind": "midpoint",
+            "points": [
+              "K",
+              "N"
+            ]
+          },
+          {
+            "id": "pI",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi I là trung điểm của KM."
+            ],
+            "point": "I",
+            "point_kind": "midpoint",
+            "points": [
+              "K",
+              "M"
+            ]
+          },
+          {
+            "id": "pH",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi H là trung điểm của KL."
+            ],
+            "point": "H",
+            "point_kind": "midpoint",
+            "points": [
+              "K",
+              "L"
+            ]
+          },
+          {
+            "id": "kl",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "KL = 6."
+            ],
+            "points": [
+              "K",
+              "L"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "KL vuông góc với (LMN)."
+            ],
+            "points_a": [
+              "K",
+              "L"
+            ],
+            "points_b": [
+              "L",
+              "M",
+              "N"
+            ]
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy LMN là tam giác đều cạnh 4."
+            ],
+            "points": [
+              "L",
+              "M",
+              "N"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "4"
+          },
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp K.LMN."
+            ],
+            "solid": "K.LMN",
+            "solid_type": "pyramid"
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "K.LMN",
+        "root_kind": "pyramid",
+        "base_kind": "equilateral_triangle",
+        "side": "4",
+        "height": "6",
+        "solid_scales": {
+          "K.HIJ": "1/8"
+        },
+        "goals": {
+          "q_ratio": {
+            "kind": "volume_ratio",
+            "numerator": "K.HIJ",
+            "denominator": "K.LMN"
+          }
+        }
+      }
+    },
+    {
+      "id": "RV-01-equilateral-pyramid-cut-midpoint-apex",
+      "kind": "positive",
+      "capability": "residual_volume",
+      "slice": "residual_single_apex_cut",
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh 4. SA vuông góc với (ABC). SA = 6. Gọi M là trung điểm của SA. Gọi N là trung điểm của SB. Gọi P là trung điểm của SC. Xét hình chóp S.MNP. Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ khối chóp S.MNP.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác đều cạnh 4."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "4"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 6."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của SA."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "A"
+            ]
+          },
+          {
+            "id": "pN",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi N là trung điểm của SB."
+            ],
+            "point": "N",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "B"
+            ]
+          },
+          {
+            "id": "pP",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi P là trung điểm của SC."
+            ],
+            "point": "P",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "C"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.MNP."
+            ],
+            "solid": "S.MNP",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ khối chóp S.MNP."
+            ],
+            "quantity": "residual_volume",
+            "solid": "S.ABC",
+            "points_a": [
+              "S",
+              "M",
+              "N",
+              "P"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "S.ABC",
+        "root_kind": "pyramid",
+        "base_kind": "equilateral_triangle",
+        "side": "4",
+        "height": "6",
+        "solid_scales": {
+          "S.MNP": "1/8"
+        },
+        "goals": {
+          "q_res": {
+            "kind": "residual_volume",
+            "original": "S.ABC",
+            "subtracted": [
+              "S.MNP"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "RV-02-right-triangle-pyramid-cut-third-apex",
+      "kind": "positive",
+      "capability": "residual_volume",
+      "slice": "residual_single_apex_cut",
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác vuông tại A. AB = 3. AC = 4. SA vuông góc với (ABC). SA = 6. Gọi M là điểm thuộc cạnh SA sao cho MA = 2SM. Gọi N là điểm thuộc cạnh SB sao cho NB = 2SN. Gọi P là điểm thuộc cạnh SC sao cho PC = 2SP. Xét hình chóp S.MNP. Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ khối chóp S.MNP.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "ra",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 3."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 4."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "4"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 6."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là điểm thuộc cạnh SA sao cho MA = 2SM."
+            ],
+            "point": "M",
+            "point_kind": "divide_segment",
+            "points": [
+              "S",
+              "A"
+            ],
+            "value": "1/3"
+          },
+          {
+            "id": "pN",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi N là điểm thuộc cạnh SB sao cho NB = 2SN."
+            ],
+            "point": "N",
+            "point_kind": "divide_segment",
+            "points": [
+              "S",
+              "B"
+            ],
+            "value": "1/3"
+          },
+          {
+            "id": "pP",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi P là điểm thuộc cạnh SC sao cho PC = 2SP."
+            ],
+            "point": "P",
+            "point_kind": "divide_segment",
+            "points": [
+              "S",
+              "C"
+            ],
+            "value": "1/3"
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.MNP."
+            ],
+            "solid": "S.MNP",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ khối chóp S.MNP."
+            ],
+            "quantity": "residual_volume",
+            "solid": "S.ABC",
+            "points_a": [
+              "S",
+              "M",
+              "N",
+              "P"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "S.ABC",
+        "root_kind": "pyramid",
+        "base_kind": "right_triangle",
+        "leg_a": "3",
+        "leg_b": "4",
+        "height": "6",
+        "solid_scales": {
+          "S.MNP": "1/27"
+        },
+        "goals": {
+          "q_res": {
+            "kind": "residual_volume",
+            "original": "S.ABC",
+            "subtracted": [
+              "S.MNP"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "RV-03-square-pyramid-frustum-residual-volume",
+      "kind": "positive",
+      "capability": "residual_volume",
+      "slice": "residual_quadrilateral_frustum",
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 6. SA vuông góc với (ABCD). SA = 8. Gọi M là trung điểm của SA. Gọi N là trung điểm của SB. Gọi P là trung điểm của SC. Gọi Q là trung điểm của SD. Xét hình chóp S.MNPQ. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 6."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 8."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của SA."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "A"
+            ]
+          },
+          {
+            "id": "pN",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi N là trung điểm của SB."
+            ],
+            "point": "N",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "B"
+            ]
+          },
+          {
+            "id": "pP",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi P là trung điểm của SC."
+            ],
+            "point": "P",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "C"
+            ]
+          },
+          {
+            "id": "pQ",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi Q là trung điểm của SD."
+            ],
+            "point": "Q",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "D"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.MNPQ."
+            ],
+            "solid": "S.MNPQ",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ."
+            ],
+            "quantity": "residual_volume",
+            "solid": "S.ABCD",
+            "points_a": [
+              "S",
+              "M",
+              "N",
+              "P",
+              "Q"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "S.ABCD",
+        "root_kind": "pyramid",
+        "base_kind": "square",
+        "side": "6",
+        "height": "8",
+        "solid_scales": {
+          "S.MNPQ": "1/8"
+        },
+        "goals": {
+          "q_res": {
+            "kind": "residual_volume",
+            "original": "S.ABCD",
+            "subtracted": [
+              "S.MNPQ"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "RV-04-shared-face-complement-residual-volume",
+      "kind": "positive",
+      "capability": "residual_volume",
+      "slice": "residual_shared_face_complement",
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh 6. SA vuông góc với (ABC). SA = 8. Gọi M là điểm thuộc cạnh BC sao cho MC = 2BM. Xét hình chóp S.ABM. Tính thể tích phần còn lại của khối chóp S.ABC sau khi bỏ đi khối chóp S.ABM.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác đều cạnh 6."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 8."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là điểm thuộc cạnh BC sao cho MC = 2BM."
+            ],
+            "point": "M",
+            "point_kind": "divide_segment",
+            "points": [
+              "B",
+              "C"
+            ],
+            "value": "1/3"
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.ABM."
+            ],
+            "solid": "S.ABM",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối chóp S.ABC sau khi bỏ đi khối chóp S.ABM."
+            ],
+            "quantity": "residual_volume",
+            "solid": "S.ABC",
+            "points_a": [
+              "S",
+              "A",
+              "B",
+              "M"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "S.ABC",
+        "root_kind": "pyramid",
+        "base_kind": "equilateral_triangle",
+        "side": "6",
+        "height": "8",
+        "solid_scales": {
+          "S.ABM": "1/3"
+        },
+        "goals": {
+          "q_res": {
+            "kind": "residual_volume",
+            "original": "S.ABC",
+            "subtracted": [
+              "S.ABM"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "RV-05-two-disjoint-subtracted-pyramids-residual",
+      "kind": "positive",
+      "capability": "residual_volume",
+      "slice": "residual_two_disjoint_cuts",
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. SA vuông góc với (ABC). SA = 9. Gọi M là điểm thuộc cạnh BC sao cho MC = 2BM. Gọi N là điểm thuộc cạnh BC sao cho NB = 2NC. Xét hình chóp S.ABM. Xét hình chóp S.ANC. Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ hai khối chóp S.ABM và S.ANC.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "ra",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 9."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "9"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là điểm thuộc cạnh BC sao cho MC = 2BM."
+            ],
+            "point": "M",
+            "point_kind": "divide_segment",
+            "points": [
+              "B",
+              "C"
+            ],
+            "value": "1/3"
+          },
+          {
+            "id": "pN",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi N là điểm thuộc cạnh BC sao cho NB = 2NC."
+            ],
+            "point": "N",
+            "point_kind": "divide_segment",
+            "points": [
+              "B",
+              "C"
+            ],
+            "value": "2/3"
+          },
+          {
+            "id": "c1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.ABM."
+            ],
+            "solid": "S.ABM",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "c2",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.ANC."
+            ],
+            "solid": "S.ANC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ hai khối chóp S.ABM và S.ANC."
+            ],
+            "quantity": "residual_volume",
+            "solid": "S.ABC",
+            "points_a": [
+              "S",
+              "A",
+              "B",
+              "M"
+            ],
+            "points_b": [
+              "S",
+              "A",
+              "N",
+              "C"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "S.ABC",
+        "root_kind": "pyramid",
+        "base_kind": "right_triangle",
+        "leg_a": "6",
+        "leg_b": "8",
+        "height": "9",
+        "solid_scales": {
+          "S.ABM": "1/3",
+          "S.ANC": "1/3"
+        },
+        "goals": {
+          "q_res": {
+            "kind": "residual_volume",
+            "original": "S.ABC",
+            "subtracted": [
+              "S.ABM",
+              "S.ANC"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "RV-06-prism-cut-corner-pyramid-multigoal",
+      "kind": "positive",
+      "capability": "residual_volume",
+      "slice": "residual_prism_corner_cut",
+      "text": "Cho hình lăng trụ đứng ABC.DEF. Đáy ABC là tam giác vuông tại A. AB = 3. AC = 4. AD = 6. Xét hình chóp D.ABC. Tính tỉ số thể tích của hai khối D.ABC và ABC.DEF. Tính thể tích phần còn lại của khối lăng trụ ABC.DEF sau khi cắt bỏ khối chóp D.ABC.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình lăng trụ đứng ABC.DEF."
+            ],
+            "solid": "ABC.DEF",
+            "solid_type": "prism",
+            "right": true
+          },
+          {
+            "id": "ra",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 3."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "3"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 4."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "4"
+          },
+          {
+            "id": "ad",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AD = 6."
+            ],
+            "points": [
+              "A",
+              "D"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp D.ABC."
+            ],
+            "solid": "D.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối D.ABC và ABC.DEF."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "D",
+              "A",
+              "B",
+              "C"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D",
+              "E",
+              "F"
+            ]
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối lăng trụ ABC.DEF sau khi cắt bỏ khối chóp D.ABC."
+            ],
+            "quantity": "residual_volume",
+            "solid": "ABC.DEF",
+            "points_a": [
+              "D",
+              "A",
+              "B",
+              "C"
+            ]
+          }
+        ]
+      },
+      "oracle": {
+        "root_solid": "ABC.DEF",
+        "root_kind": "prism",
+        "base_kind": "right_triangle",
+        "leg_a": "3",
+        "leg_b": "4",
+        "height": "6",
+        "solid_scales": {
+          "D.ABC": "1/3"
+        },
+        "goals": {
+          "q_ratio": {
+            "kind": "volume_ratio",
+            "numerator": "D.ABC",
+            "denominator": "ABC.DEF"
+          },
+          "q_res": {
+            "kind": "residual_volume",
+            "original": "ABC.DEF",
+            "subtracted": [
+              "D.ABC"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "NEG-01-swapped-ratio-operands",
+      "kind": "negative",
+      "capability": "volume_ratio",
+      "slice": "negative_swapped_ratio_order",
+      "text": "Cho hình chóp P.UVW. Đáy UVW là tam giác đều cạnh 6. PW vuông góc với (UVW). PW = 9. Gọi E là trung điểm của PU. Gọi F là trung điểm của PV. Gọi G là trung điểm của PW. Xét hình chóp P.EFG. Tính tỉ số thể tích của hai khối chóp P.EFG và P.UVW.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp P.UVW."
+            ],
+            "solid": "P.UVW",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy UVW là tam giác đều cạnh 6."
+            ],
+            "points": [
+              "U",
+              "V",
+              "W"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "PW vuông góc với (UVW)."
+            ],
+            "points_a": [
+              "P",
+              "W"
+            ],
+            "points_b": [
+              "U",
+              "V",
+              "W"
+            ]
+          },
+          {
+            "id": "h",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "PW = 9."
+            ],
+            "points": [
+              "P",
+              "W"
+            ],
+            "measure": "segment",
+            "value": "9"
+          },
+          {
+            "id": "pE",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi E là trung điểm của PU."
+            ],
+            "point": "E",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "U"
+            ]
+          },
+          {
+            "id": "pF",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi F là trung điểm của PV."
+            ],
+            "point": "F",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "V"
+            ]
+          },
+          {
+            "id": "pG",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi G là trung điểm của PW."
+            ],
+            "point": "G",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "W"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp P.EFG."
+            ],
+            "solid": "P.EFG",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp P.EFG và P.UVW."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "P",
+              "U",
+              "V",
+              "W"
+            ],
+            "points_b": [
+              "P",
+              "E",
+              "F",
+              "G"
+            ]
+          }
+        ]
+      },
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH"
+      ]
+    },
+    {
+      "id": "NEG-02-undeclared-solid-in-ratio",
+      "kind": "negative",
+      "capability": "volume_ratio",
+      "slice": "negative_undeclared_solid",
+      "text": "Cho hình chóp P.UVW. Đáy UVW là tam giác đều cạnh 6. PW vuông góc với (UVW). PW = 9. Gọi E là trung điểm của PU. Gọi F là trung điểm của PV. Gọi G là trung điểm của PW. Tính tỉ số thể tích của hai khối chóp P.EFG và P.UVW.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp P.UVW."
+            ],
+            "solid": "P.UVW",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy UVW là tam giác đều cạnh 6."
+            ],
+            "points": [
+              "U",
+              "V",
+              "W"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "PW vuông góc với (UVW)."
+            ],
+            "points_a": [
+              "P",
+              "W"
+            ],
+            "points_b": [
+              "U",
+              "V",
+              "W"
+            ]
+          },
+          {
+            "id": "h",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "PW = 9."
+            ],
+            "points": [
+              "P",
+              "W"
+            ],
+            "measure": "segment",
+            "value": "9"
+          },
+          {
+            "id": "pE",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi E là trung điểm của PU."
+            ],
+            "point": "E",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "U"
+            ]
+          },
+          {
+            "id": "pF",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi F là trung điểm của PV."
+            ],
+            "point": "F",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "V"
+            ]
+          },
+          {
+            "id": "pG",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi G là trung điểm của PW."
+            ],
+            "point": "G",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "W"
+            ]
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp P.EFG và P.UVW."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "P",
+              "E",
+              "F",
+              "G"
+            ],
+            "points_b": [
+              "P",
+              "U",
+              "V",
+              "W"
+            ]
+          }
+        ]
+      },
+      "expected_codes": [
+        "UNKNOWN_SOLID"
+      ]
+    },
+    {
+      "id": "NEG-03-spoofed-residual-operand",
+      "kind": "negative",
+      "capability": "residual_volume",
+      "slice": "negative_operand_spoofing",
+      "text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh 6. SA vuông góc với (ABCD). SA = 8. Gọi M là trung điểm của SA. Gọi N là trung điểm của SB. Gọi P là trung điểm của SC. Gọi Q là trung điểm của SD. Xét hình chóp S.MNPQ. Xét hình chóp S.MNP. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABCD."
+            ],
+            "solid": "S.ABCD",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABCD là hình vuông cạnh 6."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ],
+            "shape": "square",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABCD)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C",
+              "D"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 8."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của SA."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "A"
+            ]
+          },
+          {
+            "id": "pN",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi N là trung điểm của SB."
+            ],
+            "point": "N",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "B"
+            ]
+          },
+          {
+            "id": "pP",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi P là trung điểm của SC."
+            ],
+            "point": "P",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "C"
+            ]
+          },
+          {
+            "id": "pQ",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi Q là trung điểm của SD."
+            ],
+            "point": "Q",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "D"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.MNPQ."
+            ],
+            "solid": "S.MNPQ",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "child2",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.MNP."
+            ],
+            "solid": "S.MNP",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ."
+            ],
+            "quantity": "residual_volume",
+            "solid": "S.ABCD",
+            "points_a": [
+              "S",
+              "M",
+              "N",
+              "P"
+            ]
+          }
+        ]
+      },
+      "expected_codes": [
+        "SOURCE_OBJECT_MISMATCH",
+        "UNKNOWN_SOLID"
+      ]
+    },
+    {
+      "id": "NEG-04-overlapping-subtracted-solids",
+      "kind": "negative",
+      "capability": "residual_volume",
+      "slice": "negative_overlapping_subtraction",
+      "expected_codes": [
+        "OVERLAPPING_SUBTRACTED_SOLIDS"
+      ],
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác vuông tại A. AB = 6. AC = 8. SA vuông góc với (ABC). SA = 9. Gọi M là điểm thuộc cạnh BC sao cho MC = 2BM. Gọi N là điểm thuộc cạnh BC sao cho NB = 2NC. Xét hình chóp S.ABN. Xét hình chóp S.AMC. Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ hai khối chóp S.ABN và S.AMC.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "ra",
+            "kind": "right_angle",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác vuông tại A."
+            ],
+            "at": "A",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "ab",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AB = 6."
+            ],
+            "points": [
+              "A",
+              "B"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "ac",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "AC = 8."
+            ],
+            "points": [
+              "A",
+              "C"
+            ],
+            "measure": "segment",
+            "value": "8"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 9."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "9"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là điểm thuộc cạnh BC sao cho MC = 2BM."
+            ],
+            "point": "M",
+            "point_kind": "divide_segment",
+            "points": [
+              "B",
+              "C"
+            ],
+            "value": "1/3"
+          },
+          {
+            "id": "pN",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi N là điểm thuộc cạnh BC sao cho NB = 2NC."
+            ],
+            "point": "N",
+            "point_kind": "divide_segment",
+            "points": [
+              "B",
+              "C"
+            ],
+            "value": "2/3"
+          },
+          {
+            "id": "c1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.ABN."
+            ],
+            "solid": "S.ABN",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "c2",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.AMC."
+            ],
+            "solid": "S.AMC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ hai khối chóp S.ABN và S.AMC."
+            ],
+            "quantity": "residual_volume",
+            "solid": "S.ABC",
+            "points_a": [
+              "S",
+              "A",
+              "B",
+              "N"
+            ],
+            "points_b": [
+              "S",
+              "A",
+              "M",
+              "C"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "NEG-05-duplicate-subtracted-solid",
+      "kind": "negative",
+      "capability": "residual_volume",
+      "slice": "negative_duplicate_subtraction",
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh 4. SA vuông góc với (ABC). SA = 6. Gọi M là trung điểm của SA. Gọi N là trung điểm của SB. Gọi P là trung điểm của SC. Xét hình chóp S.MNP. Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ khối chóp S.MNP.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác đều cạnh 4."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "4"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 6."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của SA."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "A"
+            ]
+          },
+          {
+            "id": "pN",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi N là trung điểm của SB."
+            ],
+            "point": "N",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "B"
+            ]
+          },
+          {
+            "id": "pP",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi P là trung điểm của SC."
+            ],
+            "point": "P",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "C"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.MNP."
+            ],
+            "solid": "S.MNP",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ khối chóp S.MNP."
+            ],
+            "quantity": "residual_volume",
+            "solid": "S.ABC",
+            "points_a": [
+              "S",
+              "M",
+              "N",
+              "P"
+            ],
+            "points_b": [
+              "S",
+              "M",
+              "N",
+              "P"
+            ]
+          }
+        ]
+      },
+      "expected_codes": [
+        "INCONSISTENT_FACTS",
+        "SOURCE_OBJECT_MISMATCH"
+      ]
+    },
+    {
+      "id": "NEG-06-zero-residual-volume-exhaustive-split",
+      "kind": "negative",
+      "capability": "residual_volume",
+      "slice": "negative_non_positive_residual",
+      "expected_codes": [
+        "NON_POSITIVE_RESIDUAL_VOLUME"
+      ],
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh 4. SA vuông góc với (ABC). SA = 6. Gọi M là trung điểm của BC. Xét hình chóp S.ABM. Xét hình chóp S.AMC. Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ hai khối chóp S.ABM và S.AMC.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác đều cạnh 4."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "4"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 6."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "c1",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.ABM."
+            ],
+            "solid": "S.ABM",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "c2",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.AMC."
+            ],
+            "solid": "S.AMC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ hai khối chóp S.ABM và S.AMC."
+            ],
+            "quantity": "residual_volume",
+            "solid": "S.ABC",
+            "points_a": [
+              "S",
+              "A",
+              "B",
+              "M"
+            ],
+            "points_b": [
+              "S",
+              "A",
+              "M",
+              "C"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "NEG-07-uncontained-subtracted-solid",
+      "kind": "negative",
+      "capability": "residual_volume",
+      "slice": "negative_uncontained_subtraction",
+      "expected_codes": [
+        "RESIDUAL_CONTAINMENT_UNPROVED"
+      ],
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh 4. SA vuông góc với (ABC). SA = 6. Gọi M là trung điểm của SA. Gọi N là trung điểm của SB. Gọi P là trung điểm của SC. Xét hình chóp S.MNP. Tính thể tích phần còn lại của khối chóp S.MNP sau khi cắt bỏ khối chóp S.ABC.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác đều cạnh 4."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "4"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 6."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của SA."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "A"
+            ]
+          },
+          {
+            "id": "pN",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi N là trung điểm của SB."
+            ],
+            "point": "N",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "B"
+            ]
+          },
+          {
+            "id": "pP",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi P là trung điểm của SC."
+            ],
+            "point": "P",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "C"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.MNP."
+            ],
+            "solid": "S.MNP",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối chóp S.MNP sau khi cắt bỏ khối chóp S.ABC."
+            ],
+            "quantity": "residual_volume",
+            "solid": "S.MNP",
+            "points_a": [
+              "S",
+              "A",
+              "B",
+              "C"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "NEG-08-unit-annotation-on-dimensionless-ratio",
+      "kind": "negative",
+      "capability": "volume_ratio",
+      "slice": "negative_ratio_unit_annotation",
+      "text": "Cho hình chóp P.UVW. Đáy UVW là tam giác đều cạnh 6. PW vuông góc với (UVW). PW = 9. Gọi E là trung điểm của PU. Gọi F là trung điểm của PV. Gọi G là trung điểm của PW. Xét hình chóp P.EFG. Tính tỉ số thể tích của hai khối chóp P.EFG và P.UVW (đơn vị: cm³).",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp P.UVW."
+            ],
+            "solid": "P.UVW",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy UVW là tam giác đều cạnh 6."
+            ],
+            "points": [
+              "U",
+              "V",
+              "W"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "PW vuông góc với (UVW)."
+            ],
+            "points_a": [
+              "P",
+              "W"
+            ],
+            "points_b": [
+              "U",
+              "V",
+              "W"
+            ]
+          },
+          {
+            "id": "h",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "PW = 9."
+            ],
+            "points": [
+              "P",
+              "W"
+            ],
+            "measure": "segment",
+            "value": "9"
+          },
+          {
+            "id": "pE",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi E là trung điểm của PU."
+            ],
+            "point": "E",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "U"
+            ]
+          },
+          {
+            "id": "pF",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi F là trung điểm của PV."
+            ],
+            "point": "F",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "V"
+            ]
+          },
+          {
+            "id": "pG",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi G là trung điểm của PW."
+            ],
+            "point": "G",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "W"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp P.EFG."
+            ],
+            "solid": "P.EFG",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp P.EFG và P.UVW (đơn vị: cm³)."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "P",
+              "E",
+              "F",
+              "G"
+            ],
+            "points_b": [
+              "P",
+              "U",
+              "V",
+              "W"
+            ]
+          }
+        ]
+      },
+      "expected_codes": [
+        "QUESTION_CONTEXT_UNSUPPORTED"
+      ]
+    },
+    {
+      "id": "NEG-09-missing-height-dimension",
+      "kind": "negative",
+      "capability": "residual_volume",
+      "slice": "negative_missing_dimension",
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh 4. SA vuông góc với (ABC). Gọi M là trung điểm của SA. Gọi N là trung điểm của SB. Gọi P là trung điểm của SC. Xét hình chóp S.MNP. Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ khối chóp S.MNP.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác đều cạnh 4."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "4"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của SA."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "A"
+            ]
+          },
+          {
+            "id": "pN",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi N là trung điểm của SB."
+            ],
+            "point": "N",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "B"
+            ]
+          },
+          {
+            "id": "pP",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi P là trung điểm của SC."
+            ],
+            "point": "P",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "C"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.MNP."
+            ],
+            "solid": "S.MNP",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ khối chóp S.MNP."
+            ],
+            "quantity": "residual_volume",
+            "solid": "S.ABC",
+            "points_a": [
+              "S",
+              "M",
+              "N",
+              "P"
+            ]
+          }
+        ]
+      },
+      "expected_codes": [
+        "MISSING_DIMENSION"
+      ]
+    },
+    {
+      "id": "NEG-10-contradictory-midsegment-length",
+      "kind": "negative",
+      "capability": "volume_ratio",
+      "slice": "negative_contradictory_facts",
+      "text": "Cho hình chóp P.UVW. Đáy UVW là tam giác đều cạnh 6. PW vuông góc với (UVW). PW = 9. Gọi E là trung điểm của PU. Gọi F là trung điểm của PV. Gọi G là trung điểm của PW. EF = 5. Xét hình chóp P.EFG. Tính tỉ số thể tích của hai khối chóp P.EFG và P.UVW.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp P.UVW."
+            ],
+            "solid": "P.UVW",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy UVW là tam giác đều cạnh 6."
+            ],
+            "points": [
+              "U",
+              "V",
+              "W"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "PW vuông góc với (UVW)."
+            ],
+            "points_a": [
+              "P",
+              "W"
+            ],
+            "points_b": [
+              "U",
+              "V",
+              "W"
+            ]
+          },
+          {
+            "id": "h",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "PW = 9."
+            ],
+            "points": [
+              "P",
+              "W"
+            ],
+            "measure": "segment",
+            "value": "9"
+          },
+          {
+            "id": "pE",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi E là trung điểm của PU."
+            ],
+            "point": "E",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "U"
+            ]
+          },
+          {
+            "id": "pF",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi F là trung điểm của PV."
+            ],
+            "point": "F",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "V"
+            ]
+          },
+          {
+            "id": "pG",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi G là trung điểm của PW."
+            ],
+            "point": "G",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "W"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp P.EFG."
+            ],
+            "solid": "P.EFG",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "ef_bad",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "EF = 5."
+            ],
+            "points": [
+              "E",
+              "F"
+            ],
+            "measure": "segment",
+            "value": "5"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp P.EFG và P.UVW."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "P",
+              "E",
+              "F",
+              "G"
+            ],
+            "points_b": [
+              "P",
+              "U",
+              "V",
+              "W"
+            ]
+          }
+        ]
+      },
+      "expected_codes": [
+        "INCONSISTENT_FACTS"
+      ]
+    },
+    {
+      "id": "NEG-11-omitted-second-goal-in-source",
+      "kind": "negative",
+      "capability": "volume_ratio",
+      "slice": "negative_omitted_goal",
+      "text": "Cho hình chóp P.UVW. Đáy UVW là tam giác đều cạnh 6. PW vuông góc với (UVW). PW = 9. Gọi E là trung điểm của PU. Gọi F là trung điểm của PV. Gọi G là trung điểm của PW. Xét hình chóp P.EFG. Tính tỉ số thể tích của hai khối chóp P.EFG và P.UVW. Tính thể tích phần còn lại của khối chóp P.UVW sau khi cắt bỏ khối chóp P.EFG.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp P.UVW."
+            ],
+            "solid": "P.UVW",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy UVW là tam giác đều cạnh 6."
+            ],
+            "points": [
+              "U",
+              "V",
+              "W"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "PW vuông góc với (UVW)."
+            ],
+            "points_a": [
+              "P",
+              "W"
+            ],
+            "points_b": [
+              "U",
+              "V",
+              "W"
+            ]
+          },
+          {
+            "id": "h",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "PW = 9."
+            ],
+            "points": [
+              "P",
+              "W"
+            ],
+            "measure": "segment",
+            "value": "9"
+          },
+          {
+            "id": "pE",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi E là trung điểm của PU."
+            ],
+            "point": "E",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "U"
+            ]
+          },
+          {
+            "id": "pF",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi F là trung điểm của PV."
+            ],
+            "point": "F",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "V"
+            ]
+          },
+          {
+            "id": "pG",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi G là trung điểm của PW."
+            ],
+            "point": "G",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "W"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp P.EFG."
+            ],
+            "solid": "P.EFG",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp P.EFG và P.UVW."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "P",
+              "E",
+              "F",
+              "G"
+            ],
+            "points_b": [
+              "P",
+              "U",
+              "V",
+              "W"
+            ]
+          }
+        ]
+      },
+      "expected_codes": [
+        "REQUEST_NOT_ANSWERED"
+      ]
+    },
+    {
+      "id": "NEG-12-unread-premise-in-source",
+      "kind": "negative",
+      "capability": "residual_volume",
+      "slice": "negative_unread_premise",
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh 4. SA vuông góc với (ABC). SA = 6. Gọi M là trung điểm của SA. Gọi N là trung điểm của SB. Gọi P là trung điểm của SC. MN = 2. Xét hình chóp S.MNP. Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ khối chóp S.MNP.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác đều cạnh 4."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "4"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 6."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của SA."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "A"
+            ]
+          },
+          {
+            "id": "pN",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi N là trung điểm của SB."
+            ],
+            "point": "N",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "B"
+            ]
+          },
+          {
+            "id": "pP",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi P là trung điểm của SC."
+            ],
+            "point": "P",
+            "point_kind": "midpoint",
+            "points": [
+              "S",
+              "C"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.MNP."
+            ],
+            "solid": "S.MNP",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ khối chóp S.MNP."
+            ],
+            "quantity": "residual_volume",
+            "solid": "S.ABC",
+            "points_a": [
+              "S",
+              "M",
+              "N",
+              "P"
+            ]
+          }
+        ]
+      },
+      "expected_codes": [
+        "SOURCE_PREMISE_UNREAD"
+      ]
+    },
+    {
+      "id": "NEG-13-noncoplanar-derived-base-in-ratio",
+      "kind": "negative",
+      "capability": "volume_ratio",
+      "slice": "negative_noncoplanar_base",
+      "text": "Cho hình chóp P.UVW. Đáy UVW là tam giác đều cạnh 6. PW vuông góc với (UVW). PW = 9. Gọi E là trung điểm của PU. Gọi F là trung điểm của PV. Gọi G là trung điểm của PW. Gọi H là trung điểm của PE. Xét hình chóp P.EFGH. Tính tỉ số thể tích của hai khối chóp P.EFGH và P.UVW.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp P.UVW."
+            ],
+            "solid": "P.UVW",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy UVW là tam giác đều cạnh 6."
+            ],
+            "points": [
+              "U",
+              "V",
+              "W"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "6"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "PW vuông góc với (UVW)."
+            ],
+            "points_a": [
+              "P",
+              "W"
+            ],
+            "points_b": [
+              "U",
+              "V",
+              "W"
+            ]
+          },
+          {
+            "id": "h",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "PW = 9."
+            ],
+            "points": [
+              "P",
+              "W"
+            ],
+            "measure": "segment",
+            "value": "9"
+          },
+          {
+            "id": "pE",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi E là trung điểm của PU."
+            ],
+            "point": "E",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "U"
+            ]
+          },
+          {
+            "id": "pF",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi F là trung điểm của PV."
+            ],
+            "point": "F",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "V"
+            ]
+          },
+          {
+            "id": "pG",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi G là trung điểm của PW."
+            ],
+            "point": "G",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "W"
+            ]
+          },
+          {
+            "id": "pH",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi H là trung điểm của PE."
+            ],
+            "point": "H",
+            "point_kind": "midpoint",
+            "points": [
+              "P",
+              "E"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp P.EFGH."
+            ],
+            "solid": "P.EFGH",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_ratio",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính tỉ số thể tích của hai khối chóp P.EFGH và P.UVW."
+            ],
+            "quantity": "volume_ratio",
+            "points_a": [
+              "P",
+              "E",
+              "F",
+              "G",
+              "H"
+            ],
+            "points_b": [
+              "P",
+              "U",
+              "V",
+              "W"
+            ]
+          }
+        ]
+      },
+      "expected_codes": [
+        "NON_COPLANAR_POINTS"
+      ]
+    },
+    {
+      "id": "NEG-14-collinear-derived-base-in-residual",
+      "kind": "negative",
+      "capability": "residual_volume",
+      "slice": "negative_collinear_base",
+      "expected_codes": [
+        "COLLINEAR_POINTS",
+        "DEGENERATE_POINTS",
+        "INCONSISTENT_FACTS"
+      ],
+      "text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh 4. SA vuông góc với (ABC). SA = 6. Gọi M là trung điểm của BC. Xét hình chóp S.BMC. Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ khối chóp S.BMC.",
+      "payload": {
+        "facts": [
+          {
+            "id": "root",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Cho hình chóp S.ABC."
+            ],
+            "solid": "S.ABC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "base",
+            "kind": "polygon_shape",
+            "role": "premise",
+            "quotes": [
+              "Đáy ABC là tam giác đều cạnh 4."
+            ],
+            "points": [
+              "A",
+              "B",
+              "C"
+            ],
+            "shape": "equilateral_triangle",
+            "value": "4"
+          },
+          {
+            "id": "perp",
+            "kind": "perpendicular",
+            "role": "premise",
+            "quotes": [
+              "SA vuông góc với (ABC)."
+            ],
+            "points_a": [
+              "S",
+              "A"
+            ],
+            "points_b": [
+              "A",
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "sa",
+            "kind": "length",
+            "role": "premise",
+            "quotes": [
+              "SA = 6."
+            ],
+            "points": [
+              "S",
+              "A"
+            ],
+            "measure": "segment",
+            "value": "6"
+          },
+          {
+            "id": "pM",
+            "kind": "point_def",
+            "role": "premise",
+            "quotes": [
+              "Gọi M là trung điểm của BC."
+            ],
+            "point": "M",
+            "point_kind": "midpoint",
+            "points": [
+              "B",
+              "C"
+            ]
+          },
+          {
+            "id": "child",
+            "kind": "solid",
+            "role": "premise",
+            "quotes": [
+              "Xét hình chóp S.BMC."
+            ],
+            "solid": "S.BMC",
+            "solid_type": "pyramid"
+          },
+          {
+            "id": "q_res",
+            "kind": "question",
+            "role": "question",
+            "quotes": [
+              "Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ khối chóp S.BMC."
+            ],
+            "quantity": "residual_volume",
+            "solid": "S.ABC",
+            "points_a": [
+              "S",
+              "B",
+              "M",
+              "C"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
