@@ -1,0 +1,49 @@
+{
+  "schema": "authoritative-t3-receipt/1",
+  "run": "source-gate-followup-ab",
+  "branch": "research/hybrid-source-gate-followup-ab",
+  "product_commit": "68acc140a7d956e494f3bc847d01d20e394e2830",
+  "candidate_commit": "b5e803803c1739a8e7a6d7b9e6c131747126e100",
+  "t3_commit": "b0b2a3c3",
+  "measured_system_hash": "de66bd5ca6ee798dab043a1a1a7e79fc635aff5b2c5259de8878fe8f66bcae50",
+  "measured_file_count": 112,
+  "worktree": ".superpowers/worktrees/tmp-sg-followup-ab-t3 (detached, clean, removed after execution)",
+  "command": "ALLOW_LIVE_AI=0 node frontend/scripts/full-gate.mjs",
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "total_duration_seconds": 553.0,
+  "gates": {
+    "pytest_backend": {
+      "status": "PASS",
+      "passed": 11347,
+      "failed": 0,
+      "skipped": 1,
+      "deselected": 2,
+      "xfailed": 9,
+      "duration_seconds": 536.8
+    },
+    "vitest_frontend": {
+      "status": "PASS",
+      "test_files": 70,
+      "passed": 1146,
+      "failed": 0,
+      "duration_seconds": 9.0
+    },
+    "typecheck_and_build": {
+      "status": "PASS",
+      "duration_seconds": 6.0
+    },
+    "thesis_demo_replay": {
+      "status": "PASS",
+      "demo_replay_pass": "5/5",
+      "reduced_chain_cases": "1/1",
+      "duration_seconds": 0.7
+    },
+    "demo_crash_surface": {
+      "status": "PASS",
+      "expected_boundaries": "6/6",
+      "uncaught_500": 0,
+      "duration_seconds": 0.5
+    }
+  },
+  "live_requests": 0
+}
