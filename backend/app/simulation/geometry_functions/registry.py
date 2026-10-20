@@ -975,7 +975,7 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
         # reviews round 3–4: an opaque clause may re-attribute ANY role of its sentence, before or after it ("…, đường cao
         # bằng 5, H là chân của nó trên cạnh AB", "…cạnh 3, nhưng đó là cạnh của tam giác khác"): a sentence with any
         # opaque clause binds nothing. No exemption list — point definitions are closed grammar clauses (`_C_DIEM`).
-        if cau is not None and not any(kind == "mo" for kind, _m in cau):
+        if cau is not None and not any(kind == "mo" for kind, _m in cau) and _so_dinh_cau_khop(cau, khoi_goi):
             khoi, moi = (khoi_goi[0] if len(khoi_goi) == 1 else None), False
             # review round 5: a face / triangle / altitude / projection clause changes the subject — a role anywhere in the
             # sentence ("mặt bên SAB là tam giác cân và có chiều cao bằng 5") may be ITS role, and its shape premise is
@@ -1007,6 +1007,25 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
                     out[x + m.start("vs")] = ("vai", re.sub(r"\s+", " ", m["vai"].lower()), khoi, moi)
         p = y + 1 if y > p else b
     return out
+
+
+def _so_dinh_cau_khop(cau: list[tuple[str, re.Match | None]], khoi_goi: list[LoiGoi]) -> bool:
+    """Review of 08bad12f: every count-bearing shape noun of the sentence's solid / base / named-polygon clauses names as
+    many vertices as its polygon — the labelled one, or for an unlabelled "(mặt) đáy là …" the bound solid's base ("hình
+    chóp tam giác đều S.ABC có cạnh đáy bằng 2, đáy là hình vuông"). A contradicting or unresolvable count: no binding."""
+    khoi = khoi_goi[0] if len(khoi_goi) == 1 else None
+    for kind, m in cau:
+        if kind == "khoi":
+            nhan = set(re.findall(r"[A-Z][0-9]*'?", m["k"]))
+            khoi = next((k for k in khoi_goi if _nhan_khoi(k) == nhan), None)
+            if _DA_GIAC_SO.search(m["km"]) and (khoi is None or not _so_dinh_khop(m["km"], len(khoi.args.base))):
+                return False
+        elif kind in ("day", "dagiac") and _DA_GIAC_SO.search(m.group()):
+            nhan = m["p"] if kind == "dagiac" else (m["d"] or m["d2"])
+            n = len(re.findall(r"[A-Z][0-9]*'?", nhan)) if nhan else (len(khoi.args.base) if khoi else 0)
+            if not _so_dinh_khop(m.group(), n):
+                return False
+    return True
 
 
 def _cua_khop(m: re.Match, khoi: LoiGoi | None) -> bool:

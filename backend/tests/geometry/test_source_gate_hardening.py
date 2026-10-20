@@ -581,3 +581,49 @@ def test_review_t3b_a_cube_does_not_have_triangular_faces():
 
 def test_review_t3b_every_mention_of_the_polygon_is_count_checked():
     refused(right_prism("Đáy ABC đều cạnh 2, và đáy ABC là hình vuông.", *TRI))
+
+
+@pytest.mark.parametrize("solid,sentence,base,height", [
+    ("S.ABC", "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 2, đáy là hình vuông và chiều cao bằng 3.", "2", "3"),
+    ("S.ABC", "Cho hình chóp tam giác đều S.ABC có đáy là hình vuông, cạnh đáy bằng 2 và chiều cao bằng 3.", "2", "3"),
+    ("S.ABCD", "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, đáy là tam giác đều và chiều cao bằng 5.", "4", "5"),
+])
+def test_review_t3c_an_unlabelled_base_noun_contradicting_the_solid_binds_nothing(solid, sentence, base, height):
+    """Review of 08bad12f: a number-free "đáy là <shape>" names the bound solid's base; a wrong count unreads the sentence."""
+    ask = f"Tính thể tích khối chóp {solid}."
+    refused(run(f"{sentence} {ask}", [
+        f("f1", "solid", sentence, solid=solid, solid_type="pyramid", regular=True),
+        f("f2", "length", sentence, measure="base_edge", value=base, solid=solid),
+        f("f3", "length", sentence, measure="height", value=height, solid=solid),
+        q("q", ask, quantity="volume", solid=solid)]))
+
+
+def test_review_t3c_regular_prism_with_a_contradicting_base_noun():
+    s = "Cho hình lăng trụ tam giác đều MNP.M'N'P' có cạnh đáy bằng 4, đáy là hình vuông và cạnh bên MM' = 2."
+    ask = "Tính thể tích khối lăng trụ MNP.M'N'P'."
+    refused(run(f"{s} {ask}", [
+        f("f1", "solid", s, solid="MNP.M'N'P'", solid_type="prism", regular=True),
+        f("f2", "length", s, measure="base_edge", value="4", solid="MNP.M'N'P'"),
+        f("f3", "length", s, points=["M", "M'"], measure="segment", value="2"),
+        q("q", ask, quantity="volume", solid="MNP.M'N'P'")]))
+
+
+@pytest.mark.parametrize("sentence", ["Đáy ABC đều cạnh 2 và đáy là hình vuông.", "Đáy ABC đều cạnh 2 và mặt đáy là hình vuông.",
+                                      "Đáy ABC là tam giác đều cạnh 2, đáy là lục giác đều."])
+def test_review_t3c_a_later_unlabelled_base_noun_is_count_checked(sentence):
+    refused(right_prism(sentence, *TRI))
+
+
+@pytest.mark.parametrize("sentence,v", [
+    ("Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 2, đáy là tam giác đều và chiều cao bằng 3.", "√3"),
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, đáy là hình vuông và chiều cao bằng 5.", "80/3"),
+])
+def test_review_t3c_a_consistent_unlabelled_base_noun_is_still_served(sentence, v):
+    solid = "S.ABCD" if "S.ABCD" in sentence else "S.ABC"
+    base, height = ("4", "5") if solid == "S.ABCD" else ("2", "3")
+    ask = f"Tính thể tích khối chóp {solid}."
+    served(run(f"{sentence} {ask}", [
+        f("f1", "solid", sentence, solid=solid, solid_type="pyramid", regular=True),
+        f("f2", "length", sentence, measure="base_edge", value=base, solid=solid),
+        f("f3", "length", sentence, measure="height", value=height, solid=solid),
+        q("q", ask, quantity="volume", solid=solid)]), {"q": v})
