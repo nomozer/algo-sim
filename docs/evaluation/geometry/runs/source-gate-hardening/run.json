@@ -155,7 +155,26 @@
    "negatives_refused": "5/5",
    "false_serves": 0,
    "blind": false,
-   "sgh_01_18_used": false
+   "sgh_01_18_used": false,
+   "sgh_01_18_used_in_development": false
+  },
+  "sgh_01_18_blind_evaluation": {
+   "positive_cases": "6/10",
+   "mathematically_correct_goals": "10/16",
+   "strict_tuple_scoring": "8/16 (difference due to dim field semantics)",
+   "negative_exact_refusal": "5/5",
+   "ambiguous_locked_expectation": "1/2",
+   "sgh_17_adjudication": "oracle design discrepancy adjudicated separately; original manifest not modified",
+   "false_refusals": [
+    "SGH-02",
+    "SGH-04",
+    "SGH-09",
+    "SGH-10"
+   ],
+   "timing": "original blind test conducted before feedback-based fixes",
+   "remaining_defect_classes_fixed": false,
+   "strict_preregistered_threshold_met": false,
+   "conditional_go_main_scope": "offline research integration ONLY (GO_MAIN_SOURCE_GATE_HARDENING_CONDITIONAL)"
   }
  },
  "gold_delta": {
@@ -199,7 +218,7 @@
    "removed": true
   }
  ],
- "verdict_at_report": "SOURCE_GATE_HARDENING_READY_FOR_GO_MAIN_REVIEW",
+ "verdict_at_report": "SOURCE_GATE_GO_MAIN_AND_CLEANUP_VERIFIED",
  "independent_review": {
   "rounds": [
    [
@@ -293,5 +312,13 @@
   "typecheck_build": "PASS in 6.2s",
   "demo_replay": "5/5 PASS, reduced chain 1/1 PASS in 0.8s",
   "demo_crash_surface": "6/6 PASS, 0 unhandled 500s in 0.5s"
+ },
+ "go_main_authorization": "GO_MAIN_SOURCE_GATE_HARDENING_CONDITIONAL",
+ "follow_up_task_handoff": {
+  "status": "NOT_FIXED_IN_GO_MAIN — deferred to a separate follow-up task",
+  "defect_classes": {
+   "A": "_kiem_don_vi_hoi không nhận diện ranh giới mục tiêu kế tiếp có điểm mô tả chưa đặt tên",
+   "B": "_kiem_nguon_dong từ chối tiền đề ghép trong lát line_ref dù đã có các typed facts có nguồn và có thể kiểm tra độc lập"
+  }
  }
 }

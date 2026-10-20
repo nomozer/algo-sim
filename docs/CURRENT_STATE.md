@@ -1,12 +1,12 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
-## LOCAL — Route D source gate hardening (SG-1..SG-6), 2026-10-20 (not integrated)
+## INTEGRATED ON `main` (conditional offline research: `GO_MAIN_SOURCE_GATE_HARDENING_CONDITIONAL`) — Route D source gate hardening (SG-1..SG-6), 2026-10-20
 
 Branch `research/hybrid-source-gate-hardening` from `main` = `origin/main` = `6973c4b6` (Wave 2B integrated); product
-`24103909` … `b6b61061` (9 commits; six independent-review rounds), candidate freeze `1beeec0b` (112 measured files /
-`663342b0df90c805291fcc057846b31fe5e62b0035eeac13dea785f984502ab9`). Versions `geometry-functions/9` ·
+`24103909` … `602316ed` (20 product commits across initial 6 review rounds + 11 Full-T3 follow-up rounds), candidate freeze `c5a83b74` (112 measured files /
+`0512dbc53e09696dfecee4cec8ed360af4ad66d8816c782c2993c3617a0d2583`), authoritative Full T3 `2d0641f4` `FULL_PRODUCT_GATE_PASS` (pytest 11,338 passed, vitest 1,146 passed). Versions `geometry-functions/9` ·
 `geometry-fact-planner/10` · engine `/7`. Locked corpus 18/18 (main 1/18), 12/12 correct refusals, 0 wrong serves; BH2A
-known regression 11/12 + sentinel served, 0 false serves. Cache **127**, `LLM_ONLY`, `flat` unchanged, Adapter `/2`, Hybrid
+known regression 11/12 + sentinel served, 0 false serves. SGH-01..18 original blind evaluation (conducted before feedback-based fixes): 6/10 positive, 10/16 mathematically correct goals (8/16 strict tuple due to `dim` semantics), 5/5 negative exact refusal, 1/2 ambiguous, SGH-17 oracle discrepancy adjudicated separately without manifest edit, 4 false refusals (SGH-02, 04, 09, 10); strict preregistered SGH threshold NOT MET; two remaining source-gate defect classes (`_kiem_don_vi_hoi` boundary before unnamed described-point goals; `_kiem_nguon_dong` compound premises on `line_ref` slice) NOT FIXED and deferred to a follow-up task. Cache **127**, `LLM_ONLY`, `flat` unchanged, Adapter `/2`, Hybrid
 product **NO-GO**, live calls **0**. Receipts: [`source-gate-hardening/report.md`](evaluation/geometry/runs/source-gate-hardening/report.md),
 [`handoff.md`](evaluation/geometry/runs/source-gate-hardening/handoff.md).
 

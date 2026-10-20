@@ -8,10 +8,8 @@
 
 ## 0. Canonical Next Action
 
-**2026-10-20, `source-gate-hardening` (local branch `research/hybrid-source-gate-hardening` from `main` `6973c4b6`):**
-route D source gate SG-1..SG-6 (product `b6b61061`, candidate `1beeec0b`, independent review PASS). `CANONICAL_NEXT_ACTION` = owner GO MAIN review
-on `evaluation/geometry/runs/source-gate-hardening/handoff.md`; Wave 2C and Adapter /3 are not opened. Wave 2B is integrated (`6973c4b6`);
-the entries below are historical.
+**2026-10-20, `source-gate-hardening` (integrated on `main` under `GO_MAIN_SOURCE_GATE_HARDENING_CONDITIONAL` from `6973c4b6`):**
+route D source gate SG-1..SG-6 + `_kiem_so_dinh_nguon` (product `602316ed`, candidate `c5a83b74` / `0512dbc5…`, independent review PASS, Full T3 `2d0641f4` PASS; SGH-01..18 blind threshold NOT MET: 6/10 positive, 10/16 math goals, 8/16 strict tuple, 5/5 negative, 4 false refusals in SGH-02/04/09/10). `CANONICAL_NEXT_ACTION` = separate follow-up task for the two remaining source-gate defect classes: (A) `_kiem_don_vi_hoi` goal boundary before an unnamed described point, and (B) `_kiem_nguon_dong` compound premises on the `line_ref` slice (`evaluation/geometry/runs/source-gate-hardening/handoff.md`); Wave 2C and Adapter /3 are not opened.
 
 **2026-10-19, `geometry-capability-expansion` (Hybrid Wave 2B, local branch `research/hybrid-wave2b-geometry-expansion` from
 `main` `224328a2`):** ratio points, ⊥-line sections, right-trapezoid base, oblique prism (product `08596652` + review fixes `e9ec0f40`, candidate

@@ -1,7 +1,7 @@
 # Source gate hardening — báo cáo run (SG-1..SG-6)
 
 - **Run:** `source-gate-hardening` · nhánh `research/hybrid-source-gate-hardening` từ `main` = `origin/main` = `6973c4b6`
-- **Ủy quyền:** `GO_HYBRID_SOURCE_GATE_HARDENING_LOCAL` (không merge/push, không bật Hybrid, không Wave 2C, không Adapter /3)
+- **Ủy quyền:** `GO_HYBRID_SOURCE_GATE_HARDENING_LOCAL` → `GO_MAIN_SOURCE_GATE_HARDENING_CONDITIONAL` (chỉ tích hợp nghiên cứu offline lên `main`; không bật Hybrid, không Wave 2C, không Adapter /3)
 - **Commit sản phẩm (20):** `24103909` SG-1..SG-6 → `3509b705` (2 false refusal lộ trên corpus khoá) → `ee50e87b` (3 lỗ cùng
   nhóm lộ trên BH2A) → `aded2fbf` · `0cefe720` · `6c910a51` · `85e6dd86` · `b3c850e2` · `b6b61061` (review độc lập vòng 1–6)
   → `81e91ebb` · `b6a9fcc6` · `08bad12f` · `6f58c0f5` · `57701200` · `c6592ac2` · `c3b1f905` · `c7b79cce` · `26e1040a` ·
@@ -84,14 +84,28 @@ tranh luận N1/N2 vẫn được siết; xác nhận phần chênh lệch cuố
   phạm (phủ định, đường cao của tam giác) không gắn vai trò nào.
 - Wave 1 chứng chỉ, Wave 2A composition, Wave 2B năng lực, tuyến A: test xanh (Full T3 ở `handoff.md`).
 
-## 6. Giới hạn còn lại
+## 6. Bằng chứng khoa học SGH-01..18 (Blind Evaluation) & Bàn giao Task kế tiếp
 
-`ISSUE-RESEARCH-HYBRID-SOURCE-GATE-REMAINING-GAPS` (`docs/OPEN_ISSUES.md`):
-- **False refusal có mã (đánh đổi chủ ý của văn phạm đóng):** một câu tiền đề hợp lệ có mệnh đề ngoài văn phạm, hay có mệnh
-  đề mặt/tam giác/hình chiếu, không gắn chiều cao / cạnh nào; câu tiền đề ghép trên lát line_ref; "giao tuyến đó"; "lần lượt
-  bằng"; mặt ba nhãn cho mặt bốn nhãn của đề; "dựa vào SM tính …".
-- **Giới hạn phủ tiền đề có từ trước (không do run này):** một tiền đề trong câu mà một fact trích NGUYÊN câu được tính là đã
-  đọc dù không lời gọi nào mã hoá nó (review K1/K2/K5); `6973c4b6` cũng phục vụ cùng tiền đề khi quote chỉ có một số.
+### 6.1 Biên nhận đánh giá mù SGH-01..18 (`GO_MAIN_SOURCE_GATE_HARDENING_CONDITIONAL`)
+- **SGH original blind evaluation:** `6/10` positive, `10/16` mathematically correct goals.
+- **Strict tuple scoring:** `8/16` do khác biệt ngữ nghĩa trường `dim`.
+- **Negative exact refusal:** `5/5`.
+- **Ambiguous locked expectation:** `1/2`.
+- **SGH-17:** sai lệch thiết kế oracle đã được phân xử riêng, không sửa manifest gốc.
+- **Bốn false refusal:** `SGH-02`, `SGH-04`, `SGH-09`, `SGH-10`.
+- **Thời điểm đo:** đánh giá mù gốc được thực hiện trước các bản sửa dựa trên phản hồi (feedback-based fixes).
+- **Hai nhóm lỗi cổng nguồn còn lại:** `NOT FIXED` (xem §6.2).
+- **Ngưỡng SGH đăng ký trước nghiêm ngặt (strict preregistered SGH threshold):** `NOT MET`.
+- **Quyết định tích hợp:** Conditional GO MAIN (`GO_MAIN_SOURCE_GATE_HARDENING_CONDITIONAL`) được ủy quyền **chỉ cho tích hợp nghiên cứu offline (offline research integration ONLY)**.
+
+### 6.2 Hai nhóm lỗi còn lại — Bàn giao cho Follow-Up Task riêng (`ISSUE-RESEARCH-HYBRID-SOURCE-GATE-REMAINING-GAPS`)
+Hai nhóm lỗi dưới đây **không sửa trong GO MAIN** và được tách sang một follow-up task riêng:
+- **Nhóm A:** `_kiem_don_vi_hoi` không nhận diện ranh giới mục tiêu kế tiếp có điểm mô tả chưa đặt tên.
+- **Nhóm B:** `_kiem_nguon_dong` từ chối tiền đề ghép trong lát `line_ref` dù đã có các typed facts có nguồn và có thể kiểm tra độc lập.
+
+Các giới hạn đã ghi nhận khác trong `docs/OPEN_ISSUES.md`:
+- **False refusal có mã (đánh đổi chủ ý của văn phạm đóng và `_kiem_so_dinh_nguon`):** câu tiền đề có mệnh đề ngoài văn phạm, mệnh đề đổi chủ ngữ (mặt/tam giác/hình chiếu), "giao tuyến đó", "lần lượt bằng", mặt 3 nhãn cho mặt 4 nhãn của đề, "dựa vào SM tính …", hoặc danh từ "tam giác"/"hình vuông" không nhãn trong câu nói về khối.
+- **Giới hạn phủ tiền đề có từ trước (không do run này):** một tiền đề trong câu mà một fact trích NGUYÊN câu được tính là đã đọc dù không lời gọi nào mã hoá nó (review K1/K2/K5); `6973c4b6` cũng phục vụ cùng tiền đề khi quote chỉ có một số.
 
 ## 7. Ảnh hưởng lên composition
 

@@ -2,9 +2,10 @@
 
 ### ISSUE-RESEARCH-HYBRID-SOURCE-GATE-REMAINING-GAPS
 
-- **status:** OPEN (run `source-gate-hardening`, branch `research/hybrid-source-gate-hardening`, not on `main`).
-  SG-1..SG-6 are served on the locked corpus and BH2A (11/12); still refused with a code:
-- compound premise sentences on the closed line_ref slice (`ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE`; BH2A-03 with (ABCD));
+- **status:** OPEN (run `source-gate-hardening`, integrated on `main` under `GO_MAIN_SOURCE_GATE_HARDENING_CONDITIONAL` for offline research only; strict preregistered SGH blind threshold NOT MET: 6/10 positive, 10/16 math goals, 8/16 strict tuple due to `dim`, 5/5 negative, 1/2 ambiguous, SGH-17 adjudicated without manifest edit, 4 false refusals in SGH-02/04/09/10).
+  Two remaining source-gate defect classes are **NOT FIXED** and handed off to a separate follow-up task:
+- **Defect class A (follow-up task):** `_kiem_don_vi_hoi` does not recognise the boundary of a subsequent goal phrase that contains an unnamed described point.
+- **Defect class B (follow-up task):** `_kiem_nguon_dong` refuses compound premise sentences on the `line_ref` slice (`ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE`; e.g. BH2A-03 with `(ABCD)`) even when source-grounded, independently verifiable typed facts are present;
 - "giao tuyến đó" (anaphora), "lần lượt bằng" (respective binding), a three-label plane for a four-label face of the
   source (BH2A-03 as specified), method instructions inside a request ("dựa vào SM tính …", NLU L28);
 - deliberate trade-off of the closed role grammar: a premise sentence holding a clause outside it, or a face / triangle /
