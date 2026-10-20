@@ -404,6 +404,35 @@ def test_review_round2_a_role_inside_unparsed_prose_binds_nothing(sentence):
     refused(regular(sentence, "4", "5"), "UNGROUNDED_VALUE", "AMBIGUOUS_VALUE_QUOTE")
 
 
+@pytest.mark.parametrize("sentence", [   # review round 3: "của <solid>" must name the bound solid; trailing opaque clauses
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao của hình chóp T.MNPQ bằng 5.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao của khối lăng trụ bằng 5.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4 và chiều cao của khối lập phương bằng 5.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, đường cao bằng 5, hạ từ S xuống cạnh AB.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao bằng 5, đó là chiều cao của mặt bên.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao bằng 5, hạ từ S xuống AB.",
+])
+def test_review_round3_a_role_owned_by_another_solid_or_reworded_after_binds_nothing(sentence):
+    refused(regular(sentence, "4", "5"), "UNGROUNDED_VALUE", "AMBIGUOUS_VALUE_QUOTE")
+
+
+def test_review_round3_height_of_another_solid_in_its_own_sentence():
+    s0, s1 = "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4.", "Chiều cao của lăng trụ MNP.M'N'P' bằng 5."
+    ask = "Tính thể tích khối chóp S.ABCD."
+    refused(run(f"{s0} {s1} {ask}", [f("f1", "solid", s0, solid="S.ABCD", solid_type="pyramid", regular=True),
+                                     f("f2", "length", s0, measure="base_edge", solid="S.ABCD", value="4"),
+                                     f("f3", "length", s1, measure="height", solid="S.ABCD", value="5"),
+                                     q("q", ask, quantity="volume", solid="S.ABCD")]))
+
+
+@pytest.mark.parametrize("sentence,v", [   # controls: the solid's own roles still bind
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao của hình chóp bằng 5.", "80/3"),
+    ("Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao của hình chóp S.ABCD bằng 5.", "80/3"),
+])
+def test_review_round3_own_solid_roles_still_bind(sentence, v):
+    served(regular(sentence, "4", "5"), {"q": v})
+
+
 @pytest.mark.parametrize("height_sentence", ["Đường cao của mặt bên bằng 5.", "Chiều cao của tam giác SAB bằng 5."])
 def test_review_round2_a_height_of_another_object_is_refused(height_sentence):
     s0 = "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4."

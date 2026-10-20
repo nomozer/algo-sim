@@ -855,14 +855,28 @@ _C_KHOI = re.compile(rf"(?:(?:cho|xét)\s+)?(?:một\s+)?(?:(?:hình|khối)\s+)
 _C_DAY = re.compile(rf"(?:có\s+)?(?:mặt\s+)?đáy(?:\s+(?P<d>{_NHAN}))?\s+(?:là\s+(?:một\s+)?{_HINH}(?:\s+(?P<d2>{_NHAN}))?|đều)(?![\w'])"
                     rf"(?:\s+(?:có\s+)?cạnh\s*(?:(?:bằng|=|là)\s*)?{_so_nhom('ds')})?", re.IGNORECASE)
 _C_VAI = re.compile(rf"(?:(?:có|với)\s+)?(?P<vai>cạnh\s+đáy|cạnh\s+bên|chiều\s+cao|đường\s+cao|cạnh)(?:\s+của\s+(?:(?:hình|khối)\s+)?"
-                    rf"(?:chóp|lăng\s+trụ|hộp|lập\s+phương|tứ\s+diện)(?:\s+{_NHAN}(?:\.{_NHAN})?)?)?"
+                    rf"(?P<qn>chóp|lăng\s+trụ|hộp(?:\s+chữ\s+nhật)?|lập\s+phương|tứ\s+diện)(?:\s+(?P<ql>{_NHAN}(?:\.{_NHAN})?))?)?"
                     rf"\s*(?:(?:có\s+)?độ\s+dài\s*)?(?:(?:=|bằng|là)\s*)?{_so_nhom('vs')}", re.IGNORECASE)
-_C_DOAN = re.compile(rf"(?:có\s+)?(?:(?:cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|độ\s+dài|đường\s+chéo)\s+)?(?P<seg>{_L1}{_L1})(?![\w'])"
+#: "của <solid>" names the role's owner: its noun must be the bound solid's kind, its label (if any) the bound solid's
+_LOAI_KHOI = {"chóp": ("pyramid", "regular_pyramid"), "tứ diện": ("pyramid", "regular_pyramid"), "lăng trụ": ("prism",),
+              "hộp": ("prism",), "hộp chữ nhật": ("prism",), "lập phương": ("prism",)}
+#: Number-free clauses of the grammar: "SA là đường cao của hình chóp" (altitude statement).
+_C_DCAO = re.compile(rf"{_L1}{_L1}\s+là\s+đường\s+cao(?:\s+của\s+(?:(?:hình|khối)\s+)?(?:chóp|lăng\s+trụ)(?:\s+{_NHAN}(?:\.{_NHAN})?)?)?"
+                     rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
+#: A number-free clause that only DEFINES a new named point ("gọi O là tâm của hình vuông ABCD", "M là điểm trên cạnh CD")
+#: cannot re-attribute a role of its sentence — unless it itself names a height/side role or points back ("đó", "này").
+_DINH_NGHIA = re.compile(rf"(?:gọi\s+)?{_L1}(?:\s*,\s*{_L1})*\s+(?:lần\s+lượt\s+)?là\s+", re.IGNORECASE)
+_VAI_TRONG_MO = re.compile(rf"(?<!\w)(?:chiều\s+cao|đường\s+cao|cạnh(?!\s+{_L1}{_L1}))(?!\w)|(?<!\w)(?:đó|này|ấy)(?!\w)",
+                           re.IGNORECASE)
+_C_DOAN = re.compile(rf"(?:có\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?:cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo)\s+)?"
+                     rf"(?P<seg>{_L1}{_L1})(?![\w'])"
                      rf"(?:\s*=\s*{_L1}{_L1}(?![\w']))*\s*(?:=|bằng|(?:có\s+)?độ\s+dài(?:\s+bằng)?)\s*{_so_nhom('ss')}",
                      re.IGNORECASE)
-_C_VUONG = re.compile(rf"(?:(?:có\s+)?cạnh\s+bên\s+)?{_L1}{_L1}\s+vuông\s+góc\s+với\s+(?:mặt\s+phẳng\s+|mp\s*)?"
-                      rf"(?:\({_NHAN}\)|{_NHAN}(?![\w'])|(?:mặt\s+)?đáy(?!\w))", re.IGNORECASE)
-_C_NOI = re.compile(r"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=(?:có|với|cạnh)\s)", re.IGNORECASE)
+_C_VUONG = re.compile(rf"(?:(?:có\s+)?(?:cạnh\s+bên|đường\s+thẳng)\s+)?{_L1}{_L1}\s*(?:vuông\s+góc\s+với|vuông|⊥)\s*"
+                      rf"(?:mặt\s+phẳng\s+|mp\s*)?(?:\({_NHAN}\)|{_L1}{_L1}\s+và\s+{_L1}{_L1}(?![\w'])(?!\s*(?:=|bằng))|{_NHAN}(?![\w'])"
+                      rf"|(?:mặt\s+(?:phẳng\s+)?)?đáy(?!\w))", re.IGNORECASE)
+#: "cạnh CD" (a named edge) continues its clause; only a role "cạnh" ("… cạnh 2", "… cạnh bên") opens a new one
+_C_NOI = re.compile(rf"\s*[,;]\s*(?:và\s+)?|\s+và\s+|\s+(?=(?:có|với)\s|cạnh\s+(?!{_L1}{_L1}(?![\w'])))", re.IGNORECASE)
 _C_DAU = re.compile(r"\s*(?:biết\s+(?:rằng\s+)?)?", re.IGNORECASE)
 _C_HET = re.compile(r"\s*[.;]?\s*")
 _DANH_VAI = re.compile(r"(?<!\w)(?:cạnh|chiều\s+cao|đường\s+cao)(?!\w)", re.IGNORECASE)
@@ -879,7 +893,8 @@ def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
     unlabelled base AFTER it is bound (`_lien_ket_cau`)."""
     p, out = _C_DAU.match(s).end(), []
     while True:
-        for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("vuong", _C_VUONG), ("doan", _C_DOAN), ("vai", _C_VAI)):
+        for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dcao", _C_DCAO), ("vuong", _C_VUONG), ("doan", _C_DOAN),
+                         ("vai", _C_VAI)):
             if m := rx.match(s, p):
                 out.append((kind, m))
                 p = m.end()
@@ -889,7 +904,7 @@ def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
             seg = s[p:j.start()] if j else s[p:].rstrip(" .;")
             if not seg.strip() or any(_doc(x) is not None for x in _SO.finditer(seg)):
                 return None
-            out.append(("mo", None))
+            out.append(("dinh_nghia" if _DINH_NGHIA.match(seg) and not _VAI_TRONG_MO.search(seg) else "mo", None))
             p += len(seg)
         if _C_HET.fullmatch(s, p):
             return out
@@ -908,12 +923,14 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
     while p < b:
         x, y = _bien_cau(de, p)
         cau = _phan_tich_cau(de[x:y])
+        # review round 3: an opaque clause may re-attribute a role written BEFORE it too ("…, đường cao bằng 5, hạ từ S
+        # xuống cạnh AB"): any opaque clause other than a plain point definition unbinds every unlabelled role of the
+        # sentence (solid roles, an unlabelled base). Labelled bindings ("đáy ABC là … cạnh n", "SA = n") stay.
         if cau is not None:
-            khoi, moi, mo = (khoi_goi[0] if len(khoi_goi) == 1 else None), False, False
+            khoi, moi = (khoi_goi[0] if len(khoi_goi) == 1 else None), False
+            mo = any(kind == "mo" for kind, _m in cau)
             for kind, m in cau:
-                if kind == "mo":
-                    mo = True
-                elif kind == "khoi":
+                if kind == "khoi":
                     nhan = set(re.findall(r"[A-Z][0-9]*'?", m["k"]))
                     khoi = next((k for k in khoi_goi if _nhan_khoi(k) == nhan), None)
                     tu = re.sub(r"\s+", " ", m["kn"].lower())
@@ -924,10 +941,19 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
                     out[x + m.start("ds")] = ("side", frozenset(nhan))
                 elif kind == "doan":
                     out[x + m.start("ss")] = ("seg", frozenset(re.findall(r"[A-Z][0-9]*'?", m["seg"])))
-                elif kind == "vai" and not mo:     # after an opaque clause a role may be another object's: unbound
+                elif kind == "vai" and not mo and _cua_khop(m, khoi):
                     out[x + m.start("vs")] = ("vai", re.sub(r"\s+", " ", m["vai"].lower()), khoi, moi)
         p = y + 1 if y > p else b
     return out
+
+
+def _cua_khop(m: re.Match, khoi: LoiGoi | None) -> bool:
+    """A role clause's "của <solid>" names the bound solid itself: its kind, and its label when one is written."""
+    if not m["qn"]:
+        return True
+    if khoi is None or khoi.fn not in _LOAI_KHOI.get(re.sub(r"\s+", " ", m["qn"].lower()), ()):
+        return False
+    return not m["ql"] or set(re.findall(r"[A-Z][0-9]*'?", m["ql"])) == _nhan_khoi(khoi)
 
 
 def _canh_cua(v) -> set[frozenset]:
