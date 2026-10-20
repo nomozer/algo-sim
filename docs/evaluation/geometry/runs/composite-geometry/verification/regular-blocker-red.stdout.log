@@ -1,0 +1,45 @@
+F.........                                                               [100%]
+================================== FAILURES ===================================
+_ test_review_regular_child_requires_a_regular_base_on_the_direct_route[6-False] _
+
+second_side = '6', served = False
+
+    @pytest.mark.parametrize("second_side,served", [("6", False), ("4", True)])
+    def test_review_regular_child_requires_a_regular_base_on_the_direct_route(second_side, served):
+        from app.ai.function_route import run_function_route
+        calls, sentences = [], []
+        def call(cid, fn, quote, **args):
+            sentences.append(quote)
+            calls.append(dict(id=cid, fn=fn, args=args, source={"quotes": [quote]}))
+        call("root", "pyramid", "Cho hình chóp S.ABCD.", apex="S", base=list("ABCD"))
+        call("base", "rectangle", "\u0110\xe1y ABCD l\xe0 h\xecnh ch\u1eef nh\u1eadt.", vertices=list("ABCD"))
+        call("ab", "segment_length", "AB = 4.", segment=list("AB"), value="4")
+        call("ad", "segment_length", f"AD = {second_side}.", segment=list("AD"), value=second_side)
+        call("so", "segment_length", "SO = 8.", segment=list("SO"), value="8")
+        call("o", "midpoint", "G\u1ecdi O l\xe0 trung \u0111i\u1ec3m c\u1ee7a AC.", point="O", segment=list("AC"))
+        call("perp", "perpendicular_line_plane", "SO vu\xf4ng g\xf3c v\u1edbi (ABCD).", line=list("SO"), plane=list("ABCD"))
+        for p, b in zip("MNPQ", "ABCD"):
+            call("point_"+p, "midpoint", f"G\u1ecdi {p} l\xe0 trung \u0111i\u1ec3m c\u1ee7a S{b}.", point=p, segment=["S", b])
+        call("child", "regular_pyramid", "Cho h\xecnh ch\xf3p \u0111\u1ec1u S.MNPQ.", apex="S", base=list("MNPQ"))
+        call("vol", "ask_volume", "T\xednh th\u1ec3 t\xedch kh\u1ed1i ch\xf3p S.MNPQ.", solid="S.MNPQ")
+        r = run_function_route(" ".join(sentences), {"calls": calls})
+>       assert (r.status == "SERVED") == served, (r.code, r.reason)
+E       AssertionError: (None, None)
+E       assert ('SERVED' == 'SERVED'
+E         
+E           SERVED) == False
+
+backend\tests\geometry\test_composite_geometry.py:313: AssertionError
+=================================== PASSES ====================================
+=========================== short test summary info ===========================
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_regular_child_requires_a_regular_base_on_the_direct_route[4-True]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_spoofed_regular_base_on_a_rectangle_child_still_refuses
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_generic_child_on_a_rectangle_is_still_served
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_conflicting_side_lengths_refuse
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_planner_regular_child_is_never_wrongly_served[rectangle]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_planner_regular_child_is_never_wrongly_served[square]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_planner_regular_child_shares_the_engine_invariant[rectangle-False]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_planner_regular_child_shares_the_engine_invariant[square-True]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_regular_flag_with_equilateral_base_but_oblique_apex_refuses_in_the_engine
+FAILED backend\tests\geometry\test_composite_geometry.py::test_review_regular_child_requires_a_regular_base_on_the_direct_route[6-False]
+1 failed, 9 passed, 29 deselected in 1.16s

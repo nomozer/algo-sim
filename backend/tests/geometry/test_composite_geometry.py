@@ -289,3 +289,125 @@ def test_development_corpus_matches_the_independent_oracle():
             assert {q: str(squared(r, q)) for q in r.answers} == oracle.expected(c), c["id"]
         else:
             assert r.status == "REFUSED" and r.code in c["expected_codes"], (c["id"], r.code)
+
+
+@pytest.mark.parametrize("second_side,served", [("6", False), ("4", True)])
+def test_review_regular_child_requires_a_regular_base_on_the_direct_route(second_side, served):
+    from app.ai.function_route import run_function_route
+    calls, sentences = [], []
+    def call(cid, fn, quote, **args):
+        sentences.append(quote)
+        calls.append(dict(id=cid, fn=fn, args=args, source={"quotes": [quote]}))
+    call("root", "pyramid", "Cho hình chóp S.ABCD.", apex="S", base=list("ABCD"))
+    call("base", "rectangle", "Đáy ABCD là hình chữ nhật.", vertices=list("ABCD"))
+    call("ab", "segment_length", "AB = 4.", segment=list("AB"), value="4")
+    call("ad", "segment_length", f"AD = {second_side}.", segment=list("AD"), value=second_side)
+    call("so", "segment_length", "SO = 8.", segment=list("SO"), value="8")
+    call("o", "midpoint", "Gọi O là trung điểm của AC.", point="O", segment=list("AC"))
+    call("perp", "perpendicular_line_plane", "SO vuông góc với (ABCD).", line=list("SO"), plane=list("ABCD"))
+    for p, b in zip("MNPQ", "ABCD"):
+        call("point_"+p, "midpoint", f"Gọi {p} là trung điểm của S{b}.", point=p, segment=["S", b])
+    call("child", "regular_pyramid", "Cho hình chóp đều S.MNPQ.", apex="S", base=list("MNPQ"))
+    call("vol", "ask_volume", "Tính thể tích khối chóp S.MNPQ.", solid="S.MNPQ")
+    r = run_function_route(" ".join(sentences), {"calls": calls})
+    assert (r.status == "SERVED") == served, (r.code, r.reason)
+    if not served:
+        assert r.code == "INCONSISTENT_FACTS"
+    else:
+        assert squared(r, "vol") == F(256, 9)
+
+
+def _direct_rectangle_child(second_side, child_fn="regular_pyramid", extra=()):
+    from app.ai.function_route import run_function_route
+    calls, sentences = [], []
+    def call(cid, fn, quote, **args):
+        sentences.append(quote)
+        calls.append(dict(id=cid, fn=fn, args=args, source={"quotes": [quote]}))
+    call("root", "pyramid", "Cho hình chóp S.ABCD.", apex="S", base=list("ABCD"))
+    call("base", "rectangle", "Đáy ABCD là hình chữ nhật.", vertices=list("ABCD"))
+    call("ab", "segment_length", "AB = 4.", segment=list("AB"), value="4")
+    call("ad", "segment_length", f"AD = {second_side}.", segment=list("AD"), value=second_side)
+    call("so", "segment_length", "SO = 8.", segment=list("SO"), value="8")
+    call("o", "midpoint", "Gọi O là trung điểm của AC.", point="O", segment=list("AC"))
+    call("perp", "perpendicular_line_plane", "SO vuông góc với (ABCD).", line=list("SO"), plane=list("ABCD"))
+    for p, b in zip("MNPQ", "ABCD"):
+        call("point_" + p, "midpoint", f"Gọi {p} là trung điểm của S{b}.", point=p, segment=["S", b])
+    word = "hình chóp đều" if child_fn == "regular_pyramid" else "hình chóp"
+    call("child", child_fn, f"Cho {word} S.MNPQ.", apex="S", base=list("MNPQ"))
+    for cid, fn, quote, args in extra:
+        call(cid, fn, quote, **args)
+    call("vol", "ask_volume", "Tính thể tích khối chóp S.MNPQ.", solid="S.MNPQ")
+    return run_function_route(" ".join(sentences), {"calls": calls})
+
+
+def test_review_spoofed_regular_base_on_a_rectangle_child_still_refuses():
+    # A forged `regular_polygon` premise on the derived base cannot upgrade a 4×6 rectangle to a square.
+    r = _direct_rectangle_child("6", extra=[("fake", "regular_polygon", "Đáy MNPQ là hình vuông.",
+                                             {"vertices": list("MNPQ")})])
+    assert r.status == "REFUSED" and r.code == "INCONSISTENT_FACTS", (r.code, r.reason)
+
+
+def test_review_generic_child_on_a_rectangle_is_still_served():
+    # Same rectangle child WITHOUT the regular flag is a valid generic pyramid: V(child) = V(root)/8 = 64/8.
+    r = _direct_rectangle_child("6", child_fn="pyramid")
+    assert r.status == "SERVED", (r.code, r.reason)
+    assert squared(r, "vol") == 64
+
+
+def test_review_conflicting_side_lengths_refuse():
+    r = _direct_rectangle_child("4", extra=[("mn", "segment_length", "MN = 3.", {"segment": list("MN"), "value": "3"})])
+    assert r.status == "REFUSED" and r.code == "INCONSISTENT_FACTS", (r.code, r.reason)
+
+
+def _planner_regular_child(shape):
+    word = "hình chữ nhật" if shape == "rectangle" else "hình vuông"
+    side = "6" if shape == "rectangle" else "4"
+    text = (f"Cho hình chóp S.ABCD. Đáy ABCD là {word}. AB = 4. AD = {side}. "
+            "Gọi O là trung điểm của AC. SO vuông góc với (ABCD). SO = 8. ")
+    fs = [fact("root", "solid", "Cho hình chóp S.ABCD.", solid="S.ABCD", solid_type="pyramid"),
+          fact("base", "polygon_shape", f"Đáy ABCD là {word}.", points=list("ABCD"), shape=shape),
+          fact("ab", "length", "AB = 4.", points=list("AB"), measure="segment", value="4"),
+          fact("ad", "length", f"AD = {side}.", points=list("AD"), measure="segment", value=side),
+          fact("o", "point_def", "Gọi O là trung điểm của AC.", point="O", point_kind="midpoint", points=list("AC")),
+          fact("perp", "perpendicular", "SO vuông góc với (ABCD).", points_a=list("SO"), points_b=list("ABCD")),
+          fact("so", "length", "SO = 8.", points=list("SO"), measure="segment", value="8")]
+    for p, b in zip("MNPQ", "ABCD"):
+        q = f"Gọi {p} là trung điểm của S{b}."
+        text += q + " "
+        fs.append(fact("point_" + p, "point_def", q, point=p, point_kind="midpoint", points=["S", b]))
+    text += "Xét hình chóp đều S.MNPQ. Tính thể tích khối chóp S.MNPQ."
+    fs.append(fact("child", "solid", "Xét hình chóp đều S.MNPQ.", solid="S.MNPQ", solid_type="pyramid", regular=True))
+    fs.append(fact("vol", "question", "Tính thể tích khối chóp S.MNPQ.", quantity="volume", solid="S.MNPQ"))
+    return text, {"facts": fs}
+
+
+@pytest.mark.parametrize("shape", ["rectangle", "square"])
+def test_review_planner_regular_child_is_never_wrongly_served(shape):
+    # Full planner route: the source gate cannot bind the implied regular base of a derived solid, so both refuse
+    # safely today. The rectangle must never be served under any route.
+    r = run_fact_route(*_planner_regular_child(shape))
+    assert r.status == "REFUSED", (r.code, r.reason)
+
+
+@pytest.mark.parametrize("shape,served", [("rectangle", False), ("square", True)])
+def test_review_planner_regular_child_shares_the_engine_invariant(shape, served, monkeypatch):
+    # Bypass ONLY the source gate to pin the engine predicate on planner-generated calls (regular_pyramid +
+    # regular_polygon on the derived base): it is the same exact check as on the direct route.
+    from app.simulation.geometry_functions import engine
+    monkeypatch.setattr(engine, "kiem_nguon", lambda *a, **kw: {})
+    r = run_fact_route(*_planner_regular_child(shape))
+    assert (r.status == "SERVED") == served, (r.code, r.reason)
+    if served:
+        assert squared(r, "vol") == F(256, 9)   # V(root) = 16·8/3; half-scale child = V/8 = 16/3.
+    else:
+        assert r.code == "INCONSISTENT_FACTS", (r.code, r.reason)
+
+
+def test_review_regular_flag_with_equilateral_base_but_oblique_apex_refuses_in_the_engine(monkeypatch):
+    # S.MNP has an equilateral base (half-scale of ABC) but SA ⟂ (ABC) puts S over A, not over the centre.
+    from app.simulation.geometry_functions import engine
+    monkeypatch.setattr(engine, "kiem_nguon", lambda *a, **kw: {})
+    text, payload = problem()
+    next(f for f in payload["facts"] if f["id"] == "child0")["regular"] = True
+    r = run_fact_route(text, payload)
+    assert r.status == "REFUSED" and r.code == "INCONSISTENT_FACTS", (r.code, r.reason)

@@ -823,6 +823,14 @@ class _Dung:
               + M[0][2] * (M[1][0] * M[2][1] - M[1][1] * M[2][0]))
         return d3 / (M[0][0] * M[1][1] - M[0][1] * M[1][0])
 
+    def _canh_da_giac_deu(self, v) -> Fraction | None:
+        """Exact Gram check: equal sides and equal distance to the vertex centroid ⇒ regular polygon; side² or None."""
+        n = len(v)
+        canh = {self.d2(v[i], v[(i + 1) % n]) for i in range(n)}
+        O = tuple(sum(self.pts[x][i] for x in v) / n for i in range(3))
+        r = {self.g(*(tuple(self.pts[x][i] - O[i] for i in range(3)),) * 2) for x in v}
+        return next(iter(canh)) if len(canh) == 1 and len(r) == 1 and canh != {Z} else None
+
     def _dung_khong(self, c: LoiGoi) -> bool:
         a = c.args
         if c.fn in ("intersect_line_line", "intersect_line_plane", "orthogonal_projection_line", "translate_point"):
@@ -832,11 +840,8 @@ class _Dung:
         if c.fn == "segment_length":
             return self.d2(*a.segment) == binh_phuong(a.value)
         if c.fn == "regular_polygon":
-            v, n = a.vertices, len(a.vertices)
-            canh = {self.d2(v[i], v[(i + 1) % n]) for i in range(n)}
-            O = tuple(sum(self.pts[x][i] for x in v) / n for i in range(3))
-            r = {self.g(*(tuple(self.pts[x][i] - O[i] for i in range(3)),) * 2) for x in v}
-            return len(canh) == 1 and len(r) == 1 and (a.side is None or canh == {binh_phuong(a.side)})
+            canh = self._canh_da_giac_deu(a.vertices)
+            return canh is not None and (a.side is None or canh == binh_phuong(a.side))
         if c.fn == "rectangle":
             v = a.vertices
             return all(self.g(self._vec(v[i], v[(i + 1) % 4]), self._vec(v[i], v[(i - 1) % 4])) == 0 for i in range(4))
@@ -880,7 +885,10 @@ class _Dung:
             k = self.khoi[a.apex + "." + "".join(a.base)]
             ok = self._kc2_mat(k.apex, k.base[:3]) > 0
             if c.fn == "regular_pyramid":
-                ok = ok and len({self.d2(k.apex, b) for b in k.base}) == 1
+                # Regular = REGULAR base + equal lateral edges (⇒ foot at the base centre). Equal lateral edges alone
+                # only put the foot at a circumcentre: a non-square rectangle passes that test (review blocker).
+                ok = (ok and self._canh_da_giac_deu(k.base) is not None
+                      and len({self.d2(k.apex, b) for b in k.base}) == 1)
             return ok
         if c.fn == "prism":
             vec = {self._vec(b, t) for b, t in zip(a.base, a.top)}

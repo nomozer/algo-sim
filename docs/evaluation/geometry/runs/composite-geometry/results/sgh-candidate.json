@@ -1,0 +1,664 @@
+{
+  "evaluation_class": "KNOWN_REGRESSION_NOT_BLIND",
+  "original_manifest_path": "D:\\Documents\\AlgoSim-Research\\SGH\\sgh_locked_manifest.json",
+  "manifest_sha256": "268c5d666fe19133f9f5a2f523942fcc612f4ee98efe8a6d56aee9e4ea572641",
+  "canonical_manifest_lock": "fe3356847140000add09f20cfd3f598849c54992751ff70f101a79a1ae039ab2",
+  "manifest_unchanged": true,
+  "direct_original_text_and_facts": true,
+  "payload_hash_note": "Original opaque payload_sha256 retained verbatim; canonical direct-payload hash recorded separately. File hash, canonical cases lock and all text hashes verified before execution.",
+  "full_sha": "503c9d6e1b4bf60a54b1179b6299598b27b0d8f7",
+  "live_provider_calls": 0,
+  "rows": [
+    {
+      "id": "SGH-01",
+      "category": "POSITIVE",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "q1": "2a√14"
+      },
+      "exact": {
+        "q1": {
+          "coef": "2√14",
+          "dim": 1,
+          "unit": "a"
+        }
+      },
+      "values": {
+        "q1": "56"
+      },
+      "oracle": {
+        "q1": {
+          "value_sq": "56",
+          "answer": "2a√14",
+          "coef": "2√14",
+          "dim": 1,
+          "unit": "a"
+        }
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "math_matches": {
+        "q1": true
+      },
+      "strict_tuple_matches": {
+        "q1": true
+      },
+      "payload_sha256_declared": "0b63c561b0aa1c25831cd13cb6ede41b96737d2bf5528a474d6c829cbf98de59",
+      "direct_payload_canonical_sha256": "13b2914821d4dfa73670c504f4d0004bf2e944daa14f0cdc817a5ee18d4ba57a",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-02",
+      "category": "POSITIVE",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "q1": "a√37"
+      },
+      "exact": {
+        "q1": {
+          "coef": "√37",
+          "dim": 1,
+          "unit": "a"
+        }
+      },
+      "values": {
+        "q1": "37"
+      },
+      "oracle": {
+        "q1": {
+          "value_sq": "37",
+          "answer": "a√37",
+          "coef": "√37",
+          "dim": 1,
+          "unit": "a"
+        }
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "math_matches": {
+        "q1": true
+      },
+      "strict_tuple_matches": {
+        "q1": true
+      },
+      "payload_sha256_declared": "4fc67a07e7419e852a5104b66b6a0ad1e65f476b64debe15e89d26d65a42de8c",
+      "direct_payload_canonical_sha256": "ce7345a397c9cc14fdbd6cc62ded8fc4fea833e823737808c840d3099c826b6f",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-03",
+      "category": "POSITIVE",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "q1": "7a²"
+      },
+      "exact": {
+        "q1": {
+          "coef": "7",
+          "dim": 2,
+          "unit": "a"
+        }
+      },
+      "values": {
+        "q1": "49"
+      },
+      "oracle": {
+        "q1": {
+          "value_sq": "49",
+          "answer": "7a²",
+          "coef": "7",
+          "dim": 2,
+          "unit": "a"
+        }
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "math_matches": {
+        "q1": true
+      },
+      "strict_tuple_matches": {
+        "q1": true
+      },
+      "payload_sha256_declared": "39b6637bbc4b36ae4bb14992bdbb7cb21dfb108163cdf7396f1645c59edb8be6",
+      "direct_payload_canonical_sha256": "e1cde49e0157262e42647724e2461251ce4e0c982f42cafe5986e93d3613a37c",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-04",
+      "category": "POSITIVE",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "q2": "cos²=3/4",
+        "q1": "3a"
+      },
+      "exact": {
+        "q2": {
+          "coef": "3/4",
+          "dim": 0,
+          "unit": null
+        },
+        "q1": {
+          "coef": "3",
+          "dim": 1,
+          "unit": "a"
+        }
+      },
+      "values": {
+        "q2": "3/4",
+        "q1": "9"
+      },
+      "oracle": {
+        "q1": {
+          "value_sq": "9",
+          "answer": "3a",
+          "coef": "3",
+          "dim": 1,
+          "unit": "a"
+        },
+        "q2": {
+          "value_sq": "3/4",
+          "answer": "cos²=3/4",
+          "coef": "3/4",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "math_matches": {
+        "q2": true,
+        "q1": true
+      },
+      "strict_tuple_matches": {
+        "q2": true,
+        "q1": true
+      },
+      "payload_sha256_declared": "269fd3609837ec34cd665f4bbef34557735f527863c520fef5db7899edd58f2b",
+      "direct_payload_canonical_sha256": "07e2ec692e99961a7d3fd6b1479cfc6d690bcbdbd6ab64e74e902baaf5cf030f",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-05",
+      "category": "POSITIVE",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "q2": "cos²=49/81",
+        "q1": "2a√6"
+      },
+      "exact": {
+        "q2": {
+          "coef": "49/81",
+          "dim": 0,
+          "unit": null
+        },
+        "q1": {
+          "coef": "2√6",
+          "dim": 1,
+          "unit": "a"
+        }
+      },
+      "values": {
+        "q2": "49/81",
+        "q1": "24"
+      },
+      "oracle": {
+        "q1": {
+          "value_sq": "24",
+          "answer": "2a√6",
+          "coef": "2√6",
+          "dim": 1,
+          "unit": "a"
+        },
+        "q2": {
+          "value_sq": "49/81",
+          "answer": "cos²=49/81",
+          "coef": "49/81",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "math_matches": {
+        "q2": true,
+        "q1": true
+      },
+      "strict_tuple_matches": {
+        "q2": true,
+        "q1": true
+      },
+      "payload_sha256_declared": "aa33a8a0fd00296b800bd1803fddb5e9b9d398f1315c442a0632d171864cd570",
+      "direct_payload_canonical_sha256": "137acf666fdc9d4a3ae8652f7cac12d3cc60f433609d96321fdec36b9a4b374c",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-06",
+      "category": "POSITIVE",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "q2": "9√2",
+        "q1": "2√11"
+      },
+      "exact": {
+        "q2": {
+          "coef": "9√2",
+          "dim": 0,
+          "unit": null
+        },
+        "q1": {
+          "coef": "2√11",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "values": {
+        "q2": "162",
+        "q1": "44"
+      },
+      "oracle": {
+        "q1": {
+          "value_sq": "44",
+          "answer": "2√11",
+          "coef": "2√11",
+          "dim": 1,
+          "unit": null
+        },
+        "q2": {
+          "value_sq": "162",
+          "answer": "9√2",
+          "coef": "9√2",
+          "dim": 2,
+          "unit": null
+        }
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "math_matches": {
+        "q2": true,
+        "q1": true
+      },
+      "strict_tuple_matches": {
+        "q2": false,
+        "q1": false
+      },
+      "payload_sha256_declared": "e3c3e18032a992a9c7007106e9b6b680aa644c73dc0bbf3ca3f5c41dd5164ece",
+      "direct_payload_canonical_sha256": "c86af7b6ea792a248dd5a138daeb50fa513eb23fae92b2adc6d45dec1687e3f2",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-07",
+      "category": "POSITIVE",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "q2": "cos²=64/343",
+        "q1": "2a"
+      },
+      "exact": {
+        "q2": {
+          "coef": "64/343",
+          "dim": 0,
+          "unit": null
+        },
+        "q1": {
+          "coef": "2",
+          "dim": 1,
+          "unit": "a"
+        }
+      },
+      "values": {
+        "q2": "64/343",
+        "q1": "4"
+      },
+      "oracle": {
+        "q1": {
+          "value_sq": "4",
+          "answer": "2a",
+          "coef": "2",
+          "dim": 1,
+          "unit": "a"
+        },
+        "q2": {
+          "value_sq": "64/343",
+          "answer": "cos²=64/343",
+          "coef": "64/343",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "math_matches": {
+        "q2": true,
+        "q1": true
+      },
+      "strict_tuple_matches": {
+        "q2": true,
+        "q1": true
+      },
+      "payload_sha256_declared": "5f9bef8dfd73b43765d4a2bbf745d9a98a02ab0502e9f58e664bcc9f77d15ec9",
+      "direct_payload_canonical_sha256": "71d41b40345f31ec09db028a6635c9c3f4cb976e0fd5a6cedb8e55b8b84f382b",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-08",
+      "category": "POSITIVE",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "q2": "3a²√3/2",
+        "q1": "2a√3"
+      },
+      "exact": {
+        "q2": {
+          "coef": "3√3/2",
+          "dim": 2,
+          "unit": "a"
+        },
+        "q1": {
+          "coef": "2√3",
+          "dim": 1,
+          "unit": "a"
+        }
+      },
+      "values": {
+        "q2": "27/4",
+        "q1": "12"
+      },
+      "oracle": {
+        "q1": {
+          "value_sq": "12",
+          "answer": "2a√3",
+          "coef": "2√3",
+          "dim": 1,
+          "unit": "a"
+        },
+        "q2": {
+          "value_sq": "27/4",
+          "answer": "3a²√3/2",
+          "coef": "3√3/2",
+          "dim": 2,
+          "unit": "a"
+        }
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "math_matches": {
+        "q2": true,
+        "q1": true
+      },
+      "strict_tuple_matches": {
+        "q2": true,
+        "q1": true
+      },
+      "payload_sha256_declared": "8f11f0788fcea1bdae65b49fe7437ff12904ed012cdcc181b7750c829fee9839",
+      "direct_payload_canonical_sha256": "5b280b4a80d7e64bcef09e516be92c1a762b84e7f527ca6821fa98fabc85c422",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-09",
+      "category": "POSITIVE",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "q2": "cos²=13/29",
+        "q1": "2a"
+      },
+      "exact": {
+        "q2": {
+          "coef": "13/29",
+          "dim": 0,
+          "unit": null
+        },
+        "q1": {
+          "coef": "2",
+          "dim": 1,
+          "unit": "a"
+        }
+      },
+      "values": {
+        "q2": "13/29",
+        "q1": "4"
+      },
+      "oracle": {
+        "q1": {
+          "value_sq": "4",
+          "answer": "2a",
+          "coef": "2",
+          "dim": 1,
+          "unit": "a"
+        },
+        "q2": {
+          "value_sq": "13/29",
+          "answer": "cos²=13/29",
+          "coef": "13/29",
+          "dim": 0,
+          "unit": null
+        }
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "math_matches": {
+        "q2": true,
+        "q1": true
+      },
+      "strict_tuple_matches": {
+        "q2": true,
+        "q1": true
+      },
+      "payload_sha256_declared": "14262d92c1aff9c8fba61bb47af09400fda7828b3d703f71756493d2adab4b11",
+      "direct_payload_canonical_sha256": "c9ae8bcaa048529eca88e1ff1889431af2284faa611bcb7f35fcf4d610787af5",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-10",
+      "category": "POSITIVE",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "q1": "2a√2"
+      },
+      "exact": {
+        "q1": {
+          "coef": "2√2",
+          "dim": 1,
+          "unit": "a"
+        }
+      },
+      "values": {
+        "q1": "8"
+      },
+      "oracle": {
+        "q1": {
+          "value_sq": "8",
+          "answer": "2a√2",
+          "coef": "2√2",
+          "dim": 1,
+          "unit": "a"
+        }
+      },
+      "expected_status": "SERVED",
+      "expected_code": null,
+      "math_matches": {
+        "q1": true
+      },
+      "strict_tuple_matches": {
+        "q1": true
+      },
+      "payload_sha256_declared": "94dfc450ac9a6307523cb6ab325a4ad448ac299cccdd6330c05ff7ed17a771d9",
+      "direct_payload_canonical_sha256": "54cf4f233950a681b0508a920aa01a554fbcf76960ac69b819bba742891cb631",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-11",
+      "category": "NEGATIVE",
+      "status": "REFUSED",
+      "code": "UNGROUNDED_VALUE",
+      "answers": {},
+      "exact": {},
+      "values": {},
+      "oracle": {},
+      "expected_status": "REFUSED",
+      "expected_code": "UNGROUNDED_VALUE",
+      "math_matches": {},
+      "strict_tuple_matches": {},
+      "payload_sha256_declared": "dea5cd0d73acdcc0b8fc0861096be408c1116d40377e15e58c3ad33e69945719",
+      "direct_payload_canonical_sha256": "b8614a6c3acbf1482bdfc0f4deb53151954952f89895cc9bacd38d9654baff4d",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-12",
+      "category": "NEGATIVE",
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "answers": {},
+      "exact": {},
+      "values": {},
+      "oracle": {},
+      "expected_status": "REFUSED",
+      "expected_code": "SOURCE_OBJECT_MISMATCH",
+      "math_matches": {},
+      "strict_tuple_matches": {},
+      "payload_sha256_declared": "aa3a0cba0ab8f92d871efb0af60cf095261e27f3d2a387d11517eb7e6f82f016",
+      "direct_payload_canonical_sha256": "d516970bb6efa028cbd9db62fbedcd4bbb492d129aa425b0e8d5a8d77c621db8",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-13",
+      "category": "NEGATIVE",
+      "status": "REFUSED",
+      "code": "REQUEST_NOT_ANSWERED",
+      "answers": {},
+      "exact": {},
+      "values": {},
+      "oracle": {},
+      "expected_status": "REFUSED",
+      "expected_code": "REQUEST_NOT_ANSWERED",
+      "math_matches": {},
+      "strict_tuple_matches": {},
+      "payload_sha256_declared": "fd240a13a592300a36a3574110c8213dc65be0079e55ddd87d36795396ed730d",
+      "direct_payload_canonical_sha256": "b6fb3a8623885388beb28d66e5690cd200e7ad74f9b71aebe4b70827ba7c970c",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-14",
+      "category": "NEGATIVE",
+      "status": "REFUSED",
+      "code": "INCONSISTENT_FACTS",
+      "answers": {},
+      "exact": {},
+      "values": {},
+      "oracle": {},
+      "expected_status": "REFUSED",
+      "expected_code": "INCONSISTENT_FACTS",
+      "math_matches": {},
+      "strict_tuple_matches": {},
+      "payload_sha256_declared": "c8cef34e06682e5ad13b555346a373fb470829bc67074b606f7044b849c431a9",
+      "direct_payload_canonical_sha256": "09c510fbe920d95bf85e602caf75c88e5bc8faa943bb8c88daf8e61df3b49cd0",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-15",
+      "category": "NEGATIVE",
+      "status": "REFUSED",
+      "code": "UNDERDETERMINED_POINT",
+      "answers": {},
+      "exact": {},
+      "values": {},
+      "oracle": {},
+      "expected_status": "REFUSED",
+      "expected_code": "UNDERDETERMINED_POINT",
+      "math_matches": {},
+      "strict_tuple_matches": {},
+      "payload_sha256_declared": "eb6bc832952ef42663ea52365a8ef9db738e5dd20160d5d43634b5a9cd9e2d64",
+      "direct_payload_canonical_sha256": "e5800ff3827f3e5d639720338f0ac3a3e58676bfd0637edc799fc03222f62054",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-16",
+      "category": "AMBIGUOUS",
+      "status": "REFUSED",
+      "code": "UNGROUNDED_VALUE",
+      "answers": {},
+      "exact": {},
+      "values": {},
+      "oracle": {},
+      "expected_status": "REFUSED",
+      "expected_code": "UNGROUNDED_VALUE|AMBIGUOUS_VALUE_QUOTE",
+      "math_matches": {},
+      "strict_tuple_matches": {},
+      "payload_sha256_declared": "ad677306192e7a3af4e07fe6e59ddc78871ede992f63eb5b4360bba0382a07de",
+      "direct_payload_canonical_sha256": "a04fcba43a1a9e5c41545252a79e80413d21d9ba505d83e99fb73e1da61a3201",
+      "expected_outcome_match": true
+    },
+    {
+      "id": "SGH-17",
+      "category": "AMBIGUOUS",
+      "status": "SERVED",
+      "code": null,
+      "answers": {
+        "q1": "2a"
+      },
+      "exact": {
+        "q1": {
+          "coef": "2",
+          "dim": 1,
+          "unit": "a"
+        }
+      },
+      "values": {
+        "q1": "4"
+      },
+      "oracle": {},
+      "expected_status": "REFUSED",
+      "expected_code": "SOURCE_OBJECT_MISMATCH",
+      "math_matches": {
+        "q1": false
+      },
+      "strict_tuple_matches": {
+        "q1": false
+      },
+      "payload_sha256_declared": "7ee932921cc530f0c3957472e77eec3890317335e7131757ec60dc474a1bdd92",
+      "direct_payload_canonical_sha256": "63f566d2a7c2f971130e106f605ad6da44fb64a5f8aaf0614a2b48403b3551ec",
+      "expected_outcome_match": false
+    },
+    {
+      "id": "SGH-18",
+      "category": "OUT_OF_SCOPE",
+      "status": "REFUSED",
+      "code": "SCHEMA_INVALID",
+      "answers": {},
+      "exact": {},
+      "values": {},
+      "oracle": {
+        "q1": {
+          "value_sq": "256",
+          "answer": "16a²",
+          "coef": "16",
+          "dim": 2,
+          "unit": "a"
+        }
+      },
+      "expected_status": "REFUSED",
+      "expected_code": "UNSUPPORTED_CAPABILITY|SCHEMA_INVALID|SOURCE_OBJECT_MISMATCH",
+      "math_matches": {},
+      "strict_tuple_matches": {},
+      "payload_sha256_declared": "9ab6a42b425d4b56f2bbdd3d4fdcf776c08b0d93a28d1aabca90802f07292616",
+      "direct_payload_canonical_sha256": "3a48411357bf98a72345c53656c736cde09b9e3c1e7673cb7bfc9f5f75e0ae69",
+      "expected_outcome_match": true
+    }
+  ],
+  "summary": {
+    "positive_exact_served": 10,
+    "positive_goals_exact": 16,
+    "positive_strict_tuple": 14,
+    "negative_exact_refusal": 5,
+    "ambiguous_original_expectation": 1
+  }
+}

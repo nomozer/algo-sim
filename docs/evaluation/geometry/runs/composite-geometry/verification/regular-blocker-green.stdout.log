@@ -1,0 +1,43 @@
+.......................................                                  [100%]
+=================================== PASSES ====================================
+=========================== short test summary info ===========================
+PASSED backend\tests\geometry\test_composite_geometry.py::test_composite_pyramids_have_exact_independent_volumes[section-expected0]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_composite_pyramids_have_exact_independent_volumes[shared-expected1]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_composite_results_do_not_depend_on_fact_order_or_vertex_names[section]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_composite_results_do_not_depend_on_fact_order_or_vertex_names[shared]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_shared_face_uses_the_same_point_ids_and_solid_owned_topology
+PASSED backend\tests\geometry\test_composite_geometry.py::test_composite_missing_point_refuses_instead_of_inventing_a_section
+PASSED backend\tests\geometry\test_composite_geometry.py::test_composite_source_spoofing_is_rejected
+PASSED backend\tests\geometry\test_composite_geometry.py::test_original_solid_precedes_its_auxiliaries_and_derived_solids[section]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_original_solid_precedes_its_auxiliaries_and_derived_solids[shared]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_derived_base_degeneracy_is_a_safe_refusal
+PASSED backend\tests\geometry\test_composite_geometry.py::test_rational_section_and_multiple_goals_reuse_constructed_points
+PASSED backend\tests\geometry\test_composite_geometry.py::test_parallel_section_matches_child_base_and_numeric_area
+PASSED backend\tests\geometry\test_composite_geometry.py::test_composite_missing_data_and_contradictions_refuse[height-MISSING_DIMENSION]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_composite_missing_data_and_contradictions_refuse[perp-UNDERDETERMINED_POINT]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_composite_missing_data_and_contradictions_refuse[unread-SOURCE_PREMISE_UNREAD]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_composite_missing_data_and_contradictions_refuse[goal-REQUEST_NOT_ANSWERED]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_composite_missing_data_and_contradictions_refuse[conflict-INCONSISTENT_FACTS]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_two_independent_bases_have_no_inferred_placement
+PASSED backend\tests\geometry\test_composite_geometry.py::test_cyclic_constructed_vertices_refuse
+PASSED backend\tests\geometry\test_composite_geometry.py::test_exact_volume_certificate_agrees_with_independent_oracle
+PASSED backend\tests\geometry\test_composite_geometry.py::test_explicit_shared_face_relation_is_topologically_verified[SAM-True]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_explicit_shared_face_relation_is_topologically_verified[SAB-False]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_explicit_shared_face_relation_is_topologically_verified[ABC-False]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_explicit_shared_face_relation_is_topologically_verified[SMN-False]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_nonplanar_derived_base_refuses
+PASSED backend\tests\geometry\test_composite_geometry.py::test_square_section_or_crossed_section_has_verified_topology[MNPQ-True]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_square_section_or_crossed_section_has_verified_topology[MPNQ-False]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_volume_certificate_rejects_a_tampered_interpreter_answer
+PASSED backend\tests\geometry\test_composite_geometry.py::test_development_corpus_matches_the_independent_oracle
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_regular_child_requires_a_regular_base_on_the_direct_route[6-False]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_regular_child_requires_a_regular_base_on_the_direct_route[4-True]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_spoofed_regular_base_on_a_rectangle_child_still_refuses
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_generic_child_on_a_rectangle_is_still_served
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_conflicting_side_lengths_refuse
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_planner_regular_child_is_never_wrongly_served[rectangle]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_planner_regular_child_is_never_wrongly_served[square]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_planner_regular_child_shares_the_engine_invariant[rectangle-False]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_planner_regular_child_shares_the_engine_invariant[square-True]
+PASSED backend\tests\geometry\test_composite_geometry.py::test_review_regular_flag_with_equilateral_base_but_oblique_apex_refuses_in_the_engine
+39 passed in 1.69s
