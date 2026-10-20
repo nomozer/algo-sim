@@ -452,6 +452,25 @@ def test_review_round5_a_subject_changing_clause_unbinds_the_sentence(sentence):
     refused(regular(sentence, "4", "5"), "UNGROUNDED_VALUE", "AMBIGUOUS_VALUE_QUOTE")
 
 
+def test_t3_a_premise_sentence_ending_with_its_request_still_binds():
+    """Full T3 on 72d1595f: the request part of a one-sentence problem ends the premises (it was read as opaque)."""
+    ask = "tính độ dài SC."
+    t = f"Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với (ABCD) và SA = 3, {ask}"
+    facts = [f("f1", "solid", "Cho hình chóp S.ABCD", solid="S.ABCD", solid_type="pyramid"),
+             f("f2", "polygon_shape", "đáy ABCD là hình vuông cạnh 2", points=list("ABCD"), shape="square", value="2"),
+             f("f3", "perpendicular", "SA vuông góc với (ABCD)", points_a=["S", "A"], points_b=list("ABCD")),
+             f("f4", "length", "SA = 3", points=["S", "A"], measure="segment", value="3"),
+             q("q", ask, quantity="length", points=["S", "C"])]
+    served(run(t, facts), {"q": "√17"})
+
+
+def test_t3_a_named_polygon_with_its_side_binds_that_polygon_only():
+    """Full T3 on 72d1595f: "Tam giác ABC đều cạnh 2." binds the named triangle's side (served: test_projection_scene_topology);
+    an unlabelled role after such a clause in the same sentence is not bound (the triangle may own it)."""
+    s ="Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, tam giác SAB đều cạnh 4 và có chiều cao bằng 5."
+    refused(regular(s, "4", "5"), "UNGROUNDED_VALUE", "AMBIGUOUS_VALUE_QUOTE")
+
+
 @pytest.mark.parametrize("tail", [", nhưng đó là cạnh của tam giác khác", ", đó là ảnh thu nhỏ"])
 def test_review_round4_a_labelled_base_side_is_unbound_by_an_unread_clause(tail):
     s = f"Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 3{tail}, SA vuông góc với (ABC) và SA = 2."

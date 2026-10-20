@@ -896,6 +896,12 @@ _C_MAT = re.compile(rf"(?:{_MAT_NHAN}\s+(?:và\s+)?(?:nằm\s+trong\s+mặt\s+ph
                     rf"(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
 _C_DAU = re.compile(r"\s*(?:biết\s+(?:rằng\s+)?)?", re.IGNORECASE)
 _C_HET = re.compile(r"\s*[.;]?\s*")
+_C_HOI = re.compile(r"(?:hãy\s+)?(?:tính|tìm|xác\s+định|hỏi)(?!\w)", re.IGNORECASE)
+#: A named polygon with its side ("Tam giác ABC đều cạnh 2"): the side belongs to THAT polygon (labelled binding); like any
+#: other-object clause it changes the subject for unlabelled roles of the sentence.
+_C_DAGIAC = re.compile(rf"(?:tam\s+giác|hình\s+vuông|lục\s+giác)\s+(?P<p>{_L1}{_L1}{_NHAN})(?![\w'])\s+(?:là\s+(?:một\s+)?"
+                       rf"(?:tam\s+giác\s+|hình\s+vuông\s+|lục\s+giác\s+)?)?(?:đều\s+)?(?:có\s+)?cạnh\s*(?:(?:bằng|=|là)\s*)?"
+                       rf"{_so_nhom('ps')}", re.IGNORECASE)
 _DANH_VAI = re.compile(r"(?<!\w)(?:cạnh|chiều\s+cao|đường\s+cao)(?!\w)", re.IGNORECASE)
 _KHOI_FN = ("pyramid", "regular_pyramid", "prism")
 
@@ -909,8 +915,12 @@ def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
     carries no number; it is recorded as opaque ("mo") and its whole sentence then binds no role (`_lien_ket_cau`)."""
     p, out = _C_DAU.match(s).end(), []
     while True:
-        for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dcao", _C_DCAO), ("diem", _C_DIEM), ("chieu", _C_CHIEU),
-                         ("mat", _C_MAT), ("vuong", _C_VUONG), ("doan", _C_DOAN), ("vai", _C_VAI)):
+        # the request part of the sentence ("…, SA = 3, tính độ dài SC.") ends its premises; it binds nothing, and a request
+        # carrying a number (a local given or a changed value) leaves the sentence unread
+        if q := _C_HOI.match(s, p):
+            return out if not any(_doc(x) is not None for x in _SO.finditer(s, q.end())) else None
+        for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dagiac", _C_DAGIAC), ("dcao", _C_DCAO), ("diem", _C_DIEM),
+                         ("chieu", _C_CHIEU), ("mat", _C_MAT), ("vuong", _C_VUONG), ("doan", _C_DOAN), ("vai", _C_VAI)):
             if m := rx.match(s, p):
                 out.append((kind, m))
                 p = m.end()
@@ -948,7 +958,7 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
             # sentence ("mặt bên SAB là tam giác cân và có chiều cao bằng 5") may be ITS role, and its shape premise is
             # encoded by no call: no unlabelled role of such a sentence is bound. A plain point definition (midpoint,
             # centre, centroid, intersection, point on an object) names no height or side and changes nothing.
-            mo = any(kind in ("chieu", "mat", "dcao") for kind, _m in cau)
+            mo = any(kind in ("chieu", "mat", "dcao", "dagiac") for kind, _m in cau)
             # review round 6 (N1/N2): "G là trọng tâm của tam giác SAB và có đường cao bằng 5" — a "có/với <role>" right
             # after a point definition may predicate that definition's object: the sentence's roles are not bound.
             mo = mo or any(k0 == "diem" and k1 == "vai" and re.match(r"(?:có|với)\s", m1.group(), re.IGNORECASE)
@@ -959,6 +969,8 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
                     khoi = next((k for k in khoi_goi if _nhan_khoi(k) == nhan), None)
                     tu = re.sub(r"\s+", " ", m["kn"].lower())
                     moi = tu == "lập phương" or tu == "tứ diện" and "đều" in m["km"].lower()
+                elif kind == "dagiac":
+                    out[x + m.start("ps")] = ("side", frozenset(re.findall(r"[A-Z][0-9]*'?", m["p"])))
                 elif kind == "day" and m["ds"] and (m["d"] or m["d2"] or not mo):
                     day = m["d"] or m["d2"]
                     nhan = re.findall(r"[A-Z][0-9]*'?", day) if day else (list(khoi.args.base) if khoi else [])
