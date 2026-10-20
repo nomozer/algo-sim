@@ -790,3 +790,63 @@ def square_two_sentences(second):
     "Mặt đáy là hình vuông ABCD.", "Các mặt bên là tam giác cân."])
 def test_review_t3f_labelled_or_face_nouns_in_a_base_sentence_are_still_served(second):
     served(square_two_sentences(second), {"q": "80/3"})
+
+
+# ── review of c3b1f905: base / face / section attributions for common wordings; any unattributed noun refuses ──────────
+@pytest.mark.parametrize("s", ["Cho hình chóp tam giác đều S.ABC với tứ giác SABC làm đáy, AB = 2 và SA = 3.",
+                               "Cho hình chóp tam giác đều S.ABC với hình vuông SABC làm đáy, AB = 2 và SA = 3."])
+def test_review_t3g_a_labelled_polygon_made_the_base_must_match_the_solid(s):
+    refused(regular_segments(s))
+
+
+@pytest.mark.parametrize("second", ["Hình vuông SABC là đáy của nó.", "Mặt dưới của nó là hình vuông.",
+                                    "Phần dưới cùng là một hình vuông.", "Ba mặt bên là ba hình vuông."])
+def test_review_t3g_more_base_and_face_wordings_are_count_checked(second):
+    refused(regular_two_sentences(second))
+
+
+def regular_prism_two_sentences(second):
+    s1 = "Cho hình lăng trụ tam giác đều MNP.M'N'P' có cạnh đáy bằng 4 và cạnh bên MM' = 2."
+    ask = "Tính thể tích khối lăng trụ MNP.M'N'P'."
+    return run(f"{s1} {second} {ask}", [
+        {"id": "f1", "kind": "solid", "role": "premise", "quotes": [s1, second], "solid": "MNP.M'N'P'",
+         "solid_type": "prism", "regular": True},
+        f("f2", "length", s1, measure="base_edge", value="4", solid="MNP.M'N'P'"),
+        f("f3", "length", s1, points=["M", "M'"], measure="segment", value="2"),
+        q("q", ask, quantity="volume", solid="MNP.M'N'P'")])
+
+
+@pytest.mark.parametrize("second", ["Mặt trên là hình vuông.", "Mặt trên là tứ giác đều."])
+def test_review_t3g_a_prism_top_is_count_checked(second):
+    refused(regular_prism_two_sentences(second))
+
+
+def test_review_t3g_a_prism_with_two_equal_triangular_bases_is_served():
+    served(regular_prism_two_sentences("Hai đáy là hai tam giác đều bằng nhau."), {"q": "8√3"})
+
+
+@pytest.mark.parametrize("second", [
+    "Hình chiếu của S lên mặt đáy trùng với trọng tâm tam giác đáy.", "Gọi G là trọng tâm của tam giác đáy.",
+    "Các mặt bên của hình chóp là các tam giác cân.", "Mỗi mặt bên của khối chóp là một tam giác cân.",
+    "Ba mặt bên là ba tam giác cân bằng nhau.", "Tam giác SAB có đáy AB và là tam giác cân."])
+def test_review_t3g_common_triangular_pyramid_wordings_are_served(second):
+    served(regular_two_sentences(second), {"q": "√3"})
+
+
+@pytest.mark.parametrize("second", ["Gọi O là tâm của hình vuông đáy.", "Mặt phẳng (SAC) cắt khối chóp theo một tam giác cân.",
+                                    "Mỗi mặt bên tạo với đáy một tam giác cân."])
+def test_review_t3g_common_square_pyramid_wordings_are_served(second):
+    served(square_two_sentences(second), {"q": "80/3"})
+
+
+@pytest.mark.parametrize("second", ["Mặt phẳng (A'BD) cắt hình lập phương theo thiết diện là một tam giác đều.",
+                                    "Các mặt của hình lập phương là hình vuông."])
+def test_review_t3g_cube_section_and_face_wordings_are_served(second):
+    s1 = "Cho hình lập phương ABCD.A'B'C'D' cạnh 2."
+    ask = "Tính thể tích khối lập phương ABCD.A'B'C'D'."
+    r = run(f"{s1} {second} {ask}", [
+        {"id": "f1", "kind": "solid", "role": "premise", "quotes": [s1, second], "solid": "ABCD.A'B'C'D'",
+         "solid_type": "cube"},
+        f("f2", "length", s1, solid="ABCD.A'B'C'D'", measure="edge", value="2"),
+        q("q", ask, quantity="volume", solid="ABCD.A'B'C'D'")])
+    served(r, {"q": "8"})
