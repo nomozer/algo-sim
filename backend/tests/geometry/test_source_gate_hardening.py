@@ -436,6 +436,19 @@ def test_review_round4_no_exemption_for_unread_clauses(sentence):
     refused(regular(sentence, "4", "5"), "UNGROUNDED_VALUE", "AMBIGUOUS_VALUE_QUOTE")
 
 
+@pytest.mark.parametrize("sentence", [   # review round 5: a face / triangle / projection clause changes the subject
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, mặt bên SAB là tam giác cân và có chiều cao bằng 5.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, tam giác SAB cân và có đường cao bằng 5.",
+    "Cho hình chóp tứ giác đều S.ABCD có chiều cao bằng 5, tam giác SAC cân và có cạnh đáy bằng 4.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, tam giác SMN đều và có chiều cao bằng 5.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, mặt bên SAB là tam giác đều và chiều cao bằng 5.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, tam giác SAB cân, chiều cao bằng 5.",
+    "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, đường cao bằng 5, H là hình chiếu của S lên AB.",
+])
+def test_review_round5_a_subject_changing_clause_unbinds_the_sentence(sentence):
+    refused(regular(sentence, "4", "5"), "UNGROUNDED_VALUE", "AMBIGUOUS_VALUE_QUOTE")
+
+
 @pytest.mark.parametrize("tail", [", nhưng đó là cạnh của tam giác khác", ", đó là ảnh thu nhỏ"])
 def test_review_round4_a_labelled_base_side_is_unbound_by_an_unread_clause(tail):
     s = f"Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 3{tail}, SA vuông góc với (ABC) và SA = 2."

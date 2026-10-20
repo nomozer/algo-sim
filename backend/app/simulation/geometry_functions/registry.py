@@ -869,9 +869,11 @@ _DOI_TUONG_NHAN = (rf"(?:(?:cạnh|đoạn(?:\s+thẳng)?|đường\s+thẳng|ta
                    rf"mặt\s+đáy|đáy|mp)\s*)?\(?{_NHAN}\)?")
 _C_DIEM = re.compile(rf"(?:gọi\s+)?{_L1}\s+là\s+(?:(?:trung\s+điểm|tâm|trọng\s+tâm)\s+(?:của\s+)?{_DOI_TUONG_NHAN}"
                      rf"|giao\s+điểm\s+(?:của\s+)?{_DOI_TUONG_NHAN}\s+(?:và|với)\s+{_DOI_TUONG_NHAN}"
-                     rf"|hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}"
                      rf"|điểm(?:\s+di\s+động)?\s+(?:nằm\s+)?(?:trên|thuộc)\s+{_DOI_TUONG_NHAN})"
                      rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
+#: A projection may be read as the foot of a height stated in the same sentence: kept readable, but a subject change.
+_C_CHIEU = re.compile(rf"(?:gọi\s+)?{_L1}\s+là\s+hình\s+chiếu(?:\s+vuông\s+góc)?\s+của\s+{_L1}\s+(?:lên|trên)\s+{_DOI_TUONG_NHAN}"
+                      rf"(?![\w'])(?=\s*(?:[,;.]|và\s|$))", re.IGNORECASE)
 _C_DOAN = re.compile(rf"(?:có\s+)?(?:độ\s+dài\s+(?:của\s+)?)?(?:(?:cạnh\s+bên|cạnh|đoạn(?:\s+thẳng)?|đường\s+chéo)\s+)?"
                      rf"(?P<seg>{_L1}{_L1})(?![\w'])"
                      rf"(?:\s*=\s*{_L1}{_L1}(?![\w']))*\s*(?:=|bằng|(?:có\s+)?độ\s+dài(?:\s+bằng)?)\s*{_so_nhom('ss')}",
@@ -907,8 +909,8 @@ def _phan_tich_cau(s: str) -> list[tuple[str, re.Match | None]] | None:
     carries no number; it is recorded as opaque ("mo") and its whole sentence then binds no role (`_lien_ket_cau`)."""
     p, out = _C_DAU.match(s).end(), []
     while True:
-        for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dcao", _C_DCAO), ("diem", _C_DIEM), ("mat", _C_MAT),
-                         ("vuong", _C_VUONG), ("doan", _C_DOAN), ("vai", _C_VAI)):
+        for kind, rx in (("khoi", _C_KHOI), ("day", _C_DAY), ("dcao", _C_DCAO), ("diem", _C_DIEM), ("chieu", _C_CHIEU),
+                         ("mat", _C_MAT), ("vuong", _C_VUONG), ("doan", _C_DOAN), ("vai", _C_VAI)):
             if m := rx.match(s, p):
                 out.append((kind, m))
                 p = m.end()
@@ -942,7 +944,11 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
         # opaque clause binds nothing. No exemption list — point definitions are closed grammar clauses (`_C_DIEM`).
         if cau is not None and not any(kind == "mo" for kind, _m in cau):
             khoi, moi = (khoi_goi[0] if len(khoi_goi) == 1 else None), False
-            mo = any(kind == "mo" for kind, _m in cau)
+            # review round 5: a face / triangle / altitude / projection clause changes the subject — a role anywhere in the
+            # sentence ("mặt bên SAB là tam giác cân và có chiều cao bằng 5") may be ITS role, and its shape premise is
+            # encoded by no call: no unlabelled role of such a sentence is bound. A plain point definition (midpoint,
+            # centre, centroid, intersection, point on an object) names no height or side and changes nothing.
+            mo = any(kind in ("chieu", "mat", "dcao") for kind, _m in cau)
             for kind, m in cau:
                 if kind == "khoi":
                     nhan = set(re.findall(r"[A-Z][0-9]*'?", m["k"]))
