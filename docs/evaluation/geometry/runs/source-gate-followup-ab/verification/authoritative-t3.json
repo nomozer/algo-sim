@@ -3,7 +3,7 @@
   "run": "source-gate-followup-ab",
   "branch": "research/hybrid-source-gate-followup-ab",
   "product_commit": "68acc140a7d956e494f3bc847d01d20e394e2830",
-  "candidate_commit": "b5e803803c1739a8e7a6d7b9e6c131747126e100",
+  "candidate_commit": "b5e80380f6d726b6215943c466ca672db83c5560",
   "t3_commit": "b0b2a3c3",
   "measured_system_hash": "de66bd5ca6ee798dab043a1a1a7e79fc635aff5b2c5259de8878fe8f66bcae50",
   "measured_file_count": 112,

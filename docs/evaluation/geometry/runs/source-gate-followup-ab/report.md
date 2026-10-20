@@ -1,6 +1,6 @@
 # Source Gate Follow-up A+B — Targeted Defect Closure (`source-gate-followup-ab`)
 
-- **Branch**: `research/hybrid-source-gate-followup-ab` (from `main` = `origin/main` = `97cfff9c3085ec00a236f87587c2e4144b38836c`; product commit `68acc140a7d956e494f3bc847d01d20e394e2830`; candidate freeze `b5e803801a9493b719813a7f5d5b68fd5ff20c14`; authoritative Full T3 `b0b2a3c3563db6420d8700bb4e9a62efee7f57f1` `FULL_PRODUCT_GATE_PASS` — pytest `11,347` passed, vitest `1,146` passed, build `PASS`, demo `5/5`, crash `6/6`)
+- **Branch**: `research/hybrid-source-gate-followup-ab` (from `main` = `origin/main` = `97cfff9c3085ec00a236f87587c2e4144b38836c`; product commit `68acc140a7d956e494f3bc847d01d20e394e2830`; candidate freeze `b5e80380f6d726b6215943c466ca672db83c5560`; authoritative Full T3 `b0b2a3c3d214c0ac3b72f2d96def7f531fd5f1fe` `FULL_PRODUCT_GATE_PASS` — pytest `11,347` passed, vitest `1,146` passed, build `PASS`, demo `5/5`, crash `6/6`)
 - **Owner Authorization**: `GO_SOURCE_GATE_FOLLOWUP_AB_LOCAL_IMPLEMENTATION` (local implementation and verification only; no `GO MAIN` authorization)
 - **Measured System Tree SHA-256**: `de66bd5ca6ee798dab043a1a1a7e79fc635aff5b2c5259de8878fe8f66bcae50` (`112` files; supersedes `0512dbc53e09696dfecee4cec8ed360af4ad66d8816c782c2993c3617a0d2583`)
 - **Versions & Surface Invariants**:
