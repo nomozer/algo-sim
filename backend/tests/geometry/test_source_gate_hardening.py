@@ -516,3 +516,39 @@ def test_review_lateral_edge_of_a_regular_pyramid_still_serves():
                                      f("f3", "length", s, measure="lateral_edge", solid="S.ABCD", value="3"),
                                      q("q", "Tính độ dài SC.", quantity="length", points=["S", "C"])])
     served(r, {"q": "3"})
+
+
+# ── independent review of 81e91ebb: the shape noun must name as many vertices as the polygon has ───────────────────────
+def right_prism(sentence, shape, base):
+    top = "".join(c + "'" for c in base)
+    sol = f"{base}.{top}"
+    ask = f"Tính thể tích khối lăng trụ {sol}."
+    return run(f"Cho lăng trụ đứng {sol} có AA' = 3. {sentence} {ask}", [
+        f("f1", "solid", f"Cho lăng trụ đứng {sol}", solid=sol, solid_type="prism", right=True),
+        f("f4", "length", "AA' = 3", points=["A", "A'"], measure="segment", value="3"),
+        f("f2", "polygon_shape", sentence, points=list(base), shape=shape, value="2"),
+        q("q", ask, quantity="volume", solid=sol)])
+
+
+TRI, SQ4, HEX = ("equilateral_triangle", "ABC"), ("square", "ABCD"), ("regular_hexagon", "ABCDEF")
+
+
+@pytest.mark.parametrize("sentence,spec", [
+    ("Hình vuông ABC cạnh 2.", TRI), ("Hình vuông ABC có cạnh bằng 2.", TRI), ("Tam giác ABC là hình vuông cạnh 2.", TRI),
+    ("Tam giác ABC là lục giác đều cạnh 2.", TRI), ("Lục giác ABC đều cạnh 2.", TRI),
+    ("Tam giác ABCD đều cạnh 2.", SQ4), ("Lục giác ABCD đều cạnh 2.", SQ4),
+    ("Hình vuông ABCDEF cạnh 2.", HEX), ("Tam giác ABCDEF đều cạnh 2.", HEX),
+    # the same contradiction through the base clause (served on 1beeec0b as well)
+    ("Đáy ABC là hình vuông cạnh 2.", TRI), ("Đáy ABC là lục giác đều cạnh 2.", TRI), ("Đáy ABCD là tam giác đều cạnh 2.", SQ4),
+])
+def test_review_t3_a_shape_noun_with_the_wrong_vertex_count_is_refused(sentence, spec):
+    refused(right_prism(sentence, *spec))
+
+
+@pytest.mark.parametrize("sentence,spec,v", [
+    ("Tam giác ABC đều cạnh 2.", TRI, "3√3"), ("Tam giác ABC là tam giác đều có cạnh bằng 2.", TRI, "3√3"),
+    ("Đáy ABC là tam giác đều cạnh 2.", TRI, "3√3"), ("Hình vuông ABCD cạnh 2.", SQ4, "12"),
+    ("Đáy ABCD là hình vuông cạnh 2.", SQ4, "12"), ("Lục giác ABCDEF đều cạnh 2.", HEX, "18√3"),
+])
+def test_review_t3_a_shape_noun_with_the_right_vertex_count_is_served(sentence, spec, v):
+    served(right_prism(sentence, *spec), {"q": v})

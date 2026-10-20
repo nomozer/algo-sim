@@ -745,6 +745,17 @@ def _khoi_dung(c: LoiGoi) -> bool:
     return False
 
 
+#: Shape nouns that fix a vertex count (independent review of 81e91ebb: "Hình vuông ABC cạnh 2", "Đáy ABCD là tam giác đều
+#: cạnh 2" were served as an equilateral triangle / a square — a self-contradictory premise hidden by the gate).
+_DA_GIAC_SO = re.compile(r"(?<!\w)(?:(?P<t>tam|tứ|ngũ|lục)\s+giác|hình\s+vuông)(?!\w)", re.IGNORECASE)
+_SO_DINH = {"tam": 3, "tứ": 4, "ngũ": 5, "lục": 6}
+
+
+def _so_dinh_khop(cum: str, n: int) -> bool:
+    """Every count-bearing shape noun in `cum` names an n-gon."""
+    return all((_SO_DINH[m["t"].lower()] if m["t"] else 4) == n for m in _DA_GIAC_SO.finditer(cum))
+
+
 def _co_doi_tuong_hinh(c: LoiGoi, de: str = "") -> bool:
     """Bind hai cue định nghĩa mới (`lập phương`, `chữ nhật`) vào đúng đa giác, không mượn keyword của đối tượng khác."""
     vertices = list(c.args.vertices)
@@ -754,6 +765,11 @@ def _co_doi_tuong_hinh(c: LoiGoi, de: str = "") -> bool:
                 return True
             for dau, cuoi, phan in _tu_nhan(q):
                 if any(_cung_da_giac(p, vertices) for p in phan):
+                    # the shape noun written right before or after the polygon must name as many vertices as it has
+                    truoc = re.search(rf"(?:{_DA_GIAC_SO.pattern})(?:\s+đều)?\s*$", q[:dau], re.IGNORECASE)
+                    sau = re.match(rf"\s+(?:là\s+(?:một\s+)?)?(?:{_DA_GIAC_SO.pattern})", q[cuoi:], re.IGNORECASE)
+                    if not all(_so_dinh_khop(t.group(), len(vertices)) for t in (truoc, sau) if t):
+                        return False
                     if re.match(r"\s+(?:là\s+)?(?:(?:tam|tứ|ngũ|lục|đa)\s+giác\s+)?đều\b|\s+(?:là\s+)?hình\s+vuông\b",
                                 q[cuoi:], re.IGNORECASE):
                         return True
@@ -970,11 +986,14 @@ def _lien_ket_cau(de: str, a: int, b: int, calls: tuple[LoiGoi, ...]) -> dict[in
                     tu = re.sub(r"\s+", " ", m["kn"].lower())
                     moi = tu == "lập phương" or tu == "tứ diện" and "đều" in m["km"].lower()
                 elif kind == "dagiac":
-                    out[x + m.start("ps")] = ("side", frozenset(re.findall(r"[A-Z][0-9]*'?", m["p"])))
+                    nhan = re.findall(r"[A-Z][0-9]*'?", m["p"])
+                    if _so_dinh_khop(m.group(), len(nhan)):              # "Hình vuông ABC cạnh 2" binds nothing
+                        out[x + m.start("ps")] = ("side", frozenset(nhan))
                 elif kind == "day" and m["ds"] and (m["d"] or m["d2"] or not mo):
                     day = m["d"] or m["d2"]
                     nhan = re.findall(r"[A-Z][0-9]*'?", day) if day else (list(khoi.args.base) if khoi else [])
-                    out[x + m.start("ds")] = ("side", frozenset(nhan))
+                    if not nhan or _so_dinh_khop(m.group(), len(nhan)):  # "Đáy ABCD là tam giác đều cạnh 2" binds nothing
+                        out[x + m.start("ds")] = ("side", frozenset(nhan))
                 elif kind == "doan":
                     out[x + m.start("ss")] = ("seg", frozenset(re.findall(r"[A-Z][0-9]*'?", m["seg"])))
                 elif kind == "vai" and not mo and _cua_khop(m, khoi):
