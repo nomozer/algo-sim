@@ -1037,7 +1037,7 @@ _KHOI_4 = re.compile(rf"(?i:hộp|lập\s+phương)(?:\s+(?i:chữ\s+nhật))?\s
 _TU_DIEN = re.compile(rf"(?i:tứ\s+diện)(?:\s+(?i:đều))?\s+{_NHAN}(?![\w'])")
 #: a polygon label right after the noun, past its modifiers; a sentence-final period ends it, "ABC.A'B'C'" is a solid
 _DEM_SAU_NHAN = re.compile(rf"(?i:\s+(?:đều|vuông|cân|nhọn|tù)(?!\w))*\s+\(?(?P<p>{_L1}{_L1}{_NHAN}?)\)?(?![\w']|\.\w)")
-_NHAN_LA = re.compile(rf"(?<![\w'.])(?P<p>{_L1}{_L1}{_NHAN}?)\s+(?i:là\s+(?:(?:một|các|những)\s+)?)$")
+_NHAN_LA = re.compile(rf"(?<![\w'.])\(?(?P<p>{_L1}{_L1}{_NHAN}?)\)?\s+(?i:là\s+(?:(?:một|các|những)\s+)?)$")
 #: base clause right before the noun: "(hai) (mặt) đáy (ABCD) (là (một|hai))"
 _DAY_TRUOC = re.compile(rf"(?<!\w)(?i:(?:hai\s+)?(?:mặt\s+)?đáy)(?:\s+\(?{_NHAN}\)?)?\s+(?i:(?:là\s+(?:(?:một|hai)\s+)?)?)$")
 #: base named right after the noun (or its label): "tam giác đáy", "hình vuông SABC làm đáy", "… là đáy"
@@ -1045,7 +1045,7 @@ _DAY_SAU = re.compile(r"(?i:(?:\s+(?:làm|là)(?:\s+mặt)?)?\s+đáy)(?!\w)")
 #: the solid's top / bottom face: "mặt dưới (của nó) là", "phần dưới cùng là một"
 _MAT_TREN_DUOI = re.compile(r"(?i:(?<!\w)(?:mặt|phần)\s+(?:trên|dưới)(?:\s+cùng)?(?:\s+của\s+[^.;,]{1,30}?)?\s+là\s+(?:một\s+)?)$")
 #: a face predicate: "(mỗi|các|ba) mặt (bên) (của …) (đều) là|tạo với đáy (một|các|ba …)"
-_MAT_TRUOC = re.compile(r"(?<!\w)(?i:mặt)(?!\s+(?i:phẳng|đáy|trên|dưới|cầu)(?!\w))(?P<ben>\s+(?i:bên))?(?!\w)[^.;]{0,40}?"
+_MAT_TRUOC = re.compile(r"(?<!\w)(?i:mặt)(?!\s+(?i:phẳng|đáy|trên|dưới|cầu)(?!\w))(?P<ben>\s+(?i:bên)(?!\s+(?i:dưới|trên|trong|ngoài|cạnh|phải|trái|phía)(?!\w)))?(?!\w)[^.;]{0,40}?"
                         r"\s(?i:(?:đều\s+)?(?:là|tạo\s+với\s+đáy)\s+(?:(?:các|những|một|hai|ba|bốn|mỗi)\s+)?)$")
 #: "…, và (cũng) là <noun>": the same subject as the sentence's previous noun
 _NOI_TRUOC = re.compile(r"(?i:(?:\s+và|,)\s+(?:cũng\s+)?là\s+(?:một\s+)?)$")

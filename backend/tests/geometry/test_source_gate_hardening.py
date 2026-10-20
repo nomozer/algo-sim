@@ -884,3 +884,21 @@ def test_review_t3h_a_sub_solid_named_in_the_text_does_not_defer_the_base_check(
 
 def test_review_t3h_an_enumeration_of_labelled_triangles_is_served():
     served(regular_two_sentences("Tam giác SAB, SBC, SCA là các tam giác cân."), {"q": "√3"})
+
+
+# ── review of 26e1040a: "mặt bên dưới/trên" is the bottom/top face, not a lateral face; "(SBC) là" predicates a label ───
+def test_review_t3i_bottom_or_top_face_is_not_a_lateral_face():
+    s = "Cho hình chóp tứ giác đều S.ABCD có AB = 4, SA = 5 và mặt bên dưới là tam giác đều."
+    ask = "Tính độ dài SC."
+    refused(run(f"{s} {ask}", [f("f1", "solid", s, solid="S.ABCD", solid_type="pyramid", regular=True),
+                               f("l1", "length", s, points=["A", "B"], measure="segment", value="4"),
+                               f("l2", "length", s, points=["S", "A"], measure="segment", value="5"),
+                               q("q", ask, quantity="length", points=["S", "C"])]))
+    for second in ("Mặt bên dưới là tam giác đều.", "Mặt bên phía dưới là tam giác."):
+        refused(square_two_sentences(second))
+    for second in ("Mặt bên dưới là hình vuông.", "Mặt bên trên là tứ giác đều.", "Mặt bên dưới cùng là một hình vuông."):
+        refused(regular_prism_two_sentences(second))
+
+
+def test_review_t3i_a_parenthesised_face_label_is_served():
+    served(regular_two_sentences("Mặt (SBC) là tam giác đều."), {"q": "√3"})
