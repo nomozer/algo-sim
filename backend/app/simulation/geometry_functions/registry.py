@@ -1028,46 +1028,61 @@ def _so_dinh_cau_khop(cau: list[tuple[str, re.Match | None]], khoi_goi: list[Loi
     return True
 
 
-_DEM = r"(?i:(?:tam|tứ|ngũ|lục)\s+giác|hình\s+vuông)(?!\w)"
-_KHOI_DEM = re.compile(rf"(?i:(?:hình|khối)\s+(?P<kn>chóp|lăng\s+trụ))(?P<km>(?i:\s+(?:đứng|đều|xiên|(?:tam|tứ|ngũ|lục)\s+giác)"
-                       rf"(?!\w))*)\s+(?P<k>{_NHAN}(?:\.{_NHAN})?)(?![\w'])")
+#: A count-bearing shape noun, spelled freely ("hình tứ giác", "tứ-giác", "hình vuông").
+_DEM_LOI = r"(?:hình\s+)?(?:tam|tứ|ngũ|lục)[\s-]+giác|hình\s+vuông"
+_DEM_RX = re.compile(rf"(?<!\w)(?i:{_DEM_LOI})(?!\w)")
+_KHOI_DEM = re.compile(rf"(?<!\w)(?i:(?:(?:hình|khối)\s+)?(?P<kn>chóp|lăng\s+trụ))"
+                       rf"(?P<km>(?i:\s+(?:đứng|đều|xiên|{_DEM_LOI})(?!\w))*)\s+(?P<k>{_NHAN}(?:\.{_NHAN})?)(?![\w'])")
 _KHOI_4 = re.compile(rf"(?i:hộp|lập\s+phương)(?:\s+(?i:chữ\s+nhật))?\s+{_NHAN}\.{_NHAN}(?![\w'])")
 _TU_DIEN = re.compile(rf"(?i:tứ\s+diện)(?:\s+(?i:đều))?\s+{_NHAN}(?![\w'])")
-_DAY_DEM = re.compile(rf"(?<!\w)(?i:(?:mặt\s+)?đáy)(?:\s+\(?(?P<d>{_NHAN})\)?(?![\w']))?"
-                      rf"(?:\s+(?i:của\s+(?:nó|(?:hình|khối)\s+(?:chóp|lăng\s+trụ)))(?:\s+{_NHAN}(?:\.{_NHAN})?)?)?"
-                      rf"\s+(?i:(?:(?:cũng|đều)\s+)?là\s+(?:một\s+)?)?{_DEM}")
-_DA_GIAC_NHAN = re.compile(rf"{_DEM}(?:\s+(?i:đều))?\s+\(?(?P<p>{_L1}{_L1}{_NHAN}?)(?![\w'.])")
-_NHAN_LA_DA_GIAC = re.compile(rf"(?<![\w'.])(?P<p>{_L1}{_L1}{_NHAN}?)\s+(?i:là\s+(?:một\s+)?){_DEM}")
+_DEM_SAU_NHAN = re.compile(rf"(?:\s+(?i:đều))?\s+\(?(?P<p>{_L1}{_L1}{_NHAN}?)(?![\w'.])")
+_NHAN_LA = re.compile(rf"(?<![\w'.])(?P<p>{_L1}{_L1}{_NHAN}?(?:\.{_NHAN})?)\s+(?i:là\s+(?:một\s+)?)$")
+_KHOI_TRUOC = re.compile(r"(?i:(?<!\w)(?:chóp|lăng\s+trụ)(?:\s+(?:đứng|đều|xiên))*\s*)$")
+_MENH_DE = re.compile(r"[.;,:](?=\s|$)|\s(?i:và)\s")
+
+
+def _so_cua_dem(noun: str) -> int:
+    t = re.search(r"(?i)(?<!\w)(tam|tứ|ngũ|lục)(?=[\s-]+giác)", noun)
+    return _SO_DINH[t.group(1).lower()] if t else 4
 
 
 def _kiem_so_dinh_nguon(de: str) -> None:
-    """Source-level vertex-count gate (reviews of the T3 fix, rounds 1-4): every count-bearing shape noun the source
-    attaches to a solid ("hình chóp tam giác đều S.ABC"), to a base — labelled, or unlabelled and owned by the source's
-    solid(s) ("đáy là hình vuông", "mặt đáy của nó là …") — or to a named polygon ("hình vuông ABC", "ABC là tam giác")
-    names as many vertices as that polygon. Checked on the WHOLE text, whatever a value's grounding path."""
+    """Source-level vertex-count gate (reviews of the T3 fix, rounds 1-5). EVERY count-bearing shape noun of the text is
+    attributed: to the label right after it ("hình vuông ABCD"), to the label it predicates ("ABCD là hình vuông"), to
+    the solid whose name it is part of ("hình chóp tam giác đều S.ABC"), or — inside a base clause ("đáy …") or after a
+    solid noun ("… là hình chóp tứ giác") — to the base of the solid(s) the text names. It must name as many vertices as
+    that polygon; a base / solid noun with no single owner is refused. Checked on the WHOLE text, whatever path grounds
+    a value; a noun in no such context (a lateral face, a plane triangle) names no base and is not counted."""
     def dem(lb: str) -> int:
         return len(re.findall(r"[A-Z][0-9]*'?", lb))
     so_day: set[int] = set()
+    da_xet: set[int] = set()
     for m in _KHOI_DEM.finditer(de):
         dau, _, sau = m["k"].partition(".")
         n = dem(dau) if "lăng" in m["kn"].lower() else (dem(sau) if sau else dem(dau) - 1)
         so_day.add(n)
-        if not _so_dinh_khop(m["km"], n):
-            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{m.group()!r}: tên khối nêu số đỉnh đáy khác nhãn của nó")
+        for d in _DEM_RX.finditer(m["km"]):
+            da_xet.add(m.start("km") + d.start())
+            if _so_cua_dem(d.group()) != n:
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{m.group()!r}: tên khối nêu số đỉnh đáy khác nhãn của nó")
     so_day |= {4 for _ in _KHOI_4.finditer(de)} | {3 for _ in _TU_DIEN.finditer(de)}
-    for m in _DAY_DEM.finditer(de):
-        if m["d"]:
-            ok = _so_dinh_khop(m.group(), dem(m["d"]))
-        elif len(so_day) != 1:
-            raise TuChoi("AMBIGUOUS_REFERENCE", f"{m.group()!r}: không xác định được đáy của khối nào")
+    for m in _DEM_RX.finditer(de):
+        if m.start() in da_xet:
+            continue
+        if (x := _DEM_SAU_NHAN.match(de, m.end())) or (x := _NHAN_LA.search(de[:m.start()])):
+            n = dem(x["p"])
         else:
-            ok = _so_dinh_khop(m.group(), next(iter(so_day)))
-        if not ok:
-            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{m.group()!r}: hình của đáy không khớp số đỉnh đáy")
-    for rx in (_DA_GIAC_NHAN, _NHAN_LA_DA_GIAC):
-        for m in rx.finditer(de):
-            if not _so_dinh_khop(m.group(), dem(m["p"])):
-                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{m.group()!r}: tên hình nêu số đỉnh khác nhãn")
+            mo = max((k.end() for k in _MENH_DE.finditer(de, 0, m.start())), default=0)
+            cau = de[mo:m.start()]
+            if not (_KHOI_TRUOC.search(cau) or re.search(r"(?i)(?<!\w)đáy(?!\w)", cau)
+                    and not re.search(r"(?i)(?<!\w)bên(?!\w)", cau)):
+                continue
+            if len(so_day) != 1:
+                raise TuChoi("AMBIGUOUS_REFERENCE", f"{de[mo:m.end()]!r}: không xác định được đáy của khối nào")
+            n = next(iter(so_day))
+        if _so_cua_dem(m.group()) != n:
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{de[max(0, m.start() - 30):m.end() + 12]!r}: hình nêu số đỉnh khác "
+                                                   "đa giác nó gọi tên")
 
 
 def _cua_khop(m: re.Match, khoi: LoiGoi | None) -> bool:

@@ -696,3 +696,50 @@ def test_review_t3d_consistent_wordings_still_served():
         f("f2", "length", s1, measure="base_edge", value="2", solid="S.ABC"),
         f("f3", "length", s1, measure="height", value="3", solid="S.ABC"),
         q("q", ask, quantity="volume", solid="S.ABC")]), {"q": "√3"})
+
+
+# ── review of 57701200: every count noun is attributed; an unattributable base / solid noun is checked or refused ───────
+def test_review_t3e_single_sentence_hinh_tu_giac_base_with_labelled_segments():
+    s = "Cho hình chóp tam giác đều S.ABC có đáy là hình tứ giác đều, AB = 2 và SA = 3."
+    ask = "Tính thể tích khối chóp S.ABC."
+    refused(run(f"{s} {ask}", [f("f1", "solid", s, solid="S.ABC", solid_type="pyramid", regular=True),
+                               f("l1", "length", s, points=["A", "B"], measure="segment", value="2"),
+                               f("l2", "length", s, points=["S", "A"], measure="segment", value="3"),
+                               q("q", ask, quantity="volume", solid="S.ABC")]))
+
+
+def regular_two_sentences(second):
+    s1 = "Cho hình chóp tam giác đều S.ABC có cạnh đáy bằng 2 và chiều cao bằng 3."
+    ask = "Tính thể tích khối chóp S.ABC."
+    return run(f"{s1} {second} {ask}", [
+        {"id": "f1", "kind": "solid", "role": "premise", "quotes": [s1, second], "solid": "S.ABC", "solid_type": "pyramid",
+         "regular": True},
+        f("f2", "length", s1, measure="base_edge", value="2", solid="S.ABC"),
+        f("f3", "length", s1, measure="height", value="3", solid="S.ABC"),
+        q("q", ask, quantity="volume", solid="S.ABC")])
+
+
+@pytest.mark.parametrize("second", [
+    "Đáy là hình tứ giác đều.", "Đáy là hình lục giác đều.", "Đáy của khối là hình vuông.", "Đáy của chóp là hình vuông.",
+    "Đáy của hình chóp đó là hình vuông.", "Hình chóp S.ABC là hình chóp tứ giác đều.", "S.ABC là hình chóp tứ giác.",
+    "Đáy nó là hình vuông.", "Đáy có dạng hình vuông.", "Mặt đáy vốn là hình vuông.", "Đáy là tứ-giác đều."])
+def test_review_t3e_a_base_or_solid_noun_in_any_wording_is_count_checked(second):
+    refused(regular_two_sentences(second))
+
+
+@pytest.mark.parametrize("second", ["Đáy là hình tam giác đều.", "Các mặt bên là tam giác cân.",
+                                    "S.ABC là hình chóp tam giác đều."])
+def test_review_t3e_consistent_or_lateral_face_nouns_still_served(second):
+    served(regular_two_sentences(second), {"q": "√3"})
+
+
+def test_review_t3e_square_pyramid_with_triangular_lateral_faces_still_served():
+    """A lateral-face noun ("tam giác") names no base: a 3-noun beside a 4-vertex base is not a contradiction."""
+    s1, s2 = "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4 và chiều cao bằng 5.", "Các mặt bên là tam giác cân."
+    ask = "Tính thể tích khối chóp S.ABCD."
+    served(run(f"{s1} {s2} {ask}", [
+        {"id": "f1", "kind": "solid", "role": "premise", "quotes": [s1, s2], "solid": "S.ABCD", "solid_type": "pyramid",
+         "regular": True},
+        f("f2", "length", s1, measure="base_edge", value="4", solid="S.ABCD"),
+        f("f3", "length", s1, measure="height", value="5", solid="S.ABCD"),
+        q("q", ask, quantity="volume", solid="S.ABCD")]), {"q": "80/3"})
