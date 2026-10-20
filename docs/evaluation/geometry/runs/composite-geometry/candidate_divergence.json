@@ -5,14 +5,30 @@
   "run_id": "thesis-final-20260908T160224Z",
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "previous_candidate_hash": "de66bd5ca6ee798dab043a1a1a7e79fc635aff5b2c5259de8878fe8f66bcae50",
-  "current_candidate_hash": "cbec89705f77ead0a71e81f94bcc9b10b013e77009faae697100deeaed303ec0",
-  "current_product_commit": "deeb1748b2d00cafdae74dacef0fec026cf5ff47",
-  "superseded_candidate": {"freeze_commit": "503c9d6e1b4bf60a54b1179b6299598b27b0d8f7", "product_commit": "739a833a1cdaff2a6b03a5bcc3df075dc6c0235f", "tree_hash": "c1453c297b026525e8a90c6c0fbf5070653fe87cd355cdfcf705ce0d20d439cd", "reason": "independent review BLOCKER: direct regular_pyramid on a derived non-square rectangular base was served"},
+  "current_candidate_hash": "3e6c403cff0e2c4ae96c4a541f97ecbe92f1efd821e08d5fdb1572d4ee823ab9",
+  "current_product_commit": "050bb35377b40146d4862afe050a40228821a758",
   "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
   "diverged": true,
   "reason": "Owner-authorized local Wave 2C: verified constructed-base pyramids, explicit common-face check, exact volume certificates and per-solid formation. TypedFact, flat/v3/provider declarations, Adapter /2 unchanged. Historical measurements remain bound to their original candidates.",
   "cache_version": 127,
   "cache_version_hien_tai": 127,
   "cache_decision": "NO_BUMP: default route never supplies the internal topology map; new geometry and source changes are isolated Route D research.",
-  "hieu_luc_len_ket_qua_da_do": {"historical_measurements": "UNCHANGED", "live_requests": 0}
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0
+  },
+  "superseded_candidates": [
+    {
+      "freeze_commit": "503c9d6e1b4bf60a54b1179b6299598b27b0d8f7",
+      "product_commit": "739a833a1cdaff2a6b03a5bcc3df075dc6c0235f",
+      "tree_hash": "c1453c297b026525e8a90c6c0fbf5070653fe87cd355cdfcf705ce0d20d439cd",
+      "reason": "independent review BLOCKER: direct regular_pyramid on a derived non-square rectangular base was served"
+    },
+    {
+      "freeze_commit": "af26fd03ad9b18b258cd5fedb5e7b216b346762d",
+      "product_commit": "deeb1748b2d00cafdae74dacef0fec026cf5ff47",
+      "tree_hash": "cbec89705f77ead0a71e81f94bcc9b10b013e77009faae697100deeaed303ec0",
+      "reason": "independent review 2 PASS_WITH_FINDINGS: IMPORTANT-1 root binding in _mat_ben_vuong_goc_day; IMPORTANT-2 planar regular polygon"
+    }
+  ]
 }
