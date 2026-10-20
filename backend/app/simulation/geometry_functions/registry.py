@@ -1036,8 +1036,8 @@ _KHOI_DEM = re.compile(rf"(?<!\w)(?i:(?:(?:hình|khối)\s+)?(?P<kn>chóp|lăng\
 _KHOI_4 = re.compile(rf"(?i:hộp|lập\s+phương)(?:\s+(?i:chữ\s+nhật))?\s+{_NHAN}\.{_NHAN}(?![\w'])")
 _TU_DIEN = re.compile(rf"(?i:tứ\s+diện)(?:\s+(?i:đều))?\s+{_NHAN}(?![\w'])")
 #: a polygon label right after the noun, past its modifiers; a sentence-final period ends it, "ABC.A'B'C'" is a solid
-_DEM_SAU_NHAN = re.compile(rf"(?i:\s+(?:đều|vuông|cân|nhọn|tù)(?!\w))*\s+\(?(?P<p>{_L1}{_L1}{_NHAN}?)\)?(?![\w']|\.\w)")
-_NHAN_LA = re.compile(rf"(?<![\w'.])\(?(?P<p>{_L1}{_L1}{_NHAN}?)\)?\s+(?i:là\s+(?:(?:một|các|những)\s+)?)$")
+_DEM_SAU_NHAN = re.compile(rf"(?i:\s+(?:đều|vuông|cân|nhọn|tù)(?!\w))*\s+(?:(?P<tri>[Δ∆△])\s*)?\(?(?P<p>{_L1}{_L1}{_NHAN}?)\)?(?![\w']|\.\w)")
+_NHAN_LA = re.compile(rf"(?<![\w'.])(?:(?P<tri>[Δ∆△])\s*)?\(?(?P<p>{_L1}{_L1}{_NHAN}?)\)?\s+(?i:là\s+(?:(?:một|các|những)\s+)?)$")
 #: base clause right before the noun: "(hai) (mặt) đáy (ABCD) (là (một|hai))"
 _DAY_TRUOC = re.compile(rf"(?<!\w)(?i:(?:hai\s+)?(?:mặt\s+)?đáy)(?:\s+\(?{_NHAN}\)?)?\s+(?i:(?:là\s+(?:(?:một|hai)\s+)?)?)$")
 #: base named right after the noun (or its label): "tam giác đáy", "hình vuông SABC làm đáy", "… là đáy"
@@ -1117,10 +1117,10 @@ def _kiem_so_dinh_nguon(de: str, calls: tuple[LoiGoi, ...] = ()) -> None:
         doan = de[max(0, m.start() - 30):m.end() + 12]
         can, sau = [], m.end()                     # every vertex count this noun is attributed to
         if x := _DEM_SAU_NHAN.match(de, m.end()):
-            can.append(dem(x["p"]))
+            can += [dem(x["p"]), *([3] if x["tri"] else [])]
             sau = x.end()
         elif x := _NHAN_LA.search(truoc):
-            can.append(dem(x["p"]))
+            can += [dem(x["p"]), *([3] if x["tri"] else [])]
         if (_DAY_TRUOC.search(truoc) or _KHOI_TRUOC.search(truoc) or _MAT_TREN_DUOI.search(truoc)
                 or _DAY_SAU.match(de, sau)):
             if (n := mot(so_day)) is not None:
