@@ -823,6 +823,8 @@ class _Dung:
                                    "dependencies": labels, "base_coplanar": True})
             for c in self.of("ask_volume_ratio"):
                 num_s, den_s = c.args.numerator_solid, c.args.denominator_solid
+                if num_s == den_s:
+                    raise TuChoi("UNSUPPORTED_VOLUME_RATIO", f"{c.id}: tỉ số thể tích cần hai khối phân biệt", (c.id,))
                 v2_num, v2_den = self.volume_certificates[num_s], self.volume_certificates[den_s]
                 ratio = _sqrt_q(v2_num / v2_den)
                 if ratio is None or ratio <= 0:

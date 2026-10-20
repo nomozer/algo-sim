@@ -897,6 +897,8 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
             raise TuChoi("NEGATED_CLAUSE", f"{f.id}: câu hỏi tỉ số thể tích bị phủ định", (f.id,))
         kh_a = khoi_cua(f.solid, f) if (f.solid and not f.points_a) else _khoi_tu_toan_hang(f.points_a, k, f, khoi_cua)
         kh_b = _khoi_tu_toan_hang(f.points_b, k, f, khoi_cua)
+        if kh_a.ten == kh_b.ten:
+            raise TuChoi("UNSUPPORTED_VOLUME_RATIO", f"{f.id}: tỉ số thể tích cần hai khối phân biệt", (f.id,))
         return phat(f.id, "ask_volume_ratio", {"numerator_solid": kh_a.ten, "denominator_solid": kh_b.ten}, q,
                     "question(volume_ratio)")
     if n == "residual_volume" or (n == "volume" and f.solid and (len(f.points_a or []) >= 4 or len(f.points_b or []) >= 4)):

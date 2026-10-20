@@ -205,3 +205,42 @@ def test_wave3a_version_and_surface_fingerprint_invariants():
         json.dumps(registry.function_declarations(), sort_keys=True, ensure_ascii=False).encode("utf-8")
     ).hexdigest()
     assert decl_sha == "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"
+
+
+def test_self_ratio_and_duplicate_subtracted_solids_refused():
+    # Self-ratio (numerator_solid == denominator_solid) must fail closed on both routes
+    text = (
+        "Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh 2a. "
+        "Cạnh bên SA vuông góc với mặt phẳng (ABC) và SA = 3a. "
+        "Tính tỉ số thể tích của khối chóp S.ABC và khối chóp S.ABC."
+    )
+    payload = {
+        "facts": [
+            dict(id="sol", kind="solid", role="premise", solid="S.ABC", solid_type="pyramid", points_a=["S"], points_b=list("ABC"),
+                 quotes=["Cho hình chóp S.ABC"]),
+            dict(id="base", kind="polygon_shape", role="premise", shape="equilateral_triangle", points=list("ABC"),
+                 quotes=["đáy ABC là tam giác đều"]),
+            dict(id="ab", kind="length", role="premise", points=list("AB"), measure="segment", value="2a",
+                 quotes=["đáy ABC là tam giác đều cạnh 2a"]),
+            dict(id="perp", kind="perpendicular", role="premise",
+                 points_a=list("SA"), points_b=list("ABC"), quotes=["Cạnh bên SA vuông góc với mặt phẳng (ABC)"]),
+            dict(id="sa", kind="length", role="premise", points=list("SA"), measure="segment", value="3a",
+                 quotes=["SA = 3a"]),
+            dict(id="q_ratio", kind="question", role="question", quantity="volume_ratio",
+                 points_a=list("SABC"), points_b=list("SABC"),
+                 quotes=["Tính tỉ số thể tích của khối chóp S.ABC và khối chóp S.ABC."]),
+        ]
+    }
+    r_fact = run_fact_route(text, payload)
+    assert r_fact.status == "REFUSED" and r_fact.code == "UNSUPPORTED_VOLUME_RATIO", (r_fact.code, r_fact.reason)
+
+    calls = [
+        dict(id="root", fn="pyramid", args=dict(apex="S", base=list("ABC")), source={"quotes": ["Cho hình chóp S.ABC"]}),
+        dict(id="base", fn="regular_polygon", args=dict(vertices=list("ABC"), side="2a"), source={"quotes": ["đáy ABC là tam giác đều cạnh 2a."]}),
+        dict(id="perp", fn="perpendicular_line_plane", args=dict(line=list("SA"), plane=list("ABC")), source={"quotes": ["Cạnh bên SA vuông góc với mặt phẳng (ABC)"]}),
+        dict(id="sa", fn="segment_length", args=dict(segment=list("SA"), value="3a"), source={"quotes": ["SA = 3a."]}),
+        dict(id="q_ratio", fn="ask_volume_ratio", args=dict(numerator_solid="S.ABC", denominator_solid="S.ABC"),
+             source={"quotes": ["Tính tỉ số thể tích của khối chóp S.ABC và khối chóp S.ABC."]}),
+    ]
+    r_call = run_function_route(text, {"calls": calls})
+    assert r_call.status == "REFUSED" and r_call.code == "SCHEMA_INVALID", (r_call.code, r_call.reason)

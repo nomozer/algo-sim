@@ -239,6 +239,12 @@ class AskVolumeRatioArgs(_Args):
     numerator_solid: SolidName
     denominator_solid: SolidName
 
+    @model_validator(mode="after")
+    def _check_distinct_solids(self) -> AskVolumeRatioArgs:
+        if self.numerator_solid == self.denominator_solid:
+            raise ValueError("ask_volume_ratio: numerator_solid và denominator_solid phải phân biệt")
+        return self
+
 
 class AskResidualVolumeArgs(_Args):
     original_solid: SolidName
