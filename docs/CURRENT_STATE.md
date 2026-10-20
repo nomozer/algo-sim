@@ -3,8 +3,8 @@
 ## LOCAL — Route D source gate hardening (SG-1..SG-6), 2026-10-20 (not integrated)
 
 Branch `research/hybrid-source-gate-hardening` from `main` = `origin/main` = `6973c4b6` (Wave 2B integrated); product
-`24103909` · `3509b705` · `ee50e87b`, candidate freeze `c228bf4e` (112 measured files /
-`b71487235f29fb12881506b619452a58806c9278768611dd80e3769460788e3a`). Versions `geometry-functions/9` ·
+`24103909` … `b6b61061` (9 commits; six independent-review rounds), candidate freeze `1beeec0b` (112 measured files /
+`663342b0df90c805291fcc057846b31fe5e62b0035eeac13dea785f984502ab9`). Versions `geometry-functions/9` ·
 `geometry-fact-planner/10` · engine `/7`. Locked corpus 18/18 (main 1/18), 12/12 correct refusals, 0 wrong serves; BH2A
 known regression 11/12 + sentinel served, 0 false serves. Cache **127**, `LLM_ONLY`, `flat` unchanged, Adapter `/2`, Hybrid
 product **NO-GO**, live calls **0**. Receipts: [`source-gate-hardening/report.md`](evaluation/geometry/runs/source-gate-hardening/report.md),

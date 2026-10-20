@@ -5,7 +5,7 @@
 REPORT = docs/evaluation/geometry/runs/source-gate-hardening/report.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/source-gate-hardening/
 CLASSIFICATION = Route D source gate hardening SG-1..SG-6 (local, not integrated): locked corpus 18/18 VERIFIED (21/21 goals), 12/12 correct refusals, 0/30 wrong serves vs main 1/18 (first candidate 16/18 — two cases fixed after seen, not blind); BH2A-01..18 as a KNOWN regression (texts verbatim, facts RECONSTRUCTED, 16/18 reconciled with Gemini) 11/12 positives, sentinel BH2A-13 served a²√3, 5/5 negatives, 0 false serves vs 3/12; 174-row regression unchanged; NLU gold L27 served, L28 code change (declared layer); surfaces unchanged; CACHE_VERSION 127; Hybrid product NO-GO
-CODE_COMMIT = 24103909, 3509b705, ee50e87b (product); candidate freeze c228bf4e (measured_system tree_hash b71487235f29fb12881506b619452a58806c9278768611dd80e3769460788e3a across 112 files; supersedes 382604f5, 66893205)
+CODE_COMMIT = 24103909, 3509b705, ee50e87b, aded2fbf, 0cefe720, 6c910a51, 85e6dd86, b3c850e2, b6b61061 (product; the last six answer independent-review rounds 1–6); candidate freeze 1beeec0b (measured_system tree_hash 663342b0df90c805291fcc057846b31fe5e62b0035eeac13dea785f984502ab9 across 112 files; supersedes 8 earlier freezes); independent review PASS (round 6 + final delta, verification/independent-review.md)
 VERIFICATION = docs/evaluation/geometry/runs/source-gate-hardening/handoff.md (T3 + independent review receipts)
 MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
 CORRECTS = INDEPENDENT_NLU_EXTRACTION_EVALUATION gold by a declared layer only (results/historical-gold-delta.json: L27, L28); locked fixtures G7/N13 by declared current outcomes in their tests; no frozen file edited

@@ -5,43 +5,174 @@
  "date": "2026-10-20",
  "owner_authorization": "GO_HYBRID_SOURCE_GATE_HARDENING_LOCAL",
  "branch": "research/hybrid-source-gate-hardening",
- "base": {"main": "6973c4b6e0051afea2d63fe4ae89e318464b54b1", "origin_main": "6973c4b6e0051afea2d63fe4ae89e318464b54b1"},
- "commits": {"product": ["2410390998c4193751c3afa508da9f789a83f517", "3509b705ab48c2ddcce890ca15748aa1aedfaf53",
-                         "ee50e87bd41ea8ef9952a64e945d50de52500edc"],
-             "corpus_oracle_harness_lock": "53c669410be9ef98fcf06638423dd24b9c4bac50",
-             "bh2a_reconstruction_lock": "8b6f6316",
-             "candidate_freezes": ["382604f582f621a7abe7d7d43ce66e9031841153", "668932053565f8966af26e73be85abfacd5b1fdf",
-                                   "c228bf4e1ac28bfcfbb0e8b416c2190b75f69f5a"],
-             "results": ["9e66d047", "9783358d"]},
- "measured_system": {"so_file": 112, "tree_hash": "b71487235f29fb12881506b619452a58806c9278768611dd80e3769460788e3a",
-                     "superseded": ["73f4d47d2883a9b690f07b9181f53b0887178c2bbdc20b0c8ed9951634e6dd9e",
-                                    "d11fdd714e952009e8e3fbaa271fb1419bb9cf685cf67e5f9f9561381becc2aa"]},
- "versions": {"registry": "geometry-functions/9", "planner": "geometry-fact-planner/10", "engine": "geometry-function-engine/7",
-              "adapter": "hybrid-preview-adapter/2", "envelope": "hybrid-route-d-preview/1"},
- "surfaces_unchanged": {"typed_fact_schema": "aa9d93eeac9f1659af8e5acd42af1904b7aaed674a8ab0f56f0c7dd8b2ad4ee8",
-                        "flat": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
-                        "v3": "4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f",
-                        "function_declarations": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"},
+ "base": {
+  "main": "6973c4b6e0051afea2d63fe4ae89e318464b54b1",
+  "origin_main": "6973c4b6e0051afea2d63fe4ae89e318464b54b1"
+ },
+ "commits": {
+  "product": [
+   "2410390998c4193751c3afa508da9f789a83f517",
+   "3509b705ab48c2ddcce890ca15748aa1aedfaf53",
+   "ee50e87bd41ea8ef9952a64e945d50de52500edc",
+   "aded2fbfb2142ad249e8b173841a46b4c6657d7c",
+   "0cefe720a0e729757e58b16c8bb7ef649b53780b",
+   "6c910a51a650c9614b8dd8e4dd7b5368c22f475f",
+   "85e6dd86176954ac903d3c8907cbc2a8cbb3d7cf",
+   "b3c850e2e56dcb997c683d2aaf7667db5776e1d2",
+   "b6b610612563418947d38a2e4f9f10b22754b65f"
+  ],
+  "corpus_oracle_harness_lock": "53c669410be9ef98fcf06638423dd24b9c4bac50",
+  "bh2a_reconstruction_lock": "8b6f6316",
+  "candidate_freezes": [
+   "382604f5",
+   "66893205",
+   "c228bf4e",
+   "d0cb122b",
+   "bef2c13f",
+   "707b0538",
+   "cbb23016",
+   "2f12ea11",
+   "1beeec0b98cb6098bd304cd4aae92ca597d89327"
+  ],
+  "results": [
+   "9e66d047",
+   "9783358d",
+   "4cd94a66",
+   "8997f298",
+   "e05606ce",
+   "8a399112",
+   "66790613",
+   "d398ed73"
+  ]
+ },
+ "measured_system": {
+  "so_file": 112,
+  "tree_hash": "663342b0df90c805291fcc057846b31fe5e62b0035eeac13dea785f984502ab9",
+  "superseded": [
+   "73f4d47d",
+   "d11fdd71",
+   "b7148723",
+   "155d9dc7",
+   "9da3bb3e",
+   "21c9baa6",
+   "140e604b",
+   "31206eb8"
+  ]
+ },
+ "versions": {
+  "registry": "geometry-functions/9",
+  "planner": "geometry-fact-planner/10",
+  "engine": "geometry-function-engine/7",
+  "adapter": "hybrid-preview-adapter/2",
+  "envelope": "hybrid-route-d-preview/1"
+ },
+ "surfaces_unchanged": {
+  "typed_fact_schema": "aa9d93eeac9f1659af8e5acd42af1904b7aaed674a8ab0f56f0c7dd8b2ad4ee8",
+  "flat": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+  "v3": "4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f",
+  "function_declarations": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"
+ },
  "cache_version": "127",
  "cache_decision": "NO_BUMP — default /api/analyze imports no changed module at module level; shape_constraint untouched",
  "model_calls": 0,
  "hybrid_product_enablement": "NO-GO",
  "evaluation": {
-  "locked_corpus": {"baseline_main": {"verified": "1/18", "goals": "1/21", "correct_refusals": "6/12", "wrong_serves": "0/30"},
-                    "first_candidate": {"verified": "16/18", "goals": "19/21", "correct_refusals": "12/12", "wrong_serves": "0/30"},
-                    "final_candidate": {"verified": "18/18", "goals": "21/21", "correct_refusals": "12/12", "wrong_serves": "0/30"},
-                    "blind": false},
-  "bh2a_known_regression": {"texts": "verbatim, sha256[:16] match 18/18", "facts": "RECONSTRUCTED_FROM_REPORT",
-                            "reconciliation_vs_gemini_wave2a": "16/18",
-                            "wave2a": "3/12", "baseline_main": "3/12", "before_bh2a_fixes": "8/12", "final": "11/12 (14/15 goals)",
-                            "sentinel_BH2A_13": "SERVED a²√3 (oracle)", "negatives_refused": "5/5", "false_serves": 0,
-                            "blind": false, "sgh_01_18_used": false}
+  "locked_corpus": {
+   "baseline_main": {
+    "verified": "1/18",
+    "goals": "1/21",
+    "correct_refusals": "6/12",
+    "wrong_serves": "0/30"
+   },
+   "first_candidate": {
+    "verified": "16/18",
+    "goals": "19/21",
+    "correct_refusals": "12/12",
+    "wrong_serves": "0/30"
+   },
+   "final_candidate": {
+    "verified": "18/18",
+    "goals": "21/21",
+    "correct_refusals": "12/12",
+    "wrong_serves": "0/30",
+    "receipt": "results/evaluation-final/"
+   },
+   "blind": false
+  },
+  "bh2a_known_regression": {
+   "texts": "verbatim, sha256[:16] match 18/18",
+   "facts": "RECONSTRUCTED_FROM_REPORT",
+   "reconciliation_vs_gemini_wave2a": "16/18",
+   "wave2a": "3/12",
+   "baseline_main": "3/12",
+   "before_bh2a_fixes": "8/12",
+   "final": "11/12 (14/15 goals)",
+   "sentinel_BH2A_13": "SERVED a²√3 (oracle)",
+   "negatives_refused": "5/5",
+   "false_serves": 0,
+   "blind": false,
+   "sgh_01_18_used": false
+  }
  },
- "gold_delta": {"L27": "REFUSED NOT_ASKED_IN_SOURCE → SERVED (preregistered values)",
-                "L28": "REFUSED QUESTION_LOCAL_GIVEN_UNVERIFIED → REFUSED QUESTION_CONTEXT_UNSUPPORTED"},
+ "gold_delta": {
+  "L27": "REFUSED NOT_ASKED_IN_SOURCE → SERVED (preregistered values)",
+  "L28": "REFUSED QUESTION_LOCAL_GIVEN_UNVERIFIED → REFUSED QUESTION_CONTEXT_UNSUPPORTED"
+ },
  "temporary_worktrees": [
-  {"path": ".superpowers/worktrees/tmp-sgh-base", "heads": ["6973c4b6", "224328a2"], "use": "RED-on-base, baseline-main and wave2a arms", "removed": true},
-  {"path": ".superpowers/worktrees/tmp-sgh-freeze", "heads": ["53c66941", "3509b705", "ee50e87b"], "use": "clean candidate freezes", "removed": true}
+  {
+   "path": ".superpowers/worktrees/tmp-sgh-base",
+   "heads": [
+    "6973c4b6",
+    "224328a2"
+   ],
+   "use": "RED-on-base, baseline-main and wave2a arms",
+   "removed": true
+  },
+  {
+   "path": ".superpowers/worktrees/tmp-sgh-freeze",
+   "heads": "one per freeze (9), each removed",
+   "use": "clean candidate freezes",
+   "removed": true
+  }
  ],
- "verdict_at_report": "PENDING_INDEPENDENT_REVIEW_AND_T3"
+ "verdict_at_report": "PENDING_T3",
+ "independent_review": {
+  "rounds": [
+   [
+    "c228bf4e",
+    "FAIL"
+   ],
+   [
+    "d0cb122b",
+    "FAIL"
+   ],
+   [
+    "bef2c13f",
+    "FAIL"
+   ],
+   [
+    "707b0538",
+    "FAIL"
+   ],
+   [
+    "cbb23016",
+    "FAIL"
+   ],
+   [
+    "2f12ea11",
+    "PASS"
+   ],
+   [
+    "1beeec0b",
+    "PASS (delta)"
+   ]
+  ],
+  "receipt": "verification/independent-review.md"
+ },
+ "fixture_code_changes": {
+  "G7/N13": "REFUSED→SERVED 18√3",
+  "NEG2": "SOURCE_PREMISE_UNREAD→UNGROUNDED_VALUE",
+  "N03": "PREDICATE_NOT_IN_QUOTE→UNGROUNDED_VALUE",
+  "N07": "NEGATED_CLAUSE→UNGROUNDED_VALUE"
+ }
 }

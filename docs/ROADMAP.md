@@ -9,7 +9,7 @@
 ## 0. Canonical Next Action
 
 **2026-10-20, `source-gate-hardening` (local branch `research/hybrid-source-gate-hardening` from `main` `6973c4b6`):**
-route D source gate SG-1..SG-6 (product `ee50e87b`, candidate `c228bf4e`). `CANONICAL_NEXT_ACTION` = owner GO MAIN review
+route D source gate SG-1..SG-6 (product `b6b61061`, candidate `1beeec0b`, independent review PASS). `CANONICAL_NEXT_ACTION` = owner GO MAIN review
 on `evaluation/geometry/runs/source-gate-hardening/handoff.md`; Wave 2C and Adapter /3 are not opened. Wave 2B is integrated (`6973c4b6`);
 the entries below are historical.
 

@@ -34,7 +34,7 @@ tọa độ, thực thi, đo lường, correctness và scene state.
 Cập nhật 2026-10-19 — mới hơn khối "LOCAL override" ở đầu file; tường thuật cũ ở đó và §5–§6 có thể lỗi thời (việc mở: `OPEN_ISSUES.md`; việc kế tiếp: `ROADMAP.md` §0).
 ```text
 MAIN = origin/main = 6973c4b6e0051afea2d63fe4ae89e318464b54b1 (Wave 2B geometry capability expansion, GO_MAIN_HYBRID_WAVE2B, push không force)
-LOCAL_SGH = research/hybrid-source-gate-hardening · product ee50e87b · candidate c228bf4e (112 file b7148723…) · cổng nguồn SG-1..SG-6 · corpus 18/18, BH2A 11/12 (regression đã biết) · chờ owner GO MAIN (runs/source-gate-hardening/handoff.md)
+LOCAL_SGH = research/hybrid-source-gate-hardening · product b6b61061 · candidate 1beeec0b (112 file 663342b0…) · review PASS · cổng nguồn SG-1..SG-6 · corpus 18/18, BH2A 11/12 (regression đã biết) · chờ owner GO MAIN (runs/source-gate-hardening/handoff.md)
 PRODUCT_STATE = CACHE_VERSION 127 · DEFAULT_MODE LLM_ONLY · response contract flat (bề mặt không đổi) · Hybrid product NO-GO · route D versions functions/9 · planner/10 · engine/7 (nhánh SGH)
 SCENE3D = M2 #7, F1, F2 xong; P0–P3 owner duyệt hình trên bộ cảnh mẫu (chỉ phạm vi đó); "chọn kết quả" trên canvas chưa kiểm; KHÔNG Product E2E PASS
 HYBRID = product enablement NO-GO · không frontend caller /api/preview/hybrid · không tích hợp provider live · không GO LIVE

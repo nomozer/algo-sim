@@ -6,7 +6,12 @@
   SG-1..SG-6 are served on the locked corpus and BH2A (11/12); still refused with a code:
 - compound premise sentences on the closed line_ref slice (`ISSUE-ARCH-LINE-REF-PREMISE-GRAMMAR-CUBE`; BH2A-03 with (ABCD));
 - "giao tuyến đó" (anaphora), "lần lượt bằng" (respective binding), a three-label plane for a four-label face of the
-  source (BH2A-03 as specified), method instructions inside a request ("dựa vào SM tính …", NLU L28).
+  source (BH2A-03 as specified), method instructions inside a request ("dựa vào SM tính …", NLU L28);
+- deliberate trade-off of the closed role grammar: a premise sentence holding a clause outside it, or a face / triangle /
+  altitude / projection clause, binds no height or side (coded false refusal, e.g. fixtures N03, N07, NEG2);
+- pre-existing premise-coverage limit (not from this run): a premise inside a sentence a fact quotes WHOLE counts as read
+  even when no call encodes it (review K1/K2/K5, e.g. "mặt bên SAB là tam giác đều" beside SA ⊥ (ABC)); `6973c4b6` serves
+  the same premise when the quote holds one number.
 
 ### ISSUE-RESEARCH-HYBRID-GEOMETRY-CAPABILITY-GAPS
 
