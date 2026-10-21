@@ -1,0 +1,38 @@
+{
+  "schema_version": "authoritative-t3-invocation/1",
+  "run_kind": "POST_T3_CANDIDATE_FREEZE_VERIFICATION",
+  "source_commit": "48c34d886579948aa9c28019dd0559fd100f6dcd",
+  "product_commit": "3298b901d2246650535aa4028845ddc2a44892c4",
+  "candidate_commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+  "measured_system_sha256": "4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68",
+  "measured_file_count": 114,
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-simulation-evidence-repair",
+  "argv": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-simulation-evidence-repair\\backend\\scripts\\freeze_evaluation_candidate.py",
+    "--verify"
+  ],
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe"
+  },
+  "output_directory": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\t3\\freeze",
+  "timeout_seconds": 120,
+  "attempt_limit": 1,
+  "new_browser_visual_finding": "OPEN: demo6b td_sec_axial ownPixels=0; no rerun; does not change Full T3 expectations",
+  "started_utc": "2026-10-21T07:51:42.935841+00:00",
+  "command_line": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-simulation-evidence-repair\\backend\\scripts\\freeze_evaluation_candidate.py --verify",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "PLAYWRIGHT_BROWSERS_PATH": null,
+    "NODE_OPTIONS": null,
+    "PYTEST_ADDOPTS": null,
+    "CI": null,
+    "NO_COLOR": null
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "schema_version": "authoritative-t3-validation/1",
+  "run_kind": "NEW_AUTHORITATIVE_FULL_T3_NOT_HISTORICAL",
+  "source_commit": "48c34d886579948aa9c28019dd0559fd100f6dcd",
+  "product_commit": "3298b901d2246650535aa4028845ddc2a44892c4",
+  "candidate_commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+  "measured_system_sha256": "4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68",
+  "measured_file_count": 114,
+  "execution": {
+    "started_utc": "2026-10-21T07:35:16.089954+00:00",
+    "finished_utc": "2026-10-21T07:45:27.992788+00:00",
+    "duration_seconds": 610.9,
+    "exit_code": 0,
+    "timed_out": false,
+    "verdict": "FULL_PRODUCT_GATE_PASS",
+    "stdout": {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/stdout.log",
+      "bytes": 18257,
+      "sha256": "d2446b46ba4aba9fae7203cc6be401e820248087430b63b0d7cbe358af0edd33"
+    },
+    "stderr": {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/stderr.log",
+      "bytes": 332,
+      "sha256": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c"
+    }
+  },
+  "sub_gates": {
+    "backend_pytest": {
+      "status": "PASS",
+      "passed": 11439,
+      "skipped": 1,
+      "deselected": 2,
+      "xfailed": 9,
+      "failed": 0,
+      "duration_seconds": 595.4
+    },
+    "frontend_vitest": {
+      "status": "PASS",
+      "test_files_passed": 72,
+      "tests_passed": 1154,
+      "failed": 0,
+      "duration_seconds": 8.5
+    },
+    "typecheck_and_build": {
+      "status": "PASS",
+      "command": "tsc -b && vite build",
+      "duration_seconds": 5.9
+    },
+    "thesis_demo_replay": {
+      "status": "PASS",
+      "demo_cases": 5,
+      "demo_replay_pass": "5/5",
+      "reduced_chain_cases": "1/1",
+      "duration_seconds": 0.6
+    },
+    "demo_crash_surface": {
+      "status": "PASS",
+      "boundary_cases": "6/6",
+      "escaped_500": 0,
+      "duration_seconds": 0.4
+    }
+  },
+  "post_t3_candidate_freeze_verification": {
+    "started_utc": "2026-10-21T07:51:42.935841+00:00",
+    "finished_utc": "2026-10-21T07:51:44.799468+00:00",
+    "exit_code": 0,
+    "timed_out": false,
+    "status": "MATCH",
+    "stdout": {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/freeze/stdout.log",
+      "bytes": 93,
+      "sha256": "06f3c429768e8b03408400299290363b271fac389b56ec3e780dc7b1a92e9abf"
+    },
+    "stderr": {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/freeze/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "open_visual_finding": "OPEN: demo6b-curved-cone-frustum-cut td_sec_axial ownPixels=0 (historical 41), resetDiffFromDefault=239; does not alter Full T3 pass status"
+}
