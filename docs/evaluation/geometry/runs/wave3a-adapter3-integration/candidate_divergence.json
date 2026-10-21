@@ -10,7 +10,7 @@
   "previous_candidate_hash": "42f6ae2c8e290d00be2e11b439ca2499f58fe74cd84ab999e2cae2824c4b65d2",
   "previous_wave3a_candidate_hash": "df262376b3f2de7bcb0c295932c7c867a7ee2bf268ed9408071e5953ee9fc821",
   "current_candidate_hash": "817780925c278f3aeadb6ad393f65d737b9d244c62e7f382bd0b8d7f0b7d261e",
-  "current_product_commit": "PENDING_FREEZE",
+  "current_product_commit": "fb63df66556bbeb3a6f33bf142722326d0a0cab4",
   "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
   "diverged": true,
   "reason": "Owner-authorized controlled reconciliation (GO_WAVE3A_ADAPTER3_LOCAL_RECONCILIATION_ONLY) integrating Wave 3A (research/hybrid-wave3a-volume-reasoning, product 4c282ecd) with TypedFactNext + Adapter /3 (main f2bc01e3, product 61d6f44b) under a single mathematical authority (engine.py /9). Historical receipts for both branches are preserved byte-for-byte.",
