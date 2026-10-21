@@ -1475,7 +1475,7 @@ export function buildObject3D(
     return v(nhomVanh, `ellipse:${o.id}`);
   }
 
-  if (o.render === "curved_solid" && o.anchor && o.rim_point && o.curved_kind) {
+  if (o.render === "curved_solid" && o.anchor && (o.rim_point || o.radius_sq) && o.curved_kind) {
     // ⚠️ MỘT tuyến vẽ cho ba hình. Điều phối theo `curved_kind` nằm ở đây và
     // CHỈ ở đây — nó là bảng TRÌNH BÀY, không phải một thẩm quyền ngữ nghĩa
     // thứ hai: mọi số ở dưới đều đọc thẳng từ payload, không công thức nào
@@ -1491,6 +1491,8 @@ export function buildObject3D(
     const h = Math.sqrt(Math.max(0, toNumber(o.height_sq ?? "0")));
     const dinh = o.apex_or_top
       ? new THREE.Vector3(...toVec3(o.apex_or_top))
+      : o.curved_kind !== "ball" && h > 0
+        ? new THREE.Vector3(tam.x, tam.y, tam.z + h)
       : null;
     const m = new THREE.MeshStandardMaterial({
       color: net(MAU.surface),

@@ -244,7 +244,7 @@ export function collapseAll(s: InteractionState): InteractionState {
 /** Tâm hiển thị của một vật — trung bình các đỉnh nó có. Chỉ để BUNG. */
 function _tam(o: SceneObject): [number, number, number] {
   const dinh: ExactVec3[] =
-    o.vertices ?? o.polygon ?? (o.xyz ? [o.xyz] : o.point ? [o.point] : []);
+    o.vertices ?? o.polygon ?? (o.xyz ? [o.xyz] : o.point ? [o.point] : o.center ? [o.center] : o.anchor ? [o.anchor] : []);
   if (dinh.length === 0) return [0, 0, 0];
   const t: [number, number, number] = [0, 0, 0];
   for (const v of dinh) {
@@ -333,12 +333,16 @@ export interface TreeNode {
 const HANG_MUC: Record<string, string> = {
   point3: "Điểm",
   edge: "Cạnh",
+  segment3: "Cạnh",
   face: "Mặt",
   line3: "Đường thẳng",
   plane3: "Mặt phẳng",
   polygon3: "Đa giác",
   section: "Thiết diện",
+  circle3: "Thiết diện",
+  ellipse3: "Thiết diện",
   solid: "Khối",
+  curved_solid: "Khối",
   quantity: "Đại lượng",
 };
 
@@ -385,7 +389,7 @@ export function semanticTree(scene: Scene3D): TreeNode[] {
   const con = new Map<string, SceneObject[]>();
   const goc: SceneObject[] = [];
   const laKhoi = new Set(
-    scene.objects.filter((o) => o.type === "solid").map((o) => o.id),
+    scene.objects.filter((o) => o.type === "solid" || o.type === "curved_solid").map((o) => o.id),
   );
   for (const o of scene.objects) {
     // Bí danh ĐÁP SỐ (không hiện ở đâu) là MỘT kết luận với nguồn — không thành

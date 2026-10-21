@@ -67,7 +67,12 @@ class SolidSpec(ClosedNextModel):
     """Declaration of a 3D solid with local-to-canonical vertex bindings."""
 
     solid_id: IdentifierStr
-    solid_type: Literal["pyramid", "prism"] = "pyramid"
+    solid_type: Literal["pyramid", "prism", "cylinder", "cone", "sphere", "cone_frustum"] = "pyramid"
+    center: NonEmptyText | None = None
+    apex_or_top: NonEmptyText | None = None
+    rim_point: NonEmptyText | None = None
+    radius: NonEmptyText | None = None
+    height: NonEmptyText | None = None
     notation: NonEmptyText
     quote: NonEmptyText
     vertex_bindings: dict[Label, Label] = Field(default_factory=dict)
@@ -82,7 +87,8 @@ class SolidSpec(ClosedNextModel):
                     "INVALID_SOLID_NOTATION",
                     f"Pyramid notation {self.notation!r} must have a distinct apex and >=3 distinct base vertices.",
                 )
-        else:
+
+        elif self.solid_type == "prism":
             b1, b2 = self.prism_bases()
             if len(b1) < 3 or len(b1) != len(b2) or set(b1) & set(b2):
                 raise TypedFactNextValidationError(
@@ -122,6 +128,8 @@ class SolidSpec(ClosedNextModel):
         if self.solid_type == "pyramid":
             apex, base = self.apex_and_base()
             return (apex, *base)
+        if self.solid_type not in ("pyramid", "prism"):
+            return tuple(v for v in (self.center, self.apex_or_top, self.rim_point) if v is not None)
         b1, b2 = self.prism_bases()
         return (*b1, *b2)
 
@@ -148,8 +156,16 @@ class DerivedPlaneSectionSpec(ClosedNextModel):
         "through_point_parallel_plane",
         "through_point_perpendicular_line",
         "through_point_parallel_two_lines",
+        "parallel_to_base_at_distance",
+        "parallel_to_base_at_ratio",
+        "plane_equation",
+        "axial_section",
     ]
-    through_point: NonEmptyText
+    through_point: NonEmptyText | None = None
+    distance_from_base: NonEmptyText | None = None
+    ratio_from_apex: NonEmptyText | None = None
+    equation_coeffs: tuple[NonEmptyText, NonEmptyText, NonEmptyText, NonEmptyText] | None = None
+    section_shape: Literal["polygon", "circle", "ellipse"] | None = None
     parallel_plane: tuple[NonEmptyText, NonEmptyText, NonEmptyText] | None = None
     perpendicular_line: tuple[NonEmptyText, NonEmptyText] | None = None
     parallel_line_a: tuple[NonEmptyText, NonEmptyText] | None = None
@@ -160,7 +176,35 @@ class DerivedPlaneSectionSpec(ClosedNextModel):
 
     @model_validator(mode="after")
     def _validate_plane_definition(self) -> "DerivedPlaneSectionSpec":
-        parse_qualified_ref(self.through_point)
+        if self.plane_kind in (
+            "through_point_parallel_plane",
+            "through_point_perpendicular_line",
+            "through_point_parallel_two_lines",
+        ):
+            if not self.through_point:
+                raise TypedFactNextValidationError(
+                    "INVALID_DERIVED_SECTION",
+                    f"Section {self.section_id!r} ({self.plane_kind}) requires 'through_point'.",
+                )
+            parse_qualified_ref(self.through_point)
+        elif self.plane_kind == "parallel_to_base_at_distance":
+            if not self.distance_from_base:
+                raise TypedFactNextValidationError(
+                    "INVALID_DERIVED_SECTION",
+                    f"Section {self.section_id!r} requires 'distance_from_base'.",
+                )
+        elif self.plane_kind == "parallel_to_base_at_ratio":
+            if not self.ratio_from_apex:
+                raise TypedFactNextValidationError(
+                    "INVALID_DERIVED_SECTION",
+                    f"Section {self.section_id!r} requires 'ratio_from_apex'.",
+                )
+        elif self.plane_kind == "plane_equation":
+            if self.equation_coeffs is None or len(self.equation_coeffs) != 4:
+                raise TypedFactNextValidationError(
+                    "INVALID_DERIVED_SECTION",
+                    f"Section {self.section_id!r} requires 4-element 'equation_coeffs'.",
+                )
         if self.plane_kind == "through_point_parallel_plane":
             if self.parallel_plane is None or len(self.parallel_plane) != 3:
                 raise TypedFactNextValidationError(
@@ -341,7 +385,7 @@ class MathGoalSpec(ClosedNextModel):
     denominator_solid_id: IdentifierStr | None = None
     parent_solid_id: IdentifierStr | None = None
     cut_solid_id: IdentifierStr | None = None
-    goal_type: Literal["distance", "angle", "area", "volume"] | None = None
+    goal_type: Literal["distance", "angle", "area", "volume", "lateral_area", "radius"] | None = None
     target: dict[str, Any] = Field(default_factory=dict)
     solid_id: IdentifierStr | None = None
 
@@ -372,7 +416,7 @@ class DerivedObjectIdentity(ClosedNextModel):
     """Deterministic identity record for an automatically derived geometric object."""
 
     derived_id: NonEmptyText
-    kind: Literal["plane", "section_vertex", "section_polygon", "derived_solid"]
+    kind: Literal["plane", "section_vertex", "section_polygon", "section_circle", "section_ellipse", "derived_solid"]
     internal_symbol: NonEmptyText
     display_label: NonEmptyText
     reference_text: NonEmptyText

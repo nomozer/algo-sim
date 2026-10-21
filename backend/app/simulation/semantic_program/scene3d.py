@@ -501,6 +501,7 @@ _HANH_DONG: dict[str, str] = {
     "construct_plane": "CREATE",
     "construct_polygon": "CREATE",
     "construct_solid": "CREATE",
+    "construct_curved_solid": "CREATE",
     "section_edge": "EXTEND",
     "assign": "MEASURE",
 }
@@ -865,6 +866,9 @@ def _ke_lai(events: list[dict[str, Any]], objects: list[dict[str, Any]]) -> None
                                  else _cau_thiet_dien(o, by_id))
             if e.get("action") == "EXTEND" and (ten_buoc := _nhan_canh_thiet_dien(e, o, by_id)):
                 e["display_label"] = ten_buoc
+        elif o is not None and o["type"] in ("circle3", "ellipse3"):
+            e.update(action="CREATE", semantic_kind="GEOMETRY_CONSTRUCTION",
+                     learner_text=f"Dựng {_giua_cau(o['label'])}.")
         elif o is not None and e.get("action") == "CREATE":
             e["learner_text"] = (
                 f"Dựng {_giua_cau(o['label'])} ({len(o.get('vertices') or [])} đỉnh, "

@@ -2037,7 +2037,833 @@ class _Adapter3Compiler:
         d2.volume_certificates = dict(phase1_dung.volume_certificates)
         return d2
 
+    def _parse_curved_scalar(
+        self, raw_val: str | None, quote: str, context_id: str, field_name: str
+    ) -> tuple[Any, Fraction, bool]:
+        from app.simulation.geometry import curved as CV
+        from app.simulation.geometry.radical import parse_exact
+
+        if not raw_val:
+            raise TuChoi(
+                "MISSING_CURVED_DIMENSION",
+                f"{context_id}: thiếu tham số '{field_name}' của khối cong",
+                (context_id,),
+            )
+        s = str(raw_val).strip()
+        has_a = False
+        if s.endswith("a") and len(s) > 1 and (s[:-1][-1].isdigit() or s[:-1][-1] == ")"):
+            has_a = True
+            s_num = s[:-1].rstrip("*").strip() or "1"
+        elif s == "a":
+            has_a = True
+            s_num = "1"
+        else:
+            s_num = s
+        ex = parse_exact(s_num)
+        if ex is None:
+            raise TuChoi(
+                CV.ERR_BAN_KINH_NGOAI_MIEN,
+                f"{context_id}: {field_name}={raw_val!r} không thuộc miền số chính xác",
+                (context_id,),
+            )
+        try:
+            sq = CV.binh_phuong_ban_kinh(ex)
+        except GeometryError as exc:
+            raise TuChoi(exc.code, f"{context_id}: {exc}", (context_id,)) from None
+        _verify_number_in_quote(str(raw_val), quote, context_id)
+        return ex, sq, bool(has_a)
+
+    def _run_curved_route(self) -> Adapter3SimulationResult:
+        from app.simulation.geometry import curved as CV
+        from app.simulation.geometry.radical import (
+            Radical,
+            display as rad_display,
+            multiply,
+            sqrt_rational,
+            times_rational,
+        )
+        PI = CV.PI
+
+        decls: list[dict[str, Any]] = []
+        stmts: list[dict[str, Any]] = []
+        declared_names: set[str] = set()
+
+        def add_decl(name: str, mtype: str, init_val: Any = None) -> None:
+            if name not in declared_names:
+                declared_names.add(name)
+                decls.append({"name": name, "type": mtype, "initial_value": init_val})
+
+        ky_hieu: str | None = "a" if self.payload.length_unit == "a" else None
+        solid_meta: dict[str, dict[str, Any]] = {}
+        section_meta: dict[str, dict[str, Any]] = {}
+
+        for solid in self.payload.solids:
+            _verify_quote_in_problem(solid.quote, self.problem_text, solid.solid_id)
+            if solid.solid_type == "cone_frustum":
+                raise TuChoi(
+                    "CURVED_PRIMITIVE_BLOCKED_BY_KERNEL",
+                    f"{solid.solid_id}: khối nón cụt độc lập không nằm trong KHOI_CONG; "
+                    "hãy biểu diễn bằng hình nón gốc cắt bởi mặt phẳng song song với đáy",
+                    (solid.solid_id,),
+                )
+            for lv in solid.local_vertices():
+                if lv not in self.text_labels:
+                    raise TuChoi(
+                        "UNKNOWN_LABEL",
+                        f"{solid.solid_id}: điểm {lv!r} không xuất hiện trong đề bài",
+                        (solid.solid_id,),
+                    )
+            smap = {lv: solid.canonical_vertex(lv) for lv in solid.local_vertices()}
+            self.solid_specs[solid.solid_id] = solid
+            self.solid_local_to_canonical[solid.solid_id] = smap
+            self.solid_canonical_name[solid.solid_id] = solid.notation
+
+            r_val, r_sq, r_has_a = self._parse_curved_scalar(
+                solid.radius, solid.quote, solid.solid_id, "radius"
+            )
+            if r_has_a:
+                ky_hieu = "a"
+
+            c_center = smap.get(solid.center, solid.center) if solid.center else None
+            c_top = smap.get(solid.apex_or_top, solid.apex_or_top) if solid.apex_or_top else None
+            c_rim = smap.get(solid.rim_point, solid.rim_point) if solid.rim_point else None
+
+            center_var = ir_name(c_center) if c_center else f"tam_{solid.solid_id}"
+            add_decl(center_var, "point3", [0, 0, 0])
+
+            r_var = f"R_{solid.solid_id}" if len(self.payload.solids) > 1 else "R"
+            add_decl(r_var, "float", rad_display(r_val))
+
+            curved_kind = "ball" if solid.solid_type == "sphere" else solid.solid_type
+            top_var: str | None = None
+            rim_var: str | None = None
+            h_var: str | None = None
+            h_val: Any = None
+            h_sq: Fraction | None = None
+
+            if curved_kind in ("cylinder", "cone"):
+                h_val, h_sq, h_has_a = self._parse_curved_scalar(
+                    solid.height, solid.quote, solid.solid_id, "height"
+                )
+                if h_has_a:
+                    ky_hieu = "a"
+                h_var = f"h_{solid.solid_id}" if len(self.payload.solids) > 1 else "h"
+                add_decl(h_var, "float", rad_display(h_val))
+                if c_top and isinstance(h_val, Fraction):
+                    top_var = ir_name(c_top)
+                    add_decl(top_var, "point3", [0, 0, str(h_val)])
+                if c_rim and isinstance(r_val, Fraction):
+                    rim_var = ir_name(c_rim)
+                    add_decl(rim_var, "point3", [str(r_val), 0, 0])
+            else:
+                if c_rim and isinstance(r_val, Fraction):
+                    rim_var = ir_name(c_rim)
+                    add_decl(rim_var, "point3", [str(r_val), 0, 0])
+
+            solid_var = f"khoi_{ir_name(solid.solid_id)}"
+            add_decl(solid_var, "curved_solid", None)
+            label_map = {
+                "ball": f"Mặt cầu {solid.notation}" + (f" tâm {c_center}" if c_center else ""),
+                "cylinder": f"Hình trụ tròn xoay {solid.notation}" + (f" tâm {c_center}" if c_center else ""),
+                "cone": f"Hình nón tròn xoay {solid.notation}" + (f" đỉnh {c_top}" if c_top else ""),
+            }
+            stmts.append(
+                {
+                    "kind": "construct_curved_solid",
+                    "target_var": solid_var,
+                    "curved_kind": curved_kind,
+                    "anchor": center_var,
+                    "apex_or_top": top_var,
+                    "rim_point": rim_var,
+                    "radius": None if rim_var else r_var,
+                    "height": None if (curved_kind == "ball" or top_var) else h_var,
+                    "label": label_map[curved_kind],
+                }
+            )
+
+            # Base circle & structural axis/generator segments for cylinder and cone
+            if curved_kind in ("cylinder", "cone"):
+                mp_day_var = f"mp_day_{ir_name(solid.solid_id)}"
+                day_var = f"duong_tron_day_{ir_name(solid.solid_id)}"
+                add_decl(mp_day_var, "plane3", None)
+                add_decl(day_var, "circle3", None)
+                stmts.append(
+                    {
+                        "kind": "construct_plane_from_equation",
+                        "target_var": mp_day_var,
+                        "a": 0,
+                        "b": 0,
+                        "c": 1,
+                        "d": 0,
+                        "label": f"Mặt phẳng đáy ({c_center or 'O'})",
+                    }
+                )
+                stmts.append(
+                    {
+                        "kind": "assign",
+                        "target_var": day_var,
+                        "expr": {
+                            "kind": "intersect_plane_curved",
+                            "solid": solid_var,
+                            "plane": mp_day_var,
+                        },
+                    }
+                )
+                if curved_kind == "cylinder" and isinstance(h_val, Fraction):
+                    mp_tren_var = f"mp_day_tren_{ir_name(solid.solid_id)}"
+                    tren_var = f"duong_tron_day_tren_{ir_name(solid.solid_id)}"
+                    add_decl(mp_tren_var, "plane3", None)
+                    add_decl(tren_var, "circle3", None)
+                    stmts.append(
+                        {
+                            "kind": "construct_plane_from_equation",
+                            "target_var": mp_tren_var,
+                            "a": 0,
+                            "b": 0,
+                            "c": 1,
+                            "d": str(-h_val),
+                            "label": f"Mặt phẳng đáy trên ({c_top or 'O′'})",
+                        }
+                    )
+                    stmts.append(
+                        {
+                            "kind": "assign",
+                            "target_var": tren_var,
+                            "expr": {
+                                "kind": "intersect_plane_curved",
+                                "solid": solid_var,
+                                "plane": mp_tren_var,
+                            },
+                        }
+                    )
+                if top_var:
+                    truc_var = f"truc_{center_var}_{top_var}"
+                    add_decl(truc_var, "segment3", None)
+                    stmts.append(
+                        {
+                            "kind": "construct_segment",
+                            "target_var": truc_var,
+                            "endpoint_a": center_var,
+                            "endpoint_b": top_var,
+                            "label": f"Trục {c_center}{c_top}",
+                        }
+                    )
+                if rim_var:
+                    bk_var = f"ban_kinh_{center_var}_{rim_var}"
+                    add_decl(bk_var, "segment3", None)
+                    stmts.append(
+                        {
+                            "kind": "construct_segment",
+                            "target_var": bk_var,
+                            "endpoint_a": center_var,
+                            "endpoint_b": rim_var,
+                            "label": f"Bán kính đáy {c_center}{c_rim}",
+                        }
+                    )
+                if curved_kind == "cone" and top_var and rim_var:
+                    ds_var = f"duong_sinh_{top_var}_{rim_var}"
+                    add_decl(ds_var, "segment3", None)
+                    stmts.append(
+                        {
+                            "kind": "construct_segment",
+                            "target_var": ds_var,
+                            "endpoint_a": top_var,
+                            "endpoint_b": rim_var,
+                            "label": f"Đường sinh {c_top}{c_rim}",
+                        }
+                    )
+
+            solid_meta[solid.solid_id] = {
+                "solid_var": solid_var,
+                "curved_kind": curved_kind,
+                "center_var": center_var,
+                "top_var": top_var,
+                "rim_var": rim_var,
+                "r_val": r_val,
+                "r_sq": r_sq,
+                "h_val": h_val,
+                "h_sq": h_sq,
+                "c_center": c_center,
+                "c_top": c_top,
+                "c_rim": c_rim,
+            }
+
+        for sec in self.payload.derived_sections:
+            _verify_quote_in_problem(sec.quote, self.problem_text, sec.section_id)
+            smeta = solid_meta[sec.target_solid_id]
+            solid_var = smeta["solid_var"]
+            curved_kind = smeta["curved_kind"]
+            r_val = smeta["r_val"]
+            h_val = smeta["h_val"]
+
+            if sec.plane_kind == "axial_section":
+                if curved_kind not in ("cylinder", "cone") or not isinstance(r_val, Fraction) or not isinstance(h_val, Fraction):
+                    raise TuChoi(
+                        CV.ERR_NGOAI_BAO_DONG,
+                        f"{sec.section_id}: thiết diện qua trục yêu cầu hình trụ/nón có bán kính và chiều cao hữu tỉ",
+                        (sec.section_id,),
+                    )
+                a_var = smeta["rim_var"]
+                if not a_var:
+                    a_var = f"A_{ir_name(sec.section_id)}"
+                    add_decl(a_var, "point3", [str(r_val), 0, 0])
+                b_var = "B" if "B" not in declared_names else f"B_{ir_name(sec.section_id)}"
+                add_decl(b_var, "point3", None)
+                stmts.append(
+                    {
+                        "kind": "construct_point",
+                        "target_var": b_var,
+                        "expr": {
+                            "kind": "divide_segment",
+                            "a": a_var,
+                            "b": smeta["center_var"],
+                            "ratio": "2",
+                        },
+                        "label": "B",
+                    }
+                )
+                sec_var = f"td_{ir_name(sec.section_id)}"
+                add_decl(sec_var, "polygon3", None)
+                if curved_kind == "cone":
+                    top_v = smeta["top_var"]
+                    if not top_v:
+                        top_v = f"S_{ir_name(sec.section_id)}"
+                        add_decl(top_v, "point3", [0, 0, str(h_val)])
+                    v_cycle = [top_v, a_var, b_var]
+                    stmts.append(
+                        {
+                            "kind": "construct_polygon",
+                            "target_var": sec_var,
+                            "vertices": v_cycle,
+                            "label": f"Thiết diện qua trục {smeta['c_top'] or 'S'}{smeta['c_rim'] or 'A'}B",
+                        }
+                    )
+                else:
+                    ap_var = f"A_prime_{ir_name(sec.section_id)}"
+                    bp_var = f"B_prime_{ir_name(sec.section_id)}"
+                    add_decl(ap_var, "point3", [str(r_val), 0, str(h_val)])
+                    add_decl(bp_var, "point3", [str(-r_val), 0, str(h_val)])
+                    v_cycle = [a_var, b_var, bp_var, ap_var]
+                    stmts.append(
+                        {
+                            "kind": "construct_polygon",
+                            "target_var": sec_var,
+                            "vertices": v_cycle,
+                            "label": "Thiết diện qua trục hình trụ",
+                        }
+                    )
+                self.section_object_ids[sec.section_id] = sec_var
+                self.section_plane_object_ids[sec.section_id] = sec_var
+                self.section_cycles[sec.section_id] = tuple(v_cycle)
+                section_meta[sec.section_id] = {
+                    "sec_var": sec_var,
+                    "mp_var": sec_var,
+                    "shape": "polygon",
+                    "ratio_from_apex": None,
+                    "z_cut": None,
+                }
+                continue
+
+            ratio_from_apex: Fraction | None = None
+            z_cut: Fraction | None = None
+            if sec.plane_kind == "parallel_to_base_at_distance":
+                assert sec.distance_from_base is not None
+                dist_val, _, _ = self._parse_curved_scalar(
+                    sec.distance_from_base, sec.quote, sec.section_id, "distance_from_base"
+                )
+                if not isinstance(dist_val, Fraction):
+                    raise TuChoi(
+                        CV.ERR_NGOAI_BAO_DONG,
+                        f"{sec.section_id}: khoảng cách mặt phẳng cắt phải hữu tỉ",
+                        (sec.section_id,),
+                    )
+                z_cut = dist_val
+                if isinstance(h_val, Fraction) and h_val != 0:
+                    ratio_from_apex = Fraction(1) - (z_cut / h_val)
+                a_c, b_c, c_c, d_c = "0", "0", "1", str(-z_cut)
+            elif sec.plane_kind == "parallel_to_base_at_ratio":
+                assert sec.ratio_from_apex is not None
+                _verify_number_in_quote(sec.ratio_from_apex, sec.quote, sec.section_id)
+                try:
+                    rk = Fraction(sec.ratio_from_apex.strip())
+                except Exception:
+                    raise TuChoi(
+                        CV.ERR_NGOAI_BAO_DONG,
+                        f"{sec.section_id}: tỉ lệ cắt dọc trục phải hữu tỉ",
+                        (sec.section_id,),
+                    ) from None
+                if not isinstance(h_val, Fraction) or rk <= 0 or rk >= 1:
+                    raise TuChoi(
+                        CV.ERR_NGOAI_BAO_DONG,
+                        f"{sec.section_id}: tỉ lệ cắt dọc trục phải hữu tỉ trong khoảng (0, 1)",
+                        (sec.section_id,),
+                    )
+                ratio_from_apex = rk
+                z_cut = (Fraction(1) - rk) * h_val
+                a_c, b_c, c_c, d_c = "0", "0", "1", str(-z_cut)
+            else:
+                assert sec.equation_coeffs is not None
+                a_c, b_c, c_c, d_c = sec.equation_coeffs
+                if Fraction(a_c) == 0 and Fraction(b_c) == 0 and Fraction(c_c) != 0:
+                    z_cut = -Fraction(d_c) / Fraction(c_c)
+                    if isinstance(h_val, Fraction) and h_val != 0:
+                        ratio_from_apex = Fraction(1) - (z_cut / h_val)
+
+            mp_var = f"mp_{ir_name(sec.section_id)}"
+            sec_var = f"td_{ir_name(sec.section_id)}"
+            shape = sec.section_shape or "circle"
+            add_decl(mp_var, "plane3", None)
+            add_decl(sec_var, "ellipse3" if shape == "ellipse" else "circle3", None)
+            stmts.append(
+                {
+                    "kind": "construct_plane_from_equation",
+                    "target_var": mp_var,
+                    "a": a_c,
+                    "b": b_c,
+                    "c": c_c,
+                    "d": d_c,
+                    "label": f"Mặt phẳng ({sec.plane_name})",
+                }
+            )
+            stmts.append(
+                {
+                    "kind": "assign",
+                    "target_var": sec_var,
+                    "expr": {
+                        "kind": (
+                            "intersect_plane_curved_ellipse"
+                            if shape == "ellipse"
+                            else "intersect_plane_curved"
+                        ),
+                        "solid": solid_var,
+                        "plane": mp_var,
+                    },
+                }
+            )
+            self.section_object_ids[sec.section_id] = sec_var
+            self.section_plane_object_ids[sec.section_id] = mp_var
+            self.section_cycles[sec.section_id] = ()
+            section_meta[sec.section_id] = {
+                "sec_var": sec_var,
+                "mp_var": mp_var,
+                "shape": shape,
+                "ratio_from_apex": ratio_from_apex,
+                "z_cut": z_cut,
+                "plane_name": sec.plane_name,
+            }
+
+        # Handle derived solids (e.g., upper cut cone from a parallel plane section on a parent cone)
+        for g in self.payload.simulation_goals:
+            _verify_quote_in_problem(g.quote, self.problem_text, g.goal_id)
+            if g.kind == "construct_derived_solid":
+                assert g.derived_solid_id and g.target_section_id
+                parent_sid = g.parent_solid_id or next(
+                    s.target_solid_id for s in self.payload.derived_sections if s.section_id == g.target_section_id
+                )
+                pmeta = solid_meta[parent_sid]
+                sec_m = section_meta[g.target_section_id]
+                rk = sec_m.get("ratio_from_apex")
+                z_cut = sec_m.get("z_cut")
+                if (
+                    pmeta["curved_kind"] != "cone"
+                    or rk is None
+                    or z_cut is None
+                    or not (Fraction(0) < rk < Fraction(1))
+                ):
+                    raise TuChoi(
+                        "INVALID_DERIVED_SOLID",
+                        f"{g.goal_id}: khối nón dẫn xuất yêu cầu mặt phẳng cắt song song đáy cắt phần trong của trục",
+                        (g.goal_id,),
+                    )
+                o_cut_var = f"O_cat_{ir_name(g.derived_solid_id)}"
+                r_cut_var = f"R_cat_{ir_name(g.derived_solid_id)}"
+                upper_var = f"khoi_{ir_name(g.derived_solid_id)}"
+                r_cut_val = times_rational(pmeta["r_val"], rk)
+                add_decl(o_cut_var, "point3", [0, 0, str(z_cut)])
+                add_decl(r_cut_var, "float", rad_display(r_cut_val))
+                add_decl(upper_var, "curved_solid", None)
+                top_v = pmeta["top_var"]
+                if not top_v:
+                    top_v = f"S_{ir_name(g.derived_solid_id)}"
+                    add_decl(top_v, "point3", [0, 0, str(pmeta["h_val"])])
+                stmts.append(
+                    {
+                        "kind": "construct_curved_solid",
+                        "target_var": upper_var,
+                        "curved_kind": "cone",
+                        "anchor": o_cut_var,
+                        "apex_or_top": top_v,
+                        "rim_point": None,
+                        "radius": r_cut_var,
+                        "height": None,
+                        "label": f"Hình nón nhỏ đỉnh {pmeta['c_top'] or 'S'} cắt bởi ({sec_m['plane_name']})",
+                    }
+                )
+                self.solid_canonical_name[g.derived_solid_id] = g.derived_solid_id
+                solid_meta[g.derived_solid_id] = {
+                    "solid_var": upper_var,
+                    "curved_kind": "cone",
+                    "center_var": o_cut_var,
+                    "top_var": top_v,
+                    "rim_var": None,
+                    "r_val": r_cut_val,
+                    "r_sq": CV.binh_phuong_ban_kinh(r_cut_val),
+                    "h_val": times_rational(pmeta["h_val"], rk),
+                    "h_sq": CV.binh_phuong_ban_kinh(times_rational(pmeta["h_val"], rk)),
+                    "c_center": o_cut_var,
+                    "c_top": pmeta["c_top"],
+                    "c_rim": None,
+                    "parent_solid_id": parent_sid,
+                    "ratio_from_apex": rk,
+                }
+                self._register_derived(
+                    DerivedObjectIdentity(
+                        derived_id=g.derived_solid_id,
+                        kind="derived_solid",
+                        internal_symbol=g.derived_solid_id,
+                        display_label=f"Hình nón nhỏ đỉnh {pmeta['c_top'] or 'S'} cắt bởi ({sec_m['plane_name']})",
+                        reference_text=f"hình nón nhỏ đỉnh {pmeta['c_top'] or 'S'} trên mặt phẳng ({sec_m['plane_name']})",
+                        notation=None,
+                        anonymous_in_source=True,
+                        dependencies=(parent_sid, g.target_section_id),
+                        provenance={
+                            "derived_solid_id": g.derived_solid_id,
+                            "parent_solid_id": parent_sid,
+                            "section_id": g.target_section_id,
+                            "ratio_from_apex": str(rk),
+                        },
+                    )
+                )
+
+        # Compile math_goals measurements into IR statements
+        math_var_map: dict[str, str] = {}
+        for mg in self.payload.math_goals:
+            _verify_quote_in_problem(mg.quote, self.problem_text, mg.goal_id)
+            if mg.kind == "measurement":
+                assert mg.goal_type is not None
+                if "solid" in mg.target:
+                    t_sid = str(mg.target["solid"])
+                    of_var = solid_meta[t_sid]["solid_var"]
+                elif "section_id" in mg.target:
+                    t_sec = str(mg.target["section_id"])
+                    of_var = section_meta[t_sec]["sec_var"]
+                else:
+                    raise TuChoi(
+                        "INVALID_MATH_GOAL_TARGET",
+                        f"{mg.goal_id}: phép đo khối cong cần 'solid' hoặc 'section_id'",
+                        (mg.goal_id,),
+                    )
+                kq_var = f"kq_{ir_name(mg.goal_id)}"
+                add_decl(kq_var, "float", None)
+                stmts.append(
+                    {
+                        "kind": "assign",
+                        "target_var": kq_var,
+                        "expr": {
+                            "kind": "measure",
+                            "quantity": mg.goal_type,
+                            "of": of_var,
+                        },
+                    }
+                )
+                math_var_map[mg.goal_id] = kq_var
+
+        program = {
+            "program_id": "adapter3_curved_simulation",
+            "title": self.problem_text[:120],
+            "domain": "geometry",
+            "memory_declarations": decls,
+            "statements": stmts,
+        }
+        vr = validate_semantic_program(program)
+        if not vr.ok:
+            raise TuChoi(
+                "ENGINE_IR_INVALID",
+                f"IR khối cong sinh bởi Adapter /3 không qua thẩm định: {vr.error}",
+            )
+        try:
+            ket = SemanticProgramInterpreter().execute(vr.spec)
+        except GeometryError as exc:
+            raise TuChoi(exc.code, str(exc)) from None
+        except Exception as exc:  # noqa: BLE001
+            code = getattr(exc, "code", None)
+            if code:
+                raise TuChoi(code, str(exc)) from None
+            raise TuChoi("ENGINE_EXECUTION_FAILED", f"{type(exc).__name__}: {exc}") from None
+
+        fm = ket.final_memory
+        answers: dict[str, str] = {}
+        answer_exact: dict[str, dict[str, Any]] = {}
+        math_results: list[dict[str, Any]] = []
+        dim_map = {"radius": 1, "distance": 1, "area": 2, "lateral_area": 2, "volume": 3, "angle": 0}
+
+        for mg in self.payload.math_goals:
+            if mg.kind == "measurement":
+                assert mg.goal_type is not None
+                kq_var = math_var_map[mg.goal_id]
+                v = fm.get(kq_var)
+                bac = dim_map[mg.goal_type]
+                coef_str = rad_display(v)
+                disp_str = f"{coef_str}{ky_hieu}^{bac}" if (ky_hieu and bac) else coef_str
+                exact_obj = {
+                    "coef": coef_str,
+                    "dim": bac if ky_hieu else 0,
+                    "unit": ky_hieu if bac else None,
+                }
+                answers[mg.goal_id] = disp_str
+                answer_exact[mg.goal_id] = exact_obj
+                math_results.append(
+                    {
+                        "goal_id": mg.goal_id,
+                        "kind": "measurement",
+                        "goal_type": mg.goal_type,
+                        "value_display": disp_str,
+                        "exact": exact_obj,
+                        "certificate": {"rule": f"curved_measure_{mg.goal_type}", "kernel_var": kq_var},
+                    }
+                )
+            elif mg.kind == "volume_ratio":
+                assert mg.numerator_solid_id and mg.denominator_solid_id
+                if mg.numerator_solid_id == mg.denominator_solid_id:
+                    raise TuChoi("UNSUPPORTED_VOLUME_RATIO", f"{mg.goal_id}: hai khối trùng nhau", (mg.goal_id,))
+                num_m = solid_meta[mg.numerator_solid_id]
+                den_m = solid_meta[mg.denominator_solid_id]
+                rk = num_m.get("ratio_from_apex")
+                if rk is None or num_m.get("parent_solid_id") != mg.denominator_solid_id:
+                    raise TuChoi("UNSUPPORTED_VOLUME_RATIO", f"{mg.goal_id}: không xác định được tỉ lệ đồng dạng dọc trục", (mg.goal_id,))
+                ratio_val = rk ** 3
+                v_num = CV.the_tich(fm[num_m["solid_var"]])
+                v_den = CV.the_tich(fm[den_m["solid_var"]])
+                if times_rational(v_den, ratio_val) != v_num:
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{mg.goal_id}: tỉ số thể tích khối nón lệch kiểm chứng nhân ngược", (mg.goal_id,))
+                coef_str = rad_display(ratio_val)
+                exact_obj = {"coef": coef_str, "dim": 0, "unit": None}
+                answers[mg.goal_id] = coef_str
+                answer_exact[mg.goal_id] = exact_obj
+                math_results.append(
+                    {
+                        "goal_id": mg.goal_id,
+                        "kind": "volume_ratio",
+                        "numerator_solid": mg.numerator_solid_id,
+                        "denominator_solid": mg.denominator_solid_id,
+                        "value_display": coef_str,
+                        "exact": exact_obj,
+                        "certificate": {
+                            "rule": "axial_similarity_cubed_ratio",
+                            "axis_ratio": str(rk),
+                            "volume_ratio": coef_str,
+                        },
+                    }
+                )
+            elif mg.kind == "residual_volume":
+                assert mg.parent_solid_id and mg.cut_solid_id
+                if mg.parent_solid_id == mg.cut_solid_id:
+                    raise TuChoi("NON_POSITIVE_RESIDUAL_VOLUME", f"{mg.goal_id}: khối cắt trùng khối gốc", (mg.goal_id,))
+                parent_m = solid_meta[mg.parent_solid_id]
+                cut_m = solid_meta[mg.cut_solid_id]
+                rk = cut_m.get("ratio_from_apex")
+                if rk is None or cut_m.get("parent_solid_id") != mg.parent_solid_id:
+                    raise TuChoi("RESIDUAL_CONTAINMENT_UNPROVED", f"{mg.goal_id}: khối cắt không phải nón con cắt bởi mặt phẳng song song đáy", (mg.goal_id,))
+                comp_ratio = Fraction(1) - (rk ** 3)
+                if comp_ratio <= 0:
+                    raise TuChoi("NON_POSITIVE_RESIDUAL_VOLUME", f"{mg.goal_id}: thể tích phần còn lại không dương", (mg.goal_id,))
+                v_parent = CV.the_tich(fm[parent_m["solid_var"]])
+                res_val = times_rational(v_parent, comp_ratio)
+                # Cross-check against exact cone frustum formula: (1/3)*pi*h_frustum*(R^2 + R*r + r^2)
+                R_sq = parent_m["r_sq"]
+                r_sq = cut_m["r_sq"]
+                R_r = sqrt_rational(R_sq * r_sq)
+                h_frust = times_rational(sqrt_rational(parent_m["h_sq"]), Fraction(1) - rk)
+                if isinstance(R_r, Fraction):
+                    frust_direct = multiply(times_rational(h_frust, (R_sq + R_r + r_sq) * Fraction(1, 3)), PI)
+                    if frust_direct != res_val:
+                        raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{mg.goal_id}: thể tích nón cụt lệch công thức trực tiếp", (mg.goal_id,))
+                coef_str = rad_display(res_val)
+                disp_str = f"{coef_str}{ky_hieu}^3" if ky_hieu else coef_str
+                exact_obj = {"coef": coef_str, "dim": 3 if ky_hieu else 0, "unit": ky_hieu}
+                answers[mg.goal_id] = disp_str
+                answer_exact[mg.goal_id] = exact_obj
+                math_results.append(
+                    {
+                        "goal_id": mg.goal_id,
+                        "kind": "residual_volume",
+                        "parent_solid": mg.parent_solid_id,
+                        "cut_solid": mg.cut_solid_id,
+                        "complement_ratio": str(comp_ratio),
+                        "value_display": disp_str,
+                        "exact": exact_obj,
+                        "certificate": {
+                            "rule": "cone_frustum_parallel_cut_complement",
+                            "axis_ratio": str(rk),
+                            "complement_ratio": str(comp_ratio),
+                            "direct_frustum_formula_verified": True,
+                        },
+                    }
+                )
+
+        state = build_simulation_state(vr.spec, ket, None)
+        state["targets"] = list(math_var_map.values())
+        canh = build_scene3d(state)
+        by_id = {o["id"]: o for o in canh["objects"]}
+
+        solid_descriptors = [
+            {
+                "solid_id": sid,
+                "solid_type": s.solid_type,
+                "notation": s.notation,
+                "canonical_notation": s.notation,
+                "coordinate_frame_id": s.coordinate_frame_id,
+                "local_to_canonical": dict(self.solid_local_to_canonical[sid]),
+                "scene_object_id": solid_meta[sid]["solid_var"],
+            }
+            for sid, s in self.solid_specs.items()
+        ]
+        for d in self.derived_identities:
+            if d.kind == "derived_solid":
+                solid_descriptors.append(
+                    {
+                        "solid_id": d.derived_id,
+                        "solid_type": "cone",
+                        "notation": d.notation,
+                        "canonical_notation": d.internal_symbol,
+                        "coordinate_frame_id": "root",
+                        "local_to_canonical": {},
+                        "scene_object_id": solid_meta[d.derived_id]["solid_var"],
+                        "derived_id": d.derived_id,
+                    }
+                )
+
+        sim_goal_outcomes: list[dict[str, Any]] = []
+        for g in self.payload.simulation_goals:
+            if g.kind == "construct_object":
+                assert g.target_solid_id
+                oid = solid_meta[g.target_solid_id]["solid_var"]
+                sim_goal_outcomes.append(
+                    {
+                        "goal_id": g.goal_id,
+                        "kind": g.kind,
+                        "status": "CONSTRUCTED" if oid in by_id else "MISSING",
+                        "scene_object_ids": [oid],
+                        "style_role": g.style_role,
+                    }
+                )
+            elif g.kind == "construct_plane_section":
+                assert g.target_section_id
+                sec_oid = self.section_object_ids[g.target_section_id]
+                plane_oid = self.section_plane_object_ids[g.target_section_id]
+                sim_goal_outcomes.append(
+                    {
+                        "goal_id": g.goal_id,
+                        "kind": g.kind,
+                        "status": "CONSTRUCTED" if sec_oid in by_id else "MISSING",
+                        "scene_object_ids": [sec_oid, plane_oid],
+                        "section_object_id": sec_oid,
+                        "plane_object_id": plane_oid,
+                        "section_vertex_ids": list(self.section_cycles.get(g.target_section_id, ())),
+                        "style_role": g.style_role,
+                    }
+                )
+            elif g.kind == "construct_derived_solid":
+                assert g.derived_solid_id
+                oid = solid_meta[g.derived_solid_id]["solid_var"]
+                sim_goal_outcomes.append(
+                    {
+                        "goal_id": g.goal_id,
+                        "kind": g.kind,
+                        "status": "CONSTRUCTED" if oid in by_id else "MISSING",
+                        "scene_object_ids": [oid],
+                        "derived_solid_id": g.derived_solid_id,
+                        "style_role": g.style_role,
+                    }
+                )
+            elif g.kind == "highlight_geometry":
+                resolved_oids = []
+                for ref in g.target_refs:
+                    if ref in solid_meta:
+                        resolved_oids.append(solid_meta[ref]["solid_var"])
+                    elif ref in self.section_object_ids:
+                        resolved_oids.append(self.section_object_ids[ref])
+                    elif ir_name(ref) in by_id:
+                        resolved_oids.append(ir_name(ref))
+                for oid in resolved_oids:
+                    if oid in by_id and "target" not in by_id[oid]["display_group"]:
+                        by_id[oid]["display_group"].append("target")
+                sim_goal_outcomes.append(
+                    {
+                        "goal_id": g.goal_id,
+                        "kind": g.kind,
+                        "status": "HIGHLIGHTED",
+                        "scene_object_ids": resolved_oids,
+                        "style_role": g.style_role,
+                    }
+                )
+            elif g.kind == "construction_sequence":
+                steps_out = [
+                    {
+                        "step_index": ev["step_index"],
+                        "action": ev["action"],
+                        "object_id": ev.get("object"),
+                        "display_label": ev.get("display_label"),
+                        "learner_text": ev.get("learner_text"),
+                        "semantic_kind": ev.get("semantic_kind"),
+                        "depends": list(ev.get("depends") or []),
+                    }
+                    for ev in canh.get("events", [])
+                ]
+                sim_goal_outcomes.append(
+                    {
+                        "goal_id": g.goal_id,
+                        "kind": g.kind,
+                        "status": "SEQUENCED",
+                        "scene_object_ids": [s["object_id"] for s in steps_out if s.get("object_id")],
+                        "construction_steps": steps_out,
+                        "style_role": g.style_role,
+                    }
+                )
+
+        canh["simulation_contract"] = {
+            "schema_version": ROUTE_D_SIMULATION_SCHEMA_VERSION,
+            "adapter_version": ADAPTER_V3_VERSION,
+            "contract_version": TYPED_FACT_NEXT_SCHEMA_VERSION,
+            "solids": solid_descriptors,
+            "derived_identities": [d.model_dump() for d in self.derived_identities],
+            "verified_relations": [],
+            "simulation_goals": sim_goal_outcomes,
+            "math_goals": math_results,
+        }
+        pts_out = {
+            k: (v.x, v.y, v.z) for k, v in fm.items() if hasattr(v, "x") and hasattr(v, "y") and hasattr(v, "z")
+        }
+        return Adapter3SimulationResult(
+            status="SERVED",
+            scene3d=canh,
+            simulation_state=state,
+            solids=solid_descriptors,
+            derived_identities=[d.model_dump() for d in self.derived_identities],
+            verified_relations=[],
+            simulation_goals=sim_goal_outcomes,
+            math_goals=math_results,
+            answers=answers,
+            answer_exact=answer_exact,
+            length_unit=ky_hieu,
+            points=pts_out,
+            metric=None,
+            kernel_check=True,
+            trace=[],
+            calls=stmts,
+        )
+
     def run(self) -> Adapter3SimulationResult:
+        if any(s.solid_type in ("cylinder", "cone", "sphere", "cone_frustum") for s in self.payload.solids):
+            try:
+                return self._run_curved_route()
+            except TuChoi as exc:
+                return Adapter3SimulationResult(
+                    status="REFUSED",
+                    code=exc.code,
+                    reason=exc.reason,
+                    failed_calls=exc.calls,
+                )
         dung: _Dung | None = None
         try:
             self._compile_solids()

@@ -842,7 +842,14 @@ export function diemHuuHan(objects: SceneObject[]): Vec3[] {
     if (o.radius_sq && o.anchor) {
       const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq)));
       const c = toVec3(o.anchor);
-      const dinh = o.apex_or_top ? toVec3(o.apex_or_top) : c;
+      const h = o.curved_kind && o.curved_kind !== "ball" && o.height_sq
+        ? Math.sqrt(Math.max(0, toNumber(o.height_sq)))
+        : 0;
+      const dinh: Vec3 = o.apex_or_top
+        ? toVec3(o.apex_or_top)
+        : h > 0
+          ? [c[0], c[1], c[2] + h]
+          : c;
       const truc: Vec3 = [dinh[0] - c[0], dinh[1] - c[1], dinh[2] - c[2]];
       const dai = Math.hypot(...truc);
       // Khối cầu (`apex_or_top` vắng) không có trục ⇒ nở đều theo ba trục.
