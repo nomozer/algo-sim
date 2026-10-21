@@ -8,8 +8,8 @@
   - Branch: `research/simulation-visual-consistency-learning-ux`
   - Base `main`: `43247c9e9375a3dbf2b5223324a58e6f932ca596`
   - Session 1 commit: `9341a85771dba79376b46e69ac531c413f507b55`
-  - Final product commit: `ec92c8ad81e52dcbf958f25184bea2958fd6be58`
-  - Frozen candidate commit: `59d417a84b755d553b6dcf2085d66bb52fb100df`
+  - Session 2 product commit: `ec92c8ad81e52dcbf958f25184bea2958fd6be58`
+  - Final product commit (`perpendicular_witness` TypeScript interface): `dbef50896c848b93433048b0469f9a78b6a3dbda`
   - Measured system hash: `91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d` (`114` entries)
 
 ---
@@ -61,4 +61,5 @@
 - **`response_contract = "flat"` & `hybrid_preview_enabled = False`:** Verified in `backend/app/ai/pipeline.py` (`L51-L52`).
 - **`HYBRID_PRODUCT_ENABLEMENT = NO-GO` & `ALLOW_LIVE_AI = 0`:** Verified across `eval-summary.json`, `corpus-dev.json`, `candidate_divergence.json` (`live_provider_calls = 0`), and `SIMULATION_VISUAL_UX_EVALUATION_REPORT.md`.
 - **`CACHE_VERSION = "127"`:** Verified in `backend/app/main.py` (`L824`).
-- **Frozen candidate consistency:** `docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json` matches `commit = product_commit_sha = "ec92c8ad81e52dcbf958f25184bea2958fd6be58"` and `measured_system.tree_hash = "91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d"` (`so_file = 114`), with `candidate_divergence.json` confirming zero unrecorded divergence.
+- **Frozen candidate consistency:** `docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json` matches `product_commit_sha = "dbef50896c848b93433048b0469f9a78b6a3dbda"` and `measured_system.tree_hash = "91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d"` (`so_file = 114`), with `candidate_divergence.json` confirming zero unrecorded divergence.
+- **Delta Verification (`ec92c8ad` → `dbef5089`):** Confirmed `INDEPENDENT_REVIEW_PASS` (`0 BLOCKER, 0 IMPORTANT, 0 MINOR`). The delta in `frontend/src/simulations/domains/geometry/scene3d-model.ts` (`L555-L566`, `L2103`) strictly adds optional TypeScript typing for backend-emitted `perpendicular_witness` certificate fields (`certificate`, `relation`, `status`, `rule`, `foot_id`, `can_present_as_proven`) and `?? null` on `certificateRule` without altering runtime behavior or mathematical authority.

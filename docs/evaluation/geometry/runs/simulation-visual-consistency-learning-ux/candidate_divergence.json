@@ -19,7 +19,7 @@
     "frontend_geometry_renderer_locked_by": "product_commit_sha (PRODUCT_PATHS = ['backend/app', 'frontend/src'], rule = 'product-paths-excluding-test-only/1')"
   },
   "previous_product_commit": "1ca20f4f51457f3457802bca042af76accd13698",
-  "current_product_commit": "ec92c8ad81e52dcbf958f25184bea2958fd6be58",
+  "current_product_commit": "dbef50896c848b93433048b0469f9a78b6a3dbda",
   "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
   "diverged": true,
   "reason": "Owner-authorized two-session integrated campaign (GO_SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_LOCAL) unifying Scene3D visual semantics across polyhedral and curved solids (Session 1: muted slate curved surfaces, BASE_REGION vs SECTION_REGION on circle3/ellipse3, camera framing via khungNhinSuPham, raycast specificity in pick-target.ts, canonical A_prime/B_prime/O_prime/R/h/r notations in adapter3_simulation.py) and implementing simulation-first learning UX (Session 2: Mode A Simulation default hiding final answers + Mode B Mathematical Analysis panel #geo3d-bang-phan-tich + 8-category semantic classification in scene3d-model.ts and Scene3DExplorer.tsx). All historical receipts and Route A replay hashes are preserved byte-for-byte.",
