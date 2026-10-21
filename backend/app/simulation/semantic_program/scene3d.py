@@ -292,11 +292,6 @@ def _attach_topology(objects: list[dict[str, Any]],
                 obj["boundary_edge_ids"] = boundary
             else:
                 obj["surface_role"] = "AUXILIARY_SURFACE"
-        elif kind in ("circle3", "ellipse3"):
-            if "CONSTRUCT_BASE" in (obj.get("formation_roles") or ()) or str(obj.get("id") or "").startswith("duong_tron_day"):
-                obj["surface_role"] = "BASE_REGION"
-            else:
-                obj["surface_role"] = "SECTION_REGION"
         elif kind == "segment3":
             # Đoạn trùng cạnh khối (theo TÊN đầu mút): cạnh chuẩn của khối là
             # owner nét vẽ, đoạn chỉ trỏ về nó — một cạnh, một nét.

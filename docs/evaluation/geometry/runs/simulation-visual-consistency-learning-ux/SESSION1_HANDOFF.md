@@ -14,7 +14,7 @@
    - Updated `buildObject3D` in `frontend/src/simulations/domains/geometry/scene3d-view.tsx` so `curved_solid` (`cylinder`, `cone`, `ball`) uses the same muted slate-blue surface token `nen(MAU.mesh)` (`0x647a96`) and default transparency `0.22` (`0.36` when highlighted) as polyhedral `mesh` solids (`0x647a96`, `opacity: 0.22`), reserving `MAU.surface` (`0x7c3aed` purple) strictly for cutting planes (`plane3`).
 
 2. **Unified Section vs Base Circle Visual Semantics (`P2.B–D` / `P3`, Resolves `VI-02` & `VI-03`):**
-   - Updated `_attach_topology` in `backend/app/simulation/semantic_program/scene3d.py` to tag structural base circles (`duong_tron_day*` / `CONSTRUCT_BASE`) with `surface_role = "BASE_REGION"` and cutting circular/elliptical sections (`circle3` / `ellipse3`) with `surface_role = "SECTION_REGION"`.
+   - Updated `_run_curved_route` in `backend/app/ai/adapter3_simulation.py` to tag structural base circles (`duong_tron_day*` / `CONSTRUCT_BASE`) with `surface_role = "BASE_REGION"` and cutting circular/elliptical sections (`circle3` / `ellipse3`) with `surface_role = "SECTION_REGION"` (while keeping `backend/app/simulation/semantic_program/scene3d.py` and `display_names.py` untouched so frozen Route A replay hashes such as `CA_P6` remain byte-identical).
    - Updated `o.render === "circle"` in `frontend/src/simulations/domains/geometry/scene3d-view.tsx`:
      - Structural base circles (`BASE_REGION` / `CONSTRUCT_BASE` / `duong_tron_day*`) render with dark slate boundary ring `net(MAU.canh)` (`0x1e293b`, solid front / dashed hidden back) and subtle slate cap fill (`polygon_fill:${id}`, `nen(MAU.mesh)`, `opacity: 0.12`).
      - Verified cutting circular sections (`SECTION_REGION`) render with warm amber perimeter ring `net(MAU.polygon)` (`0xf59e0b`, solid front / dashed hidden back) and translucent warm amber interior disk `section_fill:${id}` (`nen(MAU.polygon)`, `opacity: 0.28`, `renderOrder: THU_TU_TO_THIET_DIEN = 7`, `depthFunc: THREE.AlwaysDepth`, `depthWrite: false`, `LECH_THIET_DIEN`).
@@ -28,15 +28,12 @@
 
 4. **Raycast Selection Specificity & Curved-Solid Display Names (`P2.F–G`, Resolves `ID-01` & `LR-01`):**
    - Updated `HANG_CU_THE` in `frontend/src/simulations/domains/geometry/pick-target.ts` to rank `segment3: 1`, `circle3: 3`, `ellipse3: 3` ahead of outer `curved_solid: 5` shells.
-   - Updated `ten_hien_thi` in `backend/app/simulation/semantic_program/display_names.py` so free quantities with mathematical symbol identifiers (`R`, `h`, `r`) receive their symbol as `notation` and `label` instead of generic `"Đại lượng đo"`.
-   - Updated `_run_curved_route` in `backend/app/ai/adapter3_simulation.py` to use canonical mathematical symbol names `A_prime`, `B_prime`, `O_prime`, `r` when undeclared so `ten_hien_thi` emits `"Điểm A′"`, `"Điểm B′"`, `"Điểm O′"`, and `"r"`.
+   - Updated `_run_curved_route` in `backend/app/ai/adapter3_simulation.py` to use canonical mathematical symbol names `A_prime`, `B_prime`, `O_prime`, `r` when undeclared and attach symbol notation/label/reference on free quantities (`R`, `h`, `r`), so `ten_hien_thi` and `Scene3D` emit `"Điểm A′"`, `"Điểm B′"`, `"Điểm O′"`, `"R"`, `"h"`, and `"r"`.
 
 ---
 
 ## 2. Files Changed in Session 1
 
-- `backend/app/simulation/semantic_program/display_names.py`
-- `backend/app/simulation/semantic_program/scene3d.py`
 - `backend/app/ai/adapter3_simulation.py`
 - `frontend/src/simulations/domains/geometry/pick-target.ts`
 - `frontend/src/simulations/domains/geometry/scene3d-model.ts`

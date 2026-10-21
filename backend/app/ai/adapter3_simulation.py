@@ -2708,8 +2708,30 @@ class _Adapter3Compiler:
                 )
 
         state = build_simulation_state(vr.spec, ket, None)
+        for o in state.get("objects", []):
+            oid = str(o.get("id") or "")
+            if o.get("kind") == "quantity" and not o.get("notation") and re.fullmatch(r"[a-zA-Z][a-zA-Z0-9₀-₉'’]*", oid):
+                o["notation"] = oid
+                if o.get("label") in (None, "", "Đại lượng đo"):
+                    o["label"] = oid
+                if o.get("reference") in (None, "", "đại lượng"):
+                    o["reference"] = oid
         state["targets"] = list(math_var_map.values())
         canh = build_scene3d(state)
+        for o in canh["objects"]:
+            okind = o.get("type")
+            oid = str(o.get("id") or "")
+            if okind in ("circle3", "ellipse3") and not o.get("surface_role"):
+                if "CONSTRUCT_BASE" in (o.get("formation_roles") or ()) or oid.startswith("duong_tron_day"):
+                    o["surface_role"] = "BASE_REGION"
+                else:
+                    o["surface_role"] = "SECTION_REGION"
+            elif okind == "quantity" and not o.get("notation") and re.fullmatch(r"[a-zA-Z][a-zA-Z0-9₀-₉'’]*", oid):
+                o["notation"] = oid
+                if o.get("label") in (None, "", "Đại lượng đo"):
+                    o["label"] = oid
+                if o.get("reference") in (None, "", "đại lượng"):
+                    o["reference"] = oid
         by_id = {o["id"]: o for o in canh["objects"]}
 
         solid_descriptors = [

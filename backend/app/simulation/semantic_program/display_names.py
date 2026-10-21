@@ -433,7 +433,7 @@ def ten_hien_thi(
             if ten.endswith("_length"):
                 raw = ten[:-7]
                 kh = ky_hieu_toan(raw)
-            elif prod in (None, "assign") and re.fullmatch(r"[a-zA-Z][a-zA-Z0-9₀-₉'’]*", ten):
+            elif prod == "assign" and re.fullmatch(r"[a-zA-Z][a-zA-Z0-9₀-₉'’]*", ten):
                 kh = ten
 
         # ⑤ Chuẩn hoá ký hiệu sư phạm cho khối và phép đo hình học

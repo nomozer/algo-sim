@@ -1,0 +1,783 @@
+{
+  "schema": "algosim-simulation-visual-ux-eval-summary/1",
+  "evaluation_label": "SIMULATION_VISUAL_UX_DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "holdout_exposed": false,
+  "live_provider_calls": 0,
+  "receipts": {
+    "baseline_sha256": "c2e0a4d7ea1a3cc84114cc0b33bef457e7c4b42d35dcb0d80790389e605156a8",
+    "session1_sha256": "1a4e275b0cc3da1968306fd55eb21a3b9633f64d0d879820e39beb4d6bd0c1a0",
+    "after_sha256": "486837f325cc4324d60eefbf0a650105e615fc3a516548d5286d39c7c04569fb"
+  },
+  "dimensions": {
+    "D1_scene3d_structural_validity": {
+      "passed": 14,
+      "total": 14,
+      "rate": 1.0
+    },
+    "D2_primary_object_presence": {
+      "passed": 13,
+      "total": 13,
+      "rate": 1.0
+    },
+    "D3_section_visibility_when_expected": {
+      "passed": 6,
+      "total": 6,
+      "rate": 1.0
+    },
+    "D4_camera_framing_adequacy": {
+      "passed": 13,
+      "total": 13,
+      "rate": 1.0,
+      "mean_primary_pixels_before": 65906.3,
+      "mean_primary_pixels_after": 107967.6,
+      "mean_bbox_height_ratio_after": 0.7253
+    },
+    "D5_label_collision_rate": {
+      "total_collisions": 0,
+      "scenes_with_collisions": 0,
+      "total_served_scenes": 13,
+      "collision_rate": 0.0
+    },
+    "D6_interaction_responsiveness": {
+      "passed": 13,
+      "total": 13,
+      "rate": 1.0
+    },
+    "D7_step_progression_validity": {
+      "passed": 13,
+      "total": 13,
+      "rate": 1.0
+    },
+    "D8_default_simulation_mode_compliance": {
+      "passed": 13,
+      "total": 13,
+      "rate": 1.0
+    },
+    "D9_mathematical_analysis_mode_availability": {
+      "passed": 13,
+      "total": 13,
+      "rate": 1.0
+    },
+    "D10_correct_result_presentation_after_explicit_reveal": {
+      "passed": 13,
+      "total": 13,
+      "rate": 1.0
+    }
+  },
+  "cases": [
+    {
+      "id": "family01_triangular_pyramid",
+      "family": "triangular_pyramid",
+      "category": "1. Hình chóp tam giác S.ABC",
+      "served": true,
+      "d1_structural_validity": true,
+      "d2_primary_object_presence": true,
+      "d3_section_visibility": true,
+      "d4_camera_framing_adequacy": true,
+      "d5_label_cleanliness": true,
+      "d6_interaction_responsiveness": true,
+      "d7_step_progression_validity": true,
+      "d8_default_simulation_mode_compliance": true,
+      "d9_math_analysis_availability": true,
+      "d10_explicit_reveal_presentation": true,
+      "metrics": {
+        "primaryPixelsBefore": 46418,
+        "primaryPixelsSession1": 47649,
+        "primaryPixelsAfter": 47649,
+        "bboxHeightRatioBefore": 0.7253,
+        "bboxHeightRatioSession1": 0.7253,
+        "bboxHeightRatioAfter": 0.7253,
+        "bboxWidthRatioAfter": 1.0,
+        "ownPixelMap": {
+          "khoi_chop": 47649
+        },
+        "sectionAmberPixels": 0,
+        "labelCount": 4,
+        "labelCollisionCount": 0,
+        "resetDiffFromDefault": 0,
+        "orbitDiffPixels": 36385,
+        "zoomDiffPixels": 7616,
+        "panDiffPixels": 26792,
+        "selectDiffPixels": 2198,
+        "explodeDiffPixels": 58533,
+        "stepCount": 6,
+        "step0DiffPixels": 45862,
+        "modeADefaultBadges": [],
+        "modeBCategories": [
+          "DERIVED_MEASUREMENT",
+          "GIVEN_DIMENSION",
+          "MATHEMATICAL_CERTIFICATE",
+          "REQUESTED_RESULT"
+        ],
+        "modeBSnippet": "Phân tích toán họcKết quả toán họcThể tích S.ABCV(S.ABC) = 10V = 1/3 × S(ABC) × SA = 10Số đo trung gianDiện tích ABCS(ABC) = 6Kích thước đã choAB = 3AC = 4SA = 5Quan hệ & Chứng chỉ"
+      },
+      "screenshots": {
+        "before_default": "screenshots/before/family01_triangular_pyramid_default.png",
+        "session1_default": "screenshots/session1-after/family01_triangular_pyramid_default.png",
+        "after_default": "screenshots/after/family01_triangular_pyramid_default.png",
+        "after_explorer_mode_a": "screenshots/after/family01_triangular_pyramid_explorer.png",
+        "after_explorer_mode_b": "screenshots/after/family01_triangular_pyramid_explorer_mode_b.png"
+      }
+    },
+    {
+      "id": "family02_quadrilateral_pyramid",
+      "family": "quadrilateral_pyramid",
+      "category": "2. Hình chóp tứ giác S.ABCD",
+      "served": true,
+      "d1_structural_validity": true,
+      "d2_primary_object_presence": true,
+      "d3_section_visibility": true,
+      "d4_camera_framing_adequacy": true,
+      "d5_label_cleanliness": true,
+      "d6_interaction_responsiveness": true,
+      "d7_step_progression_validity": true,
+      "d8_default_simulation_mode_compliance": true,
+      "d9_math_analysis_availability": true,
+      "d10_explicit_reveal_presentation": true,
+      "metrics": {
+        "primaryPixelsBefore": 33570,
+        "primaryPixelsSession1": 34136,
+        "primaryPixelsAfter": 34136,
+        "bboxHeightRatioBefore": 0.7253,
+        "bboxHeightRatioSession1": 0.7253,
+        "bboxHeightRatioAfter": 0.7253,
+        "bboxWidthRatioAfter": 1.0,
+        "ownPixelMap": {
+          "khoi_chop": 34136
+        },
+        "sectionAmberPixels": 0,
+        "labelCount": 5,
+        "labelCollisionCount": 0,
+        "resetDiffFromDefault": 0,
+        "orbitDiffPixels": 21967,
+        "zoomDiffPixels": 6132,
+        "panDiffPixels": 23766,
+        "selectDiffPixels": 2322,
+        "explodeDiffPixels": 32320,
+        "stepCount": 8,
+        "step0DiffPixels": 33101,
+        "modeADefaultBadges": [],
+        "modeBCategories": [
+          "DERIVED_MEASUREMENT",
+          "GIVEN_DIMENSION",
+          "REQUESTED_RESULT"
+        ],
+        "modeBSnippet": "Phân tích toán họcKết quả toán họcThể tích S.ABCDV(S.ABCD) = 24V = 1/3 × S(ABCD) × SA = 24Số đo trung gianDiện tích ABCDS(ABCD) = 12Kích thước đã choAB = 3AD = 4SA = 6"
+      },
+      "screenshots": {
+        "before_default": "screenshots/before/family02_quadrilateral_pyramid_default.png",
+        "session1_default": "screenshots/session1-after/family02_quadrilateral_pyramid_default.png",
+        "after_default": "screenshots/after/family02_quadrilateral_pyramid_default.png",
+        "after_explorer_mode_a": "screenshots/after/family02_quadrilateral_pyramid_explorer.png",
+        "after_explorer_mode_b": "screenshots/after/family02_quadrilateral_pyramid_explorer_mode_b.png"
+      }
+    },
+    {
+      "id": "family03_regular_pyramid",
+      "family": "regular_pyramid",
+      "category": "3. Hình chóp tứ giác đều S.ABCD",
+      "served": true,
+      "d1_structural_validity": true,
+      "d2_primary_object_presence": true,
+      "d3_section_visibility": true,
+      "d4_camera_framing_adequacy": true,
+      "d5_label_cleanliness": true,
+      "d6_interaction_responsiveness": true,
+      "d7_step_progression_validity": true,
+      "d8_default_simulation_mode_compliance": true,
+      "d9_math_analysis_availability": true,
+      "d10_explicit_reveal_presentation": true,
+      "metrics": {
+        "primaryPixelsBefore": 68986,
+        "primaryPixelsSession1": 71728,
+        "primaryPixelsAfter": 71728,
+        "bboxHeightRatioBefore": 0.7253,
+        "bboxHeightRatioSession1": 0.7253,
+        "bboxHeightRatioAfter": 0.7253,
+        "bboxWidthRatioAfter": 1.0,
+        "ownPixelMap": {
+          "khoi_chop": 71728
+        },
+        "sectionAmberPixels": 0,
+        "labelCount": 6,
+        "labelCollisionCount": 0,
+        "resetDiffFromDefault": 0,
+        "orbitDiffPixels": 50071,
+        "zoomDiffPixels": 25206,
+        "panDiffPixels": 58685,
+        "selectDiffPixels": 5937,
+        "explodeDiffPixels": 62432,
+        "stepCount": 12,
+        "step0DiffPixels": 68532,
+        "modeADefaultBadges": [],
+        "modeBCategories": [
+          "DERIVED_MEASUREMENT",
+          "GIVEN_DIMENSION",
+          "REQUESTED_RESULT"
+        ],
+        "modeBSnippet": "Phân tích toán họcKết quả toán họcThể tích S.ABCDV(S.ABCD) = 16V = 1/3 × S(ABCD) × SO = 16Số đo trung gianDiện tích ABCDS(ABCD) = 16Khoảng cách giữa S và (ABC)d(S, (ABC)) = 3Kích t"
+      },
+      "screenshots": {
+        "before_default": "screenshots/before/family03_regular_pyramid_default.png",
+        "session1_default": "screenshots/session1-after/family03_regular_pyramid_default.png",
+        "after_default": "screenshots/after/family03_regular_pyramid_default.png",
+        "after_explorer_mode_a": "screenshots/after/family03_regular_pyramid_explorer.png",
+        "after_explorer_mode_b": "screenshots/after/family03_regular_pyramid_explorer_mode_b.png"
+      }
+    },
+    {
+      "id": "family04_derived_sub_pyramid",
+      "family": "derived_sub_pyramid",
+      "category": "4. Thiết diện & Khối chóp con dẫn xuất S.ABMN",
+      "served": true,
+      "d1_structural_validity": true,
+      "d2_primary_object_presence": true,
+      "d3_section_visibility": true,
+      "d4_camera_framing_adequacy": true,
+      "d5_label_cleanliness": true,
+      "d6_interaction_responsiveness": true,
+      "d7_step_progression_validity": true,
+      "d8_default_simulation_mode_compliance": true,
+      "d9_math_analysis_availability": true,
+      "d10_explicit_reveal_presentation": true,
+      "metrics": {
+        "primaryPixelsBefore": 61810,
+        "primaryPixelsSession1": 61810,
+        "primaryPixelsAfter": 61810,
+        "bboxHeightRatioBefore": 0.7253,
+        "bboxHeightRatioSession1": 0.7253,
+        "bboxHeightRatioAfter": 0.7253,
+        "bboxWidthRatioAfter": 1.0,
+        "ownPixelMap": {
+          "khoi_S_ABCD": 52372,
+          "khoi_S_MI1I2I3": 9438
+        },
+        "sectionAmberPixels": 2838,
+        "labelCount": 6,
+        "labelCollisionCount": 0,
+        "resetDiffFromDefault": 0,
+        "orbitDiffPixels": 45640,
+        "zoomDiffPixels": 22312,
+        "panDiffPixels": 57399,
+        "selectDiffPixels": 14020,
+        "explodeDiffPixels": 53270,
+        "stepCount": 20,
+        "step0DiffPixels": 53065,
+        "modeADefaultBadges": [],
+        "modeBCategories": [
+          "DERIVED_MEASUREMENT",
+          "MATHEMATICAL_CERTIFICATE",
+          "REQUESTED_RESULT"
+        ],
+        "modeBSnippet": "Phân tích toán họcKết quả toán họcDiện tích MI1I2I3S(MI1I2I3) = 1Tỉ số thể tích S.MI1I2I3 và S.ABCDV(S.MI1I2I3) / V(S.ABCD) = 1/8Số đo trung gianThể tích S.ABCDV(S.ABCD) = 8/3Thể t"
+      },
+      "screenshots": {
+        "before_default": "screenshots/before/family04_derived_sub_pyramid_default.png",
+        "session1_default": "screenshots/session1-after/family04_derived_sub_pyramid_default.png",
+        "after_default": "screenshots/after/family04_derived_sub_pyramid_default.png",
+        "after_explorer_mode_a": "screenshots/after/family04_derived_sub_pyramid_explorer.png",
+        "after_explorer_mode_b": "screenshots/after/family04_derived_sub_pyramid_explorer_mode_b.png"
+      }
+    },
+    {
+      "id": "family05_prism",
+      "family": "prism",
+      "category": "5. Hình lăng trụ đứng ABC.A'B'C'",
+      "served": true,
+      "d1_structural_validity": true,
+      "d2_primary_object_presence": true,
+      "d3_section_visibility": true,
+      "d4_camera_framing_adequacy": true,
+      "d5_label_cleanliness": true,
+      "d6_interaction_responsiveness": true,
+      "d7_step_progression_validity": true,
+      "d8_default_simulation_mode_compliance": true,
+      "d9_math_analysis_availability": true,
+      "d10_explicit_reveal_presentation": true,
+      "metrics": {
+        "primaryPixelsBefore": 105118,
+        "primaryPixelsSession1": 105794,
+        "primaryPixelsAfter": 105794,
+        "bboxHeightRatioBefore": 0.7253,
+        "bboxHeightRatioSession1": 0.7253,
+        "bboxHeightRatioAfter": 0.7253,
+        "bboxWidthRatioAfter": 1.0,
+        "ownPixelMap": {
+          "solid_ABCDEF": 105794
+        },
+        "sectionAmberPixels": 0,
+        "labelCount": 6,
+        "labelCollisionCount": 0,
+        "resetDiffFromDefault": 0,
+        "orbitDiffPixels": 41094,
+        "zoomDiffPixels": 26507,
+        "panDiffPixels": 84504,
+        "selectDiffPixels": 3445,
+        "explodeDiffPixels": 95323,
+        "stepCount": 6,
+        "step0DiffPixels": 104456,
+        "modeADefaultBadges": [],
+        "modeBCategories": [
+          "DERIVED_MEASUREMENT",
+          "GIVEN_DIMENSION",
+          "REQUESTED_RESULT"
+        ],
+        "modeBSnippet": "Phân tích toán họcKết quả toán họcThể tích ABC.DEFV(ABC.DEF) = 30V = S(ABC) × AD = 30Số đo trung gianDiện tích ABCS(ABC) = 6Kích thước đã choAB = 3AC = 4AD = 5"
+      },
+      "screenshots": {
+        "before_default": "screenshots/before/family05_prism_default.png",
+        "session1_default": "screenshots/session1-after/family05_prism_default.png",
+        "after_default": "screenshots/after/family05_prism_default.png",
+        "after_explorer_mode_a": "screenshots/after/family05_prism_explorer.png",
+        "after_explorer_mode_b": "screenshots/after/family05_prism_explorer_mode_b.png"
+      }
+    },
+    {
+      "id": "family06a_cube",
+      "family": "cube",
+      "category": "6a. Hình lập phương ABCD.A'B'C'D'",
+      "served": true,
+      "d1_structural_validity": true,
+      "d2_primary_object_presence": true,
+      "d3_section_visibility": true,
+      "d4_camera_framing_adequacy": true,
+      "d5_label_cleanliness": true,
+      "d6_interaction_responsiveness": true,
+      "d7_step_progression_validity": true,
+      "d8_default_simulation_mode_compliance": true,
+      "d9_math_analysis_availability": true,
+      "d10_explicit_reveal_presentation": true,
+      "metrics": {
+        "primaryPixelsBefore": 81181,
+        "primaryPixelsSession1": 81538,
+        "primaryPixelsAfter": 81538,
+        "bboxHeightRatioBefore": 0.7253,
+        "bboxHeightRatioSession1": 0.7253,
+        "bboxHeightRatioAfter": 0.7253,
+        "bboxWidthRatioAfter": 1.0,
+        "ownPixelMap": {
+          "khoi_hop": 81538
+        },
+        "sectionAmberPixels": 0,
+        "labelCount": 8,
+        "labelCollisionCount": 0,
+        "resetDiffFromDefault": 0,
+        "orbitDiffPixels": 63406,
+        "zoomDiffPixels": 40222,
+        "panDiffPixels": 96256,
+        "selectDiffPixels": 20609,
+        "explodeDiffPixels": 69009,
+        "stepCount": 11,
+        "step0DiffPixels": 80358,
+        "modeADefaultBadges": [],
+        "modeBCategories": [
+          "DERIVED_MEASUREMENT",
+          "GIVEN_DIMENSION",
+          "REQUESTED_RESULT"
+        ],
+        "modeBSnippet": "Phân tích toán họcKết quả toán họcThể tích ABCD.A′B′C′D′V(ABCD.A′B′C′D′) = 64V = S(ABCD) × AA′ = 64Số đo trung gianDiện tích ABCDS(ABCD) = 16Khoảng cách giữa A và A′d(A, A′) = 4Kíc"
+      },
+      "screenshots": {
+        "before_default": "screenshots/before/family06a_cube_default.png",
+        "session1_default": "screenshots/session1-after/family06a_cube_default.png",
+        "after_default": "screenshots/after/family06a_cube_default.png",
+        "after_explorer_mode_a": "screenshots/after/family06a_cube_explorer.png",
+        "after_explorer_mode_b": "screenshots/after/family06a_cube_explorer_mode_b.png"
+      }
+    },
+    {
+      "id": "family06b_cuboid",
+      "family": "cuboid",
+      "category": "6b. Hình hộp chữ nhật ABCD.A'B'C'D'",
+      "served": true,
+      "d1_structural_validity": true,
+      "d2_primary_object_presence": true,
+      "d3_section_visibility": true,
+      "d4_camera_framing_adequacy": true,
+      "d5_label_cleanliness": true,
+      "d6_interaction_responsiveness": true,
+      "d7_step_progression_validity": true,
+      "d8_default_simulation_mode_compliance": true,
+      "d9_math_analysis_availability": true,
+      "d10_explicit_reveal_presentation": true,
+      "metrics": {
+        "primaryPixelsBefore": 69913,
+        "primaryPixelsSession1": 70841,
+        "primaryPixelsAfter": 70841,
+        "bboxHeightRatioBefore": 0.7253,
+        "bboxHeightRatioSession1": 0.7253,
+        "bboxHeightRatioAfter": 0.7253,
+        "bboxWidthRatioAfter": 1.0,
+        "ownPixelMap": {
+          "khoi_hop": 70841
+        },
+        "sectionAmberPixels": 0,
+        "labelCount": 8,
+        "labelCollisionCount": 0,
+        "resetDiffFromDefault": 0,
+        "orbitDiffPixels": 48422,
+        "zoomDiffPixels": 27499,
+        "panDiffPixels": 73891,
+        "selectDiffPixels": 18110,
+        "explodeDiffPixels": 60436,
+        "stepCount": 9,
+        "step0DiffPixels": 69312,
+        "modeADefaultBadges": [],
+        "modeBCategories": [
+          "DERIVED_MEASUREMENT",
+          "GIVEN_DIMENSION",
+          "REQUESTED_RESULT"
+        ],
+        "modeBSnippet": "Phân tích toán họcKết quả toán họcThể tích ABCD.A′B′C′D′V(ABCD.A′B′C′D′) = 60V = S(ABCD) × AA′ = 60Số đo trung gianDiện tích ABCDS(ABCD) = 12Khoảng cách giữa A và A′d(A, A′) = 5Kíc"
+      },
+      "screenshots": {
+        "before_default": "screenshots/before/family06b_cuboid_default.png",
+        "session1_default": "screenshots/session1-after/family06b_cuboid_default.png",
+        "after_default": "screenshots/after/family06b_cuboid_default.png",
+        "after_explorer_mode_a": "screenshots/after/family06b_cuboid_explorer.png",
+        "after_explorer_mode_b": "screenshots/after/family06b_cuboid_explorer_mode_b.png"
+      }
+    },
+    {
+      "id": "family07_multi_solid_composition",
+      "family": "multi_solid_composition",
+      "category": "7. Tổ hợp đa khối (Lăng trụ + Chóp chung mặt EFGH)",
+      "served": true,
+      "d1_structural_validity": true,
+      "d2_primary_object_presence": true,
+      "d3_section_visibility": true,
+      "d4_camera_framing_adequacy": true,
+      "d5_label_cleanliness": true,
+      "d6_interaction_responsiveness": true,
+      "d7_step_progression_validity": true,
+      "d8_default_simulation_mode_compliance": true,
+      "d9_math_analysis_availability": true,
+      "d10_explicit_reveal_presentation": true,
+      "metrics": {
+        "primaryPixelsBefore": 17102,
+        "primaryPixelsSession1": 17102,
+        "primaryPixelsAfter": 17102,
+        "bboxHeightRatioBefore": 0.7253,
+        "bboxHeightRatioSession1": 0.7253,
+        "bboxHeightRatioAfter": 0.7253,
+        "bboxWidthRatioAfter": 1.0,
+        "ownPixelMap": {
+          "khoi_D1_ABC": 544,
+          "khoi_S_ABC": 16135,
+          "day_ABC": 423
+        },
+        "sectionAmberPixels": 382,
+        "labelCount": 6,
+        "labelCollisionCount": 0,
+        "resetDiffFromDefault": 0,
+        "orbitDiffPixels": 20789,
+        "zoomDiffPixels": 6353,
+        "panDiffPixels": 19660,
+        "selectDiffPixels": 23128,
+        "explodeDiffPixels": 33171,
+        "stepCount": 9,
+        "step0DiffPixels": 23155,
+        "modeADefaultBadges": [],
+        "modeBCategories": [
+          "MATHEMATICAL_CERTIFICATE",
+          "REQUESTED_RESULT"
+        ],
+        "modeBSnippet": "Phân tích toán họcKết quả toán họcThể tích D1.ABCV(D1.ABC) = 4/3Thể tích S.ABCV(S.ABC) = 4Tỉ số thể tích D1.ABC và S.ABCV(D1.ABC) / V(S.ABC) = 1/3Quan hệ & Chứng chỉ kiểm chứngChun"
+      },
+      "screenshots": {
+        "before_default": "screenshots/before/family07_multi_solid_composition_default.png",
+        "session1_default": "screenshots/session1-after/family07_multi_solid_composition_default.png",
+        "after_default": "screenshots/after/family07_multi_solid_composition_default.png",
+        "after_explorer_mode_a": "screenshots/after/family07_multi_solid_composition_explorer.png",
+        "after_explorer_mode_b": "screenshots/after/family07_multi_solid_composition_explorer_mode_b.png"
+      }
+    },
+    {
+      "id": "family08_unnamed_section_vertices",
+      "family": "unnamed_section_vertices",
+      "category": "8. Thiết diện có giao điểm ẩn tên I1",
+      "served": true,
+      "d1_structural_validity": true,
+      "d2_primary_object_presence": true,
+      "d3_section_visibility": true,
+      "d4_camera_framing_adequacy": true,
+      "d5_label_cleanliness": true,
+      "d6_interaction_responsiveness": true,
+      "d7_step_progression_validity": true,
+      "d8_default_simulation_mode_compliance": true,
+      "d9_math_analysis_availability": true,
+      "d10_explicit_reveal_presentation": true,
+      "metrics": {
+        "primaryPixelsBefore": 47117,
+        "primaryPixelsSession1": 47117,
+        "primaryPixelsAfter": 47117,
+        "bboxHeightRatioBefore": 0.7253,
+        "bboxHeightRatioSession1": 0.7253,
+        "bboxHeightRatioAfter": 0.7253,
+        "bboxWidthRatioAfter": 1.0,
+        "ownPixelMap": {
+          "khoi_S_ABCD": 43147,
+          "khoi_S_MI1I2I3": 3970
+        },
+        "sectionAmberPixels": 1591,
+        "labelCount": 6,
+        "labelCollisionCount": 0,
+        "resetDiffFromDefault": 0,
+        "orbitDiffPixels": 26406,
+        "zoomDiffPixels": 13231,
+        "panDiffPixels": 42427,
+        "selectDiffPixels": 8281,
+        "explodeDiffPixels": 40892,
+        "stepCount": 20,
+        "step0DiffPixels": 43672,
+        "modeADefaultBadges": [],
+        "modeBCategories": [
+          "DERIVED_MEASUREMENT",
+          "MATHEMATICAL_CERTIFICATE",
+          "REQUESTED_RESULT"
+        ],
+        "modeBSnippet": "Phân tích toán họcKết quả toán họcDiện tích MI1I2I3S(MI1I2I3) = 8/9Thể tích phần còn lại (S.ABCD trừ S.MI1I2I3)V(S.ABCD) − V(S.MI1I2I3) = 208/27Tỉ số phần còn lại = 26/27Số đo trun"
+      },
+      "screenshots": {
+        "before_default": "screenshots/before/family08_unnamed_section_vertices_default.png",
+        "session1_default": "screenshots/session1-after/family08_unnamed_section_vertices_default.png",
+        "after_default": "screenshots/after/family08_unnamed_section_vertices_default.png",
+        "after_explorer_mode_a": "screenshots/after/family08_unnamed_section_vertices_explorer.png",
+        "after_explorer_mode_b": "screenshots/after/family08_unnamed_section_vertices_explorer_mode_b.png"
+      }
+    },
+    {
+      "id": "family09_cylinder_and_sections",
+      "family": "right_circular_cylinder",
+      "category": "9. Hình trụ tròn xoay & Thiết diện qua trục / song song đáy",
+      "served": true,
+      "d1_structural_validity": true,
+      "d2_primary_object_presence": true,
+      "d3_section_visibility": true,
+      "d4_camera_framing_adequacy": true,
+      "d5_label_cleanliness": true,
+      "d6_interaction_responsiveness": true,
+      "d7_step_progression_validity": true,
+      "d8_default_simulation_mode_compliance": true,
+      "d9_math_analysis_availability": true,
+      "d10_explicit_reveal_presentation": true,
+      "metrics": {
+        "primaryPixelsBefore": 125247,
+        "primaryPixelsSession1": 262734,
+        "primaryPixelsAfter": 262734,
+        "bboxHeightRatioBefore": 0.7253,
+        "bboxHeightRatioSession1": 0.7253,
+        "bboxHeightRatioAfter": 0.7253,
+        "bboxWidthRatioAfter": 1.0,
+        "ownPixelMap": {
+          "khoi_cyl": 75389,
+          "duong_tron_day_cyl": 56178,
+          "duong_tron_day_tren_cyl": 32801,
+          "td_sec_parallel": 68202,
+          "td_sec_axial": 30164
+        },
+        "sectionAmberPixels": 20146,
+        "labelCount": 6,
+        "labelCollisionCount": 0,
+        "resetDiffFromDefault": 0,
+        "orbitDiffPixels": 87098,
+        "zoomDiffPixels": 74147,
+        "panDiffPixels": 165133,
+        "selectDiffPixels": 90629,
+        "explodeDiffPixels": 44993,
+        "stepCount": 16,
+        "step0DiffPixels": 91044,
+        "modeADefaultBadges": [],
+        "modeBCategories": [
+          "GIVEN_DIMENSION",
+          "MATHEMATICAL_CERTIFICATE",
+          "REQUESTED_RESULT"
+        ],
+        "modeBSnippet": "Phân tích toán họcKết quả toán họcThể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»12πDiện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»12πDiện tích «Đường trò"
+      },
+      "screenshots": {
+        "before_default": "screenshots/before/family09_cylinder_and_sections_default.png",
+        "session1_default": "screenshots/session1-after/family09_cylinder_and_sections_default.png",
+        "after_default": "screenshots/after/family09_cylinder_and_sections_default.png",
+        "after_explorer_mode_a": "screenshots/after/family09_cylinder_and_sections_explorer.png",
+        "after_explorer_mode_b": "screenshots/after/family09_cylinder_and_sections_explorer_mode_b.png"
+      }
+    },
+    {
+      "id": "family10_cone_frustum_cut",
+      "family": "right_circular_cone",
+      "category": "10. Hình nón tròn xoay & Thiết diện song song đáy / qua trục",
+      "served": true,
+      "d1_structural_validity": true,
+      "d2_primary_object_presence": true,
+      "d3_section_visibility": true,
+      "d4_camera_framing_adequacy": true,
+      "d5_label_cleanliness": true,
+      "d6_interaction_responsiveness": true,
+      "d7_step_progression_validity": true,
+      "d8_default_simulation_mode_compliance": true,
+      "d9_math_analysis_availability": true,
+      "d10_explicit_reveal_presentation": true,
+      "metrics": {
+        "primaryPixelsBefore": 63028,
+        "primaryPixelsSession1": 205919,
+        "primaryPixelsAfter": 205758,
+        "bboxHeightRatioBefore": 0.7253,
+        "bboxHeightRatioSession1": 0.7253,
+        "bboxHeightRatioAfter": 0.7253,
+        "bboxWidthRatioAfter": 1.0,
+        "ownPixelMap": {
+          "khoi_cone_main": 62071,
+          "duong_tron_day_cone_main": 94779,
+          "td_sec_cut": 16770,
+          "td_sec_axial": 17019,
+          "khoi_cone_upper": 15119
+        },
+        "sectionAmberPixels": 7908,
+        "labelCount": 5,
+        "labelCollisionCount": 0,
+        "resetDiffFromDefault": 0,
+        "orbitDiffPixels": 57620,
+        "zoomDiffPixels": 45100,
+        "panDiffPixels": 93712,
+        "selectDiffPixels": 66917,
+        "explodeDiffPixels": 25905,
+        "stepCount": 15,
+        "step0DiffPixels": 67482,
+        "modeADefaultBadges": [],
+        "modeBCategories": [
+          "REQUESTED_RESULT"
+        ],
+        "modeBSnippet": "Phân tích toán họcKết quả toán họcThể tích «Hình nón đáy tâm O, đỉnh S, qua A»12πDiện tích mặt cong của «Hình nón đáy tâm O, đỉnh S, qua A»15πDiện tích SABS(SAB) = 12Tỉ số thể tích"
+      },
+      "screenshots": {
+        "before_default": "screenshots/before/family10_cone_frustum_cut_default.png",
+        "session1_default": "screenshots/session1-after/family10_cone_frustum_cut_default.png",
+        "after_default": "screenshots/after/family10_cone_frustum_cut_default.png",
+        "after_explorer_mode_a": "screenshots/after/family10_cone_frustum_cut_explorer.png",
+        "after_explorer_mode_b": "screenshots/after/family10_cone_frustum_cut_explorer_mode_b.png"
+      }
+    },
+    {
+      "id": "family11_sphere_plane_cut",
+      "family": "sphere",
+      "category": "11. Mặt cầu & Thiết diện đường tròn cắt bởi mặt phẳng",
+      "served": true,
+      "d1_structural_validity": true,
+      "d2_primary_object_presence": true,
+      "d3_section_visibility": true,
+      "d4_camera_framing_adequacy": true,
+      "d5_label_cleanliness": true,
+      "d6_interaction_responsiveness": true,
+      "d7_step_progression_validity": true,
+      "d8_default_simulation_mode_compliance": true,
+      "d9_math_analysis_availability": true,
+      "d10_explicit_reveal_presentation": true,
+      "metrics": {
+        "primaryPixelsBefore": 55011,
+        "primaryPixelsSession1": 274093,
+        "primaryPixelsAfter": 274093,
+        "bboxHeightRatioBefore": 0.7253,
+        "bboxHeightRatioSession1": 0.7253,
+        "bboxHeightRatioAfter": 0.7253,
+        "bboxWidthRatioAfter": 1.0,
+        "ownPixelMap": {
+          "khoi_sph": 171807,
+          "td_sec_sph": 102286
+        },
+        "sectionAmberPixels": 2778,
+        "labelCount": 1,
+        "labelCollisionCount": 0,
+        "resetDiffFromDefault": 0,
+        "orbitDiffPixels": 37145,
+        "zoomDiffPixels": 48968,
+        "panDiffPixels": 113819,
+        "selectDiffPixels": 89603,
+        "explodeDiffPixels": 0,
+        "stepCount": 8,
+        "step0DiffPixels": 89827,
+        "modeADefaultBadges": [],
+        "modeBCategories": [
+          "GIVEN_DIMENSION",
+          "MATHEMATICAL_CERTIFICATE",
+          "REQUESTED_RESULT"
+        ],
+        "modeBSnippet": "Phân tích toán họcKết quả toán họcThể tích «Khối cầu tâm I, đi qua R»500π/3Diện tích mặt cong của «Khối cầu tâm I, đi qua R»100πBán kính «Đường tròn giao của khối cong và (α)»4Diện"
+      },
+      "screenshots": {
+        "before_default": "screenshots/before/family11_sphere_plane_cut_default.png",
+        "session1_default": "screenshots/session1-after/family11_sphere_plane_cut_default.png",
+        "after_default": "screenshots/after/family11_sphere_plane_cut_default.png",
+        "after_explorer_mode_a": "screenshots/after/family11_sphere_plane_cut_explorer.png",
+        "after_explorer_mode_b": "screenshots/after/family11_sphere_plane_cut_explorer_mode_b.png"
+      }
+    },
+    {
+      "id": "family12_cylinder_ellipse_section",
+      "family": "curved_cylinder_ellipse_section",
+      "category": "12. Hình trụ & Thiết diện Elip (nghiêng 45°)",
+      "served": true,
+      "d1_structural_validity": true,
+      "d2_primary_object_presence": true,
+      "d3_section_visibility": true,
+      "d4_camera_framing_adequacy": true,
+      "d5_label_cleanliness": true,
+      "d6_interaction_responsiveness": true,
+      "d7_step_progression_validity": true,
+      "d8_default_simulation_mode_compliance": true,
+      "d9_math_analysis_availability": true,
+      "d10_explicit_reveal_presentation": true,
+      "metrics": {
+        "primaryPixelsBefore": 82281,
+        "primaryPixelsSession1": 123279,
+        "primaryPixelsAfter": 123279,
+        "bboxHeightRatioBefore": 0.7253,
+        "bboxHeightRatioSession1": 0.7253,
+        "bboxHeightRatioAfter": 0.7253,
+        "bboxWidthRatioAfter": 1.0,
+        "ownPixelMap": {
+          "khoi_cyl_1": 57993,
+          "duong_tron_day_cyl_1": 33819,
+          "duong_tron_day_tren_cyl_1": 16825,
+          "td_sec_el": 14642
+        },
+        "sectionAmberPixels": 660,
+        "labelCount": 2,
+        "labelCollisionCount": 0,
+        "resetDiffFromDefault": 0,
+        "orbitDiffPixels": 57249,
+        "zoomDiffPixels": 39343,
+        "panDiffPixels": 95866,
+        "selectDiffPixels": 60573,
+        "explodeDiffPixels": 0,
+        "stepCount": 11,
+        "step0DiffPixels": 60866,
+        "modeADefaultBadges": [],
+        "modeBCategories": [
+          "GIVEN_DIMENSION",
+          "MATHEMATICAL_CERTIFICATE",
+          "REQUESTED_RESULT"
+        ],
+        "modeBSnippet": "Phân tích toán họcKết quả toán họcDiện tích «Elip giao của khối cong và (P)»4π√2a^2Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua R»24πa^3Kích thước đã choR = 2h = 6Quan hệ & C"
+      },
+      "screenshots": {
+        "before_default": "screenshots/before/family12_cylinder_ellipse_section_default.png",
+        "session1_default": "screenshots/session1-after/family12_cylinder_ellipse_section_default.png",
+        "after_default": "screenshots/after/family12_cylinder_ellipse_section_default.png",
+        "after_explorer_mode_a": "screenshots/after/family12_cylinder_ellipse_section_explorer.png",
+        "after_explorer_mode_b": "screenshots/after/family12_cylinder_ellipse_section_explorer_mode_b.png"
+      }
+    },
+    {
+      "id": "family13_invalid_geometry_refusal",
+      "family": "safe_refusal",
+      "category": "13. Từ chối an toàn khi mặt phẳng không cắt mặt cầu",
+      "served": false,
+      "d1_structural_validity": true,
+      "refusal_code": "CURVED_PLANE_DOES_NOT_CUT",
+      "refusal_reason": "CURVED_PLANE_DOES_NOT_CUT: mặt phẳng không cắt khối cầu — nó nằm xa tâm hơn bán kính",
+      "browser_refusal_rendered": true,
+      "screenshot_after": "family13_invalid_geometry_refusal_refused.png"
+    }
+  ]
+}

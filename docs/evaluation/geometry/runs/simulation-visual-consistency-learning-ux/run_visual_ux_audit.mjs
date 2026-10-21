@@ -128,6 +128,7 @@ writeFileSync(
 import { createRoot } from "react-dom/client";
 import { Scene3DWorkspace } from "../src/simulations/domains/geometry/scene3d-view";
 import { Scene3DExplorer } from "../src/simulations/domains/geometry/Scene3DExplorer";
+import { UnsupportedNotice } from "../src/components/SimulationWorkspace";
 import { TRANG_THAI_DAU, select, isolate, explode, semanticTree } from "../src/simulations/domains/geometry/interaction-state";
 import { diemHuuHan, geometryTimeline, objectsAt, stepCount } from "../src/simulations/domains/geometry/scene3d-model";
 import { veKhongGian } from "../src/simulations/domains/geometry/scene3d-chart";
@@ -231,9 +232,21 @@ function SceneView({ params }: { params: AuditParams }) {
   };
 
   if (!row?.served || !scene) {
-    return <main style={{ padding: 16 }}>
-      <h1 data-testid="refusal-title">{row?.id}</h1>
-      <p data-testid="refusal">{row?.code ?? row?.refusal?.code ?? "REFUSED"}: {row?.reason ?? row?.refusal?.reason ?? "Từ chối an toàn"}</p>
+    const code = row?.code ?? row?.refusal?.code ?? "REFUSED";
+    const reason = row?.reason ?? row?.refusal?.reason ?? "Từ chối an toàn";
+    return <main style={{ padding: 24, maxWidth: 680 }}>
+      <h1 data-testid="refusal-title" style={{ marginBottom: 12 }}>{row?.id}</h1>
+      <div data-testid="refusal">
+        <UnsupportedNotice
+          unsupported={{
+            reason: \`[\${code}] \${reason}\`,
+            learner_reason: \`Từ chối an toàn (\${code}): \${reason}\`,
+            stage_reached: "verification",
+            failure_category: "postcondition_violated",
+            refusal_cause: "SOURCE",
+          }}
+        />
+      </div>
     </main>;
   }
 
@@ -516,32 +529,46 @@ try {
     const explorerAudit = await page.evaluate(() => {
       const root = document.querySelector('[data-testid="explorer-root"]');
       const text = root ? (root.textContent ?? "") : "";
-      const modeBButton = document.querySelector('[data-mo-bang="phan-tich"], [data-testid="mode-b-toggle"]');
+      const modeBButton = document.querySelector('[data-mo-bang="phan-tich"], [data-mode-b-toggle]');
+      const modeBPanelDefault = document.querySelector('[data-panel="phan-tich"], [data-math-analysis-panel]');
       const readoutBadges = [...document.querySelectorAll(".geo3d-so-do")].map((e) => (e.textContent ?? "").trim());
       return {
         hasModeBButton: Boolean(modeBButton),
         modeBButtonText: modeBButton ? (modeBButton.textContent ?? "").trim() : null,
+        defaultPanelOpen: Boolean(modeBPanelDefault),
         visibleReadoutBadgesDefault: readoutBadges,
         defaultTextSnippet: text.slice(0, 300),
       };
     });
 
     let explorerModeB = null;
-    const modeBBtn = page.locator('[data-mo-bang="phan-tich"], [data-testid="mode-b-toggle"]');
+    const modeBBtn = page.locator('[data-mo-bang="phan-tich"], [data-mode-b-toggle]');
     if (await modeBBtn.count() > 0) {
       await modeBBtn.first().click();
       await page.waitForTimeout(200);
       const modeBShot = await page.getByTestId("explorer-root").screenshot();
       const modeBFile = `${row.id}_explorer_mode_b.png`;
       writeFileSync(join(outDir, modeBFile), modeBShot);
-      const modeBPanelText = await page.evaluate(() => {
-        const panel = document.querySelector('[data-panel="phan-tich"], .geo3d-phan-tich');
-        return panel ? (panel.textContent ?? "").trim() : null;
+      const modeBDetails = await page.evaluate(() => {
+        const panel = document.querySelector('[data-panel="phan-tich"], [data-math-analysis-panel]');
+        const items = [...document.querySelectorAll('[data-analysis-id]')].map((el) => ({
+          id: el.getAttribute("data-analysis-id"),
+          category: el.getAttribute("data-analysis-category"),
+          text: (el.textContent ?? "").trim(),
+        }));
+        const badges = [...document.querySelectorAll(".geo3d-so-do")].map((e) => (e.textContent ?? "").trim());
+        return {
+          panelText: panel ? (panel.textContent ?? "").trim() : null,
+          items,
+          visibleReadoutBadgesModeB: badges,
+        };
       });
       explorerModeB = {
         screenshot: modeBFile,
-        panelOpen: Boolean(modeBPanelText),
-        panelTextSnippet: modeBPanelText ? modeBPanelText.slice(0, 300) : null,
+        panelOpen: Boolean(modeBDetails.panelText),
+        panelTextSnippet: modeBDetails.panelText ? modeBDetails.panelText.slice(0, 300) : null,
+        items: modeBDetails.items,
+        visibleReadoutBadgesModeB: modeBDetails.visibleReadoutBadgesModeB,
       };
     }
 

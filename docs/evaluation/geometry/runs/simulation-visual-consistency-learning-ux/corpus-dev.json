@@ -1,0 +1,165 @@
+{
+  "schema": "algosim-simulation-visual-ux-dev-corpus/1",
+  "evaluation_label": "SIMULATION_VISUAL_UX_DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "holdout_exposed": false,
+  "live_provider_calls": 0,
+  "total_scenes": 14,
+  "positive_served_scenes": 13,
+  "negative_refusal_scenes": 1,
+  "cases": [
+    {
+      "id": "family01_triangular_pyramid",
+      "family": "triangular_pyramid",
+      "category": "1. Hình chóp tam giác S.ABC",
+      "source": "envelope",
+      "served_expected": true,
+      "problem_text": "Cho hình chóp S.ABC có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên SA vuông góc với đáy, SA = 5. Tính thể tích khối chóp S.ABC.",
+      "has_section_expected": false,
+      "has_math_analysis_expected": true,
+      "expected_refusal_code": null
+    },
+    {
+      "id": "family02_quadrilateral_pyramid",
+      "family": "quadrilateral_pyramid",
+      "category": "2. Hình chóp tứ giác S.ABCD",
+      "source": "envelope",
+      "served_expected": true,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật, AB = 3, AD = 4. Cạnh bên SA vuông góc với mặt phẳng đáy, SA = 6. Tính thể tích khối chóp S.ABCD.",
+      "has_section_expected": false,
+      "has_math_analysis_expected": true,
+      "expected_refusal_code": null
+    },
+    {
+      "id": "family03_regular_pyramid",
+      "family": "regular_pyramid",
+      "category": "3. Hình chóp tứ giác đều S.ABCD",
+      "source": "envelope",
+      "served_expected": true,
+      "problem_text": "Cho hình chóp tứ giác đều S.ABCD có cạnh đáy bằng 4, chiều cao bằng 3. Tính thể tích khối chóp S.ABCD.",
+      "has_section_expected": false,
+      "has_math_analysis_expected": true,
+      "expected_refusal_code": null
+    },
+    {
+      "id": "family04_derived_sub_pyramid",
+      "family": "derived_sub_pyramid",
+      "category": "4. Thiết diện & Khối chóp con dẫn xuất S.ABMN",
+      "source": "route_d",
+      "served_expected": true,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình vuông cạnh 2, SA vuông góc với đáy và SA = 2. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với mặt phẳng (ABCD) cắt SB, SC, SD. Tính diện tích thiết diện và tỉ số thể tích khối chóp cắt bởi (α) so với S.ABCD.",
+      "has_section_expected": true,
+      "has_math_analysis_expected": true,
+      "expected_refusal_code": null
+    },
+    {
+      "id": "family05_prism",
+      "family": "prism",
+      "category": "5. Hình lăng trụ đứng ABC.A'B'C'",
+      "source": "envelope",
+      "served_expected": true,
+      "problem_text": "Cho hình lăng trụ đứng ABC.DEF có đáy ABC là tam giác vuông tại A, AB = 3, AC = 4. Cạnh bên AD = 5. Tính thể tích khối lăng trụ ABC.DEF.",
+      "has_section_expected": false,
+      "has_math_analysis_expected": true,
+      "expected_refusal_code": null
+    },
+    {
+      "id": "family06a_cube",
+      "family": "cube",
+      "category": "6a. Hình lập phương ABCD.A'B'C'D'",
+      "source": "envelope",
+      "served_expected": true,
+      "problem_text": "Cho hình lập phương ABCD.A'B'C'D' có cạnh bằng 4. Tính thể tích của hình lập phương đó.",
+      "has_section_expected": false,
+      "has_math_analysis_expected": true,
+      "expected_refusal_code": null
+    },
+    {
+      "id": "family06b_cuboid",
+      "family": "cuboid",
+      "category": "6b. Hình hộp chữ nhật ABCD.A'B'C'D'",
+      "source": "envelope",
+      "served_expected": true,
+      "problem_text": "Cho hình hộp chữ nhật ABCD.A'B'C'D' có AB = 3, AD = 4, AA' = 5. Tính thể tích khối hộp chữ nhật ABCD.A'B'C'D'.",
+      "has_section_expected": false,
+      "has_math_analysis_expected": true,
+      "expected_refusal_code": null
+    },
+    {
+      "id": "family07_multi_solid_composition",
+      "family": "multi_solid_composition",
+      "category": "7. Tổ hợp đa khối (Lăng trụ + Chóp chung mặt EFGH)",
+      "source": "route_d",
+      "served_expected": true,
+      "problem_text": "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC là tam giác vuông cân tại A với AB = AC = 2. Biết SA vuông góc với mặt phẳng (ABC) và SA = 6. Gọi D trên cạnh SA sao cho D là trung điểm của SA ở khối thứ nhất, còn đỉnh D của hình chóp D.ABC có DA vuông góc với (ABC) trên cùng nửa không gian và DA = 2. Dựng hai khối chóp và tính thể tích khối thứ nhất, thể tích khối thứ hai cùng tỉ số thể tích.",
+      "has_section_expected": false,
+      "has_math_analysis_expected": true,
+      "expected_refusal_code": null
+    },
+    {
+      "id": "family08_unnamed_section_vertices",
+      "family": "unnamed_section_vertices",
+      "category": "8. Thiết diện có giao điểm ẩn tên I1",
+      "source": "route_d",
+      "served_expected": true,
+      "problem_text": "Cho hình chóp S.ABCD có đáy ABCD là hình chữ nhật với AB = 2, BC = 4, SA vuông góc với đáy và SA = 3. Điểm M thuộc cạnh SA sao cho SM/SA = 1/3. Mặt phẳng (α) qua M song song với (ABCD) cắt SB, SC, SD. Dựng thiết diện, khối chóp đỉnh S phía trên (α) và tính thể tích phần khối đa diện còn lại.",
+      "has_section_expected": true,
+      "has_math_analysis_expected": true,
+      "expected_refusal_code": null
+    },
+    {
+      "id": "family09_cylinder_and_sections",
+      "family": "right_circular_cylinder",
+      "category": "9. Hình trụ tròn xoay & Thiết diện qua trục / song song đáy",
+      "source": "route_d",
+      "served_expected": true,
+      "problem_text": "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3. Mặt phẳng (α) song song với đáy cách đáy một khoảng 1 cắt hình trụ theo thiết diện đường tròn, và xét thêm thiết diện qua trục qua A. Tính thể tích, diện tích xung quanh hình trụ, diện tích thiết diện tròn và thiết diện qua trục.",
+      "has_section_expected": true,
+      "has_math_analysis_expected": true,
+      "expected_refusal_code": null
+    },
+    {
+      "id": "family10_cone_frustum_cut",
+      "family": "right_circular_cone",
+      "category": "10. Hình nón tròn xoay & Thiết diện song song đáy / qua trục",
+      "source": "route_d",
+      "served_expected": true,
+      "problem_text": "Cho hình nón tròn xoay đỉnh S, tâm đáy O, điểm A thuộc đường tròn đáy, bán kính đáy R = 3, chiều cao h = 4. Mặt phẳng (α) song song với đáy cắt trục SO theo tỉ lệ 1/2 tính từ đỉnh S, chia hình nón thành hình nón nhỏ đỉnh S và hình nón cụt. Xét thêm thiết diện qua trục SAB. Tính thể tích, diện tích xung quanh hình nón, diện tích thiết diện qua trục, tỉ số thể tích và thể tích khối nón cụt.",
+      "has_section_expected": true,
+      "has_math_analysis_expected": true,
+      "expected_refusal_code": null
+    },
+    {
+      "id": "family11_sphere_plane_cut",
+      "family": "sphere",
+      "category": "11. Mặt cầu & Thiết diện đường tròn cắt bởi mặt phẳng",
+      "source": "route_d",
+      "served_expected": true,
+      "problem_text": "Cho mặt cầu (S) tâm I bán kính R = 5. Mặt phẳng (α) có phương trình z - 3 = 0 cắt mặt cầu theo một đường tròn giao tuyến. Tính thể tích khối cầu, diện tích mặt cầu, bán kính và diện tích đường tròn giao tuyến.",
+      "has_section_expected": true,
+      "has_math_analysis_expected": true,
+      "expected_refusal_code": null
+    },
+    {
+      "id": "family12_cylinder_ellipse_section",
+      "family": "curved_cylinder_ellipse_section",
+      "category": "12. Hình trụ & Thiết diện Elip (nghiêng 45°)",
+      "source": "route_d",
+      "served_expected": true,
+      "problem_text": "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', bán kính đáy R = 2a và chiều cao h = 6a. Mặt phẳng (P) có phương trình x - z + 3 = 0 cắt trục OO' và cắt mặt trụ theo một thiết diện elip. Hãy dựng hình trụ, mặt phẳng cắt (P), thiết diện elip và tính diện tích thiết diện elip cùng thể tích hình trụ.",
+      "has_section_expected": true,
+      "has_math_analysis_expected": true,
+      "expected_refusal_code": null
+    },
+    {
+      "id": "family13_invalid_geometry_refusal",
+      "family": "safe_refusal",
+      "category": "13. Từ chối an toàn khi mặt phẳng không cắt mặt cầu",
+      "source": "envelope",
+      "served_expected": false,
+      "problem_text": "Cho mặt cầu (S) tâm I bán kính R = 5 và mặt phẳng (α) có phương trình z - 7 = 0. Hãy dựng đường tròn giao tuyến của mặt phẳng (α) và mặt cầu (S).",
+      "has_section_expected": false,
+      "has_math_analysis_expected": false,
+      "expected_refusal_code": "CURVED_PLANE_DOES_NOT_CUT"
+    }
+  ]
+}
