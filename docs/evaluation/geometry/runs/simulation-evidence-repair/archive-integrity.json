@@ -1,0 +1,422 @@
+{
+  "schema_version": "corrective-archive-integrity/1",
+  "clean_checkout_commit": "5c4a6ff90377add14a375b42436012156de2b143",
+  "original_t3": [
+    {
+      "historical_path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/t3/attempt1-fail.stdout.log",
+      "archive_path": "docs/evaluation/geometry/runs/simulation-evidence-repair/raw/original-t3/attempt1-fail.stdout.log",
+      "original_runtime_raw_bytes_sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+      "historical_normalized_git_blob_sha256": "2620186c4513cb7a9935f83de6397f5aa03fa38e2de4206ece553391701988e4",
+      "corrective_raw_archive_sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+      "recorded_original_sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+      "staged_git_blob_sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+      "committed_git_blob_sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+      "clean_checkout_sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+      "clean_checkout_commit": "5c4a6ff90377add14a375b42436012156de2b143"
+    },
+    {
+      "historical_path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/t3/attempt1-fail.stderr.log",
+      "archive_path": "docs/evaluation/geometry/runs/simulation-evidence-repair/raw/original-t3/attempt1-fail.stderr.log",
+      "original_runtime_raw_bytes_sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+      "historical_normalized_git_blob_sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+      "corrective_raw_archive_sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+      "recorded_original_sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+      "staged_git_blob_sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+      "committed_git_blob_sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+      "clean_checkout_sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+      "clean_checkout_commit": "5c4a6ff90377add14a375b42436012156de2b143"
+    },
+    {
+      "historical_path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/t3/attempt2-pass.stdout.log",
+      "archive_path": "docs/evaluation/geometry/runs/simulation-evidence-repair/raw/original-t3/attempt2-pass.stdout.log",
+      "original_runtime_raw_bytes_sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+      "historical_normalized_git_blob_sha256": "8274c4c26793ea001f892ee9c90f339f7fdeb93a43b5c92f3c8e409ca547ae6b",
+      "corrective_raw_archive_sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+      "recorded_original_sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+      "staged_git_blob_sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+      "committed_git_blob_sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+      "clean_checkout_sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+      "clean_checkout_commit": "5c4a6ff90377add14a375b42436012156de2b143"
+    },
+    {
+      "historical_path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/t3/attempt2-pass.stderr.log",
+      "archive_path": "docs/evaluation/geometry/runs/simulation-evidence-repair/raw/original-t3/attempt2-pass.stderr.log",
+      "original_runtime_raw_bytes_sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+      "historical_normalized_git_blob_sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+      "corrective_raw_archive_sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+      "recorded_original_sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+      "staged_git_blob_sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+      "committed_git_blob_sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+      "clean_checkout_sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+      "clean_checkout_commit": "5c4a6ff90377add14a375b42436012156de2b143"
+    }
+  ],
+  "browser_artifacts": [
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/execution.json",
+      "sha256": "b05c768e4a48c393fa861124311ef074dde96a7704344a15658cf71ccecfb2a0",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/input-scenes.json",
+      "sha256": "c3203838fc0eefb916d98212674f89e07d1e37706e6dce9daf8779e0cd7466de",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/invocation.json",
+      "sha256": "ada3b584453bb77d9a01753bd512480e953f70f8c705e2c573695a6b6edb29cb",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/started.json",
+      "sha256": "ff7b4259a6fd13b99e2f96bba16f600914365fba2ac6a4cf8251f1329b3b8825",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/stdout.log",
+      "sha256": "ad82f193b678bf77177141f4e6173245cc14a70b0a1891d53ae1f4c97847cbcd",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/validation.json",
+      "sha256": "60263e092928a2ebd043775fe45aad4ab1d0a01b0fa08a38c7ce0340ae849e23",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/visual-receipt.json",
+      "sha256": "f942e9716bf9e40f3dca7b4409aace4cff8683e5f8b5f751bf46ed4d1678ab9c",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo1-pyramid-derived-section_default.png",
+      "sha256": "fa78944d0681fdb43474086808b0b2b622f1b1b5e85f630c1b4713cf8122f199",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo1-pyramid-derived-section_exploded.png",
+      "sha256": "304682f79835e0a6370177a073c98731892538b257eb32e49b09ca041a74714b",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo1-pyramid-derived-section_explorer.png",
+      "sha256": "6b80f3d4e878b585bf70922d3de1f05ec0095ca32c9f3b93d7c7c637ffdd992f",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo1-pyramid-derived-section_orbit.png",
+      "sha256": "cc38c9f72ada76b40429b1bc26a31c6dac68107dacd5083d7726542d9157931c",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo1-pyramid-derived-section_selected.png",
+      "sha256": "cf84a983cbc7df1b0b693284570b0939e162bd731eb4e5a4b751975fb8cf15ce",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo1-pyramid-derived-section_step0.png",
+      "sha256": "0ba905fcdb02b952396d8deb3d3d7829bf0b3292af4e3e73712bfc255c45bc55",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo2-unnamed-section-intersections_default.png",
+      "sha256": "e9b1715b6d3dd1e85710d725da863dde554c4d43c15ae125afd21dcbc56f9f6c",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo2-unnamed-section-intersections_exploded.png",
+      "sha256": "87f1ae19890c049e3fe000fe028ed7db7a75a23b660344e0c239d350bf7cf4e4",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo2-unnamed-section-intersections_explorer.png",
+      "sha256": "95922055cb8d45649c30ead04c033948396d273f288f3f4224082429f5e16290",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo2-unnamed-section-intersections_orbit.png",
+      "sha256": "99dd0cd0db23e82b22e03be6a943dc67b22c4fb820a786b90a84755804ab76eb",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo2-unnamed-section-intersections_selected.png",
+      "sha256": "39cb8d6a8a5364dc1cb7728fde160ec616d2415384c4311b6912cb234e69f5e4",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo2-unnamed-section-intersections_step0.png",
+      "sha256": "0b0c19cbc8dc6717aadd199e4d06b2ab4153192223618cbacebb42cba77a9d78",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo3-multi-solid-shared-geometry_default.png",
+      "sha256": "11c8dddc2c9e3ba41690e939345206a7bbc3d537f9a7078dc9eebe9cb2a44836",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo3-multi-solid-shared-geometry_exploded.png",
+      "sha256": "596660e9e7f533369341521d2558c0b9740c5631e0a41e3e6396bbaa1c21aeee",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo3-multi-solid-shared-geometry_explorer.png",
+      "sha256": "ec5e86a8d87a0c1a7a330cf9e626f89c6dff7301b9d19d12ae575715305aedd4",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo3-multi-solid-shared-geometry_orbit.png",
+      "sha256": "c83d577a481d1374511182bb8177518c994935b9e642f091204ed5babaf2ed17",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo3-multi-solid-shared-geometry_selected.png",
+      "sha256": "c1bc4e2baca436d381d5a362374f7bcd5bbb0503bfc948fa0f2f88346c17339a",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo3-multi-solid-shared-geometry_step0.png",
+      "sha256": "b2697ea43b85bf84a7acd697e0b82ad14ab1e02d6271832d1c3e6191b22d3245",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo4-step-by-step-construction_default.png",
+      "sha256": "d973cb2c95fca1ec5c645ea9eca7d25dd68bdced350ea506791b5fc5bf4497a1",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo4-step-by-step-construction_exploded.png",
+      "sha256": "cf25fc771885ebefe0e1e9464c5078fba1fb8ecac5590afec9683fe0c76f68da",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo4-step-by-step-construction_explorer.png",
+      "sha256": "a8a511bf657bbf1f2ca931141828ee592b8aa665f4ad509239cd1cd504a19800",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo4-step-by-step-construction_orbit.png",
+      "sha256": "3b5d7b54219a18b8ca7e7b72315e39d4c6c580b1ba256d030a271a036f37632e",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo4-step-by-step-construction_selected.png",
+      "sha256": "b3128e924077da07259474a4c3d653006635f8aaa4d21941715d36f4c31fb5fb",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo4-step-by-step-construction_step0.png",
+      "sha256": "529447a39684f671492142a6a8d191242ab23077f08b69c2a647edb8c24ccd75",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo5-selection-and-highlighting_default.png",
+      "sha256": "c5c8fd7b6c94fcf75e1b7ac3746888414a856e811bbf6532d0fa7ecf208cf2bb",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo5-selection-and-highlighting_exploded.png",
+      "sha256": "04223408f322ec873ca1bd19872fb549126e84c4c2c4521e5049acf90d3dc57c",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo5-selection-and-highlighting_explorer.png",
+      "sha256": "96121467f2611c8cec62327577f252936a38b28ec823e4e3398d4ca1b0cb8d0b",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo5-selection-and-highlighting_orbit.png",
+      "sha256": "05f75aaa489ff56b146ee196435654c58cc3ab9317d9bcdc4fe62b54053ce937",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo5-selection-and-highlighting_selected.png",
+      "sha256": "b60b2aa61ca8a78e738d26b8158748983232d9b290821c062ee90f19706d9266",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo5-selection-and-highlighting_step0.png",
+      "sha256": "0ab61d8556f56d2c9f0a93f56a585ef3907d79b75429b8b41c076cfe7cd108c2",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6a-curved-cylinder-sections_default.png",
+      "sha256": "83e08b3e4ec342e4c843eff56712d39926d117963c2735170cca80a3bce4f950",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6a-curved-cylinder-sections_exploded.png",
+      "sha256": "28be2eaa2e4b119712e6718de61ba7c5a66fdea393af0631deb9e726fc1e3c4d",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6a-curved-cylinder-sections_explorer.png",
+      "sha256": "eb241da4c5f5488f806b1f66a919f17eb57d8eb97c29655980a4233507238a04",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6a-curved-cylinder-sections_orbit.png",
+      "sha256": "354f8733fd9dec673b8494d169ed12ada0ae8d868c1dfebb743ea44ad865fd09",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6a-curved-cylinder-sections_selected.png",
+      "sha256": "581949217277a445fdaf2f795df3b9431ce70515672504b25f15a82e3865d108",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6a-curved-cylinder-sections_step0.png",
+      "sha256": "112f591f2f97ee13a97f5ef6682241afa2509074a41ae9cc20037285f5a32df7",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6b-curved-cone-frustum-cut_default.png",
+      "sha256": "d2c35dbfc5ddc2d2a8498c4b8c6cbedf31f1642a2d1f3eb8c8a985027f07567e",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6b-curved-cone-frustum-cut_exploded.png",
+      "sha256": "fd012280c4c9f219fc614fe64be11ed06e7e523e2306ecd105ef14f1f758672a",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6b-curved-cone-frustum-cut_explorer.png",
+      "sha256": "e01adbae2692ad8ac0fc3bf3d16bfdafd9515ea2050f2cb31450ac88617cdd2a",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6b-curved-cone-frustum-cut_orbit.png",
+      "sha256": "9048ebf0cf18d035f08adf816d1b024447a041bbc2707d7f5c0149c7ceae48cb",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6b-curved-cone-frustum-cut_selected.png",
+      "sha256": "711d200da0fa7c3ef4597eced8ab5a2accbd2a88914dbf9770f0fe41b7c3c38d",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6b-curved-cone-frustum-cut_step0.png",
+      "sha256": "f8ab11517716d73559983049d9eb74da20cd63003a53da895a36121314aec163",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6c-curved-sphere-plane-cut_default.png",
+      "sha256": "cdc89713593a909c5b2f687617e0110a3b73f1fc9a4766724dd46e77f3d49c73",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6c-curved-sphere-plane-cut_exploded.png",
+      "sha256": "cdc89713593a909c5b2f687617e0110a3b73f1fc9a4766724dd46e77f3d49c73",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6c-curved-sphere-plane-cut_explorer.png",
+      "sha256": "2dff62ff398a63276dec2841a4f7921927f2c08f3cee6436f6bcbf49d4cd07ce",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6c-curved-sphere-plane-cut_orbit.png",
+      "sha256": "bd6ecf266e0efe95d2cb00a3d69c3b54478e4e280870e6a9471a4ed6c099645e",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6c-curved-sphere-plane-cut_selected.png",
+      "sha256": "3894882bcd5ca4358c833d7ad492840748a899347291d3b83b967c3f197e6b03",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6c-curved-sphere-plane-cut_step0.png",
+      "sha256": "f0a9ea929997409c7574dab43fc6b7d24a72e32b477af622ec7978c225f52d21",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo7-invalid-geometry-safe-refusal_refused.png",
+      "sha256": "52198702926d72bc7194e05904562b31a5750e2855cf3444034c877367899316",
+      "git_and_clean_checkout_match": true
+    }
+  ],
+  "all_equal": true,
+  "historical_normalized_blobs_are_not_original_runtime_bytes": true,
+  "t3_artifacts": [
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/execution.json",
+      "sha256": "75ae5718225edef19aa1a3b35fa6c5f9966ed8be2978531f7b8871b3a5e20086",
+      "committed_git_blob_sha256": "75ae5718225edef19aa1a3b35fa6c5f9966ed8be2978531f7b8871b3a5e20086",
+      "clean_checkout_sha256": "75ae5718225edef19aa1a3b35fa6c5f9966ed8be2978531f7b8871b3a5e20086",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/freeze/execution.json",
+      "sha256": "f4cf4da4b6335215d29f74326651c4c96ed98b5a35a9d12cf265f4ae85ebccb5",
+      "committed_git_blob_sha256": "f4cf4da4b6335215d29f74326651c4c96ed98b5a35a9d12cf265f4ae85ebccb5",
+      "clean_checkout_sha256": "f4cf4da4b6335215d29f74326651c4c96ed98b5a35a9d12cf265f4ae85ebccb5",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/freeze/started.json",
+      "sha256": "79ad109aea7db1be83ae9f5fb3d2ba23da8cd87f3a2b4331a49a6c0f54d2cd60",
+      "committed_git_blob_sha256": "79ad109aea7db1be83ae9f5fb3d2ba23da8cd87f3a2b4331a49a6c0f54d2cd60",
+      "clean_checkout_sha256": "79ad109aea7db1be83ae9f5fb3d2ba23da8cd87f3a2b4331a49a6c0f54d2cd60",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/freeze/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "committed_git_blob_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "clean_checkout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/freeze/stdout.log",
+      "sha256": "06f3c429768e8b03408400299290363b271fac389b56ec3e780dc7b1a92e9abf",
+      "committed_git_blob_sha256": "06f3c429768e8b03408400299290363b271fac389b56ec3e780dc7b1a92e9abf",
+      "clean_checkout_sha256": "06f3c429768e8b03408400299290363b271fac389b56ec3e780dc7b1a92e9abf",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/freeze-invocation.json",
+      "sha256": "a6e3a29a954ce073a159b52c28ffdc912dbd943e0c821da0bdc9c9a9397ced03",
+      "committed_git_blob_sha256": "a6e3a29a954ce073a159b52c28ffdc912dbd943e0c821da0bdc9c9a9397ced03",
+      "clean_checkout_sha256": "a6e3a29a954ce073a159b52c28ffdc912dbd943e0c821da0bdc9c9a9397ced03",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/invocation.json",
+      "sha256": "085ea04525d3e89aa076d3dc2a50136ec76f578dc75e675f3fdc5a969070112d",
+      "committed_git_blob_sha256": "085ea04525d3e89aa076d3dc2a50136ec76f578dc75e675f3fdc5a969070112d",
+      "clean_checkout_sha256": "085ea04525d3e89aa076d3dc2a50136ec76f578dc75e675f3fdc5a969070112d",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/started.json",
+      "sha256": "38d10ad34941b714b58eec2084c6087f99920d1928fdaea6aa9c6f3947550307",
+      "committed_git_blob_sha256": "38d10ad34941b714b58eec2084c6087f99920d1928fdaea6aa9c6f3947550307",
+      "clean_checkout_sha256": "38d10ad34941b714b58eec2084c6087f99920d1928fdaea6aa9c6f3947550307",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/stderr.log",
+      "sha256": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c",
+      "committed_git_blob_sha256": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c",
+      "clean_checkout_sha256": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/stdout.log",
+      "sha256": "d2446b46ba4aba9fae7203cc6be401e820248087430b63b0d7cbe358af0edd33",
+      "committed_git_blob_sha256": "d2446b46ba4aba9fae7203cc6be401e820248087430b63b0d7cbe358af0edd33",
+      "clean_checkout_sha256": "d2446b46ba4aba9fae7203cc6be401e820248087430b63b0d7cbe358af0edd33",
+      "git_and_clean_checkout_match": true
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/t3/validation.json",
+      "sha256": "8056603fd4bf5b8436c3a113091a6dc0e8b0b39dfb0f364cba3a7a721b5b18a5",
+      "committed_git_blob_sha256": "8056603fd4bf5b8436c3a113091a6dc0e8b0b39dfb0f364cba3a7a721b5b18a5",
+      "clean_checkout_sha256": "8056603fd4bf5b8436c3a113091a6dc0e8b0b39dfb0f364cba3a7a721b5b18a5",
+      "git_and_clean_checkout_match": true
+    }
+  ]
+}

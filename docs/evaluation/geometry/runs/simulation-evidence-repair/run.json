@@ -10,7 +10,30 @@
   "candidate_commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
   "measured_system_sha256": "4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68",
   "measured_file_count": 114,
-  "status": "IN_PROGRESS",
+  "status": "SIMULATION_EVIDENCE_REPAIR_PARTIAL",
+  "verdict": "SIMULATION_EVIDENCE_REPAIR_PARTIAL",
+  "open_important_findings": [
+    {
+      "id": "FINDING-VISUAL-DEMO6B-AXIAL-SECTION-OCCLUDED",
+      "severity": "IMPORTANT",
+      "demo": "demo6b-curved-cone-frustum-cut",
+      "object_id": "td_sec_axial",
+      "observed": "ownPixels = 0 in new browser reproduction (historical 41), resetDiffFromDefault = 239",
+      "root_cause": "scene3d-view.tsx sets depthTest: !thietDien where thietDien = (o.type === 'section'), leaving polygon_fill:td_sec_axial (o.type === 'polygon3') with depthTest: true behind curved_solid lopChieuSau opaque depth prepass (renderOrder=5), and updateCanonicalEdgeVisibility excludes curved_solid from occluders so updateNonCanonicalVisibility returns early when occluders.length === 0",
+      "disposition": "Retained open without product/test code mutation under GO_SIMULATION_EVIDENCE_REPAIR_LOCAL_ONLY; blocks unconditional visual acceptance until a separate owner-authorized renderer fix scope"
+    }
+  ],
+  "new_t3": {
+    "source_commit": "48c34d886579948aa9c28019dd0559fd100f6dcd",
+    "verdict": "FULL_PRODUCT_GATE_PASS",
+    "exit_code": 0,
+    "duration_seconds": 610.9,
+    "backend_pytest_passed": 11439,
+    "frontend_vitest_passed": 1154,
+    "stdout_sha256": "d2446b46ba4aba9fae7203cc6be401e820248087430b63b0d7cbe358af0edd33",
+    "stderr_sha256": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c",
+    "post_t3_freeze_verify_stdout_sha256": "06f3c429768e8b03408400299290363b271fac389b56ec3e780dc7b1a92e9abf"
+  },
   "live_provider_calls": 0,
   "governance": {
     "DEFAULT_MODE": "LLM_ONLY",
