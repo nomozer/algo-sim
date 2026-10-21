@@ -6,9 +6,9 @@
 - **Reviewed Worktree:** `D:\Documents\projects\algo-sim\.superpowers\worktrees\simulation-coverage-visual-validation`
 - **Branch:** `research/simulation-coverage-visual-validation` (branched from `main` = `bd8d6a9dc3acc9a4204b616379001270bb6d39f9`)
 - **Session 1 Commit:** `e05e620866934ce0f6c184f1d0de5dbace67b4cf`
-- **Final Product Commit:** `d92019d663bbd17980f0bd85ca7b7de01f34fd54`
+- **Final Product Commit:** `3298b901d2246650535aa4028845ddc2a44892c4`
 - **Candidate Freeze Commit:** `8d09dcc1b1fec791d6a8c21d50402c51aac89297`
-- **Measured System Hash:** `e1874b49319e4f154e41bf4a17bdb76611e682d52acafeb8c459cbb3f17b8ea3` (`114` files)
+- **Measured System Hash:** `4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68` (`114` files)
 
 ---
 
@@ -58,4 +58,4 @@
   - `HYBRID_PRODUCT_ENABLEMENT = NO-GO` (`run.json:35`, `CURRENT_STATE.md:7`)
   - `ALLOW_LIVE_AI = 0` / `live_provider_calls = 0` (`candidate_divergence.json:18`, `run.json:38`)
   - `CACHE_VERSION = 127` (`main.py:824`, `EVALUATION_CANDIDATE.json:9`, `candidate_divergence.json:13–14`)
-  - `EVALUATION_CANDIDATE.json` matches `product_commit_sha = "d92019d663bbd17980f0bd85ca7b7de01f34fd54"`, `so_file = 114`, and `tree_hash = "e1874b49319e4f154e41bf4a17bdb76611e682d52acafeb8c459cbb3f17b8ea3"`.
+  - `EVALUATION_CANDIDATE.json` matches `product_commit_sha = "3298b901d2246650535aa4028845ddc2a44892c4"`, `so_file = 114`, and `tree_hash = "4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68"`.
