@@ -1,0 +1,23 @@
+final family01_triangular_pyramid
+final family05_prism
+final family07_multi_solid_composition
+final family09_cylinder_and_sections
+final family10_cone_frustum_cut
+final family11_sphere_plane_cut
+final family12_cylinder_ellipse_section
+final family13_invalid_geometry_refusal
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: camera reset changed default framing
+    at file:///D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality/docs/evaluation/geometry/runs/visual-ux-final-quality/check-browser.mjs:195:5 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.13.0

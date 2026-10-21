@@ -1,0 +1,174 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality/frontend
+
+stderr | src/simulations/domains/geometry/final-quality.test.tsx > final visual quality > provides entry guidance and a complete-model action without opening analysis
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:181:10)
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx (9 tests | 9 failed) 137ms
+     × explains a nonintersecting sphere without an unsupported-family label or raw codes in the main text 15ms
+     × presents the semantic refusal class for CURVED_PRIMITIVE_BLOCKED_BY_KERNEL 2ms
+     × presents the semantic refusal class for INCONSISTENT_FACTS 6ms
+     × presents the semantic refusal class for MISSING_CURVED_DIMENSION 2ms
+     × presents the semantic refusal class for AMBIGUOUS_REFERENCE 2ms
+     × presents the semantic refusal class for postcondition_violated 1ms
+     × resolves analysis solid references and hides unknown machine names 36ms
+     × preserves genuine symbolic units and makes given quantities consistent with them 19ms
+     × provides entry guidance and a complete-model action without opening analysis 52ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 9 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/simulations/domains/geometry/final-quality.test.tsx > final visual quality > explains a nonintersecting sphere without an unsupported-family label or raw codes in the main text
+AssertionError: expected '<section class="card"><span class="ey…' to contain 'mặt phẳng cách tâm mặt cầu một khoảng…'
+
+Expected: "mặt phẳng cách tâm mặt cầu một khoảng lớn hơn bán kính"
+Received: "<section class="card"><span class="eyebrow">NGOÀI DANH MỤC MÔ PHỎNG</span><p style="margin-top:var(--sp-sm)">CURVED_PLANE_DOES_NOT_CUT: technical reason</p><dl class="refusal-facts"><div><dt>Dừng ở bước</dt><dd>Không xác định được</dd></div><div><dt>Loại vấn đề</dt><dd>Không xác định được</dd></div></dl><p class="notes">Hiện hệ dựng được khối đa diện (chóp, lăng trụ, hộp — kể cả đáy lõm), hình cầu, hình trụ và hình nón.</p></section>"
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:13:18
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/9]⎯
+
+ FAIL  src/simulations/domains/geometry/final-quality.test.tsx > final visual quality > presents the semantic refusal class for CURVED_PRIMITIVE_BLOCKED_BY_KERNEL
+AssertionError: expected '<section class="card"><span class="ey…' to contain 'NGOÀI PHẠM VI DỰNG HÌNH'
+
+Expected: "NGOÀI PHẠM VI DỰNG HÌNH"
+Received: "<section class="card"><span class="eyebrow">NGOÀI DANH MỤC MÔ PHỎNG</span><p style="margin-top:var(--sp-sm)">Không dựng được.</p><dl class="refusal-facts"><div><dt>Dừng ở bước</dt><dd>Không xác định được</dd></div><div><dt>Loại vấn đề</dt><dd>Không xác định được</dd></div></dl><p class="notes">Hiện hệ dựng được khối đa diện (chóp, lăng trụ, hộp — kể cả đáy lõm), hình cầu, hình trụ và hình nón.</p></section>"
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:26:104
+     24|     ['postcondition_violated','CHƯA KIỂM CHỨNG ĐƯỢC MÔ PHỎNG'],
+     25|   ])('presents the semantic refusal class for %s', (error_code,title) …
+     26|     expect(renderToString(<UnsupportedNotice unsupported={{reason:'Khô…
+       |                                                                                                        ^
+     27|   });
+     28|   it('resolves analysis solid references and hides unknown machine nam…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/9]⎯
+
+ FAIL  src/simulations/domains/geometry/final-quality.test.tsx > final visual quality > presents the semantic refusal class for INCONSISTENT_FACTS
+AssertionError: expected '<section class="card"><span class="ey…' to contain 'DỮ KIỆN MÂU THUẪN'
+
+Expected: "DỮ KIỆN MÂU THUẪN"
+Received: "<section class="card"><span class="eyebrow">NGOÀI DANH MỤC MÔ PHỎNG</span><p style="margin-top:var(--sp-sm)">Không dựng được.</p><dl class="refusal-facts"><div><dt>Dừng ở bước</dt><dd>Không xác định được</dd></div><div><dt>Loại vấn đề</dt><dd>Không xác định được</dd></div></dl><p class="notes">Hiện hệ dựng được khối đa diện (chóp, lăng trụ, hộp — kể cả đáy lõm), hình cầu, hình trụ và hình nón.</p></section>"
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:26:104
+     24|     ['postcondition_violated','CHƯA KIỂM CHỨNG ĐƯỢC MÔ PHỎNG'],
+     25|   ])('presents the semantic refusal class for %s', (error_code,title) …
+     26|     expect(renderToString(<UnsupportedNotice unsupported={{reason:'Khô…
+       |                                                                                                        ^
+     27|   });
+     28|   it('resolves analysis solid references and hides unknown machine nam…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/9]⎯
+
+ FAIL  src/simulations/domains/geometry/final-quality.test.tsx > final visual quality > presents the semantic refusal class for MISSING_CURVED_DIMENSION
+AssertionError: expected '<section class="card"><span class="ey…' to contain 'CHƯA ĐỦ DỮ KIỆN'
+
+Expected: "CHƯA ĐỦ DỮ KIỆN"
+Received: "<section class="card"><span class="eyebrow">NGOÀI DANH MỤC MÔ PHỎNG</span><p style="margin-top:var(--sp-sm)">Không dựng được.</p><dl class="refusal-facts"><div><dt>Dừng ở bước</dt><dd>Không xác định được</dd></div><div><dt>Loại vấn đề</dt><dd>Không xác định được</dd></div></dl><p class="notes">Hiện hệ dựng được khối đa diện (chóp, lăng trụ, hộp — kể cả đáy lõm), hình cầu, hình trụ và hình nón.</p></section>"
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:26:104
+     24|     ['postcondition_violated','CHƯA KIỂM CHỨNG ĐƯỢC MÔ PHỎNG'],
+     25|   ])('presents the semantic refusal class for %s', (error_code,title) …
+     26|     expect(renderToString(<UnsupportedNotice unsupported={{reason:'Khô…
+       |                                                                                                        ^
+     27|   });
+     28|   it('resolves analysis solid references and hides unknown machine nam…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/9]⎯
+
+ FAIL  src/simulations/domains/geometry/final-quality.test.tsx > final visual quality > presents the semantic refusal class for AMBIGUOUS_REFERENCE
+AssertionError: expected '<section class="card"><span class="ey…' to contain 'CHƯA XÁC ĐỊNH DUY NHẤT'
+
+Expected: "CHƯA XÁC ĐỊNH DUY NHẤT"
+Received: "<section class="card"><span class="eyebrow">NGOÀI DANH MỤC MÔ PHỎNG</span><p style="margin-top:var(--sp-sm)">Không dựng được.</p><dl class="refusal-facts"><div><dt>Dừng ở bước</dt><dd>Không xác định được</dd></div><div><dt>Loại vấn đề</dt><dd>Không xác định được</dd></div></dl><p class="notes">Hiện hệ dựng được khối đa diện (chóp, lăng trụ, hộp — kể cả đáy lõm), hình cầu, hình trụ và hình nón.</p></section>"
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:26:104
+     24|     ['postcondition_violated','CHƯA KIỂM CHỨNG ĐƯỢC MÔ PHỎNG'],
+     25|   ])('presents the semantic refusal class for %s', (error_code,title) …
+     26|     expect(renderToString(<UnsupportedNotice unsupported={{reason:'Khô…
+       |                                                                                                        ^
+     27|   });
+     28|   it('resolves analysis solid references and hides unknown machine nam…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/9]⎯
+
+ FAIL  src/simulations/domains/geometry/final-quality.test.tsx > final visual quality > presents the semantic refusal class for postcondition_violated
+AssertionError: expected '<section class="card"><span class="ey…' to contain 'CHƯA KIỂM CHỨNG ĐƯỢC MÔ PHỎNG'
+
+Expected: "CHƯA KIỂM CHỨNG ĐƯỢC MÔ PHỎNG"
+Received: "<section class="card"><span class="eyebrow">NGOÀI DANH MỤC MÔ PHỎNG</span><p style="margin-top:var(--sp-sm)">Không dựng được.</p><dl class="refusal-facts"><div><dt>Dừng ở bước</dt><dd>Không xác định được</dd></div><div><dt>Loại vấn đề</dt><dd>kết quả không qua được phép kiểm lại</dd></div></dl><p class="notes">Hiện hệ dựng được khối đa diện (chóp, lăng trụ, hộp — kể cả đáy lõm), hình cầu, hình trụ và hình nón.</p></section>"
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:26:104
+     24|     ['postcondition_violated','CHƯA KIỂM CHỨNG ĐƯỢC MÔ PHỎNG'],
+     25|   ])('presents the semantic refusal class for %s', (error_code,title) …
+     26|     expect(renderToString(<UnsupportedNotice unsupported={{reason:'Khô…
+       |                                                                                                        ^
+     27|   });
+     28|   it('resolves analysis solid references and hides unknown machine nam…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/9]⎯
+
+ FAIL  src/simulations/domains/geometry/final-quality.test.tsx > final visual quality > resolves analysis solid references and hides unknown machine names
+AssertionError: expected '[{"label":"Thể tích «Hình nón đáy tâm…' not to match /cone_main|cone_upper/
+
+- Expected:
+/cone_main|cone_upper/
+
++ Received:
+"[{\"label\":\"Thể tích «Hình nón đáy tâm O, đỉnh S, qua A»\",\"notation\":null,\"basisLabels\":[]},{\"label\":\"Diện tích mặt cong của «Hình nón đáy tâm O, đỉnh S, qua A»\",\"notation\":null,\"basisLabels\":[]},{\"label\":\"Diện tích SAB\",\"notation\":\"S(SAB)\",\"basisLabels\":[]},{\"label\":\"Tỉ số thể tích cone_upper và cone_main\",\"notation\":\"V(cone_upper) / V(cone_main)\",\"basisLabels\":[\"cone_upper\",\"cone_main\"]},{\"label\":\"Thể tích phần còn lại (cone_main trừ cone_upper)\",\"notation\":\"V(cone_main) − V(cone_upper)\",\"basisLabels\":[\"cone_main\",\"cone_upper\"]}]"
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:32:23
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/9]⎯
+
+ FAIL  src/simulations/domains/geometry/final-quality.test.tsx > final visual quality > preserves genuine symbolic units and makes given quantities consistent with them
+AssertionError: expected [ '2', '6' ] to deeply equal [ '2a', '6a' ]
+
+- Expected
++ Received
+
+  [
+-   "2a",
+-   "6a",
++   "2",
++   "6",
+  ]
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:41:61
+     39|     const analysis=phanTichToanHocCuaCanh(row.scene,null,row.route_d);
+     40|     expect(analysis.requestedResults.map(x=>x.valueDisplay)).toEqual([…
+     41|     expect(analysis.givenDimensions.map(x=>x.valueDisplay)).toEqual(['…
+       |                                                             ^
+     42|     const unitless=rows.find((r:any)=>r.id==='family09_cylinder_and_se…
+     43|     expect(phanTichToanHocCuaCanh(unitless.scene,null,unitless.route_d…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/9]⎯
+
+ FAIL  src/simulations/domains/geometry/final-quality.test.tsx > final visual quality > provides entry guidance and a complete-model action without opening analysis
+AssertionError: expected '<div class="geo3d-xuong"><div class="…' to contain 'Bấm Phát hoặc Bước tiếp'
+
+Expected: "Bấm Phát hoặc Bước tiếp"
+Received: "<div class="geo3d-xuong"><div class="geo3d-thanh"><h1 class="geo3d-ten-bai">Hình dựng theo từng bước</h1><div class="geo3d-thanh-nut"><button type="button" class="geo3d-menu-nut" aria-expanded="false" data-mo-bang="phan-tich" data-mode-b-toggle="">Phân tích toán học</button><div class="geo3d-menu"><button type="button" class="geo3d-menu-nut" aria-haspopup="menu" aria-expanded="false" data-mo-nhom="kham-pha">Khám phá<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></button></div><div class="geo3d-menu"><button type="button" class="geo3d-menu-nut" aria-haspopup="menu" aria-expanded="false" data-mo-nhom="hien-thi">Hiển thị<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></button></div><div class="geo3d-menu"><button type="button" class="geo3d-menu-nut" aria-haspopup="menu" aria-expanded="false" data-mo-nhom="them">Thêm<svg class="icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"></path></svg></button></div></div></div><div class="geo3d-huong-dan" data-learner-guidance="" aria-label="Hướng dẫn quan sát"><span class="geo3d-huong-dan-buoc" data-guidance-step="">Đang dựng (bước <!-- -->1<!-- -->/<!-- -->3<!-- -->): <!-- -->Dữ kiện đề cho: AB = 3, AC = 4, SA = 5.</span><span class="geo3d-huong-dan-goi-y" data-guidance-hint="">Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ</span></div><div class="geo3d-san"><div class="geo3d-player"><div class="geo3d"><div class="geo3d-canvas"><div class="geo3d-labels" aria-hidden="true"><span data-id="A" class="geo3d-label" data-uu-tien="1" title="Điểm A">A</span><span data-id="B" class="geo3d-label" data-uu-tien="1" title="Điểm B">B</span><span data-id="C" class="geo3d-label" data-uu-tien="1" title="Điểm C">C</span><span data-id="S" class="geo3d-label" data-uu-tien="1" title="Điểm S">S</span></div><div class="geo3d-plane-labels" aria-hidden="true"></div><div class="geo3d-so-do-lop" aria-label="Số đo trên hình"></div></div><p class="geo3d-progress geo3d-sr">Bước 1/3</p><p class="geo3d-narration geo3d-sr" aria-live="polite">Dữ kiện đề cho: AB = 3, AC = 4, SA = 5.</p></div><div class="geo3d-controls" role="group" aria-label="Điều khiển bước dựng"><button type="button" class="geo3d-btn" disabled="" aria-label="Bước trước"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M15 6l-6 6 6 6"></path></svg>Bước trước</button><button type="button" class="geo3d-btn" aria-label="Phát lại quá trình dựng"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 5l11 7-11 7V5z"></path></svg>Phát</button><button type="button" class="geo3d-btn" aria-label="Bước sau">Bước sau<svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 6l6 6-6 6"></path></svg></button><label class="geo3d-scrub"><span class="geo3d-scrub-label geo3d-buoc-so">Bước 1/3</span><input type="range" min="0" max="2" aria-label="Chọn bước dựng, hiện ở bước 1 trên 3" value="0"/></label><button type="button" class="geo3d-btn geo3d-cac-buoc-mo" aria-expanded="false">Các bước dựng</button></div></div><div class="geo3d-noi" role="group" aria-label="Thao tác xem" data-che-khung=""><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 3h6M10 3v6L5 19a2 2 0 002 2h10a2 2 0 002-2l-5-10V3"></path></svg> <!-- -->Tách khối</button><button type="button" class="geo3d-noi-nut"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 12a9 9 0 109-9 9 9 0 00-6.36 2.64L3 8"></path><path d="M3 3v5h5"></path></svg> Xem lại toàn hình</button></div></div></div>"
+
+ ❯ src/simulations/domains/geometry/final-quality.test.tsx:47:18
+     45|   it('provides entry guidance and a complete-model action without open…
+     46|     const html=renderToString(<Scene3DExplorer scene={rows[0].scene}/>…
+     47|     expect(html).toContain('Bấm Phát hoặc Bước tiếp');
+       |                  ^
+     48|     expect(html).toContain('Xem mô hình đầy đủ');
+     49|     expect(html).not.toContain('data-math-analysis-panel');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/9]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  9 failed (9)
+   Start at  01:32:45
+   Duration  1.26s (transform 647ms, setup 44ms, import 835ms, tests 137ms, environment 0ms)
+

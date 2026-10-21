@@ -1,0 +1,15 @@
+{
+  "status": "INTERRUPTED_NOT_AUTHORITATIVE",
+  "exit_code": "UNKNOWN",
+  "reason": "Interrupted after reproduced inherited pytest temp-root PermissionError",
+  "raw_streams": {
+    "stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stdout.log": {
+      "bytes": 4749,
+      "sha256": "29a2f8939a00d73196649cca3b508a8acfa26a224c264c9724313801068a6245"
+    }
+  }
+}

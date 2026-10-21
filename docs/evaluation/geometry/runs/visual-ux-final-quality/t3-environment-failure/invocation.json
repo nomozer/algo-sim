@@ -1,0 +1,18 @@
+{
+  "command": [
+    "C:/Program Files/nodejs/node.exe",
+    "../frontend/scripts/full-gate.mjs"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-visual-ux-final-quality\\backend",
+  "source_commit": "9343e8d0d4c4cdf5bf0865e0a550c13f238f28b5",
+  "dirty_before": "",
+  "started_utc": "2026-10-21T18:46:30.797055+00:00",
+  "timeout_seconds": 2400,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe"
+  }
+}

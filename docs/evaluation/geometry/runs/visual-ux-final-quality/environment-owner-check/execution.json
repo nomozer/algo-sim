@@ -1,0 +1,37 @@
+{
+  "command": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/geometry/test_branch_independent_harness.py::test_completion_runner_runs_under_arbitrary_branch"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-visual-ux-final-quality\\backend",
+  "source_commit": "9343e8d0d4c4cdf5bf0865e0a550c13f238f28b5",
+  "dirty_before": "",
+  "started_utc": "2026-10-21T23:31:32.569228+00:00",
+  "timeout_seconds": 120,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "PYTEST_DEBUG_TEMPROOT": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-visual-ux-final-quality\\.superpowers\\pytest-temp-2928"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 4.02,
+  "finished_utc": "2026-10-21T23:31:36.581633+00:00",
+  "dirty_after": "",
+  "streams": {
+    "stdout": {
+      "bytes": 835,
+      "sha256": "fa32661c230886bccd4e6763a1ae730b870bcd936e70c0db04f12b2a2f3f511f"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

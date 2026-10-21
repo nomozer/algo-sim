@@ -1,0 +1,33 @@
+{
+  "command": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "scripts/freeze_evaluation_candidate.py"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-visual-ux-final-quality\\backend",
+  "source_commit": "56328b17462e9c4e903dc17687da07243d06846d",
+  "dirty_before": "",
+  "started_utc": "2026-10-21T18:45:19.208481+00:00",
+  "timeout_seconds": 120,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 3.05,
+  "finished_utc": "2026-10-21T18:45:22.263800+00:00",
+  "dirty_after": "M docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "streams": {
+    "stdout": {
+      "bytes": 433,
+      "sha256": "56d2b76d64a2d5863caf8a957469c9f0b333dc612b70d1cf682304086fc59efc"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

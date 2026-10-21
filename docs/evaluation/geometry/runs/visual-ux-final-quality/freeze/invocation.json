@@ -1,0 +1,18 @@
+{
+  "command": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "scripts/freeze_evaluation_candidate.py"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-visual-ux-final-quality\\backend",
+  "source_commit": "56328b17462e9c4e903dc17687da07243d06846d",
+  "dirty_before": "",
+  "started_utc": "2026-10-21T18:45:19.208481+00:00",
+  "timeout_seconds": 120,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe"
+  }
+}

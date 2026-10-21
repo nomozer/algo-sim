@@ -1,0 +1,1175 @@
+{
+  "hash_policy": "RAW_BYTES_SHA256; all run files except this inventory itself",
+  "files": [
+    {
+      "path": ".gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "path": "after/depth.json",
+      "bytes": 8444,
+      "sha256": "75ce5623ba91017f00a7945888db0ade82c381f7b29c624a36845bde408c2c41"
+    },
+    {
+      "path": "after/family01_triangular_pyramid-analysis.png",
+      "bytes": 211228,
+      "sha256": "c38a19e9e095cdc72e2edd50e64fb8a6459b30081aa0bd61afb727c09928d145"
+    },
+    {
+      "path": "after/family01_triangular_pyramid-complete.png",
+      "bytes": 188816,
+      "sha256": "8fff3dcbc53014589926db3443ae4354dc64bffdd02a4bf0f15320f0374d1434"
+    },
+    {
+      "path": "after/family01_triangular_pyramid-entry.png",
+      "bytes": 157782,
+      "sha256": "4719958e3cd0b0a133922edce48e1f2c3710344cc709ccaac3c6d8c132f879a0"
+    },
+    {
+      "path": "after/family01_triangular_pyramid-rotated.png",
+      "bytes": 191053,
+      "sha256": "07a0ffc479d98b9e5d1ea333f9a32cd1ad3fa8e8944a975cb69dd9fe39af1303"
+    },
+    {
+      "path": "after/family01_triangular_pyramid-xray.png",
+      "bytes": 191682,
+      "sha256": "464030eb0229b533c37029bd3e5a60891f82b9e165bc2e54b71bf64efbb7414f"
+    },
+    {
+      "path": "after/family05_prism-analysis.png",
+      "bytes": 213404,
+      "sha256": "fdb2b7e4a6b4d6c187672a495381d5adc98011bc23c20e7724afdf047f73c795"
+    },
+    {
+      "path": "after/family05_prism-complete.png",
+      "bytes": 200743,
+      "sha256": "14fd630ac79d58c940925c8153417fc9e4f90978d1c17bccacc8baf40ad20219"
+    },
+    {
+      "path": "after/family05_prism-entry.png",
+      "bytes": 158725,
+      "sha256": "0fa1d53c3dd343dd5ae1cbc2e749da19aaa210e84c78c4c4e71a5a0ed760910f"
+    },
+    {
+      "path": "after/family05_prism-rotated.png",
+      "bytes": 236470,
+      "sha256": "bddaaec9702c3d11d360e34e52f3841d0b62d6bcbaaa0badffd22171fdf919bd"
+    },
+    {
+      "path": "after/family05_prism-xray.png",
+      "bytes": 188054,
+      "sha256": "95213aa31de19ee8d1fdb34d3bd0c11c431381ffed2ff71599994c3f8b9cf838"
+    },
+    {
+      "path": "after/family07_multi_solid_composition-analysis.png",
+      "bytes": 219721,
+      "sha256": "b70aa2833446fb014806f3af8d00b4da8fbe8ddc4ceea1bdd06e808d4e0a6803"
+    },
+    {
+      "path": "after/family07_multi_solid_composition-complete.png",
+      "bytes": 201530,
+      "sha256": "9e0d5af434b8e284d2c045013dc5d80b07c6f401f39c3425a3b4ee472886998b"
+    },
+    {
+      "path": "after/family07_multi_solid_composition-entry.png",
+      "bytes": 150413,
+      "sha256": "4e8ca90de73ac268da974769ad744bfd75274c9d66799b5a50b8b3dd01c033e1"
+    },
+    {
+      "path": "after/family07_multi_solid_composition-rotated.png",
+      "bytes": 182992,
+      "sha256": "9cda36c264206f80e9def7e3df6b3be22cbab3b286a855a331c110e8d2612f01"
+    },
+    {
+      "path": "after/family07_multi_solid_composition-xray.png",
+      "bytes": 160835,
+      "sha256": "2ba782d562defaeff2ae35393eb09f0e5d104d0e62642c2bcef865c3c2248f0d"
+    },
+    {
+      "path": "after/family09_cylinder_and_sections-analysis.png",
+      "bytes": 245450,
+      "sha256": "b026b860a590c8f971e2540431321fa52b41be21a8a82819dd0c750bfdc9aff1"
+    },
+    {
+      "path": "after/family09_cylinder_and_sections-complete.png",
+      "bytes": 223137,
+      "sha256": "3f844834822eafe2ddb3b02c1056d126734be7bedfaeae4cd46abda8edf23161"
+    },
+    {
+      "path": "after/family09_cylinder_and_sections-entry.png",
+      "bytes": 167743,
+      "sha256": "0fee3c8f01c6669057c67c7f139994fea3656944e6314525545696e50a9efc4b"
+    },
+    {
+      "path": "after/family09_cylinder_and_sections-rotated.png",
+      "bytes": 216061,
+      "sha256": "4de466b9df0f6f0204a3c8d4b5ea5f2aeb22d83ee88fd8c09334668ed416e819"
+    },
+    {
+      "path": "after/family09_cylinder_and_sections-xray.png",
+      "bytes": 210686,
+      "sha256": "3499d665f560c6366e577a977071f1e5d970fb2a3506a46db67fb958fecdf5e4"
+    },
+    {
+      "path": "after/family10_cone_frustum_cut-analysis.png",
+      "bytes": 253412,
+      "sha256": "ff9ba0e3b4da4209367aa5c1a1c829864ab8efc87a01ef71a29a7847ef2476bb"
+    },
+    {
+      "path": "after/family10_cone_frustum_cut-complete.png",
+      "bytes": 225133,
+      "sha256": "c74cdb3893ce3a9224f1e84c74146aefab0e397f63409ea3de90dec032859931"
+    },
+    {
+      "path": "after/family10_cone_frustum_cut-entry.png",
+      "bytes": 170170,
+      "sha256": "aba47327ab409ce2bb3684284205c4f45f0787a00d2d63079c247f076a214f04"
+    },
+    {
+      "path": "after/family10_cone_frustum_cut-rotated.png",
+      "bytes": 223010,
+      "sha256": "825dc6259ec03e1f0e5b96f65b4db1f01277355fbc51486554c25ed266f3f66e"
+    },
+    {
+      "path": "after/family10_cone_frustum_cut-xray.png",
+      "bytes": 223967,
+      "sha256": "0bda4b0c80b536ce6b3f4aec3132cf3fa811d87fd54e90865b722ffb5f08fd9d"
+    },
+    {
+      "path": "after/family11_sphere_plane_cut-analysis.png",
+      "bytes": 224289,
+      "sha256": "1de48efd3b1252d028309099c44d81efaf4bec32d9f6836b3b5707bb3e60cb53"
+    },
+    {
+      "path": "after/family11_sphere_plane_cut-complete.png",
+      "bytes": 181979,
+      "sha256": "e1f9662ddd94303826682d9457c5e5a546951b47cc42165c773f4fd18edf6f85"
+    },
+    {
+      "path": "after/family11_sphere_plane_cut-entry.png",
+      "bytes": 154681,
+      "sha256": "de534432c45789505bcfb967e25875b0f5f11c0f7792efaf635f63881f33f80a"
+    },
+    {
+      "path": "after/family11_sphere_plane_cut-rotated.png",
+      "bytes": 191880,
+      "sha256": "1e2e8d2a3412f74ecf55a7243a21114009689be84fbced2015ebd308ff82f94d"
+    },
+    {
+      "path": "after/family11_sphere_plane_cut-xray.png",
+      "bytes": 197018,
+      "sha256": "12abe255092f717c6bebea7014c885d0f875db6dc8d3e6cb3f22bf480f5cf50b"
+    },
+    {
+      "path": "after/family12_cylinder_ellipse_section-analysis.png",
+      "bytes": 226877,
+      "sha256": "73cb6cbe469fee6bd322ac48c25f94ebc7470dcace3e36cecdc360050405baba"
+    },
+    {
+      "path": "after/family12_cylinder_ellipse_section-complete.png",
+      "bytes": 194752,
+      "sha256": "c818f440fac8ed12b0003efa27bd59e2e1ec8d34ccf12e05d7f34b398e79a04b"
+    },
+    {
+      "path": "after/family12_cylinder_ellipse_section-entry.png",
+      "bytes": 149801,
+      "sha256": "0fec5de2130c60fdfc07821b368464f18227ce4cb13840bcccb3c0e728cd4bda"
+    },
+    {
+      "path": "after/family12_cylinder_ellipse_section-rotated.png",
+      "bytes": 193514,
+      "sha256": "dabc9471f141477affa74fa2bc151b74c4001baa978a697c498eea662f9baf8d"
+    },
+    {
+      "path": "after/family12_cylinder_ellipse_section-xray.png",
+      "bytes": 191990,
+      "sha256": "5e18b78de0e74a64f0a3125e2903b9246070fa0b4f5888aa3a4669332eed128a"
+    },
+    {
+      "path": "after/family13_invalid_geometry_refusal.png",
+      "bytes": 22901,
+      "sha256": "8176f941ba8fef9a02e5dec3607c668b6c778b08122e4d3fa06f1ac969404857"
+    },
+    {
+      "path": "after/receipt.json",
+      "bytes": 25410,
+      "sha256": "383ea4250c8d0b611bcf91fbbd50777ac01a4c9fa4cd8a5131aaa02cb82c8716"
+    },
+    {
+      "path": "before/family01_triangular_pyramid-analysis.png",
+      "bytes": 214337,
+      "sha256": "88d023b999257b6ec532664a8a2b6a42a95521ac8dcda486f3c9f8322f128825"
+    },
+    {
+      "path": "before/family01_triangular_pyramid-complete.png",
+      "bytes": 190511,
+      "sha256": "57cfe252c4d1397193848906046a168609e76e8ab7a47ee346968a4b7a2c7c39"
+    },
+    {
+      "path": "before/family01_triangular_pyramid-entry.png",
+      "bytes": 159031,
+      "sha256": "8cca2e8d96c74628eb5e27a32f51499d1e98ddf3822b5397fa746c23780d782a"
+    },
+    {
+      "path": "before/family01_triangular_pyramid-rotated.png",
+      "bytes": 193467,
+      "sha256": "6e831e21299a92e104c34dda532e3558e06141e51df37fc1bd4f3a0882fcc574"
+    },
+    {
+      "path": "before/family05_prism-analysis.png",
+      "bytes": 215036,
+      "sha256": "23d58f8caf574575321c84869e1ca2fdf95990b6d2066312c9e18e627b7ec029"
+    },
+    {
+      "path": "before/family05_prism-complete.png",
+      "bytes": 202748,
+      "sha256": "6339ac7629e3b2662eeefaeb8ac26504109e55fc69c93eba57b64d8e699cf004"
+    },
+    {
+      "path": "before/family05_prism-entry.png",
+      "bytes": 160225,
+      "sha256": "e9f8f4f9431b58d7b2b795c06e7626426e8f2dab69a320ee544413b650402eca"
+    },
+    {
+      "path": "before/family05_prism-rotated.png",
+      "bytes": 239478,
+      "sha256": "998ca27a25b80b735e50cc9691336e68b11fbac9a44bb710c94fb5800aaefcde"
+    },
+    {
+      "path": "before/family07_multi_solid_composition-analysis.png",
+      "bytes": 221366,
+      "sha256": "18e39735b26d61f7c395acefd550622118e6b12d19c84530b96f625adbfa36db"
+    },
+    {
+      "path": "before/family07_multi_solid_composition-complete.png",
+      "bytes": 204022,
+      "sha256": "e696be6cd5a27739546353680e5b2a7bffd8f70bd9f9d3f773c371a462f05402"
+    },
+    {
+      "path": "before/family07_multi_solid_composition-entry.png",
+      "bytes": 151280,
+      "sha256": "86bc4548fde2c1b4f9b6fb20e3af7daa04afa0b235dd517a7e605d2c13ebefc4"
+    },
+    {
+      "path": "before/family07_multi_solid_composition-rotated.png",
+      "bytes": 185639,
+      "sha256": "af6be293523493d3ce76e072ffdb1ce276ca67a7e5167784a6458c45d9b317d6"
+    },
+    {
+      "path": "before/family09_cylinder_and_sections-analysis.png",
+      "bytes": 252625,
+      "sha256": "63c1b7b74110e2766d875af2ba35c640f2a64131f918d397ac65bde08af64fe1"
+    },
+    {
+      "path": "before/family09_cylinder_and_sections-complete.png",
+      "bytes": 226420,
+      "sha256": "4080e30240f330ab9a4e8648c8cf2ca331a58aaf826e2ab72987144918c8ff72"
+    },
+    {
+      "path": "before/family09_cylinder_and_sections-entry.png",
+      "bytes": 169290,
+      "sha256": "bd7cd40e388d911ff3878b9543d9e8ab2ed0091db2f577c8deab4b995ab94ae4"
+    },
+    {
+      "path": "before/family09_cylinder_and_sections-rotated.png",
+      "bytes": 217614,
+      "sha256": "bc79c43996fdd26066825f9db99c8108831bfa64f6e7ee33ef5988da66c5f192"
+    },
+    {
+      "path": "before/family10_cone_frustum_cut-analysis.png",
+      "bytes": 254352,
+      "sha256": "03a7b3f22da1ca3e8058336391e4051d39bf0aaa4190396e1f3742cfe38ebf49"
+    },
+    {
+      "path": "before/family10_cone_frustum_cut-complete.png",
+      "bytes": 223539,
+      "sha256": "e0cdf1162ce92cea1afe2a4cda859aa4f4a094e002af3eae492c201204d8186e"
+    },
+    {
+      "path": "before/family10_cone_frustum_cut-entry.png",
+      "bytes": 171863,
+      "sha256": "47a777986202535d5bc9a9a89e8d46359255bd41e7bcd8149e70c756abd8b6fb"
+    },
+    {
+      "path": "before/family10_cone_frustum_cut-rotated.png",
+      "bytes": 228610,
+      "sha256": "fe57eb6e4dea4832a5f09dbd1f66367dcc774a5ca62a1e67f70d04b6f12b37e1"
+    },
+    {
+      "path": "before/family11_sphere_plane_cut-analysis.png",
+      "bytes": 222529,
+      "sha256": "38f8145645b9c0a68a143fbddfc789339beffaab0166345c08a72733bcd42c9f"
+    },
+    {
+      "path": "before/family11_sphere_plane_cut-complete.png",
+      "bytes": 185382,
+      "sha256": "ea76a14c72114649ba76027a9d8e8a9e7eab585a12e2acd6ad1883dbe12db68a"
+    },
+    {
+      "path": "before/family11_sphere_plane_cut-entry.png",
+      "bytes": 156314,
+      "sha256": "2195f8e1b1c9ce62f7757523d3215b7429c7a57d2145ba52dc78279308a885d5"
+    },
+    {
+      "path": "before/family11_sphere_plane_cut-rotated.png",
+      "bytes": 190965,
+      "sha256": "aeebfc03ac6b81ee676a6551f403fa17a9d187261e3a9c183deeb2a85664b796"
+    },
+    {
+      "path": "before/family12_cylinder_ellipse_section-analysis.png",
+      "bytes": 230195,
+      "sha256": "95d2dfc459249f0a65d313d4b4934a702bbd0127126a5a61de35e5ab6116eb55"
+    },
+    {
+      "path": "before/family12_cylinder_ellipse_section-complete.png",
+      "bytes": 197661,
+      "sha256": "b7de83457369f3ec42fa4a0e2079cb6c2a9de8042599d17ea51c426bc221383c"
+    },
+    {
+      "path": "before/family12_cylinder_ellipse_section-entry.png",
+      "bytes": 150993,
+      "sha256": "b4cbb4bdbca7804d9afa7d40b8dd57110431d5e91a3a1191193ce3a3b586932c"
+    },
+    {
+      "path": "before/family12_cylinder_ellipse_section-rotated.png",
+      "bytes": 200822,
+      "sha256": "6a57897b00c0a1a983a490819fb98548404ad6d442687758f33a706d034e3afe"
+    },
+    {
+      "path": "before/family13_invalid_geometry_refusal.png",
+      "bytes": 24591,
+      "sha256": "6da59bec1f16a1b068d362313d184b013e00227ea0be5c682c2712ba174a2207"
+    },
+    {
+      "path": "before/receipt.json",
+      "bytes": 17563,
+      "sha256": "f005b5bf40c03d05faf73bbc2e600b244a37dca11fe3dc9b8ecad1d3ba1a7269"
+    },
+    {
+      "path": "browser-final.log",
+      "bytes": 754,
+      "sha256": "6bbe936af0480c20f39cdf8c4466d781fc047d84cf084938ad7ab6f4122e43dc"
+    },
+    {
+      "path": "browser-source-identity.json",
+      "bytes": 3684,
+      "sha256": "3aea04414d219a1eac82470bffc02ab44f2e1ebe384caeabcdd405ff01ab612b"
+    },
+    {
+      "path": "browser-verified.log",
+      "bytes": 470,
+      "sha256": "5bafff939483d483f76d05f63fa32ed3a97e744d31e91d2f42c76cb35cd8acf9"
+    },
+    {
+      "path": "candidate_divergence.json",
+      "bytes": 922,
+      "sha256": "eadac5f2821027388115c32572d7ec16822efa26045679376fdd2680d2b7f97c"
+    },
+    {
+      "path": "check-browser.mjs",
+      "bytes": 14483,
+      "sha256": "934695e8bffddf8a83ea2adc66649f78e13bd15a8b59a9fd3b24662a03dacee1"
+    },
+    {
+      "path": "comparison.png",
+      "bytes": 1104331,
+      "sha256": "322fbb5cc2b9efd8f452674c48d4ba9daef0a3a8d20720f6b60e4d8467a3bf8c"
+    },
+    {
+      "path": "corrections-green.log",
+      "bytes": 1055,
+      "sha256": "9d3406a8a9f98f6221e5ddb0fcb6c965a5218ab8a6bb122fb3a67166e468403f"
+    },
+    {
+      "path": "depth-corrected/depth.json",
+      "bytes": 8444,
+      "sha256": "65becc0b5cf68def9469c6dd77ddbf6fc5d9b56d200b2a74068c4cacde2f0e82"
+    },
+    {
+      "path": "depth-corrected/receipt.json",
+      "bytes": 8590,
+      "sha256": "e584945514aeacd7f4bc712476e4f96f72682e76ee60efed67da2771227cfb88"
+    },
+    {
+      "path": "depth-indexed/depth.json",
+      "bytes": 8416,
+      "sha256": "571931014e23b4c6aa22f53a7d808f1cbb21274b2ecc8c0654eda1d7519cf72c"
+    },
+    {
+      "path": "depth-indexed/receipt.json",
+      "bytes": 8560,
+      "sha256": "239d6e351d81af5e4bbc886e627702a65a18dc78d2dbd953321a8e23d9ab86e9"
+    },
+    {
+      "path": "docs-check.log",
+      "bytes": 101,
+      "sha256": "7ac22f5129d0877ffce6773f6590879d070d9beb9829f9adc0c8036375456857"
+    },
+    {
+      "path": "docs-final-check.log",
+      "bytes": 101,
+      "sha256": "d2fceae592aabe49cfa8321b322bf20298f1539d91d7b1cf07f3af4c8bdd0030"
+    },
+    {
+      "path": "environment-check/execution.json",
+      "bytes": 1342,
+      "sha256": "423d9eb0815eab14851fc7d30f577cdab26ee739131ed84aabebc59a3730f771"
+    },
+    {
+      "path": "environment-check/invocation.json",
+      "bytes": 916,
+      "sha256": "074b04b0f09ccaf5be42d50200127b436d98fa7022096f0765dec70b6c6f9912"
+    },
+    {
+      "path": "environment-check/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "environment-check/stdout.log",
+      "bytes": 100,
+      "sha256": "5a20179818d478f8d1681f50ee2331669e2aaec99de224f7380e54a953bce366"
+    },
+    {
+      "path": "environment-owner-check/execution.json",
+      "bytes": 1347,
+      "sha256": "ed7d6930253f2a2cb01a6d17c91aa573d160bdb2ef5725dddc119bb3130bbf4f"
+    },
+    {
+      "path": "environment-owner-check/invocation.json",
+      "bytes": 921,
+      "sha256": "152b601b8d804ed83ee7c4e3185005e3252a9de0eb2b2920bbe462505baa230d"
+    },
+    {
+      "path": "environment-owner-check/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "environment-owner-check/stdout.log",
+      "bytes": 835,
+      "sha256": "fa32661c230886bccd4e6763a1ae730b870bcd936e70c0db04f12b2a2f3f511f"
+    },
+    {
+      "path": "environment-repro.log",
+      "bytes": 7140,
+      "sha256": "18ccf9d1e4db0f0389415cafdd321ea5d8f030b672974741b09357d49ffaac2b"
+    },
+    {
+      "path": "final/depth.json",
+      "bytes": 8416,
+      "sha256": "571931014e23b4c6aa22f53a7d808f1cbb21274b2ecc8c0654eda1d7519cf72c"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-analysis.png",
+      "bytes": 210972,
+      "sha256": "95626550713271a9e0211cac6962cef38b9a0b148b085255d65d0f3729e3b3eb"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-complete.png",
+      "bytes": 188816,
+      "sha256": "8fff3dcbc53014589926db3443ae4354dc64bffdd02a4bf0f15320f0374d1434"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-entry.png",
+      "bytes": 157782,
+      "sha256": "4719958e3cd0b0a133922edce48e1f2c3710344cc709ccaac3c6d8c132f879a0"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-rotated.png",
+      "bytes": 186864,
+      "sha256": "e2253a8ad6f807b1998f5ac0ddfb20288c369f90277700a301e40afed1956d6a"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-selected.png",
+      "bytes": 219273,
+      "sha256": "15bb1c7bae12e3285677f15879ed3be974d7fc260e408d956055731b6741f1d3"
+    },
+    {
+      "path": "final/family01_triangular_pyramid-xray.png",
+      "bytes": 191854,
+      "sha256": "00547ad92f523b6b811f48e1060aa8f12c5a15684b060689c075765449bca933"
+    },
+    {
+      "path": "final/family05_prism-analysis.png",
+      "bytes": 213404,
+      "sha256": "fdb2b7e4a6b4d6c187672a495381d5adc98011bc23c20e7724afdf047f73c795"
+    },
+    {
+      "path": "final/family05_prism-complete.png",
+      "bytes": 200743,
+      "sha256": "14fd630ac79d58c940925c8153417fc9e4f90978d1c17bccacc8baf40ad20219"
+    },
+    {
+      "path": "final/family05_prism-entry.png",
+      "bytes": 158725,
+      "sha256": "0fa1d53c3dd343dd5ae1cbc2e749da19aaa210e84c78c4c4e71a5a0ed760910f"
+    },
+    {
+      "path": "final/family05_prism-rotated.png",
+      "bytes": 236060,
+      "sha256": "1f8af8ff820336f9255001259bde64e461b2677a3db0d102e02589d87bb9c59d"
+    },
+    {
+      "path": "final/family05_prism-selected.png",
+      "bytes": 228949,
+      "sha256": "c233ed932a6554f50a97e1ca3a95484e9fe09a6a58779a8788d5fbeb424c4440"
+    },
+    {
+      "path": "final/family05_prism-xray.png",
+      "bytes": 204088,
+      "sha256": "ac0f0b3067f3b213d2cc6cf69ae0de324e51dca5fc540e43f49115bde9e8a3b7"
+    },
+    {
+      "path": "final/family07_multi_solid_composition-analysis.png",
+      "bytes": 219721,
+      "sha256": "b70aa2833446fb014806f3af8d00b4da8fbe8ddc4ceea1bdd06e808d4e0a6803"
+    },
+    {
+      "path": "final/family07_multi_solid_composition-complete.png",
+      "bytes": 201530,
+      "sha256": "9e0d5af434b8e284d2c045013dc5d80b07c6f401f39c3425a3b4ee472886998b"
+    },
+    {
+      "path": "final/family07_multi_solid_composition-entry.png",
+      "bytes": 150413,
+      "sha256": "4e8ca90de73ac268da974769ad744bfd75274c9d66799b5a50b8b3dd01c033e1"
+    },
+    {
+      "path": "final/family07_multi_solid_composition-rotated.png",
+      "bytes": 182971,
+      "sha256": "82589c2af95ddcd8e187ed3af19b3675d05b13f53839a8d17491676e9f7af593"
+    },
+    {
+      "path": "final/family07_multi_solid_composition-selected.png",
+      "bytes": 223359,
+      "sha256": "476d6f9ddc5a1c947cb2756a205ab20a0caacb15ec821480bdc158cc122bcce1"
+    },
+    {
+      "path": "final/family07_multi_solid_composition-xray.png",
+      "bytes": 204552,
+      "sha256": "89830777e7f84501e33f86131f501ffdd7354ce4d4f90b9ba14c13dc2d5743aa"
+    },
+    {
+      "path": "final/family09_cylinder_and_sections-analysis.png",
+      "bytes": 244932,
+      "sha256": "f59900f43c88098f85dc2a516f54806f1430bff378641d27f5e9fc4a32d7a9b9"
+    },
+    {
+      "path": "final/family09_cylinder_and_sections-complete.png",
+      "bytes": 224056,
+      "sha256": "ed91ce637f419689a4bacac4481c02734978ee9c238f22b2b769744ff6c95569"
+    },
+    {
+      "path": "final/family09_cylinder_and_sections-entry.png",
+      "bytes": 167743,
+      "sha256": "0fee3c8f01c6669057c67c7f139994fea3656944e6314525545696e50a9efc4b"
+    },
+    {
+      "path": "final/family09_cylinder_and_sections-rotated.png",
+      "bytes": 215044,
+      "sha256": "79addff4a2b2bb307b36470a6c3b6a7031ffef11d07c88cd19a00d7a44673949"
+    },
+    {
+      "path": "final/family09_cylinder_and_sections-selected.png",
+      "bytes": 266894,
+      "sha256": "53a64bbdbb1792f6b8fd64e0114e271ac2bbab26d30579efcdcfa5ded96152aa"
+    },
+    {
+      "path": "final/family09_cylinder_and_sections-xray.png",
+      "bytes": 222992,
+      "sha256": "cf7d6d2ba9623b306f68022684bb925ae6d8aa22ba807fc521729cc0769d0b12"
+    },
+    {
+      "path": "final/family10_cone_frustum_cut-analysis.png",
+      "bytes": 253487,
+      "sha256": "01c4d325b96be79419befc7df0cff05e0c0371354c664c0d939428893cf9b7cb"
+    },
+    {
+      "path": "final/family10_cone_frustum_cut-complete.png",
+      "bytes": 225133,
+      "sha256": "c74cdb3893ce3a9224f1e84c74146aefab0e397f63409ea3de90dec032859931"
+    },
+    {
+      "path": "final/family10_cone_frustum_cut-entry.png",
+      "bytes": 170170,
+      "sha256": "aba47327ab409ce2bb3684284205c4f45f0787a00d2d63079c247f076a214f04"
+    },
+    {
+      "path": "final/family10_cone_frustum_cut-rotated.png",
+      "bytes": 226235,
+      "sha256": "c2119f2535d1b889f392b2bb847c6e26251edcc3ab5d73cb8d98a39bab1832c2"
+    },
+    {
+      "path": "final/family10_cone_frustum_cut-selected.png",
+      "bytes": 270697,
+      "sha256": "aa24282f2a5fc7fab1b1a2707f321202fad4e0dc85d6fdc5357a4ed757d56fa1"
+    },
+    {
+      "path": "final/family10_cone_frustum_cut-xray.png",
+      "bytes": 221912,
+      "sha256": "3f0dcf262cce012e697c0e9de5772af1c88d4d8aa4bfb3985bd663da2477a75b"
+    },
+    {
+      "path": "final/family11_sphere_plane_cut-analysis.png",
+      "bytes": 224289,
+      "sha256": "1de48efd3b1252d028309099c44d81efaf4bec32d9f6836b3b5707bb3e60cb53"
+    },
+    {
+      "path": "final/family11_sphere_plane_cut-complete.png",
+      "bytes": 181979,
+      "sha256": "e1f9662ddd94303826682d9457c5e5a546951b47cc42165c773f4fd18edf6f85"
+    },
+    {
+      "path": "final/family11_sphere_plane_cut-entry.png",
+      "bytes": 154681,
+      "sha256": "de534432c45789505bcfb967e25875b0f5f11c0f7792efaf635f63881f33f80a"
+    },
+    {
+      "path": "final/family11_sphere_plane_cut-rotated.png",
+      "bytes": 189173,
+      "sha256": "dcae9bec004cb9a95dc0fb1be22b7eddbb42757015076d12543c965fc44b2ae5"
+    },
+    {
+      "path": "final/family11_sphere_plane_cut-selected.png",
+      "bytes": 237620,
+      "sha256": "bab977871ef000cfae2cc10140ffff44534147da622fed1e1e694ac0f860debf"
+    },
+    {
+      "path": "final/family11_sphere_plane_cut-xray.png",
+      "bytes": 185439,
+      "sha256": "d2adbae22d7099e426c1a3214c78c6b1f67f6454251e8ca51df5c85dac5cd493"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-analysis.png",
+      "bytes": 226877,
+      "sha256": "73cb6cbe469fee6bd322ac48c25f94ebc7470dcace3e36cecdc360050405baba"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-complete.png",
+      "bytes": 194752,
+      "sha256": "c818f440fac8ed12b0003efa27bd59e2e1ec8d34ccf12e05d7f34b398e79a04b"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-entry.png",
+      "bytes": 149801,
+      "sha256": "0fec5de2130c60fdfc07821b368464f18227ce4cb13840bcccb3c0e728cd4bda"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-rotated.png",
+      "bytes": 194885,
+      "sha256": "fe2fbaf5440f0ac3f5862665e8401be757849080a9195b252c8e196f038821bc"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-selected.png",
+      "bytes": 246054,
+      "sha256": "60e5c436f1c5674a047917c04325400ec8af4a91dabf9410f4c2af5436c4e7eb"
+    },
+    {
+      "path": "final/family12_cylinder_ellipse_section-xray.png",
+      "bytes": 189685,
+      "sha256": "eaf84f96ce219d51802f9fa60ac6ed95edd2cc92dc3e8ddbebc38c96ded667f2"
+    },
+    {
+      "path": "final/family13_invalid_geometry_refusal.png",
+      "bytes": 22901,
+      "sha256": "8176f941ba8fef9a02e5dec3607c668b6c778b08122e4d3fa06f1ac969404857"
+    },
+    {
+      "path": "final/receipt.json",
+      "bytes": 26964,
+      "sha256": "6f258da4d8c3bdef8011d943564b5bea2788e95c6e2700693ebbcba3d235a9b3"
+    },
+    {
+      "path": "focused-green.log",
+      "bytes": 291,
+      "sha256": "eca237325a7fcba1b10cf005aa8d346347acf9b12f5e407e56ecc751af4120b8"
+    },
+    {
+      "path": "focused-tests.log",
+      "bytes": 51806,
+      "sha256": "fdd738909fda81717ec2210cf53be279435e7db419571971ea7ce58c5526fbf5"
+    },
+    {
+      "path": "framing-red.log",
+      "bytes": 1403,
+      "sha256": "77487d3ba41fa17f3d4e1942521866d105614608c838b18c11adce6b983e84b9"
+    },
+    {
+      "path": "freeze/execution.json",
+      "bytes": 1153,
+      "sha256": "c8aad734a96b1a1cef51983d0d5a9d077a87dc373f7ba73a08bfeb3bc3f69fc4"
+    },
+    {
+      "path": "freeze/invocation.json",
+      "bytes": 665,
+      "sha256": "1768f34b7f863fd3ef1103c284c9c2e75a559b8dbea3d5c21ec7606a4f4b09d5"
+    },
+    {
+      "path": "freeze/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "freeze/stdout.log",
+      "bytes": 433,
+      "sha256": "56d2b76d64a2d5863caf8a957469c9f0b333dc612b70d1cf682304086fc59efc"
+    },
+    {
+      "path": "frontend-wave-final.log",
+      "bytes": 1055,
+      "sha256": "2ed8231d613fb75c63c6f1b7b3a0873878630ef9e9b357c82a424b2e900acedc"
+    },
+    {
+      "path": "frontend-wave-green.log",
+      "bytes": 2419,
+      "sha256": "a8761646980f39f5178c7f29010178be99f21acf82f3968105540dbbf0a31c91"
+    },
+    {
+      "path": "frontend-wave.log",
+      "bytes": 5689,
+      "sha256": "fcb0e17c6717fa0cd91cd5978254164c52ef8a05aa182fc074fbbc13b1315ab3"
+    },
+    {
+      "path": "handoff.md",
+      "bytes": 1867,
+      "sha256": "047c92decd425a71dfd06a5bac2f316cca06d660d4c85032b9b93699c66b7d47"
+    },
+    {
+      "path": "original-candidate.json",
+      "bytes": 3603,
+      "sha256": "daac98f1dd041a05c2a7c10a9f063dff3c53773e97e99d97a7acbd67240c6070"
+    },
+    {
+      "path": "plan.md",
+      "bytes": 2801,
+      "sha256": "ae49bb1a57dac196af8bdf1564cae20751e8bdc90b244bcea01271f66f074d61"
+    },
+    {
+      "path": "post-t3-freeze/execution.json",
+      "bytes": 1262,
+      "sha256": "3fedb02f59ff4c487eacfb465dcd39c3be2f6f8c80f07ce3c6b64e50356d40a6"
+    },
+    {
+      "path": "post-t3-freeze/invocation.json",
+      "bytes": 838,
+      "sha256": "9732bf364b20087823bcddcf2920b411de55564d7ffc8c65538852d7f2ec14b5"
+    },
+    {
+      "path": "post-t3-freeze/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "post-t3-freeze/stdout.log",
+      "bytes": 93,
+      "sha256": "7e9d54f56d4e937829eaf50bcda6397feb6b7a57e67f3f64d6802f4f9caa8a79"
+    },
+    {
+      "path": "preservation-verification.json",
+      "bytes": 195,
+      "sha256": "18384ae99759a5ab93615ef0e5400f0fe77f7b3cb90f7c74fda7ef9efc6c26b8"
+    },
+    {
+      "path": "preservation.json",
+      "bytes": 76781,
+      "sha256": "8200a5f0ed3af9317881823d24ebf844289fc293ac4bca6a1f97f8822133ef49"
+    },
+    {
+      "path": "record-command.py",
+      "bytes": 2921,
+      "sha256": "17239a011382f51c1ec3a52a3e8239113f01de2432a9917ac043a7c72dd70e32"
+    },
+    {
+      "path": "red-vitest.log",
+      "bytes": 18566,
+      "sha256": "eeea2a07f8a5901e61d62e41b86f4504bb3be748c75575b058a346fc25ae7724"
+    },
+    {
+      "path": "report.md",
+      "bytes": 11845,
+      "sha256": "991712aec022a0fa3bf578b60e3259a30c41b500c7d58d8b7bcc4f1356593c9c"
+    },
+    {
+      "path": "review-green.log",
+      "bytes": 1055,
+      "sha256": "379a64904cd1f33be711ec11350f95ee3ffebe6eea48bb0d2ab2395b44762bc6"
+    },
+    {
+      "path": "review-red.log",
+      "bytes": 3427,
+      "sha256": "79ffe9d317e1a490f2f9a43b76c673e16fdc8d835966118a2eccf885ed0e90a3"
+    },
+    {
+      "path": "review.md",
+      "bytes": 1631,
+      "sha256": "7b4efba27d29828af1463196cb560894f4b81314e5370713e4a2542816e444bd"
+    },
+    {
+      "path": "run.json",
+      "bytes": 1885,
+      "sha256": "4234e081b36f5b843a21d7a51ceef78ee249b5f6cb36e01936d7675fa93fab2f"
+    },
+    {
+      "path": "t3/execution.json",
+      "bytes": 1218,
+      "sha256": "11c03c43b2971b7580c4e8a56c197fdb81aa5a6dfb5d8180bc57d9430f3b2eca"
+    },
+    {
+      "path": "t3/invocation.json",
+      "bytes": 786,
+      "sha256": "f879e462f75c9e7630378885a28592fd0e5c6fc4cff8db399e366774a261fc7d"
+    },
+    {
+      "path": "t3/stderr.log",
+      "bytes": 332,
+      "sha256": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c"
+    },
+    {
+      "path": "t3/stdout.log",
+      "bytes": 18833,
+      "sha256": "389ec756fce8aa243ad90b33df87dbb949559a767896843c37fad8c55af3b9d9"
+    },
+    {
+      "path": "t3-environment-failure/interruption.json",
+      "bytes": 456,
+      "sha256": "337117f6f6f27049ec8a3d35c4fa3aeece192eeeff7d550f96b8f8c8efbe84d2"
+    },
+    {
+      "path": "t3-environment-failure/invocation.json",
+      "bytes": 630,
+      "sha256": "5a213084db19b5296cd55b4d6dfbcee2dd17b0891d4b2fbae6ffb5cbd46201bc"
+    },
+    {
+      "path": "t3-environment-failure/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "t3-environment-failure/stdout.log",
+      "bytes": 4749,
+      "sha256": "29a2f8939a00d73196649cca3b508a8acfa26a224c264c9724313801068a6245"
+    },
+    {
+      "path": "t3-environment-owner-failure/interruption.json",
+      "bytes": 514,
+      "sha256": "d24121b735286206babd2ee9d00e030b6a1a353c72d833aad984191a35f7dffc"
+    },
+    {
+      "path": "t3-environment-owner-failure/invocation.json",
+      "bytes": 781,
+      "sha256": "9e57baf34f34796033200114e54d9bf138d7fb84734ecce51617fe0140837252"
+    },
+    {
+      "path": "t3-environment-owner-failure/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "t3-environment-owner-failure/stdout.log",
+      "bytes": 779,
+      "sha256": "00156ea9057eed4f87e2651cd1da4ae0dfd59d9833d21cad72770d636ba03247"
+    },
+    {
+      "path": "t3-interrupted-session/interruption.json",
+      "bytes": 452,
+      "sha256": "4a86ca40704619dfb23f8f9ce624c50f4f6357b0c55e1a53d1523d42751c1213"
+    },
+    {
+      "path": "t3-interrupted-session/invocation.json",
+      "bytes": 781,
+      "sha256": "9c99accc221b1215ace4af806f3c2bc3373bc3fae1457b9e919cf65c8d063cc7"
+    },
+    {
+      "path": "t3-interrupted-session/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "t3-interrupted-session/stdout.log",
+      "bytes": 5457,
+      "sha256": "24cb65ce921b3f588e26da98bb1dfc988f3b308ebf35d7eb6ca48d3ad067e02f"
+    },
+    {
+      "path": "t3-interrupted-setup/interruption.json",
+      "bytes": 471,
+      "sha256": "83b34f462cc658cd26aba590dd3b774f3a9e63569e910997fc634fd0e57f3bb9"
+    },
+    {
+      "path": "t3-interrupted-setup/invocation.json",
+      "bytes": 692,
+      "sha256": "76b86100e17017168949f7ab385876f82431f841c5cfc416bbfe4e449f26c8b0"
+    },
+    {
+      "path": "t3-interrupted-setup/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "t3-interrupted-setup/stdout.log",
+      "bytes": 107,
+      "sha256": "b7d2c44790934bdb96d52428e09bcf77b84ded57f8767b7b94d8b016b5772023"
+    },
+    {
+      "path": "t3-launch-final.stderr.log",
+      "bytes": 156,
+      "sha256": "1cdb6cfdebd24be6ce5b44010292133e8288c21969398184bdea5497f59f71da"
+    },
+    {
+      "path": "t3-launch-final.stdout.log",
+      "bytes": 1220,
+      "sha256": "1aa30af9f7e36fb3103d120d78af53090f986f4c2565b013a1a1fad0aef41d2e"
+    },
+    {
+      "path": "t3-launch.stderr.log",
+      "bytes": 78,
+      "sha256": "7c323b1466e71254991d976ec2d6d78942f1e90179bf161e0b0b2982c1735797"
+    },
+    {
+      "path": "t3-launch.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "t3-process-id-final.txt",
+      "bytes": 7,
+      "sha256": "12f2ba62d6d6c4b51d5fca4b92c0c3cf1904e3d858fad3dfbfa73a3b65655e8c"
+    },
+    {
+      "path": "t3-process-id.txt",
+      "bytes": 6,
+      "sha256": "3d802288dfa3615991532b7ef67049627ca075a4d768ceb39a9ca65c6fdda8eb"
+    },
+    {
+      "path": "validation.json",
+      "bytes": 1741,
+      "sha256": "a4a1b1c02721dba8b2030556706973c203f99c772da3663ce6fdc229511a5127"
+    },
+    {
+      "path": "verified/depth.json",
+      "bytes": 8416,
+      "sha256": "571931014e23b4c6aa22f53a7d808f1cbb21274b2ecc8c0654eda1d7519cf72c"
+    },
+    {
+      "path": "verified/family01_triangular_pyramid-analysis.png",
+      "bytes": 211228,
+      "sha256": "c38a19e9e095cdc72e2edd50e64fb8a6459b30081aa0bd61afb727c09928d145"
+    },
+    {
+      "path": "verified/family01_triangular_pyramid-complete.png",
+      "bytes": 188816,
+      "sha256": "8fff3dcbc53014589926db3443ae4354dc64bffdd02a4bf0f15320f0374d1434"
+    },
+    {
+      "path": "verified/family01_triangular_pyramid-entry.png",
+      "bytes": 157782,
+      "sha256": "4719958e3cd0b0a133922edce48e1f2c3710344cc709ccaac3c6d8c132f879a0"
+    },
+    {
+      "path": "verified/family01_triangular_pyramid-rotated.png",
+      "bytes": 190816,
+      "sha256": "795d17786dbb2e7be534e035626df3e12bd36a3da053b2f19c89ad0f8d939407"
+    },
+    {
+      "path": "verified/family01_triangular_pyramid-selected.png",
+      "bytes": 219273,
+      "sha256": "15bb1c7bae12e3285677f15879ed3be974d7fc260e408d956055731b6741f1d3"
+    },
+    {
+      "path": "verified/family01_triangular_pyramid-xray.png",
+      "bytes": 191854,
+      "sha256": "00547ad92f523b6b811f48e1060aa8f12c5a15684b060689c075765449bca933"
+    },
+    {
+      "path": "verified/family05_prism-analysis.png",
+      "bytes": 213404,
+      "sha256": "fdb2b7e4a6b4d6c187672a495381d5adc98011bc23c20e7724afdf047f73c795"
+    },
+    {
+      "path": "verified/family05_prism-complete.png",
+      "bytes": 200743,
+      "sha256": "14fd630ac79d58c940925c8153417fc9e4f90978d1c17bccacc8baf40ad20219"
+    },
+    {
+      "path": "verified/family05_prism-entry.png",
+      "bytes": 158725,
+      "sha256": "0fa1d53c3dd343dd5ae1cbc2e749da19aaa210e84c78c4c4e71a5a0ed760910f"
+    },
+    {
+      "path": "verified/family05_prism-rotated.png",
+      "bytes": 236060,
+      "sha256": "1f8af8ff820336f9255001259bde64e461b2677a3db0d102e02589d87bb9c59d"
+    },
+    {
+      "path": "verified/family05_prism-selected.png",
+      "bytes": 228949,
+      "sha256": "c233ed932a6554f50a97e1ca3a95484e9fe09a6a58779a8788d5fbeb424c4440"
+    },
+    {
+      "path": "verified/family05_prism-xray.png",
+      "bytes": 204088,
+      "sha256": "ac0f0b3067f3b213d2cc6cf69ae0de324e51dca5fc540e43f49115bde9e8a3b7"
+    },
+    {
+      "path": "verified/family07_multi_solid_composition-analysis.png",
+      "bytes": 219721,
+      "sha256": "b70aa2833446fb014806f3af8d00b4da8fbe8ddc4ceea1bdd06e808d4e0a6803"
+    },
+    {
+      "path": "verified/family07_multi_solid_composition-complete.png",
+      "bytes": 201530,
+      "sha256": "9e0d5af434b8e284d2c045013dc5d80b07c6f401f39c3425a3b4ee472886998b"
+    },
+    {
+      "path": "verified/family07_multi_solid_composition-entry.png",
+      "bytes": 150413,
+      "sha256": "4e8ca90de73ac268da974769ad744bfd75274c9d66799b5a50b8b3dd01c033e1"
+    },
+    {
+      "path": "verified/family07_multi_solid_composition-rotated.png",
+      "bytes": 182971,
+      "sha256": "82589c2af95ddcd8e187ed3af19b3675d05b13f53839a8d17491676e9f7af593"
+    },
+    {
+      "path": "verified/family07_multi_solid_composition-selected.png",
+      "bytes": 223359,
+      "sha256": "476d6f9ddc5a1c947cb2756a205ab20a0caacb15ec821480bdc158cc122bcce1"
+    },
+    {
+      "path": "verified/family07_multi_solid_composition-xray.png",
+      "bytes": 204552,
+      "sha256": "89830777e7f84501e33f86131f501ffdd7354ce4d4f90b9ba14c13dc2d5743aa"
+    },
+    {
+      "path": "verified/family09_cylinder_and_sections-analysis.png",
+      "bytes": 236865,
+      "sha256": "e5ebe1d7e29a99875a7a2a3ff48664d8745deb66766ca5be3bc1e42e33298b2b"
+    },
+    {
+      "path": "verified/family09_cylinder_and_sections-complete.png",
+      "bytes": 209487,
+      "sha256": "a0f16f55c5ad0aa8eedcacf40ca16bc570b2a737fe022e6083c4b701a1a9420b"
+    },
+    {
+      "path": "verified/family09_cylinder_and_sections-entry.png",
+      "bytes": 162455,
+      "sha256": "66964b3a903bf4ef14f5bd13c64cc81eed5a0b991480021970fe35505b08c67b"
+    },
+    {
+      "path": "verified/family09_cylinder_and_sections-rotated.png",
+      "bytes": 211364,
+      "sha256": "65e5e7a54b2d42994341a10bb13b808ac245d80719fc720628b32f793b2b1fd9"
+    },
+    {
+      "path": "verified/family09_cylinder_and_sections-selected.png",
+      "bytes": 250639,
+      "sha256": "bb5453fd09152608a04829f08bad21317c36d3af512464d9729ff3b0219efacd"
+    },
+    {
+      "path": "verified/family09_cylinder_and_sections-xray.png",
+      "bytes": 212305,
+      "sha256": "6a97f51cff09bd5c29df2cdb365acef5fb62342904fa6dfe8c13834895ef0b5b"
+    },
+    {
+      "path": "verified/family10_cone_frustum_cut-analysis.png",
+      "bytes": 246205,
+      "sha256": "b7161724a33aa56dd51e4e23dfdbf462877bc2d06fe083be77c8e5dc5ba34c93"
+    },
+    {
+      "path": "verified/family10_cone_frustum_cut-complete.png",
+      "bytes": 214153,
+      "sha256": "bf68704ee1f02437144e5c727a39fc5be4afba0b0f5dab0871426a433e8739f3"
+    },
+    {
+      "path": "verified/family10_cone_frustum_cut-entry.png",
+      "bytes": 168292,
+      "sha256": "6f436497e7515527816cd41dfe676d0085494d962ebb09bbe372060acab8f96c"
+    },
+    {
+      "path": "verified/family10_cone_frustum_cut-rotated.png",
+      "bytes": 215532,
+      "sha256": "ca0cba0f6d2c1bef326c1c955ac92e29412008711454d8ec7c184f6ff757d271"
+    },
+    {
+      "path": "verified/family10_cone_frustum_cut-selected.png",
+      "bytes": 255398,
+      "sha256": "7c7ba5f04d811280d104c35443057830b0015b33471431f0bdbb3019fbb639d9"
+    },
+    {
+      "path": "verified/family10_cone_frustum_cut-xray.png",
+      "bytes": 215115,
+      "sha256": "a08b593e76a6e126dfdc4ed59ffa39e4564981bb9eb3187137bafc1bd8d2c8fb"
+    },
+    {
+      "path": "verified/family11_sphere_plane_cut-analysis.png",
+      "bytes": 218437,
+      "sha256": "ec7835678035a974cbb8eeab063021de2b211ac1ca4265c2d749151834dc4248"
+    },
+    {
+      "path": "verified/family11_sphere_plane_cut-complete.png",
+      "bytes": 170661,
+      "sha256": "01ee35ae90f8c0a9e6a265d6be08ebcf5d9adff5320d181ef173fe294cd7757d"
+    },
+    {
+      "path": "verified/family11_sphere_plane_cut-entry.png",
+      "bytes": 153391,
+      "sha256": "fe685073eeb24aaf7a3595d340db9eb2e5561cb643b73be0f410202f2ae5dee2"
+    },
+    {
+      "path": "verified/family11_sphere_plane_cut-rotated.png",
+      "bytes": 177425,
+      "sha256": "d4b2d64b54e122572ef1c41e214deb885da7a6c8d9e3a12ce6a60f4564c2fe59"
+    },
+    {
+      "path": "verified/family11_sphere_plane_cut-selected.png",
+      "bytes": 229639,
+      "sha256": "340b7ec24f22885171a789856faea227b278436130efeb4d879ec34038d55557"
+    },
+    {
+      "path": "verified/family11_sphere_plane_cut-xray.png",
+      "bytes": 175294,
+      "sha256": "23ff5fcd1381d5932176d985141c5f2da36758d8db266a56ba9d3a03cb13fa65"
+    },
+    {
+      "path": "verified/family12_cylinder_ellipse_section-analysis.png",
+      "bytes": 221877,
+      "sha256": "ee7ae1d8158705be66cd61f62cd9f1a2c812a4f6127cf20bc892483e2e102038"
+    },
+    {
+      "path": "verified/family12_cylinder_ellipse_section-complete.png",
+      "bytes": 184023,
+      "sha256": "f47430c82e87431d6d2ee4879d4d8ac9bb449a55bae5509f7d5b88e714e1fc1f"
+    },
+    {
+      "path": "verified/family12_cylinder_ellipse_section-entry.png",
+      "bytes": 146832,
+      "sha256": "a6fe3d6db09e3f8faf95d6ee27638e409627074f0fd8c6e571ad2d24dbfce89e"
+    },
+    {
+      "path": "verified/family12_cylinder_ellipse_section-rotated.png",
+      "bytes": 191114,
+      "sha256": "95df6219955f968e08a587b3487fcc1534e464a5c3de69608df2a834f3dc5ba9"
+    },
+    {
+      "path": "verified/family12_cylinder_ellipse_section-selected.png",
+      "bytes": 236751,
+      "sha256": "51c701e9e651586b82a6c9605faa3c0ff35256792355d3e14248276cfa683309"
+    },
+    {
+      "path": "verified/family12_cylinder_ellipse_section-xray.png",
+      "bytes": 184426,
+      "sha256": "78296e25540b61c0291e9949e551520530818bcaa3eafa26079f07bfef166eda"
+    },
+    {
+      "path": "verified/family13_invalid_geometry_refusal.png",
+      "bytes": 21460,
+      "sha256": "7b46286b44cfb1a21a9b1b54a5e4b908dedb209ce09c4062160b2b95cb3ac375"
+    },
+    {
+      "path": "verified/receipt.json",
+      "bytes": 26869,
+      "sha256": "e75662f31f537467c30ac2d175ea7e2fb58d1d9d2c3755ccda9a1caf7a3f8168"
+    }
+  ]
+}

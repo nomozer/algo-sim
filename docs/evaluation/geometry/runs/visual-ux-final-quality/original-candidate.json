@@ -1,0 +1,116 @@
+{
+  "khai": "Danh tính của hệ tại thời điểm ĐÓNG BĂNG để đánh giá. Không sửa file này vì kết quả SEALED — SEALED chỉ được phép làm thay đổi KẾT LUẬN.",
+  "dong_bang_luc": "2026-10-21T18:02:38+00:00",
+  "commit": "9966b4baaaf0fc8f6294edccd997958944654652",
+  "commit_ngan": "9966b4ba",
+  "product_commit_sha": "dbef50896c848b93433048b0469f9a78b6a3dbda",
+  "product_commit_rule": "product-paths-excluding-test-only/1",
+  "cay_lam_viec_sach": true,
+  "cache_version": "127",
+  "spec_version_ir": "1.0",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 114,
+    "tree_hash": "91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d",
+    "khai": "Băm nội dung toàn bộ mã SẢN PHẨM của hệ được đo. Harness (scripts/tests/docs) KHÔNG nằm trong đây, nên bộ đo được phép cứng cáp thêm mà không phải đóng băng lại candidate."
+  },
+  "taxonomy": {
+    "so_nghia_vu": 23,
+    "kinds": [
+      "aggregate_matching",
+      "angle",
+      "area",
+      "coplanar",
+      "derived_sequence",
+      "distance",
+      "extremum",
+      "first_match_index",
+      "lateral_area",
+      "membership",
+      "ordering",
+      "parallel",
+      "perpendicular",
+      "point_on_line",
+      "point_on_plane",
+      "predicate_verdict",
+      "radius",
+      "reachability",
+      "scalar_accumulation",
+      "section_matches",
+      "structural_traversal",
+      "total_mapping",
+      "volume"
+    ],
+    "aggregate_ops": [
+      "count",
+      "max",
+      "min",
+      "product",
+      "sum"
+    ],
+    "sequence_transforms": [
+      "distinct",
+      "filter",
+      "identity",
+      "map",
+      "reverse"
+    ],
+    "co_checker_server_owned": [
+      "aggregate_matching",
+      "angle",
+      "area",
+      "coplanar",
+      "derived_sequence",
+      "distance",
+      "extremum",
+      "first_match_index",
+      "lateral_area",
+      "membership",
+      "ordering",
+      "parallel",
+      "perpendicular",
+      "point_on_line",
+      "point_on_plane",
+      "predicate_verdict",
+      "radius",
+      "reachability",
+      "scalar_accumulation",
+      "section_matches",
+      "total_mapping",
+      "volume"
+    ],
+    "hash": "478573817749800ce8ad3635e7c574e466bd068ce5f37ee4882d1af5b5667e45"
+  },
+  "visual_primitive_set": {
+    "so_primitive": 9,
+    "primitives": [
+      "array_strip",
+      "bar_chart",
+      "bit_register",
+      "graph_view",
+      "map_view",
+      "queue_view",
+      "stack_view",
+      "table_grid",
+      "tree_element"
+    ],
+    "hash": "9357dab18fe3bce13eec0dfb5e09febf1f102a32e6338322ecb243bc234d77ef"
+  },
+  "schema_semantic_program": {
+    "duong_dan": "docs/schemas/semantic_program.schema.json",
+    "hash": "667758005778bf217d663939424ee9c4b0c8f5ca70c65d5111b25ccdb0a0e1a4"
+  },
+  "dev": {
+    "duong_dan": "docs/evaluation/semantic-benchmark/dev/cases.json",
+    "so_case": 20,
+    "fingerprint": "8a3de7a3f95309429ebc35cfbcdf3cd03237502efa4ef8b255864f069d48e885"
+  },
+  "sealed": {
+    "trang_thai": "DA_NIEM_PHONG",
+    "ghi_chu": "SEALED do nguồn ngoài cung cấp; agent viết hệ KHÔNG soạn nó. Tập của miền Tin học đã niêm phong và đã chạy; script niêm phong gỡ ở repo-cleanup, con dấu khoá bởi tests/semantic_program/test_benchmark_seal.py."
+  }
+}

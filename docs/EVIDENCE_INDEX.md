@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = VISUAL_UX_FINAL_QUALITY_W01
+
+REPORT = docs/evaluation/geometry/runs/visual-ux-final-quality/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/visual-ux-final-quality/
+CLASSIFICATION = VISUAL_UX_FINAL_QUALITY_READY_FOR_GO_MAIN_REVIEW (local-only correctness-first presentation correction; original campaign not restarted; independent review PASS, authoritative Full T3 PASS, freeze MATCH)
+CODE_COMMIT = 56328b17462e9c4e903dc17687da07243d06846d; candidate 9343e8d0d4c4cdf5bf0865e0a550c13f238f28b5; unchanged 114-file measured tree 91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d; changed frontend locked by product_commit_sha
+VERIFICATION = docs/evaluation/geometry/runs/visual-ux-final-quality/validation.json + docs/evaluation/geometry/runs/visual-ux-final-quality/verified/receipt.json + docs/evaluation/geometry/runs/visual-ux-final-quality/review.md + docs/evaluation/geometry/runs/visual-ux-final-quality/t3/execution.json + docs/evaluation/geometry/runs/visual-ux-final-quality/post-t3-freeze/execution.json + docs/evaluation/geometry/runs/visual-ux-final-quality/preservation-verification.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_W01 (refusal/depth/analysis/actual-entry interpretation and candidate identity; historical artifact bytes unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_W01
 
 REPORT = docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 9341a85771dba79376b46e69ac531c413f507b55 (Session 1) · ec92c8ad81
 VERIFICATION = docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/eval-summary.json + docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/browser-after/visual_ux_acceptance_receipt.json + docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/INDEPENDENT_REVIEW.md + docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/validation.json + docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/FINAL_HANDOFF.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = SIMULATION_DEMO6B_RENDERER_FIX_W01 (candidate_divergence.json identity layer only; historical measurements and receipts unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = VISUAL_UX_FINAL_QUALITY_W01 (correctness-first UX correction; no historical measurement rewrite)
 
 ## WAVE_ID = SIMULATION_DEMO6B_RENDERER_FIX_W01
 

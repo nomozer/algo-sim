@@ -1,0 +1,402 @@
+{
+  "depth": [
+    {
+      "family": "family04_derived_sub_pyramid",
+      "id": "td_ask9",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1089,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family07_multi_solid_composition",
+      "id": "day_ABC",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 0,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1128,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family08_unnamed_section_vertices",
+      "id": "td_ask9",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 484,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family09_cylinder_and_sections",
+      "id": "td_sec_parallel",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1704,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family09_cylinder_and_sections",
+      "id": "td_sec_axial",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 2067,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family10_cone_frustum_cut",
+      "id": "td_sec_cut",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1704,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family10_cone_frustum_cut",
+      "id": "td_sec_axial",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 990,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family11_sphere_plane_cut",
+      "id": "td_sec_sph",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1704,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family12_cylinder_ellipse_section",
+      "id": "td_sec_el",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1611,
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "xrayDepth": [
+    {
+      "family": "family04_derived_sub_pyramid",
+      "id": "td_ask9",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1089,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1089,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family07_multi_solid_composition",
+      "id": "day_ABC",
+      "depthTest": true,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 0,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 0,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1128,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family08_unnamed_section_vertices",
+      "id": "td_ask9",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 484,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 484,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family09_cylinder_and_sections",
+      "id": "td_sec_parallel",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1708,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1704,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family09_cylinder_and_sections",
+      "id": "td_sec_axial",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 2067,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 2067,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family10_cone_frustum_cut",
+      "id": "td_sec_cut",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1708,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1704,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family10_cone_frustum_cut",
+      "id": "td_sec_axial",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 990,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 990,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family11_sphere_plane_cut",
+      "id": "td_sec_sph",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1708,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1704,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "family": "family12_cylinder_ellipse_section",
+      "id": "td_sec_el",
+      "depthTest": false,
+      "depthFunc": 3,
+      "depthWrite": false,
+      "renderOrder": 7,
+      "samples": [
+        {
+          "side": 1,
+          "firstHit": "opaque_wall",
+          "changed": 1611,
+          "pass": true
+        },
+        {
+          "side": -1,
+          "firstHit": "section",
+          "changed": 1611,
+          "pass": true
+        }
+      ]
+    }
+  ]
+}

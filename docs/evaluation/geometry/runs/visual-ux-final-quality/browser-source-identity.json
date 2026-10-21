@@ -1,0 +1,81 @@
+{
+  "product_commit": "56328b17462e9c4e903dc17687da07243d06846d",
+  "measurement": "verified/receipt.json",
+  "measurement_source_note": "Final browser bundle built from the correction working files, then committed as this product; this check confirms those product files remain identical. Earlier attempts are preserved separately.",
+  "source_files": [
+    {
+      "path": "frontend/src/components/SimulationWorkspace.tsx",
+      "product_git_blob": "69d626ef9b0c202f25d31b36b050a83cd02d215b",
+      "working_file_git_blob": "69d626ef9b0c202f25d31b36b050a83cd02d215b",
+      "match": true
+    },
+    {
+      "path": "frontend/src/components/hybrid-preview-contract.test.tsx",
+      "product_git_blob": "6c59ddcf1502e62e28bacb9f232c34b79e879276",
+      "working_file_git_blob": "6c59ddcf1502e62e28bacb9f232c34b79e879276",
+      "match": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/Scene3DExplorer.test.tsx",
+      "product_git_blob": "62821a2537f05cb159ec8d8405af306495a58f2a",
+      "working_file_git_blob": "62821a2537f05cb159ec8d8405af306495a58f2a",
+      "match": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
+      "product_git_blob": "d7d7a99c9d414d7ad8854a2732b5e1f61c86df80",
+      "working_file_git_blob": "d7d7a99c9d414d7ad8854a2732b5e1f61c86df80",
+      "match": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/final-quality.test.tsx",
+      "product_git_blob": "331196c86c24bfcb47f16bd8dde3fe192460e64b",
+      "working_file_git_blob": "331196c86c24bfcb47f16bd8dde3fe192460e64b",
+      "match": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-model.ts",
+      "product_git_blob": "a63b3ab172d5b2a4b6ff6c388940acab8a24f05f",
+      "working_file_git_blob": "a63b3ab172d5b2a4b6ff6c388940acab8a24f05f",
+      "match": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-playback.tsx",
+      "product_git_blob": "b9b3dcc1903d1bf8bc0bfab6e2bd80da1c7eda9c",
+      "working_file_git_blob": "b9b3dcc1903d1bf8bc0bfab6e2bd80da1c7eda9c",
+      "match": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-section.test.ts",
+      "product_git_blob": "f3e4779812db8c7a62874e28dcb92109b7bc8102",
+      "working_file_git_blob": "f3e4779812db8c7a62874e28dcb92109b7bc8102",
+      "match": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "product_git_blob": "85b341434f76991e62970eaa09a664f0a4af4a75",
+      "working_file_git_blob": "85b341434f76991e62970eaa09a664f0a4af4a75",
+      "match": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/simulation-coverage-fixes.test.tsx",
+      "product_git_blob": "046a3216f39588973ad67945babc282c07ad99c5",
+      "working_file_git_blob": "046a3216f39588973ad67945babc282c07ad99c5",
+      "match": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/simulation-learning-ux-session2.test.tsx",
+      "product_git_blob": "dcbe1befcd402e0c83b0a196529cb19de31f1146",
+      "working_file_git_blob": "dcbe1befcd402e0c83b0a196529cb19de31f1146",
+      "match": true
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx",
+      "product_git_blob": "81b32a32d31b0deeba11f32aa4448cf743b990b7",
+      "working_file_git_blob": "81b32a32d31b0deeba11f32aa4448cf743b990b7",
+      "match": true
+    }
+  ],
+  "all_match": true,
+  "receipt_sha256": "e75662f31f537467c30ac2d175ea7e2fb58d1d9d2c3755ccda9a1caf7a3f8168"
+}

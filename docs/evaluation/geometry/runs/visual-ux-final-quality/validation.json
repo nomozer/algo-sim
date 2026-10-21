@@ -1,0 +1,59 @@
+{
+  "verdict": "VISUAL_UX_FINAL_QUALITY_READY_FOR_GO_MAIN_REVIEW",
+  "candidate_commit": "9343e8d0d4c4cdf5bf0865e0a550c13f238f28b5",
+  "product_commit": "56328b17462e9c4e903dc17687da07243d06846d",
+  "full_t3_verdict": "FULL_PRODUCT_GATE_PASS",
+  "backend": {
+    "passed": 11442,
+    "skipped": 1,
+    "deselected": 2,
+    "xfailed": 9
+  },
+  "frontend": {
+    "files": 75,
+    "passed": 1178
+  },
+  "build": "PASS",
+  "demo_replay": "5/5",
+  "reduced_chain": "1/1",
+  "crash_surface": "6/6; 0 escaped 500s",
+  "independent_review": "INDEPENDENT_REVIEW_PASS",
+  "freeze": "MATCH",
+  "clean_before_after": true,
+  "raw_log_checks": [
+    {
+      "path": "t3/stdout.log",
+      "bytes": 18833,
+      "sha256": "389ec756fce8aa243ad90b33df87dbb949559a767896843c37fad8c55af3b9d9",
+      "match": true
+    },
+    {
+      "path": "t3/stderr.log",
+      "bytes": 332,
+      "sha256": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c",
+      "match": true
+    },
+    {
+      "path": "post-t3-freeze/stdout.log",
+      "bytes": 93,
+      "sha256": "7e9d54f56d4e937829eaf50bcda6397feb6b7a57e67f3f64d6802f4f9caa8a79",
+      "match": true
+    },
+    {
+      "path": "post-t3-freeze/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "match": true
+    }
+  ],
+  "browser_receipt_sha256": "e75662f31f537467c30ac2d175ea7e2fb58d1d9d2c3755ccda9a1caf7a3f8168",
+  "browser_scenes": 8,
+  "browser_surfaces": 9,
+  "browser_screenshots": 43,
+  "historical_files_unchanged": 286,
+  "historical_screenshots_unchanged": 250,
+  "live_provider_calls": 0,
+  "merge": false,
+  "push": false,
+  "human_approval": "NOT_GRANTED"
+}

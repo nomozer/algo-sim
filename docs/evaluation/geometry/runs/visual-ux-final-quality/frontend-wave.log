@@ -1,0 +1,68 @@
+
+> algo-sim-frontend@0.1.0 test:wave
+> vitest run && tsc -b && vite build
+
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality/frontend
+
+ ❯ src/components/hybrid-preview-contract.test.tsx (41 tests | 3 failed) 7989ms
+       × F6: mọi fixture insufficient_specification với refusal_cause = UNKNOWN (hoặc vắng) không mời sửa đề và không hứa có mô phỏng; chỉ SOURCE mới mời bổ sung dữ liệu 102ms
+       × F5/F6 qua store: loadUnsupported giữ nguyên trường có cấu trúc, tiêu đề/gợi ý theo failure_category + refusal_cause 90ms
+       × toàn bộ 25 fixture refusal-* không lộ mã kỹ thuật và tuân thủ luật refusal_cause 82ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/hybrid-preview-contract.test.tsx > Hybrid Preview Contract v2 — 41 fixtures & F1–F6 > F5 & F6 — 25 fixture refusal-* và 4 fixture gate-* > F6: mọi fixture insufficient_specification với refusal_cause = UNKNOWN (hoặc vắng) không mời sửa đề và không hứa có mô phỏng; chỉ SOURCE mới mời bổ sung dữ liệu
+AssertionError: refusal-missing-underdetermined: expected '<section class="card"><span class="ey…' to contain 'CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN'
+
+Expected: "CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN"
+Received: "<section class="card"><span class="eyebrow">CHƯA ĐỦ DỮ KIỆN</span><p style="margin-top:var(--sp-sm)">Các giả thiết chưa xác định được vị trí điểm cần dựng.</p><dl class="refusal-facts"><div><dt>Dừng ở bước</dt><dd>Không xác định được</dd></div><div><dt>Loại vấn đề</dt><dd>CHƯA ĐỦ DỮ KIỆN</dd></div></dl><details><summary>Chi tiết chẩn đoán</summary><code>UNDERDETERMINED_POINT</code><p>Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình.</p></details></section>"
+
+ ❯ src/components/hybrid-preview-contract.test.tsx:478:29
+    476|         ).replace(/<!--.*?-->/g, "");
+    477|         // HFOI-F6: UNKNOWN ⇒ tiêu đề/nhãn đặt ở phía HỆ, không quy ch…
+    478|         expect(out, row.id).toContain("CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN");
+       |                             ^
+    479|         expect(out, row.id).toContain("hệ chưa xác định được đủ dữ kiệ…
+    480|         expect(out, row.id).not.toContain("đề chưa đủ dữ kiện");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL  src/components/hybrid-preview-contract.test.tsx > Hybrid Preview Contract v2 — 41 fixtures & F1–F6 > F5 & F6 — 25 fixture refusal-* và 4 fixture gate-* > F5/F6 qua store: loadUnsupported giữ nguyên trường có cấu trúc, tiêu đề/gợi ý theo failure_category + refusal_cause
+AssertionError: refusal-missing-underdetermined: expected 'CHƯA ĐỦ DỮ KIỆN' to be 'CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN' // Object.is equality
+
+Expected: "CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN"
+Received: "CHƯA ĐỦ DỮ KIỆN"
+
+ ❯ src/components/hybrid-preview-contract.test.tsx:528:39
+    526|         } else {
+    527|           expect(env.refusal_cause, row.id).toBe("UNKNOWN");
+    528|           expect(tieuDe(out), row.id).toBe("CHƯA XÁC ĐỊNH ĐỦ DỮ KIỆN");
+       |                                       ^
+    529|           expect(goiY(out), row.id).toBe(
+    530|             "Nếu đề thuộc dạng hệ dựng được và đã có đủ giả thiết, em …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL  src/components/hybrid-preview-contract.test.tsx > Hybrid Preview Contract v2 — 41 fixtures & F1–F6 > F5 & F6 — 25 fixture refusal-* và 4 fixture gate-* > toàn bộ 25 fixture refusal-* không lộ mã kỹ thuật và tuân thủ luật refusal_cause
+AssertionError: refusal-missing-underdetermined: expected '<section class="card"><span class="ey…' not to contain 'UNDERDETERMINED_POINT'
+
+Expected: "UNDERDETERMINED_POINT"
+Received: "<section class="card"><span class="eyebrow">CHƯA ĐỦ DỮ KIỆN</span><p style="margin-top:var(--sp-sm)">Các giả thiết chưa xác định được vị trí điểm cần dựng.</p><dl class="refusal-facts"><div><dt>Dừng ở bước</dt><dd>Không xác định được</dd></div><div><dt>Loại vấn đề</dt><dd>CHƯA ĐỦ DỮ KIỆN</dd></div></dl><details><summary>Chi tiết chẩn đoán</summary><code>UNDERDETERMINED_POINT</code><p>Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số liệu hay cách hiểu thay em, nên không dựng hình.</p></details></section>"
+
+ ❯ src/components/hybrid-preview-contract.test.tsx:546:33
+    544|         ).replace(/<!--.*?-->/g, "");
+    545|         expect(out, row.id).toContain(env.learner_reason);
+    546|         expect(out, row.id).not.toContain(env.reason_code);
+       |                                 ^
+    547|         expect(out, row.id).not.toContain(env.failure_category);
+    548|         expect(out, row.id).not.toContain("hybrid-route-d-preview");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed | 74 passed (75)
+      Tests  3 failed | 1172 passed (1175)
+   Start at  01:37:15
+   Duration  21.60s (transform 49.49s, setup 5.02s, import 73.00s, tests 54.31s, environment 35ms)
+
