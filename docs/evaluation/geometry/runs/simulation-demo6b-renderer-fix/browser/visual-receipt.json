@@ -1,0 +1,3591 @@
+{
+  "schema": "scene3d-browser-audit-receipt/1",
+  "scenesFile": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-demo6b-renderer-fix\\docs\\evaluation\\geometry\\runs\\simulation-demo6b-renderer-fix\\browser\\input-scenes.json",
+  "totalScenes": 9,
+  "totalConsoleErrors": 0,
+  "totalPageErrors": 0,
+  "consoleErrorMessages": [],
+  "pageErrorMessages": [],
+  "results": [
+    {
+      "id": "demo1-pyramid-derived-section",
+      "category": "Demo 1 — Pyramid + Derived Plane Section",
+      "served": true,
+      "stepCount": 20,
+      "bbox": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          2,
+          2,
+          2
+        ],
+        "count": 32
+      },
+      "subEntityCounts": {
+        "total": 61,
+        "topLevel": 15,
+        "faces": 11,
+        "segments": 8,
+        "points": 13
+      },
+      "treeCategories": [
+        {
+          "id": "khoi_S_ABCD",
+          "label": "Hình chóp S.ABCD",
+          "count": 5,
+          "childIds": [
+            "cat:Điểm",
+            "cat:Cạnh",
+            "cat:Mặt",
+            "cat:Đa giác",
+            "cat:Thiết diện"
+          ]
+        },
+        {
+          "id": "khoi_S_MI1I2I3",
+          "label": "Hình chóp cắt bởi (α) chứa đỉnh S",
+          "count": 4,
+          "childIds": [
+            "cat:Điểm",
+            "cat:Cạnh",
+            "cat:Mặt",
+            "cat:Đa giác"
+          ]
+        },
+        {
+          "id": "cat:Điểm",
+          "label": "Điểm",
+          "count": 5,
+          "childIds": [
+            "S",
+            "td_ask9::vertex:0",
+            "td_ask9::vertex:1",
+            "td_ask9::vertex:2",
+            "td_ask9::vertex:3"
+          ]
+        },
+        {
+          "id": "cat:Cạnh",
+          "label": "Cạnh",
+          "count": 12,
+          "childIds": [
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D",
+            "canh_ben_S_M",
+            "canh_ben_S_I1",
+            "canh_ben_S_I2",
+            "canh_ben_S_I3",
+            "section:td_ask9:edge:section:td_ask9:point:on:khoi_S_ABCD::edge:S-A:section:td_ask9:point:on:khoi_S_ABCD::edge:S-B",
+            "section:td_ask9:edge:section:td_ask9:point:on:khoi_S_ABCD::edge:S-B:section:td_ask9:point:on:khoi_S_ABCD::edge:S-C",
+            "section:td_ask9:edge:section:td_ask9:point:on:khoi_S_ABCD::edge:S-C:section:td_ask9:point:on:khoi_S_ABCD::edge:S-D",
+            "section:td_ask9:edge:section:td_ask9:point:on:khoi_S_ABCD::edge:S-A:section:td_ask9:point:on:khoi_S_ABCD::edge:S-D"
+          ]
+        },
+        {
+          "id": "cat:Mặt",
+          "label": "Mặt",
+          "count": 1,
+          "childIds": [
+            "td_ask9::face:0"
+          ]
+        },
+        {
+          "id": "cat:Mặt phẳng",
+          "label": "Mặt phẳng",
+          "count": 1,
+          "childIds": [
+            "mp_td_ask9"
+          ]
+        },
+        {
+          "id": "cat:Đại lượng",
+          "label": "Đại lượng",
+          "count": 3,
+          "childIds": [
+            "kq_ask9",
+            "kq_vcert10",
+            "kq_vcert11"
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "id": "S",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm S",
+          "depends": []
+        },
+        {
+          "id": "khoi_S_ABCD",
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "label": "Hình chóp S.ABCD",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ]
+        },
+        {
+          "id": "khoi_S_MI1I2I3",
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "label": "Hình chóp cắt bởi (α) chứa đỉnh S",
+          "depends": [
+            "I1",
+            "I2",
+            "I3",
+            "M",
+            "S"
+          ]
+        },
+        {
+          "id": "mp_td_ask9",
+          "type": "plane3",
+          "render": "surface",
+          "curved_kind": null,
+          "label": "(α)",
+          "depends": [
+            "I1",
+            "I2",
+            "M"
+          ]
+        },
+        {
+          "id": "kq_ask9",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Diện tích MI1I2I3",
+          "depends": [
+            "td_ask9"
+          ]
+        },
+        {
+          "id": "kq_vcert10",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Thể tích S.ABCD",
+          "depends": [
+            "khoi_S_ABCD",
+            "kq_ask9"
+          ]
+        },
+        {
+          "id": "kq_vcert11",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Thể tích S.MI1I2I3",
+          "depends": [
+            "khoi_S_MI1I2I3",
+            "kq_ask9"
+          ]
+        },
+        {
+          "id": "canh_ben_S_A",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SA",
+          "depends": [
+            "A",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_B",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SB",
+          "depends": [
+            "B",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_C",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SC",
+          "depends": [
+            "C",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_D",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SD",
+          "depends": [
+            "D",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_M",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SM",
+          "depends": [
+            "M",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_I1",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Đoạn nối S và giao điểm của SB và (α)",
+          "depends": [
+            "I1",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_I2",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Đoạn nối S và giao điểm của SC và (α)",
+          "depends": [
+            "I2",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_I3",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Đoạn nối S và giao điểm của SD và (α)",
+          "depends": [
+            "I3",
+            "S"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "semantic_kind": "EXPLANATION",
+          "object": null,
+          "learner_text": "Đặt các điểm đề cho vào không gian."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "day_ABCD",
+          "learner_text": "Dựng đáy ABCD."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "canh_ben",
+          "learner_text": "Dựng các cạnh bên SA, SB, SC, SD."
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "khoi_S_ABCD",
+          "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt)."
+        },
+        {
+          "step_index": 4,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "I1",
+          "learner_text": "Xác định giao điểm của SB và (α)."
+        },
+        {
+          "step_index": 5,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "I2",
+          "learner_text": "Xác định giao điểm của SC và (α)."
+        },
+        {
+          "step_index": 6,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "I3",
+          "learner_text": "Xác định giao điểm của SD và (α)."
+        },
+        {
+          "step_index": 7,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "M",
+          "learner_text": "Dựng M là trung điểm của đoạn AS."
+        },
+        {
+          "step_index": 8,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "day_MI1I2I3",
+          "learner_text": "Dựng đáy MI1I2I3."
+        },
+        {
+          "step_index": 9,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "canh_ben_2",
+          "learner_text": "Dựng các cạnh bên SM, SI1, SI2, SI3."
+        },
+        {
+          "step_index": 10,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "khoi_S_MI1I2I3",
+          "learner_text": "Dựng hình chóp cắt bởi (α) chứa đỉnh S (5 đỉnh, 5 mặt)."
+        },
+        {
+          "step_index": 11,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "mp_td_ask9",
+          "learner_text": "Dựng (α)."
+        },
+        {
+          "step_index": 12,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask9",
+          "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB."
+        },
+        {
+          "step_index": 13,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask9",
+          "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC."
+        },
+        {
+          "step_index": 14,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask9",
+          "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD."
+        },
+        {
+          "step_index": 15,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask9",
+          "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA."
+        },
+        {
+          "step_index": 16,
+          "action": "STEP",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask9",
+          "learner_text": "Thiết diện khép lại thành tứ giác: (α) cắt hình chóp S.ABCD."
+        },
+        {
+          "step_index": 17,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_ask9",
+          "learner_text": "Tính diện tích MI1I2I3: S(MI1I2I3) = 1."
+        },
+        {
+          "step_index": 18,
+          "action": "MEASURE",
+          "semantic_kind": "MEASUREMENT",
+          "object": "kq_vcert10",
+          "learner_text": "Thể tích S.ABCD bằng 8/3."
+        },
+        {
+          "step_index": 19,
+          "action": "MEASURE",
+          "semantic_kind": "MEASUREMENT",
+          "object": "kq_vcert11",
+          "learner_text": "Thể tích S.MI1I2I3 bằng 1/3."
+        }
+      ],
+      "ownPixelMap": {
+        "khoi_S_ABCD": {
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "ownPixels": 52372
+        },
+        "khoi_S_MI1I2I3": {
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "ownPixels": 9438
+        }
+      },
+      "ink": [
+        0,
+        0,
+        1232,
+        498
+      ],
+      "inkPixels": 520010,
+      "hues": {
+        "section": 2795,
+        "line": 72,
+        "highlight": 798
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 45633,
+        "zoomDiffPixels": 22298,
+        "panDiffPixels": 57402,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_S_ABCD",
+        "selectionDiffPixels": 14020,
+        "explodeDiffPixels": 53270,
+        "step0DiffPixels": 53065
+      },
+      "labelChecks": {
+        "labelCount": 6,
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "M"
+        ],
+        "labelCollisions": 0,
+        "uniqueLabelCoords": 6,
+        "labelsNotCollapsed": true
+      },
+      "depViolations": [],
+      "screenshots": {
+        "default": "demo1-pyramid-derived-section_default.png",
+        "orbit": "demo1-pyramid-derived-section_orbit.png",
+        "selected": "demo1-pyramid-derived-section_selected.png",
+        "exploded": "demo1-pyramid-derived-section_exploded.png",
+        "step0": "demo1-pyramid-derived-section_step0.png",
+        "explorer": "demo1-pyramid-derived-section_explorer.png"
+      },
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo2-unnamed-section-intersections",
+      "category": "Demo 2 — Unnamed Section Intersections (I1..I3)",
+      "served": true,
+      "stepCount": 20,
+      "bbox": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          2,
+          4,
+          3
+        ],
+        "count": 32
+      },
+      "subEntityCounts": {
+        "total": 61,
+        "topLevel": 15,
+        "faces": 11,
+        "segments": 8,
+        "points": 13
+      },
+      "treeCategories": [
+        {
+          "id": "khoi_S_ABCD",
+          "label": "Hình chóp S.ABCD",
+          "count": 5,
+          "childIds": [
+            "cat:Điểm",
+            "cat:Cạnh",
+            "cat:Mặt",
+            "cat:Đa giác",
+            "cat:Thiết diện"
+          ]
+        },
+        {
+          "id": "khoi_S_MI1I2I3",
+          "label": "Hình chóp cắt bởi (α) chứa đỉnh S",
+          "count": 4,
+          "childIds": [
+            "cat:Điểm",
+            "cat:Cạnh",
+            "cat:Mặt",
+            "cat:Đa giác"
+          ]
+        },
+        {
+          "id": "cat:Điểm",
+          "label": "Điểm",
+          "count": 5,
+          "childIds": [
+            "S",
+            "td_ask9::vertex:0",
+            "td_ask9::vertex:1",
+            "td_ask9::vertex:2",
+            "td_ask9::vertex:3"
+          ]
+        },
+        {
+          "id": "cat:Cạnh",
+          "label": "Cạnh",
+          "count": 12,
+          "childIds": [
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D",
+            "canh_ben_S_M",
+            "canh_ben_S_I1",
+            "canh_ben_S_I2",
+            "canh_ben_S_I3",
+            "section:td_ask9:edge:section:td_ask9:point:on:khoi_S_ABCD::edge:S-A:section:td_ask9:point:on:khoi_S_ABCD::edge:S-B",
+            "section:td_ask9:edge:section:td_ask9:point:on:khoi_S_ABCD::edge:S-B:section:td_ask9:point:on:khoi_S_ABCD::edge:S-C",
+            "section:td_ask9:edge:section:td_ask9:point:on:khoi_S_ABCD::edge:S-C:section:td_ask9:point:on:khoi_S_ABCD::edge:S-D",
+            "section:td_ask9:edge:section:td_ask9:point:on:khoi_S_ABCD::edge:S-A:section:td_ask9:point:on:khoi_S_ABCD::edge:S-D"
+          ]
+        },
+        {
+          "id": "cat:Mặt",
+          "label": "Mặt",
+          "count": 1,
+          "childIds": [
+            "td_ask9::face:0"
+          ]
+        },
+        {
+          "id": "cat:Mặt phẳng",
+          "label": "Mặt phẳng",
+          "count": 1,
+          "childIds": [
+            "mp_td_ask9"
+          ]
+        },
+        {
+          "id": "cat:Đại lượng",
+          "label": "Đại lượng",
+          "count": 3,
+          "childIds": [
+            "kq_ask9",
+            "kq_vcert10",
+            "kq_vcert11"
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "id": "S",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm S",
+          "depends": []
+        },
+        {
+          "id": "khoi_S_ABCD",
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "label": "Hình chóp S.ABCD",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ]
+        },
+        {
+          "id": "khoi_S_MI1I2I3",
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "label": "Hình chóp cắt bởi (α) chứa đỉnh S",
+          "depends": [
+            "I1",
+            "I2",
+            "I3",
+            "M",
+            "S"
+          ]
+        },
+        {
+          "id": "mp_td_ask9",
+          "type": "plane3",
+          "render": "surface",
+          "curved_kind": null,
+          "label": "(α)",
+          "depends": [
+            "I1",
+            "I2",
+            "M"
+          ]
+        },
+        {
+          "id": "kq_ask9",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Diện tích MI1I2I3",
+          "depends": [
+            "td_ask9"
+          ]
+        },
+        {
+          "id": "kq_vcert10",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Thể tích S.ABCD",
+          "depends": [
+            "khoi_S_ABCD",
+            "kq_ask9"
+          ]
+        },
+        {
+          "id": "kq_vcert11",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Thể tích S.MI1I2I3",
+          "depends": [
+            "khoi_S_MI1I2I3",
+            "kq_ask9"
+          ]
+        },
+        {
+          "id": "canh_ben_S_A",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SA",
+          "depends": [
+            "A",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_B",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SB",
+          "depends": [
+            "B",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_C",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SC",
+          "depends": [
+            "C",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_D",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SD",
+          "depends": [
+            "D",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_M",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SM",
+          "depends": [
+            "M",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_I1",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Đoạn nối S và giao điểm của SB và (α)",
+          "depends": [
+            "I1",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_I2",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Đoạn nối S và giao điểm của SC và (α)",
+          "depends": [
+            "I2",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_I3",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Đoạn nối S và giao điểm của SD và (α)",
+          "depends": [
+            "I3",
+            "S"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "semantic_kind": "EXPLANATION",
+          "object": null,
+          "learner_text": "Đặt các điểm đề cho vào không gian."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "day_ABCD",
+          "learner_text": "Dựng đáy ABCD."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "canh_ben",
+          "learner_text": "Dựng các cạnh bên SA, SB, SC, SD."
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "khoi_S_ABCD",
+          "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt)."
+        },
+        {
+          "step_index": 4,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "I1",
+          "learner_text": "Xác định giao điểm của SB và (α)."
+        },
+        {
+          "step_index": 5,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "I2",
+          "learner_text": "Xác định giao điểm của SC và (α)."
+        },
+        {
+          "step_index": 6,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "I3",
+          "learner_text": "Xác định giao điểm của SD và (α)."
+        },
+        {
+          "step_index": 7,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "M",
+          "learner_text": "Dựng M: điểm chia đoạn nối S và A."
+        },
+        {
+          "step_index": 8,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "day_MI1I2I3",
+          "learner_text": "Dựng đáy MI1I2I3."
+        },
+        {
+          "step_index": 9,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "canh_ben_2",
+          "learner_text": "Dựng các cạnh bên SM, SI1, SI2, SI3."
+        },
+        {
+          "step_index": 10,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "khoi_S_MI1I2I3",
+          "learner_text": "Dựng hình chóp cắt bởi (α) chứa đỉnh S (5 đỉnh, 5 mặt)."
+        },
+        {
+          "step_index": 11,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "mp_td_ask9",
+          "learner_text": "Dựng (α)."
+        },
+        {
+          "step_index": 12,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask9",
+          "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB."
+        },
+        {
+          "step_index": 13,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask9",
+          "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC."
+        },
+        {
+          "step_index": 14,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask9",
+          "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD."
+        },
+        {
+          "step_index": 15,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask9",
+          "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA."
+        },
+        {
+          "step_index": 16,
+          "action": "STEP",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask9",
+          "learner_text": "Thiết diện khép lại thành tứ giác: (α) cắt hình chóp S.ABCD."
+        },
+        {
+          "step_index": 17,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_ask9",
+          "learner_text": "Tính diện tích MI1I2I3: S(MI1I2I3) = 8/9."
+        },
+        {
+          "step_index": 18,
+          "action": "MEASURE",
+          "semantic_kind": "MEASUREMENT",
+          "object": "kq_vcert10",
+          "learner_text": "Thể tích S.ABCD bằng 8."
+        },
+        {
+          "step_index": 19,
+          "action": "MEASURE",
+          "semantic_kind": "MEASUREMENT",
+          "object": "kq_vcert11",
+          "learner_text": "Thể tích S.MI1I2I3 bằng 8/27."
+        }
+      ],
+      "ownPixelMap": {
+        "khoi_S_ABCD": {
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "ownPixels": 43147
+        },
+        "khoi_S_MI1I2I3": {
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "ownPixels": 3970
+        }
+      },
+      "ink": [
+        0,
+        0,
+        1232,
+        498
+      ],
+      "inkPixels": 519978,
+      "hues": {
+        "section": 1567,
+        "line": 28,
+        "highlight": 759
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 26406,
+        "zoomDiffPixels": 13224,
+        "panDiffPixels": 42418,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_S_ABCD",
+        "selectionDiffPixels": 8281,
+        "explodeDiffPixels": 40892,
+        "step0DiffPixels": 43672
+      },
+      "labelChecks": {
+        "labelCount": 6,
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "M"
+        ],
+        "labelCollisions": 0,
+        "uniqueLabelCoords": 6,
+        "labelsNotCollapsed": true
+      },
+      "depViolations": [],
+      "screenshots": {
+        "default": "demo2-unnamed-section-intersections_default.png",
+        "orbit": "demo2-unnamed-section-intersections_orbit.png",
+        "selected": "demo2-unnamed-section-intersections_selected.png",
+        "exploded": "demo2-unnamed-section-intersections_exploded.png",
+        "step0": "demo2-unnamed-section-intersections_step0.png",
+        "explorer": "demo2-unnamed-section-intersections_explorer.png"
+      },
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo3-multi-solid-shared-geometry",
+      "category": "Demo 3 — Multi-Solid Shared Geometry (Prism + Pyramid)",
+      "served": true,
+      "stepCount": 9,
+      "bbox": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          2,
+          2,
+          6
+        ],
+        "count": 19
+      },
+      "subEntityCounts": {
+        "total": 37,
+        "topLevel": 15,
+        "faces": 8,
+        "segments": 6,
+        "points": 6
+      },
+      "treeCategories": [
+        {
+          "id": "khoi_D1_ABC",
+          "label": "Hình chóp D1.ABC",
+          "count": 3,
+          "childIds": [
+            "cat:Điểm",
+            "cat:Cạnh",
+            "cat:Mặt"
+          ]
+        },
+        {
+          "id": "khoi_S_ABC",
+          "label": "Hình chóp S.ABC",
+          "count": 3,
+          "childIds": [
+            "cat:Điểm",
+            "cat:Cạnh",
+            "cat:Mặt"
+          ]
+        },
+        {
+          "id": "cat:Điểm",
+          "label": "Điểm",
+          "count": 4,
+          "childIds": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "id": "cat:Cạnh",
+          "label": "Cạnh",
+          "count": 6,
+          "childIds": [
+            "canh_ben_D1_A",
+            "canh_ben_D1_B",
+            "canh_ben_D1_C",
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C"
+          ]
+        },
+        {
+          "id": "cat:Đa giác",
+          "label": "Đa giác",
+          "count": 1,
+          "childIds": [
+            "day_ABC"
+          ]
+        },
+        {
+          "id": "cat:Đại lượng",
+          "label": "Đại lượng",
+          "count": 2,
+          "childIds": [
+            "kq_ask4",
+            "kq_ask3"
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "id": "A",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm A",
+          "depends": []
+        },
+        {
+          "id": "B",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm B",
+          "depends": []
+        },
+        {
+          "id": "C",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm C",
+          "depends": []
+        },
+        {
+          "id": "khoi_D1_ABC",
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "label": "Hình chóp D1.ABC",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D1"
+          ]
+        },
+        {
+          "id": "khoi_S_ABC",
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "label": "Hình chóp S.ABC",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "S"
+          ]
+        },
+        {
+          "id": "D",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "D",
+          "depends": [
+            "A",
+            "S"
+          ]
+        },
+        {
+          "id": "kq_ask4",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Thể tích D1.ABC",
+          "depends": [
+            "khoi_D1_ABC"
+          ]
+        },
+        {
+          "id": "kq_ask3",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Thể tích S.ABC",
+          "depends": [
+            "khoi_S_ABC"
+          ]
+        },
+        {
+          "id": "day_ABC",
+          "type": "polygon3",
+          "render": "polygon",
+          "curved_kind": null,
+          "label": "Đáy ABC",
+          "depends": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        {
+          "id": "canh_ben_D1_A",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên D1A",
+          "depends": [
+            "A",
+            "D1"
+          ]
+        },
+        {
+          "id": "canh_ben_D1_B",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên D1B",
+          "depends": [
+            "B",
+            "D1"
+          ]
+        },
+        {
+          "id": "canh_ben_D1_C",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên D1C",
+          "depends": [
+            "C",
+            "D1"
+          ]
+        },
+        {
+          "id": "canh_ben_S_A",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SA",
+          "depends": [
+            "A",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_B",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SB",
+          "depends": [
+            "B",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_C",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SC",
+          "depends": [
+            "C",
+            "S"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "semantic_kind": "EXPLANATION",
+          "object": null,
+          "learner_text": "Đặt các điểm đề cho vào không gian."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "day_ABC",
+          "learner_text": "Dựng đáy ABC."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "canh_ben",
+          "learner_text": "Dựng các cạnh bên D1A, D1B, D1C."
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "khoi_D1_ABC",
+          "learner_text": "Dựng hình chóp D1.ABC (4 đỉnh, 4 mặt)."
+        },
+        {
+          "step_index": 4,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "canh_ben_2",
+          "learner_text": "Dựng các cạnh bên SA, SB, SC."
+        },
+        {
+          "step_index": 5,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "khoi_S_ABC",
+          "learner_text": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+        },
+        {
+          "step_index": 6,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "D",
+          "learner_text": "Dựng D là trung điểm của đoạn AS."
+        },
+        {
+          "step_index": 7,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_ask4",
+          "learner_text": "Thể tích D1.ABC bằng 4/3."
+        },
+        {
+          "step_index": 8,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_ask3",
+          "learner_text": "Thể tích S.ABC bằng 4."
+        }
+      ],
+      "ownPixelMap": {
+        "khoi_D1_ABC": {
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "ownPixels": 544
+        },
+        "khoi_S_ABC": {
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "ownPixels": 16135
+        },
+        "day_ABC": {
+          "type": "polygon3",
+          "render": "polygon",
+          "curved_kind": null,
+          "ownPixels": 423
+        }
+      },
+      "ink": [
+        0,
+        0,
+        1232,
+        498
+      ],
+      "inkPixels": 519237,
+      "hues": {
+        "section": 319,
+        "line": 19,
+        "highlight": 515
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 20787,
+        "zoomDiffPixels": 6297,
+        "panDiffPixels": 19658,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_D1_ABC",
+        "selectionDiffPixels": 23128,
+        "explodeDiffPixels": 33171,
+        "step0DiffPixels": 23155
+      },
+      "labelChecks": {
+        "labelCount": 6,
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D(pyr2)",
+          "S",
+          "D"
+        ],
+        "labelCollisions": 0,
+        "uniqueLabelCoords": 6,
+        "labelsNotCollapsed": true
+      },
+      "depViolations": [],
+      "screenshots": {
+        "default": "demo3-multi-solid-shared-geometry_default.png",
+        "orbit": "demo3-multi-solid-shared-geometry_orbit.png",
+        "selected": "demo3-multi-solid-shared-geometry_selected.png",
+        "exploded": "demo3-multi-solid-shared-geometry_exploded.png",
+        "step0": "demo3-multi-solid-shared-geometry_step0.png",
+        "explorer": "demo3-multi-solid-shared-geometry_explorer.png"
+      },
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo4-step-by-step-construction",
+      "category": "Demo 4 — Step-by-Step Construction Timeline",
+      "served": true,
+      "stepCount": 14,
+      "bbox": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          3,
+          4,
+          3
+        ],
+        "count": 18
+      },
+      "subEntityCounts": {
+        "total": 33,
+        "topLevel": 10,
+        "faces": 5,
+        "segments": 3,
+        "points": 10
+      },
+      "treeCategories": [
+        {
+          "id": "khoi_S_ABC",
+          "label": "Hình chóp S.ABC",
+          "count": 5,
+          "childIds": [
+            "cat:Điểm",
+            "cat:Cạnh",
+            "cat:Mặt",
+            "cat:Đa giác",
+            "cat:Thiết diện"
+          ]
+        },
+        {
+          "id": "cat:Điểm",
+          "label": "Điểm",
+          "count": 6,
+          "childIds": [
+            "I1",
+            "I2",
+            "M",
+            "td_ask10::vertex:0",
+            "td_ask10::vertex:1",
+            "td_ask10::vertex:2"
+          ]
+        },
+        {
+          "id": "cat:Cạnh",
+          "label": "Cạnh",
+          "count": 6,
+          "childIds": [
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "section:td_ask10:edge:section:td_ask10:point:on:khoi_S_ABC::edge:S-A:section:td_ask10:point:on:khoi_S_ABC::edge:S-B",
+            "section:td_ask10:edge:section:td_ask10:point:on:khoi_S_ABC::edge:S-B:section:td_ask10:point:on:khoi_S_ABC::edge:S-C",
+            "section:td_ask10:edge:section:td_ask10:point:on:khoi_S_ABC::edge:S-A:section:td_ask10:point:on:khoi_S_ABC::edge:S-C"
+          ]
+        },
+        {
+          "id": "cat:Mặt",
+          "label": "Mặt",
+          "count": 1,
+          "childIds": [
+            "td_ask10::face:0"
+          ]
+        },
+        {
+          "id": "cat:Mặt phẳng",
+          "label": "Mặt phẳng",
+          "count": 1,
+          "childIds": [
+            "mp_td_ask10"
+          ]
+        },
+        {
+          "id": "cat:Đại lượng",
+          "label": "Đại lượng",
+          "count": 2,
+          "childIds": [
+            "kq_ask10",
+            "kq_ask9"
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "id": "khoi_S_ABC",
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "label": "Hình chóp S.ABC",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "S"
+          ]
+        },
+        {
+          "id": "I1",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Giao điểm của SB và (α)",
+          "depends": [
+            "B",
+            "S"
+          ]
+        },
+        {
+          "id": "I2",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Giao điểm của SC và (α)",
+          "depends": [
+            "C",
+            "S"
+          ]
+        },
+        {
+          "id": "M",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "M",
+          "depends": [
+            "A",
+            "S"
+          ]
+        },
+        {
+          "id": "mp_td_ask10",
+          "type": "plane3",
+          "render": "surface",
+          "curved_kind": null,
+          "label": "(α)",
+          "depends": [
+            "I1",
+            "I2",
+            "M"
+          ]
+        },
+        {
+          "id": "kq_ask10",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Diện tích MI1I2",
+          "depends": [
+            "td_ask10"
+          ]
+        },
+        {
+          "id": "kq_ask9",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Thể tích S.ABC",
+          "depends": [
+            "khoi_S_ABC",
+            "kq_ask10"
+          ]
+        },
+        {
+          "id": "canh_ben_S_A",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SA",
+          "depends": [
+            "A",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_B",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SB",
+          "depends": [
+            "B",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_C",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SC",
+          "depends": [
+            "C",
+            "S"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "semantic_kind": "EXPLANATION",
+          "object": null,
+          "learner_text": "Đặt các điểm đề cho vào không gian."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "day_ABC",
+          "learner_text": "Dựng đáy ABC."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "canh_ben",
+          "learner_text": "Dựng các cạnh bên SA, SB, SC."
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "khoi_S_ABC",
+          "learner_text": "Dựng hình chóp S.ABC (4 đỉnh, 4 mặt)."
+        },
+        {
+          "step_index": 4,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "I1",
+          "learner_text": "Xác định giao điểm của SB và (α)."
+        },
+        {
+          "step_index": 5,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "I2",
+          "learner_text": "Xác định giao điểm của SC và (α)."
+        },
+        {
+          "step_index": 6,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "M",
+          "learner_text": "Dựng M là trung điểm của đoạn AS."
+        },
+        {
+          "step_index": 7,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "mp_td_ask10",
+          "learner_text": "Dựng (α)."
+        },
+        {
+          "step_index": 8,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask10",
+          "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB."
+        },
+        {
+          "step_index": 9,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask10",
+          "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC."
+        },
+        {
+          "step_index": 10,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask10",
+          "learner_text": "Trên mặt SCA, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SA."
+        },
+        {
+          "step_index": 11,
+          "action": "STEP",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_ask10",
+          "learner_text": "Thiết diện khép lại thành tam giác: (α) cắt hình chóp S.ABC."
+        },
+        {
+          "step_index": 12,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_ask10",
+          "learner_text": "Tính diện tích MI1I2: S(MI1I2) = 3/2."
+        },
+        {
+          "step_index": 13,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_ask9",
+          "learner_text": "Thể tích S.ABC bằng 6."
+        }
+      ],
+      "ownPixelMap": {
+        "khoi_S_ABC": {
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "ownPixels": 60520
+        }
+      },
+      "ink": [
+        0,
+        0,
+        1232,
+        498
+      ],
+      "inkPixels": 520019,
+      "hues": {
+        "section": 3813,
+        "line": 39,
+        "highlight": 568
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 61037,
+        "zoomDiffPixels": 21310,
+        "panDiffPixels": 38843,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_S_ABC",
+        "selectionDiffPixels": 8706,
+        "explodeDiffPixels": 75420,
+        "step0DiffPixels": 60934
+      },
+      "labelChecks": {
+        "labelCount": 5,
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "S",
+          "M"
+        ],
+        "labelCollisions": 0,
+        "uniqueLabelCoords": 5,
+        "labelsNotCollapsed": true
+      },
+      "depViolations": [],
+      "screenshots": {
+        "default": "demo4-step-by-step-construction_default.png",
+        "orbit": "demo4-step-by-step-construction_orbit.png",
+        "selected": "demo4-step-by-step-construction_selected.png",
+        "exploded": "demo4-step-by-step-construction_exploded.png",
+        "step0": "demo4-step-by-step-construction_step0.png",
+        "explorer": "demo4-step-by-step-construction_explorer.png"
+      },
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo5-selection-and-highlighting",
+      "category": "Demo 5 — Selection & Highlighting",
+      "served": true,
+      "stepCount": 18,
+      "bbox": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          2,
+          2,
+          4
+        ],
+        "count": 30
+      },
+      "subEntityCounts": {
+        "total": 60,
+        "topLevel": 22,
+        "faces": 11,
+        "segments": 8,
+        "points": 14
+      },
+      "treeCategories": [
+        {
+          "id": "khoi_S_ABCD",
+          "label": "Hình chóp S.ABCD",
+          "count": 4,
+          "childIds": [
+            "cat:Điểm",
+            "cat:Cạnh",
+            "cat:Mặt",
+            "cat:Thiết diện"
+          ]
+        },
+        {
+          "id": "khoi_T_ABCD",
+          "label": "Hình chóp T.ABCD",
+          "count": 3,
+          "childIds": [
+            "cat:Điểm",
+            "cat:Cạnh",
+            "cat:Mặt"
+          ]
+        },
+        {
+          "id": "cat:Điểm",
+          "label": "Điểm",
+          "count": 12,
+          "childIds": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "I1",
+            "I2",
+            "I3",
+            "M",
+            "td_sec3::vertex:0",
+            "td_sec3::vertex:1",
+            "td_sec3::vertex:2",
+            "td_sec3::vertex:3"
+          ]
+        },
+        {
+          "id": "cat:Cạnh",
+          "label": "Cạnh",
+          "count": 12,
+          "childIds": [
+            "canh_ben_S_A",
+            "canh_ben_S_B",
+            "canh_ben_S_C",
+            "canh_ben_S_D",
+            "canh_ben_T_A",
+            "canh_ben_T_B",
+            "canh_ben_T_C",
+            "canh_ben_T_D",
+            "section:td_sec3:edge:section:td_sec3:point:on:khoi_S_ABCD::edge:S-A:section:td_sec3:point:on:khoi_S_ABCD::edge:S-B",
+            "section:td_sec3:edge:section:td_sec3:point:on:khoi_S_ABCD::edge:S-B:section:td_sec3:point:on:khoi_S_ABCD::edge:S-C",
+            "section:td_sec3:edge:section:td_sec3:point:on:khoi_S_ABCD::edge:S-C:section:td_sec3:point:on:khoi_S_ABCD::edge:S-D",
+            "section:td_sec3:edge:section:td_sec3:point:on:khoi_S_ABCD::edge:S-A:section:td_sec3:point:on:khoi_S_ABCD::edge:S-D"
+          ]
+        },
+        {
+          "id": "cat:Mặt",
+          "label": "Mặt",
+          "count": 1,
+          "childIds": [
+            "td_sec3::face:0"
+          ]
+        },
+        {
+          "id": "cat:Mặt phẳng",
+          "label": "Mặt phẳng",
+          "count": 1,
+          "childIds": [
+            "mp_td_sec3"
+          ]
+        },
+        {
+          "id": "cat:Đa giác",
+          "label": "Đa giác",
+          "count": 1,
+          "childIds": [
+            "day_ABCD"
+          ]
+        },
+        {
+          "id": "cat:Đại lượng",
+          "label": "Đại lượng",
+          "count": 2,
+          "childIds": [
+            "kq_vcert9",
+            "kq_vcert10"
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "id": "A",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm A",
+          "depends": []
+        },
+        {
+          "id": "B",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm B",
+          "depends": []
+        },
+        {
+          "id": "C",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm C",
+          "depends": []
+        },
+        {
+          "id": "D",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm D",
+          "depends": []
+        },
+        {
+          "id": "khoi_S_ABCD",
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "label": "Hình chóp S.ABCD",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ]
+        },
+        {
+          "id": "khoi_T_ABCD",
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "label": "Hình chóp T.ABCD",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "T"
+          ]
+        },
+        {
+          "id": "I1",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Giao điểm của SB và (α)",
+          "depends": [
+            "B",
+            "S"
+          ]
+        },
+        {
+          "id": "I2",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Giao điểm của SC và (α)",
+          "depends": [
+            "C",
+            "S"
+          ]
+        },
+        {
+          "id": "I3",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Giao điểm của SD và (α)",
+          "depends": [
+            "D",
+            "S"
+          ]
+        },
+        {
+          "id": "M",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "M",
+          "depends": [
+            "A",
+            "S"
+          ]
+        },
+        {
+          "id": "mp_td_sec3",
+          "type": "plane3",
+          "render": "surface",
+          "curved_kind": null,
+          "label": "(α)",
+          "depends": [
+            "I1",
+            "I2",
+            "M"
+          ]
+        },
+        {
+          "id": "kq_vcert9",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Thể tích S.ABCD",
+          "depends": [
+            "khoi_S_ABCD"
+          ]
+        },
+        {
+          "id": "kq_vcert10",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Thể tích T.ABCD",
+          "depends": [
+            "khoi_T_ABCD"
+          ]
+        },
+        {
+          "id": "day_ABCD",
+          "type": "polygon3",
+          "render": "polygon",
+          "curved_kind": null,
+          "label": "Đáy ABCD",
+          "depends": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        },
+        {
+          "id": "canh_ben_S_A",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SA",
+          "depends": [
+            "A",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_B",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SB",
+          "depends": [
+            "B",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_C",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SC",
+          "depends": [
+            "C",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_S_D",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên SD",
+          "depends": [
+            "D",
+            "S"
+          ]
+        },
+        {
+          "id": "canh_ben_T_A",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên TA",
+          "depends": [
+            "A",
+            "T"
+          ]
+        },
+        {
+          "id": "canh_ben_T_B",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên TB",
+          "depends": [
+            "B",
+            "T"
+          ]
+        },
+        {
+          "id": "canh_ben_T_C",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên TC",
+          "depends": [
+            "C",
+            "T"
+          ]
+        },
+        {
+          "id": "canh_ben_T_D",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Cạnh bên TD",
+          "depends": [
+            "D",
+            "T"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "semantic_kind": "EXPLANATION",
+          "object": null,
+          "learner_text": "Đặt các điểm đề cho vào không gian."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "day_ABCD",
+          "learner_text": "Dựng đáy ABCD."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "canh_ben",
+          "learner_text": "Dựng các cạnh bên SA, SB, SC, SD."
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "khoi_S_ABCD",
+          "learner_text": "Dựng hình chóp S.ABCD (5 đỉnh, 5 mặt)."
+        },
+        {
+          "step_index": 4,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "canh_ben_2",
+          "learner_text": "Dựng các cạnh bên TA, TB, TC, TD."
+        },
+        {
+          "step_index": 5,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "khoi_T_ABCD",
+          "learner_text": "Dựng hình chóp T.ABCD (5 đỉnh, 5 mặt)."
+        },
+        {
+          "step_index": 6,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "I1",
+          "learner_text": "Xác định giao điểm của SB và (α)."
+        },
+        {
+          "step_index": 7,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "I2",
+          "learner_text": "Xác định giao điểm của SC và (α)."
+        },
+        {
+          "step_index": 8,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "I3",
+          "learner_text": "Xác định giao điểm của SD và (α)."
+        },
+        {
+          "step_index": 9,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "M",
+          "learner_text": "Dựng M là trung điểm của đoạn AS."
+        },
+        {
+          "step_index": 10,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "mp_td_sec3",
+          "learner_text": "Dựng (α)."
+        },
+        {
+          "step_index": 11,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_sec3",
+          "learner_text": "Trên mặt SAB, nối giao điểm thuộc cạnh SA với giao điểm thuộc cạnh SB."
+        },
+        {
+          "step_index": 12,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_sec3",
+          "learner_text": "Trên mặt SBC, nối giao điểm thuộc cạnh SB với giao điểm thuộc cạnh SC."
+        },
+        {
+          "step_index": 13,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_sec3",
+          "learner_text": "Trên mặt SCD, nối giao điểm thuộc cạnh SC với giao điểm thuộc cạnh SD."
+        },
+        {
+          "step_index": 14,
+          "action": "EXTEND",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_sec3",
+          "learner_text": "Trên mặt SDA, nối giao điểm thuộc cạnh SD với giao điểm thuộc cạnh SA."
+        },
+        {
+          "step_index": 15,
+          "action": "STEP",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_sec3",
+          "learner_text": "Thiết diện khép lại thành tứ giác: (α) cắt hình chóp S.ABCD."
+        },
+        {
+          "step_index": 16,
+          "action": "MEASURE",
+          "semantic_kind": "MEASUREMENT",
+          "object": "kq_vcert9",
+          "learner_text": "Thể tích S.ABCD bằng 8/3."
+        },
+        {
+          "step_index": 17,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_vcert10",
+          "learner_text": "Thể tích T.ABCD bằng 16/3."
+        }
+      ],
+      "ownPixelMap": {
+        "khoi_S_ABCD": {
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "ownPixels": 3831
+        },
+        "khoi_T_ABCD": {
+          "type": "solid",
+          "render": "mesh",
+          "curved_kind": null,
+          "ownPixels": 18339
+        },
+        "day_ABCD": {
+          "type": "polygon3",
+          "render": "polygon",
+          "curved_kind": null,
+          "ownPixels": 652
+        }
+      },
+      "ink": [
+        0,
+        0,
+        1232,
+        498
+      ],
+      "inkPixels": 519690,
+      "hues": {
+        "section": 2378,
+        "line": 57,
+        "highlight": 725
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 36483,
+        "zoomDiffPixels": 17445,
+        "panDiffPixels": 59917,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_S_ABCD",
+        "selectionDiffPixels": 30842,
+        "explodeDiffPixels": 38012,
+        "step0DiffPixels": 32810
+      },
+      "labelChecks": {
+        "labelCount": 7,
+        "labels": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "S",
+          "T",
+          "M"
+        ],
+        "labelCollisions": 0,
+        "uniqueLabelCoords": 7,
+        "labelsNotCollapsed": true
+      },
+      "depViolations": [],
+      "screenshots": {
+        "default": "demo5-selection-and-highlighting_default.png",
+        "orbit": "demo5-selection-and-highlighting_orbit.png",
+        "selected": "demo5-selection-and-highlighting_selected.png",
+        "exploded": "demo5-selection-and-highlighting_exploded.png",
+        "step0": "demo5-selection-and-highlighting_step0.png",
+        "explorer": "demo5-selection-and-highlighting_explorer.png"
+      },
+      "consoleErrors": 0
+    },
+    {
+      "axialSectionChecks": {
+        "objectId": "td_sec_axial",
+        "defaultOwnPixels": 7468,
+        "orbitOwnPixels": 4981,
+        "selectAxialDiffPixels": 39801,
+        "isolateAxialInkPixels": 520548,
+        "isolateAxialSectionHuePixels": 719,
+        "isolateAxialDiffPixels": 39037,
+        "screenshots": {
+          "selectedAxial": "demo6a-curved-cylinder-sections_selected_td_sec_axial.png",
+          "isolatedAxial": "demo6a-curved-cylinder-sections_isolated_td_sec_axial.png"
+        }
+      },
+      "id": "demo6a-curved-cylinder-sections",
+      "category": "Demo 6A — Curved Cylinder + Parallel Circle & Axial Section",
+      "served": true,
+      "stepCount": 16,
+      "bbox": {
+        "min": [
+          -2,
+          -2,
+          0
+        ],
+        "max": [
+          2,
+          2,
+          3
+        ],
+        "count": 24
+      },
+      "subEntityCounts": {
+        "total": 22,
+        "topLevel": 22,
+        "faces": 0,
+        "segments": 2,
+        "points": 6
+      },
+      "treeCategories": [
+        {
+          "id": "khoi_cyl",
+          "label": "Hình trụ tròn xoay O.O' tâm O",
+          "count": 0,
+          "childIds": []
+        },
+        {
+          "id": "cat:Điểm",
+          "label": "Điểm",
+          "count": 6,
+          "childIds": [
+            "O",
+            "O_prime",
+            "A",
+            "B",
+            "A_prime_sec_axial",
+            "B_prime_sec_axial"
+          ]
+        },
+        {
+          "id": "cat:Cạnh",
+          "label": "Cạnh",
+          "count": 2,
+          "childIds": [
+            "truc_O_O_prime",
+            "ban_kinh_O_A"
+          ]
+        },
+        {
+          "id": "cat:Mặt phẳng",
+          "label": "Mặt phẳng",
+          "count": 3,
+          "childIds": [
+            "mp_day_cyl",
+            "mp_day_tren_cyl",
+            "mp_sec_parallel"
+          ]
+        },
+        {
+          "id": "cat:Đa giác",
+          "label": "Đa giác",
+          "count": 1,
+          "childIds": [
+            "td_sec_axial"
+          ]
+        },
+        {
+          "id": "cat:Thiết diện",
+          "label": "Thiết diện",
+          "count": 3,
+          "childIds": [
+            "duong_tron_day_cyl",
+            "duong_tron_day_tren_cyl",
+            "td_sec_parallel"
+          ]
+        },
+        {
+          "id": "cat:Đại lượng",
+          "label": "Đại lượng",
+          "count": 6,
+          "childIds": [
+            "R",
+            "h",
+            "kq_m_vol",
+            "kq_m_lat",
+            "kq_m_par_area",
+            "kq_m_ax_area"
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "id": "O",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm O",
+          "depends": []
+        },
+        {
+          "id": "R",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Đại lượng đo",
+          "depends": []
+        },
+        {
+          "id": "h",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Đại lượng đo",
+          "depends": []
+        },
+        {
+          "id": "O_prime",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm O′",
+          "depends": []
+        },
+        {
+          "id": "A",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm A",
+          "depends": []
+        },
+        {
+          "id": "khoi_cyl",
+          "type": "curved_solid",
+          "render": "curved_solid",
+          "curved_kind": "cylinder",
+          "label": "Hình trụ tròn xoay O.O' tâm O",
+          "depends": [
+            "A",
+            "O",
+            "O_prime"
+          ]
+        },
+        {
+          "id": "mp_day_cyl",
+          "type": "plane3",
+          "render": "surface",
+          "curved_kind": null,
+          "label": "Mặt phẳng đáy (O)",
+          "depends": []
+        },
+        {
+          "id": "duong_tron_day_cyl",
+          "type": "circle3",
+          "render": "circle",
+          "curved_kind": null,
+          "label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (O)",
+          "depends": [
+            "khoi_cyl",
+            "mp_day_cyl"
+          ]
+        },
+        {
+          "id": "mp_day_tren_cyl",
+          "type": "plane3",
+          "render": "surface",
+          "curved_kind": null,
+          "label": "Mặt phẳng đáy trên (O')",
+          "depends": []
+        },
+        {
+          "id": "duong_tron_day_tren_cyl",
+          "type": "circle3",
+          "render": "circle",
+          "curved_kind": null,
+          "label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và «Mặt phẳng cho bằng phương trình»",
+          "depends": [
+            "khoi_cyl",
+            "mp_day_tren_cyl"
+          ]
+        },
+        {
+          "id": "truc_O_O_prime",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Trục OO'",
+          "depends": [
+            "O",
+            "O_prime"
+          ]
+        },
+        {
+          "id": "ban_kinh_O_A",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Bán kính đáy OA",
+          "depends": [
+            "A",
+            "O"
+          ]
+        },
+        {
+          "id": "mp_sec_parallel",
+          "type": "plane3",
+          "render": "surface",
+          "curved_kind": null,
+          "label": "Mặt phẳng (α)",
+          "depends": []
+        },
+        {
+          "id": "td_sec_parallel",
+          "type": "circle3",
+          "render": "circle",
+          "curved_kind": null,
+          "label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (α)",
+          "depends": [
+            "khoi_cyl",
+            "mp_sec_parallel"
+          ]
+        },
+        {
+          "id": "B",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "B",
+          "depends": [
+            "A",
+            "O"
+          ]
+        },
+        {
+          "id": "td_sec_axial",
+          "type": "polygon3",
+          "render": "polygon",
+          "curved_kind": null,
+          "label": "Thiết diện qua trục hình trụ",
+          "depends": [
+            "A",
+            "A_prime_sec_axial",
+            "B",
+            "B_prime_sec_axial"
+          ]
+        },
+        {
+          "id": "A_prime_sec_axial",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm",
+          "depends": []
+        },
+        {
+          "id": "B_prime_sec_axial",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm",
+          "depends": []
+        },
+        {
+          "id": "kq_m_vol",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "depends": [
+            "khoi_cyl"
+          ]
+        },
+        {
+          "id": "kq_m_lat",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "depends": [
+            "khoi_cyl"
+          ]
+        },
+        {
+          "id": "kq_m_par_area",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Diện tích «Đường tròn giao của khối cong và (α)»",
+          "depends": [
+            "td_sec_parallel"
+          ]
+        },
+        {
+          "id": "kq_m_ax_area",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Diện tích «Đa giác A, B, điểm, điểm»",
+          "depends": [
+            "td_sec_axial"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "semantic_kind": "EXPLANATION",
+          "object": null,
+          "learner_text": "Dữ kiện đề cho: Đại lượng đo = 2, Đại lượng đo = 3."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "khoi_cyl",
+          "learner_text": "Dựng hình trụ tròn xoay O.O' tâm O."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "mp_day_cyl",
+          "learner_text": "Dựng mặt phẳng đáy (O)."
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "duong_tron_day_cyl",
+          "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (O)."
+        },
+        {
+          "step_index": 4,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "mp_day_tren_cyl",
+          "learner_text": "Dựng mặt phẳng đáy trên (O')."
+        },
+        {
+          "step_index": 5,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "duong_tron_day_tren_cyl",
+          "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và «Mặt phẳng cho bằng phương trình»."
+        },
+        {
+          "step_index": 6,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "truc_O_O_prime",
+          "learner_text": "Dựng trục OO'."
+        },
+        {
+          "step_index": 7,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "ban_kinh_O_A",
+          "learner_text": "Dựng bán kính đáy OA."
+        },
+        {
+          "step_index": 8,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "mp_sec_parallel",
+          "learner_text": "Dựng mặt phẳng (α)."
+        },
+        {
+          "step_index": 9,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_sec_parallel",
+          "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (α)."
+        },
+        {
+          "step_index": 10,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "B",
+          "learner_text": "Dựng B."
+        },
+        {
+          "step_index": 11,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_sec_axial",
+          "learner_text": "Dựng thiết diện qua trục hình trụ."
+        },
+        {
+          "step_index": 12,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_m_vol",
+          "learner_text": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 12π."
+        },
+        {
+          "step_index": 13,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_m_lat",
+          "learner_text": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 12π."
+        },
+        {
+          "step_index": 14,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_m_par_area",
+          "learner_text": "Diện tích «Đường tròn giao của khối cong và (α)» bằng 4π."
+        },
+        {
+          "step_index": 15,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_m_ax_area",
+          "learner_text": "Diện tích «Đa giác A, B, điểm, điểm» bằng 12."
+        }
+      ],
+      "ownPixelMap": {
+        "khoi_cyl": {
+          "type": "curved_solid",
+          "render": "curved_solid",
+          "curved_kind": "cylinder",
+          "ownPixels": 36685
+        },
+        "duong_tron_day_cyl": {
+          "type": "circle3",
+          "render": "circle",
+          "curved_kind": null,
+          "ownPixels": 27322
+        },
+        "duong_tron_day_tren_cyl": {
+          "type": "circle3",
+          "render": "circle",
+          "curved_kind": null,
+          "ownPixels": 27674
+        },
+        "td_sec_parallel": {
+          "type": "circle3",
+          "render": "circle",
+          "curved_kind": null,
+          "ownPixels": 26098
+        },
+        "td_sec_axial": {
+          "type": "polygon3",
+          "render": "polygon",
+          "curved_kind": null,
+          "ownPixels": 7468
+        }
+      },
+      "ink": [
+        0,
+        0,
+        1232,
+        498
+      ],
+      "inkPixels": 519543,
+      "hues": {
+        "section": 407,
+        "line": 2701,
+        "highlight": 142
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 19345,
+        "zoomDiffPixels": 22831,
+        "panDiffPixels": 62911,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_cyl",
+        "selectionDiffPixels": 38211,
+        "explodeDiffPixels": 14609,
+        "step0DiffPixels": 38644
+      },
+      "labelChecks": {
+        "labelCount": 4,
+        "labels": [
+          "O",
+          "O′",
+          "A",
+          "B"
+        ],
+        "labelCollisions": 0,
+        "uniqueLabelCoords": 4,
+        "labelsNotCollapsed": true
+      },
+      "depViolations": [],
+      "screenshots": {
+        "default": "demo6a-curved-cylinder-sections_default.png",
+        "orbit": "demo6a-curved-cylinder-sections_orbit.png",
+        "selected": "demo6a-curved-cylinder-sections_selected.png",
+        "exploded": "demo6a-curved-cylinder-sections_exploded.png",
+        "step0": "demo6a-curved-cylinder-sections_step0.png",
+        "explorer": "demo6a-curved-cylinder-sections_explorer.png"
+      },
+      "consoleErrors": 0
+    },
+    {
+      "axialSectionChecks": {
+        "objectId": "td_sec_axial",
+        "defaultOwnPixels": 3105,
+        "orbitOwnPixels": 2041,
+        "selectAxialDiffPixels": 20557,
+        "isolateAxialInkPixels": 520548,
+        "isolateAxialSectionHuePixels": 546,
+        "isolateAxialDiffPixels": 20876,
+        "screenshots": {
+          "selectedAxial": "demo6b-curved-cone-frustum-cut_selected_td_sec_axial.png",
+          "isolatedAxial": "demo6b-curved-cone-frustum-cut_isolated_td_sec_axial.png"
+        }
+      },
+      "id": "demo6b-curved-cone-frustum-cut",
+      "category": "Demo 6B — Curved Cone + Parallel Cut + Cone Frustum",
+      "served": true,
+      "stepCount": 15,
+      "bbox": {
+        "min": [
+          -3,
+          -3,
+          0
+        ],
+        "max": [
+          3,
+          3,
+          4
+        ],
+        "count": 31
+      },
+      "subEntityCounts": {
+        "total": 21,
+        "topLevel": 21,
+        "faces": 0,
+        "segments": 3,
+        "points": 5
+      },
+      "treeCategories": [
+        {
+          "id": "khoi_cone_main",
+          "label": "Hình nón tròn xoay S.O đỉnh S",
+          "count": 0,
+          "childIds": []
+        },
+        {
+          "id": "khoi_cone_upper",
+          "label": "Hình nón nhỏ đỉnh S cắt bởi (α)",
+          "count": 0,
+          "childIds": []
+        },
+        {
+          "id": "cat:Điểm",
+          "label": "Điểm",
+          "count": 5,
+          "childIds": [
+            "O",
+            "S",
+            "A",
+            "B",
+            "O_cat_cone_upper"
+          ]
+        },
+        {
+          "id": "cat:Cạnh",
+          "label": "Cạnh",
+          "count": 3,
+          "childIds": [
+            "truc_O_S",
+            "ban_kinh_O_A",
+            "duong_sinh_S_A"
+          ]
+        },
+        {
+          "id": "cat:Mặt phẳng",
+          "label": "Mặt phẳng",
+          "count": 2,
+          "childIds": [
+            "mp_day_cone_main",
+            "mp_sec_cut"
+          ]
+        },
+        {
+          "id": "cat:Đa giác",
+          "label": "Đa giác",
+          "count": 1,
+          "childIds": [
+            "td_sec_axial"
+          ]
+        },
+        {
+          "id": "cat:Thiết diện",
+          "label": "Thiết diện",
+          "count": 2,
+          "childIds": [
+            "duong_tron_day_cone_main",
+            "td_sec_cut"
+          ]
+        },
+        {
+          "id": "cat:Đại lượng",
+          "label": "Đại lượng",
+          "count": 6,
+          "childIds": [
+            "R",
+            "h",
+            "R_cat_cone_upper",
+            "kq_m_vol",
+            "kq_m_lat",
+            "kq_m_axial_area"
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "id": "O",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm O",
+          "depends": []
+        },
+        {
+          "id": "R",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Đại lượng đo",
+          "depends": []
+        },
+        {
+          "id": "h",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Đại lượng đo",
+          "depends": []
+        },
+        {
+          "id": "S",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm S",
+          "depends": []
+        },
+        {
+          "id": "A",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm A",
+          "depends": []
+        },
+        {
+          "id": "khoi_cone_main",
+          "type": "curved_solid",
+          "render": "curved_solid",
+          "curved_kind": "cone",
+          "label": "Hình nón tròn xoay S.O đỉnh S",
+          "depends": [
+            "A",
+            "O",
+            "S"
+          ]
+        },
+        {
+          "id": "mp_day_cone_main",
+          "type": "plane3",
+          "render": "surface",
+          "curved_kind": null,
+          "label": "Mặt phẳng đáy (O)",
+          "depends": []
+        },
+        {
+          "id": "duong_tron_day_cone_main",
+          "type": "circle3",
+          "render": "circle",
+          "curved_kind": null,
+          "label": "Đường tròn giao của «Hình nón đáy tâm O, đỉnh S, qua A» và (O)",
+          "depends": [
+            "khoi_cone_main",
+            "mp_day_cone_main"
+          ]
+        },
+        {
+          "id": "truc_O_S",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Trục OS",
+          "depends": [
+            "O",
+            "S"
+          ]
+        },
+        {
+          "id": "ban_kinh_O_A",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Bán kính đáy OA",
+          "depends": [
+            "A",
+            "O"
+          ]
+        },
+        {
+          "id": "duong_sinh_S_A",
+          "type": "segment3",
+          "render": "segment",
+          "curved_kind": null,
+          "label": "Đường sinh SA",
+          "depends": [
+            "A",
+            "S"
+          ]
+        },
+        {
+          "id": "mp_sec_cut",
+          "type": "plane3",
+          "render": "surface",
+          "curved_kind": null,
+          "label": "Mặt phẳng (α)",
+          "depends": []
+        },
+        {
+          "id": "td_sec_cut",
+          "type": "circle3",
+          "render": "circle",
+          "curved_kind": null,
+          "label": "Đường tròn giao của «Hình nón đáy tâm O, đỉnh S, qua A» và (α)",
+          "depends": [
+            "khoi_cone_main",
+            "mp_sec_cut"
+          ]
+        },
+        {
+          "id": "B",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "B",
+          "depends": [
+            "A",
+            "O"
+          ]
+        },
+        {
+          "id": "td_sec_axial",
+          "type": "polygon3",
+          "render": "polygon",
+          "curved_kind": null,
+          "label": "Thiết diện qua trục SAB",
+          "depends": [
+            "A",
+            "B",
+            "S"
+          ]
+        },
+        {
+          "id": "O_cat_cone_upper",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm",
+          "depends": []
+        },
+        {
+          "id": "R_cat_cone_upper",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Đại lượng đo",
+          "depends": []
+        },
+        {
+          "id": "khoi_cone_upper",
+          "type": "curved_solid",
+          "render": "curved_solid",
+          "curved_kind": "cone",
+          "label": "Hình nón nhỏ đỉnh S cắt bởi (α)",
+          "depends": [
+            "O_cat_cone_upper",
+            "R_cat_cone_upper",
+            "S"
+          ]
+        },
+        {
+          "id": "kq_m_vol",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A»",
+          "depends": [
+            "khoi_cone_main"
+          ]
+        },
+        {
+          "id": "kq_m_lat",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Diện tích mặt cong của «Hình nón đáy tâm O, đỉnh S, qua A»",
+          "depends": [
+            "khoi_cone_main"
+          ]
+        },
+        {
+          "id": "kq_m_axial_area",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Diện tích SAB",
+          "depends": [
+            "td_sec_axial"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "semantic_kind": "EXPLANATION",
+          "object": null,
+          "learner_text": "Dữ kiện đề cho: Đại lượng đo = 3, Đại lượng đo = 4, Đại lượng đo = 3/2."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "khoi_cone_main",
+          "learner_text": "Dựng hình nón tròn xoay S.O đỉnh S."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "mp_day_cone_main",
+          "learner_text": "Dựng mặt phẳng đáy (O)."
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "duong_tron_day_cone_main",
+          "learner_text": "Dựng đường tròn giao của «Hình nón đáy tâm O, đỉnh S, qua A» và (O)."
+        },
+        {
+          "step_index": 4,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "truc_O_S",
+          "learner_text": "Dựng trục OS."
+        },
+        {
+          "step_index": 5,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "ban_kinh_O_A",
+          "learner_text": "Dựng bán kính đáy OA."
+        },
+        {
+          "step_index": 6,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "duong_sinh_S_A",
+          "learner_text": "Dựng đường sinh SA."
+        },
+        {
+          "step_index": 7,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "mp_sec_cut",
+          "learner_text": "Dựng mặt phẳng (α)."
+        },
+        {
+          "step_index": 8,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_sec_cut",
+          "learner_text": "Dựng đường tròn giao của «Hình nón đáy tâm O, đỉnh S, qua A» và (α)."
+        },
+        {
+          "step_index": 9,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "B",
+          "learner_text": "Dựng B."
+        },
+        {
+          "step_index": 10,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_sec_axial",
+          "learner_text": "Dựng thiết diện qua trục SAB."
+        },
+        {
+          "step_index": 11,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "khoi_cone_upper",
+          "learner_text": "Dựng hình nón nhỏ đỉnh S cắt bởi (α)."
+        },
+        {
+          "step_index": 12,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_m_vol",
+          "learner_text": "Thể tích «Hình nón đáy tâm O, đỉnh S, qua A» bằng 12π."
+        },
+        {
+          "step_index": 13,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_m_lat",
+          "learner_text": "Diện tích mặt cong của «Hình nón đáy tâm O, đỉnh S, qua A» bằng 15π."
+        },
+        {
+          "step_index": 14,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_m_axial_area",
+          "learner_text": "Tính diện tích SAB: S(SAB) = 12."
+        }
+      ],
+      "ownPixelMap": {
+        "khoi_cone_main": {
+          "type": "curved_solid",
+          "render": "curved_solid",
+          "curved_kind": "cone",
+          "ownPixels": 19185
+        },
+        "duong_tron_day_cone_main": {
+          "type": "circle3",
+          "render": "circle",
+          "curved_kind": null,
+          "ownPixels": 31960
+        },
+        "td_sec_cut": {
+          "type": "circle3",
+          "render": "circle",
+          "curved_kind": null,
+          "ownPixels": 4063
+        },
+        "td_sec_axial": {
+          "type": "polygon3",
+          "render": "polygon",
+          "curved_kind": null,
+          "ownPixels": 3105
+        },
+        "khoi_cone_upper": {
+          "type": "curved_solid",
+          "render": "curved_solid",
+          "curved_kind": "cone",
+          "ownPixels": 4669
+        }
+      },
+      "ink": [
+        0,
+        0,
+        1232,
+        498
+      ],
+      "inkPixels": 519887,
+      "hues": {
+        "section": 226,
+        "line": 1270,
+        "highlight": 156
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 14520,
+        "zoomDiffPixels": 12319,
+        "panDiffPixels": 40203,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_cone_main",
+        "selectionDiffPixels": 20296,
+        "explodeDiffPixels": 7057,
+        "step0DiffPixels": 20725
+      },
+      "labelChecks": {
+        "labelCount": 4,
+        "labels": [
+          "O",
+          "S",
+          "A",
+          "B"
+        ],
+        "labelCollisions": 0,
+        "uniqueLabelCoords": 4,
+        "labelsNotCollapsed": true
+      },
+      "depViolations": [],
+      "screenshots": {
+        "default": "demo6b-curved-cone-frustum-cut_default.png",
+        "orbit": "demo6b-curved-cone-frustum-cut_orbit.png",
+        "selected": "demo6b-curved-cone-frustum-cut_selected.png",
+        "exploded": "demo6b-curved-cone-frustum-cut_exploded.png",
+        "step0": "demo6b-curved-cone-frustum-cut_step0.png",
+        "explorer": "demo6b-curved-cone-frustum-cut_explorer.png"
+      },
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo6c-curved-sphere-plane-cut",
+      "category": "Demo 6C — Curved Sphere + Plane Cut Circle",
+      "served": true,
+      "stepCount": 8,
+      "bbox": {
+        "min": [
+          -5,
+          -5,
+          -5
+        ],
+        "max": [
+          5,
+          5,
+          5
+        ],
+        "count": 15
+      },
+      "subEntityCounts": {
+        "total": 9,
+        "topLevel": 9,
+        "faces": 0,
+        "segments": 0,
+        "points": 1
+      },
+      "treeCategories": [
+        {
+          "id": "khoi_sph",
+          "label": "Mặt cầu (S) tâm I",
+          "count": 0,
+          "childIds": []
+        },
+        {
+          "id": "cat:Điểm",
+          "label": "Điểm",
+          "count": 1,
+          "childIds": [
+            "I"
+          ]
+        },
+        {
+          "id": "cat:Mặt phẳng",
+          "label": "Mặt phẳng",
+          "count": 1,
+          "childIds": [
+            "mp_sec_sph"
+          ]
+        },
+        {
+          "id": "cat:Thiết diện",
+          "label": "Thiết diện",
+          "count": 1,
+          "childIds": [
+            "td_sec_sph"
+          ]
+        },
+        {
+          "id": "cat:Đại lượng",
+          "label": "Đại lượng",
+          "count": 5,
+          "childIds": [
+            "R",
+            "kq_m_vol",
+            "kq_m_surf",
+            "kq_m_rad",
+            "kq_m_area"
+          ]
+        }
+      ],
+      "objects": [
+        {
+          "id": "I",
+          "type": "point3",
+          "render": "point_marker",
+          "curved_kind": null,
+          "label": "Điểm I",
+          "depends": []
+        },
+        {
+          "id": "R",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Đại lượng đo",
+          "depends": []
+        },
+        {
+          "id": "khoi_sph",
+          "type": "curved_solid",
+          "render": "curved_solid",
+          "curved_kind": "ball",
+          "label": "Mặt cầu (S) tâm I",
+          "depends": [
+            "I",
+            "R"
+          ]
+        },
+        {
+          "id": "mp_sec_sph",
+          "type": "plane3",
+          "render": "surface",
+          "curved_kind": null,
+          "label": "Mặt phẳng (α)",
+          "depends": []
+        },
+        {
+          "id": "td_sec_sph",
+          "type": "circle3",
+          "render": "circle",
+          "curved_kind": null,
+          "label": "Đường tròn giao của «Khối cầu tâm I, đi qua đại lượng» và (α)",
+          "depends": [
+            "khoi_sph",
+            "mp_sec_sph"
+          ]
+        },
+        {
+          "id": "kq_m_vol",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Thể tích «Khối cầu tâm I, đi qua đại lượng»",
+          "depends": [
+            "khoi_sph"
+          ]
+        },
+        {
+          "id": "kq_m_surf",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Diện tích mặt cong của «Khối cầu tâm I, đi qua đại lượng»",
+          "depends": [
+            "khoi_sph"
+          ]
+        },
+        {
+          "id": "kq_m_rad",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Bán kính «Đường tròn giao của khối cong và (α)»",
+          "depends": [
+            "td_sec_sph"
+          ]
+        },
+        {
+          "id": "kq_m_area",
+          "type": "quantity",
+          "render": "readout",
+          "curved_kind": null,
+          "label": "Diện tích «Đường tròn giao của khối cong và (α)»",
+          "depends": [
+            "td_sec_sph"
+          ]
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "semantic_kind": "EXPLANATION",
+          "object": null,
+          "learner_text": "Dữ kiện đề cho: Đại lượng đo = 5."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "khoi_sph",
+          "learner_text": "Dựng mặt cầu (S) tâm I."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "mp_sec_sph",
+          "learner_text": "Dựng mặt phẳng (α)."
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "object": "td_sec_sph",
+          "learner_text": "Dựng đường tròn giao của «Khối cầu tâm I, đi qua đại lượng» và (α)."
+        },
+        {
+          "step_index": 4,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_m_vol",
+          "learner_text": "Thể tích «Khối cầu tâm I, đi qua đại lượng» bằng 500π/3."
+        },
+        {
+          "step_index": 5,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_m_surf",
+          "learner_text": "Diện tích mặt cong của «Khối cầu tâm I, đi qua đại lượng» bằng 100π."
+        },
+        {
+          "step_index": 6,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_m_rad",
+          "learner_text": "Bán kính «Đường tròn giao của khối cong và (α)» bằng 4."
+        },
+        {
+          "step_index": 7,
+          "action": "MEASURE",
+          "semantic_kind": "FINAL_RESULT",
+          "object": "kq_m_area",
+          "learner_text": "Diện tích «Đường tròn giao của khối cong và (α)» bằng 16π."
+        }
+      ],
+      "ownPixelMap": {
+        "khoi_sph": {
+          "type": "curved_solid",
+          "render": "curved_solid",
+          "curved_kind": "ball",
+          "ownPixels": 25665
+        },
+        "td_sec_sph": {
+          "type": "circle3",
+          "render": "circle",
+          "curved_kind": null,
+          "ownPixels": 29346
+        }
+      },
+      "ink": [
+        0,
+        0,
+        1232,
+        498
+      ],
+      "inkPixels": 520329,
+      "hues": {
+        "section": 0,
+        "line": 606,
+        "highlight": 19
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 3031,
+        "zoomDiffPixels": 10944,
+        "panDiffPixels": 41139,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_sph",
+        "selectionDiffPixels": 25111,
+        "explodeDiffPixels": 0,
+        "step0DiffPixels": 25214
+      },
+      "labelChecks": {
+        "labelCount": 1,
+        "labels": [
+          "I"
+        ],
+        "labelCollisions": 0,
+        "uniqueLabelCoords": 1,
+        "labelsNotCollapsed": true
+      },
+      "depViolations": [],
+      "screenshots": {
+        "default": "demo6c-curved-sphere-plane-cut_default.png",
+        "orbit": "demo6c-curved-sphere-plane-cut_orbit.png",
+        "selected": "demo6c-curved-sphere-plane-cut_selected.png",
+        "exploded": "demo6c-curved-sphere-plane-cut_exploded.png",
+        "step0": "demo6c-curved-sphere-plane-cut_step0.png",
+        "explorer": "demo6c-curved-sphere-plane-cut_explorer.png"
+      },
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo7-invalid-geometry-safe-refusal",
+      "category": "Demo 7 — Invalid Geometry Safe Refusal (Non-cutting Plane)",
+      "served": false,
+      "refusalText": "CURVED_PLANE_DOES_NOT_CUT: CURVED_PLANE_DOES_NOT_CUT: mặt phẳng không cắt khối cầu — nó nằm xa tâm hơn bán kính",
+      "screenshot": "demo7-invalid-geometry-safe-refusal_refused.png",
+      "consoleErrors": 0
+    }
+  ]
+}

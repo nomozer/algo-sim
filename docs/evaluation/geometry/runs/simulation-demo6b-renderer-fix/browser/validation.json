@@ -1,0 +1,42 @@
+{
+  "schema_version": "browser-regression-validation/1",
+  "group": "SIMULATION_DEMO6B_RENDERER_FIX_BROWSER_REGRESSION",
+  "source_commit": "d2e6037b12580eed1503e911999d4bf981f2c0e4",
+  "product_commit": "1ca20f4f51457f3457802bca042af76accd13698",
+  "execution_exit_code": 0,
+  "positive": 8,
+  "negative": 1,
+  "screenshots": 53,
+  "console_errors": 0,
+  "page_errors": 0,
+  "all_primary_objects_own_pixels_positive": true,
+  "all_camera_resets_exact_zero_diff": true,
+  "demo6b_axial_section_checks": {
+    "objectId": "td_sec_axial",
+    "defaultOwnPixels": 3105,
+    "orbitOwnPixels": 2041,
+    "selectAxialDiffPixels": 20557,
+    "isolateAxialInkPixels": 520548,
+    "isolateAxialSectionHuePixels": 546,
+    "isolateAxialDiffPixels": 20876,
+    "screenshots": {
+      "selectedAxial": "demo6b-curved-cone-frustum-cut_selected_td_sec_axial.png",
+      "isolatedAxial": "demo6b-curved-cone-frustum-cut_isolated_td_sec_axial.png"
+    }
+  },
+  "demo6a_axial_section_checks": {
+    "objectId": "td_sec_axial",
+    "defaultOwnPixels": 7468,
+    "orbitOwnPixels": 4981,
+    "selectAxialDiffPixels": 39801,
+    "isolateAxialInkPixels": 520548,
+    "isolateAxialSectionHuePixels": 719,
+    "isolateAxialDiffPixels": 39037,
+    "screenshots": {
+      "selectedAxial": "demo6a-curved-cylinder-sections_selected_td_sec_axial.png",
+      "isolatedAxial": "demo6a-curved-cylinder-sections_isolated_td_sec_axial.png"
+    }
+  },
+  "input_sha256": "c3203838fc0eefb916d98212674f89e07d1e37706e6dce9daf8779e0cd7466de",
+  "receipt_sha256": "0cb8c28e396b3590cf5f1a9c97cb3b220479b57a8c5a787f6515bb7cc61cec9a"
+}

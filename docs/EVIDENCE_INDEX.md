@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SIMULATION_DEMO6B_RENDERER_FIX_W01
+
+REPORT = docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/
+CLASSIFICATION = SIMULATION_RENDERER_FIX_READY_FOR_GO_MAIN_REVIEW (local-only scoped renderer fix in scene3d-view.tsx + P0 raw-log byte-size reconciliation under GO_SIMULATION_DEMO6B_RENDERER_FIX_LOCAL_ONLY). P0 proves 4-way binary byte and SHA256 identity (31,647, 121,261, 28,606, 121,261 bytes) of original T3 logs across original runtime, corrective archive, Git blob 609cb877, and clean checkout, classifying simulation-evidence-repair/report.md byte figures (17,843, 1,303, 18,243, 332) as PROSE_REPORTING_METADATA_ERROR_ONLY. P3 role-based fix for interior auxiliary section polygons (daGiacPhu = polygon3 + AUXILIARY_SURFACE excluding CONSTRUCT_BASE; renderOrder=7, depthTest=false, two-pass LessEqualDepth/GreaterDepth border lines, synchronous camera-reset render/label projection) resolves demo6b td_sec_axial occlusion (defaultOwnPixels=3105, orbitOwnPixels=2041, selectAxialDiffPixels=20557, isolateAxialInkPixels=520548, resetDiffFromDefault=0 across all 8 positive demos; 53 PNGs, 0 errors). Independent review INDEPENDENT_REVIEW_PASS (0 BLOCKER, 0 IMPORTANT, 0 MINOR). New Full T3 at d2e6037b FULL_PRODUCT_GATE_PASS (pytest 11,439, vitest 1,156, build PASS, demo 5/5, crash 6/6; post-T3 freeze MATCH). Residual polyhedral/frustum mesh remains NOT_IMPLEMENTED, standalone cone_frustum BLOCKED_BY_KERNEL, ellipse browser scope BACKEND_ONLY.
+CODE_COMMIT = 1ca20f4f51457f3457802bca042af76accd13698 (new renderer-fixed product commit; original product commit 3298b901d2246650535aa4028845ddc2a44892c4 preserved); frozen candidate & Full T3 target d2e6037b12580eed1503e911999d4bf981f2c0e4 (original candidate 5f4ee58c48011e9e5d38d3209f7c97250032a976 preserved; measured_system tree_hash 4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68 across 114 files)
+VERIFICATION = docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/raw-log-size-reconciliation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser/validation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/t3/validation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/independent-review.md + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/archive-integrity.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SIMULATION_EVIDENCE_REPAIR_W01 (resolves open IMPORTANT finding on demo6b td_sec_axial visibility & camera reset diff, and additively corrects prose byte-size table in simulation-evidence-repair/report.md without mutating historical files)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SIMULATION_EVIDENCE_REPAIR_W01
 
 REPORT = docs/evaluation/geometry/runs/simulation-evidence-repair/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 3298b901d2246650535aa4028845ddc2a44892c4; original candidate 5f4ee
 VERIFICATION = docs/evaluation/geometry/runs/simulation-evidence-repair/original-raw-manifest.json (ORIGINAL_RUNTIME_RAW_BYTES vs HISTORICAL_NORMALIZED_GIT_BLOB vs CORRECTIVE_RAW_ARCHIVE) + docs/evaluation/geometry/runs/simulation-evidence-repair/archive-integrity.json + docs/evaluation/geometry/runs/simulation-evidence-repair/t3/validation.json + docs/evaluation/geometry/runs/simulation-evidence-repair/verification/independent-review.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = SIMULATION_EVIDENCE_RECONCILIATION_W01 (raw archive portability, new execution provenance and current scope)
-CORRECTED_BY = NONE
+CORRECTED_BY = SIMULATION_DEMO6B_RENDERER_FIX_W01
 
 ## WAVE_ID = SIMULATION_EVIDENCE_RECONCILIATION_W01
 

@@ -1,0 +1,26 @@
+{
+  "schema_version": "authoritative-t3-invocation/1",
+  "run_kind": "NEW_AUTHORITATIVE_FULL_T3_RENDERER_FIXED",
+  "source_commit": "d2e6037b12580eed1503e911999d4bf981f2c0e4",
+  "product_commit": "1ca20f4f51457f3457802bca042af76accd13698",
+  "candidate_commit": "d2e6037b12580eed1503e911999d4bf981f2c0e4",
+  "original_product_commit": "3298b901d2246650535aa4028845ddc2a44892c4",
+  "original_frozen_candidate": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+  "measured_system_sha256": "4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68",
+  "measured_file_count": 114,
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-simulation-demo6b-renderer-fix",
+  "argv": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-simulation-demo6b-renderer-fix\\frontend\\scripts\\full-gate.mjs"
+  ],
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe"
+  },
+  "output_directory": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-demo6b-renderer-fix\\docs\\evaluation\\geometry\\runs\\simulation-demo6b-renderer-fix\\t3",
+  "timeout_seconds": 2400,
+  "attempt_limit": 1,
+  "new_browser_visual_finding": "RESOLVED: demo6b td_sec_axial defaultOwnPixels=3105, orbitOwnPixels=2041, selectAxialDiffPixels=20557, isolateAxialInkPixels=520548, resetDiffFromDefault=0"
+}
