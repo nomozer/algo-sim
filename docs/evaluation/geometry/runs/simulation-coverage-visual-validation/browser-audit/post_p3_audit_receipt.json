@@ -1,6 +1,6 @@
 {
   "schema": "scene3d-browser-audit-receipt/1",
-  "scenesFile": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-coverage-visual-validation\\docs\\evaluation\\geometry\\runs\\simulation-coverage-visual-validation\\browser-audit\\baseline_scenes.json",
+  "scenesFile": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/browser-audit/baseline_scenes.json",
   "totalScenes": 9,
   "totalConsoleErrors": 0,
   "totalPageErrors": 0,

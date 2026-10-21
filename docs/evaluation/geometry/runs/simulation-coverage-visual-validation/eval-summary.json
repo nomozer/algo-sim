@@ -1,0 +1,250 @@
+{
+  "schema_version": "simulation-coverage-eval-summary/1",
+  "evaluation_scope": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "adapter_version": "hybrid-simulation-adapter/3",
+  "contract_version": "typed-fact-next/1",
+  "all_passed": true,
+  "metrics": {
+    "total_cases": 15,
+    "positive_cases": 10,
+    "negative_cases": 5,
+    "positive_served": 10,
+    "negative_refused": 5,
+    "wrong_serves": 0,
+    "scene3d_valid_v2": 10,
+    "solid_topology_complete": 10,
+    "derived_section_correct": 10,
+    "derived_point_provenance_ok": 10,
+    "multi_solid_identity_ok": 10,
+    "curved_solid_render_ok": 10,
+    "timeline_dependency_order_ok": 10,
+    "math_certificate_consistent": 10
+  },
+  "cases": [
+    {
+      "case_id": "demo1-pyramid-derived-section",
+      "expected_status": "SERVED",
+      "actual_status": "SERVED",
+      "scene3d_v2_ok": true,
+      "answers": {
+        "m_sec_area": "1",
+        "m_vol_ratio": "1/8"
+      },
+      "expected_answers": {
+        "m_sec_area": "1",
+        "m_vol_ratio": "1/8"
+      },
+      "answers_match": true,
+      "dep_violations": [],
+      "passed": true
+    },
+    {
+      "case_id": "demo2-unnamed-section-intersections",
+      "expected_status": "SERVED",
+      "actual_status": "SERVED",
+      "scene3d_v2_ok": true,
+      "answers": {
+        "m_sec_area": "8/9",
+        "m_residual": "208/27"
+      },
+      "expected_answers": {
+        "m_sec_area": "8/9",
+        "m_residual": "208/27"
+      },
+      "answers_match": true,
+      "dep_violations": [],
+      "passed": true
+    },
+    {
+      "case_id": "demo3-multi-solid-shared-geometry",
+      "expected_status": "SERVED",
+      "actual_status": "SERVED",
+      "scene3d_v2_ok": true,
+      "answers": {
+        "m_v_pyr1": "4",
+        "m_v_pyr2": "4/3",
+        "m_v_ratio": "1/3"
+      },
+      "expected_answers": {
+        "m_v_pyr1": "4",
+        "m_v_pyr2": "4/3",
+        "m_v_ratio": "1/3"
+      },
+      "answers_match": true,
+      "dep_violations": [],
+      "passed": true
+    },
+    {
+      "case_id": "demo4-step-by-step-construction",
+      "expected_status": "SERVED",
+      "actual_status": "SERVED",
+      "scene3d_v2_ok": true,
+      "answers": {
+        "m_vol_sabc": "6",
+        "m_area_perp": "3/2"
+      },
+      "expected_answers": {
+        "m_vol_sabc": "6",
+        "m_area_perp": "3/2"
+      },
+      "answers_match": true,
+      "dep_violations": [],
+      "passed": true
+    },
+    {
+      "case_id": "demo5-selection-and-highlighting",
+      "expected_status": "SERVED",
+      "actual_status": "SERVED",
+      "scene3d_v2_ok": true,
+      "answers": {
+        "m_ratio_st": "1/2"
+      },
+      "expected_answers": {
+        "m_ratio_st": "1/2"
+      },
+      "answers_match": true,
+      "dep_violations": [],
+      "passed": true
+    },
+    {
+      "case_id": "demo6a-curved-cylinder-sections",
+      "expected_status": "SERVED",
+      "actual_status": "SERVED",
+      "scene3d_v2_ok": true,
+      "answers": {
+        "m_vol": "12π",
+        "m_lat": "12π",
+        "m_par_area": "4π",
+        "m_ax_area": "12"
+      },
+      "expected_answers": {
+        "m_vol": "12π",
+        "m_lat": "12π",
+        "m_par_area": "4π",
+        "m_ax_area": "12"
+      },
+      "answers_match": true,
+      "dep_violations": [],
+      "passed": true
+    },
+    {
+      "case_id": "demo6b-curved-cone-frustum-cut",
+      "expected_status": "SERVED",
+      "actual_status": "SERVED",
+      "scene3d_v2_ok": true,
+      "answers": {
+        "m_vol": "12π",
+        "m_lat": "15π",
+        "m_axial_area": "12",
+        "m_ratio": "1/8",
+        "m_frustum": "21π/2"
+      },
+      "expected_answers": {
+        "m_vol": "12π",
+        "m_lat": "15π",
+        "m_axial_area": "12",
+        "m_ratio": "1/8",
+        "m_frustum": "21π/2"
+      },
+      "answers_match": true,
+      "dep_violations": [],
+      "passed": true
+    },
+    {
+      "case_id": "demo6c-curved-sphere-plane-cut",
+      "expected_status": "SERVED",
+      "actual_status": "SERVED",
+      "scene3d_v2_ok": true,
+      "answers": {
+        "m_vol": "500π/3",
+        "m_surf": "100π",
+        "m_rad": "4",
+        "m_area": "16π"
+      },
+      "expected_answers": {
+        "m_vol": "500π/3",
+        "m_surf": "100π",
+        "m_rad": "4",
+        "m_area": "16π"
+      },
+      "answers_match": true,
+      "dep_violations": [],
+      "passed": true
+    },
+    {
+      "case_id": "demo7-invalid-geometry-safe-refusal",
+      "expected_status": "REFUSED",
+      "actual_status": "REFUSED",
+      "expected_code": "CURVED_PLANE_DOES_NOT_CUT",
+      "actual_code": "CURVED_PLANE_DOES_NOT_CUT",
+      "scene3d_is_none": true,
+      "passed": true
+    },
+    {
+      "case_id": "pos_09_cylinder_oblique_ellipse",
+      "expected_status": "SERVED",
+      "actual_status": "SERVED",
+      "scene3d_v2_ok": true,
+      "answers": {
+        "m_el_area": "9π√2"
+      },
+      "expected_answers": {
+        "m_el_area": "9π√2"
+      },
+      "answers_match": true,
+      "dep_violations": [],
+      "passed": true
+    },
+    {
+      "case_id": "pos_10_cone_oblique_ellipse",
+      "expected_status": "SERVED",
+      "actual_status": "SERVED",
+      "scene3d_v2_ok": true,
+      "answers": {
+        "m_cone_el_area": "20π√6/3"
+      },
+      "expected_answers": {
+        "m_cone_el_area": "20π√6/3"
+      },
+      "answers_match": true,
+      "dep_violations": [],
+      "passed": true
+    },
+    {
+      "case_id": "neg_02_sphere_tangent_plane",
+      "expected_status": "REFUSED",
+      "actual_status": "REFUSED",
+      "expected_code": "CURVED_PLANE_TANGENT",
+      "actual_code": "CURVED_PLANE_TANGENT",
+      "scene3d_is_none": true,
+      "passed": true
+    },
+    {
+      "case_id": "neg_03_cone_parabolic_section",
+      "expected_status": "REFUSED",
+      "actual_status": "REFUSED",
+      "expected_code": "CURVED_CONE_SECTION_PARABOLIC",
+      "actual_code": "CURVED_CONE_SECTION_PARABOLIC",
+      "scene3d_is_none": true,
+      "passed": true
+    },
+    {
+      "case_id": "neg_04_standalone_cone_frustum",
+      "expected_status": "REFUSED",
+      "actual_status": "REFUSED",
+      "expected_code": "CURVED_PRIMITIVE_BLOCKED_BY_KERNEL",
+      "actual_code": "CURVED_PRIMITIVE_BLOCKED_BY_KERNEL",
+      "scene3d_is_none": true,
+      "passed": true
+    },
+    {
+      "case_id": "neg_05_ambiguous_multi_solid_ref",
+      "expected_status": "REFUSED",
+      "actual_status": "REFUSED",
+      "expected_code": "AMBIGUOUS_REFERENCE",
+      "actual_code": "AMBIGUOUS_REFERENCE",
+      "scene3d_is_none": true,
+      "passed": true
+    }
+  ]
+}

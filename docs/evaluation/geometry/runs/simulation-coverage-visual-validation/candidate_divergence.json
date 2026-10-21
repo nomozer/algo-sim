@@ -1,0 +1,21 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "simulation-coverage-visual-validation",
+  "corrects": "docs/evaluation/geometry/runs/wave3a-adapter3-integration/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "previous_candidate_hash": "817780925c278f3aeadb6ad393f65d737b9d244c62e7f382bd0b8d7f0b7d261e",
+  "current_candidate_hash": "e1874b49319e4f154e41bf4a17bdb76611e682d52acafeb8c459cbb3f17b8ea3",
+  "current_product_commit": "d92019d663bbd17980f0bd85ca7b7de01f34fd54",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized two-session local research campaign (GO_SIMULATION_COVERAGE_VISUAL_VALIDATION_LOCAL_RESEARCH) fixing scalar-radius/height curved_solid rendering & Z-axis bounding box in Scene3D, classifying curved_solid/circle3/ellipse3/segment3 in interaction-state.ts and scene3d.py/simulation_state.py, and expanding TypedFactNext (typed-fact-next/1) + Adapter /3 (hybrid-simulation-adapter/3) to right circular cylinder, right circular cone (parallel circular + oblique elliptic sections), and sphere (circular plane section) via curved.py::KHOI_CONG. All historical receipts preserved byte-for-byte.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP: default LLM_ONLY /api/analyze path is unchanged; curved-solid TypedFactNext + Adapter /3 remains an isolated offline research route and Scene3D fixes apply to client-side rendering and curved-solid event actions.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every earlier candidate layer (including wave3a-adapter3-integration, volume-reasoning, typedfact-next-adapter3-simulation, and BH2C) are preserved byte-for-byte."
+  }
+}

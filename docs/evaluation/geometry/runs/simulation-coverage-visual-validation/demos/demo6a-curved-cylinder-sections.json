@@ -1,0 +1,4987 @@
+{
+  "schema_version": "hybrid-Flat-preview/1",
+  "adapter_version": "hybrid-simulation-adapter/3",
+  "contract_version": "typed-fact-next/1",
+  "problem_text": "Cho hình trụ tròn xoay có tâm đáy dưới O, tâm đáy trên O', điểm A trên đường tròn đáy dưới, bán kính đáy R = 2 và chiều cao h = 3. Mặt phẳng (α) song song với đáy cách đáy một khoảng 1 cắt hình trụ theo thiết diện đường tròn, và xét thêm thiết diện qua trục qua A. Tính thể tích, diện tích xung quanh hình trụ, diện tích thiết diện tròn và thiết diện qua trục.",
+  "route_a": null,
+  "route_b": {
+    "status": "SERVED",
+    "refusal": null,
+    "answers": {
+      "m_vol": "12π",
+      "m_lat": "12π",
+      "m_par_area": "4π",
+      "m_ax_area": "12"
+    },
+    "answer_exact": {
+      "m_vol": {
+        "coef": "12π",
+        "dim": 0,
+        "unit": null
+      },
+      "m_lat": {
+        "coef": "12π",
+        "dim": 0,
+        "unit": null
+      },
+      "m_par_area": {
+        "coef": "4π",
+        "dim": 0,
+        "unit": null
+      },
+      "m_ax_area": {
+        "coef": "12",
+        "dim": 0,
+        "unit": null
+      }
+    },
+    "length_unit": null,
+    "points": {
+      "O": [
+        "0",
+        "0",
+        "0"
+      ],
+      "O_prime": [
+        "0",
+        "0",
+        "3"
+      ],
+      "A": [
+        "2",
+        "0",
+        "0"
+      ],
+      "B": [
+        "-2",
+        "0",
+        "0"
+      ],
+      "A_prime_sec_axial": [
+        "2",
+        "0",
+        "3"
+      ],
+      "B_prime_sec_axial": [
+        "-2",
+        "0",
+        "3"
+      ]
+    },
+    "metric": null,
+    "kernel_check": true,
+    "scene3d": {
+      "objects": [
+        {
+          "id": "O",
+          "label": "Điểm O",
+          "notation": "O",
+          "reference": "O",
+          "role": "Điểm",
+          "display_label": "Điểm O",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "R",
+          "label": "Đại lượng đo",
+          "notation": null,
+          "reference": "đại lượng",
+          "role": "Giá trị cho trong đề",
+          "display_label": "Đại lượng đo",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "value": "2",
+          "exact": {
+            "kind": "rational",
+            "value": "2"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "đại lượng = 2",
+            "references": []
+          }
+        },
+        {
+          "id": "h",
+          "label": "Đại lượng đo",
+          "notation": null,
+          "reference": "đại lượng",
+          "role": "Giá trị cho trong đề",
+          "display_label": "Đại lượng đo",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "value": "3",
+          "exact": {
+            "kind": "rational",
+            "value": "3"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "đại lượng = 3",
+            "references": []
+          }
+        },
+        {
+          "id": "O_prime",
+          "label": "Điểm O′",
+          "notation": "O′",
+          "reference": "O′",
+          "role": "Điểm",
+          "display_label": "Điểm O′",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "xyz": [
+            "0",
+            "0",
+            "3"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "A",
+          "label": "Điểm A",
+          "notation": "A",
+          "reference": "A",
+          "role": "Điểm",
+          "display_label": "Điểm A",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "xyz": [
+            "2",
+            "0",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "khoi_cyl",
+          "label": "Hình trụ tròn xoay O.O' tâm O",
+          "notation": null,
+          "reference": "Hình trụ đáy tâm O, tâm đáy trên O′, qua A",
+          "role": "Hình trụ đáy tâm O, tâm đáy trên O′, qua A",
+          "display_label": "Hình trụ tròn xoay O.O' tâm O",
+          "type": "curved_solid",
+          "render": "curved_solid",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_curved_solid.cylinder",
+          "depends": [
+            "A",
+            "O",
+            "O_prime"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "O",
+              "relation": "topological"
+            },
+            {
+              "source_id": "O_prime",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_curved_solid.cylinder"
+          },
+          "formation_roles": [
+            "CLOSE_SOLID"
+          ],
+          "curved_kind": "cylinder",
+          "anchor": [
+            "0",
+            "0",
+            "0"
+          ],
+          "apex_or_top": [
+            "0",
+            "0",
+            "3"
+          ],
+          "rim_point": [
+            "2",
+            "0",
+            "0"
+          ],
+          "radius_sq": "4",
+          "height_sq": "9",
+          "occludes_edges": false
+        },
+        {
+          "id": "mp_day_cyl",
+          "label": "Mặt phẳng đáy (O)",
+          "notation": "(O)",
+          "reference": "(O)",
+          "role": "Mặt phẳng cho bằng phương trình",
+          "display_label": "Mặt phẳng đáy (O)",
+          "type": "plane3",
+          "render": "surface",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_plane_from_equation",
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_plane_from_equation"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "point": [
+            "0",
+            "0",
+            "0"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "1"
+          ],
+          "occludes_edges": false,
+          "surface_role": "CUTTING_PLANE"
+        },
+        {
+          "id": "duong_tron_day_cyl",
+          "label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (O)",
+          "notation": null,
+          "reference": "Đường tròn giao của khối cong và (O)",
+          "role": "Đường tròn",
+          "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (O)",
+          "type": "circle3",
+          "render": "circle",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "intersect_plane_curved",
+          "depends": [
+            "khoi_cyl",
+            "mp_day_cyl"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "khoi_cyl",
+              "relation": "structural"
+            },
+            {
+              "source_id": "mp_day_cyl",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "intersect_plane_curved"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "center": [
+            "0",
+            "0",
+            "0"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "3"
+          ],
+          "radius_sq": "4",
+          "occludes_edges": false
+        },
+        {
+          "id": "mp_day_tren_cyl",
+          "label": "Mặt phẳng đáy trên (O')",
+          "notation": null,
+          "reference": "Mặt phẳng cho bằng phương trình",
+          "role": "Mặt phẳng cho bằng phương trình",
+          "display_label": "Mặt phẳng đáy trên (O')",
+          "type": "plane3",
+          "render": "surface",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_plane_from_equation",
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_plane_from_equation"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "point": [
+            "0",
+            "0",
+            "3"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "1"
+          ],
+          "occludes_edges": false,
+          "surface_role": "CUTTING_PLANE"
+        },
+        {
+          "id": "duong_tron_day_tren_cyl",
+          "label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và «Mặt phẳng cho bằng phương trình»",
+          "notation": null,
+          "reference": "Đường tròn giao của khối cong và mặt phẳng",
+          "role": "Đường tròn",
+          "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và «Mặt phẳng cho bằng phương trình»",
+          "type": "circle3",
+          "render": "circle",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "intersect_plane_curved",
+          "depends": [
+            "khoi_cyl",
+            "mp_day_tren_cyl"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "khoi_cyl",
+              "relation": "structural"
+            },
+            {
+              "source_id": "mp_day_tren_cyl",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "intersect_plane_curved"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "center": [
+            "0",
+            "0",
+            "3"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "3"
+          ],
+          "radius_sq": "4",
+          "occludes_edges": false
+        },
+        {
+          "id": "truc_O_O_prime",
+          "label": "Trục OO'",
+          "notation": "OO′",
+          "reference": "OO′",
+          "role": "Đoạn thẳng nối O và O′",
+          "display_label": "Trục OO'",
+          "type": "segment3",
+          "render": "segment",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": [
+            "O",
+            "O_prime"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "O",
+              "relation": "topological"
+            },
+            {
+              "source_id": "O_prime",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_segment"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "point_a": [
+            "0",
+            "0",
+            "0"
+          ],
+          "point_b": [
+            "0",
+            "0",
+            "3"
+          ],
+          "endpoints": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "3"
+            ]
+          ],
+          "endpoint_ids": [
+            "O",
+            "O_prime"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "ban_kinh_O_A",
+          "label": "Bán kính đáy OA",
+          "notation": "OA",
+          "reference": "OA",
+          "role": "Đoạn thẳng nối O và A",
+          "display_label": "Bán kính đáy OA",
+          "type": "segment3",
+          "render": "segment",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": [
+            "A",
+            "O"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "O",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_segment"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "point_a": [
+            "0",
+            "0",
+            "0"
+          ],
+          "point_b": [
+            "2",
+            "0",
+            "0"
+          ],
+          "endpoints": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "2",
+              "0",
+              "0"
+            ]
+          ],
+          "endpoint_ids": [
+            "O",
+            "A"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "mp_sec_parallel",
+          "label": "Mặt phẳng (α)",
+          "notation": "(α)",
+          "reference": "(α)",
+          "role": "Mặt phẳng cho bằng phương trình",
+          "display_label": "Mặt phẳng (α)",
+          "type": "plane3",
+          "render": "surface",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_plane_from_equation",
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_plane_from_equation"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "point": [
+            "0",
+            "0",
+            "1"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "1"
+          ],
+          "occludes_edges": false,
+          "surface_role": "CUTTING_PLANE"
+        },
+        {
+          "id": "td_sec_parallel",
+          "label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (α)",
+          "notation": null,
+          "reference": "Đường tròn giao của khối cong và (α)",
+          "role": "Đường tròn",
+          "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (α)",
+          "type": "circle3",
+          "render": "circle",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "intersect_plane_curved",
+          "depends": [
+            "khoi_cyl",
+            "mp_sec_parallel"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "khoi_cyl",
+              "relation": "structural"
+            },
+            {
+              "source_id": "mp_sec_parallel",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "intersect_plane_curved"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "center": [
+            "0",
+            "0",
+            "1"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "3"
+          ],
+          "radius_sq": "4",
+          "occludes_edges": false
+        },
+        {
+          "id": "B",
+          "label": "B",
+          "notation": "B",
+          "reference": "B",
+          "role": "Điểm chia đoạn nối A và O",
+          "display_label": "B",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_point.divide_segment",
+          "depends": [
+            "A",
+            "O"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "O",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_point.divide_segment"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "xyz": [
+            "-2",
+            "0",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "td_sec_axial",
+          "label": "Thiết diện qua trục hình trụ",
+          "notation": null,
+          "reference": "Đa giác A, B, điểm, điểm",
+          "role": "Đa giác A, B, điểm, điểm",
+          "display_label": "Thiết diện qua trục hình trụ",
+          "type": "polygon3",
+          "render": "polygon",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_polygon",
+          "depends": [
+            "A",
+            "A_prime_sec_axial",
+            "B",
+            "B_prime_sec_axial"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "A_prime_sec_axial",
+              "relation": "topological"
+            },
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "B_prime_sec_axial",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "face"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_polygon"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "vertices": [
+            [
+              "2",
+              "0",
+              "0"
+            ],
+            [
+              "-2",
+              "0",
+              "0"
+            ],
+            [
+              "-2",
+              "0",
+              "3"
+            ],
+            [
+              "2",
+              "0",
+              "3"
+            ]
+          ],
+          "vertex_ids": [
+            "A",
+            "B",
+            "B_prime_sec_axial",
+            "A_prime_sec_axial"
+          ],
+          "occludes_edges": false,
+          "surface_role": "AUXILIARY_SURFACE"
+        },
+        {
+          "id": "A_prime_sec_axial",
+          "label": "Điểm",
+          "notation": null,
+          "reference": "điểm",
+          "role": "Điểm",
+          "display_label": "Điểm",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "xyz": [
+            "2",
+            "0",
+            "3"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "B_prime_sec_axial",
+          "label": "Điểm",
+          "notation": null,
+          "reference": "điểm",
+          "role": "Điểm",
+          "display_label": "Điểm",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "xyz": [
+            "-2",
+            "0",
+            "3"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "kq_m_vol",
+          "label": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "notation": null,
+          "reference": "Thể tích khối cong",
+          "role": "Thể tích khối",
+          "display_label": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.volume",
+          "depends": [
+            "khoi_cyl"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "khoi_cyl",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.volume"
+          },
+          "formation_roles": [],
+          "value": "12π",
+          "exact": {
+            "kind": "radical",
+            "coefficient": "12",
+            "radicand": 1,
+            "pi": 1
+          },
+          "occludes_edges": false
+        },
+        {
+          "id": "kq_m_lat",
+          "label": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "notation": null,
+          "reference": "Diện tích mặt cong của khối cong",
+          "role": "Diện tích mặt cong",
+          "display_label": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.lateral_area",
+          "depends": [
+            "khoi_cyl"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "khoi_cyl",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.lateral_area"
+          },
+          "formation_roles": [],
+          "value": "12π",
+          "exact": {
+            "kind": "radical",
+            "coefficient": "12",
+            "radicand": 1,
+            "pi": 1
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "Diện tích mặt cong của khối cong = 12π",
+            "references": []
+          }
+        },
+        {
+          "id": "kq_m_par_area",
+          "label": "Diện tích «Đường tròn giao của khối cong và (α)»",
+          "notation": null,
+          "reference": "Diện tích đường tròn",
+          "role": "Diện tích",
+          "display_label": "Diện tích «Đường tròn giao của khối cong và (α)»",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.area",
+          "depends": [
+            "td_sec_parallel"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "td_sec_parallel",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.area"
+          },
+          "formation_roles": [],
+          "value": "4π",
+          "exact": {
+            "kind": "radical",
+            "coefficient": "4",
+            "radicand": 1,
+            "pi": 1
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "Diện tích đường tròn = 4π",
+            "references": []
+          }
+        },
+        {
+          "id": "kq_m_ax_area",
+          "label": "Diện tích «Đa giác A, B, điểm, điểm»",
+          "notation": null,
+          "reference": "Diện tích đa giác",
+          "role": "Diện tích",
+          "display_label": "Diện tích «Đa giác A, B, điểm, điểm»",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.area",
+          "depends": [
+            "td_sec_axial"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "td_sec_axial",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.area"
+          },
+          "formation_roles": [],
+          "value": "12",
+          "exact": {
+            "kind": "rational",
+            "value": "12"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "Diện tích đa giác = 12",
+            "references": []
+          },
+          "annotation": {
+            "kind": "area",
+            "subject_ids": [
+              "td_sec_axial"
+            ],
+            "anchor": "region",
+            "unit": null,
+            "category": "result",
+            "role": "result"
+          }
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "object": null,
+          "depends": [],
+          "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "display_label": "Bước dựng hình",
+          "semantic_kind": "EXPLANATION",
+          "details": {},
+          "learner_text": "Dữ kiện đề cho: Đại lượng đo = 2, Đại lượng đo = 3."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "object": "khoi_cyl",
+          "depends": [
+            "O",
+            "O_prime",
+            "A"
+          ],
+          "explanation": "Dựng hình trụ: đáy tâm O đi qua A, tâm đáy trên O′.",
+          "display_label": "Hình trụ tròn xoay O.O' tâm O",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Hình trụ tròn xoay O.O' tâm O",
+            "loai": "cylinder",
+            "neo": [
+              "O",
+              "O_prime",
+              "A"
+            ]
+          },
+          "learner_text": "Dựng hình trụ tròn xoay O.O' tâm O."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "object": "mp_day_cyl",
+          "depends": [],
+          "explanation": "Dựng mặt phẳng từ phương trình z = 0.",
+          "display_label": "Mặt phẳng đáy (O)",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Mặt phẳng đáy (O)",
+            "phuong_trinh": {
+              "a": "0",
+              "b": "0",
+              "c": "1",
+              "d": "0"
+            }
+          },
+          "learner_text": "Dựng mặt phẳng đáy (O)."
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "object": "duong_tron_day_cyl",
+          "depends": [
+            "khoi_cyl",
+            "mp_day_cyl"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(3, 1)), radius_sq=Fraction(4, 1)).",
+          "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (O)",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "value": {
+              "kind": "circle3",
+              "center": [
+                "0",
+                "0",
+                "0"
+              ],
+              "normal": [
+                "0",
+                "0",
+                "3"
+              ],
+              "radius_sq": "4"
+            }
+          },
+          "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (O)."
+        },
+        {
+          "step_index": 4,
+          "action": "CREATE",
+          "object": "mp_day_tren_cyl",
+          "depends": [],
+          "explanation": "Dựng mặt phẳng từ phương trình z - 3 = 0.",
+          "display_label": "Mặt phẳng đáy trên (O')",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Mặt phẳng đáy trên (O')",
+            "phuong_trinh": {
+              "a": "0",
+              "b": "0",
+              "c": "1",
+              "d": "-3"
+            }
+          },
+          "learner_text": "Dựng mặt phẳng đáy trên (O')."
+        },
+        {
+          "step_index": 5,
+          "action": "CREATE",
+          "object": "duong_tron_day_tren_cyl",
+          "depends": [
+            "khoi_cyl",
+            "mp_day_tren_cyl"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(3, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(3, 1)), radius_sq=Fraction(4, 1)).",
+          "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và «Mặt phẳng cho bằng phương trình»",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "value": {
+              "kind": "circle3",
+              "center": [
+                "0",
+                "0",
+                "3"
+              ],
+              "normal": [
+                "0",
+                "0",
+                "3"
+              ],
+              "radius_sq": "4"
+            }
+          },
+          "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và «Mặt phẳng cho bằng phương trình»."
+        },
+        {
+          "step_index": 6,
+          "action": "CREATE",
+          "object": "truc_O_O_prime",
+          "depends": [
+            "O",
+            "O_prime"
+          ],
+          "explanation": "Dựng đoạn thẳng nối O và O′.",
+          "display_label": "Trục OO'",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Trục OO'",
+            "objects": [
+              "truc_O_O_prime"
+            ],
+            "qua": [
+              "O",
+              "O_prime"
+            ]
+          },
+          "learner_text": "Dựng trục OO'.",
+          "objects": [
+            "truc_O_O_prime"
+          ]
+        },
+        {
+          "step_index": 7,
+          "action": "CREATE",
+          "object": "ban_kinh_O_A",
+          "depends": [
+            "O",
+            "A"
+          ],
+          "explanation": "Dựng đoạn thẳng nối O và A.",
+          "display_label": "Bán kính đáy OA",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Bán kính đáy OA",
+            "objects": [
+              "ban_kinh_O_A"
+            ],
+            "qua": [
+              "O",
+              "A"
+            ]
+          },
+          "learner_text": "Dựng bán kính đáy OA.",
+          "objects": [
+            "ban_kinh_O_A"
+          ]
+        },
+        {
+          "step_index": 8,
+          "action": "CREATE",
+          "object": "mp_sec_parallel",
+          "depends": [],
+          "explanation": "Dựng mặt phẳng (α) từ phương trình z - 1 = 0.",
+          "display_label": "Mặt phẳng (α)",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Mặt phẳng (α)",
+            "phuong_trinh": {
+              "a": "0",
+              "b": "0",
+              "c": "1",
+              "d": "-1"
+            }
+          },
+          "learner_text": "Dựng mặt phẳng (α)."
+        },
+        {
+          "step_index": 9,
+          "action": "CREATE",
+          "object": "td_sec_parallel",
+          "depends": [
+            "khoi_cyl",
+            "mp_sec_parallel"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(1, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(3, 1)), radius_sq=Fraction(4, 1)).",
+          "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (α)",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "value": {
+              "kind": "circle3",
+              "center": [
+                "0",
+                "0",
+                "1"
+              ],
+              "normal": [
+                "0",
+                "0",
+                "3"
+              ],
+              "radius_sq": "4"
+            }
+          },
+          "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (α)."
+        },
+        {
+          "step_index": 10,
+          "action": "CREATE",
+          "object": "B",
+          "depends": [
+            "A",
+            "O"
+          ],
+          "explanation": "Dựng điểm B = (-2, 0, 0).",
+          "display_label": "B",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "B",
+            "toa_do": [
+              "-2",
+              "0",
+              "0"
+            ]
+          },
+          "learner_text": "Dựng B."
+        },
+        {
+          "step_index": 11,
+          "action": "CREATE",
+          "object": "td_sec_axial",
+          "depends": [
+            "A",
+            "B",
+            "B_prime_sec_axial",
+            "A_prime_sec_axial"
+          ],
+          "explanation": "Dựng đa giác Thiết diện qua trục hình trụ.",
+          "display_label": "Thiết diện qua trục hình trụ",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Thiết diện qua trục hình trụ",
+            "dinh": [
+              "A",
+              "B",
+              "B_prime_sec_axial",
+              "A_prime_sec_axial"
+            ]
+          },
+          "learner_text": "Dựng thiết diện qua trục hình trụ."
+        },
+        {
+          "step_index": 12,
+          "action": "MEASURE",
+          "object": "kq_m_vol",
+          "depends": [
+            "khoi_cyl"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 12π.",
+          "display_label": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "semantic_kind": "FINAL_RESULT",
+          "details": {
+            "value": {
+              "kind": "radical",
+              "coefficient": "12",
+              "radicand": 1,
+              "pi": 1
+            }
+          },
+          "learner_text": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 12π."
+        },
+        {
+          "step_index": 13,
+          "action": "MEASURE",
+          "object": "kq_m_lat",
+          "depends": [
+            "khoi_cyl"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 12π.",
+          "display_label": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "semantic_kind": "FINAL_RESULT",
+          "details": {
+            "value": {
+              "kind": "radical",
+              "coefficient": "12",
+              "radicand": 1,
+              "pi": 1
+            }
+          },
+          "learner_text": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 12π."
+        },
+        {
+          "step_index": 14,
+          "action": "MEASURE",
+          "object": "kq_m_par_area",
+          "depends": [
+            "td_sec_parallel"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 4π.",
+          "display_label": "Diện tích «Đường tròn giao của khối cong và (α)»",
+          "semantic_kind": "FINAL_RESULT",
+          "details": {
+            "value": {
+              "kind": "radical",
+              "coefficient": "4",
+              "radicand": 1,
+              "pi": 1
+            }
+          },
+          "learner_text": "Diện tích «Đường tròn giao của khối cong và (α)» bằng 4π."
+        },
+        {
+          "step_index": 15,
+          "action": "MEASURE",
+          "object": "kq_m_ax_area",
+          "depends": [
+            "td_sec_axial"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 12.",
+          "display_label": "Diện tích «Đa giác A, B, điểm, điểm»",
+          "semantic_kind": "FINAL_RESULT",
+          "details": {
+            "value": "12"
+          },
+          "learner_text": "Diện tích «Đa giác A, B, điểm, điểm» bằng 12."
+        }
+      ],
+      "formation": {
+        "steps": [
+          {
+            "step_index": 0,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "h"
+            ],
+            "focus_ids": [],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dữ kiện đề cho: Đại lượng đo = 2, Đại lượng đo = 3.",
+            "semantic_kind": "EXPLANATION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "DECLARE_ENTITIES"
+            ]
+          },
+          {
+            "step_index": 1,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "h",
+              "khoi_cyl"
+            ],
+            "focus_ids": [
+              "khoi_cyl"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng hình trụ tròn xoay O.O' tâm O.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CLOSE_SOLID"
+            ]
+          },
+          {
+            "step_index": 2,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl"
+            ],
+            "focus_ids": [
+              "mp_day_cyl"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng mặt phẳng đáy (O).",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 3,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "duong_tron_day_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl"
+            ],
+            "focus_ids": [
+              "duong_tron_day_cyl"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (O).",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 4,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "duong_tron_day_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl"
+            ],
+            "focus_ids": [
+              "mp_day_tren_cyl"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng mặt phẳng đáy trên (O').",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 5,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl"
+            ],
+            "focus_ids": [
+              "duong_tron_day_tren_cyl"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và «Mặt phẳng cho bằng phương trình».",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 6,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "truc_O_O_prime"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng trục OO'.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 7,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "ban_kinh_O_A"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng bán kính đáy OA.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 8,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "mp_sec_parallel"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng mặt phẳng (α).",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 9,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "td_sec_parallel"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (α).",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 10,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "B"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng B.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 11,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_axial",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "td_sec_axial"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng thiết diện qua trục hình trụ.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 12,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "kq_m_vol",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_axial",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "kq_m_vol"
+            ],
+            "readout_ids": [
+              "R",
+              "h",
+              "kq_m_vol"
+            ],
+            "learner_text": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 12π.",
+            "semantic_kind": "FINAL_RESULT",
+            "geometry_progress": [],
+            "formation_roles": []
+          },
+          {
+            "step_index": 13,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "kq_m_lat",
+              "kq_m_vol",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_axial",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "kq_m_lat"
+            ],
+            "readout_ids": [
+              "R",
+              "h",
+              "kq_m_lat",
+              "kq_m_vol"
+            ],
+            "learner_text": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 12π.",
+            "semantic_kind": "FINAL_RESULT",
+            "geometry_progress": [],
+            "formation_roles": []
+          },
+          {
+            "step_index": 14,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "kq_m_lat",
+              "kq_m_par_area",
+              "kq_m_vol",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_axial",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "kq_m_par_area"
+            ],
+            "readout_ids": [
+              "R",
+              "h",
+              "kq_m_lat",
+              "kq_m_par_area",
+              "kq_m_vol"
+            ],
+            "learner_text": "Diện tích «Đường tròn giao của khối cong và (α)» bằng 4π.",
+            "semantic_kind": "FINAL_RESULT",
+            "geometry_progress": [],
+            "formation_roles": []
+          },
+          {
+            "step_index": 15,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "kq_m_ax_area",
+              "kq_m_lat",
+              "kq_m_par_area",
+              "kq_m_vol",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_axial",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "kq_m_ax_area"
+            ],
+            "readout_ids": [
+              "R",
+              "h",
+              "kq_m_ax_area",
+              "kq_m_lat",
+              "kq_m_par_area",
+              "kq_m_vol"
+            ],
+            "learner_text": "Diện tích «Đa giác A, B, điểm, điểm» bằng 12.",
+            "semantic_kind": "FINAL_RESULT",
+            "geometry_progress": [],
+            "formation_roles": []
+          }
+        ]
+      },
+      "free_objects": [
+        "A",
+        "A_prime_sec_axial",
+        "B_prime_sec_axial",
+        "O",
+        "O_prime",
+        "R",
+        "h"
+      ],
+      "diagnostics": [
+        "ANNOTATION_UNBOUND R: no GIVEN evidence span in the text",
+        "ANNOTATION_UNBOUND h: no GIVEN evidence span in the text",
+        "ANNOTATION_UNBOUND kq_m_vol: volume of a curved_solid has no registered anchor",
+        "ANNOTATION_UNBOUND kq_m_lat: measure lateral_area has no registered anchor",
+        "ANNOTATION_UNBOUND kq_m_par_area: area of a circle3 has no registered anchor"
+      ],
+      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`.",
+      "simulation_contract": {
+        "schema_version": "hybrid-route-d-simulation/3",
+        "adapter_version": "hybrid-simulation-adapter/3",
+        "contract_version": "typed-fact-next/1",
+        "solids": [
+          {
+            "solid_id": "cyl",
+            "solid_type": "cylinder",
+            "notation": "O.O'",
+            "canonical_notation": "O.O'",
+            "coordinate_frame_id": "root",
+            "local_to_canonical": {
+              "O": "O",
+              "O'": "O'",
+              "A": "A"
+            },
+            "scene_object_id": "khoi_cyl"
+          }
+        ],
+        "derived_identities": [],
+        "verified_relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sim_cyl",
+            "kind": "construct_object",
+            "status": "CONSTRUCTED",
+            "scene_object_ids": [
+              "khoi_cyl"
+            ],
+            "style_role": "primary"
+          },
+          {
+            "goal_id": "sim_sec_par",
+            "kind": "construct_plane_section",
+            "status": "CONSTRUCTED",
+            "scene_object_ids": [
+              "td_sec_parallel",
+              "mp_sec_parallel"
+            ],
+            "section_object_id": "td_sec_parallel",
+            "plane_object_id": "mp_sec_parallel",
+            "section_vertex_ids": [],
+            "style_role": "primary"
+          },
+          {
+            "goal_id": "sim_sec_ax",
+            "kind": "construct_plane_section",
+            "status": "CONSTRUCTED",
+            "scene_object_ids": [
+              "td_sec_axial",
+              "td_sec_axial"
+            ],
+            "section_object_id": "td_sec_axial",
+            "plane_object_id": "td_sec_axial",
+            "section_vertex_ids": [
+              "A",
+              "B",
+              "B_prime_sec_axial",
+              "A_prime_sec_axial"
+            ],
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "m_vol",
+            "kind": "measurement",
+            "goal_type": "volume",
+            "value_display": "12π",
+            "exact": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "certificate": {
+              "rule": "curved_measure_volume",
+              "kernel_var": "kq_m_vol"
+            }
+          },
+          {
+            "goal_id": "m_lat",
+            "kind": "measurement",
+            "goal_type": "lateral_area",
+            "value_display": "12π",
+            "exact": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "certificate": {
+              "rule": "curved_measure_lateral_area",
+              "kernel_var": "kq_m_lat"
+            }
+          },
+          {
+            "goal_id": "m_par_area",
+            "kind": "measurement",
+            "goal_type": "area",
+            "value_display": "4π",
+            "exact": {
+              "coef": "4π",
+              "dim": 0,
+              "unit": null
+            },
+            "certificate": {
+              "rule": "curved_measure_area",
+              "kernel_var": "kq_m_par_area"
+            }
+          },
+          {
+            "goal_id": "m_ax_area",
+            "kind": "measurement",
+            "goal_type": "area",
+            "value_display": "12",
+            "exact": {
+              "coef": "12",
+              "dim": 0,
+              "unit": null
+            },
+            "certificate": {
+              "rule": "curved_measure_area",
+              "kernel_var": "kq_m_ax_area"
+            }
+          }
+        ]
+      }
+    },
+    "planner": {
+      "version": "hybrid-simulation-adapter/3",
+      "calls": [
+        {
+          "kind": "construct_curved_solid",
+          "target_var": "khoi_cyl",
+          "curved_kind": "cylinder",
+          "anchor": "O",
+          "apex_or_top": "O_prime",
+          "rim_point": "A",
+          "radius": null,
+          "height": null,
+          "label": "Hình trụ tròn xoay O.O' tâm O"
+        },
+        {
+          "kind": "construct_plane_from_equation",
+          "target_var": "mp_day_cyl",
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": 0,
+          "label": "Mặt phẳng đáy (O)"
+        },
+        {
+          "kind": "assign",
+          "target_var": "duong_tron_day_cyl",
+          "expr": {
+            "kind": "intersect_plane_curved",
+            "solid": "khoi_cyl",
+            "plane": "mp_day_cyl"
+          }
+        },
+        {
+          "kind": "construct_plane_from_equation",
+          "target_var": "mp_day_tren_cyl",
+          "a": 0,
+          "b": 0,
+          "c": 1,
+          "d": "-3",
+          "label": "Mặt phẳng đáy trên (O')"
+        },
+        {
+          "kind": "assign",
+          "target_var": "duong_tron_day_tren_cyl",
+          "expr": {
+            "kind": "intersect_plane_curved",
+            "solid": "khoi_cyl",
+            "plane": "mp_day_tren_cyl"
+          }
+        },
+        {
+          "kind": "construct_segment",
+          "target_var": "truc_O_O_prime",
+          "endpoint_a": "O",
+          "endpoint_b": "O_prime",
+          "label": "Trục OO'"
+        },
+        {
+          "kind": "construct_segment",
+          "target_var": "ban_kinh_O_A",
+          "endpoint_a": "O",
+          "endpoint_b": "A",
+          "label": "Bán kính đáy OA"
+        },
+        {
+          "kind": "construct_plane_from_equation",
+          "target_var": "mp_sec_parallel",
+          "a": "0",
+          "b": "0",
+          "c": "1",
+          "d": "-1",
+          "label": "Mặt phẳng (α)"
+        },
+        {
+          "kind": "assign",
+          "target_var": "td_sec_parallel",
+          "expr": {
+            "kind": "intersect_plane_curved",
+            "solid": "khoi_cyl",
+            "plane": "mp_sec_parallel"
+          }
+        },
+        {
+          "kind": "construct_point",
+          "target_var": "B",
+          "expr": {
+            "kind": "divide_segment",
+            "a": "A",
+            "b": "O",
+            "ratio": "2"
+          },
+          "label": "B"
+        },
+        {
+          "kind": "construct_polygon",
+          "target_var": "td_sec_axial",
+          "vertices": [
+            "A",
+            "B",
+            "B_prime_sec_axial",
+            "A_prime_sec_axial"
+          ],
+          "label": "Thiết diện qua trục hình trụ"
+        },
+        {
+          "kind": "assign",
+          "target_var": "kq_m_vol",
+          "expr": {
+            "kind": "measure",
+            "quantity": "volume",
+            "of": "khoi_cyl"
+          }
+        },
+        {
+          "kind": "assign",
+          "target_var": "kq_m_lat",
+          "expr": {
+            "kind": "measure",
+            "quantity": "lateral_area",
+            "of": "khoi_cyl"
+          }
+        },
+        {
+          "kind": "assign",
+          "target_var": "kq_m_par_area",
+          "expr": {
+            "kind": "measure",
+            "quantity": "area",
+            "of": "td_sec_parallel"
+          }
+        },
+        {
+          "kind": "assign",
+          "target_var": "kq_m_ax_area",
+          "expr": {
+            "kind": "measure",
+            "quantity": "area",
+            "of": "td_sec_axial"
+          }
+        }
+      ],
+      "trace": [],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "trace": [],
+    "calls": [
+      {
+        "kind": "construct_curved_solid",
+        "target_var": "khoi_cyl",
+        "curved_kind": "cylinder",
+        "anchor": "O",
+        "apex_or_top": "O_prime",
+        "rim_point": "A",
+        "radius": null,
+        "height": null,
+        "label": "Hình trụ tròn xoay O.O' tâm O"
+      },
+      {
+        "kind": "construct_plane_from_equation",
+        "target_var": "mp_day_cyl",
+        "a": 0,
+        "b": 0,
+        "c": 1,
+        "d": 0,
+        "label": "Mặt phẳng đáy (O)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "duong_tron_day_cyl",
+        "expr": {
+          "kind": "intersect_plane_curved",
+          "solid": "khoi_cyl",
+          "plane": "mp_day_cyl"
+        }
+      },
+      {
+        "kind": "construct_plane_from_equation",
+        "target_var": "mp_day_tren_cyl",
+        "a": 0,
+        "b": 0,
+        "c": 1,
+        "d": "-3",
+        "label": "Mặt phẳng đáy trên (O')"
+      },
+      {
+        "kind": "assign",
+        "target_var": "duong_tron_day_tren_cyl",
+        "expr": {
+          "kind": "intersect_plane_curved",
+          "solid": "khoi_cyl",
+          "plane": "mp_day_tren_cyl"
+        }
+      },
+      {
+        "kind": "construct_segment",
+        "target_var": "truc_O_O_prime",
+        "endpoint_a": "O",
+        "endpoint_b": "O_prime",
+        "label": "Trục OO'"
+      },
+      {
+        "kind": "construct_segment",
+        "target_var": "ban_kinh_O_A",
+        "endpoint_a": "O",
+        "endpoint_b": "A",
+        "label": "Bán kính đáy OA"
+      },
+      {
+        "kind": "construct_plane_from_equation",
+        "target_var": "mp_sec_parallel",
+        "a": "0",
+        "b": "0",
+        "c": "1",
+        "d": "-1",
+        "label": "Mặt phẳng (α)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "td_sec_parallel",
+        "expr": {
+          "kind": "intersect_plane_curved",
+          "solid": "khoi_cyl",
+          "plane": "mp_sec_parallel"
+        }
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "B",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "A",
+          "b": "O",
+          "ratio": "2"
+        },
+        "label": "B"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "td_sec_axial",
+        "vertices": [
+          "A",
+          "B",
+          "B_prime_sec_axial",
+          "A_prime_sec_axial"
+        ],
+        "label": "Thiết diện qua trục hình trụ"
+      },
+      {
+        "kind": "assign",
+        "target_var": "kq_m_vol",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "khoi_cyl"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "kq_m_lat",
+        "expr": {
+          "kind": "measure",
+          "quantity": "lateral_area",
+          "of": "khoi_cyl"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "kq_m_par_area",
+        "expr": {
+          "kind": "measure",
+          "quantity": "area",
+          "of": "td_sec_parallel"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "kq_m_ax_area",
+        "expr": {
+          "kind": "measure",
+          "quantity": "area",
+          "of": "td_sec_axial"
+        }
+      }
+    ]
+  },
+  "route_d": {
+    "schema_version": "hybrid-route-d-simulation/3",
+    "adapter_version": "hybrid-simulation-adapter/3",
+    "contract_version": "typed-fact-next/1",
+    "status": "SERVED",
+    "refusal": null,
+    "solids": [
+      {
+        "solid_id": "cyl",
+        "solid_type": "cylinder",
+        "notation": "O.O'",
+        "canonical_notation": "O.O'",
+        "coordinate_frame_id": "root",
+        "local_to_canonical": {
+          "O": "O",
+          "O'": "O'",
+          "A": "A"
+        },
+        "scene_object_id": "khoi_cyl"
+      }
+    ],
+    "derived_identities": [],
+    "verified_relations": [],
+    "simulation_goals": [
+      {
+        "goal_id": "sim_cyl",
+        "kind": "construct_object",
+        "status": "CONSTRUCTED",
+        "scene_object_ids": [
+          "khoi_cyl"
+        ],
+        "style_role": "primary"
+      },
+      {
+        "goal_id": "sim_sec_par",
+        "kind": "construct_plane_section",
+        "status": "CONSTRUCTED",
+        "scene_object_ids": [
+          "td_sec_parallel",
+          "mp_sec_parallel"
+        ],
+        "section_object_id": "td_sec_parallel",
+        "plane_object_id": "mp_sec_parallel",
+        "section_vertex_ids": [],
+        "style_role": "primary"
+      },
+      {
+        "goal_id": "sim_sec_ax",
+        "kind": "construct_plane_section",
+        "status": "CONSTRUCTED",
+        "scene_object_ids": [
+          "td_sec_axial",
+          "td_sec_axial"
+        ],
+        "section_object_id": "td_sec_axial",
+        "plane_object_id": "td_sec_axial",
+        "section_vertex_ids": [
+          "A",
+          "B",
+          "B_prime_sec_axial",
+          "A_prime_sec_axial"
+        ],
+        "style_role": "primary"
+      }
+    ],
+    "math_goals": [
+      {
+        "goal_id": "m_vol",
+        "kind": "measurement",
+        "goal_type": "volume",
+        "value_display": "12π",
+        "exact": {
+          "coef": "12π",
+          "dim": 0,
+          "unit": null
+        },
+        "certificate": {
+          "rule": "curved_measure_volume",
+          "kernel_var": "kq_m_vol"
+        }
+      },
+      {
+        "goal_id": "m_lat",
+        "kind": "measurement",
+        "goal_type": "lateral_area",
+        "value_display": "12π",
+        "exact": {
+          "coef": "12π",
+          "dim": 0,
+          "unit": null
+        },
+        "certificate": {
+          "rule": "curved_measure_lateral_area",
+          "kernel_var": "kq_m_lat"
+        }
+      },
+      {
+        "goal_id": "m_par_area",
+        "kind": "measurement",
+        "goal_type": "area",
+        "value_display": "4π",
+        "exact": {
+          "coef": "4π",
+          "dim": 0,
+          "unit": null
+        },
+        "certificate": {
+          "rule": "curved_measure_area",
+          "kernel_var": "kq_m_par_area"
+        }
+      },
+      {
+        "goal_id": "m_ax_area",
+        "kind": "measurement",
+        "goal_type": "area",
+        "value_display": "12",
+        "exact": {
+          "coef": "12",
+          "dim": 0,
+          "unit": null
+        },
+        "certificate": {
+          "rule": "curved_measure_area",
+          "kernel_var": "kq_m_ax_area"
+        }
+      }
+    ],
+    "answers": {
+      "m_vol": "12π",
+      "m_lat": "12π",
+      "m_par_area": "4π",
+      "m_ax_area": "12"
+    },
+    "answer_exact": {
+      "m_vol": {
+        "coef": "12π",
+        "dim": 0,
+        "unit": null
+      },
+      "m_lat": {
+        "coef": "12π",
+        "dim": 0,
+        "unit": null
+      },
+      "m_par_area": {
+        "coef": "4π",
+        "dim": 0,
+        "unit": null
+      },
+      "m_ax_area": {
+        "coef": "12",
+        "dim": 0,
+        "unit": null
+      }
+    },
+    "length_unit": null,
+    "scene3d": {
+      "objects": [
+        {
+          "id": "O",
+          "label": "Điểm O",
+          "notation": "O",
+          "reference": "O",
+          "role": "Điểm",
+          "display_label": "Điểm O",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "xyz": [
+            "0",
+            "0",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "R",
+          "label": "Đại lượng đo",
+          "notation": null,
+          "reference": "đại lượng",
+          "role": "Giá trị cho trong đề",
+          "display_label": "Đại lượng đo",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "value": "2",
+          "exact": {
+            "kind": "rational",
+            "value": "2"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "đại lượng = 2",
+            "references": []
+          }
+        },
+        {
+          "id": "h",
+          "label": "Đại lượng đo",
+          "notation": null,
+          "reference": "đại lượng",
+          "role": "Giá trị cho trong đề",
+          "display_label": "Đại lượng đo",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given",
+            "measurement"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "value": "3",
+          "exact": {
+            "kind": "rational",
+            "value": "3"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "đại lượng = 3",
+            "references": []
+          }
+        },
+        {
+          "id": "O_prime",
+          "label": "Điểm O′",
+          "notation": "O′",
+          "reference": "O′",
+          "role": "Điểm",
+          "display_label": "Điểm O′",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "xyz": [
+            "0",
+            "0",
+            "3"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "A",
+          "label": "Điểm A",
+          "notation": "A",
+          "reference": "A",
+          "role": "Điểm",
+          "display_label": "Điểm A",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "xyz": [
+            "2",
+            "0",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "khoi_cyl",
+          "label": "Hình trụ tròn xoay O.O' tâm O",
+          "notation": null,
+          "reference": "Hình trụ đáy tâm O, tâm đáy trên O′, qua A",
+          "role": "Hình trụ đáy tâm O, tâm đáy trên O′, qua A",
+          "display_label": "Hình trụ tròn xoay O.O' tâm O",
+          "type": "curved_solid",
+          "render": "curved_solid",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_curved_solid.cylinder",
+          "depends": [
+            "A",
+            "O",
+            "O_prime"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "O",
+              "relation": "topological"
+            },
+            {
+              "source_id": "O_prime",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_curved_solid.cylinder"
+          },
+          "formation_roles": [
+            "CLOSE_SOLID"
+          ],
+          "curved_kind": "cylinder",
+          "anchor": [
+            "0",
+            "0",
+            "0"
+          ],
+          "apex_or_top": [
+            "0",
+            "0",
+            "3"
+          ],
+          "rim_point": [
+            "2",
+            "0",
+            "0"
+          ],
+          "radius_sq": "4",
+          "height_sq": "9",
+          "occludes_edges": false
+        },
+        {
+          "id": "mp_day_cyl",
+          "label": "Mặt phẳng đáy (O)",
+          "notation": "(O)",
+          "reference": "(O)",
+          "role": "Mặt phẳng cho bằng phương trình",
+          "display_label": "Mặt phẳng đáy (O)",
+          "type": "plane3",
+          "render": "surface",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_plane_from_equation",
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_plane_from_equation"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "point": [
+            "0",
+            "0",
+            "0"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "1"
+          ],
+          "occludes_edges": false,
+          "surface_role": "CUTTING_PLANE"
+        },
+        {
+          "id": "duong_tron_day_cyl",
+          "label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (O)",
+          "notation": null,
+          "reference": "Đường tròn giao của khối cong và (O)",
+          "role": "Đường tròn",
+          "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (O)",
+          "type": "circle3",
+          "render": "circle",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "intersect_plane_curved",
+          "depends": [
+            "khoi_cyl",
+            "mp_day_cyl"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "khoi_cyl",
+              "relation": "structural"
+            },
+            {
+              "source_id": "mp_day_cyl",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "intersect_plane_curved"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "center": [
+            "0",
+            "0",
+            "0"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "3"
+          ],
+          "radius_sq": "4",
+          "occludes_edges": false
+        },
+        {
+          "id": "mp_day_tren_cyl",
+          "label": "Mặt phẳng đáy trên (O')",
+          "notation": null,
+          "reference": "Mặt phẳng cho bằng phương trình",
+          "role": "Mặt phẳng cho bằng phương trình",
+          "display_label": "Mặt phẳng đáy trên (O')",
+          "type": "plane3",
+          "render": "surface",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_plane_from_equation",
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_plane_from_equation"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "point": [
+            "0",
+            "0",
+            "3"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "1"
+          ],
+          "occludes_edges": false,
+          "surface_role": "CUTTING_PLANE"
+        },
+        {
+          "id": "duong_tron_day_tren_cyl",
+          "label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và «Mặt phẳng cho bằng phương trình»",
+          "notation": null,
+          "reference": "Đường tròn giao của khối cong và mặt phẳng",
+          "role": "Đường tròn",
+          "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và «Mặt phẳng cho bằng phương trình»",
+          "type": "circle3",
+          "render": "circle",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "intersect_plane_curved",
+          "depends": [
+            "khoi_cyl",
+            "mp_day_tren_cyl"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "khoi_cyl",
+              "relation": "structural"
+            },
+            {
+              "source_id": "mp_day_tren_cyl",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "intersect_plane_curved"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "center": [
+            "0",
+            "0",
+            "3"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "3"
+          ],
+          "radius_sq": "4",
+          "occludes_edges": false
+        },
+        {
+          "id": "truc_O_O_prime",
+          "label": "Trục OO'",
+          "notation": "OO′",
+          "reference": "OO′",
+          "role": "Đoạn thẳng nối O và O′",
+          "display_label": "Trục OO'",
+          "type": "segment3",
+          "render": "segment",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": [
+            "O",
+            "O_prime"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "O",
+              "relation": "topological"
+            },
+            {
+              "source_id": "O_prime",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_segment"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "point_a": [
+            "0",
+            "0",
+            "0"
+          ],
+          "point_b": [
+            "0",
+            "0",
+            "3"
+          ],
+          "endpoints": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "3"
+            ]
+          ],
+          "endpoint_ids": [
+            "O",
+            "O_prime"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "ban_kinh_O_A",
+          "label": "Bán kính đáy OA",
+          "notation": "OA",
+          "reference": "OA",
+          "role": "Đoạn thẳng nối O và A",
+          "display_label": "Bán kính đáy OA",
+          "type": "segment3",
+          "render": "segment",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_segment",
+          "depends": [
+            "A",
+            "O"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "O",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_segment"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "point_a": [
+            "0",
+            "0",
+            "0"
+          ],
+          "point_b": [
+            "2",
+            "0",
+            "0"
+          ],
+          "endpoints": [
+            [
+              "0",
+              "0",
+              "0"
+            ],
+            [
+              "2",
+              "0",
+              "0"
+            ]
+          ],
+          "endpoint_ids": [
+            "O",
+            "A"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "mp_sec_parallel",
+          "label": "Mặt phẳng (α)",
+          "notation": "(α)",
+          "reference": "(α)",
+          "role": "Mặt phẳng cho bằng phương trình",
+          "display_label": "Mặt phẳng (α)",
+          "type": "plane3",
+          "render": "surface",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_plane_from_equation",
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_plane_from_equation"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "point": [
+            "0",
+            "0",
+            "1"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "1"
+          ],
+          "occludes_edges": false,
+          "surface_role": "CUTTING_PLANE"
+        },
+        {
+          "id": "td_sec_parallel",
+          "label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (α)",
+          "notation": null,
+          "reference": "Đường tròn giao của khối cong và (α)",
+          "role": "Đường tròn",
+          "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (α)",
+          "type": "circle3",
+          "render": "circle",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "intersect_plane_curved",
+          "depends": [
+            "khoi_cyl",
+            "mp_sec_parallel"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "khoi_cyl",
+              "relation": "structural"
+            },
+            {
+              "source_id": "mp_sec_parallel",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "intersect_plane_curved"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "center": [
+            "0",
+            "0",
+            "1"
+          ],
+          "normal": [
+            "0",
+            "0",
+            "3"
+          ],
+          "radius_sq": "4",
+          "occludes_edges": false
+        },
+        {
+          "id": "B",
+          "label": "B",
+          "notation": "B",
+          "reference": "B",
+          "role": "Điểm chia đoạn nối A và O",
+          "display_label": "B",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_point.divide_segment",
+          "depends": [
+            "A",
+            "O"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "O",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_point.divide_segment"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "xyz": [
+            "-2",
+            "0",
+            "0"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "td_sec_axial",
+          "label": "Thiết diện qua trục hình trụ",
+          "notation": null,
+          "reference": "Đa giác A, B, điểm, điểm",
+          "role": "Đa giác A, B, điểm, điểm",
+          "display_label": "Thiết diện qua trục hình trụ",
+          "type": "polygon3",
+          "render": "polygon",
+          "display_role": "visual_owner",
+          "origin": "derived",
+          "producer": "construct_polygon",
+          "depends": [
+            "A",
+            "A_prime_sec_axial",
+            "B",
+            "B_prime_sec_axial"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "A",
+              "relation": "topological"
+            },
+            {
+              "source_id": "A_prime_sec_axial",
+              "relation": "topological"
+            },
+            {
+              "source_id": "B",
+              "relation": "topological"
+            },
+            {
+              "source_id": "B_prime_sec_axial",
+              "relation": "topological"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "face"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "construct_polygon"
+          },
+          "formation_roles": [
+            "CONSTRUCT_AUXILIARY_GEOMETRY"
+          ],
+          "vertices": [
+            [
+              "2",
+              "0",
+              "0"
+            ],
+            [
+              "-2",
+              "0",
+              "0"
+            ],
+            [
+              "-2",
+              "0",
+              "3"
+            ],
+            [
+              "2",
+              "0",
+              "3"
+            ]
+          ],
+          "vertex_ids": [
+            "A",
+            "B",
+            "B_prime_sec_axial",
+            "A_prime_sec_axial"
+          ],
+          "occludes_edges": false,
+          "surface_role": "AUXILIARY_SURFACE"
+        },
+        {
+          "id": "A_prime_sec_axial",
+          "label": "Điểm",
+          "notation": null,
+          "reference": "điểm",
+          "role": "Điểm",
+          "display_label": "Điểm",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "xyz": [
+            "2",
+            "0",
+            "3"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "B_prime_sec_axial",
+          "label": "Điểm",
+          "notation": null,
+          "reference": "điểm",
+          "role": "Điểm",
+          "display_label": "Điểm",
+          "type": "point3",
+          "render": "point_marker",
+          "display_role": "visual_owner",
+          "origin": "free",
+          "producer": null,
+          "depends": [],
+          "dependency_edges": [],
+          "parent": null,
+          "display_group": [
+            "given"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {},
+          "formation_roles": [],
+          "xyz": [
+            "-2",
+            "0",
+            "3"
+          ],
+          "occludes_edges": false
+        },
+        {
+          "id": "kq_m_vol",
+          "label": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "notation": null,
+          "reference": "Thể tích khối cong",
+          "role": "Thể tích khối",
+          "display_label": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.volume",
+          "depends": [
+            "khoi_cyl"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "khoi_cyl",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.volume"
+          },
+          "formation_roles": [],
+          "value": "12π",
+          "exact": {
+            "kind": "radical",
+            "coefficient": "12",
+            "radicand": 1,
+            "pi": 1
+          },
+          "occludes_edges": false
+        },
+        {
+          "id": "kq_m_lat",
+          "label": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "notation": null,
+          "reference": "Diện tích mặt cong của khối cong",
+          "role": "Diện tích mặt cong",
+          "display_label": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.lateral_area",
+          "depends": [
+            "khoi_cyl"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "khoi_cyl",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.lateral_area"
+          },
+          "formation_roles": [],
+          "value": "12π",
+          "exact": {
+            "kind": "radical",
+            "coefficient": "12",
+            "radicand": 1,
+            "pi": 1
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "Diện tích mặt cong của khối cong = 12π",
+            "references": []
+          }
+        },
+        {
+          "id": "kq_m_par_area",
+          "label": "Diện tích «Đường tròn giao của khối cong và (α)»",
+          "notation": null,
+          "reference": "Diện tích đường tròn",
+          "role": "Diện tích",
+          "display_label": "Diện tích «Đường tròn giao của khối cong và (α)»",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.area",
+          "depends": [
+            "td_sec_parallel"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "td_sec_parallel",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.area"
+          },
+          "formation_roles": [],
+          "value": "4π",
+          "exact": {
+            "kind": "radical",
+            "coefficient": "4",
+            "radicand": 1,
+            "pi": 1
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "Diện tích đường tròn = 4π",
+            "references": []
+          }
+        },
+        {
+          "id": "kq_m_ax_area",
+          "label": "Diện tích «Đa giác A, B, điểm, điểm»",
+          "notation": null,
+          "reference": "Diện tích đa giác",
+          "role": "Diện tích",
+          "display_label": "Diện tích «Đa giác A, B, điểm, điểm»",
+          "type": "quantity",
+          "render": "readout",
+          "display_role": "measurement",
+          "origin": "derived",
+          "producer": "measure.area",
+          "depends": [
+            "td_sec_axial"
+          ],
+          "dependency_edges": [
+            {
+              "source_id": "td_sec_axial",
+              "relation": "structural"
+            }
+          ],
+          "parent": null,
+          "display_group": [
+            "construction",
+            "measurement",
+            "target"
+          ],
+          "visual_transform": {
+            "translate": [
+              0,
+              0,
+              0
+            ],
+            "scale": 1
+          },
+          "source": {
+            "instruction": "measure.area"
+          },
+          "formation_roles": [],
+          "value": "12",
+          "exact": {
+            "kind": "rational",
+            "value": "12"
+          },
+          "occludes_edges": false,
+          "formula": {
+            "text": "Diện tích đa giác = 12",
+            "references": []
+          },
+          "annotation": {
+            "kind": "area",
+            "subject_ids": [
+              "td_sec_axial"
+            ],
+            "anchor": "region",
+            "unit": null,
+            "category": "result",
+            "role": "result"
+          }
+        }
+      ],
+      "events": [
+        {
+          "step_index": 0,
+          "action": "INIT",
+          "object": null,
+          "depends": [],
+          "explanation": "Khởi tạo mô phỏng và nạp trạng thái ban đầu của bộ nhớ.",
+          "display_label": "Bước dựng hình",
+          "semantic_kind": "EXPLANATION",
+          "details": {},
+          "learner_text": "Dữ kiện đề cho: Đại lượng đo = 2, Đại lượng đo = 3."
+        },
+        {
+          "step_index": 1,
+          "action": "CREATE",
+          "object": "khoi_cyl",
+          "depends": [
+            "O",
+            "O_prime",
+            "A"
+          ],
+          "explanation": "Dựng hình trụ: đáy tâm O đi qua A, tâm đáy trên O′.",
+          "display_label": "Hình trụ tròn xoay O.O' tâm O",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Hình trụ tròn xoay O.O' tâm O",
+            "loai": "cylinder",
+            "neo": [
+              "O",
+              "O_prime",
+              "A"
+            ]
+          },
+          "learner_text": "Dựng hình trụ tròn xoay O.O' tâm O."
+        },
+        {
+          "step_index": 2,
+          "action": "CREATE",
+          "object": "mp_day_cyl",
+          "depends": [],
+          "explanation": "Dựng mặt phẳng từ phương trình z = 0.",
+          "display_label": "Mặt phẳng đáy (O)",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Mặt phẳng đáy (O)",
+            "phuong_trinh": {
+              "a": "0",
+              "b": "0",
+              "c": "1",
+              "d": "0"
+            }
+          },
+          "learner_text": "Dựng mặt phẳng đáy (O)."
+        },
+        {
+          "step_index": 3,
+          "action": "CREATE",
+          "object": "duong_tron_day_cyl",
+          "depends": [
+            "khoi_cyl",
+            "mp_day_cyl"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(0, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(3, 1)), radius_sq=Fraction(4, 1)).",
+          "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (O)",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "value": {
+              "kind": "circle3",
+              "center": [
+                "0",
+                "0",
+                "0"
+              ],
+              "normal": [
+                "0",
+                "0",
+                "3"
+              ],
+              "radius_sq": "4"
+            }
+          },
+          "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (O)."
+        },
+        {
+          "step_index": 4,
+          "action": "CREATE",
+          "object": "mp_day_tren_cyl",
+          "depends": [],
+          "explanation": "Dựng mặt phẳng từ phương trình z - 3 = 0.",
+          "display_label": "Mặt phẳng đáy trên (O')",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Mặt phẳng đáy trên (O')",
+            "phuong_trinh": {
+              "a": "0",
+              "b": "0",
+              "c": "1",
+              "d": "-3"
+            }
+          },
+          "learner_text": "Dựng mặt phẳng đáy trên (O')."
+        },
+        {
+          "step_index": 5,
+          "action": "CREATE",
+          "object": "duong_tron_day_tren_cyl",
+          "depends": [
+            "khoi_cyl",
+            "mp_day_tren_cyl"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(3, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(3, 1)), radius_sq=Fraction(4, 1)).",
+          "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và «Mặt phẳng cho bằng phương trình»",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "value": {
+              "kind": "circle3",
+              "center": [
+                "0",
+                "0",
+                "3"
+              ],
+              "normal": [
+                "0",
+                "0",
+                "3"
+              ],
+              "radius_sq": "4"
+            }
+          },
+          "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và «Mặt phẳng cho bằng phương trình»."
+        },
+        {
+          "step_index": 6,
+          "action": "CREATE",
+          "object": "truc_O_O_prime",
+          "depends": [
+            "O",
+            "O_prime"
+          ],
+          "explanation": "Dựng đoạn thẳng nối O và O′.",
+          "display_label": "Trục OO'",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Trục OO'",
+            "objects": [
+              "truc_O_O_prime"
+            ],
+            "qua": [
+              "O",
+              "O_prime"
+            ]
+          },
+          "learner_text": "Dựng trục OO'.",
+          "objects": [
+            "truc_O_O_prime"
+          ]
+        },
+        {
+          "step_index": 7,
+          "action": "CREATE",
+          "object": "ban_kinh_O_A",
+          "depends": [
+            "O",
+            "A"
+          ],
+          "explanation": "Dựng đoạn thẳng nối O và A.",
+          "display_label": "Bán kính đáy OA",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Bán kính đáy OA",
+            "objects": [
+              "ban_kinh_O_A"
+            ],
+            "qua": [
+              "O",
+              "A"
+            ]
+          },
+          "learner_text": "Dựng bán kính đáy OA.",
+          "objects": [
+            "ban_kinh_O_A"
+          ]
+        },
+        {
+          "step_index": 8,
+          "action": "CREATE",
+          "object": "mp_sec_parallel",
+          "depends": [],
+          "explanation": "Dựng mặt phẳng (α) từ phương trình z - 1 = 0.",
+          "display_label": "Mặt phẳng (α)",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Mặt phẳng (α)",
+            "phuong_trinh": {
+              "a": "0",
+              "b": "0",
+              "c": "1",
+              "d": "-1"
+            }
+          },
+          "learner_text": "Dựng mặt phẳng (α)."
+        },
+        {
+          "step_index": 9,
+          "action": "CREATE",
+          "object": "td_sec_parallel",
+          "depends": [
+            "khoi_cyl",
+            "mp_sec_parallel"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: Circle3(center=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(1, 1)), normal=Vec3(x=Fraction(0, 1), y=Fraction(0, 1), z=Fraction(3, 1)), radius_sq=Fraction(4, 1)).",
+          "display_label": "Đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (α)",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "value": {
+              "kind": "circle3",
+              "center": [
+                "0",
+                "0",
+                "1"
+              ],
+              "normal": [
+                "0",
+                "0",
+                "3"
+              ],
+              "radius_sq": "4"
+            }
+          },
+          "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (α)."
+        },
+        {
+          "step_index": 10,
+          "action": "CREATE",
+          "object": "B",
+          "depends": [
+            "A",
+            "O"
+          ],
+          "explanation": "Dựng điểm B = (-2, 0, 0).",
+          "display_label": "B",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "B",
+            "toa_do": [
+              "-2",
+              "0",
+              "0"
+            ]
+          },
+          "learner_text": "Dựng B."
+        },
+        {
+          "step_index": 11,
+          "action": "CREATE",
+          "object": "td_sec_axial",
+          "depends": [
+            "A",
+            "B",
+            "B_prime_sec_axial",
+            "A_prime_sec_axial"
+          ],
+          "explanation": "Dựng đa giác Thiết diện qua trục hình trụ.",
+          "display_label": "Thiết diện qua trục hình trụ",
+          "semantic_kind": "GEOMETRY_CONSTRUCTION",
+          "details": {
+            "label": "Thiết diện qua trục hình trụ",
+            "dinh": [
+              "A",
+              "B",
+              "B_prime_sec_axial",
+              "A_prime_sec_axial"
+            ]
+          },
+          "learner_text": "Dựng thiết diện qua trục hình trụ."
+        },
+        {
+          "step_index": 12,
+          "action": "MEASURE",
+          "object": "kq_m_vol",
+          "depends": [
+            "khoi_cyl"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 12π.",
+          "display_label": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "semantic_kind": "FINAL_RESULT",
+          "details": {
+            "value": {
+              "kind": "radical",
+              "coefficient": "12",
+              "radicand": 1,
+              "pi": 1
+            }
+          },
+          "learner_text": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 12π."
+        },
+        {
+          "step_index": 13,
+          "action": "MEASURE",
+          "object": "kq_m_lat",
+          "depends": [
+            "khoi_cyl"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 12π.",
+          "display_label": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A»",
+          "semantic_kind": "FINAL_RESULT",
+          "details": {
+            "value": {
+              "kind": "radical",
+              "coefficient": "12",
+              "radicand": 1,
+              "pi": 1
+            }
+          },
+          "learner_text": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 12π."
+        },
+        {
+          "step_index": 14,
+          "action": "MEASURE",
+          "object": "kq_m_par_area",
+          "depends": [
+            "td_sec_parallel"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 4π.",
+          "display_label": "Diện tích «Đường tròn giao của khối cong và (α)»",
+          "semantic_kind": "FINAL_RESULT",
+          "details": {
+            "value": {
+              "kind": "radical",
+              "coefficient": "4",
+              "radicand": 1,
+              "pi": 1
+            }
+          },
+          "learner_text": "Diện tích «Đường tròn giao của khối cong và (α)» bằng 4π."
+        },
+        {
+          "step_index": 15,
+          "action": "MEASURE",
+          "object": "kq_m_ax_area",
+          "depends": [
+            "td_sec_axial"
+          ],
+          "explanation": "Ghi nhận giá trị vừa tính được: 12.",
+          "display_label": "Diện tích «Đa giác A, B, điểm, điểm»",
+          "semantic_kind": "FINAL_RESULT",
+          "details": {
+            "value": "12"
+          },
+          "learner_text": "Diện tích «Đa giác A, B, điểm, điểm» bằng 12."
+        }
+      ],
+      "formation": {
+        "steps": [
+          {
+            "step_index": 0,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "h"
+            ],
+            "focus_ids": [],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dữ kiện đề cho: Đại lượng đo = 2, Đại lượng đo = 3.",
+            "semantic_kind": "EXPLANATION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "DECLARE_ENTITIES"
+            ]
+          },
+          {
+            "step_index": 1,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "h",
+              "khoi_cyl"
+            ],
+            "focus_ids": [
+              "khoi_cyl"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng hình trụ tròn xoay O.O' tâm O.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CLOSE_SOLID"
+            ]
+          },
+          {
+            "step_index": 2,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl"
+            ],
+            "focus_ids": [
+              "mp_day_cyl"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng mặt phẳng đáy (O).",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 3,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "duong_tron_day_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl"
+            ],
+            "focus_ids": [
+              "duong_tron_day_cyl"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (O).",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 4,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "duong_tron_day_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl"
+            ],
+            "focus_ids": [
+              "mp_day_tren_cyl"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng mặt phẳng đáy trên (O').",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 5,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl"
+            ],
+            "focus_ids": [
+              "duong_tron_day_tren_cyl"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và «Mặt phẳng cho bằng phương trình».",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 6,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "truc_O_O_prime"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng trục OO'.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 7,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "ban_kinh_O_A"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng bán kính đáy OA.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 8,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "mp_sec_parallel"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng mặt phẳng (α).",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 9,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "td_sec_parallel"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng đường tròn giao của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» và (α).",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 10,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "B"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng B.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 11,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_axial",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "td_sec_axial"
+            ],
+            "readout_ids": [
+              "R",
+              "h"
+            ],
+            "learner_text": "Dựng thiết diện qua trục hình trụ.",
+            "semantic_kind": "GEOMETRY_CONSTRUCTION",
+            "geometry_progress": [],
+            "formation_roles": [
+              "CONSTRUCT_AUXILIARY_GEOMETRY"
+            ]
+          },
+          {
+            "step_index": 12,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "kq_m_vol",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_axial",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "kq_m_vol"
+            ],
+            "readout_ids": [
+              "R",
+              "h",
+              "kq_m_vol"
+            ],
+            "learner_text": "Thể tích «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 12π.",
+            "semantic_kind": "FINAL_RESULT",
+            "geometry_progress": [],
+            "formation_roles": []
+          },
+          {
+            "step_index": 13,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "kq_m_lat",
+              "kq_m_vol",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_axial",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "kq_m_lat"
+            ],
+            "readout_ids": [
+              "R",
+              "h",
+              "kq_m_lat",
+              "kq_m_vol"
+            ],
+            "learner_text": "Diện tích mặt cong của «Hình trụ đáy tâm O, tâm đáy trên O′, qua A» bằng 12π.",
+            "semantic_kind": "FINAL_RESULT",
+            "geometry_progress": [],
+            "formation_roles": []
+          },
+          {
+            "step_index": 14,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "kq_m_lat",
+              "kq_m_par_area",
+              "kq_m_vol",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_axial",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "kq_m_par_area"
+            ],
+            "readout_ids": [
+              "R",
+              "h",
+              "kq_m_lat",
+              "kq_m_par_area",
+              "kq_m_vol"
+            ],
+            "learner_text": "Diện tích «Đường tròn giao của khối cong và (α)» bằng 4π.",
+            "semantic_kind": "FINAL_RESULT",
+            "geometry_progress": [],
+            "formation_roles": []
+          },
+          {
+            "step_index": 15,
+            "visible_ids": [
+              "A",
+              "A_prime_sec_axial",
+              "B",
+              "B_prime_sec_axial",
+              "O",
+              "O_prime",
+              "R",
+              "ban_kinh_O_A",
+              "duong_tron_day_cyl",
+              "duong_tron_day_tren_cyl",
+              "h",
+              "khoi_cyl",
+              "kq_m_ax_area",
+              "kq_m_lat",
+              "kq_m_par_area",
+              "kq_m_vol",
+              "mp_day_cyl",
+              "mp_day_tren_cyl",
+              "mp_sec_parallel",
+              "td_sec_axial",
+              "td_sec_parallel",
+              "truc_O_O_prime"
+            ],
+            "focus_ids": [
+              "kq_m_ax_area"
+            ],
+            "readout_ids": [
+              "R",
+              "h",
+              "kq_m_ax_area",
+              "kq_m_lat",
+              "kq_m_par_area",
+              "kq_m_vol"
+            ],
+            "learner_text": "Diện tích «Đa giác A, B, điểm, điểm» bằng 12.",
+            "semantic_kind": "FINAL_RESULT",
+            "geometry_progress": [],
+            "formation_roles": []
+          }
+        ]
+      },
+      "free_objects": [
+        "A",
+        "A_prime_sec_axial",
+        "B_prime_sec_axial",
+        "O",
+        "O_prime",
+        "R",
+        "h"
+      ],
+      "diagnostics": [
+        "ANNOTATION_UNBOUND R: no GIVEN evidence span in the text",
+        "ANNOTATION_UNBOUND h: no GIVEN evidence span in the text",
+        "ANNOTATION_UNBOUND kq_m_vol: volume of a curved_solid has no registered anchor",
+        "ANNOTATION_UNBOUND kq_m_lat: measure lateral_area has no registered anchor",
+        "ANNOTATION_UNBOUND kq_m_par_area: area of a circle3 has no registered anchor"
+      ],
+      "khai": "Dữ liệu CẢNH cho renderer. Mọi số là chuỗi phân số CHÍNH XÁC; hoá float là việc của renderer, ở bước cuối trước GPU. Mặt phẳng và đường thẳng KHÔNG có biên — renderer tự quyết kích thước dựa trên `depends`.",
+      "simulation_contract": {
+        "schema_version": "hybrid-route-d-simulation/3",
+        "adapter_version": "hybrid-simulation-adapter/3",
+        "contract_version": "typed-fact-next/1",
+        "solids": [
+          {
+            "solid_id": "cyl",
+            "solid_type": "cylinder",
+            "notation": "O.O'",
+            "canonical_notation": "O.O'",
+            "coordinate_frame_id": "root",
+            "local_to_canonical": {
+              "O": "O",
+              "O'": "O'",
+              "A": "A"
+            },
+            "scene_object_id": "khoi_cyl"
+          }
+        ],
+        "derived_identities": [],
+        "verified_relations": [],
+        "simulation_goals": [
+          {
+            "goal_id": "sim_cyl",
+            "kind": "construct_object",
+            "status": "CONSTRUCTED",
+            "scene_object_ids": [
+              "khoi_cyl"
+            ],
+            "style_role": "primary"
+          },
+          {
+            "goal_id": "sim_sec_par",
+            "kind": "construct_plane_section",
+            "status": "CONSTRUCTED",
+            "scene_object_ids": [
+              "td_sec_parallel",
+              "mp_sec_parallel"
+            ],
+            "section_object_id": "td_sec_parallel",
+            "plane_object_id": "mp_sec_parallel",
+            "section_vertex_ids": [],
+            "style_role": "primary"
+          },
+          {
+            "goal_id": "sim_sec_ax",
+            "kind": "construct_plane_section",
+            "status": "CONSTRUCTED",
+            "scene_object_ids": [
+              "td_sec_axial",
+              "td_sec_axial"
+            ],
+            "section_object_id": "td_sec_axial",
+            "plane_object_id": "td_sec_axial",
+            "section_vertex_ids": [
+              "A",
+              "B",
+              "B_prime_sec_axial",
+              "A_prime_sec_axial"
+            ],
+            "style_role": "primary"
+          }
+        ],
+        "math_goals": [
+          {
+            "goal_id": "m_vol",
+            "kind": "measurement",
+            "goal_type": "volume",
+            "value_display": "12π",
+            "exact": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "certificate": {
+              "rule": "curved_measure_volume",
+              "kernel_var": "kq_m_vol"
+            }
+          },
+          {
+            "goal_id": "m_lat",
+            "kind": "measurement",
+            "goal_type": "lateral_area",
+            "value_display": "12π",
+            "exact": {
+              "coef": "12π",
+              "dim": 0,
+              "unit": null
+            },
+            "certificate": {
+              "rule": "curved_measure_lateral_area",
+              "kernel_var": "kq_m_lat"
+            }
+          },
+          {
+            "goal_id": "m_par_area",
+            "kind": "measurement",
+            "goal_type": "area",
+            "value_display": "4π",
+            "exact": {
+              "coef": "4π",
+              "dim": 0,
+              "unit": null
+            },
+            "certificate": {
+              "rule": "curved_measure_area",
+              "kernel_var": "kq_m_par_area"
+            }
+          },
+          {
+            "goal_id": "m_ax_area",
+            "kind": "measurement",
+            "goal_type": "area",
+            "value_display": "12",
+            "exact": {
+              "coef": "12",
+              "dim": 0,
+              "unit": null
+            },
+            "certificate": {
+              "rule": "curved_measure_area",
+              "kernel_var": "kq_m_ax_area"
+            }
+          }
+        ]
+      }
+    },
+    "points": {
+      "O": [
+        "0",
+        "0",
+        "0"
+      ],
+      "O_prime": [
+        "0",
+        "0",
+        "3"
+      ],
+      "A": [
+        "2",
+        "0",
+        "0"
+      ],
+      "B": [
+        "-2",
+        "0",
+        "0"
+      ],
+      "A_prime_sec_axial": [
+        "2",
+        "0",
+        "3"
+      ],
+      "B_prime_sec_axial": [
+        "-2",
+        "0",
+        "3"
+      ]
+    },
+    "metric": null,
+    "kernel_check": true,
+    "trace": [],
+    "calls": [
+      {
+        "kind": "construct_curved_solid",
+        "target_var": "khoi_cyl",
+        "curved_kind": "cylinder",
+        "anchor": "O",
+        "apex_or_top": "O_prime",
+        "rim_point": "A",
+        "radius": null,
+        "height": null,
+        "label": "Hình trụ tròn xoay O.O' tâm O"
+      },
+      {
+        "kind": "construct_plane_from_equation",
+        "target_var": "mp_day_cyl",
+        "a": 0,
+        "b": 0,
+        "c": 1,
+        "d": 0,
+        "label": "Mặt phẳng đáy (O)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "duong_tron_day_cyl",
+        "expr": {
+          "kind": "intersect_plane_curved",
+          "solid": "khoi_cyl",
+          "plane": "mp_day_cyl"
+        }
+      },
+      {
+        "kind": "construct_plane_from_equation",
+        "target_var": "mp_day_tren_cyl",
+        "a": 0,
+        "b": 0,
+        "c": 1,
+        "d": "-3",
+        "label": "Mặt phẳng đáy trên (O')"
+      },
+      {
+        "kind": "assign",
+        "target_var": "duong_tron_day_tren_cyl",
+        "expr": {
+          "kind": "intersect_plane_curved",
+          "solid": "khoi_cyl",
+          "plane": "mp_day_tren_cyl"
+        }
+      },
+      {
+        "kind": "construct_segment",
+        "target_var": "truc_O_O_prime",
+        "endpoint_a": "O",
+        "endpoint_b": "O_prime",
+        "label": "Trục OO'"
+      },
+      {
+        "kind": "construct_segment",
+        "target_var": "ban_kinh_O_A",
+        "endpoint_a": "O",
+        "endpoint_b": "A",
+        "label": "Bán kính đáy OA"
+      },
+      {
+        "kind": "construct_plane_from_equation",
+        "target_var": "mp_sec_parallel",
+        "a": "0",
+        "b": "0",
+        "c": "1",
+        "d": "-1",
+        "label": "Mặt phẳng (α)"
+      },
+      {
+        "kind": "assign",
+        "target_var": "td_sec_parallel",
+        "expr": {
+          "kind": "intersect_plane_curved",
+          "solid": "khoi_cyl",
+          "plane": "mp_sec_parallel"
+        }
+      },
+      {
+        "kind": "construct_point",
+        "target_var": "B",
+        "expr": {
+          "kind": "divide_segment",
+          "a": "A",
+          "b": "O",
+          "ratio": "2"
+        },
+        "label": "B"
+      },
+      {
+        "kind": "construct_polygon",
+        "target_var": "td_sec_axial",
+        "vertices": [
+          "A",
+          "B",
+          "B_prime_sec_axial",
+          "A_prime_sec_axial"
+        ],
+        "label": "Thiết diện qua trục hình trụ"
+      },
+      {
+        "kind": "assign",
+        "target_var": "kq_m_vol",
+        "expr": {
+          "kind": "measure",
+          "quantity": "volume",
+          "of": "khoi_cyl"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "kq_m_lat",
+        "expr": {
+          "kind": "measure",
+          "quantity": "lateral_area",
+          "of": "khoi_cyl"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "kq_m_par_area",
+        "expr": {
+          "kind": "measure",
+          "quantity": "area",
+          "of": "td_sec_parallel"
+        }
+      },
+      {
+        "kind": "assign",
+        "target_var": "kq_m_ax_area",
+        "expr": {
+          "kind": "measure",
+          "quantity": "area",
+          "of": "td_sec_axial"
+        }
+      }
+    ]
+  },
+  "comparison": {
+    "status_pair": "NONE_VS_SERVED",
+    "answer_agreement": "NOT_APPLICABLE",
+    "scene3d_bucket": "ROUTE_B_ONLY"
+  }
+}

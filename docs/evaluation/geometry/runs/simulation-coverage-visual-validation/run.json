@@ -1,0 +1,41 @@
+{
+  "schema_version": "algosim.eval.run.v1",
+  "run_id": "simulation-coverage-visual-validation",
+  "wave": "simulation-coverage-visual-validation",
+  "authorization": "GO_SIMULATION_COVERAGE_VISUAL_VALIDATION_LOCAL_RESEARCH",
+  "mode": "LOCAL_RESEARCH_IMPLEMENTATION_TWO_SESSIONS_NO_GO_MAIN",
+  "branch": "research/simulation-coverage-visual-validation",
+  "baseline_main": "bd8d6a9dc3acc9a4204b616379001270bb6d39f9",
+  "session1_commit": "e05e620866934ce0f6c184f1d0de5dbace67b4cf",
+  "product_commit": "d92019d663bbd17980f0bd85ca7b7de01f34fd54",
+  "measured_system_hash": "e1874b49319e4f154e41bf4a17bdb76611e682d52acafeb8c459cbb3f17b8ea3",
+  "measured_file_count": 114,
+  "versions": {
+    "registry": "geometry-functions/11",
+    "planner": "geometry-fact-planner/11",
+    "engine": "geometry-function-engine/9",
+    "adapter_v2": "hybrid-preview-adapter/2",
+    "typed_fact_next": "typed-fact-next/1",
+    "adapter_v3": "hybrid-simulation-adapter/3",
+    "route_d_simulation": "hybrid-route-d-simulation/3"
+  },
+  "evaluation": {
+    "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+    "corpus_path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/corpus-dev.json",
+    "summary_path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/eval-summary.json",
+    "visual_receipt_path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/visual-acceptance-receipt.json",
+    "positive_served": "10/10",
+    "negative_refused": "5/5",
+    "wrong_serves": 0,
+    "browser_demos_verified": "9/9 (8 positive Scene3D WebGL demos + 1 fail-closed refusal demo)"
+  },
+  "governance": {
+    "default_mode": "LLM_ONLY",
+    "response_contract": "flat",
+    "hybrid_product_enablement": "NO-GO",
+    "cache_version": 127,
+    "cache_decision": "NO_BUMP",
+    "live_provider_calls": 0
+  },
+  "status": "SIMULATION_COVERAGE_VISUAL_VALIDATION_READY_FOR_GO_MAIN_REVIEW"
+}

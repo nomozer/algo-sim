@@ -54,7 +54,7 @@ function measure(png) {
     const k = `${rgba[i]},${rgba[i + 1]},${rgba[i + 2]}`;
     counts.set(k, (counts.get(k) ?? 0) + 1);
   }
-  const [bg] = [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0].split(",").map((v) => Number(v));
+  const bg = [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0].split(",").map((v) => Number(v));
   let x0 = w, y0 = h, x1 = -1, y1 = -1;
   for (let y = 0; y < h; y++) {
     for (let x = 0; x < w; x++) {
@@ -128,10 +128,11 @@ interface AuditParams {
 
 function SceneView({ params }: { params: AuditParams }) {
   const row = (rows as any[])[params.i];
+  const rawScene = row?.scene ?? row?.scene3d;
   const hide = new Set((params.hide ?? "").split(",").filter(Boolean));
-  const khung = row?.scene && {
-    ...row.scene,
-    objects: row.scene.objects.filter((o: any) => !hide.has(o.id)),
+  const khung = rawScene && {
+    ...rawScene,
+    objects: rawScene.objects.filter((o: any) => !hide.has(o.id)),
   } as any;
   const daVe = khung && veKhongGian(khung);
   const scene = daVe && withSubEntities(daVe, objectsAt);
@@ -210,13 +211,13 @@ function SceneView({ params }: { params: AuditParams }) {
   if (!row?.served || !scene) {
     return <main style={{ padding: 16 }}>
       <h1 data-testid="refusal-title">{row?.id}</h1>
-      <p data-testid="refusal">{row?.code ?? "REFUSED"}: {row?.reason ?? "Từ chối an toàn"}</p>
+      <p data-testid="refusal">{row?.code ?? row?.refusal?.code ?? "REFUSED"}: {row?.reason ?? row?.refusal?.reason ?? "Từ chối an toàn"}</p>
     </main>;
   }
 
   if (params.mode === "explorer") {
     return <div data-testid="explorer-root" style={{ width: "100vw", height: "100vh" }}>
-      <Scene3DExplorer scene={row.scene} de={row.problem_text ?? row.category} tieuDe={row.category} />
+      <Scene3DExplorer scene={rawScene} de={row.problem_text ?? row.category} tieuDe={row.category} />
     </div>;
   }
 
@@ -400,11 +401,14 @@ try {
           }
         }
       }
+      const uniqueLabelCoords = new Set(labels.map((l) => `${Math.round(l.x / 4)},${Math.round(l.y / 4)}`)).size;
       return {
         ...a,
         labelCount: labels.length,
         labels: labels.map((l) => l.text),
         labelCollisions,
+        uniqueLabelCoords,
+        labelsNotCollapsed: labels.length <= 1 || uniqueLabelCoords > 1,
         depViolations,
       };
     });
@@ -523,6 +527,8 @@ try {
         labelCount: meta.labelCount,
         labels: meta.labels,
         labelCollisions: meta.labelCollisions,
+        uniqueLabelCoords: meta.uniqueLabelCoords,
+        labelsNotCollapsed: meta.labelsNotCollapsed,
       },
       depViolations: meta.depViolations,
       screenshots: {
@@ -539,7 +545,7 @@ try {
 
   const receipt = {
     schema: "scene3d-browser-audit-receipt/1",
-    scenesFile: scenesPath,
+    scenesFile: scenesPath.startsWith(repoRoot) ? scenesPath.slice(repoRoot.length + 1).replace(/\\/g, "/") : scenesPath,
     totalScenes: rows.length,
     totalConsoleErrors: consoleErrors.length,
     totalPageErrors: pageErrors.length,

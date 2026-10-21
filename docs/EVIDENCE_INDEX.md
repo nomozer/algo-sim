@@ -1,5 +1,17 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SIMULATION_COVERAGE_VISUAL_VALIDATION
+
+REPORT = docs/evaluation/geometry/runs/simulation-coverage-visual-validation/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/simulation-coverage-visual-validation/
+CLASSIFICATION = Two-session Simulation Coverage & Visual Validation campaign (`research/simulation-coverage-visual-validation` from `main` `bd8d6a9d`, `GO_SIMULATION_COVERAGE_VISUAL_VALIDATION_LOCAL_RESEARCH`): 7-level capability matrix across 15 geometric families (`SIMULATION_CAPABILITY_MATRIX.md`), P3 Scene3D rendering/tree/timeline fixes for `curved_solid`/`circle3`/`ellipse3`/`segment3`, P4 `typed-fact-next/1` + `hybrid-simulation-adapter/3` expansion to right circular cylinder, right circular cone (parallel circular + oblique elliptic sections + cone-frustum residual volume), and sphere (circular plane section) via `curved.py::KHOI_CONG`, 9 interactive demo envelopes (`demos/demo1..demo7*.json`), headless Chromium WebGL visual acceptance (`visual-acceptance-receipt.json`, `screenshots/`), and simulation-centered development evaluation (`DEVELOPMENT_EVALUATION_NOT_BLIND`, 15 cases: 10/10 positive, 5/5 negative, 0 wrong serves, 10/10 across all 8 simulation criteria); CACHE_VERSION 127 NO_BUMP, LLM_ONLY, flat, Hybrid product NO-GO
+CODE_COMMIT = e05e6208 (Session 1 product) · d92019d6 (final product commit on research/simulation-coverage-visual-validation; measured_system tree_hash e1874b49319e4f154e41bf4a17bdb76611e682d52acafeb8c459cbb3f17b8ea3 across 114 files)
+VERIFICATION = docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/full-product-gate.json + verification/independent-review.md (INDEPENDENT_REVIEW_PASS) + visual-acceptance-receipt.json
+MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
+CORRECTS = WAVE3A_ADAPTER3_INTEGRATION (candidate_divergence.json only; historical measurements and receipts unchanged)
+CORRECTED_BY = NONE
+
+
 ## WAVE_ID = WAVE3A_ADAPTER3_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/wave3a-adapter3-integration/report.md
@@ -9,7 +21,7 @@ CODE_COMMIT = 4c282ecd (Wave 3A product) · 61d6f44b (Adapter /3 product) · fb6
 VERIFICATION = docs/evaluation/geometry/runs/wave3a-adapter3-integration/verification/authoritative-t3.json + verification/independent-review.md (INDEPENDENT_REVIEW_PASS)
 MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
 CORRECTS = VOLUME_REASONING and TYPEDFACT_NEXT_ADAPTER3_SIMULATION (candidate_divergence.json reconciliation; historical measurements and receipts unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = SIMULATION_COVERAGE_VISUAL_VALIDATION (candidate identity layer; no historical measurement rewrite)
 
 
 ## WAVE_ID = TYPEDFACT_NEXT_ADAPTER3_SIMULATION

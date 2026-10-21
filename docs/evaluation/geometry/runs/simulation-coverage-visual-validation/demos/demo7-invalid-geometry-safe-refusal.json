@@ -1,0 +1,61 @@
+{
+  "schema_version": "hybrid-Flat-preview/1",
+  "adapter_version": "hybrid-simulation-adapter/3",
+  "contract_version": "typed-fact-next/1",
+  "problem_text": "Cho mặt cầu (S) tâm I bán kính R = 5 và mặt phẳng (α) có phương trình z - 7 = 0. Hãy dựng đường tròn giao tuyến của mặt phẳng (α) và mặt cầu (S).",
+  "route_a": null,
+  "route_b": {
+    "status": "REFUSED",
+    "refusal": {
+      "code": "CURVED_PLANE_DOES_NOT_CUT",
+      "detail": "CURVED_PLANE_DOES_NOT_CUT: mặt phẳng không cắt khối cầu — nó nằm xa tâm hơn bán kính",
+      "calls": []
+    },
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "points": {},
+    "metric": null,
+    "kernel_check": false,
+    "scene3d": null,
+    "planner": {
+      "version": "hybrid-simulation-adapter/3",
+      "calls": [],
+      "trace": [],
+      "goal_checks": {},
+      "negated_checks": {}
+    },
+    "trace": [],
+    "calls": []
+  },
+  "route_d": {
+    "schema_version": "hybrid-route-d-simulation/3",
+    "adapter_version": "hybrid-simulation-adapter/3",
+    "contract_version": "typed-fact-next/1",
+    "status": "REFUSED",
+    "refusal": {
+      "code": "CURVED_PLANE_DOES_NOT_CUT",
+      "detail": "CURVED_PLANE_DOES_NOT_CUT: mặt phẳng không cắt khối cầu — nó nằm xa tâm hơn bán kính",
+      "calls": []
+    },
+    "solids": [],
+    "derived_identities": [],
+    "verified_relations": [],
+    "simulation_goals": [],
+    "math_goals": [],
+    "answers": {},
+    "answer_exact": {},
+    "length_unit": null,
+    "scene3d": null,
+    "points": {},
+    "metric": null,
+    "kernel_check": false,
+    "trace": [],
+    "calls": []
+  },
+  "comparison": {
+    "status_pair": "NONE_VS_REFUSED",
+    "answer_agreement": "NOT_APPLICABLE",
+    "scene3d_bucket": "NEITHER"
+  }
+}

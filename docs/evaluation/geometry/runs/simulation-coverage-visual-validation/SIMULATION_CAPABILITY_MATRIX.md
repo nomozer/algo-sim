@@ -183,3 +183,19 @@
   - **Classification:**
     - **Cone with parallel cutting plane (`cone` + `intersect_plane_curved`):** `FULL_END_TO_END` after Session 1 P4 — constructs the parent right circular cone, cutting plane $\perp$ axis at $z \in (0, h)$, and exact upper circular section `Circle3` ($r = R(1 - z/h)$), while computing exact residual/frustum volume $V_{\text{frustum}} = V_{\text{cone}} - V_{\text{upper\_cone}} = \frac{1}{3}\pi h_{\text{cut}}(R^2 + Rr + r^2)$ via certified cone ratio when requested, or visualizing the cone + parallel circular cut.
     - **Standalone `cone_frustum` primitive without parent cone:** `BLOCKED_BY_KERNEL` — `backend/app/simulation/geometry/curved.py` (`KHOI_CONG`) and `simulation_state.py` (`CurvedSolid`) only define 3 curved primitives (`"ball"`, `"cylinder"`, `"cone"` with a single `radius_sq`). Per P4 rules (*"If an analytical kernel or required contract is missing, do not falsely declare full support... classify as BLOCKED_BY_CONTRACT or BLOCKED_BY_KERNEL with concrete evidence"*), standalone `cone_frustum` without a parent cone is explicitly classified as `BLOCKED_BY_KERNEL` (`curved.py::KHOI_CONG` has no two-radius `r1_sq, r2_sq` primitive).
+
+---
+
+## 3. Post-Session-2 Verification & Visual Acceptance Summary (P3–P9)
+
+- **P3 — Simulation Breakage Fixes (`RED -> GREEN`):**
+  - Fixed scalar-radius (`rim_point: null`, `radius_sq: R^2`) and scalar-height (`apex_or_top: null`, `height_sq: h^2`) `curved_solid` rendering and Z-axis bounding box in `frontend/src/simulations/domains/geometry/scene3d-view.tsx` and `scene3d-model.ts`.
+  - Classified `segment3`, `circle3`, `ellipse3`, and `curved_solid` in `frontend/src/simulations/domains/geometry/interaction-state.ts` (`HANG_MUC` & `laKhoi`).
+  - Mapped `construct_curved_solid` to `CREATE` and `circle3`/`ellipse3` events to `CREATE` / `GEOMETRY_CONSTRUCTION` in `backend/app/simulation/semantic_program/scene3d.py` & `simulation_state.py`.
+- **P4 — Curved Solid Expansion (`RED -> GREEN`):**
+  - Extended `backend/app/simulation/geometry_functions/typed_fact_next.py` (`typed-fact-next/1`) and `backend/app/ai/adapter3_simulation.py` (`hybrid-simulation-adapter/3`) to compile and certify right circular cylinders (`cylinder`), right circular cones (`cone`) + parallel circular sections (`Circle3`) and oblique elliptic sections (`Ellipse3`), and spheres (`sphere` / `"ball"`) + plane circular sections (`Circle3`), delegating kind dispatch to `curved.py::KHOI_CONG`.
+- **P6 & P7 — Executable Demo Suite & Real Browser Visual Acceptance (`visual-acceptance-receipt.json`):**
+  - `9` deterministic demo envelopes in `demos/demo1..demo7*.json` (`8` positive interactive `Scene3D` demos + `1` fail-closed refusal demo).
+  - Audited in headless Chromium WebGL (`run_browser_audit.mjs`): `totalConsoleErrors = 0`, `totalPageErrors = 0`, `inkPixels > 519,000` on all 8 positive demos, `ownPixels > 0` for every primary object (`solid`, `curved_solid`, `section`, `polygon3`, `circle3`), `orbitDiffPixels > 0`, `zoomDiffPixels > 0`, `panDiffPixels > 0`, `selectionDiffPixels > 0`, `step0DiffPixels > 0`, `labelCollisions = 0`, and `labelsNotCollapsed = true`.
+- **P8 — Simulation-Centered Offline Evaluation (`eval-summary.json`, `corpus-dev.json`):**
+  - `DEVELOPMENT_EVALUATION_NOT_BLIND` (`15` cases: `10` positive + `5` negative): `10/10` positive served, `5/5` negative refused with exact refusal codes, `0` wrong serves, and `10/10` pass across all 8 simulation criteria (`scene3d_valid_v2`, `solid_topology_complete`, `derived_section_correct`, `derived_point_provenance_ok`, `multi_solid_identity_ok`, `curved_solid_render_ok`, `timeline_dependency_order_ok`, `math_certificate_consistent`).

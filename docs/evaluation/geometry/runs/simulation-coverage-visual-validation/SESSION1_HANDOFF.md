@@ -5,6 +5,7 @@
 - **Campaign Worktree:** `D:\Documents\projects\algo-sim\.superpowers\worktrees\simulation-coverage-visual-validation`
 - **Campaign Branch:** `research/simulation-coverage-visual-validation`
 - **Verified Baseline `main` / `origin/main`:** `bd8d6a9dc3acc9a4204b616379001270bb6d39f9`
+- **Session 1 Checkpoint Commit (`HEAD`):** `e05e620866934ce0f6c184f1d0de5dbace67b4cf`
 - **Owner Authorization:** `GO_SIMULATION_COVERAGE_VISUAL_VALIDATION_LOCAL_RESEARCH`
 - **Live AI Calls:** `0` (`ALLOW_LIVE_AI = 0`)
 
