@@ -1,0 +1,168 @@
+{
+  "schema": "algosim.raw_log_size_reconciliation.v1",
+  "baseline_main_sha": "bd8d6a9dc3acc9a4204b616379001270bb6d39f9",
+  "repair_head_sha": "609cb877d9e0177e8408f31c7d3cc0c9cd5f89fc",
+  "original_campaign_head_sha": "d86c72031d8fc85cd4eef62d9379cd1690ba1417",
+  "cause_classification": "PROSE_REPORTING_METADATA_ERROR_ONLY",
+  "all_four_original_logs_four_way_byte_identical": true,
+  "records": [
+    {
+      "file": "attempt1-fail.stdout.log",
+      "original_runtime_source_worktree": {
+        "bytes": 31647,
+        "sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+        "crlf": 257,
+        "lone_lf": 126
+      },
+      "corrective_archive_worktree": {
+        "bytes": 31647,
+        "sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+        "crlf": 257,
+        "lone_lf": 126
+      },
+      "git_blob_609cb877": {
+        "bytes": 31647,
+        "sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+        "crlf": 257,
+        "lone_lf": 126
+      },
+      "clean_checkout_archive": {
+        "bytes": 31647,
+        "sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+        "crlf": 257,
+        "lone_lf": 126
+      },
+      "historical_git_blob_d86c7203": {
+        "bytes": 31390,
+        "sha256": "2620186c4513cb7a9935f83de6397f5aa03fa38e2de4206ece553391701988e4",
+        "crlf": 0,
+        "lone_lf": 383
+      },
+      "reconciliation_evidence_json_reported_bytes": 31647,
+      "evidence_repair_report_md_erroneous_prose_bytes": 17843,
+      "four_way_exact_match": true
+    },
+    {
+      "file": "attempt1-fail.stderr.log",
+      "original_runtime_source_worktree": {
+        "bytes": 121261,
+        "sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+        "crlf": 0,
+        "lone_lf": 733
+      },
+      "corrective_archive_worktree": {
+        "bytes": 121261,
+        "sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+        "crlf": 0,
+        "lone_lf": 733
+      },
+      "git_blob_609cb877": {
+        "bytes": 121261,
+        "sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+        "crlf": 0,
+        "lone_lf": 733
+      },
+      "clean_checkout_archive": {
+        "bytes": 121261,
+        "sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+        "crlf": 0,
+        "lone_lf": 733
+      },
+      "historical_git_blob_d86c7203": {
+        "bytes": 121261,
+        "sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+        "crlf": 0,
+        "lone_lf": 733
+      },
+      "reconciliation_evidence_json_reported_bytes": 121261,
+      "evidence_repair_report_md_erroneous_prose_bytes": 1303,
+      "four_way_exact_match": true
+    },
+    {
+      "file": "attempt2-pass.stdout.log",
+      "original_runtime_source_worktree": {
+        "bytes": 28606,
+        "sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+        "crlf": 207,
+        "lone_lf": 126
+      },
+      "corrective_archive_worktree": {
+        "bytes": 28606,
+        "sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+        "crlf": 207,
+        "lone_lf": 126
+      },
+      "git_blob_609cb877": {
+        "bytes": 28606,
+        "sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+        "crlf": 207,
+        "lone_lf": 126
+      },
+      "clean_checkout_archive": {
+        "bytes": 28606,
+        "sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+        "crlf": 207,
+        "lone_lf": 126
+      },
+      "historical_git_blob_d86c7203": {
+        "bytes": 28399,
+        "sha256": "8274c4c26793ea001f892ee9c90f339f7fdeb93a43b5c92f3c8e409ca547ae6b",
+        "crlf": 0,
+        "lone_lf": 333
+      },
+      "reconciliation_evidence_json_reported_bytes": 28606,
+      "evidence_repair_report_md_erroneous_prose_bytes": 18243,
+      "four_way_exact_match": true
+    },
+    {
+      "file": "attempt2-pass.stderr.log",
+      "original_runtime_source_worktree": {
+        "bytes": 121261,
+        "sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+        "crlf": 0,
+        "lone_lf": 733
+      },
+      "corrective_archive_worktree": {
+        "bytes": 121261,
+        "sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+        "crlf": 0,
+        "lone_lf": 733
+      },
+      "git_blob_609cb877": {
+        "bytes": 121261,
+        "sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+        "crlf": 0,
+        "lone_lf": 733
+      },
+      "clean_checkout_archive": {
+        "bytes": 121261,
+        "sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+        "crlf": 0,
+        "lone_lf": 733
+      },
+      "historical_git_blob_d86c7203": {
+        "bytes": 121261,
+        "sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+        "crlf": 0,
+        "lone_lf": 733
+      },
+      "reconciliation_evidence_json_reported_bytes": 121261,
+      "evidence_repair_report_md_erroneous_prose_bytes": 332,
+      "four_way_exact_match": true
+    }
+  ],
+  "repair_wave_t3_logs": [
+    {
+      "file": "t3/stdout.log",
+      "bytes": 18257,
+      "sha256": "d2446b46ba4aba9fae7203cc6be401e820248087430b63b0d7cbe358af0edd33",
+      "three_way_exact_match": true
+    },
+    {
+      "file": "t3/stderr.log",
+      "bytes": 332,
+      "sha256": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c",
+      "three_way_exact_match": true
+    }
+  ]
+}

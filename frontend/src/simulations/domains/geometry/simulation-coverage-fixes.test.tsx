@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import * as THREE from "three";
-import { buildObject3D } from "./scene3d-view";
+import { THU_TU_TO_THIET_DIEN, buildObject3D, updateCanonicalEdgeVisibility } from "./scene3d-view";
 import { diemHuuHan, objectsAt, stepCount, type Scene3D, type SceneObject } from "./scene3d-model";
 import { veKhongGian } from "./scene3d-chart";
 import { TRANG_THAI_DAU, explode, isolate, select, semanticTree, visualTransformOf } from "./interaction-state";
@@ -246,5 +246,113 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
     expect(evalSummary.metrics.wrong_serves).toBe(0);
     expect(evalSummary.metrics.positive_served).toBe(10);
     expect(evalSummary.metrics.negative_refused).toBe(5);
+  });
+
+  it("renders interior auxiliary section polygon td_sec_axial in demo6b with non-occluded fill and two-pass GPU boundary lines", () => {
+    const rawScene = demo6b.route_b.scene3d as unknown as Scene3D;
+    const charted = veKhongGian(rawScene);
+    const enriched = withSubEntities(charted);
+    const totalSteps = stepCount(enriched);
+    const finalObjs = objectsAt(enriched, totalSteps - 1);
+
+    const tdSecAxial = finalObjs.find((o) => o.id === "td_sec_axial");
+    expect(tdSecAxial).toBeDefined();
+    expect(tdSecAxial!.type).toBe("polygon3");
+    expect(tdSecAxial!.render).toBe("polygon");
+    expect(tdSecAxial!.surface_role).toBe("AUXILIARY_SURFACE");
+    expect(tdSecAxial!.vertex_ids).toEqual(["S", "A", "B"]);
+    expect(tdSecAxial!.vertices).toEqual([
+      ["0", "0", "4"],
+      ["3", "0", "0"],
+      ["-3", "0", "0"],
+    ]);
+
+    const root = new THREE.Group();
+    for (const o of finalObjs) {
+      const built = buildObject3D(o, false);
+      if (built) root.add(built);
+    }
+
+    const cam = new THREE.PerspectiveCamera(50, 4 / 3, 0.1, 200);
+    cam.up.set(0, 0, 1);
+    cam.position.set(8, 3, 6);
+    cam.lookAt(0, 0, 2);
+    cam.updateMatrixWorld(true);
+    cam.updateProjectionMatrix();
+    updateCanonicalEdgeVisibility(root, cam, "800x600@1");
+
+    const axialGroup = root.getObjectByName("polygon:td_sec_axial");
+    expect(axialGroup).toBeDefined();
+
+    // 1. Interior fill must render at THU_TU_TO_THIET_DIEN with depthTest: false and polygonOffset
+    // so it is not completely rejected behind khoi_cone_main / khoi_cone_upper lopChieuSau depth prepasses
+    const fillMesh = axialGroup!.getObjectByName("polygon_fill:td_sec_axial") as THREE.Mesh | undefined;
+    expect(fillMesh).toBeDefined();
+    expect(fillMesh!.renderOrder).toBe(THU_TU_TO_THIET_DIEN);
+    const fillMat = fillMesh!.material as THREE.MeshStandardMaterial;
+    expect(fillMat.depthTest).toBe(false);
+    expect(fillMat.depthWrite).toBe(false);
+    expect(fillMat.polygonOffset).toBe(true);
+    expect(fillMat.opacity).toBeGreaterThanOrEqual(0.28);
+
+    // 2. Boundary lines in curved-solid scenes (occluders.length === 0) must retain both
+    // LessEqualDepth visible solid pass (with polygonOffset) and GreaterDepth hidden dashed pass
+    const borderLines = axialGroup!.children.filter((c): c is THREE.Line => (c as THREE.Line).isLine);
+    expect(borderLines.length).toBeGreaterThanOrEqual(2);
+    const lineMats = borderLines.map((l) => l.material as THREE.Material);
+    const visiblePass = lineMats.find(
+      (m): m is THREE.LineBasicMaterial =>
+        m instanceof THREE.LineBasicMaterial && !(m instanceof THREE.LineDashedMaterial)
+    );
+    const hiddenPass = lineMats.find(
+      (m): m is THREE.LineDashedMaterial => m instanceof THREE.LineDashedMaterial
+    );
+    expect(visiblePass).toBeDefined();
+    expect(visiblePass!.depthFunc).toBe(THREE.LessEqualDepth);
+    expect(visiblePass!.polygonOffset).toBe(true);
+    expect(hiddenPass).toBeDefined();
+    expect(hiddenPass!.depthFunc).toBe(THREE.GreaterDepth);
+  });
+
+  it("preserves BASE_REGION and CONSTRUCT_BASE polygon fill behavior and polyhedral CPU border classification", () => {
+    // 1. Canonical BASE_REGION in demo1 keeps depthTest: true and renderOrder: 0
+    const rawDemo1 = demo1.route_d.scene3d as unknown as Scene3D;
+    const baseDemo1 = rawDemo1.objects.find((o) => o.id === "day_ABCD")!;
+    expect(baseDemo1.surface_role).toBe("BASE_REGION");
+    const builtBase1 = buildObject3D(baseDemo1, false)!;
+    const baseFill1 = builtBase1.getObjectByName("polygon_fill:day_ABCD") as THREE.Mesh;
+    expect(baseFill1).toBeDefined();
+    expect(baseFill1.renderOrder).toBe(0);
+    expect((baseFill1.material as THREE.MeshStandardMaterial).depthTest).toBe(true);
+
+    // 2. Shared CONSTRUCT_BASE in demo3 keeps depthTest: true and renderOrder: 0
+    const rawDemo3 = demo3.route_d.scene3d as unknown as Scene3D;
+    const baseDemo3 = rawDemo3.objects.find((o) => o.id === "day_ABC")!;
+    expect(baseDemo3.formation_roles).toContain("CONSTRUCT_BASE");
+    const builtBase3 = buildObject3D(baseDemo3, false)!;
+    const baseFill3 = builtBase3.getObjectByName("polygon_fill:day_ABC") as THREE.Mesh;
+    expect(baseFill3).toBeDefined();
+    expect(baseFill3.renderOrder).toBe(0);
+    expect((baseFill3.material as THREE.MeshStandardMaterial).depthTest).toBe(true);
+
+    // 3. Polyhedral section in demo1 replaces initial two-pass border lines with CPU section_border spans
+    const root1 = new THREE.Group();
+    const solid1 = buildObject3D(rawDemo1.objects.find((o) => o.id === "khoi_S_ABCD")!, false)!;
+    const sec1 = buildObject3D(
+      { ...rawDemo1.objects.find((o) => o.id === "td_ask9")!, closed: true, fill_visible: true },
+      false
+    )!;
+    root1.add(solid1, sec1);
+    const cam = new THREE.PerspectiveCamera(50, 4 / 3, 0.1, 200);
+    cam.up.set(0, 0, 1);
+    cam.position.set(8, 3, 6);
+    cam.lookAt(0, 0, 1);
+    cam.updateMatrixWorld(true);
+    cam.updateProjectionMatrix();
+    updateCanonicalEdgeVisibility(root1, cam, "800x600@1");
+    const spanBorders = sec1.children.filter((c) => c.name.startsWith("section_border:td_ask9:"));
+    expect(spanBorders.length).toBeGreaterThan(0);
+    expect(sec1.getObjectByName("polygon_border:td_ask9:thay")).toBeUndefined();
+    expect(sec1.getObjectByName("polygon_border:td_ask9:khuat")).toBeUndefined();
   });
 });

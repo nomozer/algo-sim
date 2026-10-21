@@ -1638,12 +1638,30 @@ export function buildObject3D(
     const mauVien = net(MAU.polygon);
     const coNetDut = (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE;
     const thietDien = o.type === "section";
+    const daGiacPhu = o.type === "polygon3" && o.surface_role === "AUXILIARY_SURFACE" && !(o.formation_roles ?? []).includes("CONSTRUCT_BASE");
+    const toXuyenKhoi = thietDien || daGiacPhu;
     const thuTuVien = thietDien ? THU_TU_VE_THIET_DIEN : THU_TU_DUONG;
+    const chungVien = {
+      color: mauVien,
+      polygonOffset: true,
+      polygonOffsetFactor: -2,
+      polygonOffsetUnits: -2,
+    } as const;
     const line = new THREE.Line(gLine, new THREE.LineBasicMaterial({
-      color: mauVien, linewidth: 2,
+      ...chungVien, linewidth: 2, depthFunc: THREE.LessEqualDepth,
     }));
+    line.name = `polygon_border:${o.id}:thay`;
     line.userData.nonCanonicalBorderLine = true;
     line.renderOrder = thuTuVien;
+    const lineKhuat = new THREE.Line(gLine.clone(), new THREE.LineDashedMaterial({
+      ...chungVien, linewidth: 2, depthFunc: THREE.GreaterDepth, depthWrite: false,
+      dashSize: coNetDut, gapSize: coNetDut, transparent: true, opacity: 0.75,
+    }));
+    lineKhuat.computeLineDistances();
+    lineKhuat.name = `polygon_border:${o.id}:khuat`;
+    lineKhuat.userData.nonCanonicalBorderLine = true;
+    lineKhuat.userData.hidden = true;
+    lineKhuat.renderOrder = thuTuVien;
     const ownsBoundary = !(
       o.surface_role === "BASE_REGION"
       && o.occludes_edges === false
@@ -1651,7 +1669,7 @@ export function buildObject3D(
     );
     const nhom = new THREE.Group();
     if (ownsBoundary) {
-      nhom.add(line);
+      nhom.add(line, lineKhuat);
       preallocateSpanGeoPool(nhom, Math.max(8, pts.length * 4));
       nhom.userData.nonCanonicalLoop = {
         objectId: o.id,
@@ -1688,13 +1706,13 @@ export function buildObject3D(
         const mesh = new THREE.Mesh(gMesh, new THREE.MeshStandardMaterial({
           color: nen(MAU.polygon),
           transparent: true,
-          opacity: thietDien ? DO_DUC_TO_THIET_DIEN : noiBat ? 0.35 : 0.16,
+          opacity: thietDien ? DO_DUC_TO_THIET_DIEN : daGiacPhu ? (noiBat ? 0.42 : 0.28) : (noiBat ? 0.35 : 0.16),
           side: THREE.DoubleSide,
           depthWrite: false,
-          ...(thietDien ? { ...LECH_THIET_DIEN, depthTest: false } : {}),
+          ...(toXuyenKhoi ? { ...LECH_THIET_DIEN, depthTest: false } : {}),
         }));
         mesh.name = `${thietDien ? "section_fill" : "polygon_fill"}:${o.id}`;
-        if (thietDien) mesh.renderOrder = THU_TU_TO_THIET_DIEN;
+        if (toXuyenKhoi) mesh.renderOrder = THU_TU_TO_THIET_DIEN;
         nhom.add(mesh);
       }
     }
@@ -2497,6 +2515,8 @@ export function Scene3DWorkspace({
         : khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h);
       if (!kn) return;   // đầu vào không dùng được ⇒ giữ nguyên khung nhìn
       datKhungNhin(cam, dieuKhien, kn);
+      veRef.current?.();
+      chieuNhan();
     };
 
     vong();
