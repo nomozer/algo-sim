@@ -140,7 +140,7 @@ const KHONG_XAC_DINH = "Không xác định được";
 
 // Presentation of structured verifier codes; the backend still owns every refusal decision.
 const GEOMETRY_REFUSAL_TEXT: Record<string, { title: string; reason: string }> = {
-  CURVED_PLANE_DOES_NOT_CUT: { title: "KHÔNG CÓ GIAO TUYẾN", reason: "Không thể dựng giao tuyến vì mặt phẳng cách tâm mặt cầu một khoảng lớn hơn bán kính. Mặt phẳng và mặt cầu không có điểm chung." },
+  CURVED_PLANE_DOES_NOT_CUT: { title: "KHÔNG CÓ GIAO TUYẾN", reason: "Mặt phẳng không cắt khối đã cho." },
   INCONSISTENT_FACTS: { title: "DỮ KIỆN MÂU THUẪN", reason: "Các dữ kiện đã cho không đồng thời tạo thành một hình hợp lệ. Em hãy kiểm tra lại các giả thiết và số liệu." },
   MISSING_CURVED_DIMENSION: { title: "CHƯA ĐỦ DỮ KIỆN", reason: "Chưa đủ kích thước để xác định hình. Em hãy bổ sung các kích thước còn thiếu." },
   UNDERDETERMINED_POINT: { title: "CHƯA ĐỦ DỮ KIỆN", reason: "Các giả thiết chưa xác định được vị trí điểm cần dựng." },
@@ -175,6 +175,10 @@ export function UnsupportedNotice({
     || (unsupported.failure_category === "insufficient_specification" && unsupported.refusal_cause !== "SOURCE")
     ? undefined : geometricCode ? GEOMETRY_REFUSAL_TEXT[geometricCode] : undefined;
   const failedVerification = unsupported.error_code === "postcondition_violated";
+  const cutExplanation = geometricCode === "CURVED_PLANE_DOES_NOT_CUT"
+    ? (unsupported.learner_reason ?? unsupported.reason).split(geometricCode).join("")
+      .replace(/^[\s:[\]()—-]+/u, "").trim()
+    : null;
   // (M17-VR1) Đề THIẾU DỮ KIỆN khác hẳn đề NGOÀI DANH MỤC: chủ đề vẫn được hỗ
   // trợ, chỉ là em chưa cho đủ dữ liệu. Nói "ngoài danh mục" ở đây làm học sinh
   // tưởng hệ không mô phỏng được dạng bài đó — sai và làm nản.
@@ -331,7 +335,7 @@ export function UnsupportedNotice({
     <section className="card">
       <span className="eyebrow">{geometricRefusal?.title ?? (failedVerification ? "CHƯA KIỂM CHỨNG ĐƯỢC MÔ PHỎNG" : eyebrow)}</span>
       <p style={{ marginTop: "var(--sp-sm)" }}>{geometricRefusal
-        ? geometricCode === "CURVED_PLANE_DOES_NOT_CUT" ? geometricRefusal.reason : unsupported.learner_reason ?? geometricRefusal.reason
+        ? cutExplanation !== null ? `Không thể dựng giao tuyến. ${cutExplanation || geometricRefusal.reason}` : unsupported.learner_reason ?? geometricRefusal.reason
         : loiKe}</p>
       <dl className="refusal-facts">
         <div>

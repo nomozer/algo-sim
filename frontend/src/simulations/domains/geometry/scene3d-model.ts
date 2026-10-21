@@ -870,9 +870,14 @@ export function diemHuuHan(objects: SceneObject[]): Vec3[] {
       const tamNo = o.curved_kind === "cone" ? [c] : [c, dinh];
       if (o.curved_kind === "cone") ra.push(dinh);
       for (const t of tamNo) {
-        for (const u of phuong) {
-          ra.push([t[0] + u[0] * r, t[1] + u[1] * r, t[2] + u[2] * r]);
-          ra.push([t[0] - u[0] * r, t[1] - u[1] * r, t[2] - u[2] * r]);
+        // Enclosing corners keep diagonal camera views inside the frame before the mesh exists.
+        for (let mask = 0; mask < 1 << phuong.length; mask++) {
+          const p: Vec3 = [...t];
+          phuong.forEach((u, i) => {
+            const sign = mask & (1 << i) ? 1 : -1;
+            for (let j = 0; j < 3; j++) p[j] += sign * u[j] * r;
+          });
+          ra.push(p);
         }
       }
     }
