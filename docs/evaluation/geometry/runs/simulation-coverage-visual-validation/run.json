@@ -8,6 +8,8 @@
   "baseline_main": "bd8d6a9dc3acc9a4204b616379001270bb6d39f9",
   "session1_commit": "e05e620866934ce0f6c184f1d0de5dbace67b4cf",
   "product_commit": "3298b901d2246650535aa4028845ddc2a44892c4",
+  "candidate_freeze_commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+  "t3_target_commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
   "measured_system_hash": "4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68",
   "measured_file_count": 114,
   "versions": {
@@ -28,6 +30,15 @@
     "negative_refused": "5/5",
     "wrong_serves": 0,
     "browser_demos_verified": "9/9 (8 positive Scene3D WebGL demos + 1 fail-closed refusal demo)"
+  },
+  "verification": {
+    "independent_review": "INDEPENDENT_REVIEW_PASS",
+    "independent_review_path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/independent-review.md",
+    "full_t3": "FULL_PRODUCT_GATE_PASS",
+    "full_product_gate_path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/full-product-gate.json",
+    "backend_pytest_passed": 11439,
+    "frontend_vitest_passed": 1154,
+    "frontend_vitest_files_passed": 72
   },
   "governance": {
     "default_mode": "LLM_ONLY",

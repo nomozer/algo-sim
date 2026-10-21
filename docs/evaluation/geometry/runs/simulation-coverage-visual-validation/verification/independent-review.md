@@ -7,7 +7,7 @@
 - **Branch:** `research/simulation-coverage-visual-validation` (branched from `main` = `bd8d6a9dc3acc9a4204b616379001270bb6d39f9`)
 - **Session 1 Commit:** `e05e620866934ce0f6c184f1d0de5dbace67b4cf`
 - **Final Product Commit:** `3298b901d2246650535aa4028845ddc2a44892c4`
-- **Candidate Freeze Commit:** `8d09dcc1b1fec791d6a8c21d50402c51aac89297`
+- **Candidate Freeze Commit:** `5f4ee58c48011e9e5d38d3209f7c97250032a976` (Round 1: `8d09dcc1b1fec791d6a8c21d50402c51aac89297`)
 - **Measured System Hash:** `4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68` (`114` files)
 
 ---
@@ -59,3 +59,10 @@
   - `ALLOW_LIVE_AI = 0` / `live_provider_calls = 0` (`candidate_divergence.json:18`, `run.json:38`)
   - `CACHE_VERSION = 127` (`main.py:824`, `EVALUATION_CANDIDATE.json:9`, `candidate_divergence.json:13–14`)
   - `EVALUATION_CANDIDATE.json` matches `product_commit_sha = "3298b901d2246650535aa4028845ddc2a44892c4"`, `so_file = 114`, and `tree_hash = "4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68"`.
+
+---
+
+## Round 2 Delta Review (`3298b901` / `5f4ee58c`) — **INDEPENDENT_REVIEW_PASS (`0 BLOCKER, 0 IMPORTANT, 0 MINOR`)**
+
+1. **`backend/app/simulation/geometry_functions/typed_fact_next.py` (`3298b901`) — PASS:** Replaces the hand-written `Literal["distance", "angle", "area", "volume", "lateral_area", "radius"]` on `MathGoalSpec.goal_type` with `MathGoalType = Literal[*tuple(NGHIA_VU_DO)]` derived directly from `app.simulation.semantic_program.measure_contract.NGHIA_VU_DO`, satisfying `test_D1c_KHONG_co_ban_sao_viet_tay_cua_danh_sach_nghia_vu_do` and Checklist 3 (single mathematical/contract authority).
+2. **`backend/tests/semantic_program/test_memory_declaration_contract_alignment.py` (`3298b901`) — PASS:** Updates `SCENE_START[CA_P6]` (`C02`) from `b582e45a…` to `6e6967dca330a1e78c67a4acf08a2bbaccb54757d5f081fc23ae901b646c122f` with explicit reconciliation commentary documenting the intentional P3 Scene3D event classification changes while keeping `FINAL_MEMORY_START[CA_P6]` and `SO_VAT_START[CA_P6] = 7` unchanged.

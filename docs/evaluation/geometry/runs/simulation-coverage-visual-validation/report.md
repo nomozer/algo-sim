@@ -5,7 +5,10 @@
 - **Baseline `main` (`origin/main`):** `bd8d6a9dc3acc9a4204b616379001270bb6d39f9`
 - **Session 1 Checkpoint Commit:** `e05e620866934ce0f6c184f1d0de5dbace67b4cf`
 - **Final Product Commit:** `3298b901d2246650535aa4028845ddc2a44892c4`
+- **Candidate Freeze & Authoritative Full T3 Target Commit:** `5f4ee58c48011e9e5d38d3209f7c97250032a976`
 - **Measured System Hash (`114` files):** `4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68`
+- **Independent Review (`verification/independent-review.md`):** `INDEPENDENT_REVIEW_PASS` (`0 BLOCKER, 0 IMPORTANT, 0 MINOR` across Round 1 + Round 2)
+- **Authoritative Full T3 (`verification/full-product-gate.json`):** `FULL_PRODUCT_GATE_PASS` (pytest `11,439 passed`, vitest `72 files / 1,154 passed`, `tsc -b && vite build` `PASS`, demo replay `5/5`, crash boundary `6/6`)
 - **Final Status:** `SIMULATION_COVERAGE_VISUAL_VALIDATION_READY_FOR_GO_MAIN_REVIEW`
 
 ---

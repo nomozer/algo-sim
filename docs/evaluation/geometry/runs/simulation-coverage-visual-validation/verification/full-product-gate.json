@@ -1,0 +1,71 @@
+{
+  "schema_version": "authoritative-t3-receipt/1",
+  "wave": "simulation-coverage-visual-validation",
+  "branch": "research/simulation-coverage-visual-validation",
+  "baseline_main_commit": "bd8d6a9dc3acc9a4204b616379001270bb6d39f9",
+  "session1_commit": "e05e620866934ce0f6c184f1d0de5dbace67b4cf",
+  "product_commit": "3298b901d2246650535aa4028845ddc2a44892c4",
+  "candidate_freeze_commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+  "t3_target_commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+  "measured_system_hash": "4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68",
+  "measured_file_count": 114,
+  "command": "ALLOW_LIVE_AI=0 node frontend/scripts/full-gate.mjs",
+  "attempts": [
+    {
+      "attempt": 1,
+      "target_commit": "eaa05ecf3380967ecce9069882c8c95e1e399e7d",
+      "exit_code": 1,
+      "verdict": "FULL_PRODUCT_GATE_FAIL",
+      "stdout_log": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/t3/attempt1-fail.stdout.log",
+      "stdout_sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+      "stderr_log": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/t3/attempt1-fail.stderr.log",
+      "stderr_sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+      "notes": "11,437/11,439 backend tests and all frontend/build/demo/crash gates passed; 2 backend tests failed (test_D1c_KHONG_co_ban_sao_viet_tay_cua_danh_sach_nghia_vu_do due to hand-written Literal tuple on MathGoalSpec.goal_type in typed_fact_next.py, and test_H_sua_dung_o__TRUNG_chuong_trinh_duoc_nhan__cung_final_memory_va_canh due to P3 curved-solid/ellipse event classification updating SCENE_START[CA_P6]). Fixed in 3298b901 and re-frozen at 5f4ee58c."
+    },
+    {
+      "attempt": 2,
+      "target_commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+      "exit_code": 0,
+      "verdict": "FULL_PRODUCT_GATE_PASS",
+      "stdout_log": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/t3/attempt2-pass.stdout.log",
+      "stdout_sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+      "stderr_log": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/t3/attempt2-pass.stderr.log",
+      "stderr_sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+      "summary": {
+        "backend_pytest": {
+          "passed": 11439,
+          "failed": 0,
+          "skipped": 1,
+          "deselected": 2,
+          "xfailed": 9,
+          "duration_s": 583.9
+        },
+        "frontend_vitest": {
+          "files_passed": 72,
+          "tests_passed": 1154,
+          "failed": 0,
+          "duration_s": 8.9
+        },
+        "production_typecheck_and_build": {
+          "status": "PASS",
+          "duration_s": 5.6
+        },
+        "thesis_demo_replay_gate": {
+          "passed": 5,
+          "total": 5,
+          "reduced_chain_cases": "1/1",
+          "duration_s": 0.6
+        },
+        "crash_boundary_gate": {
+          "passed": 6,
+          "total": 6,
+          "unhandled_500_count": 0,
+          "duration_s": 0.5
+        },
+        "total_duration_s": 599.5
+      }
+    }
+  ],
+  "final_verdict": "FULL_PRODUCT_GATE_PASS",
+  "live_provider_calls": 0
+}
