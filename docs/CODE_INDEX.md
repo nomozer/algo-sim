@@ -1,5 +1,9 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Wave 3A + Adapter /3 Controlled Reconciliation & Integration (`research/integration-wave3a-adapter3`)
+
+Run `docs/evaluation/geometry/runs/wave3a-adapter3-integration/`. Reconciles Wave 3A (`research/hybrid-wave3a-volume-reasoning`, `fe9f5554`) with `TypedFactNext + Adapter /3` (`main` `f2bc01e3`) on a single mathematical authority (`backend/app/simulation/geometry_functions/engine.py`, `geometry-function-engine/9`): `adapter3_simulation.py` (`hybrid-simulation-adapter/3`) delegates single-solid volume squared certificates (`_the_tich2_khoi`), self-ratio refusal (`UNSUPPORTED_VOLUME_RATIO`), and residual-volume outward half-space containment & shared boundary face verification (`_mat_ngoai_khoi` $\to$ `RESIDUAL_CONTAINMENT_UNPROVED`) to `engine.py`. Tested in `backend/tests/geometry/test_wave3a_adapter3_integration.py`.
+
 ## TypedFactNext (`typed-fact-next/1`) & Adapter /3 (`hybrid-simulation-adapter/3`) — Simulation-First Contract Expansion
 
 Run `docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/`; contract `docs/architecture/TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md`.
@@ -8,6 +12,22 @@ Run `docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/`; contrac
 |---|---|---|
 | `backend/app/simulation/geometry_functions/typed_fact_next.py` | Versioned simulation-first contract `TYPED_FACT_NEXT_SCHEMA_VERSION = "typed-fact-next/1"` (`TypedFactNextPayload`, `SolidSpec`, `PremiseSpec`, `DerivedPlaneSectionSpec`, `GeometricRelationSpec`, `SimulationGoalSpec`, `MathGoalSpec`, `DerivedObjectIdentity`, `parse_qualified_ref`, `parse_typed_fact_next`). Coexists with unchanged `TypedFact` (`planner.py`). | `backend/tests/geometry/test_typedfact_next_adapter3.py` (`19/19`) |
 | `backend/app/ai/adapter3_simulation.py` | `ADAPTER_V3_VERSION = "hybrid-simulation-adapter/3"`, `ROUTE_D_SIMULATION_SCHEMA_VERSION = "hybrid-route-d-simulation/3"`, `run_typed_fact_next_route`, `build_adapter3_simulation_response`. Validates source quotes & numbers, resolves `solid_id::label` (`SolidQualifiedRef`) & shared geometry (Slice B), synthesizes unnamed cutting-plane section vertices & derived sub-solids on top of `_Dung` and `SemanticProgramInterpreter` (Slice A), certifies `volume_ratio` & `residual_volume`, and enriches `Scene3D` without leaking internal identifiers. Coexists with unchanged Adapter `/2` (`hybrid_preview.py`). | `backend/tests/geometry/test_typedfact_next_adapter3.py` (`19/19`), `frontend/src/simulations/domains/geometry/adapter3-simulation-demos.test.tsx` (`4/4`) |
+
+## Exact composite volume reasoning — Wave 3A local research
+
+Run `docs/evaluation/geometry/runs/volume-reasoning/`; contract `docs/architecture/WAVE3A_CONTRACT_DECISION.md`.
+`backend/app/simulation/geometry_functions/registry.py` (`geometry-functions/11`) registers internal (`provider_offered=False`)
+`ask_volume_ratio` (`AskVolumeRatioArgs`, distinct solids enforced) and `ask_residual_volume` (`AskResidualVolumeArgs`, 1–2 subtracted solids),
+closed Vietnamese question grammars (`_CUM_HOI`), ordered solid operand binding (`_ten_khoi_khop`, `_ds_khoi_khop`), and dimensionless unit
+rejection on `"ratio"` (`QUESTION_CONTEXT_UNSUPPORTED`). `backend/app/simulation/geometry_functions/planner.py` (`geometry-fact-planner/11`)
+accepts `volume_ratio` and `residual_volume` via `WithJsonSchema(FLAT_QUANTITIES)` (preserving `FLAT_EXTRACTION_SCHEMA_SHA256`), resolves solid
+operands via `_khoi_tu_toan_hang`, and places composite volume asks in `Tier 5` after all referenced solid construction calls.
+`backend/app/simulation/geometry_functions/engine.py` (`geometry-function-engine/9`) computes `_the_tich2_khoi`, `_mat_ngoai_khoi` (strict
+convexity + outward face planes), `_kiem_phan_con_lai` (outward half-space containment, shared boundary face, 3D SAT interior disjointness over
+face normals + edge-pair cross products, positive residual check), `ratio_certificates`, `residual_certificates`, and post-execution self-checks.
+`backend/app/simulation/semantic_program/interpreter.py` supports `Radical` arithmetic (`+`, `-`, `*`) and `parse_exact` rational string literals;
+`simulation_state.py` and `display_names.py` support `"assign.volume_ratio"` and `"assign.residual_volume"` without fabricating residual 3D solid
+meshes in `Scene3D.objects`. Tested in `backend/tests/geometry/test_wave3a_volume_reasoning.py`.
 
 ## Composite geometry — Wave 2C local research
 

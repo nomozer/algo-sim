@@ -1530,6 +1530,12 @@ class _Adapter3Compiler:
                 assert mg.numerator_solid_id and mg.denominator_solid_id
                 num_name = self._resolve_solid_canonical_name(mg.numerator_solid_id, mg.goal_id)
                 den_name = self._resolve_solid_canonical_name(mg.denominator_solid_id, mg.goal_id)
+                if num_name == den_name:
+                    raise TuChoi(
+                        "UNSUPPORTED_VOLUME_RATIO",
+                        f"{mg.goal_id}: tỉ số thể tích cần hai khối phân biệt ({num_name})",
+                        (mg.goal_id,),
+                    )
                 v2_num = dung.volume_certificates.get(num_name)
                 v2_den = dung.volume_certificates.get(den_name)
                 if v2_num is None or v2_den is None or v2_den == 0:
@@ -1567,12 +1573,49 @@ class _Adapter3Compiler:
                 assert mg.parent_solid_id and mg.cut_solid_id
                 parent_name = self._resolve_solid_canonical_name(mg.parent_solid_id, mg.goal_id)
                 cut_name = self._resolve_solid_canonical_name(mg.cut_solid_id, mg.goal_id)
+                if cut_name == parent_name:
+                    raise TuChoi(
+                        "NON_POSITIVE_RESIDUAL_VOLUME",
+                        f"{mg.goal_id}: không thể cắt bỏ chính khối gốc {parent_name}",
+                        (mg.goal_id,),
+                    )
                 v2_parent = dung.volume_certificates.get(parent_name)
                 v2_cut = dung.volume_certificates.get(cut_name)
                 if v2_parent is None or v2_cut is None or v2_parent == 0:
                     raise TuChoi(
                         "MISSING_VOLUME_CERTIFICATE",
                         f"{mg.goal_id}: thiếu chứng chỉ thể tích cho {parent_name} hoặc {cut_name}",
+                        (mg.goal_id,),
+                    )
+                # Single mathematical authority (engine.py /9): outward half-space containment & shared boundary face
+                _, _, orig_planes, _ = dung._mat_ngoai_khoi(dung.khoi[parent_name])
+                s_labels, s_faces, _, _ = dung._mat_ngoai_khoi(dung.khoi[cut_name])
+                for v_lb in s_labels:
+                    pt = dung.pts[v_lb]
+                    if any(
+                        n[0] * pt[0] + n[1] * pt[1] + n[2] * pt[2] - d > 0
+                        for n, d in orig_planes
+                    ):
+                        raise TuChoi(
+                            "RESIDUAL_CONTAINMENT_UNPROVED",
+                            f"{mg.goal_id}: đỉnh {v_lb} của khối {cut_name} nằm ngoài khối gốc {parent_name}",
+                            (mg.goal_id,),
+                        )
+                if not any(
+                    all(
+                        n[0] * dung.pts[v_lb][0]
+                        + n[1] * dung.pts[v_lb][1]
+                        + n[2] * dung.pts[v_lb][2]
+                        - d
+                        == 0
+                        for v_lb in sf
+                    )
+                    for sf in s_faces
+                    for n, d in orig_planes
+                ):
+                    raise TuChoi(
+                        "RESIDUAL_CONTAINMENT_UNPROVED",
+                        f"{mg.goal_id}: khối cắt bỏ {cut_name} không chung mặt biên với khối gốc {parent_name}",
                         (mg.goal_id,),
                     )
                 ratio_cut = _exact_sqrt_fraction(Fraction(v2_cut, v2_parent), mg.goal_id)
@@ -1629,6 +1672,8 @@ class _Adapter3Compiler:
                             "cut_to_parent_ratio": str(ratio_cut),
                             "complement_ratio": str(complement_ratio),
                             "residual_volume_squared": str(expected_res_v2),
+                            "containment_verified": True,
+                            "shared_boundary_verified": True,
                         },
                     }
                 )
@@ -2053,8 +2098,7 @@ class _Adapter3Compiler:
             # Compute volume certificates for single-solid too when needed by math_goals
             if not dung.composite:
                 for k in dung.khoi.values():
-                    if k.kind == "pyramid":
-                        dung.volume_certificates[k.name] = dung._the_tich2_chop(k)
+                    dung.volume_certificates[k.name] = dung._the_tich2_khoi(k)
 
             self._verify_geometric_relations_and_cuts(dung, rel_certificates)
 

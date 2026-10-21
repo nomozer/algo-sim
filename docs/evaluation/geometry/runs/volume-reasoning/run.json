@@ -1,0 +1,109 @@
+{
+  "run": "volume-reasoning",
+  "wave": "Hybrid Wave 3A — exact composite volume reasoning",
+  "date": "2026-10-21",
+  "authorization": "GO_HYBRID_WAVE3A_LOCAL_RESEARCH (local implementation only; no GO MAIN)",
+  "branch": "research/hybrid-wave3a-volume-reasoning",
+  "base_commit": "1613e0d3ebe16f0f2fe4be755052491ff581e51b",
+  "product_commits": [
+    "2e277e6ec6b87a1e64bfc8c1c9127f591fedf24f",
+    "4c282ecd9f15b14ddbbe6e0be0b247e455d8edca"
+  ],
+  "product_commit": "4c282ecd9f15b14ddbbe6e0be0b247e455d8edca",
+  "candidate_commit": "0a4b6d7027624849b53b5d79a78dd6f2116cffcd",
+  "t3_target_commit": "373116d212758458c923252ef5fb72d63d0e07fb",
+  "superseded_candidates": [
+    {
+      "freeze_commit": "817b1730d5b3a61cd18b30348e32040337428841",
+      "product_commit": "2e277e6ec6b87a1e64bfc8c1c9127f591fedf24f",
+      "tree_hash": "99cef1a99038d8bf13ed6f9a2cc476fc315986650c4c038e30479d1212d18338",
+      "reason": "independent review round 1 PASS_WITH_FINDINGS: IMPORTANT-01 self-ratio refusal in AskVolumeRatioArgs/planner/engine; MINOR-01/02 contract doc sync"
+    }
+  ],
+  "measured_system_hash": "df262376b3f2de7bcb0c295932c7c867a7ee2bf268ed9408071e5953ee9fc821",
+  "measured_file_count": 112,
+  "authoritative_t3_verdict": "FULL_PRODUCT_GATE_PASS",
+  "authoritative_t3_receipt": "docs/evaluation/geometry/runs/volume-reasoning/verification/authoritative-t3.json",
+  "independent_review": "INDEPENDENT_REVIEW_PASS (round 2, 0a4b6d70; verification/independent-review.md)",
+  "versions": {
+    "registry": "geometry-functions/11",
+    "planner": "geometry-fact-planner/11",
+    "engine": "geometry-function-engine/9",
+    "adapter": "hybrid-preview-adapter/2"
+  },
+  "surface_fingerprints": {
+    "typed_fact_json_schema_sha256": "aa9d93eeac9f1659af8e5acd42af1904b7aaed674a8ab0f56f0c7dd8b2ad4ee8",
+    "flat_extraction_surface_sha256": "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a",
+    "v3_extraction_surface_sha256": "4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f",
+    "function_calling_surface_sha256": "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25",
+    "registry_function_declarations_sha256": "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"
+  },
+  "cache_version": 127,
+  "cache_decision": "NO_BUMP (default LLM_ONLY /api/analyze path is untouched; Wave 3A composite volume reasoning is isolated to offline Route D / function_route / fact_route research)",
+  "default_mode": "LLM_ONLY",
+  "response_contract": "flat",
+  "hybrid_product_enablement": "NO-GO",
+  "live_requests": 0,
+  "results": {
+    "development_corpus": {
+      "evaluation_mode": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+      "blind_holdout": false,
+      "cases": 32,
+      "positive_exact_served": "18/18",
+      "positive_volume_ratio": "12/12",
+      "positive_residual_volume": "6/6",
+      "goal_coverage": "20/20",
+      "correct_refusal": "14/14",
+      "false_serves": 0,
+      "scene_valid": "18/18",
+      "artifact": "docs/evaluation/geometry/runs/volume-reasoning/dev-evaluation.json"
+    },
+    "bh2c_known_regression": {
+      "evaluation_mode": "KNOWN_REGRESSION_NOT_BLIND",
+      "blind_holdout": false,
+      "external_manifest_dir": "D:\\Documents\\AlgoSim-Research\\BH2C (READ-ONLY UNTOUCHED)",
+      "fact_route_positive_exact_served": "11/11",
+      "function_route_positive_exact_served": "11/11",
+      "negative_refusals": "13/13",
+      "false_serves": 0,
+      "diffs_vs_wave2c_bh2c_receipt": 0,
+      "artifact": "docs/evaluation/geometry/runs/volume-reasoning/regression-summary.json"
+    },
+    "wave2c_dev_corpus": {
+      "evaluation_mode": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+      "positive_exact_served": "16/16",
+      "goal_coverage": "26/26",
+      "correct_refusal": "14/14",
+      "false_serves": 0,
+      "changed_vs_wave2c": 0
+    },
+    "sgh_known_regression": {
+      "evaluation_mode": "KNOWN_REGRESSION_NOT_BLIND",
+      "blind_holdout": false,
+      "positive_exact_served": "10/10",
+      "positive_goals_exact": "16/16",
+      "negative_exact_refusal": "5/5",
+      "changed_vs_wave2c": 0
+    },
+    "sg1_sg6": {
+      "rows": 30,
+      "positive_served": "18/18",
+      "negative_refused": "12/12",
+      "changed_vs_wave2c": 0
+    },
+    "bh2a_known_regression": {
+      "evaluation_mode": "KNOWN_REGRESSION_NOT_BLIND",
+      "positive": "11/12",
+      "sentinel_BH2A_13": "SERVED",
+      "diagnostic_BH2A_03_variant_ABCD": "SERVED",
+      "negative_refused": "5/5",
+      "changed_vs_wave2c": 0
+    },
+    "nlu_gold": {
+      "rows": 60,
+      "changed": 0
+    },
+    "historical_174_and_adapter_2_fixtures": "PASS inside Full T3 backend suite (11401 passed, 1 skipped, 2 deselected, 9 xfailed)"
+  },
+  "verdict": "WAVE3A_READY_FOR_GO_MAIN_REVIEW"
+}

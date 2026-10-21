@@ -1,0 +1,25 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "wave3a-adapter3-integration",
+  "corrects": [
+    "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/candidate_divergence.json",
+    "docs/evaluation/geometry/runs/volume-reasoning/candidate_divergence.json"
+  ],
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "previous_candidate_hash": "42f6ae2c8e290d00be2e11b439ca2499f58fe74cd84ab999e2cae2824c4b65d2",
+  "previous_wave3a_candidate_hash": "df262376b3f2de7bcb0c295932c7c867a7ee2bf268ed9408071e5953ee9fc821",
+  "current_candidate_hash": "817780925c278f3aeadb6ad393f65d737b9d244c62e7f382bd0b8d7f0b7d261e",
+  "current_product_commit": "PENDING_FREEZE",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized controlled reconciliation (GO_WAVE3A_ADAPTER3_LOCAL_RECONCILIATION_ONLY) integrating Wave 3A (research/hybrid-wave3a-volume-reasoning, product 4c282ecd) with TypedFactNext + Adapter /3 (main f2bc01e3, product 61d6f44b) under a single mathematical authority (engine.py /9). Historical receipts for both branches are preserved byte-for-byte.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP: default LLM_ONLY /api/analyze path is unchanged; Wave 3A and Adapter /3 remain isolated offline research routes.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every earlier candidate layer (including Wave 3A volume-reasoning, TypedFactNext + Adapter /3 typedfact-next-adapter3-simulation, and BH2C) are preserved byte-for-byte."
+  }
+}

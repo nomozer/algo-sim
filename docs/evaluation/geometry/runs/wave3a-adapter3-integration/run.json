@@ -1,0 +1,9 @@
+{
+  "schema_version": "algosim.eval.run.v1",
+  "run_id": "wave3a-adapter3-integration",
+  "wave": "wave3a-adapter3-integration",
+  "branch": "research/integration-wave3a-adapter3",
+  "baseline_main": "f2bc01e38c1bc532db1c1b4747ca9df13de5b018",
+  "wave3a_head": "fe9f555437498432427ae6bbd54402cdd59c7eb7",
+  "status": "IN_PROGRESS"
+}

@@ -306,6 +306,16 @@ def _khai_lech_hien_hanh(goc: Path = KHAI_LECH_GOC) -> Path:
     for _ in range(len(lop) + 1):
         rel = hien.relative_to(GOC).as_posix()
         sau = [p for p in lop if json.loads(p.read_text(encoding="utf-8")).get("corrects") == rel]
+        if len(sau) > 1:
+            nhanh = sorted(p.relative_to(GOC).as_posix() for p in sau)
+            hop = [
+                p
+                for p in lop
+                if isinstance(c := json.loads(p.read_text(encoding="utf-8")).get("corrects"), list)
+                and sorted(c) == nhanh
+            ]
+            assert len(hop) == 1, f"hai lớp cùng đính chính {rel}: {sorted(map(str, sau))}"
+            sau = hop
         assert len(sau) <= 1, f"hai lớp cùng đính chính {rel}: {sorted(map(str, sau))}"
         if not sau:
             return hien

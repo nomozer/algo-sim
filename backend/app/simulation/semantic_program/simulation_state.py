@@ -321,6 +321,31 @@ def _provenance(spec: SemanticProgramSpec) -> dict[str, dict[str, Any]]:
                     nguon = [var_name] if isinstance(var_name, str) else []
                     ra[tv] = {"producer": "assign", "sources": nguon,
                               "label": getattr(st, "label", None)}
+                elif ek in ("arith", "unary"):
+                    def _thu_bien(bieu_thuc: Any) -> list[str]:
+                        loai_bt = getattr(bieu_thuc, "kind", None)
+                        if loai_bt == "var":
+                            ten_b = getattr(bieu_thuc, "name", None)
+                            return [ten_b] if isinstance(ten_b, str) else []
+                        if loai_bt in ("arith", "unary"):
+                            ket_qua: list[str] = []
+                            for truong_con in ("left", "right", "expr"):
+                                con = getattr(bieu_thuc, truong_con, None)
+                                if con is not None:
+                                    for b in _thu_bien(con):
+                                        if b not in ket_qua:
+                                            ket_qua.append(b)
+                            return ket_qua
+                        return []
+                    bien_con = _thu_bien(e)
+                    prod_gan = "assign"
+                    if ek == "arith" and len(bien_con) >= 2 and all(ra.get(b, {}).get("producer") == "measure.volume" for b in bien_con):
+                        if getattr(e, "op", None) == "-":
+                            prod_gan = "assign.residual_volume"
+                        elif getattr(e, "op", None) == "+":
+                            prod_gan = "assign.volume_ratio"
+                    ra[tv] = {"producer": prod_gan, "sources": bien_con,
+                              "label": getattr(st, "label", None)}
                 elif ek in _BIEU_THUC_HINH_HOC:
                     # ─── VECTƠ VÀ ĐƯỜNG CŨNG LÀ VẬT DỰNG RA ──────────────
                     #

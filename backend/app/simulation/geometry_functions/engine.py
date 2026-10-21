@@ -40,7 +40,8 @@ from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, LoiGoi, TuC
 #: /6 (run `goal-directed-function-composition`): `ask_angle_lines` IR + independent line–line Gram verifier.
 #: /7 (run `geometry-capability-expansion`): ratio points, right-angle-chain base, prism lateral vector, ⊥-line plane check.
 #: /8 (run `composite-geometry`): determined derived bases, per-solid formation, independent volume certificates.
-ENGINE_VERSION = "geometry-function-engine/8"
+#: /9 (run `volume-reasoning`): exact volume ratio (`ask_volume_ratio`) and residual volume (`ask_residual_volume`) certificates.
+ENGINE_VERSION = "geometry-function-engine/9"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -245,8 +246,18 @@ class _Dung:
         for c in self.of("height", "ask_volume"):
             if c.args.solid not in self.khoi:
                 raise TuChoi("UNKNOWN_SOLID", f"{c.id}: khối {c.args.solid} chưa được dựng bằng lời gọi nào", (c.id,))
+        for c in self.of("ask_volume_ratio"):
+            for s in (c.args.numerator_solid, c.args.denominator_solid):
+                if s not in self.khoi:
+                    raise TuChoi("UNKNOWN_SOLID", f"{c.id}: khối {s} chưa được dựng bằng lời gọi nào", (c.id,))
+        for c in self.of("ask_residual_volume"):
+            for s in (c.args.original_solid, *c.args.subtracted_solids):
+                if s not in self.khoi:
+                    raise TuChoi("UNKNOWN_SOLID", f"{c.id}: khối {s} chưa được dựng bằng lời gọi nào", (c.id,))
+            if len(set(c.args.subtracted_solids)) != len(c.args.subtracted_solids):
+                raise TuChoi("INCONSISTENT_FACTS", f"{c.id}: danh sách khối bị cắt bỏ lặp khối", (c.id,))
         self.root = next(iter(self.khoi.values()))
-        self.composite = len({frozenset(k.base) for k in self.khoi.values()}) != 1
+        self.composite = len({frozenset(k.base) for k in self.khoi.values()}) != 1 or len(self.khoi) > 1
         if self.composite:
             # A new base is admitted only as a derived object in the SAME chart. Never lay out an independent base.
             outputs = {c.args.point for c in self.of("midpoint", "centroid", "divide_segment", "intersect_line_line",
@@ -785,23 +796,49 @@ class _Dung:
             raise TuChoi("INCONSISTENT_FACTS", "dữ kiện mâu thuẫn với phần còn lại của đề: "
                          + "; ".join(f"{c.id} {c.quote!r}" for c in hong), tuple(c.id for c in hong))
         self.volume_certificates = {}
-        if self.composite:
+        self.ratio_certificates: dict[str, Fraction] = {}
+        self.residual_certificates: dict[str, Fraction] = {}
+        if self.composite or self.of("ask_volume_ratio", "ask_residual_volume"):
             from app.simulation.geometry.section import Polyhedron, kiem_mat_phang_don
             for k in self.khoi.values():
-                if k.kind != "pyramid":
-                    continue
-                labels = [k.apex, *k.base]
-                faces = P.construct_pyramid("solid", k.apex, k.base)["faces"]
+                if k.kind == "pyramid":
+                    labels = [k.apex, *k.base]
+                    faces = P.construct_pyramid("solid", k.apex, k.base)["faces"]
+                    rule = "gram_base_area_squared_times_height_squared_over_9"
+                else:
+                    labels = [*k.base, *k.top]
+                    faces = P.construct_prism("solid", k.base, k.top, tuple((b, t) for b, t in zip(k.base, k.top)))["faces"]
+                    rule = "gram_base_area_squared_times_height_squared"
                 try:
                     kiem_mat_phang_don(Polyhedron(tuple(Vec3(*self.pts[p]) for p in labels),
                                                  tuple(tuple(labels.index(p) for p in face) for face in faces)))
                 except GeometryError as e:
                     raise TuChoi(e.code, str(e), (k.call,)) from None
-                v2 = self._the_tich2_chop(k)
+                v2 = self._the_tich2_khoi(k)
+                if v2 <= 0:
+                    raise TuChoi("DEGENERATE_SOLID", f"khối {k.name} có thể tích bằng 0 (suy biến)", (k.call,))
                 self.volume_certificates[k.name] = v2
-                self.trace.append({"step": "verify_solid", "object": k.name, "rule": "gram_base_area_squared_times_height_squared_over_9",
+                self.trace.append({"step": "verify_solid", "object": k.name, "rule": rule,
                                    "calls": [k.call], "provenance": "DERIVED", "volume_squared": str(v2),
                                    "dependencies": labels, "base_coplanar": True})
+            for c in self.of("ask_volume_ratio"):
+                num_s, den_s = c.args.numerator_solid, c.args.denominator_solid
+                if num_s == den_s:
+                    raise TuChoi("UNSUPPORTED_VOLUME_RATIO", f"{c.id}: tỉ số thể tích cần hai khối phân biệt", (c.id,))
+                v2_num, v2_den = self.volume_certificates[num_s], self.volume_certificates[den_s]
+                ratio = _sqrt_q(v2_num / v2_den)
+                if ratio is None or ratio <= 0:
+                    raise TuChoi("UNSUPPORTED_VOLUME_RATIO", f"{c.id}: tỉ số thể tích giữa {num_s} và {den_s} không hữu tỉ dương", (c.id,))
+                self.ratio_certificates[c.id] = ratio
+                self.trace.append({
+                    "step": "certify_volume_ratio", "object": c.id, "rule": "exact_gram_volume_ratio_certificate",
+                    "calls": [c.id, self.khoi[num_s].call, self.khoi[den_s].call], "provenance": "DERIVED",
+                    "numerator_solid": num_s, "denominator_solid": den_s,
+                    "numerator_volume_squared": str(v2_num), "denominator_volume_squared": str(v2_den),
+                    "ratio": str(ratio),
+                })
+            for c in self.of("ask_residual_volume"):
+                self._kiem_phan_con_lai(c)
 
     def _the_tich2_chop(self, k: _Khoi) -> Fraction:
         """Independent of the interpreter's oriented boundary-volume sum: Gram base area × altitude / 3, squared."""
@@ -811,7 +848,107 @@ class _Dung:
                    for a, b in zip(k.base, (*k.base[1:], k.base[0])))
         scale = proj / (u[i] * v[j] - u[j] * v[i])
         area2 = (self.g(u, u) * self.g(v, v) - self.g(u, v) ** 2) * scale ** 2 / 4
-        return area2 * self._kc2_mat(k.apex, k.base[:3]) / 9
+        return (area2 * self._kc2_mat(k.apex, k.base[:3]) / 9 if k.kind == "pyramid"
+                else area2 * self._kc2_mat(k.top[0], k.base[:3]))
+
+    def _the_tich2_khoi(self, k: _Khoi) -> Fraction:
+        """Exact Gram-metric volume squared for a pyramid (`S_base² · h² / 9`) or prism (`S_base² · h²`), independent of IR execution."""
+        return self._the_tich2_chop(k)
+
+    def _mat_ngoai_khoi(self, k: _Khoi):
+        labels = [k.apex, *k.base] if k.kind == "pyramid" else [*k.base, *k.top]
+        faces = (P.construct_pyramid("solid", k.apex, k.base)["faces"] if k.kind == "pyramid"
+                 else P.construct_prism("solid", k.base, k.top, tuple((b, t) for b, t in zip(k.base, k.top)))["faces"])
+        planes: list[tuple[V3, Fraction]] = []
+        edges: set[tuple[str, str]] = set()
+        for face in faces:
+            for i in range(len(face)):
+                a_e, b_e = face[i], face[(i + 1) % len(face)]
+                if (b_e, a_e) not in edges:
+                    edges.add((a_e, b_e))
+            u, v = self._vec(face[0], face[1]), self._vec(face[0], face[2])
+            n = (u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0])
+            p0 = self.pts[face[0]]
+            d = n[0] * p0[0] + n[1] * p0[1] + n[2] * p0[2]
+            off = [n[0] * self.pts[x][0] + n[1] * self.pts[x][1] + n[2] * self.pts[x][2] - d for x in labels if x not in face]
+            if not off or any(val == 0 for val in off) or ({val > 0 for val in off} == {True, False}):
+                raise TuChoi("DEGENERATE_SOLID", f"khối {k.name} có mặt không lồi hoặc suy biến", (k.call,))
+            if off[0] > 0:
+                n, d = (-n[0], -n[1], -n[2]), -d
+            planes.append((n, d))
+        return labels, faces, planes, tuple(edges)
+
+    def _kiem_phan_con_lai(self, c: LoiGoi) -> None:
+        orig = self.khoi[c.args.original_solid]
+        subs = [self.khoi[s] for s in c.args.subtracted_solids]
+        _, _, orig_planes, _ = self._mat_ngoai_khoi(orig)
+        v2_orig = self.volume_certificates[orig.name]
+        sub_data = [self._mat_ngoai_khoi(sk) for sk in subs]
+        sum_r = Fraction(0)
+        for sk, (s_labels, s_faces, _s_planes, _s_edges) in zip(subs, sub_data):
+            if sk.name == orig.name:
+                raise TuChoi("NON_POSITIVE_RESIDUAL_VOLUME", f"{c.id}: không thể cắt bỏ chính khối gốc {orig.name}", (c.id,))
+            for v_lb in s_labels:
+                pt = self.pts[v_lb]
+                if any(n[0] * pt[0] + n[1] * pt[1] + n[2] * pt[2] - d > 0 for n, d in orig_planes):
+                    raise TuChoi("RESIDUAL_CONTAINMENT_UNPROVED",
+                                 f"{c.id}: đỉnh {v_lb} của khối {sk.name} nằm ngoài khối gốc {orig.name}", (c.id,))
+            if not any(
+                all(n[0] * self.pts[v_lb][0] + n[1] * self.pts[v_lb][1] + n[2] * self.pts[v_lb][2] - d == 0 for v_lb in sf)
+                for sf in s_faces for n, d in orig_planes
+            ):
+                raise TuChoi("RESIDUAL_CONTAINMENT_UNPROVED",
+                             f"{c.id}: khối cắt bỏ {sk.name} không chung mặt biên với khối gốc {orig.name}", (c.id,))
+            r_i = _sqrt_q(self.volume_certificates[sk.name] / v2_orig)
+            if r_i is None or r_i <= 0:
+                raise TuChoi("RESIDUAL_CONTAINMENT_UNPROVED",
+                             f"{c.id}: tỉ lệ thể tích khối cắt bỏ {sk.name} không hữu tỉ dương", (c.id,))
+            sum_r += r_i
+        for i in range(len(subs)):
+            la, _, pa, ea = sub_data[i]
+            pts_a = [self.pts[x] for x in la]
+            for j in range(i + 1, len(subs)):
+                lb, _, pb, eb = sub_data[j]
+                pts_b = [self.pts[x] for x in lb]
+                sep = (
+                    any(all(n[0] * p[0] + n[1] * p[1] + n[2] * p[2] - d >= 0 for p in pts_b) for n, d in pa)
+                    or any(all(n[0] * p[0] + n[1] * p[1] + n[2] * p[2] - d >= 0 for p in pts_a) for n, d in pb)
+                )
+                if not sep:
+                    for u1, u2 in ea:
+                        du = self._vec(u1, u2)
+                        p0 = self.pts[u1]
+                        for v1, v2 in eb:
+                            dv = self._vec(v1, v2)
+                            n = (du[1] * dv[2] - du[2] * dv[1], du[2] * dv[0] - du[0] * dv[2], du[0] * dv[1] - du[1] * dv[0])
+                            if n == (Z, Z, Z):
+                                continue
+                            d = n[0] * p0[0] + n[1] * p0[1] + n[2] * p0[2]
+                            va = [n[0] * p[0] + n[1] * p[1] + n[2] * p[2] - d for p in pts_a]
+                            vb = [n[0] * p[0] + n[1] * p[1] + n[2] * p[2] - d for p in pts_b]
+                            if (all(x <= 0 for x in va) and all(y >= 0 for y in vb)) or (all(x >= 0 for x in va) and all(y <= 0 for y in vb)):
+                                sep = True
+                                break
+                        if sep:
+                            break
+                if not sep:
+                    raise TuChoi("OVERLAPPING_SUBTRACTED_SOLIDS",
+                                 f"{c.id}: hai khối cắt bỏ {subs[i].name} và {subs[j].name} có phần trong giao nhau", (c.id,))
+        rem_frac = Fraction(1) - sum_r
+        if rem_frac <= 0:
+            raise TuChoi("NON_POSITIVE_RESIDUAL_VOLUME",
+                         f"{c.id}: tổng thể tích cắt bỏ không nhỏ hơn thể tích khối gốc {orig.name}", (c.id,))
+        v2_res = rem_frac * rem_frac * v2_orig
+        self.residual_certificates[c.id] = v2_res
+        self.trace.append({
+            "step": "certify_residual_volume", "object": c.id,
+            "rule": "exact_halfspace_containment_and_sat_disjointness_certificate",
+            "calls": [c.id, orig.call, *(sk.call for sk in subs)], "provenance": "DERIVED",
+            "original_solid": orig.name, "subtracted_solids": [sk.name for sk in subs],
+            "containment_verified": True, "shared_boundary_verified": True,
+            "disjoint_interiors_verified": True, "positive_residual_verified": True,
+            "residual_fraction": str(rem_frac), "residual_volume_squared": str(v2_res),
+        })
 
     def _vec(self, a: str, b: str) -> V3:
         return tuple(self.pts[b][i] - self.pts[a][i] for i in range(3))
@@ -1035,6 +1172,31 @@ class _Dung:
                 lenh.append(P.measure_quantity(kq, "distance" if c.fn == "ask_distance_lines" else "angle_cos_sq", d1, d2))
             elif c.fn == "ask_section_area":
                 lenh.append(P.measure_quantity(kq, "area", td[self._khoa_mat_cat(c)]))
+            elif c.fn == "ask_volume_ratio":
+                v_num, v_den = f"v_tu_{c.id}", f"v_mau_{c.id}"
+                s_num = "khoi_" + ir_name(a.numerator_solid.replace(".", "_"))
+                s_den = "khoi_" + ir_name(a.denominator_solid.replace(".", "_"))
+                lenh.append({**P.measure_quantity(v_num, "volume", s_num), "label": f"Thể tích khối {a.numerator_solid}"})
+                lenh.append({**P.measure_quantity(v_den, "volume", s_den), "label": f"Thể tích khối {a.denominator_solid}"})
+                khai += [P.memory_declaration(v_num, P.KIEU_DAI_LUONG), P.memory_declaration(v_den, P.KIEU_DAI_LUONG)]
+                ratio = self.ratio_certificates[c.id]
+                p_num, q_den = ratio.numerator, ratio.denominator
+                cross = {"kind": "arith", "op": "-", "left": {"kind": "arith", "op": "*", "left": {"kind": "literal", "value": q_den}, "right": {"kind": "var", "name": v_num}}, "right": {"kind": "arith", "op": "*", "left": {"kind": "literal", "value": p_num}, "right": {"kind": "var", "name": v_den}}}
+                expr = {"kind": "arith", "op": "+", "left": cross, "right": {"kind": "literal", "value": str(ratio)}}
+                lenh.append({"kind": "assign", "target_var": kq, "expr": expr, "label": f"Tỉ số thể tích V({a.numerator_solid}) / V({a.denominator_solid})"})
+            elif c.fn == "ask_residual_volume":
+                v_orig = f"v_goc_{c.id}"
+                s_orig = "khoi_" + ir_name(a.original_solid.replace(".", "_"))
+                lenh.append({**P.measure_quantity(v_orig, "volume", s_orig), "label": f"Thể tích khối gốc {a.original_solid}"})
+                khai.append(P.memory_declaration(v_orig, P.KIEU_DAI_LUONG))
+                expr: dict[str, Any] = {"kind": "var", "name": v_orig}
+                for idx, sub_s in enumerate(a.subtracted_solids, 1):
+                    v_sub = f"v_cat_{c.id}_{idx}"
+                    s_sub = "khoi_" + ir_name(sub_s.replace(".", "_"))
+                    lenh.append({**P.measure_quantity(v_sub, "volume", s_sub), "label": f"Thể tích khối cắt bỏ {sub_s}"})
+                    khai.append(P.memory_declaration(v_sub, P.KIEU_DAI_LUONG))
+                    expr = {"kind": "arith", "op": "-", "left": expr, "right": {"kind": "var", "name": v_sub}}
+                lenh.append({"kind": "assign", "target_var": kq, "expr": expr, "label": f"Thể tích phần còn lại của {a.original_solid}"})
             else:
                 dg = f"dg_{c.id}"
                 lenh.append(P.construct_polygon(dg, tuple(map(ir_name, a.polygon))))
@@ -1308,7 +1470,7 @@ _KIEM_DICH = {
 #: Bậc theo độ dài của mỗi đại lượng được hỏi — đáp số với độ dài ký hiệu a là (hệ số tại a = 1) · a^bậc.
 BAC_DAI_LUONG = {"ask_volume": 3, "ask_length": 1, "ask_distance_point_plane": 1, "ask_angle_line_plane": 0,
                  "ask_area": 2, "ask_angle_plane_plane": 0, "ask_distance_lines": 1, "ask_section_area": 2,
-                 "ask_angle_lines": 0}
+                 "ask_angle_lines": 0, "ask_volume_ratio": 0, "ask_residual_volume": 3}
 
 
 #: Definitions of the unnamed points a planner `effect-chain` may introduce (affine: valid in chart coordinates). A
@@ -1445,6 +1607,19 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
             expected = dung.volume_certificates.get(c.args.solid)
             if expected is not None and _binh_phuong(fm.get(hoi[c.id])) != expected:
                 raise TuChoi("ENGINE_SELF_CHECK_FAILED", "thể tích thực thi khác chứng chỉ diện tích Gram × đường cao", (c.id,))
+        for c in dung.of("ask_volume_ratio"):
+            v_num, v_den = fm.get(f"v_tu_{c.id}"), fm.get(f"v_mau_{c.id}")
+            if (_binh_phuong(v_num) != dung.volume_certificates.get(c.args.numerator_solid)
+                    or _binh_phuong(v_den) != dung.volume_certificates.get(c.args.denominator_solid)
+                    or fm.get(hoi[c.id]) != dung.ratio_certificates.get(c.id)):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "tỉ số thể tích thực thi khác chứng chỉ Gram độc lập", (c.id,))
+        for c in dung.of("ask_residual_volume"):
+            v_orig = fm.get(f"v_goc_{c.id}")
+            if (_binh_phuong(v_orig) != dung.volume_certificates.get(c.args.original_solid)
+                    or any(_binh_phuong(fm.get(f"v_cat_{c.id}_{idx}")) != dung.volume_certificates.get(sub_s)
+                           for idx, sub_s in enumerate(c.args.subtracted_solids, 1))
+                    or _binh_phuong(fm.get(hoi[c.id])) != dung.residual_certificates.get(c.id)):
+                raise TuChoi("ENGINE_SELF_CHECK_FAILED", "thể tích phần còn lại thực thi khác chứng chỉ Gram độc lập", (c.id,))
         kernel_ok = all((lambda v: v is not None and (v.x, v.y, v.z) == dung.pts[t])(fm.get(ir_name(t)))
                         for t in dung.pts)
         kernel_ok = kernel_ok and all(isinstance(fm.get(f'gt_{ref}'),Line3)
@@ -1479,7 +1654,8 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
             bac = BAC_DAI_LUONG[next(c.fn for c in calls if c.id == cid)]
             he = dinh_dang(v)
             chinh_xac[cid] = {"coef": he, "dim": bac if ky_hieu else 0, "unit": ky_hieu if bac else None}
-            tra[cid] = f"cos²={he}" if bac == 0 else (_hien_thi_ky_hieu(v, bac, ky_hieu) if ky_hieu else he)
+            fn_cid = next(c.fn for c in calls if c.id == cid)
+            tra[cid] = f"cos²={he}" if fn_cid.startswith("ask_angle_") else (_hien_thi_ky_hieu(v, bac, ky_hieu) if (ky_hieu and bac) else he)
         # CONTRACT-BE-1: what the source asks = each gate-certified ask's answer variable + the operands of its measure,
         # minus the planner's fresh auxiliary points (a foot H is a construction, not something the problem names; the
         # described point of an `effect-chain` IS named by the problem, "trung điểm của SC").
@@ -1490,6 +1666,20 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
             e = st.get("expr") or {}
             if st.get("target_var") in hoi.values() and e.get("kind") == "measure":
                 muc_tieu |= {st["target_var"], *(x for x in (e.get("of"), e.get("wrt")) if x and x not in phu_ir)}
+            elif st.get("target_var") in hoi.values() and e.get("kind") == "arith":
+                muc_tieu.add(st["target_var"])
+        for c in dung.of("ask_volume_ratio"):
+            muc_tieu |= {
+                f"v_tu_{c.id}", f"v_mau_{c.id}",
+                "khoi_" + ir_name(c.args.numerator_solid.replace(".", "_")),
+                "khoi_" + ir_name(c.args.denominator_solid.replace(".", "_")),
+            }
+        for c in dung.of("ask_residual_volume"):
+            muc_tieu |= {
+                f"v_goc_{c.id}", *(f"v_cat_{c.id}_{i}" for i in range(1, len(c.args.subtracted_solids) + 1)),
+                "khoi_" + ir_name(c.args.original_solid.replace(".", "_")),
+                *("khoi_" + ir_name(s.replace(".", "_")) for s in c.args.subtracted_solids),
+            }
         return KetQuaTuyen("SERVED", answers=tra, trace=dung.trace, program=program, points=dict(dung.pts),
                            metric=G.as_json(), kernel_check=True, spec=spec, exec_result=ket, chart_metric=G,
                            targets=tuple(sorted(muc_tieu)),

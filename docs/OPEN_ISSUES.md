@@ -20,6 +20,16 @@
   with lateral edge ≠ base edge) and a positional premise on a lateral face ("mặt bên ở dưới") — unencoded predicates
   of the premise-coverage class above, not vertex-count mismatches.
 
+### ISSUE-RESEARCH-HYBRID-COMPOSITE-VOLUME-REMAINING-GAPS
+
+- **status:** OPEN (run `volume-reasoning`, branch `research/hybrid-wave3a-volume-reasoning`, not on `main`).
+  Exact rational volume ratios (`ask_volume_ratio`, `bac = 0`) and certified residual volumes (`ask_residual_volume`, `bac = 3`) over verified composite pyramids/prisms are served offline (`18/18` positive, `20/20` goals, `14/14` negative refusals, `0` wrong serves; Full T3 `373116d2` PASS); still refused fail-closed or out of scope by contract:
+- irrational volume ratios ($V(A)/V(B) 
+- irrational volume ratios ($V(A)/V(B) \notin \mathbb{Q}_{>0}$) or incommensurable residual volume radicals (`UNSUPPORTED_VOLUME_RATIO` / `RESIDUAL_CONTAINMENT_UNPROVED`);
+- subtracted solids whose vertices are not contained in `original_solid`, or that do not share at least one boundary face with `original_solid`, or whose interiors overlap (`RESIDUAL_CONTAINMENT_UNPROVED` / `OVERLAPPING_SUBTRACTED_SOLIDS`);
+- residual 3D polyhedron mesh fabrication in `Scene3D.objects` (intentionally not emitted; only verified `original_solid` and `subtracted_solids` are rendered as `solid` objects);
+- provider-facing `flat` / `function_declarations` exposure of `volume_ratio` and `residual_volume` (kept `provider_offered=False` until a separate live extraction/contract GO).
+
 ### ISSUE-RESEARCH-HYBRID-GEOMETRY-CAPABILITY-GAPS
 
 - **status:** OPEN (run `geometry-capability-expansion`, branch `research/hybrid-wave2b-geometry-expansion`, not on `main`).

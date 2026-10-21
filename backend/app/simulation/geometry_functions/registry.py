@@ -39,7 +39,7 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: /9 (run `source-gate-hardening`): atomic segment labels, role-bound values, shape values keep their parameter, shared goal
 #: wording tokens, request lists in one sentence, line_ref faces of ≥ 3 labels and the intersection named in the question.
 #: /10 (run `composite-geometry`): explicit shared-face membership in two declared pyramid topologies.
-REGISTRY_VERSION = "geometry-functions/10"
+REGISTRY_VERSION = "geometry-functions/11"
 
 
 class TuChoi(Exception):
@@ -233,6 +233,22 @@ class HeightArgs(_Args):
 
 class AskVolumeArgs(_Args):
     solid: SolidName
+
+
+class AskVolumeRatioArgs(_Args):
+    numerator_solid: SolidName
+    denominator_solid: SolidName
+
+    @model_validator(mode="after")
+    def _check_distinct_solids(self) -> AskVolumeRatioArgs:
+        if self.numerator_solid == self.denominator_solid:
+            raise ValueError("ask_volume_ratio: numerator_solid và denominator_solid phải phân biệt")
+        return self
+
+
+class AskResidualVolumeArgs(_Args):
+    original_solid: SolidName
+    subtracted_solids: Annotated[list[SolidName], Field(min_length=1, max_length=2)]
 
 
 class AskLengthArgs(_Args):
@@ -516,6 +532,10 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
                                  PlanningTerm("Line", ("L",)), "declared_intersection", "intersect_plane_plane")),
     _F("ask_section_area", SectionArgs, "ask", "Đề hỏi diện tích thiết diện của một khối cắt bởi một mặt phẳng.",
        (("diện tích",), ("thiết diện",)), plane_fields=("plane",)),
+    _F("ask_volume_ratio", AskVolumeRatioArgs, "ask", "Đề hỏi tỉ số thể tích có hướng giữa hai khối đã dựng.",
+       (("tỉ số", "tỷ số", "thể tích", "re:V\\s*(?:\\(|_)"),), provider_offered=False),
+    _F("ask_residual_volume", AskResidualVolumeArgs, "ask", "Đề hỏi thể tích phần còn lại của khối gốc sau khi cắt bỏ các khối con đã dựng.",
+       (("thể tích",), ("còn lại",)), provider_offered=False),
     _F("unsupported", UnsupportedArgs, "escape", "Mệnh đề không ánh xạ được vào thư viện — engine sẽ từ chối trung thực."),
     # Goal-directed slice (run `goal-directed-section-planning`): the plane through M parallel to (Q) is the plane through M
     # and two translates of M along directions of (Q) — the IR's own expression (`PlanePerpendicularToLineExpr` note).
@@ -542,7 +562,7 @@ _TUYEN = re.compile(r"(?<!\w)hoặc(?!\w)", re.IGNORECASE)
 #: Câu tự phủ nhận điều nó nêu ("… là sai", "… vô lí") — đọc trong CẢ câu (review S1, I5).
 _SAI = re.compile(r"(?<!\w)(?:là\s+(?:điều\s+)?(?:sai|không đúng)|vô lí|vô lý)(?!\w)", re.IGNORECASE)
 #: Điều kiện đặt SAU điều được nêu, trong cùng mệnh đề ("SA ⊥ (ABCD) khi M trùng S") — review S1, I5.
-_DIEU_KIEN_SAU = re.compile(r"(?<!\w)(?:khi(?!\s+(?:đó|cắt|dựng|quay|chiếu))|nếu|với điều kiện|trừ khi)(?!\w)", re.IGNORECASE)
+_DIEU_KIEN_SAU = re.compile(r"(?<!\w)(?:khi(?!\s+(?:đó|cắt|đã\s+cắt|bỏ|loại\s+bỏ|lấy\s+đi|dựng|quay|chiếu))|nếu|với điều kiện|trừ khi)(?!\w)", re.IGNORECASE)
 
 
 class Source(BaseModel):
@@ -1681,7 +1701,7 @@ def _kiem_result_binding(phu, calls, de, nhan, don_vi_de: set[str] = frozenset()
 #: Mở đầu mệnh đề ĐIỀU KIỆN. "Khi đó" là tiền đề (nối câu), không phải điều kiện.
 #: "khi" + động từ dựng ("khi cắt bởi", "khi dựng", "khi quay") là lời dẫn phép dựng, không phải điều kiện.
 _DIEU_KIEN = re.compile(r"(?<!\w)(?:nếu|giả sử|giả thiết rằng|trong trường hợp|với điều kiện|trừ khi"
-                        r"|khi(?!\s+(?:đó|cắt|dựng|quay|chiếu))"
+                        r"|khi(?!\s+(?:đó|cắt|đã\s+cắt|bỏ|loại\s+bỏ|lấy\s+đi|dựng|quay|chiếu))"
                         # S1, nhóm A: giả định / tường thuật — không phải dữ kiện của đề
                         r"|hễ|xét trường hợp|cho rằng|muốn|khẳng định|nói rằng|nghĩ rằng"
                         r"|giả định|coi như|cho là|theo bạn)(?!\w)", re.IGNORECASE)
@@ -1765,8 +1785,9 @@ def _duoc_hoi(de: str, p: int, het: int) -> bool:
     moc_du_kien = [m.end() for m in _DUNG_GAN.finditer(_bo_cum(truoc))]
     dong_tu = list(_DONG_TU_HOI.finditer(truoc[moc_du_kien[-1] if moc_du_kien else 0:]))
     # Động từ hỏi chỉ chi phối đối tượng khi giữa chúng không có từ chặn tân ngữ (second re-verification, N2).
-    qua_dong_tu = bool(dong_tu) and not _CHAN_TAN_NGU.search(truoc[(moc_du_kien[-1] if moc_du_kien else 0) + dong_tu[-1].end():])
-    qua_hoi_sau = bool(_HOI_SAU.search(gan)) and not _CHAN_TAN_NGU.search(gan) and not _CHAN_TAN_NGU.search(de[ma:p])
+    qua_dong_tu = bool(dong_tu) and not _CHAN_TAN_NGU.search(_bo_cum(truoc)[(moc_du_kien[-1] if moc_du_kien else 0) + dong_tu[-1].end():])
+    qua_hoi_sau = bool(_HOI_SAU.search(gan)) and not _CHAN_TAN_NGU.search(gan) and not _CHAN_TAN_NGU.search(_bo_cum(de[ma:p]))
+
     return qua_dong_tu or qua_hoi_sau
 
 
@@ -2642,6 +2663,85 @@ def _khoi_thiet_dien(m, a, khoi):
     return all(_khoi_khop(m, n, a.solid, khoi) for n in co) and (bool(co) or len(khoi) == 1)
 
 
+_MOT_KHOI_RO = (
+    rf"(?:(?:(?:hình|khối)(?:\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))?|tứ diện)"
+    rf"(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*\s+)?"
+    rf"(?:{_P1}+\.{_P1}+|{_P1}{{4}})(?![\w'])"
+)
+_SO_LUONG_KHOI = {"hai": 2, "ba": 3, "bốn": 4}
+_PHAN_CON_LAI = (
+    r"thể\s+tích(?:\s+của)?\s+(?:phần|khối(?:\s+đa\s+diện|\s+chóp|\s+lăng\s+trụ)?|hình(?:\s+đa\s+diện|\s+chóp|\s+lăng\s+trụ)?)"
+    r"\s+còn\s+lại"
+)
+_SAU_CAT_BO = r"(?:sau\s+khi|khi)(?:\s+đã)?\s+(?:cắt\s+bỏ|bỏ\s+đi|bỏ|loại\s+bỏ|lấy\s+đi)"
+
+
+def _khoi_ro_cum(n: str) -> str:
+    return (
+        rf"(?:(?:(?:hình|khối)(?:\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))?|tứ diện)"
+        rf"(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*\s+)?"
+        rf"(?P<{n}s>{_P1}+\.{_P1}+|{_P1}{{4}})(?![\w'])"
+    )
+
+
+def _v_ky_hieu_cum(n: str) -> str:
+    return (
+        rf"(?-i:V)\s*(?:\(\s*(?P<{n}v>{_P1}+\.{_P1}+|{_P1}{{4}})\s*\)"
+        rf"|_\s*\{{\s*(?P<{n}u>{_P1}+\.{_P1}+|{_P1}{{4}})\s*\}}"
+        rf"|_\s*(?P<{n}w>{_P1}+\.{_P1}+|{_P1}{{4}}))(?![\w'])"
+    )
+
+
+def _sym_khoi(m: re.Match, n: str) -> str | None:
+    gd = m.groupdict()
+    return next((gd[n + k] for k in ("s", "v", "u", "w") if gd.get(n + k)), None)
+
+
+def _ten_khoi_khop(sym: str | None, solid: str, khoi: dict) -> bool:
+    if not sym:
+        return False
+    if "." in sym:
+        if sym == solid:
+            return True
+        if "." in solid:
+            sa, sb = _nhan_cum(sym.split(".")[0]), _nhan_cum(sym.split(".")[1])
+            ta, tb = _nhan_cum(solid.split(".")[0]), _nhan_cum(solid.split(".")[1])
+            return (len(sa) == len(ta) == 1 and sa == ta and len(sb) == len(tb) and _cung_da_giac(sb, tb)) or (len(sa) == len(ta) >= 3 and len(sb) == len(tb) >= 3 and ((sa == ta and sb == tb) or (sa == tb and sb == ta)))
+        return False
+    pts, s_pts = _nhan_cum(sym), _nhan_cum(solid)
+    return len(pts) == 4 and len(s_pts) == 4 and set(pts) == set(s_pts)
+
+
+def _ds_khoi_ro_cum(n: str) -> str:
+    return (
+        rf"(?P<{n}>(?:(?P<{n}q>các|hai|ba|bốn|\d+)\s+)?"
+        rf"{_MOT_KHOI_RO}(?:\s*(?:,|\bvà\b)\s*{_MOT_KHOI_RO})*)"
+        rf"(?!\s*(?:,|\bvà\b)\s*{_MOT_KHOI_RO})"
+    )
+
+
+def _ds_khoi_khop(m: re.Match, n: str, solids: list[str], khoi: dict) -> bool:
+    gd = m.groupdict()
+    raw = gd.get(n) or ""
+    toks = re.findall(rf"{_P1}+\.{_P1}+|{_P1}{{4}}", raw)
+    if not toks or len(toks) != len(solids) or len(set(toks)) != len(toks) or len(set(solids)) != len(solids):
+        return False
+    if q := (gd.get(n + "q") or "").lower():
+        if q.isdigit() and int(q) != len(toks):
+            return False
+        if q in _SO_LUONG_KHOI and _SO_LUONG_KHOI[q] != len(toks):
+            return False
+        if q == "các" and len(toks) < 2:
+            return False
+    used: set[int] = set()
+    for t in toks:
+        idx = next((i for i, s in enumerate(solids) if i not in used and _ten_khoi_khop(t, s, khoi)), None)
+        if idx is None:
+            return False
+        used.add(idx)
+    return len(used) == len(solids)
+
+
 #: hàm → [(cụm, buộc(m, args, khối của đề))].
 _CUM_HOI = {
     "ask_volume": [
@@ -2682,6 +2782,42 @@ _CUM_HOI = {
         (_cum(r"diện tích(?:\s+của)?\s+thiết diện\s+(?:đó|này|trên)(?!\w)"),
          lambda m, a, k: {frozenset(_nhan_cum(x[1] or x[2])) for mau in _CAT_BOI for x in mau.finditer(m.string)
                           if x[1] or x[2]} == {frozenset(a.plane)})],
+    "ask_volume_ratio": [
+        (_cum(rf"(?:tỉ|tỷ)\s+số(?:\s+giữa)?(?:\s+thể\s+tích)?(?:\s+(?:của|giữa))?"
+              rf"(?:\s+(?:hai|2)\s+(?:(?:hình|khối)(?:\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))?|(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))"
+              rf"(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*)?"
+              rf"\s+(?:{_v_ky_hieu_cum('x')}|{_khoi_ro_cum('x')})"
+              rf"\s+(?:và|với|trên|so\s+với|chia(?:\s+cho)?)"
+              rf"(?:\s+thể\s+tích(?:\s+của)?)?"
+              rf"\s+(?:{_v_ky_hieu_cum('y')}|{_khoi_ro_cum('y')})"
+              rf"(?:\s*,?\s*(?:tức\s+là\s+)?{_v_ky_hieu_cum('c')}\s*/\s*{_v_ky_hieu_cum('d')})?"),
+         lambda m, a, k: (
+             _ten_khoi_khop(_sym_khoi(m, "x"), a.numerator_solid, k)
+             and _ten_khoi_khop(_sym_khoi(m, "y"), a.denominator_solid, k)
+             and (not _sym_khoi(m, "c") or (
+                 _ten_khoi_khop(_sym_khoi(m, "c"), a.numerator_solid, k)
+                 and _ten_khoi_khop(_sym_khoi(m, "d"), a.denominator_solid, k)
+             ))
+         )),
+        (_cum(rf"(?:(?:tỉ|tỷ)\s+số(?:\s+thể\s+tích)?(?:\s+(?:của|giữa))?\s+)?"
+              rf"{_v_ky_hieu_cum('x')}\s*/\s*{_v_ky_hieu_cum('y')}"),
+         lambda m, a, k: (
+             _ten_khoi_khop(_sym_khoi(m, "x"), a.numerator_solid, k)
+             and _ten_khoi_khop(_sym_khoi(m, "y"), a.denominator_solid, k)
+         )),
+    ],
+    "ask_residual_volume": [
+        (_cum(rf"{_PHAN_CON_LAI}\s+của\s+{_khoi_ro_cum('o')}\s+{_SAU_CAT_BO}\s+{_ds_khoi_ro_cum('s')}"),
+         lambda m, a, k: (
+             _ten_khoi_khop(_sym_khoi(m, "o"), a.original_solid, k)
+             and _ds_khoi_khop(m, "s", a.subtracted_solids, k)
+         )),
+        (_cum(rf"{_PHAN_CON_LAI}\s+{_SAU_CAT_BO}\s+{_ds_khoi_ro_cum('s')}\s+(?:khỏi|từ|của|ở|trong)\s+{_khoi_ro_cum('o')}"),
+         lambda m, a, k: (
+             _ten_khoi_khop(_sym_khoi(m, "o"), a.original_solid, k)
+             and _ds_khoi_khop(m, "s", a.subtracted_solids, k)
+         )),
+    ],
 }
 #: Distance target after "đến/tới": a source result line (groups a, b), a named plane (`_mat_cum`), or a named line (l).
 _DICH_KHOANG_CACH = (rf"(?:(?i:giao tuyến của)\s*(?P<a>{_MAT_TOAN_HANG})\s*(?i:và)\s*(?P<b>{_MAT_TOAN_HANG})"
@@ -2827,6 +2963,8 @@ _CHIEU_HAM_HOI = {
     "ask_area": "area",
     "ask_section_area": "area",
     "ask_volume": "volume",
+    "ask_volume_ratio": "ratio",
+    "ask_residual_volume": "volume",
     "ask_angle_line_plane": "angle",
     "ask_angle_plane_plane": "angle",
     "ask_angle_lines": "angle",
@@ -2960,7 +3098,7 @@ def _kiem_don_vi_hoi(fn: str, de: str, a: int, b: int, don_vi_de: set[str],
                 return False
             mm = re.fullmatch(rf"đơn vị(?:\s+(?P<kind>{_LOAI_DON_VI}))?(?:\s*:?\s*(?P<u>{_DON_VI}))?|(?P<ub>{_DON_VI})",
                               muc, re.IGNORECASE)
-            if not mm or chieu == "angle":
+            if not mm or chieu in ("angle", "ratio"):
                 return False
             if mm["kind"]:
                 if _LOAI_DON_VI_MAP.get(re.sub(r"\s+", " ", mm["kind"].lower())) != chieu:

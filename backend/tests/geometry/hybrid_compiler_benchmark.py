@@ -418,6 +418,10 @@ REFUSAL_CLASS = {
     "SOURCE_PREMISE_UNREAD": "grounding",
     # Request completeness: taxonomy only; frozen case labels and exact oracle remain unchanged.
     "REQUEST_NOT_ANSWERED": "grounding",
+    # Wave 3A (volume-reasoning): taxonomy only; frozen thirty-case labels and oracle remain unchanged.
+    "DEGENERATE_SOLID": "contradictory", "NON_POSITIVE_RESIDUAL_VOLUME": "contradictory",
+    "OVERLAPPING_SUBTRACTED_SOLIDS": "contradictory", "RESIDUAL_CONTAINMENT_UNPROVED": "unsupported",
+    "UNSUPPORTED_VOLUME_RATIO": "unsupported",
     # malformed facts / plan
     "SCHEMA_INVALID": "malformed", "FACT_INCOMPLETE": "malformed", "UNKNOWN_SOLID": "malformed", "NO_SOLID": "malformed",
     "DUPLICATE_CALL_ID": "malformed", "DEPENDENCY_CYCLE": "dependency", "DANGLING_DEPENDENCY": "dependency",

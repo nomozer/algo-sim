@@ -29,7 +29,7 @@ from app.simulation.geometry_functions.typed_fact_next import (
 
 
 def test_coexistence_with_original_typed_fact_and_adapter2() -> None:
-    assert PLANNER_VERSION == "geometry-fact-planner/10"
+    assert PLANNER_VERSION == "geometry-fact-planner/11"
     assert ADAPTER_V2_VERSION == "hybrid-preview-adapter/2"
     assert TYPED_FACT_NEXT_SCHEMA_VERSION == "typed-fact-next/1"
     assert ADAPTER_V3_VERSION == "hybrid-simulation-adapter/3"

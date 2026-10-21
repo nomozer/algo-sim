@@ -1,0 +1,29 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "volume-reasoning",
+  "corrects": "docs/evaluation/geometry/runs/composite-geometry/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "previous_candidate_hash": "3e6c403cff0e2c4ae96c4a541f97ecbe92f1efd821e08d5fdb1572d4ee823ab9",
+  "current_candidate_hash": "df262376b3f2de7bcb0c295932c7c867a7ee2bf268ed9408071e5953ee9fc821",
+  "current_product_commit": "4c282ecd9f15b14ddbbe6e0be0b247e455d8edca",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Owner-authorized local Wave 3A: exact volume ratio (ask_volume_ratio, bac=0) and certified residual volume reasoning (ask_residual_volume, bac=3) over verified composite pyramids. Provider declarations, FLAT_EXTRACTION_SCHEMA_SHA256, and Adapter /2 wire envelope unchanged. Historical measurements remain bound to their original candidates.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP: default LLM_ONLY /api/analyze path is unchanged; Wave 3A volume ratio and residual volume capabilities are isolated to offline Route D / function_route / fact_route research.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and every earlier candidate layer (including BH2C) are preserved byte-for-byte; Wave 3A development and known-regression results are recorded separately in the volume-reasoning run as DEVELOPMENT_EVALUATION_NOT_BLIND / KNOWN_REGRESSION_NOT_BLIND."
+  },
+  "superseded_candidates": [
+    {
+      "freeze_commit": "817b1730d5b3a61cd18b30348e32040337428841",
+      "product_commit": "2e277e6ec6b87a1e64bfc8c1c9127f591fedf24f",
+      "tree_hash": "99cef1a99038d8bf13ed6f9a2cc476fc315986650c4c038e30479d1212d18338",
+      "reason": "independent review round 1 PASS_WITH_FINDINGS: IMPORTANT-01 self-ratio refusal in AskVolumeRatioArgs/planner/engine; MINOR-01/02 contract doc sync"
+    }
+  ]
+}

@@ -8,6 +8,14 @@
 
 ## 0. Canonical Next Action
 
+**2026-10-21, `wave3a-adapter3-integration` (local integration branch `research/integration-wave3a-adapter3` from `main` `f2bc01e3`):**
+controlled reconciliation and integration of Wave 3A (`research/hybrid-wave3a-volume-reasoning`, `fe9f5554`, product `4c282ecd`) with `TypedFactNext + Adapter /3` (`main` `f2bc01e3`, product `61d6f44b`) under `GO_WAVE3A_ADAPTER3_LOCAL_RECONCILIATION_ONLY`: unifies mathematical authority on `engine.py` (`geometry-function-engine/9`), delegating Adapter `/3` (`hybrid-simulation-adapter/3`) single-solid volume squared certificates (`_the_tich2_khoi`), self-ratio refusal (`UNSUPPORTED_VOLUME_RATIO`), and residual-volume outward half-space containment & shared boundary face verification (`_mat_ngoai_khoi` $\to$ `RESIDUAL_CONTAINMENT_UNPROVED`) to `engine.py` (measured `81778092…` across 114 files; cross-route equivalence `7/7` in `test_wave3a_adapter3_integration.py`; Wave 3A, Adapter `/3`, Wave 2C, BH2C, SGH, SG-1..SG-6, BH2A, NLU GOLD, and 41/41 Adapter `/2` fixtures all pass with 0 historical receipt edits). `CANONICAL_NEXT_ACTION` = owner GO MAIN review on `evaluation/geometry/runs/wave3a-adapter3-integration/report.md`; Hybrid product enablement remains NO-GO.
+
+
+**2026-10-21, `volume-reasoning` (Hybrid Wave 3A, local branch `research/hybrid-wave3a-volume-reasoning` from `main` `1613e0d3`):**
+exact composite volume ratio (`ask_volume_ratio`, `bac = 0`) and certified residual volume reasoning (`ask_residual_volume`, `bac = 3`, 5-part `ResidualVolumeCertificate` with outward half-space containment, shared boundary face, and 3D SAT interior disjointness) over verified composite solids (product `4c282ecd`, candidate `0a4b6d70` / `df262376…`, review round 2 `INDEPENDENT_REVIEW_PASS`, Full T3 `373116d2` `FULL_PRODUCT_GATE_PASS`, dev 18/18 positive / 20/20 goals / 14/14 negative / 0 wrong serves; BH2C, Wave 2C, SGH, SG-1..SG-6, BH2A, NLU GOLD all 0 diffs). `CANONICAL_NEXT_ACTION` = owner GO MAIN review on `evaluation/geometry/runs/volume-reasoning/handoff.md`; Adapter /3 and live Hybrid remain unopened. Wave 2C is integrated (`1613e0d3`); the entries below are historical.
+
+
 **2026-10-20, `composite-geometry` (Hybrid Wave 2C, local branch `research/hybrid-wave2c-composite-geometry` from `main` `78bd6876`):**
 derived sub-pyramids / parallel sections and shared-face sub-pyramids in one exact chart (product `050bb353`, candidate `962b9723` / `3e6c403c…`, review PASS, Full T3 `0acfa9e9` PASS; development 16/16, 0 false serves; SGH/SG/BH2A known regressions unchanged). `CANONICAL_NEXT_ACTION` = owner GO MAIN review on `evaluation/geometry/runs/composite-geometry/handoff.md`; Wave 3 and Adapter /3 are not opened. Source Gate Follow-up A+B is integrated (`78bd6876`); the entries below are historical.
 

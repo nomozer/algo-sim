@@ -1,0 +1,94 @@
+{
+  "schema": "authoritative-t3-receipt/2",
+  "run": "volume-reasoning",
+  "branch": "research/hybrid-wave3a-volume-reasoning",
+  "baseline_main": "1613e0d3ebe16f0f2fe4be755052491ff581e51b",
+  "product_commit": "4c282ecd9f15b14ddbbe6e0be0b247e455d8edca",
+  "candidate_freeze_commit": "0a4b6d7027624849b53b5d79a78dd6f2116cffcd",
+  "t3_target_commit": "373116d212758458c923252ef5fb72d63d0e07fb",
+  "measured_system_hash": "df262376b3f2de7bcb0c295932c7c867a7ee2bf268ed9408071e5953ee9fc821",
+  "measured_file_count": 112,
+  "measured_paths_changed_between_product_and_t3_target": 0,
+  "worktree": ".superpowers/worktrees/tmp-wave3a-t3 (detached, tracked tree clean before run, frontend/node_modules junction to D:\\Documents\\projects\\algo-sim\\frontend\\node_modules; junction link and worktree removed afterwards without --force)",
+  "command": "ALLOW_LIVE_AI=0 node frontend/scripts/full-gate.mjs",
+  "environment": {
+    "os": "Windows-11-10.0.26100-SP0",
+    "node": "v24.13.0",
+    "python": "Python 3.12.10 (D:\\Documents\\projects\\algo-sim\\backend\\.venv)"
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "target_commit": "fddd884f1d70b2a1ccea7ce777abb9b6077c3c75",
+      "started_utc": "2026-10-20T17:54:02Z",
+      "exit_code": 1,
+      "verdict": "FULL_PRODUCT_GATE_FAIL",
+      "duration_seconds": 505.2,
+      "pytest_backend": "11398 passed, 3 failed, 1 skipped, 2 deselected, 9 xfailed",
+      "vitest_frontend": "70/70 test files passed (1146 tests)",
+      "cause": "TEST_TAXONOMY_REGISTRATION: 3 test-only assertions (test_ai_function_route.py, test_text_to_geometry_functions.py, test_hybrid_compiler_benchmark.py) required explicit registration of the 2 new route-B-only functions (ask_volume_ratio, ask_residual_volume) and 5 Wave 3A refusal codes in HB.REFUSAL_CLASS. Registered in commit 373116d2; 0 measured product files changed.",
+      "freeze_verify_after_t3": {
+        "exit_code": 0,
+        "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 112 file, df262376b3f2de7b…)."
+      },
+      "raw_logs": [
+        "t3/attempt1-fail.stdout.log",
+        "t3/attempt1-fail.stderr.log"
+      ]
+    },
+    {
+      "attempt": 2,
+      "target_commit": "373116d212758458c923252ef5fb72d63d0e07fb",
+      "started_utc": "2026-10-20T18:07:04Z",
+      "exit_code": 0,
+      "verdict": "FULL_PRODUCT_GATE_PASS",
+      "duration_seconds": 497.1,
+      "gates": {
+        "pytest_backend": {
+          "status": "PASS",
+          "passed": 11401,
+          "failed": 0,
+          "skipped": 1,
+          "deselected": 2,
+          "xfailed": 9
+        },
+        "vitest_frontend": {
+          "status": "PASS",
+          "test_files": 70,
+          "passed": 1146,
+          "failed": 0
+        },
+        "typecheck_and_build": {
+          "status": "PASS"
+        },
+        "thesis_demo_replay": {
+          "status": "PASS",
+          "demo_replay_pass": "5/5",
+          "reduced_chain_cases": "1/1"
+        },
+        "demo_crash_surface": {
+          "status": "PASS",
+          "expected_boundaries": "6/6",
+          "uncaught_500": 0
+        }
+      },
+      "freeze_verify_after_t3": {
+        "exit_code": 0,
+        "stdout": "Candidate khớp bản đã đóng băng (mã sản phẩm: 112 file, df262376b3f2de7b…)."
+      },
+      "raw_logs": [
+        "t3/attempt2-pass.stdout.log",
+        "t3/attempt2-pass.stderr.log"
+      ]
+    }
+  ],
+  "raw_log_sha256": {
+    "t3/attempt1-fail.stdout.log": "b4ff5ece98766a2400995e9fe350e8612d8ccee74f1ace38d0cacafc091fc257",
+    "t3/attempt1-fail.stderr.log": "1cc966f720d696e251984486457610d36ca832ffd2d0e0f56a308bed49034876",
+    "t3/attempt2-pass.stdout.log": "6724af63f4d52544e2e61875a79b79d786f9a8a630c32333799f3acce42e270d",
+    "t3/attempt2-pass.stderr.log": "4f3d80f7ff670f0b2bd46afe2c806b057303702106e0f04304c9625be294bc4b"
+  },
+  "worktree_removed_cleanly": true,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "live_requests": 0
+}

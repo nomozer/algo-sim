@@ -14,6 +14,9 @@
 | [`TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md`](TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md) | **quyết định kiến trúc đích (2026-10-10)**: Text-to-Geometry Functions; `LLM_ONLY` là legacy (không thêm năng lực); chưa xoá, chưa đổi mặc định. Đánh giá bổ sung (ADR không đổi): nhánh B "compiler chọn hàm" so offline với A — [`runs/hybrid-compiler-selection/ARCHITECTURE_COMPARISON.md`](../evaluation/geometry/runs/hybrid-compiler-selection/ARCHITECTURE_COMPARISON.md) |
 | [`TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md`](TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md) | thư viện 24 hàm, cổng nguồn 5 tầng, chuẩn hoá có tiền điều kiện, bố cục khung affine + Gram, độ dài ký hiệu a, adapter Gemini function calling |
 | [`CUBOID_CUBE_CONTRACT_DECISION.md`](CUBOID_CUBE_CONTRACT_DECISION.md) | hình hộp chữ nhật / lập phương / lăng trụ đứng đáy vuông: trường topo, luật nhất quán, fail-closed (đưa về từ `legacy/` ở run `docs-cleanup`) |
+| [`COMPOSITE_GEOMETRY_CONTRACT.md`](COMPOSITE_GEOMETRY_CONTRACT.md) | Wave 2C: hình chóp dẫn xuất và nhiều hình chóp có mặt chung trong cùng một hệ trục hữu tỉ + Gram (`composite-geometry`) |
+| [`TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md`](TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md) | TypedFactNext (`typed-fact-next/1`) & Adapter /3 (`hybrid-simulation-adapter/3`): hợp đồng biểu diễn dữ kiện hướng mô phỏng (đỉnh thiết diện không tên, khối dẫn xuất, định danh đỉnh có tiền tố khối `solid_id::label`) (`typedfact-next-adapter3-simulation`) |
+| [`WAVE3A_CONTRACT_DECISION.md`](WAVE3A_CONTRACT_DECISION.md) | Wave 3A: tỉ số thể tích chính xác (`ask_volume_ratio`) và thể tích phần còn lại có chứng chỉ bao hàm/tách rời (`ask_residual_volume`) (`volume-reasoning`) |
 
 ## Tiền đăng ký và snapshot (bất biến)
 
