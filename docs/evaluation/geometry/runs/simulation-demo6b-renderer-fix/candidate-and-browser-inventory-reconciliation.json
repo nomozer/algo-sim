@@ -1,0 +1,858 @@
+{
+  "schema": "algosim.candidate_and_browser_inventory_reconciliation.v1",
+  "p1_measured_hash_coverage": {
+    "measured_system_tree_hash": "4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68",
+    "measured_system_entry_count": 114,
+    "measured_system_paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "composition": {
+      "backend_app_files": 108,
+      "frontend_semantic_entries": 6,
+      "frontend_semantic_entry_list": [
+        "frontend/src/simulations/domains/semantic/index.ts",
+        "frontend/src/simulations/domains/semantic/model.ts",
+        "frontend/src/simulations/domains/semantic/semantic.test.ts",
+        "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+        "frontend/src/simulations/domains/semantic/semantic_program.schema.json",
+        "frontend/src/simulations/domains/semantic/ui.tsx"
+      ],
+      "note": "frontend/src/simulations/domains/semantic/semantic_program.schema.json appears both via directory walk of frontend/src/simulations/domains/semantic and explicit path entry in MEASURED_SYSTEM_PATHS, yielding 108 + 6 = 114 entries."
+    },
+    "questions_answered": {
+      "A_frontend_geometry_intentionally_excluded_from_tree_hash": true,
+      "B_product_commit_sha_fully_identifies_changed_frontend_sources": true,
+      "C_governance_requires_freeze_to_cover_frontend_changes_via_product_commit_sha": true,
+      "D_hash_scope_explicitly_disclosed_not_called_full_system_hash": true
+    },
+    "product_commit_rule": "product-paths-excluding-test-only/1",
+    "product_paths": [
+      "backend/app",
+      "frontend/src"
+    ],
+    "test_only_globs": [
+      "frontend/src/**/*.test.ts",
+      "frontend/src/**/*.test.tsx",
+      "frontend/src/**/*fixture*.json",
+      "frontend/src/test-setup.ts",
+      "frontend/src/test-source.ts"
+    ],
+    "old_product_commit_sha": "3298b901d2246650535aa4028845ddc2a44892c4",
+    "new_product_commit_sha": "1ca20f4f51457f3457802bca042af76accd13698",
+    "new_frozen_candidate_sha": "d2e6037b12580eed1503e911999d4bf981f2c0e4",
+    "changed_files_between_old_and_new_product": {
+      "frontend/src/simulations/domains/geometry/scene3d-view.tsx": {
+        "role": "product_renderer_source",
+        "in_measured_system_paths": false,
+        "in_product_paths": true,
+        "old_product_3298b901": {
+          "commit": "3298b901d2246650535aa4028845ddc2a44892c4",
+          "git_blob_oid": "c1ae8e0426276f249356b95c8a182f59229e7605",
+          "git_blob_bytes": 141643,
+          "git_blob_sha256": "41a46ad97e2a5b597b9acafabb8855eab754123bc24f205eacf7b71d92c3940b"
+        },
+        "new_product_1ca20f4f": {
+          "commit": "1ca20f4f51457f3457802bca042af76accd13698",
+          "git_blob_oid": "382ca0ef525eb21dbe9789962a6faf3841642dba",
+          "git_blob_bytes": 142638,
+          "git_blob_sha256": "ccb09f86ce4910b0aad25797be8cf99d004d19d494cb3a475a9fcd4ce5c6e63e"
+        },
+        "full_t3_target_d2e6037b": {
+          "commit": "d2e6037b12580eed1503e911999d4bf981f2c0e4",
+          "git_blob_oid": "382ca0ef525eb21dbe9789962a6faf3841642dba",
+          "git_blob_bytes": 142638,
+          "git_blob_sha256": "ccb09f86ce4910b0aad25797be8cf99d004d19d494cb3a475a9fcd4ce5c6e63e"
+        },
+        "worktree_raw_bytes": 145539,
+        "worktree_raw_sha256": "9893e6df94ea44f52ac0fec475240b6e3c19b399a384b8f0de8421a0153cee92",
+        "worktree_lf_normalized_sha256": "ccb09f86ce4910b0aad25797be8cf99d004d19d494cb3a475a9fcd4ce5c6e63e"
+      },
+      "frontend/src/simulations/domains/geometry/simulation-coverage-fixes.test.tsx": {
+        "role": "frontend_unit_regression_test",
+        "in_measured_system_paths": false,
+        "in_product_paths": false,
+        "excluded_by_test_only_globs": "frontend/src/**/*.test.tsx",
+        "old_product_3298b901": {
+          "commit": "3298b901d2246650535aa4028845ddc2a44892c4",
+          "git_blob_oid": "0ae3646758dae7755b327f92432ac5ea8bd90f1d",
+          "git_blob_bytes": 11056,
+          "git_blob_sha256": "fecc37028c542c7eeccb92fdbef4bb7b0b61ead5999dc756eded4e8faeacd853"
+        },
+        "new_product_1ca20f4f": {
+          "commit": "1ca20f4f51457f3457802bca042af76accd13698",
+          "git_blob_oid": "7948f458f9682ddae8bf81810bfbefdc72cd3eed",
+          "git_blob_bytes": 16478,
+          "git_blob_sha256": "308424c44a2c9edb06b3e425435a0df49592043a3836bf2db6ca11cd2856121a"
+        },
+        "full_t3_target_d2e6037b": {
+          "commit": "d2e6037b12580eed1503e911999d4bf981f2c0e4",
+          "git_blob_oid": "7948f458f9682ddae8bf81810bfbefdc72cd3eed",
+          "git_blob_bytes": 16478,
+          "git_blob_sha256": "308424c44a2c9edb06b3e425435a0df49592043a3836bf2db6ca11cd2856121a"
+        },
+        "worktree_raw_bytes": 16478,
+        "worktree_raw_sha256": "308424c44a2c9edb06b3e425435a0df49592043a3836bf2db6ca11cd2856121a",
+        "worktree_lf_normalized_sha256": "308424c44a2c9edb06b3e425435a0df49592043a3836bf2db6ca11cd2856121a"
+      }
+    },
+    "authoritative_full_t3_proof": {
+      "t3_source_commit": "d2e6037b12580eed1503e911999d4bf981f2c0e4",
+      "scene3d_view_blob_at_t3": {
+        "commit": "d2e6037b12580eed1503e911999d4bf981f2c0e4",
+        "git_blob_oid": "382ca0ef525eb21dbe9789962a6faf3841642dba",
+        "git_blob_bytes": 142638,
+        "git_blob_sha256": "ccb09f86ce4910b0aad25797be8cf99d004d19d494cb3a475a9fcd4ce5c6e63e"
+      },
+      "simulation_coverage_fixes_test_blob_at_t3": {
+        "commit": "d2e6037b12580eed1503e911999d4bf981f2c0e4",
+        "git_blob_oid": "7948f458f9682ddae8bf81810bfbefdc72cd3eed",
+        "git_blob_bytes": 16478,
+        "git_blob_sha256": "308424c44a2c9edb06b3e425435a0df49592043a3836bf2db6ca11cd2856121a"
+      },
+      "vitest_line_in_t3_stdout": "src/simulations/domains/geometry/simulation-coverage-fixes.test.tsx (6 tests) 147ms",
+      "t3_stdout_sha256": "0d252ca18f66b1d8927b3e322ccc8ee3609fa5524ab2a5a260dfed4f4958d53d",
+      "snapshot_dirty_after": []
+    }
+  },
+  "p2_browser_inventory_reconciliation": {
+    "cause_of_apparent_discrepancy": "PROSE_TABLE_TRANSCRIPTION_ERROR_IN_REPORT_MD_SECTION_3_ONLY",
+    "explanation": "The machine input file docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser/input-scenes.json (SHA256 c3203838fc0eefb916d98212674f89e07d1e37706e6dce9daf8779e0cd7466de) is 100% byte-identical to docs/evaluation/geometry/runs/simulation-evidence-repair/browser/input-scenes.json and contains the exact 9 original demo scenarios from docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo1..demo7*.json. Both browser/ (extended runner run_browser_regression_audit.mjs, 53 PNGs) and browser-original-runner/ (original runner run_browser_audit.mjs, 49 PNGs) executed those exact 9 original scenarios on the new renderer. Only the prose Markdown table in an earlier draft of simulation-demo6b-renderer-fix/report.md Section 3 had miswritten demo IDs/object labels, which is now corrected to match the machine receipts.",
+    "input_scenes_sha256": "c3203838fc0eefb916d98212674f89e07d1e37706e6dce9daf8779e0cd7466de",
+    "original_runner_on_new_renderer": {
+      "invocation": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser-original-runner/invocation.json",
+      "execution": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser-original-runner/execution.json",
+      "environment": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser-original-runner/environment.json",
+      "validation": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser-original-runner/validation.json",
+      "visual_receipt": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser-original-runner/visual-receipt.json",
+      "receipt_sha256": "74d2ad48f0b1cfc0b5af923435c7a916f0f42a5eca9eb756cfcf0e6f5882d549",
+      "stdout_sha256": "434eec4afa560e1de9f5985269b0a0458dd08bfd97dff5be3075e88cada0cd40",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "screenshots_count": 49
+    },
+    "extended_runner_on_new_renderer": {
+      "invocation": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser/invocation.json",
+      "execution": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser/execution.json",
+      "validation": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser/validation.json",
+      "visual_receipt": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser/visual-receipt.json",
+      "receipt_sha256": "0cb8c28e396b3590cf5f1a9c97cb3b220479b57a8c5a787f6515bb7cc61cec9a",
+      "screenshots_count": 53
+    },
+    "demos": [
+      {
+        "index": 1,
+        "id": "demo1-pyramid-derived-section",
+        "category": "Demo 1 \u2014 Pyramid + Derived Plane Section",
+        "demo_file": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo1-pyramid-derived-section.json",
+        "demo_file_worktree_sha256": "606c036ddcab069cd8deb1c0398b9601558dc23b22f2f21fa635f12a21a53432",
+        "demo_file_git_blob_sha256": "47c4dfa7575beb60c5f9e993b277c681e83e973d04c621e927d486cbf8b13c3f",
+        "served": true,
+        "refusal": null,
+        "original_campaign_3298b901": {
+          "inkPixels": 520010,
+          "ownPixelMap": {
+            "khoi_S_ABCD": 52372,
+            "khoi_S_MI1I2I3": 9438
+          },
+          "resetDiffFromDefault": 0
+        },
+        "evidence_repair_reproduction_3298b901": {
+          "inkPixels": 520010,
+          "ownPixelMap": {
+            "khoi_S_ABCD": 52372,
+            "khoi_S_MI1I2I3": 9438
+          },
+          "resetDiffFromDefault": 0
+        },
+        "new_renderer_extended_runner_1ca20f4f": {
+          "inkPixels": 520010,
+          "ownPixelMap": {
+            "khoi_S_ABCD": 52372,
+            "khoi_S_MI1I2I3": 9438
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 45633,
+            "zoomDiffPixels": 22298,
+            "panDiffPixels": 57402,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_S_ABCD",
+            "selectionDiffPixels": 14020,
+            "explodeDiffPixels": 53270,
+            "step0DiffPixels": 53065
+          },
+          "axialSectionChecks": null,
+          "labelCount": 6,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        },
+        "new_renderer_original_runner_1ca20f4f": {
+          "inkPixels": 520010,
+          "ownPixelMap": {
+            "khoi_S_ABCD": 52372,
+            "khoi_S_MI1I2I3": 9438
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 45643,
+            "zoomDiffPixels": 22319,
+            "panDiffPixels": 57396,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_S_ABCD",
+            "selectionDiffPixels": 14020,
+            "explodeDiffPixels": 53270,
+            "step0DiffPixels": 53065
+          },
+          "labelCount": 6,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        }
+      },
+      {
+        "index": 2,
+        "id": "demo2-unnamed-section-intersections",
+        "category": "Demo 2 \u2014 Unnamed Section Intersections (I1..I3)",
+        "demo_file": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo2-unnamed-section-intersections.json",
+        "demo_file_worktree_sha256": "43c412db1496f268a29c88a61cf57622d77e8d1b2a3cb6cf11c1e84bb29a70dc",
+        "demo_file_git_blob_sha256": "052e37205a6c4c85e17ead6e25096f62fa0f3cc1722a14fcaf46b89c5759132a",
+        "served": true,
+        "refusal": null,
+        "original_campaign_3298b901": {
+          "inkPixels": 519978,
+          "ownPixelMap": {
+            "khoi_S_ABCD": 43147,
+            "khoi_S_MI1I2I3": 3970
+          },
+          "resetDiffFromDefault": 0
+        },
+        "evidence_repair_reproduction_3298b901": {
+          "inkPixels": 519978,
+          "ownPixelMap": {
+            "khoi_S_ABCD": 43147,
+            "khoi_S_MI1I2I3": 3970
+          },
+          "resetDiffFromDefault": 0
+        },
+        "new_renderer_extended_runner_1ca20f4f": {
+          "inkPixels": 519978,
+          "ownPixelMap": {
+            "khoi_S_ABCD": 43147,
+            "khoi_S_MI1I2I3": 3970
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 26406,
+            "zoomDiffPixels": 13224,
+            "panDiffPixels": 42418,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_S_ABCD",
+            "selectionDiffPixels": 8281,
+            "explodeDiffPixels": 40892,
+            "step0DiffPixels": 43672
+          },
+          "axialSectionChecks": null,
+          "labelCount": 6,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        },
+        "new_renderer_original_runner_1ca20f4f": {
+          "inkPixels": 519978,
+          "ownPixelMap": {
+            "khoi_S_ABCD": 43147,
+            "khoi_S_MI1I2I3": 3970
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 26408,
+            "zoomDiffPixels": 13235,
+            "panDiffPixels": 42426,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_S_ABCD",
+            "selectionDiffPixels": 8280,
+            "explodeDiffPixels": 40892,
+            "step0DiffPixels": 43672
+          },
+          "labelCount": 6,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        }
+      },
+      {
+        "index": 3,
+        "id": "demo3-multi-solid-shared-geometry",
+        "category": "Demo 3 \u2014 Multi-Solid Shared Geometry (Prism + Pyramid)",
+        "demo_file": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo3-multi-solid-shared-geometry.json",
+        "demo_file_worktree_sha256": "f714ef40130e78fd51f16bfe1e3bbedd41d74ec79db962a2da6bf1d6328dca54",
+        "demo_file_git_blob_sha256": "7c453812de25f42a5f5fa61b22233df88c2b9178d4035beba506e2cbf01b7f78",
+        "served": true,
+        "refusal": null,
+        "original_campaign_3298b901": {
+          "inkPixels": 519237,
+          "ownPixelMap": {
+            "khoi_D1_ABC": 544,
+            "khoi_S_ABC": 16135,
+            "day_ABC": 423
+          },
+          "resetDiffFromDefault": 0
+        },
+        "evidence_repair_reproduction_3298b901": {
+          "inkPixels": 519237,
+          "ownPixelMap": {
+            "khoi_D1_ABC": 544,
+            "khoi_S_ABC": 16135,
+            "day_ABC": 423
+          },
+          "resetDiffFromDefault": 0
+        },
+        "new_renderer_extended_runner_1ca20f4f": {
+          "inkPixels": 519237,
+          "ownPixelMap": {
+            "khoi_D1_ABC": 544,
+            "khoi_S_ABC": 16135,
+            "day_ABC": 423
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 20787,
+            "zoomDiffPixels": 6297,
+            "panDiffPixels": 19658,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_D1_ABC",
+            "selectionDiffPixels": 23128,
+            "explodeDiffPixels": 33171,
+            "step0DiffPixels": 23155
+          },
+          "axialSectionChecks": null,
+          "labelCount": 6,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        },
+        "new_renderer_original_runner_1ca20f4f": {
+          "inkPixels": 519237,
+          "ownPixelMap": {
+            "khoi_D1_ABC": 544,
+            "khoi_S_ABC": 16135,
+            "day_ABC": 423
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 20787,
+            "zoomDiffPixels": 6303,
+            "panDiffPixels": 19660,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_D1_ABC",
+            "selectionDiffPixels": 23128,
+            "explodeDiffPixels": 33171,
+            "step0DiffPixels": 23155
+          },
+          "labelCount": 6,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        }
+      },
+      {
+        "index": 4,
+        "id": "demo4-step-by-step-construction",
+        "category": "Demo 4 \u2014 Step-by-Step Construction Timeline",
+        "demo_file": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo4-step-by-step-construction.json",
+        "demo_file_worktree_sha256": "4b83e28c3016f3605138e08f49b2528278978ba9f403301e3afdedcc536bdbbb",
+        "demo_file_git_blob_sha256": "8615ae838be116933d2aa92ccb2dc4e43c205a665ddaf536b6327d7d4f6f184f",
+        "served": true,
+        "refusal": null,
+        "original_campaign_3298b901": {
+          "inkPixels": 520019,
+          "ownPixelMap": {
+            "khoi_S_ABC": 60520
+          },
+          "resetDiffFromDefault": 0
+        },
+        "evidence_repair_reproduction_3298b901": {
+          "inkPixels": 520019,
+          "ownPixelMap": {
+            "khoi_S_ABC": 60520
+          },
+          "resetDiffFromDefault": 0
+        },
+        "new_renderer_extended_runner_1ca20f4f": {
+          "inkPixels": 520019,
+          "ownPixelMap": {
+            "khoi_S_ABC": 60520
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 61037,
+            "zoomDiffPixels": 21310,
+            "panDiffPixels": 38843,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_S_ABC",
+            "selectionDiffPixels": 8706,
+            "explodeDiffPixels": 75420,
+            "step0DiffPixels": 60934
+          },
+          "axialSectionChecks": null,
+          "labelCount": 5,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        },
+        "new_renderer_original_runner_1ca20f4f": {
+          "inkPixels": 520019,
+          "ownPixelMap": {
+            "khoi_S_ABC": 60520
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 61042,
+            "zoomDiffPixels": 21315,
+            "panDiffPixels": 38826,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_S_ABC",
+            "selectionDiffPixels": 8706,
+            "explodeDiffPixels": 75420,
+            "step0DiffPixels": 60934
+          },
+          "labelCount": 5,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        }
+      },
+      {
+        "index": 5,
+        "id": "demo5-selection-and-highlighting",
+        "category": "Demo 5 \u2014 Selection & Highlighting",
+        "demo_file": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo5-selection-and-highlighting.json",
+        "demo_file_worktree_sha256": "4b2f6f8906f695448dcd20c2d81f7aebc7ab3a2833af46a2655449e5889a579c",
+        "demo_file_git_blob_sha256": "dc8c780abd19325cd3f7dd4e00f90d25945b6885d72e886dbdb294820cb800f4",
+        "served": true,
+        "refusal": null,
+        "original_campaign_3298b901": {
+          "inkPixels": 519690,
+          "ownPixelMap": {
+            "khoi_S_ABCD": 3831,
+            "khoi_T_ABCD": 18339,
+            "day_ABCD": 652
+          },
+          "resetDiffFromDefault": 0
+        },
+        "evidence_repair_reproduction_3298b901": {
+          "inkPixels": 519690,
+          "ownPixelMap": {
+            "khoi_S_ABCD": 3831,
+            "khoi_T_ABCD": 18339,
+            "day_ABCD": 652
+          },
+          "resetDiffFromDefault": 0
+        },
+        "new_renderer_extended_runner_1ca20f4f": {
+          "inkPixels": 519690,
+          "ownPixelMap": {
+            "khoi_S_ABCD": 3831,
+            "khoi_T_ABCD": 18339,
+            "day_ABCD": 652
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 36483,
+            "zoomDiffPixels": 17445,
+            "panDiffPixels": 59917,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_S_ABCD",
+            "selectionDiffPixels": 30842,
+            "explodeDiffPixels": 38012,
+            "step0DiffPixels": 32810
+          },
+          "axialSectionChecks": null,
+          "labelCount": 7,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        },
+        "new_renderer_original_runner_1ca20f4f": {
+          "inkPixels": 519690,
+          "ownPixelMap": {
+            "khoi_S_ABCD": 3831,
+            "khoi_T_ABCD": 18339,
+            "day_ABCD": 652
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 36482,
+            "zoomDiffPixels": 17444,
+            "panDiffPixels": 59913,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_S_ABCD",
+            "selectionDiffPixels": 30842,
+            "explodeDiffPixels": 38012,
+            "step0DiffPixels": 32810
+          },
+          "labelCount": 7,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        }
+      },
+      {
+        "index": 6,
+        "id": "demo6a-curved-cylinder-sections",
+        "category": "Demo 6A \u2014 Curved Cylinder + Parallel Circle & Axial Section",
+        "demo_file": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo6a-curved-cylinder-sections.json",
+        "demo_file_worktree_sha256": "711aaf5eb3357bcb8399f6a0e616f9161ade7ff8390305dc2181a46d94363e7a",
+        "demo_file_git_blob_sha256": "89bded678b1fb7589ecabfa4895d6c11cdb42197048806d0eb34521c8a485581",
+        "served": true,
+        "refusal": null,
+        "original_campaign_3298b901": {
+          "inkPixels": 519533,
+          "ownPixelMap": {
+            "khoi_cyl": 36691,
+            "duong_tron_day_cyl": 31106,
+            "duong_tron_day_tren_cyl": 31813,
+            "td_sec_parallel": 31333,
+            "td_sec_axial": 358
+          },
+          "resetDiffFromDefault": 0
+        },
+        "evidence_repair_reproduction_3298b901": {
+          "inkPixels": 519533,
+          "ownPixelMap": {
+            "khoi_cyl": 36691,
+            "duong_tron_day_cyl": 31106,
+            "duong_tron_day_tren_cyl": 31813,
+            "td_sec_parallel": 31333,
+            "td_sec_axial": 358
+          },
+          "resetDiffFromDefault": 0
+        },
+        "new_renderer_extended_runner_1ca20f4f": {
+          "inkPixels": 519543,
+          "ownPixelMap": {
+            "khoi_cyl": 36685,
+            "duong_tron_day_cyl": 27322,
+            "duong_tron_day_tren_cyl": 27674,
+            "td_sec_parallel": 26098,
+            "td_sec_axial": 7468
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 19345,
+            "zoomDiffPixels": 22831,
+            "panDiffPixels": 62911,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_cyl",
+            "selectionDiffPixels": 38211,
+            "explodeDiffPixels": 14609,
+            "step0DiffPixels": 38644
+          },
+          "axialSectionChecks": {
+            "objectId": "td_sec_axial",
+            "defaultOwnPixels": 7468,
+            "orbitOwnPixels": 4981,
+            "selectAxialDiffPixels": 39801,
+            "isolateAxialInkPixels": 520548,
+            "isolateAxialSectionHuePixels": 719,
+            "isolateAxialDiffPixels": 39037,
+            "screenshots": {
+              "selectedAxial": "demo6a-curved-cylinder-sections_selected_td_sec_axial.png",
+              "isolatedAxial": "demo6a-curved-cylinder-sections_isolated_td_sec_axial.png"
+            }
+          },
+          "labelCount": 4,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        },
+        "new_renderer_original_runner_1ca20f4f": {
+          "inkPixels": 519543,
+          "ownPixelMap": {
+            "khoi_cyl": 36685,
+            "duong_tron_day_cyl": 27322,
+            "duong_tron_day_tren_cyl": 27674,
+            "td_sec_parallel": 26013,
+            "td_sec_axial": 7468
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 19346,
+            "zoomDiffPixels": 22833,
+            "panDiffPixels": 62932,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_cyl",
+            "selectionDiffPixels": 38211,
+            "explodeDiffPixels": 14609,
+            "step0DiffPixels": 38644
+          },
+          "labelCount": 4,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        }
+      },
+      {
+        "index": 7,
+        "id": "demo6b-curved-cone-frustum-cut",
+        "category": "Demo 6B \u2014 Curved Cone + Parallel Cut + Cone Frustum",
+        "demo_file": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo6b-curved-cone-frustum-cut.json",
+        "demo_file_worktree_sha256": "e43c0cb563b099938ba87a9a8a59a9ea7878aab0f4094b0a6fa5fd1a71183257",
+        "demo_file_git_blob_sha256": "fda86ad1799e2b8ad7b02a7f8757372a74fd29f5a9b10e5d79887b5b7d4fb735",
+        "served": true,
+        "refusal": null,
+        "original_campaign_3298b901": {
+          "inkPixels": 519876,
+          "ownPixelMap": {
+            "khoi_cone_main": 19195,
+            "duong_tron_day_cone_main": 32620,
+            "td_sec_cut": 4017,
+            "td_sec_axial": 41,
+            "khoi_cone_upper": 4711
+          },
+          "resetDiffFromDefault": 0
+        },
+        "evidence_repair_reproduction_3298b901": {
+          "inkPixels": 519876,
+          "ownPixelMap": {
+            "khoi_cone_main": 19195,
+            "duong_tron_day_cone_main": 32620,
+            "td_sec_cut": 4017,
+            "td_sec_axial": 0,
+            "khoi_cone_upper": 4711
+          },
+          "resetDiffFromDefault": 239
+        },
+        "new_renderer_extended_runner_1ca20f4f": {
+          "inkPixels": 519887,
+          "ownPixelMap": {
+            "khoi_cone_main": 19185,
+            "duong_tron_day_cone_main": 31960,
+            "td_sec_cut": 4063,
+            "td_sec_axial": 3105,
+            "khoi_cone_upper": 4669
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 14520,
+            "zoomDiffPixels": 12319,
+            "panDiffPixels": 40203,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_cone_main",
+            "selectionDiffPixels": 20296,
+            "explodeDiffPixels": 7057,
+            "step0DiffPixels": 20725
+          },
+          "axialSectionChecks": {
+            "objectId": "td_sec_axial",
+            "defaultOwnPixels": 3105,
+            "orbitOwnPixels": 2041,
+            "selectAxialDiffPixels": 20557,
+            "isolateAxialInkPixels": 520548,
+            "isolateAxialSectionHuePixels": 546,
+            "isolateAxialDiffPixels": 20876,
+            "screenshots": {
+              "selectedAxial": "demo6b-curved-cone-frustum-cut_selected_td_sec_axial.png",
+              "isolatedAxial": "demo6b-curved-cone-frustum-cut_isolated_td_sec_axial.png"
+            }
+          },
+          "labelCount": 4,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        },
+        "new_renderer_original_runner_1ca20f4f": {
+          "inkPixels": 519887,
+          "ownPixelMap": {
+            "khoi_cone_main": 19181,
+            "duong_tron_day_cone_main": 31979,
+            "td_sec_cut": 4005,
+            "td_sec_axial": 3105,
+            "khoi_cone_upper": 4669
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 14521,
+            "zoomDiffPixels": 12322,
+            "panDiffPixels": 40216,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_cone_main",
+            "selectionDiffPixels": 20292,
+            "explodeDiffPixels": 7057,
+            "step0DiffPixels": 20725
+          },
+          "labelCount": 4,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        }
+      },
+      {
+        "index": 8,
+        "id": "demo6c-curved-sphere-plane-cut",
+        "category": "Demo 6C \u2014 Curved Sphere + Plane Cut Circle",
+        "demo_file": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo6c-curved-sphere-plane-cut.json",
+        "demo_file_worktree_sha256": "063d027aca5fdfb238df3f13dc3a846f34c21e733927f5847f411ecfa807d188",
+        "demo_file_git_blob_sha256": "ea06b12896c6291329c231302833870e6a6a98ce3d2a485854ee9b618faeb68e",
+        "served": true,
+        "refusal": null,
+        "original_campaign_3298b901": {
+          "inkPixels": 520329,
+          "ownPixelMap": {
+            "khoi_sph": 25665,
+            "td_sec_sph": 29346
+          },
+          "resetDiffFromDefault": 0
+        },
+        "evidence_repair_reproduction_3298b901": {
+          "inkPixels": 520329,
+          "ownPixelMap": {
+            "khoi_sph": 25665,
+            "td_sec_sph": 29346
+          },
+          "resetDiffFromDefault": 0
+        },
+        "new_renderer_extended_runner_1ca20f4f": {
+          "inkPixels": 520329,
+          "ownPixelMap": {
+            "khoi_sph": 25665,
+            "td_sec_sph": 29346
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 3031,
+            "zoomDiffPixels": 10944,
+            "panDiffPixels": 41139,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_sph",
+            "selectionDiffPixels": 25111,
+            "explodeDiffPixels": 0,
+            "step0DiffPixels": 25214
+          },
+          "axialSectionChecks": null,
+          "labelCount": 1,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        },
+        "new_renderer_original_runner_1ca20f4f": {
+          "inkPixels": 520329,
+          "ownPixelMap": {
+            "khoi_sph": 25665,
+            "td_sec_sph": 29346
+          },
+          "cameraChecks": {
+            "initialSettled": true,
+            "orbitSettled": true,
+            "orbitDiffPixels": 3032,
+            "zoomDiffPixels": 10942,
+            "panDiffPixels": 41137,
+            "resetDiffFromDefault": 0
+          },
+          "interactionChecks": {
+            "selectTarget": "khoi_sph",
+            "selectionDiffPixels": 25111,
+            "explodeDiffPixels": 0,
+            "step0DiffPixels": 25214
+          },
+          "labelCount": 1,
+          "labelCollisions": 0,
+          "depViolations": [],
+          "consoleErrors": 0
+        }
+      },
+      {
+        "index": 9,
+        "id": "demo7-invalid-geometry-safe-refusal",
+        "category": "Demo 7 \u2014 Invalid Geometry Safe Refusal (Non-cutting Plane)",
+        "demo_file": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo7-invalid-geometry-safe-refusal.json",
+        "demo_file_worktree_sha256": "1b2a3b75b675e72d5fcdf58ca8141ed12cf485ed4b3cddfa84543ed0a3ca0253",
+        "demo_file_git_blob_sha256": "bb462747338c7e0a21bb38a90116dffc6f14b8a3c0e5d3ecacb524d77e9948ba",
+        "served": false,
+        "refusal": {
+          "code": "CURVED_PLANE_DOES_NOT_CUT",
+          "detail": "CURVED_PLANE_DOES_NOT_CUT: m\u1eb7t ph\u1eb3ng kh\u00f4ng c\u1eaft kh\u1ed1i c\u1ea7u \u2014 n\u00f3 n\u1eb1m xa t\u00e2m h\u01a1n b\u00e1n k\u00ednh",
+          "calls": []
+        },
+        "original_campaign_3298b901": {
+          "inkPixels": null,
+          "ownPixelMap": null,
+          "resetDiffFromDefault": null
+        },
+        "evidence_repair_reproduction_3298b901": {
+          "inkPixels": null,
+          "ownPixelMap": null,
+          "resetDiffFromDefault": null
+        },
+        "new_renderer_extended_runner_1ca20f4f": {
+          "inkPixels": null,
+          "ownPixelMap": null,
+          "cameraChecks": null,
+          "interactionChecks": null,
+          "axialSectionChecks": null,
+          "labelCount": null,
+          "labelCollisions": null,
+          "depViolations": null,
+          "consoleErrors": 0
+        },
+        "new_renderer_original_runner_1ca20f4f": {
+          "inkPixels": null,
+          "ownPixelMap": null,
+          "cameraChecks": null,
+          "interactionChecks": null,
+          "labelCount": null,
+          "labelCollisions": null,
+          "depViolations": null,
+          "consoleErrors": 0
+        }
+      }
+    ]
+  }
+}

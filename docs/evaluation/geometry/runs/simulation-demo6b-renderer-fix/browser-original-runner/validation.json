@@ -1,0 +1,524 @@
+{
+  "schema_version": "browser-original-runner-validation/1",
+  "group": "ORIGINAL_BROWSER_AUDIT_RUNNER_ON_NEW_RENDERER",
+  "source_commit": "36c056f718299a6bc9e74795b1389c659434864e",
+  "product_commit": "1ca20f4f51457f3457802bca042af76accd13698",
+  "frozen_candidate": "d2e6037b12580eed1503e911999d4bf981f2c0e4",
+  "runner_script": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/run_browser_audit.mjs",
+  "runner_script_sha256": "274ab853cd74fe12b35bd9f982a79c92c5bfcaa7bd6996375209274bd4af486d",
+  "input_scenes_path": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser/input-scenes.json",
+  "input_scenes_sha256": "c3203838fc0eefb916d98212674f89e07d1e37706e6dce9daf8779e0cd7466de",
+  "environment": {
+    "chromium": "151.0.7922.34",
+    "playwright": "1.62.1",
+    "node": "v24.13.0",
+    "rendering_mode": "ANGLE SwiftShader software WebGL",
+    "webgl": {
+      "available": true,
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "vendor": "Google Inc. (Google)"
+    }
+  },
+  "execution_exit_code": 0,
+  "stdout_bytes": 226,
+  "stdout_sha256": "434eec4afa560e1de9f5985269b0a0458dd08bfd97dff5be3075e88cada0cd40",
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "positive": 8,
+  "negative": 1,
+  "screenshots": 49,
+  "console_errors": 0,
+  "page_errors": 0,
+  "all_primary_objects_own_pixels_positive": true,
+  "all_camera_resets_exact_zero_diff": true,
+  "receipt_sha256": "74d2ad48f0b1cfc0b5af923435c7a916f0f42a5eca9eb756cfcf0e6f5882d549",
+  "screenshots_manifest": [
+    {
+      "file": "demo1-pyramid-derived-section_default.png",
+      "bytes": 95481,
+      "sha256": "fa78944d0681fdb43474086808b0b2b622f1b1b5e85f630c1b4713cf8122f199"
+    },
+    {
+      "file": "demo1-pyramid-derived-section_exploded.png",
+      "bytes": 102553,
+      "sha256": "304682f79835e0a6370177a073c98731892538b257eb32e49b09ca041a74714b"
+    },
+    {
+      "file": "demo1-pyramid-derived-section_explorer.png",
+      "bytes": 142610,
+      "sha256": "6b80f3d4e878b585bf70922d3de1f05ec0095ca32c9f3b93d7c7c637ffdd992f"
+    },
+    {
+      "file": "demo1-pyramid-derived-section_orbit.png",
+      "bytes": 85821,
+      "sha256": "6d1017e905da61892d6ed944accf6f0bcf96c2cab6ea09cbaf792982e3f2808f"
+    },
+    {
+      "file": "demo1-pyramid-derived-section_selected.png",
+      "bytes": 97617,
+      "sha256": "cf84a983cbc7df1b0b693284570b0939e162bd731eb4e5a4b751975fb8cf15ce"
+    },
+    {
+      "file": "demo1-pyramid-derived-section_step0.png",
+      "bytes": 68136,
+      "sha256": "0ba905fcdb02b952396d8deb3d3d7829bf0b3292af4e3e73712bfc255c45bc55"
+    },
+    {
+      "file": "demo2-unnamed-section-intersections_default.png",
+      "bytes": 91829,
+      "sha256": "e9b1715b6d3dd1e85710d725da863dde554c4d43c15ae125afd21dcbc56f9f6c"
+    },
+    {
+      "file": "demo2-unnamed-section-intersections_exploded.png",
+      "bytes": 101368,
+      "sha256": "87f1ae19890c049e3fe000fe028ed7db7a75a23b660344e0c239d350bf7cf4e4"
+    },
+    {
+      "file": "demo2-unnamed-section-intersections_explorer.png",
+      "bytes": 150465,
+      "sha256": "95922055cb8d45649c30ead04c033948396d273f288f3f4224082429f5e16290"
+    },
+    {
+      "file": "demo2-unnamed-section-intersections_orbit.png",
+      "bytes": 81785,
+      "sha256": "c004d29eef5f9785fdf8755ac77a78f4745130fa902f6c5bcdd3e8a1cbfe1f55"
+    },
+    {
+      "file": "demo2-unnamed-section-intersections_selected.png",
+      "bytes": 91819,
+      "sha256": "8b945231cb5afdfe31ae582e97b249281751b7c8203d698f1bc4f5cf047760db"
+    },
+    {
+      "file": "demo2-unnamed-section-intersections_step0.png",
+      "bytes": 67536,
+      "sha256": "0b0c19cbc8dc6717aadd199e4d06b2ab4153192223618cbacebb42cba77a9d78"
+    },
+    {
+      "file": "demo3-multi-solid-shared-geometry_default.png",
+      "bytes": 104766,
+      "sha256": "11c8dddc2c9e3ba41690e939345206a7bbc3d537f9a7078dc9eebe9cb2a44836"
+    },
+    {
+      "file": "demo3-multi-solid-shared-geometry_exploded.png",
+      "bytes": 111089,
+      "sha256": "596660e9e7f533369341521d2558c0b9740c5631e0a41e3e6396bbaa1c21aeee"
+    },
+    {
+      "file": "demo3-multi-solid-shared-geometry_explorer.png",
+      "bytes": 134611,
+      "sha256": "ec5e86a8d87a0c1a7a330cf9e626f89c6dff7301b9d19d12ae575715305aedd4"
+    },
+    {
+      "file": "demo3-multi-solid-shared-geometry_orbit.png",
+      "bytes": 85545,
+      "sha256": "0dadac159d09c87184df6fc957f9d81c5ec2d68e74d2fd873151dc08db4f0cf8"
+    },
+    {
+      "file": "demo3-multi-solid-shared-geometry_selected.png",
+      "bytes": 104028,
+      "sha256": "c1bc4e2baca436d381d5a362374f7bcd5bbb0503bfc948fa0f2f88346c17339a"
+    },
+    {
+      "file": "demo3-multi-solid-shared-geometry_step0.png",
+      "bytes": 68393,
+      "sha256": "b2697ea43b85bf84a7acd697e0b82ad14ab1e02d6271832d1c3e6191b22d3245"
+    },
+    {
+      "file": "demo4-step-by-step-construction_default.png",
+      "bytes": 86017,
+      "sha256": "d973cb2c95fca1ec5c645ea9eca7d25dd68bdced350ea506791b5fc5bf4497a1"
+    },
+    {
+      "file": "demo4-step-by-step-construction_exploded.png",
+      "bytes": 93017,
+      "sha256": "cf25fc771885ebefe0e1e9464c5078fba1fb8ecac5590afec9683fe0c76f68da"
+    },
+    {
+      "file": "demo4-step-by-step-construction_explorer.png",
+      "bytes": 146797,
+      "sha256": "a8a511bf657bbf1f2ca931141828ee592b8aa665f4ad509239cd1cd504a19800"
+    },
+    {
+      "file": "demo4-step-by-step-construction_orbit.png",
+      "bytes": 79611,
+      "sha256": "3b5d7b54219a18b8ca7e7b72315e39d4c6c580b1ba256d030a271a036f37632e"
+    },
+    {
+      "file": "demo4-step-by-step-construction_selected.png",
+      "bytes": 86737,
+      "sha256": "b3128e924077da07259474a4c3d653006635f8aaa4d21941715d36f4c31fb5fb"
+    },
+    {
+      "file": "demo4-step-by-step-construction_step0.png",
+      "bytes": 66499,
+      "sha256": "529447a39684f671492142a6a8d191242ab23077f08b69c2a647edb8c24ccd75"
+    },
+    {
+      "file": "demo5-selection-and-highlighting_default.png",
+      "bytes": 115026,
+      "sha256": "c5c8fd7b6c94fcf75e1b7ac3746888414a856e811bbf6532d0fa7ecf208cf2bb"
+    },
+    {
+      "file": "demo5-selection-and-highlighting_exploded.png",
+      "bytes": 122497,
+      "sha256": "04223408f322ec873ca1bd19872fb549126e84c4c2c4521e5049acf90d3dc57c"
+    },
+    {
+      "file": "demo5-selection-and-highlighting_explorer.png",
+      "bytes": 136345,
+      "sha256": "96121467f2611c8cec62327577f252936a38b28ec823e4e3398d4ca1b0cb8d0b"
+    },
+    {
+      "file": "demo5-selection-and-highlighting_orbit.png",
+      "bytes": 113901,
+      "sha256": "29f043eb987be53632d3aa500f1956721af49ff7d8ba3aed838e9f49b7c4d4a4"
+    },
+    {
+      "file": "demo5-selection-and-highlighting_selected.png",
+      "bytes": 115068,
+      "sha256": "b60b2aa61ca8a78e738d26b8158748983232d9b290821c062ee90f19706d9266"
+    },
+    {
+      "file": "demo5-selection-and-highlighting_step0.png",
+      "bytes": 68814,
+      "sha256": "0ab61d8556f56d2c9f0a93f56a585ef3907d79b75429b8b41c076cfe7cd108c2"
+    },
+    {
+      "file": "demo6a-curved-cylinder-sections_default.png",
+      "bytes": 97702,
+      "sha256": "d4762a33db58309585df426c995df778198ab7cf620ddfa8311d8e5c3845734f"
+    },
+    {
+      "file": "demo6a-curved-cylinder-sections_exploded.png",
+      "bytes": 97389,
+      "sha256": "52715ad64eacf7847101a46ea3e5c463fa711253447e474394c939ca592ddf39"
+    },
+    {
+      "file": "demo6a-curved-cylinder-sections_explorer.png",
+      "bytes": 139120,
+      "sha256": "eb241da4c5f5488f806b1f66a919f17eb57d8eb97c29655980a4233507238a04"
+    },
+    {
+      "file": "demo6a-curved-cylinder-sections_orbit.png",
+      "bytes": 98100,
+      "sha256": "d0c585cf31d4f5c5934cf68bec0dac42a2f2f1b318996eb449fb7edd8627d0d4"
+    },
+    {
+      "file": "demo6a-curved-cylinder-sections_selected.png",
+      "bytes": 97260,
+      "sha256": "15a4cff57e21c4abf29343ce4c007f447119773720ea623f15bd4a65620cb9dc"
+    },
+    {
+      "file": "demo6a-curved-cylinder-sections_step0.png",
+      "bytes": 65924,
+      "sha256": "112f591f2f97ee13a97f5ef6682241afa2509074a41ae9cc20037285f5a32df7"
+    },
+    {
+      "file": "demo6b-curved-cone-frustum-cut_default.png",
+      "bytes": 89754,
+      "sha256": "9e85bb4b44b78c00bb640ac79d18a61b192f4b8887d65221be6e4dd76469e43c"
+    },
+    {
+      "file": "demo6b-curved-cone-frustum-cut_exploded.png",
+      "bytes": 91822,
+      "sha256": "618f3dd8a52de0159fa9397d7fec20858ed7d75f94527ef375686406892480a0"
+    },
+    {
+      "file": "demo6b-curved-cone-frustum-cut_explorer.png",
+      "bytes": 138656,
+      "sha256": "e01adbae2692ad8ac0fc3bf3d16bfdafd9515ea2050f2cb31450ac88617cdd2a"
+    },
+    {
+      "file": "demo6b-curved-cone-frustum-cut_orbit.png",
+      "bytes": 90282,
+      "sha256": "307db7dc41699ab720c3af328c6da3e89efbe1ab2e6e98267a492d859c49078d"
+    },
+    {
+      "file": "demo6b-curved-cone-frustum-cut_selected.png",
+      "bytes": 86518,
+      "sha256": "64bddfb69afaba2c61df96336c8a56fc7066e0e8326fcd7d71df8eb8da2f32d9"
+    },
+    {
+      "file": "demo6b-curved-cone-frustum-cut_step0.png",
+      "bytes": 65079,
+      "sha256": "f8ab11517716d73559983049d9eb74da20cd63003a53da895a36121314aec163"
+    },
+    {
+      "file": "demo6c-curved-sphere-plane-cut_default.png",
+      "bytes": 81288,
+      "sha256": "cdc89713593a909c5b2f687617e0110a3b73f1fc9a4766724dd46e77f3d49c73"
+    },
+    {
+      "file": "demo6c-curved-sphere-plane-cut_exploded.png",
+      "bytes": 81288,
+      "sha256": "cdc89713593a909c5b2f687617e0110a3b73f1fc9a4766724dd46e77f3d49c73"
+    },
+    {
+      "file": "demo6c-curved-sphere-plane-cut_explorer.png",
+      "bytes": 131920,
+      "sha256": "2dff62ff398a63276dec2841a4f7921927f2c08f3cee6436f6bcbf49d4cd07ce"
+    },
+    {
+      "file": "demo6c-curved-sphere-plane-cut_orbit.png",
+      "bytes": 83196,
+      "sha256": "585474d126e6ed2ee2b744e659e07be4d336652aa448e3bfb5a9b9066ef6705e"
+    },
+    {
+      "file": "demo6c-curved-sphere-plane-cut_selected.png",
+      "bytes": 82361,
+      "sha256": "3894882bcd5ca4358c833d7ad492840748a899347291d3b83b967c3f197e6b03"
+    },
+    {
+      "file": "demo6c-curved-sphere-plane-cut_step0.png",
+      "bytes": 62433,
+      "sha256": "f0a9ea929997409c7574dab43fc6b7d24a72e32b477af622ec7978c225f52d21"
+    },
+    {
+      "file": "demo7-invalid-geometry-safe-refusal_refused.png",
+      "bytes": 17467,
+      "sha256": "52198702926d72bc7194e05904562b31a5750e2855cf3444034c877367899316"
+    }
+  ],
+  "results_summary": [
+    {
+      "id": "demo1-pyramid-derived-section",
+      "category": "Demo 1 \u2014 Pyramid + Derived Plane Section",
+      "served": true,
+      "inkPixels": 520010,
+      "ownPixelMap": {
+        "khoi_S_ABCD": 52372,
+        "khoi_S_MI1I2I3": 9438
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 45643,
+        "zoomDiffPixels": 22319,
+        "panDiffPixels": 57396,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_S_ABCD",
+        "selectionDiffPixels": 14020,
+        "explodeDiffPixels": 53270,
+        "step0DiffPixels": 53065
+      },
+      "labelCount": 6,
+      "labelCollisions": 0,
+      "depViolations": [],
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo2-unnamed-section-intersections",
+      "category": "Demo 2 \u2014 Unnamed Section Intersections (I1..I3)",
+      "served": true,
+      "inkPixels": 519978,
+      "ownPixelMap": {
+        "khoi_S_ABCD": 43147,
+        "khoi_S_MI1I2I3": 3970
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 26408,
+        "zoomDiffPixels": 13235,
+        "panDiffPixels": 42426,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_S_ABCD",
+        "selectionDiffPixels": 8280,
+        "explodeDiffPixels": 40892,
+        "step0DiffPixels": 43672
+      },
+      "labelCount": 6,
+      "labelCollisions": 0,
+      "depViolations": [],
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo3-multi-solid-shared-geometry",
+      "category": "Demo 3 \u2014 Multi-Solid Shared Geometry (Prism + Pyramid)",
+      "served": true,
+      "inkPixels": 519237,
+      "ownPixelMap": {
+        "khoi_D1_ABC": 544,
+        "khoi_S_ABC": 16135,
+        "day_ABC": 423
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 20787,
+        "zoomDiffPixels": 6303,
+        "panDiffPixels": 19660,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_D1_ABC",
+        "selectionDiffPixels": 23128,
+        "explodeDiffPixels": 33171,
+        "step0DiffPixels": 23155
+      },
+      "labelCount": 6,
+      "labelCollisions": 0,
+      "depViolations": [],
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo4-step-by-step-construction",
+      "category": "Demo 4 \u2014 Step-by-Step Construction Timeline",
+      "served": true,
+      "inkPixels": 520019,
+      "ownPixelMap": {
+        "khoi_S_ABC": 60520
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 61042,
+        "zoomDiffPixels": 21315,
+        "panDiffPixels": 38826,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_S_ABC",
+        "selectionDiffPixels": 8706,
+        "explodeDiffPixels": 75420,
+        "step0DiffPixels": 60934
+      },
+      "labelCount": 5,
+      "labelCollisions": 0,
+      "depViolations": [],
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo5-selection-and-highlighting",
+      "category": "Demo 5 \u2014 Selection & Highlighting",
+      "served": true,
+      "inkPixels": 519690,
+      "ownPixelMap": {
+        "khoi_S_ABCD": 3831,
+        "khoi_T_ABCD": 18339,
+        "day_ABCD": 652
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 36482,
+        "zoomDiffPixels": 17444,
+        "panDiffPixels": 59913,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_S_ABCD",
+        "selectionDiffPixels": 30842,
+        "explodeDiffPixels": 38012,
+        "step0DiffPixels": 32810
+      },
+      "labelCount": 7,
+      "labelCollisions": 0,
+      "depViolations": [],
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo6a-curved-cylinder-sections",
+      "category": "Demo 6A \u2014 Curved Cylinder + Parallel Circle & Axial Section",
+      "served": true,
+      "inkPixels": 519543,
+      "ownPixelMap": {
+        "khoi_cyl": 36685,
+        "duong_tron_day_cyl": 27322,
+        "duong_tron_day_tren_cyl": 27674,
+        "td_sec_parallel": 26013,
+        "td_sec_axial": 7468
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 19346,
+        "zoomDiffPixels": 22833,
+        "panDiffPixels": 62932,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_cyl",
+        "selectionDiffPixels": 38211,
+        "explodeDiffPixels": 14609,
+        "step0DiffPixels": 38644
+      },
+      "labelCount": 4,
+      "labelCollisions": 0,
+      "depViolations": [],
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo6b-curved-cone-frustum-cut",
+      "category": "Demo 6B \u2014 Curved Cone + Parallel Cut + Cone Frustum",
+      "served": true,
+      "inkPixels": 519887,
+      "ownPixelMap": {
+        "khoi_cone_main": 19181,
+        "duong_tron_day_cone_main": 31979,
+        "td_sec_cut": 4005,
+        "td_sec_axial": 3105,
+        "khoi_cone_upper": 4669
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 14521,
+        "zoomDiffPixels": 12322,
+        "panDiffPixels": 40216,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_cone_main",
+        "selectionDiffPixels": 20292,
+        "explodeDiffPixels": 7057,
+        "step0DiffPixels": 20725
+      },
+      "labelCount": 4,
+      "labelCollisions": 0,
+      "depViolations": [],
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo6c-curved-sphere-plane-cut",
+      "category": "Demo 6C \u2014 Curved Sphere + Plane Cut Circle",
+      "served": true,
+      "inkPixels": 520329,
+      "ownPixelMap": {
+        "khoi_sph": 25665,
+        "td_sec_sph": 29346
+      },
+      "cameraChecks": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 3032,
+        "zoomDiffPixels": 10942,
+        "panDiffPixels": 41137,
+        "resetDiffFromDefault": 0
+      },
+      "interactionChecks": {
+        "selectTarget": "khoi_sph",
+        "selectionDiffPixels": 25111,
+        "explodeDiffPixels": 0,
+        "step0DiffPixels": 25214
+      },
+      "labelCount": 1,
+      "labelCollisions": 0,
+      "depViolations": [],
+      "consoleErrors": 0
+    },
+    {
+      "id": "demo7-invalid-geometry-safe-refusal",
+      "category": "Demo 7 \u2014 Invalid Geometry Safe Refusal (Non-cutting Plane)",
+      "served": false,
+      "refusalCode": null,
+      "refusalText": "CURVED_PLANE_DOES_NOT_CUT: CURVED_PLANE_DOES_NOT_CUT: m\u1eb7t ph\u1eb3ng kh\u00f4ng c\u1eaft kh\u1ed1i c\u1ea7u \u2014 n\u00f3 n\u1eb1m xa t\u00e2m h\u01a1n b\u00e1n k\u00ednh",
+      "consoleErrors": 0
+    }
+  ]
+}

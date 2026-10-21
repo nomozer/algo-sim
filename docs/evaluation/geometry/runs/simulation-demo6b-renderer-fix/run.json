@@ -21,6 +21,16 @@
     "all_four_original_logs_four_way_byte_identical": true,
     "receipt": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/raw-log-size-reconciliation.json"
   },
+  "candidate_and_browser_inventory_reconciliation": {
+    "measured_system_paths_coverage": "108 backend/app files + 6 frontend/src/simulations/domains/semantic entries = 114 entries",
+    "frontend_geometry_renderer_lock_mechanism": "product_commit_sha (PRODUCT_PATHS = ('backend/app', 'frontend/src'))",
+    "report_md_section_3_discrepancy_classification": "PROSE_TABLE_TRANSCRIPTION_ERROR_IN_REPORT_MD_SECTION_3_ONLY",
+    "input_scenes_byte_identical_to_simulation_evidence_repair": true,
+    "original_runner_executed_on_new_renderer": true,
+    "original_runner_receipt": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser-original-runner/validation.json",
+    "reconciliation_receipt": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/candidate-and-browser-inventory-reconciliation.json",
+    "reconciliation_report": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/CANDIDATE_AND_BROWSER_INVENTORY_RECONCILIATION.md"
+  },
   "resolved_findings": [
     {
       "id": "FINDING-VISUAL-DEMO6B-AXIAL-SECTION-OCCLUDED",
