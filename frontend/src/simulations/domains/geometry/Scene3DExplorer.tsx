@@ -120,6 +120,11 @@ const CHU_GIAI_VAI_TRO: { lop: string; chu: string }[] = [
  * Nay dòng ấy đọc thẳng `o.role` — backend quyết, phía này chỉ bày ra.
  */
 
+function MathDisplay({ text }: { text: string }) {
+  return <>{text.split(/(\^-?\d+)/).map((part, i) => /^\^-?\d+$/.test(part)
+    ? <sup key={i}>{part.slice(1)}</sup> : part)}</>;
+}
+
 function NutCay({
   nut, chon, onChon, tapNguon, duong, moNhom, onDoiNhom,
 }: {
@@ -225,6 +230,7 @@ export function Scene3DExplorer({
   const day = useMemo(() => withSubEntities(scene), [scene]);
   const cay = useMemo(() => semanticTree(day), [day]);
   const [tt, setTt] = useState<InteractionState>(taoTrangThai);
+  const [xray, setXray] = useState(false);
   // SIMULATION-FIRST UX (P1 & P6): Mặc định (Chế độ A — Mô phỏng), mọi đại lượng kết quả cuối luôn nằm trong `dapAnAn`.
   const tapKetQua = useMemo(() => tapKetQuaCuoi(day, hybrid), [day, hybrid]);
   const phanTich = useMemo(
@@ -308,6 +314,7 @@ export function Scene3DExplorer({
 
   useEffect(() => {
     setTt(taoTrangThai());
+    setXray(false);
     setMoBang(new Set());
     setMoNhom(new Set());
   }, [scene]);
@@ -486,6 +493,8 @@ export function Scene3DExplorer({
               title: "Xem kết quả toán học, công thức, đại lượng trung gian và chứng chỉ kiểm chứng" }] : []),
           ]} />
           <MenuCongCu nhan="Hiển thị" khoa="hien-thi" muc={[
+            { nhan: "Nhìn xuyên khối", chon: xray, giuMo: true, onChon: () => setXray((s) => !s),
+              title: "Chế độ quan sát: hiện vùng tô thiết diện xuyên qua các mặt khối; nét khuất vẫn là nét đứt" },
             ...(coAn ? [{ nhan: "Hiện tất cả số đo", chon: xem.showAll, giuMo: true,
               onChon: () => setXem((s) => ({ showAll: !s.showAll })),
               title: "Hiện các số đo dựng hình và đại lượng trung gian đã có ở bước này ngay cạnh vật chúng đo" }] : []),
@@ -520,8 +529,12 @@ export function Scene3DExplorer({
             Đang dựng (bước {chiSoBuoc + 1}/{Math.max(1, dsBuoc.length)}): {mucBuocHienTai}
           </span>
           <span className="geo3d-huong-dan-goi-y" data-guidance-hint="">
-            Kéo để xoay hình · Bấm đỉnh, cạnh hoặc mặt trên hình để quan sát quan hệ
+            Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hình
           </span>
+          <button type="button" className="geo3d-menu-nut" onClick={() => setTt((s) => ({ ...s, current_step: dsBuoc[dsBuoc.length - 1]?.anchor ?? 0 }))}>
+            Xem mô hình đầy đủ
+          </button>
+          {xray && <span role="status">Đang nhìn xuyên khối: vùng tô thiết diện có thể nằm sau mặt khối.</span>}
         </div>
       )}
 
@@ -538,6 +551,7 @@ export function Scene3DExplorer({
           onStepsOpenChange={setMoBuoc}
           auxiliaryShown={hinhPhu}
           gridShown={luoi}
+          xray={xray}
         />
 
         {/* Nút nổi — góc trái, KHÔNG che hình vì hình luôn ở giữa khung. */}
@@ -745,6 +759,7 @@ export function Scene3DExplorer({
           <BangNoi panel="phan-tich" id="geo3d-bang-phan-tich" className="geo3d-ngan" tieuDe="Phân tích toán học"
                    onDong={() => dongBang("phan-tich")} traTieuDiem={() => nutMoBang("phan-tich")}>
             <div className="geo3d-ngan-than geo3d-dai-luong" data-math-analysis-panel="">
+              {phanTich.lengthUnit && <p>Đơn vị độ dài: {phanTich.lengthUnit}. Các kích thước đã cho bên dưới là hệ số theo đơn vị này.</p>}
               {([
                 ["Kết quả toán học", phanTich.requestedResults],
                 ["Số đo trung gian", phanTich.derivedMeasurements],
@@ -761,7 +776,7 @@ export function Scene3DExplorer({
                       const noiDung = (
                         <>
                           {m.label && m.label !== m.notation && <span className="geo3d-dai-luong-ten">{m.label}</span>}
-                          <span className="geo3d-dai-luong-so">{chuSo}</span>
+                          <span className="geo3d-dai-luong-so"><MathDisplay text={chuSo} /></span>
                         </>
                       );
                       return (
@@ -780,7 +795,7 @@ export function Scene3DExplorer({
                           )}
                           {m.formula && (
                             <p className="geo3d-soi-cong-thuc" data-analysis-formula={m.id}>
-                              {m.formula}
+                              <MathDisplay text={m.formula} />
                             </p>
                           )}
                         </li>

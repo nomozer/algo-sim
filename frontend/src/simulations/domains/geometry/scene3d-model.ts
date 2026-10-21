@@ -1851,6 +1851,8 @@ export interface RouteDMathGoalView {
 }
 
 export interface RouteDSimulationSummary {
+  length_unit?: string | null;
+  solids?: readonly { solid_id: string; scene_object_id?: string | null }[];
   math_goals?: readonly RouteDMathGoalView[] | null;
   answers?: Readonly<Record<string, string>> | null;
   answer_exact?: Readonly<Record<string, { coef: string; dim: number; unit: string | null }>> | null;
@@ -1875,6 +1877,7 @@ export interface MucPhanTichToan {
 }
 
 export interface BangPhanTichToan {
+  lengthUnit: string | null;
   givenDimensions: MucPhanTichToan[];
   givenRelations: MucPhanTichToan[];
   derivedMeasurements: MucPhanTichToan[];
@@ -1922,8 +1925,10 @@ export function phanTichToanHocCuaCanh(
 ): BangPhanTichToan {
   const byId = new Map(scene.objects.map((o) => [o.id, o]));
   const tenNgan = (id: string) => {
-    const o = byId.get(id);
-    return o?.reference?.trim() || o?.display_label?.trim() || o?.label?.trim() || id;
+    const linked = routeD?.solids?.find((s) => s.solid_id === id)?.scene_object_id;
+    const o = byId.get(linked ?? id);
+    return [o?.reference, o?.display_label, o?.label, o?.notation]
+      .find((s) => s?.trim() && learnerTextIsSafe(scene, s)) ?? "đối tượng hình học";
   };
   const ketQua = tapKetQuaCuoi(scene, hybrid);
   const cuoi = Math.max(0, stepCount(scene) - 1);
@@ -2045,8 +2050,8 @@ export function phanTichToanHocCuaCanh(
     if (kv && byId.has(kv)) continue;
     if (byId.has(`kq_${g.goal_id}`) || (g.call_id && byId.has(`kq_${g.call_id}`))) continue;
     if (g.kind === "volume_ratio") {
-      const num = g.numerator_solid ?? "khối con";
-      const den = g.denominator_solid ?? "khối gốc";
+      const num = g.numerator_solid ? tenNgan(g.numerator_solid) : "khối con";
+      const den = g.denominator_solid ? tenNgan(g.denominator_solid) : "khối gốc";
       requestedResults.push({
         id: `goal:${g.goal_id}`,
         category: "REQUESTED_RESULT",
@@ -2059,8 +2064,8 @@ export function phanTichToanHocCuaCanh(
         certificateRule: typeof g.certificate?.rule === "string" ? g.certificate.rule : null,
       });
     } else if (g.kind === "residual_volume") {
-      const par = g.parent_solid ?? "khối gốc";
-      const cut = g.cut_solid ?? "khối cắt";
+      const par = g.parent_solid ? tenNgan(g.parent_solid) : "khối gốc";
+      const cut = g.cut_solid ? tenNgan(g.cut_solid) : "khối cắt";
       requestedResults.push({
         id: `goal:${g.goal_id}`,
         category: "REQUESTED_RESULT",
@@ -2076,7 +2081,7 @@ export function phanTichToanHocCuaCanh(
       requestedResults.push({
         id: `goal:${g.goal_id}`,
         category: "REQUESTED_RESULT",
-        label: g.goal_id,
+        label: "Kết quả đã kiểm chứng",
         notation: null,
         valueDisplay: g.value_display,
         formula: null,
@@ -2160,7 +2165,15 @@ export function phanTichToanHocCuaCanh(
     }
   }
 
+  // Unknown internal names remain available through entity ids, never as learner labels.
+  for (const item of [...givenDimensions, ...givenRelations, ...derivedMeasurements, ...requestedResults, ...certificates]) {
+    if (!learnerTextIsSafe(scene, item.label)) item.label = "Đại lượng hoặc quan hệ đã kiểm chứng";
+    if (item.notation && !learnerTextIsSafe(scene, item.notation)) item.notation = null;
+    if (item.formula && !learnerTextIsSafe(scene, item.formula)) item.formula = null;
+    item.basisLabels = item.basisLabels.map((s) => learnerTextIsSafe(scene, s) ? s : "đối tượng hình học");
+  }
   return {
+    lengthUnit: routeD?.length_unit ?? scene.length_unit?.symbol ?? null,
     givenDimensions,
     givenRelations,
     derivedMeasurements,

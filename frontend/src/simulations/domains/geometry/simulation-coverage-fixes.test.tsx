@@ -248,7 +248,7 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
     expect(evalSummary.metrics.negative_refused).toBe(5);
   });
 
-  it("renders interior auxiliary section polygon td_sec_axial in demo6b with non-occluded fill and two-pass GPU boundary lines", () => {
+  it("preserves cone axial fill geometry with depth by default, explicit x-ray, and two-pass GPU boundary lines", () => {
     const rawScene = demo6b.route_b.scene3d as unknown as Scene3D;
     const charted = veKhongGian(rawScene);
     const enriched = withSubEntities(charted);
@@ -284,13 +284,14 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
     const axialGroup = root.getObjectByName("polygon:td_sec_axial");
     expect(axialGroup).toBeDefined();
 
-    // 1. Interior fill must render at THU_TU_TO_THIET_DIEN with depthTest: false and polygonOffset
-    // so it is not completely rejected behind khoi_cone_main / khoi_cone_upper lopChieuSau depth prepasses
+    // The same axial fill is depth-correct by default and visible through solids only in x-ray mode.
     const fillMesh = axialGroup!.getObjectByName("polygon_fill:td_sec_axial") as THREE.Mesh | undefined;
     expect(fillMesh).toBeDefined();
     expect(fillMesh!.renderOrder).toBe(THU_TU_TO_THIET_DIEN);
     const fillMat = fillMesh!.material as THREE.MeshStandardMaterial;
-    expect(fillMat.depthTest).toBe(false);
+    expect(fillMat.depthTest).toBe(true);
+    const xray = buildObject3D(tdSecAxial!, false, undefined, undefined, undefined, undefined, undefined, true)!;
+    expect((xray.getObjectByName("polygon_fill:td_sec_axial") as THREE.Mesh<THREE.BufferGeometry, THREE.Material>).material.depthTest).toBe(false);
     expect(fillMat.depthWrite).toBe(false);
     expect(fillMat.polygonOffset).toBe(true);
     expect(fillMat.opacity).toBeGreaterThanOrEqual(0.28);

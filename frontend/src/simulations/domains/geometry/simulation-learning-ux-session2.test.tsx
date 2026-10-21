@@ -216,15 +216,14 @@ describe("Session 2 (P6–P10) — Simulation-First Learning Experience & Mathem
       <UnsupportedNotice
         unsupported={{
           reason: refusalRow.reason ?? "Mặt phẳng không cắt mặt cầu.",
-          learner_reason: refusalRow.reason ?? "Mặt phẳng cách tâm lớn hơn bán kính nên không có giao tuyến thực.",
           failure_category: "geometry_generation_failed",
-          error_code: "postcondition_violated",
+          error_code: refusalRow.code,
           stage_reached: "verification",
           refusal_cause: "SOURCE",
         }}
       />,
     );
-    expect(refusalHtml).toContain("CHƯA DỰNG ĐƯỢC MÔ PHỎNG");
+    expect(refusalHtml).toContain("KHÔNG CÓ GIAO TUYẾN");
     expect(refusalHtml).not.toContain("geo3d-canvas");
   });
 });

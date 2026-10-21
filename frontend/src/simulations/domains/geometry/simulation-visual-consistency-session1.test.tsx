@@ -116,7 +116,7 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     expect(secFillMat.color.getHex()).toBe(0xf59e0b);
     expect(secFillMat.opacity).toBeCloseTo(0.28, 5);
     expect(secFillMat.depthTest).toBe(true);
-    expect(secFillMat.depthFunc).toBe(THREE.AlwaysDepth);
+    expect(secFillMat.depthFunc).toBe(THREE.LessEqualDepth);
     const secRim = builtCut.children.find(
       (c): c is THREE.Mesh => c instanceof THREE.Mesh && c !== secFill,
     )!;
@@ -146,7 +146,7 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     expect(elFillMat.color.getHex()).toBe(0xf59e0b);
     expect(elFillMat.opacity).toBeCloseTo(0.28, 5);
     expect(elFillMat.depthTest).toBe(true);
-    expect(elFillMat.depthFunc).toBe(THREE.AlwaysDepth);
+    expect(elFillMat.depthFunc).toBe(THREE.LessEqualDepth);
   });
 
   it("computes tight cone and circle bounds in diemHuuHan without inflating cone apex horizontally", () => {

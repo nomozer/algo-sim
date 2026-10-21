@@ -75,6 +75,7 @@ interface Props {
   /** W2 · D/F: công tắc «Hình phụ» và «Lưới» — xưởng giữ, chuyển tiếp nguyên xuống khung nhìn. */
   auxiliaryShown?: boolean;
   gridShown?: boolean;
+  xray?: boolean;
 }
 
 /** Sàn chiều cao canvas (px): màn thấp thì trang cuộn, không để hình bé như con tem. */
@@ -108,7 +109,7 @@ const NGANG_THAP = "(orientation: landscape) and (max-height: 30rem)";
 
 export function Scene3DPlayer({
   scene, initialStep = 0, interaction, onInteraction, onSelect, fitToken = 0, annotationView,
-  stepsOpen, onStepsOpenChange, auxiliaryShown, gridShown,
+  stepsOpen, onStepsOpenChange, auxiliaryShown, gridShown, xray,
 }: Props) {
   const [moBuocTrong, setMoBuocTrong] = useState(false);
   const moBuoc = stepsOpen ?? moBuocTrong;
@@ -276,6 +277,7 @@ export function Scene3DPlayer({
         annotationView={annotationView}
         auxiliaryShown={auxiliaryShown}
         gridShown={gridShown}
+        xray={xray}
       />
 
       <div className="geo3d-controls" role="group" aria-label="Điều khiển bước dựng">

@@ -1061,6 +1061,7 @@ export function buildObject3D(
   highlightedEdgeIds: ReadonlySet<string> | ReadonlyMap<string, number> = new Set(),
   /** W4: khúc tô sáng của đoạn con nằm trên cạnh chuẩn (`toSangCanhChuan().khuc`). */
   khucToSang: ReadonlyMap<string, KhucToSang> = new Map(),
+  xray = false,
 ): THREE.Object3D | null {
   // Ngữ cảnh cấu trúc: KHÔNG phải nhấn mạnh — nền xám nhạt, nét xám trung tính.
   // Cạnh khối vốn đã là mực trung tính nên giữ nguyên; còn MÀU KIỂU (hổ phách
@@ -1395,7 +1396,8 @@ export function buildObject3D(
                 opacity: noiBat ? 0.42 : 0.28,
                 side: THREE.DoubleSide,
                 depthWrite: false,
-                depthFunc: THREE.AlwaysDepth,
+                depthTest: !xray,
+                depthFunc: THREE.LessEqualDepth,
                 ...LECH_THIET_DIEN,
               },
         ),
@@ -1505,7 +1507,8 @@ export function buildObject3D(
           opacity: noiBat ? 0.42 : 0.28,
           side: THREE.DoubleSide,
           depthWrite: false,
-          depthFunc: THREE.AlwaysDepth,
+          depthTest: !xray,
+          depthFunc: THREE.LessEqualDepth,
           ...LECH_THIET_DIEN,
         }),
       );
@@ -1752,11 +1755,8 @@ export function buildObject3D(
         // diện để không hoà vào miếng mặt cắt đồng phẳng; vẫn không ghi chiều sâu, không
         // lớp chiều sâu — vùng tô không che nét nào.
         //
-        // ⚠️ Và KHÔNG kiểm chiều sâu (W15, đo ở trình duyệt). Thiết diện nằm TRONG khối, nên
-        // mọi điểm trong của nó ở SAU mặt trước của khối; lớp chiều sâu đục của khối chạy
-        // trước toàn bộ hàng đợi trong suốt, nên một vật tô có kiểm chiều sâu bị loại ở MỌI
-        // điểm ảnh — có mặt trong cảnh mà không bao giờ hiện (bật/tắt: ΔE = 0). Nét viền
-        // thiết diện vẫn hai lượt thấy/khuất; chỉ vùng tô xuyên qua khối trong suốt.
+        // Interior fills respect solid depth by default. Only an explicit x-ray choice
+        // reveals them through the shell; hidden-line passes keep their own depth semantics.
         //
         // W16: thứ tự `THU_TU_TO_THIET_DIEN` — sau mặt, TRƯỚC nét: cạnh khối đi qua vùng
         // tô vẫn đọc rõ (§14.4), thay vì bị phủ hổ phách như ở thứ tự 10 của W15.
@@ -1766,7 +1766,7 @@ export function buildObject3D(
           opacity: thietDien ? DO_DUC_TO_THIET_DIEN : daGiacPhu ? (noiBat ? 0.42 : 0.28) : (noiBat ? 0.35 : 0.16),
           side: THREE.DoubleSide,
           depthWrite: false,
-          ...(toXuyenKhoi ? { ...LECH_THIET_DIEN, depthTest: false } : {}),
+          ...(toXuyenKhoi ? { ...LECH_THIET_DIEN, depthTest: !xray } : {}),
         }));
         mesh.name = `${thietDien ? "section_fill" : "polygon_fill"}:${o.id}`;
         if (toXuyenKhoi) mesh.renderOrder = THU_TU_TO_THIET_DIEN;
@@ -1896,6 +1896,7 @@ interface Props {
   auxiliaryShown?: boolean;
   /** W2 · F: lưới nền mảnh, mặc định TẮT; ngoài nhóm gốc ⇒ không vào occlusion, raycast hay khung nhìn. */
   gridShown?: boolean;
+  xray?: boolean;
 }
 
 /** §16.7 — cạnh góc vuông của ký hiệu tại chân, theo độ dài đoạn tới chân, có trần (đơn vị cảnh). */
@@ -2038,7 +2039,7 @@ export function dungLuoiNenSuPham(diem: Vec3[], heSoDiu = 1): THREE.Group {
 
 export function Scene3DWorkspace({
   scene, step, interaction, onSelect, fitToken = 0, annotationView = DEFAULT_ANNOTATION_VIEW,
-  auxiliaryShown = false, gridShown = false,
+  auxiliaryShown = false, gridShown = false, xray = false,
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<THREE.Group | null>(null);
@@ -2798,7 +2799,7 @@ export function Scene3DWorkspace({
           ? diemMp
           : diemNen;
       const obj = buildObject3D(renderObject, tang ? tang.get(o.id) ?? false : sangBuoc,
-        banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemChoVat, undefined, canonicalHighlights, khucToSang);
+        banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemChoVat, undefined, canonicalHighlights, khucToSang, xray);
       if (!obj) continue;
       if (tang && !tang.has(o.id)) lamDiu(obj);   // ngoài chuỗi nhân quả
       const bd = visualTransformOf(tuongTac, scene, o.id);
@@ -2828,7 +2829,7 @@ export function Scene3DWorkspace({
       (window as any).__geo3d_causal_tiers = tang ? Object.fromEntries(tang) : null;
     }
     veRef.current?.();
-  }, [scene, buoc, tuongTac, tapNoiBat, tang, anPhu]);
+  }, [scene, buoc, tuongTac, tapNoiBat, tang, anPhu, xray]);
 
   // ── KHI NÀO ĐẶT LẠI KHUNG NHÌN ────────────────────────────────────────
   //
