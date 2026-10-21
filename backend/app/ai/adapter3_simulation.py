@@ -2344,8 +2344,8 @@ class _Adapter3Compiler:
                         }
                     )
                 else:
-                    ap_var = f"A_prime_{ir_name(sec.section_id)}"
-                    bp_var = f"B_prime_{ir_name(sec.section_id)}"
+                    ap_var = "A_prime" if "A_prime" not in declared_names else f"A_prime_{ir_name(sec.section_id)}"
+                    bp_var = "B_prime" if "B_prime" not in declared_names else f"B_prime_{ir_name(sec.section_id)}"
                     add_decl(ap_var, "point3", [str(r_val), 0, str(h_val)])
                     add_decl(bp_var, "point3", [str(-r_val), 0, str(h_val)])
                     v_cycle = [a_var, b_var, bp_var, ap_var]
@@ -2481,8 +2481,8 @@ class _Adapter3Compiler:
                         f"{g.goal_id}: khối nón dẫn xuất yêu cầu mặt phẳng cắt song song đáy cắt phần trong của trục",
                         (g.goal_id,),
                     )
-                o_cut_var = f"O_cat_{ir_name(g.derived_solid_id)}"
-                r_cut_var = f"R_cat_{ir_name(g.derived_solid_id)}"
+                o_cut_var = "O_prime" if "O_prime" not in declared_names else f"O_cat_{ir_name(g.derived_solid_id)}"
+                r_cut_var = "r" if "r" not in declared_names else f"R_cat_{ir_name(g.derived_solid_id)}"
                 upper_var = f"khoi_{ir_name(g.derived_solid_id)}"
                 r_cut_val = times_rational(pmeta["r_val"], rk)
                 add_decl(o_cut_var, "point3", [0, 0, str(z_cut)])

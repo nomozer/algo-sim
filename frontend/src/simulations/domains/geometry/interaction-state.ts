@@ -352,6 +352,14 @@ const THU_TU = [
 ];
 
 function _hangMuc(o: SceneObject): string {
+  if (
+    o.type === "circle3" &&
+    (o.surface_role === "BASE_REGION" ||
+      (o.formation_roles ?? []).includes("CONSTRUCT_BASE") ||
+      o.id.startsWith("duong_tron_day"))
+  ) {
+    return "Đa giác";
+  }
   return HANG_MUC[o.type] ?? "Khác";
 }
 

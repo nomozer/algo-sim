@@ -856,10 +856,24 @@ export function diemHuuHan(objects: SceneObject[]): Vec3[] {
       const phuong: Vec3[] = dai === 0
         ? [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
         : truc_vuong_goc([truc[0] / dai, truc[1] / dai, truc[2] / dai]);
-      for (const t of [c, dinh]) {
+      const tamNo = o.curved_kind === "cone" ? [c] : [c, dinh];
+      if (o.curved_kind === "cone") ra.push(dinh);
+      for (const t of tamNo) {
         for (const u of phuong) {
           ra.push([t[0] + u[0] * r, t[1] + u[1] * r, t[2] + u[2] * r]);
           ra.push([t[0] - u[0] * r, t[1] - u[1] * r, t[2] - u[2] * r]);
+        }
+      }
+    }
+    if (o.render === "circle" && o.center && o.normal && o.radius_sq) {
+      const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq)));
+      const c = toVec3(o.center);
+      const n = toVec3(o.normal);
+      const dai = Math.hypot(...n);
+      if (dai > 0 && r > 0) {
+        for (const u of truc_vuong_goc([n[0] / dai, n[1] / dai, n[2] / dai])) {
+          ra.push([c[0] + u[0] * r, c[1] + u[1] * r, c[2] + u[2] * r]);
+          ra.push([c[0] - u[0] * r, c[1] - u[1] * r, c[2] - u[2] * r]);
         }
       }
     }

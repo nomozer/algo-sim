@@ -1364,13 +1364,46 @@ export function buildObject3D(
     const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq)));
     const day = beDayNet(diemNen, r);
     const trong = Math.max(0, r - day / 2), ngoai = r + day / 2;
+    const duongTronDay =
+      o.surface_role === "BASE_REGION" ||
+      (o.formation_roles ?? []).includes("CONSTRUCT_BASE") ||
+      o.id.startsWith("duong_tron_day");
+    const mauVanh = duongTronDay ? net(MAU.canh) : net(MAU.polygon);
     const chungVanh = {
-      color: net(MAU.line), side: THREE.DoubleSide,
+      color: mauVanh, side: THREE.DoubleSide,
       ...LECH_THIET_DIEN,
     } as const;
     // Cùng lối với elip: phần THẤY là vành đầy, phần KHUẤT là vành ngắt quãng
     // (`thetaLength` một nửa mỗi chu kỳ) — nét đứt bám đúng đường tròn.
     const nhomVanh = new THREE.Group();
+    if (o.fill_visible !== false) {
+      const bkTo = Math.max(2e-5, trong - day);
+      const to = new THREE.Mesh(
+        new THREE.RingGeometry(1e-5, bkTo, VONG_CHIA),
+        new THREE.MeshStandardMaterial(
+          duongTronDay
+            ? {
+                color: nen(MAU.mesh),
+                transparent: true,
+                opacity: noiBat ? 0.24 : 0.12,
+                side: THREE.DoubleSide,
+                depthWrite: false,
+              }
+            : {
+                color: nen(MAU.polygon),
+                transparent: true,
+                opacity: noiBat ? 0.42 : 0.28,
+                side: THREE.DoubleSide,
+                depthWrite: false,
+                depthFunc: THREE.AlwaysDepth,
+                ...LECH_THIET_DIEN,
+              },
+        ),
+      );
+      to.name = `${duongTronDay ? "polygon_fill" : "section_fill"}:${o.id}`;
+      if (!duongTronDay) to.renderOrder = THU_TU_TO_THIET_DIEN;
+      nhomVanh.add(to);
+    }
     const thay = new THREE.Mesh(
       new THREE.RingGeometry(trong, ngoai, VONG_CHIA),
       new THREE.MeshBasicMaterial({ ...chungVanh, depthFunc: THREE.LessEqualDepth }));
@@ -1415,6 +1448,7 @@ export function buildObject3D(
     const day = beDayNet(diemNen, Math.max(a, b));
     const trong: THREE.Vector3[] = [];
     const ngoai: THREE.Vector3[] = [];
+    const mepTo: THREE.Vector3[] = [];
     for (let i = 0; i <= VONG_CHIA; i += 1) {
       const t = (i / VONG_CHIA) * Math.PI * 2;
       const P = new THREE.Vector3()
@@ -1429,6 +1463,7 @@ export function buildObject3D(
         .multiplyScalar(day / 2);
       trong.push(P.clone().sub(ra));
       ngoai.push(P.clone().add(ra));
+      mepTo.push(P.clone().sub(ra.clone().multiplyScalar(3)));
     }
     /* HAI hình học từ CÙNG một vành: bản đầy đủ cho phần THẤY, bản bỏ đoạn
        xen kẽ cho phần KHUẤT. Vành vốn đã chia sẵn `VONG_CHIA` đoạn, nên "nét
@@ -1436,11 +1471,14 @@ export function buildObject3D(
        kỳ đứt bám đúng đường cong thay vì bám độ dài chiếu. */
     const dinhDay: number[] = [];
     const dinhDut: number[] = [];
+    const dinhTo: number[] = [];
     for (let i = 0; i < VONG_CHIA; i += 1) {
       const [a0, b0, a1, b1] = [trong[i], ngoai[i], trong[i + 1], ngoai[i + 1]];
+      const [t0, t1] = [mepTo[i], mepTo[i + 1]];
       const sau = [a0.x, a0.y, a0.z, b0.x, b0.y, b0.z, a1.x, a1.y, a1.z,
         b0.x, b0.y, b0.z, b1.x, b1.y, b1.z, a1.x, a1.y, a1.z];
       dinhDay.push(...sau);
+      dinhTo.push(0, 0, 0, t0.x, t0.y, t0.z, t1.x, t1.y, t1.z);
       /* Chu kỳ 4 đoạn (2 vẽ, 2 bỏ), không phải 2. Đo được: với elip nhỏ như
          `p7`, 24 nét trên một vành ~120px cho khe đứt ~2,5px — không đọc ra là
          nét đứt, và cũng không đo được. Thưa gấp đôi thì khe rộng gấp đôi. */
@@ -1452,10 +1490,29 @@ export function buildObject3D(
       return bg;
     };
     const chungVanh = {
-      color: net(MAU.line), side: THREE.DoubleSide,
+      color: net(MAU.polygon), side: THREE.DoubleSide,
       ...LECH_THIET_DIEN,
     } as const;
     const nhomVanh = new THREE.Group();
+    if (o.fill_visible !== false) {
+      const gTo = hh(dinhTo);
+      gTo.computeVertexNormals();
+      const to = new THREE.Mesh(
+        gTo,
+        new THREE.MeshStandardMaterial({
+          color: nen(MAU.polygon),
+          transparent: true,
+          opacity: noiBat ? 0.42 : 0.28,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+          depthFunc: THREE.AlwaysDepth,
+          ...LECH_THIET_DIEN,
+        }),
+      );
+      to.name = `section_fill:${o.id}`;
+      to.renderOrder = THU_TU_TO_THIET_DIEN;
+      nhomVanh.add(to);
+    }
     /* ⚠️ `depthTest: false` ĐÃ BỎ Ở ĐÂY. Nó làm thiết diện luôn vẽ đè lên mọi
        thứ — tiện để "nhìn thấy", nhưng khi ấy phần khuất và phần thấy hiện y
        hệt nhau, và câu *"đường này nằm trước hay sau khối"* mất luôn câu trả
@@ -1495,9 +1552,9 @@ export function buildObject3D(
         ? new THREE.Vector3(tam.x, tam.y, tam.z + h)
       : null;
     const m = new THREE.MeshStandardMaterial({
-      color: net(MAU.surface),
+      color: nen(MAU.mesh),
       transparent: true,
-      opacity: noiBat ? 0.5 : 0.3,
+      opacity: noiBat ? 0.36 : 0.22,
       side: THREE.DoubleSide,
       depthWrite: false,
     });
@@ -2510,9 +2567,11 @@ export function Scene3DWorkspace({
       // không theo tên bài — xem `chonHuongNhin`. Cảnh không cạnh ⇒ khung cũ.
       // Cấu trúc đo trong khung THẾ GIỚI (sau phép xoay hiển thị): hướng nhìn chọn cho hình người học thấy.
       const ct = cauTrucTheGioi(scene.objects, qRef.current);
-      const kn = ct.canh.length > 0
-        ? khungNhinSuPham(diem, [], [], cam.fov, w / h, chonHuongNhin(ct.diem, ct.canh, ct.mat))
-        : khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h);
+      const huong = ct.canh.length > 0
+        ? chonHuongNhin(ct.diem, ct.canh, ct.mat)
+        : ([8, 5, 6] as [number, number, number]);
+      const kn = khungNhinSuPham(diem, [], [], cam.fov, w / h, huong)
+        ?? khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h);
       if (!kn) return;   // đầu vào không dùng được ⇒ giữ nguyên khung nhìn
       datKhungNhin(cam, dieuKhien, kn);
       veRef.current?.();
