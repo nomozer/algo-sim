@@ -2134,14 +2134,18 @@ class _Adapter3Compiler:
             r_var = f"R_{solid.solid_id}" if len(self.payload.solids) > 1 else "R"
             add_decl(r_var, "float", rad_display(r_val))
 
-            curved_kind = "ball" if solid.solid_type == "sphere" else solid.solid_type
+            non_axial_kind = next(k for k, v in CV.KHOI_CONG.items() if not v.co_truc)
+            curved_kind = solid.solid_type if solid.solid_type in CV.KHOI_CONG else non_axial_kind
+            kc = CV.KHOI_CONG[curved_kind]
+            co_dinh_nhon = kc.vai_dinh == "đỉnh"
+            co_day_tren = kc.co_truc and not co_dinh_nhon
             top_var: str | None = None
             rim_var: str | None = None
             h_var: str | None = None
             h_val: Any = None
             h_sq: Fraction | None = None
 
-            if curved_kind in ("cylinder", "cone"):
+            if kc.co_truc:
                 h_val, h_sq, h_has_a = self._parse_curved_scalar(
                     solid.height, solid.quote, solid.solid_id, "height"
                 )
@@ -2162,11 +2166,11 @@ class _Adapter3Compiler:
 
             solid_var = f"khoi_{ir_name(solid.solid_id)}"
             add_decl(solid_var, "curved_solid", None)
-            label_map = {
-                "ball": f"Mặt cầu {solid.notation}" + (f" tâm {c_center}" if c_center else ""),
-                "cylinder": f"Hình trụ tròn xoay {solid.notation}" + (f" tâm {c_center}" if c_center else ""),
-                "cone": f"Hình nón tròn xoay {solid.notation}" + (f" đỉnh {c_top}" if c_top else ""),
-            }
+            if kc.co_truc:
+                suffix = f" {kc.vai_dinh} {c_top}" if co_dinh_nhon and c_top else (f" tâm {c_center}" if c_center else "")
+                solid_label = f"{kc.danh_tu} tròn xoay {solid.notation}{suffix}"
+            else:
+                solid_label = f"Mặt cầu {solid.notation}" + (f" tâm {c_center}" if c_center else "")
             stmts.append(
                 {
                     "kind": "construct_curved_solid",
@@ -2176,13 +2180,13 @@ class _Adapter3Compiler:
                     "apex_or_top": top_var,
                     "rim_point": rim_var,
                     "radius": None if rim_var else r_var,
-                    "height": None if (curved_kind == "ball" or top_var) else h_var,
-                    "label": label_map[curved_kind],
+                    "height": None if (not kc.co_truc or top_var) else h_var,
+                    "label": solid_label,
                 }
             )
 
-            # Base circle & structural axis/generator segments for cylinder and cone
-            if curved_kind in ("cylinder", "cone"):
+            # Base circle & structural axis/generator segments for axial curved solids
+            if kc.co_truc:
                 mp_day_var = f"mp_day_{ir_name(solid.solid_id)}"
                 day_var = f"duong_tron_day_{ir_name(solid.solid_id)}"
                 add_decl(mp_day_var, "plane3", None)
@@ -2209,7 +2213,7 @@ class _Adapter3Compiler:
                         },
                     }
                 )
-                if curved_kind == "cylinder" and isinstance(h_val, Fraction):
+                if co_day_tren and isinstance(h_val, Fraction):
                     mp_tren_var = f"mp_day_tren_{ir_name(solid.solid_id)}"
                     tren_var = f"duong_tron_day_tren_{ir_name(solid.solid_id)}"
                     add_decl(mp_tren_var, "plane3", None)
@@ -2260,7 +2264,7 @@ class _Adapter3Compiler:
                             "label": f"Bán kính đáy {c_center}{c_rim}",
                         }
                     )
-                if curved_kind == "cone" and top_var and rim_var:
+                if co_dinh_nhon and top_var and rim_var:
                     ds_var = f"duong_sinh_{top_var}_{rim_var}"
                     add_decl(ds_var, "segment3", None)
                     stmts.append(
@@ -2293,14 +2297,15 @@ class _Adapter3Compiler:
             smeta = solid_meta[sec.target_solid_id]
             solid_var = smeta["solid_var"]
             curved_kind = smeta["curved_kind"]
+            s_kc = CV.KHOI_CONG[curved_kind]
             r_val = smeta["r_val"]
             h_val = smeta["h_val"]
 
             if sec.plane_kind == "axial_section":
-                if curved_kind not in ("cylinder", "cone") or not isinstance(r_val, Fraction) or not isinstance(h_val, Fraction):
+                if not s_kc.co_truc or not isinstance(r_val, Fraction) or not isinstance(h_val, Fraction):
                     raise TuChoi(
                         CV.ERR_NGOAI_BAO_DONG,
-                        f"{sec.section_id}: thiết diện qua trục yêu cầu hình trụ/nón có bán kính và chiều cao hữu tỉ",
+                        f"{sec.section_id}: thiết diện qua trục yêu cầu hình tròn xoay có bán kính và chiều cao hữu tỉ",
                         (sec.section_id,),
                     )
                 a_var = smeta["rim_var"]
@@ -2324,7 +2329,7 @@ class _Adapter3Compiler:
                 )
                 sec_var = f"td_{ir_name(sec.section_id)}"
                 add_decl(sec_var, "polygon3", None)
-                if curved_kind == "cone":
+                if s_kc.vai_dinh == "đỉnh":
                     top_v = smeta["top_var"]
                     if not top_v:
                         top_v = f"S_{ir_name(sec.section_id)}"
@@ -2461,11 +2466,12 @@ class _Adapter3Compiler:
                     s.target_solid_id for s in self.payload.derived_sections if s.section_id == g.target_section_id
                 )
                 pmeta = solid_meta[parent_sid]
+                p_kc = CV.KHOI_CONG[pmeta["curved_kind"]]
                 sec_m = section_meta[g.target_section_id]
                 rk = sec_m.get("ratio_from_apex")
                 z_cut = sec_m.get("z_cut")
                 if (
-                    pmeta["curved_kind"] != "cone"
+                    p_kc.vai_dinh != "đỉnh"
                     or rk is None
                     or z_cut is None
                     or not (Fraction(0) < rk < Fraction(1))
@@ -2490,7 +2496,7 @@ class _Adapter3Compiler:
                     {
                         "kind": "construct_curved_solid",
                         "target_var": upper_var,
-                        "curved_kind": "cone",
+                        "curved_kind": pmeta["curved_kind"],
                         "anchor": o_cut_var,
                         "apex_or_top": top_v,
                         "rim_point": None,
@@ -2502,7 +2508,7 @@ class _Adapter3Compiler:
                 self.solid_canonical_name[g.derived_solid_id] = g.derived_solid_id
                 solid_meta[g.derived_solid_id] = {
                     "solid_var": upper_var,
-                    "curved_kind": "cone",
+                    "curved_kind": pmeta["curved_kind"],
                     "center_var": o_cut_var,
                     "top_var": top_v,
                     "rim_var": None,
@@ -2854,7 +2860,7 @@ class _Adapter3Compiler:
         )
 
     def run(self) -> Adapter3SimulationResult:
-        if any(s.solid_type in ("cylinder", "cone", "sphere", "cone_frustum") for s in self.payload.solids):
+        if any(s.solid_type not in ("pyramid", "prism") for s in self.payload.solids):
             try:
                 return self._run_curved_route()
             except TuChoi as exc:

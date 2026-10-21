@@ -1,8 +1,21 @@
 import { describe, expect, it } from "vitest";
 import * as THREE from "three";
 import { buildObject3D } from "./scene3d-view";
-import { diemHuuHan, type Scene3D, type SceneObject } from "./scene3d-model";
-import { TRANG_THAI_DAU, explode, semanticTree, visualTransformOf } from "./interaction-state";
+import { diemHuuHan, objectsAt, stepCount, type Scene3D, type SceneObject } from "./scene3d-model";
+import { veKhongGian } from "./scene3d-chart";
+import { TRANG_THAI_DAU, explode, isolate, select, semanticTree, visualTransformOf } from "./interaction-state";
+import { withSubEntities } from "./scene3d-subentities";
+import demo1 from "../../../../../docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo1-pyramid-derived-section.json";
+import demo2 from "../../../../../docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo2-unnamed-section-intersections.json";
+import demo3 from "../../../../../docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo3-multi-solid-shared-geometry.json";
+import demo4 from "../../../../../docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo4-step-by-step-construction.json";
+import demo5 from "../../../../../docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo5-selection-and-highlighting.json";
+import demo6a from "../../../../../docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo6a-curved-cylinder-sections.json";
+import demo6b from "../../../../../docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo6b-curved-cone-frustum-cut.json";
+import demo6c from "../../../../../docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo6c-curved-sphere-plane-cut.json";
+import demo7 from "../../../../../docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo7-invalid-geometry-safe-refusal.json";
+import visualReceipt from "../../../../../docs/evaluation/geometry/runs/simulation-coverage-visual-validation/visual-acceptance-receipt.json";
+import evalSummary from "../../../../../docs/evaluation/geometry/runs/simulation-coverage-visual-validation/eval-summary.json";
 
 function makeBaseScene(objects: SceneObject[]): Scene3D {
   return {
@@ -159,5 +172,85 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
     const st = explode(TRANG_THAI_DAU, "section");
     const tr = visualTransformOf(st, scene, "vong_giao");
     expect(tr.translate[2]).toBeGreaterThan(0);
+  });
+
+  it("verifies P6 interactive demo suite (Demos 1..7) and P7/P8 visual acceptance & evaluation receipts", () => {
+    const positiveDemos = [
+      { id: "demo1", env: demo1 },
+      { id: "demo2", env: demo2 },
+      { id: "demo3", env: demo3 },
+      { id: "demo4", env: demo4 },
+      { id: "demo5", env: demo5 },
+      { id: "demo6a", env: demo6a },
+      { id: "demo6b", env: demo6b },
+      { id: "demo6c", env: demo6c },
+    ];
+
+    for (const { id, env } of positiveDemos) {
+      expect(env.route_d.status, id).toBe("SERVED");
+      const rawScene = env.route_d.scene3d as unknown as Scene3D;
+      expect(rawScene, id).toBeTruthy();
+      const charted = veKhongGian(rawScene);
+      const enriched = withSubEntities(charted, objectsAt);
+      const totalSteps = stepCount(enriched);
+      expect(totalSteps, id).toBeGreaterThan(1);
+
+      const finalObjects = objectsAt(enriched, totalSteps - 1);
+      expect(finalObjects.length, id).toBeGreaterThan(0);
+      expect(diemHuuHan(finalObjects).length, id).toBeGreaterThan(0);
+
+      // Every primary object builds a non-null Three.js Object3D
+      const primary = finalObjects.filter((o) =>
+        ["solid", "curved_solid", "section", "polygon3", "circle3", "ellipse3"].includes(o.type)
+      );
+      expect(primary.length, id).toBeGreaterThan(0);
+      for (const obj of primary) {
+        const built = buildObject3D(obj, false, false, finalObjects);
+        expect(built, `${id}:${obj.id}`).not.toBeNull();
+      }
+
+      // Semantic tree has no unclassified "Khác" group
+      const tree = semanticTree(enriched);
+      expect(tree.some((n) => n.label === "Khác"), id).toBe(false);
+
+      // Select / isolate / explode state transitions work cleanly
+      const targetId = primary[0]!.id;
+      const selState = select(TRANG_THAI_DAU, targetId);
+      expect(selState.selected_id).toBe(targetId);
+      const isoState = isolate(selState, [targetId]);
+      expect(isoState.isolated_ids).toContain(targetId);
+    }
+
+    // Demo 7 negative case refuses fail-closed with no fake Scene3D
+    expect(demo7.route_d.status).toBe("REFUSED");
+    expect(demo7.route_d.refusal?.code).toBe("CURVED_PLANE_DOES_NOT_CUT");
+    expect(demo7.route_d.scene3d).toBeNull();
+
+    // P7 real-browser visual acceptance receipt invariants
+    expect(visualReceipt.totalScenes).toBe(9);
+    expect(visualReceipt.totalConsoleErrors).toBe(0);
+    expect(visualReceipt.totalPageErrors).toBe(0);
+    for (const r of visualReceipt.results) {
+      if (r.served) {
+        expect(r.inkPixels, r.id).toBeGreaterThan(0);
+        expect(r.cameraChecks.orbitDiffPixels, r.id).toBeGreaterThan(0);
+        expect(r.cameraChecks.zoomDiffPixels, r.id).toBeGreaterThan(0);
+        expect(r.cameraChecks.panDiffPixels, r.id).toBeGreaterThan(0);
+        expect(r.interactionChecks.selectionDiffPixels, r.id).toBeGreaterThan(0);
+        expect(r.interactionChecks.step0DiffPixels, r.id).toBeGreaterThan(0);
+        expect(r.labelChecks.labelsNotCollapsed, r.id).toBe(true);
+        expect(r.depViolations, r.id).toEqual([]);
+        for (const [oid, pm] of Object.entries(r.ownPixelMap)) {
+          expect((pm as { ownPixels: number }).ownPixels, `${r.id}:${oid}`).toBeGreaterThan(0);
+        }
+      }
+    }
+
+    // P8 development evaluation summary invariants
+    expect(evalSummary.evaluation_scope).toBe("DEVELOPMENT_EVALUATION_NOT_BLIND");
+    expect(evalSummary.all_passed).toBe(true);
+    expect(evalSummary.metrics.wrong_serves).toBe(0);
+    expect(evalSummary.metrics.positive_served).toBe(10);
+    expect(evalSummary.metrics.negative_refused).toBe(5);
   });
 });
