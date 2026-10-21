@@ -1,0 +1,733 @@
+stderr | src/simulations/domains/geometry/Scene3DExplorer.test.tsx > c├óy ph├ón r├ú: dß╗» liß╗çu ─æß╗º, nh╞░ng gß╗ìi ra mß╗¢i hiß╗çn > mß║╖c ─æß╗ïnh KH├öNG dß╗▒ng c├óy ΓÇö canvas kh├┤ng bß╗ï bß║úng chiß║┐m chß╗ù
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx > ┬º0.1-1 ┬╖ kh├┤ng c├│ card Kß║┐t quß║ú d╞░ß╗¢i h├¼nh > tr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi n├áo ΓÇö ─æ├íp sß╗æ ─æß╗ìc ß╗ƒ ┬½─Éß║íi l╞░ß╗úng┬╗ v├á ├┤ soi
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/Scene3DExplorer.test.tsx > c├óy ph├ón r├ú: dß╗» liß╗çu ─æß╗º, nh╞░ng gß╗ìi ra mß╗¢i hiß╗çn > mß╗Öt c├┤ng tß║»c ┬½Hiß╗çn tß║Ñt cß║ú┬╗, tß║»t mß║╖c ─æß╗ïnh; kh├┤ng c├▓n Sß╗æ ─æo/Kß║┐t quß║ú
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/Scene3DExplorer.test.tsx > ├┤ soi > bß╗ü mß║╖t hß╗ìc sinh KH├öNG lß╗Ö ─æß╗ïnh danh kß╗╣ thuß║¡t cß╗ºa hß╗ç
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > tua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi > triangular_pyramid: thanh b╞░ß╗¢c cß╗ºa tr├¼nh ph├ít ─æß║┐m b╞░ß╗¢c Dß╗░NG, kh├┤ng ─æß║┐m b╞░ß╗¢c t├¡nh
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/Scene3DExplorer.test.tsx > thao t├íc xem l├á ph├⌐p thuß║ºn tr├¬n trß║íng th├íi nh├¼n > render KH├öNG chß║ím cß║únh gß╗æc
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx > ┬º0.1-3/4/5 ┬╖ ┬½C├íc b╞░ß╗¢c dß╗▒ng┬╗ > n├║t mß╗ƒ nß║▒m trong thanh ─æiß╗üu khiß╗ân; ─æ├│ng ΓçÆ kh├┤ng c├│ danh s├ích; mß╗ƒ ΓçÆ mß╗Öt n├║t mß╗ùi b╞░ß╗¢c, b╞░ß╗¢c hiß╗çn tß║íi ─æ├ính dß║Ñu
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/Scene3DExplorer.test.tsx > ┬º16 ┬╖ x╞░ß╗ƒng: canvas l├á m├án h├¼nh, chß╗» gß╗ìi ra khi cß║ºn > Mß║╢C ─Éß╗èNH gß║ºn nh╞░ kh├┤ng c├│ chß╗»: kh├┤ng ti├¬u ─æß╗ü, kh├┤ng ─æoß║ín dß║½n
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/Scene3DExplorer.test.tsx > ┬º16 ┬╖ x╞░ß╗ƒng: canvas l├á m├án h├¼nh, chß╗» gß╗ìi ra khi cß║ºn > KH├öNG ph╞íi metadata kß╗╣ thuß║¡t ß╗ƒ m├án mß║╖c ─æß╗ïnh
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > tua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi > triangular_prism: thanh b╞░ß╗¢c cß╗ºa tr├¼nh ph├ít ─æß║┐m b╞░ß╗¢c Dß╗░NG, kh├┤ng ─æß║┐m b╞░ß╗¢c t├¡nh
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx > ┬º0.1-8 ┬╖ bß╗¢t d├▓ng m├┤ tß║ú lß║╖p > kh├┤ng c├▓n dß║úi ┬½─Éang dß╗▒ng / Dß╗▒a tr├¬n┬╗ ΓÇö d├▓ng thuyß║┐t minh v├á ├┤ soi ─æ├ú n├│i ─æiß╗üu ß║Ñy
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/Scene3DExplorer.test.tsx > ┬º16 ┬╖ x╞░ß╗ƒng: canvas l├á m├án h├¼nh, chß╗» gß╗ìi ra khi cß║ºn > canvas Tß╗ÆN Tß║áI, v├á ng─ân k├⌐o KH├öNG b├│p n├│ lß║íi
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-panels.test.tsx > mß╗ìi bß║úng th├┤ng tin ─æi qua Mß╗ÿT c╞í chß║┐ > mß║╖c ─æß╗ïnh kh├┤ng bß║úng n├áo mß╗ƒ
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/Scene3DExplorer.test.tsx > ┬º16 ┬╖ x╞░ß╗ƒng: canvas l├á m├án h├¼nh, chß╗» gß╗ìi ra khi cß║ºn > ├┤ soi l├á NGß╗« Cß║óNH: kh├┤ng chß╗ìn g├¼ th├¼ kh├┤ng c├│ n├║t thao t├íc n├áo
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > tua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi > rectangular_pyramid: thanh b╞░ß╗¢c cß╗ºa tr├¼nh ph├ít ─æß║┐m b╞░ß╗¢c Dß╗░NG, kh├┤ng ─æß║┐m b╞░ß╗¢c t├¡nh
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/Scene3DExplorer.test.tsx > t├¡ch hß╗úp ┬╖ trß║íng th├íi kh├┤ng ─æ╞░ß╗úc rß╗¢t sang b├ái mß╗¢i > d├▓ng chß╗» b╞░ß╗¢c ─æ╞░ß╗úc Kß║╕P ΓÇö kh├┤ng bao giß╗¥ in mß╗Öt b╞░ß╗¢c kh├┤ng tß╗ôn tß║íi
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx > bß║úng nß╗òi ┬½C├íc b╞░ß╗¢c dß╗▒ng┬╗ > kh├┤ng c├▓n cß╗Öt l╞░ß╗¢i: mß╗ƒ bß║úng kh├┤ng ─æß╗òi l╞░ß╗¢i/k├¡ch th╞░ß╗¢c cß╗ºa tr├¼nh ph├ít
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/product-envelope-rendering.test.tsx > raw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh > p1_chop_thiet_dien_khoang_cach ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/rectangular-pyramid-ui-integration.test.tsx > RECT_PYRAMID_P01 UI End-to-End Integration > Positive Case A: ─É├íy chß╗» nhß║¡t (V=24) > Scene3DExplorer renderToString hiß╗ân thß╗ï ─æß║ºy ─æß╗º 5 nh├ún A-D, S
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx > bß║úng nß╗òi ┬½C├íc b╞░ß╗¢c dß╗▒ng┬╗ > n├║t ß╗ƒ ph├¡a phß║úi thanh ─æiß╗üu khiß╗ân; aria-controls chß╗ë trß╗Å tß╗¢i bß║úng khi bß║úng c├│ mß║╖t
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > tua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi > cuboid: thanh b╞░ß╗¢c cß╗ºa tr├¼nh ph├ít ─æß║┐m b╞░ß╗¢c Dß╗░NG, kh├┤ng ─æß║┐m b╞░ß╗¢c t├¡nh
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx > bß║úng nß╗òi ┬½C├íc b╞░ß╗¢c dß╗▒ng┬╗ > bß║úng c├│ ─æ├│ng, vß╗ü vß╗ï tr├¡ mß║╖c ─æß╗ïnh, thu gß╗ìn v├á ti├¬u ─æß╗ü nhß║¡n b├án ph├¡m
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx > C5/D ┬╖ h├áng tr├¬n: quay lß║íi ┬╖ t├¬n b├ái ┬╖ c├┤ng cß╗Ñ ─æ├ú nh├│m > n├║t quay lß║íi c├│ chß╗» trang ─æ├¡ch v├á t├¬n b├ái l├á ti├¬u ─æß╗ü
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > tua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi > cube: thanh b╞░ß╗¢c cß╗ºa tr├¼nh ph├ít ─æß║┐m b╞░ß╗¢c Dß╗░NG, kh├┤ng ─æß║┐m b╞░ß╗¢c t├¡nh
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx > C5/D ┬╖ h├áng tr├¬n: quay lß║íi ┬╖ t├¬n b├ái ┬╖ c├┤ng cß╗Ñ ─æ├ú nh├│m > ┬½─Éß╗ü b├ái┬╗ l├á n├║t ch├¡nh mß╗ƒ bß║úng ─æß╗ü; ba nh├│m l├á n├║t menu c├│ chß╗»
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > tua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi > cross_section: thanh b╞░ß╗¢c cß╗ºa tr├¼nh ph├ít ─æß║┐m b╞░ß╗¢c Dß╗░NG, kh├┤ng ─æß║┐m b╞░ß╗¢c t├¡nh
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx > C5/D ┬╖ h├áng tr├¬n: quay lß║íi ┬╖ t├¬n b├ái ┬╖ c├┤ng cß╗Ñ ─æ├ú nh├│m > chip phß║│ng c┼⌐ kh├┤ng c├▓n tr├¬n thanh: Chi tiß║┐t, L╞░ß╗¢i, H├¼nh phß╗Ñ, Hiß╗çn tß║Ñt cß║ú, Th├ánh phß║ºn, ─Éß║íi l╞░ß╗úng nß║▒m trong menu
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/product-envelope-rendering.test.tsx > raw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh > p2_chop_day_ngu_giac_lom ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx > mß║╖t phß║│ng phß╗Ñ chß╗ë ─æß╗â ─æo kh├┤ng mß╗ƒ b╞░ß╗¢c dß╗▒ng > danh s├ích b╞░ß╗¢c kh├┤ng c├│ b╞░ß╗¢c ri├¬ng cho mß║╖t phß║│ng ß║Ñy; bß║¡t ┬½H├¼nh phß╗Ñ┬╗ th├¼ n├│ hiß╗çn ß╗ƒ khung cuß╗æi
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx > mß║╖t phß║│ng phß╗Ñ chß╗ë ─æß╗â ─æo kh├┤ng mß╗ƒ b╞░ß╗¢c dß╗▒ng > mß║╖t phß║│ng KH├öNG phß║úi h├¼nh phß╗Ñ chß╗ë ─æß╗â ─æo vß║½n mß╗ƒ b╞░ß╗¢c cß╗ºa n├│
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx > C5/D ┬╖ h├áng tr├¬n: quay lß║íi ┬╖ t├¬n b├ái ┬╖ c├┤ng cß╗Ñ ─æ├ú nh├│m > ┬½T├ích khß╗æi┬╗ chß╗ë dß╗▒ng khi cß║únh c├│ mß║╖t; ┬½Xem lß║íi to├án h├¼nh┬╗ lu├┤n c├│
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-panels.test.tsx > b╞░ß╗¢c dß╗▒ng trong thanh ─æiß╗üu khiß╗ân > ┬½B╞░ß╗¢c n/N┬╗ nß║▒m trong thanh ─æiß╗üu khiß╗ân; x╞░ß╗ƒng kh├┤ng c├▓n d├▓ng lß╗¥i kß╗â d├ái d╞░ß╗¢i thanh
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/product-envelope-rendering.test.tsx > raw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh > p3_mat_cau_va_thiet_dien_tron ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx > E ┬╖ kh├┤ng c├▓n thß║╗ lß╗¥i giß║úi lß║╖p d╞░ß╗¢i m├┤ phß╗Ång > triangular_pyramid: tr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi ß╗ƒ b╞░ß╗¢c cuß╗æi
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/product-envelope-rendering.test.tsx > raw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh > p4_hinh_tru_the_tich_va_xung_quanh ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/product-envelope-rendering.test.tsx > raw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh > p5_hinh_non_the_tich_va_xung_quanh ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-panels.test.tsx > b╞░ß╗¢c dß╗▒ng trong thanh ─æiß╗üu khiß╗ân > m├┤ tß║ú ─æß║ºy ─æß╗º cß╗ºa b╞░ß╗¢c ─æang xem ß╗ƒ bß║úng ┬½C├íc b╞░ß╗¢c dß╗▒ng┬╗, ngay d╞░ß╗¢i mß╗Ñc cß╗ºa n├│
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx > E ┬╖ kh├┤ng c├▓n thß║╗ lß╗¥i giß║úi lß║╖p d╞░ß╗¢i m├┤ phß╗Ång > triangular_prism: tr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi ß╗ƒ b╞░ß╗¢c cuß╗æi
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > tua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi > triangular_pyramid: d├▓ng B╞░ß╗¢c ß╗ƒ ─æ├íy x╞░ß╗ƒng n├│i sß╗æ b╞░ß╗¢c Dß╗░NG
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/product-envelope-rendering.test.tsx > raw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh > p6_thiet_dien_elip_cua_hinh_tru ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/product-envelope-rendering.test.tsx > raw JSON kh├┤ng nß║▒m tr├¬n bß╗ü mß║╖t hß╗ìc sinh > p7_thiet_dien_elip_cua_hinh_non ΓÇö x╞░ß╗ƒng dß╗▒ng thß║¡t, v├á KH├öNG in payload th├┤
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-steps-panel.test.tsx > lß╗¥i kß╗â cß╗ºa b╞░ß╗¢c ─æang xem kh├┤ng lß║╖p ti├¬u ─æß╗ü > b╞░ß╗¢c dß╗» kiß╗çn (ti├¬u ─æß╗ü CH├ìNH L├Ç lß╗¥i kß╗â) kh├┤ng in lß╗¥i kß╗â lß║ºn hai; b╞░ß╗¢c dß╗▒ng c├│ lß╗¥i kß╗â kh├íc ti├¬u ─æß╗ü th├¼ giß╗»
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx > E ┬╖ kh├┤ng c├▓n thß║╗ lß╗¥i giß║úi lß║╖p d╞░ß╗¢i m├┤ phß╗Ång > rectangular_pyramid: tr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi ß╗ƒ b╞░ß╗¢c cuß╗æi
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > tua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi > triangular_prism: d├▓ng B╞░ß╗¢c ß╗ƒ ─æ├íy x╞░ß╗ƒng n├│i sß╗æ b╞░ß╗¢c Dß╗░NG
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx > E ┬╖ kh├┤ng c├▓n thß║╗ lß╗¥i giß║úi lß║╖p d╞░ß╗¢i m├┤ phß╗Ång > cuboid: tr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi ß╗ƒ b╞░ß╗¢c cuß╗æi
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > tua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi > rectangular_pyramid: d├▓ng B╞░ß╗¢c ß╗ƒ ─æ├íy x╞░ß╗ƒng n├│i sß╗æ b╞░ß╗¢c Dß╗░NG
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx > E ┬╖ kh├┤ng c├▓n thß║╗ lß╗¥i giß║úi lß║╖p d╞░ß╗¢i m├┤ phß╗Ång > cube: tr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi ß╗ƒ b╞░ß╗¢c cuß╗æi
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx > E ┬╖ kh├┤ng c├▓n thß║╗ lß╗¥i giß║úi lß║╖p d╞░ß╗¢i m├┤ phß╗Ång > cross_section: tr├¼nh ph├ít kh├┤ng dß╗▒ng thß║╗ lß╗¥i giß║úi ß╗ƒ b╞░ß╗¢c cuß╗æi
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > tua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi > cuboid: d├▓ng B╞░ß╗¢c ß╗ƒ ─æ├íy x╞░ß╗ƒng n├│i sß╗æ b╞░ß╗¢c Dß╗░NG
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > tua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi > cube: d├▓ng B╞░ß╗¢c ß╗ƒ ─æ├íy x╞░ß╗ƒng n├│i sß╗æ b╞░ß╗¢c Dß╗░NG
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > tua tiß║┐n/l├╣i v├á dß╗½ng ß╗ƒ b╞░ß╗¢c h├¼nh hß╗ìc cuß╗æi > cross_section: d├▓ng B╞░ß╗¢c ß╗ƒ ─æ├íy x╞░ß╗ƒng n├│i sß╗æ b╞░ß╗¢c Dß╗░NG
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-geometry-timeline.test.tsx > lß╗¢p lß╗¥i giß║úi giß╗» c├┤ng thß╗⌐c v├á nguß╗ôn > kh├┤ng c├▓n bß║úng lß╗¥i giß║úi d╞░ß╗¢i thanh b╞░ß╗¢c ΓÇö ─æ├íp sß╗æ Mß╗ÿT mß╗Ñc ß╗ƒ ┬½─Éß║íi l╞░ß╗úng┬╗, c├┤ng thß╗⌐c ß╗ƒ ├┤ soi
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx > dß║úi lß╗¢p gß╗ìn tr├¬n m├án chß║¡t > kh├┤ng c├│ dß║úi lß╗¢p ΓçÆ kh├┤ng chip, h├áng tr├¬n y nh╞░ tr╞░ß╗¢c (m├┤ phß╗Ång tß╗▒ hß╗ìc kh├┤ng ─æß╗òi)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx > dß║úi lß╗¢p gß╗ìn tr├¬n m├án chß║¡t > c├│ dß║úi lß╗¢p ΓçÆ chip disclosure (`aria-expanded`/`aria-controls`) mang trß║íng th├íi, dß║úi ─æß║ºy ─æß╗º trong v├╣ng cß╗ºa n├│
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-focus-mode.test.tsx > dß║úi lß╗¢p gß╗ìn tr├¬n m├án chß║¡t > n├║t quay lß║íi: t├¬n gß╗ìi giß╗» ß╗ƒ `aria-label` khi chß╗» ß║⌐n (chip lß╗¢p, m├án hß║╣p)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/components/hybrid-preview-contract.test.tsx > Hybrid Preview Contract v2 ΓÇö 41 fixtures & F1ΓÇôF6 > F3 ΓÇö ISSUE-ARCH-HYBRID-ROUTE-D-NOT-WIRED (length_unit.display_scale) > hiß╗çn scene3d.length_unit.display_scale khi c├│ mß║╖t v├á kh├┤ng ─æß╗òi cß║únh kh├┤ng c├│ length_unit
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/components/hybrid-preview-contract.test.tsx > Hybrid Preview Contract v2 ΓÇö 41 fixtures & F1ΓÇôF6 > HFOI-F4 ΓÇö bi├¬n route_d, quan hß╗ç, neo timeline > SSR ß╗ƒ b╞░ß╗¢c ─æß║ºu: kh├┤ng ─æ├íp sß╗æ, kh├┤ng quan s├ít (kh├┤ng kß║┐t luß║¡n tr╞░ß╗¢c b╞░ß╗¢c chß╗æng ─æß╗í)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-playback.test.tsx > (5E) t├┤n trß╗ìng giß║úm chuyß╗ân ─æß╗Öng ß╗ƒ tß║ºng JS > bß║¡t giß║úm chuyß╗ân ─æß╗Öng ΓçÆ KH├öNG c├│ n├║t Ph├ít, vß║½n ─æi ─æ╞░ß╗úc tß╗½ng b╞░ß╗¢c
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-playback.test.tsx > (5E) vß╗Å ─æiß╗üu khiß╗ân > c├│ ─æß╗º prev ┬╖ play ┬╖ next ┬╖ chß╗ìn b╞░ß╗¢c
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-playback.test.tsx > (5E) vß╗Å ─æiß╗üu khiß╗ân > b╞░ß╗¢c cuß╗æi ΓçÆ n├║t Ph├ít th├ánh Xem lß║íi, bß║Ñm ─æ╞░ß╗úc (w10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-playback.test.tsx > (5E) vß╗Å ─æiß╗üu khiß╗ân > b╞░ß╗¢c ─æß║ºu ΓçÆ n├║t l├╣i bß╗ï v├┤ hiß╗çu
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-playback.test.tsx > (5E) vß╗Å ─æiß╗üu khiß╗ân > ┬º0.1-8 ┬╖ kh├┤ng c├▓n dß║úi ┬½─Éang dß╗▒ng / Dß╗▒a tr├¬n┬╗ d╞░ß╗¢i thanh b╞░ß╗¢c
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-playback.test.tsx > (5E) vß╗Å ─æiß╗üu khiß╗ân > b╞░ß╗¢c 0 n├│i r├╡ ─æ├óy l├á dß╗» kiß╗çn ─æß╗ü cho, kh├┤ng phß║úi chß╗ù trß╗æng
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-playback.test.tsx > (5E) vß╗Å ─æiß╗üu khiß╗ân > tr├¼nh ph├ít (cß║ú panel c├íc b╞░ß╗¢c ─æang mß╗ƒ) kh├┤ng in t├¬n biß║┐n IR
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-playback.test.tsx > (5E) vß╗Å ─æiß╗üu khiß╗ân > b╞░ß╗¢c dß╗▒ng NH├ôM cß║ính n├│i t├¬n h├ánh ─æß╗Öng, kh├┤ng tß╗▒ nhß║¡n l├á dß╗» kiß╗çn ─æß╗ü cho
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at BangNoi (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:110:3)
+    at div
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-playback.test.tsx > (5E) vß╗Å ─æiß╗üu khiß╗ân > mß╗ìi ─æiß╗üu khiß╗ân ─æß╗üu c├│ nh├ún cho tr├¼nh ─æß╗ìc m├án h├¼nh
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/simulations/domains/geometry/scene3d-playback.test.tsx > (5E) playback chß╗ë ─æß╗òi Mß╗ÿT Sß╗É NGUY├èN > `scene` ─æi v├áo v├á ─æi ra NGUY├èN Vß║╕N c├╣ng tham chiß║┐u
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+
+stderr | src/components/hybrid-preview-contract.test.tsx > Hybrid Preview Contract v2 ΓÇö 41 fixtures & F1ΓÇôF6 > SIMULATION-FIRST UX ΓÇö kh├┤ng lß╗Ö ─æ├íp sß╗æ cuß╗æi ß╗ƒ cß║ú Path A v├á Path B, giß╗» nguy├¬n ─æß║íi l╞░ß╗úng dß╗▒ng h├¼nh & chß╗⌐ng chß╗ë > Scene3DExplorer kh├┤ng dß╗▒ng n├║t Xem/ß║¿n ─æ├íp ├ín hay thß║╗ ─É├íp sß╗æ, lß╗ìc kß║┐t quß║ú cuß╗æi khß╗Åi ─Éß║íi l╞░ß╗úng v├á nh├ún tr├¬n h├¼nh, v├á dß╗▒ng h╞░ß╗¢ng dß║½n quan s├ít
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/prism-ui-integration.test.tsx > PRISM_P01 UI End-to-End Integration > Scene3DExplorer renderToString ho├án tß║Ñt vß╗¢i 6 nh├ún ─æiß╗âm A-F v├á 6 b╞░ß╗¢c dß╗▒ng
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-page.test.tsx > x╞░ß╗ƒng ΓÇö hß╗úp ─æß╗ông, kh├┤ng phß║úi b├ái ─æß╗ìc > tß╗▒ c├│ nh├ún, KH├öNG mß╗ƒ ─æß║ºu bß║▒ng mß╗Öt khß╗æi v─ân bß║ún
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-page.test.tsx > x╞░ß╗ƒng ΓÇö hß╗úp ─æß╗ông, kh├┤ng phß║úi b├ái ─æß╗ìc > dß╗▒ng lu├┤n tr├¼nh ph├ít b├¬n trong
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-page.test.tsx > x╞░ß╗ƒng ΓÇö hß╗úp ─æß╗ông, kh├┤ng phß║úi b├ái ─æß╗ìc > canvas ─æß╗⌐ng TR╞»ß╗ÜC mß╗ìi bß║úng chß╗» trong thß╗⌐ tß╗▒ ─æß╗ìc
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+stderr | src/simulations/domains/geometry/scene3d-page.test.tsx > x╞░ß╗ƒng ΓÇö hß╗úp ─æß╗ông, kh├┤ng phß║úi b├ái ─æß╗ìc > ─æß╗ü b├ái KH├öNG ─æß╗ò ra m├án h├¼nh, chß╗ë c├│ n├║t gß╗ìi
+Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format. This will lead to a mismatch between the initial, non-hydrated UI and the intended UI. To avoid this, useLayoutEffect should only be used in components that render exclusively on the client. See https://reactjs.org/link/uselayouteffect-ssr for common fixes.
+    at Scene3DPlayer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-playback.tsx:36:3)
+    at div
+    at div
+    at BangNoiHost (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/scene3d-floating-panel.tsx:82:24)
+    at Scene3DExplorer (D:/Documents/projects/algo-sim/.superpowers/worktrees/integration-wave3a-adapter3/frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx:178:10)
+
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.

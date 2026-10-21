@@ -1,5 +1,60 @@
 {
   "schema_version": "authoritative-t3-receipt/1",
   "wave": "wave3a-adapter3-integration",
-  "status": "PENDING_T3"
+  "branch": "research/integration-wave3a-adapter3",
+  "baseline_main_commit": "f2bc01e38c1bc532db1c1b4747ca9df13de5b018",
+  "wave3a_source_head": "fe9f555437498432427ae6bbd54402cdd59c7eb7",
+  "product_commit": "fb63df66556bbeb3a6f33bf142722326d0a0cab4",
+  "candidate_freeze_commit": "e345e717bc9a8371cbca49b1c42f326301fc5012",
+  "t3_target_commit": "cb09d8f940326e1b300ce275d70c70fc204583d3",
+  "measured_system_hash": "817780925c278f3aeadb6ad393f65d737b9d244c62e7f382bd0b8d7f0b7d261e",
+  "measured_file_count": 114,
+  "command": "ALLOW_LIVE_AI=0 node frontend/scripts/full-gate.mjs",
+  "attempts": [
+    {
+      "attempt": 1,
+      "target_commit": "cb09d8f940326e1b300ce275d70c70fc204583d3",
+      "exit_code": 0,
+      "verdict": "FULL_PRODUCT_GATE_PASS",
+      "stdout_log": "docs/evaluation/geometry/runs/wave3a-adapter3-integration/verification/t3/attempt1-pass.stdout.log",
+      "stdout_sha256": "6b426227ff5f8dd64baed05dfbf2f2e63f1d21ebd2757e19ed297ca69e9b6cd1",
+      "stderr_log": "docs/evaluation/geometry/runs/wave3a-adapter3-integration/verification/t3/attempt1-pass.stderr.log",
+      "stderr_sha256": "06ad76a715c21a371db814532ff9752c3b242a7aa15f5bef950209617627a05e",
+      "summary": {
+        "backend_pytest": {
+          "passed": 11427,
+          "failed": 0,
+          "skipped": 1,
+          "deselected": 2,
+          "xfailed": 9,
+          "duration_s": 443.3
+        },
+        "frontend_vitest": {
+          "files_passed": 71,
+          "tests_passed": 1150,
+          "failed": 0,
+          "duration_s": 20.6
+        },
+        "production_typecheck_and_build": {
+          "status": "PASS",
+          "duration_s": 6.9
+        },
+        "thesis_demo_replay_gate": {
+          "passed": 5,
+          "total": 5,
+          "reduced_chain_cases": "1/1",
+          "duration_s": 0.6
+        },
+        "crash_boundary_gate": {
+          "passed": 6,
+          "total": 6,
+          "unhandled_500_count": 0,
+          "duration_s": 0.4
+        },
+        "total_duration_s": 471.8
+      }
+    }
+  ],
+  "final_verdict": "FULL_PRODUCT_GATE_PASS",
+  "live_provider_calls": 0
 }

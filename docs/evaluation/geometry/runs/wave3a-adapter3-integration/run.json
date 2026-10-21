@@ -2,8 +2,46 @@
   "schema_version": "algosim.eval.run.v1",
   "run_id": "wave3a-adapter3-integration",
   "wave": "wave3a-adapter3-integration",
+  "authorization": "GO_WAVE3A_ADAPTER3_LOCAL_RECONCILIATION_ONLY",
+  "mode": "LOCAL_IMPLEMENTATION_INTEGRATION_VALIDATION_NO_GO_MAIN",
   "branch": "research/integration-wave3a-adapter3",
   "baseline_main": "f2bc01e38c1bc532db1c1b4747ca9df13de5b018",
   "wave3a_head": "fe9f555437498432427ae6bbd54402cdd59c7eb7",
-  "status": "IN_PROGRESS"
+  "wave3a_product_commit": "4c282ecd9f15b14ddbbe6e0be0b247e455d8edca",
+  "adapter3_product_commit": "61d6f44b7d8dffd69fbda51979686ced5b00efd2",
+  "combined_product_commit": "fb63df66556bbeb3a6f33bf142722326d0a0cab4",
+  "candidate_freeze_commit": "e345e717bc9a8371cbca49b1c42f326301fc5012",
+  "t3_target_commit": "cb09d8f940326e1b300ce275d70c70fc204583d3",
+  "measured_system_hash": "817780925c278f3aeadb6ad393f65d737b9d244c62e7f382bd0b8d7f0b7d261e",
+  "measured_file_count": 114,
+  "versions": {
+    "registry": "geometry-functions/11",
+    "planner": "geometry-fact-planner/11",
+    "engine": "geometry-function-engine/9",
+    "adapter_v2": "hybrid-preview-adapter/2",
+    "typed_fact_next": "typed-fact-next/1",
+    "adapter_v3": "hybrid-simulation-adapter/3",
+    "route_d_simulation": "hybrid-route-d-simulation/3"
+  },
+  "verification": {
+    "independent_review": "INDEPENDENT_REVIEW_PASS",
+    "independent_review_path": "docs/evaluation/geometry/runs/wave3a-adapter3-integration/verification/independent-review.md",
+    "full_t3": "FULL_PRODUCT_GATE_PASS",
+    "authoritative_t3_path": "docs/evaluation/geometry/runs/wave3a-adapter3-integration/verification/authoritative-t3.json",
+    "backend_pytest_passed": 11427,
+    "frontend_vitest_passed": 1150,
+    "adapter2_fixtures_verified": "41/41",
+    "wave3a_dev_corpus": "18/18 positive (20/20 goals), 14/14 negative, 0 wrong serves",
+    "adapter3_dev_corpus": "10/10 positive, 6/6 negative, 0 wrong serves, 4/4 Three.js demos",
+    "cross_route_equivalence_tests": "7/7 passed (test_wave3a_adapter3_integration.py)"
+  },
+  "governance": {
+    "default_mode": "LLM_ONLY",
+    "response_contract": "flat",
+    "hybrid_product_enablement": "NO-GO",
+    "cache_version": 127,
+    "cache_decision": "NO_BUMP",
+    "live_provider_calls": 0
+  },
+  "status": "WAVE3A_ADAPTER3_COMBINED_READY_FOR_GO_MAIN_REVIEW"
 }
