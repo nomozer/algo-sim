@@ -19,10 +19,7 @@ import evalSummary from "../../../../../docs/evaluation/geometry/runs/simulation
 
 function makeBaseScene(objects: SceneObject[]): Scene3D {
   return {
-    version: "1.0",
-    coordinate_frame: { origin: ["0", "0", "0"], axes: ["x", "y", "z"] },
     objects,
-    dependencies: {},
     free_objects: [],
     events: [],
   };
@@ -36,16 +33,15 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
       type: "curved_solid",
       render: "curved_solid",
       origin: "derived",
+      producer: "construct_curved_solid",
       depends: ["I", "R"],
       curved_kind: "ball",
       anchor: ["0", "0", "0"],
-      apex_or_top: null,
-      rim_point: null,
       radius_sq: "25",
       height_sq: "0",
       display_group: ["solid"],
     };
-    const ballGroup = buildObject3D(ballObj, false, false);
+    const ballGroup = buildObject3D(ballObj, false);
     expect(ballGroup).not.toBeNull();
     const ballMesh = ballGroup!.children.find((c): c is THREE.Mesh => c instanceof THREE.Mesh);
     expect(ballMesh).toBeDefined();
@@ -57,16 +53,15 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
       type: "curved_solid",
       render: "curved_solid",
       origin: "derived",
+      producer: "construct_curved_solid",
       depends: ["O", "R", "h"],
       curved_kind: "cylinder",
       anchor: ["0", "0", "0"],
-      apex_or_top: null,
-      rim_point: null,
       radius_sq: "4",
       height_sq: "9",
       display_group: ["solid"],
     };
-    const cylGroup = buildObject3D(cylObj, false, false);
+    const cylGroup = buildObject3D(cylObj, false);
     expect(cylGroup).not.toBeNull();
     const cylMesh = cylGroup!.children.find((c): c is THREE.Mesh => c instanceof THREE.Mesh);
     expect(cylMesh).toBeDefined();
@@ -87,16 +82,15 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
       type: "curved_solid",
       render: "curved_solid",
       origin: "derived",
+      producer: "construct_curved_solid",
       depends: ["O", "R", "h"],
       curved_kind: "cone",
       anchor: ["0", "0", "0"],
-      apex_or_top: null,
-      rim_point: null,
       radius_sq: "9",
       height_sq: "16",
       display_group: ["solid"],
     };
-    const coneGroup = buildObject3D(coneObj, false, false);
+    const coneGroup = buildObject3D(coneObj, false);
     expect(coneGroup).not.toBeNull();
     const coneMesh = coneGroup!.children.find((c): c is THREE.Mesh => c instanceof THREE.Mesh);
     expect(coneMesh).toBeDefined();
@@ -111,11 +105,10 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
       type: "curved_solid",
       render: "curved_solid",
       origin: "derived",
+      producer: "construct_curved_solid",
       depends: ["O", "R", "h"],
       curved_kind: "cone",
       anchor: ["0", "0", "0"],
-      apex_or_top: null,
-      rim_point: null,
       radius_sq: "9",
       height_sq: "16",
       display_group: ["solid"],
@@ -137,11 +130,10 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
         type: "curved_solid",
         render: "curved_solid",
         origin: "derived",
+        producer: "construct_curved_solid",
         depends: ["I", "R"],
         curved_kind: "ball",
         anchor: ["0", "0", "0"],
-        apex_or_top: null,
-        rim_point: null,
         radius_sq: "25",
         height_sq: "0",
         display_group: ["solid"],
@@ -152,6 +144,7 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
         type: "circle3",
         render: "circle",
         origin: "derived",
+        producer: "intersect_plane_curved",
         depends: ["mp", "cau"],
         center: ["0", "0", "3"],
         normal: ["0", "0", "1"],
@@ -191,7 +184,7 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
       const rawScene = env.route_d.scene3d as unknown as Scene3D;
       expect(rawScene, id).toBeTruthy();
       const charted = veKhongGian(rawScene);
-      const enriched = withSubEntities(charted, objectsAt);
+      const enriched = withSubEntities(charted);
       const totalSteps = stepCount(enriched);
       expect(totalSteps, id).toBeGreaterThan(1);
 
@@ -205,7 +198,7 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
       );
       expect(primary.length, id).toBeGreaterThan(0);
       for (const obj of primary) {
-        const built = buildObject3D(obj, false, false, finalObjects);
+        const built = buildObject3D(obj, false);
         expect(built, `${id}:${obj.id}`).not.toBeNull();
       }
 
@@ -233,15 +226,16 @@ describe("Session 1 P3 — Simulation Coverage & Visual Validation Fixes", () =>
     for (const r of visualReceipt.results) {
       if (r.served) {
         expect(r.inkPixels, r.id).toBeGreaterThan(0);
-        expect(r.cameraChecks.orbitDiffPixels, r.id).toBeGreaterThan(0);
-        expect(r.cameraChecks.zoomDiffPixels, r.id).toBeGreaterThan(0);
-        expect(r.cameraChecks.panDiffPixels, r.id).toBeGreaterThan(0);
-        expect(r.interactionChecks.selectionDiffPixels, r.id).toBeGreaterThan(0);
-        expect(r.interactionChecks.step0DiffPixels, r.id).toBeGreaterThan(0);
-        expect(r.labelChecks.labelsNotCollapsed, r.id).toBe(true);
+        expect(r.cameraChecks!.orbitDiffPixels, r.id).toBeGreaterThan(0);
+        expect(r.cameraChecks!.zoomDiffPixels, r.id).toBeGreaterThan(0);
+        expect(r.cameraChecks!.panDiffPixels, r.id).toBeGreaterThan(0);
+        expect(r.interactionChecks!.selectionDiffPixels, r.id).toBeGreaterThan(0);
+        expect(r.interactionChecks!.step0DiffPixels, r.id).toBeGreaterThan(0);
+        expect(r.labelChecks!.labelsNotCollapsed, r.id).toBe(true);
         expect(r.depViolations, r.id).toEqual([]);
-        for (const [oid, pm] of Object.entries(r.ownPixelMap)) {
-          expect((pm as { ownPixels: number }).ownPixels, `${r.id}:${oid}`).toBeGreaterThan(0);
+        const ownMap = (r.ownPixelMap ?? {}) as Record<string, { ownPixels: number }>;
+        for (const [oid, pm] of Object.entries(ownMap)) {
+          expect(pm.ownPixels, `${r.id}:${oid}`).toBeGreaterThan(0);
         }
       }
     }
