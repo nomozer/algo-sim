@@ -552,7 +552,18 @@ export interface QuantityAnnotation {
   same_as?: string;
   /** W18 §16.7 — nhân chứng khoảng cách điểm → đường/mặt phẳng: chân CHÍNH XÁC do backend tính, `u` dọc vật
    *  nhận, `v` từ chân tới điểm. Phía này chỉ vẽ — không bao giờ tự dựng chân đường vuông góc. */
-  witness?: { from: string; foot: ExactVec3; on: string; marker: { u: ExactVec3; v: ExactVec3 } };
+  witness?: {
+    from: string;
+    foot: ExactVec3;
+    on: string;
+    marker: { u: ExactVec3; v: ExactVec3 };
+    certificate?: string | null;
+    relation?: string;
+    status?: string;
+    rule?: string;
+    foot_id?: string;
+    can_present_as_proven?: boolean;
+  };
 }
 
 export interface SceneLengthUnit {
@@ -2089,7 +2100,7 @@ export function phanTichToanHocCuaCanh(
         formula: null,
         basisLabels: (o.depends ?? []).map(tenNgan),
         entityId: o.id,
-        certificateRule: o.perpendicular_witness.certificate,
+        certificateRule: o.perpendicular_witness.certificate ?? null,
       });
     } else if (o.type === "section" || o.surface_role === "SECTION_REGION") {
       certificates.push({
