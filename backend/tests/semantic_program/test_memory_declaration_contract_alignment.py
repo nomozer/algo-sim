@@ -102,8 +102,12 @@ FINAL_MEMORY_START = {CA_P1: "1d51ffe0e24b07d19c107f787d39e599ceb02f377e915d2858
 # "Thiết diện của S.ABCD cắt bởi (α)" ×4 → "Giao tuyến của (α) với mặt SAB|SBC|SCD|SDA". Trả bốn nhãn cũ thì cảnh băm
 # đúng hằng trước (`8b757305…`); 0 trường thêm/xoá, 0 trường hình học/giá trị, số vật và final_memory giữ nguyên; P6
 # không đổi. Đối soát: `docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/diagnostics/scene_hash/`.
+# simulation-coverage-visual-validation (P3): CHỈ đổi phân loại sự kiện dựng khối cong và thiết diện cong ở P6 —
+# `construct_curved_solid` ("hinh_tru") STEP -> CREATE, `ellipse3` ("E") MEASURE/MEASUREMENT -> CREATE/GEOMETRY_CONSTRUCTION
+# kèm lời kể "Dựng elip giao của …" và cạnh phụ thuộc `E` numerical -> structural; 0 trường hình học/giá trị, số vật (7) và
+# final_memory giữ nguyên; P1 không đổi. Hằng trước P3 của P6: `b582e45a…`.
 SCENE_START = {CA_P1: "ae2c0df6287d2e5ff774cd99f9e427e92e9b017efb2a2b5276610002dc0e1094",
-               CA_P6: "b582e45a72ec8ebc6683e9a9d07047395f60dee572d9acb1e128e8e6187dacac"}
+               CA_P6: "6e6967dca330a1e78c67a4acf08a2bbaccb54757d5f081fc23ae901b646c122f"}
 SO_VAT_START = {CA_P1: 17, CA_P6: 7}
 
 

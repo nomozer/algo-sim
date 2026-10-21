@@ -11,6 +11,9 @@ from typing import Annotated, Any, Literal
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
 
 from app.simulation.geometry_functions.registry import Label
+from app.simulation.semantic_program.measure_contract import NGHIA_VU_DO
+
+MathGoalType = Literal[*tuple(NGHIA_VU_DO)]
 
 TYPED_FACT_NEXT_SCHEMA_VERSION = "typed-fact-next/1"
 
@@ -385,7 +388,7 @@ class MathGoalSpec(ClosedNextModel):
     denominator_solid_id: IdentifierStr | None = None
     parent_solid_id: IdentifierStr | None = None
     cut_solid_id: IdentifierStr | None = None
-    goal_type: Literal["distance", "angle", "area", "volume", "lateral_area", "radius"] | None = None
+    goal_type: MathGoalType | None = None
     target: dict[str, Any] = Field(default_factory=dict)
     solid_id: IdentifierStr | None = None
 
