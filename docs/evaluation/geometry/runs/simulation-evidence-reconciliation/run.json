@@ -1,0 +1,44 @@
+{
+  "schema_version": "simulation-evidence-reconciliation/1",
+  "run_id": "simulation-evidence-reconciliation",
+  "wave_id": "simulation-evidence-reconciliation-w01",
+  "date": "2026-10-21",
+  "authorization": "GO_MAIN_SIMULATION_COVERAGE_CONDITIONAL",
+  "source_head": "d86c72031d8fc85cd4eef62d9379cd1690ba1417",
+  "main": "bd8d6a9dc3acc9a4204b616379001270bb6d39f9",
+  "origin_main": "bd8d6a9dc3acc9a4204b616379001270bb6d39f9",
+  "remote_main_verified": "bd8d6a9dc3acc9a4204b616379001270bb6d39f9",
+  "product_commit": "3298b901d2246650535aa4028845ddc2a44892c4",
+  "candidate_commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+  "full_t3_target": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+  "measured_system_sha256": "4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68",
+  "measured_files": 114,
+  "freeze_verification": "MATCH in source and clean detached source checkout",
+  "premerge_result": "SIMULATION_GO_MAIN_BLOCKED",
+  "evidence_reconciliation": "SIMULATION_EVIDENCE_RECONCILIATION_BLOCKED",
+  "blockers": [
+    "T3 stdout receipt hashes do not match the committed raw Git blobs; clean checkout changes all four raw log hashes",
+    "Polyhedral frustum mesh claims name nonexistent DerivedSubSolidSpec/frustum_like support",
+    "Original browser command/arguments/execution stdout are not retained in tracked run; receipt and artifact chain alone establish only the saved inventory"
+  ],
+  "source_original_evidence_modified": false,
+  "merged": false,
+  "pushed": false,
+  "cleanup_performed": false,
+  "post_main_validation": "NOT_RUN_PREMERGE_GATES_BLOCKED",
+  "live_provider_calls": 0,
+  "governance": {
+    "DEFAULT_MODE": "LLM_ONLY",
+    "RESPONSE_CONTRACT": "flat",
+    "HYBRID_PRODUCT_ENABLEMENT": "NO-GO",
+    "ALLOW_LIVE_AI": 0,
+    "CACHE_VERSION": 127
+  },
+  "documentation_correction_validation": {
+    "passed": 4,
+    "failed": 0,
+    "duration_s": 0.64,
+    "command_description": "ALLOW_LIVE_AI=0 python -m pytest -q -p no:cacheprovider tests/geometry/test_docs_information_architecture.py::{test_inv_10_evidence_artifact_paths_exist,test_inv_11_correction_chain_acyclic,test_inv_12_wave_ids_unique,test_inv_23_docs_root_is_a_closed_list}",
+    "scope": "documentation paths, acyclic correction chain, unique wave IDs, permitted docs locations; not a product/post-main gate"
+  }
+}

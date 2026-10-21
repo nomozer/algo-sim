@@ -1,0 +1,1196 @@
+{
+  "schema_version": "browser-reproduction-validation/1",
+  "group": "NEW_BROWSER_REPRODUCTION_NOT_ORIGINAL",
+  "execution_exit_code": 0,
+  "positive": 8,
+  "negative": 1,
+  "screenshots": 49,
+  "console_errors": 0,
+  "page_errors": 0,
+  "ellipse_scenes": 0,
+  "ellipse_scope": "BACKEND_ONLY",
+  "input_sha256": "c3203838fc0eefb916d98212674f89e07d1e37706e6dce9daf8779e0cd7466de",
+  "receipt_sha256": "f942e9716bf9e40f3dca7b4409aace4cff8683e5f8b5f751bf46ed4d1678ab9c",
+  "demos": [
+    {
+      "id": "demo1-pyramid-derived-section",
+      "status": "SERVED",
+      "scene_object_inventory": [
+        {
+          "id": "A",
+          "type": "point3"
+        },
+        {
+          "id": "B",
+          "type": "point3"
+        },
+        {
+          "id": "C",
+          "type": "point3"
+        },
+        {
+          "id": "D",
+          "type": "point3"
+        },
+        {
+          "id": "S",
+          "type": "point3"
+        },
+        {
+          "id": "khoi_S_ABCD",
+          "type": "solid"
+        },
+        {
+          "id": "I1",
+          "type": "point3"
+        },
+        {
+          "id": "I2",
+          "type": "point3"
+        },
+        {
+          "id": "I3",
+          "type": "point3"
+        },
+        {
+          "id": "M",
+          "type": "point3"
+        },
+        {
+          "id": "khoi_S_MI1I2I3",
+          "type": "solid"
+        },
+        {
+          "id": "mp_td_ask9",
+          "type": "plane3"
+        },
+        {
+          "id": "td_ask9",
+          "type": "section"
+        },
+        {
+          "id": "kq_ask9",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_vcert10",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_vcert11",
+          "type": "quantity"
+        },
+        {
+          "id": "day_ABCD",
+          "type": "polygon3"
+        },
+        {
+          "id": "canh_ben_S_A",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_B",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_C",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_D",
+          "type": "segment3"
+        },
+        {
+          "id": "day_MI1I2I3",
+          "type": "polygon3"
+        },
+        {
+          "id": "canh_ben_S_M",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_I1",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_I2",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_I3",
+          "type": "segment3"
+        }
+      ],
+      "checks": {
+        "ink_present": true,
+        "own_pixels_positive": true,
+        "camera_changes": true,
+        "camera_settled": true,
+        "selection_and_timeline": true,
+        "labels": true,
+        "dependency_order": true,
+        "receipt_inventory_matches_input": true,
+        "solid_inventory_complete": true
+      },
+      "own_pixels": {
+        "khoi_S_ABCD": 52372,
+        "khoi_S_MI1I2I3": 9438
+      },
+      "camera": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 45634,
+        "zoomDiffPixels": 22293,
+        "panDiffPixels": 57400,
+        "resetDiffFromDefault": 0
+      },
+      "screenshots": [
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo1-pyramid-derived-section_default.png",
+          "bytes": 95481,
+          "sha256": "fa78944d0681fdb43474086808b0b2b622f1b1b5e85f630c1b4713cf8122f199"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo1-pyramid-derived-section_orbit.png",
+          "bytes": 85474,
+          "sha256": "cc38c9f72ada76b40429b1bc26a31c6dac68107dacd5083d7726542d9157931c"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo1-pyramid-derived-section_selected.png",
+          "bytes": 97617,
+          "sha256": "cf84a983cbc7df1b0b693284570b0939e162bd731eb4e5a4b751975fb8cf15ce"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo1-pyramid-derived-section_exploded.png",
+          "bytes": 102553,
+          "sha256": "304682f79835e0a6370177a073c98731892538b257eb32e49b09ca041a74714b"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo1-pyramid-derived-section_step0.png",
+          "bytes": 68136,
+          "sha256": "0ba905fcdb02b952396d8deb3d3d7829bf0b3292af4e3e73712bfc255c45bc55"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo1-pyramid-derived-section_explorer.png",
+          "bytes": 142610,
+          "sha256": "6b80f3d4e878b585bf70922d3de1f05ec0095ca32c9f3b93d7c7c637ffdd992f"
+        }
+      ],
+      "all_checks_passed": true
+    },
+    {
+      "id": "demo2-unnamed-section-intersections",
+      "status": "SERVED",
+      "scene_object_inventory": [
+        {
+          "id": "A",
+          "type": "point3"
+        },
+        {
+          "id": "B",
+          "type": "point3"
+        },
+        {
+          "id": "C",
+          "type": "point3"
+        },
+        {
+          "id": "D",
+          "type": "point3"
+        },
+        {
+          "id": "S",
+          "type": "point3"
+        },
+        {
+          "id": "khoi_S_ABCD",
+          "type": "solid"
+        },
+        {
+          "id": "I1",
+          "type": "point3"
+        },
+        {
+          "id": "I2",
+          "type": "point3"
+        },
+        {
+          "id": "I3",
+          "type": "point3"
+        },
+        {
+          "id": "M",
+          "type": "point3"
+        },
+        {
+          "id": "khoi_S_MI1I2I3",
+          "type": "solid"
+        },
+        {
+          "id": "mp_td_ask9",
+          "type": "plane3"
+        },
+        {
+          "id": "td_ask9",
+          "type": "section"
+        },
+        {
+          "id": "kq_ask9",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_vcert10",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_vcert11",
+          "type": "quantity"
+        },
+        {
+          "id": "day_ABCD",
+          "type": "polygon3"
+        },
+        {
+          "id": "canh_ben_S_A",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_B",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_C",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_D",
+          "type": "segment3"
+        },
+        {
+          "id": "day_MI1I2I3",
+          "type": "polygon3"
+        },
+        {
+          "id": "canh_ben_S_M",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_I1",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_I2",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_I3",
+          "type": "segment3"
+        }
+      ],
+      "checks": {
+        "ink_present": true,
+        "own_pixels_positive": true,
+        "camera_changes": true,
+        "camera_settled": true,
+        "selection_and_timeline": true,
+        "labels": true,
+        "dependency_order": true,
+        "receipt_inventory_matches_input": true,
+        "solid_inventory_complete": true
+      },
+      "own_pixels": {
+        "khoi_S_ABCD": 43147,
+        "khoi_S_MI1I2I3": 3970
+      },
+      "camera": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 26399,
+        "zoomDiffPixels": 13239,
+        "panDiffPixels": 42421,
+        "resetDiffFromDefault": 0
+      },
+      "screenshots": [
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo2-unnamed-section-intersections_default.png",
+          "bytes": 91829,
+          "sha256": "e9b1715b6d3dd1e85710d725da863dde554c4d43c15ae125afd21dcbc56f9f6c"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo2-unnamed-section-intersections_orbit.png",
+          "bytes": 82572,
+          "sha256": "99dd0cd0db23e82b22e03be6a943dc67b22c4fb820a786b90a84755804ab76eb"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo2-unnamed-section-intersections_selected.png",
+          "bytes": 92233,
+          "sha256": "39cb8d6a8a5364dc1cb7728fde160ec616d2415384c4311b6912cb234e69f5e4"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo2-unnamed-section-intersections_exploded.png",
+          "bytes": 101368,
+          "sha256": "87f1ae19890c049e3fe000fe028ed7db7a75a23b660344e0c239d350bf7cf4e4"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo2-unnamed-section-intersections_step0.png",
+          "bytes": 67536,
+          "sha256": "0b0c19cbc8dc6717aadd199e4d06b2ab4153192223618cbacebb42cba77a9d78"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo2-unnamed-section-intersections_explorer.png",
+          "bytes": 150465,
+          "sha256": "95922055cb8d45649c30ead04c033948396d273f288f3f4224082429f5e16290"
+        }
+      ],
+      "all_checks_passed": true
+    },
+    {
+      "id": "demo3-multi-solid-shared-geometry",
+      "status": "SERVED",
+      "scene_object_inventory": [
+        {
+          "id": "A",
+          "type": "point3"
+        },
+        {
+          "id": "B",
+          "type": "point3"
+        },
+        {
+          "id": "C",
+          "type": "point3"
+        },
+        {
+          "id": "D1",
+          "type": "point3"
+        },
+        {
+          "id": "khoi_D1_ABC",
+          "type": "solid"
+        },
+        {
+          "id": "S",
+          "type": "point3"
+        },
+        {
+          "id": "khoi_S_ABC",
+          "type": "solid"
+        },
+        {
+          "id": "D",
+          "type": "point3"
+        },
+        {
+          "id": "kq_ask4",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_ask3",
+          "type": "quantity"
+        },
+        {
+          "id": "day_ABC",
+          "type": "polygon3"
+        },
+        {
+          "id": "canh_ben_D1_A",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_D1_B",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_D1_C",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_A",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_B",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_C",
+          "type": "segment3"
+        }
+      ],
+      "checks": {
+        "ink_present": true,
+        "own_pixels_positive": true,
+        "camera_changes": true,
+        "camera_settled": true,
+        "selection_and_timeline": true,
+        "labels": true,
+        "dependency_order": true,
+        "receipt_inventory_matches_input": true,
+        "solid_inventory_complete": true
+      },
+      "own_pixels": {
+        "khoi_D1_ABC": 544,
+        "khoi_S_ABC": 16135,
+        "day_ABC": 423
+      },
+      "camera": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 20787,
+        "zoomDiffPixels": 6297,
+        "panDiffPixels": 19657,
+        "resetDiffFromDefault": 0
+      },
+      "screenshots": [
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo3-multi-solid-shared-geometry_default.png",
+          "bytes": 104766,
+          "sha256": "11c8dddc2c9e3ba41690e939345206a7bbc3d537f9a7078dc9eebe9cb2a44836"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo3-multi-solid-shared-geometry_orbit.png",
+          "bytes": 85544,
+          "sha256": "c83d577a481d1374511182bb8177518c994935b9e642f091204ed5babaf2ed17"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo3-multi-solid-shared-geometry_selected.png",
+          "bytes": 104028,
+          "sha256": "c1bc4e2baca436d381d5a362374f7bcd5bbb0503bfc948fa0f2f88346c17339a"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo3-multi-solid-shared-geometry_exploded.png",
+          "bytes": 111089,
+          "sha256": "596660e9e7f533369341521d2558c0b9740c5631e0a41e3e6396bbaa1c21aeee"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo3-multi-solid-shared-geometry_step0.png",
+          "bytes": 68393,
+          "sha256": "b2697ea43b85bf84a7acd697e0b82ad14ab1e02d6271832d1c3e6191b22d3245"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo3-multi-solid-shared-geometry_explorer.png",
+          "bytes": 134611,
+          "sha256": "ec5e86a8d87a0c1a7a330cf9e626f89c6dff7301b9d19d12ae575715305aedd4"
+        }
+      ],
+      "all_checks_passed": true
+    },
+    {
+      "id": "demo4-step-by-step-construction",
+      "status": "SERVED",
+      "scene_object_inventory": [
+        {
+          "id": "A",
+          "type": "point3"
+        },
+        {
+          "id": "B",
+          "type": "point3"
+        },
+        {
+          "id": "C",
+          "type": "point3"
+        },
+        {
+          "id": "S",
+          "type": "point3"
+        },
+        {
+          "id": "khoi_S_ABC",
+          "type": "solid"
+        },
+        {
+          "id": "I1",
+          "type": "point3"
+        },
+        {
+          "id": "I2",
+          "type": "point3"
+        },
+        {
+          "id": "M",
+          "type": "point3"
+        },
+        {
+          "id": "mp_td_ask10",
+          "type": "plane3"
+        },
+        {
+          "id": "td_ask10",
+          "type": "section"
+        },
+        {
+          "id": "kq_ask10",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_ask9",
+          "type": "quantity"
+        },
+        {
+          "id": "day_ABC",
+          "type": "polygon3"
+        },
+        {
+          "id": "canh_ben_S_A",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_B",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_C",
+          "type": "segment3"
+        }
+      ],
+      "checks": {
+        "ink_present": true,
+        "own_pixels_positive": true,
+        "camera_changes": true,
+        "camera_settled": true,
+        "selection_and_timeline": true,
+        "labels": true,
+        "dependency_order": true,
+        "receipt_inventory_matches_input": true,
+        "solid_inventory_complete": true
+      },
+      "own_pixels": {
+        "khoi_S_ABC": 60520
+      },
+      "camera": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 61042,
+        "zoomDiffPixels": 21315,
+        "panDiffPixels": 38826,
+        "resetDiffFromDefault": 0
+      },
+      "screenshots": [
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo4-step-by-step-construction_default.png",
+          "bytes": 86017,
+          "sha256": "d973cb2c95fca1ec5c645ea9eca7d25dd68bdced350ea506791b5fc5bf4497a1"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo4-step-by-step-construction_orbit.png",
+          "bytes": 79611,
+          "sha256": "3b5d7b54219a18b8ca7e7b72315e39d4c6c580b1ba256d030a271a036f37632e"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo4-step-by-step-construction_selected.png",
+          "bytes": 86737,
+          "sha256": "b3128e924077da07259474a4c3d653006635f8aaa4d21941715d36f4c31fb5fb"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo4-step-by-step-construction_exploded.png",
+          "bytes": 93017,
+          "sha256": "cf25fc771885ebefe0e1e9464c5078fba1fb8ecac5590afec9683fe0c76f68da"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo4-step-by-step-construction_step0.png",
+          "bytes": 66499,
+          "sha256": "529447a39684f671492142a6a8d191242ab23077f08b69c2a647edb8c24ccd75"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo4-step-by-step-construction_explorer.png",
+          "bytes": 146797,
+          "sha256": "a8a511bf657bbf1f2ca931141828ee592b8aa665f4ad509239cd1cd504a19800"
+        }
+      ],
+      "all_checks_passed": true
+    },
+    {
+      "id": "demo5-selection-and-highlighting",
+      "status": "SERVED",
+      "scene_object_inventory": [
+        {
+          "id": "A",
+          "type": "point3"
+        },
+        {
+          "id": "B",
+          "type": "point3"
+        },
+        {
+          "id": "C",
+          "type": "point3"
+        },
+        {
+          "id": "D",
+          "type": "point3"
+        },
+        {
+          "id": "S",
+          "type": "point3"
+        },
+        {
+          "id": "khoi_S_ABCD",
+          "type": "solid"
+        },
+        {
+          "id": "T",
+          "type": "point3"
+        },
+        {
+          "id": "khoi_T_ABCD",
+          "type": "solid"
+        },
+        {
+          "id": "I1",
+          "type": "point3"
+        },
+        {
+          "id": "I2",
+          "type": "point3"
+        },
+        {
+          "id": "I3",
+          "type": "point3"
+        },
+        {
+          "id": "M",
+          "type": "point3"
+        },
+        {
+          "id": "mp_td_sec3",
+          "type": "plane3"
+        },
+        {
+          "id": "td_sec3",
+          "type": "section"
+        },
+        {
+          "id": "kq_vcert9",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_vcert10",
+          "type": "quantity"
+        },
+        {
+          "id": "day_ABCD",
+          "type": "polygon3"
+        },
+        {
+          "id": "canh_ben_S_A",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_B",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_C",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_S_D",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_T_A",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_T_B",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_T_C",
+          "type": "segment3"
+        },
+        {
+          "id": "canh_ben_T_D",
+          "type": "segment3"
+        }
+      ],
+      "checks": {
+        "ink_present": true,
+        "own_pixels_positive": true,
+        "camera_changes": true,
+        "camera_settled": true,
+        "selection_and_timeline": true,
+        "labels": true,
+        "dependency_order": true,
+        "receipt_inventory_matches_input": true,
+        "solid_inventory_complete": true
+      },
+      "own_pixels": {
+        "khoi_S_ABCD": 3831,
+        "khoi_T_ABCD": 18339,
+        "day_ABCD": 652
+      },
+      "camera": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 36464,
+        "zoomDiffPixels": 17458,
+        "panDiffPixels": 59917,
+        "resetDiffFromDefault": 0
+      },
+      "screenshots": [
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo5-selection-and-highlighting_default.png",
+          "bytes": 115026,
+          "sha256": "c5c8fd7b6c94fcf75e1b7ac3746888414a856e811bbf6532d0fa7ecf208cf2bb"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo5-selection-and-highlighting_orbit.png",
+          "bytes": 114061,
+          "sha256": "05f75aaa489ff56b146ee196435654c58cc3ab9317d9bcdc4fe62b54053ce937"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo5-selection-and-highlighting_selected.png",
+          "bytes": 115068,
+          "sha256": "b60b2aa61ca8a78e738d26b8158748983232d9b290821c062ee90f19706d9266"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo5-selection-and-highlighting_exploded.png",
+          "bytes": 122497,
+          "sha256": "04223408f322ec873ca1bd19872fb549126e84c4c2c4521e5049acf90d3dc57c"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo5-selection-and-highlighting_step0.png",
+          "bytes": 68814,
+          "sha256": "0ab61d8556f56d2c9f0a93f56a585ef3907d79b75429b8b41c076cfe7cd108c2"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo5-selection-and-highlighting_explorer.png",
+          "bytes": 136345,
+          "sha256": "96121467f2611c8cec62327577f252936a38b28ec823e4e3398d4ca1b0cb8d0b"
+        }
+      ],
+      "all_checks_passed": true
+    },
+    {
+      "id": "demo6a-curved-cylinder-sections",
+      "status": "SERVED",
+      "scene_object_inventory": [
+        {
+          "id": "O",
+          "type": "point3"
+        },
+        {
+          "id": "R",
+          "type": "quantity"
+        },
+        {
+          "id": "h",
+          "type": "quantity"
+        },
+        {
+          "id": "O_prime",
+          "type": "point3"
+        },
+        {
+          "id": "A",
+          "type": "point3"
+        },
+        {
+          "id": "khoi_cyl",
+          "type": "curved_solid"
+        },
+        {
+          "id": "mp_day_cyl",
+          "type": "plane3"
+        },
+        {
+          "id": "duong_tron_day_cyl",
+          "type": "circle3"
+        },
+        {
+          "id": "mp_day_tren_cyl",
+          "type": "plane3"
+        },
+        {
+          "id": "duong_tron_day_tren_cyl",
+          "type": "circle3"
+        },
+        {
+          "id": "truc_O_O_prime",
+          "type": "segment3"
+        },
+        {
+          "id": "ban_kinh_O_A",
+          "type": "segment3"
+        },
+        {
+          "id": "mp_sec_parallel",
+          "type": "plane3"
+        },
+        {
+          "id": "td_sec_parallel",
+          "type": "circle3"
+        },
+        {
+          "id": "B",
+          "type": "point3"
+        },
+        {
+          "id": "td_sec_axial",
+          "type": "polygon3"
+        },
+        {
+          "id": "A_prime_sec_axial",
+          "type": "point3"
+        },
+        {
+          "id": "B_prime_sec_axial",
+          "type": "point3"
+        },
+        {
+          "id": "kq_m_vol",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_m_lat",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_m_par_area",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_m_ax_area",
+          "type": "quantity"
+        }
+      ],
+      "checks": {
+        "ink_present": true,
+        "own_pixels_positive": true,
+        "camera_changes": true,
+        "camera_settled": true,
+        "selection_and_timeline": true,
+        "labels": true,
+        "dependency_order": true,
+        "receipt_inventory_matches_input": true,
+        "solid_inventory_complete": true
+      },
+      "own_pixels": {
+        "khoi_cyl": 36691,
+        "duong_tron_day_cyl": 31106,
+        "duong_tron_day_tren_cyl": 31813,
+        "td_sec_parallel": 31333,
+        "td_sec_axial": 358
+      },
+      "camera": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 16480,
+        "zoomDiffPixels": 22186,
+        "panDiffPixels": 59791,
+        "resetDiffFromDefault": 0
+      },
+      "screenshots": [
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6a-curved-cylinder-sections_default.png",
+          "bytes": 95296,
+          "sha256": "83e08b3e4ec342e4c843eff56712d39926d117963c2735170cca80a3bce4f950"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6a-curved-cylinder-sections_orbit.png",
+          "bytes": 95924,
+          "sha256": "354f8733fd9dec673b8494d169ed12ada0ae8d868c1dfebb743ea44ad865fd09"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6a-curved-cylinder-sections_selected.png",
+          "bytes": 95945,
+          "sha256": "581949217277a445fdaf2f795df3b9431ce70515672504b25f15a82e3865d108"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6a-curved-cylinder-sections_exploded.png",
+          "bytes": 96331,
+          "sha256": "28be2eaa2e4b119712e6718de61ba7c5a66fdea393af0631deb9e726fc1e3c4d"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6a-curved-cylinder-sections_step0.png",
+          "bytes": 65924,
+          "sha256": "112f591f2f97ee13a97f5ef6682241afa2509074a41ae9cc20037285f5a32df7"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6a-curved-cylinder-sections_explorer.png",
+          "bytes": 139120,
+          "sha256": "eb241da4c5f5488f806b1f66a919f17eb57d8eb97c29655980a4233507238a04"
+        }
+      ],
+      "all_checks_passed": true
+    },
+    {
+      "id": "demo6b-curved-cone-frustum-cut",
+      "status": "SERVED",
+      "scene_object_inventory": [
+        {
+          "id": "O",
+          "type": "point3"
+        },
+        {
+          "id": "R",
+          "type": "quantity"
+        },
+        {
+          "id": "h",
+          "type": "quantity"
+        },
+        {
+          "id": "S",
+          "type": "point3"
+        },
+        {
+          "id": "A",
+          "type": "point3"
+        },
+        {
+          "id": "khoi_cone_main",
+          "type": "curved_solid"
+        },
+        {
+          "id": "mp_day_cone_main",
+          "type": "plane3"
+        },
+        {
+          "id": "duong_tron_day_cone_main",
+          "type": "circle3"
+        },
+        {
+          "id": "truc_O_S",
+          "type": "segment3"
+        },
+        {
+          "id": "ban_kinh_O_A",
+          "type": "segment3"
+        },
+        {
+          "id": "duong_sinh_S_A",
+          "type": "segment3"
+        },
+        {
+          "id": "mp_sec_cut",
+          "type": "plane3"
+        },
+        {
+          "id": "td_sec_cut",
+          "type": "circle3"
+        },
+        {
+          "id": "B",
+          "type": "point3"
+        },
+        {
+          "id": "td_sec_axial",
+          "type": "polygon3"
+        },
+        {
+          "id": "O_cat_cone_upper",
+          "type": "point3"
+        },
+        {
+          "id": "R_cat_cone_upper",
+          "type": "quantity"
+        },
+        {
+          "id": "khoi_cone_upper",
+          "type": "curved_solid"
+        },
+        {
+          "id": "kq_m_vol",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_m_lat",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_m_axial_area",
+          "type": "quantity"
+        }
+      ],
+      "checks": {
+        "ink_present": true,
+        "own_pixels_positive": false,
+        "camera_changes": true,
+        "camera_settled": true,
+        "selection_and_timeline": true,
+        "labels": true,
+        "dependency_order": true,
+        "receipt_inventory_matches_input": true,
+        "solid_inventory_complete": true
+      },
+      "own_pixels": {
+        "khoi_cone_main": 19195,
+        "duong_tron_day_cone_main": 32620,
+        "td_sec_cut": 4017,
+        "td_sec_axial": 0,
+        "khoi_cone_upper": 4711
+      },
+      "camera": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 13583,
+        "zoomDiffPixels": 12141,
+        "panDiffPixels": 40069,
+        "resetDiffFromDefault": 239
+      },
+      "screenshots": [
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6b-curved-cone-frustum-cut_default.png",
+          "bytes": 90087,
+          "sha256": "d2c35dbfc5ddc2d2a8498c4b8c6cbedf31f1642a2d1f3eb8c8a985027f07567e"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6b-curved-cone-frustum-cut_orbit.png",
+          "bytes": 89691,
+          "sha256": "9048ebf0cf18d035f08adf816d1b024447a041bbc2707d7f5c0149c7ceae48cb"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6b-curved-cone-frustum-cut_selected.png",
+          "bytes": 87680,
+          "sha256": "711d200da0fa7c3ef4597eced8ab5a2accbd2a88914dbf9770f0fe41b7c3c38d"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6b-curved-cone-frustum-cut_exploded.png",
+          "bytes": 91660,
+          "sha256": "fd012280c4c9f219fc614fe64be11ed06e7e523e2306ecd105ef14f1f758672a"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6b-curved-cone-frustum-cut_step0.png",
+          "bytes": 65079,
+          "sha256": "f8ab11517716d73559983049d9eb74da20cd63003a53da895a36121314aec163"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6b-curved-cone-frustum-cut_explorer.png",
+          "bytes": 138656,
+          "sha256": "e01adbae2692ad8ac0fc3bf3d16bfdafd9515ea2050f2cb31450ac88617cdd2a"
+        }
+      ],
+      "all_checks_passed": false
+    },
+    {
+      "id": "demo6c-curved-sphere-plane-cut",
+      "status": "SERVED",
+      "scene_object_inventory": [
+        {
+          "id": "I",
+          "type": "point3"
+        },
+        {
+          "id": "R",
+          "type": "quantity"
+        },
+        {
+          "id": "khoi_sph",
+          "type": "curved_solid"
+        },
+        {
+          "id": "mp_sec_sph",
+          "type": "plane3"
+        },
+        {
+          "id": "td_sec_sph",
+          "type": "circle3"
+        },
+        {
+          "id": "kq_m_vol",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_m_surf",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_m_rad",
+          "type": "quantity"
+        },
+        {
+          "id": "kq_m_area",
+          "type": "quantity"
+        }
+      ],
+      "checks": {
+        "ink_present": true,
+        "own_pixels_positive": true,
+        "camera_changes": true,
+        "camera_settled": true,
+        "selection_and_timeline": true,
+        "labels": true,
+        "dependency_order": true,
+        "receipt_inventory_matches_input": true,
+        "solid_inventory_complete": true
+      },
+      "own_pixels": {
+        "khoi_sph": 25665,
+        "td_sec_sph": 29346
+      },
+      "camera": {
+        "initialSettled": true,
+        "orbitSettled": true,
+        "orbitDiffPixels": 3032,
+        "zoomDiffPixels": 10945,
+        "panDiffPixels": 41139,
+        "resetDiffFromDefault": 0
+      },
+      "screenshots": [
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6c-curved-sphere-plane-cut_default.png",
+          "bytes": 81288,
+          "sha256": "cdc89713593a909c5b2f687617e0110a3b73f1fc9a4766724dd46e77f3d49c73"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6c-curved-sphere-plane-cut_orbit.png",
+          "bytes": 82853,
+          "sha256": "bd6ecf266e0efe95d2cb00a3d69c3b54478e4e280870e6a9471a4ed6c099645e"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6c-curved-sphere-plane-cut_selected.png",
+          "bytes": 82361,
+          "sha256": "3894882bcd5ca4358c833d7ad492840748a899347291d3b83b967c3f197e6b03"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6c-curved-sphere-plane-cut_exploded.png",
+          "bytes": 81288,
+          "sha256": "cdc89713593a909c5b2f687617e0110a3b73f1fc9a4766724dd46e77f3d49c73"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6c-curved-sphere-plane-cut_step0.png",
+          "bytes": 62433,
+          "sha256": "f0a9ea929997409c7574dab43fc6b7d24a72e32b477af622ec7978c225f52d21"
+        },
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo6c-curved-sphere-plane-cut_explorer.png",
+          "bytes": 131920,
+          "sha256": "2dff62ff398a63276dec2841a4f7921927f2c08f3cee6436f6bcbf49d4cd07ce"
+        }
+      ],
+      "all_checks_passed": true
+    },
+    {
+      "id": "demo7-invalid-geometry-safe-refusal",
+      "status": "REFUSED",
+      "scene_object_inventory": [],
+      "checks": {
+        "null_scene_and_expected_refusal": true
+      },
+      "own_pixels": {},
+      "camera": null,
+      "screenshots": [
+        {
+          "path": "docs/evaluation/geometry/runs/simulation-evidence-repair/browser/screenshots/demo7-invalid-geometry-safe-refusal_refused.png",
+          "bytes": 17467,
+          "sha256": "52198702926d72bc7194e05904562b31a5750e2855cf3444034c877367899316"
+        }
+      ],
+      "all_checks_passed": true
+    }
+  ],
+  "failures": [
+    {
+      "demo": "demo6b-curved-cone-frustum-cut",
+      "check": "own_pixels_positive",
+      "zero_pixel_objects": [
+        "td_sec_axial"
+      ]
+    }
+  ],
+  "all_checks_passed": false,
+  "status": "REPRODUCTION_CAPTURE_COMPLETE_VISUAL_FINDING_OPEN"
+}

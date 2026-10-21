@@ -1,0 +1,48 @@
+{
+  "source_commit": "d86c72031d8fc85cd4eef62d9379cd1690ba1417",
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-simulation-go-main",
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe"
+  },
+  "timeout_seconds": 30,
+  "run_kind": "BINARY_CAPTURE_SELF_CHECK",
+  "argv": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "-c",
+    "import os; os.write(1,b'first\\r\\nsecond\\n'); os.write(2,b'error\\r\\nlast\\n')"
+  ],
+  "output_directory": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\checks",
+  "started_utc": "2026-10-21T07:27:23.421620+00:00",
+  "command_line": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe -c \"import os; os.write(1,b'first\\r\\nsecond\\n'); os.write(2,b'error\\r\\nlast\\n')\"",
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "PLAYWRIGHT_BROWSERS_PATH": null,
+    "NODE_OPTIONS": null,
+    "PYTEST_ADDOPTS": null,
+    "CI": null,
+    "NO_COLOR": "1"
+  },
+  "finished_utc": "2026-10-21T07:27:23.505601+00:00",
+  "exit_code": 0,
+  "timed_out": false,
+  "hash_policy": "RAW_BYTES_SHA256",
+  "streams": {
+    "stdout": {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\checks\\stdout.log",
+      "bytes": 14,
+      "sha256": "285e4b03332b9f0915c75a094fc20a00ec1c7d2bcdbf3d915031bf698e041d53"
+    },
+    "stderr": {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\checks\\stderr.log",
+      "bytes": 12,
+      "sha256": "de110bb5dc6e71dd963cff1b284e8d775b9e4deb2ea7a01c2d40e88d0faac5c2"
+    }
+  },
+  "snapshot_dirty_after": []
+}

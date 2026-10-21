@@ -1,0 +1,69 @@
+{
+  "product_test_scripts_diff_vs_product_commit": [],
+  "candidate_manifest_diff": "",
+  "source_preserved_files": [
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-coverage-visual-validation\\docs\\EVIDENCE_INDEX.md",
+      "sha256": "57a550e6b2fd26554f9018229b16cf17c0ff9381204d59c7ef689cdb04b30e8e",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-coverage-visual-validation\\docs\\evaluation\\geometry\\runs\\simulation-evidence-reconciliation\\evidence.json",
+      "sha256": "f15ed671defe097e6d2bfb48f9c0b76d951e3e97ffc27dd2684262e0f940d313",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-coverage-visual-validation\\docs\\evaluation\\geometry\\runs\\simulation-evidence-reconciliation\\report.md",
+      "sha256": "ac629d30ab148c8c9f8f05bf54c79348d0798281a56d0ff16354e3fb734585ee",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-coverage-visual-validation\\docs\\evaluation\\geometry\\runs\\simulation-evidence-reconciliation\\run.json",
+      "sha256": "08dfb9cbcc5cad9158cf6b3d6911b09f0b296c97f44cfcb108150ec97baf54e4",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-coverage-visual-validation\\docs\\evaluation\\geometry\\runs\\simulation-coverage-visual-validation\\verification\\t3\\attempt1-fail.stdout.log",
+      "sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-coverage-visual-validation\\docs\\evaluation\\geometry\\runs\\simulation-coverage-visual-validation\\verification\\t3\\attempt1-fail.stderr.log",
+      "sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-coverage-visual-validation\\docs\\evaluation\\geometry\\runs\\simulation-coverage-visual-validation\\verification\\t3\\attempt2-pass.stdout.log",
+      "sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+      "unchanged": true
+    },
+    {
+      "path": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-coverage-visual-validation\\docs\\evaluation\\geometry\\runs\\simulation-coverage-visual-validation\\verification\\t3\\attempt2-pass.stderr.log",
+      "sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+      "unchanged": true
+    }
+  ],
+  "provider_surface_test": {
+    "argv": [
+      "python",
+      "-m",
+      "pytest",
+      "-q",
+      "-p",
+      "no:cacheprovider",
+      "tests/geometry/test_wave3a_volume_reasoning.py::test_wave3a_version_and_surface_fingerprint_invariants"
+    ],
+    "passed": 1,
+    "failed": 0,
+    "five_locked_provider_fingerprints": "UNCHANGED"
+  },
+  "documentation_tests": {
+    "passed": 8,
+    "failed": 0,
+    "deselected": 34
+  },
+  "binary_capture_self_check": "PASS exact stdout/stderr mixed newline bytes",
+  "freeze_verification": "MATCH 114 files 4d11a91790422b95",
+  "historical_classifications": "UNCHANGED",
+  "new_harness_delta": "Only run-local capture.py and probe-browser.mjs; original backend/frontend tests/scripts and frozen browser runner unchanged. Capture protocol adds raw-byte redirection and preflight metadata; does not change evaluation inputs/expectations."
+}

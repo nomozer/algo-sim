@@ -1,0 +1,7 @@
+raw/** -text -diff
+browser/** -text whitespace=cr-at-eol
+browser/screenshots/** -text -diff
+t3/** -text whitespace=cr-at-eol
+checks/** -text whitespace=cr-at-eol
+preserved/** -text -diff
+*.log -text -diff

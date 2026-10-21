@@ -1,0 +1,18 @@
+{
+  "source_commit": "d86c72031d8fc85cd4eef62d9379cd1690ba1417",
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-simulation-go-main",
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe"
+  },
+  "timeout_seconds": 30,
+  "run_kind": "BINARY_CAPTURE_SELF_CHECK",
+  "argv": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "-c",
+    "import os; os.write(1,b'first\\r\\nsecond\\n'); os.write(2,b'error\\r\\nlast\\n')"
+  ],
+  "output_directory": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\checks"
+}

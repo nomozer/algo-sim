@@ -1,0 +1,43 @@
+{
+  "schema_version": "raw-t3-preservation/1",
+  "source_commit": "d86c72031d8fc85cd4eef62d9379cd1690ba1417",
+  "hash_policy": "EXACT_BYTES_SHA256_NO_NORMALIZATION",
+  "artifacts": [
+    {
+      "historical_path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/t3/attempt1-fail.stdout.log",
+      "archive_path": "docs/evaluation/geometry/runs/simulation-evidence-repair/raw/original-t3/attempt1-fail.stdout.log",
+      "original_runtime_raw_bytes_sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+      "historical_normalized_git_blob_sha256": "2620186c4513cb7a9935f83de6397f5aa03fa38e2de4206ece553391701988e4",
+      "corrective_raw_archive_sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+      "recorded_original_sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6",
+      "staged_git_blob_sha256": "e2074c0897550bda185a6f55ea4113e3a8324263fc7a0cf1e2743228207c03f6"
+    },
+    {
+      "historical_path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/t3/attempt1-fail.stderr.log",
+      "archive_path": "docs/evaluation/geometry/runs/simulation-evidence-repair/raw/original-t3/attempt1-fail.stderr.log",
+      "original_runtime_raw_bytes_sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+      "historical_normalized_git_blob_sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+      "corrective_raw_archive_sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+      "recorded_original_sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5",
+      "staged_git_blob_sha256": "bfd6d2ca0bf9c3f05bf6010dd12a9c949656172434d9579ba24fdc3701be54a5"
+    },
+    {
+      "historical_path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/t3/attempt2-pass.stdout.log",
+      "archive_path": "docs/evaluation/geometry/runs/simulation-evidence-repair/raw/original-t3/attempt2-pass.stdout.log",
+      "original_runtime_raw_bytes_sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+      "historical_normalized_git_blob_sha256": "8274c4c26793ea001f892ee9c90f339f7fdeb93a43b5c92f3c8e409ca547ae6b",
+      "corrective_raw_archive_sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+      "recorded_original_sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06",
+      "staged_git_blob_sha256": "013f2e784e9fa828a055320468afe7137f080d2447615aec3c3d3970a2138e06"
+    },
+    {
+      "historical_path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/t3/attempt2-pass.stderr.log",
+      "archive_path": "docs/evaluation/geometry/runs/simulation-evidence-repair/raw/original-t3/attempt2-pass.stderr.log",
+      "original_runtime_raw_bytes_sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+      "historical_normalized_git_blob_sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+      "corrective_raw_archive_sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+      "recorded_original_sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0",
+      "staged_git_blob_sha256": "47de58275e7e069019a5f60938442317568919cd55fcaf2c0cd567fee13589c0"
+    }
+  ]
+}

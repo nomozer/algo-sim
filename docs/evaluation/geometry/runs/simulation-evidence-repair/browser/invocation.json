@@ -1,0 +1,841 @@
+{
+  "source_commit": "d86c72031d8fc85cd4eef62d9379cd1690ba1417",
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-simulation-go-main",
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe"
+  },
+  "timeout_seconds": 1200,
+  "run_kind": "NEW_BROWSER_REPRODUCTION_NOT_ORIGINAL",
+  "argv": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-simulation-go-main\\docs\\evaluation\\geometry\\runs\\simulation-coverage-visual-validation\\run_browser_audit.mjs",
+    "--scenes",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\input-scenes.json",
+    "--out",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots",
+    "--receipt",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\visual-receipt.json"
+  ],
+  "output_directory": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser",
+  "frozen_candidate": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+  "measured_system_sha256": "4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68",
+  "measured_file_count": 114,
+  "input_scenes_sha256": "c3203838fc0eefb916d98212674f89e07d1e37706e6dce9daf8779e0cd7466de",
+  "input_demos": [
+    {
+      "id": "demo1-pyramid-derived-section",
+      "path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo1-pyramid-derived-section.json",
+      "commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+      "blob_sha256": "47c4dfa7575beb60c5f9e993b277c681e83e973d04c621e927d486cbf8b13c3f",
+      "expected_served": true,
+      "expected_objects": [
+        [
+          "A",
+          "point3"
+        ],
+        [
+          "B",
+          "point3"
+        ],
+        [
+          "C",
+          "point3"
+        ],
+        [
+          "D",
+          "point3"
+        ],
+        [
+          "S",
+          "point3"
+        ],
+        [
+          "khoi_S_ABCD",
+          "solid"
+        ],
+        [
+          "I1",
+          "point3"
+        ],
+        [
+          "I2",
+          "point3"
+        ],
+        [
+          "I3",
+          "point3"
+        ],
+        [
+          "M",
+          "point3"
+        ],
+        [
+          "khoi_S_MI1I2I3",
+          "solid"
+        ],
+        [
+          "mp_td_ask9",
+          "plane3"
+        ],
+        [
+          "td_ask9",
+          "section"
+        ],
+        [
+          "kq_ask9",
+          "quantity"
+        ],
+        [
+          "kq_vcert10",
+          "quantity"
+        ],
+        [
+          "kq_vcert11",
+          "quantity"
+        ],
+        [
+          "day_ABCD",
+          "polygon3"
+        ],
+        [
+          "canh_ben_S_A",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_B",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_C",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_D",
+          "segment3"
+        ],
+        [
+          "day_MI1I2I3",
+          "polygon3"
+        ],
+        [
+          "canh_ben_S_M",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_I1",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_I2",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_I3",
+          "segment3"
+        ]
+      ]
+    },
+    {
+      "id": "demo2-unnamed-section-intersections",
+      "path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo2-unnamed-section-intersections.json",
+      "commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+      "blob_sha256": "052e37205a6c4c85e17ead6e25096f62fa0f3cc1722a14fcaf46b89c5759132a",
+      "expected_served": true,
+      "expected_objects": [
+        [
+          "A",
+          "point3"
+        ],
+        [
+          "B",
+          "point3"
+        ],
+        [
+          "C",
+          "point3"
+        ],
+        [
+          "D",
+          "point3"
+        ],
+        [
+          "S",
+          "point3"
+        ],
+        [
+          "khoi_S_ABCD",
+          "solid"
+        ],
+        [
+          "I1",
+          "point3"
+        ],
+        [
+          "I2",
+          "point3"
+        ],
+        [
+          "I3",
+          "point3"
+        ],
+        [
+          "M",
+          "point3"
+        ],
+        [
+          "khoi_S_MI1I2I3",
+          "solid"
+        ],
+        [
+          "mp_td_ask9",
+          "plane3"
+        ],
+        [
+          "td_ask9",
+          "section"
+        ],
+        [
+          "kq_ask9",
+          "quantity"
+        ],
+        [
+          "kq_vcert10",
+          "quantity"
+        ],
+        [
+          "kq_vcert11",
+          "quantity"
+        ],
+        [
+          "day_ABCD",
+          "polygon3"
+        ],
+        [
+          "canh_ben_S_A",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_B",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_C",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_D",
+          "segment3"
+        ],
+        [
+          "day_MI1I2I3",
+          "polygon3"
+        ],
+        [
+          "canh_ben_S_M",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_I1",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_I2",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_I3",
+          "segment3"
+        ]
+      ]
+    },
+    {
+      "id": "demo3-multi-solid-shared-geometry",
+      "path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo3-multi-solid-shared-geometry.json",
+      "commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+      "blob_sha256": "7c453812de25f42a5f5fa61b22233df88c2b9178d4035beba506e2cbf01b7f78",
+      "expected_served": true,
+      "expected_objects": [
+        [
+          "A",
+          "point3"
+        ],
+        [
+          "B",
+          "point3"
+        ],
+        [
+          "C",
+          "point3"
+        ],
+        [
+          "D1",
+          "point3"
+        ],
+        [
+          "khoi_D1_ABC",
+          "solid"
+        ],
+        [
+          "S",
+          "point3"
+        ],
+        [
+          "khoi_S_ABC",
+          "solid"
+        ],
+        [
+          "D",
+          "point3"
+        ],
+        [
+          "kq_ask4",
+          "quantity"
+        ],
+        [
+          "kq_ask3",
+          "quantity"
+        ],
+        [
+          "day_ABC",
+          "polygon3"
+        ],
+        [
+          "canh_ben_D1_A",
+          "segment3"
+        ],
+        [
+          "canh_ben_D1_B",
+          "segment3"
+        ],
+        [
+          "canh_ben_D1_C",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_A",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_B",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_C",
+          "segment3"
+        ]
+      ]
+    },
+    {
+      "id": "demo4-step-by-step-construction",
+      "path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo4-step-by-step-construction.json",
+      "commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+      "blob_sha256": "8615ae838be116933d2aa92ccb2dc4e43c205a665ddaf536b6327d7d4f6f184f",
+      "expected_served": true,
+      "expected_objects": [
+        [
+          "A",
+          "point3"
+        ],
+        [
+          "B",
+          "point3"
+        ],
+        [
+          "C",
+          "point3"
+        ],
+        [
+          "S",
+          "point3"
+        ],
+        [
+          "khoi_S_ABC",
+          "solid"
+        ],
+        [
+          "I1",
+          "point3"
+        ],
+        [
+          "I2",
+          "point3"
+        ],
+        [
+          "M",
+          "point3"
+        ],
+        [
+          "mp_td_ask10",
+          "plane3"
+        ],
+        [
+          "td_ask10",
+          "section"
+        ],
+        [
+          "kq_ask10",
+          "quantity"
+        ],
+        [
+          "kq_ask9",
+          "quantity"
+        ],
+        [
+          "day_ABC",
+          "polygon3"
+        ],
+        [
+          "canh_ben_S_A",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_B",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_C",
+          "segment3"
+        ]
+      ]
+    },
+    {
+      "id": "demo5-selection-and-highlighting",
+      "path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo5-selection-and-highlighting.json",
+      "commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+      "blob_sha256": "dc8c780abd19325cd3f7dd4e00f90d25945b6885d72e886dbdb294820cb800f4",
+      "expected_served": true,
+      "expected_objects": [
+        [
+          "A",
+          "point3"
+        ],
+        [
+          "B",
+          "point3"
+        ],
+        [
+          "C",
+          "point3"
+        ],
+        [
+          "D",
+          "point3"
+        ],
+        [
+          "S",
+          "point3"
+        ],
+        [
+          "khoi_S_ABCD",
+          "solid"
+        ],
+        [
+          "T",
+          "point3"
+        ],
+        [
+          "khoi_T_ABCD",
+          "solid"
+        ],
+        [
+          "I1",
+          "point3"
+        ],
+        [
+          "I2",
+          "point3"
+        ],
+        [
+          "I3",
+          "point3"
+        ],
+        [
+          "M",
+          "point3"
+        ],
+        [
+          "mp_td_sec3",
+          "plane3"
+        ],
+        [
+          "td_sec3",
+          "section"
+        ],
+        [
+          "kq_vcert9",
+          "quantity"
+        ],
+        [
+          "kq_vcert10",
+          "quantity"
+        ],
+        [
+          "day_ABCD",
+          "polygon3"
+        ],
+        [
+          "canh_ben_S_A",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_B",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_C",
+          "segment3"
+        ],
+        [
+          "canh_ben_S_D",
+          "segment3"
+        ],
+        [
+          "canh_ben_T_A",
+          "segment3"
+        ],
+        [
+          "canh_ben_T_B",
+          "segment3"
+        ],
+        [
+          "canh_ben_T_C",
+          "segment3"
+        ],
+        [
+          "canh_ben_T_D",
+          "segment3"
+        ]
+      ]
+    },
+    {
+      "id": "demo6a-curved-cylinder-sections",
+      "path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo6a-curved-cylinder-sections.json",
+      "commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+      "blob_sha256": "89bded678b1fb7589ecabfa4895d6c11cdb42197048806d0eb34521c8a485581",
+      "expected_served": true,
+      "expected_objects": [
+        [
+          "O",
+          "point3"
+        ],
+        [
+          "R",
+          "quantity"
+        ],
+        [
+          "h",
+          "quantity"
+        ],
+        [
+          "O_prime",
+          "point3"
+        ],
+        [
+          "A",
+          "point3"
+        ],
+        [
+          "khoi_cyl",
+          "curved_solid"
+        ],
+        [
+          "mp_day_cyl",
+          "plane3"
+        ],
+        [
+          "duong_tron_day_cyl",
+          "circle3"
+        ],
+        [
+          "mp_day_tren_cyl",
+          "plane3"
+        ],
+        [
+          "duong_tron_day_tren_cyl",
+          "circle3"
+        ],
+        [
+          "truc_O_O_prime",
+          "segment3"
+        ],
+        [
+          "ban_kinh_O_A",
+          "segment3"
+        ],
+        [
+          "mp_sec_parallel",
+          "plane3"
+        ],
+        [
+          "td_sec_parallel",
+          "circle3"
+        ],
+        [
+          "B",
+          "point3"
+        ],
+        [
+          "td_sec_axial",
+          "polygon3"
+        ],
+        [
+          "A_prime_sec_axial",
+          "point3"
+        ],
+        [
+          "B_prime_sec_axial",
+          "point3"
+        ],
+        [
+          "kq_m_vol",
+          "quantity"
+        ],
+        [
+          "kq_m_lat",
+          "quantity"
+        ],
+        [
+          "kq_m_par_area",
+          "quantity"
+        ],
+        [
+          "kq_m_ax_area",
+          "quantity"
+        ]
+      ]
+    },
+    {
+      "id": "demo6b-curved-cone-frustum-cut",
+      "path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo6b-curved-cone-frustum-cut.json",
+      "commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+      "blob_sha256": "fda86ad1799e2b8ad7b02a7f8757372a74fd29f5a9b10e5d79887b5b7d4fb735",
+      "expected_served": true,
+      "expected_objects": [
+        [
+          "O",
+          "point3"
+        ],
+        [
+          "R",
+          "quantity"
+        ],
+        [
+          "h",
+          "quantity"
+        ],
+        [
+          "S",
+          "point3"
+        ],
+        [
+          "A",
+          "point3"
+        ],
+        [
+          "khoi_cone_main",
+          "curved_solid"
+        ],
+        [
+          "mp_day_cone_main",
+          "plane3"
+        ],
+        [
+          "duong_tron_day_cone_main",
+          "circle3"
+        ],
+        [
+          "truc_O_S",
+          "segment3"
+        ],
+        [
+          "ban_kinh_O_A",
+          "segment3"
+        ],
+        [
+          "duong_sinh_S_A",
+          "segment3"
+        ],
+        [
+          "mp_sec_cut",
+          "plane3"
+        ],
+        [
+          "td_sec_cut",
+          "circle3"
+        ],
+        [
+          "B",
+          "point3"
+        ],
+        [
+          "td_sec_axial",
+          "polygon3"
+        ],
+        [
+          "O_cat_cone_upper",
+          "point3"
+        ],
+        [
+          "R_cat_cone_upper",
+          "quantity"
+        ],
+        [
+          "khoi_cone_upper",
+          "curved_solid"
+        ],
+        [
+          "kq_m_vol",
+          "quantity"
+        ],
+        [
+          "kq_m_lat",
+          "quantity"
+        ],
+        [
+          "kq_m_axial_area",
+          "quantity"
+        ]
+      ]
+    },
+    {
+      "id": "demo6c-curved-sphere-plane-cut",
+      "path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo6c-curved-sphere-plane-cut.json",
+      "commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+      "blob_sha256": "ea06b12896c6291329c231302833870e6a6a98ce3d2a485854ee9b618faeb68e",
+      "expected_served": true,
+      "expected_objects": [
+        [
+          "I",
+          "point3"
+        ],
+        [
+          "R",
+          "quantity"
+        ],
+        [
+          "khoi_sph",
+          "curved_solid"
+        ],
+        [
+          "mp_sec_sph",
+          "plane3"
+        ],
+        [
+          "td_sec_sph",
+          "circle3"
+        ],
+        [
+          "kq_m_vol",
+          "quantity"
+        ],
+        [
+          "kq_m_surf",
+          "quantity"
+        ],
+        [
+          "kq_m_rad",
+          "quantity"
+        ],
+        [
+          "kq_m_area",
+          "quantity"
+        ]
+      ]
+    },
+    {
+      "id": "demo7-invalid-geometry-safe-refusal",
+      "path": "docs/evaluation/geometry/runs/simulation-coverage-visual-validation/demos/demo7-invalid-geometry-safe-refusal.json",
+      "commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+      "blob_sha256": "bb462747338c7e0a21bb38a90116dffc6f14b8a3c0e5d3ecacb524d77e9948ba",
+      "expected_served": false,
+      "expected_objects": []
+    }
+  ],
+  "expected_screenshot_paths": [
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo1-pyramid-derived-section_default.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo1-pyramid-derived-section_orbit.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo1-pyramid-derived-section_selected.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo1-pyramid-derived-section_exploded.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo1-pyramid-derived-section_step0.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo1-pyramid-derived-section_explorer.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo2-unnamed-section-intersections_default.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo2-unnamed-section-intersections_orbit.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo2-unnamed-section-intersections_selected.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo2-unnamed-section-intersections_exploded.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo2-unnamed-section-intersections_step0.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo2-unnamed-section-intersections_explorer.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo3-multi-solid-shared-geometry_default.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo3-multi-solid-shared-geometry_orbit.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo3-multi-solid-shared-geometry_selected.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo3-multi-solid-shared-geometry_exploded.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo3-multi-solid-shared-geometry_step0.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo3-multi-solid-shared-geometry_explorer.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo4-step-by-step-construction_default.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo4-step-by-step-construction_orbit.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo4-step-by-step-construction_selected.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo4-step-by-step-construction_exploded.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo4-step-by-step-construction_step0.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo4-step-by-step-construction_explorer.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo5-selection-and-highlighting_default.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo5-selection-and-highlighting_orbit.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo5-selection-and-highlighting_selected.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo5-selection-and-highlighting_exploded.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo5-selection-and-highlighting_step0.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo5-selection-and-highlighting_explorer.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6a-curved-cylinder-sections_default.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6a-curved-cylinder-sections_orbit.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6a-curved-cylinder-sections_selected.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6a-curved-cylinder-sections_exploded.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6a-curved-cylinder-sections_step0.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6a-curved-cylinder-sections_explorer.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6b-curved-cone-frustum-cut_default.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6b-curved-cone-frustum-cut_orbit.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6b-curved-cone-frustum-cut_selected.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6b-curved-cone-frustum-cut_exploded.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6b-curved-cone-frustum-cut_step0.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6b-curved-cone-frustum-cut_explorer.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6c-curved-sphere-plane-cut_default.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6c-curved-sphere-plane-cut_orbit.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6c-curved-sphere-plane-cut_selected.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6c-curved-sphere-plane-cut_exploded.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6c-curved-sphere-plane-cut_step0.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo6c-curved-sphere-plane-cut_explorer.png",
+    "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-evidence-repair\\docs\\evaluation\\geometry\\runs\\simulation-evidence-repair\\browser\\screenshots\\demo7-invalid-geometry-safe-refusal_refused.png"
+  ],
+  "browser_environment": {
+    "schema_version": "browser-preflight/1",
+    "probe_utc": "2026-10-21T07:26:50.870Z",
+    "os": {
+      "platform": "win32",
+      "release": "10.0.26100",
+      "architecture": "x64"
+    },
+    "node": "v24.13.0",
+    "playwright": "1.62.1",
+    "chromium": "151.0.7922.34",
+    "executable": "C:\\Users\\Bunny\\AppData\\Local\\ms-playwright\\chromium-1234\\chrome-win64\\chrome.exe",
+    "executable_sha256": "409805a16d6416087e6b2f778df1cf8f7bbb267d6b99f6b5bb0a618eace234f2",
+    "headless": true,
+    "args": [
+      "--use-angle=swiftshader",
+      "--enable-unsafe-swiftshader",
+      "--ignore-gpu-blocklist"
+    ],
+    "viewport": {
+      "width": 1280,
+      "height": 860
+    },
+    "rendering_mode": "ANGLE SwiftShader software WebGL",
+    "webgl": {
+      "available": true,
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "vendor": "Google Inc. (Google)"
+    },
+    "note": "Separate preflight probe; reproduction uses the unchanged frozen audit runner with the same executable and flags."
+  },
+  "ellipse_browser_scope": "BACKEND_ONLY; optional additional group not executed"
+}

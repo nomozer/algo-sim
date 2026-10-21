@@ -1,0 +1,9 @@
+# Simulation evidence repair — local-only execution
+
+Authorization: GO_SIMULATION_EVIDENCE_REPAIR_LOCAL_ONLY. Status: IN_PROGRESS.
+
+This additive correction preserves the original campaign reports, receipts, screenshots, oracle and scientific classifications. Existing uncommitted reconciliation findings are preserved byte-for-byte in their original run and in a separate preservation backup; the original source worktree is unchanged. Current scope: [capability matrix](capability-matrix.md). Authoritative nine-demo inventory: [preserved reconciliation matrix](../simulation-evidence-reconciliation/report.md).
+
+The four original T3 streams are preserved under raw/original-t3 with scoped -text; original runtime, historical normalized Git blob and corrective archive identities are separately recorded in original-raw-manifest.json. New browser evidence is independently identified in browser/invocation.json and execution.json; it is never labeled as the original browser run. Ellipse browser scope remains BACKEND_ONLY. Product/tests/original browser runner/full-gate remain unchanged; capture.py and probe-browser.mjs are run-local evidence tools only.
+
+Browser reproduction completed once: exit 0, 8 served + 1 refusal, 49 new screenshots, zero console/page errors. Full command/env/times/log hashes are in browser/invocation.json and browser/execution.json; all screenshot hashes/object inventories/checks are in browser/validation.json. An OPEN visual finding is retained: demo6b td_sec_axial ownPixels=0 (historical 41), resetDiffFromDefault=239. This does not establish independent visibility of the axial triangle in the audit view. No browser rerun or expectation change was made. Ellipses remain BACKEND_ONLY. Fresh authoritative T3 and clean-checkout archive verification are pending. No merge, push, branch deletion, worktree removal or new geometry is authorized.

@@ -1,5 +1,27 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SIMULATION_EVIDENCE_REPAIR_W01
+
+REPORT = docs/evaluation/geometry/runs/simulation-evidence-repair/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/simulation-evidence-repair/
+CLASSIFICATION = Local-only additive raw evidence repair and new browser/T3 reproduction. Current capability matrix is capability-matrix.md: residual polyhedral/frustum mesh NOT_IMPLEMENTED, scalar residual volume distinct from rendering, standalone cone_frustum BLOCKED_BY_KERNEL, ellipse browser scope BACKEND_ONLY. Original reports, screenshots, oracle data, hashes and classifications preserved.
+CODE_COMMIT = 3298b901d2246650535aa4028845ddc2a44892c4; original candidate 5f4ee58c48011e9e5d38d3209f7c97250032a976; base source d86c72031d8fc85cd4eef62d9379cd1690ba1417
+VERIFICATION = docs/evaluation/geometry/runs/simulation-evidence-repair/original-raw-manifest.json (ORIGINAL_RUNTIME_RAW_BYTES vs HISTORICAL_NORMALIZED_GIT_BLOB vs CORRECTIVE_RAW_ARCHIVE); new browser/t3 receipts and integrity manifest in the run
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SIMULATION_EVIDENCE_RECONCILIATION_W01 (raw archive portability, new execution provenance and current scope)
+CORRECTED_BY = NONE
+
+## WAVE_ID = SIMULATION_EVIDENCE_RECONCILIATION_W01
+
+REPORT = docs/evaluation/geometry/runs/simulation-evidence-reconciliation/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/simulation-evidence-reconciliation/
+CLASSIFICATION = Conditional GO MAIN preflight BLOCKED: original Full T3 stdout raw hashes match the source worktree but not Git blobs or a clean detached checkout because of line-ending conversion; authoritative demo inventory is 8 served scenes + 1 refusal with 49 screenshots, no browser-tested ellipse; reported DerivedSubSolidSpec/frustum_like support is absent from the committed implementation. Original evidence is unchanged. No merge, push, product change, or cleanup.
+CODE_COMMIT = 3298b901d2246650535aa4028845ddc2a44892c4; candidate / Full T3 target 5f4ee58c48011e9e5d38d3209f7c97250032a976; inspected source d86c72031d8fc85cd4eef62d9379cd1690ba1417
+VERIFICATION = docs/evaluation/geometry/runs/simulation-evidence-reconciliation/evidence.json (separate RAW_GIT_BLOB_SHA256 and RAW_WORKTREE_BYTES_SHA256 identities; clean detached reproduction)
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SIMULATION_COVERAGE_VISUAL_VALIDATION (demo descriptions, browser scope, residual-mesh claims, and raw-log portability)
+CORRECTED_BY = SIMULATION_EVIDENCE_REPAIR_W01
+
 ## WAVE_ID = SIMULATION_COVERAGE_VISUAL_VALIDATION
 
 REPORT = docs/evaluation/geometry/runs/simulation-coverage-visual-validation/report.md
@@ -9,7 +31,7 @@ CODE_COMMIT = e05e6208 (Session 1 product) · 3298b901 (final product commit on 
 VERIFICATION = docs/evaluation/geometry/runs/simulation-coverage-visual-validation/verification/full-product-gate.json + verification/independent-review.md (INDEPENDENT_REVIEW_PASS) + visual-acceptance-receipt.json
 MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
 CORRECTS = WAVE3A_ADAPTER3_INTEGRATION (candidate_divergence.json only; historical measurements and receipts unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = SIMULATION_EVIDENCE_RECONCILIATION_W01
 
 
 ## WAVE_ID = WAVE3A_ADAPTER3_INTEGRATION

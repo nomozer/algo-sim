@@ -1,0 +1,32 @@
+{
+  "schema_version": "browser-preflight/1",
+  "probe_utc": "2026-10-21T07:26:50.870Z",
+  "os": {
+    "platform": "win32",
+    "release": "10.0.26100",
+    "architecture": "x64"
+  },
+  "node": "v24.13.0",
+  "playwright": "1.62.1",
+  "chromium": "151.0.7922.34",
+  "executable": "C:\\Users\\Bunny\\AppData\\Local\\ms-playwright\\chromium-1234\\chrome-win64\\chrome.exe",
+  "executable_sha256": "409805a16d6416087e6b2f778df1cf8f7bbb267d6b99f6b5bb0a618eace234f2",
+  "headless": true,
+  "args": [
+    "--use-angle=swiftshader",
+    "--enable-unsafe-swiftshader",
+    "--ignore-gpu-blocklist"
+  ],
+  "viewport": {
+    "width": 1280,
+    "height": 860
+  },
+  "rendering_mode": "ANGLE SwiftShader software WebGL",
+  "webgl": {
+    "available": true,
+    "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+    "vendor": "Google Inc. (Google)"
+  },
+  "note": "Separate preflight probe; reproduction uses the unchanged frozen audit runner with the same executable and flags."
+}

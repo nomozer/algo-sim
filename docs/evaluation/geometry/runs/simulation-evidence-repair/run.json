@@ -1,0 +1,22 @@
+{
+  "schema_version": "simulation-evidence-repair/1",
+  "run_id": "simulation-evidence-repair",
+  "wave_id": "simulation-evidence-repair-w01",
+  "date": "2026-10-21",
+  "authorization": "GO_SIMULATION_EVIDENCE_REPAIR_LOCAL_ONLY",
+  "branch": "research/simulation-evidence-repair",
+  "source_commit": "d86c72031d8fc85cd4eef62d9379cd1690ba1417",
+  "product_commit": "3298b901d2246650535aa4028845ddc2a44892c4",
+  "candidate_commit": "5f4ee58c48011e9e5d38d3209f7c97250032a976",
+  "measured_system_sha256": "4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68",
+  "measured_file_count": 114,
+  "status": "IN_PROGRESS",
+  "live_provider_calls": 0,
+  "governance": {
+    "DEFAULT_MODE": "LLM_ONLY",
+    "RESPONSE_CONTRACT": "flat",
+    "HYBRID_PRODUCT_ENABLEMENT": "NO-GO",
+    "ALLOW_LIVE_AI": 0,
+    "CACHE_VERSION": 127
+  }
+}
