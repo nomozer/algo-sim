@@ -1,0 +1,87 @@
+{
+  "schema_version": "authoritative-t3-validation/1",
+  "run_kind": "AUTHORITATIVE_FULL_T3_SIMULATION_VISUAL_UX",
+  "source_commit": "f5b6d152370bf91bde798a1b4c6c06c8d4aa2a58",
+  "product_commit": "dbef50896c848b93433048b0469f9a78b6a3dbda",
+  "candidate_commit": "f5b6d152370bf91bde798a1b4c6c06c8d4aa2a58",
+  "session1_commit": "9341a85771dba79376b46e69ac531c413f507b55",
+  "session2_commit": "ec92c8ad81e52dcbf958f25184bea2958fd6be58",
+  "measured_system_sha256": "91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d",
+  "measured_file_count": 114,
+  "attempt1_archive": {
+    "status": "ARCHIVED_TRANSPARENTLY",
+    "directory": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/attempt1-fail",
+    "cause": "TypeScript strict check on SceneObject.perpendicular_witness (QuantityAnnotation['witness']) missing optional certificate fields in frontend/src/simulations/domains/geometry/scene3d-model.ts; resolved in commit dbef50896c848b93433048b0469f9a78b6a3dbda"
+  },
+  "execution": {
+    "started_utc": "2026-10-21T18:04:05.253540+00:00",
+    "finished_utc": "2026-10-21T18:12:26.210853+00:00",
+    "duration_seconds": 500.0,
+    "exit_code": 0,
+    "timed_out": false,
+    "verdict": "FULL_PRODUCT_GATE_PASS",
+    "stdout": {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/stdout.log",
+      "bytes": 29439,
+      "sha256": "004f2025d361f2a9e131326132ccf3614b8c20b174297a8261c370f88154732b"
+    },
+    "stderr": {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/stderr.log",
+      "bytes": 138295,
+      "sha256": "bccc41d24a26ca575552ae5d65c3f89025768cf86e1ad93d8eaebca26a3f874d"
+    }
+  },
+  "sub_gates": {
+    "backend_pytest": {
+      "status": "PASS",
+      "passed": 11442,
+      "skipped": 1,
+      "deselected": 2,
+      "xfailed": 9,
+      "failed": 0,
+      "duration_seconds": 482.5
+    },
+    "frontend_vitest": {
+      "status": "PASS",
+      "test_files_passed": 74,
+      "tests_passed": 1166,
+      "failed": 0,
+      "duration_seconds": 9.5
+    },
+    "typecheck_and_build": {
+      "status": "PASS",
+      "command": "tsc -b && vite build",
+      "duration_seconds": 6.8
+    },
+    "thesis_demo_replay": {
+      "status": "PASS",
+      "demo_cases": 5,
+      "demo_replay_pass": "5/5",
+      "reduced_chain_cases": "1/1",
+      "duration_seconds": 0.7
+    },
+    "demo_crash_surface": {
+      "status": "PASS",
+      "boundary_cases": "6/6",
+      "escaped_500": 0,
+      "duration_seconds": 0.5
+    }
+  },
+  "post_t3_candidate_freeze_verification": {
+    "started_utc": "2026-10-21T18:12:26.550982+00:00",
+    "finished_utc": "2026-10-21T18:12:28.276810+00:00",
+    "exit_code": 0,
+    "timed_out": false,
+    "status": "MATCH",
+    "stdout": {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/freeze/stdout.log",
+      "bytes": 93,
+      "sha256": "7e9d54f56d4e937829eaf50bcda6397feb6b7a57e67f3f64d6802f4f9caa8a79"
+    },
+    "stderr": {
+      "path": "docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/freeze/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "authoritative-t3-freeze-invocation/1",
+  "run_kind": "POST_T3_CANDIDATE_FREEZE_VERIFY_SIMULATION_VISUAL_UX",
+  "source_commit": "f5b6d152370bf91bde798a1b4c6c06c8d4aa2a58",
+  "product_commit": "dbef50896c848b93433048b0469f9a78b6a3dbda",
+  "candidate_commit": "f5b6d152370bf91bde798a1b4c6c06c8d4aa2a58",
+  "measured_system_sha256": "91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d",
+  "measured_file_count": 114,
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-simulation-visual-ux",
+  "argv": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "backend/scripts/freeze_evaluation_candidate.py",
+    "--verify"
+  ],
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8"
+  },
+  "output_directory": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\simulation-visual-consistency-learning-ux\\docs\\evaluation\\geometry\\runs\\simulation-visual-consistency-learning-ux\\t3\\freeze",
+  "timeout_seconds": 120,
+  "attempt_limit": 1
+}

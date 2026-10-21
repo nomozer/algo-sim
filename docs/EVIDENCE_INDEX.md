@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_W01
+
+REPORT = docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/
+CLASSIFICATION = SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_READY_FOR_REVIEW (two-session integrated development campaign on research/simulation-visual-consistency-learning-ux from verified main 43247c9e9375a3dbf2b5223324a58e6f932ca596 under GO_SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_LOCAL; SIMULATION_VISUAL_UX_DEVELOPMENT_EVALUATION_NOT_BLIND). Session 1 (9341a857) unifies Scene3D visual semantics across polyhedra and curved solids (muted slate curved surfaces 0x647a96, BASE_REGION vs SECTION_REGION on circle3/ellipse3 with translucent amber section disk section_fill:<id>, auto-framing via khungNhinSuPham + radial bounding extents in diemHuuHan, raycast specificity HANG_CU_THE in pick-target.ts, canonical A'/B'/O'/R/h/r notations in adapter3_simulation.py). Session 2 (ec92c8ad + dbef5089) implements Mode A Simulation default hiding all final requested answers (defaultPanelOpen=false, visibleReadoutBadgesDefault=[]) and Mode B Mathematical Analysis (#geo3d-bang-phan-tich) with 8-category semantic classification (phanLoaiVat, phanTichToanHocCuaCanh). Real-browser Chromium WebGL evaluation across 14 families (13 served + 1 refusal, 92 after/*.png screenshots): D1..D10 = 1.0, 0 label collisions, 0 console/page errors, resetDiffFromDefault = 0. Independent review INDEPENDENT_REVIEW_PASS (0 BLOCKER, 0 IMPORTANT, 0 MINOR). Authoritative Full T3 at f5b6d152 FULL_PRODUCT_GATE_PASS (pytest 11,442, vitest 1,166, build PASS, demo 5/5, crash 6/6; post-T3 freeze MATCH).
+CODE_COMMIT = 9341a85771dba79376b46e69ac531c413f507b55 (Session 1) · ec92c8ad81e52dcbf958f25184bea2958fd6be58 (Session 2) · dbef50896c848b93433048b0469f9a78b6a3dbda (final product commit); candidate freeze & Full T3 target f5b6d152370bf91bde798a1b4c6c06c8d4aa2a58 (measured_system tree_hash 91ac973ebc2d42041809d957c55e2829f875c05e649e35b7eee9ebeac1e5d26d across 114 files)
+VERIFICATION = docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/eval-summary.json + docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/browser-after/visual_ux_acceptance_receipt.json + docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/INDEPENDENT_REVIEW.md + docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/t3/validation.json + docs/evaluation/geometry/runs/simulation-visual-consistency-learning-ux/FINAL_HANDOFF.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SIMULATION_DEMO6B_RENDERER_FIX_W01 (candidate_divergence.json identity layer only; historical measurements and receipts unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SIMULATION_DEMO6B_RENDERER_FIX_W01
 
 REPORT = docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 1ca20f4f51457f3457802bca042af76accd13698 (new renderer-fixed produ
 VERIFICATION = docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/raw-log-size-reconciliation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/candidate-and-browser-inventory-reconciliation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser-original-runner/validation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser/validation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/t3/validation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/independent-review.md + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/archive-integrity.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = SIMULATION_EVIDENCE_REPAIR_W01 (resolves open IMPORTANT finding on demo6b td_sec_axial visibility & camera reset diff, and additively corrects prose byte-size table in simulation-evidence-repair/report.md without mutating historical files)
-CORRECTED_BY = NONE
+CORRECTED_BY = SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_W01 (candidate identity layer; no historical measurement rewrite)
 
 ## WAVE_ID = SIMULATION_EVIDENCE_REPAIR_W01
 
