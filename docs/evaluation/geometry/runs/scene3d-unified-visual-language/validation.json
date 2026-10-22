@@ -1,0 +1,87 @@
+{
+  "schema_version": "scene3d-unified-visual-validation/1",
+  "status": "PASS",
+  "checks": {
+    "candidate_head_is_freeze_commit": true,
+    "manifest_commit_is_evidence_commit": true,
+    "manifest_product_commit": true,
+    "manifest_clean_tree": true,
+    "manifest_cache_version_127": true,
+    "product_is_ancestor_of_candidate": true,
+    "no_product_change_after_product_commit": true,
+    "t3_exit_0_clean": true,
+    "t3_stream_hashes_match": true,
+    "t3_gate_pass_marker": true,
+    "freeze_verify_exit_0_clean": true,
+    "freeze_stream_hashes_match": true,
+    "freeze_match_marker": true,
+    "browser_final_measured_product_commit": true,
+    "browser_validation_pass": true
+  },
+  "candidate_commit": "dd3bddd48dad7ff865d7c0442c50b6523d87d3c7",
+  "evidence_commit": "672e8fc60465becd666e8450af55d2ea852d277c",
+  "product_commit": "34a57d3540f82a78701b0f0caa8dbae746f266d1",
+  "measured_system": {
+    "paths": [
+      "backend/app",
+      "frontend/src/simulations/domains/semantic",
+      "frontend/src/simulations/domains/semantic/semantic_program.schema.json"
+    ],
+    "so_file": 114,
+    "tree_hash": "9bf35a1d6f4c3b3e90228964a3b5ee96288de29efcb3f580f22c6f126489bd9a"
+  },
+  "full_t3": {
+    "directory": "t3-attempt2",
+    "elapsed_seconds": 571.06,
+    "pytest": "11442 passed, 1 skipped, 2 deselected, 9 xfailed",
+    "vitest": "76 files / 1192 tests passed",
+    "build": "PASS",
+    "demo_replay": "5/5",
+    "crash_surface": "6/6",
+    "streams": {
+      "stdout": {
+        "bytes": 18440,
+        "sha256": "e466f3e8d10dfdc4dc24a9aa0799f402dc9d07835a7f1c329423050ffa26a115"
+      },
+      "stderr": {
+        "bytes": 342,
+        "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a"
+      }
+    }
+  },
+  "interrupted_attempt": {
+    "directory": "t3",
+    "status": "INTERRUPTED_NO_RESULT",
+    "why": "previous Claude session ended during backend pytest (~91%); no execution.json; bytes kept as is"
+  },
+  "post_t3_freeze": {
+    "directory": "post-t3-freeze",
+    "result": "MATCH",
+    "streams": {
+      "stdout": {
+        "bytes": 93,
+        "sha256": "6c12d76fd31e4f780cf28cde36a52b49fd17330eb18fda30f704d5820c1e0933"
+      },
+      "stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  "browser": {
+    "status": "AUTOMATED_TECHNICAL_PASS",
+    "total_checks": 1542,
+    "arm": "final-r2",
+    "source_commit": "34a57d3540f82a78701b0f0caa8dbae746f266d1"
+  },
+  "governance": {
+    "cache_version": 127,
+    "default_mode": "LLM_ONLY",
+    "response_contract": "flat",
+    "hybrid_product_enablement": "NO-GO",
+    "allow_live_ai": 0,
+    "live_provider_calls": 0
+  },
+  "human_visual_approval": "NOT_GRANTED",
+  "go_main": "NOT_GRANTED"
+}

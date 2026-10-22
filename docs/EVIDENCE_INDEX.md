@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SCENE3D_UNIFIED_VISUAL_LANGUAGE_W01
+
+REPORT = docs/evaluation/geometry/runs/scene3d-unified-visual-language/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-unified-visual-language/
+CLASSIFICATION = SCENE3D_UNIFIED_VISUAL_LANGUAGE_READY_FOR_HUMAN_REVIEW (local-only semantic material tokens from DESIGN.md across every geometry family; A/B/C survey re-measured after the token-override defect with runtime probe + WebGL material checks; independent reviews rounds 3-5 with no open Critical/Important; authoritative Full T3 PASS; post-T3 freeze MATCH; human visual approval NOT_GRANTED)
+CODE_COMMIT = 34a57d3540f82a78701b0f0caa8dbae746f266d1; candidate dd3bddd48dad7ff865d7c0442c50b6523d87d3c7; unchanged 114-file measured tree 9bf35a1d6f4c3b3e90228964a3b5ee96288de29efcb3f580f22c6f126489bd9a; changed frontend renderer locked by product_commit_sha
+VERIFICATION = docs/evaluation/geometry/runs/scene3d-unified-visual-language/validation.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/browser-metrics.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/survey-validity.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/t3-attempt2/execution.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/post-t3-freeze/execution.json + docs/evaluation/geometry/runs/scene3d-unified-visual-language/handoff.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = GEOMETRIC_VISUAL_CORRECTNESS_FRAMING_W01 (semantic material palette: stable full-scene primary/secondary solid roles replace the visible-index teal override; one unlit section fill across polygon/circle/ellipse; historical artifact bytes unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = GEOMETRIC_VISUAL_CORRECTNESS_FRAMING_W01
 
 REPORT = docs/evaluation/geometry/runs/geometric-visual-correctness-framing/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = ca84337e32c27c1116f5b1065ca45f2fcdf3e13c; candidate 7868db0aef3810
 VERIFICATION = docs/evaluation/geometry/runs/geometric-visual-correctness-framing/validation.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/after/measurements.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/before/measurements.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/OWNER_VISUAL_FINDINGS.md + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/review.md + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/t3/execution.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/post-t3-freeze/execution.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/handoff.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = VISUAL_UX_FINAL_QUALITY_W01 (adaptive safe-area camera framing, true radius-R curved surface bounds, restrained curved rim thickness, dynamic camera-dependent quadric rim occlusion, Normal vs X-ray section depth honesty, multi-solid occluder passing & D1 notation, and demo title reconciliation; historical artifact bytes unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = SCENE3D_UNIFIED_VISUAL_LANGUAGE_W01 (semantic material palette and stable solid roles; historical artifact bytes unchanged)
 
 ## WAVE_ID = VISUAL_UX_FINAL_QUALITY_W01
 

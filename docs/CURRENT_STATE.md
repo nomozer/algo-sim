@@ -1,5 +1,9 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+## LOCAL SCENE3D UNIFIED VISUAL LANGUAGE (`research/scene3d-unified-visual-language`), 2026-10-22
+
+Owner campaign stacked on `research/geometric-visual-correctness-framing` (`f9559671`; `main` `43247c9e` unchanged): semantic Scene3D tokens extending root `DESIGN.md` ([`SCENE3D_VISUAL_LANGUAGE.md`](architecture/SCENE3D_VISUAL_LANGUAGE.md)) in `scene3d-roles.ts::PHONG_CACH_SCENE3D`, consumed by every mesh technique in `scene3d-view.tsx`; stable full-scene solid roles (`vaiTroKhoi`), one unlit section language for polygon/circle/ellipse and metadata-free polygon3 (`vaiTroMien`, also driving section depth/X-ray order), per-owner span material reuse. Product `34a57d35` (via `36dfccef`, `24e1a9db`), frozen candidate `dd3bddd4`. The earlier A/B/C survey was invalidated by a token-override defect and re-measured with a runtime probe and WebGL material checks ([`survey-validity.json`](evaluation/geometry/runs/scene3d-unified-visual-language/survey-validity.json)); browser validation 1542/1542; independent reviews rounds 3–5 with no open Critical/Important; authoritative Full T3 `FULL_PRODUCT_GATE_PASS` (570.3s, pytest 11,442, vitest 76 files / 1,192, build PASS, demo 5/5, crash 6/6), post-T3 freeze `MATCH`. Known limit: metadata-free faces with a `parent` in old envelopes render as sections (M-b). Verdict **`SCENE3D_UNIFIED_VISUAL_LANGUAGE_READY_FOR_HUMAN_REVIEW`** ([`handoff.md`](evaluation/geometry/runs/scene3d-unified-visual-language/handoff.md); human visual approval `NOT_GRANTED`, GO MAIN `NOT_GRANTED`). Cache **127**, `LLM_ONLY`, `flat`, Hybrid **NO-GO**, live provider calls **0**.
+
 ## LOCAL GEOMETRIC VISUAL CORRECTNESS & ADAPTIVE FRAMING (`research/geometric-visual-correctness-framing`), 2026-10-22
 
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION
