@@ -1,0 +1,13 @@
+{
+ "schema": "execution/1",
+ "purpose": "Re-freeze the evaluation candidate after product commit 3553e4d4 (backend/app touched)",
+ "worktree": ".superpowers/worktrees/s2-freeze (detached, clean: 0 status lines)",
+ "commit": "3553e4d45991954dd0fb8c0ac30bf5fb79a3ff51",
+ "command": "cd backend && PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py",
+ "exit_code": 0,
+ "clean_tree_recorded": true,
+ "measured_system": {"files": 115, "tree_hash": "96962736b4aed18ec13afd73d06fab822fe398d7bf5939babc9a3733e45c1af4"},
+ "manifest_sha256": "3680853c2f86b619db75dab46cd93fa3213f7f2365954cd671a9da8ef50fb5f2",
+ "discarded_attempt": "a first run in the campaign worktree recorded clean_tree=false (untracked run directory); its manifest was discarded, not committed",
+ "post_copy_verify": {"cwd": "Session 2 worktree", "command": "scripts/freeze_evaluation_candidate.py --verify", "exit_code": 0}
+}
