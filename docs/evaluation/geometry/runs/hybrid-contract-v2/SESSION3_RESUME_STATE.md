@@ -73,3 +73,17 @@
      - `NEG-per-edge-same-name`: câu `"cắt SB tại N, cắt SC tại N"` bị chặn ngay tại tầng schema `parse_typed_fact_next_v2` với mã `INVALID_DERIVED_SECTION` (thuộc nhóm `EXTRACTION_FAILED` في `hybrid_preview.py`) trước khi tới Source Gate.
 6. **Evaluation đã kết thúc thành công hay chỉ in kết quả trung gian?**
    - Lần chạy của Claude đang là bước kiểm tra trong quá trình triển khai P4b và bị văng `UnicodeEncodeError` (do `cp1252` trên console Windows ở dòng 81 của `evaluate_grammar_set.py` khi in ký tự tiếng Việt trong `mismatches`).
+
+---
+
+## 3. Final Completion Ledger (`P1`–`P9`)
+
+- **P4b Completed (`814b88c9f30d649b1e94239aba81bfdabd7f2dab`)**:
+  - `after-p4b-grammar.json`: `SERVE = 22/22` (`100%` of positive cases served with exact oracle answers, `wrong_served: []`, `served_without_gate: []`), `REFUSE_GEOMETRY = 4/4`, `REFUSE_KERNEL = 2/2`, `REFUSE_SOURCE = 18/19` (`+1 REFUSE_OTHER` on `NEG-per-edge-same-name` at `/2` schema boundary `INVALID_DERIVED_SECTION`), total `match = 46/47`.
+- **P6 & P7 Completed (`94893d72049baddc3f6bdea433e7a31157f8e8f5`)**:
+  - `evaluate_session3.py` executed across Families A–H (`verification/evaluation/session3-evaluation-summary.json` & `session3-evaluation-full.json`), `0` live provider calls, `0` `wrong_served`.
+- **P8 Independent Review & Remediation Completed (`541803c867adfbc5e85a8109bd0307552090f9df`)**:
+  - Read-only subagent `61217726-a797-4a91-b722-e4393c7e11c9` audited `227d447f..94893d72`; finding `I-1` (vacuous `DINH_CAT_CANH` on plane-only `/2` section without derived solid or `declared_boundary`) fixed in `541803c8` and pinned by `test_v2_plane_only_section_area_without_derived_solid_is_served` (`47 passed` in `test_hybrid_contract_v2.py`).
+- **P9 Final Reports Written**:
+  - `SESSION3_FINAL_REPORT.md`, `CONTRACT_V2_IMPLEMENTATION_REPORT.md`, `SOURCE_GATE_COVERAGE_MATRIX.md`, `PLANNER_COMPOSITION_AND_REUSE_REPORT.md`, `BACKEND_MIGRATION_READINESS.md`, `INDEPENDENT_REVIEW.md`, `report.md`, `handoff.md`, `run.json`, `candidate_divergence.json`.
+

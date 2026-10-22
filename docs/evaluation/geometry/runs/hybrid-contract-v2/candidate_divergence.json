@@ -1,0 +1,21 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "hybrid-contract-v2",
+  "corrects": "docs/evaluation/geometry/runs/backend-hybrid-contract-unification/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "previous_candidate_hash": "96962736b4aed18ec13afd73d06fab822fe398d7bf5939babc9a3733e45c1af4",
+  "current_candidate_hash": "173af8b2604dde4754a602eb868ceb07f8129263f7b80aa9601a9a203aec51d9",
+  "current_measured_files": 116,
+  "current_product_commit": "541803c867adfbc5e85a8109bd0307552090f9df",
+  "diverged": true,
+  "reason": "Backend Hybrid Session 3 (GO_HYBRID_SESSION3_CONTRACT_V2_LOCAL_RESEARCH): implements canonical contract typed-fact-next/2 (StatedIntersectionSpec + optional declared_boundary), route-labeled converter convert_v1_to_v2, bridge /2 (typed-fact-next-bridge/2), Adapter /4 (hybrid-simulation-adapter/4, hybrid-route-d-simulation/4) delegating exclusively to the planner + engine with unified Source Gate authority (registry.kiem_nguon, 0 legacy substring fallback on /2), bounded unstated lateral cut derivation (D6 DERIVED_FRESH via PlanningContract on intersect_line_plane when a closed boundary is required, verified by exact closure certificate same_section_cycle), closed Source Gate grammar expansions G1-G7 on a pre-locked 47-case evaluation set, and section-before-area plane ownership in engine._bien_dich_mat_cat. Bumps internal versions to geometry-functions/13, geometry-fact-planner/13, geometry-function-engine/11 while keeping /1 contracts, provider schemas, default route (LLM_ONLY), response contract (flat), IR budget (32), cache key (127), and historical measurements unchanged.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP: /api/analyze (LLM_ONLY) does not import or execute the geometry-functions engine, Adapter /3, Adapter /4, or the TypedFactNext bridges; no provider prompt, schema, routing policy, or cached envelope changed.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and frozen corpora remain byte-identical."
+  }
+}

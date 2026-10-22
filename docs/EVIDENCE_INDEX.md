@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = hybrid-contract-v2
+
+REPORT = docs/evaluation/geometry/runs/hybrid-contract-v2/SESSION3_FINAL_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-contract-v2/
+CLASSIFICATION = DEVELOPMENT_EVALUATION_NOT_BLIND; OFFLINE_REPLAY; Backend Hybrid Session 3 (`GO_HYBRID_SESSION3_CONTRACT_V2_LOCAL_RESEARCH`: D1 GO canonical `typed-fact-next/2`, `typed-fact-next-bridge/2`, `hybrid-simulation-adapter/4`, `hybrid-route-d-simulation/4`, `convert_v1_to_v2`; D2 GO-conditional unified Source Gate authority `registry.kiem_nguon` on `/2` with 0 legacy substring fallback; D3 GO closed Source Gate grammar G1–G7 on pre-locked 47-case `grammar-set.json` `10c57be7…`: 22/22 positive SERVED with exact oracle answers, 25/25 negative REFUSED, 46/47 category match; D4 KEEP 32 IR budget; D5 GO `geometry-functions/13`, `geometry-fact-planner/13`, `geometry-function-engine/11`; D6 GO-limited bounded unstated lateral cut derivation `derived_fresh` via `PlanningContract` on `intersect_line_plane` verified by `same_section_cycle` closure certificate). Independent review `INDEPENDENT_REVIEW_PASS` (`61217726-a797-4a91-b722-e4393c7e11c9`). CACHE_VERSION 127 NO_BUMP, LLM_ONLY, flat, Hybrid product NO-GO, 0 live provider calls.
+CODE_COMMIT = 541803c867adfbc5e85a8109bd0307552090f9df (final product; measured_system tree_hash 173af8b2604dde4754a602eb868ceb07f8129263f7b80aa9601a9a203aec51d9 across 116 files); earlier checkpoints fe6ad30b (P1 safety), 4268f4e2 (P4a grammar lock), fa1599c6 (P2 contract v2), 42f19eec (P3/P5 bridge v2 + Adapter /4), 814b88c9 (P4b grammar G1–G7), 94893d72 (P6/P7 evaluation)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-contract-v2/run.json; docs/evaluation/geometry/runs/hybrid-contract-v2/verification/grammar/after-p4b-grammar.json; docs/evaluation/geometry/runs/hybrid-contract-v2/verification/evaluation/session3-evaluation-summary.json; docs/evaluation/geometry/runs/hybrid-contract-v2/INDEPENDENT_REVIEW.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = backend-hybrid-contract-unification (candidate_divergence.json chain tip; historical measurements and frozen corpora unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = backend-hybrid-contract-unification
 
 REPORT = docs/evaluation/geometry/runs/backend-hybrid-contract-unification/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 3553e4d45991954dd0fb8c0ac30bf5fb79a3ff51 (product); 5beb0e86 (cand
 VERIFICATION = docs/evaluation/geometry/runs/backend-hybrid-contract-unification/evaluation.json; docs/evaluation/geometry/runs/backend-hybrid-contract-unification/session1-family-replay.json; docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/red/red-receipts.json; docs/evaluation/geometry/runs/backend-hybrid-contract-unification/handoff.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = backend-hybrid-taxonomy-completion (candidate chain tip); TYPEDFACT_NEXT_ADAPTER3_SIMULATION (dev-corpus expectations A3-DEV-07/08 source defects served, A3-DEV-10 kept false refusal, A3-DEV-11 code order — frozen corpus bytes unchanged); backend-hybrid-continuation (Adapter /3 figures in EVALUATION_SUMMARY.md describe 82d3d255, not this code)
-CORRECTED_BY = NONE
+CORRECTED_BY = hybrid-contract-v2
 
 ## WAVE_ID = backend-hybrid-continuation
 
