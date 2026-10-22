@@ -246,7 +246,6 @@ def test_d6_derives_unstated_cut_vertices_with_provenance_and_never_shows_them_a
     assert [s for s in text if tok.search(s)] == []
 
 
-@pytest.mark.xfail(strict=True, reason="D3 grammar wave: a derived pyramid named by description as a ratio operand")
 def test_d6_described_derived_pyramid_ratio_is_exact():
     from fractions import Fraction
     r = _run4(_partial("ABC", ("SB",), ask="Tính tỉ số thể tích của khối chóp đỉnh S cắt bởi (α) và khối chóp S.ABC."))
@@ -304,3 +303,34 @@ def test_route_v2_boundary_records_internal_faults_as_technical_refusals(monkeyp
     monkeypatch.setattr(FR, "run_fact_route", boom)
     r = _run4(_v2(_payload("ABC")))
     assert (r.status, r.code) == ("REFUSED", "ROUTE_INTERNAL_ERROR") and "ZeroDivisionError" in r.reason
+
+
+def test_d3_closed_grammar_paraphrases_and_negative_controls():
+    """D3 closed grammar expansion: PARA-0..5, CORPUS-DEV09/10, and negative controls on `/2`."""
+    import json
+    from fractions import Fraction
+    from pathlib import Path
+    from app.ai.hybrid_preview import classify_refusal
+
+    root = Path(__file__).resolve().parents[3]
+    cases = {
+        c["id"]: c
+        for c in json.loads(
+            (root / "docs/evaluation/geometry/runs/hybrid-contract-v2/grammar-set.json").read_text(encoding="utf-8")
+        )["cases"]
+    }
+    for cid in ("PARA-0", "PARA-1", "PARA-2", "PARA-3", "PARA-4", "PARA-5", "POS-per-edge-with-va-cat",
+                "CORPUS-DEV09-construct", "CORPUS-DEV10-prism-area"):
+        r = _run4(cases[cid]["payload"])
+        assert r.status == "SERVED", (cid, r.code, r.reason)
+        assert r.route_d["source_verification"] == {"authority": "registry.kiem_nguon"}
+        for k, v in cases[cid]["answers"].items():
+            assert _square(r.answer_exact[k]["coef"]) == Fraction(v), (cid, k, r.answer_exact)
+
+    for cid in ("NEG-point-first-wrong-reference", "NEG-contains-a-line",
+                "NEG-other-plane-subject", "NEG-swapped-names", "NEG-stated-edge-not-in-text"):
+        r = _run4(cases[cid]["payload"])
+        assert r.status == "REFUSED", cid
+        assert classify_refusal(r.code).group in ("SOURCE_UNVERIFIED", "MISSING_DATA"), (cid, r.code)
+    assert _run4(cases["NEG-per-edge-same-name"]["payload"]).code == "INVALID_DERIVED_SECTION"
+

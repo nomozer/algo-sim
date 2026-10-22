@@ -1263,7 +1263,7 @@ class _Dung:
                 for d in self.mat_phu:
                     cur_id = tuple(d["constructs"]) + tuple(d["targets"])
                     self._kiem_mat_phu(d)
-                for c in self.of("section", "ask_section_area"):
+                for c in (*self.of("section"), *self.of("ask_section_area")):
                     cur_id = (c.id,)
                     self._plane(c.args.plane)
                 for c in self.of("ask_area"):
@@ -1441,7 +1441,7 @@ class _Dung:
         mặt) chỉ dựng MỘT lần dù được yêu cầu dựng và hỏi diện tích; trả {khoá: biến thiết diện}."""
         td: dict[tuple, str] = {}
         vet: dict[tuple, dict] = {}
-        for c in self.of("section", "ask_section_area"):
+        for c in (*self.of("section"), *self.of("ask_section_area")):
             if (khoa := self._khoa_mat_cat(c)) in td:
                 vet[khoa]["calls"].append(c.id)                 # cùng thiết diện: một đối tượng, vết ghi mọi lời gọi (M3)
                 continue

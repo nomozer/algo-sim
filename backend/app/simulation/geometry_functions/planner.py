@@ -1089,8 +1089,13 @@ def _mat_qua_diem(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn: s
     c = phat(f.id, fn, {"solid": khoi, "plane": [m, *d["labels"]]}, d["quotes"], f"{rule}→{fn}")
     k.trace[-1]["fact"] = f.id
     d["targets"].append(f.id)
+    # a cut certificate on this plane, and its cut calls, share the plane's FINAL quotes (an area question on the same
+    # plane mapped after the section grows them — run `hybrid-contract-v2`)
+    cat = [x for x in k.auxiliary if x.get("rule") == DINH_CAT_CANH and x.get("plane_goal") == d["goal"]]
+    for x in cat:
+        x["quotes"] = list(d["quotes"])
     for call in k.calls:                                  # một khai báo, một tập quote cho mọi lời gọi của nó
-        if call["id"] in d["constructs"] + d["targets"]:
+        if call["id"] in d["constructs"] + d["targets"] + [i for x in cat for i in x["constructs"]]:
             call["source"]["quotes"] = list(d["quotes"])
     k.trace.append({"fact": f.id, "step": "decompose_goal", "rule": rule,
                     "goal": f"Section({khoi}, Plane({m} ∥ ({''.join(ref)})))",
