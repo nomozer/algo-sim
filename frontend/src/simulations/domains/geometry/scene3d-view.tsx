@@ -1876,7 +1876,8 @@ export function buildObject3D(
     const mauVien = net(mauVienMien);
     const coNetDut = (beDayNet(diemNen, 1) / SECTION_STROKE_RATIO) * NET_DUT_TI_LE;
     const thietDien = o.type === "section";
-    const daGiacPhu = o.type === "polygon3" && o.surface_role === "AUXILIARY_SURFACE" && !(o.formation_roles ?? []).includes("CONSTRUCT_BASE");
+    // Same role as the fill color: a section-role polygon3 (tagged or metadata-free) gets section depth/X-ray order.
+    const daGiacPhu = o.type === "polygon3" && laThietDien;
     const toXuyenKhoi = thietDien || daGiacPhu;
     const thuTuVien = thietDien ? THU_TU_VE_THIET_DIEN : THU_TU_DUONG;
     const chungVien = {

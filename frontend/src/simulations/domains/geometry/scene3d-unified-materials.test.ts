@@ -63,6 +63,11 @@ describe("shared semantic material behavior", () => {
       const mesh = (built.getObjectByName(`section_fill:${o.id}`) ?? built.getObjectByName(`polygon_fill:${o.id}`)) as THREE.Mesh;
       const material = mesh.material as THREE.MeshBasicMaterial;
       expect([o.id, material.color.getHex(), material.opacity]).toEqual([o.id, reference.color.getHex(), reference.opacity]);
+      // Same section depth semantics too: drawn after shells, revealed only by explicit X-ray.
+      const xray = buildObject3D(o, false, undefined, undefined, undefined, undefined, undefined, true)!;
+      const xrayMesh = (xray.getObjectByName(`section_fill:${o.id}`) ?? xray.getObjectByName(`polygon_fill:${o.id}`)) as THREE.Mesh;
+      expect([o.id, mesh.renderOrder, (mesh.material as THREE.Material).depthTest, (xrayMesh.material as THREE.Material).depthTest])
+        .toEqual([o.id, fill(polygon).renderOrder, true, false]);
     }
     expect(roles.vaiTroMien({ ...polygon, type: "polygon3", surface_role: undefined, formation_roles: ["CONSTRUCT_BASE"] })).toBe("base");
   });
