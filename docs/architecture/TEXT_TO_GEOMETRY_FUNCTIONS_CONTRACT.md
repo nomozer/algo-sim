@@ -1,16 +1,40 @@
-# Contract: Text-to-Geometry Functions (`geometry-functions/2`, engine `geometry-function-engine/1`)
+# Contract: Text-to-Geometry Functions & Kiến trúc Hybrid (`geometry-functions/11`, planner `geometry-fact-planner/11`, engine `geometry-function-engine/9`)
 
-Contract **đang hiệu lực** của kiến trúc đích ([`TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md`](TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md)).
+Contract **đang hiệu lực** của nền tảng hàm hình học và kiến trúc mục tiêu **Hybrid**
+([`TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md`](TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md),
+[`HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](HYBRID_B_TARGET_ARCHITECTURE_DECISION.md),
+[`TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md`](TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md),
+[`WAVE3A_CONTRACT_DECISION.md`](WAVE3A_CONTRACT_DECISION.md)).
 Sửa contract ⇒ wave mới + test. Bản v1 bất biến: `../evaluation/geometry/runs/text-to-geometry-functions/FUNCTION_REGISTRY_SPEC.md`.
 
-```
-đề ──► AI (Gemini function calling, MỘT lượt/đề)        backend/app/ai/function_calling.py
-   ──► lời gọi {fn, args, call_id, quotes[], depends_on[]}
-   ──► lược đồ đóng · cổng nguồn 5 tầng                  backend/app/simulation/geometry_functions/registry.py
-   ──► engine: chuẩn hoá có tiền điều kiện · phụ thuộc · bố cục khung affine + Gram · kiểm MỌI dữ kiện
-                                                          backend/app/simulation/geometry_functions/engine.py
+> **Phân biệt AS-IS và TO-BE:**
+> - **AS-IS (Tuyến sản phẩm mặc định hiện hành):** `DEFAULT_MODE = LLM_ONLY` (`CACHE_VERSION = 127`). Tuyến mặc định của
+>   `/api/analyze` chưa chuyển sang **Hybrid** cho tới khi vượt qua đủ 20 cổng tại [`../MIGRATION_CHECKLIST.md`](../MIGRATION_CHECKLIST.md).
+> - **TO-BE (Kiến trúc mục tiêu — Hybrid):** AI chỉ trích xuất JSON Typed Facts (`TypedFact` ở `fact_extraction.py`
+>   `hybrid-semantic-extraction/3`, hoặc `TypedFactNext` ở `typed_fact_next.py` `typed-fact-next/1`), đi qua cổng kiểm
+>   chứng nguồn **Semantic Grounding**, sau đó **Goal-Directed Construction Planner** tất định (`planner.py`,
+>   `geometry-fact-planner/11`) tự chọn và phối hợp các **Geometry Functions** (`registry.py`, `geometry-functions/11`)
+>   → **Compiler / Construction IR** → **Engine / Kernel** (`engine.py`, `geometry-function-engine/9`;
+>   `adapter3_simulation.py`, `hybrid-simulation-adapter/3`) → **Scene3D**.
+> - **Tuyến đối chứng trực tiếp (Baseline A):** AI gọi trực tiếp hàm dựng hình (`function_calling.py` →
+>   `function_route.py`) chỉ giữ làm baseline đối chứng thực nghiệm.
+
+```text
+[Tuyến mục tiêu TO-BE — Hybrid]
+đề tiếng Việt
+   ──► AI trích xuất JSON Typed Facts                     backend/app/ai/fact_extraction.py (`hybrid-semantic-extraction/3`)
+       (`TypedFact` / `TypedFactNext`)                    backend/app/simulation/geometry_functions/typed_fact_next.py (`typed-fact-next/1`)
+   ──► Semantic Grounding & chuẩn hoá dữ kiện             backend/app/simulation/geometry_functions/planner.py (`geometry-fact-planner/11`)
+   ──► Goal-Directed Construction Planner (tất định tự phối hợp lời gọi Geometry Functions)
+   ──► lược đồ đóng · cổng nguồn 6 tầng (`kiem_nguon`)    backend/app/simulation/geometry_functions/registry.py (`geometry-functions/11`)
+   ──► Engine: chuẩn hoá có tiền điều kiện · phụ thuộc · bố cục khung affine + Gram · kiểm MỌI dữ kiện
+                                                          backend/app/simulation/geometry_functions/engine.py (`geometry-function-engine/9`)
    ──► IR SemanticProgram ──► interpreter + kernel dưới metric.using(G)
-   ──► Scene3D + chart_metric (+ length_unit)            backend/app/ai/function_route.py
+   ──► Scene3D + chart_metric (+ length_unit)             backend/app/ai/function_route.py · backend/app/ai/adapter3_simulation.py (`hybrid-simulation-adapter/3`)
+
+[Tuyến đối chứng Baseline A — Direct Function Calling]
+đề ──► AI (Gemini function calling, MỘT lượt/đề)          backend/app/ai/function_calling.py
+   ──► lời gọi {fn, args, call_id, quotes[], depends_on[]} ──► registry.py ──► engine.py ──► Scene3D
 ```
 
 ## 1. Lời gọi
@@ -18,33 +42,35 @@ Sửa contract ⇒ wave mới + test. Bản v1 bất biến: `../evaluation/geom
 `{"id"|"call_id": "c1", "fn": <tên trong REGISTRY>, "args": {...}, "source": {"quotes": ["…nguyên văn…"]},
 "depends_on": ["c0"]}`. Lược đồ đóng (`extra="forbid"`): không ô toạ độ, không hàm ngoài bảng, không mã. Nhãn
 `^[A-Z][0-9]*'?$`; khối `S.ABC` / `ABC.A'B'C'`; số chính xác `4 · 2/3 · 1,5 · √3 · 3√3/4` hoặc theo ký hiệu
-`a · 2a · a√3 · a√3/2 · 3a/2`. `depends_on` là khai báo của AI: treo ⇒ `DANGLING_DEPENDENCY`, vòng ⇒ `DEPENDENCY_CYCLE`;
+`a · 2a · a√3 · a√3/2 · 3a/2`. `depends_on` là khai báo phụ thuộc: treo ⇒ `DANGLING_DEPENDENCY`, vòng ⇒ `DEPENDENCY_CYCLE`;
 engine tự tính thứ tự dựng, không tin khai báo ấy.
 
-## 2. Thư viện hàm (30)
+## 2. Thư viện hàm (`geometry-functions/11` — 35 hàm trong `REGISTRY`)
 
-Danh sách đúng theo mã tại run `hybrid-section-slice`, 2026-10-11. Từ run `source-bound-result-planning`
-(product `efb756aa`): `REGISTRY_VERSION = geometry-functions/4`, `orthogonal_projection_line` nhận thêm `line_ref`
-tuỳ chọn (`line` xor `line_ref`; tuyến A gửi `line_ref` ⇒ `RESULT_BINDING_UNVERIFIED`); băm khai báo hàm `5ceb0f99…`
-(trước đó `f2ec9698…`), ghim qua `runs/source-bound-result-planning/provider-surfaces.json` trong
-`test_hybrid_goal_decomposition.py::test_provider_surfaces_are_pinned`. `PlanningContract` chỉ là metadata nội bộ,
-không vào khai báo hàm.
+Danh sách đồng bộ trực tiếp theo mã nguồn tại `backend/app/simulation/geometry_functions/registry.py`
+(`REGISTRY_VERSION = "geometry-functions/11"`, `PLANNER_VERSION = "geometry-fact-planner/11"`,
+`ENGINE_VERSION = "geometry-function-engine/9"`):
+- Tổng số hàm đăng ký trong `REGISTRY`: **35 hàm** (`11` hàm `fact`, `12` hàm `construct`, `11` hàm `ask`, `1` hàm `escape`).
+- Trong đó **31 hàm** có `provider_offered = True` (30 hàm trong `PROVIDER_FUNCTIONS` cho bề mặt function-calling đối chứng +
+  `translate_point` có `auxiliary_only = True` chỉ dành cho Planner), và **4 hàm** có `provider_offered = False`
+  (`divide_segment`, `ask_angle_lines`, `ask_volume_ratio`, `ask_residual_volume`) được biên dịch tất định từ
+  Typed Facts qua `planner.py` / `engine.py` để giữ nguyên vân tay bề mặt khai báo hàm của Baseline A
+  (`test_hybrid_goal_decomposition.py::test_provider_surfaces_are_pinned`). `PlanningContract` chỉ là metadata nội bộ,
+  không vào khai báo hàm.
 
-| nhóm | hàm |
-|---|---|
-| dữ kiện | `regular_polygon` · `rectangle` · `right_angle` · `segment_length` · `equal_length` · `height` · `perpendicular_line_plane` · `perpendicular_lines` · `altitude` · `orthogonal_projection` · `face_perpendicular_base` |
-| dựng | `midpoint` · `centroid` (tam giác) · `pyramid` · `regular_pyramid` · `prism` · `orthogonal_projection_line` · `intersect_line_line` · `intersect_line_plane` · `section` (thiết diện khối × mặt qua ba điểm có tên) · `intersection_line` (giao tuyến hai mặt) |
-| hỏi | `ask_volume` · `ask_area` · `ask_section_area` · `ask_length` · `ask_distance_point_plane` · `ask_distance_lines` · `ask_angle_line_plane` · `ask_angle_plane_plane` (góc trả `cos²`; đề hỏi `"số đo (của) góc"` hoặc theo `độ`/`radian` ⇒ `QUESTION_CONTEXT_UNSUPPORTED`) |
-| thoát | `unsupported` ⇒ `OUT_OF_SCOPE` |
+| nhóm | hàm (`provider_offered = True`) | hàm nội bộ tuyến Hybrid / Planner (`provider_offered = False` hoặc `auxiliary_only = True`) |
+|---|---|---|
+| dữ kiện (`fact`, 11) | `regular_polygon` · `rectangle` · `right_angle` · `segment_length` · `equal_length` · `height` · `perpendicular_line_plane` · `perpendicular_lines` · `altitude` · `orthogonal_projection` · `face_perpendicular_base` | — |
+| dựng (`construct`, 12) | `midpoint` · `centroid` (tam giác) · `pyramid` · `regular_pyramid` · `prism` · `orthogonal_projection_line` · `intersect_line_line` · `intersect_line_plane` · `section` (thiết diện khối × mặt qua ba điểm có tên) · `intersection_line` (giao tuyến hai mặt) | `translate_point` (`auxiliary_only = True`) · `divide_segment` (`provider_offered = False`, chia đoạn theo tỉ số dương) |
+| hỏi (`ask`, 11) | `ask_volume` · `ask_area` · `ask_section_area` · `ask_length` · `ask_distance_point_plane` · `ask_distance_lines` · `ask_angle_line_plane` · `ask_angle_plane_plane` (góc trả `cos²`; đề hỏi `"số đo (của) góc"` hoặc theo `độ`/`radian` ⇒ `QUESTION_CONTEXT_UNSUPPORTED`) | `ask_angle_lines` (`provider_offered = False`, góc giữa hai đường thẳng) · `ask_volume_ratio` (`provider_offered = False`, tỉ số thể tích hai khối, Wave 3A) · `ask_residual_volume` (`provider_offered = False`, thể tích phần còn lại có chứng chỉ bao hàm, Wave 3A) |
+| thoát (`escape`, 1) | `unsupported` ⇒ `OUT_OF_SCOPE` | — |
 
-**Hàm chỉ dành cho planner** (run `goal-directed-section-planning`): `translate_point` (`auxiliary_only`) — ảnh của
-một điểm qua phép tịnh tiến theo vectơ hai điểm đã có. Không khai cho provider (tuyến A vẫn đúng 30 hàm trên,
-`PROVIDER_FUNCTIONS`; băm khai báo `f2ec9698…` không đổi ở run đó), chỉ hợp lệ trong một phân rã đã khai `MAT_SONG_SONG`:
-thiết diện / diện tích thiết diện với mặt (P) qua điểm đã xác minh M song song mặt có tên (Q) = mặt qua M và hai
-ảnh tịnh tiến của M theo Q₀Q₁→, Q₀Q₂→ (biểu thức IR `vector_from_points` + `translate`, không primitive mới).
-Typed Facts: `section` / `question(area)` mang `point` + `points_b` + `plane_relation` thay cho `points`;
-`perpendicular` ⇒ `PLANE_NOT_UNIQUE`. Engine kiểm: song song (Q), không trùng (Q) (`DERIVED_PLANE_IS_REFERENCE`),
-không là mặt biên (`SECTION_PLANE_IS_FACE`); hàm phụ ngoài phân rã ⇒ `AUXILIARY_ONLY_FUNCTION`.
+**Hàm chỉ dành cho planner** (run `goal-directed-section-planning`, mở rộng ở `two-line-plane-section`): `translate_point` (`auxiliary_only`) — ảnh của
+một điểm qua phép tịnh tiến theo vectơ hai điểm đã có. Không khai cho provider (tuyến A vẫn đúng 30 hàm trong
+`PROVIDER_FUNCTIONS`), chỉ hợp lệ trong các phân rã mặt phẳng đã đăng ký của Planner (`MAT_SONG_SONG`, mặt phẳng qua một
+đường và song song đường kia, hoặc hai đường cắt nhau/song song theo [`TWO_LINE_PLANE_SECTION_CONTRACT.md`](TWO_LINE_PLANE_SECTION_CONTRACT.md)):
+biểu thức IR `vector_from_points` + `translate`, không thêm primitive mới. Engine kiểm: song song (Q), không trùng (Q)
+(`DERIVED_PLANE_IS_REFERENCE`), không là mặt biên (`SECTION_PLANE_IS_FACE`); hàm phụ ngoài phân rã ⇒ `AUXILIARY_ONLY_FUNCTION`.
 
 Thiết diện và giao tuyến dùng **IR chung đã có**: `construct_section`, `assign` với `intersect_plane_plane`, `measure area`.
 Hybrid không có engine thứ hai. Mỗi (khối, phương trình mặt cắt) chỉ dựng một thiết diện, dù mặt được gọi bằng các bộ
@@ -96,9 +122,9 @@ của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cầ
    "là", "dài", "có độ dài", chuỗi "SA = SB = 3") và sau số chỉ có đơn vị rồi hết mệnh đề — "SA ≥ 3", "SA ≈ 3", "SA bằng 3
    lần AB", "SA = 3 là sai" ⇒ `UNGROUNDED_VALUE`.
 
-6. **Ngữ cảnh yêu cầu & văn phạm câu hỏi dùng chung** (runs `question-local-givens`, `shared-ask-grammar-safety`, research
-   branch): sau khi mọi lời gọi vượt cổng nguồn thường, `_kiem_du_kien_cau_hoi` và `_kiem_vung_tien_de` kiểm toàn bộ câu hỏi,
-   mệnh đề mục tiêu/phép dựng đứng trước động từ hỏi, việc kế tiếp, câu theo sau và câu ghi chú.
+6. **Ngữ cảnh yêu cầu & văn phạm câu hỏi dùng chung** (runs `question-local-givens`, `shared-ask-grammar-safety`,
+   `source-gate-hardening`): sau khi mọi lời gọi vượt cổng nguồn thường, `_kiem_du_kien_cau_hoi` và `_kiem_vung_tien_de`
+   kiểm toàn bộ câu hỏi, mệnh đề mục tiêu/phép dựng đứng trước động từ hỏi, việc kế tiếp, câu theo sau và câu ghi chú.
    - Mọi chữ trong câu có cụm được hỏi phải thuộc một vùng đã đọc (`_vung_hoi`, động từ hỏi, fragment dữ kiện đã cover, việc
      kế tiếp hợp lệ, mệnh đề mục tiêu hoàn chỉnh có vị từ quan hệ/tính chất `_VI_TU_MUC_TIEU` hoặc quan hệ bội số nhị nguyên
      `_QUAN_HE_BOI_SO` giữa hai đoạn thẳng, hoặc phép dựng hợp lệ); phần dư chỉ được khớp `_DAN_CAU_HOI`.
@@ -109,14 +135,16 @@ của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cầ
    - Ngữ cảnh giả định/thay cấu hình, câu theo sau chưa được phủ, yêu cầu làm tròn/định dạng kết quả/đổi đơn vị hoặc hỏi số
      đo góc ⇒ `QUESTION_CONTEXT_UNSUPPORTED`.
    - Dữ kiện cùng câu đã xác minh vẫn phục vụ, kể cả "Tính thể tích …, biết SA = 3." và cạnh AB = 2 của đáy vuông cạnh 2.
-   Engine tiếp tục sở hữu dựng hình và kiểm ràng buộc. Hai route A/B dùng chung cổng; LLM_ONLY mặc định không đổi.
+   Engine tiếp tục sở hữu dựng hình và kiểm ràng buộc. Hai route (Baseline A và **Hybrid**) dùng chung cổng; `LLM_ONLY` mặc định không đổi.
 
-## 4. Engine
+## 4. Engine (`geometry-function-engine/9`)
 
 - **Độ dài** (`do_dai`): `segment_length`, lớp `equal_length`, hình đã dựng, cạnh khác của đa giác đều; hai nguồn lệch ⇒
   `INCONSISTENT_FACTS` nêu đủ lời gọi.
 - **Bố cục đáy** (khung 2D + Gram G₂ hữu tỉ): đa giác đều k ∈ {3, 4, 6} (khác ⇒ `UNSUPPORTED_REGULAR_POLYGON`), hình chữ
-  nhật, tam giác theo cạnh + góc vuông; khác ⇒ `UNSUPPORTED_BASE_SHAPE`. G = G₂ ⊕ h²; đỉnh ngoài đáy ở z = 1.
+  nhật, hình bình hành / hình thoi / hình thang vuông hoặc cân khi đủ kích thước xác định, tam giác theo ba cạnh hoặc hai
+  cạnh + góc vuông; khác ⇒ `UNSUPPORTED_BASE_SHAPE`. G = G₂ ⊕ h²; đỉnh ngoài đáy ở z = 1 (hoặc hệ trục nhiều khối chung mặt
+  theo [`COMPOSITE_GEOMETRY_CONTRACT.md`](COMPOSITE_GEOMETRY_CONTRACT.md)).
 - **Chuẩn hoá có tiền điều kiện** — ba cách nói về đường vuông góc mặt phẳng thành MỘT ràng buộc:
   `perpendicular_line_plane` (chân = đầu mút trên mặt); `altitude` (đỉnh phải là đỉnh của chính khối chóp, chân trên đáy);
   `orthogonal_projection` (ảnh ≠ điểm, ảnh trên mặt). Hỏng ⇒ `PRECONDITION_FAILED` / `FOOT_NOT_IN_PLANE`.
@@ -125,19 +153,26 @@ của một hàm. Từ khoá định nghĩa của hàm là điều kiện **cầ
   h² = SA² − t²AB² (≤ 0 ⇒ `INCONSISTENT_FACTS`; thiếu SA/SB ⇒ `MISSING_DIMENSION`).
 - **Độ dài ký hiệu**: mọi độ dài theo a ⇒ dựng ở a = 1 (bước `choose_unit`, `LAYOUT_DERIVED`, không phải dữ kiện), đáp số =
   hệ số · a^bậc (thể tích 3, diện tích 2, độ dài/khoảng cách 1, góc 0); trộn a với số ⇒ `NON_HOMOGENEOUS_LENGTHS`.
+- **Tỉ số thể tích & thể tích phần còn lại** ([`WAVE3A_CONTRACT_DECISION.md`](WAVE3A_CONTRACT_DECISION.md)): chứng chỉ bình
+  phương thể tích hữu tỉ (`_the_tich2_khoi`), kiểm bao hàm nửa không gian ngoài và mặt biên chung (`_mat_ngoai_khoi` ⇒
+  `RESIDUAL_CONTAINMENT_UNPROVED` khi không chứng minh được).
 - **Không suy chân mặc định**: điểm không có luật xác định ⇒ `UNDERDETERMINED_POINT`.
 - **Kiểm**: mọi dữ kiện kiểm lại chính xác dưới G (mặt ⊥ mặt bằng n₁ᵀG⁻¹n₂ = 0). Lời gọi engine đã dùng mà sai ⇒
   `ENGINE_SELF_CHECK_FAILED`; còn lại ⇒ `INCONSISTENT_FACTS`. Điểm kernel thực thi phải trùng bố cục.
 
-## 5. Adapter Gemini (offline ở `ai-function-route`)
+## 5. Adapter Gemini (offline ở `ai-function-route` & `fact_extraction.py`)
 
-Một `generateContent`/đề; `tools.functionDeclarations` dẫn xuất từ REGISTRY (tập con OpenAPI, Type viết hoa, không
-`$ref`/`anyOf`); `toolConfig.functionCallingConfig = {mode: ANY | VALIDATED, allowedFunctionNames}`; `maxOutputTokens`
-là trần cứng (gồm thinking). Phản hồi: `MAX_TOKENS` ⇒ `RESPONSE_TRUNCATED` (không thực thi kế hoạch cụt);
-`MALFORMED_FUNCTION_CALL`; lý do khác ⇒ `PROVIDER_REFUSED`; không ứng viên ⇒ `NO_CANDIDATE`/`PROVIDER_BLOCKED`; không
-`functionCall` ⇒ `NO_FUNCTION_CALL`; thiếu `call_id` ⇒ `CALL_ID_MISSING`; trùng id khác nội dung ⇒ `DUPLICATE_CALL_ID`
-(y hệt ⇒ bỏ, ghi `dropped_identical_duplicates`). Lỗi transport ⇒ `PROVIDER_ERROR`. Không bao giờ lùi về `LLM_ONLY`.
-Vân tay bề mặt mô hình của đường này: `surface_fingerprint()` — mọi lượt đo phải ghi.
+- **Tuyến Hybrid (`fact_extraction.py`, `hybrid-semantic-extraction/3`):** Một lượt `generateContent`/đề với JSON Schema đóng
+  (`DEFAULT_RESPONSE_CONTRACT = "flat"`); chuẩn hoá và kiểm chứng nguồn trước khi chuyển cho `planner.py` (`geometry-fact-planner/11`).
+  Với hợp đồng mở rộng hướng mô phỏng (`typed-fact-next/1`), `adapter3_simulation.py` (`hybrid-simulation-adapter/3`) biên
+  dịch sang `Scene3D` có kiểm chứng (xem [`TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md`](TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md)).
+- **Tuyến đối chứng Baseline A (`function_calling.py`):** Một `generateContent`/đề; `tools.functionDeclarations` dẫn xuất từ
+  `REGISTRY` (tập con OpenAPI, Type viết hoa, không `$ref`/`anyOf`); `toolConfig.functionCallingConfig = {mode: ANY | VALIDATED, allowedFunctionNames}`;
+  `maxOutputTokens` là trần cứng (gồm thinking). Phản hồi: `MAX_TOKENS` ⇒ `RESPONSE_TRUNCATED` (không thực thi kế hoạch cụt);
+  `MALFORMED_FUNCTION_CALL`; lý do khác ⇒ `PROVIDER_REFUSED`; không ứng viên ⇒ `NO_CANDIDATE`/`PROVIDER_BLOCKED`; không
+  `functionCall` ⇒ `NO_FUNCTION_CALL`; thiếu `call_id` ⇒ `CALL_ID_MISSING`; trùng id khác nội dung ⇒ `DUPLICATE_CALL_ID`
+  (y hệt ⇒ bỏ, ghi `dropped_identical_duplicates`). Lỗi transport ⇒ `PROVIDER_ERROR`. Không bao giờ lùi về `LLM_ONLY`.
+  Vân tay bề mặt mô hình của đường này: `surface_fingerprint()` — mọi lượt đo phải ghi.
 
 ## 6. Ranh giới
 
@@ -146,5 +181,11 @@ Vân tay bề mặt mô hình của đường này: `surface_fingerprint()` — 
 `test_Y_duong_mac_dinh_VAN_khong_tham_chieu_compiler`, vốn xanh sai vì `pipeline.py` nạp compiler qua `__import__` cắt
 chuỗi): không nạp động trong mã sản phẩm · bao đóng import tĩnh chỉ với compiler qua cổng `routing` đã khai · module nạp
 thật khi chạy `run_pipeline` ở `LLM_ONLY` ⊆ bao đóng tĩnh và không có module nào ở đây;
-`app/simulation` không nhập `scene3d`/`simulation_state`. Giới hạn hiện tại: một mặt đáy; chóp/lăng trụ đứng; chưa có
-song song, góc nhị diện tổng quát, thiết diện, khối tròn, đáy hình thoi/hình thang.
+`app/simulation` không nhập `scene3d`/`simulation_state`. Phạm vi năng lực đã mở rộng theo từng đợt (thiết diện qua mặt
+phẳng song song / hai đường thẳng, hình hộp / lập phương, đáy hình bình hành / hình thoi / hình thang, tổ hợp đa khối, tỉ số
+thể tích và thể tích phần còn lại, cùng đường `TypedFactNext` + `Adapter /3` cho đỉnh thiết diện không tên và khối tròn xoay)
+được định nghĩa tại [`TWO_LINE_PLANE_SECTION_CONTRACT.md`](TWO_LINE_PLANE_SECTION_CONTRACT.md),
+[`GEOMETRY_CAPABILITY_EXPANSION_CONTRACT.md`](GEOMETRY_CAPABILITY_EXPANSION_CONTRACT.md),
+[`COMPOSITE_GEOMETRY_CONTRACT.md`](COMPOSITE_GEOMETRY_CONTRACT.md),
+[`WAVE3A_CONTRACT_DECISION.md`](WAVE3A_CONTRACT_DECISION.md) và
+[`TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md`](TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md).

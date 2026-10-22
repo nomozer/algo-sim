@@ -12,7 +12,13 @@ bằng **số chính xác tuyệt đối** — không làm tròn ở bất kỳ 
 ## 1. Hệ thống làm gì
 
 **LLM đọc đề, engine tất định diễn hoạt.** Đây là *luận điểm* của đề tài chứ
-không phải một chi tiết kĩ thuật.
+không phải một chi tiết kĩ thuật. Mục tiêu của sản phẩm là **mô phỏng 3D hình học
+không gian tương tác**, không phải hệ thống tự động giải và chứng minh mọi bài toán.
+
+Hệ thống phân biệt rõ **tuyến sản phẩm mặc định hiện hành (`AS-IS`)** và **kiến trúc
+mục tiêu (`TO-BE: Hybrid`)**:
+
+### Tuyến sản phẩm mặc định hiện hành (`AS-IS: DEFAULT_MODE = LLM_ONLY`)
 
 ```
 đề tiếng Việt
@@ -26,10 +32,29 @@ không phải một chi tiết kĩ thuật.
    → trace + cảnh 3D
 ```
 
+### Kiến trúc mục tiêu (`TO-BE: Hybrid` — đang phát triển và đánh giá, chưa bật làm mặc định)
+
+```
+đề tiếng Việt
+   → AI: trích xuất     → JSON Typed Facts (TypedFact / TypedFactNext)
+   ─────────────────── từ đây trở đi KHÔNG có LLM ───────────────────
+   → Semantic Grounding (đối chiếu nguyên văn câu đề, vai trò mệnh đề, đơn vị)
+   → Goal-Directed Construction Planner (tất định tự phối hợp Geometry Functions)
+   → Compiler / Construction IR
+   → Geometry Functions / Engine / Kernel (khung affine + metric Gram chính xác)
+   → Scene3D
+```
+
+*(Tuyến sản phẩm mặc định chưa chuyển sang **Hybrid** cho tới khi vượt qua đủ 20 cổng tại
+[`docs/MIGRATION_CHECKLIST.md`](docs/MIGRATION_CHECKLIST.md); chi tiết tại
+[`docs/ARCHITECTURE_MAP.md`](docs/ARCHITECTURE_MAP.md) và [`docs/architecture/README.md`](docs/architecture/README.md).)*
+
 LLM **không bao giờ** phát một toạ độ kết quả. Nó nói *"giao tuyến của (SAB)
-và (SCD)"*; toạ độ do nhân hình học tính. Mọi toán hạng hình học trong chương
-trình là **TÊN** của một vật đã dựng — cưỡng chế ở lược đồ, không phải nhắc
-trong prompt. LLM không sinh hoạt hình, không sinh toạ độ, không quyết đúng/sai.
+và (SCD)"* (trên tuyến `LLM_ONLY`) hoặc chỉ trích xuất dữ kiện có kiểu kèm trích
+dẫn nguyên văn câu đề (trên kiến trúc **Hybrid**); toạ độ và phép dựng do nhân hình
+học tính. Mọi toán hạng hình học trong chương trình là **TÊN** của một vật đã dựng
+— cưỡng chế ở lược đồ, không phải nhắc trong prompt. LLM không sinh hoạt hình,
+không sinh toạ độ, không quyết đúng/sai.
 
 Một bài mới trong phạm vi các bước dựng đã có **không cần mã riêng theo dạng
 bài**; bài ngoài phạm vi ấy bị **từ chối có cấu trúc** (nói dừng ở chặng nào, vì
@@ -55,8 +80,10 @@ Năng lực chính xác của sản phẩm (họ khối, phép dựng, phép đo
 
 - Chỉ những bài **biểu diễn được bằng các bước dựng hiện có**; phủ chương trình
   Toán 11–12 là một phần, có chủ đích.
-- Khối có mặt cong (cầu, trụ, nón), nhiều khối trong một đề và đề từ ảnh chụp
-  **chưa** là năng lực sản phẩm đầy đủ.
+- Trên tuyến sản phẩm mặc định (`LLM_ONLY`), khối có mặt cong (cầu, trụ, nón),
+  nhiều khối trong một đề và đề từ ảnh chụp **chưa** là năng lực sản phẩm đầy đủ
+  (các lát cắt mở rộng trên kiến trúc **Hybrid** được kiểm chứng riêng theo từng
+  đợt trong [`docs/architecture/README.md`](docs/architecture/README.md)).
 - Kéo–thả liên tục kiểu GeoGebra nằm ngoài phạm vi: tương tác là chọn và tua bước.
 - **Tác động lên người học chưa được đánh giá** — kiểm thử kỹ thuật không thay
   thực nghiệm sư phạm.

@@ -91,6 +91,8 @@ Tên đề tài (giữ nguyên chính xác):
 >
 > ⚠️ TÊN CANONICAL, nguồn GVHD, chốt **2026-08-24** —
 > `STATUS_LEDGER §0-2026-08-24`. Nội dung: hình học không gian Toán 11–12.
+> Mục tiêu sản phẩm là **mô phỏng 3D hình học không gian tương tác**, không phải
+> hệ thống tự động giải và chứng minh mọi bài toán.
 >
 > **Mọi tên trước đó đã hết hiệu lực**, kể cả bản Tin học THPT từng treo ở
 > chính mục này kèm chữ *"canonical (chốt 2026-08-18)"*. Đề Tin học, danh mục
@@ -98,29 +100,39 @@ Tên đề tài (giữ nguyên chính xác):
 > truy vết ở `CODE_INDEX.md §0j`) — doc nào còn mô tả chúng là đang nói về mã
 > không tồn tại.
 >
-> **Động từ đúng của LLM nay là "tổng hợp", trong một ranh giới hẹp.** Mục này
-> từng cấm chữ *"sinh"* vì hồi ấy LLM chỉ điền một đặc tả dựng tay. Kiến trúc
-> hiện tại khác: LLM **tổng hợp một Semantic Program có biên** — tức các BƯỚC
-> DỰNG — rồi engine tất định thực thi, kiểm chứng và dẫn xuất trace/cảnh 3D.
-> Đây đúng là §4.1 bên dưới đã ghi từ 2026-08-20; hai mục cũ mâu thuẫn nhau và
-> **§4 mới là bản đúng**.
+> **Phân biệt rõ vai trò của LLM trên tuyến sản phẩm mặc định hiện hành (`AS-IS`)
+> và kiến trúc mục tiêu (`TO-BE: Hybrid`):**
+> - **AS-IS (`DEFAULT_MODE = LLM_ONLY` — tuyến sản phẩm mặc định hiện hành):**
+>   LLM đọc đề → `RequestContract` rồi **tổng hợp một Semantic Program có biên**
+>   (các BƯỚC DỰNG) để engine tất định thực thi, kiểm chứng và dẫn xuất trace/cảnh 3D.
+> - **TO-BE (`Hybrid` — kiến trúc mục tiêu):**
+>   AI chỉ trích xuất **JSON Typed Facts** (`TypedFact` / `TypedFactNext`) kèm trích
+>   dẫn nguyên văn câu đề → **Semantic Grounding** → **Goal-Directed Construction
+>   Planner tất định** tự chọn và phối hợp **Geometry Functions** → **Compiler /
+>   Construction IR** → **Engine / Kernel** → **Scene3D** (xem
+>   [`architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md)
+>   và [`architecture/TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md`](architecture/TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md)).
+>   Không đánh đồng kiến trúc **Hybrid** với lát cắt `FactGraph`/`primitive_compiler`
+>   cũ theo họ bài (`geometry_compiler/`). Tuyến mặc định của sản phẩm vẫn là
+>   `LLM_ONLY` cho tới khi vượt qua đủ 20 cổng tại [`MIGRATION_CHECKLIST.md`](MIGRATION_CHECKLIST.md).
 >
 > Ranh giới R0 **không** vì thế mà lỏng đi — nó chặt hơn: LLM tuyệt đối không
 > phát toạ độ, mọi toán hạng hình học trong IR là **TÊN** của vật đã dựng, và
-> bài không biểu diễn được bằng IR thì bị **từ chối**, không xấp xỉ.
+> bài không biểu diễn được bằng IR/hàm dựng thì bị **từ chối**, không xấp xỉ.
 >
 > **Phạm vi KHÔNG suy ra từ tên.** Task được xếp loại theo §3a–3d bên dưới.
 
 ### 3a. Phạm vi cốt lõi
 
-1. LLM đọc đề tiếng Việt → `RequestContract` (dữ kiện + nghĩa vụ, **đóng băng**).
-2. LLM tổng hợp `SemanticProgramSpec` — các bước dựng, có lược đồ ràng buộc.
-3. Cổng tất định kiểm định **fail-closed**: tĩnh · grounding · phủ · hậu điều kiện.
-4. Deterministic engine **sở hữu** state, timeline và result; nhân hình học tính
+1. **Đọc đề tiếng Việt có kiểm chứng nguồn:**
+   - Trên tuyến mặc định `AS-IS` (`LLM_ONLY`): LLM đọc đề → `RequestContract` (dữ kiện + nghĩa vụ, **đóng băng**) → LLM tổng hợp `SemanticProgramSpec` (các bước dựng, có lược đồ ràng buộc).
+   - Trên kiến trúc mục tiêu `TO-BE` (**Hybrid**): AI trích xuất JSON Typed Facts (`TypedFact` / `TypedFactNext`) → Semantic Grounding → Planner tất định tự phối hợp Geometry Functions → Compiler / Construction IR.
+2. Cổng tất định kiểm định **fail-closed**: tĩnh · grounding nguồn · phủ · hậu điều kiện · chứng chỉ giả định.
+3. Deterministic engine **sở hữu** state, timeline, bố cục khung affine + metric Gram và result; nhân hình học tính
    **chính xác** (hữu tỉ + căn), không `float`.
-5. Renderer 3D trình bày **authoritative state**; tương tác là **chọn và tua**.
-6. Hỗ trợ hình học không gian Toán 11–12 và tương tác học tập.
-7. Yêu cầu thiếu dữ kiện hoặc ngoài khả năng → **từ chối trung thực**.
+4. Renderer 3D (`Scene3DExplorer`) trình bày **authoritative state**; tương tác là **chọn, cô lập, xoay quan sát và tua bước dựng**.
+5. Hỗ trợ hình học không gian Toán 11–12 và tương tác học tập.
+6. Yêu cầu thiếu dữ kiện hoặc ngoài khả năng → **từ chối trung thực**.
 
 ### 3b. Bốn loại — mọi task phải được xếp loại
 
@@ -161,9 +173,11 @@ patch wave**, và báo đúng bốn mục:
 ## 4. Các luật cứng bền vững (tóm tắt — nơi thực thi ở ARCHITECTURE_MAP §5)
 
 1. **LLM không bao giờ sở hữu runtime**: không sinh timeline / bước / kết quả.
-   LLM chỉ trích xuất ngữ nghĩa, phân loại, điền config được validate, **và
-   (từ 2026-08-20) tổng hợp bounded Semantic IR** — IR là *chương trình*, còn
-   chạy nó ra timeline vẫn là việc của engine tất định.
+   Trên tuyến mặc định `AS-IS` (`LLM_ONLY`), LLM chỉ trích xuất `RequestContract`
+   và tổng hợp bounded Semantic IR; trên kiến trúc mục tiêu `TO-BE` (**Hybrid**),
+   AI chỉ trích xuất JSON Typed Facts còn Planner tất định tự chọn và phối hợp
+   Geometry Functions để biên dịch sang IR — chạy IR ra timeline và `Scene3D`
+   luôn là việc của engine tất định.
 2. **Engine tất định sở hữu sự thật** — mọi diễn biến từ `init`/`apply`/`timeline`.
 3. **Canonical simulation: đúng hoặc `capability_gap`** — không render xấp xỉ
    gây hiểu lầm.

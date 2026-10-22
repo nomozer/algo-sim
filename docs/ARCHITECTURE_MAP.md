@@ -20,69 +20,76 @@ trúc thật sự đổi; sửa `CODE_INDEX.md` khi module/export công khai đ�
 
 ## 1. Hệ thống là gì
 
-Học sinh dán một đề bài bằng lời/hình ảnh → LLM **chỉ** bóc tách dữ kiện có cấu trúc và nghĩa vụ hình học → **engine tất định** (hoặc primitive compiler khi đủ điều kiện) sinh chương trình, diễn giải hoạt cảnh và trạng thái. Toàn bộ chuỗi chữ hiển thị và prompt đều tiếng Việt.
+Học sinh nhập một đề bài hình học không gian bằng lời/hình ảnh tiếng Việt → LLM **chỉ** trích xuất ngữ nghĩa và dữ kiện có cấu trúc → **hệ thống tất định** kiểm chứng nguồn, lập kế hoạch/chương trình dựng hình, tính toán chính xác và xuất hoạt cảnh `Scene3D` tương tác. Mục tiêu sản phẩm là **mô phỏng 3D hình học không gian tương tác**, không phải hệ thống tự động giải và chứng minh mọi bài toán. Toàn bộ chuỗi chữ hiển thị và prompt đều bằng tiếng Việt.
 
-## 2. Luồng xử lý hình học (Pipeline Hiện Tại & Kiến Trúc Đích)
+## 2. Luồng xử lý hình học (Tuyến Mặc Định Hiện Hành `AS-IS` & Kiến Trúc Mục Tiêu `TO-BE: Hybrid`)
 
 ### 2a. Sơ đồ tổng thể
 
 ```text
+[1] TUYẾN SẢN PHẨM MẶC ĐỊNH HIỆN HÀNH (AS-IS: DEFAULT_MODE = LLM_ONLY)
 Input text/image
   → Ingestion (chuẩn hóa đầu vào)
-  → Analyze LLM (stage_semantic_analyze)
-  → RequestContract + structured relations (dữ kiện hình học có cấu trúc)
-  → FactGraph (mạng dữ kiện hình học quan hệ)
-  → [Rẽ nhánh theo tính hợp lệ / eligible]:
-      ├─ Nhánh Thực Nghiệm (Compiler Path):
-      │    Deterministic Compiler (primitive_compiler nếu eligible)
-      │    → Semantic Program tất định
-      └─ Nhánh Mặc Định Hiện Tại (Default LLM Path):
-           LLM Synthesis (stage_semantic_program)
-           → Semantic Program ứng viên
-  → Scene Builder & Interpreter (thực thi chương trình ngữ nghĩa, dẫn xuất tọa độ/bước)
+  → Analyze LLM (`stage_semantic_analyze`) → `RequestContract` + `structured_relations`
+  → [Mặc định `LLM_ONLY`]: LLM Synthesis (`stage_semantic_program`) → `SemanticProgramSpec` ứng viên
+    *(Nhánh opt-in lịch sử `geometry_compiler/`: `FactGraph` → `primitive_compiler` cho 6 họ bài cố định; giữ nguyên, không mở rộng tiếp)*
+  → Scene Builder & Interpreter (`hoan_thien_dung_hinh` → thực thi chương trình ngữ nghĩa, dẫn xuất tọa độ/bước)
+  → Construction Binding & Source Grounding Gates (`construction_binding`, `grounding_gate`)
   → Assumption Certificate Gate (w15, chặng `assumption`: giá trị số người học thấy phải có chứng chỉ C0/C1 — §2e)
   → Visual Obligation Gate (kiểm định bao phủ nghĩa vụ trực quan C1/C2)
-  → Frontend Step Replay & Scene3D Explorer (diễn hoạt từng bước, tua, tương tác camera)
+  → Frontend Step Replay & `Scene3DExplorer` (diễn hoạt từng bước, tua, tương tác camera)
+
+[2] KIẾN TRÚC MỤC TIÊU (TO-BE: Hybrid — đang phát triển/đánh giá, chưa bật làm mặc định sản phẩm)
+Vietnamese Problem
+  → AI JSON Typed Facts (`TypedFact` ở `fact_extraction.py` `hybrid-semantic-extraction/3`,
+    hoặc `TypedFactNext` ở `typed_fact_next.py` `typed-fact-next/1`)
+  → Semantic Grounding (`kiem_nguon` 6 tầng tại `registry.py`, đối chiếu nguyên văn câu đề)
+  → Goal-Directed Construction Planner (`planner.py`, `geometry-fact-planner/11`:
+    tất định tự chọn và phối hợp các hàm từ thư viện 35 hàm `geometry-functions/11`)
+  → Compiler / Construction IR
+  → Geometry Functions / Engine / Kernel (`engine.py` `geometry-function-engine/9`,
+    `adapter3_simulation.py` `hybrid-simulation-adapter/3`, khung affine + metric Gram chính xác)
+  → `Scene3D` + `chart_metric` → `Scene3DExplorer`
 ```
 
-### 2a.1 Đối chiếu tuyến sản phẩm thật với kiến trúc mục tiêu
+### 2a.1 Đối chiếu tuyến sản phẩm thật (`AS-IS`) với kiến trúc mục tiêu (`TO-BE: Hybrid`)
 
-| Yêu cầu | Đã có | Còn thiếu / giới hạn | Caller thật | Bằng chứng |
+| Yêu cầu | Đã có trên tuyến mặc định (`AS-IS: LLM_ONLY`) | Đã có trên kiến trúc mục tiêu (`TO-BE: Hybrid`) | Còn thiếu / giới hạn trước khi đổi mặc định | Caller & Bằng chứng |
 |---|---|---|---|---|
-| Nhận đề chữ hoặc ảnh | `/api/analyze` chuẩn hoá text/docx; `/api/image/extract` đọc ảnh rồi buộc người học xem, sửa và xác nhận văn bản trước khi phân tích | chưa có pipeline tự tách vùng/OCR camera tổng quát; ảnh chỉ đi tiếp sau checkpoint người dùng | `ProblemInput.tsx` → `main.py::extract_image` / `main.py::analyze` | `test_image_extract_api.py`, `test_photo_problem_vision_checkpoint.py` |
-| Trích dữ kiện và nghĩa vụ | `stage_semantic_analyze` tạo `RequestContract`; `structured_relations.py` chuẩn hoá quan hệ có `source_fact_id` và cờ giả định | vocabulary quan hệ đóng, chưa phải bộ hiểu mọi cách diễn đạt | `_semantic_route_attempt` | `test_structured_geometry_relations.py`, `test_analyze_definitional_normalization_prompt.py` |
-| Chọn lệnh dựng có sẵn | mặc định `LLM_ONLY`: `stage_semantic_program` sinh `SemanticProgramSpec`; compiler tất định chỉ chạy khi mode opt-in và contract eligible | compiler-first tự động chưa được bật; general layout solver chưa có | `_semantic_route_attempt` → `geometry_compiler.routing` hoặc `stage_semantic_program` | `test_semantic_route_wired_to_production.py`, `test_cuboid_cube_production_route.py` |
-| Backend thực thi/tính/kiểm | validator + static check → formation → interpreter/kernel exact → construction/source/postcondition/assumption/visual gates; R0 không gọi model sau IR | coverage phụ thuộc từ vựng đóng; các issue OPEN nêu từng miền chưa chứng minh | `route.verify_and_compile`; `_dung_scene3d` chỉ chạy khi `executable` | `test_mocked_production_e2e.py`, `test_assumption_certificate.py`, `test_frame_state_invariant.py` |
-| Trả JSON và hiển thị 3D | envelope `generic.semantic_program` mang trace/config và `scene3d`; store nạp envelope, `SimulationWorkspace` gắn `Scene3DExplorer` | D5 mobile và duyệt hình người vẫn mở; frontend không là authority hình học | `_envelope_tu_route_sinh` → `store.loadEnvelope` → `Scene3DExplorer` | `product-envelope-rendering.test.tsx`, `Scene3DExplorer.test.tsx` |
+| Nhận đề chữ hoặc ảnh | `/api/analyze` chuẩn hoá text/docx; `/api/image/extract` đọc ảnh rồi buộc người học xem, sửa và xác nhận văn bản trước khi phân tích | dùng chung tầng chuẩn hoá văn bản đầu vào | chưa có pipeline tự tách vùng/OCR camera tổng quát; ảnh chỉ đi tiếp sau checkpoint người dùng | `ProblemInput.tsx` → `main.py::extract_image` / `main.py::analyze`; `test_image_extract_api.py`, `test_photo_problem_vision_checkpoint.py` |
+| Trích dữ kiện và nghĩa vụ | `stage_semantic_analyze` tạo `RequestContract`; `structured_relations.py` chuẩn hoá quan hệ có `source_fact_id` và cờ giả định | `fact_extraction.py` (`hybrid-semantic-extraction/3`, contract `flat`) và `typed_fact_next.py` (`typed-fact-next/1`) trích JSON Typed Facts có trích dẫn câu đề | cần nghiệm thu live E2E theo ngân sách và vượt đủ 20 cổng tại `docs/MIGRATION_CHECKLIST.md` | `_semantic_route_attempt`; `fact_route.py`; `adapter3_simulation.py`; `test_typedfact_next_adapter3.py` |
+| Lập kế hoạch & chọn hàm dựng | mặc định `LLM_ONLY`: `stage_semantic_program` sinh `SemanticProgramSpec` (nhánh `geometry_compiler` chỉ chạy khi opt-in cho 6 họ bài cũ) | `planner.py` (`geometry-fact-planner/11`) tất định tự phối hợp 35 hàm trong `registry.py` (`geometry-functions/11`) từ Typed Facts (không để AI tự ghép chương trình) | chưa bật làm mặc định của `/api/analyze` (`DEFAULT_MODE = LLM_ONLY`) | `planner.py::lap_ke_hoach_tu_facts`; `test_hybrid_goal_decomposition.py`, `test_wave3a_adapter3_integration.py` |
+| Backend thực thi/tính/kiểm | validator + static check → formation → interpreter/kernel exact → construction/source/postcondition/assumption/visual gates; R0 không gọi model sau IR | `kiem_nguon` 6 tầng → `engine.py` (`geometry-function-engine/9`: khung affine + metric Gram hữu tỉ, kiểm mọi dữ kiện, chứng chỉ thể tích) + `adapter3_simulation.py` (`hybrid-simulation-adapter/3`) → IR → kernel chính xác | khối chóp cụt rời và mặt cắt elip của nón nghiêng ở trình duyệt vẫn là giới hạn đã ghi nhận | `route.verify_and_compile`; `engine.py`; `adapter3_simulation.py`; `test_mocked_production_e2e.py`, `test_simulation_coverage_curved.py` |
+| Trả JSON và hiển thị 3D | envelope `generic.semantic_program` mang trace/config và `scene3d`; store nạp envelope, `SimulationWorkspace` gắn `Scene3DExplorer` | xuất `Scene3D` + `chart_metric` (và `/api/preview/hybrid` khi bật cờ preview qua `hybrid_preview.py` `hybrid-preview-adapter/2`) | bảng màu vật liệu `Scene3D` cuối cùng đang chờ Owner phê duyệt trong phiên nghiên cứu thiết kế riêng | `_envelope_tu_route_sinh` / `hybrid_preview.py` → `Scene3DExplorer`; `product-envelope-rendering.test.tsx`, `Scene3DExplorer.test.tsx` |
 
-`FactGraph`/primitive compiler là lát cắt thực nghiệm có caller khi opt-in, không phải đường mặc định đã hoàn tất. Tag Git
+`FactGraph`/primitive compiler (`geometry_compiler/`) là lát cắt thực nghiệm thế hệ trước (viết chuỗi lệnh theo từng họ bài khi opt-in), **không phải** kiến trúc **Hybrid** mục tiêu. Tag Git
 `SEMANTIC_PROGRAM_CONTRACT_V1` là **mốc lịch sử** tại commit `8dbd5bc7`: nó thêm contract/validator/schema V1; contract hiện
 hành đã tiếp tục tiến hoá và được khoá bằng code Pydantic + hai schema sinh đồng bộ. Tag không được dùng làm version runtime,
 không có script nào resolve tag này, và không bị di chuyển/xoá trong cleanup.
 
 ### 2b. Phân định các chế độ kiến trúc
 
-1. **Kiến trúc đang chạy mặc định (`DEFAULT_MODE = LLM_ONLY`):**
+1. **Tuyến sản phẩm đang chạy mặc định (`AS-IS: DEFAULT_MODE = LLM_ONLY`, `CACHE_VERSION = 127`):**
    - Đề bài qua Analyze LLM tạo `RequestContract`.
    - `stage_semantic_program` gọi Gemini để tổng hợp `SemanticProgramSpec`.
-   - Cổng tất định kiểm định tĩnh, thực thi sinh timeline và kiểm tra nghĩa vụ trực quan.
-   - Tuyệt đối chưa thay thế LLM synthesis trên đường mặc định này.
+   - Cổng tất định kiểm định tĩnh, thực thi sinh timeline, kiểm tra ràng buộc nguồn/chứng chỉ giả định và nghĩa vụ trực quan.
+   - Giữ làm tuyến mặc định hiện hành và đường đối chứng; không thêm năng lực mô phỏng mới trên `LLM_ONLY` (`docs/architecture/TEXT_TO_GEOMETRY_FUNCTIONS_DECISION.md`).
 
-2. **Đường compiler thực nghiệm (Compiler Experimental Slice):**
-   - Đã chứng minh trên vertical slice: họ bài chóp đáy tam giác vuông (`right_triangle_base_pyramid_volume`).
-     *(w13: danh sách này đã cũ — `geometry_compiler/compiler.py::SUPPORTED_FAMILIES` có sáu họ; mỗi họ còn tự viết chuỗi câu lệnh, xem `ISSUE-ARCH-FORMATION-PER-FAMILY-SEQUENCE`. w14: compiler thôi tự viết đường cao/cạnh bên/đáy trên — bước bổ sung chung ở §2d sinh chúng.)*
-   - Sau khi Analyze trích xuất `structured_relations`, `FactGraph` nhận diện cấu trúc và gọi `primitive_compiler` để sinh `SemanticProgramSpec` 100% tất định (0 lượt gọi LLM synthesis).
+2. **Lát cắt compiler theo họ bài thế hệ cũ (`geometry_compiler/` — Opt-In Historical Slice, KHÔNG đánh đồng với Hybrid):**
+   - Triển khai trên 6 họ bài cố định (`geometry_compiler/compiler.py::SUPPORTED_FAMILIES`), nhận `RequestContract` + `structured_relations` qua `FactGraph` để sinh `SemanticProgramSpec`.
+   - Giữ nguyên trạng thái opt-in để bảo toàn kiểm thử hồi quy lịch sử, **không mở rộng tiếp và không phải kiến trúc Hybrid mục tiêu**.
 
-3. **Kiến trúc đích (Target Architecture: Compiler-First + LLM Fallback):**
-   - Đích đến sau khi hoàn thiện các họ hình học: Ưu tiên biên dịch tất định trước (compiler-first).
-   - Nếu bài toán thuộc họ đã hỗ trợ (`eligible`) → biên dịch tất định trực tiếp.
-   - Nếu bài toán nằm ngoài tập primitive đã hỗ trợ → chuyển tiếp an toàn sang LLM synthesis fallback có giám sát và giới hạn.
-   - Chưa được bật cho sản phẩm vì cần đạt đủ 20 cổng tại `docs/MIGRATION_CHECKLIST.md`.
+3. **Kiến trúc mục tiêu (`TO-BE: Hybrid` — [`HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](architecture/HYBRID_B_TARGET_ARCHITECTURE_DECISION.md), [`TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md`](architecture/TEXT_TO_GEOMETRY_FUNCTIONS_CONTRACT.md), [`TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md`](architecture/TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md)):**
+   - **AI chỉ trích xuất JSON Typed Facts** (`TypedFact` / `TypedFactNext`) kèm trích dẫn nguyên văn câu đề (`fact_extraction.py` `hybrid-semantic-extraction/3`, `typed_fact_next.py` `typed-fact-next/1`).
+   - **Semantic Grounding (`kiem_nguon` 6 tầng tại `registry.py`):** Kiểm chứng trích dẫn nguồn, vai trò mệnh đề, phủ định, vị từ, giá trị và văn phạm câu hỏi.
+   - **Goal-Directed Construction Planner tất định (`planner.py`, `geometry-fact-planner/11`):** Tự phân rã mục tiêu và phối hợp các hàm trong thư viện **Geometry Functions** (`registry.py`, `geometry-functions/11`, 35 hàm) mà không để LLM tự chọn chuỗi hàm.
+   - **Compiler / Construction IR & Engine / Kernel (`engine.py` `geometry-function-engine/9`, `adapter3_simulation.py` `hybrid-simulation-adapter/3`):** Chuẩn hoá quan hệ có tiền điều kiện, tự tính bố cục khung affine + metric Gram hữu tỉ $G$, kiểm lại mọi dữ kiện, biên dịch qua IR/Kernel và xuất `Scene3D`.
+   - *(Lưu ý: Tuyến đối chứng "Baseline A" nơi AI gọi trực tiếp hàm dựng qua `function_calling.py` chỉ dùng để so sánh thực nghiệm. Cả tuyến **Hybrid** lẫn Baseline A đều chưa bật làm mặc định của sản phẩm cho tới khi vượt qua đủ 20 cổng tại `docs/MIGRATION_CHECKLIST.md`.)*
 
-4. **Các thành phần chưa triển khai (Unimplemented Components):**
-   - Bộ giải bố cục không gian tổng quát (general 3D spatial layout solver).
-   - Đường ống bóc tách vùng ảnh / OCR tự động từ camera điện thoại.
-   - Định tuyến compiler-first tự động, cơ chế canary, và rollback production.
+4. **Các thành phần chưa triển khai hoặc đang mở:**
+   - Bộ giải bố cục không gian đa mục tiêu tổng quát cho mọi cấu hình bất kỳ ngoài các lớp khung affine + Gram đã đăng ký.
+   - Đường ống bóc tách vùng ảnh / OCR tự động hoàn toàn không cần checkpoint xác nhận của người học.
+   - Chuyển đổi mặc định sản phẩm sang **Hybrid** (cần hoàn tất đánh giá live theo ngân sách và vượt đủ 20 cổng tại `docs/MIGRATION_CHECKLIST.md`).
 
 ### 2c. Scene3D edge identity và occlusion (amendment 2026-09-28)
 
@@ -261,20 +268,17 @@ Chi tiết dành cho khoá luận — sơ đồ, vùng LLM/tất định, đư�
 | **Chương trình ngữ nghĩa (IR)** | LLM tổng hợp, **server đóng băng nghĩa vụ trước** (`RequestContract`) | IR là *chương trình ứng viên*; chạy nó KHÔNG phải việc của LLM |
 | **Trace thực thi** | `semantic_program/interpreter.py` — **authority tất định** | ngân sách **thực thi**; chạm trần phải BÁO |
 | **Khung hình (frame)** | `semantic_program/visual_adapter.py` | song ánh `frame k ⇔ trace[k]` — điều kiện để bất biến #31 là định lý |
-| **Topology + trạng thái đỉnh của `graph_view`** | `visual_adapter.py` đọc `memory_snapshot`; chương trình KHAI BÁO biến mang trạng thái (`visited_ref`/`current_ref`) | renderer **cấm** tự chạy lại BFS/DFS — làm thế là dựng engine thứ hai ở tầng trình bày |
-| **Bước xem (view step)** | `semantic_program/pacer.py` | ngân sách **trình bày**, tách hẳn ngân sách thực thi; gộp KHÔNG bỏ |
-| Vị trí object lúc chạy | `GenericState.pos` (engine-owned, **toạ độ miền 0–100**) | spec bất biến; drag chỉ đổi state |
-| **Bố cục/kích thước canvas** | **RENDERER** — không bao giờ là engine state | xem quy tắc renderer-neutral bên dưới |
+| **Thư viện hàm, Planner & Engine của kiến trúc Hybrid** | `geometry_functions/registry.py` (`geometry-functions/11`, 35 hàm) · `planner.py` (`geometry-fact-planner/11`) · `engine.py` (`geometry-function-engine/9`) · `adapter3_simulation.py` (`hybrid-simulation-adapter/3`) | AI chỉ trích xuất `TypedFact` / `TypedFactNext`; Planner tất định phối hợp hàm; Engine sở hữu khung affine + metric Gram và kiểm chứng mọi dữ kiện |
+| **Bước xem (view step) & dòng thời gian dựng hình** | `semantic_program/pacer.py` (2D dự phòng) · `scene3d-model.ts::geometryTimeline` (Scene3D, #35) | ngân sách **trình bày**, tách hẳn ngân sách thực thi; phân hoạch đầy đủ, không cắt câm |
+| **Bố cục/kích thước canvas & camera 3D** | **RENDERER** (`scene3d-camera.ts`, `scene3d-view.tsx`, `interaction-state.ts`) — không bao giờ là engine state | xem quy tắc renderer-neutral ở §3b bên dưới |
 | Định tuyến bài → mô phỏng | `domain_profile.co_duong_thuc_thi` (TẤT ĐỊNH, 0 lượt gọi) | không còn classify; đề không ánh xạ tới nghĩa vụ có checker ⇒ chặn trước mọi lượt gọi |
-| Phán quyết "có phát hay không" | `route.verify_and_compile` → `servable` | `executable` mà `not servable` = `verification_gap`, **không** được gộp |
-| Đúng/sai của thao tác học sinh | **chỉ rule tất định** | không có rule → `unsupported_to_verify` |
+| Phán quyết "có phát hay không" | `route.verify_and_compile` → `servable` (tuyến `LLM_ONLY`) · `kiem_nguon` + `engine` + `validate_geometry_v2` (tuyến **Hybrid**) | `executable` mà `not servable` = `verification_gap`, **không** được gộp |
+| Đúng/sai của kết quả hình học | **chỉ engine/checker tất định** (`geometry_obligations.py::GEOMETRY_CHECKERS`, hậu điều kiện, chứng chỉ thể tích) | không còn bề mặt phán quyết cho học sinh (#10, #11) |
 | Cấu hình đang chạy | store (`active.config`) — **opaque**, bất biến | store mù domain |
-| **Visual mode (2D/3D) đang hiển thị** | store — **lát trình bày** (`visualMode`, cạnh `leftOpen`) | M8: không bao giờ vào engine state/spec; **không do LLM chọn**; đổi mode không đụng active/cursor/prediction |
-| Renderer khả dụng của một module | hợp đồng module (`supportedVisualModes` ∩ `renderers`) qua `simulations/renderer.ts` | **cấm** switch-case theo simulation_id |
-| Mặt trình bày đang mở (home/workspace/history) | store — `view` (M9-UX1) | như visualMode: trình bày thuần, không đụng engine |
-| **Chế độ học sinh đang mở (Khám phá / Thử thách)** | store — `exploreOpen` / `challengeOpen` (W4B-3A), **mù domain** | HAI cờ vì hai chế độ khác nhau ở chỗ AI PHÁN XÉT (xem bất biến #24); trước đây là `useState` cục bộ tên `labOpen` trong hai renderer miền |
-| **Chỗ đặt lối vào hai chế độ** | `components/SimulationControls.tsx` — chủ sở hữu **DUY NHẤT** | renderer miền **cấm** dựng `sim-secondary-action`; miền chỉ cấp CÂU MỜI qua `predict.entry`/`explore.entry` |
+| Mặt trình bày đang mở (home/workspace/history) | store — `view` (M9-UX1) | trình bày thuần, không đụng engine |
+| **Chế độ quan sát trên Scene3D (Mode A — Mô phỏng / Mode B — Phân tích)** | `Scene3DExplorer.tsx` + `interaction-state.ts` | mặc định mở ở Mode A (không lộ đáp số cuối cùng trên canvas); học sinh chủ động mở bảng Phân tích/Lời giải (Mode B) |
 | **Lịch sử học BỀN** | `state/history.ts` → localStorage (schema v1, whitelist) | M9-UX1: envelope ĐÃ VALIDATE + tiến độ trình bày an toàn (lastCursor/visualMode); **runtime reset/goHome không phá lịch sử** |
+| *Các hàng lịch sử của giai đoạn Tin học* (`graph_view`, `GenericState.pos`, `challengeOpen`/`predict.entry`/`explore.entry`) | *Đã gỡ cùng các module Tin học (`6703c48a`, `e664f683`)* | *Xem nguyên văn lịch sử tại [`legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md`](legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md) và các hàng `#10, #16, #18, #24–#26` ở §5* |
 
 ## 3b. Quy tắc RENDERER-NEUTRAL STATE (M7.FREEZE — điều kiện để có 3D)
 
@@ -284,42 +288,28 @@ chart conversion reject the whole envelope; missing/null scene retains independe
 The shell's scene guard selects layout and is not evidence that a metric failure was safely accepted as 2D.
 History schema/records remain unchanged; reopen revalidates before restoring progress.
 
-**Engine state chỉ chứa sự thật NGỮ NGHĨA. Bố cục là chuyện của renderer.**
+**Engine state chỉ chứa sự thật NGỮ NGHĨA và HÌNH HỌC CHÍNH XÁC. Bố cục khung nhìn và camera là chuyện của renderer.**
 
-- Vị trí trong không gian **mô phỏng** (vd `GenericState.pos`, toạ độ miền 0–100)
-  là ngữ nghĩa → ở engine. **Toạ độ pixel / kích thước canvas / viewBox** là
-  trình bày → **cấm** nằm trong state.
-- Diễn biến chuyển động diễn đạt bằng **định danh ngữ nghĩa**, không bằng toạ độ:
-  `Frame.entityPos: entityId → **nodeId**` (generic) và `NetStep.packetAt =
-  **nodeId**` (network). Nhờ vậy renderer 3D tính vị trí riêng mà **dùng lại
-  nguyên state**.
-- 2D và 3D **dùng chung** config/state/timeline/action của **cùng một module**.
-  **Không** tạo `simulation_id` riêng cho 3D, **không** fork engine.
+- Tọa độ hình học 3D chính xác / metric Gram $G$, danh tính thực thể, cạnh chuẩn tắc và vai trò dựng hình (`formation_roles`, `surface_role`) thuộc về **backend/engine**.
+- **Tọa độ pixel, kích thước canvas, góc quay camera (`scene3d-camera.ts`), trạng thái chọn/cô lập/bung hình (`interaction-state.ts`) và phân đoạn nét hiện/khuất theo camera (`scene3d-edge-visibility.ts`)** thuộc về **renderer** — tuyệt đối không ghi ngược vào engine state.
+- Renderer 3D chỉ đọc `scene3d` đã kiểm chứng từ envelope tại từng bước dựng (`objectsAt`); mọi thao tác xoay/chọn/cô lập/tua bước không làm thay đổi bất kỳ đại lượng toán học nào (khóa bởi `interaction-state.test.ts` và `semantic-dumb-frontend.test.ts`).
 
-*Tiền lệ đã sửa (M7.FREEZE):* `NetworkState` từng chứa `positions` là **toạ độ
-pixel** do `layout()` sinh (COL=150, X0=80…) — dữ liệu trình bày lọt vào state
-quyền uy. Nay `layout2d` sống trong `network/ui.tsx`; state chỉ còn topology +
-route (BFS) + steps + cursor. Khóa bằng test: state không được chứa
-`positions/width/height` hay bất kỳ `"x"/"y"` số nào.
-
-*Quy tắc này ĐÃ ĐƯỢC HIỆN THỰC HÓA (M8):* `network/ui3d.tsx` là renderer 3D
-(Three.js) đọc **nguyên** NetworkState đó — `layout3d` (nodeId → Vector3),
-camera, mesh, nội suy chuyển động đều renderer-owned trong ref/closure của
-component; state không thêm một trường nào (khoá bởi `render3d.test.tsx`).
-Renderer 3D được phép **nội suy hình ảnh** giữa hai bước ngữ nghĩa nhưng không
-bịa trạng thái trung gian: sự thật vẫn là `packetAt` của bước hiện tại.
+*(Tiền lệ lịch sử thời mô phỏng mạng/Tin học M7.FREEZE và M8 về `NetworkState`, `NetStep.packetAt`, `network/ui.tsx`, `network/ui3d.tsx` đã gỡ cùng mã Tin học; nguyên văn lưu tại [`legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md`](legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md).)*
 
 ## 4. Hướng phụ thuộc (không được đảo)
 
 ```
-manifest ← validator ← catalog ← pipeline ← main
-manifest ← representation / semantic / patterns / patch
-types ← registry ← store ← components
-module (domain) → types/registry;  renderer → state (chỉ ĐỌC)
+# Tuyến sản phẩm mặc định (AS-IS: LLM_ONLY — 2026-08-20) — KHÔNG được đảo:
+contract ← validator / ir_static_check ← formation ← interpreter (geometry kernel) ← visual_adapter ← pacer ← envelope ← pipeline ← main
 
-# Route sinh ngữ nghĩa (2026-08-20) — KHÔNG được đảo:
-contract ← validator ← interpreter ← visual_adapter ← pacer ← envelope
+# Kiến trúc mục tiêu (TO-BE: Hybrid) — KHÔNG được đảo:
+registry ← planner / engine ← fact_route / adapter3_simulation ← hybrid_preview
+
+# Frontend — KHÔNG được đảo:
+types ← registry ← store ← components
+module (generic.semantic_program) → types/registry;  Scene3DExplorer / renderer → state & scene3d (chỉ ĐỌC)
 ```
+*(Hướng phụ thuộc cũ của hệ Tin học `manifest ← validator ← catalog` và `representation / patterns / patch` đã gỡ cùng mã; nguyên văn ở [`legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md`](legacy/ARCHITECTURE_MAP_INFORMATICS_ERA.md).)*
 
 Renderer **không bao giờ** nắm state quyền uy; nó phát `SimAction` và đọc lại.
 Store **không** biết domain (không import Trace/SimulationSpec/mảng).
@@ -463,15 +453,12 @@ renderer theo module): nguyên văn ở [`legacy/ARCHITECTURE_MAP_INFORMATICS_ER
    mình đã ở đúng route, sai thì thoát mã 2; (b) **tiêm lỗi giả** — cố ý thêm
    `margin-top: 7px` + icon lệch 9px, chạy lại, thấy nó bắt đủ, rồi mới trả CSS về.
    Một guard chưa từng thấy màu đỏ là một guard chưa được chứng minh.
-12. **Tự chế ngôn ngữ thị giác trong khi dự án ĐÃ CÓ `DESIGN.md`** (M9-UX6) —
-   `DESIGN.md` §Don't nói rõ: *"Don't paint a CTA or structural fill in any
+12. **Tự chế ngôn ngữ thị giác cho khung web khi dự án ĐÃ CÓ `DESIGN.md`, hoặc lấy nhầm bảng màu sticker của `DESIGN.md` áp vào vật liệu 3D của Scene3D** (M9-UX6, cập nhật phạm vi tại [`DESIGN_BRIEF.md`](DESIGN_BRIEF.md) §4) —
+   Với **giao diện khung website** (`tokens.css`, `global.css`), `DESIGN.md` §Don't quy định rõ: *"Don't paint a CTA or structural fill in any
    sticker-palette colour — those are decoration only"* và *"Don't introduce a
-   second structural accent alongside primary"*. Tím/hồng/cam/teal là **trang trí**
-   (chấm phân loại, minh hoạ); màu DUY NHẤT sơn hành động là `--primary`. Muốn một
-   thẻ nổi lên thì dùng **surface tint** (`canvas-soft`), KHÔNG viền màu — đúng
-   khuôn `pricing-plan-card-featured`. Ngoại lệ hợp lệ: §Semantic cho phép sticker
-   palette mang **status** (xanh lá = đúng, cam = sai). Khoá bằng
-   `components/ui-hygiene.test.ts`.
+   second structural accent alongside primary"*. Tím/hồng/cam/teal trên khung web chỉ là **trang trí**; màu DUY NHẤT sơn nút hành động là `--primary`. Muốn một
+   thẻ nổi lên thì dùng **surface tint** (`canvas-soft`), KHÔNG viền màu. Khoá bằng
+   `components/ui-hygiene.test.ts`. Ngược lại, đối với **vật liệu hình học 3D trong `Scene3D`**, `DESIGN.md` không phải quy chuẩn bắt buộc: các thực thể 3D đi theo lớp **Scene3D Geometry Semantic Roles** (`scene3d-roles.ts`) và **Interaction States** (`interaction-state.ts`) theo [`DESIGN_BRIEF.md`](DESIGN_BRIEF.md) §4.
 13. **Đặt guard ở chỗ phụ thuộc route** (M9-UX6) — guard cấm-emoji đầu tiên quét
    `renderToString(<App/>)`, mà SSR chỉ đi qua **trạng thái đầu** (Home) nên không
    bao giờ chạm workspace: emoji 🔮 (`PredictionBar`) và chuỗi `find_max`

@@ -1,7 +1,20 @@
 # Quyết định kiến trúc: Text-to-Geometry Functions là kiến trúc đích
 
-**Status:** accepted — 2026-10-10 (người dùng, theo ý tưởng của GVHD). Bất biến: bản này không sửa; quyết định sau
-thay nó bằng một tệp mới và ghi `superseded by` ở đây.
+**Status:** accepted — 2026-10-10 (người dùng, theo ý tưởng của GVHD). Bất biến: bản gốc bên dưới giữ nguyên; quyết định
+sau thay nó bằng một tệp mới và ghi `superseded by` ở đây.
+
+> **Superseded in part by:** [`HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](HYBRID_B_TARGET_ARCHITECTURE_DECISION.md) (2026-10-11)
+> và mở rộng tại [`TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md`](TYPEDFACT_NEXT_ADAPTER3_CONTRACT.md).
+> - **Điểm giữ nguyên hiệu lực:** Nguyên lý cốt lõi tách việc đọc đề khỏi quyết định hình học (R0 chặt hơn, thư viện
+>   `geometry_functions`, Engine tất định sở hữu khung affine + metric Gram hữu tỉ, kiểm chứng mọi dữ kiện và xuất
+>   `Scene3D`); `LLM_ONLY` vẫn là tuyến sản phẩm mặc định hiện hành (`AS-IS: DEFAULT_MODE = LLM_ONLY`) và không nhận thêm
+>   năng lực mô phỏng mới; `geometry_compiler/` (Primitive Compiler/FactGraph theo họ bài) giữ nguyên trạng thái opt-in,
+>   không phải kiến trúc đích.
+> - **Điểm đã được kế nhiệm trong kiến trúc mục tiêu (`TO-BE: Hybrid`):** Thay vì để AI trực tiếp chọn và ghép chuỗi lời
+>   gọi hàm dựng hình (Baseline A — `function_calling.py` / `function_route.py`, nay chỉ giữ làm đường đối chứng thực
+>   nghiệm), kiến trúc **Hybrid** giao cho AI chỉ trích xuất **JSON Typed Facts** (`TypedFact` / `TypedFactNext`), qua
+>   **Semantic Grounding**, rồi **Goal-Directed Construction Planner** tất định (`planner.py`) tự chọn và phối hợp các
+>   **Geometry Functions** → **Compiler / Construction IR** → **Engine / Kernel** → **Scene3D**.
 
 AlgoSim chuyển hướng phát triển chính sang **Text-to-Geometry Functions**: AI đọc đề theo từng mệnh đề và chỉ **chọn và
 tham số hoá** lời gọi trong một thư viện hàm dựng hình hữu hạn, có kiểu, mỗi lời gọi chép nguyên văn đoạn đề làm căn cứ;
