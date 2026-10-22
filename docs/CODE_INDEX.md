@@ -1,5 +1,18 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## TypedFactNext → planner bridge (`research/hybrid-backend-integration-session1`, LOCAL research, Hybrid off)
+
+Run `docs/evaluation/geometry/runs/typedfactnext-planner-bridge/`; architecture `docs/architecture/HYBRID_BACKEND_TARGET_ARCHITECTURE.md`.
+
+| path | owns | tests |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/typed_fact_next_bridge.py` | `bridge(raw)`: PURE TypedFactNext → `TypedFact` translation (no text reading, no added fact); refuses what `TypedFact` cannot express with `BRIDGE_UNSUPPORTED_*` / `BRIDGE_CUT_EDGES_NOT_STATED` | `backend/tests/geometry/test_typedfactnext_planner_bridge.py` |
+| `backend/app/ai/function_route.py` | `run_typed_fact_next_planner_route` (bridge → `run_fact_route`, research only, not on `/api/analyze`); `_an_dinh_thiet_dien_phu` hides fresh section-vertex labels from learner text | same |
+| `backend/app/simulation/geometry_functions/planner.py` | provider-hidden `TypedFact` fields (`SkipJsonSchema`) + `INTERNAL_FACT_FIELDS`; `_dinh_cat_canh` (SectionVertex needs: reuse / named / fresh `intersect_line_plane`), `_khoi_tren_thiet_dien` (derived pyramid), `solid_refs` operands; `geometry-fact-planner/12` | same |
+| `backend/app/simulation/geometry_functions/registry.py` | `DINH_CAT_CANH` certificate (`_kiem_dinh_cat`, `_cum_cat_canh`, `_CAT_CANH_CHUNG`); ratio-point coefficient ownership (`_ty_so_khop`); definition grammar aligned with `_TY_SO`; `geometry-functions/12` | same; `backend/tests/geometry/test_source_gate_hardening.py` |
+| `backend/app/simulation/geometry_functions/engine.py` | `_Dung.kiem_dinh_cat` (vertex on edge, 0 < t ≤ 1); typed `IR_MEMORY_BUDGET_EXCEEDED`; teaching expansion skipped (traced) when over the IR budget; `geometry-function-engine/10` | same |
+| `backend/app/ai/hybrid_preview.py` · `backend/app/ai/fact_extraction.py` | preview births read from group-event `objects`; provider facts with bridge-only fields refused (`INTERNAL_FIELD_FROM_PROVIDER`) | same; `backend/tests/test_hybrid_preview_fixtures.py` |
+
 ## Simulation evidence repair (`research/simulation-evidence-repair`)
 
 Current capability authority: `docs/evaluation/geometry/runs/simulation-evidence-repair/capability-matrix.md`; supersedes unsupported residual-mesh claims in the historical campaign matrix. New evidence-only capture tooling lives in that run (`capture.py`, binary subprocess streams; `probe-browser.mjs`, separate environment probe). Existing `run_browser_audit.mjs`, `full-gate.mjs`, product and test code are reused unchanged. Dedicated residual mesh NOT_IMPLEMENTED; standalone cone_frustum BLOCKED_BY_KERNEL; ellipse browser scope BACKEND_ONLY.

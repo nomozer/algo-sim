@@ -31,10 +31,10 @@ from app.simulation.geometry_functions.typed_fact_next import (
 
 
 def test_combined_version_identities_and_governance() -> None:
-    """Verify version identities of Registry /11, Planner /11, Engine /9, Adapter /2, and Adapter /3."""
-    assert REGISTRY_VERSION == "geometry-functions/11"
-    assert PLANNER_VERSION == "geometry-fact-planner/11"
-    assert ENGINE_VERSION == "geometry-function-engine/9"
+    """Verify version identities of Registry /12, Planner /12, Engine /10 (typedfactnext-planner-bridge), Adapter /2 and /3."""
+    assert REGISTRY_VERSION == "geometry-functions/12"
+    assert PLANNER_VERSION == "geometry-fact-planner/12"
+    assert ENGINE_VERSION == "geometry-function-engine/10"
     assert ADAPTER_V2_VERSION == "hybrid-preview-adapter/2"
     assert TYPED_FACT_NEXT_SCHEMA_VERSION == "typed-fact-next/1"
     assert ADAPTER_V3_VERSION == "hybrid-simulation-adapter/3"

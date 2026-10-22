@@ -36,12 +36,14 @@ from app.simulation.geometry.predicates import parallel_planes, point_on_line, p
 from app.simulation.semantic_program import ir_builders as P
 
 from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de, nhom_mat_nguon
+from .registry import DINH_CAT_CANH
 
 #: /6 (run `goal-directed-function-composition`): `ask_angle_lines` IR + independent line–line Gram verifier.
 #: /7 (run `geometry-capability-expansion`): ratio points, right-angle-chain base, prism lateral vector, ⊥-line plane check.
 #: /8 (run `composite-geometry`): determined derived bases, per-solid formation, independent volume certificates.
 #: /9 (run `volume-reasoning`): exact volume ratio (`ask_volume_ratio`) and residual volume (`ask_residual_volume`) certificates.
-ENGINE_VERSION = "geometry-function-engine/9"
+#: /10 (run `typedfactnext-planner-bridge`): section vertices verified on their edge segment (0 < t ≤ 1, `kiem_dinh_cat`).
+ENGINE_VERSION = "geometry-function-engine/10"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -1240,6 +1242,45 @@ class _Dung:
         except GeometryError as e:
             raise TuChoi(e.code, str(e), cur_id or tuple(c.id for c in self.of("section", "ask_section_area", "intersection_line", "ask_area", "ask_angle_line_plane")))
 
+    def kiem_dinh_cat(self, d: dict) -> None:
+        """Postconditions of a `DINH_CAT_CANH` certificate on the built figure (run `typedfactnext-planner-bridge`): every
+        vertex lies on its edge's LINE and on the derived plane, the edge IS a lateral edge of the solid and not parallel to
+        the plane (unique cut), and the vertex lies on the SEGMENT oriented from the apex (pyramid, 0 < t ≤ 1) or from the base
+        (prism, 0 ≤ t ≤ 1) — exact, chart coordinates (incidence is affine);
+        a derived pyramid's base vertices are pairwise distinct. Reused points are checked like constructed ones."""
+        ids = tuple(d.get("constructs") or ()) + ((d["derived"]["call"],) if d.get("derived") else ())
+        k = self.khoi.get(d.get("solid"))
+        if k is None:
+            raise TuChoi("UNKNOWN_SOLID", "đỉnh thiết diện: khối bị cắt không có trên hình", ids)
+        # lateral edges ORIENTED from the apex (pyramid) or the base vertex (prism): t is measured from that end
+        canh = {frozenset(e): e for e in ([(k.apex, b) for b in k.base] if k.apex else list(zip(k.base, k.top)))}
+        with _metric.using(self.metric()):
+            mat = self._plane(d["plane"])
+            for v in d["vertices"]:
+                if frozenset(v["edge"]) not in canh:
+                    raise TuChoi("SECTION_VERTEX_OFF_EDGE", f"{''.join(v['edge'])} không phải cạnh bên của {k.name}", ids)
+                (u, w), x = canh[frozenset(v["edge"])], v["label"]
+                pu, pw, px = (Vec3(*self.pts[n]) for n in (u, w, x))
+                huong = pw - pu
+                if huong.dot(mat.normal) == 0:
+                    raise TuChoi("LINE_PARALLEL_TO_PLANE", f"cạnh {u}{w} song song (hoặc nằm trong) mặt cắt — không có giao duy "
+                                 "nhất", ids)
+                if not point_on_line(px, Line3(pu, huong)) or mat.signed_eval(px) != 0:
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{x} không là giao của {u}{w} với mặt cắt", ids)
+                i = next(j for j in range(3) if (huong.x, huong.y, huong.z)[j] != 0)
+                t = ((px.x, px.y, px.z)[i] - (pu.x, pu.y, pu.z)[i]) / (huong.x, huong.y, huong.z)[i]
+                # a pyramid's lateral edge starts at the apex: the cut may meet the base vertex, never the apex; a prism's
+                # lateral edge has no apex, either endpoint may be met
+                if not (0 < t <= 1 if k.apex else 0 <= t <= 1):
+                    raise TuChoi("SECTION_VERTEX_OFF_EDGE", f"mặt cắt gặp đường {u}{w} ngoài cạnh (t = {t})", ids)
+                self.trace.append({"step": "certify_section_vertex", "object": x, "edge": [u, w], "t": str(t),
+                                   "choice": v["choice"], "rule": d["rule"], "relation_verified": True,
+                                   "provenance": "DERIVED", "binding": "AUXILIARY"})
+            if d.get("derived"):
+                base = d["derived"]["base"]
+                if len({self.pts[n] for n in base}) != len(base):
+                    raise TuChoi("DEGENERATE_DERIVED_SECTION", "hai đỉnh thiết diện trùng nhau", ids)
+
     def _kiem_mat_vuong_duong(self, d: dict) -> None:
         """Postconditions of the plane through p ⊥ d (`MAT_VUONG_DUONG`), independent of how it was assembled: both
         auxiliary directions ⊥ d in the chart Gram metric, independent (a plane), and the same plane as the kernel's own
@@ -1584,16 +1625,31 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         dung.ten_mat_phu = ten_mat_phu
         dung.kiem()
         dung.kiem_mat_cat()
+        for d in auxiliary:                              # section vertices on stated cut edges (`DINH_CAT_CANH`)
+            if d.get("rule") == DINH_CAT_CANH:
+                dung.kiem_dinh_cat(d)
         dung.kiem_mat_viet(nhom_mat_nguon(problem_text))
         chuoi = [d for d in auxiliary if d.get("rule") == "effect-chain"]
         for d in chuoi:
             dung.kiem_mo_ta(d)
         program, hoi = dung.bien_dich()
+        from app.simulation.semantic_program.validator import MAX_MEMORY_DECLARATIONS
+        if (n := len(program["memory_declarations"])) > MAX_MEMORY_DECLARATIONS:   # a resource budget, typed
+            raise TuChoi("IR_MEMORY_BUDGET_EXCEEDED", f"chương trình dựng cần {n} khai báo bộ nhớ > trần "
+                         f"{MAX_MEMORY_DECLARATIONS} — không dựng một phần")
         vr = validate_semantic_program(program)
         if not vr.ok:
             raise TuChoi("ENGINE_IR_INVALID", f"IR engine sinh ra không qua thẩm định: {vr.error}")
         to_po = hop_dong_to_po_da_khai(calls)
         spec = hoan_thien_dung_hinh(vr.spec, to_po).spec
+        if (len(spec.memory_declarations) > MAX_MEMORY_DECLARATIONS
+                and any(d.get("rule") == DINH_CAT_CANH for d in auxiliary)):
+            # Section-vertex plans only (run `typedfactnext-planner-bridge`; every other plan keeps main's behaviour): when
+            # the teaching expansion ALONE exceeds the IR budget, build the verified program unexpanded — the Adapter /3
+            # policy — and say so in the trace. Geometry, checks and answers are those of the verified program.
+            dung.trace.append({"step": "formation_budget", "rule": "pedagogical_expansion_skipped",
+                               "declarations": len(spec.memory_declarations), "limit": MAX_MEMORY_DECLARATIONS})
+            spec = vr.spec
         G = dung.metric()
         try:
             with _metric.using(G):

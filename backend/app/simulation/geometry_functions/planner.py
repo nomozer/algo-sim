@@ -27,14 +27,18 @@ from dataclasses import dataclass, field
 from typing import Annotated, Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, WithJsonSchema
+from pydantic.json_schema import SkipJsonSchema
 
-from .registry import AUXILIARY_RULES, MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, ExactNumber, Label, TuChoi, nhan_cua_de, nhan_phu_da_dung
+from .registry import AUXILIARY_RULES, DINH_CAT_CANH, MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, ExactNumber, Label, TuChoi
+from .registry import nhan_cua_de, nhan_phu_da_dung
 from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, render_call, same_call, planning_contracts
 
 #: /8 (run `goal-directed-function-composition`): goal entry by typed slots (`_toan_hang_muc_tieu`), line partner operand.
 #: /9 (run `geometry-capability-expansion`): `divide_segment` point_def, plane through a point ⊥ a line (`MAT_VUONG_DUONG`).
 #: /10 (run `source-gate-hardening`): a `line_ref` producer may name a face by ≥ 3 distinct labels ((ABCD)).
-PLANNER_VERSION = "geometry-fact-planner/11"
+#: /12 (run `typedfactnext-planner-bridge`): provider-hidden bridge fields; section vertices on stated cut edges (reuse /
+#: named / fresh), derived pyramid over the section, solid operands by fact id.
+PLANNER_VERSION = "geometry-fact-planner/12"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
 def _nhan_tuoi(stem: str) -> tuple[str, ...]:
@@ -95,6 +99,20 @@ class TypedFact(BaseModel):
         "(parallel) hay vuông góc (perpendicular) với mặt `points_b`; khi đó không có `points`")
     plane_name: Label | None = Field(None, description="tên mặt phẳng cắt trong đề; bắt buộc cho parallel_two_lines")
     reason: str | None = None
+    # Internal only (run `typedfactnext-planner-bridge`): absent from every provider schema (`SkipJsonSchema`, frozen
+    # fingerprints unchanged) and refused when a provider response carries them (`INTERNAL_FACT_FIELDS`). Written by the
+    # TypedFactNext bridge: the edges a relation-plane section is stated to cut, the names the source gives those cuts
+    # (aligned; None = unnamed), and the section a derived pyramid "khối chóp đỉnh S cắt bởi (α)" stands on.
+    cut_edges: SkipJsonSchema[list[list[Label]] | None] = None
+    cut_points: SkipJsonSchema[list[Label | None] | None] = None
+    plane_ref: SkipJsonSchema[str | None] = None
+    # Operands of a volume ratio / residual question as solid FACT ids (declared or derived), in the ordered roles the
+    # question's quantity defines: (numerator, denominator) / (original, subtracted…).
+    solid_refs: SkipJsonSchema[list[str] | None] = None
+
+
+#: TypedFact fields only the deterministic bridge writes; a provider response carrying one is refused.
+INTERNAL_FACT_FIELDS = ("cut_edges", "cut_points", "plane_ref", "solid_refs")
 
 
 @dataclass
@@ -208,9 +226,42 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
                         raise TuChoi("FACT_INCOMPLETE", f"{f.id}: mỗi đường cần đúng hai điểm đã định danh", (f.id,))
                     if len(set(line)) != 2:
                         raise TuChoi("DEGENERATE_LINE", f"{f.id}: hai đầu mút đường trùng nhau", (f.id,))
+        if f.cut_edges is not None or f.cut_points is not None:
+            if f.kind != "section" or f.plane_relation is None or not f.cut_edges:
+                raise TuChoi("SCHEMA_INVALID", f"{f.id}: cạnh bị cắt chỉ cho thiết diện của mặt cho bằng quan hệ", (f.id,))
+            canh = [frozenset(e) for e in f.cut_edges]
+            if any(len(e) != 2 or len(set(e)) != 2 for e in f.cut_edges) or len(set(canh)) != len(canh):
+                raise TuChoi("FACT_INCOMPLETE", f"{f.id}: mỗi cạnh bị cắt là hai đỉnh phân biệt, không lặp", (f.id,))
+            ten = [p for p in f.cut_points or () if p]
+            if f.cut_points is not None and (len(f.cut_points) != len(f.cut_edges) or len(set(ten)) != len(ten)):
+                raise TuChoi("FACT_INCOMPLETE", f"{f.id}: tên giao điểm khớp từng cạnh bị cắt, không trùng", (f.id,))
+        if f.plane_ref is not None:
+            if f.kind != "solid" or f.solid_type != "pyramid" or f.solid or f.points:
+                raise TuChoi("SCHEMA_INVALID", f"{f.id}: plane_ref chỉ cho khối chóp dựng trên thiết diện (đỉnh ở `point`)",
+                             (f.id,))
+            required = ("point", "solid_type", "plane_ref")
+        if f.solid_refs is not None:
+            so = {"volume_ratio": (2, 2), "residual_volume": (2, 3)}.get(f.quantity or "")
+            if (f.kind != "question" or so is None or not so[0] <= len(f.solid_refs) <= so[1]
+                    or len(set(f.solid_refs)) != len(f.solid_refs) or f.solid or f.points or f.points_a or f.points_b):
+                raise TuChoi("SCHEMA_INVALID", f"{f.id}: solid_refs chỉ cho tỉ số / thể tích còn lại, thay cho toán hạng điểm",
+                             (f.id,))
         if thieu := [k for k in required if getattr(f, k) in (None, [])]:
             raise TuChoi("FACT_INCOMPLETE", f"{f.id} ({f.kind}) thiếu {thieu}", (f.id,))
     by_id = {f.id: f for f in facts}
+    for f in facts:
+        if f.plane_ref is None:
+            continue
+        sec = by_id.get(f.plane_ref)
+        if sec is None:
+            raise TuChoi("UNKNOWN_DERIVED_REFERENCE", f"{f.id}: thiết diện {f.plane_ref!r} không tồn tại", (f.id,))
+        if sec.kind != "section" or not sec.cut_edges:
+            raise TuChoi("DERIVED_REFERENCE_TYPE_MISMATCH", f"{f.id}: {sec.id} không phải thiết diện có cạnh bị cắt",
+                         (f.id, sec.id))
+        for obj in (f, sec):
+            if obj.role in ("prove", "condition") or obj.negated:
+                raise TuChoi("UNSUPPORTED_CAPABILITY", "khối dựng trên thiết diện chỉ từ giả thiết / yêu cầu khẳng định",
+                             (obj.id,))
     for f in facts:
         if f.line_ref is None:
             continue
@@ -298,7 +349,7 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
     if dk := [f.id for f in facts if f.role == "condition"]:
         raise TuChoi("CONDITIONAL_CLAUSE", f"dữ kiện trong mệnh đề điều kiện {dk} — không phải giả thiết vô điều kiện", tuple(dk))
     for f in facts:
-        if f.kind == "solid" and f.role != "question":
+        if f.kind == "solid" and f.role != "question" and f.plane_ref is None:
             kh = _doc_khoi(f)
             k.solids[kh.ky_hieu] = kh
     ten = {s: kh.ten for s, kh in k.solids.items()} | {kh.ten: kh.ten for kh in k.solids.values()}
@@ -338,18 +389,29 @@ def lap_ke_hoach(raw: Any, problem_text: str = "") -> KeHoach:
                 phat(kh.fact + "_day", "rectangle", {"vertices": kh.day}, kh.quotes, "hình hộp chữ nhật ⇒ đáy hình chữ nhật")
 
     # Bind all explicit producers before resolving goals, independently of provider order.
-    for f in sorted(facts, key=lambda f: (f.kind == "question", f.id)):
-        if f.kind == "solid" and f.role != "question":
-            continue
+    def anh_xa(f: TypedFact) -> None:
+        if f.kind == "solid" and (f.role != "question" or f.plane_ref is not None):
+            return
         if f.role == "prove":
             c = _anh_xa(f, k, ten, deu, khoi_cua, lambda *a, **kw: phat(*a, **kw, dich="goals"))
             k.goals.append({"fact": f.id, "call": c})
-            continue
+            return
         if f.negated:
             c = _anh_xa(f, k, ten, deu, khoi_cua, lambda *a, **kw: phat(*a, **kw, dich="negated"))
             k.negated.append({"fact": f.id, "call": c})
-            continue
+            return
         _anh_xa(f, k, ten, deu, khoi_cua, phat)
+
+    thu_tu = sorted(facts, key=lambda f: f.id)
+    for f in thu_tu:
+        if f.kind != "question":
+            anh_xa(f)
+    for f in thu_tu:                                      # derived pyramids stand on the sections just planned, and
+        if f.plane_ref is not None:                       # questions may name them by their vertices
+            _khoi_tren_thiet_dien(f, k, phat, khoi_cua)
+    for f in thu_tu:
+        if f.kind == "question":
+            anh_xa(f)
     for f in facts:
         if f.kind == "length" and f.measure == "height" and f.role == "premise" and not f.negated:
             k.heights[khoi_cua(f.solid, f).ten] = f.id
@@ -758,7 +820,10 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
         args = {"point": f.point, ("segment" if fn == "midpoint" else "polygon"): f.points}
         return phat(f.id, fn, args, q, f"point_def({f.point_kind})")
     if f.kind == "section" and f.plane_relation:                     # mục tiêu: thiết diện với một mặt DỰNG từ quan hệ
-        return _mat_qua_diem(f, q, k, phat, khoi_cua(f.solid, f).ten, "section")
+        c = _mat_qua_diem(f, q, k, phat, khoi_cua(f.solid, f).ten, "section")
+        if f.cut_edges:
+            _dinh_cat_canh(f, k, phat, khoi_cua(f.solid, f))
+        return c
     if f.kind == "section":                                         # dựng thiết diện: khối × mặt phẳng qua ba điểm có tên
         return phat(f.id, "section", {"solid": khoi_cua(f.solid, f).ten, "plane": f.points}, q, "section(solid, plane)")
     if f.kind == "intersection_line":
@@ -890,6 +955,18 @@ def _cau_hoi(f: TypedFact, q: list[str], k: KeHoach, khoi_cua, phat) -> dict:
     if n == "volume":
         pass
 
+    if f.solid_refs:                                    # operands by solid fact id (declared or derived pyramid)
+        theo = {kh.fact: kh for kh in k.solids.values()}
+        if lac := [x for x in f.solid_refs if x not in theo]:
+            raise TuChoi("UNKNOWN_SOLID", f"{f.id}: {lac} không phải khối đã khai", (f.id,))
+        ten = [theo[x].ten for x in f.solid_refs]
+        if f.role != "question" or f.negated:
+            raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: toán hạng khối chỉ cho câu hỏi khẳng định", (f.id,))
+        if n == "volume_ratio":
+            return phat(f.id, "ask_volume_ratio", {"numerator_solid": ten[0], "denominator_solid": ten[1]}, q,
+                        "question(volume_ratio, solid refs)")
+        return phat(f.id, "ask_residual_volume", {"original_solid": ten[0], "subtracted_solids": ten[1:]}, q,
+                    "question(residual_volume, solid refs)")
     if n == "volume_ratio" or (n == "volume" and not f.solid and len(f.points_a or []) >= 4 and len(f.points_b or []) >= 4):
         if f.role == "prove":
             raise TuChoi("GOAL_CLAUSE_NOT_PREMISE", f"{f.id}: tỉ số thể tích là điều phải chứng minh, chưa hỗ trợ", (f.id,))
@@ -1077,6 +1154,128 @@ def _mat_vuong_duong(f: TypedFact, q: list[str], k: KeHoach, phat, khoi: str, fn
                               "translate; engine kiểm vuông góc chính xác)",
                     "provenance": "DERIVED", "binding": "AUXILIARY"})
     return c
+
+
+def _canh_ben(kh: _Khoi) -> list[tuple[str, str]]:
+    """Lateral edges in base order: apex–base vertex of a pyramid, base–top vertex of a prism (structure, no coordinates)."""
+    return [(kh.dinh, b) for b in kh.day] if kh.loai == "pyramid" else list(zip(kh.day, kh.tren))
+
+
+def _dinh_cat_canh(f: TypedFact, k: KeHoach, phat, kh: _Khoi) -> dict:
+    """Section vertices of a derived plane on the edges the source says it cuts (`DINH_CAT_CANH`, run
+    `typedfactnext-planner-bridge`). One typed need SectionVertex(edge, plane) per lateral edge, solved by the cheapest
+    candidate whose effect is already established: the plane's own through-point when its validated producer lies on that
+    edge, or an identical intersection already planned (cost 0); otherwise a NEW `intersect_line_plane` named as the source
+    names it (cost 1) or with a fresh `I…` label (cost 1). An unstated edge takes only a cost-0 reuse — the planner never
+    asserts a cut the source did not state. The gate binds the cut clause; the engine checks every vertex (0 < t ≤ 1)."""
+    d = next((x for x in k.derived_planes.values() if f.id in x["targets"]), None)
+    if d is None:
+        raise TuChoi("AUXILIARY_RULE_MISMATCH", f"{f.id}: cạnh bị cắt cần một mặt dẫn xuất đã khai", (f.id,))
+    stated = [tuple(e) for e in f.cut_edges]
+    names = list(f.cut_points) if f.cut_points else [None] * len(stated)
+    if d.get("cut") not in (None, {"edges": [list(e) for e in stated], "points": names}):
+        raise TuChoi("AMBIGUOUS_FACT", f"{f.id}: hai cách nêu cạnh bị cắt cho cùng một mặt", (f.id,))
+    d["cut"] = {"edges": [list(e) for e in stated], "points": names}
+    canh = _canh_ben(kh)
+    if lac := [e for e in stated if frozenset(e) not in {frozenset(x) for x in canh}]:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: {[''.join(e) for e in lac]} không phải cạnh bên của {kh.ten}", (f.id,))
+    plane, p = [d["point"], *d["labels"]], d["point"]
+    ten = dict(zip(map(frozenset, stated), names))
+    cert = {"rule": DINH_CAT_CANH, "goal": f.id, "plane_goal": d["goal"], "point": p, "plane": plane, "solid": kh.ten,
+            "stated_edges": [list(e) for e in stated], "stated_points": names, "vertices": [], "constructs": [],
+            "labels": [], "quotes": list(d["quotes"]), "provenance": "DERIVED", "binding": "AUXILIARY"}
+    r = k.resolver
+    for u, v in canh:
+        e = frozenset((u, v))
+        r.needs += 1
+        if r.needs > MAX_EFFECT_NEEDS:
+            raise TuChoi("PLAN_TOO_LARGE", "quá trần typed needs")
+        choices = []                                  # (cost, kind, label, call id, producer id)
+        # The through-point's producer is read from the FACTS (its call carries the fact id), so the choice does not depend
+        # on the order facts are mapped in.
+        tren_canh = next((x for x in r.facts.values() if x.kind == "point_def" and x.role == "premise" and not x.negated
+                          and x.point_kind in ("midpoint", "divide_segment") and x.point == p
+                          and frozenset(x.points or ()) == e), None)
+        if tren_canh is not None:
+            choices.append((0, "reuse_through_point", p, None, tren_canh.id))
+        if p in e:
+            choices.append((0, "reuse_through_point", p, None, None))
+        cu = next((c for c in k.calls if c["fn"] == "intersect_line_plane" and frozenset(c["args"]["line"]) == e
+                   and c["args"]["plane"] == plane), None)
+        if cu is not None:
+            choices.append((0, "reuse_intersection", cu["args"]["point"], cu["id"], None))
+        if e in ten:
+            choices.append((1, "named_intersection", ten[e], None, None) if ten[e] else (1, "fresh_intersection", None, None, None))
+        r.candidates += len(choices)
+        if r.candidates > MAX_EFFECT_CANDIDATES * MAX_EFFECT_NEEDS:
+            raise TuChoi("PLAN_TOO_LARGE", "quá trần candidate")
+        if not choices:
+            continue                                  # unstated edge with nothing established on it: no vertex claimed
+        cost, kind, label, call_id, producer = min(choices, key=lambda x: (x[0], x[1]))
+        if e in ten and ten[e] and label != ten[e]:   # the source names the cut otherwise than the point already there
+            raise TuChoi("AMBIGUOUS_REFERENCE", f"{f.id}: giao điểm trên {u}{v} được gọi {ten[e]} nhưng đã là {label}",
+                         (f.id,))
+        if cost:
+            if kind == "fresh_intersection":
+                r.feet += 1
+                if r.feet > MAX_RESULT_FEET:
+                    raise TuChoi("PLAN_TOO_LARGE", "quá trần điểm tươi")
+                if "I" not in r.quet:
+                    r.quet.add("I")
+                    k.taken |= nhan_phu_da_dung(r.text, "I")
+                label = next((n for n in _nhan_tuoi("I") if n not in k.taken), None)
+                if label is None:
+                    raise TuChoi("PLAN_TOO_LARGE", "hết nhãn điểm phụ")
+                k.taken.add(label)
+                cert["labels"].append(label)
+            dung = {c["id"] for c in k.calls}
+            call_id = next(j for j in (f"{f.id}_cut{len(cert['vertices']) + 1}", *(f"{f.id}_cut_{n}" for n in range(2, 1000)))
+                           if j not in k.fact_ids | dung)
+            phat(call_id, "intersect_line_plane", {"point": label, "line": [u, v], "plane": plane}, d["quotes"],
+                 f"{DINH_CAT_CANH}→intersect_line_plane ({kind})")
+            k.trace[-1]["fact"] = f.id
+            cert["constructs"].append(call_id)
+        cert["vertices"].append({"edge": [u, v], "label": label, "choice": kind, "call": call_id, "producer": producer,
+                                 "stated": e in ten})
+        k.trace.append({"fact": f.id, "step": "effect_resolution", "need": f"SectionVertex({u}{v}, plane through {p})",
+                        "selection": kind, "cost": cost, "candidates": len(choices), "label": label})
+    if missing := [list(e) for e in stated if not any(frozenset(x["edge"]) == frozenset(e) for x in cert["vertices"])]:
+        raise TuChoi("AUXILIARY_RULE_MISMATCH", f"{f.id}: cạnh bị cắt {missing} không có đỉnh thiết diện", (f.id,))
+    k.auxiliary.append(cert)
+    k.trace.append({"fact": f.id, "step": "decompose_goal", "rule": DINH_CAT_CANH, "calls": list(cert["constructs"]),
+                    "auxiliary": list(cert["labels"]), "reused": [x["label"] for x in cert["vertices"] if not x["call"]
+                                                                 or x["choice"] == "reuse_intersection"],
+                    "provenance": "DERIVED", "binding": "AUXILIARY"})
+    return cert
+
+
+def _khoi_tren_thiet_dien(f: TypedFact, k: KeHoach, phat, khoi_cua) -> dict:
+    """Derived pyramid "khối chóp đỉnh S cắt bởi (α)": apex = the parent pyramid's apex, base = the section vertices on
+    EVERY lateral edge in base order (each established by `_dinh_cat_canh`); an open cycle is refused, never closed by
+    guessing. Registered as a solid so later goals (ratio, residual) can name it by its vertices."""
+    sec = next((x for x in k.auxiliary if x.get("rule") == DINH_CAT_CANH and x["goal"] == f.plane_ref), None)
+    if sec is None:
+        raise TuChoi("AUXILIARY_RULE_MISMATCH", f"{f.id}: thiết diện {f.plane_ref} chưa có đỉnh trên cạnh bị cắt", (f.id,))
+    kh = next(x for x in k.solids.values() if x.ten == sec["solid"])
+    if kh.loai != "pyramid" or kh.dinh != f.point:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", f"{f.id}: khối dựng trên thiết diện cần đỉnh {kh.dinh} của chóp {kh.ten}",
+                     (f.id,))
+    dinh = {frozenset(x["edge"]): x["label"] for x in sec["vertices"]}
+    if any(frozenset(e) not in dinh for e in _canh_ben(kh)):
+        raise TuChoi("SECTION_NOT_CLOSED_ON_LATERAL_EDGES", f"{f.id}: thiết diện chưa có đỉnh trên mọi cạnh bên của {kh.ten}",
+                     (f.id,))
+    vong = [dinh[frozenset(e)] for e in _canh_ben(kh)]
+    if len(set(vong)) < 3:
+        raise TuChoi("DEGENERATE_DERIVED_SECTION", f"{f.id}: thiết diện có ít hơn 3 đỉnh phân biệt", (f.id,))
+    ten = f"{kh.dinh}.{''.join(vong)}"
+    if ten in k.solids:
+        raise TuChoi("AMBIGUOUS_REFERENCE", f"{f.id}: khối {ten} đã được khai", (f.id,))
+    phat(f.id, "pyramid", {"apex": kh.dinh, "base": vong}, list(f.quotes), f"{DINH_CAT_CANH}→pyramid (khối trên thiết diện)")
+    k.solids[ten] = _Khoi(ten, ten, "pyramid", vong, dinh=kh.dinh, fact=f.id, quotes=list(f.quotes), kieu="pyramid")
+    sec["derived"] = {"call": f.id, "apex": kh.dinh, "base": vong, "quotes": list(f.quotes)}
+    k.trace.append({"fact": f.id, "step": "decompose_goal", "rule": DINH_CAT_CANH, "goal": f"Pyramid({kh.dinh}, Section)",
+                    "dependencies": [sec["goal"], *vong], "calls": [f.id], "provenance": "DERIVED", "binding": "AUXILIARY"})
+    return sec
 
 
 def _phan_ra(f: TypedFact, q: list[str], k: KeHoach, phat, p: str, dt: list[str]) -> dict:

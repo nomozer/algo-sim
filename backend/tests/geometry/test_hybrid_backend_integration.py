@@ -460,9 +460,10 @@ def test_version_constants_surface_fingerprints_and_historical_receipt_preservat
     # /6, /7, /5 -> /7, /8, /6 (goal-directed-function-composition): ask_angle_lines, centroid + angle goal contracts.
     # -> /8, /9, /7 (geometry-capability-expansion): divide_segment, MAT_VUONG_DUONG, right-angle chain, prism vector.
     # composite-geometry: shared-face source check + constructed-base pyramids; provider schemas unchanged.
-    assert REGISTRY_VERSION == "geometry-functions/11"
-    assert PLANNER_VERSION == "geometry-fact-planner/11"
-    assert ENGINE_VERSION == "geometry-function-engine/9"
+    # -> /12, /12, /10 (typedfactnext-planner-bridge): cut-edge section vertices, derived pyramid; provider schemas unchanged.
+    assert REGISTRY_VERSION == "geometry-functions/12"
+    assert PLANNER_VERSION == "geometry-fact-planner/12"
+    assert ENGINE_VERSION == "geometry-function-engine/10"
     # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định.
     # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness.
     assert main_module.CACHE_VERSION == "127"

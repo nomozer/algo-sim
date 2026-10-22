@@ -8,6 +8,7 @@
 
 | file | phạm vi |
 |---|---|
+| [`HYBRID_BACKEND_TARGET_ARCHITECTURE.md`](HYBRID_BACKEND_TARGET_ARCHITECTURE.md) | kiến trúc đích nghiên cứu: TypedFactNext → bridge → cổng nguồn → planner → engine → Scene3D; quyết định `BRIDGE_FEASIBLE` cho tập đa diện có mặt cắt theo quan hệ; không đổi bề mặt nhà cung cấp; Hybrid vẫn NO-GO |
 | [`ASSUMPTION_CERTIFICATE_AMENDMENT.md`](ASSUMPTION_CERTIFICATE_AMENDMENT.md) | chứng chỉ giả định (W15), ràng buộc phép dựng với đề (W17 §15, W18 §16); mã sản phẩm trích đường dẫn này |
 | [`OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`](OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md) | edge identity, visual owner, occlusion span, oracle độc lập |
 | [`HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](HYBRID_B_TARGET_ARCHITECTURE_DECISION.md) | **quyết định (2026-10-11)**: trong Text-to-Geometry Functions, Hybrid B (AI trích Typed Facts → compiler tất định chọn/kết hợp hàm) là hướng ưu tiên; A là baseline đối chứng; dựa trên kết quả OFFLINE — chưa có bằng chứng Gemini thật; `LLM_ONLY` vẫn mặc định |

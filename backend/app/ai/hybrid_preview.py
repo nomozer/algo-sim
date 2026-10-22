@@ -68,7 +68,7 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
     ("CAPABILITY", "capability_gap", frozenset({
         "UNSUPPORTED_CAPABILITY", "UNSUPPORTED_BASE_SHAPE", "UNSUPPORTED_CENTROID", "UNSUPPORTED_MULTIPLE_BASES",
         "UNSUPPORTED_MULTIPLE_HEIGHTS", "UNSUPPORTED_PLANE", "UNSUPPORTED_REGULAR_POLYGON", "QUESTION_CONTEXT_UNSUPPORTED",
-        "UNSUPPORTED_IRRATIONAL_LAYOUT", "UNSUPPORTED_VOLUME_RATIO",
+        "UNSUPPORTED_IRRATIONAL_LAYOUT", "UNSUPPORTED_VOLUME_RATIO", "IR_MEMORY_BUDGET_EXCEEDED",
         "PLAN_TOO_LARGE", "NO_SOLID", "NON_HOMOGENEOUS_LENGTHS", "CONDITIONAL_CLAUSE", "NEGATED_CLAUSE",
         "METRIC_REQUIRES_EUCLIDEAN_CHART",
         # Route D's OUT_OF_SCOPE is the extraction escape `unsupported` ("this clause does not map to the function
@@ -78,7 +78,7 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
      "Đề này cần một phép dựng hoặc một dạng câu hỏi mà hệ chưa hỗ trợ, nên hệ không dựng một hình gần đúng."),
     ("MISSING_DATA", "insufficient_specification", frozenset({
         "MISSING_DIMENSION", "UNDERDETERMINED_POINT", "PLANE_NOT_UNIQUE", "FOOT_NOT_DETERMINED", "AMBIGUOUS_FACT",
-        "AMBIGUOUS_REFERENCE"}),
+        "AMBIGUOUS_REFERENCE", "SECTION_NOT_CLOSED_ON_LATERAL_EDGES"}),
      "Dữ kiện hiện có chưa xác định được duy nhất hình cần dựng hoặc còn hiểu theo nhiều cách. AlgoSim không tự chọn số "
      "liệu hay cách hiểu thay em, nên không dựng hình."),
     ("INVALID_DATA", "geometry_generation_failed", frozenset({
@@ -89,7 +89,9 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
         # polyhedral kernel (`GeometryError` codes Route D passes through unchanged)
         "DEGENERATE_POINTS", "COLLINEAR_POINTS", "PARALLEL_NO_INTERSECTION", "CONTAINED_INFINITE_INTERSECTION",
         "ZERO_VECTOR", "PLANE_EQUATION_DEGENERATE", "POLYGON_CHAIN_NOT_CONVEX", "MEASURE_UNDEFINED", "METRIC_NOT_EUCLIDEAN",
-        "PLANE_DOES_NOT_CUT", "PLANE_TOUCHES_VERTEX", "PLANE_TOUCHES_EDGE", "SECTION_INTERSECTION_DEGENERATE"}),
+        "PLANE_DOES_NOT_CUT", "PLANE_TOUCHES_VERTEX", "PLANE_TOUCHES_EDGE", "SECTION_INTERSECTION_DEGENERATE",
+        # stated cut edges of a derived plane (`DINH_CAT_CANH`) that the built figure contradicts
+        "SECTION_VERTEX_OFF_EDGE", "LINE_PARALLEL_TO_PLANE", "DEGENERATE_DERIVED_SECTION"}),
      "Các dữ kiện dùng để dựng hình mâu thuẫn nhau hoặc làm hình suy biến, nên không có hình nào thoả tất cả. AlgoSim "
      "dừng lại thay vì dựng một hình sai."),
     ("SOURCE_UNVERIFIED", "verification_gap", frozenset({
@@ -114,7 +116,8 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
         "RESPONSE_TRUNCATED", "MAX_TOKENS", "NO_CANDIDATE", "JSON_INVALID", "MALFORMED_RESPONSE_PART",
         "RESPONSE_CONTRACT_INVALID", "SCHEMA_INVALID", "FACT_INCOMPLETE", "DANGLING_DEPENDENCY", "DUPLICATE_CALL_ID",
         "DEPENDENCY_CYCLE", "UNKNOWN_DERIVED_REFERENCE", "DERIVED_REFERENCE_TYPE_MISMATCH", "AUXILIARY_LABEL_COLLISION",
-        "AUXILIARY_RULE_MISMATCH", "AUXILIARY_ONLY_FUNCTION", "UNKNOWN_SOLID", "PRECONDITION_FAILED"}),
+        "AUXILIARY_RULE_MISMATCH", "AUXILIARY_ONLY_FUNCTION", "UNKNOWN_SOLID", "PRECONDITION_FAILED",
+        "INTERNAL_FIELD_FROM_PROVIDER"}),
      "Hệ chưa chuyển được đề này thành các dữ kiện dựng hình kiểm chứng được, nên không dựng hình."),
     ("INTEGRITY", "geometry_generation_failed", frozenset({
         "PREVIEW_IDENTITY_CHANGED", "PREVIEW_SURFACE_CHANGED", "PREVIEW_PROOF_STATUS_INVALID", "PREVIEW_DISABLED"}),
@@ -208,9 +211,11 @@ def _validate_scene(scene: dict) -> Metric:
         index = event["step_index"]
         if type(index) is not int or not 0 <= index < len(steps):
             raise PreviewInvalid("PREVIEW_DEPENDENCY_INVALID")
-        if event.get("object"):
-            # Quantity/construction events may have no rendered object (existing Scene3D contract).
-            born.setdefault(event["object"], index)
+        # Quantity/construction events may have no rendered object (existing Scene3D contract). A group event creates the
+        # objects it lists (lateral edges of a derived solid): births are read as the timeline reads them (`objectsAt`).
+        for obj in (event.get("object"), *(event.get("objects") or ())):
+            if obj:
+                born.setdefault(obj, index)
     for oid, obj in objects.items():
         for dep in obj.get("depends") or ():
             if dep not in objects or dep in born and (oid not in born or born[dep] >= born[oid]):
