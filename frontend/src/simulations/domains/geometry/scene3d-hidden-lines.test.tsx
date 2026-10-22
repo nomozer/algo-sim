@@ -116,10 +116,11 @@ describe("hidden-line — cấu trúc cảnh", () => {
   it("đoạn đã phân loại KHUẤT không bị GPU loại lần hai", () => {
     const m = canonicalEdgeMaterial(true, false);
     expect(m.depthTest).toBe(false);
-    expect(m.opacity).toBeGreaterThanOrEqual(0.85);
+    expect(m.opacity).toBeGreaterThanOrEqual(0.5);
+    expect(m.opacity).toBeLessThan(canonicalEdgeMaterial(false, false).opacity * 0.8);
   });
 
-  it("nét cạnh dùng mực riêng, tương phản với mặt tô (≥ 7:1 trên nền sáng)", () => {
+  it("nét cạnh có mực riêng: nét thấy ≥ 7:1, nét khuất lùi một bậc nhưng vẫn ≥ 4.5:1 trước alpha", () => {
     const sang = (c: THREE.Color) => {
       const k = (x: number) => (x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4);
       const s = c.clone().convertLinearToSRGB();
@@ -133,7 +134,7 @@ describe("hidden-line — cấu trúc cảnh", () => {
       .material as THREE.MeshStandardMaterial).color;
     for (const m of mat) {
       expect(m.color.getHex()).not.toBe(to.getHex());
-      expect(1.05 / (sang(m.color) + 0.05)).toBeGreaterThanOrEqual(7);
+      expect(1.05 / (sang(m.color) + 0.05)).toBeGreaterThanOrEqual(m instanceof THREE.LineDashedMaterial ? 4.5 : 7);
     }
   });
 

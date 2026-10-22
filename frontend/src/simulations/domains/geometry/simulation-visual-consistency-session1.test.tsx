@@ -6,7 +6,7 @@ import { hangCuThe } from "./pick-target";
 import { semanticTree } from "./interaction-state";
 
 describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid Presentation", () => {
-  it("unifies curved_solid surface material with polyhedral mesh palette (slate-blue 0x647a96, opacity 0.22 / 0.36)", () => {
+  it("unifies curved_solid surface material with polyhedral mesh palette (DESIGN sky, common normal / selected opacity)", () => {
     const polyObj: SceneObject = {
       id: "chop",
       label: "Hình chóp S.ABC",
@@ -56,9 +56,9 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
       )!;
       const matDefault = meshDefault.material as THREE.MeshStandardMaterial;
       expect(matDefault.color.getHex()).toBe(polyMat.color.getHex());
-      expect(matDefault.color.getHex()).toBe(0x647a96);
+      expect(matDefault.color.getHex()).toBe(0x62aef0);
       expect(matDefault.opacity).toBeCloseTo(polyMat.opacity, 5);
-      expect(matDefault.opacity).toBeCloseTo(0.22, 5);
+      expect(matDefault.opacity).toBeCloseTo(0.18, 5);
 
       const groupHighlighted = buildObject3D(curvedObj, true)!;
       const meshHighlighted = groupHighlighted.children.find(
@@ -66,7 +66,7 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
           c instanceof THREE.Mesh && (c.material as THREE.Material).colorWrite !== false,
       )!;
       const matHighlighted = meshHighlighted.material as THREE.MeshStandardMaterial;
-      expect(matHighlighted.opacity).toBeCloseTo(0.36, 5);
+      expect(matHighlighted.opacity).toBeCloseTo(0.30, 5);
     }
   });
 
@@ -87,13 +87,13 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     const builtBase = buildObject3D(baseCircle, false)!;
     const baseFill = builtBase.getObjectByName("polygon_fill:duong_tron_day_cyl") as THREE.Mesh;
     expect(baseFill).toBeDefined();
-    const baseFillMat = baseFill.material as THREE.MeshStandardMaterial;
-    expect(baseFillMat.color.getHex()).toBe(0x647a96);
-    expect(baseFillMat.opacity).toBeCloseTo(0.12, 5);
+    const baseFillMat = baseFill.material as THREE.MeshBasicMaterial;
+    expect(baseFillMat.color.getHex()).toBe(0x62aef0);
+    expect(baseFillMat.opacity).toBeCloseTo(0.10, 5);
     const baseRim = builtBase.children.find(
       (c): c is THREE.Mesh => c instanceof THREE.Mesh && c !== baseFill,
     )!;
-    expect((baseRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(0x1e293b);
+    expect((baseRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(0x31302e);
 
     const cutCircle: SceneObject = {
       id: "td_sec_parallel",
@@ -112,15 +112,15 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     const secFill = builtCut.getObjectByName("section_fill:td_sec_parallel") as THREE.Mesh;
     expect(secFill).toBeDefined();
     expect(secFill.renderOrder).toBe(THU_TU_TO_THIET_DIEN);
-    const secFillMat = secFill.material as THREE.MeshStandardMaterial;
-    expect(secFillMat.color.getHex()).toBe(0xf59e0b);
-    expect(secFillMat.opacity).toBeCloseTo(0.28, 5);
+    const secFillMat = secFill.material as THREE.MeshBasicMaterial;
+    expect(secFillMat.color.getHex()).toBe(0xffc857);
+    expect(secFillMat.opacity).toBeCloseTo(0.38, 5);
     expect(secFillMat.depthTest).toBe(true);
     expect(secFillMat.depthFunc).toBe(THREE.LessEqualDepth);
     const secRim = builtCut.children.find(
       (c): c is THREE.Mesh => c instanceof THREE.Mesh && c !== secFill,
     )!;
-    expect((secRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(0xf59e0b);
+    expect((secRim.material as THREE.MeshBasicMaterial).color.getHex()).toBe(0xdd5b00);
 
     const cutEllipse: SceneObject = {
       id: "td_sec_el",
@@ -142,9 +142,9 @@ describe("Session 1 (P2–P5) — Unified Geometry Visual System & Curved Solid 
     const elFill = builtEllipse.getObjectByName("section_fill:td_sec_el") as THREE.Mesh;
     expect(elFill).toBeDefined();
     expect(elFill.renderOrder).toBe(THU_TU_TO_THIET_DIEN);
-    const elFillMat = elFill.material as THREE.MeshStandardMaterial;
-    expect(elFillMat.color.getHex()).toBe(0xf59e0b);
-    expect(elFillMat.opacity).toBeCloseTo(0.28, 5);
+    const elFillMat = elFill.material as THREE.MeshBasicMaterial;
+    expect(elFillMat.color.getHex()).toBe(0xffc857);
+    expect(elFillMat.opacity).toBeCloseTo(0.38, 5);
     expect(elFillMat.depthTest).toBe(true);
     expect(elFillMat.depthFunc).toBe(THREE.LessEqualDepth);
   });

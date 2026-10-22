@@ -757,7 +757,7 @@ describe("(5D-lõm) renderer trình bày ĐÚNG phần lõm", () => {
     const chon = buildObject3D(m, true) as unknown as {
       material: { opacity: number; colorWrite: boolean };
     };
-    expect(chon.material.opacity).toBe(0.55);
+    expect(chon.material.opacity).toBe(0.24);
     expect(chon.material.colorWrite).toBe(true);
   });
 
