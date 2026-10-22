@@ -101,9 +101,11 @@ export function vaiTroKhoi(scene: Pick<Scene3D, "objects" | "events">): Map<stri
   return new Map(solids.map((o, i) => [o.id, i === 0 ? "primary" : "secondary"]));
 }
 
-/** Existing surface/formation metadata, not scene ids, determines the visual role across every mesh technique. */
+/** Existing surface/formation metadata, not scene ids, determines the visual role across every mesh technique.
+ * Base metadata wins; otherwise every region type falls back to section alike — the backend tags each non-base
+ * polygon3 AUXILIARY_SURFACE, and pre-metadata envelopes must not change color by mesh technique. */
 export function vaiTroMien(o: SceneObject): "base" | "section" | "auxiliary" {
   if (o.surface_role === "BASE_REGION" || (o.formation_roles ?? []).includes("CONSTRUCT_BASE")) return "base";
-  if (o.type === "section" || o.type === "circle3" || o.type === "ellipse3" || o.surface_role === "SECTION_REGION" || o.surface_role === "AUXILIARY_SURFACE") return "section";
+  if (o.type === "section" || o.type === "polygon3" || o.type === "circle3" || o.type === "ellipse3" || o.surface_role === "SECTION_REGION" || o.surface_role === "AUXILIARY_SURFACE") return "section";
   return "auxiliary";
 }

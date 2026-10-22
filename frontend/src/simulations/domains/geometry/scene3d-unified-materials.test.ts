@@ -51,6 +51,22 @@ describe("shared semantic material behavior", () => {
     expect(material.isMeshBasicMaterial).toBe(true);
   });
 
+  it("gives a metadata-free constructed polygon the same section fallback as circle/ellipse", () => {
+    // Pre-metadata envelopes (e.g. saved public samples) carry neither surface_role nor formation_roles; the
+    // backend now tags such a construct_polygon AUXILIARY_SURFACE. Fallback must not differ by mesh technique.
+    const legacy: SceneObject = { ...polygon, id: "legacy", type: "polygon3", surface_role: undefined };
+    const auxiliary: SceneObject = { ...polygon, id: "aux", type: "polygon3", surface_role: "AUXILIARY_SURFACE" };
+    const untypedCircle: SceneObject = { ...circle, id: "untyped_circle", surface_role: undefined };
+    const reference = fill(polygon).material;
+    for (const o of [legacy, auxiliary, untypedCircle]) {
+      const built = buildObject3D(o, false)!;
+      const mesh = (built.getObjectByName(`section_fill:${o.id}`) ?? built.getObjectByName(`polygon_fill:${o.id}`)) as THREE.Mesh;
+      const material = mesh.material as THREE.MeshBasicMaterial;
+      expect([o.id, material.color.getHex(), material.opacity]).toEqual([o.id, reference.color.getHex(), reference.opacity]);
+    }
+    expect(roles.vaiTroMien({ ...polygon, type: "polygon3", surface_role: undefined, formation_roles: ["CONSTRUCT_BASE"] })).toBe("base");
+  });
+
   it("does not submit transparent flat rim ribbons twice", () => {
     for (const o of [circle, ellipse]) {
       const built = buildObject3D(o, false)!;
