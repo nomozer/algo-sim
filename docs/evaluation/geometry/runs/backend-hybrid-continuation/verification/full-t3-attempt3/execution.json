@@ -1,0 +1,33 @@
+{
+  "command": [
+    "node",
+    "frontend/scripts/full-gate.mjs"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-backend-continuation-verify",
+  "source_commit": "76a7ce33cc955a1e4a2e01d4d5374493c843d86c",
+  "dirty_before": "",
+  "started_utc": "2026-10-22T14:35:54.759512+00:00",
+  "timeout_seconds": 2400,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "OMP_NUM_THREADS": "1"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 539.14,
+  "finished_utc": "2026-10-22T14:44:53.902584+00:00",
+  "dirty_after": "",
+  "streams": {
+    "stdout": {
+      "bytes": 28974,
+      "sha256": "6bc85abd557aa44503999678cf8ee6c9e06da9fd0bf65507627438ad51cd3f94"
+    },
+    "stderr": {
+      "bytes": 126499,
+      "sha256": "76ec9bf5977c8b0645209385570e0ff066b0924910ed24272a336b30027be79e"
+    }
+  }
+}

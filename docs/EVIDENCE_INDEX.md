@@ -24,11 +24,11 @@ CORRECTED_BY = backend-hybrid-taxonomy-completion
 
 ## WAVE_ID = backend-hybrid-taxonomy-completion
 
-REPORT = docs/evaluation/geometry/runs/backend-hybrid-continuation/GEMINI_TAKEOVER_CHECKPOINT.md
+REPORT = docs/evaluation/geometry/runs/backend-hybrid-continuation/BACKEND_SESSION1_HANDOFF.md
 ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/backend-hybrid-taxonomy-completion/
-CLASSIFICATION = OFFLINE_REPLAY; Gemini takeover refusal-taxonomy completion for TypedFactNext bridge safety fixes (b6684564ac4596da30819da5fcc4c875ebb1a640). Classifies INVALID_TYPED_FACT_NEXT, UNKNOWN_VERTEX_REF, and BRIDGE_UNSUPPORTED_LENGTH_UNIT across hybrid_compiler_benchmark.REFUSAL_CLASS and hybrid_preview._NHOM; no guard weakened, no expected answer changed, frozen provider schemas and historical receipts preserved byte-identical.
-CODE_COMMIT = b6684564ac4596da30819da5fcc4c875ebb1a640
-VERIFICATION = docs/evaluation/geometry/runs/backend-hybrid-taxonomy-completion/candidate_divergence.json
+CLASSIFICATION = BACKEND_HYBRID_INTEGRATION_READY_FOR_OWNER_REVIEW; OFFLINE_REPLAY; Gemini takeover refusal-taxonomy completion for TypedFactNext bridge safety fixes (b6684564ac4596da30819da5fcc4c875ebb1a640), candidate freeze 76a7ce33cc955a1e4a2e01d4d5374493c843d86c (measured_system tree_hash 13fd32b498ea9e47f23f01d0f4efc99b7f8d789ed6e59fe814c8fc4891d7e172 across 115 files), Independent Review Round 2 INDEPENDENT_REVIEW_PASS (0 BLOCKER, 0 IMPORTANT), and Authoritative Full T3 Attempt 3 FULL_PRODUCT_GATE_PASS (pytest 11505 passed, vitest 1156 passed, build PASS, demo 5/5, crash 6/6, post-T3 freeze verify MATCH). No guard weakened, no expected answer changed, frozen provider schemas and historical receipts preserved byte-identical.
+CODE_COMMIT = b6684564ac4596da30819da5fcc4c875ebb1a640 (product); 76a7ce33cc955a1e4a2e01d4d5374493c843d86c (frozen candidate & Authoritative Full T3 Attempt 3 target)
+VERIFICATION = docs/evaluation/geometry/runs/backend-hybrid-taxonomy-completion/candidate_divergence.json; docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/full-t3-attempt3/execution.json; docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/post-t3-freeze-verify/execution.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = backend-hybrid-bridge-safety (candidate metadata chain and refusal taxonomy completion for Full T3 Attempt 2 failures)
 CORRECTED_BY = NONE
