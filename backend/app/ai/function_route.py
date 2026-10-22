@@ -121,7 +121,7 @@ def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -
             for s in buoc:
                 if "learner_text" in s:
                     s["learner_text"] = ve_ten(s["learner_text"])
-        phu = {v["label"]: v["edge"] for v in d["vertices"] if v["choice"] == "fresh_intersection"}
+        phu = {v["label"]: v["edge"] for v in d["vertices"] if v["choice"] in ("fresh_intersection", "derived_fresh")}
         hien = {x: f"giao điểm của {''.join(e)} và {ten}" for x, e in phu.items()}
         for x, mo_ta in hien.items():
             if ir_name(x) in objs:
@@ -280,6 +280,12 @@ def run_typed_fact_next_planner_route(raw: Any) -> KetQuaTuyen:
         # PremiseSpec.args is an open dictionary; malformed operands must not escape this input boundary.
         return KetQuaTuyen("REFUSED", "INVALID_TYPED_FACT_NEXT", "đối số giả thiết bị thiếu hoặc sai kiểu",
                            planner={"bridge": {"version": BRIDGE_VERSION}})
+    return chay_sau_cau_noi(b)
+
+
+def chay_sau_cau_noi(b: dict[str, Any]) -> KetQuaTuyen:
+    """The ONE route after a TypedFactNext bridge (`/1` and `/2`, run `hybrid-contract-v2`): planner → Source Gate →
+    engine → Scene3D (`run_fact_route`), then the declared length unit and plane names checked against the gated output."""
     r = run_fact_route(b["bridge"]["problem_text"], {"facts": b["facts"]})
     r.planner = {**(r.planner or {}), "bridge": {k: v for k, v in b["bridge"].items() if k != "problem_text"}}
     unit = b["bridge"]["declared_length_unit"]

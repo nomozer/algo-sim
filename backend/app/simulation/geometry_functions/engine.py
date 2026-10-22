@@ -43,7 +43,9 @@ from .registry import DINH_CAT_CANH
 #: /8 (run `composite-geometry`): determined derived bases, per-solid formation, independent volume certificates.
 #: /9 (run `volume-reasoning`): exact volume ratio (`ask_volume_ratio`) and residual volume (`ask_residual_volume`) certificates.
 #: /10 (run `typedfactnext-planner-bridge`): section vertices verified on their edge segment (0 < t ≤ 1, `kiem_dinh_cat`).
-ENGINE_VERSION = "geometry-function-engine/10"
+#: /11 (run `hybrid-contract-v2`, owner D5/D6): section closure certificate (`chung_chi_khep_kin` = exact `cross_section`),
+#: declared-boundary verification; IR canonicalization limited to engine-owned names.
+ENGINE_VERSION = "geometry-function-engine/11"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -110,6 +112,8 @@ class KetQuaTuyen:
     checker: Any = field(default=None, repr=False, compare=False)
     #: Hợp đồng CHỈ mang tô-pô khối đề đã khai (`hop_dong_to_po_da_khai`) — cùng một giá trị cho bổ sung dựng hình và bày cảnh.
     declared_topology: Any = None
+    #: Route-D `/4` envelope (run `hybrid-contract-v2`, `app/ai/adapter4_route.py`); None on every other route.
+    route_d: dict[str, Any] | None = None
     #: Tên IR mà ĐỀ hỏi (CONTRACT-BE-1): biến đáp số của mỗi lời hỏi đã qua cổng nguồn + toán hạng phép đo của nó, trừ điểm
     #: phụ tươi do planner dựng. Cùng nghĩa `targets` mà tuyến LLM_ONLY đọc từ nghĩa vụ của `RequestContract`.
     targets: tuple[str, ...] = ()
@@ -1320,6 +1324,45 @@ class _Dung:
                 base = d["derived"]["base"]
                 if len({self.pts[n] for n in base}) != len(base):
                     raise TuChoi("DEGENERATE_DERIVED_SECTION", "hai đỉnh thiết diện trùng nhau", ids)
+        # Closure certificate (run `hybrid-contract-v2`): the polygon a derived solid stands on, and any author-declared
+        # boundary, must BE the exact cross-section — same vertices, same cyclic order (rotation / reversal allowed).
+        tren = {frozenset(v["edge"]): v["label"] for v in d["vertices"]}
+        vong = None
+        if d.get("declared_boundary") is not None:
+            vong = [tren.get(frozenset(e)) for e in d["declared_boundary"]]
+            if None in vong:
+                raise TuChoi("SECTION_BOUNDARY_INCOMPLETE", "biên khai báo đi qua cạnh không có đỉnh thiết diện", ids)
+            self.chung_chi_khep_kin(k.name, d["plane"], vong, ids)
+        if d.get("derived"):
+            vong = list(d["derived"]["base"])
+            self.chung_chi_khep_kin(k.name, d["plane"], vong, ids)
+        if vong is not None:
+            d["closure"] = {"boundary": vong, "verified": True,
+                            "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"}
+            self.trace.append({"step": "certify_section_closure", "object": "".join(vong), "rule": d["rule"],
+                               "relation_verified": True, "provenance": "DERIVED", "binding": "AUXILIARY"})
+
+    def chung_chi_khep_kin(self, ten_khoi: str, mat: list[str], vong: list[str], ids: tuple = ()) -> None:
+        """THE section-closure authority (run `hybrid-contract-v2`; Adapter /3 calls it too): the cycle `vong` of built
+        points is exactly `section.cross_section(solid, plane through mat[:3])` up to rotation / reversal. Incidence only,
+        exact Fractions, chart coordinates (affine-invariant). Anything else ⇒ `SECTION_BOUNDARY_INCOMPLETE`."""
+        from app.simulation.geometry.section import Polyhedron, cross_section, same_section_cycle
+        k = self.khoi[ten_khoi]
+        if k.kind == "pyramid":
+            dinh, mat_khoi = [k.apex, *k.base], P.construct_pyramid("solid", k.apex, k.base)["faces"]
+        else:
+            dinh = [*k.base, *k.top]
+            mat_khoi = P.construct_prism("solid", k.base, k.top, tuple(zip(k.base, k.top)))["faces"]
+        try:
+            with _metric.using(self.metric()):
+                that = cross_section(Polyhedron(tuple(Vec3(*self.pts[p]) for p in dinh),
+                                                tuple(tuple(dinh.index(p) for p in f) for f in mat_khoi)),
+                                     self._plane(mat[:3])).polygon
+        except GeometryError as e:
+            raise TuChoi(e.code, str(e), ids) from None
+        if not same_section_cycle([Vec3(*self.pts[p]) for p in vong], that):
+            raise TuChoi("SECTION_BOUNDARY_INCOMPLETE", f"chu trình {''.join(vong)} ({len(vong)} đỉnh) không phải thiết diện "
+                         f"thật của {ten_khoi} ({len(that)} đỉnh) theo đúng thứ tự vòng", ids)
 
     def _kiem_mat_vuong_duong(self, d: dict) -> None:
         """Postconditions of the plane through p ⊥ d (`MAT_VUONG_DUONG`), independent of how it was assembled: both

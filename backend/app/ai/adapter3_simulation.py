@@ -27,8 +27,7 @@ from app.simulation.geometry.predicates import (
     parallel_planes,
     point_on_line,
 )
-from app.simulation.geometry.section import Polyhedron, cross_section, kiem_mat_phang_don, same_section_cycle
-from app.simulation.semantic_program import ir_builders as P
+from app.simulation.geometry.section import Polyhedron, kiem_mat_phang_don
 from app.simulation.geometry_functions.engine import (
     BAC_DAI_LUONG,
     KetQuaTuyen,
@@ -1361,23 +1360,9 @@ class _Adapter3Compiler:
         states are cut — or a crossed order is refused, never served as a smaller or self-intersecting polygon."""
         for sec in self.payload.derived_sections:
             cycle = self.section_cycles[sec.section_id]
-            k = dung.khoi[self.solid_canonical_name[sec.target_solid_id]]
-            if k.kind == "pyramid":
-                labels, faces = [k.apex, *k.base], P.construct_pyramid("solid", k.apex, k.base)["faces"]
-            else:
-                labels = [*k.base, *k.top]
-                faces = P.construct_prism("solid", k.base, k.top, tuple(zip(k.base, k.top)))["faces"]
-            try:
-                exact = cross_section(Polyhedron(tuple(Vec3(*dung.pts[p]) for p in labels),
-                                                 tuple(tuple(labels.index(p) for p in f) for f in faces)),
-                                      dung._plane(self.section_plane_triples[sec.section_id])).polygon
-            except GeometryError as exc:
-                raise TuChoi(exc.code, str(exc), (sec.section_id,)) from None
-            if not same_section_cycle([Vec3(*dung.pts[p]) for p in cycle], exact):
-                raise TuChoi("SECTION_BOUNDARY_INCOMPLETE",
-                             f"{sec.section_id}: cut_edges cho chu trình {''.join(cycle)} ({len(cycle)} đỉnh) nhưng thiết diện "
-                             f"thật có {len(exact)} đỉnh hoặc thứ tự khác — Adapter /3 đọc cut_edges là TOÀN BỘ biên",
-                             (sec.section_id,))
+            # one closure authority for every route (run `hybrid-contract-v2`): the engine's exact cross-section
+            dung.chung_chi_khep_kin(self.solid_canonical_name[sec.target_solid_id],
+                                    list(self.section_plane_triples[sec.section_id]), list(cycle), (sec.section_id,))
             certificates.append({"relation_id": f"closure:{sec.section_id}", "kind": "section_closure", "verified": True,
                                  "details": {"section_id": sec.section_id, "boundary": list(cycle),
                                              "rule": "cycle == cross_section(solid, plane) up to rotation/reversal"}})

@@ -38,7 +38,9 @@ from .registry import POINT_PRODUCERS, REGISTRY, doc_ke_hoach, goal_slots, rende
 #: /10 (run `source-gate-hardening`): a `line_ref` producer may name a face by ≥ 3 distinct labels ((ABCD)).
 #: /12 (run `typedfactnext-planner-bridge`): provider-hidden bridge fields; section vertices on stated cut edges (reuse /
 #: named / fresh), derived pyramid over the section, solid operands by fact id.
-PLANNER_VERSION = "geometry-fact-planner/12"
+#: /13 (run `hybrid-contract-v2`, owner D5/D6): section vertices through the Registry `Meet` contract (no hard-coded
+#: producer); `/2`-only derived vertices on unstated lateral edges where a closed boundary is required; declared boundary.
+PLANNER_VERSION = "geometry-fact-planner/13"
 #: Nhãn điểm phụ: chuỗi H, H1, H2, …; nhãn đầu tiên không có trong đề lẫn dữ kiện (Label của Registry không cho namespace
 #: riêng mà không đổi bề mặt nhà cung cấp của A ⇒ "dành riêng" = chọn tươi + cổng kiểm `AUXILIARY_LABEL_COLLISION`).
 def _nhan_tuoi(stem: str) -> tuple[str, ...]:
@@ -109,10 +111,15 @@ class TypedFact(BaseModel):
     # Operands of a volume ratio / residual question as solid FACT ids (declared or derived), in the ordered roles the
     # question's quantity defines: (numerator, denominator) / (original, subtracted…).
     solid_refs: SkipJsonSchema[list[str] | None] = None
+    # Internal only, written by the `typed-fact-next/2` bridge (run `hybrid-contract-v2`): `derive_cuts` lets the planner
+    # derive the vertex on a lateral edge the source does not state (D6) where a closed boundary is required;
+    # `boundary_edges` is an author-declared boundary (cyclic edges) the engine must verify, never trust.
+    derive_cuts: SkipJsonSchema[bool | None] = None
+    boundary_edges: SkipJsonSchema[list[list[Label]] | None] = None
 
 
 #: TypedFact fields only the deterministic bridge writes; a provider response carrying one is refused.
-INTERNAL_FACT_FIELDS = ("cut_edges", "cut_points", "plane_ref", "solid_refs")
+INTERNAL_FACT_FIELDS = ("cut_edges", "cut_points", "plane_ref", "solid_refs", "derive_cuts", "boundary_edges")
 
 
 @dataclass
@@ -226,9 +233,15 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
                         raise TuChoi("FACT_INCOMPLETE", f"{f.id}: mỗi đường cần đúng hai điểm đã định danh", (f.id,))
                     if len(set(line)) != 2:
                         raise TuChoi("DEGENERATE_LINE", f"{f.id}: hai đầu mút đường trùng nhau", (f.id,))
-        if f.cut_edges is not None or f.cut_points is not None:
-            if f.kind != "section" or f.plane_relation is None or not f.cut_edges:
+        if f.cut_edges is not None or f.cut_points is not None or f.derive_cuts or f.boundary_edges is not None:
+            # an empty stated list is meaningful only with `derive_cuts` (`/2`); `/1` never writes one
+            if (f.kind != "section" or f.plane_relation is None or f.cut_edges is None
+                    or (not f.cut_edges and not f.derive_cuts)):
                 raise TuChoi("SCHEMA_INVALID", f"{f.id}: cạnh bị cắt chỉ cho thiết diện của mặt cho bằng quan hệ", (f.id,))
+            vong = [frozenset(e) for e in f.boundary_edges or ()]
+            if f.boundary_edges is not None and (len(vong) < 3 or len(set(vong)) != len(vong)
+                                                 or any(len(e) != 2 for e in vong)):
+                raise TuChoi("FACT_INCOMPLETE", f"{f.id}: biên khai báo là chu trình ≥ 3 cạnh phân biệt", (f.id,))
             canh = [frozenset(e) for e in f.cut_edges]
             if any(len(e) != 2 or len(set(e)) != 2 for e in f.cut_edges) or len(set(canh)) != len(canh):
                 raise TuChoi("FACT_INCOMPLETE", f"{f.id}: mỗi cạnh bị cắt là hai đỉnh phân biệt, không lặp", (f.id,))
@@ -255,7 +268,7 @@ def doc_du_kien(raw: Any) -> list[TypedFact]:
         sec = by_id.get(f.plane_ref)
         if sec is None:
             raise TuChoi("UNKNOWN_DERIVED_REFERENCE", f"{f.id}: thiết diện {f.plane_ref!r} không tồn tại", (f.id,))
-        if sec.kind != "section" or not sec.cut_edges:
+        if sec.kind != "section" or not (sec.cut_edges or (sec.cut_edges is not None and sec.derive_cuts)):
             raise TuChoi("DERIVED_REFERENCE_TYPE_MISMATCH", f"{f.id}: {sec.id} không phải thiết diện có cạnh bị cắt",
                          (f.id, sec.id))
         for obj in (f, sec):
@@ -821,7 +834,7 @@ def _anh_xa(f: TypedFact, k: KeHoach, ten: dict, deu: dict, khoi_cua, phat) -> d
         return phat(f.id, fn, args, q, f"point_def({f.point_kind})")
     if f.kind == "section" and f.plane_relation:                     # mục tiêu: thiết diện với một mặt DỰNG từ quan hệ
         c = _mat_qua_diem(f, q, k, phat, khoi_cua(f.solid, f).ten, "section")
-        if f.cut_edges:
+        if f.cut_edges or (f.cut_edges is not None and f.derive_cuts):      # `/2`: no stated cut, vertices derived (D6)
             _dinh_cat_canh(f, k, phat, khoi_cua(f.solid, f))
         return c
     if f.kind == "section":                                         # dựng thiết diện: khối × mặt phẳng qua ba điểm có tên
@@ -1161,13 +1174,27 @@ def _canh_ben(kh: _Khoi) -> list[tuple[str, str]]:
     return [(kh.dinh, b) for b in kh.day] if kh.loai == "pyramid" else list(zip(kh.day, kh.tren))
 
 
+def _hop_dong_giao_diem() -> tuple[str, Any]:
+    """The Registry function (and its planning contract) that realizes a section vertex: a line meeting a plane, effect
+    `Meet` (run `hybrid-contract-v2`). Read from the Registry, never named in the planner — without exactly one such
+    contract no cut vertex is planned (ablation-tested)."""
+    cs = [(s.name, c) for s in REGISTRY.values() for c in planning_contracts(s) if c.effect.kind == "Meet"]
+    if len(cs) != 1:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", "thư viện không có đúng một hàm dựng giao điểm đường–mặt cho đỉnh thiết diện")
+    return cs[0]
+
+
 def _dinh_cat_canh(f: TypedFact, k: KeHoach, phat, kh: _Khoi) -> dict:
     """Section vertices of a derived plane on the edges the source says it cuts (`DINH_CAT_CANH`, run
     `typedfactnext-planner-bridge`). One typed need SectionVertex(edge, plane) per lateral edge, solved by the cheapest
     candidate whose effect is already established: the plane's own through-point when its validated producer lies on that
-    edge, or an identical intersection already planned (cost 0); otherwise a NEW `intersect_line_plane` named as the source
-    names it (cost 1) or with a fresh `I…` label (cost 1). An unstated edge takes only a cost-0 reuse — the planner never
-    asserts a cut the source did not state. The gate binds the cut clause; the engine checks every vertex (0 < t ≤ 1)."""
+    edge, or an identical intersection already planned (cost 0); otherwise a NEW call of the Registry `Meet` producer
+    named as the source names it (cost 1) or with a fresh `I…` label (cost 1). An unstated edge takes a cost-0 reuse —
+    and, only for a `/2` fact (`derive_cuts`) whose section must close (a derived solid stands on it, or the author declared
+    a boundary through that edge), a DERIVED vertex (cost 2, `derived_fresh`, run `hybrid-contract-v2` D6): never named
+    with a source label, never stated, checked by the engine (0 < t ≤ 1, closure certificate). The gate binds the cut
+    clause; it never asserts a cut the source did not state."""
+    fn, hd = _hop_dong_giao_diem()
     d = next((x for x in k.derived_planes.values() if f.id in x["targets"]), None)
     if d is None:
         raise TuChoi("AUXILIARY_RULE_MISMATCH", f"{f.id}: cạnh bị cắt cần một mặt dẫn xuất đã khai", (f.id,))
@@ -1185,6 +1212,14 @@ def _dinh_cat_canh(f: TypedFact, k: KeHoach, phat, kh: _Khoi) -> dict:
             "stated_edges": [list(e) for e in stated], "stated_points": names, "vertices": [], "constructs": [],
             "labels": [], "quotes": list(d["quotes"]), "provenance": "DERIVED", "binding": "AUXILIARY"}
     r = k.resolver
+    # D6 scope: a vertex is derived only where a closed boundary is REQUIRED — a derived solid stands on this section, or
+    # the author's declared boundary passes through that edge (to be verified, not trusted).
+    khep = bool(f.derive_cuts) and any(x.plane_ref == f.id for x in r.facts.values())
+    bien = {frozenset(x) for x in f.boundary_edges or ()} if f.derive_cuts else set()
+    if f.derive_cuts:
+        cert["derive"] = True
+    if f.boundary_edges is not None:
+        cert["declared_boundary"] = [list(x) for x in f.boundary_edges]
     for u, v in canh:
         e = frozenset((u, v))
         r.needs += 1
@@ -1200,12 +1235,14 @@ def _dinh_cat_canh(f: TypedFact, k: KeHoach, phat, kh: _Khoi) -> dict:
             choices.append((0, "reuse_through_point", p, None, tren_canh.id))
         if p in e:
             choices.append((0, "reuse_through_point", p, None, None))
-        cu = next((c for c in k.calls if c["fn"] == "intersect_line_plane" and frozenset(c["args"]["line"]) == e
+        cu = next((c for c in k.calls if c["fn"] == fn and frozenset(c["args"]["line"]) == e
                    and c["args"]["plane"] == plane), None)
         if cu is not None:
             choices.append((0, "reuse_intersection", cu["args"]["point"], cu["id"], None))
         if e in ten:
             choices.append((1, "named_intersection", ten[e], None, None) if ten[e] else (1, "fresh_intersection", None, None, None))
+        if not choices and (khep or e in bien):
+            choices.append((2, "derived_fresh", None, None, None))
         r.candidates += len(choices)
         if r.candidates > MAX_EFFECT_CANDIDATES * MAX_EFFECT_NEEDS:
             raise TuChoi("PLAN_TOO_LARGE", "quá trần candidate")
@@ -1216,7 +1253,7 @@ def _dinh_cat_canh(f: TypedFact, k: KeHoach, phat, kh: _Khoi) -> dict:
             raise TuChoi("AMBIGUOUS_REFERENCE", f"{f.id}: giao điểm trên {u}{v} được gọi {ten[e]} nhưng đã là {label}",
                          (f.id,))
         if cost:
-            if kind == "fresh_intersection":
+            if kind in ("fresh_intersection", "derived_fresh"):
                 r.feet += 1
                 if r.feet > MAX_RESULT_FEET:
                     raise TuChoi("PLAN_TOO_LARGE", "quá trần điểm tươi")
@@ -1231,8 +1268,8 @@ def _dinh_cat_canh(f: TypedFact, k: KeHoach, phat, kh: _Khoi) -> dict:
             dung = {c["id"] for c in k.calls}
             call_id = next(j for j in (f"{f.id}_cut{len(cert['vertices']) + 1}", *(f"{f.id}_cut_{n}" for n in range(2, 1000)))
                            if j not in k.fact_ids | dung)
-            phat(call_id, "intersect_line_plane", {"point": label, "line": [u, v], "plane": plane}, d["quotes"],
-                 f"{DINH_CAT_CANH}→intersect_line_plane ({kind})")
+            phat(call_id, fn, render_call(hd, {"X": label, "L": [u, v], "Q": plane}), d["quotes"],
+                 f"{DINH_CAT_CANH}→{fn} ({kind})")
             k.trace[-1]["fact"] = f.id
             cert["constructs"].append(call_id)
         cert["vertices"].append({"edge": [u, v], "label": label, "choice": kind, "call": call_id, "producer": producer,

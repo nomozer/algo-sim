@@ -92,7 +92,7 @@ _NHOM: tuple[tuple[str, str, frozenset[str], str], ...] = (
         "ZERO_VECTOR", "PLANE_EQUATION_DEGENERATE", "POLYGON_CHAIN_NOT_CONVEX", "MEASURE_UNDEFINED", "METRIC_NOT_EUCLIDEAN",
         "PLANE_DOES_NOT_CUT", "PLANE_TOUCHES_VERTEX", "PLANE_TOUCHES_EDGE", "SECTION_INTERSECTION_DEGENERATE",
         # stated cut edges of a derived plane (`DINH_CAT_CANH`) that the built figure contradicts
-        "SECTION_VERTEX_OFF_EDGE", "LINE_PARALLEL_TO_PLANE", "DEGENERATE_DERIVED_SECTION"}),
+        "SECTION_VERTEX_OFF_EDGE", "LINE_PARALLEL_TO_PLANE", "DEGENERATE_DERIVED_SECTION", "SECTION_BOUNDARY_INCOMPLETE"}),
      "Các dữ kiện dùng để dựng hình mâu thuẫn nhau hoặc làm hình suy biến, nên không có hình nào thoả tất cả. AlgoSim "
      "dừng lại thay vì dựng một hình sai."),
     ("SOURCE_UNVERIFIED", "verification_gap", frozenset({

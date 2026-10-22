@@ -425,6 +425,7 @@ REFUSAL_CLASS = {
     # typedfactnext-planner-bridge: taxonomy only; frozen thirty-case labels and oracle remain unchanged.
     "SECTION_VERTEX_OFF_EDGE": "contradictory", "LINE_PARALLEL_TO_PLANE": "contradictory",
     "DEGENERATE_DERIVED_SECTION": "contradictory", "SECTION_NOT_CLOSED_ON_LATERAL_EDGES": "underconstrained",
+    "SECTION_BOUNDARY_INCOMPLETE": "contradictory",
     "IR_MEMORY_BUDGET_EXCEEDED": "unsupported", "UNKNOWN_SOLID_ID": "malformed", "BRIDGE_INCONSISTENT_SECTION": "malformed",
     "BRIDGE_CUT_EDGES_NOT_STATED": "unsupported", "BRIDGE_UNSUPPORTED_CURVED": "unsupported",
     "BRIDGE_UNSUPPORTED_DERIVED_SOLID": "unsupported", "BRIDGE_UNSUPPORTED_MEASUREMENT": "unsupported",

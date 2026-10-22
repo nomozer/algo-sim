@@ -13,13 +13,17 @@ from typing import Any
 from .registry import TuChoi
 from .typed_fact_next import (
     DerivedPlaneSectionSpec,
+    DerivedPlaneSectionSpecV2,
     TypedFactNextPayload,
     TypedFactNextValidationError,
     parse_qualified_ref,
     parse_typed_fact_next,
+    parse_typed_fact_next_v2,
 )
 
 BRIDGE_VERSION = "typed-fact-next-bridge/1"
+#: `/2` bridge (run `hybrid-contract-v2`, owner D1/D5): stated intersections → stated cuts, D6 enabled, declared boundary.
+BRIDGE_V2_VERSION = "typed-fact-next-bridge/2"
 
 _PLANE_RELATION = {"through_point_parallel_plane": "parallel", "through_point_perpendicular_line": "perpendicular",
                    "through_point_parallel_two_lines": "parallel_two_lines"}
@@ -69,7 +73,9 @@ def _check_qualified_refs(value: Any, solids: dict[str, Any]) -> None:
             raise TuChoi("UNKNOWN_VERTEX_REF", f"{value!r} không phải đỉnh của khối đã khai")
 
 
-def _section_fact(sec: DerivedPlaneSectionSpec, solids: dict[str, Any], asked: list[str]) -> dict[str, Any]:
+def _mat_fact(sec: DerivedPlaneSectionSpec | DerivedPlaneSectionSpecV2, solids: dict[str, Any],
+              asked: list[str]) -> dict[str, Any]:
+    """The section fact's PLANE (shared by `/1` and `/2`)."""
     rel = _PLANE_RELATION.get(sec.plane_kind)
     if rel is None:
         raise TuChoi("BRIDGE_UNSUPPORTED_PLANE_KIND", f"{sec.section_id}: mặt {sec.plane_kind} chưa có phép dựng của planner",
@@ -83,6 +89,24 @@ def _section_fact(sec: DerivedPlaneSectionSpec, solids: dict[str, Any], asked: l
         f["points_b"] = _refs(sec.perpendicular_line)
     else:
         f.update(points_a=_refs(sec.parallel_line_a), points_b=_refs(sec.parallel_line_b), plane_name=sec.plane_name)
+    return f
+
+
+def _section_fact_v2(sec: DerivedPlaneSectionSpecV2, solids: dict[str, Any], asked: list[str]) -> dict[str, Any]:
+    """`/2`: stated intersections are the stated cuts (names aligned, None = stated but unnamed); the planner may derive
+    the vertex of an UNSTATED lateral edge where a closed boundary is required (D6); a declared boundary is verified."""
+    f = _mat_fact(sec, solids, asked)
+    f["cut_edges"] = [_refs(s.edge) for s in sec.stated_intersections]
+    if any(s.point for s in sec.stated_intersections):
+        f["cut_points"] = [s.point for s in sec.stated_intersections]
+    f["derive_cuts"] = True
+    if sec.declared_boundary is not None:
+        f["boundary_edges"] = [_refs(e) for e in sec.declared_boundary]
+    return f
+
+
+def _section_fact(sec: DerivedPlaneSectionSpec, solids: dict[str, Any], asked: list[str]) -> dict[str, Any]:
+    f = _mat_fact(sec, solids, asked)
     edges = [tuple(_refs(e)) for e in sec.cut_edges]
     named = {frozenset(_refs(k.split("-"))): v for k, v in sec.named_intersections.items()}
     if not edges and named:                              # the names the payload gives define the stated cuts, in its order
@@ -98,11 +122,24 @@ def _section_fact(sec: DerivedPlaneSectionSpec, solids: dict[str, Any], asked: l
 
 
 def bridge(raw: dict[str, Any] | TypedFactNextPayload) -> dict[str, Any]:
-    """`{"facts": [...], "bridge": {...}}` for the planner, or `TuChoi` (typed, fail-closed)."""
+    """`/1` → `{"facts": [...], "bridge": {...}}` for the planner, or `TuChoi` (typed, fail-closed)."""
     try:
         p = parse_typed_fact_next(raw)
     except TypedFactNextValidationError as e:
         raise TuChoi(e.code, e.detail) from None
+    return _bridge(p, _section_fact, BRIDGE_VERSION, v2=False)
+
+
+def bridge_v2(raw: dict[str, Any]) -> dict[str, Any]:
+    """`typed-fact-next/2` → planner facts (run `hybrid-contract-v2`). The same pure translation as `/1` except sections."""
+    try:
+        p = parse_typed_fact_next_v2(raw)
+    except TypedFactNextValidationError as e:
+        raise TuChoi(e.code, e.detail) from None
+    return _bridge(p, _section_fact_v2, BRIDGE_V2_VERSION, v2=True)
+
+
+def _bridge(p: TypedFactNextPayload, section_fact, version: str, v2: bool) -> dict[str, Any]:
     facts: list[dict[str, Any]] = []
     solids = {s.solid_id: s for s in p.solids}
     for s in p.solids:
@@ -195,7 +232,7 @@ def bridge(raw: dict[str, Any] | TypedFactNextPayload) -> dict[str, Any]:
         if g.kind == "construct_plane_section":
             asked.setdefault(g.target_section_id, []).append(g.quote)
     for sec in p.derived_sections:
-        facts.append(_section_fact(sec, solids, asked.get(sec.section_id, [])))
+        facts.append(section_fact(sec, solids, asked.get(sec.section_id, [])))
 
     derived = {}
     for g in p.simulation_goals:
@@ -207,7 +244,7 @@ def bridge(raw: dict[str, Any] | TypedFactNextPayload) -> dict[str, Any]:
             raise TuChoi("BRIDGE_UNSUPPORTED_DERIVED_SOLID", f"{g.goal_id}: khối dựng trên thiết diện chỉ cho hình chóp",
                          (g.goal_id,))
         sec = next((s for s in p.derived_sections if s.section_id == g.target_section_id), None)
-        if sec is None or not (sec.cut_edges or sec.named_intersections):
+        if sec is None or not (v2 or sec.cut_edges or sec.named_intersections):     # `/2`: unstated cuts may be derived
             raise TuChoi("BRIDGE_CUT_EDGES_NOT_STATED", f"{g.goal_id}: thiết diện {g.target_section_id} không nêu các cạnh bị "
                          "cắt — bridge không suy ra cạnh nào bị cắt", (g.goal_id,))
         derived[g.derived_solid_id] = g.goal_id
@@ -233,14 +270,14 @@ def bridge(raw: dict[str, Any] | TypedFactNextPayload) -> dict[str, Any]:
             facts.append({**q, "quantity": "volume", "solid": solids[g.target.get("solid") or g.solid_id].notation})
         elif g.goal_type == "area" and g.target.get("section_id") in {s.section_id for s in p.derived_sections}:
             sec = next(s for s in p.derived_sections if s.section_id == g.target["section_id"])
-            f = _section_fact(sec, solids, [])
+            f = _mat_fact(sec, solids, [])
             facts.append({**q, "quantity": "area", **{k: f[k] for k in ("solid", "point", "plane_relation", "points_b",
                                                                          "points_a", "plane_name") if k in f}})
         else:
             raise TuChoi("BRIDGE_UNSUPPORTED_MEASUREMENT", f"{g.goal_id}: mục tiêu {g.kind}/{g.goal_type} chưa có ánh xạ",
                          (g.goal_id,))
     khong = [g.goal_id for g in p.simulation_goals if g.kind in _NO_NEW_FACT_GOALS]
-    return {"facts": facts, "bridge": {"version": BRIDGE_VERSION, "goals_without_new_facts": khong,
+    return {"facts": facts, "bridge": {"version": version, "goals_without_new_facts": khong,
                                        "declared_length_unit": p.length_unit,
                                        "declared_plane_names": {s.section_id: s.plane_name for s in p.derived_sections},
                                        "problem_text": p.problem_text}}

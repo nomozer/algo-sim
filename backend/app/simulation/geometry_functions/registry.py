@@ -41,7 +41,9 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: /10 (run `composite-geometry`): explicit shared-face membership in two declared pyramid topologies.
 #: /12 (run `typedfactnext-planner-bridge`): a ratio point owns the coefficient its equation read; the definition grammar
 #: reads "M thuộc cạnh SA sao cho …"; `DINH_CAT_CANH` cut-clause / derived-pyramid certificate.
-REGISTRY_VERSION = "geometry-functions/12"
+#: /13 (run `hybrid-contract-v2`, owner D3/D5/D6): `intersect_line_plane` planning contract (effect `Meet`); `derived_fresh`
+#: section vertices; closed definition / cut-clause alternatives (see `_QUA_SONG_SONG`, `_cum_cat_canh`).
+REGISTRY_VERSION = "geometry-functions/13"
 
 
 class TuChoi(Exception):
@@ -310,7 +312,7 @@ class TranslatePointArgs(_Args):
 class PlanningTerm:
     """Internal typed role slots; not an expression language or provider program."""
     kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance", "AnswerLength", "AnswerArea", "AnswerAngleLinePlane",
-                  "AnswerAngleLines"]
+                  "AnswerAngleLines", "Meet"]
     operands: tuple[str, ...]
 
 
@@ -322,7 +324,8 @@ class PlanningContract:
     named in the source by `phrase` (operands in group `ops`, `{P}` = one point label). Never serialized to a provider."""
     inputs: tuple[PlanningTerm, ...]
     effect: PlanningTerm
-    source_policy: Literal["declared_intersection", "projection_foot", "distance_witness", "derived_point", "distance_answer", "goal_answer"]
+    source_policy: Literal["declared_intersection", "projection_foot", "distance_witness", "derived_point", "distance_answer",
+                           "goal_answer", "section_vertex"]
     verifier: str
     call: tuple[tuple[str, str | tuple[str, ...]], ...] = ()
     fresh: str | None = None
@@ -445,7 +448,12 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("intersect_line_line", IntersectionLinesArgs, "construct", "Dựng giao điểm DUY NHẤT của hai đường thẳng; không phải đoạn hữu hạn.",
        (("giao điểm",),), segment_fields=("line1", "line2"), point_fields=("point",)),
     _F("intersect_line_plane", IntersectionPlaneArgs, "construct", "Dựng giao điểm DUY NHẤT của đường thẳng và mặt phẳng.",
-       (("giao điểm",),), plane_fields=("plane",), segment_fields=("line",), point_fields=("point",)),
+       (("giao điểm",),), plane_fields=("plane",), segment_fields=("line",), point_fields=("point",),
+       # Section vertex (run `hybrid-contract-v2`): effect `Meet` X = L ∩ Q; only `planner._dinh_cat_canh` asks for it
+       # (no goal / descriptor, so no other search can select it); the engine checks uniqueness and 0 < t ≤ 1.
+       planning=PlanningContract((PlanningTerm("Line", ("L",)), PlanningTerm("Plane", ("Q",))),
+                                 PlanningTerm("Meet", ("X", "L", "Q")), "section_vertex", "_construction_relation",
+                                 call=(("point", "X"), ("line", "L"), ("plane", "Q")), fresh="I")),
     _F("perpendicular_lines", PerpendicularLinesArgs, "fact", "Hai đường thẳng vuông góc (SA ⊥ AB). Một lời gọi cho MỖI cặp.",
        (_VUONG,), segment_fields=("line1", "line2")),
     _F("equal_length", EqualLengthArgs, "fact", "Hai đoạn bằng nhau (SA = AB).", (("=", "bằng"),),
@@ -3584,6 +3592,12 @@ def _canh_ben_khoi(calls: tuple[LoiGoi, ...], ten: str) -> tuple[str | None, lis
     return None
 
 
+def _ham_giao_diem() -> str | None:
+    """Name of the ONE Registry function whose planning contract meets a line with a plane (effect `Meet`), else None."""
+    ten = [s.name for s in REGISTRY.values() for c in planning_contracts(s) if c.effect.kind == "Meet"]
+    return ten[0] if len(ten) == 1 else None
+
+
 def _kiem_dinh_cat(d: dict, mats: list[dict], theo_id: dict, de: str, nhan: set[str], chiem: set[str],
                    nhan_da_khai: set, calls: tuple[LoiGoi, ...], ten_mat_phu: dict | None, cat_doc: dict,
                    buoc: list[tuple[int, int]] | None) -> set[str]:
@@ -3592,14 +3606,22 @@ def _kiem_dinh_cat(d: dict, mats: list[dict], theo_id: dict, de: str, nhan: set[
     vertex is either a call `intersect_line_plane(label, edge, plane)` sharing the plane's quotes — its label the name the
     source gives that cut, or fresh — or the plane's own through-point whose validated producer lies on that edge. A derived
     pyramid "khối chóp đỉnh S cắt bởi (α)" / "khối chóp S.MNP" covers every lateral edge, bound in closed wording. Only
-    refuses; the engine checks every vertex on the built figure (0 < t ≤ 1)."""
+    refuses; the engine checks every vertex on the built figure (0 < t ≤ 1).
+    Run `hybrid-contract-v2` (D6): a `derived_fresh` vertex — on a lateral edge the source does NOT state, with a fresh
+    label — is admitted only for a `/2` certificate (`derive`) whose section must close (a derived pyramid stands on it,
+    or the author's declared boundary passes through that edge). It is never a source fact; the engine certifies closure."""
     ids = tuple(d.get("constructs") or ()) + ((d["derived"].get("call"),) if isinstance(d.get("derived"), dict) else ())
     mat = next((x for x in mats if x.get("goal") == d.get("plane_goal")), None)
     stated, ten = d.get("stated_edges") or [], d.get("stated_points") or []
-    if (mat is None or [mat.get("point"), *(mat.get("labels") or [])] != d.get("plane") or not stated
+    phai_khep = bool(d.get("derive")) and (isinstance(d.get("derived"), dict) or bool(d.get("declared_boundary")))
+    bien = {frozenset(e) for e in d.get("declared_boundary") or ()}
+    giao = _ham_giao_diem()
+    if (mat is None or [mat.get("point"), *(mat.get("labels") or [])] != d.get("plane") or (not stated and not phai_khep)
             or mat.get("cut") != {"edges": stated, "points": ten} or tuple(d.get("quotes") or ()) != tuple(mat.get("quotes") or ())):
         raise TuChoi("AUXILIARY_RULE_MISMATCH", "đỉnh thiết diện: khai báo không đứng trên một mặt dẫn xuất đã kiểm", ids)
-    if not cat_doc.get(d.get("plane_goal")):
+    if giao is None:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", "thư viện không có hàm dựng giao điểm đường–mặt cho đỉnh thiết diện", ids)
+    if stated and not cat_doc.get(d.get("plane_goal")):
         raise TuChoi("SOURCE_OBJECT_MISMATCH", "đề không nêu mặt phẳng cắt các cạnh "
                      f"{', '.join(''.join(e) for e in stated)} ngay sau định nghĩa của nó", ids)
     khoi = _canh_ben_khoi(calls, d.get("solid"))
@@ -3618,13 +3640,20 @@ def _kiem_dinh_cat(d: dict, mats: list[dict], theo_id: dict, de: str, nhan: set[
         e, x, loai, cid = frozenset(v.get("edge") or ()), v.get("label"), v.get("choice"), v.get("call")
         if e not in tap_canh or e in tren or not isinstance(x, str):
             raise TuChoi("AUXILIARY_RULE_MISMATCH", "đỉnh thiết diện: cạnh lặp hoặc không phải cạnh bên", ids)
-        if loai in ("named_intersection", "fresh_intersection"):
+        if loai in ("named_intersection", "fresh_intersection", "derived_fresh"):
             c = theo_id.get(cid)
-            if not (cid in goi and c is not None and c.fn == "intersect_line_plane" and c.args.point == x
+            if not (cid in goi and c is not None and c.fn == giao and c.args.point == x
                     and frozenset(c.args.line) == e and c.args.plane == plane and c.quotes == qs):
                 raise TuChoi("AUXILIARY_RULE_MISMATCH", f"đỉnh thiết diện {x}: lời gọi không khớp luật {DINH_CAT_CANH}", ids)
             if loai == "named_intersection" and (x not in nhan or ten_canh.get(e) != x):
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"giao điểm {x} không phải tên đề đặt cho giao trên {''.join(sorted(e))}", ids)
+            if loai == "derived_fresh":
+                if e in ten_canh or not phai_khep or not (isinstance(d.get("derived"), dict) or e in bien):
+                    raise TuChoi("AUXILIARY_RULE_MISMATCH", f"đỉnh dẫn xuất trên {''.join(sorted(e))}: cạnh đã được nêu, hoặc "
+                                 "thiết diện không cần khép kín", ids)
+                if x in nhan or x in chiem or x in nhan_da_khai or x not in (d.get("labels") or []):
+                    raise TuChoi("AUXILIARY_LABEL_COLLISION", f"điểm dẫn xuất {x} trùng nhãn của đề hoặc đã khai", ids)
+                nhan_da_khai.add(x)
             if loai == "fresh_intersection":
                 if e not in ten_canh:                      # a fresh cut only on an edge the source states is cut
                     raise TuChoi("AUXILIARY_RULE_MISMATCH", f"giao mới trên {''.join(sorted(e))}: cạnh không được nêu là bị cắt",
@@ -3644,7 +3673,7 @@ def _kiem_dinh_cat(d: dict, mats: list[dict], theo_id: dict, de: str, nhan: set[
                 raise TuChoi("SOURCE_OBJECT_MISMATCH", f"đề gọi giao trên {''.join(sorted(e))} là {ten_canh[e]}, không phải {x}", ids)
         elif loai == "reuse_intersection":
             c = theo_id.get(cid)
-            if not (c is not None and c.fn == "intersect_line_plane" and c.args.point == x and frozenset(c.args.line) == e
+            if not (c is not None and c.fn == giao and c.args.point == x and frozenset(c.args.line) == e
                     and c.args.plane == plane):
                 raise TuChoi("AUXILIARY_RULE_MISMATCH", f"đỉnh {x}: không có giao điểm đã dựng để dùng lại", ids)
         else:
