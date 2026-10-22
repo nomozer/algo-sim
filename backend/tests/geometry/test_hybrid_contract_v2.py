@@ -102,3 +102,67 @@ def test_an_unexpected_internal_fault_is_a_technical_refusal_not_a_data_error(mo
     r = run_typed_fact_next_route(_payload("ABC"))
     assert (r.status, r.code) == ("REFUSED", "ADAPTER_INTERNAL_ERROR"), (r.status, r.code)
     assert "ZeroDivisionError" in r.reason
+
+
+# ── P2: typed-fact-next/2 — stated intersections, declared boundary, explicit /1 → /2 conversion ────────────────────
+
+def _v2(v1: dict, route: str = "bridge") -> dict:
+    from app.simulation.geometry_functions.typed_fact_next import convert_v1_to_v2
+    return convert_v1_to_v2(v1, route)
+
+
+def test_v1_converts_to_v2_only_with_an_explicit_route_label():
+    from app.simulation.geometry_functions.typed_fact_next import convert_v1_to_v2
+    for route in (None, "", "auto", "both"):
+        with pytest.raises(TypedFactNextValidationError) as e:
+            convert_v1_to_v2(_payload("ABC"), route)
+        assert e.value.code == "ROUTE_LABEL_REQUIRED"
+
+
+def test_bridge_conversion_maps_cut_edges_to_stated_intersections():
+    v2 = _v2(_payload("ABCD"))
+    sec = v2["derived_sections"][0]
+    assert v2["schema_version"] == "typed-fact-next/2" and "cut_edges" not in sec and "named_intersections" not in sec
+    assert [(s["edge"], s["point"]) for s in sec["stated_intersections"]] == [(["S", "B"], "N"), (["S", "C"], "P"),
+                                                                             (["S", "D"], "Q")]
+    assert sec.get("declared_boundary") is None
+
+
+def test_adapter3_conversion_maps_cut_edges_to_a_declared_boundary_and_names_only_to_stated():
+    p = _payload("ABCD", cut=["SA", "SB", "SC", "SD"])
+    v2 = _v2(p, "adapter3")
+    sec = v2["derived_sections"][0]
+    assert sec["declared_boundary"] == [["S", "A"], ["S", "B"], ["S", "C"], ["S", "D"]]
+    assert [(s["edge"], s["point"]) for s in sec["stated_intersections"]] == [(["S", "A"], "M"), (["S", "B"], "N"),
+                                                                             (["S", "C"], "P"), (["S", "D"], "Q")]
+
+
+def test_v2_parses_and_v1_parser_never_reads_v2():
+    from app.simulation.geometry_functions.typed_fact_next import parse_typed_fact_next_v2
+    v2 = _v2(_payload("ABC"))
+    assert parse_typed_fact_next_v2(v2).schema_version == "typed-fact-next/2"
+    with pytest.raises(TypedFactNextValidationError) as e:
+        parse_typed_fact_next(v2)
+    assert e.value.code == "SCHEMA_VERSION_MISMATCH"
+    with pytest.raises(TypedFactNextValidationError) as e:
+        parse_typed_fact_next_v2(_payload("ABC"))
+    assert e.value.code == "SCHEMA_VERSION_MISMATCH"
+
+
+@pytest.mark.parametrize("mutate,code", [
+    (lambda s: s.update(cut_edges=[["S", "B"]]), "INVALID_TYPED_FACT_NEXT"),
+    (lambda s: s.update(named_intersections={"S-B": "N"}), "INVALID_TYPED_FACT_NEXT"),
+    (lambda s: s["stated_intersections"][0].update(quote="một câu khác"), "INVALID_DERIVED_SECTION"),
+    (lambda s: s["stated_intersections"].append(dict(s["stated_intersections"][0])), "INVALID_DERIVED_SECTION"),
+    (lambda s: s["stated_intersections"][1].update(point="N"), "INVALID_DERIVED_SECTION"),
+    (lambda s: s.update(declared_boundary=[["S", "A"], ["S", "B"]]), "INVALID_DERIVED_SECTION"),
+    (lambda s: s.update(declared_boundary=[["S", "A"], ["S", "A"], ["S", "B"]]), "INVALID_DERIVED_SECTION"),
+    (lambda s: s.update(requires_closed_boundary=False), "INVALID_TYPED_FACT_NEXT"),
+])
+def test_v2_section_shape_is_closed(mutate, code):
+    from app.simulation.geometry_functions.typed_fact_next import parse_typed_fact_next_v2
+    v2 = _v2(_payload("ABC"))
+    mutate(v2["derived_sections"][0])
+    with pytest.raises(TypedFactNextValidationError) as e:
+        parse_typed_fact_next_v2(v2)
+    assert e.value.code == code, (e.value.code, e.value.detail)

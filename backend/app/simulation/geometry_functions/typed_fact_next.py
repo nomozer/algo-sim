@@ -6,7 +6,7 @@ Coexists with the frozen `TypedFact` (`typed-facts/2`) contract in `planner.py` 
 from __future__ import annotations
 
 import re
-from typing import Annotated, Any, Literal
+from typing import Annotated, Any, ClassVar, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
 
@@ -16,6 +16,7 @@ from app.simulation.semantic_program.measure_contract import NGHIA_VU_DO
 MathGoalType = Literal[*tuple(NGHIA_VU_DO)]
 
 TYPED_FACT_NEXT_SCHEMA_VERSION = "typed-fact-next/1"
+TYPED_FACT_NEXT_V2_SCHEMA_VERSION = "typed-fact-next/2"
 
 NonEmptyText = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
 IdentifierStr = Annotated[
@@ -214,8 +215,8 @@ class PremiseSpec(ClosedNextModel):
         return self
 
 
-class DerivedPlaneSectionSpec(ClosedNextModel):
-    """Cutting plane specification capable of auto-deriving unnamed section vertices."""
+class _PlaneSectionBase(ClosedNextModel):
+    """The cutting plane of a section (shared by `/1` and `/2`): which plane, through what, in which solid."""
 
     section_id: IdentifierStr
     plane_name: NonEmptyText = "α"
@@ -238,12 +239,10 @@ class DerivedPlaneSectionSpec(ClosedNextModel):
     perpendicular_line: tuple[NonEmptyText, NonEmptyText] | None = None
     parallel_line_a: tuple[NonEmptyText, NonEmptyText] | None = None
     parallel_line_b: tuple[NonEmptyText, NonEmptyText] | None = None
-    cut_edges: tuple[tuple[NonEmptyText, NonEmptyText], ...] = ()
-    named_intersections: dict[str, Label] = Field(default_factory=dict)
     quote: NonEmptyText
 
     @model_validator(mode="after")
-    def _validate_plane_definition(self) -> "DerivedPlaneSectionSpec":
+    def _validate_plane_definition(self) -> "_PlaneSectionBase":
         if self.plane_kind in (
             "through_point_parallel_plane",
             "through_point_perpendicular_line",
@@ -302,6 +301,18 @@ class DerivedPlaneSectionSpec(ClosedNextModel):
                 )
             for p in (*self.parallel_line_a, *self.parallel_line_b):
                 parse_qualified_ref(p)
+        return self
+
+
+class DerivedPlaneSectionSpec(_PlaneSectionBase):
+    """`/1` section: `cut_edges` keeps the reading of the route that receives it (bridge: the edges the source STATES are
+    cut; Adapter /3: the complete boundary) — never reinterpreted; `/2` separates the two."""
+
+    cut_edges: tuple[tuple[NonEmptyText, NonEmptyText], ...] = ()
+    named_intersections: dict[str, Label] = Field(default_factory=dict)
+
+    @model_validator(mode="after")
+    def _validate_cuts(self) -> "DerivedPlaneSectionSpec":
         for u, v in self.cut_edges:
             parse_qualified_ref(u)
             parse_qualified_ref(v)
@@ -310,6 +321,51 @@ class DerivedPlaneSectionSpec(ClosedNextModel):
             if len(ends) != 2 or not all(_QUALIFIED_REF_RE.match(x.strip()) for x in ends):
                 raise TypedFactNextValidationError(
                     "INVALID_DERIVED_SECTION", f"Section {self.section_id!r}: named intersection key {key!r} is not 'U-V'.")
+        return self
+
+
+class StatedIntersectionSpec(ClosedNextModel):
+    """`/2` (1)+(4): ONE intersection the source states — the edge it says is cut, the name it gives the point (None: the
+    source states the cut but names no point), and the quote that states it (inside the section's quote)."""
+
+    edge: tuple[NonEmptyText, NonEmptyText]
+    point: Label | None = None
+    quote: NonEmptyText
+
+    @model_validator(mode="after")
+    def _validate_edge(self) -> "StatedIntersectionSpec":
+        a, b = (parse_qualified_ref(x) for x in self.edge)
+        if a == b:
+            raise TypedFactNextValidationError("INVALID_DERIVED_SECTION", f"Stated intersection on a degenerate edge {self.edge}.")
+        return self
+
+
+class DerivedPlaneSectionSpecV2(_PlaneSectionBase):
+    """`typed-fact-next/2` section (run `hybrid-contract-v2`): inputs say only what the source says. The section boundary,
+    its derived vertices and its closure certificate are ENGINE outputs. `declared_boundary` is an author's claim (cyclic
+    order of edges) that is always verified, never trusted. There is no input flag that waives the closure proof: whether
+    a closed boundary is required follows from the goals (a derived solid needs it)."""
+
+    stated_intersections: tuple[StatedIntersectionSpec, ...] = ()
+    declared_boundary: tuple[tuple[NonEmptyText, NonEmptyText], ...] | None = None
+
+    @model_validator(mode="after")
+    def _validate_statements(self) -> "DerivedPlaneSectionSpecV2":
+        def bad(detail: str) -> TypedFactNextValidationError:
+            return TypedFactNextValidationError("INVALID_DERIVED_SECTION", f"Section {self.section_id!r}: {detail}")
+
+        canh = [frozenset(parse_qualified_ref(x) for x in s.edge) for s in self.stated_intersections]
+        if len(set(canh)) != len(canh):
+            raise bad("an edge is stated twice")
+        ten = [s.point for s in self.stated_intersections if s.point]
+        if len(set(ten)) != len(ten):
+            raise bad("two stated intersections carry the same name")
+        if any(s.quote not in self.quote for s in self.stated_intersections):
+            raise bad("a stated intersection's quote is not inside the section's quote")
+        if self.declared_boundary is not None:
+            vong = [frozenset(parse_qualified_ref(x) for x in e) for e in self.declared_boundary]
+            if len(vong) < 3 or len(set(vong)) != len(vong) or any(len(e) != 2 for e in vong):
+                raise bad("a declared boundary is a cycle of at least 3 distinct edges")
         return self
 
 
@@ -502,6 +558,7 @@ class DerivedObjectIdentity(ClosedNextModel):
 class TypedFactNextPayload(ClosedNextModel):
     """Top-level `typed-fact-next/1` simulation-first contract payload."""
 
+    _VERSION: ClassVar[str] = TYPED_FACT_NEXT_SCHEMA_VERSION
     schema_version: str
     problem_text: NonEmptyText
     length_unit: Literal["1", "a"] | None = None
@@ -514,10 +571,10 @@ class TypedFactNextPayload(ClosedNextModel):
 
     @model_validator(mode="after")
     def _validate_payload(self) -> "TypedFactNextPayload":
-        if self.schema_version != TYPED_FACT_NEXT_SCHEMA_VERSION:
+        if self.schema_version != self._VERSION:
             raise TypedFactNextValidationError(
                 "SCHEMA_VERSION_MISMATCH",
-                f"Expected schema_version={TYPED_FACT_NEXT_SCHEMA_VERSION!r}, got {self.schema_version!r}.",
+                f"Expected schema_version={self._VERSION!r}, got {self.schema_version!r}.",
             )
         if not self.solids:
             raise TypedFactNextValidationError(
@@ -613,9 +670,54 @@ class TypedFactNextPayload(ClosedNextModel):
         return self
 
 
+class TypedFactNextPayloadV2(TypedFactNextPayload):
+    """`typed-fact-next/2` (run `hybrid-contract-v2`, owner D1): `/1` with the section split into stated intersections
+    and an optional declared boundary. Everything else keeps the `/1` shape and cross-reference checks."""
+
+    _VERSION: ClassVar[str] = TYPED_FACT_NEXT_V2_SCHEMA_VERSION
+    derived_sections: tuple[DerivedPlaneSectionSpecV2, ...] = ()
+
+
 def parse_typed_fact_next(raw: dict[str, Any] | TypedFactNextPayload) -> TypedFactNextPayload:
-    """Validate and parse a `typed-fact-next/1` payload with fail-closed error reporting."""
-    if isinstance(raw, TypedFactNextPayload):
+    """Validate and parse a `typed-fact-next/1` payload with fail-closed error reporting. Never reads `/2`."""
+    return _parse(TypedFactNextPayload, raw)
+
+
+def parse_typed_fact_next_v2(raw: dict[str, Any] | TypedFactNextPayloadV2) -> TypedFactNextPayloadV2:
+    """Validate and parse a `typed-fact-next/2` payload with fail-closed error reporting. Never reads `/1`."""
+    return _parse(TypedFactNextPayloadV2, raw)
+
+
+def convert_v1_to_v2(raw: dict[str, Any], route: str | None) -> dict[str, Any]:
+    """`/1 → /2` ONLY for a payload whose route is declared, because `/1.cut_edges` means different things per route:
+    `bridge` — the edges the source states are cut (+ their names); `adapter3` — the complete boundary, so it becomes a
+    `declared_boundary` (verified, never trusted) and only NAMED intersections become stated ones (an Adapter /3 payload
+    carries no record of which unnamed cuts the text states — re-author them, do not guess). Anything else refuses."""
+    if route not in ("bridge", "adapter3"):
+        raise TypedFactNextValidationError("ROUTE_LABEL_REQUIRED",
+                                           f"`/1` cut_edges has no route-free meaning; route must be 'bridge' or 'adapter3', got {route!r}.")
+    p = parse_typed_fact_next(raw)
+    out = p.model_dump(mode="json", exclude_none=True)
+    out["schema_version"] = TYPED_FACT_NEXT_V2_SCHEMA_VERSION
+    for sec, d in zip(p.derived_sections, out["derived_sections"]):
+        named = {frozenset(parse_qualified_ref(x) for x in k.split("-")): (k.split("-"), v)
+                 for k, v in sec.named_intersections.items()}
+        if route == "bridge":
+            edges = [list(e) for e in sec.cut_edges] or [ends for ends, _v in named.values()]
+            stated = [{"edge": e, "point": named.get(frozenset(parse_qualified_ref(x) for x in e), (None, None))[1],
+                       "quote": sec.quote} for e in edges]
+        else:
+            stated = [{"edge": ends, "point": v, "quote": sec.quote} for ends, v in named.values()]
+            if sec.cut_edges:
+                d["declared_boundary"] = [list(e) for e in sec.cut_edges]
+        d.pop("cut_edges", None)
+        d.pop("named_intersections", None)
+        d["stated_intersections"] = stated
+    return out
+
+
+def _parse(model: type[TypedFactNextPayload], raw: Any) -> TypedFactNextPayload:
+    if type(raw) is model:                        # exact type: a `/2` model is never accepted as `/1` (subclass)
         return raw
     if not isinstance(raw, dict):
         raise TypedFactNextValidationError(
@@ -623,13 +725,13 @@ def parse_typed_fact_next(raw: dict[str, Any] | TypedFactNextPayload) -> TypedFa
             "TypedFactNext payload must be a JSON object.",
         )
     version = raw.get("schema_version")
-    if version != TYPED_FACT_NEXT_SCHEMA_VERSION:
+    if version != model._VERSION:
         raise TypedFactNextValidationError(
             "SCHEMA_VERSION_MISMATCH",
-            f"Expected schema_version={TYPED_FACT_NEXT_SCHEMA_VERSION!r}, got {version!r}.",
+            f"Expected schema_version={model._VERSION!r}, got {version!r}.",
         )
     try:
-        return TypedFactNextPayload.model_validate(raw)
+        return model.model_validate(raw)
     except TypedFactNextValidationError:
         raise
     except Exception as exc:
