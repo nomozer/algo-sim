@@ -8,6 +8,7 @@ role and cut is re-checked there. Contract and decision: `docs/architecture/HYBR
 """
 from __future__ import annotations
 
+import re
 from typing import Any
 
 from .registry import TuChoi
@@ -32,6 +33,8 @@ _NO_NEW_FACT_GOALS = ("highlight_geometry", "construction_sequence", "construct_
 def _ref(ref: str) -> str:
     """A vertex reference as a global label. Only identity bindings reach here (checked in `bridge`), so a solid-qualified
     reference `pyr::A` and `A` are the same point."""
+    if not isinstance(ref, str):
+        raise TuChoi("INVALID_TYPED_FACT_NEXT", "tham chiếu đỉnh phải là chuỗi")
     try:
         return parse_qualified_ref(ref)[1]
     except TypedFactNextValidationError as e:
@@ -39,13 +42,41 @@ def _ref(ref: str) -> str:
 
 
 def _refs(xs) -> list[str]:
+    if not isinstance(xs, (list, tuple)):
+        raise TuChoi("INVALID_TYPED_FACT_NEXT", "các tham chiếu đỉnh phải là danh sách")
     return [_ref(x) for x in xs]
+
+
+def _check_qualified_refs(value: Any, solids: dict[str, Any]) -> None:
+    """Check namespaces before translation erases them; source quotes are not references."""
+    if isinstance(value, dict):
+        for key, item in value.items():
+            if key not in ("quote", "problem_text"):
+                if key == "named_intersections":
+                    for edge in item:
+                        _check_qualified_refs(edge.split("-"), solids)
+                _check_qualified_refs(item, solids)
+    elif isinstance(value, (list, tuple)):
+        for item in value:
+            _check_qualified_refs(item, solids)
+    elif isinstance(value, str) and "::" in value:
+        try:
+            sid, label = parse_qualified_ref(value)
+        except TypedFactNextValidationError as e:
+            raise TuChoi(e.code, e.detail) from None
+        if sid not in solids:
+            raise TuChoi("UNKNOWN_SOLID_ID", f"tham chiếu tới khối chưa khai {sid!r}")
+        if label not in solids[sid].local_vertices():
+            raise TuChoi("UNKNOWN_VERTEX_REF", f"{value!r} không phải đỉnh của khối đã khai")
 
 
 def _section_fact(sec: DerivedPlaneSectionSpec, solids: dict[str, Any], asked: list[str]) -> dict[str, Any]:
     rel = _PLANE_RELATION.get(sec.plane_kind)
     if rel is None:
         raise TuChoi("BRIDGE_UNSUPPORTED_PLANE_KIND", f"{sec.section_id}: mặt {sec.plane_kind} chưa có phép dựng của planner",
+                     (sec.section_id,))
+    if not re.search(r"\(\s*" + re.escape(sec.plane_name) + r"\s*\)", sec.quote):
+        raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{sec.section_id}: tên mặt không có trong quote của mặt cắt",
                      (sec.section_id,))
     f: dict[str, Any] = {"id": sec.section_id, "kind": "section", "role": "question" if asked else "premise",
                          "quotes": [sec.quote, *asked], "solid": solids[sec.target_solid_id].notation,
@@ -86,6 +117,7 @@ def bridge(raw: dict[str, Any] | TypedFactNextPayload) -> dict[str, Any]:
                          "định danh điểm bằng nhãn", (s.solid_id,))
         facts.append({"id": s.solid_id, "kind": "solid", "role": "premise", "quotes": [s.quote], "solid": s.notation,
                       "solid_type": s.solid_type})
+    _check_qualified_refs(p.model_dump(), solids)
     theo_ten = {s.notation: f for s, f in zip(p.solids, facts)}
 
     for i, prem in enumerate(p.premises, 1):
@@ -213,4 +245,5 @@ def bridge(raw: dict[str, Any] | TypedFactNextPayload) -> dict[str, Any]:
                          (g.goal_id,))
     khong = [g.goal_id for g in p.simulation_goals if g.kind in _NO_NEW_FACT_GOALS]
     return {"facts": facts, "bridge": {"version": BRIDGE_VERSION, "goals_without_new_facts": khong,
+                                       "declared_length_unit": p.length_unit,
                                        "problem_text": p.problem_text}}

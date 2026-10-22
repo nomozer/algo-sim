@@ -259,8 +259,17 @@ def run_typed_fact_next_planner_route(raw: Any) -> KetQuaTuyen:
     except TuChoi as e:
         return KetQuaTuyen("REFUSED", e.code, e.reason, e.calls, details=e.data,
                            planner={"bridge": {"version": BRIDGE_VERSION}})
+    except (KeyError, TypeError):
+        # PremiseSpec.args is an open dictionary; malformed operands must not escape this input boundary.
+        return KetQuaTuyen("REFUSED", "INVALID_TYPED_FACT_NEXT", "đối số giả thiết bị thiếu hoặc sai kiểu",
+                           planner={"bridge": {"version": BRIDGE_VERSION}})
     r = run_fact_route(b["bridge"]["problem_text"], {"facts": b["facts"]})
     r.planner = {**(r.planner or {}), "bridge": {k: v for k, v in b["bridge"].items() if k != "problem_text"}}
+    unit = b["bridge"]["declared_length_unit"]
+    if r.status == "SERVED" and unit is not None and unit != (r.length_unit or "1"):
+        code = "NON_HOMOGENEOUS_LENGTHS" if unit == "1" else "BRIDGE_UNSUPPORTED_LENGTH_UNIT"
+        return KetQuaTuyen("REFUSED", code, "đơn vị đã khai không được biểu diễn bởi dữ kiện trên planner",
+                           planner=r.planner)
     return r
 
 

@@ -594,3 +594,61 @@ def test_bridge_refuses_what_typedfact_cannot_express(case, code):
         payload["derived_sections"][0].update(cut_edges=[], named_intersections={})
     r = run_typed_fact_next_planner_route(payload)
     assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
+
+
+@pytest.mark.parametrize("case,code", [
+    ("missing_point", "INVALID_TYPED_FACT_NEXT"),
+    ("non_string_point", "INVALID_TYPED_FACT_NEXT"),
+    ("non_sequence_segment", "INVALID_TYPED_FACT_NEXT"),
+    ("invalid_qualified_syntax", "INVALID_QUALIFIED_REF"),
+    ("unknown_qualifier", "UNKNOWN_SOLID_ID"),
+    ("unknown_local_vertex", "UNKNOWN_VERTEX_REF"),
+    ("unknown_named_edge_qualifier", "UNKNOWN_SOLID_ID"),
+    ("contradictory_unit", "NON_HOMOGENEOUS_LENGTHS"),
+    ("unrepresentable_unit", "BRIDGE_UNSUPPORTED_LENGTH_UNIT"),
+    ("wrong_plane_name", "SOURCE_OBJECT_MISMATCH"),
+])
+def test_bridge_preserves_input_constraints_or_refuses(case, code):
+    from app.ai.function_route import run_typed_fact_next_planner_route
+    payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+    control = run_typed_fact_next_planner_route(payload)
+    assert control.status == "SERVED", (control.code, control.reason)
+    args = payload["premises"][3]["args"]
+    if case == "missing_point":
+        del args["point"]
+    elif case == "non_string_point":
+        args["point"] = 1
+    elif case == "non_sequence_segment":
+        args["segment"] = 1
+    elif case == "invalid_qualified_syntax":
+        args["point"] = "ghost::m"
+    elif case == "unknown_qualifier":
+        payload["derived_sections"][0]["through_point"] = "ghost::M"
+    elif case == "unknown_local_vertex":
+        payload["derived_sections"][0]["through_point"] = "pyr::M"
+    elif case == "unknown_named_edge_qualifier":
+        payload["derived_sections"][0]["named_intersections"] = {"ghost::S-ghost::B": "N", "S-C": "P"}
+    elif case == "contradictory_unit":
+        payload["length_unit"] = "1"
+    elif case == "unrepresentable_unit":
+        payload["length_unit"] = "a"
+        payload["problem_text"] = payload["problem_text"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+        for prem in payload["premises"]:
+            prem["quote"] = prem["quote"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+            for key in ("side", "value"):
+                if prem["args"].get(key) == "a":
+                    prem["args"][key] = "1"
+    else:
+        payload["derived_sections"][0]["plane_name"] = "β"
+    r = run_typed_fact_next_planner_route(payload)
+    assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
+    assert r.scene3d is None and not r.answers
+
+
+def test_bridge_accepts_matching_units_and_declared_qualified_vertices():
+    from app.ai.function_route import run_typed_fact_next_planner_route
+    payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+    payload["length_unit"] = "a"
+    payload["premises"][1]["args"]["line"] = ["pyr::S", "pyr::A"]
+    r = run_typed_fact_next_planner_route(payload)
+    assert r.status == "SERVED" and r.length_unit == "a", (r.code, r.reason)

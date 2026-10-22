@@ -430,6 +430,7 @@ REFUSAL_CLASS = {
     "BRIDGE_UNSUPPORTED_DERIVED_SOLID": "unsupported", "BRIDGE_UNSUPPORTED_MEASUREMENT": "unsupported",
     "BRIDGE_UNSUPPORTED_PLANE_KIND": "unsupported", "BRIDGE_UNSUPPORTED_PREMISE": "unsupported",
     "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY": "unsupported", "BRIDGE_UNSUPPORTED_RELATION": "unsupported",
+    "BRIDGE_UNSUPPORTED_LENGTH_UNIT": "unsupported",
     # malformed facts / plan
     "SCHEMA_INVALID": "malformed", "FACT_INCOMPLETE": "malformed", "UNKNOWN_SOLID": "malformed", "NO_SOLID": "malformed",
     "DUPLICATE_CALL_ID": "malformed", "DEPENDENCY_CYCLE": "dependency", "DANGLING_DEPENDENCY": "dependency",
