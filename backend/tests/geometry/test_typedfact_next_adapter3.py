@@ -895,12 +895,14 @@ def test_p5_p6_development_corpus_and_demos_oracle() -> None:
 
     # Correction layer (run `backend-hybrid-contract-unification`, CORRECTED_BY in EVIDENCE_INDEX): the frozen corpus stays
     # byte-identical; the shared Source Gate now decides these. A3-DEV-07 / -08 ask "tính tỉ số thể tích" without naming the
-    # two solids, so the ratio's orientation is not in the source (a source defect the frozen run served). A3-DEV-10 is a
-    # FALSE refusal, kept: the gate's closed grammar does not bind "Dựng lăng trụ, thiết diện bởi (α)" to the one prism —
-    # the gate is not loosened for coverage. A3-DEV-11 still refuses; the gate now speaks first (code order only).
+    # two solids, so the ratio's orientation is not in the source (a source defect the frozen run served). A3-DEV-11 still
+    # refuses; the gate now speaks first (code order only). A3-DEV-10 is a FALSE refusal of the gate grammar — locked as a
+    # strict xfail below, not as an expected result.
     corrected = {"A3-DEV-07": ("REFUSED", {"SOURCE_OBJECT_MISMATCH"}), "A3-DEV-08": ("REFUSED", {"SOURCE_OBJECT_MISMATCH"}),
-                 "A3-DEV-10": ("REFUSED", {"SOURCE_OBJECT_MISMATCH"}), "A3-DEV-11": ("REFUSED", {"SOURCE_OBJECT_MISMATCH"})}
+                 "A3-DEV-11": ("REFUSED", {"SOURCE_OBJECT_MISMATCH"})}
     for case in corpus["cases"]:
+        if case["case_id"] == "A3-DEV-10":
+            continue
         res = run_typed_fact_next_route(case["payload"])
         if case["case_id"] in corrected:
             status, codes = corrected[case["case_id"]]
@@ -915,3 +917,28 @@ def test_p5_p6_development_corpus_and_demos_oracle() -> None:
         else:
             assert res.scene3d is None
             assert res.code in set(case["expected_codes"])
+
+
+@pytest.mark.xfail(strict=True, reason="gate grammar false refusal (owner decision D3): 'thiết diện bởi (α)' not bound")
+@pytest.mark.parametrize("case_id,complete_boundary", [("A3-DEV-10", False), ("A3-DEV-03", True), ("A3-DEV-04", True),
+                                                       ("A3-DEV-06", True), ("A3-DEV-09", True)])
+def test_gate_grammar_false_refusals_are_known_not_expected(case_id, complete_boundary) -> None:
+    """Run `backend-hybrid-contract-unification`, independent review: these sections are geometrically valid (with the gate
+    stubbed they serve with a closure certificate) but the shared Source Gate refuses them (SOURCE_OBJECT_MISMATCH) because
+    its closed grammar does not bind "Dựng …, thiết diện bởi (α)" to the solid. -03/-04/-06/-09 serve today only because
+    they omit `cut_edges` (no gate verdict, legacy authority); given their complete boundary they are refused. Strict xfail:
+    this turns red the day the gate grammar covers the wording — then it must become a passing test."""
+    import copy
+    import json
+    import re
+    from pathlib import Path
+
+    corpus = json.loads((Path(__file__).resolve().parents[3] / "docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation"
+                         / "corpus-dev.json").read_text(encoding="utf-8"))
+    p = copy.deepcopy(next(c["payload"] for c in corpus["cases"] if c["case_id"] == case_id))
+    if complete_boundary:
+        sec = p["derived_sections"][0]
+        apex, base = next(s for s in p["solids"] if s["solid_id"] == sec["target_solid_id"])["notation"].split(".")
+        sec["cut_edges"] = [[apex, v] for v in re.findall(r"[A-Z]'?", base)]
+    res = run_typed_fact_next_route(p)
+    assert res.status == "SERVED", (res.code, res.reason)
