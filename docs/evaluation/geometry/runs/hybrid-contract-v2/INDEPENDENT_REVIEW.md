@@ -5,8 +5,8 @@
 - **Branch**: `research/hybrid-backend-session3-contract-v2`
 - **Base Commit SHA**: `227d447f5c1ca55a2c4bd68f3c8c583228902cfc` (`227d447f`, Session 2 HEAD)
 - **Initial Audited Commit SHA**: `94893d72049baddc3f6bdea433e7a31157f8e8f5` (`94893d72`)
-- **Post-Remediation Final Product Commit SHA**: `541803c867adfbc5e85a8109bd0307552090f9df` (`541803c8`)
-- **Measured Product Tree SHA-256 (`backend/app`, 116 files)**: `173af8b2604dde4754a602eb868ceb07f8129263f7b80aa9601a9a203aec51d9`
+- **Post-Remediation Final Product Commit SHA**: `69bd2fe48be1fd3afa6ce4112ccddda92a07d850` (`69bd2fe4`)
+- **Measured Product Tree SHA-256 (`backend/app`, 116 files)**: `413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df`
 
 ---
 
@@ -76,11 +76,11 @@ The independent read-only review audited `git diff 227d447f5c1ca55a2c4bd68f3c8c5
 - **None.**
 
 ### `IMPORTANT` Findings (Remediated)
-1. **[I-1] Plane-only `construct_plane_section` / `measurement(area)` on `/2` without `construct_derived_solid` or `declared_boundary` emitted vacuous `DINH_CAT_CANH` (`planner.py:1220`) — FIXED in `541803c867adfbc5e85a8109bd0307552090f9df`**:
+1. **[I-1] Plane-only `construct_plane_section` / `measurement(area)` on `/2` without `construct_derived_solid` or `declared_boundary` emitted vacuous `DINH_CAT_CANH` (`planner.py:1220`) — FIXED in `69bd2fe48be1fd3afa6ce4112ccddda92a07d850`**:
    - **Cause**: On `/2`, `_section_fact_v2` sets `cut_edges = []` and `derive_cuts = True` when `stated_intersections` is empty. When a payload requested only `construct_plane_section` and/or `measurement(area)` without `construct_derived_solid` (`khep = False`) and without `declared_boundary` (`f.boundary_edges is None`), `_dinh_cat_canh` emitted a `DINH_CAT_CANH` certificate with `stated_edges: []` and `phai_khep = False`, which `registry._kiem_dinh_cat` refused with `AUXILIARY_RULE_MISMATCH`.
    - **Fix**: Added `if not stated and not khep and f.boundary_edges is None: return` in `planner._dinh_cat_canh` (`planner.py:1223–1224`) and pinned with `test_v2_plane_only_section_area_without_derived_solid_is_served` in `backend/tests/geometry/test_hybrid_contract_v2.py` (`47 passed`).
 2. **[I-2] `EVALUATION_CANDIDATE.json` refreeze required for 116-file product tree — RESOLVED in P8 freeze step**:
-   - **Cause**: Adding `backend/app/ai/adapter4_route.py` increased the measured `backend/app` file count from `115` to `116` (`173af8b2604dde4754a602eb868ceb07f8129263f7b80aa9601a9a203aec51d9`).
+   - **Cause**: Adding `backend/app/ai/adapter4_route.py` increased the measured `backend/app` file count from `115` to `116` (`413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df`).
    - **Fix**: Registered `candidate_divergence.json` in `docs/evaluation/geometry/runs/hybrid-contract-v2/` and refroze `docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json` via `freeze_evaluation_candidate.py --write` for the clean detached Full T3 gate.
 
 ### `MINOR` Observations
@@ -90,4 +90,4 @@ The independent read-only review audited `git diff 227d447f5c1ca55a2c4bd68f3c8c5
 
 ## 4. Final Verdict
 
-- **Verdict**: **`INDEPENDENT_REVIEW_PASS`** (post-remediation at product commit `541803c867adfbc5e85a8109bd0307552090f9df`).
+- **Verdict**: **`INDEPENDENT_REVIEW_PASS`** (post-remediation at product commit `69bd2fe48be1fd3afa6ce4112ccddda92a07d850`).

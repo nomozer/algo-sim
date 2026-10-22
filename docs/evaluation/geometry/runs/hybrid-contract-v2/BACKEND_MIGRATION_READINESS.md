@@ -2,7 +2,7 @@
 
 - **Run**: `hybrid-contract-v2` (Backend Hybrid Session 3)
 - **Authorization**: `GO_HYBRID_SESSION3_CONTRACT_V2_LOCAL_RESEARCH`
-- **Product Commit**: `541803c867adfbc5e85a8109bd0307552090f9df`
+- **Product Commit**: `69bd2fe48be1fd3afa6ce4112ccddda92a07d850`
 - **Default Production Mode**: `DEFAULT_MODE = LLM_ONLY`, `RESPONSE_CONTRACT = flat`, `HYBRID_PRODUCT_ENABLEMENT = NO-GO`, `CACHE_VERSION = 127` (`NO_BUMP`)
 
 ---

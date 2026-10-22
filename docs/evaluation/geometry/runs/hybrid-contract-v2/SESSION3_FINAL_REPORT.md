@@ -5,8 +5,8 @@
 - **Branch**: `research/hybrid-backend-session3-contract-v2`
 - **Worktree**: `D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s3`
 - **Base Commit (Session 2 HEAD)**: `227d447f5c1ca55a2c4bd68f3c8c583228902cfc`
-- **Final Product Commit**: `541803c867adfbc5e85a8109bd0307552090f9df` (`541803c8`)
-- **Measured Product Tree (`backend/app`, 116 files)**: `173af8b2604dde4754a602eb868ceb07f8129263f7b80aa9601a9a203aec51d9`
+- **Final Product Commit**: `69bd2fe48be1fd3afa6ce4112ccddda92a07d850` (`69bd2fe4`)
+- **Measured Product Tree (`backend/app`, 116 files)**: `413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df`
 - **Evaluation Classification**: `DEVELOPMENT_EVALUATION_NOT_BLIND` (`0` live provider calls, `ALLOW_LIVE_AI = 0`)
 
 ---
@@ -42,7 +42,7 @@ Session 3 resumed and completed the Backend Hybrid Contract V2, Unified Source A
 | **P5** | `D1 GO`, `D2 GO-cond`, `D5 GO` | `backend/app/ai/adapter4_route.py` (`ADAPTER_V4_VERSION = "hybrid-simulation-adapter/4"`, `ROUTE_D_SIMULATION_V4_SCHEMA_VERSION = "hybrid-route-d-simulation/4"`, `run_typed_fact_next_v2_route`) delegating exclusively to `bridge_v2` + planner + engine with `100%` `registry.kiem_nguon` authority (`0` legacy substring fallback). |
 | **P6** | `D4 KEEP 32` | IR budget audit confirming `MAX_MEMORY_DECLARATIONS = 32` unchanged; `gop_doi_tuong_trung` keeps `plane_constructions_per_section = 1.0` and `18–30 <= 32` declarations across all 3- and 4-sided pyramid/prism section plans while hexagonal pyramids (`33–36`) deterministically refuse with `IR_MEMORY_BUDGET_EXCEEDED`. |
 | **P7** | Offline Evaluation | `evaluate_session3.py` across Families A–H (`verification/evaluation/session3-evaluation-summary.json` & `session3-evaluation-full.json`): `0` `wrong_served` across all `562` evaluations. |
-| **P8** | Independent Review & Full T3 | Read-only subagent review (`61217726-a797-4a91-b722-e4393c7e11c9`), remediation of `I-1` (`541803c8`) and `I-2` (`EVALUATION_CANDIDATE.json` refreeze), and authoritative clean detached Full T3 gate (`FULL_PRODUCT_GATE_PASS`). |
+| **P8** | Independent Review & Full T3 | Read-only subagent review (`61217726-a797-4a91-b722-e4393c7e11c9`), remediation of `I-1` (`69bd2fe4`) and `I-2` (`EVALUATION_CANDIDATE.json` refreeze), and authoritative clean detached Full T3 gate (`FULL_PRODUCT_GATE_PASS`). |
 
 ---
 

@@ -2,7 +2,7 @@
 
 - **Run**: `hybrid-contract-v2` (Backend Hybrid Session 3)
 - **Authorization**: `GO_HYBRID_SESSION3_CONTRACT_V2_LOCAL_RESEARCH` (`D4 KEEP 32`, `D6 GO-limited`)
-- **Product Commit**: `541803c867adfbc5e85a8109bd0307552090f9df`
+- **Product Commit**: `69bd2fe48be1fd3afa6ce4112ccddda92a07d850`
 
 ---
 

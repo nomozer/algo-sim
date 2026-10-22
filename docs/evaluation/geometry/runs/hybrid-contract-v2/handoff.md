@@ -5,8 +5,8 @@
 - **Branch**: `research/hybrid-backend-session3-contract-v2`
 - **Worktree**: `D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s3`
 - **Base Commit (Session 2 HEAD)**: `227d447f5c1ca55a2c4bd68f3c8c583228902cfc`
-- **Final Product Commit**: `541803c867adfbc5e85a8109bd0307552090f9df` (`541803c8`)
-- **Measured Product Tree (`backend/app`, 116 files)**: `173af8b2604dde4754a602eb868ceb07f8129263f7b80aa9601a9a203aec51d9`
+- **Final Product Commit**: `69bd2fe48be1fd3afa6ce4112ccddda92a07d850` (`69bd2fe4`)
+- **Measured Product Tree (`backend/app`, 116 files)**: `413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df`
 
 ---
 
@@ -20,7 +20,7 @@
    - `D5 GO`: Internal versions bumped to `geometry-functions/13`, `geometry-fact-planner/13`, `geometry-function-engine/11` while keeping all `/1` versions, provider surface fingerprints (`485d3834...`, `4bff35bb...`, `7ea511a6...`, `aa9d93ee...`, `5ceb0f99...`), `DEFAULT_MODE = LLM_ONLY`, `RESPONSE_CONTRACT = flat`, and `CACHE_VERSION = 127` (`NO_BUMP`) intact.
    - `D6 GO-limited`: `PlanningContract` on `REGISTRY["intersect_line_plane"]` (`effect=Meet`, `fresh="I"`), cost-2 `derived_fresh` only when a closed boundary is required, exact closure certificate `chung_chi_khep_kin` (`same_section_cycle`), and learner-facing internal label stripping (`_an_dinh_thiet_dien_phu`).
 2. **Independent Review (`61217726-a797-4a91-b722-e4393c7e11c9`)**:
-   - Verdict: `INDEPENDENT_REVIEW_PASS` after remediating `I-1` (`541803c867adfbc5e85a8109bd0307552090f9df`) and `I-2` (`EVALUATION_CANDIDATE.json` refreeze).
+   - Verdict: `INDEPENDENT_REVIEW_PASS` after remediating `I-1` (`69bd2fe48be1fd3afa6ce4112ccddda92a07d850`) and `I-2` (`EVALUATION_CANDIDATE.json` refreeze).
 3. **Authoritative Clean Detached Full T3 Verification**:
    - Executed in a clean detached worktree (`node frontend/scripts/full-gate.mjs` + `freeze_evaluation_candidate.py --verify`).
 4. **Branch & Worktree Safety**:
