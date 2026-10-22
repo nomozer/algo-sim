@@ -1978,7 +1978,12 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
             if (vt := _vi_tri(de, q)) is None:
                 raise TuChoi("QUOTE_NOT_IN_SOURCE", f"{c.id}: đoạn {q!r} không có nguyên văn trong đề", (c.id,))
             vts.append(vt)
-        mien = nhan_dan_xuat if c.fn in ("ask_volume_ratio", "ask_residual_volume") else set()
+        mien = (
+            nhan_dan_xuat
+            if c.fn in ("ask_volume_ratio", "ask_residual_volume")
+            and any(re.search(_khoi_ro_cum("m"), de[dau:_c], re.I) for dau, _c in vts)
+            else set()
+        )
         if lac := sorted(nhan_cua_loi_goi(c) - nhan - mien):
             raise TuChoi("UNKNOWN_LABEL", f"{c.id}: nhãn {lac} không có trong đề", (c.id,))
         if c.spec.kind == "escape":
