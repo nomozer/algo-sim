@@ -2,7 +2,7 @@
  "summary": {
   "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND",
   "provider_calls": 0,
-  "wall_seconds": 24.067,
+  "wall_seconds": 23.866,
   "family_a_locked_grammar_v2": {
    "lock_sha256": "10c57be7b485d7b3f1a97183ff41b28988e70641e297e01cccf68d1434cc4abe",
    "cases": 47,
@@ -214,7 +214,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0346,
+    "seconds": 0.0333,
     "answers": {
      "g_res": "49/3072",
      "g_ratio": "1/64"
@@ -224,7 +224,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0327,
+    "seconds": 0.0346,
     "answers": {
      "g_res": "49/3072",
      "g_ratio": "1/64"
@@ -243,7 +243,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0316,
+    "seconds": 0.0572,
     "answers": {
      "g_res": "49/3072",
      "g_ratio": "1/64"
@@ -253,7 +253,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0322,
+    "seconds": 0.0341,
     "answers": {
      "g_res": "49/3072",
      "g_ratio": "1/64"
@@ -272,7 +272,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0347,
+    "seconds": 0.0329,
     "answers": {
      "g_res": "169/8748",
      "g_ratio": "1/729"
@@ -282,7 +282,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.034,
+    "seconds": 0.0333,
     "answers": {
      "g_res": "169/8748",
      "g_ratio": "1/729"
@@ -301,7 +301,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0332,
+    "seconds": 0.0329,
     "answers": {
      "g_res": "169/8748",
      "g_ratio": "1/729"
@@ -311,7 +311,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0343,
+    "seconds": 0.0326,
     "answers": {
      "g_res": "169/8748",
      "g_ratio": "1/729"
@@ -330,7 +330,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0332,
+    "seconds": 0.033,
     "answers": {
      "g_res": "361/34992",
      "g_ratio": "64/729"
@@ -340,7 +340,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.034,
+    "seconds": 0.0339,
     "answers": {
      "g_res": "361/34992",
      "g_ratio": "64/729"
@@ -359,7 +359,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0336,
+    "seconds": 0.0328,
     "answers": {
      "g_res": "361/34992",
      "g_ratio": "64/729"
@@ -369,7 +369,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0336,
+    "seconds": 0.0327,
     "answers": {
      "g_res": "361/34992",
      "g_ratio": "64/729"
@@ -388,7 +388,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0316,
+    "seconds": 0.0315,
     "answers": {
      "g_res": "49/192",
      "g_ratio": "1/64"
@@ -398,7 +398,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0331,
+    "seconds": 0.0319,
     "answers": {
      "g_res": "49/192",
      "g_ratio": "1/64"
@@ -417,7 +417,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0306,
+    "seconds": 0.0302,
     "answers": {
      "g_res": "49/192",
      "g_ratio": "1/64"
@@ -427,7 +427,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0311,
+    "seconds": 0.0308,
     "answers": {
      "g_res": "49/192",
      "g_ratio": "1/64"
@@ -446,7 +446,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0332,
+    "seconds": 0.0316,
     "answers": {
      "g_res": "676/2187",
      "g_ratio": "1/729"
@@ -456,7 +456,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0327,
+    "seconds": 0.0321,
     "answers": {
      "g_res": "676/2187",
      "g_ratio": "1/729"
@@ -475,7 +475,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0327,
+    "seconds": 0.0308,
     "answers": {
      "g_res": "676/2187",
      "g_ratio": "1/729"
@@ -485,7 +485,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0319,
+    "seconds": 0.0325,
     "answers": {
      "g_res": "676/2187",
      "g_ratio": "1/729"
@@ -504,7 +504,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0334,
+    "seconds": 0.0324,
     "answers": {
      "g_res": "361/2187",
      "g_ratio": "64/729"
@@ -514,7 +514,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0331,
+    "seconds": 0.0317,
     "answers": {
      "g_res": "361/2187",
      "g_ratio": "64/729"
@@ -533,7 +533,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0315,
+    "seconds": 0.0309,
     "answers": {
      "g_res": "361/2187",
      "g_ratio": "64/729"
@@ -543,7 +543,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0319,
+    "seconds": 0.0312,
     "answers": {
      "g_res": "361/2187",
      "g_ratio": "64/729"
@@ -562,7 +562,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0322,
+    "seconds": 0.032,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -591,7 +591,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0358,
+    "seconds": 0.0365,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -601,7 +601,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0374,
+    "seconds": 0.0353,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -620,7 +620,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0343,
+    "seconds": 0.0318,
     "answers": {
      "g_res": "676/6561",
      "g_ratio": "1/729"
@@ -630,7 +630,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0339,
+    "seconds": 0.0322,
     "answers": {
      "g_res": "676/6561",
      "g_ratio": "1/729"
@@ -649,7 +649,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0431,
+    "seconds": 0.0383,
     "answers": {
      "g_res": "676/6561",
      "g_ratio": "1/729"
@@ -659,7 +659,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0431,
+    "seconds": 0.0388,
     "answers": {
      "g_res": "676/6561",
      "g_ratio": "1/729"
@@ -678,7 +678,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0345,
+    "seconds": 0.034,
     "answers": {
      "g_res": "361/6561",
      "g_ratio": "64/729"
@@ -688,7 +688,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0333,
+    "seconds": 0.0335,
     "answers": {
      "g_res": "361/6561",
      "g_ratio": "64/729"
@@ -707,7 +707,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0387,
+    "seconds": 0.0376,
     "answers": {
      "g_res": "361/6561",
      "g_ratio": "64/729"
@@ -717,7 +717,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0371,
+    "seconds": 0.0373,
     "answers": {
      "g_res": "361/6561",
      "g_ratio": "64/729"
@@ -736,7 +736,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0339,
+    "seconds": 0.0335,
     "answers": {
      "g_res": "49/36",
      "g_ratio": "1/64"
@@ -746,7 +746,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0331,
+    "seconds": 0.033,
     "answers": {
      "g_res": "49/36",
      "g_ratio": "1/64"
@@ -765,7 +765,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0555,
+    "seconds": 0.0549,
     "answers": {
      "g_res": "49/36",
      "g_ratio": "1/64"
@@ -775,7 +775,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0365,
+    "seconds": 0.0361,
     "answers": {
      "g_res": "49/36",
      "g_ratio": "1/64"
@@ -794,7 +794,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0414,
+    "seconds": 0.0337,
     "answers": {
      "g_res": "10816/6561",
      "g_ratio": "1/729"
@@ -804,7 +804,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0345,
+    "seconds": 0.034,
     "answers": {
      "g_res": "10816/6561",
      "g_ratio": "1/729"
@@ -823,7 +823,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0377,
+    "seconds": 0.0368,
     "answers": {
      "g_res": "10816/6561",
      "g_ratio": "1/729"
@@ -833,7 +833,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0381,
+    "seconds": 0.0374,
     "answers": {
      "g_res": "10816/6561",
      "g_ratio": "1/729"
@@ -852,7 +852,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0366,
+    "seconds": 0.0344,
     "answers": {
      "g_res": "5776/6561",
      "g_ratio": "64/729"
@@ -862,7 +862,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0375,
+    "seconds": 0.0359,
     "answers": {
      "g_res": "5776/6561",
      "g_ratio": "64/729"
@@ -881,7 +881,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0386,
+    "seconds": 0.0481,
     "answers": {
      "g_res": "5776/6561",
      "g_ratio": "64/729"
@@ -891,7 +891,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0415,
+    "seconds": 0.0567,
     "answers": {
      "g_res": "5776/6561",
      "g_ratio": "64/729"
@@ -910,7 +910,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0366,
+    "seconds": 0.0354,
     "answers": {
      "g_res": "49",
      "g_ratio": "1/64"
@@ -920,7 +920,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0405,
+    "seconds": 0.0343,
     "answers": {
      "g_res": "49",
      "g_ratio": "1/64"
@@ -939,7 +939,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0434,
+    "seconds": 0.0378,
     "answers": {
      "g_res": "49",
      "g_ratio": "1/64"
@@ -949,7 +949,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0429,
+    "seconds": 0.0399,
     "answers": {
      "g_res": "49",
      "g_ratio": "1/64"
@@ -968,7 +968,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.039,
+    "seconds": 0.035,
     "answers": {
      "g_res": "43264/729",
      "g_ratio": "1/729"
@@ -978,7 +978,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0349,
+    "seconds": 0.0346,
     "answers": {
      "g_res": "43264/729",
      "g_ratio": "1/729"
@@ -997,7 +997,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0404,
+    "seconds": 0.0377,
     "answers": {
      "g_res": "43264/729",
      "g_ratio": "1/729"
@@ -1007,7 +1007,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0422,
+    "seconds": 0.0378,
     "answers": {
      "g_res": "43264/729",
      "g_ratio": "1/729"
@@ -1026,7 +1026,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0414,
+    "seconds": 0.0351,
     "answers": {
      "g_res": "23104/729",
      "g_ratio": "64/729"
@@ -1036,7 +1036,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0381,
+    "seconds": 0.0339,
     "answers": {
      "g_res": "23104/729",
      "g_ratio": "64/729"
@@ -1055,7 +1055,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0893,
+    "seconds": 0.0589,
     "answers": {
      "g_res": "23104/729",
      "g_ratio": "64/729"
@@ -1065,7 +1065,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0471,
+    "seconds": 0.0378,
     "answers": {
      "g_res": "23104/729",
      "g_ratio": "64/729"
@@ -1084,7 +1084,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0348,
+    "seconds": 0.0329,
     "answers": {
      "g_res": "49/4",
      "g_ratio": "1/64"
@@ -1094,7 +1094,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0329,
+    "seconds": 0.0324,
     "answers": {
      "g_res": "49/4",
      "g_ratio": "1/64"
@@ -1113,7 +1113,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0327,
+    "seconds": 0.0315,
     "answers": {
      "g_res": "49/4",
      "g_ratio": "1/64"
@@ -1123,7 +1123,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0322,
+    "seconds": 0.0324,
     "answers": {
      "g_res": "49/4",
      "g_ratio": "1/64"
@@ -1142,36 +1142,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0331,
-    "answers": {
-     "g_res": "10816/729",
-     "g_ratio": "1/729"
-    },
-    "scene_valid": true
-   },
-   "v2_adapter4": {
-    "status": "SERVED",
-    "code": null,
-    "seconds": 0.0342,
-    "answers": {
-     "g_res": "10816/729",
-     "g_ratio": "1/729"
-    },
-    "scene_valid": true,
-    "label_leaks": 0,
-    "source_authority": "registry.kiem_nguon",
-    "wrong_served": false,
-    "converted": true
-   },
-   "v1_v2_agree_on_v1_served": true
-  },
-  {
-   "id": "B-right5-t13-perpendicular",
-   "expect_v1": "SERVED",
-   "v1_bridge": {
-    "status": "SERVED",
-    "code": null,
-    "seconds": 0.0328,
+    "seconds": 0.0321,
     "answers": {
      "g_res": "10816/729",
      "g_ratio": "1/729"
@@ -1195,12 +1166,41 @@
    "v1_v2_agree_on_v1_served": true
   },
   {
+   "id": "B-right5-t13-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0318,
+    "answers": {
+     "g_res": "10816/729",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0313,
+    "answers": {
+     "g_res": "10816/729",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
    "id": "B-right5-t23-parallel",
    "expect_v1": "SERVED",
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0332,
+    "seconds": 0.0325,
     "answers": {
      "g_res": "5776/729",
      "g_ratio": "64/729"
@@ -1210,7 +1210,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0348,
+    "seconds": 0.0336,
     "answers": {
      "g_res": "5776/729",
      "g_ratio": "64/729"
@@ -1229,7 +1229,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0324,
+    "seconds": 0.0319,
     "answers": {
      "g_res": "5776/729",
      "g_ratio": "64/729"
@@ -1239,7 +1239,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0318,
+    "seconds": 0.0325,
     "answers": {
      "g_res": "5776/729",
      "g_ratio": "64/729"
@@ -1258,7 +1258,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0321,
+    "seconds": 0.0329,
     "answers": {
      "g_res": "676/243",
      "g_ratio": "1/729"
@@ -1268,7 +1268,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0402,
+    "seconds": 0.0319,
     "answers": {
      "g_res": "676/243",
      "g_ratio": "1/729"
@@ -1287,7 +1287,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0326,
+    "seconds": 0.0325,
     "answers": {
      "g_res": "676/243",
      "g_ratio": "1/729"
@@ -1297,7 +1297,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.032,
+    "seconds": 0.0311,
     "answers": {
      "g_res": "676/243",
      "g_ratio": "1/729"
@@ -1316,7 +1316,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0331,
+    "seconds": 0.031,
     "answers": {
      "g_res": "676/243",
      "g_ratio": "1/729"
@@ -1326,7 +1326,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0333,
+    "seconds": 0.0307,
     "answers": {
      "g_res": "676/243",
      "g_ratio": "1/729"
@@ -1345,7 +1345,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0521,
+    "seconds": 0.0311,
     "answers": {
      "g_res": "676/243",
      "g_ratio": "1/729"
@@ -1355,7 +1355,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0454,
+    "seconds": 0.0321,
     "answers": {
      "g_res": "676/243",
      "g_ratio": "1/729"
@@ -1374,7 +1374,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0529,
+    "seconds": 0.0469,
     "answers": {
      "g_ratio": "729"
     },
@@ -1383,7 +1383,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0354,
+    "seconds": 0.0273,
     "answers": {
      "g_ratio": "729"
     },
@@ -1401,7 +1401,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0347,
+    "seconds": 0.033,
     "answers": {
      "g_res": "2028",
      "g_ratio": "1/729"
@@ -1411,7 +1411,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0356,
+    "seconds": 0.0345,
     "answers": {
      "g_res": "2028",
      "g_ratio": "1/729"
@@ -1430,7 +1430,7 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0342,
+    "seconds": 0.0325,
     "answers": {
      "g_res": "676/243",
      "g_ratio": "1/729"
@@ -1440,7 +1440,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0339,
+    "seconds": 0.0332,
     "answers": {
      "g_res": "676/243",
      "g_ratio": "1/729"
@@ -1459,14 +1459,14 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.022,
+    "seconds": 0.0216,
     "answers": {},
     "scene_valid": true
    },
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0219,
+    "seconds": 0.0211,
     "answers": {},
     "scene_valid": true,
     "label_leaks": 0,
@@ -1482,14 +1482,14 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0245,
+    "seconds": 0.0246,
     "answers": {},
     "scene_valid": true
    },
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0273,
+    "seconds": 0.024,
     "answers": {},
     "scene_valid": true,
     "label_leaks": 0,
@@ -1505,14 +1505,14 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0309,
+    "seconds": 0.0302,
     "answers": {},
     "scene_valid": true
    },
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.028,
+    "seconds": 0.0286,
     "answers": {},
     "scene_valid": true,
     "label_leaks": 0,
@@ -1528,14 +1528,14 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0264,
+    "seconds": 0.026,
     "answers": {},
     "scene_valid": true
    },
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0261,
+    "seconds": 0.0263,
     "answers": {},
     "scene_valid": true,
     "label_leaks": 0,
@@ -1551,14 +1551,14 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0213,
+    "seconds": 0.0224,
     "answers": {},
     "scene_valid": true
    },
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0217,
+    "seconds": 0.0234,
     "answers": {},
     "scene_valid": true,
     "label_leaks": 0,
@@ -1574,14 +1574,14 @@
    "v1_bridge": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0235,
+    "seconds": 0.0443,
     "answers": {},
     "scene_valid": true
    },
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0242,
+    "seconds": 0.0274,
     "answers": {},
     "scene_valid": true,
     "label_leaks": 0,
@@ -1597,12 +1597,12 @@
    "v1_bridge": {
     "status": "REFUSED",
     "code": "INCONSISTENT_FACTS",
-    "seconds": 0.0134
+    "seconds": 0.0124
    },
    "v2_adapter4": {
     "status": "REFUSED",
     "code": "INCONSISTENT_FACTS",
-    "seconds": 0.0114,
+    "seconds": 0.012,
     "wrong_served": false,
     "converted": true
    },
@@ -1614,12 +1614,12 @@
    "v1_bridge": {
     "status": "REFUSED",
     "code": "MISSING_DIMENSION",
-    "seconds": 0.0102
+    "seconds": 0.0103
    },
    "v2_adapter4": {
     "status": "REFUSED",
     "code": "MISSING_DIMENSION",
-    "seconds": 0.0096,
+    "seconds": 0.0098,
     "wrong_served": false,
     "converted": true
    },
@@ -1631,12 +1631,12 @@
    "v1_bridge": {
     "status": "REFUSED",
     "code": "PARALLEL_NO_INTERSECTION",
-    "seconds": 0.0109
+    "seconds": 0.0112
    },
    "v2_adapter4": {
     "status": "REFUSED",
     "code": "PARALLEL_NO_INTERSECTION",
-    "seconds": 0.011,
+    "seconds": 0.0112,
     "wrong_served": false,
     "converted": true
    },
@@ -1653,7 +1653,7 @@
    "v2_adapter4": {
     "status": "REFUSED",
     "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.0029,
+    "seconds": 0.0027,
     "wrong_served": false,
     "converted": true
    },
@@ -1670,7 +1670,7 @@
    "v2_adapter4": {
     "status": "REFUSED",
     "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.0028,
+    "seconds": 0.0029,
     "wrong_served": false,
     "converted": true
    },
@@ -1699,7 +1699,7 @@
    "v1_bridge": {
     "status": "REFUSED",
     "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
-    "seconds": 0.0003
+    "seconds": 0.0002
    },
    "v2_adapter4": {
     "status": "REFUSED",
@@ -1738,7 +1738,7 @@
    "v2_adapter4": {
     "status": "REFUSED",
     "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.0032,
+    "seconds": 0.0033,
     "wrong_served": false,
     "converted": true
    },
@@ -1750,12 +1750,12 @@
    "v1_bridge": {
     "status": "REFUSED",
     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
-    "seconds": 0.0012
+    "seconds": 0.0013
    },
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0206,
+    "seconds": 0.0219,
     "answers": {},
     "scene_valid": true,
     "label_leaks": 0,
@@ -1771,12 +1771,12 @@
    "v1_bridge": {
     "status": "REFUSED",
     "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.0028
+    "seconds": 0.0029
    },
    "v2_adapter4": {
     "status": "REFUSED",
     "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.0024,
+    "seconds": 0.0027,
     "wrong_served": false,
     "converted": true
    },
@@ -1790,7 +1790,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0422,
+    "seconds": 0.0374,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -1807,7 +1807,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0563,
+    "seconds": 0.0621,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -1824,7 +1824,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0381,
+    "seconds": 0.0455,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -1841,7 +1841,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0376,
+    "seconds": 0.04,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -1858,7 +1858,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0368,
+    "seconds": 0.039,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -1875,7 +1875,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.035,
+    "seconds": 0.0373,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -1892,7 +1892,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0359,
+    "seconds": 0.0381,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -1909,7 +1909,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0373,
+    "seconds": 0.0375,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -1926,7 +1926,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.035,
+    "seconds": 0.0427,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -1943,7 +1943,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0345,
+    "seconds": 0.0389,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -1960,7 +1960,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0349,
+    "seconds": 0.0422,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -1977,7 +1977,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0379,
+    "seconds": 0.04,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -1994,7 +1994,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0378,
+    "seconds": 0.0371,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2011,7 +2011,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0355,
+    "seconds": 0.0393,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2028,7 +2028,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.036,
+    "seconds": 0.038,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2045,7 +2045,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0369,
+    "seconds": 0.0436,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2062,7 +2062,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0351,
+    "seconds": 0.0386,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2079,7 +2079,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0372,
+    "seconds": 0.0385,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2096,7 +2096,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0365,
+    "seconds": 0.0381,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2113,7 +2113,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0365,
+    "seconds": 0.0397,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2130,7 +2130,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0568,
+    "seconds": 0.0648,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2147,7 +2147,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0373,
+    "seconds": 0.0366,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2181,7 +2181,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0362,
+    "seconds": 0.0367,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2198,7 +2198,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0368,
+    "seconds": 0.0365,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2215,7 +2215,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.037,
+    "seconds": 0.0381,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2232,7 +2232,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0366,
+    "seconds": 0.0392,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2249,7 +2249,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0362,
+    "seconds": 0.0359,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2266,7 +2266,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0341,
+    "seconds": 0.0342,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2283,7 +2283,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0336,
+    "seconds": 0.0345,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2300,7 +2300,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0345,
+    "seconds": 0.0515,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2317,7 +2317,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.0344,
+    "seconds": 0.0346,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2334,7 +2334,7 @@
    "v2_adapter4": {
     "status": "SERVED",
     "code": null,
-    "seconds": 0.035,
+    "seconds": 0.0334,
     "answers": {
      "g_res": "49/576",
      "g_ratio": "1/64"
@@ -2352,14 +2352,14 @@
    "v2_from_bridge": {
     "status": "REFUSED",
     "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.003,
+    "seconds": 0.0029,
     "wrong_served": false,
     "converted": true
    },
    "v2_from_adapter3_convention": {
     "status": "REFUSED",
     "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.0029,
+    "seconds": 0.0028,
     "wrong_served": false,
     "converted": true
    }
@@ -2376,132 +2376,13 @@
    "v2_from_adapter3_convention": {
     "status": "REFUSED",
     "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.003,
+    "seconds": 0.0029,
     "wrong_served": false,
     "converted": true
    }
   },
   {
    "id": "N-negated-relation",
-   "v2_from_bridge": {
-    "status": "REFUSED",
-    "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.0034,
-    "wrong_served": false,
-    "converted": true
-   },
-   "v2_from_adapter3_convention": {
-    "status": "REFUSED",
-    "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.003,
-    "wrong_served": false,
-    "converted": true
-   }
-  },
-  {
-   "id": "N-conditional-plane",
-   "v2_from_bridge": {
-    "status": "REFUSED",
-    "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.003,
-    "wrong_served": false,
-    "converted": true
-   },
-   "v2_from_adapter3_convention": {
-    "status": "REFUSED",
-    "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.0028,
-    "wrong_served": false,
-    "converted": true
-   }
-  },
-  {
-   "id": "N-wrong-number",
-   "v2_from_bridge": {
-    "status": "REFUSED",
-    "code": "UNGROUNDED_VALUE",
-    "seconds": 0.005,
-    "wrong_served": false,
-    "converted": true
-   },
-   "v2_from_adapter3_convention": {
-    "status": "REFUSED",
-    "code": "UNGROUNDED_VALUE",
-    "seconds": 0.0054,
-    "wrong_served": false,
-    "converted": true
-   }
-  },
-  {
-   "id": "N-ratio-orientation-unstated",
-   "v2_from_bridge": {
-    "status": "REFUSED",
-    "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.0042,
-    "wrong_served": false,
-    "converted": true
-   },
-   "v2_from_adapter3_convention": {
-    "status": "REFUSED",
-    "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.0034,
-    "wrong_served": false,
-    "converted": true
-   }
-  },
-  {
-   "id": "N-residual-ownership-unstated",
-   "v2_from_bridge": {
-    "status": "REFUSED",
-    "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.0048,
-    "wrong_served": false,
-    "converted": true
-   },
-   "v2_from_adapter3_convention": {
-    "status": "REFUSED",
-    "code": "SOURCE_OBJECT_MISMATCH",
-    "seconds": 0.004,
-    "wrong_served": false,
-    "converted": true
-   }
-  },
-  {
-   "id": "N-missing-height",
-   "v2_from_bridge": {
-    "status": "REFUSED",
-    "code": "MISSING_DIMENSION",
-    "seconds": 0.0264,
-    "wrong_served": false,
-    "converted": true
-   },
-   "v2_from_adapter3_convention": {
-    "status": "REFUSED",
-    "code": "MISSING_DIMENSION",
-    "seconds": 0.0198,
-    "wrong_served": false,
-    "converted": true
-   }
-  },
-  {
-   "id": "N-quote-not-in-source",
-   "v2_from_bridge": {
-    "status": "REFUSED",
-    "code": "QUOTE_NOT_IN_SOURCE",
-    "seconds": 0.0052,
-    "wrong_served": false,
-    "converted": true
-   },
-   "v2_from_adapter3_convention": {
-    "status": "REFUSED",
-    "code": "QUOTE_NOT_IN_SOURCE",
-    "seconds": 0.0055,
-    "wrong_served": false,
-    "converted": true
-   }
-  },
-  {
-   "id": "N-anonymous-ratio-operand-triangle",
    "v2_from_bridge": {
     "status": "REFUSED",
     "code": "SOURCE_OBJECT_MISMATCH",
@@ -2513,6 +2394,125 @@
     "status": "REFUSED",
     "code": "SOURCE_OBJECT_MISMATCH",
     "seconds": 0.0027,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-conditional-plane",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0029,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0026,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-wrong-number",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "seconds": 0.0048,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "seconds": 0.0049,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-ratio-orientation-unstated",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.003,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.003,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-residual-ownership-unstated",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0037,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0036,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-missing-height",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "seconds": 0.0145,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "seconds": 0.0142,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-quote-not-in-source",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "QUOTE_NOT_IN_SOURCE",
+    "seconds": 0.005,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "QUOTE_NOT_IN_SOURCE",
+    "seconds": 0.0049,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-anonymous-ratio-operand-triangle",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0025,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0022,
     "wrong_served": false,
     "converted": true
    }

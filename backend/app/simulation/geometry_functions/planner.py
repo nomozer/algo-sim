@@ -1220,6 +1220,8 @@ def _dinh_cat_canh(f: TypedFact, k: KeHoach, phat, kh: _Khoi) -> dict:
     # D6 scope: a vertex is derived only where a closed boundary is REQUIRED — a derived solid stands on this section, or
     # the author's declared boundary passes through that edge (to be verified, not trusted).
     khep = bool(f.derive_cuts) and any(x.plane_ref == f.id for x in r.facts.values())
+    if not stated and not khep and f.boundary_edges is None:
+        return
     bien = {frozenset(x) for x in f.boundary_edges or ()} if f.derive_cuts else set()
     if f.derive_cuts:
         cert["derive"] = True

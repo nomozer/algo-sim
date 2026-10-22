@@ -1,7 +1,7 @@
 {
   "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND",
   "provider_calls": 0,
-  "wall_seconds": 24.067,
+  "wall_seconds": 23.866,
   "family_a_locked_grammar_v2": {
     "lock_sha256": "10c57be7b485d7b3f1a97183ff41b28988e70641e297e01cccf68d1434cc4abe",
     "cases": 47,

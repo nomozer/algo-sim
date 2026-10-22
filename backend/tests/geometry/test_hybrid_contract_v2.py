@@ -334,3 +334,29 @@ def test_d3_closed_grammar_paraphrases_and_negative_controls():
         assert classify_refusal(r.code).group in ("SOURCE_UNVERIFIED", "MISSING_DATA"), (cid, r.code)
     assert _run4(cases["NEG-per-edge-same-name"]["payload"]).code == "INVALID_DERIVED_SECTION"
 
+
+def test_v2_plane_only_section_area_without_derived_solid_is_served():
+    """Independent review I-1: a plane-only `/2` section (`stated_intersections: []`, `declared_boundary: None`)
+    requesting only `construct_plane_section` + `measurement(area)` without `construct_derived_solid` is served."""
+    from fractions import Fraction
+    from app.ai.function_route import run_typed_fact_next_planner_route
+
+    p1 = _payload("ABC")
+    sec_q = p1["derived_sections"][0]["quote"]
+    plain_q = "Mặt phẳng (α) qua M và song song với (ABC)."
+    area_q = "Tính diện tích thiết diện của hình chóp S.ABC cắt bởi (α)."
+    ratio_q = p1["math_goals"][0]["quote"]
+    p1["problem_text"] = p1["problem_text"].replace(sec_q, plain_q).replace(ratio_q, area_q)
+    p1["derived_sections"][0].update(quote=plain_q, cut_edges=[], named_intersections={})
+    p1["simulation_goals"] = [p1["simulation_goals"][0]]
+    p1["math_goals"] = [
+        {"goal_id": "g_area", "kind": "measurement", "goal_type": "area",
+         "target": {"section_id": "sec"}, "quote": area_q}
+    ]
+    r1 = run_typed_fact_next_planner_route(p1)
+    assert r1.status == "SERVED", (r1.code, r1.reason)
+    r2 = _run4(_v2(p1))
+    assert r2.status == "SERVED", (r2.code, r2.reason)
+    assert _square(r2.answer_exact["g_area"]["coef"]) == Fraction(3, 256)
+
+
