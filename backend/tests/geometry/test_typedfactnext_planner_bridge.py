@@ -607,6 +607,7 @@ def test_bridge_refuses_what_typedfact_cannot_express(case, code):
     ("contradictory_unit", "NON_HOMOGENEOUS_LENGTHS"),
     ("unrepresentable_unit", "BRIDGE_UNSUPPORTED_LENGTH_UNIT"),
     ("wrong_plane_name", "SOURCE_OBJECT_MISMATCH"),
+    ("reference_plane_name", "SOURCE_OBJECT_MISMATCH"),
 ])
 def test_bridge_preserves_input_constraints_or_refuses(case, code):
     from app.ai.function_route import run_typed_fact_next_planner_route
@@ -639,7 +640,7 @@ def test_bridge_preserves_input_constraints_or_refuses(case, code):
                 if prem["args"].get(key) == "a":
                     prem["args"][key] = "1"
     else:
-        payload["derived_sections"][0]["plane_name"] = "β"
+        payload["derived_sections"][0]["plane_name"] = "ABC" if case == "reference_plane_name" else "β"
     r = run_typed_fact_next_planner_route(payload)
     assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
     assert r.scene3d is None and not r.answers
@@ -649,6 +650,7 @@ def test_bridge_accepts_matching_units_and_declared_qualified_vertices():
     from app.ai.function_route import run_typed_fact_next_planner_route
     payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
     payload["length_unit"] = "a"
+    payload["simulation_goals"][0]["goal_id"] = "g::S"
     payload["premises"][1]["args"]["line"] = ["pyr::S", "pyr::A"]
     r = run_typed_fact_next_planner_route(payload)
     assert r.status == "SERVED" and r.length_unit == "a", (r.code, r.reason)

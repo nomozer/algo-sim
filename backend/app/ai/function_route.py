@@ -270,6 +270,15 @@ def run_typed_fact_next_planner_route(raw: Any) -> KetQuaTuyen:
         code = "NON_HOMOGENEOUS_LENGTHS" if unit == "1" else "BRIDGE_UNSUPPORTED_LENGTH_UNIT"
         return KetQuaTuyen("REFUSED", code, "đơn vị đã khai không được biểu diễn bởi dữ kiện trên planner",
                            planner=r.planner)
+    if r.status == "SERVED":
+        from app.simulation.geometry_functions.engine import ir_name
+
+        objects = {o["id"]: o for o in r.scene3d["objects"]}
+        for section_id, name in b["bridge"]["declared_plane_names"].items():
+            plane = objects.get(f"mp_td_{ir_name(section_id)}", {})
+            if plane.get("display_label") != f"({name})":
+                return KetQuaTuyen("REFUSED", "SOURCE_OBJECT_MISMATCH", "tên mặt đã khai không khớp mặt được Source Gate xác minh",
+                                   planner=r.planner)
     return r
 
 

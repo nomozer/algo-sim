@@ -8,7 +8,6 @@ role and cut is re-checked there. Contract and decision: `docs/architecture/HYBR
 """
 from __future__ import annotations
 
-import re
 from typing import Any
 
 from .registry import TuChoi
@@ -51,7 +50,7 @@ def _check_qualified_refs(value: Any, solids: dict[str, Any]) -> None:
     """Check namespaces before translation erases them; source quotes are not references."""
     if isinstance(value, dict):
         for key, item in value.items():
-            if key not in ("quote", "problem_text"):
+            if key not in ("quote", "problem_text", "solid") and not key.endswith("_id"):
                 if key == "named_intersections":
                     for edge in item:
                         _check_qualified_refs(edge.split("-"), solids)
@@ -74,9 +73,6 @@ def _section_fact(sec: DerivedPlaneSectionSpec, solids: dict[str, Any], asked: l
     rel = _PLANE_RELATION.get(sec.plane_kind)
     if rel is None:
         raise TuChoi("BRIDGE_UNSUPPORTED_PLANE_KIND", f"{sec.section_id}: mặt {sec.plane_kind} chưa có phép dựng của planner",
-                     (sec.section_id,))
-    if not re.search(r"\(\s*" + re.escape(sec.plane_name) + r"\s*\)", sec.quote):
-        raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{sec.section_id}: tên mặt không có trong quote của mặt cắt",
                      (sec.section_id,))
     f: dict[str, Any] = {"id": sec.section_id, "kind": "section", "role": "question" if asked else "premise",
                          "quotes": [sec.quote, *asked], "solid": solids[sec.target_solid_id].notation,
@@ -246,4 +242,5 @@ def bridge(raw: dict[str, Any] | TypedFactNextPayload) -> dict[str, Any]:
     khong = [g.goal_id for g in p.simulation_goals if g.kind in _NO_NEW_FACT_GOALS]
     return {"facts": facts, "bridge": {"version": BRIDGE_VERSION, "goals_without_new_facts": khong,
                                        "declared_length_unit": p.length_unit,
+                                       "declared_plane_names": {s.section_id: s.plane_name for s in p.derived_sections},
                                        "problem_text": p.problem_text}}
