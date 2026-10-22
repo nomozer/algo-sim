@@ -1,0 +1,24 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "typedfactnext-planner-bridge",
+  "corrects": "docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/candidate_divergence.json",
+  "previous_candidate_hash": "4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68",
+  "previous_measured_files": 114,
+  "current_candidate_hash": "2711d78e401234a2bea98a983d94fe1b29973b4482b407c5529307e38f67b16d",
+  "current_measured_files": 115,
+  "original_product_commit": "1ca20f4f51457f3457802bca042af76accd13698",
+  "current_product_commit": "8b5916e7309a8939f0c462367120360391ccb70c",
+  "frozen_at_commit": "9c3cdf7ccce11296aaf7fc7ffee05cdbf0efef47",
+  "frozen_in": "clean detached worktree at frozen_at_commit; --verify exit 0 there",
+  "current_candidate_source": "docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json",
+  "diverged": true,
+  "reason": "Backend Hybrid integration Session 1 (research, LOCAL): TypedFactNext -> TypedFact bridge (new measured file typed_fact_next_bridge.py), planner /12, Registry /12, engine /10 cut-edge section vertices and derived pyramid, Source Gate divide_segment number ownership, operator-preview group-event births. Route D research path only; /api/analyze, pipeline.py and main.py untouched.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP: no prompt, routing policy or /api/analyze envelope change; DEFAULT_MODE LLM_ONLY, RESPONSE_CONTRACT flat; provider fingerprints (flat 485d3834…, v3 4bff35bb…, function calling 7ea511a6…, TypedFact schema aa9d93ee…, declarations 5ceb0f99…) asserted unchanged by test_hybrid_backend_integration.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: earlier candidate layers and receipts are preserved byte-for-byte; this layer adds a development (not blind) evaluation only."
+  }
+}
