@@ -72,8 +72,26 @@
 
 ---
 
-## 4. Remaining Visual Limitations & Governance Boundaries
+## 4. Independent Review & Authoritative Full T3 Verification (P9)
 
-- Headless Chromium + SwiftShader WebGL measurements and screenshots are deterministic software-rendered evidence, not physical GPU/monitor human sign-off.
+- **Product & Test Commit:** `ca84337e32c27c1116f5b1065ca45f2fcdf3e13c`
+- **Frozen Candidate Commit:** `7868db0aef3810e2089b5f8b8d6aecfb8b3e1400` (`measured_system.tree_hash = 9bf35a1d6f4c3b3e90228964a3b5ee96288de29efcb3f580f22c6f126489bd9a` across `114` files; `cay_lam_viec_sach = true`)
+- **Independent Read-Only Review (`review.md`):** **`INDEPENDENT_REVIEW_PASS`** (`0 BLOCKER, 0 IMPORTANT, 0 MINOR`; reviewer conversation `589da610-17c3-4526-9684-a0d41700ccb0`).
+- **Authoritative Full T3 (`t3/execution.json`, `validation.json`):** **`FULL_PRODUCT_GATE_PASS`** on clean detached checkout `verify-geometric-visual-correctness-framing` (`7868db0aef3810e2089b5f8b8d6aecfb8b3e1400`, `dirty_before = ""`, `dirty_after = ""`, `551.88s`):
+  - **Backend pytest:** `11,442 passed, 1 skipped, 2 deselected, 9 xfailed` (`536.1s`). (Note: an initial run `t3-attempt1-maxpath/` hit a Windows 260-character `MAX_PATH` limit inside `git add -A` in `test_evaluation_candidate.py` when `PYTEST_DEBUG_TEMPROOT` was nested under the long worktree directory name; preserved intact in `t3-attempt1-maxpath/`, resolved by routing `PYTEST_DEBUG_TEMPROOT` to `.superpowers/pt-<pid>` and `core.longpaths=true` in `record-command.py` without touching product/test code.)
+  - **Frontend vitest:** `75/75` files, `1,183/1,183` tests passed (`8.8s`).
+  - **TypeScript + Vite production build:** `tsc -b && vite build` `PASS` (`5.1s`).
+  - **Thesis demo replay:** `5/5` (`DEMO_REPLAY_PASS 5/5`, `REDUCED_CHAIN_CASES 1/1`, `0.7s`).
+  - **Crash boundary surface:** `6/6` (`0` escaped 500s, `0.5s`).
+  - **Raw log digests (`t3/`):** `t3/stdout.log` = `29,318` bytes (`sha256: 1d055da75315adfe5d377f82e761a26064b9acbe06d07f0f2a4d753964adf185`), `t3/stderr.log` = `144,823` bytes (`sha256: f9fb4b90d04609956ae4477578ed296ccc1d1d9a6322aa3c6fb6b0abe05a82fe`).
+- **Post-T3 Freeze Verification (`post-t3-freeze/execution.json`):** **`MATCH`** (`exit_code = 0`, `dirty_before = ""`, `dirty_after = ""`; `post-t3-freeze/stdout.log` = `93` bytes, `sha256: 6c12d76fd31e4f780cf28cde36a52b49fd17330eb18fda30f704d5820c1e0933`; `post-t3-freeze/stderr.log` = `0` bytes, `sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`).
+
+---
+
+## 5. Remaining Visual Limitations & Governance Boundaries
+
+- Headless Chromium + SwiftShader WebGL measurements and screenshots are deterministic software-rendered evidence, not physical GPU/monitor human sign-off (`human_approval = NOT_GRANTED`).
 - Multi-solid CPU edge visibility (`classifySolidEdgeVisibility`) handles polyhedral solids in `localOccluders` with coplanar shared-face exclusion, while curved rim visibility (`diemVanhCongBiChe`) analytically tests quadric volumes (`ball`, `cylinder`, `cone`); general arbitrary mesh-vs-quadric intersection curves remain outside scope.
 - Residual polyhedral/frustum 3D solid meshes remain `NOT_IMPLEMENTED`, standalone `cone_frustum` remains `BLOCKED_BY_KERNEL`, and all governance invariants (`DEFAULT_MODE = LLM_ONLY`, `RESPONSE_CONTRACT = flat`, `HYBRID_PRODUCT_ENABLEMENT = NO-GO`, `ALLOW_LIVE_AI = 0`, `CACHE_VERSION = 127`) are unchanged.
+- **Proposed Readiness Verdict:** **`GEOMETRIC_VISUAL_CORRECTNESS_READY_FOR_HUMAN_REVIEW`**
+

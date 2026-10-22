@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = GEOMETRIC_VISUAL_CORRECTNESS_FRAMING_W01
+
+REPORT = docs/evaluation/geometry/runs/geometric-visual-correctness-framing/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/geometric-visual-correctness-framing/
+CLASSIFICATION = GEOMETRIC_VISUAL_CORRECTNESS_READY_FOR_HUMAN_REVIEW (local-only geometric visual correctness, adaptive safe-area framing, dynamic camera-dependent curved rim visibility, Normal vs X-ray section depth honesty, multi-solid occlusion & D1 subscript identity, and demo title reconciliation under GO_GEOMETRIC_VISUAL_CORRECTNESS_LOCAL_ONLY; independent review PASS, authoritative Full T3 PASS, post-T3 freeze MATCH; human visual approval NOT_GRANTED)
+CODE_COMMIT = ca84337e32c27c1116f5b1065ca45f2fcdf3e13c; candidate 7868db0aef3810e2089b5f8b8d6aecfb8b3e1400; 114-file measured tree 9bf35a1d6f4c3b3e90228964a3b5ee96288de29efcb3f580f22c6f126489bd9a; changed backend/frontend locked by product_commit_sha
+VERIFICATION = docs/evaluation/geometry/runs/geometric-visual-correctness-framing/validation.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/after/measurements.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/before/measurements.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/OWNER_VISUAL_FINDINGS.md + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/review.md + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/t3/execution.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/post-t3-freeze/execution.json + docs/evaluation/geometry/runs/geometric-visual-correctness-framing/handoff.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = VISUAL_UX_FINAL_QUALITY_W01 (adaptive safe-area camera framing, true radius-R curved surface bounds, restrained curved rim thickness, dynamic camera-dependent quadric rim occlusion, Normal vs X-ray section depth honesty, multi-solid occluder passing & D1 notation, and demo title reconciliation; historical artifact bytes unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = VISUAL_UX_FINAL_QUALITY_W01
 
 REPORT = docs/evaluation/geometry/runs/visual-ux-final-quality/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 56328b17462e9c4e903dc17687da07243d06846d; candidate 9343e8d0d4c4cd
 VERIFICATION = docs/evaluation/geometry/runs/visual-ux-final-quality/validation.json + docs/evaluation/geometry/runs/visual-ux-final-quality/verified/receipt.json + docs/evaluation/geometry/runs/visual-ux-final-quality/review.md + docs/evaluation/geometry/runs/visual-ux-final-quality/t3/execution.json + docs/evaluation/geometry/runs/visual-ux-final-quality/post-t3-freeze/execution.json + docs/evaluation/geometry/runs/visual-ux-final-quality/preservation-verification.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_W01 (refusal/depth/analysis/actual-entry interpretation and candidate identity; historical artifact bytes unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = GEOMETRIC_VISUAL_CORRECTNESS_FRAMING_W01 (adaptive camera framing, curved rim thickness/occlusion, Normal vs X-ray section depth, multi-solid occlusion/D1 notation, and demo identity reconciliation; historical artifact bytes unchanged)
 
 ## WAVE_ID = SIMULATION_VISUAL_CONSISTENCY_LEARNING_UX_W01
 

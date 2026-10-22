@@ -1,0 +1,35 @@
+{
+  "command": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "backend/scripts/freeze_evaluation_candidate.py",
+    "--verify"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\verify-geometric-visual-correctness-framing",
+  "source_commit": "7868db0aef3810e2089b5f8b8d6aecfb8b3e1400",
+  "dirty_before": "",
+  "started_utc": "2026-10-22T03:50:20.352824+00:00",
+  "timeout_seconds": 2400,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "PYTEST_DEBUG_TEMPROOT": "D:\\Documents\\projects\\algo-sim\\.superpowers\\pt-8628"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 4.75,
+  "finished_utc": "2026-10-22T03:50:25.106205+00:00",
+  "dirty_after": "",
+  "streams": {
+    "stdout": {
+      "bytes": 93,
+      "sha256": "6c12d76fd31e4f780cf28cde36a52b49fd17330eb18fda30f704d5820c1e0933"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}
