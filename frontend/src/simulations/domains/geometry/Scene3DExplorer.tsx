@@ -420,9 +420,12 @@ export function Scene3DExplorer({
   // SIMULATION-FIRST UX (P2 #3): Hướng dẫn quan sát ngắn gọn theo bước dựng hiện tại khi có dữ liệu timeline tin cậy.
   const dsBuoc = useMemo(() => geometryStepList(day), [day]);
   const chiSoBuoc = dsBuoc.length > 0 ? geometryStepOf(day, buocHien) : 0;
+  const daXongBuoc = dsBuoc.length <= 1 || chiSoBuoc >= dsBuoc.length - 1;
   const mucBuocHienTai = useMemo(() => {
     if (day.events.length === 0) return "";
-    const goc = dsBuoc[chiSoBuoc]?.label || geometryNarrationAt(day, buocHien) || "Dữ kiện đề cho";
+    const tenBuoc = dsBuoc[chiSoBuoc]?.label;
+    const loiKe = geometryNarrationAt(day, buocHien);
+    const goc = (tenBuoc && tenBuoc.trim().length > 3 ? tenBuoc : loiKe || tenBuoc) || "Dữ kiện đề cho";
     return goc.replace(/Số đo/g, "Độ lớn").replace(/Kết quả/g, "Mục dựng");
   }, [day, dsBuoc, chiSoBuoc, buocHien]);
   /* W05 · E: vai trò trong chuỗi nhân quả quanh vật đang chọn (W10) tô ở mục bảng «Đại lượng» — trước ở dòng thẻ
@@ -526,15 +529,19 @@ export function Scene3DExplorer({
       {day.events.length > 0 && (
         <div className="geo3d-huong-dan" data-learner-guidance="" aria-label="Hướng dẫn quan sát">
           <span className="geo3d-huong-dan-buoc" data-guidance-step="">
-            Đang dựng (bước {chiSoBuoc + 1}/{Math.max(1, dsBuoc.length)}): {mucBuocHienTai}
+            {daXongBuoc ? "Đã dựng xong" : "Đang dựng"} (bước {chiSoBuoc + 1}/{Math.max(1, dsBuoc.length)}): {mucBuocHienTai}
           </span>
           <span className="geo3d-huong-dan-goi-y" data-guidance-hint="">
-            Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hình
+            {daXongBuoc
+              ? "Mô hình đã hoàn chỉnh · Kéo để xoay hình · Bấm vào đối tượng hoặc mở Phân tích toán học để khám phá"
+              : "Bấm Phát hoặc Bước sau để dựng hình · Kéo để xoay hình"}
           </span>
-          <button type="button" className="geo3d-menu-nut" onClick={() => setTt((s) => ({ ...s, current_step: dsBuoc[dsBuoc.length - 1]?.anchor ?? 0 }))}>
-            Xem mô hình đầy đủ
-          </button>
-          {xray && <span role="status">Đang nhìn xuyên khối: vùng tô thiết diện có thể nằm sau mặt khối.</span>}
+          {!daXongBuoc && (
+            <button type="button" className="geo3d-menu-nut" onClick={() => setTt((s) => ({ ...s, current_step: dsBuoc[dsBuoc.length - 1]?.anchor ?? 0 }))}>
+              Xem mô hình đầy đủ
+            </button>
+          )}
+          {xray && <span role="status" data-xray-indicator="">Đang nhìn xuyên khối (X-quang): vùng tô thiết diện hiện xuyên qua mặt khối, không phải che khuất vật lý thông thường.</span>}
         </div>
       )}
 

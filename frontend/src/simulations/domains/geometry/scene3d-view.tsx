@@ -45,6 +45,8 @@ import {
   canonicalEdgesOf,
   classifySolidEdgeVisibility,
   classifyWorldSegmentVisibility,
+  diemVanhCongBiChe,
+  type CurvedSolidVolumeMeta,
   type EdgeVisibilityAudit,
   type WorldSolidOccluder,
 } from "./scene3d-edge-visibility";
@@ -310,37 +312,34 @@ const LECH_THIET_DIEN = {
 /** Chu kỳ nét đứt, theo tỉ lệ cảnh — đọc được ở mọi mức thu phóng. */
 const NET_DUT_TI_LE = 0.022;
 
-/** Bản sao VÔ HÌNH chỉ ghi chiều sâu, để đường biết mình có bị che không. */
+/** Bản sao VÔ HÌNH chỉ ghi chiều sâu mặt SAU (ở hàng đợi đục, trước phần tô thiết diện ở thứ tự 7)
+ *  để phần tô thiết diện nằm TRONG khối vượt qua phép kiểm `LessEqualDepth` ở chế độ thường mà vẫn bị
+ *  khối khác nằm hẳn phía trước che đúng. */
 function lopChieuSau(g: THREE.BufferGeometry): THREE.Mesh {
   const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({
     colorWrite: false, depthWrite: true, depthTest: true,
-    side: THREE.DoubleSide,
-    /* ⚠️ ĐỤC, KHÔNG `transparent` — và đây là bản sửa của một lỗi đã đo được.
-     *
-     * Bản đầu khai `transparent: true, opacity: 0` để lớp này nằm cùng hàng
-     * đợi với khối tô bóng và tôn trọng `renderOrder`. Nhưng hàng đợi TRONG
-     * SUỐT còn sắp theo KHOẢNG CÁCH, nên ở một số góc lớp chiều sâu ghi SAU
-     * khi vành thiết diện đã hỏi — lượt "thấy" vì thế vẫn vẽ trên cung khuất,
-     * và cung ấy đọc ra LIỀN.
-     *
-     * Chẩn đoán: tô tạm lượt khuất màu đỏ rồi chụp `p3` ở góc mặc định — ảnh
-     * cho thấy ĐỎ và HỔ PHÁCH nằm chồng nhau trên cùng một cung, tức cả hai
-     * lượt cùng vẽ. Không có phép thử ấy thì triệu chứng ("cung khuất vẫn
-     * liền") trỏ nhầm sang phép kiểm chiều sâu hoặc sang độ lệch.
-     *
-     * Hàng đợi ĐỤC luôn chạy trước TOÀN BỘ hàng đợi trong suốt, nên chiều sâu
-     * chắc chắn có mặt trước khi bất kỳ đường nào hỏi. `colorWrite: false` giữ
-     * nó vô hình, nên khối vẫn trong suốt y như trước.
-     */
+    side: THREE.BackSide,
     transparent: false,
-    /* ⚠️ Lùi chiều sâu một chút (w10). `polygonOffset` của ĐƯỜNG không có tác
-     * dụng — WebGL chỉ áp nó cho đa giác — nên cạnh nằm đúng trên mặt khối
-     * tranh chiều sâu với chính mặt ấy và hiện lấm tấm (ảnh: cạnh SC). Đẩy
-     * lớp này (một đa giác) ra sau thì đường trên mặt luôn thắng. */
     polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1,
   }));
   m.renderOrder = THU_TU_CHIEU_SAU;
   m.userData.chieuSau = true;      // không bắt chuột, không vào hộp bao
+  return m;
+}
+
+/** Bản sao VÔ HÌNH ghi chiều sâu mặt TRƯỚC ở thứ tự 7.5 (sau phần tô thiết diện ở 7, trước mọi đường ở 8..10)
+ *  để các đường/nét nằm sau mặt trước của khối bị phân loại là khuất bởi phép kiểm chiều sâu GPU. */
+function lopChieuSauMatTruoc(g: THREE.BufferGeometry): THREE.Mesh {
+  const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({
+    colorWrite: false, depthWrite: true, depthTest: true,
+    side: THREE.FrontSide,
+    transparent: true, opacity: 0,
+    polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1,
+  }));
+  m.renderOrder = THU_TU_TO_THIET_DIEN + 0.5;
+  m.userData.chieuSauMatTruoc = true;
+  m.userData.voHan = true;
+  m.raycast = () => {};
   return m;
 }
 
@@ -619,6 +618,51 @@ interface NonCanonicalLoopMeta {
   isPlaneBorder?: boolean;
 }
 
+interface CurvedRimLoopMeta {
+  objectId: string;
+  trong: THREE.Vector3[];
+  ngoai: THREE.Vector3[];
+  midpoints: THREE.Vector3[];
+  thayMesh: THREE.Mesh;
+  khuatMesh: THREE.Mesh;
+}
+
+function capNhatHinhHocVanhCong(
+  rim: CurvedRimLoopMeta,
+  hiddenFlags: readonly boolean[],
+  useCpuDepthOverride: boolean,
+): void {
+  const segCount = rim.midpoints.length;
+  const dinhThay: number[] = [];
+  const dinhDut: number[] = [];
+  const dashCycle = 4; // 24 uniform dashes around 96-segment loop (2 segments dash, 2 segments gap)
+  for (let i = 0; i < segCount; i += 1) {
+    const [a0, b0, a1, b1] = [rim.trong[i], rim.ngoai[i], rim.trong[i + 1], rim.ngoai[i + 1]];
+    const quad = [
+      a0.x, a0.y, a0.z, b0.x, b0.y, b0.z, a1.x, a1.y, a1.z,
+      b0.x, b0.y, b0.z, b1.x, b1.y, b1.z, a1.x, a1.y, a1.z,
+    ];
+    if (!useCpuDepthOverride) {
+      dinhThay.push(...quad);
+      if (i % dashCycle < 2) dinhDut.push(...quad);
+    } else if (!hiddenFlags[i]) {
+      dinhThay.push(...quad);
+    } else if (i % dashCycle < 2) {
+      dinhDut.push(...quad);
+    }
+  }
+  const setPos = (mesh: THREE.Mesh, arr: number[]) => {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.Float32BufferAttribute(arr, 3));
+    mesh.geometry?.dispose?.();
+    mesh.geometry = g;
+    const mat = mesh.material as THREE.MeshBasicMaterial;
+    mat.depthTest = !useCpuDepthOverride;
+  };
+  setPos(rim.thayMesh, dinhThay);
+  setPos(rim.khuatMesh, dinhDut);
+}
+
 function updateNonCanonicalVisibility(
   targetRoot: THREE.Object3D,
   camera: THREE.Camera,
@@ -792,17 +836,28 @@ export function updateCanonicalEdgeVisibility(
   let sampleCount = 0;
   let recomputedSolidCount = 0;
   const khoa = (v: number) => (Math.abs(v) < 1e-12 ? 0 : Number(v.toPrecision(10)));
+  const solidCandidates: { candidate: THREE.Object3D; source: SceneObject }[] = [];
+  const curvedVolumes: CurvedSolidVolumeMeta[] = [];
   root.traverse((candidate) => {
     const source = candidate.userData?.solidSceneObject as SceneObject | undefined;
-    if (!source) return;
-    candidate.updateWorldMatrix(true, false);
-    occluders.push({ solid: source, matrixWorld: candidate.matrixWorld.clone() });
+    if (source) {
+      candidate.updateWorldMatrix(true, false);
+      solidCandidates.push({ candidate, source });
+      occluders.push({ solid: source, matrixWorld: candidate.matrixWorld.clone() });
+      return;
+    }
+    const curvedMeta = candidate.userData?.curvedSolidVolume as CurvedSolidVolumeMeta | undefined;
+    if (curvedMeta) {
+      candidate.updateWorldMatrix(true, false);
+      curvedVolumes.push({
+        ...curvedMeta,
+        anchor: curvedMeta.anchor.clone().applyMatrix4(candidate.matrixWorld),
+        top: curvedMeta.top ? curvedMeta.top.clone().applyMatrix4(candidate.matrixWorld) : null,
+      });
+    }
+  });
+  for (const { candidate, source } of solidCandidates) {
     const localCamera = candidate.worldToLocal(camera.position.clone());
-    // `OrbitControls` (damping) round-trips the pose through spherical
-    // coordinates every frame, so an idle camera walks in its last ULPs and an
-    // exact-float key recomputed every mobile frame. 10 significant digits move
-    // a projected point by ~1e-6 physical px here — far below the 0.5 px
-    // product↔oracle tolerance; ±0 and sub-1e-12 noise collapse to 0.
     const signature = [
       ...[
         localCamera.x, localCamera.y, localCamera.z,
@@ -814,7 +869,31 @@ export function updateCanonicalEdgeVisibility(
     let audit = candidate.userData.edgeVisibilityAudit as EdgeVisibilityAudit | undefined;
     if (!audit || candidate.userData.edgeVisibilitySignature !== signature) {
       const viewport = /^(\d+)x(\d+)@(\d+(?:\.\d+)?)$/.exec(renderSignature);
+      const distinctSolids = solidCandidates.filter(
+        (item, idx, arr) => arr.findIndex((x) => x.source.id === item.source.id) === idx,
+      );
+      const invMat = candidate.matrixWorld.clone().invert();
+      const toFrac = (n: number) => {
+        const scaled = Math.round(n * 1000000);
+        return scaled % 1000000 === 0 ? String(scaled / 1000000) : `${scaled}/1000000`;
+      };
+      const localOccluders: SceneObject[] = distinctSolids.length > 1
+        ? distinctSolids.map(({ candidate: otherNode, source: otherSolid }) => {
+            if (otherSolid.id === source.id) return source;
+            const relMat = invMat.clone().multiply(otherNode.matrixWorld);
+            const isIdentity = relMat.elements.every((val, i) => Math.abs(val - (i % 5 === 0 ? 1 : 0)) < 1e-7);
+            if (isIdentity) return otherSolid;
+            return {
+              ...otherSolid,
+              vertices: (otherSolid.vertices ?? []).map((pt) => {
+                const v = new THREE.Vector3(...toVec3(pt)).applyMatrix4(relMat);
+                return [toFrac(v.x), toFrac(v.y), toFrac(v.z)];
+              }),
+            };
+          })
+        : [source];
       audit = classifySolidEdgeVisibility(source, localCamera, {
+        occluders: localOccluders,
         projected_edge_pixels: viewport
           ? (edge) => {
               const a = candidate.localToWorld(edge.a.clone()).project(camera);
@@ -852,7 +931,7 @@ export function updateCanonicalEdgeVisibility(
       counts.set(id, (counts.get(id) ?? 0) + 1);
       if (child.userData.highlighted === true) highlighted.add(id);
     });
-  });
+  }
 
   const worldSignature = [
     ...[
@@ -863,6 +942,25 @@ export function updateCanonicalEdgeVisibility(
     renderSignature,
   ].join("|");
   updateNonCanonicalVisibility(root, camera, occluders, worldSignature);
+  if (curvedVolumes.length > 0) {
+    const worldCam = camera.position.clone();
+    root.traverse((node) => {
+      const rim = node.userData?.curvedRimLoop as CurvedRimLoopMeta | undefined;
+      if (!rim) return;
+      if (node.userData.curvedRimSig === worldSignature) return;
+      node.updateWorldMatrix(true, false);
+      const flags = rim.midpoints.map((mp) => {
+        const wPt = mp.clone().applyMatrix4(node.matrixWorld);
+        return diemVanhCongBiChe(wPt, worldCam, curvedVolumes);
+      });
+      const flagSig = flags.map((f) => (f ? "1" : "0")).join("");
+      if (node.userData.curvedRimFlagSig !== flagSig) {
+        capNhatHinhHocVanhCong(rim, flags, true);
+        node.userData.curvedRimFlagSig = flagSig;
+      }
+      node.userData.curvedRimSig = worldSignature;
+    });
+  }
 
   const visible = [...status].filter(([, values]) => values.size === 1 && values.has("visible"))
     .map(([id]) => id).sort();
@@ -926,7 +1024,7 @@ export function datKhungNhin(
  * lại. ĐỈNH THẬT (toạ độ thế giới, đã tính tách khối), không phải góc hộp bao:
  * khung vừa theo HÌNH CHIẾU, và góc hộp bao chiếu ra ngoài hình.
  */
-export function diemKhungNhin(goc: THREE.Object3D): [number, number, number][] {
+export function diemKhungNhin(goc: THREE.Object3D, daCoDiemCanh = false): [number, number, number][] {
   const diem: [number, number, number][] = [];
   const p = new THREE.Vector3();
   // Cờ nằm trên NHÓM (đường vô hạn là một nhóm hai nét): hỏi cả tổ tiên, không
@@ -935,6 +1033,7 @@ export function diemKhungNhin(goc: THREE.Object3D): [number, number, number][] {
   const boQua = (vat: THREE.Object3D) => {
     for (let x: THREE.Object3D | null = vat; x && x !== goc; x = x.parent) {
       if (x.userData?.voHan || x.userData?.chieuSau) return true;
+      if (daCoDiemCanh && (x.userData?.curvedRimLoop || x.userData?.curvedSolidVolume)) return true;
     }
     return false;
   };
@@ -960,7 +1059,7 @@ export function diemKhungNhin(goc: THREE.Object3D): [number, number, number][] {
  * ở bước 0 chỉ có điểm, vùng bấm lọt vào hai góc hộp bao ⇒ hình lệch 65–100 px, tâm quỹ đạo lệch khỏi hình).
  */
 export function diemVuaKhung(goc: THREE.Object3D, diemCanh: Vec3[]): Vec3[] {
-  const diem: Vec3[] = [...diemKhungNhin(goc), ...diemCanh];
+  const diem: Vec3[] = [...diemKhungNhin(goc, diemCanh.length > 0), ...diemCanh];
   if (diem.length === 0) {
     const hop = new THREE.Box3().setFromObject(goc);
     if (!hop.isEmpty()) diem.push([hop.min.x, hop.min.y, hop.min.z], [hop.max.x, hop.max.y, hop.max.z]);
@@ -1297,7 +1396,7 @@ export function buildObject3D(
             const mMoRong = new THREE.MeshStandardMaterial({
               color: mauMp,
               transparent: true,
-              opacity: noiBat ? 0.18 : 0.09,
+              opacity: noiBat ? 0.16 : 0.055,
               side: THREE.DoubleSide,
               depthWrite: false,
               depthTest: false,
@@ -1327,7 +1426,7 @@ export function buildObject3D(
         const mMoRong = new THREE.MeshStandardMaterial({
           color: mauMp,
           transparent: true,
-          opacity: noiBat ? 0.18 : 0.09,
+          opacity: noiBat ? 0.16 : 0.055,
           side: THREE.DoubleSide,
           depthWrite: false,
           depthTest: false,
@@ -1345,7 +1444,7 @@ export function buildObject3D(
     const m = new THREE.MeshStandardMaterial({
       color: mauMp,
       transparent: true,
-      opacity: noiBat ? 0.32 : 0.1,
+      opacity: noiBat ? 0.28 : 0.07,
       side: THREE.DoubleSide,
       depthWrite: false,
     });
@@ -1360,25 +1459,23 @@ export function buildObject3D(
   }
 
   if (o.render === "circle" && o.center && o.normal && o.radius_sq) {
-    // Chia lưới CHỈ ĐỂ VẼ. `radius_sq` là số chính xác backend gửi; căn bậc
-    // hai lấy ở ĐÂY, tại biên hiển thị — không sớm hơn một tầng nào.
     const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq)));
-    const day = beDayNet(diemNen, r);
-    const trong = Math.max(0, r - day / 2), ngoai = r + day / 2;
     const duongTronDay =
       o.surface_role === "BASE_REGION" ||
       (o.formation_roles ?? []).includes("CONSTRUCT_BASE") ||
       o.id.startsWith("duong_tron_day");
+    const heSoDay = (noiBat ? 1.25 : 1) * (duongTronDay ? 0.36 : 0.46);
+    const day = beDayNet(diemNen, r) * heSoDay;
+    const ngoaiR = r;
+    const trongR = Math.max(0, r - day);
     const mauVanh = duongTronDay ? net(MAU.canh) : net(MAU.polygon);
     const chungVanh = {
       color: mauVanh, side: THREE.DoubleSide,
       ...LECH_THIET_DIEN,
     } as const;
-    // Cùng lối với elip: phần THẤY là vành đầy, phần KHUẤT là vành ngắt quãng
-    // (`thetaLength` một nửa mỗi chu kỳ) — nét đứt bám đúng đường tròn.
     const nhomVanh = new THREE.Group();
     if (o.fill_visible !== false) {
-      const bkTo = Math.max(2e-5, trong - day);
+      const bkTo = Math.max(2e-5, trongR);
       const to = new THREE.Mesh(
         new THREE.RingGeometry(1e-5, bkTo, VONG_CHIA),
         new THREE.MeshStandardMaterial(
@@ -1406,23 +1503,44 @@ export function buildObject3D(
       if (!duongTronDay) to.renderOrder = THU_TU_TO_THIET_DIEN;
       nhomVanh.add(to);
     }
-    const thay = new THREE.Mesh(
-      new THREE.RingGeometry(trong, ngoai, VONG_CHIA),
-      new THREE.MeshBasicMaterial({ ...chungVanh, depthFunc: THREE.LessEqualDepth }));
-    thay.renderOrder = THU_TU_VE_THIET_DIEN;
-    nhomVanh.add(thay);
-    const soNet = VONG_CHIA / 4;             // xem chú thích ở nhánh elip
-    const buoc = (Math.PI * 2) / soNet;
-    for (let i = 0; i < soNet; i += 1) {
-      const cung = new THREE.Mesh(
-        new THREE.RingGeometry(trong, ngoai, 2, 1, i * buoc, buoc / 2),
-        new THREE.MeshBasicMaterial({
-          ...chungVanh, depthFunc: THREE.GreaterDepth, depthWrite: false,
-          transparent: true, opacity: 0.7,
-        }));
-      cung.renderOrder = THU_TU_VE_THIET_DIEN;
-      nhomVanh.add(cung);
+    const soDoanVanh = 96;
+    const trongPts: THREE.Vector3[] = [];
+    const ngoaiPts: THREE.Vector3[] = [];
+    const midpoints: THREE.Vector3[] = [];
+    for (let i = 0; i <= soDoanVanh; i += 1) {
+      const t = (i / soDoanVanh) * Math.PI * 2;
+      const cs = Math.cos(t), sn = Math.sin(t);
+      trongPts.push(new THREE.Vector3(trongR * cs, trongR * sn, 0));
+      ngoaiPts.push(new THREE.Vector3(ngoaiR * cs, ngoaiR * sn, 0));
+      if (i < soDoanVanh) {
+        const tm = ((i + 0.5) / soDoanVanh) * Math.PI * 2;
+        midpoints.push(new THREE.Vector3(ngoaiR * Math.cos(tm), ngoaiR * Math.sin(tm), 0));
+      }
     }
+    const thay = new THREE.Mesh(
+      new THREE.BufferGeometry(),
+      new THREE.MeshBasicMaterial({ ...chungVanh, depthFunc: THREE.LessEqualDepth }),
+    );
+    thay.renderOrder = THU_TU_VE_THIET_DIEN;
+    const khuat = new THREE.Mesh(
+      new THREE.BufferGeometry(),
+      new THREE.MeshBasicMaterial({
+        ...chungVanh, depthFunc: THREE.GreaterDepth, depthWrite: false,
+        transparent: true, opacity: 0.65,
+      }),
+    );
+    khuat.renderOrder = THU_TU_VE_THIET_DIEN;
+    nhomVanh.add(thay, khuat);
+    const rimMeta: CurvedRimLoopMeta = {
+      objectId: o.id,
+      trong: trongPts,
+      ngoai: ngoaiPts,
+      midpoints,
+      thayMesh: thay,
+      khuatMesh: khuat,
+    };
+    capNhatHinhHocVanhCong(rimMeta, [], false);
+    nhomVanh.userData.curvedRimLoop = rimMeta;
     const n = new THREE.Vector3(...toVec3(o.normal)).normalize();
     nhomVanh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n);
     nhomVanh.position.set(...toVec3(o.center));
@@ -1433,58 +1551,45 @@ export function buildObject3D(
     o.render === "ellipse" && o.center && o.normal &&
     o.major_dir && o.minor_dir && o.semi_major_sq && o.semi_minor_sq
   ) {
-    // Chia lưới CHỈ ĐỂ VẼ. Bốn số backend gửi đều CHÍNH XÁC; căn bậc hai và
-    // chuẩn hoá độ dài lấy ở ĐÂY, tại biên hiển thị — không sớm hơn một tầng
-    // nào. Backend không chuẩn hoá được: nó sẽ đá hai phương ra khỏi ℚ³.
     const a = Math.sqrt(Math.max(0, toNumber(o.semi_major_sq)));
     const b = Math.sqrt(Math.max(0, toNumber(o.semi_minor_sq)));
     const M = new THREE.Vector3(...toVec3(o.major_dir)).normalize();
     const m = new THREE.Vector3(...toVec3(o.minor_dir)).normalize();
     const n = new THREE.Vector3(...toVec3(o.normal)).normalize();
-    // Vành elip: dựng trong mặt phẳng (M, m) rồi đặt vào không gian. Không
-    // dùng `RingGeometry` + scale không đều — scale ấy bóp méo cả bề rộng nét.
-    //
-    // ⚠️ DẢI, KHÔNG PHẢI ĐƯỜNG. `THREE.Line` luôn dày một điểm ảnh vì WebGL bỏ
-    // qua `linewidth`; đo được là 10–13 điểm ảnh có màu cho cả một elip. Nên
-    // vành được dựng thành một dải hai mép, dày theo TỈ LỆ CẢNH.
-    const day = beDayNet(diemNen, Math.max(a, b));
+    const day = beDayNet(diemNen, Math.max(a, b)) * (noiBat ? 0.56 : 0.46);
+    const soDoanVanh = 96;
     const trong: THREE.Vector3[] = [];
     const ngoai: THREE.Vector3[] = [];
     const mepTo: THREE.Vector3[] = [];
-    for (let i = 0; i <= VONG_CHIA; i += 1) {
-      const t = (i / VONG_CHIA) * Math.PI * 2;
+    const midpoints: THREE.Vector3[] = [];
+    for (let i = 0; i <= soDoanVanh; i += 1) {
+      const t = (i / soDoanVanh) * Math.PI * 2;
       const P = new THREE.Vector3()
         .addScaledVector(M, a * Math.cos(t))
         .addScaledVector(m, b * Math.sin(t));
-      // Pháp tuyến TRONG MẶT PHẲNG của elip: tiếp tuyến quay 90° quanh `n`.
       const tt = new THREE.Vector3()
         .addScaledVector(M, -a * Math.sin(t))
         .addScaledVector(m, b * Math.cos(t))
         .normalize();
       const ra = new THREE.Vector3().crossVectors(tt, n).normalize()
-        .multiplyScalar(day / 2);
-      trong.push(P.clone().sub(ra));
-      ngoai.push(P.clone().add(ra));
-      mepTo.push(P.clone().sub(ra.clone().multiplyScalar(3)));
+        .multiplyScalar(day);
+      const pTrong = P.clone().sub(ra);
+      trong.push(pTrong);
+      ngoai.push(P);
+      mepTo.push(pTrong);
+      if (i < soDoanVanh) {
+        const tm = ((i + 0.5) / soDoanVanh) * Math.PI * 2;
+        midpoints.push(
+          new THREE.Vector3()
+            .addScaledVector(M, a * Math.cos(tm))
+            .addScaledVector(m, b * Math.sin(tm)),
+        );
+      }
     }
-    /* HAI hình học từ CÙNG một vành: bản đầy đủ cho phần THẤY, bản bỏ đoạn
-       xen kẽ cho phần KHUẤT. Vành vốn đã chia sẵn `VONG_CHIA` đoạn, nên "nét
-       đứt" ở đây là bỏ bớt đoạn — không cần vật liệu nét đứt cho mesh, và chu
-       kỳ đứt bám đúng đường cong thay vì bám độ dài chiếu. */
-    const dinhDay: number[] = [];
-    const dinhDut: number[] = [];
     const dinhTo: number[] = [];
-    for (let i = 0; i < VONG_CHIA; i += 1) {
-      const [a0, b0, a1, b1] = [trong[i], ngoai[i], trong[i + 1], ngoai[i + 1]];
+    for (let i = 0; i < soDoanVanh; i += 1) {
       const [t0, t1] = [mepTo[i], mepTo[i + 1]];
-      const sau = [a0.x, a0.y, a0.z, b0.x, b0.y, b0.z, a1.x, a1.y, a1.z,
-        b0.x, b0.y, b0.z, b1.x, b1.y, b1.z, a1.x, a1.y, a1.z];
-      dinhDay.push(...sau);
       dinhTo.push(0, 0, 0, t0.x, t0.y, t0.z, t1.x, t1.y, t1.z);
-      /* Chu kỳ 4 đoạn (2 vẽ, 2 bỏ), không phải 2. Đo được: với elip nhỏ như
-         `p7`, 24 nét trên một vành ~120px cho khe đứt ~2,5px — không đọc ra là
-         nét đứt, và cũng không đo được. Thưa gấp đôi thì khe rộng gấp đôi. */
-      if (i % 4 < 2) dinhDut.push(...sau);
     }
     const hh = (ds: number[]) => {
       const bg = new THREE.BufferGeometry();
@@ -1516,36 +1621,31 @@ export function buildObject3D(
       to.renderOrder = THU_TU_TO_THIET_DIEN;
       nhomVanh.add(to);
     }
-    /* ⚠️ `depthTest: false` ĐÃ BỎ Ở ĐÂY. Nó làm thiết diện luôn vẽ đè lên mọi
-       thứ — tiện để "nhìn thấy", nhưng khi ấy phần khuất và phần thấy hiện y
-       hệt nhau, và câu *"đường này nằm trước hay sau khối"* mất luôn câu trả
-       lời. Nay thiết diện đi qua đúng phép kiểm chiều sâu như mọi đường khác;
-       phần khuất vẫn đọc được vì nó được vẽ, chỉ ở dạng đứt và nhạt hơn. */
-    const thay = new THREE.Mesh(hh(dinhDay), new THREE.MeshBasicMaterial({
+    const thay = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({
       ...chungVanh, depthFunc: THREE.LessEqualDepth,
     }));
     thay.renderOrder = THU_TU_VE_THIET_DIEN;
-    const khuat = new THREE.Mesh(hh(dinhDut), new THREE.MeshBasicMaterial({
+    const khuat = new THREE.Mesh(new THREE.BufferGeometry(), new THREE.MeshBasicMaterial({
       ...chungVanh, depthFunc: THREE.GreaterDepth, depthWrite: false,
-      transparent: true, opacity: 0.7,
+      transparent: true, opacity: 0.65,
     }));
     khuat.renderOrder = THU_TU_VE_THIET_DIEN;
     nhomVanh.add(thay, khuat);
+    const rimMeta: CurvedRimLoopMeta = {
+      objectId: o.id,
+      trong,
+      ngoai,
+      midpoints,
+      thayMesh: thay,
+      khuatMesh: khuat,
+    };
+    capNhatHinhHocVanhCong(rimMeta, [], false);
+    nhomVanh.userData.curvedRimLoop = rimMeta;
     nhomVanh.position.set(...toVec3(o.center));
     return v(nhomVanh, `ellipse:${o.id}`);
   }
 
   if (o.render === "curved_solid" && o.anchor && (o.rim_point || o.radius_sq) && o.curved_kind) {
-    // ⚠️ MỘT tuyến vẽ cho ba hình. Điều phối theo `curved_kind` nằm ở đây và
-    // CHỈ ở đây — nó là bảng TRÌNH BÀY, không phải một thẩm quyền ngữ nghĩa
-    // thứ hai: mọi số ở dưới đều đọc thẳng từ payload, không công thức nào
-    // được tính lại ở phía này.
-    // ⚠️ `r` và `h` KHÔNG đo ở đây. Backend gửi `radius_sq`/`height_sq` — số
-    // hữu tỉ CHÍNH XÁC — và phía này chỉ lấy căn ở biên hiển thị.
-    //
-    // Bản đầu tự đo khoảng cách giữa hai điểm neo để có `r` và `h`. Đó là tầng
-    // vẽ đang LÀM HÌNH HỌC, và `scene3d.test.tsx` bắt được ngay — cổng ấy
-    // chứng minh mình có răng ở đúng lần đầu tiên nó cần.
     const tam = new THREE.Vector3(...toVec3(o.anchor));
     const r = Math.sqrt(Math.max(0, toNumber(o.radius_sq ?? "0")));
     const h = Math.sqrt(Math.max(0, toNumber(o.height_sq ?? "0")));
@@ -1571,33 +1671,59 @@ export function buildObject3D(
     }
     const mesh = new THREE.Mesh(g, m);
     if (dinh) {
-      // Ba.js dựng trụ/nón quanh trục Y, tâm ở giữa chiều cao. Đưa về đúng
-      // trục và đúng chỗ bằng phép quay trên một trục ĐÃ CÓ trong payload.
       const truc = dinh.clone().sub(tam).normalize();
       mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), truc);
       mesh.position.copy(tam).addScaledVector(truc, h / 2);
     } else {
       mesh.position.copy(tam);
     }
-    /* Khối cong cũng phải CHE được đường nằm sau nó. Bản sao chiều sâu dùng
-       CHUNG hình học và CHÉP phép biến đổi từ chính `mesh` — dựng lại phép
-       quay ở đây là mở đường cho hai bản trôi khỏi nhau. */
     const nhomCong = new THREE.Group();
     const bong = lopChieuSau(g);
     bong.quaternion.copy(mesh.quaternion);
     bong.position.copy(mesh.position);
-    nhomCong.add(mesh, bong);
+    const bongTruoc = lopChieuSauMatTruoc(g);
+    bongTruoc.quaternion.copy(mesh.quaternion);
+    bongTruoc.position.copy(mesh.position);
+    nhomCong.add(mesh, bong, bongTruoc);
+    if (o.curved_kind === "ball" && r > 0) {
+      const soNhip = 96;
+      const taoVongCau = (layDiem: (ang: number) => THREE.Vector3, doDuc: number) => {
+        const pts: THREE.Vector3[] = [];
+        for (let i = 0; i <= soNhip; i += 1) {
+          pts.push(layDiem((i / soNhip) * Math.PI * 2));
+        }
+        const vong = new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints(pts),
+          new THREE.LineBasicMaterial({
+            color: net(MAU.canh),
+            transparent: true,
+            opacity: noiBat ? doDuc * 1.4 : doDuc,
+            depthWrite: false,
+          }),
+        );
+        vong.position.copy(tam);
+        vong.userData.voHan = true;
+        vong.raycast = () => {};
+        return vong;
+      };
+      nhomCong.add(
+        taoVongCau((ang) => new THREE.Vector3(r * Math.cos(ang), r * Math.sin(ang), 0), 0.18),
+        taoVongCau((ang) => new THREE.Vector3(r * Math.cos(ang), 0, r * Math.sin(ang)), 0.13),
+        taoVongCau((ang) => new THREE.Vector3(0, r * Math.cos(ang), r * Math.sin(ang)), 0.13),
+      );
+    }
+    nhomCong.userData.curvedSolidVolume = {
+      id: o.id,
+      kind: o.curved_kind as "cylinder" | "cone" | "ball",
+      anchor: tam.clone(),
+      top: dinh ? dinh.clone() : null,
+      radius: r,
+      height: h,
+    } satisfies CurvedSolidVolumeMeta;
     return v(nhomCong, `curved:${o.id}:${o.curved_kind}`);
   }
 
   if (o.render === "mesh" && o.vertices && o.faces) {
-    // Chia tam giác trên mỗi mặt — phép chia LIST, không phải phép hình học:
-    // thứ tự đỉnh quanh mặt do kernel quyết, ở đây chỉ nối chúng lại.
-    //
-    // ⚠️ QUẠT TAM GIÁC ĐÃ THAY (2026-09-07, `NONCONVEX_POLYHEDRON_VOLUME_
-    // FOUNDATION`). Quạt chỉ đúng với mặt LỒI; với mặt lõm nó **lấp mất phần
-    // lõm** — hình vẽ ra trông hợp lý mà sai. Sửa thể tích mà để renderer lấp
-    // phần lõm là chữa nửa bệnh: con số đúng, thứ học sinh NHÌN THẤY vẫn sai.
     const dinh = o.vertices.map(toVec3);
     const pos: number[] = [];
     for (const f of o.faces) {
@@ -1617,7 +1743,8 @@ export function buildObject3D(
       side: THREE.DoubleSide,
       depthWrite: false,
     })));
-    // Lớp chiều sâu: chính khối này che các cạnh nằm sau nó.
+    // Lớp chiều sâu riêng: mọi đường sau khối thấy được khối này dù vật liệu
+    // mặt trên khai `depthWrite: false`.
     nhom.add(lopChieuSau(g));
     // Mỗi cạnh topology có đúng MỘT visual owner. Derived edge trong cây chỉ
     // là hit proxy, nên không thể tạo lớp solid/dashed chồng lên owner này.
@@ -2047,6 +2174,8 @@ export function Scene3DWorkspace({
   //: Đặt lại khung nhìn cho vừa hình. Giữ trong ref vì nó do vòng dựng cảnh
   //: tạo ra (cần `cam`, `controls`) nhưng được gọi từ ngoài vòng ấy.
   const vuaKhungRef = useRef<(() => void) | null>(null);
+  const sceneRef = useRef(scene);
+  sceneRef.current = scene;
   const [webglFailed, setWebglFailed] = useState(false);
   /* regular-triangular-pyramid-w01 — XOAY HIỂN THỊ: đáy chóp nghiêng (§18.2) về nằm ngang. Đồng nhất thức cho mọi cảnh
      có đáy ngang (mọi họ trước), nên các họ ấy không đổi một điểm ảnh. Áp lên nhóm gốc + nhóm nhân chứng; vị trí THẾ GIỚI
@@ -2541,37 +2670,94 @@ export function Scene3DWorkspace({
       return ten;
     };
 
+    const tinhTuyChonKhung = (diem: Vec3[], huong: [number, number, number], w: number, _h: number) => {
+      const tiLeCR = tiLeHinhChieu(diem, huong) ?? 1;
+      const dsVat = sceneRef.current.objects;
+      const coMatCat = dsVat.some(
+        (o) => o.type === "plane3" || o.type === "section" || o.type === "circle3" || o.type === "ellipse3",
+      );
+      const cRect = container.getBoundingClientRect();
+      const panelEl = typeof document !== "undefined" ? document.getElementById("geo3d-bang-phan-tich") : null;
+      const pRect = panelEl?.getBoundingClientRect();
+      const coPanelPhai = Boolean(
+        pRect && pRect.width > 0 && cRect.width > 0 && pRect.left < cRect.right && pRect.left > cRect.left,
+      );
+      const safeLeft = cRect.left + 24;
+      const safeRight = coPanelPhai ? Math.max(cRect.left + w * 0.36, pRect!.left - 28) : cRect.right - 24;
+      const safeWidthRatio = cRect.width > 0
+        ? Math.max(0.32, Math.min(1, (safeRight - safeLeft) / Math.max(1, w)))
+        : 1;
+      const safeCenterX = (safeLeft + safeRight) / 2;
+      const dichTamNgang = coPanelPhai && cRect.width > 0
+        ? (safeCenterX - (cRect.left + w / 2)) / Math.max(1, w / 2)
+        : 0;
+      let tiLeDoc = 0.56;
+      if (tiLeCR > 1.15) tiLeDoc = 0.54;
+      if (coMatCat) tiLeDoc = Math.min(tiLeDoc, 0.55);
+      if (w < 900) tiLeDoc = Math.min(tiLeDoc, 0.52);
+      if (coPanelPhai) tiLeDoc = Math.min(tiLeDoc, 0.52);
+      const tiLeNgang = coPanelPhai
+        ? Math.min(0.50, safeWidthRatio * 0.72)
+        : Math.min(0.62, tiLeDoc * 1.15);
+      return {
+        tiLeDoc,
+        tiLeNgang,
+        dichTamNgang,
+        dichTamDoc: 0.025,
+      };
+    };
+
+    const datLaiVungAnToan = () => {
+      const diem = diemVuaKhung(goc, diemHuuHan(sceneRef.current.objects).map((p) => xoay(p, qRef.current)));
+      if (diem.length === 0) return;
+      chinhCo();
+      const w = renderer.domElement.clientWidth || 1;
+      const h = renderer.domElement.clientHeight || 1;
+      const vHuong = cam.position.clone().sub(dieuKhien.target);
+      const dLen = vHuong.length() || 1;
+      const huongHienTai: [number, number, number] = [vHuong.x / dLen, vHuong.y / dLen, vHuong.z / dLen];
+      const kn = khungNhinSuPham(
+        diem, [], [], cam.fov, w / h, huongHienTai, tinhTuyChonKhung(diem, huongHienTai, w, h),
+      );
+      if (!kn) return;
+      datKhungNhin(cam, dieuKhien, kn);
+      veRef.current?.();
+      chieuNhan();
+    };
+
+    const sanKhau = container.closest(".geo3d-san") ?? container.parentElement;
+    let trangThaiPanelTruoc = Boolean(
+      typeof document !== "undefined" && document.getElementById("geo3d-bang-phan-tich"),
+    );
+    const moPanel = typeof MutationObserver !== "undefined" && sanKhau
+      ? new MutationObserver(() => {
+          const hienTaiPanel = Boolean(document.getElementById("geo3d-bang-phan-tich"));
+          if (hienTaiPanel !== trangThaiPanelTruoc) {
+            trangThaiPanelTruoc = hienTaiPanel;
+            datLaiVungAnToan();
+          }
+        })
+      : null;
+    if (moPanel && sanKhau) {
+      moPanel.observe(sanKhau, { childList: true, subtree: true });
+    }
+
     // ── ĐẶT KHUNG NHÌN CHO VỪA HÌNH ────────────────────────────────────
     //
     // Đọc hộp bao của những gì ĐANG dựng trong nhóm gốc, không đọc `scene` —
     // ẩn/cô lập/tách khối đều đã phản ánh vào nhóm, nên một nguồn là đủ.
     vuaKhungRef.current = () => {
-      /* ⚠️ VÀ CẢ VẬT CHƯA XUẤT HIỆN — đây là bản sửa của một lỗi đo được.
-       *
-       * Khung nhìn cố ý **đứng yên** giữa các bước (nếu không, tua bước biến
-       * thành đổi góc máy). Nhưng nó được tính từ những gì đang dựng ở lúc
-       * gọi, tức **bước 0** — khi cảnh mới chỉ có vài điểm tự do. Ở `p3`, hộp
-       * bao lúc ấy là hai điểm cách nhau 15 đơn vị; tới bước cuối mặt cầu bán
-       * kính 15 xuất hiện và **tràn ra ngoài khung**, bị cắt cả trên lẫn dưới.
-       *
-       * Sửa bằng cách khung nhìn ôm **toàn cảnh** ngay từ đầu: camera vẫn đứng
-       * yên (bất biến giữ nguyên), nhưng nó đứng ở chỗ nhìn được hình CUỐI.
-       * Hợp với hộp bao đang dựng để phép tách khối vẫn đúng. */
-      const diem = diemVuaKhung(goc, diemHuuHan(scene.objects).map((p) => xoay(p, qRef.current)));
+      const dsVat = sceneRef.current.objects;
+      const diem = diemVuaKhung(goc, diemHuuHan(dsVat).map((p) => xoay(p, qRef.current)));
       if (diem.length === 0) return;
-      // mobile-canvas-fit: chiều cao canvas có thể vừa đổi theo cảnh mới (trình phát đặt TRƯỚC lần vừa khung này) —
-      // đồng bộ cỡ bộ vẽ với khung chứa ngay đây, không chờ ResizeObserver, để tỉ lệ khung của phép vừa là tỉ lệ thật.
       chinhCo();
       const w = renderer.domElement.clientWidth || 1;
       const h = renderer.domElement.clientHeight || 1;
-      // Hướng nhìn chọn theo số đo của TOÀN cảnh (cùng lẽ trên: hình cuối),
-      // không theo tên bài — xem `chonHuongNhin`. Cảnh không cạnh ⇒ khung cũ.
-      // Cấu trúc đo trong khung THẾ GIỚI (sau phép xoay hiển thị): hướng nhìn chọn cho hình người học thấy.
-      const ct = cauTrucTheGioi(scene.objects, qRef.current);
+      const ct = cauTrucTheGioi(dsVat, qRef.current);
       const huong = ct.canh.length > 0
         ? chonHuongNhin(ct.diem, ct.canh, ct.mat)
         : ([8, 5, 6] as [number, number, number]);
-      const kn = khungNhinSuPham(diem, [], [], cam.fov, w / h, huong)
+      const kn = khungNhinSuPham(diem, [], [], cam.fov, w / h, huong, tinhTuyChonKhung(diem, huong, w, h))
         ?? khungNhinVua(hopBaoCuaDiem(diem), cam.fov, w / h);
       if (!kn) return;   // đầu vào không dùng được ⇒ giữ nguyên khung nhìn
       datKhungNhin(cam, dieuKhien, kn);
@@ -2587,6 +2773,7 @@ export function Scene3DWorkspace({
       renderer.domElement.removeEventListener("pointerup", nhacTay);
       window.removeEventListener("resize", chinhCo);
       roKhung?.disconnect();
+      moPanel?.disconnect();
       dieuKhien.dispose();
       const warmHold = scene3.userData.warmHoldGroup as THREE.Group | undefined;
       warmHold?.traverse((x) => {
@@ -2762,6 +2949,8 @@ export function Scene3DWorkspace({
     const idSeDung = new Set(seDung.map((o) => o.id));
     const khoaDich = (id: string) => visualTransformOf(tuongTac, scene, id).translate.join(",");
     const nhuong = doanNhuongCanh(seDung, khoaDich);
+    const dsKhoiId = seDung.filter((x) => x.type === "solid" || x.type === "curved_solid").map((x) => x.id);
+    const canhKhoiDaDung: { a: THREE.Vector3; b: THREE.Vector3; dich: string }[] = [];
     for (const o of seDung) {
       const progress = progressById.get(o.id);
       const progressCha = o.parent ? progressById.get(o.parent) : undefined;
@@ -2801,6 +2990,58 @@ export function Scene3DWorkspace({
       const obj = buildObject3D(renderObject, tang ? tang.get(o.id) ?? false : sangBuoc,
         banKinhBamDiem(KHOANG_CAM_MAC_DINH), diemChoVat, undefined, canonicalHighlights, khucToSang, xray);
       if (!obj) continue;
+      const chiSoKhoi = dsKhoiId.indexOf(o.id);
+      const dichVat = khoaDich(o.id);
+      if (dsKhoiId.length > 1 && chiSoKhoi >= 0) {
+        const laKhoiPhu = chiSoKhoi > 0;
+        const dangNhanKhoi = sangBuoc || Boolean(tang && tang.has(o.id) && tang.get(o.id) !== "boi_canh");
+        if (laKhoiPhu) {
+          obj.traverse((child) => {
+            const mesh = child as THREE.Mesh;
+            if (mesh.isMesh && !mesh.userData?.chieuSau) {
+              const mat = mesh.material as THREE.MeshStandardMaterial | undefined;
+              if (mat && mat.colorWrite !== false && !dangNhanKhoi) {
+                mat.color.setHex(0x0d9488);
+                mat.opacity = 0.18;
+              }
+            }
+          });
+          if (o.type === "curved_solid" && dichVat === khoaDich(dsKhoiId[0])) {
+            delete obj.userData.curvedSolidVolume;
+            for (const c of [...obj.children]) {
+              if (c.userData?.chieuSau || c.userData?.chieuSauMatTruoc) obj.remove(c);
+            }
+          }
+        }
+        if (o.type === "solid") {
+          const diemTrenDoan = (p: THREE.Vector3, a: THREE.Vector3, b: THREE.Vector3) => {
+            const abx = b.x - a.x, aby = b.y - a.y, abz = b.z - a.z;
+            const lenSq = abx * abx + aby * aby + abz * abz;
+            if (lenSq < 1e-12) return false;
+            const apx = p.x - a.x, apy = p.y - a.y, apz = p.z - a.z;
+            const t = (apx * abx + apy * aby + apz * abz) / lenSq;
+            if (t < -1e-4 || t > 1 + 1e-4) return false;
+            return Math.hypot(a.x + abx * t - p.x, a.y + aby * t - p.y, a.z + abz * t - p.z) <= 1e-4;
+          };
+          obj.traverse((child) => {
+            const edge = child.userData?.canonicalEdge as ReturnType<typeof canonicalEdgesOf>[number] | undefined;
+            if (!edge || !(child as THREE.Group).isGroup) return;
+            if (!laKhoiPhu) {
+              canhKhoiDaDung.push({ a: edge.a.clone(), b: edge.b.clone(), dich: dichVat });
+              return;
+            }
+            const trungCanhChinh = canhKhoiDaDung.some(
+              (c) => c.dich === dichVat && diemTrenDoan(edge.a, c.a, c.b) && diemTrenDoan(edge.b, c.a, c.b),
+            );
+            if (trungCanhChinh && !child.userData.highlighted && !child.userData.khuc) {
+              child.visible = false;
+            } else if (!child.userData.highlighted) {
+              child.userData.edgeColor = 0x0f766e;
+              delete child.userData.spanSignature;
+            }
+          });
+        }
+      }
       if (tang && !tang.has(o.id)) lamDiu(obj);   // ngoài chuỗi nhân quả
       const bd = visualTransformOf(tuongTac, scene, o.id);
       datViTriTrinhBay(obj, bd);

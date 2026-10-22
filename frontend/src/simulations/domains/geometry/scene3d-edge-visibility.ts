@@ -198,6 +198,16 @@ export function classifySolidEdgeVisibility(
       : options.projected_edge_pixels ?? 256;
     const cells = sampleSegments(pixels);
     const excluded = new Set(edge.adjacentSurfaceIds);
+    if ((options.occluders?.length ?? 1) > 1) {
+      for (const tri of triangles) {
+        if (excluded.has(tri.surfaceId)) continue;
+        const da = Math.abs(tri.normal.dot(new THREE.Vector3().subVectors(edge.a, tri.a)));
+        const db = Math.abs(tri.normal.dot(new THREE.Vector3().subVectors(edge.b, tri.a)));
+        if (da <= 1e-4 && db <= 1e-4) {
+          excluded.add(tri.surfaceId);
+        }
+      }
+    }
     const states: boolean[] = [];
     for (let index = 0; index < cells; index += 1) {
       const t = (index + 0.5) / cells;
@@ -362,4 +372,80 @@ export function classifyWorldSegmentVisibility(
   }
   return { spans, colinear_canonical_edge_ids: colinearIds };
 }
+
+export interface CurvedSolidVolumeMeta {
+  id: string;
+  kind: "cylinder" | "cone" | "ball";
+  anchor: THREE.Vector3;
+  top: THREE.Vector3 | null;
+  radius: number;
+  height: number;
+}
+
+export function diemVanhCongBiChe(
+  pt: THREE.Vector3,
+  worldCam: THREE.Vector3,
+  volumes: readonly CurvedSolidVolumeMeta[],
+): boolean {
+  const dir = new THREE.Vector3().subVectors(pt, worldCam);
+  const rayLen = dir.length();
+  if (rayLen < 1e-6) return false;
+  for (const vol of volumes) {
+    const r = vol.radius;
+    if (r <= 1e-6) continue;
+    if (vol.kind === "ball") {
+      const toPt = new THREE.Vector3().subVectors(pt, vol.anchor);
+      const distPt = toPt.length();
+      if (Math.abs(distPt - r) <= 0.08 * r) {
+        const viewVec = new THREE.Vector3().subVectors(worldCam, pt);
+        if (viewVec.dot(toPt) < -1e-3 * r * rayLen) return true;
+        continue;
+      }
+      const oc = new THREE.Vector3().subVectors(vol.anchor, worldCam);
+      const tStar = Math.max(0.01, Math.min(0.985, oc.dot(dir) / (rayLen * rayLen)));
+      const closest = worldCam.clone().addScaledVector(dir, tStar);
+      if (closest.distanceTo(vol.anchor) < r * 0.995) return true;
+      continue;
+    }
+    const h = vol.height;
+    if (!vol.top || h <= 1e-6) continue;
+    const axis = new THREE.Vector3().subVectors(vol.top, vol.anchor).normalize();
+    const camRel = new THREE.Vector3().subVectors(worldCam, vol.anchor);
+    const ptRel = new THREE.Vector3().subVectors(pt, vol.anchor);
+    const zCam = camRel.dot(axis);
+    const zPt = ptRel.dot(axis);
+    const dz = zPt - zCam;
+    let tLo = 0.005;
+    let tHi = 0.992;
+    const zMin = 0.002 * h;
+    const zMax = 0.998 * h;
+    if (Math.abs(dz) < 1e-7) {
+      if (zCam <= zMin || zCam >= zMax) continue;
+    } else {
+      const t0 = (zMin - zCam) / dz;
+      const t1 = (zMax - zCam) / dz;
+      tLo = Math.max(tLo, Math.min(t0, t1));
+      tHi = Math.min(tHi, Math.max(t0, t1));
+    }
+    if (tLo > tHi) continue;
+    const camPerp = camRel.clone().addScaledVector(axis, -zCam);
+    const ptPerp = ptRel.clone().addScaledVector(axis, -zPt);
+    const dPerp = new THREE.Vector3().subVectors(ptPerp, camPerp);
+    const dPerpSq = dPerp.lengthSq();
+    const tCrit = dPerpSq > 1e-9
+      ? Math.max(tLo, Math.min(tHi, -camPerp.dot(dPerp) / dPerpSq))
+      : tHi;
+    const samples = [tLo, (tLo + tHi) * 0.5, tCrit, tHi];
+    for (const t of samples) {
+      const z = zCam + t * dz;
+      if (z <= zMin || z >= zMax) continue;
+      const rLimit = vol.kind === "cone" ? r * (1 - z / h) : r;
+      if (rLimit <= 1e-6) continue;
+      const pPerp = camPerp.clone().addScaledVector(dPerp, t);
+      if (pPerp.length() < rLimit * 0.996) return true;
+    }
+  }
+  return false;
+}
+
 
