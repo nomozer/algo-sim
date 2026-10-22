@@ -1,0 +1,19 @@
+{
+  "command": [
+    "node",
+    "frontend/scripts/full-gate.mjs"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s1-freeze",
+  "source_commit": "404f0568a00651505ec0773754a04ef5c493f5f9",
+  "dirty_before": "",
+  "started_utc": "2026-10-22T12:23:10.720127+00:00",
+  "timeout_seconds": 3000,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "OMP_NUM_THREADS": "1",
+    "PYTEST_DEBUG_TEMPROOT": "D:\\Documents\\projects\\algo-sim\\.superpowers\\pt-20820"
+  }
+}

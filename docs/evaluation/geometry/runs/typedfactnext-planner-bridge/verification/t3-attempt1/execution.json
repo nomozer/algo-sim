@@ -1,0 +1,34 @@
+{
+  "command": [
+    "node",
+    "frontend/scripts/full-gate.mjs"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\s1-freeze",
+  "source_commit": "404f0568a00651505ec0773754a04ef5c493f5f9",
+  "dirty_before": "",
+  "started_utc": "2026-10-22T12:23:10.720127+00:00",
+  "timeout_seconds": 3000,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "OMP_NUM_THREADS": "1",
+    "PYTEST_DEBUG_TEMPROOT": "D:\\Documents\\projects\\algo-sim\\.superpowers\\pt-20820"
+  },
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_seconds": 617.84,
+  "finished_utc": "2026-10-22T12:33:28.574524+00:00",
+  "dirty_after": "",
+  "streams": {
+    "stdout": {
+      "bytes": 20391,
+      "sha256": "a1a45b0a52467936f5cb4712800baef7140f944a9598de9effe0230b145ab721"
+    },
+    "stderr": {
+      "bytes": 342,
+      "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a"
+    }
+  }
+}

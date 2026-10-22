@@ -1,0 +1,97 @@
+{
+  "schema": "BACKEND_HYBRID_EVALUATION_SUMMARY/1",
+  "classification": [
+    "DEVELOPMENT_EVALUATION_NOT_BLIND",
+    "OFFLINE_REPLAY"
+  ],
+  "source_product_commit": "4f3aaea5e0d3b5c1fe1537bd3ddf4bc73cbe88ee",
+  "evaluation_file": "planner-composition-final.json",
+  "evaluation_sha256": "e3618a876f3bd11aaeb2e44f1ed0623b24eaf5d3c2fadacc57d016218f7f0b69",
+  "provider_requests": 0,
+  "nl_live_e2e": "NOT_VERIFIED",
+  "actual_provider_tokens": "NOT_APPLICABLE: no requests",
+  "production_tokens_cost_latency": "UNKNOWN",
+  "case_coverage": "40/49",
+  "case_coverage_warning": "Inherited goal_coverage is a count of expected-served CASES, not a count of mathematical goals.",
+  "exact_numeric_cases": "34/34",
+  "wrong_served_cases": 0,
+  "refusal_cases": "11/11",
+  "structurally_valid_scenes": "40/40",
+  "same_status_and_strict_code_as_inherited": {
+    "matched": 60,
+    "total": 60,
+    "interpretation": "regression parity, not independent semantic proof of every old error code"
+  },
+  "new_boundary_strict_code_tests": {
+    "negative": 11,
+    "positive": 1,
+    "all_passed": true,
+    "receipt": "verification/boundary-final-green/execution.json",
+    "independent_review": "independent-review.md"
+  },
+  "strict_code_preregistered_in_existing_eval": {
+    "bridge_scope_cases": 5,
+    "invalid_cases_with_only_refusal_status_target": 6
+  },
+  "not_served_resource_limits": {
+    "IR_MEMORY_BUDGET_EXCEEDED": 9
+  },
+  "metamorphic_relations": {
+    "relabel_invariance": true,
+    "premise_order_invariance": true,
+    "goal_order_invariance": true,
+    "ratio_inversion_reciprocal": true,
+    "scaling_ratio_invariant_residual_k3": true,
+    "parallel_base_equals_perpendicular_SA": true
+  },
+  "adapter3_same_evaluation": {
+    "served": 55,
+    "wrong_served": 3,
+    "exact_correct_when_served": "43/43",
+    "served_invalid": [
+      "N-swapped-names",
+      "N-anonymous-ratio-operand",
+      "N-unread-condition"
+    ],
+    "served_bridge_scope": [
+      "S-cut-edges-not-in-payload",
+      "S-shared-label-identity",
+      "S-open-cycle"
+    ],
+    "crashes": [
+      [
+        "S-plane-equation",
+        "AssertionError"
+      ]
+    ],
+    "same_payload_wrong_served": [
+      "B-square2-t12-parallel",
+      "B-square2-t12-perpendicular",
+      "B-square2-t13-parallel",
+      "B-square2-t13-perpendicular",
+      "B-square2-t23-parallel",
+      "B-square2-t23-perpendicular",
+      "B-square3-t12-parallel",
+      "B-square3-t12-perpendicular",
+      "B-square3-t13-parallel",
+      "B-square3-t13-perpendicular",
+      "B-square3-t23-parallel",
+      "B-square3-t23-perpendicular",
+      "B-rectangle4-t12-parallel",
+      "B-rectangle4-t12-perpendicular",
+      "B-rectangle4-t13-parallel",
+      "B-rectangle4-t13-perpendicular",
+      "B-rectangle4-t23-parallel",
+      "B-rectangle4-t23-perpendicular"
+    ],
+    "same_payload_served": 21
+  },
+  "timing_seconds": {
+    "route_p50": 0.0265,
+    "route_max": 0.0632,
+    "scope": "single local run, all 60 served/refused authored cases, not production latency"
+  },
+  "cpu_rss": "UNKNOWN: not profiled",
+  "blind_evidence": "NONE: existing holdouts were not edited or used as new blind evidence",
+  "full_t3": "See separate immutable authoritative receipt in final handoff."
+}

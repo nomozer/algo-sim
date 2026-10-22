@@ -20,6 +20,17 @@ CODE_COMMIT = 4f3aaea5e0d3b5c1fe1537bd3ddf4bc73cbe88ee
 VERIFICATION = docs/evaluation/geometry/runs/backend-hybrid-bridge-safety/candidate_divergence.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = backend-hybrid-continuation (candidate metadata chain now follows corrected product bytes)
+CORRECTED_BY = backend-hybrid-taxonomy-completion
+
+## WAVE_ID = backend-hybrid-taxonomy-completion
+
+REPORT = docs/evaluation/geometry/runs/backend-hybrid-continuation/GEMINI_TAKEOVER_CHECKPOINT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/backend-hybrid-taxonomy-completion/
+CLASSIFICATION = OFFLINE_REPLAY; Gemini takeover refusal-taxonomy completion for TypedFactNext bridge safety fixes (b6684564ac4596da30819da5fcc4c875ebb1a640). Classifies INVALID_TYPED_FACT_NEXT, UNKNOWN_VERTEX_REF, and BRIDGE_UNSUPPORTED_LENGTH_UNIT across hybrid_compiler_benchmark.REFUSAL_CLASS and hybrid_preview._NHOM; no guard weakened, no expected answer changed, frozen provider schemas and historical receipts preserved byte-identical.
+CODE_COMMIT = b6684564ac4596da30819da5fcc4c875ebb1a640
+VERIFICATION = docs/evaluation/geometry/runs/backend-hybrid-taxonomy-completion/candidate_divergence.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = backend-hybrid-bridge-safety (candidate metadata chain and refusal taxonomy completion for Full T3 Attempt 2 failures)
 CORRECTED_BY = NONE
 
 ## WAVE_ID = typedfactnext-planner-bridge
