@@ -1,0 +1,39 @@
+{
+  "command": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-backend-s1\\backend",
+  "source_commit": "404f0568a00651505ec0773754a04ef5c493f5f9",
+  "dirty_before": "?? docs/evaluation/geometry/runs/backend-hybrid-continuation/\n?? docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/t3-attempt1/",
+  "started_utc": "2026-10-22T13:28:29.022622+00:00",
+  "timeout_seconds": 120,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "OMP_NUM_THREADS": "1",
+    "PYTEST_DEBUG_TEMPROOT": "D:\\Documents\\projects\\algo-sim\\.superpowers\\pt-20628"
+  },
+  "exit_code": 1,
+  "timed_out": false,
+  "elapsed_seconds": 4.72,
+  "finished_utc": "2026-10-22T13:28:33.738291+00:00",
+  "dirty_after": "?? docs/evaluation/geometry/runs/backend-hybrid-continuation/\n?? docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/t3-attempt1/",
+  "streams": {
+    "stdout": {
+      "bytes": 1997,
+      "sha256": "5e2475468985c5af053ce38035911ac152203de85e5b8744125f67385d60dace"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

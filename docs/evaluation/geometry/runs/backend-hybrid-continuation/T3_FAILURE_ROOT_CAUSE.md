@@ -1,0 +1,13 @@
+# T3 failure root cause and correction
+
+Classification: **candidate/freeze metadata contract mismatch**, not a demonstrated mathematical regression.
+
+Original immutable candidate: `404f0568a00651505ec0773754a04ef5c493f5f9`, product `8b5916e7309a8939f0c462367120360391ccb70c`, measured hash `2711d78e401234a2bea98a983d94fe1b29973b4482b407c5529307e38f67b16d` / 115 files. Full T3 attempt 1 remains FAIL: 1 failed, 11492 passed, 1 skipped, 2 deselected, 9 xfailed; frontend 1156 passed, build/demo/crash gates passed. Elapsed 617.84 s. Original logs and receipt remain in `../typedfactnext-planner-bridge/verification/t3-attempt1/`; original stream SHA256 and bytes are recorded in `recovery-inventory.json`.
+
+Exact failure: `backend/tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI`, line 347, `KeyError: run_candidate_hash`. The correction-chain resolver selects the Session 1 layer, which omitted the historical thesis run link. Its current product hash was correct. The previous layer in `simulation-demo6b-renderer-fix/candidate_divergence.json` includes the key and matches immutable `thesis-final-acceptance/IDENTITY_LOCK.json`; Git source at `43247c9e` has that valid layer. Baseline comparison is source/receipt evidence, not an invented new baseline execution.
+
+Fresh isolated reproduction: `verification/repro-c2b/execution.json`, exit 1, 4.72 s; same missing key. Minimal remedy: NEW `candidate_divergence.json` in this run, correcting the Session 1 layer and restoring `run_candidate_hash` and `run_id` from the unchanged lock. No weakened assertions, changed expected answers, skipped tests, altered thesis policy or rewritten receipt. `verification/targeted-governance/` then passed 53 tests in 41.47 s (pytest 40.57 s). Focused backend: 239 passed in 19.41 s (pytest 18.48 s), before the later review fixes.
+
+Independent review subsequently required bridge safety fixes. Those change product bytes; therefore the metadata-only correction here retains its old identity and is superseded by `../backend-hybrid-bridge-safety/candidate_divergence.json` for the new product. No old T3 result certifies the new candidate. See the final handoff for the new authoritative T3 result and exact SHA.
+
+Earlier focused failures inherited from Claude remain failures: pre-review and post-review 1/2/3 candidate fingerprint guard, before freeze (1902 pass, 1 fail, 1 xfail in post-review3). New RED attempts intentionally failed 8/9, then 2/2 qualifier cases, then 2/2 plane/ID cases. Their local raw logs are not committed (raw tracebacks); command/exit/hash receipts are retained. PASS attempts do not erase these attempts.

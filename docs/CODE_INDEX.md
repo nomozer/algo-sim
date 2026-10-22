@@ -1,5 +1,7 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+**Continuation boundary fixes:** `typed_fact_next_bridge._check_qualified_refs` validates namespaces before dropping them; `run_typed_fact_next_planner_route` returns typed malformed-operand refusals and preserves declared unit/plane identity against source-gated output. Regression tests extend `test_typedfactnext_planner_bridge.py`; run `evaluation/geometry/runs/backend-hybrid-continuation/`. No new product modules; reuse existing planner/engine/gate.
+
 ## TypedFactNext → planner bridge (`research/hybrid-backend-integration-session1`, LOCAL research, Hybrid off)
 
 Run `docs/evaluation/geometry/runs/typedfactnext-planner-bridge/`; architecture `docs/architecture/HYBRID_BACKEND_TARGET_ARCHITECTURE.md`.

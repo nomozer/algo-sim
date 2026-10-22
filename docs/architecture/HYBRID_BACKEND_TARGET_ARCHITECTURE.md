@@ -1,5 +1,7 @@
 # HYBRID_BACKEND_TARGET_ARCHITECTURE — research target and Session 1 decision
 
+**Continuation clarification (2026-10-22):** §4 means two-line relation planes without the new cut clause; combining them with stated cut-edge/derived-solid construction remains unsupported. Adapter /3 is still a separate compiler. The bridge validates structural namespaces, transports declared units/plane names, and orchestration rejects mismatches against source-gated engine output. It does not parse source text. Full source/identity/outcome parity and `cut_edges` semantics require the decision in `../evaluation/geometry/runs/backend-hybrid-continuation/BACKEND_HYBRID_ARCHITECTURE_DECISION.md`.
+
 Status: research architecture, 2026-10-22, run [`typedfactnext-planner-bridge`](../evaluation/geometry/runs/typedfactnext-planner-bridge/plan.md).
 Product unchanged: `LLM_ONLY`, response contract `flat`, Hybrid product enablement **NO-GO**, `CACHE_VERSION = 127`.
 

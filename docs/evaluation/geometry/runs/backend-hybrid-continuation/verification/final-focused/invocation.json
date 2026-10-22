@@ -1,0 +1,32 @@
+{
+  "command": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/geometry/test_thesis_acceptance_matrix.py",
+    "tests/geometry/test_typedfactnext_planner_bridge.py",
+    "tests/geometry/test_hybrid_wave1_dependency_planner.py",
+    "tests/geometry/test_goal_directed_function_composition.py",
+    "tests/geometry/test_hybrid_backend_integration.py",
+    "tests/geometry/test_typedfact_next_adapter3.py",
+    "tests/geometry/test_wave3a_adapter3_integration.py",
+    "tests/geometry/test_wave3a_volume_reasoning.py",
+    "tests/geometry/test_docs_information_architecture.py",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-backend-s1\\backend",
+  "source_commit": "4f3aaea5e0d3b5c1fe1537bd3ddf4bc73cbe88ee",
+  "dirty_before": "M docs/AI_CONTEXT_BUNDLE.md\n M docs/CODE_INDEX.md\n M docs/CURRENT_STATE.md\n M docs/EVIDENCE_INDEX.md\n M docs/OPEN_ISSUES.md\n M docs/ROADMAP.md\n M docs/architecture/HYBRID_BACKEND_TARGET_ARCHITECTURE.md\n M docs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json\n?? docs/evaluation/geometry/runs/backend-hybrid-bridge-safety/\n?? docs/evaluation/geometry/runs/backend-hybrid-continuation/\n?? docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/t3-attempt1/",
+  "started_utc": "2026-10-22T13:40:06.890641+00:00",
+  "timeout_seconds": 240,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "OMP_NUM_THREADS": "1",
+    "PYTEST_DEBUG_TEMPROOT": "D:\\Documents\\projects\\algo-sim\\.superpowers\\pt-17360"
+  }
+}

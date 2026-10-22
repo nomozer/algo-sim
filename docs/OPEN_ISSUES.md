@@ -1,5 +1,7 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+**LOCAL backend Session 1 (2026-10-22):** ratio span ownership and preview group-event births resolved on `research/hybrid-backend-integration-session1`; actual preview cause was timeline birth handling, not fact-ID dependencies. TypedFactNext bridge remains partial; cut_edges has incompatible route meanings, Adapter /3 source grounding and malformed-operand gaps remain. Contract proposal and P0–P6 status: `evaluation/geometry/runs/backend-hybrid-continuation/BACKEND_HYBRID_ARCHITECTURE_DECISION.md` and gap matrix.
+
 ### ISSUE-RESEARCH-HYBRID-SOURCE-GATE-REMAINING-GAPS
 
 - **status:** OPEN (run `source-gate-hardening`, integrated on `main` under `GO_MAIN_SOURCE_GATE_HARDENING_CONDITIONAL` for offline research only; strict preregistered SGH blind threshold NOT MET: 6/10 positive, 10/16 math goals, 8/16 strict tuple due to `dim`, 5/5 negative, 1/2 ambiguous, SGH-17 adjudicated without manifest edit, 4 false refusals in SGH-02/04/09/10).

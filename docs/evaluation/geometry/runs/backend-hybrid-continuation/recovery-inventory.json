@@ -1,0 +1,191 @@
+{
+  "schema": "CODEX_TAKEOVER_RECOVERY/1",
+  "head": "404f0568a00651505ec0773754a04ef5c493f5f9",
+  "branch": "research/hybrid-backend-integration-session1",
+  "main": "f10e6283dd3fd2cfdef189e1bef0ffdecf2be942",
+  "origin_main": "43247c9e9375a3dbf2b5223324a58e6f932ca596",
+  "merge_base": "43247c9e9375a3dbf2b5223324a58e6f932ca596",
+  "git_status": "?? docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/t3-attempt1/",
+  "changed_since_source": [
+    "M\tbackend/app/ai/fact_extraction.py",
+    "M\tbackend/app/ai/function_route.py",
+    "M\tbackend/app/ai/hybrid_preview.py",
+    "M\tbackend/app/simulation/geometry_functions/engine.py",
+    "M\tbackend/app/simulation/geometry_functions/planner.py",
+    "M\tbackend/app/simulation/geometry_functions/registry.py",
+    "A\tbackend/app/simulation/geometry_functions/typed_fact_next_bridge.py",
+    "M\tbackend/scripts/export_hybrid_preview_fixtures.py",
+    "M\tbackend/tests/geometry/hybrid_compiler_benchmark.py",
+    "M\tbackend/tests/geometry/test_hybrid_backend_integration.py",
+    "M\tbackend/tests/geometry/test_typedfact_next_adapter3.py",
+    "A\tbackend/tests/geometry/test_typedfactnext_planner_bridge.py",
+    "M\tbackend/tests/geometry/test_wave3a_adapter3_integration.py",
+    "M\tbackend/tests/geometry/test_wave3a_volume_reasoning.py",
+    "M\tdocs/CODE_INDEX.md",
+    "A\tdocs/architecture/HYBRID_BACKEND_TARGET_ARCHITECTURE.md",
+    "M\tdocs/architecture/README.md",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/BACKEND_INTEGRATION_BASELINE_AUDIT.md",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/PLANNER_COMPOSITION_EVALUATION.md",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/SOURCE_GATE_INTEGRATION_REPORT.md",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/candidate_divergence.json",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/evaluate.py",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/plan.md",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/planner-composition-evaluation.json",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/record.py",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/review-round1.md",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/review-round2.md",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/review-round3.md",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/review-round4.md",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review1/execution.json",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review1/invocation.json",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review1/stderr.log",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review1/stdout.log",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review2/execution.json",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review2/invocation.json",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review2/stderr.log",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review2/stdout.log",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review3/execution.json",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review3/invocation.json",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review3/stderr.log",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review3/stdout.log",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-pre-review/execution.json",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-pre-review/invocation.json",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-pre-review/stderr.log",
+    "A\tdocs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-pre-review/stdout.log",
+    "M\tdocs/evaluation/semantic-benchmark/EVALUATION_CANDIDATE.json"
+  ],
+  "inherited_run_files": {
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/BACKEND_INTEGRATION_BASELINE_AUDIT.md": {
+      "bytes": 7714,
+      "sha256": "0ee03fb7216241f6fa480bb59067c98fc54f1663bc1a2e2fee09255e525582cf"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/candidate_divergence.json": {
+      "bytes": 1926,
+      "sha256": "61ea41437d69fff3ba627b7f3c5f5568d1f2bb681079e806cfc56fad190715f4"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/evaluate.py": {
+      "bytes": 27430,
+      "sha256": "ccde7bf243324c5c05039f4ca07f7294f5c15ce1cf6184a51c578b208f6af9b5"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/plan.md": {
+      "bytes": 5027,
+      "sha256": "6babac580bfe314ab1c551b97859b74f165d7520dcde22206c87a1adf7897b78"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/planner-composition-evaluation.json": {
+      "bytes": 58714,
+      "sha256": "f5d9475ac48b087347f46cd3d06be29d601dd2c97c38ff974603810628c2e606"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/PLANNER_COMPOSITION_EVALUATION.md": {
+      "bytes": 8364,
+      "sha256": "b7a267b2d3b061dcdbdc610922b95a304871fae052f3e4e897ab75256ae88e7b"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/record.py": {
+      "bytes": 3204,
+      "sha256": "897a69ec4619b74cac0e363a9ebbd9e9ee369d18eac473afce0c99d4ee750a0b"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/review-round1.md": {
+      "bytes": 2820,
+      "sha256": "b39124a752ad6e653e470661b8575e20958def918304a755d00b1edd0c20f2e4"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/review-round2.md": {
+      "bytes": 3146,
+      "sha256": "8dbbe3209c2dc5f49670b6133b7a6ccd21b8b34be008be29e500263dbed3a677"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/review-round3.md": {
+      "bytes": 2771,
+      "sha256": "2a4e169fc9724acd512fac1714ad14cd5d276eb792415ee572163f0aef686376"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/review-round4.md": {
+      "bytes": 1386,
+      "sha256": "5632913b9fe89f89abaf72e857feaba5e79cb6ee5e91d7e35e86e3297830b84e"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/SOURCE_GATE_INTEGRATION_REPORT.md": {
+      "bytes": 9321,
+      "sha256": "9f23e2051b416c3200f37337229c92faae7a8c423eaf2f272fc596a17709e34f"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/__pycache__/evaluate.cpython-312.pyc": {
+      "bytes": 36049,
+      "sha256": "024645252fa007e95698c614b39dd95fe91916264850b56c6e759a027a43e4d2"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review1/execution.json": {
+      "bytes": 4532,
+      "sha256": "bca0185b8ebabd303c0ada5b980979b782b68cc76b4692f5e403488b5787ddc4"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review1/invocation.json": {
+      "bytes": 3212,
+      "sha256": "464239f05bc66bee95bdf4759903412bd5225c66a3e8c2e8d9ed69bc6effa528"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review1/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review1/stdout.log": {
+      "bytes": 8358,
+      "sha256": "76550134c4b7ee3955237010d342d7a57fd3e002dcc632ccdb6c3aa590411a94"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review2/execution.json": {
+      "bytes": 4530,
+      "sha256": "10c7318e7723d52561d6e7bef521bd78fbe378c8246a3fbc56c148ff71d0a821"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review2/invocation.json": {
+      "bytes": 3210,
+      "sha256": "654385ebc762133b725f702e8e80f5d46f18f3ec7a4676d54fe7b5428e17876d"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review2/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review2/stdout.log": {
+      "bytes": 8358,
+      "sha256": "35d67432099b55ee3a604da5af3c58a22c876271d0103f170abbe2c4265281f3"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review3/execution.json": {
+      "bytes": 4532,
+      "sha256": "ffb759302f7aa1b1d76704f5d3b9066644cb300500aa3ccb70d661571e715f18"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review3/invocation.json": {
+      "bytes": 3212,
+      "sha256": "80878b7ebfb8711db51131e9041a02f530e3e59c19ef43e86d698610b3179fd3"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review3/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-post-review3/stdout.log": {
+      "bytes": 8358,
+      "sha256": "2af4bdfcc39786eaa8da5c30ed4ba9728c3b13ad101ffc500d58490de16cd83c"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-pre-review/execution.json": {
+      "bytes": 4509,
+      "sha256": "b7c235a625dbd77c13f1e9dcd4cf80d193273fdada11f0c4f4ee31275ce85083"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-pre-review/invocation.json": {
+      "bytes": 3189,
+      "sha256": "b28ef5030795126606befd6da9f78814b4e752dc679c710007359508a0e1a703"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-pre-review/stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/focused-pytest-pre-review/stdout.log": {
+      "bytes": 8358,
+      "sha256": "ca5a4c7cbf8238ab7a586e23bd014dd4afaf0dabb4d3cb7d9939567b6f7151c0"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/t3-attempt1/execution.json": {
+      "bytes": 1023,
+      "sha256": "554d7394b6974a6921f54abadb59a88c9917e4bb3db95b66a4bb24e8c9734049"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/t3-attempt1/invocation.json": {
+      "bytes": 591,
+      "sha256": "ccb279c9301d2c366a24d1e5fa4d94713a840fb32b589f4d9224d55eeec3ae62"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/t3-attempt1/stderr.log": {
+      "bytes": 342,
+      "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a"
+    },
+    "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/t3-attempt1/stdout.log": {
+      "bytes": 20391,
+      "sha256": "a1a45b0a52467936f5cb4712800baef7140f944a9598de9effe0230b145ab721"
+    }
+  }
+}

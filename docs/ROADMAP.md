@@ -1,5 +1,7 @@
 # ROADMAP.md — Lộ trình nghiên cứu và phát triển AlgoSim
 
+**LOCAL Session 1 continuation (2026-10-22):** owner handoff and candidate evidence in `evaluation/geometry/runs/backend-hybrid-continuation/`; explicit user P0–P6 gap matrix there supplements this older roadmap numbering. Next research decision is cut_edges/identity/Adapter /3 compatibility; live extraction and production enablement need separate GO.
+
 > **Tài liệu Canonical cho Roadmap của đề tài Khóa luận.**
 > Mọi bước tiếp theo phải bám sát thứ tự ưu tiên P0 → P6.
 > Bước hành động tiếp theo duy nhất (Single Canonical Next Action) được khai báo tại Mục 0.

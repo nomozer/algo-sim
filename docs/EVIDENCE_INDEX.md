@@ -1,5 +1,39 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = backend-hybrid-continuation
+
+REPORT = docs/evaluation/geometry/runs/backend-hybrid-continuation/BACKEND_HYBRID_ARCHITECTURE_DECISION.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/backend-hybrid-continuation/
+CLASSIFICATION = DEVELOPMENT_EVALUATION_NOT_BLIND; OFFLINE_REPLAY; research Session 1 continuation only. Recovered original Full T3 FAIL (C2b missing run_candidate_hash), preserved unchanged; metadata-only correction followed by independently reviewed bridge safety fixes. No live NLP evidence.
+CODE_COMMIT = 8b5916e7309a8939f0c462367120360391ccb70c (inherited); ac719a5b597b4899c8ef1e159ca595e99d962a6c and 4f3aaea5e0d3b5c1fe1537bd3ddf4bc73cbe88ee (safety fixes)
+VERIFICATION = docs/evaluation/geometry/runs/backend-hybrid-continuation/recovery-inventory.json; docs/evaluation/geometry/runs/backend-hybrid-continuation/planner-composition-final.json; docs/evaluation/geometry/runs/backend-hybrid-continuation/independent-review.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = typedfactnext-planner-bridge (candidate metadata, source/architecture claim qualification and missing Session 1 handoff; original result files unchanged)
+CORRECTED_BY = backend-hybrid-bridge-safety
+
+## WAVE_ID = backend-hybrid-bridge-safety
+
+REPORT = docs/evaluation/geometry/runs/backend-hybrid-continuation/BACKEND_HYBRID_INTEGRATION_GAP_MATRIX.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/backend-hybrid-bridge-safety/
+CLASSIFICATION = OFFLINE_REPLAY; local backend boundary correction, same campaign and branch. Frozen provider contracts unchanged. Final candidate/T3 evidence is linked by continuation handoff when available.
+CODE_COMMIT = 4f3aaea5e0d3b5c1fe1537bd3ddf4bc73cbe88ee
+VERIFICATION = docs/evaluation/geometry/runs/backend-hybrid-bridge-safety/candidate_divergence.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = backend-hybrid-continuation (candidate metadata chain now follows corrected product bytes)
+CORRECTED_BY = NONE
+
+## WAVE_ID = typedfactnext-planner-bridge
+
+REPORT = docs/evaluation/geometry/runs/typedfactnext-planner-bridge/PLANNER_COMPOSITION_EVALUATION.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/typedfactnext-planner-bridge/
+CLASSIFICATION = DEVELOPMENT_EVALUATION_NOT_BLIND; original Session 1 product and evaluation; Full T3 attempt 1 FAIL (1 failed, 11492 passed), not PASS
+CODE_COMMIT = 8b5916e7309a8939f0c462367120360391ccb70c
+VERIFICATION = docs/evaluation/geometry/runs/typedfactnext-planner-bridge/planner-composition-evaluation.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = simulation-demo6b-renderer-fix (candidate divergence only; original bytes unchanged)
+CORRECTED_BY = backend-hybrid-continuation
+
+
 ## WAVE_ID = SIMULATION_DEMO6B_RENDERER_FIX_W01
 
 REPORT = docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/report.md
@@ -9,7 +43,7 @@ CODE_COMMIT = 1ca20f4f51457f3457802bca042af76accd13698 (new renderer-fixed produ
 VERIFICATION = docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/raw-log-size-reconciliation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/candidate-and-browser-inventory-reconciliation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser-original-runner/validation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/browser/validation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/t3/validation.json + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/independent-review.md + docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/archive-integrity.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = SIMULATION_EVIDENCE_REPAIR_W01 (resolves open IMPORTANT finding on demo6b td_sec_axial visibility & camera reset diff, and additively corrects prose byte-size table in simulation-evidence-repair/report.md without mutating historical files)
-CORRECTED_BY = NONE
+CORRECTED_BY = typedfactnext-planner-bridge
 
 ## WAVE_ID = SIMULATION_EVIDENCE_REPAIR_W01
 

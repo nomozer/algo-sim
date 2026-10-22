@@ -1,0 +1,21 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "backend-hybrid-bridge-safety",
+  "corrects": "docs/evaluation/geometry/runs/backend-hybrid-continuation/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "previous_candidate_hash": "2711d78e401234a2bea98a983d94fe1b29973b4482b407c5529307e38f67b16d",
+  "current_candidate_hash": "22c4fc6de9350cfee55d3eb4a4b3497410214ba39ac18c2f9a5db4384631ef51",
+  "current_measured_files": 115,
+  "current_product_commit": "4f3aaea5e0d3b5c1fe1537bd3ddf4bc73cbe88ee",
+  "diverged": true,
+  "reason": "Local continuation independent-review fixes: validate qualified vertex namespaces and edge-map keys; typed refusals for malformed operands; preserve and check explicit unit and source-gated plane identity. No provider schema, engine arithmetic, default route, frontend, cache or historical measurement change. Supersedes metadata-only correction for inherited Session1 bytes.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP: research callable only; no production imports, prompt or analyze envelope change.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: all historical receipts and correction layers preserved; new development replay and new candidate only."
+  }
+}

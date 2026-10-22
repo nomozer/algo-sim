@@ -1,5 +1,7 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+**LOCAL backend continuation (2026-10-22):** `research/hybrid-backend-integration-session1`, product `4f3aaea5` after inherited `8b5916e7`; typed bridge constraints fixed, independently reviewed. Historical T3 remains FAIL; new frozen verification recorded in `evaluation/geometry/runs/backend-hybrid-continuation/`. Scoped research only; no replacement of production or automatic merge.
+
 ## LOCAL RENDERER FIX & RAW-LOG RECONCILIATION (`research/simulation-demo6b-renderer-fix`), 2026-10-21
 
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION
