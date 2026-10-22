@@ -1,0 +1,11 @@
+{
+  "command": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "backend/scripts/freeze_evaluation_candidate.py",
+    "--verify"
+  ],
+  "source_commit": "84c729e0b0df7868dfcc0a6e48cac457d7959e92",
+  "exit_code": 0,
+  "stdout": "Candidate khá»›p báº£n Ä‘Ã£ Ä‘Ã³ng bÄƒng (mÃ£ sáº£n pháº©m: 116 file, 413ee525d20874aaâ€¦).",
+  "stderr": ""
+}
