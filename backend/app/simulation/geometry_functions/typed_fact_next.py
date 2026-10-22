@@ -140,6 +140,66 @@ class SolidSpec(ClosedNextModel):
         return self.vertex_bindings.get(local_label, local_label)
 
 
+#: Argument shape of every premise kind a route compiles (run `hybrid-contract-v2`, P1): "ref" = one vertex reference,
+#: "refs<n>" = a list of at least / exactly n references ("refs2=" exact), "value" = an exact number written as text or
+#: integer, "id" = a solid id; a trailing "?" marks an optional argument. A premise with a known kind and a wrong shape is
+#: an INPUT error refused here, before any route compiles it. Unknown kinds stay the routes' own capability refusal.
+_ARGS_LOI = {
+    "regular_pyramid": {"apex": "ref", "base": "refs3"},
+    "right_prism": {"base": "refs3", "top": "refs3"},
+    "regular_polygon": {"vertices": "refs3", "side": "value?"},
+    "rectangle": {"vertices": "refs4="},
+    "segment_length": {"segment": "refs2=", "value": "value"},
+    "height": {"value": "value", "solid": "id?"},
+    "equal_length": {"segment_a": "refs2=", "segment_b": "refs2="},
+    "perpendicular_line_plane": {"line": "refs2=", "plane": "refs3"},
+    "perpendicular_lines": {"line1": "refs2=", "line2": "refs2="},
+    "face_perpendicular_base": {"face": "refs3", "base": "refs3"},
+    "altitude": {"apex": "ref", "foot": "ref", "solid": "id?"},
+    "midpoint": {"point": "ref", "segment": "refs2="},
+    "divide_segment": {"point": "ref", "segment": "refs2=", "ratio": "value"},
+    "centroid": {"point": "ref", "polygon": "refs3"},
+    "orthogonal_projection": {"point": "ref", "image": "ref", "plane": "refs3"},
+    "orthogonal_projection_line": {"point": "ref", "image": "ref", "line": "refs2="},
+    "intersect_line_line": {"point": "ref", "line1": "refs2=", "line2": "refs2="},
+    "intersect_line_plane": {"point": "ref", "line": "refs2=", "plane": "refs3"},
+}
+for _alias, _goc in (("base_is_square", "regular_polygon"), ("base_is_equilateral_triangle", "regular_polygon"),
+                     ("base_is_regular_polygon", "regular_polygon"), ("base_is_rectangle", "rectangle"),
+                     ("equal_segments", "equal_length"), ("line_perp_plane", "perpendicular_line_plane"),
+                     ("line_perp_line", "perpendicular_lines"), ("plane_perp_base", "face_perpendicular_base"),
+                     ("point_is_midpoint", "midpoint"), ("point_divides_segment", "divide_segment"),
+                     ("point_is_centroid", "centroid"), ("point_is_foot", "orthogonal_projection")):
+    _ARGS_LOI[_alias] = _ARGS_LOI[_goc]
+#: Right angle: two closed alternatives, by which keys are present.
+_ARGS_GOC_VUONG = ({"vertices": "refs3=", "right_at": "ref"}, {"vertex": "ref", "rays": "refs2="})
+
+
+def _hinh_dung(value: Any, shape: str) -> bool:
+    if shape == "ref":
+        return isinstance(value, str) and _QUALIFIED_REF_RE.match(value.strip()) is not None
+    if shape.startswith("refs"):
+        n, exact = int(shape[4:].rstrip("=")), shape.endswith("=")
+        return (isinstance(value, (list, tuple)) and all(_hinh_dung(x, "ref") for x in value)
+                and (len(value) == n if exact else len(value) >= n))
+    if shape == "value":
+        return isinstance(value, int) and not isinstance(value, bool) or isinstance(value, str) and bool(value.strip())
+    return isinstance(value, str) and re.fullmatch(r"[A-Za-z0-9_.:-]+", value) is not None      # "id"
+
+
+def _kiem_args(kind: str, args: dict[str, Any]) -> None:
+    mau = (_ARGS_LOI.get(kind),) if kind not in ("right_angle", "base_is_right_triangle") else _ARGS_GOC_VUONG
+    if mau == (None,):
+        return
+    for m in mau:
+        if set(args) <= set(m) and all(
+                _hinh_dung(args[k], s.rstrip("?")) if k in args and (args[k] is not None or not s.endswith("?"))
+                else s.endswith("?") for k, s in m.items()):
+            return
+    raise TypedFactNextValidationError(
+        "INVALID_PREMISE_ARGS", f"Premise {kind!r} needs args {[dict(m) for m in mau]}, got {sorted(args)}.")
+
+
 class PremiseSpec(ClosedNextModel):
     """Grounded geometric premise supporting solid-qualified references."""
 
@@ -147,6 +207,11 @@ class PremiseSpec(ClosedNextModel):
     args: dict[str, Any] = Field(default_factory=dict)
     quote: NonEmptyText
     solid_id: IdentifierStr | None = None
+
+    @model_validator(mode="after")
+    def _validate_args(self) -> "PremiseSpec":
+        _kiem_args(self.kind, self.args)
+        return self
 
 
 class DerivedPlaneSectionSpec(ClosedNextModel):
@@ -240,6 +305,11 @@ class DerivedPlaneSectionSpec(ClosedNextModel):
         for u, v in self.cut_edges:
             parse_qualified_ref(u)
             parse_qualified_ref(v)
+        for key in self.named_intersections:                 # one edge "U-V" of two references, nothing else
+            ends = key.split("-")
+            if len(ends) != 2 or not all(_QUALIFIED_REF_RE.match(x.strip()) for x in ends):
+                raise TypedFactNextValidationError(
+                    "INVALID_DERIVED_SECTION", f"Section {self.section_id!r}: named intersection key {key!r} is not 'U-V'.")
         return self
 
 

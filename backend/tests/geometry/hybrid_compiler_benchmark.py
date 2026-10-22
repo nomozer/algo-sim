@@ -431,7 +431,7 @@ REFUSAL_CLASS = {
     "BRIDGE_UNSUPPORTED_PLANE_KIND": "unsupported", "BRIDGE_UNSUPPORTED_PREMISE": "unsupported",
     "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY": "unsupported", "BRIDGE_UNSUPPORTED_RELATION": "unsupported",
     "BRIDGE_UNSUPPORTED_LENGTH_UNIT": "unsupported",
-    "INVALID_TYPED_FACT_NEXT": "malformed", "UNKNOWN_VERTEX_REF": "malformed",
+    "INVALID_TYPED_FACT_NEXT": "malformed", "UNKNOWN_VERTEX_REF": "malformed", "INVALID_PREMISE_ARGS": "malformed",
     # malformed facts / plan
     "SCHEMA_INVALID": "malformed", "FACT_INCOMPLETE": "malformed", "UNKNOWN_SOLID": "malformed", "NO_SOLID": "malformed",
     "DUPLICATE_CALL_ID": "malformed", "DEPENDENCY_CYCLE": "dependency", "DANGLING_DEPENDENCY": "dependency",

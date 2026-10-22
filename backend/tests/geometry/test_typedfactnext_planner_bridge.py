@@ -609,10 +609,12 @@ def test_bridge_refuses_what_typedfact_cannot_express(case, code):
 
 
 @pytest.mark.parametrize("case,code", [
-    ("missing_point", "INVALID_TYPED_FACT_NEXT"),
-    ("non_string_point", "INVALID_TYPED_FACT_NEXT"),
-    ("non_sequence_segment", "INVALID_TYPED_FACT_NEXT"),
-    ("invalid_qualified_syntax", "INVALID_QUALIFIED_REF"),
+    # Run `hybrid-contract-v2` (P1): premise argument shapes are now checked by the shared schema at parse time, so these
+    # input errors are refused earlier and more precisely (INVALID_PREMISE_ARGS) — still before any compilation.
+    ("missing_point", "INVALID_PREMISE_ARGS"),
+    ("non_string_point", "INVALID_PREMISE_ARGS"),
+    ("non_sequence_segment", "INVALID_PREMISE_ARGS"),
+    ("invalid_qualified_syntax", "INVALID_PREMISE_ARGS"),
     ("unknown_qualifier", "UNKNOWN_SOLID_ID"),
     ("unknown_local_vertex", "UNKNOWN_VERTEX_REF"),
     ("unknown_named_edge_qualifier", "UNKNOWN_SOLID_ID"),

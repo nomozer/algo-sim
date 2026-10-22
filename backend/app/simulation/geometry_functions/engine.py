@@ -177,23 +177,27 @@ def thu_tu_su_pham(khoi_diem: list[tuple[str, list[dict[str, Any]]]], dinh_khoi:
     return [b for b in khoi_diem if b[0] in can], [b for b in khoi_diem if b[0] not in can]
 
 
-def gop_doi_tuong_trung(khai: list[dict[str, Any]], lenh: list[dict[str, Any]]
+#: Fields of an IR statement that are never a reference to another variable (run `hybrid-contract-v2`, P1).
+_KHONG_THAM_CHIEU = frozenset({"kind", "label", "target_var"})
+
+
+def gop_doi_tuong_trung(khai: list[dict[str, Any]], lenh: list[dict[str, Any]], so_huu: set[str] | frozenset[str]
                         ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
-    """IR canonicalization (run `backend-hybrid-contract-unification`), on the FINAL statement order: an engine-internal
-    `derived_*` line / plane whose construction (IR kind + operand names) repeats one already in the program IS that object
-    — the repeat is dropped and every later read goes to the first. The kernel builds the same object from the same named
-    operands, so values are unchanged; only declarations shrink (each cut vertex used to re-declare the section plane, each
-    foot on a line re-declare that line). Labelled objects are never merged away."""
+    """IR canonicalization (run `backend-hybrid-contract-unification`), on the FINAL statement order: an engine-OWNED line
+    / plane (`so_huu`: names `bien_dich` itself created for an operand, never a source name nor a labelled object) whose
+    construction (IR kind + operand names) repeats one already in the program IS that object — the repeat is dropped and
+    every later reference goes to the first. The kernel builds the same object from the same named operands, so values
+    are unchanged; only declarations shrink. References are rewritten only in reference fields (`_KHONG_THAM_CHIEU`)."""
     dau: dict[tuple, str] = {}
     doi: dict[str, str] = {}
 
-    def ve(x: Any) -> Any:
+    def ve(x: Any, khoa_cha: str = "") -> Any:
         if isinstance(x, str):
-            return doi.get(x, x)
+            return x if khoa_cha in _KHONG_THAM_CHIEU else doi.get(x, x)
         if isinstance(x, dict):
-            return {k: ve(v) for k, v in x.items()}
+            return {k: ve(v, k) for k, v in x.items()}
         if isinstance(x, list):
-            return [ve(v) for v in x]
+            return [ve(v, khoa_cha) for v in x]
         return x
 
     giu = []
@@ -201,7 +205,7 @@ def gop_doi_tuong_trung(khai: list[dict[str, Any]], lenh: list[dict[str, Any]]
         st = ve(st) if doi else st
         if st["kind"] in ("construct_line", "construct_plane"):
             khoa = (st["kind"], st.get("through_a"), st.get("through_b"), tuple(st.get("through") or ()))
-            if khoa in dau and st["target_var"].startswith("derived_") and "label" not in st:
+            if khoa in dau and st["target_var"] in so_huu and "label" not in st:
                 doi[st["target_var"]] = dau[khoa]
                 continue
             dau.setdefault(khoa, st["target_var"])
@@ -1080,6 +1084,7 @@ class _Dung:
     # ── IR ──────────────────────────────────────────────────────────────────
     def bien_dich(self) -> tuple[dict[str, Any], dict[str, str]]:
         self.emitted_lines: set[str] = set()
+        so_huu: set[str] = set()                 # operand lines / planes this compiler names itself (`gop_doi_tuong_trung`)
         khai: list[dict[str, Any]] = []
         lenh: list[dict[str, Any]] = []
         khoi_diem: list[tuple[str, list[dict[str, Any]], list[dict[str, Any]]]] = []
@@ -1097,11 +1102,13 @@ class _Dung:
                     name = prefix + suffix
                     lenh.append(P.construct_line(name, *map(ir_name, labels)))
                     khai.append(P.memory_declaration(name, "line3"))
+                    so_huu.add(name)
                     return name
                 def plane(labels):
                     name = prefix + "_plane"
                     lenh.append({"kind": "construct_plane", "target_var": name, "through": list(map(ir_name, labels[:3]))})
                     khai.append(P.memory_declaration(name, "plane3"))
+                    so_huu.add(name)
                     return name
                 if c.fn == "intersect_line_line":
                     expr = {"kind": c.fn, "line_a": line("_line1", a.line1), "line_b": line("_line2", a.line2)}
@@ -1239,7 +1246,7 @@ class _Dung:
             khai.append(P.memory_declaration(kq, P.KIEU_DAI_LUONG))
             hoi[c.id] = kq
             self.trace.append({"step": "measure", "object": c.fn, "rule": c.fn, "calls": [c.id], "provenance": "DERIVED"})
-        khai, lenh = gop_doi_tuong_trung(khai, lenh)
+        khai, lenh = gop_doi_tuong_trung(khai, lenh, so_huu)
         return {"title": "Dựng hình từ lời gọi hàm có nguồn", "memory_declarations": khai, "statements": lenh}, hoi
 
     def kiem_mat_cat(self) -> None:

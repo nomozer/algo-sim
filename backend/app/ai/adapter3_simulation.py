@@ -178,11 +178,15 @@ def _shared_source_gate(payload: TypedFactNextPayload) -> dict[str, Any]:
     from app.simulation.geometry_functions.typed_fact_next_bridge import bridge
 
     try:
-        k = lap_ke_hoach({"facts": bridge(payload)["facts"]}, payload.problem_text)
+        facts = bridge(payload)["facts"]
     except TuChoi as exc:
         return {"authority": LEGACY_SOURCE_AUTHORITY, "gate_unavailable": exc.code}
-    except (KeyError, TypeError):
+    except (KeyError, TypeError):                        # bridge INPUT parsing only (run `hybrid-contract-v2`, P1)
         raise TuChoi("INVALID_TYPED_FACT_NEXT", "đối số giả thiết bị thiếu hoặc sai kiểu") from None
+    try:
+        k = lap_ke_hoach({"facts": facts}, payload.problem_text)    # a planner fault is ours: it reaches the boundary
+    except TuChoi as exc:
+        return {"authority": LEGACY_SOURCE_AUTHORITY, "gate_unavailable": exc.code}
     read = tuple(q for g in (*k.goals, *k.negated) if g.get("call") for q in g["call"]["source"]["quotes"])
     kiem_nguon(doc_ke_hoach({"calls": k.calls}), payload.problem_text, tuple(k.auxiliary), read)
     return {"authority": SOURCE_GATE_AUTHORITY}
@@ -3170,8 +3174,16 @@ def run_typed_fact_next_route(
             code=exc.code,
             reason=exc.detail,
         )
-    compiler = _Adapter3Compiler(payload)
-    return compiler.run()
+    # Public boundary (run `hybrid-contract-v2`, P1): malformed input is refused by the schema above; a late input-shape
+    # error keeps its own input code; anything else is OUR fault, recorded as a technical refusal — never shown as the
+    # user's data error, never escaping as an exception.
+    try:
+        return _Adapter3Compiler(payload).run()
+    except TypedFactNextValidationError as exc:
+        return Adapter3SimulationResult(status="REFUSED", code=exc.code, reason=exc.detail)
+    except Exception as exc:  # noqa: BLE001 — boundary record of an unexpected internal fault, typed, not a data verdict
+        return Adapter3SimulationResult(status="REFUSED", code="ADAPTER_INTERNAL_ERROR",
+                                        reason=f"{type(exc).__name__}: {exc}")
 
 
 def build_adapter3_simulation_response(
