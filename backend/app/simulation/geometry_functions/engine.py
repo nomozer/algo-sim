@@ -177,6 +177,38 @@ def thu_tu_su_pham(khoi_diem: list[tuple[str, list[dict[str, Any]]]], dinh_khoi:
     return [b for b in khoi_diem if b[0] in can], [b for b in khoi_diem if b[0] not in can]
 
 
+def gop_doi_tuong_trung(khai: list[dict[str, Any]], lenh: list[dict[str, Any]]
+                        ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """IR canonicalization (run `backend-hybrid-contract-unification`), on the FINAL statement order: an engine-internal
+    `derived_*` line / plane whose construction (IR kind + operand names) repeats one already in the program IS that object
+    — the repeat is dropped and every later read goes to the first. The kernel builds the same object from the same named
+    operands, so values are unchanged; only declarations shrink (each cut vertex used to re-declare the section plane, each
+    foot on a line re-declare that line). Labelled objects are never merged away."""
+    dau: dict[tuple, str] = {}
+    doi: dict[str, str] = {}
+
+    def ve(x: Any) -> Any:
+        if isinstance(x, str):
+            return doi.get(x, x)
+        if isinstance(x, dict):
+            return {k: ve(v) for k, v in x.items()}
+        if isinstance(x, list):
+            return [ve(v) for v in x]
+        return x
+
+    giu = []
+    for st in lenh:
+        st = ve(st) if doi else st
+        if st["kind"] in ("construct_line", "construct_plane"):
+            khoa = (st["kind"], st.get("through_a"), st.get("through_b"), tuple(st.get("through") or ()))
+            if khoa in dau and st["target_var"].startswith("derived_") and "label" not in st:
+                doi[st["target_var"]] = dau[khoa]
+                continue
+            dau.setdefault(khoa, st["target_var"])
+        giu.append(st)
+    return [d for d in khai if d["name"] not in doi], giu
+
+
 @dataclass
 class _Khoi:
     name: str
@@ -1207,6 +1239,7 @@ class _Dung:
             khai.append(P.memory_declaration(kq, P.KIEU_DAI_LUONG))
             hoi[c.id] = kq
             self.trace.append({"step": "measure", "object": c.fn, "rule": c.fn, "calls": [c.id], "provenance": "DERIVED"})
+        khai, lenh = gop_doi_tuong_trung(khai, lenh)
         return {"title": "Dựng hình từ lời gọi hàm có nguồn", "memory_declarations": khai, "statements": lenh}, hoi
 
     def kiem_mat_cat(self) -> None:

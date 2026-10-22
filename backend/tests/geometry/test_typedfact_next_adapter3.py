@@ -893,8 +893,19 @@ def test_p5_p6_development_corpus_and_demos_oracle() -> None:
         raw_bytes = demo_path.read_bytes().replace(b"\r\n", b"\n")
         assert hashlib.sha256(raw_bytes).hexdigest() == demo_meta["sha256"]
 
+    # Correction layer (run `backend-hybrid-contract-unification`, CORRECTED_BY in EVIDENCE_INDEX): the frozen corpus stays
+    # byte-identical; the shared Source Gate now decides these. A3-DEV-07 / -08 ask "tính tỉ số thể tích" without naming the
+    # two solids, so the ratio's orientation is not in the source (a source defect the frozen run served). A3-DEV-10 is a
+    # FALSE refusal, kept: the gate's closed grammar does not bind "Dựng lăng trụ, thiết diện bởi (α)" to the one prism —
+    # the gate is not loosened for coverage. A3-DEV-11 still refuses; the gate now speaks first (code order only).
+    corrected = {"A3-DEV-07": ("REFUSED", {"SOURCE_OBJECT_MISMATCH"}), "A3-DEV-08": ("REFUSED", {"SOURCE_OBJECT_MISMATCH"}),
+                 "A3-DEV-10": ("REFUSED", {"SOURCE_OBJECT_MISMATCH"}), "A3-DEV-11": ("REFUSED", {"SOURCE_OBJECT_MISMATCH"})}
     for case in corpus["cases"]:
         res = run_typed_fact_next_route(case["payload"])
+        if case["case_id"] in corrected:
+            status, codes = corrected[case["case_id"]]
+            assert (res.status, res.code in codes, res.scene3d) == (status, True, None), (case["case_id"], res.code)
+            continue
         assert res.status == case["expected_status"], f"Case {case['case_id']} failed: {res.code}"
         if case["expected_status"] == "SERVED":
             assert res.scene3d is not None

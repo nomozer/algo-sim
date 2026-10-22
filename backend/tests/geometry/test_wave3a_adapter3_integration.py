@@ -178,8 +178,12 @@ def test_adapter3_unified_halfspace_containment_refusal() -> None:
     problem_text = (
         "Cho hai hình chóp S.ABC và D.ABC có chung mặt đáy ABC là tam giác vuông cân tại A "
         "với AB = AC = a. Biết SA vuông góc với mặt phẳng (ABC) và SA = a. Đỉnh D của hình chóp "
-        "D.ABC có DA vuông góc với (ABC) và DA = 2a. Tính thể tích phần còn lại."
+        "D.ABC có DA vuông góc với (ABC) và DA = 2a. Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ "
+        "khối chóp D.ABC."
     )
+    # Run `backend-hybrid-contract-unification`: the shared Source Gate now runs first, and the bare "Tính thể tích phần
+    # còn lại" names neither the parent nor the cut solid (SOURCE_OBJECT_MISMATCH). The question names both, so the
+    # refusal under test is again the engine's containment certificate.
     payload = {
         "schema_version": TYPED_FACT_NEXT_SCHEMA_VERSION,
         "problem_text": problem_text,
@@ -291,7 +295,7 @@ def test_adapter3_unified_halfspace_containment_refusal() -> None:
                 "kind": "residual_volume",
                 "parent_solid_id": "pyr_small",
                 "cut_solid_id": "pyr_tall",
-                "quote": "Tính thể tích phần còn lại",
+                "quote": "Tính thể tích phần còn lại của khối chóp S.ABC sau khi cắt bỏ khối chóp D.ABC",
             }
         ],
     }

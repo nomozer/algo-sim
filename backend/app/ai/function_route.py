@@ -132,6 +132,10 @@ def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -
             continue
         an = re.compile(r"(?<![\w'])[A-Z0-9'.]*(?:" + "|".join(map(re.escape, sorted(phu, key=len, reverse=True)))
                         + r")[A-Z0-9'.]*(?![\w'])")
+        # Lateral edges of the derived pyramid (formation expansion `canh_ben_<apex>_<v>`; run
+        # `backend-hybrid-contract-unification`): edges of that solid, not segments of the section.
+        canh_ben = ({f"canh_ben_{ir_name(kd['apex'])}_{ir_name(v)}" for v in kd["base"]} if kd else set())
+        ben = f"Cạnh bên của khối chóp đỉnh {kd['apex']} cắt bởi {ten}" if kd else ""
         for o in canh["objects"]:
             if o["id"] in {ir_name(x) for x in phu} or not an.search(str(o.get("notation") or o.get("label") or "")):
                 continue
@@ -140,8 +144,21 @@ def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -
                 o["role"] = f"Đỉnh {kd['apex']}, đáy là thiết diện bởi {ten}"
             elif o.get("type") in ("polygon3", "section"):
                 doi(o["id"], f"Thiết diện bởi {ten}", f"Dựng thiết diện bởi {ten}.", an)
+            elif o["id"] in canh_ben:
+                doi(o["id"], ben, f"Dựng {ben[:1].lower()}{ben[1:]}.", an)
             else:
                 doi(o["id"], "Đoạn của thiết diện", "Nối các giao điểm của thiết diện.", an)
+            if isinstance(o.get("role"), str) and an.search(o["role"]):
+                o["role"] = an.sub(lambda m: hien.get(m[0], "thiết diện"), o["role"])
+        for e in canh["events"]:                         # the group step building those lateral edges
+            if set(e.get("objects") or ()) & canh_ben:
+                nhom = f"Các cạnh bên của khối chóp đỉnh {kd['apex']} cắt bởi {ten}"
+                cau = f"Dựng {nhom[:1].lower()}{nhom[1:]}."
+                e.update(display_label=nhom, learner_text=cau, explanation=cau)
+                if isinstance(e.get("details"), dict) and "label" in e["details"]:
+                    e["details"]["label"] = nhom
+                if 0 <= e["step_index"] < len(buoc):
+                    buoc[e["step_index"]]["learner_text"] = cau
         for e in canh["events"]:                         # remaining event text naming a fresh label
             for k in ("display_label", "learner_text", "explanation"):
                 if isinstance(e.get(k), str) and an.search(e[k]):

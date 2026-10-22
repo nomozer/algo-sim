@@ -27,7 +27,8 @@ from app.simulation.geometry.predicates import (
     parallel_planes,
     point_on_line,
 )
-from app.simulation.geometry.section import Polyhedron, kiem_mat_phang_don
+from app.simulation.geometry.section import Polyhedron, cross_section, kiem_mat_phang_don, same_section_cycle
+from app.simulation.semantic_program import ir_builders as P
 from app.simulation.geometry_functions.engine import (
     BAC_DAI_LUONG,
     KetQuaTuyen,
@@ -105,6 +106,7 @@ class Adapter3SimulationResult:
     answers: dict[str, str] = field(default_factory=dict)
     answer_exact: dict[str, dict[str, Any]] = field(default_factory=dict)
     length_unit: str | None = None
+    source_verification: dict[str, Any] | None = None
     points: dict[str, tuple[Fraction, Fraction, Fraction]] = field(default_factory=dict)
     metric: dict[str, Any] | None = None
     kernel_check: bool = False
@@ -157,6 +159,33 @@ def _verify_number_in_quote(value_str: str, quote: str, context_id: str) -> None
             f"{context_id}: giá trị {value_str!r} không khớp số nào trong trích dẫn {quote!r}",
             (context_id,),
         )
+
+
+#: Source authority of a served Adapter /3 result (run `backend-hybrid-contract-unification`).
+SOURCE_GATE_AUTHORITY = "registry.kiem_nguon"
+LEGACY_SOURCE_AUTHORITY = "adapter3.substring_legacy"
+
+
+def _shared_source_gate(payload: TypedFactNextPayload) -> dict[str, Any]:
+    """ONE source authority where it can read the payload (run `backend-hybrid-contract-unification`): the stated facts of
+    a polyhedral payload reach the Registry Source Gate (`kiem_nguon`) through the pure bridge and the planner — the path of
+    `run_typed_fact_next_planner_route` minus the engine — before Adapter /3 builds anything. A gate refusal is Adapter /3's
+    refusal, with the gate's code. A payload the bridge / planner cannot express has NO gate verdict: Adapter /3 still runs
+    its legacy quote / number checks and the result says so (`LEGACY_SOURCE_AUTHORITY`) — whether that case must refuse
+    instead is an owner decision (`CONTRACT_DECISION_PROPOSAL.md`, decision D2)."""
+    from app.simulation.geometry_functions.planner import lap_ke_hoach
+    from app.simulation.geometry_functions.registry import kiem_nguon
+    from app.simulation.geometry_functions.typed_fact_next_bridge import bridge
+
+    try:
+        k = lap_ke_hoach({"facts": bridge(payload)["facts"]}, payload.problem_text)
+    except TuChoi as exc:
+        return {"authority": LEGACY_SOURCE_AUTHORITY, "gate_unavailable": exc.code}
+    except (KeyError, TypeError):
+        raise TuChoi("INVALID_TYPED_FACT_NEXT", "đối số giả thiết bị thiếu hoặc sai kiểu") from None
+    read = tuple(q for g in (*k.goals, *k.negated) if g.get("call") for q in g["call"]["source"]["quotes"])
+    kiem_nguon(doc_ke_hoach({"calls": k.calls}), payload.problem_text, tuple(k.auxiliary), read)
+    return {"authority": SOURCE_GATE_AUTHORITY}
 
 
 def _solid_faces(solid: SolidSpec, canonical_map: dict[str, str]) -> list[frozenset[str]]:
@@ -670,6 +699,10 @@ class _Adapter3Compiler:
     def _compile_derived_sections(self) -> None:
         for sec in self.payload.derived_sections:
             _verify_quote_in_problem(sec.quote, self.problem_text, sec.section_id)
+            if sec.plane_kind not in ("through_point_parallel_plane", "through_point_parallel_two_lines",
+                                      "through_point_perpendicular_line"):
+                raise TuChoi("UNSUPPORTED_PLANE_KIND", f"{sec.section_id}: mặt {sec.plane_kind} chưa có phép dựng trên khối "
+                             "đa diện", (sec.section_id,))
             sid = sec.target_solid_id
             solid = self.solid_specs[sid]
             smap = self.solid_local_to_canonical[sid]
@@ -1316,6 +1349,34 @@ class _Adapter3Compiler:
                     (sid,),
                 )
         return certificates
+
+    def _certify_section_boundary(self, dung: _Dung, certificates: list[dict[str, Any]]) -> None:
+        """Closure certificate (run `backend-hybrid-contract-unification`). Adapter /3 reads `/1.cut_edges` as the COMPLETE
+        section boundary in cyclic order, so the cycle it built must BE the exact cross-section of the solid by the plane
+        (`section.cross_section`; rotation / reversal allowed). A partial list — the bridge reading, the edges the source
+        states are cut — or a crossed order is refused, never served as a smaller or self-intersecting polygon."""
+        for sec in self.payload.derived_sections:
+            cycle = self.section_cycles[sec.section_id]
+            k = dung.khoi[self.solid_canonical_name[sec.target_solid_id]]
+            if k.kind == "pyramid":
+                labels, faces = [k.apex, *k.base], P.construct_pyramid("solid", k.apex, k.base)["faces"]
+            else:
+                labels = [*k.base, *k.top]
+                faces = P.construct_prism("solid", k.base, k.top, tuple(zip(k.base, k.top)))["faces"]
+            try:
+                exact = cross_section(Polyhedron(tuple(Vec3(*dung.pts[p]) for p in labels),
+                                                 tuple(tuple(labels.index(p) for p in f) for f in faces)),
+                                      dung._plane(self.section_plane_triples[sec.section_id])).polygon
+            except GeometryError as exc:
+                raise TuChoi(exc.code, str(exc), (sec.section_id,)) from None
+            if not same_section_cycle([Vec3(*dung.pts[p]) for p in cycle], exact):
+                raise TuChoi("SECTION_BOUNDARY_INCOMPLETE",
+                             f"{sec.section_id}: cut_edges cho chu trình {''.join(cycle)} ({len(cycle)} đỉnh) nhưng thiết diện "
+                             f"thật có {len(exact)} đỉnh hoặc thứ tự khác — Adapter /3 đọc cut_edges là TOÀN BỘ biên",
+                             (sec.section_id,))
+            certificates.append({"relation_id": f"closure:{sec.section_id}", "kind": "section_closure", "verified": True,
+                                 "details": {"section_id": sec.section_id, "boundary": list(cycle),
+                                             "rule": "cycle == cross_section(solid, plane) up to rotation/reversal"}})
 
     def _verify_geometric_relations_and_cuts(
         self, dung: _Dung, certificates: list[dict[str, Any]]
@@ -2862,7 +2923,11 @@ class _Adapter3Compiler:
     def run(self) -> Adapter3SimulationResult:
         if any(s.solid_type not in ("pyramid", "prism") for s in self.payload.solids):
             try:
-                return self._run_curved_route()
+                res = self._run_curved_route()
+                if res.status == "SERVED":          # the planner has no curved solids: no shared gate verdict exists
+                    res.source_verification = {"authority": LEGACY_SOURCE_AUTHORITY,
+                                               "gate_unavailable": "BRIDGE_UNSUPPORTED_CURVED"}
+                return res
             except TuChoi as exc:
                 return Adapter3SimulationResult(
                     status="REFUSED",
@@ -2872,6 +2937,7 @@ class _Adapter3Compiler:
                 )
         dung: _Dung | None = None
         try:
+            source_verification = _shared_source_gate(self.payload)
             self._compile_solids()
             self._compile_premises()
             self._compile_derived_sections()
@@ -2923,6 +2989,7 @@ class _Adapter3Compiler:
 
             dung.bo_cuc_day()
             dung.giai_phu_thuoc()
+            self._certify_section_boundary(dung, rel_certificates)
             dung.mat_phu = self.mat_phu
             dung.ten_mat_phu = self.ten_mat_phu
             dung.kiem()
@@ -3058,6 +3125,7 @@ class _Adapter3Compiler:
                 "verified_relations": rel_certificates,
                 "simulation_goals": sim_goal_outcomes,
                 "math_goals": math_results,
+                "source_verification": source_verification,
             }
 
             return Adapter3SimulationResult(
@@ -3067,6 +3135,7 @@ class _Adapter3Compiler:
                 solids=solid_descriptors,
                 derived_identities=[d.model_dump() for d in self.derived_identities],
                 verified_relations=rel_certificates,
+                source_verification=source_verification,
                 simulation_goals=sim_goal_outcomes,
                 math_goals=math_results,
                 answers=answers,
@@ -3129,6 +3198,7 @@ def build_adapter3_simulation_response(
         "solids": res.solids,
         "derived_identities": res.derived_identities,
         "verified_relations": res.verified_relations,
+        "source_verification": res.source_verification,
         "simulation_goals": res.simulation_goals,
         "math_goals": res.math_goals,
         "answers": res.answers,

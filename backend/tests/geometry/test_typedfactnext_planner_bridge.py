@@ -366,8 +366,16 @@ def test_teaching_expansion_over_the_ir_budget_is_skipped_and_recorded_not_refus
     assert [s["rule"] for s in r.trace if s.get("step") == "formation_budget"] == ["pedagogical_expansion_skipped"]
 
 
-def test_a_compiled_program_over_the_ir_budget_is_a_typed_refusal():
-    text, facts = _square_case("vuông góc với SA")        # ⊥ a line adds four auxiliary points: over the budget
+def test_a_compiled_program_over_the_ir_budget_is_a_typed_refusal(monkeypatch):
+    # Run `backend-hybrid-contract-unification`: this plan was 33 declarations only because each cut re-declared the
+    # section plane and each foot re-declared SA; canonicalized it is 30 and serves. The refusal path itself is kept under
+    # test by a budget one below the program's real size.
+    import app.simulation.semantic_program.validator as V
+
+    text, facts = _square_case("vuông góc với SA")
+    r = run_fact_route(text, facts)
+    assert r.status == "SERVED" and len(r.program["memory_declarations"]) == 30, (r.code, r.reason)
+    monkeypatch.setattr(V, "MAX_MEMORY_DECLARATIONS", 29)
     r = run_fact_route(text, facts)
     assert (r.status, r.code) == ("REFUSED", "IR_MEMORY_BUDGET_EXCEEDED"), (r.code, r.reason)
 
@@ -477,7 +485,11 @@ def test_cut_vertices_and_their_operand_planes_speak_the_source_plane_name(case)
     assert not [s for s in learner if ky in s or "mặt phẳng qua" in s]
     dup = [s["learner_text"] for s in sc["formation"]["steps"] if any(f.endswith("_plane") and f.startswith("derived_")
                                                                        for f in s["focus_ids"])]
-    assert dup == ["Xét mặt phẳng (α) để tìm giao điểm với SB.", "Xét mặt phẳng (α) để tìm giao điểm với SC."]
+    # Run `backend-hybrid-contract-unification`: the two cuts read ONE plane object (IR canonicalization), so the plane is
+    # "considered" once; each cut keeps its own step naming its edge and (α).
+    assert dup == ["Xét mặt phẳng (α) để tìm giao điểm với SB."]
+    cuts = [s["learner_text"] for s in sc["formation"]["steps"] if "giao điểm của S" in s["learner_text"]]
+    assert [("SB" in x, "SC" in x, "(α)" in x) for x in cuts] == [(True, False, True), (False, True, True)]
     if case == "named":
         assert next(o for o in sc["objects"] if o["id"] == "N")["role"] == "Giao điểm của SB và (α)"
 
