@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = backend-hybrid-contract-unification
+
+REPORT = docs/evaluation/geometry/runs/backend-hybrid-contract-unification/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/backend-hybrid-contract-unification/
+CLASSIFICATION = DEVELOPMENT_EVALUATION_NOT_BLIND; OFFLINE_REPLAY; Backend Hybrid Session 2 (`GO_BACKEND_SESSION2_LOCAL_CONTRACT_RESEARCH`), local research only. Adapter /3 closure certificate + shared Registry Source Gate (legacy-labelled where the bridge cannot express the payload) + engine IR canonicalization. Session 1 family: bridge 49/49 (was 40/49), Adapter /3 same-payload wrong 18→0, invalid served 3→1 (owner decision D2), crash 1→0; contract parity 316 payloads 0 wrong / 0 disagreements. Contract change NOT implemented: CONTRACT_DECISION_PROPOSAL.md (D1–D6). No holdout, no live NLP.
+CODE_COMMIT = 3553e4d45991954dd0fb8c0ac30bf5fb79a3ff51 (product); 5beb0e86 (candidate freeze, measured_system 96962736b4aed18ec13afd73d06fab822fe398d7bf5939babc9a3733e45c1af4, 115 files)
+VERIFICATION = docs/evaluation/geometry/runs/backend-hybrid-contract-unification/evaluation.json; docs/evaluation/geometry/runs/backend-hybrid-contract-unification/session1-family-replay.json; docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/red/red-receipts.json; docs/evaluation/geometry/runs/backend-hybrid-contract-unification/handoff.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = backend-hybrid-taxonomy-completion (candidate chain tip); TYPEDFACT_NEXT_ADAPTER3_SIMULATION (dev-corpus expectations A3-DEV-07/08 source defects served, A3-DEV-10 kept false refusal, A3-DEV-11 code order — frozen corpus bytes unchanged); backend-hybrid-continuation (Adapter /3 figures in EVALUATION_SUMMARY.md describe 82d3d255, not this code)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = backend-hybrid-continuation
 
 REPORT = docs/evaluation/geometry/runs/backend-hybrid-continuation/BACKEND_HYBRID_ARCHITECTURE_DECISION.md
@@ -31,7 +42,7 @@ CODE_COMMIT = b6684564ac4596da30819da5fcc4c875ebb1a640 (product); 76a7ce33cc955a
 VERIFICATION = docs/evaluation/geometry/runs/backend-hybrid-taxonomy-completion/candidate_divergence.json; docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/full-t3-attempt3/execution.json; docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/post-t3-freeze-verify/execution.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = backend-hybrid-bridge-safety (candidate metadata chain and refusal taxonomy completion for Full T3 Attempt 2 failures)
-CORRECTED_BY = NONE
+CORRECTED_BY = backend-hybrid-contract-unification
 
 ## WAVE_ID = typedfactnext-planner-bridge
 
@@ -111,7 +122,7 @@ CODE_COMMIT = 54e61480 · 61d6f44b (final product); candidate freeze 09f97a28 (m
 VERIFICATION = docs/evaluation/geometry/runs/typedfact-next-adapter3-simulation/verification/authoritative-t3.json + verification/independent-review.md (INDEPENDENT_REVIEW_PASS)
 MODEL_REQUEST_COUNT = 0 (offline only; ALLOW_LIVE_AI=0)
 CORRECTS = COMPOSITE_GEOMETRY (candidate_divergence.json only; historical measurements unchanged)
-CORRECTED_BY = WAVE3A_ADAPTER3_INTEGRATION (candidate identity reconciliation layer; no historical measurement rewrite)
+CORRECTED_BY = WAVE3A_ADAPTER3_INTEGRATION (candidate identity reconciliation layer; no historical measurement rewrite); backend-hybrid-contract-unification (dev-corpus expectation layer A3-DEV-07/08/10/11; corpus bytes unchanged)
 
 
 ## WAVE_ID = VOLUME_REASONING

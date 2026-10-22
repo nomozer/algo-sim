@@ -1,0 +1,2511 @@
+{
+ "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+ "provider_calls": 0,
+ "groups": {
+  "base": [
+   "B-equilateral0-t12-parallel",
+   "B-equilateral0-t12-perpendicular",
+   "B-equilateral0-t13-parallel",
+   "B-equilateral0-t13-perpendicular",
+   "B-equilateral0-t23-parallel",
+   "B-equilateral0-t23-perpendicular",
+   "B-equilateral1-t12-parallel",
+   "B-equilateral1-t12-perpendicular",
+   "B-equilateral1-t13-parallel",
+   "B-equilateral1-t13-perpendicular",
+   "B-equilateral1-t23-parallel",
+   "B-equilateral1-t23-perpendicular",
+   "B-square2-t12-parallel",
+   "B-square2-t12-perpendicular",
+   "B-square2-t13-parallel",
+   "B-square2-t13-perpendicular",
+   "B-square2-t23-parallel",
+   "B-square2-t23-perpendicular",
+   "B-square3-t12-parallel",
+   "B-square3-t12-perpendicular",
+   "B-square3-t13-parallel",
+   "B-square3-t13-perpendicular",
+   "B-square3-t23-parallel",
+   "B-square3-t23-perpendicular",
+   "B-rectangle4-t12-parallel",
+   "B-rectangle4-t12-perpendicular",
+   "B-rectangle4-t13-parallel",
+   "B-rectangle4-t13-perpendicular",
+   "B-rectangle4-t23-parallel",
+   "B-rectangle4-t23-perpendicular",
+   "B-right5-t12-parallel",
+   "B-right5-t12-perpendicular",
+   "B-right5-t13-parallel",
+   "B-right5-t13-perpendicular",
+   "B-right5-t23-parallel",
+   "B-right5-t23-perpendicular"
+  ],
+  "mr": [
+   "MR-ref",
+   "MR-relabel",
+   "MR-premise-order",
+   "MR-goal-order",
+   "MR-inverted",
+   "MR-scaled",
+   "MR-plane-equivalence"
+  ],
+  "construction_only": [
+   "C-equilateral-parallel",
+   "C-equilateral-perpendicular",
+   "C-square-parallel",
+   "C-square-perpendicular",
+   "C-right-parallel",
+   "C-right-perpendicular"
+  ],
+  "negative": [
+   "N-contradictory-length",
+   "N-missing-height",
+   "N-degenerate-parallel-edge",
+   "N-swapped-names",
+   "N-anonymous-ratio-operand",
+   "N-unread-condition"
+  ],
+  "bridge_scope": [
+   "S-cut-edges-not-in-payload",
+   "S-shared-label-identity",
+   "S-plane-equation",
+   "S-curved-solid",
+   "S-open-cycle"
+  ]
+ },
+ "aggregate": {
+  "cases": 60,
+  "expected_served": 49,
+  "expected_refused_invalid": 6,
+  "expected_refused_bridge_scope": 5,
+  "goal_coverage": "40/49",
+  "not_covered_codes": {
+   "IR_MEMORY_BUDGET_EXCEEDED": 9
+  },
+  "exact_correct_of_served_with_answers": "34/34",
+  "wrong_served": 0,
+  "refusal_correct": "11/11",
+  "scene_valid": "40/40",
+  "label_leaks": 0,
+  "visible_duplicate_planes": 0,
+  "planner_plane_name_in_text": 0,
+  "served_with_visible_auxiliary_H_points": 40,
+  "selection_counts": {
+   "reuse_through_point": 40,
+   "named_intersection": 77,
+   "fresh_intersection": 14
+  },
+  "quotes_in_source": "40/40",
+  "planner_selected_operations_mean": 5.92,
+  "dag_depth_max": 5,
+  "dag_depth_min": 4,
+  "vertex_reuse_rate": "40/131",
+  "plane_constructions_per_served": [
+   1
+  ],
+  "distinct_composition_patterns": [
+   "[[\"intersect_line_plane\", \"orthogonal_projection_line\", \"translate_point\"], [\"reuse_through_point\", \"fresh_intersection\", \"fresh_intersection\", \"fresh_intersection\"]]",
+   "[[\"intersect_line_plane\", \"orthogonal_projection_line\", \"translate_point\"], [\"reuse_through_point\", \"fresh_intersection\", \"fresh_intersection\"]]",
+   "[[\"intersect_line_plane\", \"orthogonal_projection_line\", \"translate_point\"], [\"reuse_through_point\", \"named_intersection\", \"named_intersection\"]]",
+   "[[\"intersect_line_plane\", \"translate_point\"], [\"reuse_through_point\", \"fresh_intersection\", \"fresh_intersection\", \"fresh_intersection\"]]",
+   "[[\"intersect_line_plane\", \"translate_point\"], [\"reuse_through_point\", \"fresh_intersection\", \"fresh_intersection\"]]",
+   "[[\"intersect_line_plane\", \"translate_point\"], [\"reuse_through_point\", \"named_intersection\", \"named_intersection\", \"named_intersection\"]]",
+   "[[\"intersect_line_plane\", \"translate_point\"], [\"reuse_through_point\", \"named_intersection\", \"named_intersection\"]]"
+  ],
+  "seconds_p50": 0.0364,
+  "seconds_max": 0.1505,
+  "metamorphic_relations": {
+   "relabel_invariance": true,
+   "premise_order_invariance": true,
+   "goal_order_invariance": true,
+   "ratio_inversion_reciprocal": true,
+   "scaling_ratio_invariant_residual_k3": true,
+   "parallel_base_equals_perpendicular_SA": true
+  },
+  "adapter3": {
+   "served": 55,
+   "wrong_served": 3,
+   "exact_correct_when_served": "43/43",
+   "served_invalid": [
+    "N-swapped-names",
+    "N-anonymous-ratio-operand",
+    "N-unread-condition"
+   ],
+   "served_bridge_scope": [
+    "S-cut-edges-not-in-payload",
+    "S-shared-label-identity",
+    "S-open-cycle"
+   ],
+   "crashes": [
+    [
+     "S-plane-equation",
+     "AssertionError"
+    ]
+   ],
+   "same_payload_wrong_served": [
+    "B-square2-t12-parallel",
+    "B-square2-t12-perpendicular",
+    "B-square2-t13-parallel",
+    "B-square2-t13-perpendicular",
+    "B-square2-t23-parallel",
+    "B-square2-t23-perpendicular",
+    "B-square3-t12-parallel",
+    "B-square3-t12-perpendicular",
+    "B-square3-t13-parallel",
+    "B-square3-t13-perpendicular",
+    "B-square3-t23-parallel",
+    "B-square3-t23-perpendicular",
+    "B-rectangle4-t12-parallel",
+    "B-rectangle4-t12-perpendicular",
+    "B-rectangle4-t13-parallel",
+    "B-rectangle4-t13-perpendicular",
+    "B-rectangle4-t23-parallel",
+    "B-rectangle4-t23-perpendicular"
+   ],
+   "same_payload_served": 21
+  }
+ },
+ "rows": [
+  {
+   "id": "B-equilateral0-t12-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.1505,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 13,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-equilateral0-t12-perpendicular",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.04,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "orthogonal_projection_line",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 15,
+   "planner_selected_operations": 7,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 4,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-equilateral0-t13-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0325,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 13,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-equilateral0-t13-perpendicular",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0353,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "orthogonal_projection_line",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 15,
+   "planner_selected_operations": 7,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 4,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-equilateral0-t23-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0309,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 13,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-equilateral0-t23-perpendicular",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0346,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "orthogonal_projection_line",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 15,
+   "planner_selected_operations": 7,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 4,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-equilateral1-t12-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0298,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 13,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-equilateral1-t12-perpendicular",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0346,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "orthogonal_projection_line",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 15,
+   "planner_selected_operations": 7,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 4,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-equilateral1-t13-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0305,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 13,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-equilateral1-t13-perpendicular",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0364,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "orthogonal_projection_line",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 15,
+   "planner_selected_operations": 7,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 4,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-equilateral1-t23-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0285,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 13,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-equilateral1-t23-perpendicular",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.039,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "orthogonal_projection_line",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 15,
+   "planner_selected_operations": 7,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 4,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-square2-t12-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "1/16",
+      "g_res": "5a³/16"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0383,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 14,
+   "planner_selected_operations": 6,
+   "dag_depth": 5,
+   "vertex_needs": 4,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-square2-t12-perpendicular",
+   "expect": "SERVED",
+   "status": "REFUSED",
+   "code": "IR_MEMORY_BUDGET_EXCEEDED",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "1/16",
+      "g_res": "5a³/16"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0394,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-square2-t13-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "1/54",
+      "g_res": "53a³/162"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0539,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 14,
+   "planner_selected_operations": 6,
+   "dag_depth": 5,
+   "vertex_needs": 4,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-square2-t13-perpendicular",
+   "expect": "SERVED",
+   "status": "REFUSED",
+   "code": "IR_MEMORY_BUDGET_EXCEEDED",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "1/54",
+      "g_res": "53a³/162"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0516,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-square2-t23-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "4/27",
+      "g_res": "23a³/81"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0586,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 14,
+   "planner_selected_operations": 6,
+   "dag_depth": 5,
+   "vertex_needs": 4,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-square2-t23-perpendicular",
+   "expect": "SERVED",
+   "status": "REFUSED",
+   "code": "IR_MEMORY_BUDGET_EXCEEDED",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "4/27",
+      "g_res": "23a³/81"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0407,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-square3-t12-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "1/16",
+      "g_res": "5a³/4"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0572,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 14,
+   "planner_selected_operations": 6,
+   "dag_depth": 5,
+   "vertex_needs": 4,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-square3-t12-perpendicular",
+   "expect": "SERVED",
+   "status": "REFUSED",
+   "code": "IR_MEMORY_BUDGET_EXCEEDED",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "1/16",
+      "g_res": "5a³/4"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0346,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-square3-t13-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "1/54",
+      "g_res": "106a³/81"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.056,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 14,
+   "planner_selected_operations": 6,
+   "dag_depth": 5,
+   "vertex_needs": 4,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-square3-t13-perpendicular",
+   "expect": "SERVED",
+   "status": "REFUSED",
+   "code": "IR_MEMORY_BUDGET_EXCEEDED",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "1/54",
+      "g_res": "106a³/81"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0567,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-square3-t23-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "4/27",
+      "g_res": "92a³/81"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0634,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 14,
+   "planner_selected_operations": 6,
+   "dag_depth": 5,
+   "vertex_needs": 4,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-square3-t23-perpendicular",
+   "expect": "SERVED",
+   "status": "REFUSED",
+   "code": "IR_MEMORY_BUDGET_EXCEEDED",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "4/27",
+      "g_res": "92a³/81"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0385,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-rectangle4-t12-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "1/16",
+      "g_res": "15/2"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0556,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 16,
+   "planner_selected_operations": 6,
+   "dag_depth": 5,
+   "vertex_needs": 4,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-rectangle4-t12-perpendicular",
+   "expect": "SERVED",
+   "status": "REFUSED",
+   "code": "IR_MEMORY_BUDGET_EXCEEDED",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "1/16",
+      "g_res": "15/2"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0373,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-rectangle4-t13-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "1/54",
+      "g_res": "212/27"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0829,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 16,
+   "planner_selected_operations": 6,
+   "dag_depth": 5,
+   "vertex_needs": 4,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-rectangle4-t13-perpendicular",
+   "expect": "SERVED",
+   "status": "REFUSED",
+   "code": "IR_MEMORY_BUDGET_EXCEEDED",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "1/54",
+      "g_res": "212/27"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0417,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-rectangle4-t23-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "4/27",
+      "g_res": "184/27"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.057,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 16,
+   "planner_selected_operations": 6,
+   "dag_depth": 5,
+   "vertex_needs": 4,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-rectangle4-t23-perpendicular",
+   "expect": "SERVED",
+   "status": "REFUSED",
+   "code": "IR_MEMORY_BUDGET_EXCEEDED",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "4/27",
+      "g_res": "184/27"
+     },
+     "exact_correct": false
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0355,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-right5-t12-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0461,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 15,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-right5-t12-perpendicular",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0442,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "orthogonal_projection_line",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 17,
+   "planner_selected_operations": 7,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 4,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-right5-t13-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0563,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 15,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-right5-t13-perpendicular",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0514,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "orthogonal_projection_line",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 17,
+   "planner_selected_operations": 7,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 4,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-right5-t23-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0361,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 15,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "B-right5-t23-perpendicular",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0571,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "orthogonal_projection_line",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 17,
+   "planner_selected_operations": 7,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 4,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "MR-ref",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0374,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 13,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "MR-relabel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0475,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 13,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "MR-premise-order",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0358,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 13,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "MR-goal-order",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.036,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 13,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "MR-inverted",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0436,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 12,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "MR-scaled",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0366,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 13,
+   "planner_selected_operations": 5,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "MR-plane-equivalence",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "exact_correct": true,
+    "wrong_served": false
+   },
+   "seconds": 0.0501,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "orthogonal_projection_line",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "named_intersection",
+     "named_intersection"
+    ]
+   ],
+   "planner_calls": 15,
+   "planner_selected_operations": 7,
+   "dag_depth": 5,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 4,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "C-equilateral-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.0285,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "fresh_intersection",
+     "fresh_intersection"
+    ]
+   ],
+   "planner_calls": 11,
+   "planner_selected_operations": 5,
+   "dag_depth": 4,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [
+    "I",
+    "I1"
+   ],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "C-equilateral-perpendicular",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.0234,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "orthogonal_projection_line",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "fresh_intersection",
+     "fresh_intersection"
+    ]
+   ],
+   "planner_calls": 13,
+   "planner_selected_operations": 7,
+   "dag_depth": 4,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [
+    "I",
+    "I1"
+   ],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 4,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "C-square-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {}
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.0315,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "fresh_intersection",
+     "fresh_intersection",
+     "fresh_intersection"
+    ]
+   ],
+   "planner_calls": 12,
+   "planner_selected_operations": 6,
+   "dag_depth": 4,
+   "vertex_needs": 4,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [
+    "I",
+    "I1",
+    "I2"
+   ],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "C-square-perpendicular",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {}
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.0244,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "orthogonal_projection_line",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "fresh_intersection",
+     "fresh_intersection",
+     "fresh_intersection"
+    ]
+   ],
+   "planner_calls": 14,
+   "planner_selected_operations": 8,
+   "dag_depth": 4,
+   "vertex_needs": 4,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [
+    "I",
+    "I1",
+    "I2"
+   ],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 4,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "C-right-parallel",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.0209,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "fresh_intersection",
+     "fresh_intersection"
+    ]
+   ],
+   "planner_calls": 13,
+   "planner_selected_operations": 5,
+   "dag_depth": 4,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [
+    "I",
+    "I1"
+   ],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 2,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "C-right-perpendicular",
+   "expect": "SERVED",
+   "status": "SERVED",
+   "code": null,
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.0256,
+   "exact_correct": true,
+   "pattern": [
+    [
+     "intersect_line_plane",
+     "orthogonal_projection_line",
+     "translate_point"
+    ],
+    [
+     "reuse_through_point",
+     "fresh_intersection",
+     "fresh_intersection"
+    ]
+   ],
+   "planner_calls": 15,
+   "planner_selected_operations": 7,
+   "dag_depth": 4,
+   "vertex_needs": 3,
+   "vertex_reused": 1,
+   "plane_constructions": 1,
+   "fresh_labels": [
+    "I",
+    "I1"
+   ],
+   "scene_valid": true,
+   "scene_problem": "",
+   "label_leaks": 0,
+   "planner_plane_name_in_text": 0,
+   "visible_duplicate_planes": 0,
+   "visible_auxiliary_plane_points": 4,
+   "quotes_in_source": true,
+   "wrong_served": false,
+   "refusal_correct": false
+  },
+  {
+   "id": "N-contradictory-length",
+   "expect": "REFUSED",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "adapter3": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.0108,
+   "wrong_served": false,
+   "refusal_correct": true
+  },
+  {
+   "id": "N-missing-height",
+   "expect": "REFUSED",
+   "status": "REFUSED",
+   "code": "MISSING_DIMENSION",
+   "adapter3": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.0087,
+   "wrong_served": false,
+   "refusal_correct": true
+  },
+  {
+   "id": "N-degenerate-parallel-edge",
+   "expect": "REFUSED",
+   "status": "REFUSED",
+   "code": "PARALLEL_NO_INTERSECTION",
+   "adapter3": {
+    "status": "REFUSED",
+    "code": "PARALLEL_NO_INTERSECTION",
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.01,
+   "wrong_served": false,
+   "refusal_correct": true
+  },
+  {
+   "id": "S-cut-edges-not-in-payload",
+   "expect": "REFUSED_BRIDGE_SCOPE",
+   "status": "REFUSED",
+   "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "SERVED",
+     "code": null,
+     "answers": {
+      "g_ratio": "1/8"
+     }
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.0002,
+   "wrong_served": false,
+   "refusal_correct": true
+  },
+  {
+   "id": "N-swapped-names",
+   "expect": "REFUSED",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "wrong_served": true
+   },
+   "seconds": 0.0041,
+   "wrong_served": false,
+   "refusal_correct": true
+  },
+  {
+   "id": "S-shared-label-identity",
+   "expect": "REFUSED_BRIDGE_SCOPE",
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.0002,
+   "wrong_served": false,
+   "refusal_correct": true
+  },
+  {
+   "id": "S-plane-equation",
+   "expect": "REFUSED_BRIDGE_SCOPE",
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+   "adapter3": {
+    "status": "CRASH",
+    "code": "AssertionError",
+    "same_payload": {
+     "status": "CRASH",
+     "code": "AssertionError",
+     "answers": {}
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.0002,
+   "wrong_served": false,
+   "refusal_correct": true
+  },
+  {
+   "id": "S-curved-solid",
+   "expect": "REFUSED_BRIDGE_SCOPE",
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_CURVED",
+   "adapter3": {
+    "status": "REFUSED",
+    "code": "MISSING_CURVED_DIMENSION",
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "MISSING_CURVED_DIMENSION",
+     "answers": {}
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.0001,
+   "wrong_served": false,
+   "refusal_correct": true
+  },
+  {
+   "id": "N-anonymous-ratio-operand",
+   "expect": "REFUSED",
+   "status": "REFUSED",
+   "code": "UNKNOWN_LABEL",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "wrong_served": true
+   },
+   "seconds": 0.0027,
+   "wrong_served": false,
+   "refusal_correct": true
+  },
+  {
+   "id": "S-open-cycle",
+   "expect": "REFUSED_BRIDGE_SCOPE",
+   "status": "REFUSED",
+   "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "wrong_served": false
+   },
+   "seconds": 0.0012,
+   "wrong_served": false,
+   "refusal_correct": true
+  },
+  {
+   "id": "N-unread-condition",
+   "expect": "REFUSED",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "same_payload": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "answers": {}
+    },
+    "wrong_served": true
+   },
+   "seconds": 0.0023,
+   "wrong_served": false,
+   "refusal_correct": true
+  }
+ ]
+}

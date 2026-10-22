@@ -1,5 +1,15 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Backend Hybrid Session 2 — contract unification (`research/hybrid-backend-session2-contract`, LOCAL research, Hybrid off)
+
+Run `docs/evaluation/geometry/runs/backend-hybrid-contract-unification/` (report, `CONTRACT_DECISION_PROPOSAL.md`). No new module.
+
+| path | owns | tests |
+|---|---|---|
+| `backend/app/ai/adapter3_simulation.py` | `_Adapter3Compiler._certify_section_boundary` (Adapter /3 reads `/1.cut_edges` as the complete boundary and must prove it: cycle == `section.cross_section`, else `SECTION_BOUNDARY_INCOMPLETE`); `_shared_source_gate` (bridge → planner → `registry.kiem_nguon` before compiling; gate refusal binding) + `SOURCE_GATE_AUTHORITY` / `LEGACY_SOURCE_AUTHORITY` and `Adapter3SimulationResult.source_verification`; `UNSUPPORTED_PLANE_KIND` for polyhedral plane kinds without a construction | `backend/tests/geometry/test_hybrid_contract_unification.py` |
+| `backend/app/simulation/geometry_functions/engine.py` | `gop_doi_tuong_trung` (end of `_Dung.bien_dich`): one declaration per identical engine-internal `derived_*` line/plane; labelled objects never merged; IR budget unchanged | same; `backend/tests/geometry/test_typedfactnext_planner_bridge.py` |
+| `backend/app/ai/function_route.py` | `_an_dinh_thiet_dien_phu` also names derived-pyramid lateral edges (`canh_ben_<apex>_<v>`) and scrubs fresh labels from `role` | `backend/tests/geometry/test_hybrid_contract_unification.py` |
+
 **Continuation boundary fixes:** `typed_fact_next_bridge._check_qualified_refs` validates namespaces before dropping them; `run_typed_fact_next_planner_route` returns typed malformed-operand refusals and preserves declared unit/plane identity against source-gated output. Regression tests extend `test_typedfactnext_planner_bridge.py`; run `evaluation/geometry/runs/backend-hybrid-continuation/`. No new product modules; reuse existing planner/engine/gate.
 
 ## TypedFactNext → planner bridge (`research/hybrid-backend-integration-session1`, LOCAL research, Hybrid off)

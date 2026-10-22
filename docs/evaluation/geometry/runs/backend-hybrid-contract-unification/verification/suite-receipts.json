@@ -1,0 +1,49 @@
+{
+ "p3-composition-suites.log": {
+  "raw_log_sha256": "bfb3a5151ccd301f1f5c758a2dbe9932248c24eb1e999386ee6c42d927c199e5",
+  "raw_log_bytes": 944,
+  "raw_log_committed": false,
+  "exit_code": 0,
+  "summary_line": "334 passed, 1 warning in 33.72s",
+  "failed": [],
+  "assertions": []
+ },
+ "geometry-dir-first-run-before-fixes.log": {
+  "raw_log_sha256": "3f7586fbf91d8d9b8d059c635fdfb858d7ade4950b5337d66a06bf5afaa9cf69",
+  "raw_log_bytes": 39965,
+  "raw_log_committed": false,
+  "exit_code": 1,
+  "summary_line": "16 failed, 9074 passed, 1 deselected, 10 xfailed, 2 warnings in 446.44s (0:07:26)",
+  "failed": [
+   "tests/geometry/test_analyze_failure_cluster_diagnosis.py::test_tien_kiem_kho",
+   "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[arbitrary-feature-branch-xyz]",
+   "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[feat/rectangular-base-pyramid-compiler]",
+   "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[hotfix/test-isolation-123]",
+   "tests/geometry/test_branch_independent_harness.py::test_diagnose_precheck_independent_of_branch[main]",
+   "tests/geometry/test_branch_independent_harness.py::test_precheck_accepts_detached_head[precheck]",
+   "tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only",
+   "tests/geometry/test_docs_test_telemetry.py::test_inv_05_candidate_and_cache_verify_only",
+   "tests/geometry/test_holdout_readiness.py::test_bao_cao_da_sinh_va_KHONG_TROI",
+   "tests/geometry/test_hybrid_backend_integration.py::test_version_constants_surface_fingerprints_and_historical_receipt_preservation",
+   "tests/geometry/test_hybrid_contract_unification.py::test_identical_derived_lines_and_planes_are_declared_once[parallel-ABCD]",
+   "tests/geometry/test_hybrid_contract_unification.py::test_identical_derived_lines_and_planes_are_declared_once[perpendicular-ABCD]",
+   "tests/geometry/test_thesis_acceptance_matrix.py::test_C2b_candidate_hien_tai_phai_duoc_KHAI",
+   "tests/geometry/test_typedfactnext_planner_bridge.py::test_a_compiled_program_over_the_ir_budget_is_a_typed_refusal",
+   "tests/geometry/test_typedfactnext_planner_bridge.py::test_cut_vertices_and_their_operand_planes_speak_the_source_plane_name[anon]",
+   "tests/geometry/test_typedfactnext_planner_bridge.py::test_cut_vertices_and_their_operand_planes_speak_the_source_plane_name[named]"
+  ],
+  "assertions": [
+   "E       AssertionError: (None, None)",
+   "E       AssertionError: assert 'FAIL' == 'PASS'",
+   "E       AssertionError: assert ('9f80fa85ec6...e16df52', 115) == ('13fd32b498e...1d7e172', 115)",
+   "E       AssertionError: assert ('READY_FOR_PHASE7B:  NO' in '# PHASE 7B — BÁO CÁO SẴN SÀNG\\n\\n> Sinh bằng `scripts/report_holdout_readiness.py`. **0 API call.**\\n> Mọi số dẫn từ ...ng: [`PHASE7B_READINESS.md`](PHASE7B_RE",
+   "E       AssertionError: assert 1 == 0",
+   "E       AssertionError: assert Fraction(49, 576) == ((Fraction(7, 8) ** 2) * 0.1111111111111111)",
+   "E       AssertionError: assert ['Xét mặt phẳ...điểm với SB.'] == ['Xét mặt phẳ...điểm với SC.']",
+   "E       AssertionError: văn bản khai đã cũ — hệ hiện tại là 9f80fa85ec6209c0…, khai 13fd32b498ea9e47…",
+   "E       assert '13fd32b498ea...8fc4891d7e172' == '9f80fa85ec62...33847ce16df52'",
+   "E       assert ('SERVED', None) == ('REFUSED', '...GET_EXCEEDED')",
+   "E       assert False is True"
+  ]
+ }
+}
