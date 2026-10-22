@@ -1,0 +1,8 @@
+{
+ "cwd": ".superpowers/worktrees/t3-s2/backend (detached f1ae2238, clean after T3: 0 status lines)",
+ "command": "PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py --verify",
+ "exit_code": 0,
+ "result": "MATCH: 115 files, 96962736b4aed18e…",
+ "summary_from_stdout": {"pytest": "11525 passed, 1 skipped, 2 deselected, 15 xfailed (553.01s)", "vitest": "72/72 files, 1156 passed",
+                         "build": "PASS", "demo": "5/5", "crash_surface": "6/6", "verdict": "FULL_PRODUCT_GATE_PASS"}
+}
