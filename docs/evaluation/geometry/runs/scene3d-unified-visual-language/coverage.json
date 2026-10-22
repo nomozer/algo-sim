@@ -1,0 +1,274 @@
+{
+  "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "scenes": [
+    {
+      "id": "family01_triangular_pyramid",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "2f0f36b9e178d66e2aaf2b1b5ed0318994777c8dfc5091d91b5152480d51cc55",
+      "state_sha256": "3b92c14ca6960faf0c4ecd6de47e32dfd40f23303ef473c87742e6c633d2f152"
+    },
+    {
+      "id": "family02_quadrilateral_pyramid",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "0ad263b55da874f4544b34035577e7e9e77094b9b2f0fe9d52ada3b01653395e",
+      "state_sha256": "6b4d3993bf17426671df7629d86d4b25079690aacf9401df5f219221abb1e77d"
+    },
+    {
+      "id": "family03_regular_pyramid",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "d3331c96ba298f00333f7727b8a7b12aef12e26f19ee401fd75103aad4f845e9",
+      "state_sha256": "ae0b7bee2cadb468726d9295471d568d9733770bac8d95cb2c89ed84dd2f2dd4"
+    },
+    {
+      "id": "family04_derived_sub_pyramid",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "324f8b8269e758887ebcdf6965921dc6a0a81648f8716f539a63e01a0d643705",
+      "state_sha256": "c09b266a9594bd7b18702012c541201549b1cc003da5c8ff07d9098bf7ca4ef7"
+    },
+    {
+      "id": "family05_prism",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "5729ae496534ea234ab7d3ea266eaea25cd8ef8936b3ad136dabc18f07db8515",
+      "state_sha256": "8d425dbd400847a18d72be49407832c390dcbb03c8d9c72c108b0a791a163f44"
+    },
+    {
+      "id": "family06a_cube",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "762d66fcf5afea647f6792bbfe95bf6ddeae731d9f4ee2fb4fd11560dd8dac80",
+      "state_sha256": "03719171ede492025d9e687c0fa8096a1502bf6d361983cdf32c3fc2ca321e1b"
+    },
+    {
+      "id": "family06b_cuboid",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "1f31a9898226ef8339f6f7076c40f9e28756bf41fd6585b93ad7aefcdadc10c7",
+      "state_sha256": "22058b6965db4daeac6fc78d376d054411b24ab73d278cf258fe97aadf05b671"
+    },
+    {
+      "id": "family07_multi_solid_composition",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "3824c155528b5e061771011858ea81473e11c4afc56938aa426086d816e9f5a5",
+      "state_sha256": "15cfcdacb9c97de5a395a825e40fcfbfab53b9f4fc62613612b3453663006d9f"
+    },
+    {
+      "id": "family08_unnamed_section_vertices",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "1d67f9488c0770f3cc0199cd5f23ecf7d0297699b929f28e0fa401f952e75848",
+      "state_sha256": "f1579e5ae3c91ad4b68d7aa48fa06a3e3e1f0c55c6a3f8db86431a2b318445e5"
+    },
+    {
+      "id": "family09_cylinder_and_sections",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "53dffa470a3db5faf9b007d6e8b6f264118e5885970cf47401a1946e5ea9cd32",
+      "state_sha256": "992003347a64b749a1893f4dbf7689dd5c66df63859acfc381c39657c126e22c"
+    },
+    {
+      "id": "family10_cone_frustum_cut",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "d5372610c69083fd5237bc021d23c2607dcd6f122ed965ba4674dc0f17011dc3",
+      "state_sha256": "6b571c98966668d8fbf75aa3ebe6fa9355e11eed4d59d64b8bfddaabc07e43e4"
+    },
+    {
+      "id": "family11_sphere_plane_cut",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "cf32c0ca84cb771600045a834b71a903748357bcdef35bba97a2d51022fb1c67",
+      "state_sha256": "f51dd9f500bfb19039c7cca45e9f0ae02af74ae9f03161ac2260d1c73a3c60de"
+    },
+    {
+      "id": "family12_cylinder_ellipse_section",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "4254ec58151b5908a43264e7d8c773fac25b859d134cf0547016b8a994b8cc80",
+      "state_sha256": "aca0bfbadf2b2bbdc6f622d8baa672f15f85943c638e81c7395d4c5b3b4df8df"
+    },
+    {
+      "id": "family13_invalid_geometry_refusal",
+      "served": false,
+      "source": "docs/evaluation/geometry/runs/geometric-visual-correctness-framing/demos/audit_scenes.json",
+      "verification": null,
+      "scene_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "state_sha256": "7e9021d74d7ed38602e7d87d5f3e5150288be93c689084204255b75e8704bc1f"
+    },
+    {
+      "id": "public-thiet-dien-chop",
+      "served": true,
+      "source": "frontend/src/data/geometry-samples.json#thiet-dien-chop",
+      "verification": null,
+      "scene_sha256": "5e0591cbc5437d34be11e9ced894d56362e052de7ed94df0866a349da6548a70",
+      "state_sha256": "1a733e3e5afd89487d81476ec8c789fb28cbee83243ae6b9e275e06a5b77ec36"
+    },
+    {
+      "id": "public-mat-cheo-sac",
+      "served": true,
+      "source": "frontend/src/data/geometry-samples.json#mat-cheo-sac",
+      "verification": null,
+      "scene_sha256": "acf1501c9dd5956c1244a26ba565f846dcff2fd4d1997b50185ef53e8f833ecf",
+      "state_sha256": "5b9505eade556d1757def6c9aa335dbfd305c699b2597fd0f06ff69eeecc7af9"
+    },
+    {
+      "id": "public-vuong-goc-chop",
+      "served": true,
+      "source": "frontend/src/data/geometry-samples.json#vuong-goc-chop",
+      "verification": null,
+      "scene_sha256": "f1f4cdeac39f0d88d0192bef9c4685de719a3951e48a553fcf7f12fc4e044e3d",
+      "state_sha256": "6e4fd061f7cfb99b799d00abd77837ee09f0d3cb03d7e40304db1d290152b0a6"
+    },
+    {
+      "id": "public-mp-vuong-goc-duong",
+      "served": true,
+      "source": "frontend/src/data/geometry-samples.json#mp-vuong-goc-duong",
+      "verification": null,
+      "scene_sha256": "d9da632f0cd3d338eec8caebd6c2e2f9e85cb5d1e99c554715707766115ca5ee",
+      "state_sha256": "e06ee4abc86dd22097bff09ce24cc142ec392552f9fd938aff36a4f8164ee40c"
+    },
+    {
+      "id": "public-the-tich-chop",
+      "served": true,
+      "source": "frontend/src/data/geometry-samples.json#the-tich-chop",
+      "verification": null,
+      "scene_sha256": "ad44914d10bc64d8af08cf19962b37d0cfce427a4219791a75800140113f4931",
+      "state_sha256": "a61b617b04b6cadbef3c4b3603f087e9204330aeafae0d7e590542f697f510b5"
+    },
+    {
+      "id": "public-cau-the-tich",
+      "served": true,
+      "source": "frontend/src/data/geometry-samples.json#cau-the-tich",
+      "verification": null,
+      "scene_sha256": "0468d26227514364384d38412b0761a39231bb37958103780f82b01bd9ccc9df",
+      "state_sha256": "d5d1a6f12b01a8cbd7fa0d28a65273b77e78f21561716504fbe1cc676c7f3e6b"
+    },
+    {
+      "id": "public-cau-cat-mat-phang",
+      "served": true,
+      "source": "frontend/src/data/geometry-samples.json#cau-cat-mat-phang",
+      "verification": null,
+      "scene_sha256": "2f0c17cd13ad6971f1a5c51f41fd0a21613d040788fab62e8fd1c6984c7f49ef",
+      "state_sha256": "59095b5bf009f3bd014a5622e2e1cfe15ffc6ae7a6784b616d4b661166f60856"
+    },
+    {
+      "id": "public-tru-truc-xien",
+      "served": true,
+      "source": "frontend/src/data/geometry-samples.json#tru-truc-xien",
+      "verification": null,
+      "scene_sha256": "a760bd0f2a69bac4c5e800d04d7af641489faf38d3d45ed5396a55dcfabedd7d",
+      "state_sha256": "095b8f7f5bdcd484e02f8b373b517fae84ecfedd140d8e1469411cdf0ff71d7d"
+    },
+    {
+      "id": "public-tru-thiet-dien-tron",
+      "served": true,
+      "source": "frontend/src/data/geometry-samples.json#tru-thiet-dien-tron",
+      "verification": null,
+      "scene_sha256": "e58e88b2b2afb511ef5795610489ddd8d5271cfb96f94fef51353345d73c604d",
+      "state_sha256": "81068f0643805035a087fc06c24dc39f423e8d8f0b79eecd8a359f035f4d4ab7"
+    },
+    {
+      "id": "public-non-duong-sinh",
+      "served": true,
+      "source": "frontend/src/data/geometry-samples.json#non-duong-sinh",
+      "verification": null,
+      "scene_sha256": "60f591c475a2127a0a35d300760910a52e3efb5f0cad88a577ada6378e3c6978",
+      "state_sha256": "9791783a7b78079d15beaf308cc893fa305ff01e27707a8ce926a738d6d12039"
+    },
+    {
+      "id": "public-non-thiet-dien-truc",
+      "served": true,
+      "source": "frontend/src/data/geometry-samples.json#non-thiet-dien-truc",
+      "verification": null,
+      "scene_sha256": "4e4e8862deb82a90b4b649391124129199791b0441cd9e7316a7d7ac52025b16",
+      "state_sha256": "dab0d5e8f1c17a4853c8c738be37554735945503523e299faf0a1945348e74a0"
+    },
+    {
+      "id": "regular-hexagonal-pyramid-hex",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/regular-hexagonal-pyramid/diagnostics/cases.py#H1_side_height",
+      "verification": "verify_and_compile SERVABLE",
+      "scene_sha256": "6b38e8151a4fe82beb891482d6abdfb9627d521c76134291ffaa06be8efa860e",
+      "state_sha256": "d75b7b23be18977e8b8e4e570229b9ea1569f94c84648b067f6809f119be4de3"
+    },
+    {
+      "id": "regular-prisms-3",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/regular-prisms/diagnostics/cases.py#T1_side_height",
+      "verification": "verify_and_compile SERVABLE",
+      "scene_sha256": "da6b2040a491a83dc54f24c5b3df137bc48bbbf43fc27ae85c2728457bd15df7",
+      "state_sha256": "9aaa31a871f4ef09a79f25da7d0f5895371ef48c49f53c84d829d6568823dad6"
+    },
+    {
+      "id": "regular-prisms-6",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/regular-prisms/diagnostics/cases.py#X1_side_height",
+      "verification": "verify_and_compile SERVABLE",
+      "scene_sha256": "9b1a8a2dcf32b5ddf009b3782238d8470eae9e7f5dc063f90dfb94850f535705",
+      "state_sha256": "3a6babddeff5cdba72376766cd9bfcfb50866d6455269cabb5b4485c51be9691"
+    },
+    {
+      "id": "oblique-prism",
+      "served": true,
+      "source": "backend/tests/geometry/test_oblique_prism.py#OP01_triangle_foot_vertex_height",
+      "verification": "verify_and_compile SERVABLE",
+      "scene_sha256": "784a9a5d812282e4a3c95eeab3f7c59a6072d91efce59b51843be308eefbe668",
+      "state_sha256": "52f01142572b470da03f5fe733be39a2f5587fd1ebab9e70714d81d3843757c2"
+    },
+    {
+      "id": "polygon-chain-base",
+      "served": true,
+      "source": "backend/tests/geometry/test_general_polygon_base.py#P01_trapezoid_pyramid",
+      "verification": "verify_and_compile SERVABLE",
+      "scene_sha256": "5a2262f198dc47c72e103c7e9fc97c1ee9e5d38501810540b08a7e76ab59c932",
+      "state_sha256": "6acca1309b80be2e5189cef9c1254bb4ebde9293f7e619374cd5e881d7f15828"
+    },
+    {
+      "id": "concave-pentagonal-pyramid",
+      "served": true,
+      "source": "backend/tests/geometry/test_nonconvex_polyhedron_volume.py#_spec_lom",
+      "verification": "verify_and_compile SERVABLE",
+      "scene_sha256": "b7649bf0b0ecdf1a6f9c3e09bdf2fdf7e8b71ef881b11ee35262a23db8c5012a",
+      "state_sha256": "fe9573ab95949e7fe5c42e5e00dfc3b2f52873ada4f21c5584925934c6cf6396"
+    },
+    {
+      "id": "regular_triangular_pyramid",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/inputs/fixtures/regular_triangular_pyramid_positive.json",
+      "verification": null,
+      "scene_sha256": "28b53c5368022d1009a888383efb1b8add4aaf5a817baefb803b27255d633b2b",
+      "state_sha256": "b245409a09b9393c254f8a2bb8dd83b8d16a4d20cd8174ae5edeacc4d2a8de77"
+    },
+    {
+      "id": "regular_tetrahedron",
+      "served": true,
+      "source": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/inputs/fixtures/regular_tetrahedron_positive.json",
+      "verification": null,
+      "scene_sha256": "507e45f6d4235ed8db3f9e0c2b9d3ac66c9e99a959c68be5832a1dedcb13c312",
+      "state_sha256": "aa21bb29d5bf103581e0ad9d926781b553ee1af0e3e0a7b8379f43d78f89075c"
+    }
+  ],
+  "limits": [
+    "Offline authored scenes do not demonstrate live natural-language E2E.",
+    "Derived residual volume does not imply a residual solid mesh.",
+    "Each shape is a representative, not exhaustive geometry coverage."
+  ]
+}

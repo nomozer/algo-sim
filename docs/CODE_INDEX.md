@@ -1,5 +1,17 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Local Scene3D unified visual language
+
+Run `docs/evaluation/geometry/runs/scene3d-unified-visual-language/`; contract `docs/architecture/SCENE3D_VISUAL_LANGUAGE.md`.
+`frontend/src/simulations/domains/geometry/scene3d-roles.ts` extends the existing shared role authority with typed
+`PHONG_CACH_SCENE3D`, `vaiTroMien` (surface/formation metadata) and `vaiTroKhoi` (complete construction history,
+stable through visibility/array-order changes). `scene3d-view.tsx::buildObject3D` consumes these for every mesh
+technique; unlit single-pass flat fills and common lit shells preserve existing depth/occlusion/camera rules.
+Per-owner `spanMaterial` reuses encountered line styles; `disposeScene3DObject` releases attached/inactive resources.
+CSS causal blue in `styles/tokens.css` stays locked by role tests. Behavior tests:
+`scene3d-unified-materials.test.ts`, existing material/hidden-line/role tests. A/B/C and browser measurements live
+only in the run; no product theme UI, backend authority or route/cache change.
+
 ## Final visual UX quality correction (`research/visual-ux-final-quality`)
 
 Run `docs/evaluation/geometry/runs/visual-ux-final-quality/`. Presentation-only corrections reuse `UnsupportedNotice` in `SimulationWorkspace.tsx` (structured refusal labels, exact code-token cleanup, collapsed diagnostics); `phanTichToanHocCuaCanh` in `scene3d-model.ts` (verified solid display mappings, safe fallback labels, declared length-unit context); `Scene3DExplorer.tsx` (superscripts, construction guidance, last-construction preview, explicit x-ray); `scene3d-playback.tsx` (x-ray prop forwarding); `scene3d-view.tsx::buildObject3D` (depth-correct fills by default, x-ray only by user choice); and `scene3d-model.ts::diemHuuHan` (enclosing radial corners for first-load framing). Tests: `frontend/src/simulations/domains/geometry/final-quality.test.tsx`, existing section/cone/refusal/Explorer regression tests, and the run's `check-browser.mjs`. Backend authority, route/cache/default mode are unchanged.

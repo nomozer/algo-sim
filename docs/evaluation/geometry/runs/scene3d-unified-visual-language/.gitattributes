@@ -1,0 +1,2 @@
+# Evidence is hashed as raw bytes: never normalize line endings in this run.
+* -text

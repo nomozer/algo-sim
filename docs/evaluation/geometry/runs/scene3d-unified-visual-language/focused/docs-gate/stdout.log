@@ -1,0 +1,18 @@
+...................F.........................                            [100%]
+================================== FAILURES ===================================
+_________________ test_inv_20_candidate_and_cache_verify_only _________________
+
+    def test_inv_20_candidate_and_cache_verify_only():
+        """20. Candidate và cache chỉ verify-only, không thay đổi."""
+        cand_cmd = subprocess.run(
+            [sys.executable, "backend/scripts/freeze_evaluation_candidate.py", "--verify"],
+            cwd=REPO, capture_output=True, text=True, env=dict(subprocess.os.environ, PYTHONUTF8="1")
+        )
+>       assert cand_cmd.returncode == 0
+E       AssertionError: assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe', 'backend/scripts/free...đã đóng băng: product_commit_sha\nNếu lệch vì một kết quả SEALED thì đây là VI PHẠM luật con dấu (§7.4).\n', stderr='').returncode
+
+tests\geometry\test_docs_information_architecture.py:197: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_docs_information_architecture.py::test_inv_20_candidate_and_cache_verify_only
+1 failed, 44 passed in 5.74s

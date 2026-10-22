@@ -1,0 +1,21 @@
+{
+  "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "registered_before": "final controlled A/B/C and final matrix; initial baseline/development B was already inspected",
+  "human_visual_approval": "NOT_GRANTED",
+  "metrics": {
+    "semantic_material_consistency": "All three section mesh techniques must have identical neutral/focus colors and alpha; every neutral shell uses its full-scene role.",
+    "palette_exceptions": "0 scene-id/family-id palette branches in product changes; engineering invisibility/warmup constants are not palette exceptions.",
+    "geometry_identity": "Fixture hash, scene/state hashes and unchanged backend/model/chart/camera/classifier trees; full frontend geometry tree independently locked by Git product identity.",
+    "frame_and_panel_overlap": "Default camera equals baseline within 1e-9; analysis panel overlap = 0 in sampled default desktop/compact states; report any existing deficit instead of reclassifying it.",
+    "occlusion": "Baseline vs final normal default edge IDs/spans/dashes unchanged; independent two-sided opaque-wall probes: Normal blocked=0 pixels, Normal front>0, X-ray blocked>0.",
+    "section_own_pixels": "On/off same-frame pixels with RGB L1 delta >8; report counts/fractions per fill and normal/orbit/X-ray. Visible section expectation is positive in at least one meaningful normal/orbit camera; explicit foreground occlusion may yield zero.",
+    "edge_stability": "Selection changes emphasis, not baseline default-camera hidden/visible span signatures; X-ray leaves classifier/dash semantics intact.",
+    "label_readability": "Report visible label CSS colors, font size and pairwise rectangle collisions; all visible labels >=12 CSS px; browser text contrast evaluated against actual label background where resolvable, UNKNOWN otherwise.",
+    "selection": "Selected id must be non-null; pixel/style emphasis differs from neutral; no numeric answer annotation on Mode A entry.",
+    "reproducibility": "Identical fixture/camera/viewport/state for comparisons; report full screenshot hashes and RGB differences; no aesthetic score inferred.",
+    "css_variables": "Existing tokens tests plus static scan of production CSS/TS/TSX; unresolved count 0 excluding declared runtime properties.",
+    "performance": "Raw orbit durations, occlusion p50/p95, draw/program/memory counts, first-use allocations and repeated-sweep allocations. Encountered material styles must not allocate repeatedly. SwiftShader is not physical-device FPS.",
+    "visibility_transitions": "Actual hide/isolate/reset and backward timeline controls on multi-solid, cone and prism; remaining secondary shell must retain neutral color and opacity after selection cleared. Missing targets or null probes are failures, not zero."
+  },
+  "forbidden_inferences": ["Automated assertions do not grant human aesthetic approval", "Offline scenes do not prove live NLU E2E", "114 measured files do not hash the full frontend renderer"]
+}

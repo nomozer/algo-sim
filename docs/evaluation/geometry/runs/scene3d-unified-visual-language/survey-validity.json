@@ -1,0 +1,35 @@
+{
+  "schema_version": "scene3d-survey-validity/3",
+  "evidence_bytes_preserved": true,
+  "defect": "Survey token override could run after TypeScript compilation and be counted while the live constant was unchanged.",
+  "harness_lineage": [
+    {"sha256_prefix": "3636d4ad", "archived": false, "status": "DEFECTIVE", "used_by": ["A"], "note": "predates this session; bytes not recoverable"},
+    {"sha256_prefix": "b53ff305", "archived": "harness-archive/browser-b53ff305.mjs", "used_by": ["baseline-complete"], "change": "prior session: override before TS transform (enforce: pre), count must equal 1; A/C only; no runtime proof"},
+    {"sha256_prefix": "893b672f", "archived": "harness-archive/browser-893b672f.mjs (reconstructed, hash verified)", "used_by": ["A-complete", "B-complete", "C-complete", "final"], "change": "B overridden too; live PHONG_CACH_SCENE3D probe must equal proposal; residual defect: baseline tokens.css substitution a no-op (review round 3 I1)"},
+    {"sha256_prefix": "e4322774", "archived": "harness-archive/browser-e4322774.mjs (reconstructed, hash verified)", "used_by": ["survey-A", "survey-B", "survey-C", "final-v2", "before attempt 1 (failed closed, no receipt)"], "change": "baseline tokens inlined at global.css importer; substitutions once each; built-CSS check (CRLF comparison artefact made attempt 1 fail closed); full matrix for final-* stages"},
+    {"sha256_prefix": "7d5e59f4", "archived": "harness-archive/browser-7d5e59f4.mjs (reconstructed, hash verified)", "used_by": ["before"], "change": "whitespace-normalized declaration comparison (baseline path only)"},
+    {"sha256_prefix": "c34ec0c6", "archived": "harness-archive/browser-c34ec0c6.mjs", "used_by": ["final-v3", "survey-A-r2", "survey-B-r2", "survey-C-r2", "final-r2"], "change": "per-pass span-pool growth instrumentation for orbit allocations"}
+  ],
+  "arms": {
+    "baseline": {"status": "SUPERSEDED", "why": "older 33-row fixture scenes.json (aa9167...)"},
+    "survey-development-A": {"status": "INVALIDATED", "why": "development arm, old fixture, pre-fix harness; override effect never verified at runtime"},
+    "survey-development-B": {"status": "DEVELOPMENT_ONLY", "why": "uncommitted pre-product development source, old fixture"},
+    "A": {"status": "INVALIDATED", "why": "defective harness 3636d4ad, old fixture; applied_token_overrides=1 was a transform count, not runtime proof"},
+    "baseline-complete": {"status": "SUPERSEDED", "by": "before", "why": "WebGL/JS before-source valid, but tokens.css substitution was a no-op (built CSS #0075de) while claimed"},
+    "A-complete": {"status": "SUPERSEDED", "by": "survey-A-r2", "why": "runtime-verified at product 36dfccef; product changed (review round 3 I2)"},
+    "B-complete": {"status": "SUPERSEDED", "by": "survey-B-r2", "why": "as A-complete"},
+    "C-complete": {"status": "SUPERSEDED", "by": "survey-C-r2", "why": "as A-complete"},
+    "final": {"status": "SUPERSEDED", "by": "final-r2", "why": "as A-complete"},
+    "survey-A": {"status": "SUPERSEDED", "by": "survey-A-r2", "why": "runtime-verified at 24e1a9db; product changed at 34a57d35 (review round 4 M-a)"},
+    "survey-B": {"status": "SUPERSEDED", "by": "survey-B-r2", "why": "as survey-A"},
+    "survey-C": {"status": "SUPERSEDED", "by": "survey-C-r2", "why": "as survey-A"},
+    "final-v2": {"status": "SUPERSEDED", "by": "final-v3", "why": "strict warm-orbit check observed [3,0] on family07_multi_solid_composition without pool instrumentation; cause unverified"},
+    "final-v3": {"status": "SUPERSEDED", "by": "final-r2", "why": "instrumented, all repeat allocations 0, [3,0] not reproduced; product changed at 34a57d35"},
+    "focused": {"status": "TEST_RECEIPTS", "why": "build/full-frontend at f9559671+dirty (historical); geometry-domain-final and docs-gate at 36dfccef"},
+    "before": {"status": "AUTHORITATIVE_BEFORE", "why": "baseline roles/view/tokens substituted once each, built CSS carries #2563eb; independent of HEAD's changed files"},
+    "survey-A-r2": {"status": "AUTHORITATIVE_SURVEY", "requires": "validate.py PASS"},
+    "survey-B-r2": {"status": "AUTHORITATIVE_SURVEY", "requires": "validate.py PASS"},
+    "survey-C-r2": {"status": "AUTHORITATIVE_SURVEY", "requires": "validate.py PASS"},
+    "final-r2": {"status": "AUTHORITATIVE_FINAL_MATRIX", "requires": "validate.py PASS at the frozen product commit"}
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "scene3d-visual-run/1",
+  "run_id": "scene3d-unified-visual-language",
+  "wave_id": "SCENE3D_UNIFIED_VISUAL_LANGUAGE_W01",
+  "date_local": "2026-10-22",
+  "timezone": "Asia/Bangkok",
+  "branch": "research/scene3d-unified-visual-language",
+  "refs_verified": {
+    "main": "43247c9e9375a3dbf2b5223324a58e6f932ca596",
+    "origin_main": "43247c9e9375a3dbf2b5223324a58e6f932ca596",
+    "source_head": "f95596716912e5550ed079287221274b2d70f24c",
+    "baseline_product": "ca84337e32c27c1116f5b1065ca45f2fcdf3e13c",
+    "baseline_frozen_candidate": "7868db0aef3810e2089b5f8b8d6aecfb8b3e1400",
+    "root_head": "fe9f555437498432427ae6bbd54402cdd59c7eb7"
+  },
+  "supplied_sha_mismatches": [],
+  "baseline_campaign_worktree_clean": true,
+  "human_visual_approval": "NOT_GRANTED",
+  "go_main": "NOT_GRANTED",
+  "live_provider_calls": 0,
+  "governance": {
+    "default_mode": "LLM_ONLY",
+    "response_contract": "flat",
+    "hybrid_product_enablement": "NO-GO",
+    "allow_live_ai": 0,
+    "cache_version": 127
+  }
+}

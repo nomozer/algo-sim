@@ -8,6 +8,7 @@
 
 | file | phạm vi |
 |---|---|
+| [`SCENE3D_VISUAL_LANGUAGE.md`](SCENE3D_VISUAL_LANGUAGE.md) | mở rộng token Scene3D từ DESIGN.md; vật liệu chung, vai trò khối ổn định, depth và quyền phê duyệt người giữ riêng |
 | [`ASSUMPTION_CERTIFICATE_AMENDMENT.md`](ASSUMPTION_CERTIFICATE_AMENDMENT.md) | chứng chỉ giả định (W15), ràng buộc phép dựng với đề (W17 §15, W18 §16); mã sản phẩm trích đường dẫn này |
 | [`OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md`](OCCLUSION_AND_SCENE_IDENTITY_AMENDMENT.md) | edge identity, visual owner, occlusion span, oracle độc lập |
 | [`HYBRID_B_TARGET_ARCHITECTURE_DECISION.md`](HYBRID_B_TARGET_ARCHITECTURE_DECISION.md) | **quyết định (2026-10-11)**: trong Text-to-Geometry Functions, Hybrid B (AI trích Typed Facts → compiler tất định chọn/kết hợp hàm) là hướng ưu tiên; A là baseline đối chứng; dựa trên kết quả OFFLINE — chưa có bằng chứng Gemini thật; `LLM_ONLY` vẫn mặc định |

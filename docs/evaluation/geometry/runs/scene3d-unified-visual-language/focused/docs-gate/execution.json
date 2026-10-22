@@ -1,0 +1,40 @@
+{
+  "command": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "tests/geometry/test_docs_information_architecture.py",
+    "tests/test_current_state_identity.py",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-unified-visual-language\\backend",
+  "source_commit": "36dfccef9bb3f5bff3e802aece7083a0e747df72",
+  "dirty_before": "M docs/CODE_INDEX.md\n M docs/architecture/README.md\n?? .gitattributes\n?? debug.log\n?? docs/architecture/SCENE3D_VISUAL_LANGUAGE.md\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/",
+  "started_utc": "2026-10-22T05:50:57.063757+00:00",
+  "timeout_seconds": 600,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "PYTEST_DEBUG_TEMPROOT": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\scene3d-unified-visual-language\\.superpowers\\pytest-temp"
+  },
+  "timed_out": false,
+  "exit_code": 1,
+  "elapsed_seconds": 6.906,
+  "finished_utc": "2026-10-22T05:51:03.967091+00:00",
+  "dirty_after": "M docs/CODE_INDEX.md\n M docs/architecture/README.md\n?? .gitattributes\n?? debug.log\n?? docs/architecture/SCENE3D_VISUAL_LANGUAGE.md\n?? docs/evaluation/geometry/runs/scene3d-unified-visual-language/",
+  "streams": {
+    "stdout": {
+      "bytes": 1297,
+      "sha256": "321001192bc4b96241cf8a0d2338fae10c885a12bc5e85c8db5dea6f1859b515"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/scene3d-unified-visual-language/frontend
+
+
+ Test Files  60 passed (60)
+      Tests  1063 passed (1063)
+   Start at  12:50:43
+   Duration  6.57s (transform 10.34s, setup 1.98s, import 22.58s, tests 11.93s, environment 11ms)
+
