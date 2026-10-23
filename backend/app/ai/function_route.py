@@ -76,6 +76,12 @@ def _ke_diem_dung(canh: dict[str, Any], vai: dict[str, str]) -> None:
         canh["formation"]["steps"][e["step_index"]]["learner_text"] = cau
 
 
+class _KhoiKhongKhai(ValueError):
+    """A solid named on unnamed cut vertices without the planner's `derived` record. The Source Gate admits that solid
+    only through the record, so this is our own inconsistency, refused at the route boundary (run
+    `scene3d-section-inspector-c0`), never labelled or valued by guesswork."""
+
+
 def _thay_ten(s: str, cu: list[tuple[str, str]]) -> str:
     """Rewrite each old notation (longest first) as a WHOLE name: never inside a dotted or primed name ("MII1" in
     "S.MII1", review F3). "Thiết diện HMH1" becomes the new name; a sentence that starts with it keeps its capital."""
@@ -219,6 +225,8 @@ def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -
                     or not (la_td or an.search(str(o.get("notation") or o.get("label") or "")))):
                 continue
             truoc = o.get("notation")
+            if o.get("type") == "solid" and not kd:
+                raise _KhoiKhongKhai(o["id"])
             if o.get("type") == "solid" and kd:
                 doi(o["id"], f"Khối chóp đỉnh {kd['apex']} cắt bởi {ten}", f"Dựng khối chóp đỉnh {kd['apex']} cắt bởi {ten}.")
                 o["role"] = f"Đỉnh {kd['apex']}, đáy là thiết diện bởi {ten}"
@@ -334,6 +342,9 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
             _gan_nhan_chung_duong_cao_chinh_xac(canh, r.chart_metric, trace=r.trace)
             _an_dinh_thiet_dien_phu(canh, auxiliary)
             _vai_mat_cat(canh, auxiliary)
+    except _KhoiKhongKhai as e:
+        return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED",
+                           f"khối {e} dựng trên đỉnh thiết diện không tên mà không có khối dẫn xuất đã khai", trace=r.trace)
     except Exception as e:  # noqa: BLE001 — cảnh hỏng ⇒ từ chối có mã, không phục vụ nửa vời
         return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", f"{type(e).__name__}: {e}", trace=r.trace)
     if not canh.get("objects"):

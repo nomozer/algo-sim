@@ -107,6 +107,65 @@ def test_A_a_section_without_stated_cut_edges_still_shows_the_declared_name():
     assert not [t for t in _learner(sc) if any(b in t for b in built)]
 
 
+def _without_derived(monkeypatch):
+    """Planner output with the derived-solid record removed from every cut: an internal inconsistency, since a solid
+    named on unnamed section vertices only exists when the planner declared it."""
+    import app.simulation.geometry_functions.planner as PL
+    goc = PL.lap_ke_hoach
+
+    def lap(*a, **k):
+        kh = goc(*a, **k)
+        for d in kh.auxiliary:
+            d.pop("derived", None)
+        return kh
+    monkeypatch.setattr(PL, "lap_ke_hoach", lap)
+
+
+def test_kd_is_required_by_contract_and_its_absence_is_refused_at_the_source_gate(monkeypatch):
+    """Run `scene3d-section-inspector-c0` (review F3 residual): the derived pyramid call is admitted only through its
+    cut's `derived` record, so a plan without it is refused by the existing gate before any scene is presented."""
+    _without_derived(monkeypatch)
+    r = run_typed_fact_next_v2_route(CASES["PLANE-ONLY-ratio-described"]["payload"])
+    assert (r.status, r.code) == ("REFUSED", "AUXILIARY_RULE_MISMATCH")
+    assert r.scene3d is None
+
+
+def test_kd_presentation_fails_closed_instead_of_labelling_a_solid_as_a_segment():
+    """Defence in depth: should the presentation ever see a solid on unnamed cut vertices without its derived record,
+    it raises a dedicated error (no "Đoạn của thiết diện", no invented label or value)."""
+    from app.ai.function_route import _KhoiKhongKhai, _an_dinh_thiet_dien_phu
+    from app.simulation.geometry_functions.registry import DINH_CAT_CANH
+    canh = {"objects": [
+        {"id": "mp_td_sp", "type": "plane3", "label": "(α)", "display_label": "(α)", "notation": "(α)", "depends": []},
+        {"id": "I", "type": "point3", "label": "I", "notation": "I", "depends": []},
+        {"id": "khoi_S_MII1", "type": "solid", "label": "S.MII1", "notation": "S.MII1", "depends": []}],
+        "events": [], "formation": {"steps": []}}
+    aux = ({"rule": DINH_CAT_CANH, "goal": "sp", "vertices": [{"label": "I", "edge": ["B", "B'"],
+                                                               "choice": "fresh_intersection"}]},)
+    with pytest.raises(_KhoiKhongKhai):
+        _an_dinh_thiet_dien_phu(canh, aux)
+    assert not [o for o in canh["objects"] if o["label"] == "Đoạn của thiết diện"]
+
+
+def test_kd_route_maps_the_presentation_inconsistency_to_a_structured_refusal(monkeypatch):
+    import app.ai.function_route as FR
+
+    def hong(canh, aux):
+        raise FR._KhoiKhongKhai("khoi_x")
+    monkeypatch.setattr(FR, "_an_dinh_thiet_dien_phu", hong)
+    r = run_typed_fact_next_v2_route(CASES["PLANE-ONLY-ratio-described"]["payload"])
+    assert (r.status, r.code) == ("REFUSED", "SCENE_BUILD_FAILED")
+    assert "khối dẫn xuất" in r.reason and "khoi_x" in r.reason
+
+
+@pytest.mark.parametrize("cid", [c for c in SERVED if any(
+    g["kind"] == "construct_derived_solid" for g in CASES[c]["payload"].get("simulation_goals") or ())])
+def test_kd_valid_scenes_with_a_derived_solid_are_still_served(cid):
+    r = _run(cid)
+    assert any(o["type"] == "solid" and o["label"].startswith("Khối chóp đỉnh") for o in r.scene3d["objects"]) or all(
+        o.get("notation") for o in r.scene3d["objects"] if o["type"] == "solid")
+
+
 @pytest.mark.parametrize("text, cu, expected", [
     ("V(S.MII1)/V(S.ABC)", [("MII1", "thiết diện bởi (α)")], "V(S.MII1)/V(S.ABC)"),   # inside a dotted name: untouched
     ("HMH1 có diện tích", [("HMH1", "thiết diện bởi (α)")], "Thiết diện bởi (α) có diện tích"),
