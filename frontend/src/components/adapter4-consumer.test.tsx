@@ -63,6 +63,77 @@ describe("Adapter /4 offline consumer", () => {
     expect(docPhanHoiHybrid(raw).ok).toBe(false);
   });
 
+  // Review MAJOR-1: provenance claims must agree with the scene point in both directions.
+  it.each([
+    ["derived → source named", "DERIVED_FRESH", (v: any) => { v.provenance = "SOURCE_NAMED"; v.stated = true; }],
+    ["derived → stated unnamed, unstated", "DERIVED_FRESH", (v: any) => { v.provenance = "STATED_UNNAMED"; }],
+    ["stated unnamed → unstated", "STATED_UNNAMED", (v: any) => { v.stated = false; }],
+    ["source named → unstated", "SOURCE_NAMED", (v: any) => { v.stated = false; }],
+  ])("rejects provenance relabel %s", (_, from, mutate) => {
+    const row = rows.find((r: any) => r.route_d.sections.some((s: any) => s.vertices.some((v: any) => v.provenance === from)));
+    const raw = response(row);
+    (mutate as (v: any) => void)(raw.route_d.sections.flatMap((s: any) => s.vertices).find((v: any) => v.provenance === from));
+    expect(docPhanHoiHybrid(raw).ok).toBe(false);
+  });
+
+  // Review MAJOR-2: dropping the closure certificate is not a way into the plane-only exception.
+  const haCapChungChi = (r: any) => { r.route_d.sections[0].boundary = null; r.route_d.sections[0].closure_certificate = null; };
+  const khoiDanXuat = (r: any) => {
+    const sec = r.envelope.scene3d.objects.find((o: any) => o.type === "section");
+    return r.envelope.scene3d.objects.find((o: any) => o.type === "solid" && !sec.depends.includes(o.id));
+  };
+  it.each([
+    ["derived solid without vertex_ids", (r: any) => { delete khoiDanXuat(r).vertex_ids; }],
+    ["derived solid with a renamed vertex", (r: any) => { khoiDanXuat(r).vertex_ids[1] = "Qx"; }],
+    ["derived solid removed", (r: any) => {
+      const id = khoiDanXuat(r).id;
+      r.envelope.scene3d.objects = r.envelope.scene3d.objects.filter((o: any) => o.id !== id);
+    }],
+  ])("rejects a certificate-less section with %s", (_, mutate) => {
+    const raw = response(rows.find((r: any) => "g_res" in r.route_d.answers));
+    haCapChungChi(raw); (mutate as (r: any) => void)(raw);
+    expect(docPhanHoiHybrid(raw).ok).toBe(false);
+  });
+
+  it("accepts the real plane-only section, which has no derived solid", () => {
+    const row = rows.find((r: any) => r.route_d.sections.some((s: any) => s.closure_certificate === null));
+    expect(row).toBeDefined();
+    expect(docPhanHoiHybrid(response(row)).ok).toBe(true);
+  });
+
+  it("rejects an empty closure rule", () => {
+    const raw = response(); raw.route_d.sections[0].closure_certificate.rule = "";
+    expect(docPhanHoiHybrid(raw).ok).toBe(false);
+  });
+
+  // Review MINOR: malformed scene shapes never make the boundary throw.
+  it.each([
+    ["section without depends", false, (r: any) => { delete r.envelope.scene3d.objects.find((o: any) => o.type === "section").depends; }],
+    ["non-array edge indices", false, (r: any) => {
+      const src = r.envelope.scene3d.objects.find((o: any) => o.type === "section").vertex_sources
+        .find((x: any) => x.solid_edge_vertex_indices);
+      src.solid_edge_vertex_indices = 3;
+    }],
+    // Off the section path: notation typing belongs to the general scene gate (`hopLeScene3D`), not to /4.
+    ["numeric notation", true, (r: any) => { r.envelope.scene3d.objects.find((o: any) => o.type === "point3").notation = 7; }],
+  ])("does not throw on %s", (_, ok, mutate) => {
+    const raw = response(); (mutate as (r: any) => void)(raw);
+    expect(() => docPhanHoiHybrid(raw)).not.toThrow();
+    expect(docPhanHoiHybrid(raw).ok).toBe(ok);
+  });
+
+  // The 25 real refusals of this run (`hybrid-offline-consumer/results/fixtures.json`).
+  const refusals = JSON.parse(readFileSync(resolve(__dirname, "../../../docs/evaluation/geometry/runs/hybrid-offline-consumer/results/fixtures.json"), "utf8"))
+    .fixtures.filter((r: any) => r.route_d.status === "REFUSED");
+  it("covers every refusal fixture of the offline consumer run", () => expect(refusals).toHaveLength(25));
+  it.each(refusals as any[])("keeps refusal $id without a scene", (row) => {
+    const result = docPhanHoiHybrid(structuredClone(row));
+    expect(result.ok).toBe(true);
+    if (!result.ok) return;
+    expect(result.envelope.scene3d).toBeUndefined();
+    expect(result.envelope.reason_code).toBe(row.route_d.refusal.code);
+  });
+
   it("refuses a success scene attached to a refusal", () => {
     const raw = response();
     raw.route_d.status = "REFUSED";

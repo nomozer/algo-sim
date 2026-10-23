@@ -17,6 +17,7 @@ export const HYBRID_PREVIEW_SCHEMA = "hybrid-route-d-preview/1";
 export const HYBRID_PREVIEW_ADAPTER = "hybrid-preview-adapter/2";
 export const HYBRID_SIMULATION_SCHEMA = "hybrid-route-d-simulation/4";
 export const HYBRID_SIMULATION_ADAPTER = "hybrid-simulation-adapter/4";
+const HYBRID_SIMULATION_CONTRACT = "typed-fact-next/2";
 /** Khoá của view đã kiểm trong envelope (do frontend tạo, không phải trường của backend). */
 export const KHOA_HYBRID_VIEW = "hybrid_preview";
 
@@ -91,12 +92,36 @@ function cungChuTrinh(a: unknown[], b: unknown[]): boolean {
     cycle.some((_, offset) => a.every((x, i) => JSON.stringify(x) === JSON.stringify(cycle[(i + offset) % cycle.length]))));
 }
 
+/** Role the backend writes on engine-introduced section points (`backend/app/ai/function_route.py`). */
+const VAI_DIEM_PHU = "Điểm dựng phụ";
+/** What the planner (`_dinh_cat_canh`) fixes per provenance: is the point an unnamed auxiliary, and is its edge stated?
+ *  `undefined` = not fixed by the contract. The scene cannot tell STATED_UNNAMED from DERIVED_FRESH (both unnamed
+ *  auxiliaries); that distinction is backend authority only. */
+const LUAT_NGUON: Record<string, { phu?: boolean; stated?: boolean }> = {
+  SOURCE_NAMED: { phu: false, stated: true },
+  STATED_UNNAMED: { phu: true, stated: true },
+  DERIVED_FRESH: { phu: true, stated: false },
+  THROUGH_POINT_REUSE: {},
+  REUSED_INTERSECTION: {},
+};
+const chuanTen = (s: string) => s.replace(/″/g, "''").replace(/[′’]/g, "'");
+
+/** Malformed scene shapes refuse instead of throwing (the boundary never raises). */
 function kiemSections(sections: unknown, scene: Scene3D): string | null {
+  try {
+    return kiemSectionsCore(sections, scene);
+  } catch {
+    return "thiết diện sai dạng";
+  }
+}
+
+function kiemSectionsCore(sections: unknown, scene: Scene3D): string | null {
   if (!Array.isArray(sections)) return "thiếu provenance thiết diện";
   const ids = new Set<string>();
+  const coId = new Set(scene.objects.map((o) => o.id));
+  if (scene.objects.some((o) => (o.depends ?? []).some((d) => !coId.has(d)))) return "cảnh có phụ thuộc treo";
   const diem = (name: string) => scene.objects.filter((o) => o.type === "point3"
-    && (o.id === name || o.notation?.replace(/[′’]/g, "'") === name.replace(/[′’]/g, "'")));
-  const nguon = new Set(["THROUGH_POINT_REUSE", "SOURCE_NAMED", "STATED_UNNAMED", "REUSED_INTERSECTION", "DERIVED_FRESH"]);
+    && (o.id === name || (typeof o.notation === "string" && chuanTen(o.notation) === chuanTen(name))));
   for (const s of sections) {
     if (!laDoiTuong(s) || typeof s.section_id !== "string" || ids.has(s.section_id) || !Array.isArray(s.vertices)) return "thiết diện sai dạng";
     ids.add(s.section_id);
@@ -107,15 +132,17 @@ function kiemSections(sections: unknown, scene: Scene3D): string | null {
     if (!solid?.vertex_ids || s.vertices.length !== polygon.length) return "đỉnh thiết diện lệch cảnh";
     const labels = new Set<string>();
     for (const v of s.vertices) {
-      if (!laDoiTuong(v) || typeof v.label !== "string" || labels.has(v.label) || !nguon.has(String(v.provenance))
-        || typeof v.stated !== "boolean" || (v.provenance === "DERIVED_FRESH" && v.stated)
+      const luat = laDoiTuong(v) ? LUAT_NGUON[String(v.provenance)] : undefined;
+      if (!laDoiTuong(v) || !luat || typeof v.label !== "string" || labels.has(v.label)
+        || typeof v.stated !== "boolean" || (luat.stated !== undefined && v.stated !== luat.stated)
         || !Array.isArray(v.edge) || v.edge.length !== 2 || !v.edge.every((id) => typeof id === "string" && diem(id).length === 1)
         || !scene.objects.some((o) => o.id === v.label && o.type === "point3" && (v.provenance !== "DERIVED_FRESH" || o.origin === "derived"))) return "provenance đỉnh thiết diện sai";
       labels.add(v.label);
       const point = scene.objects.find((o) => o.id === v.label && o.type === "point3");
       if (!point) return "thiếu điểm thiết diện";
-      if (v.provenance === "DERIVED_FRESH" && (point.notation != null || point.role !== "Điểm dựng phụ"
-        || point.display_group?.includes("given"))) return "điểm suy diễn không được giả làm dữ kiện";
+      const laDiemPhu = point.notation == null && point.role === VAI_DIEM_PHU && !point.display_group?.includes("given");
+      if (luat.phu === true && !laDiemPhu) return "điểm suy diễn không được giả làm dữ kiện";
+      if (luat.phu === false && point.notation == null) return "điểm suy diễn không được giả làm dữ kiện";
       const ordinal = polygon.findIndex((p) => JSON.stringify(p) === JSON.stringify(point?.xyz));
       const source = obj.vertex_sources?.[ordinal];
       const edge = v.edge.map((name: string) => diem(name)[0].id);
@@ -124,16 +151,17 @@ function kiemSections(sections: unknown, scene: Scene3D): string | null {
         ? !cungChuTrinh(edge, indices.map((i) => solid.vertex_ids![i]))
         : source.solid_vertex_index == null || !edge.includes(solid.vertex_ids[source.solid_vertex_index]))) return "cạnh nguồn thiết diện lệch cảnh";
     }
-    // Plane-only sections have no derived-solid closure certificate in /4; preserve this absence honestly.
+    // /4 emits a closure certificate whenever the section closes a derived solid. Without one, the section may be
+    // plane-only, so the scene must hold no solid besides the cut one (fail closed; a certificate-less section beside a
+    // second solid is refused even if legitimate).
     if (s.boundary === null && s.closure_certificate === null) {
-      if (scene.objects.some((o) => o.type === "solid" && o.id !== solid.id
-        && [...labels].every((id) => o.vertex_ids?.includes(id)))) return "khối dẫn xuất thiếu chứng chỉ khép kín";
+      if (scene.objects.some((o) => o.type === "solid" && o.id !== solid.id)) return "khối dẫn xuất thiếu chứng chỉ khép kín";
       continue;
     }
     if (!Array.isArray(s.boundary) || s.boundary.length < 3 || new Set(s.boundary).size !== s.boundary.length
       || s.boundary.length !== labels.size || !s.boundary.every((id) => labels.has(id))
       || !laDoiTuong(s.closure_certificate) || s.closure_certificate.verified !== true
-      || typeof s.closure_certificate.rule !== "string" || !Array.isArray(s.closure_certificate.boundary)
+      || typeof s.closure_certificate.rule !== "string" || !s.closure_certificate.rule || !Array.isArray(s.closure_certificate.boundary)
       || !cungChuTrinh(s.boundary, s.closure_certificate.boundary)) return "chứng chỉ chu trình thiết diện lệch";
     const points = s.boundary.map((id) => scene.objects.find((o) => o.id === id)?.xyz);
     if (points.some((p) => !p) || !cungChuTrinh(points, obj.polygon)) return "chu trình thiết diện lệch cảnh";
@@ -168,7 +196,7 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
   const v4 = routeD.schema_version === HYBRID_SIMULATION_SCHEMA;
   const id = routeD.runtime_identity;
   if (v4) {
-    if (routeD.adapter_version !== HYBRID_SIMULATION_ADAPTER || routeD.contract_version !== "typed-fact-next/2"
+    if (routeD.adapter_version !== HYBRID_SIMULATION_ADAPTER || routeD.contract_version !== HYBRID_SIMULATION_CONTRACT
       || routeD.status !== "SERVED" || routeD.refusal !== null || !laDoiTuong(routeD.source_verification)
       || routeD.source_verification.authority !== "registry.kiem_nguon") return { reason: "authority Adapter /4 không hợp lệ" };
     const error = kiemSections(routeD.sections, scene);
@@ -245,7 +273,7 @@ export function docPhanHoiHybrid(raw: unknown): KetQuaPhanHoiHybrid {
   const v4 = raw.schema_version === HYBRID_SIMULATION_SCHEMA;
   if (!v4 && laDoiTuong(raw.route_d) && raw.route_d.schema_version === HYBRID_SIMULATION_SCHEMA) return { ok: false, reason: "wrapper/route_d khác phiên bản" };
   if (v4 && (!laDoiTuong(raw.route_d) || raw.route_d.schema_version !== HYBRID_SIMULATION_SCHEMA
-    || raw.route_d.adapter_version !== HYBRID_SIMULATION_ADAPTER || raw.route_d.contract_version !== "typed-fact-next/2")) return { ok: false, reason: "identity Adapter /4 lệch" };
+    || raw.route_d.adapter_version !== HYBRID_SIMULATION_ADAPTER || raw.route_d.contract_version !== HYBRID_SIMULATION_CONTRACT)) return { ok: false, reason: "identity Adapter /4 lệch" };
   const envelope = raw.envelope;
   if (!laDoiTuong(envelope)) return { ok: false, reason: "phản hồi không có envelope (phản hồi cổng operator)" };
   if (KHOA_HYBRID_VIEW in envelope) return { ok: false, reason: "envelope backend không được tự mang hybrid_preview" };

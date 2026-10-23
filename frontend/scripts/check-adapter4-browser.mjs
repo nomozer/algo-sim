@@ -23,6 +23,8 @@ const fixtures = data.fixtures.map(row => {
 });
 const out = resolve(process.argv[2] ?? '');
 if (!process.argv[2] || existsSync(out)) throw Error('fresh output directory required');
+// Before the output directory exists: a dirty tree means the receipt does not identify the measured source.
+const treeClean = execFileSync('git', ['status', '--porcelain'], { cwd: root, encoding: 'utf8' }).trim() === '';
 mkdirSync(out, { recursive: true });
 const url = 'http://127.0.0.1:3115';
 const results = [], errors = [], forbidden = [];
@@ -68,6 +70,7 @@ try {
         const text = await page.locator('body').innerText();
         assert(text.includes(fx.envelope.learner_reason), `${fx.id}: refusal message absent`);
         assert(!text.includes(fx.route_d.refusal.code), `${fx.id}: refusal code leaked`);
+        assert(!/\b[\p{L}\p{N}]+_[\p{L}\p{N}_]+\b|::/u.test(text), `${fx.id}: internal name leaked in refusal`);
         row.refusal = 'VISIBLE_NO_SCENE';
         continue;
       }
@@ -103,17 +106,26 @@ try {
           }));
           const progress = scene.formation.steps[anchor]?.geometry_progress ?? [];
           const edgeIds = [...(window.__geo3d_visible_edge_ids ?? []), ...(window.__geo3d_hidden_edge_ids ?? []), ...(window.__geo3d_mixed_edge_ids ?? [])];
-          return { step, anchor, rendered, dependencies, unknown, early, progress, edgeIds,
+          const quantityEarly = quantities.map(q => q.quantity_id).filter(id => !ids.has(id));
+          return { step, anchor, rendered, dependencies, unknown, early, quantityEarly, progress, edgeIds,
             duplicates: window.__geo3d_duplicate_visual_owner_ids ?? [],
             quantityIds: quantities.map(q => q.quantity_id), solids: rendered.filter(id => world.objects.find(o => o.id === id)?.type === 'solid') };
         }, step);
         assert(!frame.dependencies.length && !frame.unknown.length && !frame.early.length && !frame.duplicates.length, `${fx.id}: objects/dependencies ${JSON.stringify(frame)}`);
+        assert(!frame.quantityEarly.length, `${fx.id}: answer before its quantity exists at ${step}: ${frame.quantityEarly}`);
         for (const progress of frame.progress) {
           const polygon = fx.envelope.scene3d.objects.find(o => o.id === progress.object_id).polygon;
           const count = progress.closed ? polygon.length : progress.visible_edge_ids.length + 1;
           const renderId = `${progress.object_id}#${count}${progress.closed ? 'c' : ''}${progress.fill_visible ? 'f' : ''}`;
           assert(frame.rendered.includes(renderId), `${fx.id}: section progress missing at ${step}: ${renderId}`);
           assert(!progress.fill_visible || progress.closed, `${fx.id}: open section filled`);
+          // Independent of `entitiesPresentAt` (which admits every section sub-entity once the section exists).
+          if (!progress.closed) {
+            const sub = frame.rendered.filter(id => id.startsWith(`${progress.object_id}::`));
+            assert(!sub.some(id => id.includes('::face:')), `${fx.id}: open section face drawn at ${step}`);
+            const vertices = new Set(sub.filter(id => id.includes('::vertex:')));
+            assert(vertices.size <= progress.visible_edge_ids.length + 1, `${fx.id}: section vertices ahead of edges at ${step}`);
+          }
         }
         row.frames.push(frame);
       }
@@ -171,6 +183,7 @@ try {
 finally {
   await browser.close();
   const receipt = { status: code ? 'FAIL' : 'FRONTEND_CONSUMER_ACCEPTANCE_PASS', source_commit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
+    tree_clean: treeClean,
     source_sha256: sha(bytes), harness_sha256: sha(readFileSync(import.meta.filename)), browser: 'Chrome headless / SwiftShader', provider_calls: 0,
     math_authority: 'engine certificates and locked numeric oracle, not screenshots', human_visual_review: 'NOT_APPROVED',
     readout_scope: 'test-only operator readout via shared hybridTaiBuoc/giaTriDapSo; final answers remain hidden in learner UI',
