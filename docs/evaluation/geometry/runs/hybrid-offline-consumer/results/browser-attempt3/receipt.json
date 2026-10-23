@@ -1,0 +1,48 @@
+{
+  "status": "FAIL",
+  "source_commit": "565076028e1ff62d123a4a1d7e4e0999686b9783",
+  "source_sha256": "f4ed8ea4927976a2fdd68f6df1b49e57cca7dde7dbbde8830e124a2692ec7439",
+  "browser": "Chrome headless / SwiftShader",
+  "provider_calls": 0,
+  "math_authority": "engine certificates and locked numeric oracle, not screenshots",
+  "human_visual_review": "NOT_APPROVED",
+  "readout_scope": "test-only operator readout via shared hybridTaiBuoc/giaTriDapSo; final answers remain hidden in learner UI",
+  "results": [
+    {
+      "id": "PARA-0",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "status": "SERVED",
+      "frames": [
+        {
+          "step": 0,
+          "anchor": 0,
+          "rendered": [
+            "A",
+            "B",
+            "C",
+            "D",
+            "S"
+          ],
+          "dependencies": [],
+          "unknown": [],
+          "early": [],
+          "progress": [],
+          "edgeIds": [],
+          "duplicates": [],
+          "quantityIds": [],
+          "solids": []
+        }
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "type": "acceptance",
+      "message": "PARA-0: objects/dependencies {\"step\":1,\"anchor\":1,\"rendered\":[\"A\",\"B\",\"C\",\"D\",\"S\",\"khoi_S_ABCD\",\"khoi_S_ABCD::face:0\",\"khoi_S_ABCD::edge:A-B\",\"khoi_S_ABCD::edge:B-C\",\"khoi_S_ABCD::edge:C-D\",\"khoi_S_ABCD::edge:A-D\",\"khoi_S_ABCD::face:1\",\"khoi_S_ABCD::edge:S-A\",\"khoi_S_ABCD::edge:S-B\",\"khoi_S_ABCD::face:2\",\"khoi_S_ABCD::edge:S-C\",\"khoi_S_ABCD::face:3\",\"khoi_S_ABCD::edge:S-D\",\"khoi_S_ABCD::face:4\"],\"dependencies\":[],\"unknown\":[],\"early\":[\"khoi_S_ABCD::face:0\",\"khoi_S_ABCD::edge:A-B\",\"khoi_S_ABCD::edge:B-C\",\"khoi_S_ABCD::edge:C-D\",\"khoi_S_ABCD::edge:A-D\",\"khoi_S_ABCD::face:1\",\"khoi_S_ABCD::edge:S-A\",\"khoi_S_ABCD::edge:S-B\",\"khoi_S_ABCD::face:2\",\"khoi_S_ABCD::edge:S-C\",\"khoi_S_ABCD::face:3\",\"khoi_S_ABCD::edge:S-D\",\"khoi_S_ABCD::face:4\"],\"progress\":[],\"edgeIds\":[\"khoi_S_ABCD::edge:B-C\",\"khoi_S_ABCD::edge:C-D\",\"khoi_S_ABCD::edge:S-B\",\"khoi_S_ABCD::edge:S-C\",\"khoi_S_ABCD::edge:S-D\",\"khoi_S_ABCD::edge:A-B\",\"khoi_S_ABCD::edge:A-D\",\"khoi_S_ABCD::edge:S-A\"],\"duplicates\":[],\"quantityIds\":[],\"solids\":[\"khoi_S_ABCD\"]}"
+    }
+  ],
+  "forbidden": []
+}

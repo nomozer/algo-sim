@@ -1,0 +1,37 @@
+{
+  "schema": "hybrid_disabled_integration_invariants/1",
+  "provider_calls": 0,
+  "head": "565076028e1ff62d123a4a1d7e4e0999686b9783",
+  "base": "3f6d737529af6fc79494fc3baeb340a7ca663b10",
+  "invariants": {
+    "CACHE_VERSION": "127",
+    "DEFAULT_MODE": "LLM_ONLY",
+    "RESPONSE_CONTRACT": "flat",
+    "MAX_MEMORY_DECLARATIONS": 32,
+    "ALLOW_LIVE_AI": "0"
+  },
+  "invariants_hold": true,
+  "contract_versions": {
+    "registry": "geometry-functions/13",
+    "planner": "geometry-fact-planner/13",
+    "engine": "geometry-function-engine/11",
+    "adapter4": "hybrid-simulation-adapter/4",
+    "preview_adapter": "hybrid-preview-adapter/2",
+    "preview_envelope": "hybrid-route-d-preview/1",
+    "registry_functions": 35
+  },
+  "default_policy": [
+    "LLM_ONLY",
+    false,
+    "flat",
+    null
+  ],
+  "analyze_policy_with_preview_env": [
+    false,
+    null
+  ],
+  "product_files_changed_vs_base": [],
+  "modules_loaded_by_production_entry": 47,
+  "loaded_modules_differing_from_base": [],
+  "changed_files_not_loaded_at_startup": []
+}

@@ -1,0 +1,42 @@
+{
+  "source_commit": "565076028e1ff62d123a4a1d7e4e0999686b9783",
+  "command": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/geometry/test_hybrid_contract_v2.py",
+    "tests/geometry/test_hybrid_contract_unification.py",
+    "tests/geometry/test_typedfact_next_adapter3.py",
+    "tests/test_hybrid_preview_contract.py",
+    "tests/test_hybrid_preview_api.py",
+    "tests/test_hybrid_preview_fixtures.py",
+    "tests/test_cache_identity.py",
+    "../docs/evaluation/geometry/runs/hybrid-offline-consumer/test_extraction_scoring.py",
+    "../docs/evaluation/geometry/runs/hybrid-session4a-readiness/test_offline_replay.py",
+    "--basetemp=../.superpowers/session5-backend"
+  ],
+  "exit_code": 1,
+  "summary": [
+    "277 passed, 6 xfailed, 1 warning, 4 errors in 38.89s\r"
+  ],
+  "streams": {
+    "stdout": {
+      "bytes": 4514,
+      "sha256": "9d0f5d11a13f8364778ebff473a2b696be5e7a241f95aac5795b1f0b71992975",
+      "stored_bytes": 4514,
+      "stored_sha256": "9d0f5d11a13f8364778ebff473a2b696be5e7a241f95aac5795b1f0b71992975"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "raw_receipt_sha256": "88e65fb070f5d66d056efbe8cc5d57445c36bcd834c16c28ca1b55928fb3a860",
+  "raw_archive": ".superpowers/session5-attempts/backend-targeted-initial/",
+  "classification": "ENVIRONMENT_SETUP_FAILURE_PARENT_TEMP_DIRECTORY_MISSING"
+}

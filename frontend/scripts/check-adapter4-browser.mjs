@@ -81,14 +81,14 @@ try {
         const frame = await page.evaluate(async step => {
           const model = await import('/src/simulations/domains/geometry/scene3d-model.ts');
           const chart = await import('/src/simulations/domains/geometry/scene3d-chart.ts');
-          const { withSubEntities } = await import('/src/simulations/domains/geometry/scene3d-subentities.ts');
+          const { withSubEntities, entitiesPresentAt } = await import('/src/simulations/domains/geometry/scene3d-subentities.ts');
           const { hybridTaiBuoc, giaTriDapSo } = await import('/src/simulations/domains/geometry/hybrid-preview-adapter.ts');
           const { envelope, view } = window.__adapter4;
           const scene = envelope.scene3d, world = withSubEntities(chart.veKhongGian(scene), model.objectsAt);
           const timeline = model.geometryTimeline(world);
           const anchor = timeline[step]?.anchor ?? step;
-          const present = model.objectsAt(world, anchor);
-          const ids = new Set(present.map(o => o.id));
+          const ids = entitiesPresentAt(world, anchor, model.objectsAt);
+          const present = world.objects.filter(o => ids.has(o.id));
           const dependencies = present.flatMap(o => (o.depends ?? []).filter(id => !ids.has(id)).map(id => `${o.id}->${id}`));
           const rendered = window.__geo3d_rendered_object_ids ?? [];
           const unknown = rendered.filter(id => !world.objects.some(o => o.id === id || o.type === 'section' && new RegExp(`^${o.id}#\\d+c?f?$`).test(id)));
@@ -171,7 +171,7 @@ try {
 finally {
   await browser.close();
   const receipt = { status: code ? 'FAIL' : 'FRONTEND_CONSUMER_ACCEPTANCE_PASS', source_commit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
-    source_sha256: sha(bytes), browser: 'Chrome headless / SwiftShader', provider_calls: 0,
+    source_sha256: sha(bytes), harness_sha256: sha(readFileSync(import.meta.filename)), browser: 'Chrome headless / SwiftShader', provider_calls: 0,
     math_authority: 'engine certificates and locked numeric oracle, not screenshots', human_visual_review: 'NOT_APPROVED',
     readout_scope: 'test-only operator readout via shared hybridTaiBuoc/giaTriDapSo; final answers remain hidden in learner UI',
     results, errors, forbidden };

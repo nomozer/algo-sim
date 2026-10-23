@@ -1,0 +1,51 @@
+{
+  "command": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/geometry/test_hybrid_contract_v2.py",
+    "tests/geometry/test_hybrid_contract_unification.py",
+    "tests/geometry/test_typedfact_next_adapter3.py",
+    "tests/test_hybrid_preview_contract.py",
+    "tests/test_hybrid_preview_api.py",
+    "tests/test_hybrid_preview_fixtures.py",
+    "tests/test_cache_identity.py",
+    "../docs/evaluation/geometry/runs/hybrid-offline-consumer/test_extraction_scoring.py",
+    "../docs/evaluation/geometry/runs/hybrid-session4a-readiness/test_offline_replay.py",
+    "--basetemp=../.superpowers/session5-backend-final"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-session5-offline-consumer\\backend",
+  "source_commit": "565076028e1ff62d123a4a1d7e4e0999686b9783",
+  "started_utc": "2026-10-23T11:13:59.456586+00:00",
+  "elapsed_seconds": 44.89,
+  "exit_code": 0,
+  "timeout_seconds": 2400,
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe"
+  },
+  "streams": {
+    "stdout": {
+      "bytes": 867,
+      "sha256": "5fca055737d401e18ab90e1eeb3eff00d883ed74e3137ee1b550bfb6484918fb",
+      "stored_bytes": 867,
+      "stored_sha256": "5fca055737d401e18ab90e1eeb3eff00d883ed74e3137ee1b550bfb6484918fb"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "summary": [
+    "281 passed, 6 xfailed, 1 warning in 42.96s\r"
+  ]
+}

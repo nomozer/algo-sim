@@ -1,0 +1,45 @@
+{
+  "command": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "../docs/evaluation/geometry/runs/hybrid-offline-consumer/test_extraction_scoring.py",
+    "../docs/evaluation/geometry/runs/hybrid-offline-consumer/test_run_check.py",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp=../.superpowers/session5-tools-final"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-session5-offline-consumer\\backend",
+  "source_commit": "565076028e1ff62d123a4a1d7e4e0999686b9783",
+  "started_utc": "2026-10-23T11:15:46.319893+00:00",
+  "elapsed_seconds": 2.422,
+  "exit_code": 0,
+  "timeout_seconds": 2400,
+  "timed_out": false,
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe"
+  },
+  "streams": {
+    "stdout": {
+      "bytes": 101,
+      "sha256": "666b70c5028b8cada39a3be595020375d9f9500e32c951bf71e75c9f7174cd2a",
+      "stored_bytes": 101,
+      "stored_sha256": "666b70c5028b8cada39a3be595020375d9f9500e32c951bf71e75c9f7174cd2a"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "summary": [
+    "15 passed in 1.40s\r"
+  ]
+}

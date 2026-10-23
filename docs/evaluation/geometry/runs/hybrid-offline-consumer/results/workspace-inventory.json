@@ -1,0 +1,149 @@
+{
+  "worktrees": [
+    {
+      "path": "D:/Documents/projects/algo-sim",
+      "head": "fe9f555437498432427ae6bbd54402cdd59c7eb7",
+      "state": "refs/heads/research/hybrid-wave3a-volume-reasoning",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/extraction-v2-safety",
+      "head": "330a222a2d4f627da7454378627a1497c239fb8c",
+      "state": "refs/heads/integration/extraction-v2-safety",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/freeze-scene3d-metric-boundary",
+      "head": "cb1f4954a7243de0561b3e724b7b2e94cb36bffc",
+      "state": "detached",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/freeze-scene3d-metric-final",
+      "head": "216bbf84beb4a2bbd0e6d6c688a4f3e4becf24bc",
+      "state": "detached",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/geometric-visual-correctness-framing",
+      "head": "f95596716912e5550ed079287221274b2d70f24c",
+      "state": "refs/heads/research/geometric-visual-correctness-framing",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-s1",
+      "head": "82d3d25540ea643a68bd7877eb1b67a78dfc7134",
+      "state": "refs/heads/research/hybrid-backend-integration-session1",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-route-d-preview-wiring",
+      "head": "65d6ee97d6f693c6613153d28aaf40fa0f352ba1",
+      "state": "refs/heads/research/hybrid-route-d-preview-wiring",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-semantic-extraction-v2",
+      "head": "dc27009fe9530ced01c3e6d52898d789a62cb36f",
+      "state": "refs/heads/research/hybrid-semantic-extraction-v2",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-session5-offline-consumer",
+      "head": "565076028e1ff62d123a4a1d7e4e0999686b9783",
+      "state": "refs/heads/research/hybrid-session5-offline-consumer",
+      "action": "ACTIVE_SESSION5_KEEP"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/nl-to-scene3d-e2e-readiness",
+      "head": "25f57e31604c5a12ca30667276b17596dcceb71b",
+      "state": "refs/heads/research/nl-to-scene3d-e2e-readiness",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/scene3d-plane-grid-camera",
+      "head": "551a354174e1c213f3ad2bf03d7574ebf75f4d85",
+      "state": "refs/heads/research/scene3d-plane-grid-camera",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/scene3d-unified-visual-language",
+      "head": "8618d84c917c5d5d41eb9a9cd41a40e93ae2996c",
+      "state": "refs/heads/research/scene3d-unified-visual-language",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/semantic-extraction-v3",
+      "head": "7168d26963011433889dc907492df87ac62140f7",
+      "state": "refs/heads/research/semantic-extraction-v3",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/semantic-extraction-v3-runtime-revision",
+      "head": "bb014eb832672948e613ac21984c7c65cee14b83",
+      "state": "refs/heads/research/semantic-extraction-v3-runtime-revision",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-coverage-visual-validation",
+      "head": "d86c72031d8fc85cd4eef62d9379cd1690ba1417",
+      "state": "refs/heads/research/simulation-coverage-visual-validation",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-visual-consistency-learning-ux",
+      "head": "f6a8e30fb70d377c5a8a97db476ebd4d7c090336",
+      "state": "refs/heads/research/simulation-visual-consistency-learning-ux",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-scene3d-metric-boundary",
+      "head": "2160fbcf3a8ec489f8ac792ffccdcf7436f30c86",
+      "state": "detached",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-scene3d-pre-main",
+      "head": "61668c9362c49df39f1ae948b0e7a7e1cad33f95",
+      "state": "detached",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-scene3d-pre-main-2",
+      "head": "8e2235e7a540da58c48adf6fcced12624676119c",
+      "state": "detached",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/verify-geometric-visual-correctness-framing",
+      "head": "7868db0aef3810e2089b5f8b8d6aecfb8b3e1400",
+      "state": "detached",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/verify-visual-ux-final-quality",
+      "head": "9343e8d0d4c4cdf5bf0865e0a550c13f238f28b5",
+      "state": "detached",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    },
+    {
+      "path": "D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality",
+      "head": "164a5e25ad25bf42d689df115ade5d74b5c733e9",
+      "state": "refs/heads/research/visual-ux-final-quality",
+      "action": "OWNER_REVIEW_ONLY_NO_DELETE"
+    }
+  ],
+  "unregistered_candidates_preserve": [
+    "goal-bounded",
+    "goal-fixed",
+    "hybrid-offline-readiness-finalization",
+    "semantic-grounding-base-20261017",
+    "simulation-evidence-repair",
+    "t3-scene3d-metric-final"
+  ],
+  "candidate_sizes": "UNKNOWN_NOT_MEASURED; no ownership/process/ACL clearance",
+  "disk_free_bytes": 23757201408,
+  "reclaimed_bytes": 0,
+  "dependency_strategy": "existing backend venv directly; frontend node_modules junction to root; no install",
+  "deletions": []
+}
