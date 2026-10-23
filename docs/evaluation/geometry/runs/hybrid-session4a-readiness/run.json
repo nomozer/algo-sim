@@ -1,0 +1,86 @@
+{
+  "schema": "run/1",
+  "run": "hybrid-session4a-readiness",
+  "task_code": "BACKEND_HYBRID_SESSION4A_READINESS",
+  "wave": 1,
+  "date": "2026-10-23",
+  "timezone": "Asia/Bangkok",
+  "authorization": "Owner supplied Session 4A P0-P7 specification; offline local preparation only",
+  "branch": "research/hybrid-session4a-readiness",
+  "worktree": ".superpowers/worktrees/hybrid-session4a-readiness",
+  "base_commit": "f10e6283dd3fd2cfdef189e1bef0ffdecf2be942",
+  "documentation_commit": "Resolve the commit containing this file with git log; not a self-referential measured product ID",
+  "source_subject": {
+    "product_commit": "69bd2fe48be1fd3afa6ce4112ccddda92a07d850",
+    "t3_candidate": "84c729e0b0df7868dfcc0a6e48cac457d7959e92",
+    "final_session3_documentation_head": "0f7b3a69d0f920a6cc115a7d9e1a89f693137208",
+    "git_backend_tree": "357afcfae2289cfed286cb47f709c708a6c661cc",
+    "measured_system_sha256": "413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df",
+    "measured_path_entries": 116,
+    "unique_files": 115,
+    "verification_worktree": ".superpowers/worktrees/hybrid-session4a-s3-verify"
+  },
+  "classification": "OFFLINE_AUDIT_REPLAY_AND_DEVELOPMENT_DIAGNOSTICS_NOT_INDEPENDENT_HOLDOUT",
+  "product_change": false,
+  "new_runtime_modules": [],
+  "provider_calls": 0,
+  "governance": {
+    "DEFAULT_MODE": "LLM_ONLY",
+    "RESPONSE_CONTRACT": "flat",
+    "HYBRID_PRODUCT_ENABLEMENT": "NO-GO",
+    "ALLOW_LIVE_AI": 0,
+    "CACHE_VERSION": "127",
+    "MAX_MEMORY_DECLARATIONS": 32,
+    "workers": 1,
+    "blas_openmp_threads": 1,
+    "merge_push_delete": "NONE"
+  },
+  "decisions": {
+    "offline_research": "READY_BOUNDED",
+    "main_integration_disabled": "PARTIAL",
+    "bounded_live_experiment": "BLOCKED_OWNER_GO_CURATOR_MODEL_LOCK_REQUIRED",
+    "production_replacement": "BLOCKED_NO_GO",
+    "independent_holdout": "PROTOCOL_PREPARED_EXECUTION_PENDING_INDEPENDENT_EVALUATOR"
+  },
+  "corrections": {
+    "source_wave": "HYBRID_CONTRACT_V2",
+    "claimed_562": "NOT_RECONCILED",
+    "mixed_unit_sum_A_to_H": 560,
+    "overlapping_composition_inspections_separate": 38,
+    "post_fix_mutation_executions": 46436,
+    "historical_artifact_changes": 0,
+    "old_reports_edited": false
+  },
+  "measurements": {
+    "archived_flat_outputs": 43,
+    "archived_missing_output": 1,
+    "usable_v2_provider_outputs_in_examined_inputs": 0,
+    "authored_canonical_seam": {"cases": 47, "verified_scenes": 22, "refusals": 25},
+    "new_development_diagnostics": {"cases": 12, "exact_matches": 12, "structurally_valid_scenes": 12, "novel_signatures_established": 0},
+    "route_b_reproduction": {"problems": 30, "two_arm_rows": 60, "correct_served": 38, "correct_refusal": 18, "false_refusal": 4, "wrong_served": 0},
+    "new_provider_tokens": "UNKNOWN_NOT_MEASURED",
+    "new_provider_latency": "UNKNOWN_NOT_MEASURED",
+    "new_provider_cost": "UNKNOWN_NOT_MEASURED",
+    "browser_rendering": "UNKNOWN_NOT_EXECUTED",
+    "remote_freshness": "LOCAL_TRACKING_REFS_ONLY"
+  },
+  "verification": {
+    "receipt": "results/final-verification.json",
+    "targeted_tests": "201 passed, 1 xfailed, 1 warning",
+    "documentation_tests": "8 passed, 34 deselected",
+    "provenance_guard_checks": "2 passed",
+    "independent_review": "INDEPENDENT_REVIEW.md (no important/critical findings; minor provenance guard remediated)",
+    "full_t3": "NOT_RERUN; original Session 3 receipt retained at original candidate",
+    "artifact_hashes": "artifact-hashes.json"
+  },
+  "deliverables": [
+    "INTEGRATION_PREFLIGHT_REPORT.md",
+    "SESSION3_EVIDENCE_RECONCILIATION.md",
+    "PLANNER_GENERALIZATION_GAP_REPORT.md",
+    "E2E_EXTRACTION_READINESS.md",
+    "INDEPENDENT_HOLDOUT_PROTOCOL.md",
+    "MIGRATION_RELEASE_DECISION.md"
+  ],
+  "live_decision": "OWNER_LIVE_EVALUATION_DECISION.md (proposal only, not approval)",
+  "handoff": "handoff.md"
+}

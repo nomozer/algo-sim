@@ -1,5 +1,14 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Session 4A offline readiness tooling (local, no product integration)
+
+Run `docs/evaluation/geometry/runs/hybrid-session4a-readiness/`: `audit_receipts.py` inventories refs/worktrees and reconciles
+immutable Session 3 receipts; `offline_replay.py::ReplayExtractor/replay_one` supplies a provider-independent local output seam,
+strict V2/source validation and code-based stage attribution, reusing the pinned Session 3 Adapter `/4` and existing scene validator.
+`test_offline_replay.py` checks that boundary; `planner_diagnostics.py` locks then measures twelve implementer-authored development
+probes and recovers benchmark-H row identities. These scripts require an explicitly selected Session 3 source checkout; they do not
+add a production provider or change flat/default/cache behavior. Reports and independent holdout protocol live beside the scripts.
+
 ## Simulation evidence repair (`research/simulation-evidence-repair`)
 
 Current capability authority: `docs/evaluation/geometry/runs/simulation-evidence-repair/capability-matrix.md`; supersedes unsupported residual-mesh claims in the historical campaign matrix. New evidence-only capture tooling lives in that run (`capture.py`, binary subprocess streams; `probe-browser.mjs`, separate environment probe). Existing `run_browser_audit.mjs`, `full-gate.mjs`, product and test code are reused unchanged. Dedicated residual mesh NOT_IMPLEMENTED; standalone cone_frustum BLOCKED_BY_KERNEL; ellipse browser scope BACKEND_ONLY.

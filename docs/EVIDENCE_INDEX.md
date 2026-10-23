@@ -1,5 +1,18 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_SESSION4A_READINESS
+
+REPORT = docs/evaluation/geometry/runs/hybrid-session4a-readiness/handoff.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-session4a-readiness/
+CLASSIFICATION = OFFLINE_RESEARCH_READY_BOUNDED; MAIN_INTEGRATION_PARTIAL; LIVE_BLOCKED_OWNER_GO_REQUIRED; PRODUCTION_NO_GO
+CODE_COMMIT = NONE (offline run tooling only; product remains unchanged from local main; measured subject is Session 3 69bd2fe4 at clean detached 84c729e0)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-session4a-readiness/run.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_CONTRACT_V2 (source-branch reports at 0f7b3a69: 562 mixed evaluations not reconciled; 500-case fuzz claims contradicted by 13661/19114-call receipts; nonexistent p1-planner.json; 116 measured entries are not all backend files; benchmark false-refusal scope and final T3/documentation identity clarified)
+CORRECTED_BY = NONE
+SOURCE_CORRECTION_CHAIN = HYBRID_CONTRACT_V2 at 0f7b3a69d0f920a6cc115a7d9e1a89f693137208 CORRECTED_BY HYBRID_SESSION4A_READINESS (source run is on the unmerged Session 3 branch; its bytes are unchanged)
+
+
 ## WAVE_ID = SIMULATION_DEMO6B_RENDERER_FIX_W01
 
 REPORT = docs/evaluation/geometry/runs/simulation-demo6b-renderer-fix/report.md

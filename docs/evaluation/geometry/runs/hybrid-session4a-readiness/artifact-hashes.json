@@ -1,0 +1,146 @@
+{
+  "schema": "session4a_artifact_hashes/1",
+  "hash_algorithm": "SHA-256: sha256 is original local file bytes; sha256_lf normalizes CRLF to LF for portable Git verification; manifest excludes itself",
+  "files": {
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/audit_receipts.py": {
+      "bytes": 5171,
+      "sha256": "dddd7902e1d9a260a8b6fbda5573820dbf60c3d82be44f13304a01ce97614f0d",
+      "sha256_lf": "dddd7902e1d9a260a8b6fbda5573820dbf60c3d82be44f13304a01ce97614f0d"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/E2E_EXTRACTION_READINESS.md": {
+      "bytes": 7739,
+      "sha256": "b5dea4dfa150e0a3fb518fbb95dd5058cb990bdfe3148c1c68d23e10dffd329a",
+      "sha256_lf": "b5dea4dfa150e0a3fb518fbb95dd5058cb990bdfe3148c1c68d23e10dffd329a"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/handoff.md": {
+      "bytes": 3946,
+      "sha256": "d6de1f1cf4c69f98cc6a8c7fa4888ab12f8b1d1b24c17ea54384673d163f5d4d",
+      "sha256_lf": "d6de1f1cf4c69f98cc6a8c7fa4888ab12f8b1d1b24c17ea54384673d163f5d4d"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/INDEPENDENT_HOLDOUT_PROTOCOL.md": {
+      "bytes": 7136,
+      "sha256": "6ac68be24a92bebcc421a71e6636c32221dd662eadee42766c891c2d7e7fd072",
+      "sha256_lf": "6ac68be24a92bebcc421a71e6636c32221dd662eadee42766c891c2d7e7fd072"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/INDEPENDENT_REVIEW.md": {
+      "bytes": 1481,
+      "sha256": "3f54bafd35527ed767c77ea6cdab0e19a21b9b6a92c91ee2ba220c3c5c7f3e5d",
+      "sha256_lf": "3f54bafd35527ed767c77ea6cdab0e19a21b9b6a92c91ee2ba220c3c5c7f3e5d"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/INTEGRATION_PREFLIGHT_REPORT.md": {
+      "bytes": 5477,
+      "sha256": "23fe187c0454c36b1532a56367bef870babdddffe686deaccd01d2b65d05a59b",
+      "sha256_lf": "23fe187c0454c36b1532a56367bef870babdddffe686deaccd01d2b65d05a59b"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/MIGRATION_RELEASE_DECISION.md": {
+      "bytes": 7188,
+      "sha256": "dd87a8d325c37e01b71cffd35cf305fa0b35acee6416cec7a459ab245f9b7953",
+      "sha256_lf": "dd87a8d325c37e01b71cffd35cf305fa0b35acee6416cec7a459ab245f9b7953"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/offline_replay.py": {
+      "bytes": 6206,
+      "sha256": "04c3730b76f819bf902af665b1301b0f86a7479335e1bbd86881409dbc1dc0f5",
+      "sha256_lf": "04c3730b76f819bf902af665b1301b0f86a7479335e1bbd86881409dbc1dc0f5"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/OWNER_LIVE_EVALUATION_DECISION.md": {
+      "bytes": 2155,
+      "sha256": "ec17c6e3c19c178a455d809f650c76d34bc678f406753ea8f5425e9713304c3b",
+      "sha256_lf": "ec17c6e3c19c178a455d809f650c76d34bc678f406753ea8f5425e9713304c3b"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/plan.md": {
+      "bytes": 4165,
+      "sha256": "0047f87f0a015d1985481dba2a1e3a5d40b1342a2bcfa5dbf50b82d15b9d2586",
+      "sha256_lf": "0047f87f0a015d1985481dba2a1e3a5d40b1342a2bcfa5dbf50b82d15b9d2586"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/planner_diagnostics.py": {
+      "bytes": 7540,
+      "sha256": "3074c210822497fe2d01172083ff403c2eae7d6eeaeddee7a4143d2b31f858b5",
+      "sha256_lf": "3074c210822497fe2d01172083ff403c2eae7d6eeaeddee7a4143d2b31f858b5"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/PLANNER_GENERALIZATION_GAP_REPORT.md": {
+      "bytes": 8537,
+      "sha256": "b93f5a4708cec275507fbbb0d994cada251ae90c763e2170b579eac2d26e184a",
+      "sha256_lf": "b93f5a4708cec275507fbbb0d994cada251ae90c763e2170b579eac2d26e184a"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/results/closing-integrity.json": {
+      "bytes": 410,
+      "sha256": "ee97d831e50a5103f347db220c64699ee9205ef3ffa2217919de53d79f185fc8",
+      "sha256_lf": "c19f4d47f7985fb93ac3c79e2e17efe8a5b1592bd5a8809c394748dd0576004d"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/results/diagnostic-inputs.json": {
+      "bytes": 48970,
+      "sha256": "df8369d5c647f542e9225c365d64916bf01c4a4cc0d6ba1ef31c838fbb805f2d",
+      "sha256_lf": "2dce24518b79cb7b597e82007db7595e92685b1d7cbb7f339f3dcdb7a14d905d"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/results/diagnostic-lock.json": {
+      "bytes": 403,
+      "sha256": "b91ee281d76e7957719b7dec75b7c16fe246a66b94f9da944588b1d0fe833677",
+      "sha256_lf": "afb4a98297c339e988b040060280988e2cd3bcc0c6429202f7ebfad4f4d07213"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/results/diagnostic-oracles.json": {
+      "bytes": 782,
+      "sha256": "1c3751835222b2379b757c4e9d4fba147b42e4d94b620cacb1c61787777f1f12",
+      "sha256_lf": "26dbae3d8bfcb2a80cbe787029f27cd0397bf56a5ff77796d0c01e510a606cc0"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/results/final-verification.json": {
+      "bytes": 5119,
+      "sha256": "88f0258a3ab1f8c10a983ca43b0b018bd5ae5eaa08fe0cf4e4e58b2f3e0a9366",
+      "sha256_lf": "5f48817e2bef2847f05d60e72aec58a825c36e985e4671a1b90d4ca47a1ce4b6"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/results/offline-replay.json": {
+      "bytes": 47204,
+      "sha256": "79edbc5f384015c62a93b53da366da7370e5e8756c2dbd2c31eb108a413cc3a1",
+      "sha256_lf": "8fddddac7e01e68cf06d0db8da1599641c83555fcfb5398e3c23e314c484bdba"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/results/planner-diagnostics.json": {
+      "bytes": 36212,
+      "sha256": "c710b28aca7c2bc0cd39268c61b0c05cdd72ad133a85cc593c6c9655ecba8faa",
+      "sha256_lf": "fc40eb5a1345dd5febcb247352db56fa8b1707dbb82756bd5fe54b07ef7cc423"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/results/receipt-audit-attempt2.json": {
+      "bytes": 74748,
+      "sha256": "1d970278439b2d7d6501e6af4a3de407093fb741f6d65969a357a86473162447",
+      "sha256_lf": "5c449595764e121ff534d3b83c51a7436ebd2914dc8730b83f557d716a65163c"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/results/receipt-audit.json": {
+      "bytes": 15881,
+      "sha256": "391569dc7eea4d9d5fd938996496c3347c458c54595be6fca75cfa788252ed9e",
+      "sha256_lf": "1e25c1834161c3419c2f1afced78d9e35266c7d3a6cf7ff9ea53da05d6f714bd"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/run.json": {
+      "bytes": 3863,
+      "sha256": "6d2026f213a62fe0063c947b5b98f2a32442931b9f13b8f1ca20a8b4e5ff8ae5",
+      "sha256_lf": "6d2026f213a62fe0063c947b5b98f2a32442931b9f13b8f1ca20a8b4e5ff8ae5"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/SESSION3_EVIDENCE_RECONCILIATION.md": {
+      "bytes": 8005,
+      "sha256": "8d92189ee49bc59c7165708251bf0c14ed5a723ab20d9535afa35ce702462883",
+      "sha256_lf": "8d92189ee49bc59c7165708251bf0c14ed5a723ab20d9535afa35ce702462883"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/test_offline_replay.py": {
+      "bytes": 3196,
+      "sha256": "53c17ea8789e4c54a3799f1f5e1230cbaa1bbbe8b7609b7663ade3e25f8c0ecb",
+      "sha256_lf": "53c17ea8789e4c54a3799f1f5e1230cbaa1bbbe8b7609b7663ade3e25f8c0ecb"
+    },
+    "docs/evaluation/geometry/runs/hybrid-session4a-readiness/verify_readiness.py": {
+      "bytes": 5554,
+      "sha256": "97d32c95c8192f66e14d6850b871ce6cb8c6fa03bf4aa04974dbecf284024244",
+      "sha256_lf": "97d32c95c8192f66e14d6850b871ce6cb8c6fa03bf4aa04974dbecf284024244"
+    },
+    "docs/CODE_INDEX.md": {
+      "bytes": 683599,
+      "sha256": "e23224dad875c902f422d43d1bf239de0621c184556ee02516e69ed8c496a77f",
+      "sha256_lf": "a56bc7430a80b939d7b65b77410ba80434a48998077c7362ccb43f7b1cf51446"
+    },
+    "docs/EVIDENCE_INDEX.md": {
+      "bytes": 200460,
+      "sha256": "90e38ae9ce9ee00bbcb81084e92688b65b837137fac6c623cf2853250a5a65ad",
+      "sha256_lf": "d2f6bfe6a4c15d0681a1a482cc8fdaf27e76b293068a2a0b3a2c64957fd88979"
+    },
+    "docs/CURRENT_STATE.md": {
+      "bytes": 122863,
+      "sha256": "64573cc7a4a35e0e962ff17381c534020de752676c83c920ac692099160e67b7",
+      "sha256_lf": "69e46b7c183e96c97538d7e1ac96ba6d957cb95fad734cd78ee3bf207a981336"
+    }
+  }
+}
