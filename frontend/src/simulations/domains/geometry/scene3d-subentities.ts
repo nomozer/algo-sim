@@ -207,6 +207,45 @@ function _banDoDiem(scene: Scene3D): Map<string, SceneObject | null> {
 }
 
 /**
+ * Điểm ngữ nghĩa của từng đỉnh thiết diện.
+ *
+ * Toạ độ có đúng một điểm ⇒ điểm ấy (luật `_banDoDiem`). Toạ độ có HAI điểm trở
+ * lên ⇒ chỉ nhận điểm mà **phụ thuộc của nó nói nó là giao của đúng cạnh khối ấy
+ * với mặt cắt** (run `scene3d-section-inspector-c0`): `vertex_sources[k]` chỉ
+ * cạnh (U, V) của khối, điểm phụ thuộc đúng một `line3` trên {U, V} và một
+ * `plane3` là mặt cắt (cùng id, hoặc cùng các điểm dựng). Lăng trụ: H (tịnh tiến)
+ * ≡ I (BB′ ∩ (α)) ⇒ I. Không đúng một điểm như thế ⇒ `null`, tức nhãn trung tính;
+ * không bao giờ chọn theo thứ tự, theo tên hay chỉ vì trùng toạ độ.
+ */
+function _diemCuaDinh(
+  scene: Scene3D, sec: SceneObject, diem: Map<string, SceneObject | null>,
+): (SceneObject | null)[] {
+  const theoId = new Map(scene.objects.map((o) => [o.id, o]));
+  const khoi = sec.depends.map((d) => theoId.get(d)).find((o) => o?.type === "solid");
+  const mat = sec.depends.map((d) => theoId.get(d)).find((o) => o?.type === "plane3");
+  const cungTap = (a: string[], b: string[]) =>
+    new Set(a).size === a.length && a.length === b.length && a.every((x) => b.includes(x));
+  return (sec.polygon ?? []).map((v, k) => {
+    const khoa = _khoaToa(v);
+    const mot = diem.get(khoa);
+    if (mot !== null) return mot ?? null;
+    const canh = sec.vertex_sources?.[k]?.solid_edge_vertex_indices;
+    if (!khoi?.vertex_ids || !mat || !canh || canh.length !== 2) return null;
+    const uv = canh.map((i) => khoi.vertex_ids![i]);
+    const ung = scene.objects.filter((p) => {
+      if (isSubEntity(p.id) || p.type !== "point3" || !p.xyz || _khoaToa(p.xyz) !== khoa
+        || p.depends.length !== 2) return false;
+      const toanHang = p.depends.map((d) => theoId.get(d));
+      const duong = toanHang.find((x) => x?.type === "line3");
+      const phang = toanHang.find((x) => x?.type === "plane3");
+      return !!duong && !!phang && cungTap(duong.depends, uv)
+        && (phang.id === mat.id || cungTap(phang.depends, mat.depends));
+    });
+    return ung.length === 1 ? ung[0] : null;
+  });
+}
+
+/**
  * Đỉnh · cạnh · mặt của mọi THIẾT DIỆN trong cảnh, TẤT ĐỊNH.
  *
  * ─── VÌ SAO THIẾT DIỆN CẦN RIÊNG, KHÔNG DÙNG CHUNG VỚI KHỐI ─────────────
@@ -234,7 +273,7 @@ export function deriveSectionSubEntities(scene: Scene3D): SubEntity[] {
     if (o.type !== "section" || !o.polygon || o.polygon.length < 3) continue;
     const poly = o.polygon;
     const goc = o.producer ?? "construct_section";
-    const ten = poly.map((v) => diem.get(_khoaToa(v)) ?? null);
+    const ten = _diemCuaDinh(scene, o, diem);
     const endpointIds = poly.map((_, index) =>
       o.endpoint_entities?.[index]?.entity_id ?? sectionVertexId(o.id, index));
 
@@ -374,10 +413,7 @@ export function sectionDetails(
     vertexCount: sec.polygon.length,
     // Danh sách đỉnh — ký hiệu trước, vì đây là một DÃY và câu đầy đủ nối bằng
     // dấu phẩy sẽ dài hơn cả ô soi. Không có ký hiệu thì mới dùng tên.
-    vertexNames: sec.polygon.map((v, i) => {
-      const o = diem.get(_khoaToa(v));
-      return o?.notation ?? o?.label ?? `Đỉnh ${i + 1}`;
-    }),
+    vertexNames: _diemCuaDinh(scene, sec, diem).map((o, i) => o?.notation ?? o?.label ?? `Đỉnh ${i + 1}`),
     solidId: sec.parent ?? cua("solid"),
     planeId: cua("plane3"),
   };
