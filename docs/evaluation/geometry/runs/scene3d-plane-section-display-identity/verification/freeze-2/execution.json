@@ -1,0 +1,12 @@
+{
+ "schema": "execution/1",
+ "purpose": "Re-freeze the evaluation candidate after product commit 665f542c (supersedes freeze 1 at ec17602a before any measurement)",
+ "worktree": ".superpowers/worktrees/hybrid-session5-offline-consumer (branch research/scene3d-plane-section-display-identity, clean: 0 status lines before the run)",
+ "commit": "665f542c8fea00676316e8c83c31d25a41de2643",
+ "command": "cd backend && PYTHONIOENCODING=utf-8 D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py",
+ "exit_code": 0,
+ "clean_tree_recorded": true,
+ "measured_system": {"files": 116, "tree_hash": "c332dcb58005bac07f61f6968c27b7ed4af4fa9f015073ace6d5b174ee37a5cc"},
+ "previous_measured_system": {"files": 116, "tree_hash": "ba2854172f0ff236adfb790385b76c2548bea0b2ae97b89cbfb4ca4c555220dd", "status": "superseded"},
+ "manifest_sha256": "6044e53d8df0ea05206f4859efad7b2c026ff6692a04a8eea46407dbfc516919"
+}
