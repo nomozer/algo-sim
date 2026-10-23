@@ -11,7 +11,7 @@ import type { Scene3D, SceneObject } from "./scene3d-model";
 import { deriveSectionSubEntities, sectionCycleLabel, sectionDetails } from "./scene3d-subentities";
 
 const EXPORT = resolve(__dirname,
-  "../../../../../docs/evaluation/geometry/runs/scene3d-section-inspector-c0/results/adapter4-export-final/adapter4-fixtures.json");
+  "../../../../../docs/evaluation/geometry/runs/scene3d-section-inspector-c0/results/adapter4-export-reviewed/adapter4-fixtures.json");
 const SERVED: { id: string; envelope: { scene3d: Scene3D } }[] = JSON.parse(readFileSync(EXPORT, "utf-8")).fixtures;
 const scene = (id: string): Scene3D => structuredClone(SERVED.find((f) => f.id === id)!.envelope.scene3d);
 const PRISM = "CORPUS-DEV10-prism-area";

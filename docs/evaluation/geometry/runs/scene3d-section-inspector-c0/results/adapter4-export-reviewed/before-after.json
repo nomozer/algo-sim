@@ -1,0 +1,819 @@
+{
+ "schema": "adapter4_name_diff/1",
+ "source_commit": "4d3b8849d50adb3ceb427e8f7f630c2cbdcba66a",
+ "provider_calls": 0,
+ "network_attempts": 0,
+ "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+ "before": "docs/evaluation/geometry/runs/hybrid-disabled-integration/results/adapter4-consumer-after-review/adapter4-frontend-fixtures.json",
+ "rule": "only label/display_label/reference/notation/role/learner_text/explanation/formula.text may differ; every other value, key and list length is asserted equal",
+ "refusals_equal_session5": 25,
+ "served": [
+  {
+   "id": "PARA-0",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "PARA-1",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "PARA-2",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "PARA-3",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "PARA-4",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "PARA-5",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "CORPUS-DEV01-construct",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABCD)"
+    },
+    {
+     "path": "envelope.scene3d.events[19].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABCD); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "CORPUS-DEV03-construct",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MH2H3)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MH2H3)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H2, H3",
+     "after": "Mặt phẳng qua M và vuông góc với SA"
+    },
+    {
+     "path": "envelope.scene3d.events[18].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H2, H3.",
+     "after": "Dựng (α): mặt phẳng qua M và vuông góc với SA; dựng qua M và các điểm dựng phụ H2, H3."
+    }
+   ]
+  },
+  {
+   "id": "CORPUS-DEV06-construct",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "CORPUS-DEV09-construct",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABCD)"
+    },
+    {
+     "path": "envelope.scene3d.events[19].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABCD); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "CORPUS-DEV10-prism-area",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[I].label",
+     "before": "Giao điểm của BB' và (α)",
+     "after": "Giao điểm của BB′ và (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[I].reference",
+     "before": "giao điểm của BB' và (α)",
+     "after": "giao điểm của BB′ và (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[I].display_label",
+     "before": "Giao điểm của BB' và (α)",
+     "after": "Giao điểm của BB′ và (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[I1].label",
+     "before": "Giao điểm của CC' và (α)",
+     "after": "Giao điểm của CC′ và (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[I1].reference",
+     "before": "giao điểm của CC' và (α)",
+     "after": "giao điểm của CC′ và (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[I1].display_label",
+     "before": "Giao điểm của CC' và (α)",
+     "after": "Giao điểm của CC′ và (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sp].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sp].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sp].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.objects[td_sp].label",
+     "before": "Thiết diện HMH1",
+     "after": "Thiết diện bởi (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[td_sp].notation",
+     "before": "HMH1",
+     "after": null
+    },
+    {
+     "path": "envelope.scene3d.objects[td_sp].reference",
+     "before": "HMH1",
+     "after": "thiết diện bởi (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[td_sp].display_label",
+     "before": "Thiết diện HMH1",
+     "after": "Thiết diện bởi (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[kq_g_area].label",
+     "before": "Diện tích HMH1",
+     "after": "Diện tích thiết diện bởi (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[kq_g_area].notation",
+     "before": "S(HMH1)",
+     "after": null
+    },
+    {
+     "path": "envelope.scene3d.objects[kq_g_area].reference",
+     "before": "S(HMH1)",
+     "after": "diện tích thiết diện bởi (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[kq_g_area].display_label",
+     "before": "Diện tích HMH1",
+     "after": "Diện tích thiết diện bởi (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[kq_g_area].formula.text",
+     "before": "S(HMH1) = √3/4",
+     "after": "S(thiết diện bởi (α)) = √3/4"
+    },
+    {
+     "path": "envelope.scene3d.events[11].explanation",
+     "before": "Xét mặt phẳng (α) để tìm giao điểm với BB'.",
+     "after": "Xét mặt phẳng (α) để tìm giao điểm với BB′."
+    },
+    {
+     "path": "envelope.scene3d.events[11].learner_text",
+     "before": "Xét mặt phẳng (α) để tìm giao điểm với BB'.",
+     "after": "Xét mặt phẳng (α) để tìm giao điểm với BB′."
+    },
+    {
+     "path": "envelope.scene3d.events[12].explanation",
+     "before": "Xác định giao điểm của BB' và (α).",
+     "after": "Xác định giao điểm của BB′ và (α)."
+    },
+    {
+     "path": "envelope.scene3d.events[12].display_label",
+     "before": "Giao điểm của BB' và (α)",
+     "after": "Giao điểm của BB′ và (α)"
+    },
+    {
+     "path": "envelope.scene3d.events[12].details.label",
+     "before": "Giao điểm của BB' và (α)",
+     "after": "Giao điểm của BB′ và (α)"
+    },
+    {
+     "path": "envelope.scene3d.events[12].learner_text",
+     "before": "Xác định giao điểm của BB' và (α).",
+     "after": "Xác định giao điểm của BB′ và (α)."
+    },
+    {
+     "path": "envelope.scene3d.events[14].explanation",
+     "before": "Xác định giao điểm của CC' và (α).",
+     "after": "Xác định giao điểm của CC′ và (α)."
+    },
+    {
+     "path": "envelope.scene3d.events[14].display_label",
+     "before": "Giao điểm của CC' và (α)",
+     "after": "Giao điểm của CC′ và (α)"
+    },
+    {
+     "path": "envelope.scene3d.events[14].details.label",
+     "before": "Giao điểm của CC' và (α)",
+     "after": "Giao điểm của CC′ và (α)"
+    },
+    {
+     "path": "envelope.scene3d.events[14].learner_text",
+     "before": "Xác định giao điểm của CC' và (α).",
+     "after": "Xác định giao điểm của CC′ và (α)."
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    },
+    {
+     "path": "envelope.scene3d.events[19].display_label",
+     "before": "Thiết diện HMH1",
+     "after": "Thiết diện bởi (α)"
+    },
+    {
+     "path": "envelope.scene3d.events[20].display_label",
+     "before": "Diện tích HMH1",
+     "after": "Diện tích thiết diện bởi (α)"
+    },
+    {
+     "path": "envelope.scene3d.events[20].learner_text",
+     "before": "Tính diện tích HMH1: S(HMH1) = √3/4.",
+     "after": "Tính diện tích thiết diện bởi (α): S(thiết diện bởi (α)) = √3/4."
+    },
+    {
+     "path": "envelope.scene3d.formation.steps[11].learner_text",
+     "before": "Xét mặt phẳng (α) để tìm giao điểm với BB'.",
+     "after": "Xét mặt phẳng (α) để tìm giao điểm với BB′."
+    },
+    {
+     "path": "envelope.scene3d.formation.steps[12].learner_text",
+     "before": "Xác định giao điểm của BB' và (α).",
+     "after": "Xác định giao điểm của BB′ và (α)."
+    },
+    {
+     "path": "envelope.scene3d.formation.steps[14].learner_text",
+     "before": "Xác định giao điểm của CC' và (α).",
+     "after": "Xác định giao điểm của CC′ và (α)."
+    },
+    {
+     "path": "envelope.scene3d.formation.steps[20].learner_text",
+     "before": "Tính diện tích HMH1: S(HMH1) = √3/4.",
+     "after": "Tính diện tích thiết diện bởi (α): S(thiết diện bởi (α)) = √3/4."
+    }
+   ]
+  },
+  {
+   "id": "PARTIAL-1of2-construct",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "PARTIAL-2of3-construct",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABCD)"
+    },
+    {
+     "path": "envelope.scene3d.events[19].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABCD); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "PLANE-ONLY-construct",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "PLANE-ONLY-ratio-described",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.objects[v_tu_g_ratio].label",
+     "before": "Đoạn của thiết diện",
+     "after": "Thể tích khối chóp đỉnh S cắt bởi (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[v_tu_g_ratio].reference",
+     "before": "đoạn của thiết diện",
+     "after": "thể tích khối chóp đỉnh S cắt bởi (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[v_tu_g_ratio].display_label",
+     "before": "Đoạn của thiết diện",
+     "after": "Thể tích khối chóp đỉnh S cắt bởi (α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[kq_g_ratio].label",
+     "before": "Đoạn của thiết diện",
+     "after": "Tỉ số của V(khối chóp đỉnh S cắt bởi (α)) và V(S.ABC)"
+    },
+    {
+     "path": "envelope.scene3d.objects[kq_g_ratio].reference",
+     "before": "đoạn của thiết diện",
+     "after": "tỉ số của V(khối chóp đỉnh S cắt bởi (α)) và V(S.ABC)"
+    },
+    {
+     "path": "envelope.scene3d.objects[kq_g_ratio].display_label",
+     "before": "Đoạn của thiết diện",
+     "after": "Tỉ số của V(khối chóp đỉnh S cắt bởi (α)) và V(S.ABC)"
+    },
+    {
+     "path": "envelope.scene3d.objects[kq_g_ratio].formula.text",
+     "before": "V(S.MII1)/V(S.ABC) = 1/8",
+     "after": "V(khối chóp đỉnh S cắt bởi (α))/V(S.ABC) = 1/8"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    },
+    {
+     "path": "envelope.scene3d.events[20].explanation",
+     "before": "Nối các giao điểm của thiết diện.",
+     "after": "Tính thể tích khối: √3/96."
+    },
+    {
+     "path": "envelope.scene3d.events[20].display_label",
+     "before": "Đoạn của thiết diện",
+     "after": "Thể tích khối chóp đỉnh S cắt bởi (α)"
+    },
+    {
+     "path": "envelope.scene3d.events[20].learner_text",
+     "before": "Nối các giao điểm của thiết diện.",
+     "after": "Thể tích khối chóp đỉnh S cắt bởi (α) bằng √3/96."
+    },
+    {
+     "path": "envelope.scene3d.events[22].explanation",
+     "before": "Nối các giao điểm của thiết diện.",
+     "after": "Ghi nhận giá trị vừa tính được: 1/8."
+    },
+    {
+     "path": "envelope.scene3d.events[22].display_label",
+     "before": "Đoạn của thiết diện",
+     "after": "Tỉ số của V(khối chóp đỉnh S cắt bởi (α)) và V(S.ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[22].learner_text",
+     "before": "Nối các giao điểm của thiết diện.",
+     "after": "Tính tỉ số của V(khối chóp đỉnh S cắt bởi (α)) và V(S.ABC): V(khối chóp đỉnh S cắt bởi (α))/V(S.ABC) = 1/8."
+    },
+    {
+     "path": "envelope.scene3d.formation.steps[20].learner_text",
+     "before": "Nối các giao điểm của thiết diện.",
+     "after": "Thể tích khối chóp đỉnh S cắt bởi (α) bằng √3/96."
+    },
+    {
+     "path": "envelope.scene3d.formation.steps[22].learner_text",
+     "before": "Nối các giao điểm của thiết diện.",
+     "after": "Tính tỉ số của V(khối chóp đỉnh S cắt bởi (α)) và V(S.ABC): V(khối chóp đỉnh S cắt bởi (α))/V(S.ABC) = 1/8."
+    }
+   ]
+  },
+  {
+   "id": "RELABEL-TDEF",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(KHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(KHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua K, H, H1",
+     "after": "Mặt phẳng qua K và song song với (DEF)"
+    },
+    {
+     "path": "envelope.scene3d.events[17].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm K, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua K và song song với (DEF); dựng qua K và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "ORDER-premises-0",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "ORDER-premises-1",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "ORDER-goals",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "PERP-square-third",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MH2H3)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MH2H3)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H2, H3",
+     "after": "Mặt phẳng qua M và vuông góc với SA"
+    },
+    {
+     "path": "envelope.scene3d.events[18].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H2, H3.",
+     "after": "Dựng (α): mặt phẳng qua M và vuông góc với SA; dựng qua M và các điểm dựng phụ H2, H3."
+    }
+   ]
+  },
+  {
+   "id": "POS-per-edge-with-va-cat",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[17].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  },
+  {
+   "id": "GEO-declared-boundary-reversed",
+   "route_d_equal": true,
+   "name_changes": [
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].notation",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].reference",
+     "before": "(MHH1)",
+     "after": "(α)"
+    },
+    {
+     "path": "envelope.scene3d.objects[mp_td_sec].role",
+     "before": "Mặt phẳng qua M, H, H1",
+     "after": "Mặt phẳng qua M và song song với (ABC)"
+    },
+    {
+     "path": "envelope.scene3d.events[15].explanation",
+     "before": "Dựng mặt phẳng (α) qua ba điểm M, H, H1.",
+     "after": "Dựng (α): mặt phẳng qua M và song song với (ABC); dựng qua M và các điểm dựng phụ H, H1."
+    }
+   ]
+  }
+ ]
+}
