@@ -76,6 +76,17 @@ def _ke_diem_dung(canh: dict[str, Any], vai: dict[str, str]) -> None:
         canh["formation"]["steps"][e["step_index"]]["learner_text"] = cau
 
 
+def _thay_ten(s: str, cu: list[tuple[str, str]]) -> str:
+    """Rewrite each old notation (longest first) as a WHOLE name: never inside a dotted or primed name ("MII1" in
+    "S.MII1", review F3). "Thiết diện HMH1" becomes the new name; a sentence that starts with it keeps its capital."""
+    for truoc, sau in cu:
+        hoa = sau[:1].upper() + sau[1:]
+        s = re.sub(rf"[Tt]hiết diện {re.escape(truoc)}(?![\w'′])", lambda m: hoa if m[0][0] == "T" else sau, s)
+        s = re.sub(rf"(?<![\w'′.]){re.escape(truoc)}(?![\w'′])",
+                   lambda m: hoa if m.start() == 0 or s[:m.start()].rstrip().endswith((".", ":")) else sau, s)
+    return s
+
+
 def _vai_mat_cat(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
     """Presentation only (run `scene3d-plane-section-display-identity`): a section plane's role states the SOURCE relation
     the planner read ("qua M và song song với (ABC)"), not its construction points ("qua M, H, H1": translates the source
@@ -85,12 +96,36 @@ def _vai_mat_cat(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
 
     objs = {o["id"]: o for o in canh["objects"]}
     ky = lambda xs: "".join(xs).replace("'", "′")
+
+    def ten_nguon(d: dict, nhan: list[str]) -> str:
+        """The reference plane as the SOURCE writes it (review F2): a source "(ABCD)" is planned through A, B, C only,
+        while another source writes "(ABC)" for the same base. Pick the candidate its quotes contain."""
+        cau = " ".join(d.get("quotes") or ()).replace("′", "'")
+        mat_ = mat_khoi(d["solid"], nhan)
+        return next((c for c in (mat_, f"({ky(nhan)})") if c.replace("′", "'") in cau), mat_)
+
+    def mat_khoi(khoi: str, nhan: list[str]) -> str:
+        """The solid face holding the planner's reference points; no such face ⇒ the planner's points."""
+        can = {ir_name(x) for x in nhan}
+        for o in objs.values():
+            if o.get("type") != "solid" or o.get("notation") != ky([khoi]) or not o.get("faces"):
+                continue
+            for f in sorted(o["faces"], key=len):
+                mat_ = [o["vertex_ids"][i] for i in f]
+                if can <= set(mat_):
+                    k = mat_.index(ir_name(nhan[0]))
+                    mat_ = mat_[k:] + mat_[:k]
+                    if mat_[1] != ir_name(nhan[1]):          # read the cycle in the source's direction
+                        mat_ = mat_[:1] + mat_[1:][::-1]
+                    return "(" + "".join((objs.get(v) or {}).get("notation") or v for v in mat_) + ")"
+        return f"({ky(nhan)})"
+
     for d in auxiliary:
         mat = objs.get(f"mp_td_{ir_name(d['goal'])}") if d.get("goal") else None
         if mat is None:
             continue
         if d.get("rule") == MAT_SONG_SONG:
-            quan_he = f"song song với ({ky(d['parallel_to'])})"
+            quan_he = f"song song với {ten_nguon(d, d['parallel_to'])}"
         elif d.get("rule") == MAT_HAI_DUONG:
             quan_he = "song song với " + " và ".join(ky(x) for x in d["lines"])
         elif d.get("rule") == MAT_VUONG_DUONG:
@@ -196,12 +231,7 @@ def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -
                 o["role"] = an.sub(lambda m: hien.get(m[0], "thiết diện"), o["role"])
         cu.sort(key=lambda p: len(p[0]), reverse=True)
 
-        def thay_cu(s: str) -> str:
-            for truoc, sau in cu:
-                giu_hoa = lambda m, sau=sau: sau[:1].upper() + sau[1:] if m[0][:1].isupper() else sau
-                s = re.sub(rf"[Tt]hiết diện {re.escape(truoc)}(?![\w'′])", giu_hoa, s)
-                s = re.sub(rf"(?<![\w'′]){re.escape(truoc)}(?![\w'′])", sau, s)
-            return s
+        thay_cu = lambda s: _thay_ten(s, cu)
 
         def thay(s: str) -> str:
             return an.sub(lambda m: hien.get(m[0], "thiết diện"), thay_cu(s))
@@ -258,13 +288,14 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
     if r.status != "SERVED":
         return r
     try:
-        from app.simulation.geometry_functions.registry import DINH_CAT_CANH, MAT_HAI_DUONG
+        from app.simulation.geometry_functions.registry import (
+            DINH_CAT_CANH, MAT_HAI_DUONG, MAT_SONG_SONG, MAT_VUONG_DUONG)
         from app.simulation.geometry_functions.engine import ir_name
         two_line = [d for d in auxiliary if d.get('rule') == MAT_HAI_DUONG]
-        # A section plane's source name (α) is also not rebuildable from its construction points (the planner's
-        # parallel-plane translates H, H1 gave "(MHH1)"); keep it as notation/reference (run
-        # `scene3d-plane-section-display-identity`).
-        cut = any(d.get('rule') == DINH_CAT_CANH for d in auxiliary)
+        # A derived section plane's source name (α) is not rebuildable from its construction points either (the
+        # planner's parallel-plane translates H, H1 gave "(MHH1)"); keep it as notation/reference, with or without
+        # stated cut edges (run `scene3d-plane-section-display-identity`, review F1).
+        cut = any(d.get('rule') in (DINH_CAT_CANH, MAT_SONG_SONG, MAT_VUONG_DUONG) for d in auxiliary)
         with _metric.using(r.chart_metric):
             state = build_simulation_state(r.spec, r.exec_result, r.declared_topology,
                                            prefer_declared_plane_names=bool(two_line) or cut)

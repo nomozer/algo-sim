@@ -61,11 +61,42 @@ def test_A_section_plane_shows_the_declared_source_name_in_every_learner_field(c
         built = _point_built_names(sc, plane)
         assert name not in built
         assert not [t for t in _learner(sc) if any(b in t for b in built)]
-        # the role states the source relation the planner read, e.g. "qua M và song song với (ABC)"
-        assert plane["role"].startswith(f"Mặt phẳng qua {sec['through_point'].replace(chr(39), '′')} và ")
+        # the role states the source relation, e.g. "qua M và song song với (ABCD)"; the related object is the one the
+        # source quote names (review F2: a 3-point planner reference read "(ABC)" for a source "(ABCD)")
+        qua = sec["through_point"].replace("'", "′")
+        m = re.fullmatch(rf"Mặt phẳng qua {re.escape(qua)} và (?:song song với (\([^)]+\))|vuông góc với (\S+))",
+                         plane["role"])
+        assert m, plane["role"]
+        assert (m[1] or m[2]).replace("′", "'") in sec["quote"], (plane["role"], sec["quote"])
         # internal construction untouched: the surface is still the plane through its construction points
         assert plane["depends"] == OLD[cid]["envelope"]["scene3d"]["objects"][
             [o["id"] for o in OLD[cid]["envelope"]["scene3d"]["objects"]].index(plane["id"])]["depends"]
+
+
+def test_A_a_section_without_stated_cut_edges_still_shows_the_declared_name():
+    """Review F1: "Dựng thiết diện … bởi (α)" alone (no stated cut edges, no derived solid) has no cut certificate; the
+    declared name must not depend on one."""
+    p = json.loads(json.dumps(CASES["PLANE-ONLY-construct"]["payload"]))
+    p["simulation_goals"] = [g for g in p["simulation_goals"] if g["kind"] == "construct_plane_section"]
+    r = run_typed_fact_next_v2_route(p)
+    assert r.status == "SERVED", (r.code, r.reason)
+    sc = r.scene3d
+    plane = next(o for o in sc["objects"] if o["id"] == "mp_td_sec")
+    assert [plane[k] for k in ("label", "display_label", "reference", "notation")] == ["(α)"] * 4
+    assert plane["role"] == "Mặt phẳng qua M và song song với (ABC)"
+    built = _point_built_names(sc, plane)
+    assert not [t for t in _learner(sc) if any(b in t for b in built)]
+
+
+@pytest.mark.parametrize("text, cu, expected", [
+    ("V(S.MII1)/V(S.ABC)", [("MII1", "thiết diện bởi (α)")], "V(S.MII1)/V(S.ABC)"),   # inside a dotted name: untouched
+    ("HMH1 có diện tích", [("HMH1", "thiết diện bởi (α)")], "Thiết diện bởi (α) có diện tích"),
+    ("Tính diện tích HMH1.", [("HMH1", "thiết diện bởi (α)")], "Tính diện tích thiết diện bởi (α)."),
+    ("Thiết diện HMH1", [("HMH1", "thiết diện bởi (α)")], "Thiết diện bởi (α)"),
+])
+def test_old_names_are_replaced_as_whole_names_keeping_sentence_case(text, cu, expected):
+    from app.ai.function_route import _thay_ten
+    assert _thay_ten(text, cu) == expected
 
 
 def test_B_a_section_with_unnamed_vertices_is_not_named_through_a_coincident_construction_point():
