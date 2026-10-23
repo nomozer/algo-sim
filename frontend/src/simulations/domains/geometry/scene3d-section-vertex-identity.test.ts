@@ -11,7 +11,7 @@ import type { Scene3D, SceneObject } from "./scene3d-model";
 import { deriveSectionSubEntities, sectionCycleLabel, sectionDetails } from "./scene3d-subentities";
 
 const EXPORT = resolve(__dirname,
-  "../../../../../docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/results/adapter4-export-final/adapter4-fixtures.json");
+  "../../../../../docs/evaluation/geometry/runs/scene3d-section-inspector-c0/results/adapter4-export-final/adapter4-fixtures.json");
 const SERVED: { id: string; envelope: { scene3d: Scene3D } }[] = JSON.parse(readFileSync(EXPORT, "utf-8")).fixtures;
 const scene = (id: string): Scene3D => structuredClone(SERVED.find((f) => f.id === id)!.envelope.scene3d);
 const PRISM = "CORPUS-DEV10-prism-area";
@@ -20,14 +20,14 @@ const obj = (sc: Scene3D, id: string) => sc.objects.find((o) => o.id === id)!;
 describe("section vertex identity on coincident points", () => {
   it("names the prism's unnamed cuts by their edge-intersection role", () => {
     expect(sectionDetails(scene(PRISM), "td_sp")?.vertexNames).toEqual([
-      "Giao điểm của BB' và (α)", "M", "Giao điểm của CC' và (α)"]);
+      "Giao điểm của BB′ và (α)", "M", "Giao điểm của CC′ và (α)"]);
   });
 
   it("gives the section vertex sub-entities the same point, edges unchanged", () => {
     const sub = deriveSectionSubEntities(scene(PRISM)).filter((s) => s.parent === "td_sp");
     const dinh = sub.filter((s) => s.type === "point3");
     expect(dinh.map((s) => [s.label, s.depends])).toEqual([
-      ["Giao điểm của BB' và (α)", ["I"]], ["M", ["M"]], ["Giao điểm của CC' và (α)", ["I1"]]]);
+      ["Giao điểm của BB′ và (α)", ["I"]], ["M", ["M"]], ["Giao điểm của CC′ và (α)", ["I1"]]]);
     expect(sub.filter((s) => s.type === "edge").map((s) => s.label)).toEqual(["Cạnh 1", "Cạnh 2", "Cạnh 3"]);
   });
 
@@ -35,7 +35,7 @@ describe("section vertex identity on coincident points", () => {
     const sc = scene(PRISM);
     sc.objects.reverse();
     for (const o of sc.objects) if (o.id === "H" || o.id === "H1") o.notation = `Z${o.id}`;
-    expect(sectionDetails(sc, "td_sp")?.vertexNames[0]).toBe("Giao điểm của BB' và (α)");
+    expect(sectionDetails(sc, "td_sp")?.vertexNames[0]).toBe("Giao điểm của BB′ và (α)");
   });
 
   it("stays neutral when no coincident point is the cut of that edge", () => {
