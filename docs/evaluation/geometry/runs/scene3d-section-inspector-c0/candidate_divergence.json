@@ -1,0 +1,21 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "scene3d-section-inspector-c0",
+  "corrects": "docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "previous_candidate_hash": "d16c9b66be8feddf6ff71e68de391b84f49bbe914683b60e7f69bb71eda48784",
+  "current_candidate_hash": "5429cd76f5ffa40ad27d1f4eac16ee9523fe441d6755e4565a2a3495ece12aae",
+  "current_measured_files": 116,
+  "current_product_commit": "c04094f1776a71ce789b3dc25c5e090bdd30fe9c",
+  "diverged": true,
+  "reason": "GO_SCENE3D_AB_MAIN_AND_C0_FINALIZATION_LOCAL: (1) frontend frontend/src/simulations/domains/geometry/scene3d-subentities.ts `_diemCuaDinh` names a section vertex shared by two semantic points by the point whose dependencies make it the cut of that solid edge with the section plane (prism I/I1 over the translates H/H1); unique-coordinate vertices unchanged; (2) backend/app/ai/function_route.py: the section plane's fallback event explanation states the source definition before its construction (review R1); a solid on unnamed cut vertices without its derived record fails closed with a dedicated error mapped to SCENE_BUILD_FAILED (review F3 residual). Route D presentation and a shared inspector helper only; no schema, contract, IR or kernel change.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP: /api/analyze (LLM_ONLY) does not import app.ai.function_route; the frontend helper reads existing Scene3D fields and changes no envelope; across 178 measured scenes only the two prism vertices resolve differently.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements, frozen corpora and historical Adapter /4 fixtures remain byte-identical; new export goes to this run."
+  }
+}

@@ -1,0 +1,12 @@
+{
+ "schema": "execution/1",
+ "purpose": "Freeze the evaluation candidate after product commit c04094f1 (frontend/src scene3d-subentities.ts and backend/app/ai/function_route.py touched)",
+ "worktree": ".superpowers/worktrees/hybrid-session5-offline-consumer (branch research/scene3d-section-inspector-c0, clean: 0 status lines before the run)",
+ "commit": "c04094f1776a71ce789b3dc25c5e090bdd30fe9c",
+ "command": "cd backend && PYTHONIOENCODING=utf-8 D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py",
+ "exit_code": 0,
+ "clean_tree_recorded": true,
+ "measured_system": {"files": 116, "tree_hash": "5429cd76f5ffa40ad27d1f4eac16ee9523fe441d6755e4565a2a3495ece12aae"},
+ "previous_measured_system": {"files": 116, "tree_hash": "d16c9b66be8feddf6ff71e68de391b84f49bbe914683b60e7f69bb71eda48784"},
+ "manifest_sha256": "531c303c46d2a805a3afd9663957625709a52f812aec5b5bd3163855b7f556ae"
+}
