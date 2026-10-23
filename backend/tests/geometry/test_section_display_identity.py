@@ -73,6 +73,25 @@ def test_A_section_plane_shows_the_declared_source_name_in_every_learner_field(c
             [o["id"] for o in OLD[cid]["envelope"]["scene3d"]["objects"]].index(plane["id"])]["depends"]
 
 
+@pytest.mark.parametrize("cid", [c for c in SERVED if CASES[c]["payload"].get("derived_sections")])
+def test_R1_plane_explanation_states_the_source_definition_then_the_real_construction(cid):
+    """Review R1 (run `scene3d-section-inspector-c0`): "Dựng mặt phẳng (α) qua ba điểm M, H, H1." read as if H, H1 defined
+    (α). The fallback explanation now gives the source relation first and names H, H1 as auxiliary construction points;
+    the learner step text is unchanged."""
+    r = _run(cid)
+    sc = r.scene3d
+    old = OLD[cid]["envelope"]["scene3d"]
+    for sec in CASES[cid]["payload"]["derived_sections"]:
+        plane = next(o for o in sc["objects"] if o["id"] == f"mp_td_{sec['section_id']}")
+        ev = next(e for e in sc["events"] if e.get("object") == plane["id"] and e.get("action") == "CREATE")
+        before = next(e for e in old["events"] if e.get("object") == plane["id"] and e.get("action") == "CREATE")
+        assert "qua ba điểm" not in ev["explanation"]
+        rel = plane["role"][:1].lower() + plane["role"][1:]
+        assert ev["explanation"].startswith(f"Dựng {plane['display_label']}: {rel}; dựng qua ")
+        assert "điểm dựng phụ" in ev["explanation"]
+        assert (ev["learner_text"], ev["display_label"]) == (before["learner_text"], "(α)")
+
+
 def test_A_a_section_without_stated_cut_edges_still_shows_the_declared_name():
     """Review F1: "Dựng thiết diện … bởi (α)" alone (no stated cut edges, no derived solid) has no cut certificate; the
     declared name must not depend on one."""

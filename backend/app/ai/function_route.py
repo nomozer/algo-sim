@@ -133,6 +133,14 @@ def _vai_mat_cat(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
         else:
             continue
         mat["role"] = f"Mặt phẳng qua {ky(d['point'])} và {quan_he}"
+        # Review R1 (run `scene3d-section-inspector-c0`): the fallback explanation read "Dựng mặt phẳng (α) qua ba điểm
+        # M, H, H1." as if H, H1 defined (α). Source definition first, then the real construction and its auxiliaries.
+        ten = mat.get("display_label") or mat.get("label")
+        phu = ", ".join(ky([x]) for x in d.get("labels") or ())
+        for e in canh["events"]:
+            if e.get("object") == mat["id"] and e.get("action") == "CREATE" and phu:
+                e["explanation"] = (f"Dựng {ten}: mặt phẳng qua {ky(d['point'])} và {quan_he}; dựng qua "
+                                    f"{ky(d['point'])} và các điểm dựng phụ {phu}.")
 
 
 def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
