@@ -7,7 +7,9 @@ import { execFileSync } from 'node:child_process';
 import { docPNG } from './png-pixels.mjs';
 
 const root = resolve(import.meta.dirname, '../..');
-const source = join(root, 'docs/evaluation/geometry/runs/hybrid-offline-consumer/results/fixtures.json');
+// Optional 2nd argument: a later export of the same shape (e.g. run `scene3d-plane-section-display-identity`).
+const source = process.argv[3] ? resolve(process.argv[3])
+  : join(root, 'docs/evaluation/geometry/runs/hybrid-offline-consumer/results/fixtures.json');
 const bytes = readFileSync(source), data = JSON.parse(bytes);
 const sha = b => createHash('sha256').update(b).digest('hex');
 const canonical = x => x === null || typeof x !== 'object' ? JSON.stringify(x)
@@ -184,7 +186,7 @@ finally {
   await browser.close();
   const receipt = { status: code ? 'FAIL' : 'FRONTEND_CONSUMER_ACCEPTANCE_PASS', source_commit: execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).trim(),
     tree_clean: treeClean,
-    source_sha256: sha(bytes), harness_sha256: sha(readFileSync(import.meta.filename)), browser: 'Chrome headless / SwiftShader', provider_calls: 0,
+    fixtures: source.slice(root.length + 1).replaceAll('\\', '/'), source_sha256: sha(bytes), harness_sha256: sha(readFileSync(import.meta.filename)), browser: 'Chrome headless / SwiftShader', provider_calls: 0,
     math_authority: 'engine certificates and locked numeric oracle, not screenshots', human_visual_review: 'NOT_APPROVED',
     readout_scope: 'test-only operator readout via shared hybridTaiBuoc/giaTriDapSo; final answers remain hidden in learner UI',
     results, errors, forbidden };
