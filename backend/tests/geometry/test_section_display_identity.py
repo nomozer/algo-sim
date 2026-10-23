@@ -195,6 +195,10 @@ def test_B_a_section_with_unnamed_vertices_is_not_named_through_a_coincident_con
     # review N2 (run `scene3d-section-inspector-c0`): the descriptive label, now shown by the inspector, writes primes
     # as the rest of the UI does (BB′, not BB')
     assert (objs["I"]["label"], objs["I1"]["label"]) == ("Giao điểm của BB′ và (α)", "Giao điểm của CC′ và (α)")
+    # review P1: the per-cut step built by the second text builder writes primes too
+    steps = [s["learner_text"] for s in sc["formation"]["steps"]]
+    assert "Xét mặt phẳng (α) để tìm giao điểm với BB′." in steps
+    assert not [t for t in steps if "BB'" in t or "CC'" in t]
     for p in ("I", "I1"):    # STATED_UNNAMED stays unnamed and auxiliary, never a given
         assert objs[p]["notation"] is None and objs[p]["role"] == "Điểm dựng phụ"
         assert "given" not in (objs[p].get("display_group") or [])

@@ -180,7 +180,8 @@ def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -
         for v in d["vertices"]:                          # the IR operand plane of each cut is the section plane again:
             if v.get("call") and (dup := objs.get(f"derived_{ir_name(v['label'])}_plane")):   # one visible owner only
                 dup.update(render="non_visual", display_role="non_visual")
-                doi(dup["id"], ten, f"Xét mặt phẳng {ten} để tìm giao điểm với {''.join(v['edge'])}.")
+                canh_cat = "".join(v["edge"]).replace("'", "′")      # primes as the UI writes them (review P1)
+                doi(dup["id"], ten, f"Xét mặt phẳng {ten} để tìm giao điểm với {canh_cat}.")
         # The planner's point-built plane name ("(MHH1)") is not the source's: learner text says the source name (review 2).
         # Rebuilt from the planner's operand order (`depends` is sorted): the plane's own notation is already the source
         # name, but each cut's operand plane (`derived_*_plane`) still composes "(MHH1)" into "Giao điểm của SB và (MHH1)".
