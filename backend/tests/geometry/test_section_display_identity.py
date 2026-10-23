@@ -192,6 +192,9 @@ def test_B_a_section_with_unnamed_vertices_is_not_named_through_a_coincident_con
     # the coincidence is real and stays: two semantic points per vertex, ids and coordinates unchanged
     assert objs["H"]["xyz"] == objs["I"]["xyz"] and objs["H1"]["xyz"] == objs["I1"]["xyz"]
     assert (objs["H"]["notation"], objs["H1"]["notation"]) == ("H", "H1")
+    # review N2 (run `scene3d-section-inspector-c0`): the descriptive label, now shown by the inspector, writes primes
+    # as the rest of the UI does (BB′, not BB')
+    assert (objs["I"]["label"], objs["I1"]["label"]) == ("Giao điểm của BB′ và (α)", "Giao điểm của CC′ và (α)")
     for p in ("I", "I1"):    # STATED_UNNAMED stays unnamed and auxiliary, never a given
         assert objs[p]["notation"] is None and objs[p]["role"] == "Điểm dựng phụ"
         assert "given" not in (objs[p].get("display_group") or [])

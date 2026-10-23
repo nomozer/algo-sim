@@ -200,7 +200,8 @@ def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -
                 if "learner_text" in s:
                     s["learner_text"] = ve_ten(s["learner_text"])
         phu = {v["label"]: v["edge"] for v in d["vertices"] if v["choice"] in ("fresh_intersection", "derived_fresh")}
-        hien = {x: f"giao điểm của {''.join(e)} và {ten}" for x, e in phu.items()}
+        # Primes as the rest of the UI writes them (BB′): the inspector shows this label (review N2).
+        hien = {x: f"giao điểm của {''.join(e).replace(chr(39), '′')} và {ten}" for x, e in phu.items()}
         for x, mo_ta in hien.items():
             if ir_name(x) in objs:
                 objs[ir_name(x)]["role"] = "Điểm dựng phụ"
