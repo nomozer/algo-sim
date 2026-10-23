@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SCENE3D_PLANE_SECTION_DISPLAY_IDENTITY
+
+REPORT = docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/FINAL_OWNER_HANDOFF.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/
+CLASSIFICATION = DEVELOPMENT_EVALUATION_NOT_BLIND; LOCAL research, Hybrid off; publication remediation merged to local main 50cee903 (fast-forward); Adapter /4 presentation fix on research/scene3d-plane-section-display-identity (NOT merged): declared section plane name in every learner field, no vertex cycle over unnamed section vertices, quantity kind kept; prism inspector vertex names still "Đỉnh k" (Owner decision, no schema change needed); REMOTE_SECURITY_BLOCKED (27 exceptions pending); human visual review PENDING
+CODE_COMMIT = 41c7e6f854c84d4c987b88cd1f4bcd877921cb78 (product, backend/app/ai/function_route.py only); 56bdf9b9218f895fcdc283800a38c5be17d029cc (candidate; measured_system d16c9b66be8feddf6ff71e68de391b84f49bbe914683b60e7f69bb71eda48784, 116 files; NO_BUMP 127); 57138dbb3f7d12828d712adf5311d261a2c03106 (final export, Full T3 target FULL_PRODUCT_GATE_PASS: pytest 11637, vitest 1238, build, demo 5/5, crash 6/6); superseded freezes f8ec3222 (unmeasured) and 8efb32b4 (measured at 65cbdd6f)
+VERIFICATION = docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/run.json; docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/verification/full-t3/execution.json; docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/verification/browser-final/receipt.json; docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/verification/refusal-final/receipt.json; docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/results/adapter4-export-final/before-after.json; docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/INDEPENDENT_REVIEW.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_OFFLINE_CONSUMER (Adapter /4 scene names: plane "(MHH1)", prism section "HMH1", plane-only quantities "Đoạn của thiết diện"; historical fixtures and Session 5 receipts unchanged, new export beside them); PUBLICATION_SAFETY_REMEDIATION (HISTORICAL_TRACEBACK_EXCEPTION_PROPOSAL.md §5 date cutoff "trước 2026-10-23" excludes its own blob 8a515fef added 2026-10-23 11:43 +0700; replaced by an exact closed-list wording, file bytes unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = PUBLICATION_SAFETY_REMEDIATION
 
 REPORT = docs/evaluation/geometry/runs/publication-safety-remediation/FINAL_OWNER_HANDOFF.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 76c6795c37569aebcf41c0d22ffbe0d8268872d9 (publication safety gate 
 VERIFICATION = docs/evaluation/geometry/runs/publication-safety-remediation/run.json; docs/evaluation/geometry/runs/publication-safety-remediation/POST_MAIN_REGRESSION_REPORT.md; docs/evaluation/geometry/runs/publication-safety-remediation/refusal-screens/receipt.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_OFFLINE_CONSUMER (SECURITY_AUDIT.md: the blocking log is removed from the tip at 76c6795c; its scope was 22 logs, the push-range rescan covers every new blob and message, and 26 further already-public blobs are inventoried); backend-hybrid-contract-unification (verification/geometry-dir-first-run-before-fixes.log removed from the tip; bytes remain at 77f7aaf7 and offline; suite-receipts.json keeps SHA-256 3f7586fb… and the summary)
-CORRECTED_BY = NONE
+CORRECTED_BY = SCENE3D_PLANE_SECTION_DISPLAY_IDENTITY (exception-wording date cutoff; proposal bytes unchanged)
 
 ## WAVE_ID = HYBRID_OFFLINE_CONSUMER
 
@@ -20,7 +31,7 @@ CODE_COMMIT = e090af1c9511bbc83afce92e4d6c88a32d851503 (product, frontend only);
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-offline-consumer/run.json; docs/evaluation/geometry/runs/hybrid-offline-consumer/verification/full-t3/execution.json; docs/evaluation/geometry/runs/hybrid-offline-consumer/results/browser-final-9f06ed2b/receipt.json; docs/evaluation/geometry/runs/hybrid-offline-consumer/verification/independent-review.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = NONE (report.md §2 corrects this run's own SESSION5_TAKEOVER_CHECKPOINT.md description of browser attempt 4)
-CORRECTED_BY = PUBLICATION_SAFETY_REMEDIATION (SECURITY_AUDIT.md remediation status; run bytes unchanged)
+CORRECTED_BY = PUBLICATION_SAFETY_REMEDIATION (SECURITY_AUDIT.md remediation status; run bytes unchanged); SCENE3D_PLANE_SECTION_DISPLAY_IDENTITY (Adapter /4 scene names; fixtures and receipts unchanged)
 
 ## WAVE_ID = HYBRID_DISABLED_INTEGRATION
 

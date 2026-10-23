@@ -1,0 +1,33 @@
+{
+  "schema": "authoritative-t3-receipt/2",
+  "run": "scene3d-plane-section-display-identity",
+  "branch": "research/scene3d-plane-section-display-identity",
+  "baseline_main": "50cee9035d664d7d3d39762610af740a8b8cd558",
+  "product_commit": "41c7e6f854c84d4c987b88cd1f4bcd877921cb78",
+  "candidate_freeze_commit": "56bdf9b9218f895fcdc283800a38c5be17d029cc",
+  "t3_target_commit": "57138dbb3f7d12828d712adf5311d261a2c03106",
+  "product_paths_changed_between_product_and_t3_target": 0,
+  "measured_system_hash": "d16c9b66be8feddf6ff71e68de391b84f49bbe914683b60e7f69bb71eda48784",
+  "measured_file_count": 116,
+  "worktree": ".superpowers/worktrees/hybrid-session5-offline-consumer (git status --porcelain = 0 lines before and after; Vite stopped; nothing written to the worktree during the run)",
+  "command": "ALLOW_LIVE_AI=0 ALGO_SIM_PYTHON=D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe node frontend/scripts/full-gate.mjs",
+  "environment": {"os": "Windows 11 Pro 10.0.26100", "node": "v24.13.0", "python": "Python 3.12 (D:/Documents/projects/algo-sim/backend/.venv)"},
+  "started_utc": "2026-10-23T17:25:17Z",
+  "finished_utc": "2026-10-23T17:32:58Z",
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "pytest_backend": "11637 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning",
+  "pytest_delta_vs_main": "+51 vs 11586 at 76c6795c (main content): the 51 tests of test_section_display_identity.py; test_typedfactnext_planner_bridge.py count unchanged",
+  "vitest_frontend": "73/73 files, 1238 tests passed",
+  "build": "PASS (tsc -b + vite build)",
+  "demo_replay": "5/5",
+  "demo_crash_surface": "6/6 refusal boundaries correct, 0 thrown",
+  "streams": {
+    "stdout": {"file": "stdout.log", "bytes": 18610, "sha256_as_written": "2e444bef0920acae15b7257853330b7be890f006b3407c5dc960a6c0a65b84fc"},
+    "stderr": {"file": "stderr.log", "bytes": 342, "sha256_as_written": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a", "content": "vite chunk-size warning only"}
+  },
+  "post_t3_freeze_verify": "post-t3-freeze-verify.log (exit 0, MATCH d16c9b66…)",
+  "superseded": "verification/superseded-665f542c/: Full T3 PASS (11632) at 65cbdd6f for the intermediate candidate 8efb32b4; replaced after independent-review fixes F1-F3",
+  "not_covered_by_t3": "browser gates (verification/browser-final, verification/refusal-final) and frontend/scripts/*.node-test.mjs (none touched has one)",
+  "provider_calls": 0
+}

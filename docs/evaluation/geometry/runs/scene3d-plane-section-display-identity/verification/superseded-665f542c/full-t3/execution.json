@@ -1,0 +1,32 @@
+{
+  "schema": "authoritative-t3-receipt/2",
+  "run": "scene3d-plane-section-display-identity",
+  "branch": "research/scene3d-plane-section-display-identity",
+  "baseline_main": "50cee9035d664d7d3d39762610af740a8b8cd558",
+  "product_commit": "665f542c8fea00676316e8c83c31d25a41de2643",
+  "candidate_freeze_commit": "8efb32b47dcd199ec60eb2786be04adba2f0f961",
+  "t3_target_commit": "65cbdd6fe7b8203041240c5ea8044aea9f4b051c",
+  "product_paths_changed_between_product_and_t3_target": 0,
+  "measured_system_hash": "c332dcb58005bac07f61f6968c27b7ed4af4fa9f015073ace6d5b174ee37a5cc",
+  "measured_file_count": 116,
+  "worktree": ".superpowers/worktrees/hybrid-session5-offline-consumer (git status --porcelain = 0 lines before and after; Vite stopped; nothing written to the worktree during the run)",
+  "command": "ALLOW_LIVE_AI=0 ALGO_SIM_PYTHON=D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe node frontend/scripts/full-gate.mjs",
+  "environment": {"os": "Windows 11 Pro 10.0.26100", "node": "v24.13.0", "python": "Python 3.12 (D:/Documents/projects/algo-sim/backend/.venv)"},
+  "started_utc": "2026-10-23T16:43:56Z",
+  "finished_utc": "2026-10-23T16:53:49Z",
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "pytest_backend": "11632 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning",
+  "pytest_delta_vs_main": "+46 vs 11586 at 76c6795c (main content): the 46 tests of test_section_display_identity.py; test_typedfactnext_planner_bridge.py count unchanged",
+  "vitest_frontend": "73/73 files, 1238 tests passed",
+  "build": "PASS (tsc -b + vite build)",
+  "demo_replay": "5/5",
+  "demo_crash_surface": "6/6 refusal boundaries correct, 0 thrown",
+  "streams": {
+    "stdout": {"file": "stdout.log", "bytes": 18615, "sha256_as_written": "1b350c0584a9b6e619a6827b037c0256d1264dcbf9cf9d8a3599a4d060a8d338"},
+    "stderr": {"file": "stderr.log", "bytes": 342, "sha256_as_written": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a", "content": "vite chunk-size warning only"}
+  },
+  "post_t3_freeze_verify": "post-t3-freeze-verify.log (exit 0, MATCH c332dcb5…)",
+  "not_covered_by_t3": "browser gates (verification/browser-after, verification/refusal-after) and frontend/scripts/*.node-test.mjs (none touched has one)",
+  "provider_calls": 0
+}

@@ -1,0 +1,6 @@
+VIOLATION rule=PY_TRACEBACK path=docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/geometry-dir-first-run-before-fixes.log blob=8a515fef0e1537c03f8abcc2dc533e88704f164f line=561 exception=PENDING_OWNER_DECISION
+VIOLATION rule=PY_TRACEBACK path=docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/geometry-dir-first-run-before-fixes.log blob=8a515fef0e1537c03f8abcc2dc533e88704f164f line=562 exception=PENDING_OWNER_DECISION
+VIOLATION rule=PY_TRACEBACK path=docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/geometry-dir-first-run-before-fixes.log blob=8a515fef0e1537c03f8abcc2dc533e88704f164f line=564 exception=PENDING_OWNER_DECISION
+VIOLATION rule=PY_TRACEBACK path=docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/geometry-dir-first-run-before-fixes.log blob=8a515fef0e1537c03f8abcc2dc533e88704f164f line=566 exception=PENDING_OWNER_DECISION
+VIOLATION rule=PY_TRACEBACK path=docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/geometry-dir-first-run-before-fixes.log blob=8a515fef0e1537c03f8abcc2dc533e88704f164f line=569 exception=PENDING_OWNER_DECISION
+SUMMARY scanned=514 messages=58 violations=5 pending_exception=5 verdict=BLOCKED

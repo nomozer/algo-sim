@@ -1,5 +1,16 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Adapter /4 section display identity (`research/scene3d-plane-section-display-identity`, LOCAL research, Hybrid off)
+
+Run `docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/`. Presentation only on route D; the shared
+`simulation_state.py` / `display_names.py` (default route) are untouched.
+
+| path | owns | tests |
+|---|---|---|
+| `backend/app/ai/function_route.py` | `run_function_route` turns on `prefer_declared_plane_names` for every derived section plane rule (`MAT_SONG_SONG`, `MAT_VUONG_DUONG`, `DINH_CAT_CANH`; two-line already) so a declared (α) is the plane's notation/reference; `_vai_mat_cat`: the plane role states the source relation, naming the reference plane as the source quote writes it; `_an_dinh_thiet_dien_phu`: point-built name rebuilt from the planner operand order, a section with an unnamed vertex keeps no vertex cycle, quantities on renamed objects keep their kind; `_thay_ten`: whole-name replacement keeping sentence case | `backend/tests/geometry/test_section_display_identity.py` (locked grammar cases; no-geometry-change guard vs historical envelopes); `test_typedfactnext_planner_bridge.py::test_cut_vertices_and_their_operand_planes_speak_the_source_plane_name` |
+| `docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/export_fixtures.py` | Fresh Adapter /4 export beside history (`open(..., 'x')`); asserts only learner-name fields differ from the historical served envelopes and refusals equal Session 5; writes `before-after.json` | run-local results |
+| `frontend/scripts/check-adapter4-browser.mjs` | optional 2nd argument: a later fixtures export of the same shape (default unchanged); receipt records `fixtures` | run-local receipts |
+
 ## Publication safety gate (`research/publication-safety-remediation`, local, no product change)
 
 Run `docs/evaluation/geometry/runs/publication-safety-remediation/`. Tooling only; `backend/app` and the measured system unchanged.
