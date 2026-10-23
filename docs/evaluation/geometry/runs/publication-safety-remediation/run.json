@@ -1,0 +1,34 @@
+{
+ "run": "publication-safety-remediation",
+ "task": "Session 5 post-main remediation (publication safety gate, historical traceback exception dossier, visual review, ACL cleanup plan)",
+ "authorization": "GO_SESSION5_POST_MAIN_REMEDIATION_LOCAL_ONLY",
+ "owner_decisions_received": {
+  "MAIN_INTEGRATION": "ACCEPTED",
+  "HISTORICAL_LOG_REMEDIATION": "CONDITIONAL_GO",
+  "REMOTE_PUSH": "NO-GO",
+  "VISUAL_ACCEPTANCE": "PENDING",
+  "LIVE_PROVIDER": "NO-GO",
+  "PRODUCTION_REPLACEMENT": "NO-GO"
+ },
+ "date": "2026-10-23",
+ "branch": "research/publication-safety-remediation",
+ "base_main": "b4ac5e879b35ac3605ba75c51df5bb6b89352734",
+ "origin_main": "43247c9e9375a3dbf2b5223324a58e6f932ca596",
+ "tooling_commit": "76c6795c37569aebcf41c0d22ffbe0d8268872d9",
+ "t3_target_commit": "76c6795c37569aebcf41c0d22ffbe0d8268872d9",
+ "product_change": false,
+ "measured_system_changed": false,
+ "cache_version": "127",
+ "cache_bump": "NO_BUMP (no prompt, policy or product change)",
+ "provider_calls": 0,
+ "merged_to_main": false,
+ "pushed": false,
+ "history_rewritten": false,
+ "worktree": ".superpowers/worktrees/hybrid-session5-offline-consumer (reused; no new worktree)",
+ "offline_archive": "D:/AlgoSim-Offline-Archive/2026-10-23-traceback-remediation (same physical SSD; not a drive-failure backup)",
+ "classification": {
+  "remote": "REMOTE_SECURITY_BLOCKED",
+  "visual": "VISUAL_FIX_REQUIRED",
+  "cleanup": "CLEANUP_ADMIN_REQUIRED"
+ }
+}

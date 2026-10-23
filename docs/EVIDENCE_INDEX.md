@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = PUBLICATION_SAFETY_REMEDIATION
+
+REPORT = docs/evaluation/geometry/runs/publication-safety-remediation/FINAL_OWNER_HANDOFF.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/publication-safety-remediation/
+CLASSIFICATION = REMOTE_SECURITY_BLOCKED (27 exceptions PENDING_OWNER_DECISION, 0 unexempted findings); VISUAL_FIX_REQUIRED (plane `reference` (MHH1) vs declared (α); coincident auxiliary/intersection points; backend-side, not fixed); CLEANUP_ADMIN_REQUIRED. Post-main remediation under `GO_SESSION5_POST_MAIN_REMEDIATION_LOCAL_ONLY` on `research/publication-safety-remediation` from local main `b4ac5e87`; tooling and docs only, `backend/app` and the measured system unchanged; no push, no history rewrite
+CODE_COMMIT = 76c6795c37569aebcf41c0d22ffbe0d8268872d9 (publication safety gate + tip removal of the raw-traceback log; Full T3 target)
+VERIFICATION = docs/evaluation/geometry/runs/publication-safety-remediation/run.json; docs/evaluation/geometry/runs/publication-safety-remediation/POST_MAIN_REGRESSION_REPORT.md; docs/evaluation/geometry/runs/publication-safety-remediation/refusal-screens/receipt.json
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_OFFLINE_CONSUMER (SECURITY_AUDIT.md: the blocking log is removed from the tip at 76c6795c; its scope was 22 logs, the push-range rescan covers every new blob and message, and 26 further already-public blobs are inventoried); backend-hybrid-contract-unification (verification/geometry-dir-first-run-before-fixes.log removed from the tip; bytes remain at 77f7aaf7 and offline; suite-receipts.json keeps SHA-256 3f7586fb… and the summary)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_OFFLINE_CONSUMER
 
 REPORT = docs/evaluation/geometry/runs/hybrid-offline-consumer/report.md
@@ -9,7 +20,7 @@ CODE_COMMIT = e090af1c9511bbc83afce92e4d6c88a32d851503 (product, frontend only);
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-offline-consumer/run.json; docs/evaluation/geometry/runs/hybrid-offline-consumer/verification/full-t3/execution.json; docs/evaluation/geometry/runs/hybrid-offline-consumer/results/browser-final-9f06ed2b/receipt.json; docs/evaluation/geometry/runs/hybrid-offline-consumer/verification/independent-review.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = NONE (report.md §2 corrects this run's own SESSION5_TAKEOVER_CHECKPOINT.md description of browser attempt 4)
-CORRECTED_BY = NONE
+CORRECTED_BY = PUBLICATION_SAFETY_REMEDIATION (SECURITY_AUDIT.md remediation status; run bytes unchanged)
 
 ## WAVE_ID = HYBRID_DISABLED_INTEGRATION
 
@@ -55,7 +66,7 @@ CODE_COMMIT = 3553e4d45991954dd0fb8c0ac30bf5fb79a3ff51 (product); 5beb0e86 (cand
 VERIFICATION = docs/evaluation/geometry/runs/backend-hybrid-contract-unification/evaluation.json; docs/evaluation/geometry/runs/backend-hybrid-contract-unification/session1-family-replay.json; docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/red/red-receipts.json; docs/evaluation/geometry/runs/backend-hybrid-contract-unification/handoff.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = backend-hybrid-taxonomy-completion (candidate chain tip); TYPEDFACT_NEXT_ADAPTER3_SIMULATION (dev-corpus expectations A3-DEV-07/08 source defects served, A3-DEV-10 kept false refusal, A3-DEV-11 code order — frozen corpus bytes unchanged); backend-hybrid-continuation (Adapter /3 figures in EVALUATION_SUMMARY.md describe 82d3d255, not this code)
-CORRECTED_BY = hybrid-contract-v2
+CORRECTED_BY = hybrid-contract-v2; PUBLICATION_SAFETY_REMEDIATION (tip-tree removal of verification/geometry-dir-first-run-before-fixes.log)
 
 ## WAVE_ID = backend-hybrid-continuation
 

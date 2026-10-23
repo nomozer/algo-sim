@@ -1,0 +1,30 @@
+{
+  "schema": "authoritative-t3-receipt/2",
+  "run": "publication-safety-remediation",
+  "branch": "research/publication-safety-remediation",
+  "baseline_main": "b4ac5e879b35ac3605ba75c51df5bb6b89352734",
+  "t3_target_commit": "76c6795c37569aebcf41c0d22ffbe0d8268872d9",
+  "product_change": false,
+  "measured_system_hash": "413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df",
+  "measured_file_count": 116,
+  "worktree": ".superpowers/worktrees/hybrid-session5-offline-consumer (reused; git status --porcelain = 0 lines before and after; Vite stopped; nothing written to the worktree during the run)",
+  "command": "ALLOW_LIVE_AI=0 ALGO_SIM_PYTHON=D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe node frontend/scripts/full-gate.mjs",
+  "environment": {"os": "Windows 11 Pro 10.0.26100", "node": "v24.13.0", "python": "Python 3.12 (D:/Documents/projects/algo-sim/backend/.venv)", "concurrent_load": "another session ran tsc -b / vitest in worktree scene3d-unified-visual-language"},
+  "started_utc": "2026-10-23T14:13:37Z",
+  "finished_utc": "2026-10-23T14:24:03Z",
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "pytest_backend": "11586 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning",
+  "pytest_delta_vs_main": "+14 collected vs b4ac5e87 (11602 vs 11588): 12 in test_publication_safety_gate.py + 2 parametrized over backend/scripts in test_domain_string.py; 0 removed",
+  "vitest_frontend": "73/73 files, 1238 tests passed",
+  "build": "PASS (tsc -b + vite build)",
+  "demo_replay": "5/5",
+  "demo_crash_surface": "6/6 refusal boundaries correct, 0 thrown",
+  "streams": {
+    "stdout": {"file": "stdout.log", "bytes": 18616, "sha256_as_written": "7f7f4c5ed5230737a0f69d713865ce90214c1bff2529e26b04449c01ea2254ab"},
+    "stderr": {"file": "stderr.log", "bytes": 342, "sha256_as_written": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a", "content": "vite chunk-size warning only"}
+  },
+  "post_t3_freeze_verify": "post-t3-freeze-verify.log (exit 0, MATCH)",
+  "superseded_attempts": "attempt 1 ran in the wrong directory (MODULE_NOT_FOUND, nothing measured); attempt 2 was stopped by the agent because it edited the worktree while pytest ran; neither result is used",
+  "provider_calls": 0
+}
