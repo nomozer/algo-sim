@@ -77,6 +77,9 @@ def test_B_a_section_with_unnamed_vertices_is_not_named_through_a_coincident_con
     sec = objs["td_sp"]
     assert (sec["label"], sec["display_label"], sec["notation"]) == ("Thiết diện bởi (α)", "Thiết diện bởi (α)", None)
     assert not [t for t in _learner(sc) if "HMH1" in t]
+    # renaming the section keeps its pedagogical event text (an earlier draft overwrote it with "Dựng thiết diện …")
+    assert "Thiết diện khép lại thành tam giác: (α) cắt lăng trụ đứng ABC.A′B′C′." in [
+        s["learner_text"] for s in sc["formation"]["steps"]]
     # the coincidence is real and stays: two semantic points per vertex, ids and coordinates unchanged
     assert objs["H"]["xyz"] == objs["I"]["xyz"] and objs["H1"]["xyz"] == objs["I1"]["xyz"]
     assert (objs["H"]["notation"], objs["H1"]["notation"]) == ("H", "H1")

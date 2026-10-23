@@ -179,9 +179,13 @@ def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -
             if o.get("type") == "solid" and kd:
                 doi(o["id"], f"Khối chóp đỉnh {kd['apex']} cắt bởi {ten}", f"Dựng khối chóp đỉnh {kd['apex']} cắt bởi {ten}.")
                 o["role"] = f"Đỉnh {kd['apex']}, đáy là thiết diện bởi {ten}"
+            elif o.get("type") in ("polygon3", "section") and an.search(str(o.get("notation") or o.get("label") or "")):
+                doi(o["id"], f"Thiết diện bởi {ten}", f"Dựng thiết diện bởi {ten}.", an)
             elif o.get("type") in ("polygon3", "section"):
-                lo = re.compile("|".join([an.pattern] + ([re.escape(truoc)] if truoc else [])))
-                doi(o["id"], f"Thiết diện bởi {ten}", f"Dựng thiết diện bởi {ten}.", lo)
+                # Named only through a coincident construction point: rename the object; its events keep their own
+                # text ("Thiết diện khép lại thành tam giác …") and only the old cycle name is rewritten below.
+                nhan = f"Thiết diện bởi {ten}"
+                o.update(label=nhan, display_label=nhan, reference=nhan[:1].lower() + nhan[1:], notation=None)
             elif o["id"] in canh_ben:
                 doi(o["id"], ben, f"Dựng {ben[:1].lower()}{ben[1:]}.", an)
             else:
@@ -194,7 +198,8 @@ def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -
 
         def thay_cu(s: str) -> str:
             for truoc, sau in cu:
-                s = re.sub(rf"[Tt]hiết diện {re.escape(truoc)}(?![\w'′])", sau, s)
+                giu_hoa = lambda m, sau=sau: sau[:1].upper() + sau[1:] if m[0][:1].isupper() else sau
+                s = re.sub(rf"[Tt]hiết diện {re.escape(truoc)}(?![\w'′])", giu_hoa, s)
                 s = re.sub(rf"(?<![\w'′]){re.escape(truoc)}(?![\w'′])", sau, s)
             return s
 
