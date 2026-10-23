@@ -1,0 +1,9 @@
+
+ RUN  v4.1.10 D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-session5-offline-consumer/frontend
+
+
+ Test Files  5 passed (5)
+      Tests  180 passed (180)
+   Start at  18:49:56
+   Duration  1.42s (transform 1.41s, setup 211ms, import 1.94s, tests 790ms, environment 1ms)
+

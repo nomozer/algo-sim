@@ -1,0 +1,45 @@
+{
+  "command": [
+    "C:/Program Files/nodejs/node.exe",
+    "node_modules/vitest/vitest.mjs",
+    "run",
+    "src/components/adapter4-consumer.test.tsx",
+    "src/components/hybrid-preview-contract.test.tsx",
+    "src/code-index-sync.test.ts",
+    "src/components/ui-hygiene.test.ts",
+    "src/simulations/domains/geometry/product-envelope-rendering.test.tsx"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-session5-offline-consumer\\frontend",
+  "source_commit": "922e897959a4688463091d7d4e410695590e9701",
+  "started_utc": "2026-10-23T11:49:08.184957+00:00",
+  "elapsed_seconds": 1.89,
+  "exit_code": 1,
+  "timeout_seconds": 2400,
+  "timed_out": false,
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe"
+  },
+  "streams": {
+    "stdout": {
+      "bytes": 467,
+      "sha256": "09182efd5e3a5d2ec33e355f695f82ae317ef41f62133836db0202128de1a6db",
+      "stored_bytes": 45,
+      "stored_sha256": "8403f7cdc0f3bd05f7794823b11ac214422d99c60f15c805eb29eb74bc2c4dd2"
+    },
+    "stderr": {
+      "bytes": 945,
+      "sha256": "a56d5a0808448b8beea96758f138fbadbca55b6f62b91f2409ecb3e4cae25a60",
+      "stored_bytes": 45,
+      "stored_sha256": "8403f7cdc0f3bd05f7794823b11ac214422d99c60f15c805eb29eb74bc2c4dd2"
+    }
+  },
+  "summary": [
+    " Test Files  1 failed | 4 passed (5)",
+    "      Tests  1 failed | 179 passed (180)"
+  ]
+}

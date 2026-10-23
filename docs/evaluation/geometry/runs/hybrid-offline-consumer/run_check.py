@@ -28,7 +28,8 @@ def main(out, cwd, command, timeout=2400):
         data = getattr(result, name)
         # Raw receipt stays local if a Python traceback is present; never add forbidden bytes to Git.
         if result.returncode != 0 or b'Traceback (most recent call last):' in data:
-            local = cwd / '.superpowers/session5-raw' / out.name
+            # Repo-root /.superpowers/ is gitignored; <cwd>/.superpowers under backend/ or frontend/ is not.
+            local = Path(__file__).resolve().parents[5] / '.superpowers/session5-raw' / out.name
             local.mkdir(parents=True, exist_ok=True); (local/(name+'.log')).write_bytes(data)
             safe = b'FAILURE_OR_RAW_TRACEBACK_WITHHELD_LOCAL_ONLY\n'
         else:
