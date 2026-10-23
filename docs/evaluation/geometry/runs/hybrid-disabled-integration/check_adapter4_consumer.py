@@ -32,9 +32,22 @@ from evaluate_grammar_set import load_lock, square_of  # noqa: E402
 INTERNAL = re.compile(r'derived_|_fresh|canh_ben_|::|\b[A-Z]{2,}(?:_[A-Z0-9]{2,})+\b')
 
 
+#: Any snake_case token (`khoi_S_ABCD`, `kq_g_res`, `A_prime`, `g_ratio` …) — learner text is Vietnamese prose and
+#: notation, never an underscore identifier. Added after independent review: the first regex missed these families.
+SNAKE = re.compile(r'\b\w+_\w+\b')
+
+
+def leaks(scene, envelope):
+    ids = {o['id'] for o in scene['objects']} | {e.get('id') for e in scene['events'] if e.get('id')}
+    hits = set()
+    for t in learner_texts(scene, envelope):
+        hits |= set(INTERNAL.findall(t)) | set(SNAKE.findall(t)) | {i for i in ids if i in t and '_' in i}
+    return sorted(hits)
+
+
 def learner_texts(scene, envelope):
-    texts = [o.get(k, '') for o in scene['objects'] for k in ('label',)]
-    texts += [e.get(k, '') for e in scene['events'] for k in ('learner_text', 'explanation')]
+    texts = [o.get(k, '') for o in scene['objects'] for k in ('label', 'display_label', 'role', 'notation')]
+    texts += [e.get(k, '') for e in scene['events'] for k in ('learner_text', 'explanation', 'display_label')]
     texts += [s.get('learner_text', '') for s in scene['formation']['steps']]
     texts += [envelope.get('title', ''), envelope.get('description', '')]
     texts += [f.get('narration', '') for f in envelope['config']['frames']]
@@ -62,7 +75,7 @@ def check(case):
     row['envelope_config_errors'] = errors
     row['execution_truncated'] = envelope['config']['execution_truncated']
     envelope.update(domain='geometry', source='adapter4_offline_fixture', scene3d=scene)
-    row['internal_ids_in_learner_text'] = sorted({m for t in learner_texts(scene, envelope) for m in INTERNAL.findall(t)})
+    row['internal_ids_in_learner_text'] = leaks(scene, envelope)
     got = {k: str(square_of(v['coef'])) for k, v in (r.answer_exact or {}).items()}
     row['oracle_answers_match'] = {k: got.get(k) == v for k, v in case.get('answers', {}).items()}
     dump = json.dumps(scene, ensure_ascii=False)
@@ -96,6 +109,10 @@ def main(out):
         'learner_text_internal_id_leaks': {r['id']: r['internal_ids_in_learner_text'] for r in served
                                            if r.get('internal_ids_in_learner_text')},
         'oracle_mismatches': [r['id'] for r in served if not all(r.get('oracle_answers_match', {}).values())],
+        'served_with_numeric_oracle': sum(bool(r.get('oracle_answers_match')) for r in served),
+        'served_construct_only_no_oracle': [r['id'] for r in served if not r.get('oracle_answers_match')],
+        'served_sections_without_closure_certificate': [r['id'] for r in served
+                                                        if not all(r.get('section_closure_certified', []))],
         'answers_not_bound_in_scene': {r['id']: [k for k, v in r['answers_bound_in_scene'].items() if not v]
                                        for r in served if not all(r.get('answers_bound_in_scene', {}).values())},
         'max_solid_objects_per_scene': max((r.get('solid_objects', 0) for r in served), default=0),

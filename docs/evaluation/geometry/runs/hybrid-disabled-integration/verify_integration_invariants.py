@@ -42,6 +42,8 @@ def blob(rev, rel):
 
 
 def main(out):
+    # Recorded from the inherited environment BEFORE the probe forces it; asserting the forced value would be circular.
+    inherited_live = os.environ.get('ALLOW_LIVE_AI', 'UNSET')
     env = {k: v for k, v in os.environ.items() if k not in ('HYBRID_ROUTE_D_PREVIEW', 'GEOMETRY_COMPILER_MODE')}
     env['ALLOW_LIVE_AI'] = '0'
     probe = json.loads(subprocess.run([sys.executable, '-c', PROBE], capture_output=True, text=True,
@@ -60,7 +62,7 @@ def main(out):
     from app.ai.hybrid_preview import ADAPTER_VERSION, ENVELOPE_VERSION
 
     invariants = {'CACHE_VERSION': CACHE_VERSION, 'DEFAULT_MODE': che_do({}), 'RESPONSE_CONTRACT': RESPONSE_CONTRACT,
-                  'MAX_MEMORY_DECLARATIONS': MAX_MEMORY_DECLARATIONS, 'ALLOW_LIVE_AI': env['ALLOW_LIVE_AI']}
+                  'MAX_MEMORY_DECLARATIONS': MAX_MEMORY_DECLARATIONS, 'ALLOW_LIVE_AI': inherited_live}
     expected = {'CACHE_VERSION': '127', 'DEFAULT_MODE': 'LLM_ONLY', 'RESPONSE_CONTRACT': 'flat',
                 'MAX_MEMORY_DECLARATIONS': 32, 'ALLOW_LIVE_AI': '0'}
     receipt = {
