@@ -76,6 +76,30 @@ def _ke_diem_dung(canh: dict[str, Any], vai: dict[str, str]) -> None:
         canh["formation"]["steps"][e["step_index"]]["learner_text"] = cau
 
 
+def _vai_mat_cat(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
+    """Presentation only (run `scene3d-plane-section-display-identity`): a section plane's role states the SOURCE relation
+    the planner read ("qua M và song song với (ABC)"), not its construction points ("qua M, H, H1": translates the source
+    never names). Depends, coordinates and the construction itself are unchanged."""
+    from app.simulation.geometry_functions.engine import ir_name
+    from app.simulation.geometry_functions.registry import MAT_HAI_DUONG, MAT_SONG_SONG, MAT_VUONG_DUONG
+
+    objs = {o["id"]: o for o in canh["objects"]}
+    ky = lambda xs: "".join(xs).replace("'", "′")
+    for d in auxiliary:
+        mat = objs.get(f"mp_td_{ir_name(d['goal'])}") if d.get("goal") else None
+        if mat is None:
+            continue
+        if d.get("rule") == MAT_SONG_SONG:
+            quan_he = f"song song với ({ky(d['parallel_to'])})"
+        elif d.get("rule") == MAT_HAI_DUONG:
+            quan_he = "song song với " + " và ".join(ky(x) for x in d["lines"])
+        elif d.get("rule") == MAT_VUONG_DUONG:
+            quan_he = f"vuông góc với {ky(d['perpendicular_to'])}"
+        else:
+            continue
+        mat["role"] = f"Mặt phẳng qua {ky(d['point'])} và {quan_he}"
+
+
 def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -> None:
     """Presentation only (run `typedfactnext-planner-bridge`): a section vertex the source does not name (`DINH_CAT_CANH`
     fresh label) and anything built on it carry descriptive Vietnamese text and no notation, so a planner label (I, I1)
@@ -109,11 +133,16 @@ def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -
                 dup.update(render="non_visual", display_role="non_visual")
                 doi(dup["id"], ten, f"Xét mặt phẳng {ten} để tìm giao điểm với {''.join(v['edge'])}.")
         # The planner's point-built plane name ("(MHH1)") is not the source's: learner text says the source name (review 2).
-        if (ky := mat.get("notation")) and ky != ten:
+        # Rebuilt from the planner's operand order (`depends` is sorted): the plane's own notation is already the source
+        # name, but each cut's operand plane (`derived_*_plane`) still composes "(MHH1)" into "Giao điểm của SB và (MHH1)".
+        ky = "(" + "".join(d["plane"]).replace("'", "′") + ")" if d.get("plane") else mat.get("notation")
+        if ky and ky != ten:
             def ve_ten(x: Any) -> Any:
                 return x.replace(ky, ten) if isinstance(x, str) else x
             for o in canh["objects"]:
-                o["role"] = ve_ten(o.get("role"))
+                for k in ("role", "label", "display_label", "reference"):
+                    if k in o:
+                        o[k] = ve_ten(o[k])
             for e in canh["events"]:
                 for k in ("display_label", "learner_text", "explanation"):
                     if k in e:
@@ -136,20 +165,61 @@ def _an_dinh_thiet_dien_phu(canh: dict[str, Any], auxiliary: tuple[dict, ...]) -
         # `backend-hybrid-contract-unification`): edges of that solid, not segments of the section.
         canh_ben = ({f"canh_ben_{ir_name(kd['apex'])}_{ir_name(v)}" for v in kd["base"]} if kd else set())
         ben = f"Cạnh bên của khối chóp đỉnh {kd['apex']} cắt bởi {ten}" if kd else ""
+        # Old notation of a renamed section / derived solid → how learner text now calls it (run
+        # `scene3d-plane-section-display-identity`): quantities and events naming them are rewritten through it.
+        cu: list[tuple[str, str]] = []
         for o in canh["objects"]:
-            if o["id"] in {ir_name(x) for x in phu} or not an.search(str(o.get("notation") or o.get("label") or "")):
+            # This cut's section never keeps a vertex cycle: a cycle would name an unnamed vertex, also when a
+            # construction point coincides with it (prism: translate H ≡ cut BB′∩(α), so the cycle read "HMH1").
+            la_td = o.get("type") == "section" and mat.get("id") in (o.get("depends") or ())
+            if (o["id"] in {ir_name(x) for x in phu} or o.get("type") == "quantity"
+                    or not (la_td or an.search(str(o.get("notation") or o.get("label") or "")))):
                 continue
+            truoc = o.get("notation")
             if o.get("type") == "solid" and kd:
                 doi(o["id"], f"Khối chóp đỉnh {kd['apex']} cắt bởi {ten}", f"Dựng khối chóp đỉnh {kd['apex']} cắt bởi {ten}.")
                 o["role"] = f"Đỉnh {kd['apex']}, đáy là thiết diện bởi {ten}"
             elif o.get("type") in ("polygon3", "section"):
-                doi(o["id"], f"Thiết diện bởi {ten}", f"Dựng thiết diện bởi {ten}.", an)
+                lo = re.compile("|".join([an.pattern] + ([re.escape(truoc)] if truoc else [])))
+                doi(o["id"], f"Thiết diện bởi {ten}", f"Dựng thiết diện bởi {ten}.", lo)
             elif o["id"] in canh_ben:
                 doi(o["id"], ben, f"Dựng {ben[:1].lower()}{ben[1:]}.", an)
             else:
                 doi(o["id"], "Đoạn của thiết diện", "Nối các giao điểm của thiết diện.", an)
+            if truoc and o.get("type") in ("solid", "polygon3", "section"):
+                cu.append((truoc, o["reference"]))
             if isinstance(o.get("role"), str) and an.search(o["role"]):
                 o["role"] = an.sub(lambda m: hien.get(m[0], "thiết diện"), o["role"])
+        cu.sort(key=lambda p: len(p[0]), reverse=True)
+
+        def thay_cu(s: str) -> str:
+            for truoc, sau in cu:
+                s = re.sub(rf"[Tt]hiết diện {re.escape(truoc)}(?![\w'′])", sau, s)
+                s = re.sub(rf"(?<![\w'′]){re.escape(truoc)}(?![\w'′])", sau, s)
+            return s
+
+        def thay(s: str) -> str:
+            return an.sub(lambda m: hien.get(m[0], "thiết diện"), thay_cu(s))
+
+        # A quantity on a renamed object keeps its kind ("Diện tích", "Tỉ số"): only the names inside it change, and
+        # it has no notation, since that notation cannot be written without naming an unnamed vertex.
+        for o in canh["objects"]:
+            nguon = [o.get("label"), o.get("notation"), (o.get("formula") or {}).get("text")]
+            if o.get("type") != "quantity" or not any(isinstance(s, str) and thay(s) != s for s in nguon):
+                continue
+            nhan = thay(str(o.get("label") or ""))
+            o.update(label=nhan, display_label=nhan, reference=nhan[:1].lower() + nhan[1:], notation=None)
+            if isinstance((o.get("formula") or {}).get("text"), str):
+                o["formula"]["text"] = thay(o["formula"]["text"])
+            if isinstance(o.get("role"), str):
+                o["role"] = thay(o["role"])
+        for e in canh["events"]:
+            for k in ("display_label", "learner_text", "explanation"):
+                if isinstance(e.get(k), str):
+                    e[k] = thay_cu(e[k])
+        for s in buoc:
+            if isinstance(s.get("learner_text"), str):
+                s["learner_text"] = thay_cu(s["learner_text"])
         for e in canh["events"]:                         # the group step building those lateral edges
             if set(e.get("objects") or ()) & canh_ben:
                 nhom = f"Các cạnh bên của khối chóp đỉnh {kd['apex']} cắt bởi {ten}"
@@ -183,12 +253,16 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
     if r.status != "SERVED":
         return r
     try:
-        from app.simulation.geometry_functions.registry import MAT_HAI_DUONG
+        from app.simulation.geometry_functions.registry import DINH_CAT_CANH, MAT_HAI_DUONG
         from app.simulation.geometry_functions.engine import ir_name
         two_line = [d for d in auxiliary if d.get('rule') == MAT_HAI_DUONG]
+        # A section plane's source name (α) is also not rebuildable from its construction points (the planner's
+        # parallel-plane translates H, H1 gave "(MHH1)"); keep it as notation/reference (run
+        # `scene3d-plane-section-display-identity`).
+        cut = any(d.get('rule') == DINH_CAT_CANH for d in auxiliary)
         with _metric.using(r.chart_metric):
             state = build_simulation_state(r.spec, r.exec_result, r.declared_topology,
-                                           prefer_declared_plane_names=bool(two_line))
+                                           prefer_declared_plane_names=bool(two_line) or cut)
             # CONTRACT-BE-1: the third argument carries topology, not obligations, so `targets` came out empty and the
             # asked quantity read as `intermediate` while its event was FINAL_RESULT; the engine names what the source asks.
             state["targets"] = list(r.targets)
@@ -215,6 +289,7 @@ def run_function_route(problem_text: str, plan: Any, auxiliary: tuple[dict, ...]
             _gan_nhan_chung_hinh_chieu(canh, r.spec, r.exec_result.final_memory)
             _gan_nhan_chung_duong_cao_chinh_xac(canh, r.chart_metric, trace=r.trace)
             _an_dinh_thiet_dien_phu(canh, auxiliary)
+            _vai_mat_cat(canh, auxiliary)
     except Exception as e:  # noqa: BLE001 — cảnh hỏng ⇒ từ chối có mã, không phục vụ nửa vời
         return KetQuaTuyen("REFUSED", "SCENE_BUILD_FAILED", f"{type(e).__name__}: {e}", trace=r.trace)
     if not canh.get("objects"):

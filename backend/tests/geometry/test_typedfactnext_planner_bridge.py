@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from copy import deepcopy
 from fractions import Fraction
+from itertools import permutations
 import re
 
 import pytest
@@ -477,12 +478,20 @@ def test_cut_vertices_and_their_operand_planes_speak_the_source_plane_name(case)
     r = run_fact_route(NAMED, _named()) if case == "named" else run_fact_route(ANON, _anon())
     assert r.status == "SERVED", (r.code, r.reason)
     sc = r.scene3d
-    ky = next(o for o in sc["objects"] if o["id"] == "mp_td_td")["notation"]
-    assert ky and ky != "(α)"
-    learner = [str(o.get("role")) for o in sc["objects"]]
+    objs = {o["id"]: o for o in sc["objects"]}
+    mat = objs["mp_td_td"]
+    # Run `scene3d-plane-section-display-identity`: this used to assert the notation stayed the point-built "(MHH1)"
+    # and checked only role/event/step text, so "(MHH1)" reached the canvas (`notation`) and the inspector
+    # (`reference`). Every field the frontend reads now carries (α); the construction (depends) is unchanged.
+    assert [mat[k] for k in ("notation", "reference", "label", "display_label")] == ["(α)"] * 4
+    dau = [objs[d]["notation"] for d in mat["depends"]]       # sorted ids: forbid every order of the point-built names
+    built = {f(p) for p in permutations(dau) for f in (lambda p: "(" + "".join(p) + ")", lambda p: "qua " + ", ".join(p))}
+    assert "(α)" not in built
+    learner = [str(o.get(k)) for o in sc["objects"] for k in ("role", "label", "display_label", "reference", "notation")]
+    learner += [str((o.get("formula") or {}).get("text")) for o in sc["objects"]]
     learner += [str(e.get(k)) for e in sc["events"] for k in ("display_label", "learner_text", "explanation")]
     learner += [s.get("learner_text", "") for s in sc["formation"]["steps"]]
-    assert not [s for s in learner if ky in s or "mặt phẳng qua" in s]
+    assert not [s for s in learner if any(b in s for b in built)]
     dup = [s["learner_text"] for s in sc["formation"]["steps"] if any(f.endswith("_plane") and f.startswith("derived_")
                                                                        for f in s["focus_ids"])]
     # Run `backend-hybrid-contract-unification`: the two cuts read ONE plane object (IR canonicalization), so the plane is
