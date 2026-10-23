@@ -80,6 +80,12 @@ try {
       const slider = page.locator('.geo3d-scrub input[type=range]');
       await slider.waitFor();
       const max = Number(await slider.getAttribute('max'));
+      // Review F5 (run `scene3d-section-inspector-c0`): the shared envelope builder's `config.frames[].narration` can
+      // still name construction labels; the Scene3D path must never render any of it beyond the scene's own step text.
+      const own = new Set(fx.envelope.scene3d.formation.steps.map(s => s.learner_text));
+      const hidden = [...new Set((fx.envelope.config?.frames ?? []).map(f => f.narration)
+        .filter(t => typeof t === 'string' && t.length > 12 && !own.has(t)))];
+      row.hiddenNarrations = hidden.length;
       for (let step = 0; step <= max; step++) {
         await slider.fill(String(step));
         await page.waitForTimeout(65);
@@ -115,6 +121,8 @@ try {
         }, step);
         assert(!frame.dependencies.length && !frame.unknown.length && !frame.early.length && !frame.duplicates.length, `${fx.id}: objects/dependencies ${JSON.stringify(frame)}`);
         assert(!frame.quantityEarly.length, `${fx.id}: answer before its quantity exists at ${step}: ${frame.quantityEarly}`);
+        const body = await page.locator('body').innerText();
+        assert(!hidden.some(t => body.includes(t)), `${fx.id}: envelope frame narration rendered at ${step}`);
         for (const progress of frame.progress) {
           const polygon = fx.envelope.scene3d.objects.find(o => o.id === progress.object_id).polygon;
           const count = progress.closed ? polygon.length : progress.visible_edge_ids.length + 1;
