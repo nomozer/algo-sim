@@ -1,0 +1,6333 @@
+{
+ "cases": [
+  {
+   "answers": {
+    "g_ratio": "1/64",
+    "g_res": "49/576"
+   },
+   "category": "paraphrase_reference",
+   "expected": "SERVE",
+   "id": "PARA-0",
+   "note": "Session 2 paraphrase family (PARA-1..5); PARA-0 is the reference wording",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "A"
+        ],
+        "point": "M",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD"
+     },
+     {
+      "cut_solid_id": "sub",
+      "goal_id": "g_res",
+      "kind": "residual_volume",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_ratio": "1/64",
+    "g_res": "49/576"
+   },
+   "category": "known_paraphrase",
+   "expected": "SERVE",
+   "id": "PARA-1",
+   "note": "Session 2 paraphrase family (PARA-1..5); PARA-0 is the reference wording",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) đi qua M, song song với mặt phẳng (ABC), cắt SA, SB, SC, SD lần lượt tại M, N, P, Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "A"
+        ],
+        "point": "M",
+        "quote": "Mặt phẳng (α) đi qua M, song song với mặt phẳng (ABC), cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) đi qua M, song song với mặt phẳng (ABC), cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) đi qua M, song song với mặt phẳng (ABC), cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Mặt phẳng (α) đi qua M, song song với mặt phẳng (ABC), cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD"
+     },
+     {
+      "cut_solid_id": "sub",
+      "goal_id": "g_res",
+      "kind": "residual_volume",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M, song song với mặt phẳng (ABC), cắt SA, SB, SC, SD lần lượt tại M, N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_ratio": "1/64",
+    "g_res": "49/576"
+   },
+   "category": "known_paraphrase",
+   "expected": "SERVE",
+   "id": "PARA-2",
+   "note": "Session 2 paraphrase family (PARA-1..5); PARA-0 is the reference wording",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Gọi (α) là mặt phẳng qua M và song song với (ABC); (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "A"
+        ],
+        "point": "M",
+        "quote": "Gọi (α) là mặt phẳng qua M và song song với (ABC); (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Gọi (α) là mặt phẳng qua M và song song với (ABC); (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Gọi (α) là mặt phẳng qua M và song song với (ABC); (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Gọi (α) là mặt phẳng qua M và song song với (ABC); (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD"
+     },
+     {
+      "cut_solid_id": "sub",
+      "goal_id": "g_res",
+      "kind": "residual_volume",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Gọi (α) là mặt phẳng qua M và song song với (ABC); (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_ratio": "1/64",
+    "g_res": "49/576"
+   },
+   "category": "known_paraphrase",
+   "expected": "SERVE",
+   "id": "PARA-3",
+   "note": "Session 2 paraphrase family (PARA-1..5); PARA-0 is the reference wording",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Qua M dựng mặt phẳng (α) song song với (ABC), (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "A"
+        ],
+        "point": "M",
+        "quote": "Qua M dựng mặt phẳng (α) song song với (ABC), (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Qua M dựng mặt phẳng (α) song song với (ABC), (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Qua M dựng mặt phẳng (α) song song với (ABC), (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Qua M dựng mặt phẳng (α) song song với (ABC), (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD"
+     },
+     {
+      "cut_solid_id": "sub",
+      "goal_id": "g_res",
+      "kind": "residual_volume",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Qua M dựng mặt phẳng (α) song song với (ABC), (α) cắt SA, SB, SC, SD lần lượt tại M, N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_ratio": "1/64",
+    "g_res": "49/576"
+   },
+   "category": "known_paraphrase",
+   "expected": "SERVE",
+   "id": "PARA-4",
+   "note": "Session 2 paraphrase family (PARA-1..5); PARA-0 is the reference wording",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) chứa M và song song với (ABC) cắt các cạnh SA, SB, SC, SD lần lượt tại M, N, P, Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "A"
+        ],
+        "point": "M",
+        "quote": "Mặt phẳng (α) chứa M và song song với (ABC) cắt các cạnh SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) chứa M và song song với (ABC) cắt các cạnh SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) chứa M và song song với (ABC) cắt các cạnh SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Mặt phẳng (α) chứa M và song song với (ABC) cắt các cạnh SA, SB, SC, SD lần lượt tại M, N, P, Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD"
+     },
+     {
+      "cut_solid_id": "sub",
+      "goal_id": "g_res",
+      "kind": "residual_volume",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) chứa M và song song với (ABC) cắt các cạnh SA, SB, SC, SD lần lượt tại M, N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_ratio": "1/64",
+    "g_res": "49/576"
+   },
+   "category": "known_paraphrase",
+   "expected": "SERVE",
+   "id": "PARA-5",
+   "note": "Session 2 paraphrase family (PARA-1..5); PARA-0 is the reference wording",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M song song với (ABC) và cắt SA tại M, cắt SB tại N, cắt SC tại P, cắt SD tại Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "A"
+        ],
+        "point": "M",
+        "quote": "Mặt phẳng (α) qua M song song với (ABC) và cắt SA tại M, cắt SB tại N, cắt SC tại P, cắt SD tại Q"
+       },
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M song song với (ABC) và cắt SA tại M, cắt SB tại N, cắt SC tại P, cắt SD tại Q"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M song song với (ABC) và cắt SA tại M, cắt SB tại N, cắt SC tại P, cắt SD tại Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Mặt phẳng (α) qua M song song với (ABC) và cắt SA tại M, cắt SB tại N, cắt SC tại P, cắt SD tại Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD"
+     },
+     {
+      "cut_solid_id": "sub",
+      "goal_id": "g_res",
+      "kind": "residual_volume",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M song song với (ABC) và cắt SA tại M, cắt SB tại N, cắt SC tại P, cắt SD tại Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "dev_corpus_section_sentence",
+   "expected": "SERVE",
+   "id": "CORPUS-DEV01-construct",
+   "note": "section sentence verbatim from the Adapter /3 dev corpus; corpus ratio question replaced by a construction request (the original asks 'tính tỉ số thể tích' without operands, see OWN-*)",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD. Dựng thiết diện của hình chóp cắt bởi (α), khối chóp cắt bởi (α) chứa đỉnh S.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp cắt bởi (α), khối chóp cắt bởi (α) chứa đỉnh S",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Dựng thiết diện của hình chóp cắt bởi (α), khối chóp cắt bởi (α) chứa đỉnh S",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "ratio_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "id": "CORPUS-DEV01-ratio-unowned",
+   "note": "the corpus' own 'tính tỉ số thể tích' names neither solid: orientation not in the source (P1.4)",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) đi qua M và song song với đáy (ABCD) cắt các cạnh SB, SC, SD. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "dev_corpus_section_sentence",
+   "expected": "SERVE",
+   "id": "CORPUS-DEV03-construct",
+   "note": "section sentence verbatim from the Adapter /3 dev corpus; corpus ratio question replaced by a construction request (the original asks 'tính tỉ số thể tích' without operands, see OWN-*)",
+   "payload": {
+    "derived_sections": [
+     {
+      "perpendicular_line": [
+       "S",
+       "A"
+      ],
+      "plane_kind": "through_point_perpendicular_line",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và vuông góc với SA cắt SB, SC",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và vuông góc với SA cắt SB, SC"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và vuông góc với SA cắt SB, SC"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và vuông góc với SA cắt SB, SC. Dựng từng bước hình chóp, thiết diện bởi (α), khối chóp đỉnh S cắt bởi (α), làm nổi bật thiết diện.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng từng bước hình chóp, thiết diện bởi (α), khối chóp đỉnh S cắt bởi (α), làm nổi bật thiết diện",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Dựng từng bước hình chóp, thiết diện bởi (α), khối chóp đỉnh S cắt bởi (α), làm nổi bật thiết diện",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "ratio_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "id": "CORPUS-DEV03-ratio-unowned",
+   "note": "the corpus' own 'tính tỉ số thể tích' names neither solid: orientation not in the source (P1.4)",
+   "payload": {
+    "derived_sections": [
+     {
+      "perpendicular_line": [
+       "S",
+       "A"
+      ],
+      "plane_kind": "through_point_perpendicular_line",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và vuông góc với SA cắt SB, SC",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và vuông góc với SA cắt SB, SC"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và vuông góc với SA cắt SB, SC"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và vuông góc với SA cắt SB, SC. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "dev_corpus_section_sentence",
+   "expected": "SERVE",
+   "id": "CORPUS-DEV06-construct",
+   "note": "section sentence verbatim from the Adapter /3 dev corpus; corpus ratio question replaced by a construction request (the original asks 'tính tỉ số thể tích' without operands, see OWN-*)",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC. Dựng từng bước hình chóp, thiết diện bởi (α), khối chóp đỉnh S cắt bởi (α), làm nổi bật thiết diện.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng từng bước hình chóp, thiết diện bởi (α), khối chóp đỉnh S cắt bởi (α), làm nổi bật thiết diện",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Dựng từng bước hình chóp, thiết diện bởi (α), khối chóp đỉnh S cắt bởi (α), làm nổi bật thiết diện",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "ratio_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "id": "CORPUS-DEV06-ratio-unowned",
+   "note": "the corpus' own 'tính tỉ số thể tích' names neither solid: orientation not in the source (P1.4)",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "dev_corpus_section_sentence",
+   "expected": "SERVE",
+   "id": "CORPUS-DEV09-construct",
+   "note": "section sentence verbatim from the Adapter /3 dev corpus; corpus ratio question replaced by a construction request (the original asks 'tính tỉ số thể tích' without operands, see OWN-*)",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD. Dựng thiết diện, khối chóp đỉnh S cắt bởi (α).",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện, khối chóp đỉnh S cắt bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Dựng thiết diện, khối chóp đỉnh S cắt bởi (α)",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "ratio_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "id": "CORPUS-DEV09-ratio-unowned",
+   "note": "the corpus' own 'tính tỉ số thể tích' names neither solid: orientation not in the source (P1.4)",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SC, SD. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_area": "3/16"
+   },
+   "category": "dev_corpus_section_sentence",
+   "expected": "SERVE",
+   "id": "CORPUS-DEV10-prism-area",
+   "note": "A3-DEV-10 verbatim; area² of an equilateral triangle of side a = 3/16",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt BB', CC'",
+      "section_id": "sp",
+      "stated_intersections": [
+       {
+        "edge": [
+         "B",
+         "B'"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt BB', CC'"
+       },
+       {
+        "edge": [
+         "C",
+         "C'"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt BB', CC'"
+       }
+      ],
+      "target_solid_id": "pr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "goal_id": "g_area",
+      "goal_type": "area",
+      "kind": "measurement",
+      "quote": "tính diện tích thiết diện",
+      "target": {
+       "section_id": "sp"
+      }
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "base": [
+        "A",
+        "B",
+        "C"
+       ],
+       "top": [
+        "A'",
+        "B'",
+        "C'"
+       ]
+      },
+      "kind": "right_prism",
+      "quote": "Cho lăng trụ đứng ABC.A'B'C'"
+     },
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "segment": [
+        "A",
+        "A'"
+       ],
+       "value": "2a"
+      },
+      "kind": "segment_length",
+      "quote": "AA' = 2a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "A",
+        "A'"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của AA'"
+     }
+    ],
+    "problem_text": "Cho lăng trụ đứng ABC.A'B'C' có đáy ABC là tam giác đều cạnh a và AA' = 2a. Gọi M là trung điểm của AA'. Mặt phẳng (α) qua M và song song với (ABC) cắt BB', CC'. Dựng lăng trụ, thiết diện bởi (α) và tính diện tích thiết diện.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g",
+      "kind": "construct_plane_section",
+      "quote": "thiết diện bởi (α)",
+      "target_section_id": "sp"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "ABC.A'B'C'",
+      "quote": "Cho lăng trụ đứng ABC.A'B'C'",
+      "solid_id": "pr",
+      "solid_type": "prism"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "partial_intersections",
+   "expected": "SERVE",
+   "id": "PARTIAL-1of2-construct",
+   "note": "SC's cut is not stated: derived (D6), never presented as a source fact",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB tại N",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB tại N"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB tại N. Dựng thiết diện của hình chóp S.ABC bởi (α) và khối chóp đỉnh S cắt bởi (α).",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α) và khối chóp đỉnh S cắt bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α) và khối chóp đỉnh S cắt bởi (α)",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "partial_intersections",
+   "expected": "SERVE",
+   "id": "PARTIAL-2of3-construct",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SD lần lượt tại N, Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SD lần lượt tại N, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SD lần lượt tại N, Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABCD) cắt SB, SD lần lượt tại N, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α) và khối chóp đỉnh S cắt bởi (α).",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α) và khối chóp đỉnh S cắt bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α) và khối chóp đỉnh S cắt bởi (α)",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "plane_only",
+   "expected": "SERVE",
+   "id": "PLANE-ONLY-construct",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC)",
+      "section_id": "sec",
+      "stated_intersections": [],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC). Dựng thiết diện của hình chóp S.ABC bởi (α) và khối chóp đỉnh S cắt bởi (α).",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α) và khối chóp đỉnh S cắt bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α) và khối chóp đỉnh S cắt bởi (α)",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_ratio": "1/64"
+   },
+   "category": "plane_only",
+   "expected": "SERVE",
+   "id": "PLANE-ONLY-ratio-described",
+   "note": "the derived pyramid is named by description ('khối chóp đỉnh S cắt bởi (α)'), both operands in order",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC)",
+      "section_id": "sec",
+      "stated_intersections": [],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của khối chóp đỉnh S cắt bởi (α) và khối chóp S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC). Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của khối chóp đỉnh S cắt bởi (α) và khối chóp S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của khối chóp đỉnh S cắt bởi (α) và khối chóp S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_ratio": "1/64",
+    "g_res": "49/3072"
+   },
+   "category": "relabel",
+   "expected": "SERVE",
+   "id": "RELABEL-TDEF",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "D",
+       "E",
+       "F"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua K và song song với (DEF) cắt TE, TF lần lượt tại X, Y",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "T",
+         "E"
+        ],
+        "point": "X",
+        "quote": "Mặt phẳng (α) qua K và song song với (DEF) cắt TE, TF lần lượt tại X, Y"
+       },
+       {
+        "edge": [
+         "T",
+         "F"
+        ],
+        "point": "Y",
+        "quote": "Mặt phẳng (α) qua K và song song với (DEF) cắt TE, TF lần lượt tại X, Y"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "K"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp T.KXY và T.DEF"
+     },
+     {
+      "cut_solid_id": "sub",
+      "goal_id": "g_res",
+      "kind": "residual_volume",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại của khối chóp T.DEF sau khi cắt bỏ khối chóp T.KXY"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "D",
+        "E",
+        "F"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy DEF là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "T",
+        "D"
+       ],
+       "plane": [
+        "D",
+        "E",
+        "F"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "TD vuông góc với mặt phẳng (DEF)"
+     },
+     {
+      "args": {
+       "segment": [
+        "T",
+        "D"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "TD = a"
+     },
+     {
+      "args": {
+       "point": "K",
+       "segment": [
+        "T",
+        "D"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi K là trung điểm của TD"
+     }
+    ],
+    "problem_text": "Cho hình chóp T.DEF. Đáy DEF là tam giác đều cạnh a. TD vuông góc với mặt phẳng (DEF). TD = a. Gọi K là trung điểm của TD. Mặt phẳng (α) qua K và song song với (DEF) cắt TE, TF lần lượt tại X, Y. Dựng thiết diện của hình chóp T.DEF bởi (α). Tính tỉ số thể tích của hai khối chóp T.KXY và T.DEF. Tính thể tích phần còn lại của khối chóp T.DEF sau khi cắt bỏ khối chóp T.KXY.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp T.DEF bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "T",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp T.KXY và T.DEF",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "T.DEF",
+      "quote": "Cho hình chóp T.DEF",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_ratio": "1/64",
+    "g_res": "49/576"
+   },
+   "category": "premise_order",
+   "expected": "SERVE",
+   "id": "ORDER-premises-0",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD"
+     },
+     {
+      "cut_solid_id": "sub",
+      "goal_id": "g_res",
+      "kind": "residual_volume",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Gọi M là trung điểm của SA. SA = a. SA vuông góc với mặt phẳng (ABC). Đáy ABCD là hình vuông cạnh a. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_ratio": "1/64",
+    "g_res": "49/576"
+   },
+   "category": "premise_order",
+   "expected": "SERVE",
+   "id": "ORDER-premises-1",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD"
+     },
+     {
+      "cut_solid_id": "sub",
+      "goal_id": "g_res",
+      "kind": "residual_volume",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. SA vuông góc với mặt phẳng (ABC). Đáy ABCD là hình vuông cạnh a. Gọi M là trung điểm của SA. SA = a. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_ratio": "1/64",
+    "g_res": "49/576"
+   },
+   "category": "goal_order",
+   "expected": "SERVE",
+   "id": "ORDER-goals",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "cut_solid_id": "sub",
+      "goal_id": "g_res",
+      "kind": "residual_volume",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ"
+     },
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ. Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_ratio": "1/729",
+    "g_res": "676/6561"
+   },
+   "category": "reference",
+   "expected": "SERVE",
+   "id": "PERP-square-third",
+   "note": "⊥ SA with SA ⊥ base: the same plane as ∥ base",
+   "payload": {
+    "derived_sections": [
+     {
+      "perpendicular_line": [
+       "S",
+       "A"
+      ],
+      "plane_kind": "through_point_perpendicular_line",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và vuông góc với SA cắt SB, SC, SD lần lượt tại N, P, Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và vuông góc với SA cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và vuông góc với SA cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Mặt phẳng (α) qua M và vuông góc với SA cắt SB, SC, SD lần lượt tại N, P, Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD"
+     },
+     {
+      "cut_solid_id": "sub",
+      "goal_id": "g_res",
+      "kind": "residual_volume",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "ratio": "1/3",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_divides_segment",
+      "quote": "Điểm M thuộc cạnh SA sao cho SM = 1/3 SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Điểm M thuộc cạnh SA sao cho SM = 1/3 SA. Mặt phẳng (α) qua M và vuông góc với SA cắt SB, SC, SD lần lượt tại N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "negation",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-negated-plane",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và không song song với (ABC) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và không song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và không song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và không song song với (ABC) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "condition",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-conditional-plane",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Nếu mặt phẳng (α) qua M và song song với (ABC) thì (α) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Nếu mặt phẳng (α) qua M và song song với (ABC) thì (α) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Nếu mặt phẳng (α) qua M và song song với (ABC) thì (α) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Nếu mặt phẳng (α) qua M và song song với (ABC) thì (α) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "missing_data",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-missing-height",
+   "note": "SA's length not given: the solid is not determined",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "number_wrong_object",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-number-wrong-object",
+   "note": "the quote states SB = a; payload claims SA = a",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SB = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SB = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "wrong_relation",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-wrong-relation",
+   "note": "the quote states SA ⊥ SB; payload claims SA ⊥ (ABC)",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với SB"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với SB. SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "ratio_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-ratio-unowned-named",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "ratio_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-ratio-unowned-anonymous",
+   "note": "Session 2 known invalid serve (anonymous operand): must refuse on /2 (P1.4)",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC)",
+      "section_id": "sec",
+      "stated_intersections": [],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC). Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "residual_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-residual-unowned",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "cut_solid_id": "sub",
+      "goal_id": "g_res",
+      "kind": "residual_volume",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính thể tích phần còn lại.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "wrong_naming",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-swapped-names",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MPN và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MPN và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MPN và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "unread_condition",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-unread-condition",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P sao cho NP = BC",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P sao cho NP = BC"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P sao cho NP = BC"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P sao cho NP = BC. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "stated_not_in_source",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-stated-edge-not-in-text",
+   "note": "payload states a cut on SA; the text states only SB, SC (use declared_boundary for a boundary)",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "A"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "grammar_negative_control",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-contains-a-line",
+   "note": "'chứa SA' is a line, not 'qua M' — must not bind as the through-point clause",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) chứa SA và song song với BC cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) chứa SA và song song với BC cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) chứa SA và song song với BC cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) chứa SA và song song với BC cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "grammar_negative_control",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-other-plane-subject",
+   "note": "the restated subject is a different plane (β)",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC); (β) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC); (β) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC); (β) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC); (β) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "grammar_negative_control",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-per-edge-same-name",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M song song với (ABC) và cắt SB tại N, cắt SC tại N",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M song song với (ABC) và cắt SB tại N, cắt SC tại N"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M song song với (ABC) và cắt SB tại N, cắt SC tại N"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNN và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M song song với (ABC) và cắt SB tại N, cắt SC tại N. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNN và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNN và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "grammar_negative_control",
+   "expected": "REFUSE_SOURCE",
+   "id": "NEG-point-first-wrong-reference",
+   "note": "point-first wording names (SBC); payload claims ∥ (ABC)",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Qua M dựng mặt phẳng (α) song song với (SBC), (α) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Qua M dựng mặt phẳng (α) song song với (SBC), (α) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Qua M dựng mặt phẳng (α) song song với (SBC), (α) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Qua M dựng mặt phẳng (α) song song với (SBC), (α) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_ratio": "1/64"
+   },
+   "category": "grammar_positive_control",
+   "expected": "SERVE",
+   "id": "POS-per-edge-with-va-cat",
+   "note": "positive control for the per-edge form with 'và cắt' (same facts as the reference)",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) và cắt SB tại N, cắt SC tại P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) và cắt SB tại N, cắt SC tại P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) và cắt SB tại N, cắt SC tại P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) và cắt SB tại N, cắt SC tại P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "contradiction",
+   "expected": "REFUSE_GEOMETRY",
+   "id": "GEO-contradictory-length",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "2a"
+      },
+      "kind": "segment_length",
+      "quote": "Biết SA = 2a"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Biết SA = 2a. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "degenerate",
+   "expected": "REFUSE_GEOMETRY",
+   "id": "GEO-parallel-to-cut-edges",
+   "note": "(α) ∥ (SBC) is parallel to SB and SC",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "S",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (SBC) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (SBC) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (SBC) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (SBC) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "declared_boundary",
+   "expected": "REFUSE_GEOMETRY",
+   "id": "GEO-declared-boundary-crossed",
+   "note": "crossed cyclic order",
+   "payload": {
+    "derived_sections": [
+     {
+      "declared_boundary": [
+       [
+        "S",
+        "A"
+       ],
+       [
+        "S",
+        "C"
+       ],
+       [
+        "S",
+        "B"
+       ],
+       [
+        "S",
+        "D"
+       ]
+      ],
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "declared_boundary",
+   "expected": "REFUSE_GEOMETRY",
+   "id": "GEO-declared-boundary-partial",
+   "note": "M on SA missing from the boundary",
+   "payload": {
+    "derived_sections": [
+     {
+      "declared_boundary": [
+       [
+        "S",
+        "B"
+       ],
+       [
+        "S",
+        "C"
+       ],
+       [
+        "S",
+        "D"
+       ]
+      ],
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {
+    "g_ratio": "1/64",
+    "g_res": "49/576"
+   },
+   "category": "declared_boundary",
+   "expected": "SERVE",
+   "id": "GEO-declared-boundary-reversed",
+   "note": "reversed and rotated cycle: the same polygon",
+   "payload": {
+    "derived_sections": [
+     {
+      "declared_boundary": [
+       [
+        "S",
+        "D"
+       ],
+       [
+        "S",
+        "C"
+       ],
+       [
+        "S",
+        "B"
+       ],
+       [
+        "S",
+        "A"
+       ]
+      ],
+      "parallel_plane": [
+       "A",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       },
+       {
+        "edge": [
+         "S",
+         "D"
+        ],
+        "point": "Q",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD"
+     },
+     {
+      "cut_solid_id": "sub",
+      "goal_id": "g_res",
+      "kind": "residual_volume",
+      "parent_solid_id": "pyr",
+      "quote": "Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C",
+        "D"
+       ]
+      },
+      "kind": "base_is_square",
+      "quote": "Đáy ABCD là hình vuông cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABCD. Đáy ABCD là hình vuông cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC, SD lần lượt tại N, P, Q. Dựng thiết diện của hình chóp S.ABCD bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD. Tính thể tích phần còn lại của khối chóp S.ABCD sau khi cắt bỏ khối chóp S.MNPQ.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABCD bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNPQ và S.ABCD",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABCD",
+      "quote": "Cho hình chóp S.ABCD",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "unsupported_plane_kind",
+   "expected": "REFUSE_KERNEL",
+   "id": "KER-plane-equation",
+   "note": "",
+   "payload": {
+    "derived_sections": [
+     {
+      "equation_coeffs": [
+       "0",
+       "0",
+       "1",
+       "-1"
+      ],
+      "plane_kind": "plane_equation",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "B"
+        ],
+        "point": "N",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       },
+       {
+        "edge": [
+         "S",
+         "C"
+        ],
+        "point": "P",
+        "quote": "Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [
+     {
+      "denominator_solid_id": "pyr",
+      "goal_id": "g_ratio",
+      "kind": "volume_ratio",
+      "numerator_solid_id": "sub",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC"
+     }
+    ],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (ABC) cắt SB, SC lần lượt tại N, P. Dựng thiết diện của hình chóp S.ABC bởi (α). Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC.",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Tính tỉ số thể tích của hai khối chóp S.MNP và S.ABC",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  },
+  {
+   "answers": {},
+   "category": "unsupported_section_shape",
+   "expected": "REFUSE_KERNEL",
+   "id": "KER-section-on-base-edges",
+   "note": "geometry is valid, but a derived pyramid with apex S over a section cutting base edges is not in scope",
+   "payload": {
+    "derived_sections": [
+     {
+      "parallel_plane": [
+       "S",
+       "B",
+       "C"
+      ],
+      "plane_kind": "through_point_parallel_plane",
+      "plane_name": "α",
+      "quote": "Mặt phẳng (α) qua M và song song với (SBC) cắt SA, AB, AC",
+      "section_id": "sec",
+      "stated_intersections": [
+       {
+        "edge": [
+         "S",
+         "A"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (SBC) cắt SA, AB, AC"
+       },
+       {
+        "edge": [
+         "A",
+         "B"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (SBC) cắt SA, AB, AC"
+       },
+       {
+        "edge": [
+         "A",
+         "C"
+        ],
+        "point": null,
+        "quote": "Mặt phẳng (α) qua M và song song với (SBC) cắt SA, AB, AC"
+       }
+      ],
+      "target_solid_id": "pyr",
+      "through_point": "M"
+     }
+    ],
+    "math_goals": [],
+    "premises": [
+     {
+      "args": {
+       "side": "a",
+       "vertices": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "base_is_equilateral_triangle",
+      "quote": "Đáy ABC là tam giác đều cạnh a"
+     },
+     {
+      "args": {
+       "line": [
+        "S",
+        "A"
+       ],
+       "plane": [
+        "A",
+        "B",
+        "C"
+       ]
+      },
+      "kind": "line_perp_plane",
+      "quote": "SA vuông góc với mặt phẳng (ABC)"
+     },
+     {
+      "args": {
+       "segment": [
+        "S",
+        "A"
+       ],
+       "value": "a"
+      },
+      "kind": "segment_length",
+      "quote": "SA = a"
+     },
+     {
+      "args": {
+       "point": "M",
+       "segment": [
+        "S",
+        "A"
+       ]
+      },
+      "kind": "point_is_midpoint",
+      "quote": "Gọi M là trung điểm của SA"
+     }
+    ],
+    "problem_text": "Cho hình chóp S.ABC. Đáy ABC là tam giác đều cạnh a. SA vuông góc với mặt phẳng (ABC). SA = a. Gọi M là trung điểm của SA. Mặt phẳng (α) qua M và song song với (SBC) cắt SA, AB, AC. Dựng thiết diện của hình chóp S.ABC bởi (α) và khối chóp đỉnh S cắt bởi (α).",
+    "schema_version": "typed-fact-next/2",
+    "simulation_goals": [
+     {
+      "goal_id": "g_sec",
+      "kind": "construct_plane_section",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α) và khối chóp đỉnh S cắt bởi (α)",
+      "target_section_id": "sec"
+     },
+     {
+      "apex_ref": "S",
+      "derived_solid_id": "sub",
+      "goal_id": "g_sub",
+      "kind": "construct_derived_solid",
+      "parent_solid_id": "pyr",
+      "quote": "Dựng thiết diện của hình chóp S.ABC bởi (α) và khối chóp đỉnh S cắt bởi (α)",
+      "target_section_id": "sec"
+     }
+    ],
+    "solids": [
+     {
+      "notation": "S.ABC",
+      "quote": "Cho hình chóp S.ABC",
+      "solid_id": "pyr",
+      "solid_type": "pyramid"
+     }
+    ]
+   }
+  }
+ ],
+ "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND (preregistered, same author)",
+ "lock_rule": "expectations are never edited after the lock commit"
+}

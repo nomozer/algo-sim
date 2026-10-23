@@ -36,12 +36,16 @@ from app.simulation.geometry.predicates import parallel_planes, point_on_line, p
 from app.simulation.semantic_program import ir_builders as P
 
 from .registry import MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG, LoiGoi, TuChoi, binh_phuong, doc_ke_hoach, doc_so, kiem_nguon, nhan_cua_de, nhom_mat_nguon
+from .registry import DINH_CAT_CANH
 
 #: /6 (run `goal-directed-function-composition`): `ask_angle_lines` IR + independent line–line Gram verifier.
 #: /7 (run `geometry-capability-expansion`): ratio points, right-angle-chain base, prism lateral vector, ⊥-line plane check.
 #: /8 (run `composite-geometry`): determined derived bases, per-solid formation, independent volume certificates.
 #: /9 (run `volume-reasoning`): exact volume ratio (`ask_volume_ratio`) and residual volume (`ask_residual_volume`) certificates.
-ENGINE_VERSION = "geometry-function-engine/9"
+#: /10 (run `typedfactnext-planner-bridge`): section vertices verified on their edge segment (0 < t ≤ 1, `kiem_dinh_cat`).
+#: /11 (run `hybrid-contract-v2`, owner D5/D6): section closure certificate (`chung_chi_khep_kin` = exact `cross_section`),
+#: declared-boundary verification; IR canonicalization limited to engine-owned names.
+ENGINE_VERSION = "geometry-function-engine/11"
 Z = Fraction(0)
 V3 = tuple[Fraction, Fraction, Fraction]
 
@@ -108,6 +112,8 @@ class KetQuaTuyen:
     checker: Any = field(default=None, repr=False, compare=False)
     #: Hợp đồng CHỈ mang tô-pô khối đề đã khai (`hop_dong_to_po_da_khai`) — cùng một giá trị cho bổ sung dựng hình và bày cảnh.
     declared_topology: Any = None
+    #: Route-D `/4` envelope (run `hybrid-contract-v2`, `app/ai/adapter4_route.py`); None on every other route.
+    route_d: dict[str, Any] | None = None
     #: Tên IR mà ĐỀ hỏi (CONTRACT-BE-1): biến đáp số của mỗi lời hỏi đã qua cổng nguồn + toán hạng phép đo của nó, trừ điểm
     #: phụ tươi do planner dựng. Cùng nghĩa `targets` mà tuyến LLM_ONLY đọc từ nghĩa vụ của `RequestContract`.
     targets: tuple[str, ...] = ()
@@ -173,6 +179,42 @@ def thu_tu_su_pham(khoi_diem: list[tuple[str, list[dict[str, Any]]]], dinh_khoi:
         if t in can:
             can |= doc(l) - {t}
     return [b for b in khoi_diem if b[0] in can], [b for b in khoi_diem if b[0] not in can]
+
+
+#: Fields of an IR statement that are never a reference to another variable (run `hybrid-contract-v2`, P1).
+_KHONG_THAM_CHIEU = frozenset({"kind", "label", "target_var"})
+
+
+def gop_doi_tuong_trung(khai: list[dict[str, Any]], lenh: list[dict[str, Any]], so_huu: set[str] | frozenset[str]
+                        ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
+    """IR canonicalization (run `backend-hybrid-contract-unification`), on the FINAL statement order: an engine-OWNED line
+    / plane (`so_huu`: names `bien_dich` itself created for an operand, never a source name nor a labelled object) whose
+    construction (IR kind + operand names) repeats one already in the program IS that object — the repeat is dropped and
+    every later reference goes to the first. The kernel builds the same object from the same named operands, so values
+    are unchanged; only declarations shrink. References are rewritten only in reference fields (`_KHONG_THAM_CHIEU`)."""
+    dau: dict[tuple, str] = {}
+    doi: dict[str, str] = {}
+
+    def ve(x: Any, khoa_cha: str = "") -> Any:
+        if isinstance(x, str):
+            return x if khoa_cha in _KHONG_THAM_CHIEU else doi.get(x, x)
+        if isinstance(x, dict):
+            return {k: ve(v, k) for k, v in x.items()}
+        if isinstance(x, list):
+            return [ve(v, khoa_cha) for v in x]
+        return x
+
+    giu = []
+    for st in lenh:
+        st = ve(st) if doi else st
+        if st["kind"] in ("construct_line", "construct_plane"):
+            khoa = (st["kind"], st.get("through_a"), st.get("through_b"), tuple(st.get("through") or ()))
+            if khoa in dau and st["target_var"] in so_huu and "label" not in st:
+                doi[st["target_var"]] = dau[khoa]
+                continue
+            dau.setdefault(khoa, st["target_var"])
+        giu.append(st)
+    return [d for d in khai if d["name"] not in doi], giu
 
 
 @dataclass
@@ -1046,6 +1088,7 @@ class _Dung:
     # ── IR ──────────────────────────────────────────────────────────────────
     def bien_dich(self) -> tuple[dict[str, Any], dict[str, str]]:
         self.emitted_lines: set[str] = set()
+        so_huu: set[str] = set()                 # operand lines / planes this compiler names itself (`gop_doi_tuong_trung`)
         khai: list[dict[str, Any]] = []
         lenh: list[dict[str, Any]] = []
         khoi_diem: list[tuple[str, list[dict[str, Any]], list[dict[str, Any]]]] = []
@@ -1063,11 +1106,13 @@ class _Dung:
                     name = prefix + suffix
                     lenh.append(P.construct_line(name, *map(ir_name, labels)))
                     khai.append(P.memory_declaration(name, "line3"))
+                    so_huu.add(name)
                     return name
                 def plane(labels):
                     name = prefix + "_plane"
                     lenh.append({"kind": "construct_plane", "target_var": name, "through": list(map(ir_name, labels[:3]))})
                     khai.append(P.memory_declaration(name, "plane3"))
+                    so_huu.add(name)
                     return name
                 if c.fn == "intersect_line_line":
                     expr = {"kind": c.fn, "line_a": line("_line1", a.line1), "line_b": line("_line2", a.line2)}
@@ -1205,6 +1250,7 @@ class _Dung:
             khai.append(P.memory_declaration(kq, P.KIEU_DAI_LUONG))
             hoi[c.id] = kq
             self.trace.append({"step": "measure", "object": c.fn, "rule": c.fn, "calls": [c.id], "provenance": "DERIVED"})
+        khai, lenh = gop_doi_tuong_trung(khai, lenh, so_huu)
         return {"title": "Dựng hình từ lời gọi hàm có nguồn", "memory_declarations": khai, "statements": lenh}, hoi
 
     def kiem_mat_cat(self) -> None:
@@ -1217,7 +1263,7 @@ class _Dung:
                 for d in self.mat_phu:
                     cur_id = tuple(d["constructs"]) + tuple(d["targets"])
                     self._kiem_mat_phu(d)
-                for c in self.of("section", "ask_section_area"):
+                for c in (*self.of("section"), *self.of("ask_section_area")):
                     cur_id = (c.id,)
                     self._plane(c.args.plane)
                 for c in self.of("ask_area"):
@@ -1239,6 +1285,84 @@ class _Dung:
                                      (c.id,))
         except GeometryError as e:
             raise TuChoi(e.code, str(e), cur_id or tuple(c.id for c in self.of("section", "ask_section_area", "intersection_line", "ask_area", "ask_angle_line_plane")))
+
+    def kiem_dinh_cat(self, d: dict) -> None:
+        """Postconditions of a `DINH_CAT_CANH` certificate on the built figure (run `typedfactnext-planner-bridge`): every
+        vertex lies on its edge's LINE and on the derived plane, the edge IS a lateral edge of the solid and not parallel to
+        the plane (unique cut), and the vertex lies on the SEGMENT oriented from the apex (pyramid, 0 < t ≤ 1) or from the base
+        (prism, 0 ≤ t ≤ 1) — exact, chart coordinates (incidence is affine);
+        a derived pyramid's base vertices are pairwise distinct. Reused points are checked like constructed ones."""
+        ids = tuple(d.get("constructs") or ()) + ((d["derived"]["call"],) if d.get("derived") else ())
+        k = self.khoi.get(d.get("solid"))
+        if k is None:
+            raise TuChoi("UNKNOWN_SOLID", "đỉnh thiết diện: khối bị cắt không có trên hình", ids)
+        # lateral edges ORIENTED from the apex (pyramid) or the base vertex (prism): t is measured from that end
+        canh = {frozenset(e): e for e in ([(k.apex, b) for b in k.base] if k.apex else list(zip(k.base, k.top)))}
+        with _metric.using(self.metric()):
+            mat = self._plane(d["plane"])
+            for v in d["vertices"]:
+                if frozenset(v["edge"]) not in canh:
+                    raise TuChoi("SECTION_VERTEX_OFF_EDGE", f"{''.join(v['edge'])} không phải cạnh bên của {k.name}", ids)
+                (u, w), x = canh[frozenset(v["edge"])], v["label"]
+                pu, pw, px = (Vec3(*self.pts[n]) for n in (u, w, x))
+                huong = pw - pu
+                if huong.dot(mat.normal) == 0:
+                    raise TuChoi("LINE_PARALLEL_TO_PLANE", f"cạnh {u}{w} song song (hoặc nằm trong) mặt cắt — không có giao duy "
+                                 "nhất", ids)
+                if not point_on_line(px, Line3(pu, huong)) or mat.signed_eval(px) != 0:
+                    raise TuChoi("ENGINE_SELF_CHECK_FAILED", f"{x} không là giao của {u}{w} với mặt cắt", ids)
+                i = next(j for j in range(3) if (huong.x, huong.y, huong.z)[j] != 0)
+                t = ((px.x, px.y, px.z)[i] - (pu.x, pu.y, pu.z)[i]) / (huong.x, huong.y, huong.z)[i]
+                # a pyramid's lateral edge starts at the apex: the cut may meet the base vertex, never the apex; a prism's
+                # lateral edge has no apex, either endpoint may be met
+                if not (0 < t <= 1 if k.apex else 0 <= t <= 1):
+                    raise TuChoi("SECTION_VERTEX_OFF_EDGE", f"mặt cắt gặp đường {u}{w} ngoài cạnh (t = {t})", ids)
+                self.trace.append({"step": "certify_section_vertex", "object": x, "edge": [u, w], "t": str(t),
+                                   "choice": v["choice"], "rule": d["rule"], "relation_verified": True,
+                                   "provenance": "DERIVED", "binding": "AUXILIARY"})
+            if d.get("derived"):
+                base = d["derived"]["base"]
+                if len({self.pts[n] for n in base}) != len(base):
+                    raise TuChoi("DEGENERATE_DERIVED_SECTION", "hai đỉnh thiết diện trùng nhau", ids)
+        # Closure certificate (run `hybrid-contract-v2`): the polygon a derived solid stands on, and any author-declared
+        # boundary, must BE the exact cross-section — same vertices, same cyclic order (rotation / reversal allowed).
+        tren = {frozenset(v["edge"]): v["label"] for v in d["vertices"]}
+        vong = None
+        if d.get("declared_boundary") is not None:
+            vong = [tren.get(frozenset(e)) for e in d["declared_boundary"]]
+            if None in vong:
+                raise TuChoi("SECTION_BOUNDARY_INCOMPLETE", "biên khai báo đi qua cạnh không có đỉnh thiết diện", ids)
+            self.chung_chi_khep_kin(k.name, d["plane"], vong, ids)
+        if d.get("derived"):
+            vong = list(d["derived"]["base"])
+            self.chung_chi_khep_kin(k.name, d["plane"], vong, ids)
+        if vong is not None:
+            d["closure"] = {"boundary": vong, "verified": True,
+                            "rule": "boundary == cross_section(solid, plane) up to rotation/reversal; vertices 0 < t ≤ 1"}
+            self.trace.append({"step": "certify_section_closure", "object": "".join(vong), "rule": d["rule"],
+                               "relation_verified": True, "provenance": "DERIVED", "binding": "AUXILIARY"})
+
+    def chung_chi_khep_kin(self, ten_khoi: str, mat: list[str], vong: list[str], ids: tuple = ()) -> None:
+        """THE section-closure authority (run `hybrid-contract-v2`; Adapter /3 calls it too): the cycle `vong` of built
+        points is exactly `section.cross_section(solid, plane through mat[:3])` up to rotation / reversal. Incidence only,
+        exact Fractions, chart coordinates (affine-invariant). Anything else ⇒ `SECTION_BOUNDARY_INCOMPLETE`."""
+        from app.simulation.geometry.section import Polyhedron, cross_section, same_section_cycle
+        k = self.khoi[ten_khoi]
+        if k.kind == "pyramid":
+            dinh, mat_khoi = [k.apex, *k.base], P.construct_pyramid("solid", k.apex, k.base)["faces"]
+        else:
+            dinh = [*k.base, *k.top]
+            mat_khoi = P.construct_prism("solid", k.base, k.top, tuple(zip(k.base, k.top)))["faces"]
+        try:
+            with _metric.using(self.metric()):
+                that = cross_section(Polyhedron(tuple(Vec3(*self.pts[p]) for p in dinh),
+                                                tuple(tuple(dinh.index(p) for p in f) for f in mat_khoi)),
+                                     self._plane(mat[:3])).polygon
+        except GeometryError as e:
+            raise TuChoi(e.code, str(e), ids) from None
+        if not same_section_cycle([Vec3(*self.pts[p]) for p in vong], that):
+            raise TuChoi("SECTION_BOUNDARY_INCOMPLETE", f"chu trình {''.join(vong)} ({len(vong)} đỉnh) không phải thiết diện "
+                         f"thật của {ten_khoi} ({len(that)} đỉnh) theo đúng thứ tự vòng", ids)
 
     def _kiem_mat_vuong_duong(self, d: dict) -> None:
         """Postconditions of the plane through p ⊥ d (`MAT_VUONG_DUONG`), independent of how it was assembled: both
@@ -1317,7 +1441,7 @@ class _Dung:
         mặt) chỉ dựng MỘT lần dù được yêu cầu dựng và hỏi diện tích; trả {khoá: biến thiết diện}."""
         td: dict[tuple, str] = {}
         vet: dict[tuple, dict] = {}
-        for c in self.of("section", "ask_section_area"):
+        for c in (*self.of("section"), *self.of("ask_section_area")):
             if (khoa := self._khoa_mat_cat(c)) in td:
                 vet[khoa]["calls"].append(c.id)                 # cùng thiết diện: một đối tượng, vết ghi mọi lời gọi (M3)
                 continue
@@ -1584,16 +1708,31 @@ def dung_tu_loi_goi(problem_text: str, plan: Any, auxiliary: tuple[dict, ...] = 
         dung.ten_mat_phu = ten_mat_phu
         dung.kiem()
         dung.kiem_mat_cat()
+        for d in auxiliary:                              # section vertices on stated cut edges (`DINH_CAT_CANH`)
+            if d.get("rule") == DINH_CAT_CANH:
+                dung.kiem_dinh_cat(d)
         dung.kiem_mat_viet(nhom_mat_nguon(problem_text))
         chuoi = [d for d in auxiliary if d.get("rule") == "effect-chain"]
         for d in chuoi:
             dung.kiem_mo_ta(d)
         program, hoi = dung.bien_dich()
+        from app.simulation.semantic_program.validator import MAX_MEMORY_DECLARATIONS
+        if (n := len(program["memory_declarations"])) > MAX_MEMORY_DECLARATIONS:   # a resource budget, typed
+            raise TuChoi("IR_MEMORY_BUDGET_EXCEEDED", f"chương trình dựng cần {n} khai báo bộ nhớ > trần "
+                         f"{MAX_MEMORY_DECLARATIONS} — không dựng một phần")
         vr = validate_semantic_program(program)
         if not vr.ok:
             raise TuChoi("ENGINE_IR_INVALID", f"IR engine sinh ra không qua thẩm định: {vr.error}")
         to_po = hop_dong_to_po_da_khai(calls)
         spec = hoan_thien_dung_hinh(vr.spec, to_po).spec
+        if (len(spec.memory_declarations) > MAX_MEMORY_DECLARATIONS
+                and any(d.get("rule") == DINH_CAT_CANH for d in auxiliary)):
+            # Section-vertex plans only (run `typedfactnext-planner-bridge`; every other plan keeps main's behaviour): when
+            # the teaching expansion ALONE exceeds the IR budget, build the verified program unexpanded — the Adapter /3
+            # policy — and say so in the trace. Geometry, checks and answers are those of the verified program.
+            dung.trace.append({"step": "formation_budget", "rule": "pedagogical_expansion_skipped",
+                               "declarations": len(spec.memory_declarations), "limit": MAX_MEMORY_DECLARATIONS})
+            spec = vr.spec
         G = dung.metric()
         try:
             with _metric.using(G):

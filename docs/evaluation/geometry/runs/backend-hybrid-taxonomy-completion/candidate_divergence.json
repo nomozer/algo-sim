@@ -1,0 +1,21 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "backend-hybrid-taxonomy-completion",
+  "corrects": "docs/evaluation/geometry/runs/backend-hybrid-bridge-safety/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "previous_candidate_hash": "22c4fc6de9350cfee55d3eb4a4b3497410214ba39ac18c2f9a5db4384631ef51",
+  "current_candidate_hash": "13fd32b498ea9e47f23f01d0f4efc99b7f8d789ed6e59fe814c8fc4891d7e172",
+  "current_measured_files": 115,
+  "current_product_commit": "b6684564ac4596da30819da5fcc4c875ebb1a640",
+  "diverged": true,
+  "reason": "Gemini takeover completion: classify BRIDGE_UNSUPPORTED_LENGTH_UNIT (CAPABILITY) and INVALID_TYPED_FACT_NEXT (EXTRACTION_FAILED) in backend/app/ai/hybrid_preview.py::_NHOM (alongside INVALID_TYPED_FACT_NEXT and UNKNOWN_VERTEX_REF in hybrid_compiler_benchmark.REFUSAL_CLASS) so all literal Route D refusal codes introduced by 4f3aaea5e0d3b5c1fe1537bd3ddf4bc73cbe88ee are classified without FALLBACK. No guard weakened, no expected output changed, no provider schema, engine arithmetic, default route, frontend, cache or historical measurement change.",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP: refusal taxonomy dictionary classification only; no production analyze envelope, prompt or cache key change.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: all historical receipts and prior correction layers preserved byte-identical."
+  }
+}

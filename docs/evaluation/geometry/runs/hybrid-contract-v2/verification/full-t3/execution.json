@@ -1,0 +1,35 @@
+{
+  "command": [
+    "node",
+    "frontend/scripts/full-gate.mjs"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-backend-s3",
+  "source_commit": "84c729e0b0df7868dfcc0a6e48cac457d7959e92",
+  "dirty_before": "",
+  "started_utc": "2026-10-22T19:00:05.069630+00:00",
+  "timeout_seconds": 2400,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 484.53,
+  "finished_utc": "2026-10-22T19:08:09.602500+00:00",
+  "dirty_after": "",
+  "streams": {
+    "stdout": {
+      "bytes": 28692,
+      "sha256": "9f5e691664a45c8d4a9e93c2fd5e534bd8c13048d0a6c6c585f3a02bdc39a94f"
+    },
+    "stderr": {
+      "bytes": 121552,
+      "sha256": "b3ac201a6aed454a2039d619558768451af582fbfee1b5f1f421cb86a35583e0"
+    }
+  }
+}

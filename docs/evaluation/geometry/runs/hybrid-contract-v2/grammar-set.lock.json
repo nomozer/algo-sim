@@ -1,0 +1,9 @@
+{
+ "lock": "grammar-set.json",
+ "sha256_lf_normalised": "10c57be7b485d7b3f1a97183ff41b28988e70641e297e01cccf68d1434cc4abe",
+ "cases": 47,
+ "expected_classes": {"SERVE": 22, "REFUSE_SOURCE": 19, "REFUSE_GEOMETRY": 4, "REFUSE_KERNEL": 2},
+ "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND (preregistered by the implementing agent; not independent, not blind)",
+ "locked_before": "any typed-fact-next/2, planner D6 or Source Gate grammar change of run hybrid-contract-v2",
+ "rule": "expectations are never edited after this commit; a disagreement is diagnosed in the report (grammar false refusal / source / kernel / geometry), not fixed in the lock"
+}

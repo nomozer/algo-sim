@@ -1,0 +1,213 @@
+{
+ "cases": 60,
+ "expected_served": 49,
+ "expected_refused_invalid": 6,
+ "expected_refused_bridge_scope": 5,
+ "goal_coverage": "49/49",
+ "not_covered_codes": {},
+ "exact_correct_of_served_with_answers": "43/43",
+ "wrong_served": 0,
+ "refusal_correct": "11/11",
+ "scene_valid": "49/49",
+ "label_leaks": 0,
+ "visible_duplicate_planes": 0,
+ "planner_plane_name_in_text": 0,
+ "served_with_visible_auxiliary_H_points": 49,
+ "selection_counts": {
+  "reuse_through_point": 49,
+  "named_intersection": 104,
+  "fresh_intersection": 14
+ },
+ "quotes_in_source": "49/49",
+ "planner_selected_operations_mean": 6.31,
+ "dag_depth_max": 5,
+ "dag_depth_min": 4,
+ "vertex_reuse_rate": "49/167",
+ "plane_constructions_per_served": [
+  1
+ ],
+ "distinct_composition_patterns": [
+  "[[\"intersect_line_plane\", \"orthogonal_projection_line\", \"translate_point\"], [\"reuse_through_point\", \"fresh_intersection\", \"fresh_intersection\", \"fresh_intersection\"]]",
+  "[[\"intersect_line_plane\", \"orthogonal_projection_line\", \"translate_point\"], [\"reuse_through_point\", \"fresh_intersection\", \"fresh_intersection\"]]",
+  "[[\"intersect_line_plane\", \"orthogonal_projection_line\", \"translate_point\"], [\"reuse_through_point\", \"named_intersection\", \"named_intersection\", \"named_intersection\"]]",
+  "[[\"intersect_line_plane\", \"orthogonal_projection_line\", \"translate_point\"], [\"reuse_through_point\", \"named_intersection\", \"named_intersection\"]]",
+  "[[\"intersect_line_plane\", \"translate_point\"], [\"reuse_through_point\", \"fresh_intersection\", \"fresh_intersection\", \"fresh_intersection\"]]",
+  "[[\"intersect_line_plane\", \"translate_point\"], [\"reuse_through_point\", \"fresh_intersection\", \"fresh_intersection\"]]",
+  "[[\"intersect_line_plane\", \"translate_point\"], [\"reuse_through_point\", \"named_intersection\", \"named_intersection\", \"named_intersection\"]]",
+  "[[\"intersect_line_plane\", \"translate_point\"], [\"reuse_through_point\", \"named_intersection\", \"named_intersection\"]]"
+ ],
+ "seconds_p50": 0.0305,
+ "seconds_max": 0.0739,
+ "metamorphic_relations": {
+  "relabel_invariance": true,
+  "premise_order_invariance": true,
+  "goal_order_invariance": true,
+  "ratio_inversion_reciprocal": true,
+  "scaling_ratio_invariant_residual_k3": true,
+  "parallel_base_equals_perpendicular_SA": true
+ },
+ "adapter3": {
+  "served": 53,
+  "wrong_served": 1,
+  "exact_correct_when_served": "43/43",
+  "served_invalid": [
+   "N-anonymous-ratio-operand"
+  ],
+  "served_bridge_scope": [
+   "S-cut-edges-not-in-payload",
+   "S-shared-label-identity",
+   "S-open-cycle"
+  ],
+  "crashes": [],
+  "same_payload_wrong_served": [],
+  "same_payload_served": 1
+ }
+}
+{
+ "contract_parity": {
+  "cases": 316,
+  "bridge_served": 36,
+  "adapter3_served": 20,
+  "both_served": 20,
+  "both_served_disagree": 0,
+  "wrong_served": {
+   "bridge": 0,
+   "adapter3": 0
+  },
+  "crashes": 0,
+  "adapter3_refusal_codes": {
+   "DEGENERATE_DERIVED_SECTION": 96,
+   "SOURCE_OBJECT_MISMATCH": 116,
+   "SECTION_BOUNDARY_INCOMPLETE": 84
+  },
+  "bridge_refusal_codes": {
+   "SECTION_NOT_CLOSED_ON_LATERAL_EDGES": 164,
+   "SOURCE_OBJECT_MISMATCH": 116
+  }
+ },
+ "budget": [
+  {
+   "id": "BUD-equilateral0-parallel",
+   "status": "SERVED",
+   "code": null,
+   "declarations_uncapped": 24,
+   "duplicate_constructs_uncapped": 1
+  },
+  {
+   "id": "BUD-equilateral0-perpendicular",
+   "status": "SERVED",
+   "code": null,
+   "declarations_uncapped": 27,
+   "duplicate_constructs_uncapped": 1
+  },
+  {
+   "id": "BUD-square1-parallel",
+   "status": "SERVED",
+   "code": null,
+   "declarations_uncapped": 27,
+   "duplicate_constructs_uncapped": 1
+  },
+  {
+   "id": "BUD-square1-perpendicular",
+   "status": "SERVED",
+   "code": null,
+   "declarations_uncapped": 30,
+   "duplicate_constructs_uncapped": 1
+  },
+  {
+   "id": "BUD-rectangle2-parallel",
+   "status": "SERVED",
+   "code": null,
+   "declarations_uncapped": 27,
+   "duplicate_constructs_uncapped": 1
+  },
+  {
+   "id": "BUD-rectangle2-perpendicular",
+   "status": "SERVED",
+   "code": null,
+   "declarations_uncapped": 30,
+   "duplicate_constructs_uncapped": 1
+  },
+  {
+   "id": "BUD-hexagon-parallel",
+   "status": "REFUSED",
+   "code": "IR_MEMORY_BUDGET_EXCEEDED",
+   "declarations_uncapped": 33,
+   "duplicate_constructs_uncapped": 1
+  },
+  {
+   "id": "BUD-hexagon-perpendicular",
+   "status": "REFUSED",
+   "code": "IR_MEMORY_BUDGET_EXCEEDED",
+   "declarations_uncapped": 36,
+   "duplicate_constructs_uncapped": 1
+  }
+ ],
+ "metamorphic_invariance": {
+  "premise_permutation": {
+   "bridge": "24/24",
+   "adapter3": "24/24"
+  },
+  "relabel": {
+   "bridge": "2/2",
+   "adapter3": "2/2"
+  },
+  "goal_order": {
+   "bridge": "1/1",
+   "adapter3": "1/1"
+  },
+  "paraphrase": {
+   "bridge": "1/5",
+   "adapter3": "1/5"
+  }
+ },
+ "metamorphic_reference": {
+  "bridge": "SERVED",
+  "adapter3": "SERVED"
+ },
+ "negatives": {
+  "payloads": 20,
+  "served": {
+   "bridge": [],
+   "adapter3": [
+    "N-anonymous-ratio-operand-triangle/convention"
+   ]
+  },
+  "crashes": 0
+ },
+ "scene_valid": {
+  "bridge": "65/65",
+  "adapter3": "50/50"
+ },
+ "composition": {
+  "plans": 38,
+  "duplicate_calls": 0,
+  "ir_duplicate_constructs": 38,
+  "dag_depth": [
+   4,
+   5
+  ],
+  "declarations": [
+   18,
+   30
+  ],
+  "selection_counts": {
+   "reuse_through_point": 38,
+   "named_intersection": 90,
+   "fresh_intersection": 5
+  },
+  "plane_constructions_per_section": [
+   1.0
+  ]
+ },
+ "seconds": {
+  "bridge": {
+   "p50": 0.0028,
+   "max": 0.0604
+  },
+  "adapter3": {
+   "p50": 0.0037,
+   "max": 0.0567
+  }
+ }
+}

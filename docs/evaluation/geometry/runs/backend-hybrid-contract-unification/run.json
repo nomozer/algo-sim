@@ -1,0 +1,32 @@
+{
+ "schema": "run/1",
+ "run": "backend-hybrid-contract-unification",
+ "task_code": "BACKEND_HYBRID_SESSION2_CONTRACT_UNIFICATION",
+ "date": "2026-10-22",
+ "owner_authorization": "GO_BACKEND_SESSION2_LOCAL_CONTRACT_RESEARCH",
+ "branch": "research/hybrid-backend-session2-contract",
+ "worktree": ".superpowers/worktrees/hybrid-backend-s2",
+ "base": {
+  "session1_head": "82d3d25540ea643a68bd7877eb1b67a78dfc7134",
+  "session1_full_t3_target": "76a7ce33cc955a1e4a2e01d4d5374493c843d86c",
+  "session1_product": "b6684564ac4596da30819da5fcc4c875ebb1a640",
+  "origin_main": "43247c9e9375a3dbf2b5223324a58e6f932ca596",
+  "local_main": "f10e6283dd3fd2cfdef189e1bef0ffdecf2be942",
+  "local_main_note": "local main is 1 docs-only commit ahead of origin/main (f10e6283, unpushed); not in this branch"
+ },
+ "commits": {
+  "product": ["3553e4d45991954dd0fb8c0ac30bf5fb79a3ff51"],
+  "candidate_freeze": "5beb0e86",
+  "evidence": "see handoff.md"
+ },
+ "measured_system": {"files": 115, "tree_hash": "96962736b4aed18ec13afd73d06fab822fe398d7bf5939babc9a3733e45c1af4"},
+ "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+ "provider_calls": 0,
+ "governance": {"DEFAULT_MODE": "LLM_ONLY", "RESPONSE_CONTRACT": "flat", "HYBRID_PRODUCT_ENABLEMENT": "NO-GO",
+                "ALLOW_LIVE_AI": 0, "CACHE_VERSION": "127", "cache_decision": "NO_BUMP"},
+ "contract_versions_unchanged": ["typed-fact-next/1", "typed-fact-next-bridge/1", "hybrid-simulation-adapter/3",
+                                 "hybrid-route-d-simulation/3", "geometry-functions/12", "geometry-fact-planner/12",
+                                 "geometry-function-engine/10"],
+ "owner_decisions_open": ["D1", "D2", "D3", "D4", "D5", "D6"],
+ "final_state": "SESSION2_CONTRACT_DECISION_REQUIRED"
+}

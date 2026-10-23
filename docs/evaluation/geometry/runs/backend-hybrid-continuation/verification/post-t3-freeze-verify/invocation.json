@@ -1,0 +1,19 @@
+{
+  "command": [
+    "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe",
+    "backend/scripts/freeze_evaluation_candidate.py",
+    "--verify"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-backend-continuation-verify",
+  "source_commit": "76a7ce33cc955a1e4a2e01d4d5374493c843d86c",
+  "dirty_before": "",
+  "started_utc": "2026-10-22T14:44:54.139817+00:00",
+  "timeout_seconds": 120,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "OMP_NUM_THREADS": "1"
+  }
+}

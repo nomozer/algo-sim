@@ -289,6 +289,14 @@ IDENTITY_DELTAS = (
      "versions": {"registry_version": ("geometry-functions/10", "geometry-functions/11"),
                   "planner_version": ("geometry-fact-planner/10", "geometry-fact-planner/11"),
                   "engine_version": ("geometry-function-engine/8", "geometry-function-engine/9")}},
+    {"run": "typedfactnext-planner-bridge",
+     "versions": {"registry_version": ("geometry-functions/11", "geometry-functions/12"),
+                  "planner_version": ("geometry-fact-planner/11", "geometry-fact-planner/12"),
+                  "engine_version": ("geometry-function-engine/9", "geometry-function-engine/10")}},
+    {"run": "hybrid-contract-v2",
+     "versions": {"registry_version": ("geometry-functions/12", "geometry-functions/13"),
+                  "planner_version": ("geometry-fact-planner/12", "geometry-fact-planner/13"),
+                  "engine_version": ("geometry-function-engine/10", "geometry-function-engine/11")}},
 )
 
 

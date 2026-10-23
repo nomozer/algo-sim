@@ -1,5 +1,9 @@
 # CURRENT_STATE.md — Trạng thái hiện tại
 
+**LOCAL backend Session 2 (2026-10-22):** `research/hybrid-backend-session2-contract` from Session 1 `82d3d255`; product `3553e4d4`, candidate `5beb0e86` (115 files, `96962736…`). Backward-compatible safety + canonicalization only; contract decisions D1–D6 pending; status and T3 in `evaluation/geometry/runs/backend-hybrid-contract-unification/handoff.md`. Research only; no merge, push or production change.
+
+**LOCAL backend continuation (2026-10-22):** `research/hybrid-backend-integration-session1`, product `4f3aaea5` after inherited `8b5916e7`; typed bridge constraints fixed, independently reviewed. Historical T3 remains FAIL; new frozen verification recorded in `evaluation/geometry/runs/backend-hybrid-continuation/`. Scoped research only; no replacement of production or automatic merge.
+
 ## LOCAL RENDERER FIX & RAW-LOG RECONCILIATION (`research/simulation-demo6b-renderer-fix`), 2026-10-21
 
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION

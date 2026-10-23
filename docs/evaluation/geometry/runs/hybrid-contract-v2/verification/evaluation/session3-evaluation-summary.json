@@ -1,0 +1,208 @@
+{
+  "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "provider_calls": 0,
+  "wall_seconds": 24.523,
+  "family_a_locked_grammar_v2": {
+    "lock_sha256": "10c57be7b485d7b3f1a97183ff41b28988e70641e297e01cccf68d1434cc4abe",
+    "cases": 47,
+    "match": 46,
+    "wrong_served": [],
+    "by_expected": {
+      "SERVE": "22/22",
+      "REFUSE_SOURCE": "18/19",
+      "REFUSE_GEOMETRY": "4/4",
+      "REFUSE_KERNEL": "2/2"
+    },
+    "confusion": {
+      "SERVE -> SERVE": 22,
+      "REFUSE_SOURCE -> REFUSE_SOURCE": 18,
+      "REFUSE_SOURCE -> REFUSE_OTHER": 1,
+      "REFUSE_GEOMETRY -> REFUSE_GEOMETRY": 4,
+      "REFUSE_KERNEL -> REFUSE_KERNEL": 2
+    },
+    "served_without_gate": [],
+    "mismatches": [
+      {
+        "id": "NEG-per-edge-same-name",
+        "expected": "REFUSE_SOURCE",
+        "observed": "REFUSE_OTHER",
+        "code": "INVALID_DERIVED_SECTION",
+        "reason": "Section 'sec': two stated intersections carry the same name"
+      }
+    ]
+  },
+  "family_b_session1_dual_run": {
+    "cases": 60,
+    "v1_session1_aggregate": {
+      "goal_coverage": "49/49",
+      "exact_correct_of_served_with_answers": "43/43",
+      "wrong_served": 0,
+      "refusal_correct": "11/11",
+      "scene_valid": "49/49",
+      "label_leaks": 0
+    },
+    "v2_adapter4_on_49_v1_served": "49/49",
+    "v1_v2_answer_agreement_on_49_served": "49/49",
+    "v2_adapter4_d6_newly_served_open_cycle": [
+      "S-open-cycle"
+    ],
+    "v2_adapter4_invalid_refused": "6/6",
+    "v2_adapter4_wrong_served": 0,
+    "v2_adapter4_scene_valid": "50/50",
+    "v2_adapter4_label_leaks": 0,
+    "v2_adapter4_gate_authority_100pct": true
+  },
+  "family_c_contract_parity": {
+    "cases": 316,
+    "v1_bridge_served": 36,
+    "v1_adapter3_served": 20,
+    "v2_adapter4_from_bridge_served": 36,
+    "v2_adapter4_from_adapter3_served": 20,
+    "v1_both_served": 20,
+    "v1_both_served_disagree": 0,
+    "v2_both_served_disagree": 0,
+    "wrong_served": {
+      "v1_bridge": 0,
+      "v1_adapter3": 0,
+      "v2_adapter4": 0
+    }
+  },
+  "family_d_metamorphic": {
+    "reference": {
+      "v1_bridge": "1/1",
+      "v1_adapter3": "1/1",
+      "v2_adapter4_stated_4edges": "1/1"
+    },
+    "premise_permutation": {
+      "v1_bridge": "24/24",
+      "v1_adapter3": "24/24",
+      "v2_adapter4_stated_4edges": "24/24"
+    },
+    "relabel": {
+      "v1_bridge": "2/2",
+      "v1_adapter3": "2/2",
+      "v2_adapter4_stated_4edges": "2/2"
+    },
+    "goal_order": {
+      "v1_bridge": "1/1",
+      "v1_adapter3": "1/1",
+      "v2_adapter4_stated_4edges": "1/1"
+    },
+    "paraphrase": {
+      "v1_bridge": "5/5",
+      "v1_adapter3": "5/5",
+      "v2_adapter4_stated_4edges": "5/5"
+    }
+  },
+  "family_e_negative_controls": {
+    "payloads": 20,
+    "v1_bridge_served": [],
+    "v1_adapter3_served": [
+      "N-anonymous-ratio-operand-triangle/convention"
+    ],
+    "v2_adapter4_served": []
+  },
+  "family_f_ir_budget_and_composition": {
+    "budget": [
+      {
+        "id": "BUD-equilateral0-parallel",
+        "status": "SERVED",
+        "code": null,
+        "declarations_uncapped": 24,
+        "duplicate_constructs_uncapped": 1
+      },
+      {
+        "id": "BUD-equilateral0-perpendicular",
+        "status": "SERVED",
+        "code": null,
+        "declarations_uncapped": 27,
+        "duplicate_constructs_uncapped": 1
+      },
+      {
+        "id": "BUD-square1-parallel",
+        "status": "SERVED",
+        "code": null,
+        "declarations_uncapped": 27,
+        "duplicate_constructs_uncapped": 1
+      },
+      {
+        "id": "BUD-square1-perpendicular",
+        "status": "SERVED",
+        "code": null,
+        "declarations_uncapped": 30,
+        "duplicate_constructs_uncapped": 1
+      },
+      {
+        "id": "BUD-rectangle2-parallel",
+        "status": "SERVED",
+        "code": null,
+        "declarations_uncapped": 27,
+        "duplicate_constructs_uncapped": 1
+      },
+      {
+        "id": "BUD-rectangle2-perpendicular",
+        "status": "SERVED",
+        "code": null,
+        "declarations_uncapped": 30,
+        "duplicate_constructs_uncapped": 1
+      },
+      {
+        "id": "BUD-hexagon-parallel",
+        "status": "REFUSED",
+        "code": "IR_MEMORY_BUDGET_EXCEEDED",
+        "declarations_uncapped": 33,
+        "duplicate_constructs_uncapped": 1
+      },
+      {
+        "id": "BUD-hexagon-perpendicular",
+        "status": "REFUSED",
+        "code": "IR_MEMORY_BUDGET_EXCEEDED",
+        "declarations_uncapped": 36,
+        "duplicate_constructs_uncapped": 1
+      }
+    ],
+    "composition": {
+      "plans": 38,
+      "duplicate_calls": 0,
+      "ir_duplicate_constructs": 38,
+      "dag_depth": [
+        4,
+        5
+      ],
+      "declarations": [
+        18,
+        30
+      ],
+      "selection_counts": {
+        "reuse_through_point": 38,
+        "named_intersection": 90,
+        "fresh_intersection": 5
+      },
+      "plane_constructions_per_section": [
+        1.0
+      ]
+    }
+  },
+  "family_g_adapter3_dev_corpus": {
+    "cases": 16,
+    "v1_adapter3_status": {
+      "SERVED": 7,
+      "REFUSED": 9
+    },
+    "v2_adapter4_raw_converted_codes": {
+      "UNKNOWN_VERTEX_REF": 5,
+      "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY": 3,
+      "SOURCE_OBJECT_MISMATCH": 8
+    }
+  },
+  "family_h_route_b_benchmark": {
+    "cases": 30,
+    "evaluations": 60,
+    "outcomes": {
+      "correct_served": 38,
+      "correct_refusal": 18,
+      "false_refusal": 4
+    },
+    "wrong_served": 0
+  }
+}

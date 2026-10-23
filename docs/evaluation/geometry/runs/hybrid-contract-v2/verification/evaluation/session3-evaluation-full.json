@@ -1,0 +1,2752 @@
+{
+ "summary": {
+  "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "provider_calls": 0,
+  "wall_seconds": 24.523,
+  "family_a_locked_grammar_v2": {
+   "lock_sha256": "10c57be7b485d7b3f1a97183ff41b28988e70641e297e01cccf68d1434cc4abe",
+   "cases": 47,
+   "match": 46,
+   "wrong_served": [],
+   "by_expected": {
+    "SERVE": "22/22",
+    "REFUSE_SOURCE": "18/19",
+    "REFUSE_GEOMETRY": "4/4",
+    "REFUSE_KERNEL": "2/2"
+   },
+   "confusion": {
+    "SERVE -> SERVE": 22,
+    "REFUSE_SOURCE -> REFUSE_SOURCE": 18,
+    "REFUSE_SOURCE -> REFUSE_OTHER": 1,
+    "REFUSE_GEOMETRY -> REFUSE_GEOMETRY": 4,
+    "REFUSE_KERNEL -> REFUSE_KERNEL": 2
+   },
+   "served_without_gate": [],
+   "mismatches": [
+    {
+     "id": "NEG-per-edge-same-name",
+     "expected": "REFUSE_SOURCE",
+     "observed": "REFUSE_OTHER",
+     "code": "INVALID_DERIVED_SECTION",
+     "reason": "Section 'sec': two stated intersections carry the same name"
+    }
+   ]
+  },
+  "family_b_session1_dual_run": {
+   "cases": 60,
+   "v1_session1_aggregate": {
+    "goal_coverage": "49/49",
+    "exact_correct_of_served_with_answers": "43/43",
+    "wrong_served": 0,
+    "refusal_correct": "11/11",
+    "scene_valid": "49/49",
+    "label_leaks": 0
+   },
+   "v2_adapter4_on_49_v1_served": "49/49",
+   "v1_v2_answer_agreement_on_49_served": "49/49",
+   "v2_adapter4_d6_newly_served_open_cycle": [
+    "S-open-cycle"
+   ],
+   "v2_adapter4_invalid_refused": "6/6",
+   "v2_adapter4_wrong_served": 0,
+   "v2_adapter4_scene_valid": "50/50",
+   "v2_adapter4_label_leaks": 0,
+   "v2_adapter4_gate_authority_100pct": true
+  },
+  "family_c_contract_parity": {
+   "cases": 316,
+   "v1_bridge_served": 36,
+   "v1_adapter3_served": 20,
+   "v2_adapter4_from_bridge_served": 36,
+   "v2_adapter4_from_adapter3_served": 20,
+   "v1_both_served": 20,
+   "v1_both_served_disagree": 0,
+   "v2_both_served_disagree": 0,
+   "wrong_served": {
+    "v1_bridge": 0,
+    "v1_adapter3": 0,
+    "v2_adapter4": 0
+   }
+  },
+  "family_d_metamorphic": {
+   "reference": {
+    "v1_bridge": "1/1",
+    "v1_adapter3": "1/1",
+    "v2_adapter4_stated_4edges": "1/1"
+   },
+   "premise_permutation": {
+    "v1_bridge": "24/24",
+    "v1_adapter3": "24/24",
+    "v2_adapter4_stated_4edges": "24/24"
+   },
+   "relabel": {
+    "v1_bridge": "2/2",
+    "v1_adapter3": "2/2",
+    "v2_adapter4_stated_4edges": "2/2"
+   },
+   "goal_order": {
+    "v1_bridge": "1/1",
+    "v1_adapter3": "1/1",
+    "v2_adapter4_stated_4edges": "1/1"
+   },
+   "paraphrase": {
+    "v1_bridge": "5/5",
+    "v1_adapter3": "5/5",
+    "v2_adapter4_stated_4edges": "5/5"
+   }
+  },
+  "family_e_negative_controls": {
+   "payloads": 20,
+   "v1_bridge_served": [],
+   "v1_adapter3_served": [
+    "N-anonymous-ratio-operand-triangle/convention"
+   ],
+   "v2_adapter4_served": []
+  },
+  "family_f_ir_budget_and_composition": {
+   "budget": [
+    {
+     "id": "BUD-equilateral0-parallel",
+     "status": "SERVED",
+     "code": null,
+     "declarations_uncapped": 24,
+     "duplicate_constructs_uncapped": 1
+    },
+    {
+     "id": "BUD-equilateral0-perpendicular",
+     "status": "SERVED",
+     "code": null,
+     "declarations_uncapped": 27,
+     "duplicate_constructs_uncapped": 1
+    },
+    {
+     "id": "BUD-square1-parallel",
+     "status": "SERVED",
+     "code": null,
+     "declarations_uncapped": 27,
+     "duplicate_constructs_uncapped": 1
+    },
+    {
+     "id": "BUD-square1-perpendicular",
+     "status": "SERVED",
+     "code": null,
+     "declarations_uncapped": 30,
+     "duplicate_constructs_uncapped": 1
+    },
+    {
+     "id": "BUD-rectangle2-parallel",
+     "status": "SERVED",
+     "code": null,
+     "declarations_uncapped": 27,
+     "duplicate_constructs_uncapped": 1
+    },
+    {
+     "id": "BUD-rectangle2-perpendicular",
+     "status": "SERVED",
+     "code": null,
+     "declarations_uncapped": 30,
+     "duplicate_constructs_uncapped": 1
+    },
+    {
+     "id": "BUD-hexagon-parallel",
+     "status": "REFUSED",
+     "code": "IR_MEMORY_BUDGET_EXCEEDED",
+     "declarations_uncapped": 33,
+     "duplicate_constructs_uncapped": 1
+    },
+    {
+     "id": "BUD-hexagon-perpendicular",
+     "status": "REFUSED",
+     "code": "IR_MEMORY_BUDGET_EXCEEDED",
+     "declarations_uncapped": 36,
+     "duplicate_constructs_uncapped": 1
+    }
+   ],
+   "composition": {
+    "plans": 38,
+    "duplicate_calls": 0,
+    "ir_duplicate_constructs": 38,
+    "dag_depth": [
+     4,
+     5
+    ],
+    "declarations": [
+     18,
+     30
+    ],
+    "selection_counts": {
+     "reuse_through_point": 38,
+     "named_intersection": 90,
+     "fresh_intersection": 5
+    },
+    "plane_constructions_per_section": [
+     1.0
+    ]
+   }
+  },
+  "family_g_adapter3_dev_corpus": {
+   "cases": 16,
+   "v1_adapter3_status": {
+    "SERVED": 7,
+    "REFUSED": 9
+   },
+   "v2_adapter4_raw_converted_codes": {
+    "UNKNOWN_VERTEX_REF": 5,
+    "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY": 3,
+    "SOURCE_OBJECT_MISMATCH": 8
+   }
+  },
+  "family_h_route_b_benchmark": {
+   "cases": 30,
+   "evaluations": 60,
+   "outcomes": {
+    "correct_served": 38,
+    "correct_refusal": 18,
+    "false_refusal": 4
+   },
+   "wrong_served": 0
+  }
+ },
+ "family_b_rows": [
+  {
+   "id": "B-equilateral0-t12-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0327,
+    "answers": {
+     "g_res": "49/3072",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0325,
+    "answers": {
+     "g_res": "49/3072",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-equilateral0-t12-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0325,
+    "answers": {
+     "g_res": "49/3072",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0347,
+    "answers": {
+     "g_res": "49/3072",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-equilateral0-t13-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.034,
+    "answers": {
+     "g_res": "169/8748",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0349,
+    "answers": {
+     "g_res": "169/8748",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-equilateral0-t13-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0327,
+    "answers": {
+     "g_res": "169/8748",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0337,
+    "answers": {
+     "g_res": "169/8748",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-equilateral0-t23-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0332,
+    "answers": {
+     "g_res": "361/34992",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0346,
+    "answers": {
+     "g_res": "361/34992",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-equilateral0-t23-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0333,
+    "answers": {
+     "g_res": "361/34992",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0346,
+    "answers": {
+     "g_res": "361/34992",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-equilateral1-t12-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0349,
+    "answers": {
+     "g_res": "49/192",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0506,
+    "answers": {
+     "g_res": "49/192",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-equilateral1-t12-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0324,
+    "answers": {
+     "g_res": "49/192",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0324,
+    "answers": {
+     "g_res": "49/192",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-equilateral1-t13-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.033,
+    "answers": {
+     "g_res": "676/2187",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0332,
+    "answers": {
+     "g_res": "676/2187",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-equilateral1-t13-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0329,
+    "answers": {
+     "g_res": "676/2187",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0337,
+    "answers": {
+     "g_res": "676/2187",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-equilateral1-t23-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0335,
+    "answers": {
+     "g_res": "361/2187",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0335,
+    "answers": {
+     "g_res": "361/2187",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-equilateral1-t23-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0327,
+    "answers": {
+     "g_res": "361/2187",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0324,
+    "answers": {
+     "g_res": "361/2187",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-square2-t12-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0319,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0354,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-square2-t12-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0348,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0354,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-square2-t13-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0338,
+    "answers": {
+     "g_res": "676/6561",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0327,
+    "answers": {
+     "g_res": "676/6561",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-square2-t13-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0386,
+    "answers": {
+     "g_res": "676/6561",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0405,
+    "answers": {
+     "g_res": "676/6561",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-square2-t23-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0368,
+    "answers": {
+     "g_res": "361/6561",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0339,
+    "answers": {
+     "g_res": "361/6561",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-square2-t23-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0383,
+    "answers": {
+     "g_res": "361/6561",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0407,
+    "answers": {
+     "g_res": "361/6561",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-square3-t12-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.035,
+    "answers": {
+     "g_res": "49/36",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0349,
+    "answers": {
+     "g_res": "49/36",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-square3-t12-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0615,
+    "answers": {
+     "g_res": "49/36",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0498,
+    "answers": {
+     "g_res": "49/36",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-square3-t13-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0379,
+    "answers": {
+     "g_res": "10816/6561",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0363,
+    "answers": {
+     "g_res": "10816/6561",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-square3-t13-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0504,
+    "answers": {
+     "g_res": "10816/6561",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0446,
+    "answers": {
+     "g_res": "10816/6561",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-square3-t23-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0366,
+    "answers": {
+     "g_res": "5776/6561",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0356,
+    "answers": {
+     "g_res": "5776/6561",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-square3-t23-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0379,
+    "answers": {
+     "g_res": "5776/6561",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0405,
+    "answers": {
+     "g_res": "5776/6561",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-rectangle4-t12-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0341,
+    "answers": {
+     "g_res": "49",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0361,
+    "answers": {
+     "g_res": "49",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-rectangle4-t12-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0365,
+    "answers": {
+     "g_res": "49",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0392,
+    "answers": {
+     "g_res": "49",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-rectangle4-t13-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0354,
+    "answers": {
+     "g_res": "43264/729",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0347,
+    "answers": {
+     "g_res": "43264/729",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-rectangle4-t13-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0386,
+    "answers": {
+     "g_res": "43264/729",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0388,
+    "answers": {
+     "g_res": "43264/729",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-rectangle4-t23-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0351,
+    "answers": {
+     "g_res": "23104/729",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.034,
+    "answers": {
+     "g_res": "23104/729",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-rectangle4-t23-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0568,
+    "answers": {
+     "g_res": "23104/729",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0378,
+    "answers": {
+     "g_res": "23104/729",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-right5-t12-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0389,
+    "answers": {
+     "g_res": "49/4",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0338,
+    "answers": {
+     "g_res": "49/4",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-right5-t12-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0327,
+    "answers": {
+     "g_res": "49/4",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0328,
+    "answers": {
+     "g_res": "49/4",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-right5-t13-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0336,
+    "answers": {
+     "g_res": "10816/729",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0342,
+    "answers": {
+     "g_res": "10816/729",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-right5-t13-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0357,
+    "answers": {
+     "g_res": "10816/729",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0358,
+    "answers": {
+     "g_res": "10816/729",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-right5-t23-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0345,
+    "answers": {
+     "g_res": "5776/729",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0368,
+    "answers": {
+     "g_res": "5776/729",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "B-right5-t23-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0349,
+    "answers": {
+     "g_res": "5776/729",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0347,
+    "answers": {
+     "g_res": "5776/729",
+     "g_ratio": "64/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "MR-ref",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0353,
+    "answers": {
+     "g_res": "676/243",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0356,
+    "answers": {
+     "g_res": "676/243",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "MR-relabel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0348,
+    "answers": {
+     "g_res": "676/243",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0351,
+    "answers": {
+     "g_res": "676/243",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "MR-premise-order",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0366,
+    "answers": {
+     "g_res": "676/243",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0387,
+    "answers": {
+     "g_res": "676/243",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "MR-goal-order",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0438,
+    "answers": {
+     "g_res": "676/243",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0348,
+    "answers": {
+     "g_res": "676/243",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "MR-inverted",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.11,
+    "answers": {
+     "g_ratio": "729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0336,
+    "answers": {
+     "g_ratio": "729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "MR-scaled",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0333,
+    "answers": {
+     "g_res": "2028",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0349,
+    "answers": {
+     "g_res": "2028",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "MR-plane-equivalence",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.034,
+    "answers": {
+     "g_res": "676/243",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.034,
+    "answers": {
+     "g_res": "676/243",
+     "g_ratio": "1/729"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "C-equilateral-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0213,
+    "answers": {},
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0219,
+    "answers": {},
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "C-equilateral-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0243,
+    "answers": {},
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0273,
+    "answers": {},
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "C-square-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.029,
+    "answers": {},
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0379,
+    "answers": {},
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "C-square-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0351,
+    "answers": {},
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0272,
+    "answers": {},
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "C-right-parallel",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0217,
+    "answers": {},
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0222,
+    "answers": {},
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "C-right-perpendicular",
+   "expect_v1": "SERVED",
+   "v1_bridge": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0251,
+    "answers": {},
+    "scene_valid": true
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0262,
+    "answers": {},
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": true
+  },
+  {
+   "id": "N-contradictory-length",
+   "expect_v1": "REFUSED",
+   "v1_bridge": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "seconds": 0.0124
+   },
+   "v2_adapter4": {
+    "status": "REFUSED",
+    "code": "INCONSISTENT_FACTS",
+    "seconds": 0.0119,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": null
+  },
+  {
+   "id": "N-missing-height",
+   "expect_v1": "REFUSED",
+   "v1_bridge": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "seconds": 0.0106
+   },
+   "v2_adapter4": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "seconds": 0.0107,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": null
+  },
+  {
+   "id": "N-degenerate-parallel-edge",
+   "expect_v1": "REFUSED",
+   "v1_bridge": {
+    "status": "REFUSED",
+    "code": "PARALLEL_NO_INTERSECTION",
+    "seconds": 0.0116
+   },
+   "v2_adapter4": {
+    "status": "REFUSED",
+    "code": "PARALLEL_NO_INTERSECTION",
+    "seconds": 0.0108,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": null
+  },
+  {
+   "id": "S-cut-edges-not-in-payload",
+   "expect_v1": "REFUSED_BRIDGE_SCOPE",
+   "v1_bridge": {
+    "status": "REFUSED",
+    "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+    "seconds": 0.0005
+   },
+   "v2_adapter4": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0035,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": null
+  },
+  {
+   "id": "N-swapped-names",
+   "expect_v1": "REFUSED",
+   "v1_bridge": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0028
+   },
+   "v2_adapter4": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0027,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": null
+  },
+  {
+   "id": "S-shared-label-identity",
+   "expect_v1": "REFUSED_BRIDGE_SCOPE",
+   "v1_bridge": {
+    "status": "REFUSED",
+    "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "seconds": 0.0002
+   },
+   "v2_adapter4": {
+    "status": "REFUSED",
+    "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+    "seconds": 0.0002,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": null
+  },
+  {
+   "id": "S-plane-equation",
+   "expect_v1": "REFUSED_BRIDGE_SCOPE",
+   "v1_bridge": {
+    "status": "REFUSED",
+    "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+    "seconds": 0.0002
+   },
+   "v2_adapter4": {
+    "status": "REFUSED",
+    "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+    "seconds": 0.0002,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": null
+  },
+  {
+   "id": "S-curved-solid",
+   "expect_v1": "REFUSED_BRIDGE_SCOPE",
+   "v1_bridge": {
+    "status": "REFUSED",
+    "code": "BRIDGE_UNSUPPORTED_CURVED",
+    "seconds": 0.0002
+   },
+   "v2_adapter4": {
+    "status": "REFUSED",
+    "code": "BRIDGE_UNSUPPORTED_CURVED",
+    "seconds": 0.0002,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": null
+  },
+  {
+   "id": "N-anonymous-ratio-operand",
+   "expect_v1": "REFUSED",
+   "v1_bridge": {
+    "status": "REFUSED",
+    "code": "UNKNOWN_LABEL",
+    "seconds": 0.003
+   },
+   "v2_adapter4": {
+    "status": "REFUSED",
+    "code": "UNKNOWN_LABEL",
+    "seconds": 0.0039,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": null
+  },
+  {
+   "id": "S-open-cycle",
+   "expect_v1": "REFUSED_BRIDGE_SCOPE",
+   "v1_bridge": {
+    "status": "REFUSED",
+    "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+    "seconds": 0.0013
+   },
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0213,
+    "answers": {},
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": null
+  },
+  {
+   "id": "N-unread-condition",
+   "expect_v1": "REFUSED",
+   "v1_bridge": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0028
+   },
+   "v2_adapter4": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0026,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v1_v2_agree_on_v1_served": null
+  }
+ ],
+ "family_d_rows": [
+  {
+   "id": "MR-ref",
+   "relation": "reference",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0383,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-0123",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.06,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-0132",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0369,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-0213",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0378,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-0231",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0374,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-0312",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0375,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-0321",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0375,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-1023",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0376,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-1032",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0398,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-1203",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0393,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-1230",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0436,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-1302",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0409,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-1320",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0413,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-2013",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0408,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-2031",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0381,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-2103",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0391,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-2130",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0411,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-2301",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0385,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-2310",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0382,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-3012",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.038,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-3021",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0736,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-3102",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0377,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-3120",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.037,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-3201",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0377,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-premise-3210",
+   "relation": "premise_permutation",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0365,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-relabel-0",
+   "relation": "relabel",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0384,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-relabel-1",
+   "relation": "relabel",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0367,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 50,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-goal-order",
+   "relation": "goal_order",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0375,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-paraphrase-0",
+   "relation": "paraphrase",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0336,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-paraphrase-1",
+   "relation": "paraphrase",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0338,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-paraphrase-2",
+   "relation": "paraphrase",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0368,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-paraphrase-3",
+   "relation": "paraphrase",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0338,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  },
+  {
+   "id": "MR-paraphrase-4",
+   "relation": "paraphrase",
+   "v2_adapter4": {
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0338,
+    "answers": {
+     "g_res": "49/576",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "label_leaks": 0,
+    "source_authority": "registry.kiem_nguon",
+    "wrong_served": false
+   }
+  }
+ ],
+ "family_e_rows": [
+  {
+   "id": "N-swapped-names-4",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.003,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0029,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-unread-condition",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0028,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0029,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-negated-relation",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0027,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.003,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-conditional-plane",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0029,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0027,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-wrong-number",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "seconds": 0.0048,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "UNGROUNDED_VALUE",
+    "seconds": 0.0051,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-ratio-orientation-unstated",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0031,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.003,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-residual-ownership-unstated",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0038,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0037,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-missing-height",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "seconds": 0.0137,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "MISSING_DIMENSION",
+    "seconds": 0.0137,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-quote-not-in-source",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "QUOTE_NOT_IN_SOURCE",
+    "seconds": 0.0051,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "QUOTE_NOT_IN_SOURCE",
+    "seconds": 0.0052,
+    "wrong_served": false,
+    "converted": true
+   }
+  },
+  {
+   "id": "N-anonymous-ratio-operand-triangle",
+   "v2_from_bridge": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0026,
+    "wrong_served": false,
+    "converted": true
+   },
+   "v2_from_adapter3_convention": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "seconds": 0.0023,
+    "wrong_served": false,
+    "converted": true
+   }
+  }
+ ],
+ "family_g_rows": [
+  {
+   "id": "A3-DEV-01",
+   "expected_status_v1": "SERVED",
+   "v1_adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "authority": {
+     "authority": "adapter3.substring_legacy",
+     "gate_unavailable": "UNKNOWN_VERTEX_REF"
+    }
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "UNKNOWN_VERTEX_REF"
+   }
+  },
+  {
+   "id": "A3-DEV-02",
+   "expected_status_v1": "SERVED",
+   "v1_adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "authority": {
+     "authority": "adapter3.substring_legacy",
+     "gate_unavailable": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+    }
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+   }
+  },
+  {
+   "id": "A3-DEV-03",
+   "expected_status_v1": "SERVED",
+   "v1_adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "authority": {
+     "authority": "adapter3.substring_legacy",
+     "gate_unavailable": "BRIDGE_CUT_EDGES_NOT_STATED"
+    }
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   }
+  },
+  {
+   "id": "A3-DEV-04",
+   "expected_status_v1": "SERVED",
+   "v1_adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "authority": {
+     "authority": "adapter3.substring_legacy",
+     "gate_unavailable": "BRIDGE_CUT_EDGES_NOT_STATED"
+    }
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   }
+  },
+  {
+   "id": "A3-DEV-05",
+   "expected_status_v1": "SERVED",
+   "v1_adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "authority": {
+     "authority": "adapter3.substring_legacy",
+     "gate_unavailable": "UNKNOWN_VERTEX_REF"
+    }
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "UNKNOWN_VERTEX_REF"
+   }
+  },
+  {
+   "id": "A3-DEV-06",
+   "expected_status_v1": "SERVED",
+   "v1_adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "authority": {
+     "authority": "adapter3.substring_legacy",
+     "gate_unavailable": "BRIDGE_CUT_EDGES_NOT_STATED"
+    }
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   }
+  },
+  {
+   "id": "A3-DEV-07",
+   "expected_status_v1": "SERVED",
+   "v1_adapter3": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "authority": null
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   }
+  },
+  {
+   "id": "A3-DEV-08",
+   "expected_status_v1": "SERVED",
+   "v1_adapter3": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "authority": null
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   }
+  },
+  {
+   "id": "A3-DEV-09",
+   "expected_status_v1": "SERVED",
+   "v1_adapter3": {
+    "status": "SERVED",
+    "code": null,
+    "authority": {
+     "authority": "adapter3.substring_legacy",
+     "gate_unavailable": "BRIDGE_CUT_EDGES_NOT_STATED"
+    }
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   }
+  },
+  {
+   "id": "A3-DEV-10",
+   "expected_status_v1": "SERVED",
+   "v1_adapter3": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "authority": null
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   }
+  },
+  {
+   "id": "A3-DEV-11",
+   "expected_status_v1": "REFUSED",
+   "v1_adapter3": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH",
+    "authority": null
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "SOURCE_OBJECT_MISMATCH"
+   }
+  },
+  {
+   "id": "A3-DEV-12",
+   "expected_status_v1": "REFUSED",
+   "v1_adapter3": {
+    "status": "REFUSED",
+    "code": "AMBIGUOUS_REFERENCE",
+    "authority": null
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+   }
+  },
+  {
+   "id": "A3-DEV-13",
+   "expected_status_v1": "REFUSED",
+   "v1_adapter3": {
+    "status": "REFUSED",
+    "code": "SHARED_ENTITY_MISMATCH",
+    "authority": null
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY"
+   }
+  },
+  {
+   "id": "A3-DEV-14",
+   "expected_status_v1": "REFUSED",
+   "v1_adapter3": {
+    "status": "REFUSED",
+    "code": "DERIVED_PLANE_IS_REFERENCE",
+    "authority": null
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "UNKNOWN_VERTEX_REF"
+   }
+  },
+  {
+   "id": "A3-DEV-15",
+   "expected_status_v1": "REFUSED",
+   "v1_adapter3": {
+    "status": "REFUSED",
+    "code": "COLLINEAR_POINTS",
+    "authority": null
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "UNKNOWN_VERTEX_REF"
+   }
+  },
+  {
+   "id": "A3-DEV-16",
+   "expected_status_v1": "REFUSED",
+   "v1_adapter3": {
+    "status": "REFUSED",
+    "code": "SOURCE_NUMBER_MISMATCH",
+    "authority": null
+   },
+   "v2_adapter4_raw_converted": {
+    "status": "REFUSED",
+    "code": "UNKNOWN_VERTEX_REF"
+   }
+  }
+ ]
+}

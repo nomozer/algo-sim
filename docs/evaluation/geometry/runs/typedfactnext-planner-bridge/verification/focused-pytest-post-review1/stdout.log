@@ -1,0 +1,102 @@
+........................................................................ [  3%]
+..................................................x..................... [  7%]
+........................................................................ [ 11%]
+........................................................................ [ 15%]
+........................................................................ [ 19%]
+........................................................................ [ 22%]
+........................................................................ [ 26%]
+........................................................................ [ 30%]
+........................................................................ [ 34%]
+........................................................................ [ 38%]
+........................................................................ [ 41%]
+...............................F........................................ [ 45%]
+........................................................................ [ 49%]
+........................................................................ [ 53%]
+........................................................................ [ 57%]
+........................................................................ [ 60%]
+........................................................................ [ 64%]
+........................................................................ [ 68%]
+........................................................................ [ 72%]
+........................................................................ [ 76%]
+........................................................................ [ 80%]
+........................................................................ [ 83%]
+........................................................................ [ 87%]
+........................................................................ [ 91%]
+........................................................................ [ 95%]
+........................................................................ [ 99%]
+.................                                                        [100%]
+================================== FAILURES ===================================
+_ test_version_constants_surface_fingerprints_and_historical_receipt_preservation _
+
+    def test_version_constants_surface_fingerprints_and_historical_receipt_preservation():
+        """P3, P4.8 & P4.9: Verify versions, surface fingerprints, LLM_ONLY default, and untouched v3 receipts."""
+        # /6, /7, /5 -> /7, /8, /6 (goal-directed-function-composition): ask_angle_lines, centroid + angle goal contracts.
+        # -> /8, /9, /7 (geometry-capability-expansion): divide_segment, MAT_VUONG_DUONG, right-angle chain, prism vector.
+        # composite-geometry: shared-face source check + constructed-base pyramids; provider schemas unchanged.
+        # -> /12, /12, /10 (typedfactnext-planner-bridge): cut-edge section vertices, derived pyramid; provider schemas unchanged.
+        assert REGISTRY_VERSION == "geometry-functions/12"
+        assert PLANNER_VERSION == "geometry-fact-planner/12"
+        assert ENGINE_VERSION == "geometry-function-engine/10"
+        # 125 -> 126 (hybrid-offline-readiness-finalization): độ dài nguồn không đọc từ biểu thức/vectơ/giả định.
+        # 126 -> 127 (hybrid-architecture-wave1-exact-certificates-planner): segment3 đường cao mang perpendicular_witness.
+        assert main_module.CACHE_VERSION == "127"
+        assert main_module.semantic_route_mode() == "off"
+        assert RESPONSE_CONTRACT == "flat"
+        # Verify default production pipeline (`main.py` / `pipeline.py`) remains LLM_ONLY and does not wire Hybrid route
+        main_src = (ROOT / "backend/app/main.py").read_text(encoding="utf-8")
+        pipeline_src = (ROOT / "backend/app/ai/pipeline.py").read_text(encoding="utf-8")
+        assert "fact_extraction" not in main_src and "function_route" not in main_src
+        assert "fact_extraction" not in pipeline_src and "function_route" not in pipeline_src
+    
+        # Surface fingerprints must remain identical to locked evaluation pins
+        assert surface_fingerprint("flat") == "485d3834db8b18cfdb24143bfbb14deb8f5b7a9d74cb612d48db8c08252e507a"
+        # research contract v3 only (flat, the default, is unchanged): described-point questions are generated from the
+        # Registry goal contracts (area, angle) in goal-directed-function-composition; was 90bf8f03…. Unchanged by
+        # geometry-capability-expansion (the ratio point_def stays out of v3 and of the frozen `flat` surface 485d3834…).
+        assert surface_fingerprint("v3") == "4bff35bbf690a9973b2b7834019b908d507bbbb4277928e36d12dcff657e226f"
+        assert function_calling.surface_fingerprint() == "7ea511a6e3828c9adcc8402aa2d7d6b1d433e67a01ec4329c3009c46af652b25"
+    
+        typed_fact_sha = hashlib.sha256(
+            json.dumps(TypedFact.model_json_schema(), sort_keys=True, ensure_ascii=False).encode("utf-8")
+        ).hexdigest()
+        assert typed_fact_sha == "aa9d93eeac9f1659af8e5acd42af1904b7aaed674a8ab0f56f0c7dd8b2ad4ee8"
+    
+        decl_sha = hashlib.sha256(
+            json.dumps(registry.function_declarations(), sort_keys=True, ensure_ascii=False).encode("utf-8")
+        ).hexdigest()
+        assert decl_sha == "5ceb0f999d4d7c1ee37c02207ea6470a7f972a168d6c52fa597392934d86f169"
+    
+        # Historical receipts of semantic-extraction-v3-runtime-revision must remain bound to product SHA 6ba9033b...
+        v3_div = json.loads((V3_REV_RUN / "candidate_divergence.json").read_text(encoding="utf-8"))
+        assert v3_div["current_candidate_hash"] == "6ba9033bfca06d671cd27891e2dad06c7d44f365fed45527123c907d664b65ed"
+        inv = json.loads((V3_REV_RUN / "results/offline/invocations.json").read_text(encoding="utf-8"))
+        assert inv["status"] == "COMPLETE" and len(inv["invocations"]) == 8
+        for row in inv["invocations"]:
+            assert row["status"] == "PASS"
+            assert row["input_identity"]["product_sha256"] == "6ba9033bfca06d671cd27891e2dad06c7d44f365fed45527123c907d664b65ed"
+    
+        # The combined candidate's own receipt stays bound to ITS product hash (historical, immutable) ...
+        hbi = json.loads((RUNS_DIR / "hybrid-backend-integration/run.json").read_text(encoding="utf-8"))
+        assert (hbi["product_sha256"], hbi["measured_files"]) == (
+            "afab0a3ca3abfe3c3f7692d34be2aeadbd099b8d43b6543d8d234d19b5ef8443", 110)
+        # ... while the live tree must equal whichever candidate is frozen NOW. Run `hybrid-pre-main-hardening`: this used to
+        # pin afab0a3c literally, so every later product change (refrozen as a new candidate) read as a broken receipt.
+        fz = _load_module("_freeze_eval_cand_int", ROOT / "backend/scripts/freeze_evaluation_candidate.py")
+        combined_hash, file_count = fz.measured_system_hash()
+        frozen = json.loads(fz.OUT.read_text(encoding="utf-8"))["measured_system"]
+>       assert (combined_hash, file_count) == (frozen["tree_hash"], frozen["so_file"])
+E       AssertionError: assert ('1a4628021e1...5835e5f', 115) == ('4d11a917904...a7dcf68', 114)
+E         
+E         At index 0 diff: '1a4628021e180a7ad7acf947234322978a55367ec9b0b7f29452bcf405835e5f' != '4d11a91790422b9508bc90921f4352687a4b8616c0f855886e76649d3a7dcf68'
+E         Use -v to get more diff
+
+tests\geometry\test_hybrid_backend_integration.py:514: AssertionError
+============================== warnings summary ===============================
+..\..\..\..\backend\.venv\Lib\site-packages\fastapi\testclient.py:1
+  D:\Documents\projects\algo-sim\backend\.venv\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_hybrid_backend_integration.py::test_version_constants_surface_fingerprints_and_historical_receipt_preservation
+1 failed, 1887 passed, 1 xfailed, 1 warning in 79.48s (0:01:19)

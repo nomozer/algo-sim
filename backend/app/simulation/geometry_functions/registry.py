@@ -25,6 +25,7 @@ engine kèm tiền điều kiện hình học, không ở đây.
 """
 from __future__ import annotations
 
+import contextvars
 import functools
 import re
 import unicodedata
@@ -39,7 +40,11 @@ from pydantic import BaseModel, BeforeValidator, ConfigDict, Field, ValidationEr
 #: /9 (run `source-gate-hardening`): atomic segment labels, role-bound values, shape values keep their parameter, shared goal
 #: wording tokens, request lists in one sentence, line_ref faces of ≥ 3 labels and the intersection named in the question.
 #: /10 (run `composite-geometry`): explicit shared-face membership in two declared pyramid topologies.
-REGISTRY_VERSION = "geometry-functions/11"
+#: /12 (run `typedfactnext-planner-bridge`): a ratio point owns the coefficient its equation read; the definition grammar
+#: reads "M thuộc cạnh SA sao cho …"; `DINH_CAT_CANH` cut-clause / derived-pyramid certificate.
+#: /13 (run `hybrid-contract-v2`, owner D3/D5/D6): `intersect_line_plane` planning contract (effect `Meet`); `derived_fresh`
+#: section vertices; closed definition / cut-clause alternatives (see `_QUA_SONG_SONG`, `_cum_cat_canh`).
+REGISTRY_VERSION = "geometry-functions/13"
 
 
 class TuChoi(Exception):
@@ -308,7 +313,7 @@ class TranslatePointArgs(_Args):
 class PlanningTerm:
     """Internal typed role slots; not an expression language or provider program."""
     kind: Literal["Point", "Plane", "Line", "Foot", "AnswerDistance", "AnswerLength", "AnswerArea", "AnswerAngleLinePlane",
-                  "AnswerAngleLines"]
+                  "AnswerAngleLines", "Meet"]
     operands: tuple[str, ...]
 
 
@@ -320,7 +325,8 @@ class PlanningContract:
     named in the source by `phrase` (operands in group `ops`, `{P}` = one point label). Never serialized to a provider."""
     inputs: tuple[PlanningTerm, ...]
     effect: PlanningTerm
-    source_policy: Literal["declared_intersection", "projection_foot", "distance_witness", "derived_point", "distance_answer", "goal_answer"]
+    source_policy: Literal["declared_intersection", "projection_foot", "distance_witness", "derived_point", "distance_answer",
+                           "goal_answer", "section_vertex"]
     verifier: str
     call: tuple[tuple[str, str | tuple[str, ...]], ...] = ()
     fresh: str | None = None
@@ -443,7 +449,12 @@ REGISTRY: dict[str, FunctionSpec] = {s.name: s for s in (
     _F("intersect_line_line", IntersectionLinesArgs, "construct", "Dựng giao điểm DUY NHẤT của hai đường thẳng; không phải đoạn hữu hạn.",
        (("giao điểm",),), segment_fields=("line1", "line2"), point_fields=("point",)),
     _F("intersect_line_plane", IntersectionPlaneArgs, "construct", "Dựng giao điểm DUY NHẤT của đường thẳng và mặt phẳng.",
-       (("giao điểm",),), plane_fields=("plane",), segment_fields=("line",), point_fields=("point",)),
+       (("giao điểm",),), plane_fields=("plane",), segment_fields=("line",), point_fields=("point",),
+       # Section vertex (run `hybrid-contract-v2`): effect `Meet` X = L ∩ Q; only `planner._dinh_cat_canh` asks for it
+       # (no goal / descriptor, so no other search can select it); the engine checks uniqueness and 0 < t ≤ 1.
+       planning=PlanningContract((PlanningTerm("Line", ("L",)), PlanningTerm("Plane", ("Q",))),
+                                 PlanningTerm("Meet", ("X", "L", "Q")), "section_vertex", "_construction_relation",
+                                 call=(("point", "X"), ("line", "L"), ("plane", "Q")), fresh="I")),
     _F("perpendicular_lines", PerpendicularLinesArgs, "fact", "Hai đường thẳng vuông góc (SA ⊥ AB). Một lời gọi cho MỖI cặp.",
        (_VUONG,), segment_fields=("line1", "line2")),
     _F("equal_length", EqualLengthArgs, "fact", "Hai đoạn bằng nhau (SA = AB).", (("=", "bằng"),),
@@ -1262,9 +1273,14 @@ MAT_HAI_DUONG = "section(plane through point strictly parallel to two lines)"
 #: Plane through a point ⊥ a line d (run `geometry-capability-expansion`): two translates of the point along Z − F(Z), F(Z) the
 #: foot of a solid vertex Z on d — existing primitives only (`orthogonal_projection_line`, `translate_point`).
 MAT_VUONG_DUONG = "section(plane through point perpendicular to a line)"
+#: Run `typedfactnext-planner-bridge`: the vertices of a derived plane's section on the edges the source says it cuts
+#: ("(α) … cắt SB, SC (lần lượt tại N, P)") — one `intersect_line_plane` per stated edge (the plane's own through-point
+#: reused on its edge), and optionally the pyramid "khối chóp đỉnh S cắt bởi (α)" over the closed lateral-edge cycle.
+DINH_CAT_CANH = "section vertices on the stated cut edges of a derived plane"
 AUXILIARY_RULES = {"distance(point,line)": ("orthogonal_projection_line", "ask_length"),
                    MAT_SONG_SONG: ("translate_point", "section"), MAT_HAI_DUONG: ("translate_point", "section"),
-                   MAT_VUONG_DUONG: ("orthogonal_projection_line", "translate_point", "section")}
+                   MAT_VUONG_DUONG: ("orthogonal_projection_line", "translate_point", "section"),
+                   DINH_CAT_CANH: ("intersect_line_plane", "pyramid")}
 #: "khoảng cách từ S đến (đường thẳng) BD": điểm và đường gắn vai trong CÙNG một cụm; cách nói khác ⇒ từ chối, không đoán.
 _KHOANG_CACH_DIEM_DUONG = re.compile(
     r"khoảng cách\s+từ\s+(?:điểm\s+)?([A-Z][0-9]*'?)\s+(?:đến|tới)\s+(?:đường thẳng\s+)?([A-Z][0-9]*'?)([A-Z][0-9]*'?)(?![\w'])",
@@ -1298,6 +1314,10 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
     da: set[str] = _kiem_result_binding(phu, calls, de, nhan, don_vi_de, buoc)
     chiem = nhan | nhan_phu_da_dung(de)
     nhan_da_khai: set = set()
+    cat_doc: dict = {}                                    # plane goal → its declared cut clause was read in the source
+    cat_canh: list[dict] = []                             # `DINH_CAT_CANH`: checked after every plane they stand on
+    khoi_dan_xuat = frozenset(d["derived"].get("call") for d in phu if d.get("rule") == DINH_CAT_CANH
+                              and isinstance(d.get("derived"), dict))
     for d in phu:
         if d.get('effect_binding') or d.get('rule') in ('result-line-reference','result-line-alias'):
             continue  # same source authority validated actual producer/consumer/goal above
@@ -1305,7 +1325,11 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
         if luat not in AUXILIARY_RULES:
             raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x}: luật {luat!r} không có trong bảng phân rã")
         if luat in (MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG):
-            da |= _kiem_mat_song_song(d, theo_id, de, nhan, chiem, nhan_da_khai, calls, ten_mat_phu, don_vi_de, buoc)
+            da |= _kiem_mat_song_song(d, theo_id, de, nhan, chiem, nhan_da_khai, calls, ten_mat_phu, don_vi_de, buoc,
+                                      cat_doc, khoi_dan_xuat)
+            continue
+        if luat == DINH_CAT_CANH:
+            cat_canh.append(d)
             continue
         if x in nhan_da_khai:
             raise TuChoi("AUXILIARY_RULE_MISMATCH", f"điểm phụ {x} được khai hai lần")
@@ -1353,6 +1377,17 @@ def _kiem_phu(phu: tuple[dict, ...], calls: tuple[LoiGoi, ...], de: str, nhan: s
             raise TuChoi("NOT_ASKED_IN_SOURCE", f"{hoi.id}: câu chứa 'khoảng cách từ {p} đến {''.join(dt)}' không hỏi nó "
                          "(không có từ hỏi, hoặc đã gán giá trị) — không trả lời điều đề không hỏi", ids)
         da |= set(ids)
+    mats = [d for d in phu if d.get("rule") in (MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG)]
+    for d in cat_canh:
+        da |= _kiem_dinh_cat(d, mats, theo_id, de, nhan, chiem, nhan_da_khai, calls, ten_mat_phu, cat_doc, buoc)
+    if cat_canh:
+        # Every cut clause the SOURCE writes, in any sentence, must be exactly a declared one: a second clause naming other
+        # edges or other names ("Dựng thiết diện … bởi (α) cắt BC, CA lần lượt tại N, P") contradicts the bound cut and is
+        # never read as covered (review round 1, BLOCKER 1).
+        mau = [r for d in mats if (r := _cum_cat_canh(d.get("cut"))) is not None]
+        if lac := [m[0] for m in _CAT_CANH_CHUNG.finditer(de) if not any(r.fullmatch(de, m.start(), m.end()) for r in mau)]:
+            raise TuChoi("SOURCE_OBJECT_MISMATCH", f"đề có mệnh đề cắt khác mệnh đề đã gắn với mặt cắt: {lac}",
+                         tuple(c for d in cat_canh for c in d.get("constructs") or ()))
     return da
 
 
@@ -1906,6 +1941,7 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
     """Cổng nguồn tất định — xem docstring module. Ném `TuChoi` ở lời gọi đầu tiên hỏng (theo thứ tự id).
     `auxiliary`: điểm phụ planner nhánh B khai (`AUXILIARY_RULES`); nhánh A không truyền ⇒ mọi nhãn phải có trong đề.
     Returns the name the source gave each bound derived plane (first construct id → "P", or None when unnamed)."""
+    _KHOI_MO_TA.set({})
     de = chuan_hoa(text)
     nhan = nhan_cua_de(de)
     don_vi_de = _don_vi_met_cua_de(de)
@@ -1916,6 +1952,20 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
     ten_mat_phu: dict[str, str | None] = {}              # derived plane (first construct id) → name the source gave it
     buoc: list[tuple[int, int]] = []                     # descriptor ask phrases an `effect-chain` certificate bound
     phu = _kiem_phu(tuple(auxiliary), calls, de, nhan, ten_mat_phu, don_vi_de, buoc)
+    # Derived pyramids validated above (run `hybrid-contract-v2`): a volume question may name one by description
+    # ("khối chóp đỉnh S cắt bởi (α)"), and its fresh vertex labels — never in the source — are not "unknown" there.
+    mo_ta: dict[tuple[str, str], str] = {}
+    nhan_dan_xuat: set[str] = set()
+    for d in auxiliary:
+        if d.get("rule") != DINH_CAT_CANH or not isinstance(d.get("derived"), dict):
+            continue
+        mat = next((x for x in auxiliary if x.get("goal") == d.get("plane_goal") and x.get("constructs")
+                    and x.get("rule") in (MAT_SONG_SONG, MAT_HAI_DUONG, MAT_VUONG_DUONG)), None)
+        if mat is not None and (ten := ten_mat_phu.get(mat["constructs"][0])):
+            kd = d["derived"]
+            mo_ta[(kd["apex"], ten)] = f"{kd['apex']}.{''.join(kd['base'])}"
+            nhan_dan_xuat |= set(d.get("labels") or ())
+    _KHOI_MO_TA.set(mo_ta)
     if any(d.get('rule') == MAT_HAI_DUONG or d.get('line_ref') for d in auxiliary):
         _kiem_nguon_dong(calls, de, phu, read_quotes)
     if lac := sorted(c.id for c in calls if c.spec.auxiliary_only and c.id not in phu):
@@ -1928,7 +1978,13 @@ def kiem_nguon(calls: tuple[LoiGoi, ...], text: str, auxiliary: tuple[dict, ...]
             if (vt := _vi_tri(de, q)) is None:
                 raise TuChoi("QUOTE_NOT_IN_SOURCE", f"{c.id}: đoạn {q!r} không có nguyên văn trong đề", (c.id,))
             vts.append(vt)
-        if lac := sorted(nhan_cua_loi_goi(c) - nhan):
+        mien = (
+            nhan_dan_xuat
+            if c.fn in ("ask_volume_ratio", "ask_residual_volume")
+            and any(re.search(_khoi_ro_cum("m"), de[dau:_c], re.I) for dau, _c in vts)
+            else set()
+        )
+        if lac := sorted(nhan_cua_loi_goi(c) - nhan - mien):
             raise TuChoi("UNKNOWN_LABEL", f"{c.id}: nhãn {lac} không có trong đề", (c.id,))
         if c.spec.kind == "escape":
             continue
@@ -2091,8 +2147,9 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
             residue[x - a:y - a] = " " * (y - x)
             found = True
         for x, y in phep_dung_spans:
-            if a <= x < y <= b:
-                residue[x - a:y - a] = " " * (y - x)
+            if max(a, x) < min(b, y):
+                ox, oy = max(a, x), min(b, y)
+                residue[ox - a:oy - a] = " " * (oy - ox)
                 found = True
         return "".join(residue), found
 
@@ -2151,6 +2208,7 @@ def _kiem_du_kien_cau_hoi(calls: tuple[LoiGoi, ...], de: str, read_quotes: tuple
         # A validated construction definition is read as a whole: its own words ("sao cho" of a ratio point) are not
         # given markers opening an unread fragment (run `geometry-capability-expansion`).
         phep_dung_spans = _doc_phep_dung_cau_hoi(de, start, end, calls, dung, khoi, phu)
+        phep_dung_spans += [(a, b) for a, b in buoc if start <= a and b <= end and not _hoi_dung_cum(de, a, b)]
         for a, b in (*phrases, *phep_dung_spans):
             masked[a - start:b - start] = " " * (b - a)
         assertions = [r.span for r in rb] + [m.span() for m in lengths]
@@ -2390,6 +2448,10 @@ def _kiem_vung_tien_de(calls: tuple[LoiGoi, ...], de: str, het: int, read_quotes
             if (vt := _vi_tri(de, q)) is None or vt[0] >= het:
                 continue
             rang += [(vt[0], vt[1], v, (ci, f)) for f, v in gt]
+            if c.fn == "divide_segment":
+                # A ratio point carries no value field: it owns the ONE coefficient its solved equation read ("SM = 1/3 SA").
+                rang += [(m.start("k"), m.end("k"), doc_so(m["k"]), (ci, "ratio"))
+                         for m in _ty_so_khop(c, de, *vt) if m["k"]][:1]
             nhip = [vt]
             if re.search(r"[.!?;]\s", de[vt[0]:vt[1]].rstrip()):
                 # a quote spanning sentences covers only what its call's own binding grammar reads in it
@@ -2678,10 +2740,19 @@ _SAU_CAT_BO = r"(?:sau\s+khi|khi)(?:\s+đã)?\s+(?:cắt\s+bỏ|bỏ\s+đi|bỏ|
 
 def _khoi_ro_cum(n: str) -> str:
     return (
-        rf"(?:(?:(?:hình|khối)(?:\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))?|tứ diện)"
+        rf"(?:(?:(?:(?:hình|khối)(?:\s+(?:chóp|lăng trụ|lập phương|hộp|tứ diện|đa diện))?|tứ diện)"
         rf"(?:\s+(?:đứng|đều|tam giác|tứ giác|chữ nhật|lục giác))*\s+)?"
         rf"(?P<{n}s>{_P1}+\.{_P1}+|{_P1}{{4}})(?![\w'])"
+        # a derived pyramid named by DESCRIPTION — apex + the plane that cut it (run `hybrid-contract-v2`, D3); resolved
+        # only to a pyramid the gate validated on that plane (`_KHOI_MO_TA`), never by guessing
+        rf"|(?:khối|hình)\s+chóp\s+(?:đỉnh\s+)?(?P<{n}da>{_P1})(?![\w'])\s+(?:được\s+)?(?:cắt(?:\s+ra)?|tạo)\s+bởi\s+"
+        rf"(?:(?:mặt phẳng|mp)\s*)?\((?P<{n}dm>{_P1}|[α-ω])\))"
     )
+
+
+#: Derived pyramids the gate validated in THIS `kiem_nguon` call: (apex, source plane name) → solid name. Set and reset
+#: by `kiem_nguon` itself (run `hybrid-contract-v2`), empty everywhere else.
+_KHOI_MO_TA: contextvars.ContextVar[dict[tuple[str, str], str]] = contextvars.ContextVar("_KHOI_MO_TA", default={})
 
 
 def _v_ky_hieu_cum(n: str) -> str:
@@ -2694,6 +2765,8 @@ def _v_ky_hieu_cum(n: str) -> str:
 
 def _sym_khoi(m: re.Match, n: str) -> str | None:
     gd = m.groupdict()
+    if gd.get(n + "da"):
+        return _KHOI_MO_TA.get().get((gd[n + "da"], gd[n + "dm"])) or "?"      # a description no pyramid answers: "?"
     return next((gd[n + k] for k in ("s", "v", "u", "w") if gd.get(n + k)), None)
 
 
@@ -3191,6 +3264,10 @@ def _doc_muc_tieu_cau_hoi(de: str, a: int, b: int, dung: set[str]) -> list[tuple
 
 
 _CUM_DINH_NGHIA_DIEM = re.compile(
+    # ratio point written without "là … điểm" ("Điểm M thuộc cạnh SA sao cho SM = 1/3 SA"): the same optional part as the
+    # binding grammar `_TY_SO`, so a clause that grammar validated is read whole (run `typedfactnext-planner-bridge`)
+    rf"(?:(?:(?:gọi|lấy|cho|dựng|vẽ|xác định|tìm)\s+)?(?:điểm\s+)?{_P1}\s+(?:thuộc|nằm\s+trên|trên)\s+"
+    rf"(?:(?:cạnh|đoạn\s+thẳng|đoạn)\s+)?{_P1}{_P1}\s*,?\s*sao\s+cho\s+{_P1}{_P1}\s*=\s*(?:\d+(?:/\d+)?)?\s*{_P1}{_P1}[.\s]*$)|"
     rf"(?:(?:(?:gọi|lấy|cho|dựng|vẽ|xác định|tìm)\s+)?(?:điểm\s+)?{_P1}\s+là\s+"
     rf"(?:trung điểm(?:\s+của)?(?:\s+(?:đoạn(?:\s+thẳng)?|cạnh(?:\s+bên|\s+đáy)?))?\s+{_P1}{_P1}"
     rf"|trọng tâm(?:\s+của)?(?:\s+(?:tam giác|tứ giác|đa giác|mặt\s+đáy|đáy))?\s+\(?{_NHOM_NHAN}\)?"
@@ -3243,6 +3320,15 @@ def _doc_phep_dung_cau_hoi(de: str, start: int, end: int, calls: tuple[LoiGoi, .
         for pat in (_CUM_DUNG_MAT_PHU, _CUM_DUNG_THIET_DIEN_PHU):
             for m in pat.finditer(de, start, end):
                 spans.append((m.start(), m.end()))
+    if any(c.id in phu and c.fn == _ham_giao_diem() for c in calls):
+        # a cut clause whose `DINH_CAT_CANH` certificate the gate validated (exact edges/names checked there); its restated
+        # subject "…; (α) cắt …" is read with it when (α) is a plane the source DEFINES (run `hybrid-contract-v2`, D3)
+        dinh_nghia = {m["ten"] for mau in (_QUA_SONG_SONG, _DIEM_TRUOC_SONG_SONG, _QUA_VUONG_DUONG,
+                                           _DIEM_TRUOC_VUONG_DUONG, _QUA_HAI_DUONG) for m in mau.finditer(de)
+                      if m["ten"]}
+        for m in _CAT_CANH_CHUNG.finditer(de, start, end):
+            chu = _CHU_NGU_CAT.search(de, start, m.start())
+            spans.append((chu.start() if chu and chu["ten"] in dinh_nghia else m.start(), m.end()))
     for m in _CUM_DUNG_HINH_CHIEU.finditer(de, start, end):
         if m["p"] not in dung or (m["img"] and m["img"] not in dung):
             continue
@@ -3271,9 +3357,16 @@ def _tap_mat(m: re.Match, i: int, day: frozenset | None) -> frozenset | None:
 
 #: "(P) đi qua M và song song với (ABCD)" — a plane defined by a verified point and a reference plane, possibly unnamed when
 #: written inside the section phrase. Groups: ten, diem, then the three operand groups of `_MAT_TOAN_HANG` (3, 4, 5).
+#: "chứa M" ≡ "qua M" for ONE point label (run `hybrid-contract-v2`, D3): "chứa SA" is a line and never matches `diem`.
+_QUA_CHUA = r"(?:(?:đi\s+)?qua|chứa)\s+(?:điểm\s+)?"
 _QUA_SONG_SONG = re.compile(
-    rf"(?:(?:mặt phẳng|mp)\s*)?(?:\((?P<ten>{_P1}|[α-ω])\)\s*)?(?:là\s+mặt phẳng\s+)?(?:đi\s+)?qua\s+(?:điểm\s+)?"
+    rf"(?:(?:mặt phẳng|mp)\s*)?(?:\((?P<ten>{_P1}|[α-ω])\)\s*)?(?:là\s+mặt phẳng\s+)?{_QUA_CHUA}"
     rf"(?P<diem>{_P1})(?![\w'])\s*,?\s*(?:và\s+)?song song\s+(?:với\s+)?" + _MAT_TOAN_HANG, re.IGNORECASE)
+#: "Qua M dựng mặt phẳng (α) song song với (ABC)" — point-first order, named plane required (run `hybrid-contract-v2`, D3).
+#: Groups: diem (1), ten (2), then the three operand groups of `_MAT_TOAN_HANG` (3, 4, 5).
+_DIEM_TRUOC = (rf"{_QUA_CHUA}(?P<diem>{_P1})(?![\w'])\s*,?\s*(?:ta\s+)?(?:dựng|vẽ|kẻ|xét|lấy|gọi|cho)?\s*"
+               rf"(?:mặt phẳng|mp)?\s*\((?P<ten>{_P1}|[α-ω])\)\s*(?:là\s+mặt phẳng\s+)?")
+_DIEM_TRUOC_SONG_SONG = re.compile(_DIEM_TRUOC + r"song song\s+(?:với\s+)?" + _MAT_TOAN_HANG, re.IGNORECASE)
 _DAN_THIET_DIEN = rf"thiết diện\s+(?:của\s+)?{_KHOI_NGU}(?:với|cắt bởi|tạo bởi|bởi)\s+"
 #: The definition sentence ends right after the reference plane (a real sentence end — ";" is not one), or its rest is
 #: exactly the section request on the named plane. Anything else ("… và song song với (SBC)", "; (P) vuông góc với SC",
@@ -3282,12 +3375,61 @@ _HET_CAU = re.compile(r"[.?!](?=\s|$)")
 _TU_THIET_DIEN = len("thiết diện")
 
 
-def _het_dinh_nghia(s: str, cuoi: int, m: re.Match) -> bool:
+_NOI_DS = r"\s*(?:,\s*(?:và\s+)?|\s+và\s+)\s*"
+
+
+def _cum_cat_canh(cut: dict | None, ten_mat: str | None = None) -> re.Pattern[str] | None:
+    """The cut clause a `DINH_CAT_CANH` declaration states, as ONE closed pattern: "cắt (các cạnh) SB, SC (lần lượt tại N,
+    P)" — exactly those edges in that order (each edge written either way round), and the names only when every cut is
+    named. Run `typedfactnext-planner-bridge`. Run `hybrid-contract-v2` (D3), closed alternatives with the same meaning:
+    the per-edge form "cắt SB tại N(, (và) cắt SC tại P)…" (every cut named, the same order), and the clause opened by the
+    defined plane restated as subject — "…; (α) cắt …" / "…, (α) cắt …" — only when `ten_mat` is that plane's name."""
+    if not cut or not cut.get("edges"):
+        return None
+    ten = cut.get("points") or [None] * len(cut["edges"])
+    if any(ten) and not all(ten):
+        return None                                    # "lần lượt tại" names every cut or none
+
+    def canh1(a: str, b: str) -> str:
+        return rf"(?-i:(?:{re.escape(a)}{re.escape(b)}|{re.escape(b)}{re.escape(a)}))(?![\w'])"
+    canh = _NOI_DS.join(canh1(a, b) for a, b in cut["edges"])
+    duoi = (rf"\s+lần\s+lượt\s+tại\s+(?:(?:các\s+)?điểm\s+)?"
+            + _NOI_DS.join(rf"(?-i:{re.escape(p)})(?![\w'])" for p in ten)) if all(ten) else ""
+    lop = rf"(?:(?:các\s+|hai\s+|ba\s+|bốn\s+)?(?:cạnh|đường thẳng)(?:\s+bên)?\s+)?"
+    than = [rf"cắt\s+{lop}{canh}{duoi}"]
+    if all(ten):
+        tai = [rf"{canh1(a, b)}\s+tại\s+(?:điểm\s+)?(?-i:{re.escape(p)})(?![\w'])" for (a, b), p in zip(cut["edges"], ten)]
+        than.append(rf"cắt\s+(?:cạnh\s+)?{tai[0]}" + "".join(rf"{_NOI_DS}(?:cắt\s+(?:cạnh\s+)?)?{t}" for t in tai[1:]))
+    mo = [r"\s*,?\s*(?:và\s+)?"]
+    if ten_mat:
+        mo.append(rf"\s*[,;]\s*(?:(?:mặt phẳng|mp)\s*)?\({re.escape(ten_mat)}\)\s+")
+    return re.compile(rf"(?:{'|'.join(mo)})(?:{'|'.join(than)})\s*", re.IGNORECASE)
+
+
+#: The defined plane restated as the subject right before a cut clause: "…; (α) cắt …" (run `hybrid-contract-v2`, D3).
+_CHU_NGU_CAT = re.compile(rf"[,;]\s*(?:(?:mặt phẳng|mp)\s*)?\((?P<ten>{_P1}|[α-ω])\)\s+\Z")
+#: Any cut clause (question-context coverage of a sentence whose cut certificate the gate already validated). The per-edge
+#: form "cắt SB tại N, cắt SC tại P" comes first so it is matched whole (run `hybrid-contract-v2`).
+_CAT_TAI = rf"(?-i:{_P1}{_P1})(?![\w'])\s+tại\s+(?:điểm\s+)?(?-i:{_P1})(?![\w'])"
+_CAT_CANH_CHUNG = re.compile(
+    rf"cắt\s+(?:cạnh\s+)?{_CAT_TAI}(?:{_NOI_DS}(?:cắt\s+(?:cạnh\s+)?)?{_CAT_TAI})*"
+    rf"|cắt\s+(?:(?:các\s+|hai\s+|ba\s+|bốn\s+)?(?:cạnh|đường thẳng)(?:\s+bên)?\s+)?(?-i:{_P1}{_P1})(?![\w'])"
+    rf"(?:{_NOI_DS}(?-i:{_P1}{_P1})(?![\w']))*(?:\s+lần\s+lượt\s+tại\s+(?:(?:các\s+)?điểm\s+)?(?-i:{_P1})(?![\w'])"
+    rf"(?:{_NOI_DS}(?-i:{_P1})(?![\w']))*)?", re.IGNORECASE)
+
+
+def _het_dinh_nghia(s: str, cuoi: int, m: re.Match, cut: dict | None = None,
+                    doc_cat: list[tuple[int, int]] | None = None) -> bool:
     """`s`: the SOURCE (with the quote normalised in place); `cuoi`: where the definition ends in it. The rest of the source
-    sentence is read, whatever the quote's extent (a quote cut after the operand never hides "… và song song với …")."""
+    sentence is read, whatever the quote's extent (a quote cut after the operand never hides "… và song song với …").
+    A declared cut clause (`cut`, `DINH_CAT_CANH`) may be that rest — read, and its span recorded in `doc_cat`."""
     het = _HET_CAU.search(s, cuoi)
     con = s[cuoi:het.start() if het else len(s)]
     if not con.strip():
+        return True
+    if (r := _cum_cat_canh(cut, m["ten"] if "ten" in m.re.groupindex else None)) is not None and r.fullmatch(con):
+        if doc_cat is not None:
+            doc_cat.append((cuoi, cuoi + len(con)))
         return True
     return bool(m["ten"]) and re.fullmatch(
         rf"\s*[,;]?\s*(?:(?:và|rồi|sau đó)\s+)?(?:hãy\s+)?(?:xác định|tìm|tính)(?:\s+diện tích(?:\s+của)?)?\s+{_DAN_THIET_DIEN}"
@@ -3307,11 +3449,15 @@ def _khoi_trong_quote(c: LoiGoi, khoi: dict[str, frozenset]) -> bool:
 
 def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tuple[LoiGoi, ...],
                              ten_ra: set[str] | None = None, don_vi_de: set[str] = frozenset(),
-                             buoc: list[tuple[int, int]] | None = None, duong: list[str] | None = None) -> bool:
+                             buoc: list[tuple[int, int]] | None = None, duong: list[str] | None = None,
+                             cut: dict | None = None, doc_cat: list[tuple[int, int]] | None = None,
+                             khoi_dan_xuat: frozenset[str] = frozenset()) -> bool:
     """Bounded grammar binding a section to a derived plane: the plane through `p` parallel to (q) is defined in the quotes
     (named "(P)" and referred to by a section phrase, or written inside the section phrase), as a premise, not negated.
-    Unknown wording is refused, not guessed. `ten_ra` receives the plane names the source gave, once bound."""
-    khoi = _khoi_cua_loi_goi(calls)
+    Unknown wording is refused, not guessed. `ten_ra` receives the plane names the source gave, once bound. `cut` /
+    `doc_cat`: a declared cut clause after the definition is read (`_het_dinh_nghia`). `khoi_dan_xuat`: pyramid calls a
+    `DINH_CAT_CANH` certificate builds ON this section — not source solids a bare "thiết diện" could refer to."""
+    khoi = _khoi_cua_loi_goi(tuple(x for x in calls if x.id not in khoi_dan_xuat))
     if not _khoi_trong_quote(c, khoi):
         return False
     day = khoi.get(c.args.solid)
@@ -3326,20 +3472,28 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
         return _vai_tro_tai(s, pos) not in ("GOAL", "CONDITIONAL") and not _phu_dinh(s, pos, text)
 
     # `duong` given: the plane is defined by a point and a LINE it is ⊥ to (`MAT_VUONG_DUONG`); otherwise ∥ the plane q.
-    mau = _QUA_VUONG_DUONG if duong else _QUA_SONG_SONG
+    cac_mau = (_QUA_VUONG_DUONG, _DIEM_TRUOC_VUONG_DUONG) if duong else (_QUA_SONG_SONG, _DIEM_TRUOC_SONG_SONG)
 
     def khop(m) -> bool:
         if duong:
             return frozenset(_nhan_cum(m["l"])) == frozenset(duong)
-        return _tap_mat(m, 3, day) == frozenset(q)
+        tap = _tap_mat(m, 3, day)
+        # the source may name the reference face by ALL its vertices ("đáy (ABCD)") while the call carries three of them:
+        # the same plane, accepted only for the cut solid's own base (run `hybrid-contract-v2`, D3)
+        return tap == frozenset(q) or (day is not None and tap == frozenset(day) and frozenset(q) < tap and len(q) == 3)
 
     ten_mat = set()
     gan: dict[int, int] = {}                             # vị trí (trong đề) của từ "thiết diện" → cuối cụm thiết diện
     for qn, goc, s in doan:
-        for m in mau.finditer(qn):
+        for m in (m for mau in cac_mau for m in mau.finditer(qn)):
             if m["diem"] != p or not khop(m):
                 continue
-            if not vai_tro_ok(s, goc + m.start(), m[0]) or not _het_dinh_nghia(s, goc + m.end(), m):
+            cuoi = goc + m.end()
+            if not duong and m[5] and day is not None:     # "đáy (ABCD)": the base's own label belongs to the operand
+                nhan_day = re.match(rf"\s*\((?P<n>{_NHOM_NHAN})\)", s[cuoi:])
+                if nhan_day and frozenset(_nhan_cum(nhan_day["n"])) == frozenset(day):
+                    cuoi += nhan_day.end()
+            if not vai_tro_ok(s, goc + m.start(), m[0]) or not _het_dinh_nghia(s, cuoi, m, cut, doc_cat):
                 return False
             if m["ten"]:
                 ten_mat.add(m["ten"])
@@ -3348,15 +3502,19 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
             elif not m["ten"]:
                 return False                                 # mặt không tên, không nằm trong cụm thiết diện: không gắn được
     # A name defined anywhere in the problem for another point or plane makes "(P)" ambiguous.
-    for mau_khac in (_QUA_SONG_SONG, _QUA_VUONG_DUONG):
+    for mau_khac in (_QUA_SONG_SONG, _DIEM_TRUOC_SONG_SONG, _QUA_VUONG_DUONG, _DIEM_TRUOC_VUONG_DUONG):
         for m in mau_khac.finditer(de):
-            if m["ten"] in ten_mat and (mau_khac is not mau or m["diem"] != p or not khop(m)):
+            if m["ten"] in ten_mat and (mau_khac not in cac_mau or m["diem"] != p or not khop(m)):
                 return False
     for ten in ten_mat:
         mau = [(rf"{_DAN_THIET_DIEN}(?:(?:mặt phẳng|mp)\s*)?\({re.escape(ten)}\)", False),
+               (rf"thiết diện\s*(?:,\s*|\s+và\s+)(?:khối|hình)\s+chóp\s+(?:đỉnh\s+)?(?P<dinh>{_P1})(?![\w'])\s+"
+                rf"(?:được\s+)?(?:cắt(?:\s+ra)?|tạo)\s+bởi\s+(?:(?:mặt phẳng|mp)\s*)?\({re.escape(ten)}\)", False),
                (rf"\({re.escape(ten)}\)\s+cắt\s+(?:hình|khối)(?:[^.;]|\.(?=[A-Z]))*?theo\s+(?:một\s+)?thiết diện", True)]
         for qn, goc, s in doan:
             for r, o_cuoi in ((r, o) for x, o in mau for r in re.finditer(x, qn, re.IGNORECASE)):
+                if r.groupdict().get("dinh") not in (None, c.args.solid.split(".")[0]):
+                    continue
                 if not vai_tro_ok(s, goc + r.start(), r[0]):
                     return False
                 gan[goc + (r.end() - _TU_THIET_DIEN if o_cuoi else r.start())] = goc + r.end()
@@ -3377,6 +3535,10 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
             m_ana = re.match(r"\s+(?:đó|này|trên)(?![\w'])", de[b:], re.IGNORECASE)
             if m_ana and truoc and truoc[-1] in gan:
                 return b + m_ana.end()
+            # a bare "diện tích thiết diện" closing its clause names THE section only when every section the source
+            # mentioned before it is the one bound to (P) (run `hybrid-contract-v2`, D3) — otherwise it is ambiguous
+            if truoc and all(t in gan for t in truoc) and re.match(r"\s*(?:[.?!;]|$)", de[b:]):
+                return b
             return None
 
         hoi_p = [(a, b_obj) for a, b in hoi if (b_obj := cuoi_cum_p(b)) is not None
@@ -3396,9 +3558,11 @@ def mat_song_song_dung_nguon(c: LoiGoi, p: str, q: list[str], de: str, calls: tu
 
 def _kiem_mat_song_song(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: set[str], nhan_da_khai: set,
                         calls: tuple[LoiGoi, ...], ten_mat_phu: dict | None = None,
-                        don_vi_de: set[str] = frozenset(), buoc: list[tuple[int, int]] | None = None) -> set[str]:
+                        don_vi_de: set[str] = frozenset(), buoc: list[tuple[int, int]] | None = None,
+                        cat_doc: dict | None = None, khoi_dan_xuat: frozenset[str] = frozenset()) -> set[str]:
     """Declared decomposition `MAT_SONG_SONG`: two fresh labels, two translates of the point along two directions of the
-    reference plane, every target section on exactly (point, label₁, label₂), shared quotes, and a source binding."""
+    reference plane, every target section on exactly (point, label₁, label₂), shared quotes, and a source binding.
+    `cat_doc[goal]`: whether the declared cut clause (`d["cut"]`) was read after the source definition."""
     xs, p, q = list(d.get("labels") or []), d.get("point"), list(d.get("parallel_to") or [])
     qs = tuple(d.get("quotes") or ())
     ids = tuple(i for i in (*(d.get("constructs") or ()), *(d.get("targets") or ())) if i)
@@ -3413,7 +3577,7 @@ def _kiem_mat_song_song(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: 
                 or len(moc) != 2 or len(set(moc)) != 2 or set(moc) & set(duong) or len(dung) != 4 or not dich or not qs):
             raise TuChoi("AUXILIARY_RULE_MISMATCH", f"mặt phụ qua {p}: khai báo không đủ cho luật {MAT_VUONG_DUONG}", ids)
         return _kiem_mat_vuong_duong(d, p, xs, chan, duong, moc, dung, dich, qs, ids, de, nhan, chiem, nhan_da_khai, calls,
-                                     ten_mat_phu, don_vi_de, buoc)
+                                     ten_mat_phu, don_vi_de, buoc, cat_doc, khoi_dan_xuat)
     if (len(xs) != 2 or len(set(xs)) != 2 or (not two and len(q) < 3) or len(dung) != 2 or not dich or not qs
             or two and (len(lines) != 2 or any(len(v) != 2 or len(set(v)) != 2 for v in lines) or not d.get("plane_name"))):
         raise TuChoi("AUXILIARY_RULE_MISMATCH", f"mặt phụ qua {p}: khai báo không đủ cho luật {MAT_SONG_SONG}", ids)
@@ -3432,12 +3596,16 @@ def _kiem_mat_song_song(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: 
     if lac := sorted(({p} | {v for line in huong for v in line}) - nhan):
         raise TuChoi("UNKNOWN_LABEL", f"nhãn {lac} không có trong đề", ids)
     ten_nguon: set[str] = set()
+    doc_cat: list[tuple[int, int]] = []
     for c in dich:
         bound = (_mat_hai_duong_dung_nguon(c, p, lines, d["plane_name"], de, calls, don_vi_de, buoc) if two else
-                 mat_song_song_dung_nguon(c, p, q, de, calls, ten_nguon, don_vi_de, buoc))
+                 mat_song_song_dung_nguon(c, p, q, de, calls, ten_nguon, don_vi_de, buoc, cut=d.get("cut"), doc_cat=doc_cat,
+                                          khoi_dan_xuat=khoi_dan_xuat))
         if not bound:
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: đề không nói thiết diện của {c.args.solid} với mặt phẳng qua {p} "
                          f"song song ({''.join(q)})", ids)
+    if cat_doc is not None and d.get("cut"):
+        cat_doc[d.get("goal")] = bool(doc_cat)
     if two:
         ten_nguon.add(d['plane_name'])
     # The engine names the plane by what the source called it, bound here — never by the auxiliary labels.
@@ -3447,7 +3615,7 @@ def _kiem_mat_song_song(d: dict, theo_id: dict, de: str, nhan: set[str], chiem: 
 
 
 def _kiem_mat_vuong_duong(d, p, xs, chan, duong, moc, dung, dich, qs, ids, de, nhan, chiem, nhan_da_khai, calls,
-                          ten_mat_phu, don_vi_de, buoc) -> set[str]:
+                          ten_mat_phu, don_vi_de, buoc, cat_doc=None, khoi_dan_xuat=frozenset()) -> set[str]:
     """Declared decomposition `MAT_VUONG_DUONG`: for two solid vertices Zᵢ off the line d, Fᵢ = foot of Zᵢ on d
     (`orthogonal_projection_line`) and Xᵢ = p + Fᵢ→Zᵢ (`translate_point`); every target section on exactly (p, X₁, X₂),
     shared quotes, fresh labels, and a source definition "(P) đi qua p và vuông góc với d". The engine re-checks ⊥ exactly."""
@@ -3468,13 +3636,178 @@ def _kiem_mat_vuong_duong(d, p, xs, chan, duong, moc, dung, dich, qs, ids, de, n
     if lac := sorted(({p} | set(duong) | set(moc)) - nhan):
         raise TuChoi("UNKNOWN_LABEL", f"nhãn {lac} không có trong đề", ids)
     ten_nguon: set[str] = set()
+    doc_cat: list[tuple[int, int]] = []
     for c in dich:
-        if not mat_song_song_dung_nguon(c, p, [], de, calls, ten_nguon, don_vi_de, buoc, duong=duong):
+        if not mat_song_song_dung_nguon(c, p, [], de, calls, ten_nguon, don_vi_de, buoc, duong=duong, cut=d.get("cut"),
+                                        doc_cat=doc_cat, khoi_dan_xuat=khoi_dan_xuat):
             raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: đề không nói thiết diện của {c.args.solid} với mặt phẳng qua {p} "
                          f"vuông góc {''.join(duong)}", ids)
+    if cat_doc is not None and d.get("cut"):
+        cat_doc[d.get("goal")] = bool(doc_cat)
     if ten_mat_phu is not None:
         ten_mat_phu[ids[0]] = next(iter(ten_nguon)) if len(ten_nguon) == 1 else None
     return set(ids)
+
+
+#: Negation / exclusion anywhere in the sentence that requests the derived pyramid (review rounds 1–3).
+_LOAI_TRU_YEU_CAU = re.compile(r"(?<!\w)(?:không|chẳng|chưa|đừng|khỏi|miễn|bỏ\s+qua|thay\s+vì|thay\s+cho|(?:ngoại\s+)?trừ)"
+                               r"(?!\w)", re.IGNORECASE)
+
+#: Closed positive lead-ins of the derived pyramid phrase within its clause: nothing (after "và" / "rồi" / ","), a request
+#: verb, or the ratio / residual question openers that name it as an operand. Anything else is refused, never guessed.
+_MO_KHOI_TREN_THIET_DIEN = re.compile(
+    r"\s*(?:(?:hãy\s+)?(?:dựng|vẽ|xác\s+định|xét)(?:\s+(?:thêm|tiếp|cả|luôn))?\s*"
+    r"|(?:(?:hãy\s+)?(?:tính|tìm|xác\s+định)\s+)?(?:tỉ|tỷ)\s+số\s+thể\s+tích\s+(?:của\s+|giữa\s+)?(?:hai\s+)?"
+    r"|(?:hãy\s+)?(?:tính|tìm)\s+thể\s+tích\s+(?:của\s+)?phần\s+còn\s+lại\s+của\s+(?:khối|hình)\s+chóp\s+"
+    r"(?-i:[A-Z][0-9]*'?\.(?:[A-Z][0-9]*'?)+)\s+sau\s+khi\s+cắt\s+(?:bỏ|đi)\s+)?", re.IGNORECASE)
+
+
+def _canh_ben_khoi(calls: tuple[LoiGoi, ...], ten: str) -> tuple[str | None, list[tuple[str, str]]] | None:
+    """(apex, lateral edges in base order) of the validated solid named `ten`; None when no such solid call."""
+    for c in calls:
+        if c.fn in ("pyramid", "regular_pyramid") and f"{c.args.apex}.{''.join(c.args.base)}" == ten:
+            return c.args.apex, [(c.args.apex, b) for b in c.args.base]
+        if c.fn == "prism" and f"{''.join(c.args.base)}.{''.join(c.args.top)}" == ten:
+            return None, list(zip(c.args.base, c.args.top))
+    return None
+
+
+def _ham_giao_diem() -> str | None:
+    """Name of the ONE Registry function whose planning contract meets a line with a plane (effect `Meet`), else None."""
+    ten = [s.name for s in REGISTRY.values() for c in planning_contracts(s) if c.effect.kind == "Meet"]
+    return ten[0] if len(ten) == 1 else None
+
+
+def _kiem_dinh_cat(d: dict, mats: list[dict], theo_id: dict, de: str, nhan: set[str], chiem: set[str],
+                   nhan_da_khai: set, calls: tuple[LoiGoi, ...], ten_mat_phu: dict | None, cat_doc: dict,
+                   buoc: list[tuple[int, int]] | None) -> set[str]:
+    """Declared `DINH_CAT_CANH` (run `typedfactnext-planner-bridge`): the cut certificate stands on a validated derived
+    plane whose source definition is followed by THIS cut clause; each stated edge is a lateral edge of the cut solid; each
+    vertex is either a call `intersect_line_plane(label, edge, plane)` sharing the plane's quotes — its label the name the
+    source gives that cut, or fresh — or the plane's own through-point whose validated producer lies on that edge. A derived
+    pyramid "khối chóp đỉnh S cắt bởi (α)" / "khối chóp S.MNP" covers every lateral edge, bound in closed wording. Only
+    refuses; the engine checks every vertex on the built figure (0 < t ≤ 1).
+    Run `hybrid-contract-v2` (D6): a `derived_fresh` vertex — on a lateral edge the source does NOT state, with a fresh
+    label — is admitted only for a `/2` certificate (`derive`) whose section must close (a derived pyramid stands on it,
+    or the author's declared boundary passes through that edge). It is never a source fact; the engine certifies closure."""
+    ids = tuple(d.get("constructs") or ()) + ((d["derived"].get("call"),) if isinstance(d.get("derived"), dict) else ())
+    mat = next((x for x in mats if x.get("goal") == d.get("plane_goal")), None)
+    stated, ten = d.get("stated_edges") or [], d.get("stated_points") or []
+    phai_khep = bool(d.get("derive")) and (isinstance(d.get("derived"), dict) or bool(d.get("declared_boundary")))
+    bien = {frozenset(e) for e in d.get("declared_boundary") or ()}
+    giao = _ham_giao_diem()
+    if (mat is None or [mat.get("point"), *(mat.get("labels") or [])] != d.get("plane") or (not stated and not phai_khep)
+            or mat.get("cut") != {"edges": stated, "points": ten} or tuple(d.get("quotes") or ()) != tuple(mat.get("quotes") or ())):
+        raise TuChoi("AUXILIARY_RULE_MISMATCH", "đỉnh thiết diện: khai báo không đứng trên một mặt dẫn xuất đã kiểm", ids)
+    if giao is None:
+        raise TuChoi("UNSUPPORTED_CAPABILITY", "thư viện không có hàm dựng giao điểm đường–mặt cho đỉnh thiết diện", ids)
+    if stated and not cat_doc.get(d.get("plane_goal")):
+        raise TuChoi("SOURCE_OBJECT_MISMATCH", "đề không nêu mặt phẳng cắt các cạnh "
+                     f"{', '.join(''.join(e) for e in stated)} ngay sau định nghĩa của nó", ids)
+    khoi = _canh_ben_khoi(calls, d.get("solid"))
+    if khoi is None:
+        raise TuChoi("UNKNOWN_SOLID", f"đỉnh thiết diện: khối {d.get('solid')!r} không có lời gọi đã kiểm", ids)
+    dinh, canh = khoi
+    tap_canh = {frozenset(e) for e in canh}
+    if any(frozenset(e) not in tap_canh for e in stated):
+        raise TuChoi("SOURCE_OBJECT_MISMATCH", "cạnh đề nói bị cắt không phải cạnh bên của khối", ids)
+    ten_canh = {frozenset(e): p for e, p in zip(stated, ten)}
+    plane, qs = list(d["plane"]), tuple(d["quotes"])
+    goi = {c for c in d.get("constructs") or ()}
+    da_goi: set[str] = set()
+    tren: dict[frozenset, str] = {}
+    for v in d.get("vertices") or []:
+        e, x, loai, cid = frozenset(v.get("edge") or ()), v.get("label"), v.get("choice"), v.get("call")
+        if e not in tap_canh or e in tren or not isinstance(x, str):
+            raise TuChoi("AUXILIARY_RULE_MISMATCH", "đỉnh thiết diện: cạnh lặp hoặc không phải cạnh bên", ids)
+        if loai in ("named_intersection", "fresh_intersection", "derived_fresh"):
+            c = theo_id.get(cid)
+            if not (cid in goi and c is not None and c.fn == giao and c.args.point == x
+                    and frozenset(c.args.line) == e and c.args.plane == plane and c.quotes == qs):
+                raise TuChoi("AUXILIARY_RULE_MISMATCH", f"đỉnh thiết diện {x}: lời gọi không khớp luật {DINH_CAT_CANH}", ids)
+            if loai == "named_intersection" and (x not in nhan or ten_canh.get(e) != x):
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"giao điểm {x} không phải tên đề đặt cho giao trên {''.join(sorted(e))}", ids)
+            if loai == "derived_fresh":
+                if e in ten_canh or not phai_khep or not (isinstance(d.get("derived"), dict) or e in bien):
+                    raise TuChoi("AUXILIARY_RULE_MISMATCH", f"đỉnh dẫn xuất trên {''.join(sorted(e))}: cạnh đã được nêu, hoặc "
+                                 "thiết diện không cần khép kín", ids)
+                if x in nhan or x in chiem or x in nhan_da_khai or x not in (d.get("labels") or []):
+                    raise TuChoi("AUXILIARY_LABEL_COLLISION", f"điểm dẫn xuất {x} trùng nhãn của đề hoặc đã khai", ids)
+                nhan_da_khai.add(x)
+            if loai == "fresh_intersection":
+                if e not in ten_canh:                      # a fresh cut only on an edge the source states is cut
+                    raise TuChoi("AUXILIARY_RULE_MISMATCH", f"giao mới trên {''.join(sorted(e))}: cạnh không được nêu là bị cắt",
+                                 ids)
+                if ten_canh[e]:
+                    raise TuChoi("AUXILIARY_RULE_MISMATCH", f"đề đặt tên giao trên {''.join(sorted(e))}; không dùng nhãn phụ", ids)
+                if x in chiem or x in nhan_da_khai or x not in (d.get("labels") or []):
+                    raise TuChoi("AUXILIARY_LABEL_COLLISION", f"điểm phụ {x} trùng nhãn của đề hoặc đã khai", ids)
+                nhan_da_khai.add(x)
+            da_goi.add(cid)
+        elif loai == "reuse_through_point":
+            p = theo_id.get(v.get("producer")) if v.get("producer") else None
+            if x != mat.get("point") or (p is None and x not in e) or (p is not None and not (
+                    p.fn in ("midpoint", "divide_segment") and p.args.point == x and frozenset(p.args.segment) == e)):
+                raise TuChoi("AUXILIARY_RULE_MISMATCH", f"đỉnh {x}: điểm qua của mặt không nằm trên {''.join(sorted(e))}", ids)
+            if e in ten_canh and ten_canh[e] not in (None, x):
+                raise TuChoi("SOURCE_OBJECT_MISMATCH", f"đề gọi giao trên {''.join(sorted(e))} là {ten_canh[e]}, không phải {x}", ids)
+        elif loai == "reuse_intersection":
+            c = theo_id.get(cid)
+            if not (c is not None and c.fn == giao and c.args.point == x and frozenset(c.args.line) == e
+                    and c.args.plane == plane):
+                raise TuChoi("AUXILIARY_RULE_MISMATCH", f"đỉnh {x}: không có giao điểm đã dựng để dùng lại", ids)
+        else:
+            raise TuChoi("AUXILIARY_RULE_MISMATCH", f"đỉnh thiết diện: lựa chọn {loai!r} không có trong luật", ids)
+        tren[e] = x
+    if da_goi != goi or any(frozenset(e) not in tren for e in stated):
+        raise TuChoi("AUXILIARY_RULE_MISMATCH", "đỉnh thiết diện: cạnh đề nói bị cắt chưa có đỉnh, hoặc lời gọi thừa", ids)
+    kd = d.get("derived")
+    if kd is None:
+        return set(goi)
+    c = theo_id.get(kd.get("call")) if isinstance(kd, dict) else None
+    vong = [tren.get(frozenset(e)) for e in canh]
+    if (c is None or dinh is None or c.fn != "pyramid" or c.args.apex != dinh or None in vong or c.args.base != vong
+            or list(c.quotes) != list(kd.get("quotes") or ()) or len(set(vong)) < 3):
+        raise TuChoi("AUXILIARY_RULE_MISMATCH", "khối trên thiết diện: lời gọi không phủ đúng mọi cạnh bên", (c.id,) if c else ids)
+    ten_mat = (ten_mat_phu or {}).get((mat.get("constructs") or [None])[0])
+    # named form: the derived pyramid's own symbol in a "(hai) khối chóp X(, Y) và Z" list — order is bound by the ask
+    cum = [rf"(?:khối|hình)\s+chóp\s+(?:(?-i:[A-Z][0-9]*'?\.(?:[A-Z][0-9]*'?)+)\s*(?:,\s*|\s+và\s+))*"
+           rf"(?-i:{re.escape(dinh)}\.{''.join(map(re.escape, vong))})(?![\w'])"] if set(vong) <= nhan else []
+    if ten_mat:
+        cum.append(rf"(?:khối|hình)\s+chóp\s+(?:đỉnh\s+)?(?-i:{re.escape(dinh)})\s+(?:được\s+)?(?:cắt(?:\s+ra)?\s+bởi|tạo\s+bởi|"
+                   rf"giới\s+hạn\s+bởi)\s+(?:(?:mặt phẳng|mp)\s*)?\({re.escape(ten_mat)}\)")
+        # the apex named AFTER the plane: "khối chóp cắt bởi (α) chứa đỉnh S" (run `hybrid-contract-v2`, D3)
+        cum.append(rf"(?:khối|hình)\s+chóp\s+(?:được\s+)?(?:cắt(?:\s+ra)?\s+bởi|tạo\s+bởi)\s+(?:(?:mặt phẳng|mp)\s*)?"
+                   rf"\({re.escape(ten_mat)}\)\s+(?:và\s+)?chứa\s+(?:đỉnh\s+)?(?-i:{re.escape(dinh)})(?![\w'])")
+    khop = []
+    for q in c.quotes:
+        if (vt := _vi_tri(de, q)) is None:
+            raise TuChoi("QUOTE_NOT_IN_SOURCE", f"{c.id}: đoạn {q!r} không có nguyên văn trong đề", (c.id,))
+        for m in (m for r in cum for m in re.finditer(r, de[:vt[1]], re.IGNORECASE) if m.start() >= vt[0]):
+            if _vai_tro_tai(de, m.start()) in ("GOAL", "CONDITIONAL") or _phu_dinh(de, m.start(), m[0]):
+                raise TuChoi("UNSUPPORTED_CAPABILITY", f"{c.id}: khối trên thiết diện nằm trong điều kiện / chứng minh / phủ định",
+                             (c.id,))
+            # The clause leading to the phrase must be a CLOSED positive lead-in (a request verb, a ratio / residual question
+            # opener, or nothing after a connector): "nhưng không dựng", "thay vì", "trừ" … are never read as a request
+            # (review rounds 1–2; an open negation blacklist cannot be complete).
+            dau = _cau_chua(de, m.start())
+            menh_de = re.split(r"[,;:]|(?<!\w)(?:và|nhưng|rồi)(?!\w)", de[dau:m.start()], flags=re.IGNORECASE)[-1]
+            # A negation may govern a list ("không dựng mặt đáy và khối chóp …", review round 3) or follow ("… hay
+            # không?"): any negation / exclusion word in the whole sentence refuses (fail-closed).
+            het = re.search(r"[.!?](?:\s|$)", de[m.end():])
+            cau = de[dau:m.end() + (het.end() if het else len(de) - m.end())]
+            if _LOAI_TRU_YEU_CAU.search(cau):
+                raise TuChoi("NEGATED_CLAUSE", f"{c.id}: câu yêu cầu khối chóp trên thiết diện có từ phủ định / loại trừ",
+                             (c.id,))
+            if not _MO_KHOI_TREN_THIET_DIEN.fullmatch(menh_de):
+                raise TuChoi("NEGATED_CLAUSE", f"{c.id}: mệnh đề trước khối chóp trên thiết diện không phải một yêu cầu "
+                             f"khẳng định đã biết ({menh_de.strip()!r})", (c.id,))
+            khop.append(m.span())
+    if not khop:
+        raise TuChoi("SOURCE_OBJECT_MISMATCH", f"{c.id}: đề không gọi khối chóp đỉnh {dinh} trên thiết diện bởi mặt này", (c.id,))
+    if buoc is not None:                                   # the request phrase is answered by this certified construction
+        buoc.extend(khop)
+    return set(goi) | {c.id}
 
 
 _QUA_HAI_DUONG = re.compile(
@@ -3482,13 +3815,18 @@ _QUA_HAI_DUONG = re.compile(
     rf"\s*,?\s*(?:và\s+)?song song\s+với\s+(?:hai\s+đường thẳng\s+)?"
     rf"(?P<a>{_P1})\s*(?P<b>{_P1})(?![\w'])\s+và\s+(?P<c>{_P1})\s*(?P<d>{_P1})(?![\w'])", re.I)
 _QUA_SONG_SONG_ANON = re.sub(r"\(\?P<[^>]+>", "(?:", _QUA_SONG_SONG.pattern)
+_DIEM_TRUOC_SONG_SONG_ANON = re.sub(r"\(\?P<[^>]+>", "(?:", _DIEM_TRUOC_SONG_SONG.pattern)
 #: "(P) đi qua A và vuông góc với SC" — a plane fixed by a verified point and a LINE (two labels; a plane after "vuông góc"
 #: is not unique and never reaches here). Groups: ten, diem, l.
 _QUA_VUONG_DUONG = re.compile(
-    rf"(?:(?:mặt phẳng|mp)\s*)?(?:\((?P<ten>{_P1}|[α-ω])\)\s*)?(?:là\s+mặt phẳng\s+)?(?:đi\s+)?qua\s+(?:điểm\s+)?"
+    rf"(?:(?:mặt phẳng|mp)\s*)?(?:\((?P<ten>{_P1}|[α-ω])\)\s*)?(?:là\s+mặt phẳng\s+)?{_QUA_CHUA}"
     rf"(?P<diem>{_P1})(?![\w'])\s*,?\s*(?:và\s+)?vuông góc\s+(?:với\s+)?(?:đường thẳng\s+|cạnh\s+)?"
     rf"(?<![\w'.(])(?P<l>{_P1}{_P1})(?![\w'])", re.IGNORECASE)
+_DIEM_TRUOC_VUONG_DUONG = re.compile(
+    _DIEM_TRUOC + rf"vuông góc\s+(?:với\s+)?(?:đường thẳng\s+|cạnh\s+)?(?<![\w'.(])(?P<l>{_P1}{_P1})(?![\w'])",
+    re.IGNORECASE)
 _QUA_VUONG_DUONG_ANON = re.sub(r"\(\?P<[^>]+>", "(?:", _QUA_VUONG_DUONG.pattern)
+_DIEM_TRUOC_VUONG_DUONG_ANON = re.sub(r"\(\?P<[^>]+>", "(?:", _DIEM_TRUOC_VUONG_DUONG.pattern)
 _QUA_HAI_DUONG_ANON = re.sub(r"\(\?P<[^>]+>", "(?:", _QUA_HAI_DUONG.pattern)
 _KHOANG_CACH_GIAO_TUYEN = re.compile(
     rf"khoảng cách\s+từ\s+(?:(?:điểm|đỉnh)\s+)?(?P<p>{_P1})(?![\w'])\s*(?:đến|tới)\s*"
@@ -3504,11 +3842,18 @@ _CUM_DUNG_GIAO_TUYEN = re.compile(
     re.IGNORECASE,
 )
 _CUM_DUNG_MAT_PHU = re.compile(
-    rf"(?:(?:hãy\s+)?(?:gọi|cho|dựng|vẽ|xác định|tìm)\s+)?(?:{_QUA_SONG_SONG_ANON}|{_QUA_HAI_DUONG_ANON}|{_QUA_VUONG_DUONG_ANON})",
+    rf"(?:(?:hãy\s+)?(?:gọi|cho|dựng|vẽ|xác định|tìm)\s+)?(?:{_QUA_SONG_SONG_ANON}|{_DIEM_TRUOC_SONG_SONG_ANON}"
+    rf"|{_QUA_HAI_DUONG_ANON}|{_QUA_VUONG_DUONG_ANON}|{_DIEM_TRUOC_VUONG_DUONG_ANON})",
     re.IGNORECASE,
 )
+#: Optional solid lead-in in a multi-object construction request: "Dựng lăng trụ, thiết diện bởi (α) và tính …".
+_MO_KHOI_DUNG = (rf"(?:(?:từng\s+bước\s+)?(?:hình|khối)?\s*(?:chóp(?:\s+(?:tứ|tam)\s+giác)?(?:\s+đều)?"
+                 rf"|lăng\s+trụ(?:\s+(?:đứng|đều|tam\s+giác|tứ\s+giác))*|tứ\s+diện(?:\s+đều)?|hình\s+hộp(?:\s+chữ\s+nhật)?|"
+                 rf"hình\s+lập\s+phương)(?:\s+{_NHAN}(?:\.{_NHAN})?)?\s*(?:,\s*|\s+và\s+))?")
 _CUM_DUNG_THIET_DIEN_PHU = re.compile(
-    rf"(?:(?:hãy\s+)?(?:xác định|tìm|dựng|vẽ)\s+{_DAN_THIET_DIEN}(?:{_QUA_SONG_SONG_ANON}|{_QUA_VUONG_DUONG_ANON}|(?:(?:mặt phẳng|mp)\s*)?\((?:{_P1}|[α-ω])\))"
+    rf"(?:(?:hãy\s+)?(?:xác định|tìm|dựng|vẽ)\s+{_MO_KHOI_DUNG}(?:{_DAN_THIET_DIEN}"
+    rf"(?:{_QUA_SONG_SONG_ANON}|{_QUA_VUONG_DUONG_ANON}|(?:(?:mặt phẳng|mp)\s*)?\((?:{_P1}|[α-ω])\))"
+    rf"|thiết diện\s*(?:,\s*(?=(?:khối|hình)\s+chóp\b))?)"
     rf"|(?:(?:mặt phẳng|mp)\s*)?\((?:{_P1}|[α-ω])\)\s+cắt\s+(?:hình|khối)(?:[^.;]|\.(?=[A-Z]))*?theo\s+(?:một\s+)?thiết diện)",
     re.IGNORECASE,
 )
@@ -3698,8 +4043,14 @@ def _ty_so_dung_nguon(c: LoiGoi, q: str) -> bool:
     """The ratio the source STATES, solved exactly for t = XP/XY on the segment it names, equals the call's
     (segment, ratio) — read in either direction ([X, Y], t) or ([Y, X], 1 − t): one point, one convention. Segment
     lengths in units of XY: XP = t, PY = 1 − t, XY = 1 (a + b·t); "L = k·R" ⇒ t = (k·a_R − a_L) / (b_L − k·b_R)."""
+    return next(_ty_so_khop(c, chuan_hoa(q)), None) is not None
+
+
+def _ty_so_khop(c: LoiGoi, s: str, pos: int = 0, endpos: int | None = None):
+    """The `_TY_SO` matches in `s[pos:endpos]` that solve to the call's (segment, ratio) — `_ty_so_dung_nguon`'s reader,
+    also used by premise coverage to own exactly the coefficient the equation read (run `typedfactnext-planner-bridge`)."""
     a = c.args
-    for m in _TY_SO.finditer(chuan_hoa(q)):
+    for m in _TY_SO.finditer(s, pos, len(s) if endpos is None else endpos):
         p, x, y = m["p"], m["x"], m["y"]
         if p != a.point or len({p, x, y}) != 3:
             continue
@@ -3717,8 +4068,7 @@ def _ty_so_dung_nguon(c: LoiGoi, q: str) -> bool:
         if not 0 < t < 1:
             continue
         if (list(a.segment), Fraction(a.ratio)) in (([x, y], t), ([y, x], 1 - t)):
-            return True
-    return False
+            yield m
 
 
 def construction_source_bound(c: LoiGoi, de: str = "") -> bool:

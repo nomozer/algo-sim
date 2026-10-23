@@ -1,5 +1,30 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Backend Hybrid Session 2 — contract unification (`research/hybrid-backend-session2-contract`, LOCAL research, Hybrid off)
+
+Run `docs/evaluation/geometry/runs/backend-hybrid-contract-unification/` (report, `CONTRACT_DECISION_PROPOSAL.md`). No new module.
+
+| path | owns | tests |
+|---|---|---|
+| `backend/app/ai/adapter3_simulation.py` | `_Adapter3Compiler._certify_section_boundary` (Adapter /3 reads `/1.cut_edges` as the complete boundary and must prove it: cycle == `section.cross_section`, else `SECTION_BOUNDARY_INCOMPLETE`); `_shared_source_gate` (bridge → planner → `registry.kiem_nguon` before compiling; gate refusal binding) + `SOURCE_GATE_AUTHORITY` / `LEGACY_SOURCE_AUTHORITY` and `Adapter3SimulationResult.source_verification`; `UNSUPPORTED_PLANE_KIND` for polyhedral plane kinds without a construction | `backend/tests/geometry/test_hybrid_contract_unification.py` |
+| `backend/app/simulation/geometry_functions/engine.py` | `gop_doi_tuong_trung` (end of `_Dung.bien_dich`): one declaration per identical engine-internal `derived_*` line/plane; labelled objects never merged; IR budget unchanged | same; `backend/tests/geometry/test_typedfactnext_planner_bridge.py` |
+| `backend/app/ai/function_route.py` | `_an_dinh_thiet_dien_phu` also names derived-pyramid lateral edges (`canh_ben_<apex>_<v>`) and scrubs fresh labels from `role` | `backend/tests/geometry/test_hybrid_contract_unification.py` |
+
+**Continuation boundary fixes:** `typed_fact_next_bridge._check_qualified_refs` validates namespaces before dropping them; `run_typed_fact_next_planner_route` returns typed malformed-operand refusals and preserves declared unit/plane identity against source-gated output. Regression tests extend `test_typedfactnext_planner_bridge.py`; run `evaluation/geometry/runs/backend-hybrid-continuation/`. No new product modules; reuse existing planner/engine/gate.
+
+## TypedFactNext → planner bridge (`research/hybrid-backend-integration-session1`, LOCAL research, Hybrid off)
+
+Run `docs/evaluation/geometry/runs/typedfactnext-planner-bridge/`; architecture `docs/architecture/HYBRID_BACKEND_TARGET_ARCHITECTURE.md`.
+
+| path | owns | tests |
+|---|---|---|
+| `backend/app/simulation/geometry_functions/typed_fact_next_bridge.py` | `bridge(raw)`: PURE TypedFactNext → `TypedFact` translation (no text reading, no added fact); refuses what `TypedFact` cannot express with `BRIDGE_UNSUPPORTED_*` / `BRIDGE_CUT_EDGES_NOT_STATED` | `backend/tests/geometry/test_typedfactnext_planner_bridge.py` |
+| `backend/app/ai/function_route.py` | `run_typed_fact_next_planner_route` (bridge → `run_fact_route`, research only, not on `/api/analyze`); `_an_dinh_thiet_dien_phu` hides fresh section-vertex labels from learner text | same |
+| `backend/app/simulation/geometry_functions/planner.py` | provider-hidden `TypedFact` fields (`SkipJsonSchema`) + `INTERNAL_FACT_FIELDS`; `_dinh_cat_canh` (SectionVertex needs: reuse / named / fresh `intersect_line_plane`), `_khoi_tren_thiet_dien` (derived pyramid), `solid_refs` operands; `geometry-fact-planner/12` | same |
+| `backend/app/simulation/geometry_functions/registry.py` | `DINH_CAT_CANH` certificate (`_kiem_dinh_cat`, `_cum_cat_canh`, `_CAT_CANH_CHUNG`); ratio-point coefficient ownership (`_ty_so_khop`); definition grammar aligned with `_TY_SO`; `geometry-functions/12` | same; `backend/tests/geometry/test_source_gate_hardening.py` |
+| `backend/app/simulation/geometry_functions/engine.py` | `_Dung.kiem_dinh_cat` (vertex on edge, 0 < t ≤ 1); typed `IR_MEMORY_BUDGET_EXCEEDED`; teaching expansion skipped (traced) when over the IR budget; `geometry-function-engine/10` | same |
+| `backend/app/ai/hybrid_preview.py` · `backend/app/ai/fact_extraction.py` | preview births read from group-event `objects`; provider facts with bridge-only fields refused (`INTERNAL_FIELD_FROM_PROVIDER`) | same; `backend/tests/test_hybrid_preview_fixtures.py` |
+
 ## Simulation evidence repair (`research/simulation-evidence-repair`)
 
 Current capability authority: `docs/evaluation/geometry/runs/simulation-evidence-repair/capability-matrix.md`; supersedes unsupported residual-mesh claims in the historical campaign matrix. New evidence-only capture tooling lives in that run (`capture.py`, binary subprocess streams; `probe-browser.mjs`, separate environment probe). Existing `run_browser_audit.mjs`, `full-gate.mjs`, product and test code are reused unchanged. Dedicated residual mesh NOT_IMPLEMENTED; standalone cone_frustum BLOCKED_BY_KERNEL; ellipse browser scope BACKEND_ONLY.

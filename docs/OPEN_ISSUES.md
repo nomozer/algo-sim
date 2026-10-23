@@ -1,5 +1,9 @@
 # OPEN_ISSUES.md — Danh mục các vấn đề kỹ thuật đang mở
 
+**LOCAL backend Session 2 (2026-10-22, `research/hybrid-backend-session2-contract`, product `3553e4d4`):** `cut_edges` divergence now SAFE, not unified — Adapter /3 proves its full-boundary reading (closure certificate), the bridge keeps its stated-subset reading; 0 wrong / 0 disagreements on 316 parity payloads; the schema fix is a proposal (D1). Adapter /3 takes the Registry Source Gate verdict wherever the bridge can express the payload; elsewhere legacy checks decide, labelled — 1 known invalid serve remains (D2), and on Adapter /3's own dev corpus the gate decides 0 of 7 served cases. IR budget refusals 9/49 → 0/49 by canonicalization (budget 32 kept; hexagonal base genuinely 33/36, D4). Gate grammar false-refuses 4/5 paraphrases of a section clause (D3). Plane-equation crash fixed. Decisions D1–D6: `evaluation/geometry/runs/backend-hybrid-contract-unification/CONTRACT_DECISION_PROPOSAL.md`.
+
+**LOCAL backend Session 1 (2026-10-22):** ratio span ownership and preview group-event births resolved on `research/hybrid-backend-integration-session1`; actual preview cause was timeline birth handling, not fact-ID dependencies. TypedFactNext bridge remains partial; cut_edges has incompatible route meanings, Adapter /3 source grounding and malformed-operand gaps remain. Contract proposal and P0–P6 status: `evaluation/geometry/runs/backend-hybrid-continuation/BACKEND_HYBRID_ARCHITECTURE_DECISION.md` and gap matrix.
+
 ### ISSUE-RESEARCH-HYBRID-SOURCE-GATE-REMAINING-GAPS
 
 - **status:** OPEN (run `source-gate-hardening`, integrated on `main` under `GO_MAIN_SOURCE_GATE_HARDENING_CONDITIONAL` for offline research only; strict preregistered SGH blind threshold NOT MET: 6/10 positive, 10/16 math goals, 8/16 strict tuple due to `dim`, 5/5 negative, 1/2 ambiguous, SGH-17 adjudicated without manifest edit, 4 false refusals in SGH-02/04/09/10).

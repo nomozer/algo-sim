@@ -1,0 +1,18 @@
+{
+  "scope": "authoritative Full T3 once after freeze",
+  "pytest_workers": 1,
+  "vitest_max_workers": 2,
+  "control": "VITEST_MAX_WORKERS=2; verified in installed vitest/dist/chunks/coverage.DM_a_rWm.js:380",
+  "thread_env": {
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1"
+  },
+  "ALLOW_LIVE_AI": "0",
+  "timeout_seconds": 2400,
+  "attempt_limit": 1,
+  "parallel_builds": false,
+  "provider_token_measurement": "NOT_APPLICABLE: no provider requests",
+  "cpu_and_rss_measurement": "UNKNOWN: no profiler; wall times in execution.json"
+}

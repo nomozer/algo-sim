@@ -1,0 +1,17 @@
+{
+ "schema": "execution/1",
+ "purpose": "Development evaluation of run backend-hybrid-contract-unification (DEVELOPMENT_EVALUATION_NOT_BLIND)",
+ "product_commit": "3553e4d4",
+ "cwd": "backend/",
+ "command": "PYTHONIOENCODING=utf-8 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/Scripts/python.exe ../docs/evaluation/geometry/runs/backend-hybrid-contract-unification/evaluate.py ../docs/evaluation/geometry/runs/backend-hybrid-contract-unification",
+ "interpreter": "main checkout backend/.venv (Python 3.12), run from the Session 2 worktree",
+ "exit_code": 0,
+ "wall_seconds": "UNKNOWN",
+ "wall_seconds_note": "the shell timer failed (bc not installed); not re-run, because a re-run rewrites the per-row timing fields and so the output hashes",
+ "provider_calls": 0,
+ "outputs": {
+  "evaluation.json": "3d56cceaa981880d6b9852332e6398f1ff125e86cbb134c1bb5898410e2b2be5",
+  "session1-family-replay.json": "afd26493b1d9e9b912caf1b8e4e3334a6de0143419cf760522050a0dac8a7141"
+ },
+ "logs": ["stdout.log", "stderr.log"]
+}

@@ -18,7 +18,7 @@ from typing import Any, Callable
 from app.ai.function_calling import MAX_OUTPUT_TOKENS, TEMPERATURE, LiveAIDisabled, _openapi
 from app.ai.function_route import run_fact_route
 from app.simulation.geometry_functions import KetQuaTuyen
-from app.simulation.geometry_functions.planner import TypedFact
+from app.simulation.geometry_functions.planner import INTERNAL_FACT_FIELDS, TypedFact
 from app.simulation.geometry_functions.registry import NUMBER_PATTERN, REGISTRY, goal_slots, planning_contracts
 
 SYSTEM_PROMPT = (
@@ -250,6 +250,10 @@ def parse_response(body: Any, diag: dict[str, Any]) -> dict[str, Any]:
         raise _TuChoiAI("JSON_INVALID", "đầu ra không phải đối tượng JSON")
     if not isinstance(data.get("facts", []), list):
         raise _TuChoiAI("MALFORMED_RESPONSE_PART", "facts phải là danh sách")
+    # Fields only the deterministic TypedFactNext bridge writes are not offered to the provider; one in its output is
+    # refused rather than trusted (run `typedfactnext-planner-bridge`).
+    if any(isinstance(f, dict) and any(k in f for k in INTERNAL_FACT_FIELDS) for f in data.get("facts") or []):
+        raise _TuChoiAI("INTERNAL_FIELD_FROM_PROVIDER", "dữ kiện của nhà cung cấp mang ô nội bộ của bridge")
     diag["n_facts"] = len(data.get("facts") or [])
     return data
 

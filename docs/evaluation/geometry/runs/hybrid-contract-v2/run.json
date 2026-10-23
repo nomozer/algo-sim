@@ -1,0 +1,95 @@
+{
+  "schema": "run/1",
+  "run": "hybrid-contract-v2",
+  "task_code": "BACKEND_HYBRID_SESSION3_CONTRACT_V2",
+  "date": "2026-10-23",
+  "owner_authorization": "GO_HYBRID_SESSION3_CONTRACT_V2_LOCAL_RESEARCH",
+  "branch": "research/hybrid-backend-session3-contract-v2",
+  "worktree": ".superpowers/worktrees/hybrid-backend-s3",
+  "base": {
+    "session2_head": "227d447f5c1ca55a2c4bd68f3c8c583228902cfc",
+    "session2_full_t3_target": "5beb0e864f9ef8c38ca4841c094037cc55046916",
+    "session2_product": "3553e4d45991954dd0fb8c0ac30bf5fb79a3ff51",
+    "origin_main": "43247c9e9375a3dbf2b5223324a58e6f932ca596"
+  },
+  "commits": {
+    "plan": "3d7d3f6ba571a874bb9aef87fbbbc9b828a6105f",
+    "p1_safety": "fe6ad30bea6aa90a4827befaf8091c6b3fdee505",
+    "p4a_grammar_lock": "4268f4e214125fe20c858930bc92b0c5798dfc67",
+    "p2_contract_v2": "fa1599c657006317d482a4630f641a236defdcb0",
+    "p3_p5_bridge_planner_adapter4": "42f19eecec0b43635c6f7809250b93249d79bf5d",
+    "p4b_grammar_g1_g7": "814b88c9f30d649b1e94239aba81bfdabd7f2dab",
+    "p6_p7_evaluation": "94893d72049baddc3f6bdea433e7a31157f8e8f5",
+    "product_final": "69bd2fe48be1fd3afa6ce4112ccddda92a07d850",
+    "candidate_freeze_attempt1": "b555ca48f2f40c1b7e6d043ecf8339d10d85f781",
+    "candidate_freeze": "84c729e0b0df7868dfcc0a6e48cac457d7959e92"
+  },
+  "measured_system": {
+    "files": 116,
+    "tree_hash": "413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df"
+  },
+  "locked_grammar_set": {
+    "file": "grammar-set.json",
+    "lock_file": "grammar-set.lock.json",
+    "lock_commit": "4268f4e214125fe20c858930bc92b0c5798dfc67",
+    "sha256": "10c57be7b485d7b3f1a97183ff41b28988e70641e297e01cccf68d1434cc4abe",
+    "cases": 47,
+    "positive_served": "22/22",
+    "match": "46/47",
+    "wrong_served": 0,
+    "served_without_gate": 0
+  },
+  "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "provider_calls": 0,
+  "governance": {
+    "DEFAULT_MODE": "LLM_ONLY",
+    "RESPONSE_CONTRACT": "flat",
+    "HYBRID_PRODUCT_ENABLEMENT": "NO-GO",
+    "ALLOW_LIVE_AI": 0,
+    "CACHE_VERSION": "127",
+    "cache_decision": "NO_BUMP",
+    "MAX_MEMORY_DECLARATIONS": 32
+  },
+  "contract_versions": {
+    "v2_canonical": [
+      "typed-fact-next/2",
+      "typed-fact-next-bridge/2",
+      "hybrid-simulation-adapter/4",
+      "hybrid-route-d-simulation/4",
+      "geometry-functions/13",
+      "geometry-fact-planner/13",
+      "geometry-function-engine/11"
+    ],
+    "v1_preserved": [
+      "typed-fact-next/1",
+      "typed-fact-next-bridge/1",
+      "hybrid-simulation-adapter/3",
+      "hybrid-route-d-simulation/3",
+      "hybrid-preview-adapter/2",
+      "hybrid-route-d-preview/1"
+    ]
+  },
+  "owner_decisions_executed": [
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6"
+  ],
+  "final_state": "SESSION3_CONTRACT_V2_AND_PLANNER_MIGRATION_COMPLETE",
+  "authoritative_full_t3": {
+    "target_commit": "84c729e0b0df7868dfcc0a6e48cac457d7959e92",
+    "product_commit": "69bd2fe48be1fd3afa6ce4112ccddda92a07d850",
+    "status": "FULL_PRODUCT_GATE_PASS",
+    "attempt": 2,
+    "pytest_backend": "11572 passed, 1 skipped, 2 deselected, 15 xfailed",
+    "vitest_frontend": "72 files, 1156 passed",
+    "production_build": "PASS",
+    "demo_replay": "5/5 PASS, 1/1 reduced",
+    "demo_crash_audit": "6/6 PASS, 0 uncaught",
+    "post_t3_freeze_verify": "MATCH (116 files, 413ee525d20874aa...)",
+    "elapsed_seconds": 484.53,
+    "receipt": "verification/full-t3/execution.json"
+  }
+}

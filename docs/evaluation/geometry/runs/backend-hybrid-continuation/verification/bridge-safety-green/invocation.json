@@ -1,0 +1,26 @@
+{
+  "command": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/geometry/test_typedfactnext_planner_bridge.py",
+    "tests/geometry/test_wave3a_volume_reasoning.py",
+    "tests/geometry/test_typedfact_next_adapter3.py",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-backend-s1\\backend",
+  "source_commit": "404f0568a00651505ec0773754a04ef5c493f5f9",
+  "dirty_before": "M backend/app/ai/function_route.py\n M backend/app/simulation/geometry_functions/typed_fact_next_bridge.py\n M backend/tests/geometry/test_typedfactnext_planner_bridge.py\n?? docs/evaluation/geometry/runs/backend-hybrid-continuation/\n?? docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/t3-attempt1/",
+  "started_utc": "2026-10-22T13:33:50.245779+00:00",
+  "timeout_seconds": 120,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "OMP_NUM_THREADS": "1",
+    "PYTEST_DEBUG_TEMPROOT": "D:\\Documents\\projects\\algo-sim\\.superpowers\\pt-16228"
+  }
+}

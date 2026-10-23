@@ -1,0 +1,751 @@
+{
+ "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND (preregistered)",
+ "provider_calls": 0,
+ "aggregate": {
+  "lock_sha256": "10c57be7b485d7b3f1a97183ff41b28988e70641e297e01cccf68d1434cc4abe",
+  "cases": 47,
+  "match": 46,
+  "wrong_served": [],
+  "by_expected": {
+   "SERVE": "22/22",
+   "REFUSE_SOURCE": "18/19",
+   "REFUSE_GEOMETRY": "4/4",
+   "REFUSE_KERNEL": "2/2"
+  },
+  "confusion": {
+   "SERVE -> SERVE": 22,
+   "REFUSE_SOURCE -> REFUSE_SOURCE": 18,
+   "REFUSE_SOURCE -> REFUSE_OTHER": 1,
+   "REFUSE_GEOMETRY -> REFUSE_GEOMETRY": 4,
+   "REFUSE_KERNEL -> REFUSE_KERNEL": 2
+  },
+  "mismatches": [
+   {
+    "id": "NEG-per-edge-same-name",
+    "expected": "REFUSE_SOURCE",
+    "observed": "REFUSE_OTHER",
+    "code": "INVALID_DERIVED_SECTION",
+    "reason": "Section 'sec': two stated intersections carry the same name"
+   }
+  ],
+  "served_without_gate": []
+ },
+ "rows": [
+  {
+   "id": "PARA-0",
+   "category": "paraphrase_reference",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0861,
+   "answers": {
+    "g_res": "49/576",
+    "g_ratio": "1/64"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "PARA-1",
+   "category": "known_paraphrase",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0347,
+   "answers": {
+    "g_res": "49/576",
+    "g_ratio": "1/64"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "PARA-2",
+   "category": "known_paraphrase",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0341,
+   "answers": {
+    "g_res": "49/576",
+    "g_ratio": "1/64"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "PARA-3",
+   "category": "known_paraphrase",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0339,
+   "answers": {
+    "g_res": "49/576",
+    "g_ratio": "1/64"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "PARA-4",
+   "category": "known_paraphrase",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0344,
+   "answers": {
+    "g_res": "49/576",
+    "g_ratio": "1/64"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "PARA-5",
+   "category": "known_paraphrase",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0433,
+   "answers": {
+    "g_res": "49/576",
+    "g_ratio": "1/64"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "CORPUS-DEV01-construct",
+   "category": "dev_corpus_section_sentence",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0286,
+   "answers": {},
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "CORPUS-DEV01-ratio-unowned",
+   "category": "ratio_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0032,
+   "observed": "REFUSE_SOURCE",
+   "reason": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "CORPUS-DEV03-construct",
+   "category": "dev_corpus_section_sentence",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0241,
+   "answers": {},
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "CORPUS-DEV03-ratio-unowned",
+   "category": "ratio_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0029,
+   "observed": "REFUSE_SOURCE",
+   "reason": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "CORPUS-DEV06-construct",
+   "category": "dev_corpus_section_sentence",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0203,
+   "answers": {},
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "CORPUS-DEV06-ratio-unowned",
+   "category": "ratio_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0028,
+   "observed": "REFUSE_SOURCE",
+   "reason": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "CORPUS-DEV09-construct",
+   "category": "dev_corpus_section_sentence",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0263,
+   "answers": {},
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "CORPUS-DEV09-ratio-unowned",
+   "category": "ratio_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0031,
+   "observed": "REFUSE_SOURCE",
+   "reason": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "CORPUS-DEV10-prism-area",
+   "category": "dev_corpus_section_sentence",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0235,
+   "answers": {
+    "g_area": "3/16"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "PARTIAL-1of2-construct",
+   "category": "partial_intersections",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0216,
+   "answers": {},
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 1,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "PARTIAL-2of3-construct",
+   "category": "partial_intersections",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0284,
+   "answers": {},
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 1,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "PLANE-ONLY-construct",
+   "category": "plane_only",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0206,
+   "answers": {},
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 2,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "PLANE-ONLY-ratio-described",
+   "category": "plane_only",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0243,
+   "answers": {
+    "g_ratio": "1/64"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 2,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "RELABEL-TDEF",
+   "category": "relabel",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0366,
+   "answers": {
+    "g_res": "49/3072",
+    "g_ratio": "1/64"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "ORDER-premises-0",
+   "category": "premise_order",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0347,
+   "answers": {
+    "g_res": "49/576",
+    "g_ratio": "1/64"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "ORDER-premises-1",
+   "category": "premise_order",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0319,
+   "answers": {
+    "g_res": "49/576",
+    "g_ratio": "1/64"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "ORDER-goals",
+   "category": "goal_order",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0312,
+   "answers": {
+    "g_res": "49/576",
+    "g_ratio": "1/64"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "PERP-square-third",
+   "category": "reference",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0374,
+   "answers": {
+    "g_res": "676/6561",
+    "g_ratio": "1/729"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-negated-plane",
+   "category": "negation",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0025,
+   "observed": "REFUSE_SOURCE",
+   "reason": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-conditional-plane",
+   "category": "condition",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0023,
+   "observed": "REFUSE_SOURCE",
+   "reason": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-missing-height",
+   "category": "missing_data",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "MISSING_DIMENSION",
+   "seconds": 0.0124,
+   "observed": "REFUSE_SOURCE",
+   "reason": "chưa có dữ kiện cho chiều cao của S",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-number-wrong-object",
+   "category": "number_wrong_object",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "UNGROUNDED_VALUE",
+   "seconds": 0.0044,
+   "observed": "REFUSE_SOURCE",
+   "reason": "p3: 'SB = a' không gắn a với vai trò của ô này trong một câu đọc trọn",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-wrong-relation",
+   "category": "wrong_relation",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "PLANE_NOT_IN_QUOTE",
+   "seconds": 0.0041,
+   "observed": "REFUSE_SOURCE",
+   "reason": "p2: mặt phẳng ['A', 'B', 'C'] không được nhắc trong 'SA vuông góc với SB'",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-ratio-unowned-named",
+   "category": "ratio_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0029,
+   "observed": "REFUSE_SOURCE",
+   "reason": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-ratio-unowned-anonymous",
+   "category": "ratio_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0028,
+   "observed": "REFUSE_SOURCE",
+   "reason": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-residual-unowned",
+   "category": "residual_without_operands",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0028,
+   "observed": "REFUSE_SOURCE",
+   "reason": "g_sub: đề không gọi khối chóp đỉnh S trên thiết diện bởi mặt này",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-swapped-names",
+   "category": "wrong_naming",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0043,
+   "observed": "REFUSE_SOURCE",
+   "reason": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-unread-condition",
+   "category": "unread_condition",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0026,
+   "observed": "REFUSE_SOURCE",
+   "reason": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-stated-edge-not-in-text",
+   "category": "stated_not_in_source",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0029,
+   "observed": "REFUSE_SOURCE",
+   "reason": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-contains-a-line",
+   "category": "grammar_negative_control",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.003,
+   "observed": "REFUSE_SOURCE",
+   "reason": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-other-plane-subject",
+   "category": "grammar_negative_control",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0025,
+   "observed": "REFUSE_SOURCE",
+   "reason": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "NEG-per-edge-same-name",
+   "category": "grammar_negative_control",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "INVALID_DERIVED_SECTION",
+   "seconds": 0.0003,
+   "observed": "REFUSE_OTHER",
+   "reason": "Section 'sec': two stated intersections carry the same name",
+   "wrong_served": false,
+   "match": false
+  },
+  {
+   "id": "NEG-point-first-wrong-reference",
+   "category": "grammar_negative_control",
+   "expected": "REFUSE_SOURCE",
+   "status": "REFUSED",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "seconds": 0.0029,
+   "observed": "REFUSE_SOURCE",
+   "reason": "sec: đề không nói thiết diện của S.ABC với mặt phẳng qua M song song (ABC)",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "POS-per-edge-with-va-cat",
+   "category": "grammar_positive_control",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0282,
+   "answers": {
+    "g_ratio": "1/64"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "GEO-contradictory-length",
+   "category": "contradiction",
+   "expected": "REFUSE_GEOMETRY",
+   "status": "REFUSED",
+   "code": "INCONSISTENT_FACTS",
+   "seconds": 0.0112,
+   "observed": "REFUSE_GEOMETRY",
+   "reason": "đoạn SA nhận hai độ dài khác nhau từ các dữ kiện",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "GEO-parallel-to-cut-edges",
+   "category": "degenerate",
+   "expected": "REFUSE_GEOMETRY",
+   "status": "REFUSED",
+   "code": "PARALLEL_NO_INTERSECTION",
+   "seconds": 0.0109,
+   "observed": "REFUSE_GEOMETRY",
+   "reason": "PARALLEL_NO_INTERSECTION: đường thẳng SONG SONG với mặt phẳng — không có giao điểm",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "GEO-declared-boundary-crossed",
+   "category": "declared_boundary",
+   "expected": "REFUSE_GEOMETRY",
+   "status": "REFUSED",
+   "code": "SECTION_BOUNDARY_INCOMPLETE",
+   "seconds": 0.0144,
+   "observed": "REFUSE_GEOMETRY",
+   "reason": "chu trình MPNQ (4 đỉnh) không phải thiết diện thật của S.ABCD (4 đỉnh) theo đúng thứ tự vòng",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "GEO-declared-boundary-partial",
+   "category": "declared_boundary",
+   "expected": "REFUSE_GEOMETRY",
+   "status": "REFUSED",
+   "code": "SECTION_BOUNDARY_INCOMPLETE",
+   "seconds": 0.0154,
+   "observed": "REFUSE_GEOMETRY",
+   "reason": "chu trình NPQ (3 đỉnh) không phải thiết diện thật của S.ABCD (4 đỉnh) theo đúng thứ tự vòng",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "GEO-declared-boundary-reversed",
+   "category": "declared_boundary",
+   "expected": "SERVE",
+   "status": "SERVED",
+   "code": null,
+   "seconds": 0.0343,
+   "answers": {
+    "g_res": "49/576",
+    "g_ratio": "1/64"
+   },
+   "answers_correct": true,
+   "observed": "SERVE",
+   "source_authority": {
+    "authority": "registry.kiem_nguon"
+   },
+   "derived_vertices": 0,
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "KER-plane-equation",
+   "category": "unsupported_plane_kind",
+   "expected": "REFUSE_KERNEL",
+   "status": "REFUSED",
+   "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+   "seconds": 0.0004,
+   "observed": "REFUSE_KERNEL",
+   "reason": "sec: mặt plane_equation chưa có phép dựng của planner",
+   "wrong_served": false,
+   "match": true
+  },
+  {
+   "id": "KER-section-on-base-edges",
+   "category": "unsupported_section_shape",
+   "expected": "REFUSE_KERNEL",
+   "status": "REFUSED",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "seconds": 0.0011,
+   "observed": "REFUSE_KERNEL",
+   "reason": "sec: ['AB', 'AC'] không phải cạnh bên của S.ABC",
+   "wrong_served": false,
+   "match": true
+  }
+ ]
+}

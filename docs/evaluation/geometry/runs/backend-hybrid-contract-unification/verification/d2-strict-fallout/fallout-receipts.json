@@ -1,0 +1,61 @@
+{
+ "strict-at-3553e4d4.log": {
+  "raw_log_sha256": "ac1939759030a7de7c736b683a97f195b13f011be1ddefd864b06f644f21f773",
+  "raw_log_bytes": 9657,
+  "raw_log_committed": false,
+  "exit_code": "UNKNOWN",
+  "summary_line": "18 failed, 18 passed in 0.83s",
+  "failed": [
+   "tests/geometry/test_typedfact_next_adapter3.py::test_adapter3_preview_envelope_compatibility",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_p2_refuses_ungrounded_quote_and_mismatched_number",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_p4_scene3d_topology_edges_surfaces_and_timeline",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_p5_p6_development_corpus_and_demos_oracle",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_slice_a_parallel_two_lines_unnamed_section",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_slice_a_perpendicular_plane_unnamed_section",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_slice_a_refuses_plane_coincident_with_base",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_slice_a_refuses_plane_missing_lateral_edges",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_slice_a_refuses_plane_not_unique_parallel_lines",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_slice_a_unnamed_section_vertices_and_derived_solid",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_slice_b_multi_solid_qualified_identity_and_shared_geometry",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_slice_b_refuses_ambiguous_unqualified_vertex_reference",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_slice_b_refuses_disconnected_coordinate_frame",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_slice_b_refuses_shared_entity_mismatch",
+   "tests/geometry/test_wave3a_adapter3_integration.py::test_adapter3_unified_self_ratio_and_self_residual_refusal",
+   "tests/geometry/test_wave3a_adapter3_integration.py::test_cross_route_equivalence_shared_base_multi_pyramid_ratio",
+   "tests/geometry/test_wave3a_adapter3_integration.py::test_cross_route_equivalence_square_pyramid_parallel_cut",
+   "tests/geometry/test_wave3a_adapter3_integration.py::test_cross_route_equivalence_triangular_pyramid_ratio_one_third"
+  ],
+  "assertions": [
+   "E   AssertionError: Adapter /3 refused: SOURCE_GATE_UNAVAILABLE - BRIDGE_CUT_EDGES_NOT_STATED",
+   "E   AssertionError: Case A3-DEV-01 failed: SOURCE_GATE_UNAVAILABLE",
+   "E   AssertionError: Unexpected refusal: SOURCE_GATE_UNAVAILABLE - BRIDGE_CUT_EDGES_NOT_STATED",
+   "E   AssertionError: Unexpected refusal: SOURCE_GATE_UNAVAILABLE - BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY",
+   "E   AssertionError: Unexpected refusal: SOURCE_GATE_UNAVAILABLE - UNKNOWN_VERTEX_REF",
+   "E   AssertionError: assert 'REFUSED' == 'SERVED'",
+   "E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'AMBIGUOUS_REFERENCE'",
+   "E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'COORDINATE_F..._DISCONNECTED'",
+   "E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'SHARED_ENTITY_MISMATCH'",
+   "E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'SOURCE_QUOTE_NOT_FOUND'",
+   "E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'UNSUPPORTED_VOLUME_RATIO'",
+   "E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' in {'COLLINEAR_POINTS', 'PLANE_NOT_UNIQUE'}",
+   "E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' in {'CONTAINED_INFINITE_INTERSECTION', 'DERIVED_PLANE_IS_REFERENCE', 'PARALLEL_LINE_AND_PLANE', 'SECTION_NOT_CLOSED_ON_LATERAL_EDGES', 'SECTION_PLANE_IS_FACE'}",
+   "E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' in {'DEGENERATE_DERIVED_SOLID', 'DERIVED_PLANE_IS_REFERENCE', 'SECTION_PLANE_IS_FACE'}"
+  ]
+ },
+ "nonstrict-before-test-corrections.log": {
+  "raw_log_sha256": "7b8a03fdaf042bd19cf38094c2affcf3c09689684d5dfef44f78595f64b3a680",
+  "raw_log_bytes": 827,
+  "raw_log_committed": false,
+  "exit_code": "UNKNOWN",
+  "summary_line": "4 failed, 44 passed in 3.93s",
+  "failed": [
+   "tests/geometry/test_hybrid_contract_unification.py::test_adapter3_boundary_in_a_crossed_order_is_refused",
+   "tests/geometry/test_hybrid_contract_unification.py::test_adapter3_refuses_what_the_shared_source_gate_refuses[_anonymous_ratio_operand]",
+   "tests/geometry/test_typedfact_next_adapter3.py::test_p5_p6_development_corpus_and_demos_oracle",
+   "tests/geometry/test_wave3a_adapter3_integration.py::test_adapter3_unified_halfspace_containment_refusal"
+  ],
+  "assertions": [
+   "E           AssertionError: Case A3-DEV-07 failed: SOURCE_OBJECT_MISMATCH"
+  ]
+ }
+}

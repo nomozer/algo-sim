@@ -1,0 +1,238 @@
+{
+  "schema": "RAW_STREAM_ARCHIVE_CORRECTION/1",
+  "corrects": "4fb1045f log transport only; existing receipts and source logs unchanged",
+  "cause": "core.autocrlf=true; text logs normalized CRLF to LF on git add",
+  "archive": "passed-command-raw-streams.zip",
+  "archive_bytes": 5641,
+  "archive_sha256": "5ab8c0a1fd5585a5ee42397534c36b2cd6a6c95bcfcfb2b4d13bdb4f52772c46",
+  "streams": [
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/boundary-final-green/stdout.log",
+      "archive_member": "verification/boundary-final-green/stdout.log",
+      "runtime_and_receipt": {
+        "bytes": 182,
+        "sha256": "530ae554db197e6655a09bbc46bf297204d39f7be0ba1019d52f8d7958980789"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 179,
+        "sha256": "674c2c78ca68d8c46d0468a7ea22632eeb271f6f49b2b00559f0323fc1763d31",
+        "same_as_runtime": false
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/boundary-final-green/stderr.log",
+      "archive_member": "verification/boundary-final-green/stderr.log",
+      "runtime_and_receipt": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "same_as_runtime": true
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/bridge-boundary-green/stdout.log",
+      "archive_member": "verification/bridge-boundary-green/stdout.log",
+      "runtime_and_receipt": {
+        "bytes": 101,
+        "sha256": "d1ef07b8d61587c03d95d1c52be193eafa1f220ac5aef8b0cb4de890a7ec7e4a"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 99,
+        "sha256": "2424c41290d817b5363d14cc1b77fc0015151e4913720723268f60db9dfd10e9",
+        "same_as_runtime": false
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/bridge-boundary-green/stderr.log",
+      "archive_member": "verification/bridge-boundary-green/stderr.log",
+      "runtime_and_receipt": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "same_as_runtime": true
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/bridge-safety-green/stdout.log",
+      "archive_member": "verification/bridge-safety-green/stdout.log",
+      "runtime_and_receipt": {
+        "bytes": 182,
+        "sha256": "93eb1bc5949eb695f9b23cb2aec0a82cd001b36cc8d28c9b985d24aa53853239"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 179,
+        "sha256": "572eb23b0cf659eb5ea74df84c89bb6fe7356a850dff16a5a19b3e0ea537d084",
+        "same_as_runtime": false
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/bridge-safety-green/stderr.log",
+      "archive_member": "verification/bridge-safety-green/stderr.log",
+      "runtime_and_receipt": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "same_as_runtime": true
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/development-final/stdout.log",
+      "archive_member": "verification/development-final/stdout.log",
+      "runtime_and_receipt": {
+        "bytes": 3317,
+        "sha256": "2e07bbb18eec6a45dfe6aa0fd08ad0afe25b39977ffda6b5204085924c2de3c8"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 3225,
+        "sha256": "9edd7ab4a026603eade6ed498ba74bdfdb2e316ab6159d54bc183d27ab5ba252",
+        "same_as_runtime": false
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/development-final/stderr.log",
+      "archive_member": "verification/development-final/stderr.log",
+      "runtime_and_receipt": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "same_as_runtime": true
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/development-replay/stdout.log",
+      "archive_member": "verification/development-replay/stdout.log",
+      "runtime_and_receipt": {
+        "bytes": 3317,
+        "sha256": "c12d125de073c568ef464448f2fa1253510b969f94ca957747ee643cd2b79431"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 3225,
+        "sha256": "cad6b9dc301bf4c54871c0930161ef52fd4ac82904800abad23500ed36ba2723",
+        "same_as_runtime": false
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/development-replay/stderr.log",
+      "archive_member": "verification/development-replay/stderr.log",
+      "runtime_and_receipt": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "same_as_runtime": true
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/final-focused/stdout.log",
+      "archive_member": "verification/final-focused/stdout.log",
+      "runtime_and_receipt": {
+        "bytes": 937,
+        "sha256": "f289101abbd64686615b33a805c51d0341dfc22892c782d8b9167b15177870d1"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 925,
+        "sha256": "71114189fd9f9bc5ca703b84b36be4923b49807f91afe0949e3d1fd91b2332b0",
+        "same_as_runtime": false
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/final-focused/stderr.log",
+      "archive_member": "verification/final-focused/stderr.log",
+      "runtime_and_receipt": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "same_as_runtime": true
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/focused-backend/stdout.log",
+      "archive_member": "verification/focused-backend/stdout.log",
+      "runtime_and_receipt": {
+        "bytes": 856,
+        "sha256": "563e47e2804b609c8cd52804d7d02fa5b567d4d5552bcfcbf3ed3afb13968e24"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 845,
+        "sha256": "fa4508331815cbd87907d6f8b6e174d7f16c9ee1ee727dab0925c9f7f317c5ec",
+        "same_as_runtime": false
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/focused-backend/stderr.log",
+      "archive_member": "verification/focused-backend/stderr.log",
+      "runtime_and_receipt": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "same_as_runtime": true
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/freeze-before-t3/stdout.log",
+      "archive_member": "verification/freeze-before-t3/stdout.log",
+      "runtime_and_receipt": {
+        "bytes": 93,
+        "sha256": "2305a06c9fc23a119db22ef86e6919a041a9d8af5c5fa970e07352bbba7fd910"
+      },
+      "git_blob_at_4fb1045f": null
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/freeze-before-t3/stderr.log",
+      "archive_member": "verification/freeze-before-t3/stderr.log",
+      "runtime_and_receipt": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "git_blob_at_4fb1045f": null
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/targeted-governance/stdout.log",
+      "archive_member": "verification/targeted-governance/stdout.log",
+      "runtime_and_receipt": {
+        "bytes": 102,
+        "sha256": "78baca04299109180cc48303aa8bb3ef2110ef3a43d25d8fecb8dada6a27fc87"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 100,
+        "sha256": "5bf410b4540fdd9b8482e047f9dc5058e3ffd27851550fbbfb8228095736aeda",
+        "same_as_runtime": false
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/targeted-governance/stderr.log",
+      "archive_member": "verification/targeted-governance/stderr.log",
+      "runtime_and_receipt": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "git_blob_at_4fb1045f": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "same_as_runtime": true
+      }
+    }
+  ],
+  "failed_raw_streams": "Remain local and untracked, not archived in Git because they contain raw tracebacks. Hashes in execution receipts preserve identity.",
+  "full_t3_in_progress": "Excluded until complete; future passing T3 streams need separate binary packaging."
+}

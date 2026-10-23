@@ -1,0 +1,112 @@
+{
+ "route": "adapter3",
+ "runs": 13661,
+ "skipped_seeds": 0,
+ "escaped_exceptions": 1015,
+ "escaped_by_kind": {
+  "TypeError @ _compile_premises": 214,
+  "AttributeError @ parse_qualified_ref": 551,
+  "TypedFactNextValidationError @ parse_qualified_ref": 108,
+  "IndexError @ _compile_premises": 51,
+  "KeyError @ _compile_premises": 81,
+  "TypedFactNextValidationError @ split_vertex_chain": 10
+ },
+ "internal_errors": 0,
+ "internal_by_reason": {},
+ "examples": {
+  "TypeError @ _compile_premises": {
+   "seed": "u4",
+   "site": [
+    "premises",
+    "0",
+    "args",
+    "vertices"
+   ],
+   "value": "5"
+  },
+  "AttributeError @ parse_qualified_ref": {
+   "seed": "u4",
+   "site": [
+    "premises",
+    "0",
+    "args",
+    "vertices"
+   ],
+   "value": "[['S', 'A']]"
+  },
+  "TypedFactNextValidationError @ parse_qualified_ref": {
+   "seed": "u4",
+   "site": [
+    "premises",
+    "3",
+    "args",
+    "point"
+   ],
+   "value": "''"
+  },
+  "IndexError @ _compile_premises": {
+   "seed": "u4",
+   "site": [
+    "premises",
+    "3",
+    "args",
+    "segment"
+   ],
+   "value": "[]"
+  },
+  "KeyError @ _compile_premises": {
+   "seed": "A3-DEV-01",
+   "site": [
+    "premises",
+    "0",
+    "args",
+    "vertices"
+   ],
+   "value": "'<DEL>'"
+  },
+  "TypedFactNextValidationError @ split_vertex_chain": {
+   "seed": "A3-DEV-01",
+   "site": [
+    "relations",
+    "0",
+    "container_ref"
+   ],
+   "value": "'1/0'"
+  }
+ },
+ "result_codes": {
+  "INVALID_TYPED_FACT_NEXT": 7084,
+  "INVALID_QUALIFIED_REF": 919,
+  "INVALID_NUMBER_VALUE": 773,
+  "UNKNOWN_SOLID_ID": 710,
+  "UNSUPPORTED_PREMISE_KIND": 616,
+  "None": 353,
+  "UNKNOWN_LABEL": 293,
+  "SCHEMA_INVALID": 273,
+  "UNKNOWN_SECTION_ID": 180,
+  "INVALID_SIMULATION_GOAL": 166,
+  "SOURCE_NUMBER_MISMATCH": 164,
+  "INVALID_SOLID_NOTATION": 161,
+  "INVALID_RELATION_SPEC": 153,
+  "SOURCE_OBJECT_MISMATCH": 152,
+  "INVALID_MATH_GOAL": 144,
+  "SHARED_ENTITY_MISMATCH": 129,
+  "INVALID_DERIVED_SECTION": 60,
+  "COLLINEAR_POINTS": 60,
+  "DERIVED_PLANE_IS_REFERENCE": 58,
+  "AMBIGUOUS_REFERENCE": 50,
+  "MISSING_DIMENSION": 34,
+  "SECTION_BOUNDARY_INCOMPLETE": 28,
+  "COORDINATE_FRAME_DISCONNECTED": 24,
+  "UNDERDETERMINED_POINT": 15,
+  "UNGROUNDED_VALUE": 9,
+  "PLANE_TOUCHES_VERTEX": 7,
+  "SOURCE_PREMISE_UNREAD": 6,
+  "NON_POSITIVE_LENGTH": 6,
+  "ROLE_NOT_IN_QUOTE": 6,
+  "INCONSISTENT_FACTS": 4,
+  "UNSUPPORTED_MULTIPLE_BASES": 4,
+  "DEGENERATE_DERIVED_SECTION": 3,
+  "DEGENERATE_POINTS": 2
+ }
+}

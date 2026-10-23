@@ -1,0 +1,79 @@
+{
+ "p1-red.log": {
+  "raw_log_sha256": "ff509658be46121bd95fde5c7a5ce86b28d93579dcd3bed0399d94a3ac2fa853",
+  "raw_log_bytes": 11954,
+  "raw_log_committed": false,
+  "exit_code": 1,
+  "summary_line": "6 failed, 3 passed in 1.82s",
+  "failed": [
+   "tests/geometry/test_hybrid_contract_unification.py::test_adapter3_boundary_in_a_crossed_order_is_refused",
+   "tests/geometry/test_hybrid_contract_unification.py::test_adapter3_complete_boundary_is_served_with_a_closure_certificate",
+   "tests/geometry/test_hybrid_contract_unification.py::test_adapter3_never_serves_a_bridge_style_partial_boundary_as_a_smaller_polygon",
+   "tests/geometry/test_hybrid_contract_unification.py::test_adapter3_polyhedral_plane_kind_without_a_construction_refuses_not_crashes",
+   "tests/geometry/test_hybrid_contract_unification.py::test_one_payload_never_gets_two_different_answers[ABCD-parallel]",
+   "tests/geometry/test_hybrid_contract_unification.py::test_one_payload_never_gets_two_different_answers[ABCD-perpendicular]"
+  ],
+  "assertions": [
+   "E                       AssertionError: (('SA', 'SB', 'SC'), Adapter3SimulationResult(status='SERVED', code=None, reason=None, failed_calls=(), scene3d={'obje..., {'id': 'vcert11', 'fn': 'ask_volume', 'args': {'solid': '",
+   "E                       AssertionError: (('SA', 'SB', 'SC'), Adapter3SimulationResult(status='SERVED', code=None, reason=None, failed_calls=(), scene3d={'obje...}, {'id': 'vcert9', 'fn': 'ask_volume', 'args': {'solid': '",
+   "E                       assert Fraction(1, 256) == (Fraction(1, 8) ** 2)",
+   "E               AssertionError",
+   "E       AssertionError: ('REFUSED', 'POLYHEDRON_FACE_NOT_SIMPLE')",
+   "E       AssertionError: ('SERVED', None, {'g_ratio': '1/16'})",
+   "E       assert ('REFUSED', '...E_NOT_SIMPLE') == ('REFUSED', '...Y_INCOMPLETE')",
+   "E       assert ('SERVED', None) == ('REFUSED', '...Y_INCOMPLETE')",
+   "E       assert (0 == 1)"
+  ]
+ },
+ "p2-red.log": {
+  "raw_log_sha256": "e88c994850de6e1b292327d403c0040eee46f306f5fe9ef15fe5f9ff8a7efe83",
+  "raw_log_bytes": 4527,
+  "raw_log_committed": false,
+  "exit_code": 1,
+  "summary_line": "3 failed, 9 deselected in 1.08s",
+  "failed": [
+   "tests/geometry/test_hybrid_contract_unification.py::test_adapter3_refuses_what_the_shared_source_gate_refuses[_anonymous_ratio_operand]",
+   "tests/geometry/test_hybrid_contract_unification.py::test_adapter3_refuses_what_the_shared_source_gate_refuses[_swapped_names]",
+   "tests/geometry/test_hybrid_contract_unification.py::test_adapter3_refuses_what_the_shared_source_gate_refuses[_unread_condition]"
+  ],
+  "assertions": [
+   "E           AssertionError: ('REFUSED', 'DEGENERATE_DERIVED_SECTION', {})",
+   "E           assert ('REFUSED', '...IVED_SECTION') == ('REFUSED', '...ECT_MISMATCH')"
+  ]
+ },
+ "p4-red.log": {
+  "raw_log_sha256": "885dda81d683f813c65c28b63c3ff2bd14fe14ff3c6e4b9c6fbbe246e016256d",
+  "raw_log_bytes": 8465,
+  "raw_log_committed": false,
+  "exit_code": 1,
+  "summary_line": "4 failed, 14 deselected in 1.20s",
+  "failed": [
+   "tests/geometry/test_hybrid_contract_unification.py::test_identical_derived_lines_and_planes_are_declared_once[parallel-ABCD]",
+   "tests/geometry/test_hybrid_contract_unification.py::test_identical_derived_lines_and_planes_are_declared_once[parallel-ABC]",
+   "tests/geometry/test_hybrid_contract_unification.py::test_identical_derived_lines_and_planes_are_declared_once[perpendicular-ABCD]",
+   "tests/geometry/test_hybrid_contract_unification.py::test_identical_derived_lines_and_planes_are_declared_once[perpendicular-ABC]"
+  ],
+  "assertions": [
+   "E       AssertionError: ('IR_MEMORY_BUDGET_EXCEEDED', 'chương trình dựng cần 33 khai báo bộ nhớ > trần 32 — không dựng một phần')",
+   "E       AssertionError: [('construct_line', 'S', 'A', ()), ('construct_line', 'S', 'A', ()), ('construct_line', 'S', 'B', ()), ('construct_plane', None, None, ('M', 'H2', 'H3')), ('construct_line', 'S', 'C', ()), ('const",
+   "E       AssertionError: [('construct_line', 'S', 'B', ()), ('construct_plane', None, None, ('M', 'H', 'H1')), ('construct_line', 'S', 'C', ()), ('construct_plane', None, None, ('M', 'H', 'H1'))]",
+   "E       AssertionError: [('construct_line', 'S', 'B', ()), ('construct_plane', None, None, ('M', 'H', 'H1')), ('construct_line', 'S', 'C', ())...e', None, None, ('M', 'H', 'H1')), ('construct_line', 'S', 'D', ()), ('cons",
+   "E       assert 'REFUSED' == 'SERVED'",
+   "E       assert 4 == 3",
+   "E       assert 6 == 4"
+  ]
+ },
+ "p5-red.log": {
+  "raw_log_sha256": "55a8cc3f2aa1f8bc092ff4bb50af2ddb1ddd95ae09a0fb3cd03b6aebbe80648e",
+  "raw_log_bytes": 1976,
+  "raw_log_committed": false,
+  "exit_code": 1,
+  "summary_line": "1 failed, 1 passed, 18 deselected in 0.75s",
+  "failed": [
+   "tests/geometry/test_hybrid_contract_unification.py::test_fresh_cut_labels_never_reach_the_learner_and_derived_edges_are_named_as_such[ABCD]"
+  ],
+  "assertions": [
+   "E       AssertionError: assert ['Đa giác M, ... nối S và I2'] == []"
+  ]
+ }
+}

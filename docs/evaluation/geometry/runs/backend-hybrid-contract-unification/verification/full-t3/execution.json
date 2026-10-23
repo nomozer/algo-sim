@@ -1,0 +1,35 @@
+{
+  "command": [
+    "node",
+    "frontend/scripts/full-gate.mjs"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-s2",
+  "source_commit": "f1ae22384e3e01255879f52aa4104eb33ca46a3f",
+  "dirty_before": "",
+  "started_utc": "2026-10-22T16:12:46.678194+00:00",
+  "timeout_seconds": 2400,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 582.35,
+  "finished_utc": "2026-10-22T16:22:29.032578+00:00",
+  "dirty_after": "",
+  "streams": {
+    "stdout": {
+      "bytes": 18509,
+      "sha256": "561e4586d3db58dc489859f8d66c7ea27a36dfeba71eb10cafaf935d9e6af158"
+    },
+    "stderr": {
+      "bytes": 342,
+      "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a"
+    }
+  }
+}

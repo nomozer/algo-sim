@@ -1,0 +1,6180 @@
+{
+ "classification": "DEVELOPMENT_EVALUATION_NOT_BLIND",
+ "provider_calls": 0,
+ "aggregate": {
+  "contract_parity": {
+   "cases": 316,
+   "bridge_served": 36,
+   "adapter3_served": 20,
+   "both_served": 20,
+   "both_served_disagree": 0,
+   "wrong_served": {
+    "bridge": 0,
+    "adapter3": 0
+   },
+   "crashes": 0,
+   "adapter3_refusal_codes": {
+    "DEGENERATE_DERIVED_SECTION": 96,
+    "SOURCE_OBJECT_MISMATCH": 116,
+    "SECTION_BOUNDARY_INCOMPLETE": 84
+   },
+   "bridge_refusal_codes": {
+    "SECTION_NOT_CLOSED_ON_LATERAL_EDGES": 164,
+    "SOURCE_OBJECT_MISMATCH": 116
+   }
+  },
+  "budget": [
+   {
+    "id": "BUD-equilateral0-parallel",
+    "status": "SERVED",
+    "code": null,
+    "declarations_uncapped": 24,
+    "duplicate_constructs_uncapped": 1
+   },
+   {
+    "id": "BUD-equilateral0-perpendicular",
+    "status": "SERVED",
+    "code": null,
+    "declarations_uncapped": 27,
+    "duplicate_constructs_uncapped": 1
+   },
+   {
+    "id": "BUD-square1-parallel",
+    "status": "SERVED",
+    "code": null,
+    "declarations_uncapped": 27,
+    "duplicate_constructs_uncapped": 1
+   },
+   {
+    "id": "BUD-square1-perpendicular",
+    "status": "SERVED",
+    "code": null,
+    "declarations_uncapped": 30,
+    "duplicate_constructs_uncapped": 1
+   },
+   {
+    "id": "BUD-rectangle2-parallel",
+    "status": "SERVED",
+    "code": null,
+    "declarations_uncapped": 27,
+    "duplicate_constructs_uncapped": 1
+   },
+   {
+    "id": "BUD-rectangle2-perpendicular",
+    "status": "SERVED",
+    "code": null,
+    "declarations_uncapped": 30,
+    "duplicate_constructs_uncapped": 1
+   },
+   {
+    "id": "BUD-hexagon-parallel",
+    "status": "REFUSED",
+    "code": "IR_MEMORY_BUDGET_EXCEEDED",
+    "declarations_uncapped": 33,
+    "duplicate_constructs_uncapped": 1
+   },
+   {
+    "id": "BUD-hexagon-perpendicular",
+    "status": "REFUSED",
+    "code": "IR_MEMORY_BUDGET_EXCEEDED",
+    "declarations_uncapped": 36,
+    "duplicate_constructs_uncapped": 1
+   }
+  ],
+  "metamorphic_invariance": {
+   "premise_permutation": {
+    "bridge": "24/24",
+    "adapter3": "24/24"
+   },
+   "relabel": {
+    "bridge": "2/2",
+    "adapter3": "2/2"
+   },
+   "goal_order": {
+    "bridge": "1/1",
+    "adapter3": "1/1"
+   },
+   "paraphrase": {
+    "bridge": "1/5",
+    "adapter3": "1/5"
+   }
+  },
+  "metamorphic_reference": {
+   "bridge": "SERVED",
+   "adapter3": "SERVED"
+  },
+  "negatives": {
+   "payloads": 20,
+   "served": {
+    "bridge": [],
+    "adapter3": [
+     "N-anonymous-ratio-operand-triangle/convention"
+    ]
+   },
+   "crashes": 0
+  },
+  "scene_valid": {
+   "bridge": "65/65",
+   "adapter3": "50/50"
+  },
+  "composition": {
+   "plans": 38,
+   "duplicate_calls": 0,
+   "ir_duplicate_constructs": 38,
+   "dag_depth": [
+    4,
+    5
+   ],
+   "declarations": [
+    18,
+    30
+   ],
+   "selection_counts": {
+    "reuse_through_point": 38,
+    "named_intersection": 90,
+    "fresh_intersection": 5
+   },
+   "plane_constructions_per_section": [
+    1.0
+   ]
+  },
+  "seconds": {
+   "bridge": {
+    "p50": 0.0028,
+    "max": 0.0604
+   },
+   "adapter3": {
+    "p50": 0.0037,
+    "max": 0.0567
+   }
+  }
+ },
+ "families": {
+  "contract_parity": [
+   {
+    "id": "P-ABC-parallel-t12-SA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0017
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t12-SB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.001
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0015
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t12-SC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.004
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t12-SASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0034
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0035
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t12-SASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0031
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0024
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t12-SBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0016
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t12-SBSC",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.024,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0093
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t12-SCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0016
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t12-SCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0042
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t12-SASBSC",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0282,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0221,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABC-parallel-t12-SASCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0027
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t12-SBSASC",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0265,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0317,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABC-parallel-t12-SBSCSA",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0263,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0263,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABC-parallel-t12-SCSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0027
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t12-SCSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0038
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t13-SA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.001
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0016
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t13-SB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0014
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0022
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t13-SC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0016
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t13-SASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0034
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0048
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t13-SASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0028
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0037
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t13-SBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0021
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0023
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t13-SBSC",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0248,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0099
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t13-SCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0016
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t13-SCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0024
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t13-SASBSC",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.024,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0256,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABC-parallel-t13-SASCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0027
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0028
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t13-SBSASC",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0256,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0284,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABC-parallel-t13-SBSCSA",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0271,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0338,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABC-parallel-t13-SCSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0039
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0039
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-parallel-t13-SCSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0026
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0027
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.001
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0015
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0048
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.003
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.003
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0049
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.002
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SBSC",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.027,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0101
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0014
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0017
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0027
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SASBSC",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0296,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0376,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SASCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0042
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0044
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SBSASC",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0266,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0287,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SBSCSA",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0275,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.024,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SCSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0058
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0064
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t12-SCSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0028
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0022
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0024
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0036
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0019
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0019
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0021
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0017
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SBSC",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0359,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0109
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0019
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0029
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SASBSC",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0275,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0247,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SASCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SBSASC",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0282,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0454,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SBSCSA",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0297,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0298,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SCSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0029
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABC-perpendicular-t13-SCSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0026
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0009
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0015
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.001
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0015
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0015
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0015
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.001
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0016
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.001
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0016
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.001
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0015
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0019
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0016
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.001
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0021
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0017
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.001
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0015
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0039
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0023
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0085
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0025
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0049
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0014
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0048
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASCSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0037
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0036
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0036
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0022
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0044
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.007
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSCSD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0279,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0121
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0037
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0028
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0036
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0037
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0037
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0028
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0037
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0029
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0036
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0028
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0119
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0076
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASBSCSD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0253,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0285,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASBSDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASCSBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASCSDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASDSBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SASDSCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0029
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSASCSD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0391,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0153
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSASDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSCSASD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0244,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0125
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSCSDSA",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0248,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.049,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSDSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0037
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SBSDSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0029
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSASBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSASDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0043
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0058
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSBSASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSBSDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0037
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0028
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSDSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0028
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SCSDSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.004
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0029
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSASBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0028
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSASCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0069
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSBSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.006
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSBSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSCSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t12-SDSCSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.001
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0015
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0016
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0019
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0022
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0016
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0021
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.001
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0017
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.002
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0011
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0019
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.002
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0029
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0097
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0031
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0054
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASCSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0039
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0037
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0036
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSCSD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0236,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0314
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0017
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0045
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0039
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0039
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0037
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0028
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0029
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0027
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0023
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0065
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0017
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0045
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0025
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0059
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0184
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.004
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASBSCSD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0267,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0285,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASBSDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0039
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASCSBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASCSDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASDSBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0027
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SASDSCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0026
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSASCSD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0337,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0167
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSASDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSCSASD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0263,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0164
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSCSDSA",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0375,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0284,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSDSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SBSDSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0027
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSASBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0063
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.006
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSASDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSBSASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0027
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSBSDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0027
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSDSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0045
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SCSDSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0029
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSASBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0029
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSASCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSBSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSBSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0027
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSCSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0027
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-parallel-t13-SDSCSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0037
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.005
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0017
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.002
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.002
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.002
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0014
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.002
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0014
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0023
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0066
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.002
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0034
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0025
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0048
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0018
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0024
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0014
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.002
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0019
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0019
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0019
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0018
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0054
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.002
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0043
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0042
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASCSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0019
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0047
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.005
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.006
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0027
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.005
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0055
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0047
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSCSD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0286,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0145
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0018
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.005
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0051
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0014
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0052
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0049
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0037
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0014
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0042
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0028
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0018
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0096
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0049
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0017
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0046
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0014
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0049
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASBSCSD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0352,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0332,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASBSDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0041
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0037
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASCSBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0041
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASCSDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASDSBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SASDSCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSASCSD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0319,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0156
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSASDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0045
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0048
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSCSASD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0504,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0151
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSCSDSA",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0353,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0453,
+     "answers": {
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSDSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0039
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0047
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SBSDSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0051
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0044
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSASBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0039
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSASDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSBSASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSBSDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0058
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSDSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0063
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0043
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SCSDSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSASBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0037
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSASCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0041
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSBSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0037
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0042
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSBSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0041
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0061
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSCSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0041
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t12-SDSCSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0039
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0012
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0018
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0021
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0017
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0028
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0018
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0025
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0024
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0027
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0022
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0027
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0022
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0026
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0014
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.002
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0017
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0026
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0021
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0013
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0022
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0017
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0023
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0017
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "DEGENERATE_DERIVED_SECTION",
+     "seconds": 0.0025
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0019
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0054
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0018
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0053
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0053
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASCSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.006
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0019
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0051
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0018
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0123
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0021
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0058
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0019
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0053
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0017
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0054
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSCSD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0327,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0165
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0048
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0065
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0026
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0076
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0026
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0059
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0045
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0014
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0046
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0014
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0045
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0024
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0055
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0015
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0046
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SECTION_NOT_CLOSED_ON_LATERAL_EDGES",
+     "seconds": 0.0016
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0046
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASBSCSD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0311,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.041,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASBSDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0116
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0041
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASCSBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASCSDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASDSBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0037
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SASDSCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.004
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSASCSD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0305,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0217
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSASDSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0038
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSCSASD",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0339,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SECTION_BOUNDARY_INCOMPLETE",
+     "seconds": 0.0201
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSCSDSA",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0483,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0352,
+     "answers": {
+      "g_ratio": "1/729"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSDSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0038
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SBSDSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSASBSD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0065
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0073
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSASDSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0035
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSBSASD",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0034
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSBSDSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0042
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.004
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSDSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0048
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0093
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SCSDSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0056
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0042
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSASBSC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0036
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSASCSB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0029
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSBSASC",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0029
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSBSCSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSCSASB",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0029
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0031
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "P-ABCD-perpendicular-t13-SDSCSBSA",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0033
+    },
+    "both_served_agree": null
+   }
+  ],
+  "budget": [
+   {
+    "id": "BUD-equilateral0-parallel",
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0294,
+    "answers": {
+     "g_res": "49/3072",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "uncapped": {
+     "status": "SERVED",
+     "code": null,
+     "declarations": 24,
+     "derived_duplicates": 1
+    }
+   },
+   {
+    "id": "BUD-equilateral0-perpendicular",
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0317,
+    "answers": {
+     "g_res": "49/3072",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "uncapped": {
+     "status": "SERVED",
+     "code": null,
+     "declarations": 27,
+     "derived_duplicates": 1
+    }
+   },
+   {
+    "id": "BUD-square1-parallel",
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0461,
+    "answers": {
+     "g_res": "49/36",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "uncapped": {
+     "status": "SERVED",
+     "code": null,
+     "declarations": 27,
+     "derived_duplicates": 1
+    }
+   },
+   {
+    "id": "BUD-square1-perpendicular",
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0348,
+    "answers": {
+     "g_res": "49/36",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "uncapped": {
+     "status": "SERVED",
+     "code": null,
+     "declarations": 30,
+     "derived_duplicates": 1
+    }
+   },
+   {
+    "id": "BUD-rectangle2-parallel",
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0345,
+    "answers": {
+     "g_res": "49",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "uncapped": {
+     "status": "SERVED",
+     "code": null,
+     "declarations": 27,
+     "derived_duplicates": 1
+    }
+   },
+   {
+    "id": "BUD-rectangle2-perpendicular",
+    "status": "SERVED",
+    "code": null,
+    "seconds": 0.0508,
+    "answers": {
+     "g_res": "49",
+     "g_ratio": "1/64"
+    },
+    "scene_valid": true,
+    "uncapped": {
+     "status": "SERVED",
+     "code": null,
+     "declarations": 30,
+     "derived_duplicates": 1
+    }
+   },
+   {
+    "id": "BUD-hexagon-parallel",
+    "status": "REFUSED",
+    "code": "IR_MEMORY_BUDGET_EXCEEDED",
+    "seconds": 0.0336,
+    "uncapped": {
+     "status": "SERVED",
+     "code": null,
+     "declarations": 33,
+     "derived_duplicates": 1
+    }
+   },
+   {
+    "id": "BUD-hexagon-perpendicular",
+    "status": "REFUSED",
+    "code": "IR_MEMORY_BUDGET_EXCEEDED",
+    "seconds": 0.0371,
+    "uncapped": {
+     "status": "SERVED",
+     "code": null,
+     "declarations": 36,
+     "derived_duplicates": 1
+    }
+   }
+  ],
+  "metamorphic": [
+   {
+    "id": "MR-ref",
+    "relation": "reference",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0372,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0441,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-0123",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0359,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0346,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-0132",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0442,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0567,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-0213",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0396,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0462,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-0231",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0376,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0396,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-0312",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0434,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0439,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-0321",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0567,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0362,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-1023",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0321,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.055,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-1032",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0353,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0406,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-1203",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.034,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0409,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-1230",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0484,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0506,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-1302",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0604,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0393,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-1320",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0325,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0338,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-2013",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0338,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0329,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-2031",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0452,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0403,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-2103",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.033,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0322,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-2130",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0345,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0346,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-2301",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0331,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0425,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-2310",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0384,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0335,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-3012",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0327,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.033,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-3021",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0458,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0325,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-3102",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0356,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0408,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-3120",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0325,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.036,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-3201",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0331,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0378,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-premise-3210",
+    "relation": "premise_permutation",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0421,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0441,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-relabel-0",
+    "relation": "relabel",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0377,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0345,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-relabel-1",
+    "relation": "relabel",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0392,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0345,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-goal-order",
+    "relation": "goal_order",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0335,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0329,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-paraphrase-0",
+    "relation": "paraphrase",
+    "bridge": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0402,
+     "answers": {
+      "g_res": "49/576",
+      "g_ratio": "1/64"
+     },
+     "scene_valid": true,
+     "wrong_served": false
+    },
+    "adapter3": {
+     "status": "SERVED",
+     "code": null,
+     "seconds": 0.0323,
+     "answers": {
+      "g_ratio": "1/64",
+      "g_res": "49/576"
+     },
+     "scene_valid": true,
+     "wrong_served": false,
+     "source_authority": "registry.kiem_nguon"
+    },
+    "both_served_agree": true
+   },
+   {
+    "id": "MR-paraphrase-1",
+    "relation": "paraphrase",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0028
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "MR-paraphrase-2",
+    "relation": "paraphrase",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0026
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "MR-paraphrase-3",
+    "relation": "paraphrase",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0025
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.003
+    },
+    "both_served_agree": null
+   },
+   {
+    "id": "MR-paraphrase-4",
+    "relation": "paraphrase",
+    "bridge": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0025
+    },
+    "adapter3": {
+     "status": "REFUSED",
+     "code": "SOURCE_OBJECT_MISMATCH",
+     "seconds": 0.0032
+    },
+    "both_served_agree": null
+   }
+  ],
+  "negatives": [
+   {
+    "id": "N-swapped-names-4",
+    "bridge_style": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0032
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0028
+     },
+     "both_served_agree": null
+    },
+    "adapter_convention": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0026
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0029
+     },
+     "both_served_agree": null
+    }
+   },
+   {
+    "id": "N-unread-condition",
+    "bridge_style": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0026
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0031
+     },
+     "both_served_agree": null
+    },
+    "adapter_convention": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0025
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0031
+     },
+     "both_served_agree": null
+    }
+   },
+   {
+    "id": "N-negated-relation",
+    "bridge_style": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0025
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.003
+     },
+     "both_served_agree": null
+    },
+    "adapter_convention": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0026
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0028
+     },
+     "both_served_agree": null
+    }
+   },
+   {
+    "id": "N-conditional-plane",
+    "bridge_style": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0026
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0028
+     },
+     "both_served_agree": null
+    },
+    "adapter_convention": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0025
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0029
+     },
+     "both_served_agree": null
+    }
+   },
+   {
+    "id": "N-wrong-number",
+    "bridge_style": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "UNGROUNDED_VALUE",
+      "seconds": 0.0046
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "UNGROUNDED_VALUE",
+      "seconds": 0.0049
+     },
+     "both_served_agree": null
+    },
+    "adapter_convention": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "UNGROUNDED_VALUE",
+      "seconds": 0.0044
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "UNGROUNDED_VALUE",
+      "seconds": 0.0063
+     },
+     "both_served_agree": null
+    }
+   },
+   {
+    "id": "N-ratio-orientation-unstated",
+    "bridge_style": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0032
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0039
+     },
+     "both_served_agree": null
+    },
+    "adapter_convention": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.003
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0033
+     },
+     "both_served_agree": null
+    }
+   },
+   {
+    "id": "N-residual-ownership-unstated",
+    "bridge_style": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0035
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0037
+     },
+     "both_served_agree": null
+    },
+    "adapter_convention": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0032
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0117
+     },
+     "both_served_agree": null
+    }
+   },
+   {
+    "id": "N-missing-height",
+    "bridge_style": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "MISSING_DIMENSION",
+      "seconds": 0.0155
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "MISSING_DIMENSION",
+      "seconds": 0.0136
+     },
+     "both_served_agree": null
+    },
+    "adapter_convention": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "MISSING_DIMENSION",
+      "seconds": 0.0127
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "MISSING_DIMENSION",
+      "seconds": 0.0133
+     },
+     "both_served_agree": null
+    }
+   },
+   {
+    "id": "N-quote-not-in-source",
+    "bridge_style": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "QUOTE_NOT_IN_SOURCE",
+      "seconds": 0.0046
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "QUOTE_NOT_IN_SOURCE",
+      "seconds": 0.0049
+     },
+     "both_served_agree": null
+    },
+    "adapter_convention": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "QUOTE_NOT_IN_SOURCE",
+      "seconds": 0.0109
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "QUOTE_NOT_IN_SOURCE",
+      "seconds": 0.0056
+     },
+     "both_served_agree": null
+    }
+   },
+   {
+    "id": "N-anonymous-ratio-operand-triangle",
+    "bridge_style": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0031
+     },
+     "adapter3": {
+      "status": "REFUSED",
+      "code": "SOURCE_OBJECT_MISMATCH",
+      "seconds": 0.0033
+     },
+     "both_served_agree": null
+    },
+    "adapter_convention": {
+     "bridge": {
+      "status": "REFUSED",
+      "code": "BRIDGE_CUT_EDGES_NOT_STATED",
+      "seconds": 0.0003
+     },
+     "adapter3": {
+      "status": "SERVED",
+      "code": null,
+      "seconds": 0.0152,
+      "answers": {
+       "g_ratio": "1/64"
+      },
+      "scene_valid": true,
+      "wrong_served": true,
+      "source_authority": "adapter3.substring_legacy"
+     },
+     "both_served_agree": null
+    }
+   }
+  ]
+ }
+}
