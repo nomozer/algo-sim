@@ -1,0 +1,112 @@
+....FFFFFFFFFFFF.FF.F.FF.F..........                                     [100%]
+================================== FAILURES ===================================
+E   AssertionError: Unexpected refusal: SOURCE_GATE_UNAVAILABLE - UNKNOWN_VERTEX_REF
+    assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:243: AssertionError: Unexpected refusal: SOURCE_GATE_UNAVAILABLE - UNKNOWN_VERTEX_REF
+E   AssertionError: Unexpected refusal: SOURCE_GATE_UNAVAILABLE - BRIDGE_CUT_EDGES_NOT_STATED
+    assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:393: AssertionError: Unexpected refusal: SOURCE_GATE_UNAVAILABLE - BRIDGE_CUT_EDGES_NOT_STATED
+E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' in {'DEGENERATE_DERIVED_SOLID', 'DERIVED_PLANE_IS_REFERENCE', 'SECTION_PLANE_IS_FACE'}
+     +  where 'SOURCE_GATE_UNAVAILABLE' = Adapter3SimulationResult(status='REFUSED', code='SOURCE_GATE_UNAVAILABLE', reason='UNKNOWN_VERTEX_REF', failed_calls=(...r_exact={}, length_unit=None, source_verification=None, points={}, metric=None, kernel_check=False, trace=[], calls=[]).code
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:403: AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' in {'DEGENERATE_DERIVED_SOLID', 'DERIVED_PLANE_IS_REFERENCE', 'SECTION_PLANE_IS_FACE'}
+E   AssertionError: Unexpected refusal: SOURCE_GATE_UNAVAILABLE - BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+    assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:569: AssertionError: Unexpected refusal: SOURCE_GATE_UNAVAILABLE - BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY
+E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'AMBIGUOUS_REFERENCE'
+      
+      - AMBIGUOUS_REFERENCE
+      + SOURCE_GATE_UNAVAILABLE
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:597: AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'AMBIGUOUS_REFERENCE'
+E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'SHARED_ENTITY_MISMATCH'
+      
+      - SHARED_ENTITY_MISMATCH
+      + SOURCE_GATE_UNAVAILABLE
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:606: AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'SHARED_ENTITY_MISMATCH'
+E   AssertionError: assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:615: AssertionError: assert 'REFUSED' == 'SERVED'
+E   AssertionError: Unexpected refusal: SOURCE_GATE_UNAVAILABLE - BRIDGE_CUT_EDGES_NOT_STATED
+    assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:726: AssertionError: Unexpected refusal: SOURCE_GATE_UNAVAILABLE - BRIDGE_CUT_EDGES_NOT_STATED
+E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' in {'COLLINEAR_POINTS', 'PLANE_NOT_UNIQUE'}
+     +  where 'SOURCE_GATE_UNAVAILABLE' = Adapter3SimulationResult(status='REFUSED', code='SOURCE_GATE_UNAVAILABLE', reason='UNKNOWN_VERTEX_REF', failed_calls=(...r_exact={}, length_unit=None, source_verification=None, points={}, metric=None, kernel_check=False, trace=[], calls=[]).code
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:746: AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' in {'COLLINEAR_POINTS', 'PLANE_NOT_UNIQUE'}
+E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' in {'CONTAINED_INFINITE_INTERSECTION', 'DERIVED_PLANE_IS_REFERENCE', 'PARALLEL_LINE_AND_PLANE', 'SECTION_NOT_CLOSED_ON_LATERAL_EDGES', 'SECTION_PLANE_IS_FACE'}
+     +  where 'SOURCE_GATE_UNAVAILABLE' = Adapter3SimulationResult(status='REFUSED', code='SOURCE_GATE_UNAVAILABLE', reason='UNKNOWN_VERTEX_REF', failed_calls=(...r_exact={}, length_unit=None, source_verification=None, points={}, metric=None, kernel_check=False, trace=[], calls=[]).code
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:755: AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' in {'CONTAINED_INFINITE_INTERSECTION', 'DERIVED_PLANE_IS_REFERENCE', 'PARALLEL_LINE_AND_PLANE', 'SECTION_NOT_CLOSED_ON_LATERAL_EDGES', 'SECTION_PLANE_IS_FACE'}
+E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'COORDINATE_F..._DISCONNECTED'
+      
+      - COORDINATE_FRAME_DISCONNECTED
+      + SOURCE_GATE_UNAVAILABLE
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:769: AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'COORDINATE_F..._DISCONNECTED'
+E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'SOURCE_QUOTE_NOT_FOUND'
+      
+      - SOURCE_QUOTE_NOT_FOUND
+      + SOURCE_GATE_UNAVAILABLE
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:777: AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'SOURCE_QUOTE_NOT_FOUND'
+E   AssertionError: assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:830: AssertionError: assert 'REFUSED' == 'SERVED'
+E   AssertionError: Case A3-DEV-01 failed: SOURCE_GATE_UNAVAILABLE
+    assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_typedfact_next_adapter3.py:909: AssertionError: Case A3-DEV-01 failed: SOURCE_GATE_UNAVAILABLE
+E   AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'UNSUPPORTED_VOLUME_RATIO'
+      
+      - UNSUPPORTED_VOLUME_RATIO
+      + SOURCE_GATE_UNAVAILABLE
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_wave3a_adapter3_integration.py:158: AssertionError: assert 'SOURCE_GATE_UNAVAILABLE' == 'UNSUPPORTED_VOLUME_RATIO'
+E   AssertionError: Adapter /3 refused: SOURCE_GATE_UNAVAILABLE - BRIDGE_CUT_EDGES_NOT_STATED
+    assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_wave3a_adapter3_integration.py:313: AssertionError: Adapter /3 refused: SOURCE_GATE_UNAVAILABLE - BRIDGE_CUT_EDGES_NOT_STATED
+E   AssertionError: assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_wave3a_adapter3_integration.py:572: AssertionError: assert 'REFUSED' == 'SERVED'
+E   AssertionError: assert 'REFUSED' == 'SERVED'
+      
+      - SERVED
+      + REFUSED
+D:\Documents\projects\algo-sim\.superpowers\worktrees\hybrid-backend-s2\backend\tests\geometry\test_wave3a_adapter3_integration.py:786: AssertionError: assert 'REFUSED' == 'SERVED'
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_slice_a_unnamed_section_vertices_and_derived_solid
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_slice_a_perpendicular_plane_unnamed_section
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_slice_a_refuses_plane_coincident_with_base
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_slice_b_multi_solid_qualified_identity_and_shared_geometry
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_slice_b_refuses_ambiguous_unqualified_vertex_reference
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_slice_b_refuses_shared_entity_mismatch
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_adapter3_preview_envelope_compatibility
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_slice_a_parallel_two_lines_unnamed_section
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_slice_a_refuses_plane_not_unique_parallel_lines
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_slice_a_refuses_plane_missing_lateral_edges
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_slice_b_refuses_disconnected_coordinate_frame
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_p2_refuses_ungrounded_quote_and_mismatched_number
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_p4_scene3d_topology_edges_surfaces_and_timeline
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_p5_p6_development_corpus_and_demos_oracle
+FAILED tests/geometry/test_wave3a_adapter3_integration.py::test_adapter3_unified_self_ratio_and_self_residual_refusal
+FAILED tests/geometry/test_wave3a_adapter3_integration.py::test_cross_route_equivalence_square_pyramid_parallel_cut
+FAILED tests/geometry/test_wave3a_adapter3_integration.py::test_cross_route_equivalence_triangular_pyramid_ratio_one_third
+FAILED tests/geometry/test_wave3a_adapter3_integration.py::test_cross_route_equivalence_shared_base_multi_pyramid_ratio
+18 failed, 18 passed in 0.83s

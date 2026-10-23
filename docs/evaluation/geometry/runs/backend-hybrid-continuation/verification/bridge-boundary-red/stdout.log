@@ -1,0 +1,514 @@
+FFFFFFFF.                                                                [100%]
+================================== FAILURES ===================================
+_ test_bridge_preserves_input_constraints_or_refuses[missing_point-INVALID_TYPED_FACT_NEXT] _
+
+case = 'missing_point', code = 'INVALID_TYPED_FACT_NEXT'
+
+    @pytest.mark.parametrize("case,code", [
+        ("missing_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_string_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_sequence_segment", "INVALID_TYPED_FACT_NEXT"),
+        ("unknown_qualifier", "UNKNOWN_SOLID_ID"),
+        ("unknown_local_vertex", "UNKNOWN_VERTEX_REF"),
+        ("contradictory_unit", "NON_HOMOGENEOUS_LENGTHS"),
+        ("unrepresentable_unit", "BRIDGE_UNSUPPORTED_LENGTH_UNIT"),
+        ("wrong_plane_name", "SOURCE_OBJECT_MISMATCH"),
+    ])
+    def test_bridge_preserves_input_constraints_or_refuses(case, code):
+        from app.ai.function_route import run_typed_fact_next_planner_route
+        payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+        control = run_typed_fact_next_planner_route(payload)
+        assert control.status == "SERVED", (control.code, control.reason)
+        args = payload["premises"][3]["args"]
+        if case == "missing_point":
+            del args["point"]
+        elif case == "non_string_point":
+            args["point"] = 1
+        elif case == "non_sequence_segment":
+            args["segment"] = 1
+        elif case == "unknown_qualifier":
+            payload["derived_sections"][0]["through_point"] = "ghost::M"
+        elif case == "unknown_local_vertex":
+            payload["derived_sections"][0]["through_point"] = "pyr::M"
+        elif case == "contradictory_unit":
+            payload["length_unit"] = "1"
+        elif case == "unrepresentable_unit":
+            payload["length_unit"] = "a"
+            payload["problem_text"] = payload["problem_text"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+            for prem in payload["premises"]:
+                prem["quote"] = prem["quote"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+                for key in ("side", "value"):
+                    if prem["args"].get(key) == "a":
+                        prem["args"][key] = "1"
+        else:
+            payload["derived_sections"][0]["plane_name"] = "β"
+>       r = run_typed_fact_next_planner_route(payload)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\geometry\test_typedfactnext_planner_bridge.py:637: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+app\ai\function_route.py:258: in run_typed_fact_next_planner_route
+    b = bridge(raw)
+        ^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+raw = {'schema_version': 'typed-fact-next/1', 'problem_text': 'Cho hình chóp S.ABC có đáy ABC là tam giác đều cạnh a, SA vuô...SA = a'}, {'kind': 'point_is_midpoint', 'args': {'segment': ['S', 'A']}, 'quote': 'Gọi M là trung điểm của SA.'}], ...}
+
+    def bridge(raw: dict[str, Any] | TypedFactNextPayload) -> dict[str, Any]:
+        """`{"facts": [...], "bridge": {...}}` for the planner, or `TuChoi` (typed, fail-closed)."""
+        try:
+            p = parse_typed_fact_next(raw)
+        except TypedFactNextValidationError as e:
+            raise TuChoi(e.code, e.detail) from None
+        facts: list[dict[str, Any]] = []
+        solids = {s.solid_id: s for s in p.solids}
+        for s in p.solids:
+            if s.solid_type not in ("pyramid", "prism"):
+                raise TuChoi("BRIDGE_UNSUPPORTED_CURVED", f"{s.solid_id}: khối {s.solid_type} chưa có trên planner", (s.solid_id,))
+            if any(a != b for a, b in s.vertex_bindings.items()) or s.coordinate_frame_id != "root":
+                raise TuChoi("BRIDGE_UNSUPPORTED_QUALIFIED_IDENTITY", f"{s.solid_id}: hai điểm khác nhau mang cùng nhãn — TypedFact "
+                             "định danh điểm bằng nhãn", (s.solid_id,))
+            facts.append({"id": s.solid_id, "kind": "solid", "role": "premise", "quotes": [s.quote], "solid": s.notation,
+                          "solid_type": s.solid_type})
+        theo_ten = {s.notation: f for s, f in zip(p.solids, facts)}
+    
+        for i, prem in enumerate(p.premises, 1):
+            a, k, fid, q = prem.args, prem.kind, f"p{i}", [prem.quote]
+            if k in ("regular_pyramid", "right_prism"):
+                ten = f"{_ref(a['apex'])}.{''.join(_refs(a['base']))}" if k == "regular_pyramid" else \
+                    f"{''.join(_refs(a['base']))}.{''.join(_refs(a['top']))}"
+                if ten not in theo_ten:
+                    raise TuChoi("UNKNOWN_SOLID", f"{fid}: {ten} không phải khối đã khai", (fid,))
+                theo_ten[ten].update({"regular" if k == "regular_pyramid" else "right": True})
+                theo_ten[ten]["quotes"] = [*theo_ten[ten]["quotes"], prem.quote]
+                continue
+            if k in ("regular_polygon", "base_is_square", "base_is_equilateral_triangle", "base_is_regular_polygon"):
+                v = _refs(a["vertices"])
+                f = {"kind": "polygon_shape", "points": v, "shape": _REGULAR_SHAPE.get(len(v), "regular_polygon")}
+                if a.get("side") is not None:
+                    f["value"] = str(a["side"])
+            elif k in ("rectangle", "base_is_rectangle"):
+                f = {"kind": "polygon_shape", "points": _refs(a["vertices"]), "shape": "rectangle"}
+            elif k in ("right_angle", "base_is_right_triangle"):
+                at = _ref(a["right_at"] if "vertices" in a else a["vertex"])
+                f = {"kind": "right_angle", "at": at,
+                     "points": [x for x in _refs(a["vertices"]) if x != at] if "vertices" in a else _refs(a["rays"])}
+            elif k == "segment_length":
+                f = {"kind": "length", "measure": "segment", "points": _refs(a["segment"]), "value": str(a["value"])}
+            elif k == "height":
+                sol = solids.get(a.get("solid") or prem.solid_id or "")
+                f = {"kind": "length", "measure": "height", "solid": sol.notation if sol else a.get("solid"),
+                     "value": str(a["value"])}
+            elif k in ("equal_length", "equal_segments"):
+                f = {"kind": "equal_lengths", "points_a": _refs(a["segment_a"]), "points_b": _refs(a["segment_b"])}
+            elif k in ("perpendicular_line_plane", "line_perp_plane"):
+                f = {"kind": "perpendicular", "points_a": _refs(a["line"]), "points_b": _refs(a["plane"])}
+            elif k in ("perpendicular_lines", "line_perp_line"):
+                f = {"kind": "perpendicular", "points_a": _refs(a["line1"]), "points_b": _refs(a["line2"])}
+            elif k in ("face_perpendicular_base", "plane_perp_base"):
+                f = {"kind": "perpendicular", "points_a": _refs(a["face"]), "points_b": _refs(a["base"])}
+            elif k == "altitude":
+                sol = solids.get(a.get("solid") or prem.solid_id or "")
+                f = {"kind": "altitude", "points": [_ref(a["apex"]), _ref(a["foot"])],
+                     "solid": sol.notation if sol else a.get("solid")}
+            elif k in ("midpoint", "point_is_midpoint"):
+>               f = {"kind": "point_def", "point_kind": "midpoint", "point": _ref(a["point"]), "points": _refs(a["segment"])}
+                                                                                  ^^^^^^^^^^
+E               KeyError: 'point'
+
+app\simulation\geometry_functions\typed_fact_next_bridge.py:131: KeyError
+_ test_bridge_preserves_input_constraints_or_refuses[non_string_point-INVALID_TYPED_FACT_NEXT] _
+
+case = 'non_string_point', code = 'INVALID_TYPED_FACT_NEXT'
+
+    @pytest.mark.parametrize("case,code", [
+        ("missing_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_string_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_sequence_segment", "INVALID_TYPED_FACT_NEXT"),
+        ("unknown_qualifier", "UNKNOWN_SOLID_ID"),
+        ("unknown_local_vertex", "UNKNOWN_VERTEX_REF"),
+        ("contradictory_unit", "NON_HOMOGENEOUS_LENGTHS"),
+        ("unrepresentable_unit", "BRIDGE_UNSUPPORTED_LENGTH_UNIT"),
+        ("wrong_plane_name", "SOURCE_OBJECT_MISMATCH"),
+    ])
+    def test_bridge_preserves_input_constraints_or_refuses(case, code):
+        from app.ai.function_route import run_typed_fact_next_planner_route
+        payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+        control = run_typed_fact_next_planner_route(payload)
+        assert control.status == "SERVED", (control.code, control.reason)
+        args = payload["premises"][3]["args"]
+        if case == "missing_point":
+            del args["point"]
+        elif case == "non_string_point":
+            args["point"] = 1
+        elif case == "non_sequence_segment":
+            args["segment"] = 1
+        elif case == "unknown_qualifier":
+            payload["derived_sections"][0]["through_point"] = "ghost::M"
+        elif case == "unknown_local_vertex":
+            payload["derived_sections"][0]["through_point"] = "pyr::M"
+        elif case == "contradictory_unit":
+            payload["length_unit"] = "1"
+        elif case == "unrepresentable_unit":
+            payload["length_unit"] = "a"
+            payload["problem_text"] = payload["problem_text"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+            for prem in payload["premises"]:
+                prem["quote"] = prem["quote"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+                for key in ("side", "value"):
+                    if prem["args"].get(key) == "a":
+                        prem["args"][key] = "1"
+        else:
+            payload["derived_sections"][0]["plane_name"] = "β"
+>       r = run_typed_fact_next_planner_route(payload)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\geometry\test_typedfactnext_planner_bridge.py:637: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+app\ai\function_route.py:258: in run_typed_fact_next_planner_route
+    b = bridge(raw)
+        ^^^^^^^^^^^
+app\simulation\geometry_functions\typed_fact_next_bridge.py:131: in bridge
+    f = {"kind": "point_def", "point_kind": "midpoint", "point": _ref(a["point"]), "points": _refs(a["segment"])}
+                                                                 ^^^^^^^^^^^^^^^^
+app\simulation\geometry_functions\typed_fact_next_bridge.py:36: in _ref
+    return parse_qualified_ref(ref)[1]
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ref = 1
+
+    def parse_qualified_ref(ref: str) -> tuple[str | None, str]:
+        """Parse an optional solid-qualified vertex reference (`solid_id::label` or `label`)."""
+>       m = _QUALIFIED_REF_RE.match(ref.strip())
+                                    ^^^^^^^^^
+E       AttributeError: 'int' object has no attribute 'strip'
+
+app\simulation\geometry_functions\typed_fact_next.py:56: AttributeError
+_ test_bridge_preserves_input_constraints_or_refuses[non_sequence_segment-INVALID_TYPED_FACT_NEXT] _
+
+case = 'non_sequence_segment', code = 'INVALID_TYPED_FACT_NEXT'
+
+    @pytest.mark.parametrize("case,code", [
+        ("missing_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_string_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_sequence_segment", "INVALID_TYPED_FACT_NEXT"),
+        ("unknown_qualifier", "UNKNOWN_SOLID_ID"),
+        ("unknown_local_vertex", "UNKNOWN_VERTEX_REF"),
+        ("contradictory_unit", "NON_HOMOGENEOUS_LENGTHS"),
+        ("unrepresentable_unit", "BRIDGE_UNSUPPORTED_LENGTH_UNIT"),
+        ("wrong_plane_name", "SOURCE_OBJECT_MISMATCH"),
+    ])
+    def test_bridge_preserves_input_constraints_or_refuses(case, code):
+        from app.ai.function_route import run_typed_fact_next_planner_route
+        payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+        control = run_typed_fact_next_planner_route(payload)
+        assert control.status == "SERVED", (control.code, control.reason)
+        args = payload["premises"][3]["args"]
+        if case == "missing_point":
+            del args["point"]
+        elif case == "non_string_point":
+            args["point"] = 1
+        elif case == "non_sequence_segment":
+            args["segment"] = 1
+        elif case == "unknown_qualifier":
+            payload["derived_sections"][0]["through_point"] = "ghost::M"
+        elif case == "unknown_local_vertex":
+            payload["derived_sections"][0]["through_point"] = "pyr::M"
+        elif case == "contradictory_unit":
+            payload["length_unit"] = "1"
+        elif case == "unrepresentable_unit":
+            payload["length_unit"] = "a"
+            payload["problem_text"] = payload["problem_text"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+            for prem in payload["premises"]:
+                prem["quote"] = prem["quote"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+                for key in ("side", "value"):
+                    if prem["args"].get(key) == "a":
+                        prem["args"][key] = "1"
+        else:
+            payload["derived_sections"][0]["plane_name"] = "β"
+>       r = run_typed_fact_next_planner_route(payload)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\geometry\test_typedfactnext_planner_bridge.py:637: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+app\ai\function_route.py:258: in run_typed_fact_next_planner_route
+    b = bridge(raw)
+        ^^^^^^^^^^^
+app\simulation\geometry_functions\typed_fact_next_bridge.py:131: in bridge
+    f = {"kind": "point_def", "point_kind": "midpoint", "point": _ref(a["point"]), "points": _refs(a["segment"])}
+                                                                                             ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+xs = 1
+
+    def _refs(xs) -> list[str]:
+>       return [_ref(x) for x in xs]
+                                 ^^
+E       TypeError: 'int' object is not iterable
+
+app\simulation\geometry_functions\typed_fact_next_bridge.py:42: TypeError
+_ test_bridge_preserves_input_constraints_or_refuses[unknown_qualifier-UNKNOWN_SOLID_ID] _
+
+case = 'unknown_qualifier', code = 'UNKNOWN_SOLID_ID'
+
+    @pytest.mark.parametrize("case,code", [
+        ("missing_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_string_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_sequence_segment", "INVALID_TYPED_FACT_NEXT"),
+        ("unknown_qualifier", "UNKNOWN_SOLID_ID"),
+        ("unknown_local_vertex", "UNKNOWN_VERTEX_REF"),
+        ("contradictory_unit", "NON_HOMOGENEOUS_LENGTHS"),
+        ("unrepresentable_unit", "BRIDGE_UNSUPPORTED_LENGTH_UNIT"),
+        ("wrong_plane_name", "SOURCE_OBJECT_MISMATCH"),
+    ])
+    def test_bridge_preserves_input_constraints_or_refuses(case, code):
+        from app.ai.function_route import run_typed_fact_next_planner_route
+        payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+        control = run_typed_fact_next_planner_route(payload)
+        assert control.status == "SERVED", (control.code, control.reason)
+        args = payload["premises"][3]["args"]
+        if case == "missing_point":
+            del args["point"]
+        elif case == "non_string_point":
+            args["point"] = 1
+        elif case == "non_sequence_segment":
+            args["segment"] = 1
+        elif case == "unknown_qualifier":
+            payload["derived_sections"][0]["through_point"] = "ghost::M"
+        elif case == "unknown_local_vertex":
+            payload["derived_sections"][0]["through_point"] = "pyr::M"
+        elif case == "contradictory_unit":
+            payload["length_unit"] = "1"
+        elif case == "unrepresentable_unit":
+            payload["length_unit"] = "a"
+            payload["problem_text"] = payload["problem_text"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+            for prem in payload["premises"]:
+                prem["quote"] = prem["quote"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+                for key in ("side", "value"):
+                    if prem["args"].get(key) == "a":
+                        prem["args"][key] = "1"
+        else:
+            payload["derived_sections"][0]["plane_name"] = "β"
+        r = run_typed_fact_next_planner_route(payload)
+>       assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
+E       AssertionError: (None, None)
+E       assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_typedfactnext_planner_bridge.py:638: AssertionError
+_ test_bridge_preserves_input_constraints_or_refuses[unknown_local_vertex-UNKNOWN_VERTEX_REF] _
+
+case = 'unknown_local_vertex', code = 'UNKNOWN_VERTEX_REF'
+
+    @pytest.mark.parametrize("case,code", [
+        ("missing_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_string_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_sequence_segment", "INVALID_TYPED_FACT_NEXT"),
+        ("unknown_qualifier", "UNKNOWN_SOLID_ID"),
+        ("unknown_local_vertex", "UNKNOWN_VERTEX_REF"),
+        ("contradictory_unit", "NON_HOMOGENEOUS_LENGTHS"),
+        ("unrepresentable_unit", "BRIDGE_UNSUPPORTED_LENGTH_UNIT"),
+        ("wrong_plane_name", "SOURCE_OBJECT_MISMATCH"),
+    ])
+    def test_bridge_preserves_input_constraints_or_refuses(case, code):
+        from app.ai.function_route import run_typed_fact_next_planner_route
+        payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+        control = run_typed_fact_next_planner_route(payload)
+        assert control.status == "SERVED", (control.code, control.reason)
+        args = payload["premises"][3]["args"]
+        if case == "missing_point":
+            del args["point"]
+        elif case == "non_string_point":
+            args["point"] = 1
+        elif case == "non_sequence_segment":
+            args["segment"] = 1
+        elif case == "unknown_qualifier":
+            payload["derived_sections"][0]["through_point"] = "ghost::M"
+        elif case == "unknown_local_vertex":
+            payload["derived_sections"][0]["through_point"] = "pyr::M"
+        elif case == "contradictory_unit":
+            payload["length_unit"] = "1"
+        elif case == "unrepresentable_unit":
+            payload["length_unit"] = "a"
+            payload["problem_text"] = payload["problem_text"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+            for prem in payload["premises"]:
+                prem["quote"] = prem["quote"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+                for key in ("side", "value"):
+                    if prem["args"].get(key) == "a":
+                        prem["args"][key] = "1"
+        else:
+            payload["derived_sections"][0]["plane_name"] = "β"
+        r = run_typed_fact_next_planner_route(payload)
+>       assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
+E       AssertionError: (None, None)
+E       assert ('SERVED', None) == ('REFUSED', '...N_VERTEX_REF')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_typedfactnext_planner_bridge.py:638: AssertionError
+_ test_bridge_preserves_input_constraints_or_refuses[contradictory_unit-NON_HOMOGENEOUS_LENGTHS] _
+
+case = 'contradictory_unit', code = 'NON_HOMOGENEOUS_LENGTHS'
+
+    @pytest.mark.parametrize("case,code", [
+        ("missing_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_string_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_sequence_segment", "INVALID_TYPED_FACT_NEXT"),
+        ("unknown_qualifier", "UNKNOWN_SOLID_ID"),
+        ("unknown_local_vertex", "UNKNOWN_VERTEX_REF"),
+        ("contradictory_unit", "NON_HOMOGENEOUS_LENGTHS"),
+        ("unrepresentable_unit", "BRIDGE_UNSUPPORTED_LENGTH_UNIT"),
+        ("wrong_plane_name", "SOURCE_OBJECT_MISMATCH"),
+    ])
+    def test_bridge_preserves_input_constraints_or_refuses(case, code):
+        from app.ai.function_route import run_typed_fact_next_planner_route
+        payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+        control = run_typed_fact_next_planner_route(payload)
+        assert control.status == "SERVED", (control.code, control.reason)
+        args = payload["premises"][3]["args"]
+        if case == "missing_point":
+            del args["point"]
+        elif case == "non_string_point":
+            args["point"] = 1
+        elif case == "non_sequence_segment":
+            args["segment"] = 1
+        elif case == "unknown_qualifier":
+            payload["derived_sections"][0]["through_point"] = "ghost::M"
+        elif case == "unknown_local_vertex":
+            payload["derived_sections"][0]["through_point"] = "pyr::M"
+        elif case == "contradictory_unit":
+            payload["length_unit"] = "1"
+        elif case == "unrepresentable_unit":
+            payload["length_unit"] = "a"
+            payload["problem_text"] = payload["problem_text"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+            for prem in payload["premises"]:
+                prem["quote"] = prem["quote"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+                for key in ("side", "value"):
+                    if prem["args"].get(key) == "a":
+                        prem["args"][key] = "1"
+        else:
+            payload["derived_sections"][0]["plane_name"] = "β"
+        r = run_typed_fact_next_planner_route(payload)
+>       assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
+E       AssertionError: (None, None)
+E       assert ('SERVED', None) == ('REFUSED', '...EOUS_LENGTHS')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_typedfactnext_planner_bridge.py:638: AssertionError
+_ test_bridge_preserves_input_constraints_or_refuses[unrepresentable_unit-BRIDGE_UNSUPPORTED_LENGTH_UNIT] _
+
+case = 'unrepresentable_unit', code = 'BRIDGE_UNSUPPORTED_LENGTH_UNIT'
+
+    @pytest.mark.parametrize("case,code", [
+        ("missing_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_string_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_sequence_segment", "INVALID_TYPED_FACT_NEXT"),
+        ("unknown_qualifier", "UNKNOWN_SOLID_ID"),
+        ("unknown_local_vertex", "UNKNOWN_VERTEX_REF"),
+        ("contradictory_unit", "NON_HOMOGENEOUS_LENGTHS"),
+        ("unrepresentable_unit", "BRIDGE_UNSUPPORTED_LENGTH_UNIT"),
+        ("wrong_plane_name", "SOURCE_OBJECT_MISMATCH"),
+    ])
+    def test_bridge_preserves_input_constraints_or_refuses(case, code):
+        from app.ai.function_route import run_typed_fact_next_planner_route
+        payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+        control = run_typed_fact_next_planner_route(payload)
+        assert control.status == "SERVED", (control.code, control.reason)
+        args = payload["premises"][3]["args"]
+        if case == "missing_point":
+            del args["point"]
+        elif case == "non_string_point":
+            args["point"] = 1
+        elif case == "non_sequence_segment":
+            args["segment"] = 1
+        elif case == "unknown_qualifier":
+            payload["derived_sections"][0]["through_point"] = "ghost::M"
+        elif case == "unknown_local_vertex":
+            payload["derived_sections"][0]["through_point"] = "pyr::M"
+        elif case == "contradictory_unit":
+            payload["length_unit"] = "1"
+        elif case == "unrepresentable_unit":
+            payload["length_unit"] = "a"
+            payload["problem_text"] = payload["problem_text"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+            for prem in payload["premises"]:
+                prem["quote"] = prem["quote"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+                for key in ("side", "value"):
+                    if prem["args"].get(key) == "a":
+                        prem["args"][key] = "1"
+        else:
+            payload["derived_sections"][0]["plane_name"] = "β"
+        r = run_typed_fact_next_planner_route(payload)
+>       assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
+E       AssertionError: (None, None)
+E       assert ('SERVED', None) == ('REFUSED', '..._LENGTH_UNIT')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_typedfactnext_planner_bridge.py:638: AssertionError
+_ test_bridge_preserves_input_constraints_or_refuses[wrong_plane_name-SOURCE_OBJECT_MISMATCH] _
+
+case = 'wrong_plane_name', code = 'SOURCE_OBJECT_MISMATCH'
+
+    @pytest.mark.parametrize("case,code", [
+        ("missing_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_string_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_sequence_segment", "INVALID_TYPED_FACT_NEXT"),
+        ("unknown_qualifier", "UNKNOWN_SOLID_ID"),
+        ("unknown_local_vertex", "UNKNOWN_VERTEX_REF"),
+        ("contradictory_unit", "NON_HOMOGENEOUS_LENGTHS"),
+        ("unrepresentable_unit", "BRIDGE_UNSUPPORTED_LENGTH_UNIT"),
+        ("wrong_plane_name", "SOURCE_OBJECT_MISMATCH"),
+    ])
+    def test_bridge_preserves_input_constraints_or_refuses(case, code):
+        from app.ai.function_route import run_typed_fact_next_planner_route
+        payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+        control = run_typed_fact_next_planner_route(payload)
+        assert control.status == "SERVED", (control.code, control.reason)
+        args = payload["premises"][3]["args"]
+        if case == "missing_point":
+            del args["point"]
+        elif case == "non_string_point":
+            args["point"] = 1
+        elif case == "non_sequence_segment":
+            args["segment"] = 1
+        elif case == "unknown_qualifier":
+            payload["derived_sections"][0]["through_point"] = "ghost::M"
+        elif case == "unknown_local_vertex":
+            payload["derived_sections"][0]["through_point"] = "pyr::M"
+        elif case == "contradictory_unit":
+            payload["length_unit"] = "1"
+        elif case == "unrepresentable_unit":
+            payload["length_unit"] = "a"
+            payload["problem_text"] = payload["problem_text"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+            for prem in payload["premises"]:
+                prem["quote"] = prem["quote"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+                for key in ("side", "value"):
+                    if prem["args"].get(key) == "a":
+                        prem["args"][key] = "1"
+        else:
+            payload["derived_sections"][0]["plane_name"] = "β"
+        r = run_typed_fact_next_planner_route(payload)
+>       assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
+E       AssertionError: (None, None)
+E       assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_typedfactnext_planner_bridge.py:638: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_typedfactnext_planner_bridge.py::test_bridge_preserves_input_constraints_or_refuses[missing_point-INVALID_TYPED_FACT_NEXT]
+FAILED tests/geometry/test_typedfactnext_planner_bridge.py::test_bridge_preserves_input_constraints_or_refuses[non_string_point-INVALID_TYPED_FACT_NEXT]
+FAILED tests/geometry/test_typedfactnext_planner_bridge.py::test_bridge_preserves_input_constraints_or_refuses[non_sequence_segment-INVALID_TYPED_FACT_NEXT]
+FAILED tests/geometry/test_typedfactnext_planner_bridge.py::test_bridge_preserves_input_constraints_or_refuses[unknown_qualifier-UNKNOWN_SOLID_ID]
+FAILED tests/geometry/test_typedfactnext_planner_bridge.py::test_bridge_preserves_input_constraints_or_refuses[unknown_local_vertex-UNKNOWN_VERTEX_REF]
+FAILED tests/geometry/test_typedfactnext_planner_bridge.py::test_bridge_preserves_input_constraints_or_refuses[contradictory_unit-NON_HOMOGENEOUS_LENGTHS]
+FAILED tests/geometry/test_typedfactnext_planner_bridge.py::test_bridge_preserves_input_constraints_or_refuses[unrepresentable_unit-BRIDGE_UNSUPPORTED_LENGTH_UNIT]
+FAILED tests/geometry/test_typedfactnext_planner_bridge.py::test_bridge_preserves_input_constraints_or_refuses[wrong_plane_name-SOURCE_OBJECT_MISMATCH]
+8 failed, 1 passed, 54 deselected in 1.94s

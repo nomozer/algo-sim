@@ -1,0 +1,204 @@
+.FFF.F.FF                                                                [100%]
+================================== FAILURES ===================================
+_ test_adapter3_never_serves_a_bridge_style_partial_boundary_as_a_smaller_polygon _
+
+    def test_adapter3_never_serves_a_bridge_style_partial_boundary_as_a_smaller_polygon():
+        """Session 1 finding: Adapter /3 read [SB, SC, SD] as the whole boundary and served V(S.NPQ)/V(S.ABCD) (18 cases)."""
+        r = run_typed_fact_next_route(_payload())
+>       assert (r.status, r.code) == ("REFUSED", "SECTION_BOUNDARY_INCOMPLETE"), (r.status, r.code, r.answers)
+E       AssertionError: ('SERVED', None, {'g_ratio': '1/16'})
+E       assert ('SERVED', None) == ('REFUSED', '...Y_INCOMPLETE')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_hybrid_contract_unification.py:83: AssertionError
+____ test_adapter3_complete_boundary_is_served_with_a_closure_certificate _____
+
+    def test_adapter3_complete_boundary_is_served_with_a_closure_certificate():
+        r = run_typed_fact_next_route(_payload(cut=["SA", "SB", "SC", "SD"]))
+        assert r.status == "SERVED", (r.code, r.reason)
+        assert _ratio(r) == Fraction(1, 8) ** 2
+        cert = [v for v in r.verified_relations if v["kind"] == "section_closure"]
+>       assert len(cert) == 1 and cert[0]["verified"] and cert[0]["details"]["boundary"] == ["M", "N", "P", "Q"]
+E       assert (0 == 1)
+E        +  where 0 = len([])
+
+tests\geometry\test_hybrid_contract_unification.py:91: AssertionError
+____________ test_adapter3_boundary_in_a_crossed_order_is_refused _____________
+
+    def test_adapter3_boundary_in_a_crossed_order_is_refused():
+        r = run_typed_fact_next_route(_payload(cut=["SA", "SC", "SB", "SD"]))
+>       assert (r.status, r.code) == ("REFUSED", "SECTION_BOUNDARY_INCOMPLETE"), (r.status, r.code)
+E       AssertionError: ('REFUSED', 'POLYHEDRON_FACE_NOT_SIMPLE')
+E       assert ('REFUSED', '...E_NOT_SIMPLE') == ('REFUSED', '...Y_INCOMPLETE')
+E         
+E         At index 1 diff: 'POLYHEDRON_FACE_NOT_SIMPLE' != 'SECTION_BOUNDARY_INCOMPLETE'
+E         Use -v to get more diff
+
+tests\geometry\test_hybrid_contract_unification.py:96: AssertionError
+______ test_one_payload_never_gets_two_different_answers[ABCD-parallel] _______
+
+base = 'ABCD', plane = 'parallel'
+
+    @pytest.mark.parametrize("base,plane", [("ABC", "parallel"), ("ABCD", "parallel"), ("ABC", "perpendicular"),
+                                            ("ABCD", "perpendicular")])
+    def test_one_payload_never_gets_two_different_answers(base, plane):
+        """Contract parity on every ordering of every subset of lateral edges: when both routes serve, the answers agree."""
+        edges = [f"S{x}" for x in base]
+        for n in range(1, len(edges) + 1):
+            for cut in permutations(edges, n):
+                p = _payload(base, plane, list(cut))
+                a, b = run_typed_fact_next_planner_route(deepcopy(p)), run_typed_fact_next_route(deepcopy(p))
+                if a.status == b.status == "SERVED":
+                    assert _ratio(a) == _ratio(b) == Fraction(1, 8) ** 2, cut
+                for r in (a, b):
+                    if r.status == "SERVED":
+>                       assert _ratio(r) == Fraction(1, 8) ** 2, (cut, r)
+E                       AssertionError: (('SA', 'SB', 'SC'), Adapter3SimulationResult(status='SERVED', code=None, reason=None, failed_calls=(), scene3d={'obje...}, {'id': 'vcert9', 'fn': 'ask_volume', 'args': {'solid': 'S.MPQ'}, 'source': {'quotes': ['Cho hình chóp S.ABCD.']}}]))
+E                       assert Fraction(1, 256) == (Fraction(1, 8) ** 2)
+E                        +  where Fraction(1, 256) = _ratio(Adapter3SimulationResult(status='SERVED', code=None, reason=None, failed_calls=(), scene3d={'objects': [{'id': 'A', 'l...}}, {'id': 'vcert9', 'fn': 'ask_volume', 'args': {'solid': 'S.MPQ'}, 'source': {'quotes': ['Cho hình chóp S.ABCD.']}}]))
+E                        +  and   Fraction(1, 8) = Fraction(1, 8)
+
+tests\geometry\test_hybrid_contract_unification.py:112: AssertionError
+____ test_one_payload_never_gets_two_different_answers[ABCD-perpendicular] ____
+
+base = 'ABCD', plane = 'perpendicular'
+
+    @pytest.mark.parametrize("base,plane", [("ABC", "parallel"), ("ABCD", "parallel"), ("ABC", "perpendicular"),
+                                            ("ABCD", "perpendicular")])
+    def test_one_payload_never_gets_two_different_answers(base, plane):
+        """Contract parity on every ordering of every subset of lateral edges: when both routes serve, the answers agree."""
+        edges = [f"S{x}" for x in base]
+        for n in range(1, len(edges) + 1):
+            for cut in permutations(edges, n):
+                p = _payload(base, plane, list(cut))
+                a, b = run_typed_fact_next_planner_route(deepcopy(p)), run_typed_fact_next_route(deepcopy(p))
+                if a.status == b.status == "SERVED":
+                    assert _ratio(a) == _ratio(b) == Fraction(1, 8) ** 2, cut
+                for r in (a, b):
+                    if r.status == "SERVED":
+>                       assert _ratio(r) == Fraction(1, 8) ** 2, (cut, r)
+E                       AssertionError: (('SA', 'SB', 'SC'), Adapter3SimulationResult(status='SERVED', code=None, reason=None, failed_calls=(), scene3d={'obje..., {'id': 'vcert11', 'fn': 'ask_volume', 'args': {'solid': 'S.MPQ'}, 'source': {'quotes': ['Cho hình chóp S.ABCD.']}}]))
+E                       assert Fraction(1, 256) == (Fraction(1, 8) ** 2)
+E                        +  where Fraction(1, 256) = _ratio(Adapter3SimulationResult(status='SERVED', code=None, reason=None, failed_calls=(), scene3d={'objects': [{'id': 'A', 'l...}, {'id': 'vcert11', 'fn': 'ask_volume', 'args': {'solid': 'S.MPQ'}, 'source': {'quotes': ['Cho hình chóp S.ABCD.']}}]))
+E                        +  and   Fraction(1, 8) = Fraction(1, 8)
+
+tests\geometry\test_hybrid_contract_unification.py:112: AssertionError
+_ test_adapter3_polyhedral_plane_kind_without_a_construction_refuses_not_crashes _
+
+    def test_adapter3_polyhedral_plane_kind_without_a_construction_refuses_not_crashes():
+        p = _payload(base="ABC")
+        p["derived_sections"][0].update(plane_kind="plane_equation", equation_coeffs=("0", "0", "1", "-1"))
+>       r = run_typed_fact_next_route(p)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\geometry\test_hybrid_contract_unification.py:118: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+app\ai\adapter3_simulation.py:3105: in run_typed_fact_next_route
+    return compiler.run()
+           ^^^^^^^^^^^^^^
+app\ai\adapter3_simulation.py:2877: in run
+    self._compile_derived_sections()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <app.ai.adapter3_simulation._Adapter3Compiler object at 0x00000109C088FD40>
+
+    def _compile_derived_sections(self) -> None:
+        for sec in self.payload.derived_sections:
+            _verify_quote_in_problem(sec.quote, self.problem_text, sec.section_id)
+            sid = sec.target_solid_id
+            solid = self.solid_specs[sid]
+            smap = self.solid_local_to_canonical[sid]
+            solid_cname = self.solid_canonical_name[sid]
+    
+            p0 = self.resolve_ref(sec.through_point, sid, sec.section_id)
+            x1, x2 = _alloc_labels(self.occupied_labels, "X", 2)
+            self.aux_hidden_points.update((x1, x2))
+    
+            sec_call_id = self._next_call_id("sec")
+            self.section_call_ids[sec.section_id] = sec_call_id
+    
+            if sec.plane_kind == "through_point_parallel_plane":
+                assert sec.parallel_plane is not None
+                q0, q1, q2 = (self.resolve_ref(p, sid, sec.section_id) for p in sec.parallel_plane)
+                t1_id = self._next_call_id("tp")
+                t2_id = self._next_call_id("tp")
+                self.calls.append(
+                    {
+                        "id": t1_id,
+                        "fn": "translate_point",
+                        "args": {"point": p0, "vector": [q0, q1], "image": x1},
+                        "source": {"quotes": [sec.quote]},
+                    }
+                )
+                self.calls.append(
+                    {
+                        "id": t2_id,
+                        "fn": "translate_point",
+                        "args": {"point": p0, "vector": [q0, q2], "image": x2},
+                        "source": {"quotes": [sec.quote]},
+                    }
+                )
+                self.mat_phu.append(
+                    {
+                        "rule": MAT_SONG_SONG,
+                        "point": p0,
+                        "parallel_to": [q0, q1, q2],
+                        "labels": [x1, x2],
+                        "constructs": [t1_id, t2_id],
+                        "targets": [sec_call_id],
+                    }
+                )
+                self.ten_mat_phu[t1_id] = sec.plane_name
+                plane_deps = (p0, q0, q1, q2)
+            elif sec.plane_kind == "through_point_parallel_two_lines":
+                assert sec.parallel_line_a is not None and sec.parallel_line_b is not None
+                la = [self.resolve_ref(p, sid, sec.section_id) for p in sec.parallel_line_a]
+                lb = [self.resolve_ref(p, sid, sec.section_id) for p in sec.parallel_line_b]
+                t1_id = self._next_call_id("tp")
+                t2_id = self._next_call_id("tp")
+                self.calls.append(
+                    {
+                        "id": t1_id,
+                        "fn": "translate_point",
+                        "args": {"point": p0, "vector": la, "image": x1},
+                        "source": {"quotes": [sec.quote]},
+                    }
+                )
+                self.calls.append(
+                    {
+                        "id": t2_id,
+                        "fn": "translate_point",
+                        "args": {"point": p0, "vector": lb, "image": x2},
+                        "source": {"quotes": [sec.quote]},
+                    }
+                )
+                self.mat_phu.append(
+                    {
+                        "rule": MAT_HAI_DUONG,
+                        "point": p0,
+                        "lines": [la, lb],
+                        "labels": [x1, x2],
+                        "plane_name": sec.plane_name,
+                        "constructs": [t1_id, t2_id],
+                        "targets": [sec_call_id],
+                    }
+                )
+                self.ten_mat_phu[t1_id] = sec.plane_name
+                plane_deps = (p0, *la, *lb)
+            else:
+>               assert sec.perpendicular_line is not None
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               AssertionError
+
+app\ai\adapter3_simulation.py:754: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_adapter3_never_serves_a_bridge_style_partial_boundary_as_a_smaller_polygon
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_adapter3_complete_boundary_is_served_with_a_closure_certificate
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_adapter3_boundary_in_a_crossed_order_is_refused
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_one_payload_never_gets_two_different_answers[ABCD-parallel]
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_one_payload_never_gets_two_different_answers[ABCD-perpendicular]
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_adapter3_polyhedral_plane_kind_without_a_construction_refuses_not_crashes
+6 failed, 3 passed in 1.82s
+exit 1

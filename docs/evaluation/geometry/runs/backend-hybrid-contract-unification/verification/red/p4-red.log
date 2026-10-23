@@ -1,0 +1,101 @@
+FFFF                                                                     [100%]
+================================== FAILURES ===================================
+___ test_identical_derived_lines_and_planes_are_declared_once[parallel-ABC] ___
+
+base = 'ABC', plane = 'parallel'
+
+    @pytest.mark.parametrize("base", ["ABC", "ABCD"])
+    @pytest.mark.parametrize("plane", ["parallel", "perpendicular"])
+    def test_identical_derived_lines_and_planes_are_declared_once(base, plane):
+        """Session 1: 9/49 quadrilateral ⊥-plane residual plans hit IR_MEMORY_BUDGET_EXCEEDED (33 > 32) because every cut
+        vertex re-declared the same section plane and both perpendicular feet re-declared line SA. The budget stays 32."""
+        from app.simulation.semantic_program.validator import MAX_MEMORY_DECLARATIONS
+    
+        r = run_typed_fact_next_planner_route(_payload(base, plane, residual=True))
+        assert r.status == "SERVED", (r.code, r.reason)
+        assert MAX_MEMORY_DECLARATIONS == 32
+        assert len(r.program["memory_declarations"]) <= MAX_MEMORY_DECLARATIONS
+        d = _derived_constructs(r.program)
+>       assert len(d) == len(set(d)), d
+E       AssertionError: [('construct_line', 'S', 'B', ()), ('construct_plane', None, None, ('M', 'H', 'H1')), ('construct_line', 'S', 'C', ()), ('construct_plane', None, None, ('M', 'H', 'H1'))]
+E       assert 4 == 3
+E        +  where 4 = len([('construct_line', 'S', 'B', ()), ('construct_plane', None, None, ('M', 'H', 'H1')), ('construct_line', 'S', 'C', ()), ('construct_plane', None, None, ('M', 'H', 'H1'))])
+E        +  and   3 = len({('construct_line', 'S', 'B', ()), ('construct_line', 'S', 'C', ()), ('construct_plane', None, None, ('M', 'H', 'H1'))})
+E        +    where {('construct_line', 'S', 'B', ()), ('construct_line', 'S', 'C', ()), ('construct_plane', None, None, ('M', 'H', 'H1'))} = set([('construct_line', 'S', 'B', ()), ('construct_plane', None, None, ('M', 'H', 'H1')), ('construct_line', 'S', 'C', ()), ('construct_plane', None, None, ('M', 'H', 'H1'))])
+
+tests\geometry\test_hybrid_contract_unification.py:216: AssertionError
+__ test_identical_derived_lines_and_planes_are_declared_once[parallel-ABCD] ___
+
+base = 'ABCD', plane = 'parallel'
+
+    @pytest.mark.parametrize("base", ["ABC", "ABCD"])
+    @pytest.mark.parametrize("plane", ["parallel", "perpendicular"])
+    def test_identical_derived_lines_and_planes_are_declared_once(base, plane):
+        """Session 1: 9/49 quadrilateral ⊥-plane residual plans hit IR_MEMORY_BUDGET_EXCEEDED (33 > 32) because every cut
+        vertex re-declared the same section plane and both perpendicular feet re-declared line SA. The budget stays 32."""
+        from app.simulation.semantic_program.validator import MAX_MEMORY_DECLARATIONS
+    
+        r = run_typed_fact_next_planner_route(_payload(base, plane, residual=True))
+        assert r.status == "SERVED", (r.code, r.reason)
+        assert MAX_MEMORY_DECLARATIONS == 32
+        assert len(r.program["memory_declarations"]) <= MAX_MEMORY_DECLARATIONS
+        d = _derived_constructs(r.program)
+>       assert len(d) == len(set(d)), d
+E       AssertionError: [('construct_line', 'S', 'B', ()), ('construct_plane', None, None, ('M', 'H', 'H1')), ('construct_line', 'S', 'C', ())...e', None, None, ('M', 'H', 'H1')), ('construct_line', 'S', 'D', ()), ('construct_plane', None, None, ('M', 'H', 'H1'))]
+E       assert 6 == 4
+E        +  where 6 = len([('construct_line', 'S', 'B', ()), ('construct_plane', None, None, ('M', 'H', 'H1')), ('construct_line', 'S', 'C', ())...e', None, None, ('M', 'H', 'H1')), ('construct_line', 'S', 'D', ()), ('construct_plane', None, None, ('M', 'H', 'H1'))])
+E        +  and   4 = len({('construct_line', 'S', 'B', ()), ('construct_line', 'S', 'C', ()), ('construct_line', 'S', 'D', ()), ('construct_plane', None, None, ('M', 'H', 'H1'))})
+E        +    where {('construct_line', 'S', 'B', ()), ('construct_line', 'S', 'C', ()), ('construct_line', 'S', 'D', ()), ('construct_plane', None, None, ('M', 'H', 'H1'))} = set([('construct_line', 'S', 'B', ()), ('construct_plane', None, None, ('M', 'H', 'H1')), ('construct_line', 'S', 'C', ())...e', None, None, ('M', 'H', 'H1')), ('construct_line', 'S', 'D', ()), ('construct_plane', None, None, ('M', 'H', 'H1'))])
+
+tests\geometry\test_hybrid_contract_unification.py:216: AssertionError
+_ test_identical_derived_lines_and_planes_are_declared_once[perpendicular-ABC] _
+
+base = 'ABC', plane = 'perpendicular'
+
+    @pytest.mark.parametrize("base", ["ABC", "ABCD"])
+    @pytest.mark.parametrize("plane", ["parallel", "perpendicular"])
+    def test_identical_derived_lines_and_planes_are_declared_once(base, plane):
+        """Session 1: 9/49 quadrilateral ⊥-plane residual plans hit IR_MEMORY_BUDGET_EXCEEDED (33 > 32) because every cut
+        vertex re-declared the same section plane and both perpendicular feet re-declared line SA. The budget stays 32."""
+        from app.simulation.semantic_program.validator import MAX_MEMORY_DECLARATIONS
+    
+        r = run_typed_fact_next_planner_route(_payload(base, plane, residual=True))
+        assert r.status == "SERVED", (r.code, r.reason)
+        assert MAX_MEMORY_DECLARATIONS == 32
+        assert len(r.program["memory_declarations"]) <= MAX_MEMORY_DECLARATIONS
+        d = _derived_constructs(r.program)
+>       assert len(d) == len(set(d)), d
+E       AssertionError: [('construct_line', 'S', 'A', ()), ('construct_line', 'S', 'A', ()), ('construct_line', 'S', 'B', ()), ('construct_plane', None, None, ('M', 'H2', 'H3')), ('construct_line', 'S', 'C', ()), ('construct_plane', None, None, ('M', 'H2', 'H3'))]
+E       assert 6 == 4
+E        +  where 6 = len([('construct_line', 'S', 'A', ()), ('construct_line', 'S', 'A', ()), ('construct_line', 'S', 'B', ()), ('construct_plane', None, None, ('M', 'H2', 'H3')), ('construct_line', 'S', 'C', ()), ('construct_plane', None, None, ('M', 'H2', 'H3'))])
+E        +  and   4 = len({('construct_line', 'S', 'A', ()), ('construct_line', 'S', 'B', ()), ('construct_line', 'S', 'C', ()), ('construct_plane', None, None, ('M', 'H2', 'H3'))})
+E        +    where {('construct_line', 'S', 'A', ()), ('construct_line', 'S', 'B', ()), ('construct_line', 'S', 'C', ()), ('construct_plane', None, None, ('M', 'H2', 'H3'))} = set([('construct_line', 'S', 'A', ()), ('construct_line', 'S', 'A', ()), ('construct_line', 'S', 'B', ()), ('construct_plane', None, None, ('M', 'H2', 'H3')), ('construct_line', 'S', 'C', ()), ('construct_plane', None, None, ('M', 'H2', 'H3'))])
+
+tests\geometry\test_hybrid_contract_unification.py:216: AssertionError
+_ test_identical_derived_lines_and_planes_are_declared_once[perpendicular-ABCD] _
+
+base = 'ABCD', plane = 'perpendicular'
+
+    @pytest.mark.parametrize("base", ["ABC", "ABCD"])
+    @pytest.mark.parametrize("plane", ["parallel", "perpendicular"])
+    def test_identical_derived_lines_and_planes_are_declared_once(base, plane):
+        """Session 1: 9/49 quadrilateral ⊥-plane residual plans hit IR_MEMORY_BUDGET_EXCEEDED (33 > 32) because every cut
+        vertex re-declared the same section plane and both perpendicular feet re-declared line SA. The budget stays 32."""
+        from app.simulation.semantic_program.validator import MAX_MEMORY_DECLARATIONS
+    
+        r = run_typed_fact_next_planner_route(_payload(base, plane, residual=True))
+>       assert r.status == "SERVED", (r.code, r.reason)
+E       AssertionError: ('IR_MEMORY_BUDGET_EXCEEDED', 'chương trình dựng cần 33 khai báo bộ nhớ > trần 32 — không dựng một phần')
+E       assert 'REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED
+
+tests\geometry\test_hybrid_contract_unification.py:212: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_identical_derived_lines_and_planes_are_declared_once[parallel-ABC]
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_identical_derived_lines_and_planes_are_declared_once[parallel-ABCD]
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_identical_derived_lines_and_planes_are_declared_once[perpendicular-ABC]
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_identical_derived_lines_and_planes_are_declared_once[perpendicular-ABCD]
+4 failed, 14 deselected in 1.20s
+exit 1

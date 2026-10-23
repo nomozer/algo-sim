@@ -1,0 +1,81 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+_ test_bridge_preserves_input_constraints_or_refuses[reference_plane_name-SOURCE_OBJECT_MISMATCH] _
+
+case = 'reference_plane_name', code = 'SOURCE_OBJECT_MISMATCH'
+
+    @pytest.mark.parametrize("case,code", [
+        ("missing_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_string_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_sequence_segment", "INVALID_TYPED_FACT_NEXT"),
+        ("invalid_qualified_syntax", "INVALID_QUALIFIED_REF"),
+        ("unknown_qualifier", "UNKNOWN_SOLID_ID"),
+        ("unknown_local_vertex", "UNKNOWN_VERTEX_REF"),
+        ("unknown_named_edge_qualifier", "UNKNOWN_SOLID_ID"),
+        ("contradictory_unit", "NON_HOMOGENEOUS_LENGTHS"),
+        ("unrepresentable_unit", "BRIDGE_UNSUPPORTED_LENGTH_UNIT"),
+        ("wrong_plane_name", "SOURCE_OBJECT_MISMATCH"),
+        ("reference_plane_name", "SOURCE_OBJECT_MISMATCH"),
+    ])
+    def test_bridge_preserves_input_constraints_or_refuses(case, code):
+        from app.ai.function_route import run_typed_fact_next_planner_route
+        payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+        control = run_typed_fact_next_planner_route(payload)
+        assert control.status == "SERVED", (control.code, control.reason)
+        args = payload["premises"][3]["args"]
+        if case == "missing_point":
+            del args["point"]
+        elif case == "non_string_point":
+            args["point"] = 1
+        elif case == "non_sequence_segment":
+            args["segment"] = 1
+        elif case == "invalid_qualified_syntax":
+            args["point"] = "ghost::m"
+        elif case == "unknown_qualifier":
+            payload["derived_sections"][0]["through_point"] = "ghost::M"
+        elif case == "unknown_local_vertex":
+            payload["derived_sections"][0]["through_point"] = "pyr::M"
+        elif case == "unknown_named_edge_qualifier":
+            payload["derived_sections"][0]["named_intersections"] = {"ghost::S-ghost::B": "N", "S-C": "P"}
+        elif case == "contradictory_unit":
+            payload["length_unit"] = "1"
+        elif case == "unrepresentable_unit":
+            payload["length_unit"] = "a"
+            payload["problem_text"] = payload["problem_text"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+            for prem in payload["premises"]:
+                prem["quote"] = prem["quote"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+                for key in ("side", "value"):
+                    if prem["args"].get(key) == "a":
+                        prem["args"][key] = "1"
+        else:
+            payload["derived_sections"][0]["plane_name"] = "ABC" if case == "reference_plane_name" else "β"
+        r = run_typed_fact_next_planner_route(payload)
+>       assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
+E       AssertionError: (None, None)
+E       assert ('SERVED', None) == ('REFUSED', '...ECT_MISMATCH')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_typedfactnext_planner_bridge.py:645: AssertionError
+_____ test_bridge_accepts_matching_units_and_declared_qualified_vertices ______
+
+    def test_bridge_accepts_matching_units_and_declared_qualified_vertices():
+        from app.ai.function_route import run_typed_fact_next_planner_route
+        payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+        payload["length_unit"] = "a"
+        payload["simulation_goals"][0]["goal_id"] = "g::S"
+        payload["premises"][1]["args"]["line"] = ["pyr::S", "pyr::A"]
+        r = run_typed_fact_next_planner_route(payload)
+>       assert r.status == "SERVED" and r.length_unit == "a", (r.code, r.reason)
+E       AssertionError: ('UNKNOWN_SOLID_ID', "tham chiếu tới khối chưa khai 'g'")
+E       assert ('REFUSED' == 'SERVED'
+E         
+E         - SERVED
+E         + REFUSED)
+
+tests\geometry\test_typedfactnext_planner_bridge.py:656: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_typedfactnext_planner_bridge.py::test_bridge_preserves_input_constraints_or_refuses[reference_plane_name-SOURCE_OBJECT_MISMATCH]
+FAILED tests/geometry/test_typedfactnext_planner_bridge.py::test_bridge_accepts_matching_units_and_declared_qualified_vertices
+2 failed, 64 deselected in 1.08s

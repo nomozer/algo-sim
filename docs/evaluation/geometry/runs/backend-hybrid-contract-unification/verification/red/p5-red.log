@@ -1,0 +1,29 @@
+.F                                                                       [100%]
+================================== FAILURES ===================================
+_ test_fresh_cut_labels_never_reach_the_learner_and_derived_edges_are_named_as_such[ABCD] _
+
+base = 'ABCD'
+
+    @pytest.mark.parametrize("base", ["ABC", "ABCD"])
+    def test_fresh_cut_labels_never_reach_the_learner_and_derived_edges_are_named_as_such(base):
+        """Canonicalization lets the formation expansion of the derived pyramid fit the budget (square base); its base polygon
+        and lateral edges must not speak planner labels (I, I1, …), and a lateral edge is not 'a segment of the section'."""
+        r = run_typed_fact_next_planner_route(_anonymous_construction(base))
+        assert r.status == "SERVED", (r.code, r.reason)
+        fresh = next(d for d in r.planner["auxiliary"] if d.get("vertices"))["labels"]
+        tok = re.compile(r"(?<![\w'])[A-Z0-9'.]*(?:" + "|".join(map(re.escape, fresh)) + r")[A-Z0-9'.]*(?![\w'])")
+        sc = r.scene3d
+        text = [str(o.get(k)) for o in sc["objects"] for k in ("label", "display_label", "reference", "notation", "role")]
+        text += [str(e.get(k)) for e in sc["events"] for k in ("display_label", "learner_text", "explanation")]
+        text += [s.get("learner_text", "") for s in sc["formation"]["steps"]]
+>       assert [s for s in text if tok.search(s)] == []
+E       AssertionError: assert ['Đa giác M, ... nối S và I2'] == []
+E         
+E         Left contains 4 more items, first extra item: 'Đa giác M, I, I1, I2'
+E         Use -v to get more diff
+
+tests\geometry\test_hybrid_contract_unification.py:251: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_fresh_cut_labels_never_reach_the_learner_and_derived_edges_are_named_as_such[ABCD]
+1 failed, 1 passed, 18 deselected in 0.75s
+exit 1

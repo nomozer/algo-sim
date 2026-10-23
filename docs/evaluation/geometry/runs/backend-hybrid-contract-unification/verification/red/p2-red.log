@@ -1,0 +1,71 @@
+FFF                                                                      [100%]
+================================== FAILURES ===================================
+__ test_adapter3_refuses_what_the_shared_source_gate_refuses[_swapped_names] __
+
+make = <function _swapped_names at 0x00000259799802C0>
+
+    @pytest.mark.parametrize("make", [_swapped_names, _unread_condition, _anonymous_ratio_operand])
+    def test_adapter3_refuses_what_the_shared_source_gate_refuses(make):
+        """Session 1 finding: Adapter /3's substring checks served these three invalid inputs; the Registry Source Gate (via
+        the bridge) refuses them. Adapter /3 must take the SAME verdict, with the same code."""
+        p = make()
+        gate = run_typed_fact_next_planner_route(deepcopy(p))
+        assert gate.status == "REFUSED", (gate.code, gate.answers)
+        for payload in (p, _adapter_convention(p)):
+            r = run_typed_fact_next_route(payload)
+>           assert (r.status, r.code) == ("REFUSED", gate.code), (r.status, r.code, r.answers)
+E           AssertionError: ('REFUSED', 'DEGENERATE_DERIVED_SECTION', {})
+E           assert ('REFUSED', '...IVED_SECTION') == ('REFUSED', '...ECT_MISMATCH')
+E             
+E             At index 1 diff: 'DEGENERATE_DERIVED_SECTION' != 'SOURCE_OBJECT_MISMATCH'
+E             Use -v to get more diff
+
+tests\geometry\test_hybrid_contract_unification.py:157: AssertionError
+_ test_adapter3_refuses_what_the_shared_source_gate_refuses[_unread_condition] _
+
+make = <function _unread_condition at 0x0000025979980360>
+
+    @pytest.mark.parametrize("make", [_swapped_names, _unread_condition, _anonymous_ratio_operand])
+    def test_adapter3_refuses_what_the_shared_source_gate_refuses(make):
+        """Session 1 finding: Adapter /3's substring checks served these three invalid inputs; the Registry Source Gate (via
+        the bridge) refuses them. Adapter /3 must take the SAME verdict, with the same code."""
+        p = make()
+        gate = run_typed_fact_next_planner_route(deepcopy(p))
+        assert gate.status == "REFUSED", (gate.code, gate.answers)
+        for payload in (p, _adapter_convention(p)):
+            r = run_typed_fact_next_route(payload)
+>           assert (r.status, r.code) == ("REFUSED", gate.code), (r.status, r.code, r.answers)
+E           AssertionError: ('REFUSED', 'DEGENERATE_DERIVED_SECTION', {})
+E           assert ('REFUSED', '...IVED_SECTION') == ('REFUSED', '...ECT_MISMATCH')
+E             
+E             At index 1 diff: 'DEGENERATE_DERIVED_SECTION' != 'SOURCE_OBJECT_MISMATCH'
+E             Use -v to get more diff
+
+tests\geometry\test_hybrid_contract_unification.py:157: AssertionError
+_ test_adapter3_refuses_what_the_shared_source_gate_refuses[_anonymous_ratio_operand] _
+
+make = <function _anonymous_ratio_operand at 0x0000025979980400>
+
+    @pytest.mark.parametrize("make", [_swapped_names, _unread_condition, _anonymous_ratio_operand])
+    def test_adapter3_refuses_what_the_shared_source_gate_refuses(make):
+        """Session 1 finding: Adapter /3's substring checks served these three invalid inputs; the Registry Source Gate (via
+        the bridge) refuses them. Adapter /3 must take the SAME verdict, with the same code."""
+        p = make()
+        gate = run_typed_fact_next_planner_route(deepcopy(p))
+        assert gate.status == "REFUSED", (gate.code, gate.answers)
+        for payload in (p, _adapter_convention(p)):
+            r = run_typed_fact_next_route(payload)
+>           assert (r.status, r.code) == ("REFUSED", gate.code), (r.status, r.code, r.answers)
+E           AssertionError: ('REFUSED', 'DEGENERATE_DERIVED_SECTION', {})
+E           assert ('REFUSED', '...IVED_SECTION') == ('REFUSED', '...ECT_MISMATCH')
+E             
+E             At index 1 diff: 'DEGENERATE_DERIVED_SECTION' != 'SOURCE_OBJECT_MISMATCH'
+E             Use -v to get more diff
+
+tests\geometry\test_hybrid_contract_unification.py:157: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_adapter3_refuses_what_the_shared_source_gate_refuses[_swapped_names]
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_adapter3_refuses_what_the_shared_source_gate_refuses[_unread_condition]
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_adapter3_refuses_what_the_shared_source_gate_refuses[_anonymous_ratio_operand]
+3 failed, 9 deselected in 1.08s
+exit 1

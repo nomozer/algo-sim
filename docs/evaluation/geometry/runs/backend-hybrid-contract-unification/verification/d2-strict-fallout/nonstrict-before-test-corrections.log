@@ -1,0 +1,9 @@
+        assert summary["positive_passed"] == summary["positive_total"] == 10
+        assert summary["negative_passed"] == summary["negative_total"] == 6
+>           assert res.status == case["expected_status"], f"Case {case['case_id']} failed: {res.code}"
+E           AssertionError: Case A3-DEV-07 failed: SOURCE_OBJECT_MISMATCH
+FAILED tests/geometry/test_typedfact_next_adapter3.py::test_p5_p6_development_corpus_and_demos_oracle
+FAILED tests/geometry/test_wave3a_adapter3_integration.py::test_adapter3_unified_halfspace_containment_refusal
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_adapter3_boundary_in_a_crossed_order_is_refused
+FAILED tests/geometry/test_hybrid_contract_unification.py::test_adapter3_refuses_what_the_shared_source_gate_refuses[_anonymous_ratio_operand]
+4 failed, 44 passed in 3.93s

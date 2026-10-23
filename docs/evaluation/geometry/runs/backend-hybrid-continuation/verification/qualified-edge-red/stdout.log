@@ -1,0 +1,147 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+_ test_bridge_preserves_input_constraints_or_refuses[invalid_qualified_syntax-INVALID_QUALIFIED_REF] _
+
+case = 'invalid_qualified_syntax', code = 'INVALID_QUALIFIED_REF'
+
+    @pytest.mark.parametrize("case,code", [
+        ("missing_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_string_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_sequence_segment", "INVALID_TYPED_FACT_NEXT"),
+        ("invalid_qualified_syntax", "INVALID_QUALIFIED_REF"),
+        ("unknown_qualifier", "UNKNOWN_SOLID_ID"),
+        ("unknown_local_vertex", "UNKNOWN_VERTEX_REF"),
+        ("unknown_named_edge_qualifier", "UNKNOWN_SOLID_ID"),
+        ("contradictory_unit", "NON_HOMOGENEOUS_LENGTHS"),
+        ("unrepresentable_unit", "BRIDGE_UNSUPPORTED_LENGTH_UNIT"),
+        ("wrong_plane_name", "SOURCE_OBJECT_MISMATCH"),
+    ])
+    def test_bridge_preserves_input_constraints_or_refuses(case, code):
+        from app.ai.function_route import run_typed_fact_next_planner_route
+        payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+        control = run_typed_fact_next_planner_route(payload)
+        assert control.status == "SERVED", (control.code, control.reason)
+        args = payload["premises"][3]["args"]
+        if case == "missing_point":
+            del args["point"]
+        elif case == "non_string_point":
+            args["point"] = 1
+        elif case == "non_sequence_segment":
+            args["segment"] = 1
+        elif case == "invalid_qualified_syntax":
+            args["point"] = "ghost::m"
+        elif case == "unknown_qualifier":
+            payload["derived_sections"][0]["through_point"] = "ghost::M"
+        elif case == "unknown_local_vertex":
+            payload["derived_sections"][0]["through_point"] = "pyr::M"
+        elif case == "unknown_named_edge_qualifier":
+            payload["derived_sections"][0]["named_intersections"] = {"ghost::S-ghost::B": "N", "S-C": "P"}
+        elif case == "contradictory_unit":
+            payload["length_unit"] = "1"
+        elif case == "unrepresentable_unit":
+            payload["length_unit"] = "a"
+            payload["problem_text"] = payload["problem_text"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+            for prem in payload["premises"]:
+                prem["quote"] = prem["quote"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+                for key in ("side", "value"):
+                    if prem["args"].get(key) == "a":
+                        prem["args"][key] = "1"
+        else:
+            payload["derived_sections"][0]["plane_name"] = "β"
+>       r = run_typed_fact_next_planner_route(payload)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\geometry\test_typedfactnext_planner_bridge.py:643: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+app\ai\function_route.py:258: in run_typed_fact_next_planner_route
+    b = bridge(raw)
+        ^^^^^^^^^^^
+app\simulation\geometry_functions\typed_fact_next_bridge.py:114: in bridge
+    _check_qualified_refs(p.model_dump(), solids)
+app\simulation\geometry_functions\typed_fact_next_bridge.py:55: in _check_qualified_refs
+    _check_qualified_refs(item, solids)
+app\simulation\geometry_functions\typed_fact_next_bridge.py:58: in _check_qualified_refs
+    _check_qualified_refs(item, solids)
+app\simulation\geometry_functions\typed_fact_next_bridge.py:55: in _check_qualified_refs
+    _check_qualified_refs(item, solids)
+app\simulation\geometry_functions\typed_fact_next_bridge.py:55: in _check_qualified_refs
+    _check_qualified_refs(item, solids)
+app\simulation\geometry_functions\typed_fact_next_bridge.py:60: in _check_qualified_refs
+    sid, label = parse_qualified_ref(value)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ref = 'ghost::m'
+
+    def parse_qualified_ref(ref: str) -> tuple[str | None, str]:
+        """Parse an optional solid-qualified vertex reference (`solid_id::label` or `label`)."""
+        m = _QUALIFIED_REF_RE.match(ref.strip())
+        if not m:
+>           raise TypedFactNextValidationError(
+                "INVALID_QUALIFIED_REF",
+                f"Invalid vertex reference {ref!r}; expected 'LABEL' or 'solid_id::LABEL'.",
+            )
+E           app.simulation.geometry_functions.typed_fact_next.TypedFactNextValidationError: INVALID_QUALIFIED_REF: Invalid vertex reference 'ghost::m'; expected 'LABEL' or 'solid_id::LABEL'.
+
+app\simulation\geometry_functions\typed_fact_next.py:58: TypedFactNextValidationError
+_ test_bridge_preserves_input_constraints_or_refuses[unknown_named_edge_qualifier-UNKNOWN_SOLID_ID] _
+
+case = 'unknown_named_edge_qualifier', code = 'UNKNOWN_SOLID_ID'
+
+    @pytest.mark.parametrize("case,code", [
+        ("missing_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_string_point", "INVALID_TYPED_FACT_NEXT"),
+        ("non_sequence_segment", "INVALID_TYPED_FACT_NEXT"),
+        ("invalid_qualified_syntax", "INVALID_QUALIFIED_REF"),
+        ("unknown_qualifier", "UNKNOWN_SOLID_ID"),
+        ("unknown_local_vertex", "UNKNOWN_VERTEX_REF"),
+        ("unknown_named_edge_qualifier", "UNKNOWN_SOLID_ID"),
+        ("contradictory_unit", "NON_HOMOGENEOUS_LENGTHS"),
+        ("unrepresentable_unit", "BRIDGE_UNSUPPORTED_LENGTH_UNIT"),
+        ("wrong_plane_name", "SOURCE_OBJECT_MISMATCH"),
+    ])
+    def test_bridge_preserves_input_constraints_or_refuses(case, code):
+        from app.ai.function_route import run_typed_fact_next_planner_route
+        payload = _next(NAMED.replace(" " + RATIO_Q, ""), [deepcopy(SEC)], [deepcopy(SEC_GOAL)])
+        control = run_typed_fact_next_planner_route(payload)
+        assert control.status == "SERVED", (control.code, control.reason)
+        args = payload["premises"][3]["args"]
+        if case == "missing_point":
+            del args["point"]
+        elif case == "non_string_point":
+            args["point"] = 1
+        elif case == "non_sequence_segment":
+            args["segment"] = 1
+        elif case == "invalid_qualified_syntax":
+            args["point"] = "ghost::m"
+        elif case == "unknown_qualifier":
+            payload["derived_sections"][0]["through_point"] = "ghost::M"
+        elif case == "unknown_local_vertex":
+            payload["derived_sections"][0]["through_point"] = "pyr::M"
+        elif case == "unknown_named_edge_qualifier":
+            payload["derived_sections"][0]["named_intersections"] = {"ghost::S-ghost::B": "N", "S-C": "P"}
+        elif case == "contradictory_unit":
+            payload["length_unit"] = "1"
+        elif case == "unrepresentable_unit":
+            payload["length_unit"] = "a"
+            payload["problem_text"] = payload["problem_text"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+            for prem in payload["premises"]:
+                prem["quote"] = prem["quote"].replace("cạnh a", "cạnh 1").replace("SA = a", "SA = 1")
+                for key in ("side", "value"):
+                    if prem["args"].get(key) == "a":
+                        prem["args"][key] = "1"
+        else:
+            payload["derived_sections"][0]["plane_name"] = "β"
+        r = run_typed_fact_next_planner_route(payload)
+>       assert (r.status, r.code) == ("REFUSED", code), (r.code, r.reason)
+E       AssertionError: (None, None)
+E       assert ('SERVED', None) == ('REFUSED', '...OWN_SOLID_ID')
+E         
+E         At index 0 diff: 'SERVED' != 'REFUSED'
+E         Use -v to get more diff
+
+tests\geometry\test_typedfactnext_planner_bridge.py:644: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/geometry/test_typedfactnext_planner_bridge.py::test_bridge_preserves_input_constraints_or_refuses[invalid_qualified_syntax-INVALID_QUALIFIED_REF]
+FAILED tests/geometry/test_typedfactnext_planner_bridge.py::test_bridge_preserves_input_constraints_or_refuses[unknown_named_edge_qualifier-UNKNOWN_SOLID_ID]
+2 failed, 63 deselected in 1.16s
