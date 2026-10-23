@@ -1,0 +1,352 @@
+{
+  "base_main": "3f6d737529af6fc79494fc3baeb340a7ca663b10",
+  "preservation_commit": "77f7aaf7",
+  "logs": [
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/bridge-boundary-red/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/bridge-boundary-red/stdout.log",
+      "bytes": 29203,
+      "sha256": "563efb4397956ed4bada7e020430d37aa0f846d7c4823cf9cb0b1471c1647382",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/full-t3/stderr.log",
+      "bytes": 332,
+      "sha256": "ccb6bf354a0674eeb1e49df9a880a000b75240079fdb849282bb899d81eeb58c",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/full-t3/stdout.log",
+      "bytes": 23296,
+      "sha256": "181ad6b32ac43f83fac75ace5cc6be09b139c1c954c4ed00891aa51d6224d4dd",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/plane-identity-red/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/plane-identity-red/stdout.log",
+      "bytes": 4617,
+      "sha256": "a4c5b08a84f629628a0d539af2e1dc33391344cb5dbaafc01e0a1eb0a7f9866a",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/qualified-edge-red/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/qualified-edge-red/stdout.log",
+      "bytes": 8303,
+      "sha256": "01c55bfbe44bff80962b2629709de1be07448d85fce539d889b48bccecdbce48",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/repro-c2b/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-continuation/verification/repro-c2b/stdout.log",
+      "bytes": 1997,
+      "sha256": "5e2475468985c5af053ce38035911ac152203de85e5b8744125f67385d60dace",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/d2-strict-fallout/nonstrict-before-test-corrections.log",
+      "bytes": 827,
+      "sha256": "7b8a03fdaf042bd19cf38094c2affcf3c09689684d5dfef44f78595f64b3a680",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/d2-strict-fallout/strict-at-3553e4d4.log",
+      "bytes": 9657,
+      "sha256": "ac1939759030a7de7c736b683a97f195b13f011be1ddefd864b06f644f21f773",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/full-t3/stderr.log",
+      "bytes": 342,
+      "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/full-t3/stdout.log",
+      "bytes": 18509,
+      "sha256": "561e4586d3db58dc489859f8d66c7ea27a36dfeba71eb10cafaf935d9e6af158",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/geometry-dir-first-run-before-fixes.log",
+      "bytes": 39965,
+      "sha256": "3f7586fbf91d8d9b8d059c635fdfb858d7ade4950b5337d66a06bf5afaa9cf69",
+      "findings": {
+        "raw_traceback": [
+          561
+        ]
+      }
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/p3-composition-suites.log",
+      "bytes": 944,
+      "sha256": "bfb3a5151ccd301f1f5c758a2dbe9932248c24eb1e999386ee6c42d927c199e5",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/red/p1-red.log",
+      "bytes": 11954,
+      "sha256": "ff509658be46121bd95fde5c7a5ce86b28d93579dcd3bed0399d94a3ac2fa853",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/red/p2-red.log",
+      "bytes": 4527,
+      "sha256": "e88c994850de6e1b292327d403c0040eee46f306f5fe9ef15fe5f9ff8a7efe83",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/red/p4-red.log",
+      "bytes": 8465,
+      "sha256": "885dda81d683f813c65c28b63c3ff2bd14fe14ff3c6e4b9c6fbbe246e016256d",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/red/p5-red.log",
+      "bytes": 1976,
+      "sha256": "55a8cc3f2aa1f8bc092ff4bb50af2ddb1ddd95ae09a0fb3cd03b6aebbe80648e",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/t3-attempt1/stderr.log",
+      "bytes": 342,
+      "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a",
+      "findings": {}
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/typedfactnext-planner-bridge/verification/t3-attempt1/stdout.log",
+      "bytes": 20391,
+      "sha256": "a1a45b0a52467936f5cb4712800baef7140f944a9598de9effe0230b145ab721",
+      "findings": {}
+    }
+  ],
+  "remote_push_status": "REMOTE_PUSH_SECURITY_BLOCKED",
+  "scope": "All 22 blobs decoded and scanned. Test failures are diagnostics, not provider outputs. Raw traceback manually confirmed at the reported location. Pattern scan is not a universal secret guarantee.",
+  "root_status": [
+    " M frontend/src/components/SimulationWorkspace.tsx",
+    " M frontend/src/components/hybrid-preview-contract.test.tsx",
+    " M frontend/src/simulations/domains/geometry/Scene3DExplorer.test.tsx",
+    " M frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
+    " M frontend/src/simulations/domains/geometry/interaction-state.ts",
+    " M frontend/src/simulations/domains/geometry/pick-target.ts",
+    " M frontend/src/simulations/domains/geometry/scene3d-auxiliary.ts",
+    " M frontend/src/simulations/domains/geometry/scene3d-camera.ts",
+    " M frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts",
+    " M frontend/src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx",
+    " M frontend/src/simulations/domains/geometry/scene3d-model.ts",
+    " M frontend/src/simulations/domains/geometry/scene3d-playback.tsx",
+    " M frontend/src/simulations/domains/geometry/scene3d-presentation.ts",
+    " M frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+    " M frontend/src/simulations/domains/geometry/scene3d-section.test.ts",
+    " M frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+    " M frontend/src/simulations/domains/geometry/scene3d.test.tsx",
+    " M frontend/src/styles/global.css",
+    " M frontend/src/styles/tokens.css",
+    "?? docs/evaluation/geometry/runs/docs-final-go-main/",
+    "?? docs/evaluation/geometry/runs/hybrid-go-main/",
+    "?? docs/evaluation/geometry/runs/hybrid-preview-contract-hardening-go-main/",
+    "?? docs/evaluation/geometry/runs/hybrid-route-d-preview-go-main/",
+    "?? docs/evaluation/geometry/runs/scene3d-go-main/",
+    "?? docs/evaluation/geometry/runs/source-gate-hardening/verification/t3-fail-72d1595f.log",
+    "?? frontend/public/",
+    "?? frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx"
+  ],
+  "root_file_hashes": [
+    {
+      "path": "frontend/src/components/SimulationWorkspace.tsx",
+      "sha256": "88ee4e5491da74938315422ffd141426383075d511683a9d6821ae9756c64bc9"
+    },
+    {
+      "path": "frontend/src/components/hybrid-preview-contract.test.tsx",
+      "sha256": "97bf6d7470d7a3c02faac74a49424cbc3f0507f9da1fe941be260c2d803f5925"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/Scene3DExplorer.test.tsx",
+      "sha256": "9722cc1bfdedfb51e467851fb5be545ddd195a4d1c5cd0467f44e4f667c29c75"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/Scene3DExplorer.tsx",
+      "sha256": "34e0ff11f5ba5e83eb58065905f0d13fd4feb841b6c9b244ec37cb5525f43233"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/interaction-state.ts",
+      "sha256": "e45dfda3e579cf7832217abd3fe3d2bf7c657751fdff7cce8e41399c135de690"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/pick-target.ts",
+      "sha256": "64c602fe4991338381b314e74d30c002ae7dc1d370e44ace2df3dacc7a7d48f4"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-auxiliary.ts",
+      "sha256": "af0f8e70ef9791d9907f39c031763b90b9352e5ec75d4adadcf388454512fb9b"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-camera.ts",
+      "sha256": "8eeddf314bb63edbc901b68af74190717d28f67da0ac908cb2e929540a0c8add"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-edge-visibility.ts",
+      "sha256": "a18a500bad6a0d6f85821c5eac8afb8f724751498b3b63c65c172592b6c6233f"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-hidden-lines.test.tsx",
+      "sha256": "6cfa83aa030f572d41deff3d21476c2ab5b432683cc9908d186202ae7aed41e5"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-model.ts",
+      "sha256": "accdee312b8a26a509d85e99626a9c6f99076ce3433f25588719524832f0d419"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-playback.tsx",
+      "sha256": "ec1b00d84d63cc89186b018f68fc5615d2c2f248911118942535e39e9b0832e1"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-presentation.ts",
+      "sha256": "7f9d4e9024ff6864c648422d4fc62c2fc60e2d9db4c2295cf2abea2838cd171f"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-roles.ts",
+      "sha256": "3cbf921555ec7c3f5957f05db98df02fda6d8d572b09af5c12e2f326a6ea4100"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-section.test.ts",
+      "sha256": "ec2313d7adea5c823946b356951ddfcb8329f56dad659fa6a18f4dc74e5fb082"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d-view.tsx",
+      "sha256": "410b8fd11f4114b83fb7be215b703a5422619c922e02658456e50718d0eb5124"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/scene3d.test.tsx",
+      "sha256": "fc30e8894bc25b5221c401b791f8f4c49089253fcdfe8e654745c49c833faf37"
+    },
+    {
+      "path": "frontend/src/styles/global.css",
+      "sha256": "0a7e7408f21bd721d04f846ad35e202a6cf5e105d0121e8ea5e41f43e871253b"
+    },
+    {
+      "path": "frontend/src/styles/tokens.css",
+      "sha256": "4c2353ab87f5fd1701085baf1ea3c86ddded6a57cd0303cad82149bd28564346"
+    },
+    {
+      "path": "docs/evaluation/geometry/runs/source-gate-hardening/verification/t3-fail-72d1595f.log",
+      "sha256": "e48eaa7c445c9522a571493797c64ba178fa5da8d588ad8d4ee54077b0324723"
+    },
+    {
+      "path": "frontend/src/simulations/domains/geometry/simulation-visual-consistency-session1.test.tsx",
+      "sha256": "88a82a65a42998c1885ab3138afe8e594a501830c4e6d32c2332d278053decd9"
+    }
+  ],
+  "disk_free_bytes": 23763025920,
+  "worktrees": [
+    "worktree D:/Documents/projects/algo-sim",
+    "HEAD fe9f555437498432427ae6bbd54402cdd59c7eb7",
+    "branch refs/heads/research/hybrid-wave3a-volume-reasoning",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/extraction-v2-safety",
+    "HEAD 330a222a2d4f627da7454378627a1497c239fb8c",
+    "branch refs/heads/integration/extraction-v2-safety",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/freeze-scene3d-metric-boundary",
+    "HEAD cb1f4954a7243de0561b3e724b7b2e94cb36bffc",
+    "detached",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/freeze-scene3d-metric-final",
+    "HEAD 216bbf84beb4a2bbd0e6d6c688a4f3e4becf24bc",
+    "detached",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/geometric-visual-correctness-framing",
+    "HEAD f95596716912e5550ed079287221274b2d70f24c",
+    "branch refs/heads/research/geometric-visual-correctness-framing",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-backend-s1",
+    "HEAD 82d3d25540ea643a68bd7877eb1b67a78dfc7134",
+    "branch refs/heads/research/hybrid-backend-integration-session1",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-route-d-preview-wiring",
+    "HEAD 65d6ee97d6f693c6613153d28aaf40fa0f352ba1",
+    "branch refs/heads/research/hybrid-route-d-preview-wiring",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-semantic-extraction-v2",
+    "HEAD dc27009fe9530ced01c3e6d52898d789a62cb36f",
+    "branch refs/heads/research/hybrid-semantic-extraction-v2",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/hybrid-session5-offline-consumer",
+    "HEAD 3f6d737529af6fc79494fc3baeb340a7ca663b10",
+    "branch refs/heads/research/hybrid-session5-offline-consumer",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/nl-to-scene3d-e2e-readiness",
+    "HEAD 25f57e31604c5a12ca30667276b17596dcceb71b",
+    "branch refs/heads/research/nl-to-scene3d-e2e-readiness",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/scene3d-plane-grid-camera",
+    "HEAD 551a354174e1c213f3ad2bf03d7574ebf75f4d85",
+    "branch refs/heads/research/scene3d-plane-grid-camera",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/scene3d-unified-visual-language",
+    "HEAD 8618d84c917c5d5d41eb9a9cd41a40e93ae2996c",
+    "branch refs/heads/research/scene3d-unified-visual-language",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/semantic-extraction-v3",
+    "HEAD 7168d26963011433889dc907492df87ac62140f7",
+    "branch refs/heads/research/semantic-extraction-v3",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/semantic-extraction-v3-runtime-revision",
+    "HEAD bb014eb832672948e613ac21984c7c65cee14b83",
+    "branch refs/heads/research/semantic-extraction-v3-runtime-revision",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-coverage-visual-validation",
+    "HEAD d86c72031d8fc85cd4eef62d9379cd1690ba1417",
+    "branch refs/heads/research/simulation-coverage-visual-validation",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/simulation-visual-consistency-learning-ux",
+    "HEAD f6a8e30fb70d377c5a8a97db476ebd4d7c090336",
+    "branch refs/heads/research/simulation-visual-consistency-learning-ux",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-scene3d-metric-boundary",
+    "HEAD 2160fbcf3a8ec489f8ac792ffccdcf7436f30c86",
+    "detached",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-scene3d-pre-main",
+    "HEAD 61668c9362c49df39f1ae948b0e7a7e1cad33f95",
+    "detached",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/t3-scene3d-pre-main-2",
+    "HEAD 8e2235e7a540da58c48adf6fcced12624676119c",
+    "detached",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/verify-geometric-visual-correctness-framing",
+    "HEAD 7868db0aef3810e2089b5f8b8d6aecfb8b3e1400",
+    "detached",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/verify-visual-ux-final-quality",
+    "HEAD 9343e8d0d4c4cdf5bf0865e0a550c13f238f28b5",
+    "detached",
+    "",
+    "worktree D:/Documents/projects/algo-sim/.superpowers/worktrees/visual-ux-final-quality",
+    "HEAD 164a5e25ad25bf42d689df115ade5d74b5c733e9",
+    "branch refs/heads/research/visual-ux-final-quality",
+    ""
+  ],
+  "deletions": [],
+  "reclaimed_bytes": 0
+}

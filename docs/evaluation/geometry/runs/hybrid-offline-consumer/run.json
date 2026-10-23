@@ -1,0 +1,16 @@
+{
+  "run_id": "hybrid-offline-consumer",
+  "task_wave": "hybrid-offline-consumer-w01",
+  "session": 5,
+  "date": "2026-10-23",
+  "authorization": "GO_SESSION5_HYBRID_V2_OFFLINE_CONSUMER_RESEARCH",
+  "base_commit": "3f6d737529af6fc79494fc3baeb340a7ca663b10",
+  "branch": "research/hybrid-session5-offline-consumer",
+  "classification": "OFFLINE_DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "provider_calls": 0,
+  "default_mode": "LLM_ONLY",
+  "response_contract": "flat",
+  "hybrid_product_enablement": "NO-GO",
+  "remote_push_security": "REMOTE_PUSH_SECURITY_BLOCKED",
+  "status": "IN_PROGRESS"
+}

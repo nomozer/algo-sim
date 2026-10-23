@@ -15,6 +15,8 @@ import type { Scene3D } from "./scene3d-model";
 
 export const HYBRID_PREVIEW_SCHEMA = "hybrid-route-d-preview/1";
 export const HYBRID_PREVIEW_ADAPTER = "hybrid-preview-adapter/2";
+export const HYBRID_SIMULATION_SCHEMA = "hybrid-route-d-simulation/4";
+export const HYBRID_SIMULATION_ADAPTER = "hybrid-simulation-adapter/4";
 /** Khoá của view đã kiểm trong envelope (do frontend tạo, không phải trường của backend). */
 export const KHOA_HYBRID_VIEW = "hybrid_preview";
 
@@ -42,9 +44,18 @@ export interface HybridObservationView {
 }
 
 export interface HybridPreviewView {
-  adapter_version: typeof HYBRID_PREVIEW_ADAPTER;
+  adapter_version: typeof HYBRID_PREVIEW_ADAPTER | typeof HYBRID_SIMULATION_ADAPTER;
   answers: HybridAnswerView[];
   observations: HybridObservationView[];
+  /** Adapter /4 certificates and provenance, never promoted to source givens. */
+  sections?: HybridSectionView[];
+}
+
+export interface HybridSectionView {
+  section_id: string;
+  boundary: string[] | null;
+  vertices: { label: string; edge: string[]; provenance: string; stated: boolean }[];
+  closure_certificate: { boundary: string[]; verified: boolean; rule: string } | null;
 }
 
 /** Hàm loại `fact` của Registry (`geometry_functions/registry.py` — mệnh đề kiểm được trên hình) → tên cho học sinh.
@@ -74,6 +85,63 @@ export type KetQuaPhanHoiHybrid =
 const laDoiTuong = (x: unknown): x is Record<string, unknown> => !!x && typeof x === "object" && !Array.isArray(x);
 const gon = (s: unknown) => String(s ?? "").replace(/\s+/g, "");
 
+/** Compare backend identities/coordinates only; no intersection, area or volume calculation in the consumer. */
+function cungChuTrinh(a: unknown[], b: unknown[]): boolean {
+  return a.length === b.length && [b, [...b].reverse()].some((cycle) =>
+    cycle.some((_, offset) => a.every((x, i) => JSON.stringify(x) === JSON.stringify(cycle[(i + offset) % cycle.length]))));
+}
+
+function kiemSections(sections: unknown, scene: Scene3D): string | null {
+  if (!Array.isArray(sections)) return "thiếu provenance thiết diện";
+  const ids = new Set<string>();
+  const diem = (name: string) => scene.objects.filter((o) => o.type === "point3"
+    && (o.id === name || o.notation?.replace(/[′’]/g, "'") === name.replace(/[′’]/g, "'")));
+  const nguon = new Set(["THROUGH_POINT_REUSE", "SOURCE_NAMED", "STATED_UNNAMED", "REUSED_INTERSECTION", "DERIVED_FRESH"]);
+  for (const s of sections) {
+    if (!laDoiTuong(s) || typeof s.section_id !== "string" || ids.has(s.section_id) || !Array.isArray(s.vertices)) return "thiết diện sai dạng";
+    ids.add(s.section_id);
+    const obj = scene.objects.find((o) => o.id === `td_${s.section_id}` && o.type === "section");
+    if (!obj || !obj.polygon) return "thiết diện không thuộc cảnh";
+    const polygon = obj.polygon;
+    const solid = scene.objects.find((o) => obj.depends.includes(o.id) && o.type === "solid");
+    if (!solid?.vertex_ids || s.vertices.length !== polygon.length) return "đỉnh thiết diện lệch cảnh";
+    const labels = new Set<string>();
+    for (const v of s.vertices) {
+      if (!laDoiTuong(v) || typeof v.label !== "string" || labels.has(v.label) || !nguon.has(String(v.provenance))
+        || typeof v.stated !== "boolean" || (v.provenance === "DERIVED_FRESH" && v.stated)
+        || !Array.isArray(v.edge) || v.edge.length !== 2 || !v.edge.every((id) => typeof id === "string" && diem(id).length === 1)
+        || !scene.objects.some((o) => o.id === v.label && o.type === "point3" && (v.provenance !== "DERIVED_FRESH" || o.origin === "derived"))) return "provenance đỉnh thiết diện sai";
+      labels.add(v.label);
+      const point = scene.objects.find((o) => o.id === v.label && o.type === "point3");
+      if (!point) return "thiếu điểm thiết diện";
+      if (v.provenance === "DERIVED_FRESH" && (point.notation != null || point.role !== "Điểm dựng phụ"
+        || point.display_group?.includes("given"))) return "điểm suy diễn không được giả làm dữ kiện";
+      const ordinal = polygon.findIndex((p) => JSON.stringify(p) === JSON.stringify(point?.xyz));
+      const source = obj.vertex_sources?.[ordinal];
+      const edge = v.edge.map((name: string) => diem(name)[0].id);
+      const indices = source?.solid_edge_vertex_indices;
+      if (ordinal < 0 || !source || (indices
+        ? !cungChuTrinh(edge, indices.map((i) => solid.vertex_ids![i]))
+        : source.solid_vertex_index == null || !edge.includes(solid.vertex_ids[source.solid_vertex_index]))) return "cạnh nguồn thiết diện lệch cảnh";
+    }
+    // Plane-only sections have no derived-solid closure certificate in /4; preserve this absence honestly.
+    if (s.boundary === null && s.closure_certificate === null) {
+      if (scene.objects.some((o) => o.type === "solid" && o.id !== solid.id
+        && [...labels].every((id) => o.vertex_ids?.includes(id)))) return "khối dẫn xuất thiếu chứng chỉ khép kín";
+      continue;
+    }
+    if (!Array.isArray(s.boundary) || s.boundary.length < 3 || new Set(s.boundary).size !== s.boundary.length
+      || s.boundary.length !== labels.size || !s.boundary.every((id) => labels.has(id))
+      || !laDoiTuong(s.closure_certificate) || s.closure_certificate.verified !== true
+      || typeof s.closure_certificate.rule !== "string" || !Array.isArray(s.closure_certificate.boundary)
+      || !cungChuTrinh(s.boundary, s.closure_certificate.boundary)) return "chứng chỉ chu trình thiết diện lệch";
+    const points = s.boundary.map((id) => scene.objects.find((o) => o.id === id)?.xyz);
+    if (points.some((p) => !p) || !cungChuTrinh(points, obj.polygon)) return "chu trình thiết diện lệch cảnh";
+  }
+  if (scene.objects.filter((o) => o.type === "section").length !== ids.size) return "thiếu thiết diện";
+  return null;
+}
+
 function nhomKiem(group: unknown): [string, Record<string, unknown>][] | null {
   if (group == null) return [];
   if (!laDoiTuong(group)) return null;
@@ -97,11 +165,18 @@ function giaTriCanh(scene: Scene3D, id: string): string | null {
  */
 export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridPreviewView } | { reason: string } {
   if (!laDoiTuong(routeD)) return { reason: "route_d không phải đối tượng" };
+  const v4 = routeD.schema_version === HYBRID_SIMULATION_SCHEMA;
   const id = routeD.runtime_identity;
-  if (!laDoiTuong(id) || id.adapter_version !== HYBRID_PREVIEW_ADAPTER) return { reason: "adapter_version không được hỗ trợ" };
+  if (v4) {
+    if (routeD.adapter_version !== HYBRID_SIMULATION_ADAPTER || routeD.contract_version !== "typed-fact-next/2"
+      || routeD.status !== "SERVED" || routeD.refusal !== null || !laDoiTuong(routeD.source_verification)
+      || routeD.source_verification.authority !== "registry.kiem_nguon") return { reason: "authority Adapter /4 không hợp lệ" };
+    const error = kiemSections(routeD.sections, scene);
+    if (error) return { reason: error };
+  } else if (!laDoiTuong(id) || id.adapter_version !== HYBRID_PREVIEW_ADAPTER) return { reason: "adapter_version không được hỗ trợ" };
 
   // §4 — length_unit của route_d phải đúng là length_unit của cảnh (một nguồn).
-  if (JSON.stringify(routeD.length_unit ?? null) !== JSON.stringify(scene.length_unit ?? null)) {
+  if (JSON.stringify(routeD.length_unit ?? null) !== JSON.stringify((v4 ? scene.length_unit?.symbol : scene.length_unit) ?? null)) {
     return { reason: "length_unit của route_d lệch cảnh" };
   }
   const donVi = scene.length_unit?.symbol ?? null;
@@ -110,6 +185,7 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
   const ans = routeD.answers ?? {};
   const exact = routeD.answer_exact ?? {};
   if (!laDoiTuong(ans) || !laDoiTuong(exact)) return { reason: "answers/answer_exact sai dạng" };
+  if (v4 && JSON.stringify(Object.keys(ans).sort()) !== JSON.stringify(Object.keys(exact).sort())) return { reason: "answers/answer_exact lệch" };
   for (const [k, sym] of Object.entries(ans)) {
     const ex = exact[k];
     if (typeof sym !== "string" || !sym.trim() || !laDoiTuong(ex)) return { reason: `đáp số ${k} thiếu dạng chính xác` };
@@ -156,7 +232,8 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
       });
     }
   }
-  return { view: { adapter_version: HYBRID_PREVIEW_ADAPTER, answers, observations } };
+  return { view: { adapter_version: v4 ? HYBRID_SIMULATION_ADAPTER : HYBRID_PREVIEW_ADAPTER, answers, observations,
+    ...(v4 ? { sections: structuredClone(routeD.sections) as HybridSectionView[] } : {}) } };
 }
 
 /**
@@ -164,11 +241,20 @@ export function dungHybridView(routeD: unknown, scene: Scene3D): { view: HybridP
  * envelope từ chối giữ nguyên (lời từ chối không mang quan sát — §5). Phản hồi cổng HTTP (không envelope) ⇒ lỗi.
  */
 export function docPhanHoiHybrid(raw: unknown): KetQuaPhanHoiHybrid {
-  if (!laDoiTuong(raw) || raw.schema_version !== HYBRID_PREVIEW_SCHEMA) return { ok: false, reason: "schema_version lạ" };
+  if (!laDoiTuong(raw) || (raw.schema_version !== HYBRID_PREVIEW_SCHEMA && raw.schema_version !== HYBRID_SIMULATION_SCHEMA)) return { ok: false, reason: "schema_version lạ" };
+  const v4 = raw.schema_version === HYBRID_SIMULATION_SCHEMA;
+  if (!v4 && laDoiTuong(raw.route_d) && raw.route_d.schema_version === HYBRID_SIMULATION_SCHEMA) return { ok: false, reason: "wrapper/route_d khác phiên bản" };
+  if (v4 && (!laDoiTuong(raw.route_d) || raw.route_d.schema_version !== HYBRID_SIMULATION_SCHEMA
+    || raw.route_d.adapter_version !== HYBRID_SIMULATION_ADAPTER || raw.route_d.contract_version !== "typed-fact-next/2")) return { ok: false, reason: "identity Adapter /4 lệch" };
   const envelope = raw.envelope;
   if (!laDoiTuong(envelope)) return { ok: false, reason: "phản hồi không có envelope (phản hồi cổng operator)" };
   if (KHOA_HYBRID_VIEW in envelope) return { ok: false, reason: "envelope backend không được tự mang hybrid_preview" };
-  if (envelope.status !== "ok") return { ok: true, envelope: { ...envelope } };
+  if (envelope.status !== "ok") {
+    if (v4 && (!laDoiTuong(raw.route_d) || raw.route_d.status !== "REFUSED" || !laDoiTuong(raw.route_d.refusal)
+      || typeof raw.route_d.refusal.code !== "string" || raw.route_d.refusal.code !== envelope.reason_code
+      || envelope.scene3d != null || envelope.simulation_id != null)) return { ok: false, reason: "từ chối Adapter /4 lệch" };
+    return { ok: true, envelope: { ...envelope } };
+  }
   const scene = envelope.scene3d as Scene3D | undefined;
   if (!laDoiTuong(scene) || !Array.isArray(scene.objects) || !Array.isArray(scene.events)) {
     return { ok: false, reason: "envelope phục vụ thiếu scene3d" };
@@ -186,8 +272,12 @@ export function docPhanHoiHybrid(raw: unknown): KetQuaPhanHoiHybrid {
  * Không dựng lại từ `route_d` (đã bỏ ở biên vận chuyển) — chỉ kiểm tính nhất quán với cảnh.
  */
 export function kiemHybridView(view: unknown, scene: Scene3D | undefined): string | null {
-  if (!laDoiTuong(view) || view.adapter_version !== HYBRID_PREVIEW_ADAPTER) return "hybrid_preview lạ";
+  if (!laDoiTuong(view) || (view.adapter_version !== HYBRID_PREVIEW_ADAPTER && view.adapter_version !== HYBRID_SIMULATION_ADAPTER)) return "hybrid_preview lạ";
   if (!scene) return "hybrid_preview cần scene3d";
+  if (view.adapter_version === HYBRID_SIMULATION_ADAPTER) {
+    const error = kiemSections(view.sections, scene);
+    if (error) return error;
+  }
   if (!Array.isArray(view.answers) || !Array.isArray(view.observations)) return "hybrid_preview sai dạng";
   const daCo = new Set<string>();
   for (const a of view.answers) {
@@ -213,7 +303,7 @@ export function kiemHybridView(view: unknown, scene: Scene3D | undefined): strin
 /** View đã kiểm của envelope đang hoạt động, hoặc `null` (envelope LLM_ONLY không bao giờ có). */
 export function hybridViewCua(envelope: unknown): HybridPreviewView | null {
   const v = laDoiTuong(envelope) ? envelope[KHOA_HYBRID_VIEW] : null;
-  return laDoiTuong(v) && v.adapter_version === HYBRID_PREVIEW_ADAPTER ? (v as unknown as HybridPreviewView) : null;
+  return laDoiTuong(v) && (v.adapter_version === HYBRID_PREVIEW_ADAPTER || v.adapter_version === HYBRID_SIMULATION_ADAPTER) ? (v as unknown as HybridPreviewView) : null;
 }
 
 /**
