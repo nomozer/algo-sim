@@ -97,11 +97,12 @@ const VAI_DIEM_PHU = "Điểm dựng phụ";
 /** What the planner (`_dinh_cat_canh`) fixes per provenance: is the point an unnamed auxiliary, and is its edge stated?
  *  `undefined` = not fixed by the contract. The scene cannot tell STATED_UNNAMED from DERIVED_FRESH (both unnamed
  *  auxiliaries); that distinction is backend authority only. */
-const LUAT_NGUON: Record<string, { phu?: boolean; stated?: boolean }> = {
+const LUAT_NGUON: Record<string, { phu?: boolean; stated?: boolean; qua?: boolean }> = {
   SOURCE_NAMED: { phu: false, stated: true },
   STATED_UNNAMED: { phu: true, stated: true },
   DERIVED_FRESH: { phu: true, stated: false },
-  THROUGH_POINT_REUSE: {},
+  // `qua`: the label is the plane's own through-point (a named source/premise point the plane depends on).
+  THROUGH_POINT_REUSE: { phu: false, qua: true },
   REUSED_INTERSECTION: {},
 };
 const chuanTen = (s: string) => s.replace(/″/g, "''").replace(/[′’]/g, "'");
@@ -119,7 +120,8 @@ function kiemSectionsCore(sections: unknown, scene: Scene3D): string | null {
   if (!Array.isArray(sections)) return "thiếu provenance thiết diện";
   const ids = new Set<string>();
   const coId = new Set(scene.objects.map((o) => o.id));
-  if (scene.objects.some((o) => (o.depends ?? []).some((d) => !coId.has(d)))) return "cảnh có phụ thuộc treo";
+  if (scene.objects.some((o) => (o.depends ?? []).some((d) => !coId.has(d)))
+    || (scene.formation?.steps ?? []).some((st) => (st.visible_ids ?? []).some((d) => !coId.has(d)))) return "cảnh có phụ thuộc treo";
   const diem = (name: string) => scene.objects.filter((o) => o.type === "point3"
     && (o.id === name || (typeof o.notation === "string" && chuanTen(o.notation) === chuanTen(name))));
   for (const s of sections) {
@@ -143,6 +145,8 @@ function kiemSectionsCore(sections: unknown, scene: Scene3D): string | null {
       const laDiemPhu = point.notation == null && point.role === VAI_DIEM_PHU && !point.display_group?.includes("given");
       if (luat.phu === true && !laDiemPhu) return "điểm suy diễn không được giả làm dữ kiện";
       if (luat.phu === false && point.notation == null) return "điểm suy diễn không được giả làm dữ kiện";
+      if (luat.qua && !scene.objects.some((o) => obj.depends.includes(o.id) && o.type !== "solid"
+        && (o.depends ?? []).includes(point.id))) return "điểm qua không thuộc mặt cắt";
       const ordinal = polygon.findIndex((p) => JSON.stringify(p) === JSON.stringify(point?.xyz));
       const source = obj.vertex_sources?.[ordinal];
       const edge = v.edge.map((name: string) => diem(name)[0].id);

@@ -123,8 +123,8 @@ try {
           if (!progress.closed) {
             const sub = frame.rendered.filter(id => id.startsWith(`${progress.object_id}::`));
             assert(!sub.some(id => id.includes('::face:')), `${fx.id}: open section face drawn at ${step}`);
-            const vertices = new Set(sub.filter(id => id.includes('::vertex:')));
-            assert(vertices.size <= progress.visible_edge_ids.length + 1, `${fx.id}: section vertices ahead of edges at ${step}`);
+            const ahead = sub.filter(id => id.includes('::vertex:') && Number(id.split('::vertex:')[1]) > progress.visible_edge_ids.length);
+            assert(!ahead.length, `${fx.id}: section vertices ahead of edges at ${step}: ${ahead}`);
           }
         }
         row.frames.push(frame);

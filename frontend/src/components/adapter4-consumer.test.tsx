@@ -69,6 +69,9 @@ describe("Adapter /4 offline consumer", () => {
     ["derived → stated unnamed, unstated", "DERIVED_FRESH", (v: any) => { v.provenance = "STATED_UNNAMED"; }],
     ["stated unnamed → unstated", "STATED_UNNAMED", (v: any) => { v.stated = false; }],
     ["source named → unstated", "SOURCE_NAMED", (v: any) => { v.stated = false; }],
+    // Review round 2: the through-point is the plane's own named point, never an auxiliary or another intersection.
+    ["derived → through point", "DERIVED_FRESH", (v: any) => { v.provenance = "THROUGH_POINT_REUSE"; v.stated = true; }],
+    ["named intersection → through point", "SOURCE_NAMED", (v: any) => { v.provenance = "THROUGH_POINT_REUSE"; }],
   ])("rejects provenance relabel %s", (_, from, mutate) => {
     const row = rows.find((r: any) => r.route_d.sections.some((s: any) => s.vertices.some((v: any) => v.provenance === from)));
     const raw = response(row);
@@ -99,6 +102,11 @@ describe("Adapter /4 offline consumer", () => {
     const row = rows.find((r: any) => r.route_d.sections.some((s: any) => s.closure_certificate === null));
     expect(row).toBeDefined();
     expect(docPhanHoiHybrid(response(row)).ok).toBe(true);
+  });
+
+  it("rejects a formation step showing an object the scene does not have", () => {
+    const raw = response(); raw.envelope.scene3d.formation.steps[0].visible_ids.push("khong_co");
+    expect(docPhanHoiHybrid(raw).ok).toBe(false);
   });
 
   it("rejects an empty closure rule", () => {
