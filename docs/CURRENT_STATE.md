@@ -8,6 +8,12 @@
 
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION
 
+Session 5 offline `/4` consumer (2026-10-23, `research/hybrid-session5-offline-consumer`, not merged/pushed; Codex →
+Claude takeover): [`handoff`](evaluation/geometry/runs/hybrid-offline-consumer/handoff.md). Frontend-only product
+`e090af1c`, candidate `9f06ed2b` (measured system unchanged), Full T3 PASS, browser acceptance 94/94 PASS, review PASS;
+status `SESSION5_READY_FOR_OWNER_GO_MAIN_REVIEW`. `/4` consumed by fixture injection only — no endpoint emits the `/4`
+wrapper. NL extraction quality UNKNOWN. Defaults, cache 127 and next-action authority unchanged.
+
 Session 4B disabled integration (2026-10-23, `research/hybrid-session4b-integration`; fast-forwarded into LOCAL `main`
 `9c7ed1b1` under `GO_MAIN_HYBRID_V2_DISABLED_LOCAL_ONLY`, not pushed —
 [`GO_MAIN_RECORD`](evaluation/geometry/runs/hybrid-disabled-integration/GO_MAIN_RECORD.md)):

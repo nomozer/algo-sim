@@ -1,0 +1,31 @@
+{
+  "schema": "authoritative-t3-receipt/2",
+  "run": "hybrid-offline-consumer",
+  "branch": "research/hybrid-session5-offline-consumer",
+  "baseline_main": "3f6d737529af6fc79494fc3baeb340a7ca663b10",
+  "product_commit": "e090af1c9511bbc83afce92e4d6c88a32d851503",
+  "candidate_freeze_commit": "9f06ed2b664f03976f1f7d67b6b0a44f0e5b7f15",
+  "t3_target_commit": "478d50e837bf937545bc5c75bf9e88895e1aad81",
+  "product_paths_changed_between_product_and_t3_target": 0,
+  "measured_system_hash": "413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df",
+  "measured_file_count": 116,
+  "worktree": ".superpowers/worktrees/hybrid-session5-offline-consumer (the Session 5 development worktree; tracked tree clean before run: git status --porcelain = 0 lines; Vite 3115 stopped; no second worktree)",
+  "command": "ALLOW_LIVE_AI=0 ALGO_SIM_PYTHON=D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe node frontend/scripts/full-gate.mjs",
+  "environment": {"os": "Windows 11 Pro 10.0.26100", "node": "v24.13.0", "python": "Python 3.12 (D:/Documents/projects/algo-sim/backend/.venv)"},
+  "started_utc": "2026-10-23T12:27:00Z",
+  "finished_utc": "2026-10-23T12:35:33Z",
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "pytest_backend": "11572 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning",
+  "vitest_frontend": "73/73 files, 1238 tests passed",
+  "build": "PASS (tsc -b + vite build)",
+  "demo_replay": "5/5",
+  "demo_crash_surface": "6/6 refusal boundaries correct, 0 thrown",
+  "streams": {
+    "stdout": {"file": "stdout.log", "sha256_as_written": "1fe38e87e0bbc00a3cb5cc4c2ca0f74a781992db39dcabcdbf8b24c9ae825e67"},
+    "stderr": {"file": "stderr.log", "sha256_as_written": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a", "content": "vite chunk-size warning only"}
+  },
+  "post_t3_freeze_verify": "post-t3-freeze-verify.log (exit 0, MATCH)",
+  "provider_calls": 0,
+  "not_covered_by_t3": "frontend/scripts/*.node-test.mjs harnesses and browser gates; Adapter /4 browser acceptance is separate: results/browser-final-9f06ed2b/receipt.json"
+}

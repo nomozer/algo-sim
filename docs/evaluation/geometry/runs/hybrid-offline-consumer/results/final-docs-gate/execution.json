@@ -1,0 +1,45 @@
+{
+  "command": [
+    "D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/geometry/test_docs_information_architecture.py",
+    "tests/test_current_state_identity.py",
+    "tests/semantic_program/test_evaluation_candidate.py"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\hybrid-session5-offline-consumer\\backend",
+  "source_commit": "478d50e837bf937545bc5c75bf9e88895e1aad81",
+  "started_utc": "2026-10-23T12:38:36.747127+00:00",
+  "elapsed_seconds": 18.719,
+  "exit_code": 0,
+  "timeout_seconds": 2400,
+  "timed_out": false,
+  "environment": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "ALGO_SIM_PYTHON": "D:\\Documents\\projects\\algo-sim\\backend\\.venv\\Scripts\\python.exe"
+  },
+  "streams": {
+    "stdout": {
+      "bytes": 102,
+      "sha256": "274a4159b976b92b528bd0bf9546ac12b47ccc0ab7784133958bc3774d6a0a7b",
+      "stored_bytes": 102,
+      "stored_sha256": "274a4159b976b92b528bd0bf9546ac12b47ccc0ab7784133958bc3774d6a0a7b"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored_bytes": 0,
+      "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "summary": [
+    "71 passed in 17.92s\r"
+  ]
+}

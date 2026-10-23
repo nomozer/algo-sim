@@ -7,10 +7,22 @@
   "base_commit": "3f6d737529af6fc79494fc3baeb340a7ca663b10",
   "branch": "research/hybrid-session5-offline-consumer",
   "classification": "OFFLINE_DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "implementers": ["Codex (until usage limit, through 56507602)", "Claude Opus 5.5 (takeover from 565076028e1f)"],
   "provider_calls": 0,
   "default_mode": "LLM_ONLY",
   "response_contract": "flat",
   "hybrid_product_enablement": "NO-GO",
+  "cache_version": 127,
   "remote_push_security": "REMOTE_PUSH_SECURITY_BLOCKED",
-  "status": "IN_PROGRESS"
+  "product_commit": "e090af1c9511bbc83afce92e4d6c88a32d851503",
+  "candidate_freeze_commit": "9f06ed2b664f03976f1f7d67b6b0a44f0e5b7f15",
+  "measured_system_hash": "413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df",
+  "full_t3": {"target": "478d50e837bf937545bc5c75bf9e88895e1aad81", "verdict": "FULL_PRODUCT_GATE_PASS", "receipt": "verification/full-t3/execution.json"},
+  "browser_acceptance": {"commit": "9f06ed2b664f03976f1f7d67b6b0a44f0e5b7f15", "verdict": "FRONTEND_CONSUMER_ACCEPTANCE_PASS", "rows": 94, "tree_clean": true, "receipt": "results/browser-final-9f06ed2b/receipt.json"},
+  "independent_review": {"final": "PASS", "rounds": 3, "record": "verification/independent-review.md"},
+  "human_visual_review": "NOT_APPROVED",
+  "nl_to_typedfacts_quality": "UNKNOWN",
+  "full_nl_to_scene3d": "NOT_MEASURED",
+  "reclaimed_bytes": 0,
+  "status": "SESSION5_READY_FOR_OWNER_GO_MAIN_REVIEW"
 }

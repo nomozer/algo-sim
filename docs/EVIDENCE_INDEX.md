@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_OFFLINE_CONSUMER
+
+REPORT = docs/evaluation/geometry/runs/hybrid-offline-consumer/report.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-offline-consumer/
+CLASSIFICATION = SESSION5_READY_FOR_OWNER_GO_MAIN_REVIEW; OFFLINE_DEVELOPMENT_EVALUATION_NOT_BLIND; FRONTEND_CONSUMER_ACCEPTANCE_PASS (fixture injection, no /4 wrapper producer); NL_TO_TYPEDFACTS_QUALITY_UNKNOWN; FULL_NL_TO_SCENE3D_NOT_MEASURED. Session 5 on `research/hybrid-session5-offline-consumer` from local main `3f6d7375`; Codex through `56507602`, Claude takeover after.
+CODE_COMMIT = e090af1c9511bbc83afce92e4d6c88a32d851503 (product, frontend only); 9f06ed2b664f03976f1f7d67b6b0a44f0e5b7f15 (candidate; measured_system 413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df, 116 files, unchanged); 478d50e837bf937545bc5c75bf9e88895e1aad81 (Full T3 FULL_PRODUCT_GATE_PASS: pytest 11572 passed / 1 skipped / 2 deselected / 15 xfailed, vitest 73 files / 1238 passed, build PASS, demo 5/5, crash 6/6, post-T3 freeze MATCH)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-offline-consumer/run.json; docs/evaluation/geometry/runs/hybrid-offline-consumer/verification/full-t3/execution.json; docs/evaluation/geometry/runs/hybrid-offline-consumer/results/browser-final-9f06ed2b/receipt.json; docs/evaluation/geometry/runs/hybrid-offline-consumer/verification/independent-review.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = NONE (report.md §2 corrects this run's own SESSION5_TAKEOVER_CHECKPOINT.md description of browser attempt 4)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_DISABLED_INTEGRATION
 
 REPORT = docs/evaluation/geometry/runs/hybrid-disabled-integration/BACKEND_HYBRID_INTEGRATION_REPORT.md
