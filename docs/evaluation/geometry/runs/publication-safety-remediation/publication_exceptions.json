@@ -1,0 +1,412 @@
+{
+ "schema": "publication-exceptions/1",
+ "policy": "AGENTS.md §4 forbids raw tracebacks and secrets in the Git tree. An entry exempts exactly (path, blob, sha256, rules) and only when owner_decision is APPROVED_BY_USER, written by the Owner. Agents and scripts never write that value. New or changed content is never covered.",
+ "proposal": "docs/evaluation/geometry/runs/publication-safety-remediation/HISTORICAL_TRACEBACK_EXCEPTION_PROPOSAL.md",
+ "entries": [
+  {
+   "path": "docs/evaluation/geometry/runs/backend-hybrid-contract-unification/verification/geometry-dir-first-run-before-fixes.log",
+   "blob": "8a515fef0e1537c03f8abcc2dc533e88704f164f",
+   "sha256": "3f7586fbf91d8d9b8d059c635fdfb858d7ade4950b5337d66a06bf5afaa9cf69",
+   "bytes": 39965,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "HISTORY_ONLY",
+   "first_commit": "77f7aaf7ae027e2ff7b6bc9f14aee38a785ce6fb",
+   "first_commit_date": "2026-10-23T11:43:40+07:00",
+   "already_public_on_origin_main": false,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "backend/.env.example",
+   "blob": "fa87951a8d6b5c443af9c40bd0c064f0e85d9638",
+   "sha256": "c9a3508e38cf49fb13aa8e975b607b8b4854a391663624b7c372cce0b6f830a8",
+   "bytes": 480,
+   "rules": [
+    "SECRET_ASSIGNMENT"
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "0621910084d26b43de857f8dda230d4c8a2fe7a1",
+   "first_commit_date": "2026-07-13T01:18:52+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "backend/tests/conftest_classroom.py",
+   "blob": "1a16c593f14ec5c49c3d9eae52afb717e672fa05",
+   "sha256": "fde1af1e16cc3e254f5bc53313b90b9bcc03987de7fbb76d3bc697181f0877d0",
+   "bytes": 3504,
+   "rules": [
+    "HARDCODED_PASSWORD"
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "b38ef482b5424c82b0c5d7f1e8a5e8ca25e872b2",
+   "first_commit_date": "2026-08-13T15:36:16+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "backend/tests/geometry/test_docs_information_architecture.py",
+   "blob": "0fe9b1fd883e507856cf5ad227e19c382210f9b7",
+   "sha256": "24abec8f85093eaa428099e90795321d6f6c7878e97d50076972a11a26f26624",
+   "bytes": 19719,
+   "rules": [
+    "GOOGLE_API_KEY"
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "34c36872d70245a8f294e4ca9cbf5a975990914a",
+   "first_commit_date": "2026-09-22T14:03:20+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "backend/tests/geometry/test_multicase_benchmark.py",
+   "blob": "454e1f9ae10ee60dbca86fd71f6d74eb73bd9d77",
+   "sha256": "270466d23ba2606b9800cbf35191b3ea7480353f2de023974675bbe82348cbac",
+   "bytes": 23595,
+   "rules": [
+    "GOOGLE_API_KEY"
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "1f0b645f48526f7e7ca3f52ba2935d2620effcb2",
+   "first_commit_date": "2026-09-21T14:09:19+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "backend/tests/geometry/test_structured_relation_analyze_live_runner.py",
+   "blob": "59a92e47b766f9d75353eec1019f24d86cd64dc5",
+   "sha256": "d10588dd87ebaf235bde9318c807e694e7c7e09d01efc3a797ec04ac95cf94f6",
+   "bytes": 18888,
+   "rules": [
+    "GOOGLE_API_KEY"
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "44d5244d856a83ecef10e9b4c00515ad149ba15b",
+   "first_commit_date": "2026-09-21T08:13:59+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "backend/tests/geometry/test_structured_relation_revalidation.py",
+   "blob": "a46e4d510dfe483cf39732727a38c114a5637a41",
+   "sha256": "91743a992e6c896633c8c9d18ad6e492cb8eff8445f9e42ee679064df8139610",
+   "bytes": 15184,
+   "rules": [
+    "GOOGLE_API_KEY"
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "616397697d8d7cb9ca6d3fa4cedd909abee24006",
+   "first_commit_date": "2026-09-21T13:19:47+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "backend/tests/test_auth_api.py",
+   "blob": "60bbfa275bc62fbc30310b80134152dec02e48f5",
+   "sha256": "fd383b1a6e87a461180cf1d76a419d2d7cc80a5b49c7fb9d00939c98d1acd540",
+   "bytes": 10197,
+   "rules": [
+    "HARDCODED_PASSWORD"
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "b38ef482b5424c82b0c5d7f1e8a5e8ca25e872b2",
+   "first_commit_date": "2026-08-13T15:36:16+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "backend/tests/test_curved_acceptance_manifest.py",
+   "blob": "a8143fce1ad21a3a90d737ec08a415e3ac01cd51",
+   "sha256": "78628af245ea4ed811d3f9c4f7bee0204d5c943d5e85ec2412a12536ca3cbff7",
+   "bytes": 20910,
+   "rules": [
+    "GOOGLE_API_KEY"
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "67e11671ea059cd9ee931857f4ba2869e4367050",
+   "first_commit_date": "2026-10-08T03:35:19+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "backend/tests/test_dev_backend_launcher.py",
+   "blob": "5aa9000c8647a4c9234fdc896de5b00c022f69e6",
+   "sha256": "08c5f6e9ada5942b8ed5c85ae92cfb8215d54f7df9f513e8d9446025121deab0",
+   "bytes": 23101,
+   "rules": [
+    "BEARER_TOKEN"
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "a532f96ace06bb2ec277c571ffc00d95e214c94e",
+   "first_commit_date": "2026-09-16T11:17:33+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/photo-problem-to-scene/docker-backend-dev-auto-refresh/SECRET_SCAN.json",
+   "blob": "d2a4702cf8725937a31a6526fba4779e8c5c5d8f",
+   "sha256": "4d7f5d8bf348518b7fefe25b5445c6909da7b948569acc76ba3d83f71f6b1207",
+   "bytes": 1461,
+   "rules": [
+    "BEARER_TOKEN"
+   ],
+   "category": "SYNTHETIC_TEST_VECTOR_OR_PLACEHOLDER",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "e6ca857c7f9c1853795e2a1555fcb8e7febc5ef4",
+   "first_commit_date": "2026-09-16T11:37:13+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/classroom-band-fit/diagnostics/attempts/a1_9284202d/fixtures_9284202d.log",
+   "blob": "d7292aabe06ecb5768df9ed2fcc34f1787ee26bf",
+   "sha256": "a42395690d60849cf47b5ddf0d4003da7999a1133bd974c86e2ef732c1545471",
+   "bytes": 3678,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "6a1801e787753726dab3f043f73896e366d832b4",
+   "first_commit_date": "2026-10-09T12:17:42+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/cuboid-final-review/results/logs/PRE_FREEZE_FULL_BACKEND_fac2769e.log",
+   "blob": "a23e7b70d84805215767383d492aa7c032e581f0",
+   "sha256": "8fc139e2aa2dd2ccae4156f5189ddfce737cf3fbadc6ec4bee1c5fa4c3b60ac2",
+   "bytes": 26911,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "a1c53cdbf9cd35667f0e1d918584e880a67daab3",
+   "first_commit_date": "2026-10-05T09:28:23+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/exact-dimensions/diagnostics/attempt2/evidence_fe83c46e.log",
+   "blob": "6df0a514e7d23a47a271e1a70a62b0742104fe03",
+   "sha256": "b6bc78bc932704a3b6c2a26a3b7eb7618c624212020f8cc107d02955360b66bb",
+   "bytes": 2082,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "d51db4e20daa1a764659fa7304498008aeea303c",
+   "first_commit_date": "2026-10-08T02:23:31+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w01/diagnostics/logs/PRE_FREEZE_FULL_BACKEND_ad7172ab.log",
+   "blob": "47af91536e077d9d1547d296c9a753d9cd2669f4",
+   "sha256": "4d518094cd18ee8b17eebc0c456df13c00b617bb99aba560c4f1fbf177a56b19",
+   "bytes": 25132,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "b5cf450320ae920242660c3c695b18916b06f912",
+   "first_commit_date": "2026-10-06T00:29:49+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w01/diagnostics/logs/PRE_FREEZE_FULL_BACKEND_de5b2331.log",
+   "blob": "ccb887b79d6ba4d866e4e632d5a82ccbf379256d",
+   "sha256": "9c593850b33b80b0f00410d9b783b545c289ced70625a3fedcd5655493312a73",
+   "bytes": 30944,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "5aaf11eec2b88f15054f454ce4b1706893bb15c1",
+   "first_commit_date": "2026-10-05T19:55:05+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/diagnostics/attempts/attempt1_47941832/EVIDENCE_BUILDER_47941832.log",
+   "blob": "20d5ae68087878c7718a692c2c7e30c3120e3312",
+   "sha256": "74db71d5d7bd7004d2f6ea252c54a1f6b3cfe093d58dd94a60a648c89fd7dbef",
+   "bytes": 2163,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "a5d233ce4e635b0228f04af55aa04f3407d4a8d8",
+   "first_commit_date": "2026-10-06T10:18:45+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/regular-square-pyramid-w03/diagnostics/attempts/attempt1_47941832/OCCLUSION_47941832.log",
+   "blob": "02896a3708eb5478f491b3199c36b13c102fc5f0",
+   "sha256": "2737be093c65f3f389308ab229205d613afbccc216935bb4c24daf533b3dcba4",
+   "bytes": 2328,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "a5d233ce4e635b0228f04af55aa04f3407d4a8d8",
+   "first_commit_date": "2026-10-06T10:18:45+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/regular-triangular-pyramid-w01/diagnostics/attempts/attempt2_1bb11018/EVIDENCE_BUILDER_1bb11018.log",
+   "blob": "2dfd119fcf7e4ba0538bec63f4bde93043c4db9f",
+   "sha256": "231f0de37e1da8f97d93015c72ff63a083814570e8e36139727c84eb36f5a5d3",
+   "bytes": 1776,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "c08a1eed9dbd62820a09bb41af3d3b9561dab3ab",
+   "first_commit_date": "2026-10-07T20:37:03+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/shared-ask-grammar-safety/evidence-reconciliation-55c657b8/green-55c657b8/suite6-full-geometry-regression-55c657b8.txt",
+   "blob": "ccc702fb263fac60220ea0545e7d680a41ef359d",
+   "sha256": "38fc9c959b0d8a06bda59a48e973f30dba1d67156347d9836ac1db4d5ccd3068",
+   "bytes": 15345,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "ae53195639ffd5b75f2ebc26269a9ed2f6d8916f",
+   "first_commit_date": "2026-10-16T02:29:47+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/shared-ask-grammar-safety/verification/suite6-full-geometry-regression.txt",
+   "blob": "2f84e90aee91079f1c695952a27d65336e7fe59b",
+   "sha256": "38b788d71b68459cd5aafb61f65f1018b1963ebb50a76ef780b45b17c81aa88a",
+   "bytes": 24859,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "34a04eaf7e9cbaf70d5c8741e3fb155fa7fd65e7",
+   "first_commit_date": "2026-10-16T00:39:22+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/w15-assumption-closure/diagnostics/logs/PONYTAIL_FULL_SUITE.log",
+   "blob": "05bac6a4c20ac19bfe96b45df224f23ddb7a1c2c",
+   "sha256": "a0f962ffd4f09e7ad51cc4d714af408604806d704c6b6907ffd92da70d09e9b4",
+   "bytes": 16686,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "5a54bfc6888ce1fd7ab4c4ee705a251973a1473e",
+   "first_commit_date": "2026-10-03T12:49:43+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/w16-premerge-closure/diagnostics/logs/PRE_FREEZE_FULL_BACKEND_cd3a0efa_FULL_OUTPUT.log",
+   "blob": "03215c3a8a64beb86198d7455be364dbad4c14d0",
+   "sha256": "8510da4b9de2024461e2129a2ad1deea2500393cfdf3cd4f953e17990b4cdf8b",
+   "bytes": 10958,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "705970dd83f267a17da87e5f18906eee829ad955",
+   "first_commit_date": "2026-10-03T19:16:17+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/logs/PRE_FREEZE_FULL_BACKEND_d3817d5f.log",
+   "blob": "96204c6fdf0dbfc6c348377b8f3e837fa41ff9dd",
+   "sha256": "62315eb8aa54b4e4e976dca399e02e12ebf78004a5571fed13e69d7efc8c17a2",
+   "bytes": 16193,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "781c14e50327d12aa864426391898f7976442567",
+   "first_commit_date": "2026-10-04T10:33:39+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/w17-operation-annotations/diagnostics/logs/PRE_FREEZE_FULL_BACKEND_fadfd10e.log",
+   "blob": "441c021a5f49b37b8e599492326c274a41875dd6",
+   "sha256": "2391ddef08d76f4ffde70a14a20a64afdee7d499697e152e916190f7aeb80f01",
+   "bytes": 14456,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "a20b76f1415c486a083cbfdb0af1d66c534f4d2e",
+   "first_commit_date": "2026-10-04T10:09:15+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/w18-binding-focus/diagnostics/logs/PRE_FREEZE_FULL_BACKEND_7a06ee47.log",
+   "blob": "7aff35e760ae4092b275d689b23e4a4707358b56",
+   "sha256": "e1c50bfe6f343b3b91c5041a87e1598f6f39362e037e79334386d299b96208d6",
+   "bytes": 36157,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "8caa8307bbd26e8e2b006d1b45d70b51efccc86f",
+   "first_commit_date": "2026-10-04T16:09:35+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  },
+  {
+   "path": "docs/evaluation/geometry/runs/w20-cleanup-premerge/results/logs/PRE_FREEZE_FULL_BACKEND_8b6a1a3a.log",
+   "blob": "75ddf8886741c3e659b279c2c5e5599d9435af7a",
+   "sha256": "81f79933c6efb45ea00b78163c8e34e10ad2f4a075bf8c64ed175522b31461ba",
+   "bytes": 21871,
+   "rules": [
+    "PY_TRACEBACK"
+   ],
+   "category": "RAW_PYTHON_TRACEBACK_IN_LOG",
+   "scope": "LEGACY_TIP_AND_HISTORY",
+   "first_commit": "c43862daf0460575fe7a066b64acd5e1c3a8d0df",
+   "first_commit_date": "2026-10-04T22:52:48+07:00",
+   "already_public_on_origin_main": true,
+   "owner_decision": "PENDING_OWNER_DECISION"
+  }
+ ]
+}

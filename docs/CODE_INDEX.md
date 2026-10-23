@@ -1,5 +1,14 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Publication safety gate (`research/publication-safety-remediation`, local, no product change)
+
+Run `docs/evaluation/geometry/runs/publication-safety-remediation/`. Tooling only; `backend/app` and the measured system unchanged.
+
+| path | owns | tests |
+|---|---|---|
+| `backend/scripts/check_publication_safety.py` | Pre-push gate (0 model calls) over Git OBJECTS, not the working tree: `--head` (every tracked blob of HEAD) · `--range BASE..TIP` (every blob new in the range at every path, plus commit messages). Rules `RULES`: raw Python traceback frames, provider/GitHub/AWS/Slack keys, private keys, secret assignments, and the `BEARER_TOKEN` / `HARDCODED_PASSWORD` patterns of docs-IA `audit_secret_scan` (inv_22, which scans only 12 governance docs). Exemptions only from `publication_exceptions.json`, per exact (path, blob, SHA-256, rule), active only when the Owner wrote `APPROVED_BY_USER`; output is metadata only (never the matched text); exit 0/1/2 | `backend/tests/test_publication_safety_gate.py` (temp Git repos: new traceback blocked, approved exact blob passes, pending still blocks, changed bytes / other path / other rule not exempt, tip removal vs history, commit messages, code literal and binary not flagged, malformed exceptions = error; integrity of the real exceptions file) |
+| `docs/evaluation/geometry/runs/publication-safety-remediation/check_refusal_screens.mjs` | Offline refusal screens of the 25 Adapter /4 refusal fixtures, each loaded after a served `PARA-0` canvas (Session 5 injection path, no backend, 0 model calls); one PNG per refusal code per viewport | run-local receipt `refusal-screens/receipt.json` |
+
 ## Backend Hybrid disabled integration (`research/hybrid-session4b-integration`, LOCAL research, Hybrid off)
 
 Run `docs/evaluation/geometry/runs/hybrid-disabled-integration/`. Merges Sessions 1–3 (`0f7b3a69`) and 4A (`ef6829d3`)
