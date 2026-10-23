@@ -5,10 +5,13 @@
   "run_id": "thesis-final-20260908T160224Z",
   "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
   "previous_candidate_hash": "d16c9b66be8feddf6ff71e68de391b84f49bbe914683b60e7f69bb71eda48784",
-  "current_candidate_hash": "d7a8f93a43621a6ce3e9b5656184894b67fa20a5641e3a5cefce31a6066ee94e",
+  "current_candidate_hash": "4acdac53ba018a0561d3580006c55a9047613b06332a93ba4b2ea521382ab168",
   "current_measured_files": 116,
-  "current_product_commit": "048d58bdc4d3fe72d7a10a97aa018c3d240e46d6",
-  "superseded_within_run": "freeze 1 19e1fbcd at product c04094f1 (5429cd76…): browser 94/94 and refusal 50/50 PASS at c3916629, no T3; superseded by the review N2 prime fix 048d58bd (verification/freeze-2)",
+  "current_product_commit": "4d3b8849d50adb3ceb427e8f7f630c2cbdcba66a",
+  "superseded_within_run": [
+    "freeze 1 19e1fbcd at product c04094f1 (5429cd76…): browser 94/94 and refusal 50/50 PASS at c3916629, no T3; superseded by the review N2 prime fix",
+    "freeze 2 d268c222 at product 048d58bd (d7a8f93a…): browser 94/94 and refusal 50/50 PASS at d268c222, no T3; superseded by the review P1 prime fix 4d3b8849 (verification/freeze-3)"
+  ],
   "diverged": true,
   "reason": "GO_SCENE3D_AB_MAIN_AND_C0_FINALIZATION_LOCAL: (1) frontend frontend/src/simulations/domains/geometry/scene3d-subentities.ts `_diemCuaDinh` names a section vertex shared by two semantic points by the point whose dependencies make it the cut of that solid edge with the section plane (prism I/I1 over the translates H/H1); unique-coordinate vertices unchanged; (2) backend/app/ai/function_route.py: the section plane's fallback event explanation states the source definition before its construction (review R1); a solid on unnamed cut vertices without its derived record fails closed with a dedicated error mapped to SCENE_BUILD_FAILED (review F3 residual). Route D presentation and a shared inspector helper only; no schema, contract, IR or kernel change.",
   "cache_version": 127,

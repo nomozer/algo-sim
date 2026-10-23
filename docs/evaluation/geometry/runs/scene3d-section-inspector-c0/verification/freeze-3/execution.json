@@ -1,0 +1,13 @@
+{
+ "schema": "execution/1",
+ "purpose": "Re-freeze the evaluation candidate after product commit 4d3b8849 (review P1 prime fix); supersedes freeze 2 at 048d58bd",
+ "worktree": ".superpowers/worktrees/hybrid-session5-offline-consumer (branch research/scene3d-section-inspector-c0, clean: 0 status lines before the run)",
+ "commit": "9fa40dcd63378c412ba2571d08d81710dd70d19f",
+ "product_commit_sha": "4d3b8849d50adb3ceb427e8f7f630c2cbdcba66a",
+ "command": "cd backend && PYTHONIOENCODING=utf-8 D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py",
+ "exit_code": 0,
+ "clean_tree_recorded": true,
+ "measured_system": {"files": 116, "tree_hash": "4acdac53ba018a0561d3580006c55a9047613b06332a93ba4b2ea521382ab168"},
+ "previous_measured_system": {"files": 116, "tree_hash": "d7a8f93a43621a6ce3e9b5656184894b67fa20a5641e3a5cefce31a6066ee94e", "status": "superseded"},
+ "manifest_sha256": "7786c7add2a1f4c5d5740c1f449a7e38b8731eb7c40748e146430f3403a0f964"
+}
