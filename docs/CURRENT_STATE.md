@@ -8,7 +8,9 @@
 
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION
 
-Session 4B disabled integration (2026-10-23, `research/hybrid-session4b-integration`, not merged/pushed):
+Session 4B disabled integration (2026-10-23, `research/hybrid-session4b-integration`; fast-forwarded into LOCAL `main`
+`9c7ed1b1` under `GO_MAIN_HYBRID_V2_DISABLED_LOCAL_ONLY`, not pushed —
+[`GO_MAIN_RECORD`](evaluation/geometry/runs/hybrid-disabled-integration/GO_MAIN_RECORD.md)):
 [`FINAL_HANDOFF`](evaluation/geometry/runs/hybrid-disabled-integration/FINAL_HANDOFF.md). Sessions 1–3 + 4A merged onto
 local main `f10e6283`; product trees equal Session 3 candidate `84c729e0`; candidate `2bbad1f2` Full T3 PASS, review PASS;
 status `BACKEND_HYBRID_INTEGRATION_CANDIDATE_READY_FOR_OWNER_GO_MAIN`, `/4` frontend consumer acceptance OPEN (no caller).
