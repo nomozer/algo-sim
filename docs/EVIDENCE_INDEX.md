@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = SCENE3D_SECTION_INSPECTOR_C0
+
+REPORT = docs/evaluation/geometry/runs/scene3d-section-inspector-c0/FINAL_OWNER_HANDOFF.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/scene3d-section-inspector-c0/
+CLASSIFICATION = SCENE3D_C0_READY_FOR_OWNER_GO_MAIN; DEVELOPMENT_EVALUATION_NOT_BLIND; LOCAL, Hybrid off; A/B merged to local main 9978e512 (fast-forward); C0 on research/scene3d-section-inspector-c0 (NOT merged): coincident section vertices named by their verified edge-intersection point; review R1 explanation, F5 non-rendering witness, missing derived record fail-closed; REMOTE_SECURITY_BLOCKED; human visual review PENDING
+CODE_COMMIT = 4d3b8849d50adb3ceb427e8f7f630c2cbdcba66a (product: backend/app/ai/function_route.py, frontend/src/simulations/domains/geometry/scene3d-subentities.ts); ce2aa0f1a9315ea9e6df6801f694cfb2abef39e2 (candidate; measured_system 4acdac53ba018a0561d3580006c55a9047613b06332a93ba4b2ea521382ab168, 116 files; NO_BUMP 127; Full T3 FULL_PRODUCT_GATE_PASS: pytest 11683, vitest 1245, build, demo 5/5, crash 6/6); superseded freezes 19e1fbcd and d268c222 (browser-only)
+VERIFICATION = docs/evaluation/geometry/runs/scene3d-section-inspector-c0/run.json; docs/evaluation/geometry/runs/scene3d-section-inspector-c0/verification/full-t3/execution.json; docs/evaluation/geometry/runs/scene3d-section-inspector-c0/verification/browser/receipt.json; docs/evaluation/geometry/runs/scene3d-section-inspector-c0/verification/refusal/receipt.json; docs/evaluation/geometry/runs/scene3d-section-inspector-c0/results/adapter4-export-reviewed/before-after.json; docs/evaluation/geometry/runs/scene3d-section-inspector-c0/INDEPENDENT_REVIEW.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = SCENE3D_PLANE_SECTION_DISPLAY_IDENTITY (open residuals: prism inspector "Đỉnh k", R1 explanation, missing-derived branch, ASCII primes in shown labels; that run's files unchanged)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = SCENE3D_PLANE_SECTION_DISPLAY_IDENTITY
 
 REPORT = docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/FINAL_OWNER_HANDOFF.md
@@ -9,7 +20,7 @@ CODE_COMMIT = 41c7e6f854c84d4c987b88cd1f4bcd877921cb78 (product, backend/app/ai/
 VERIFICATION = docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/run.json; docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/verification/full-t3/execution.json; docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/verification/browser-final/receipt.json; docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/verification/refusal-final/receipt.json; docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/results/adapter4-export-final/before-after.json; docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/INDEPENDENT_REVIEW.md
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_OFFLINE_CONSUMER (Adapter /4 scene names: plane "(MHH1)", prism section "HMH1", plane-only quantities "Đoạn của thiết diện"; historical fixtures and Session 5 receipts unchanged, new export beside them); PUBLICATION_SAFETY_REMEDIATION (HISTORICAL_TRACEBACK_EXCEPTION_PROPOSAL.md §5 date cutoff "trước 2026-10-23" excludes its own blob 8a515fef added 2026-10-23 11:43 +0700; replaced by an exact closed-list wording, file bytes unchanged)
-CORRECTED_BY = NONE
+CORRECTED_BY = SCENE3D_SECTION_INSPECTOR_C0 (open residuals addressed; files unchanged)
 
 ## WAVE_ID = PUBLICATION_SAFETY_REMEDIATION
 

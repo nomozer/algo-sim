@@ -1,5 +1,15 @@
 # CODE_INDEX.md — Chỉ mục module + BỘ NHỚ KIẾN TRÚC
 
+## Scene3D section inspector C0 (`research/scene3d-section-inspector-c0`, LOCAL, Hybrid off)
+
+Run `docs/evaluation/geometry/runs/scene3d-section-inspector-c0/`.
+
+| path | owns | tests |
+|---|---|---|
+| `frontend/src/simulations/domains/geometry/scene3d-subentities.ts` | `_diemCuaDinh`: semantic point of each section vertex for `sectionDetails` and `deriveSectionSubEntities`. Unique coordinate ⇒ that point (unchanged); several ⇒ only the point whose depends are one `line3` on exactly the solid edge of `vertex_sources[k]` and one `plane3` that is the section plane; otherwise `null` (neutral "Đỉnh k"). Never by order, name or `producer` | `scene3d-section-vertex-identity.test.ts` |
+| `backend/app/ai/function_route.py` | `_vai_mat_cat` also writes the section plane's fallback CREATE explanation (source definition, then construction auxiliaries); `_KhoiKhongKhai` (solid on unnamed cut vertices without its `derived` record) caught in `run_function_route` before the broad handler → `SCENE_BUILD_FAILED`; primes in cut-vertex labels and per-cut step text | `backend/tests/geometry/test_section_display_identity.py` (`R1`, `kd`, prism) |
+| `frontend/scripts/check-adapter4-browser.mjs` | per-frame assertion that no `envelope.config.frames[].narration` (besides the scene's own step text) is rendered; receipt row `hiddenNarrations` | run-local receipts; negative control in `verification/f5-negative-control/` |
+
 ## Adapter /4 section display identity (`research/scene3d-plane-section-display-identity`, LOCAL research, Hybrid off)
 
 Run `docs/evaluation/geometry/runs/scene3d-plane-section-display-identity/`. Presentation only on route D; the shared

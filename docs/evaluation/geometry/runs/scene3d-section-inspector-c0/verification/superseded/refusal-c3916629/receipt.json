@@ -1,0 +1,797 @@
+{
+ "status": "REFUSAL_SCREEN_CHECK_PASS",
+ "source_commit": "c3916629ef3a0cc5459ffc514a4775beeec57211",
+ "tree_clean": true,
+ "fixtures_sha256": "f4ed8ea4927976a2fdd68f6df1b49e57cca7dde7dbbde8830e124a2692ec7439",
+ "harness_sha256": "e6305a61d38200f6dbe31e8b6c2a2b8a6e6de6eb39b2b6af27a48b6773696fb7",
+ "provider_calls": 0,
+ "browser": "Chrome headless / SwiftShader",
+ "precondition": "served PARA-0 canvas present before every refusal",
+ "human_visual_review": "PENDING",
+ "refusals": 25,
+ "rows": 50,
+ "errors": [],
+ "forbidden": [],
+ "results": [
+  {
+   "id": "CORPUS-DEV01-ratio-unowned",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "CORPUS-DEV01-ratio-unowned-1440.png",
+    "sha256": "0b18ca59544bc0a5911d2d309e1620b86ba6421c96931e75436c606c2ebe43f3"
+   }
+  },
+  {
+   "id": "CORPUS-DEV03-ratio-unowned",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "CORPUS-DEV06-ratio-unowned",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "CORPUS-DEV09-ratio-unowned",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-negated-plane",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-conditional-plane",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-missing-height",
+   "code": "MISSING_DIMENSION",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "NEG-missing-height-1440.png",
+    "sha256": "8d99efe7e32daee9e296d42e69934e5aab17e6fac2b75b11b40db1121126c3d7"
+   }
+  },
+  {
+   "id": "NEG-number-wrong-object",
+   "code": "UNGROUNDED_VALUE",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "NEG-number-wrong-object-1440.png",
+    "sha256": "0b18ca59544bc0a5911d2d309e1620b86ba6421c96931e75436c606c2ebe43f3"
+   }
+  },
+  {
+   "id": "NEG-wrong-relation",
+   "code": "PLANE_NOT_IN_QUOTE",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "NEG-wrong-relation-1440.png",
+    "sha256": "0b18ca59544bc0a5911d2d309e1620b86ba6421c96931e75436c606c2ebe43f3"
+   }
+  },
+  {
+   "id": "NEG-ratio-unowned-named",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-ratio-unowned-anonymous",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-residual-unowned",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-swapped-names",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-unread-condition",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-stated-edge-not-in-text",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-contains-a-line",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-other-plane-subject",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-per-edge-same-name",
+   "code": "INVALID_DERIVED_SECTION",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "NEG-per-edge-same-name-1440.png",
+    "sha256": "7c88c94728c38787348e27bdeaa2a7a09f96b6ccc27682963deb44ab2c9b35c9"
+   }
+  },
+  {
+   "id": "NEG-point-first-wrong-reference",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "GEO-contradictory-length",
+   "code": "INCONSISTENT_FACTS",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "GEO-contradictory-length-1440.png",
+    "sha256": "ca5e97e4360705dff33848a1565c344a8bb023da41c5d59ec8470a414e134ac1"
+   }
+  },
+  {
+   "id": "GEO-parallel-to-cut-edges",
+   "code": "PARALLEL_NO_INTERSECTION",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "GEO-parallel-to-cut-edges-1440.png",
+    "sha256": "ca5e97e4360705dff33848a1565c344a8bb023da41c5d59ec8470a414e134ac1"
+   }
+  },
+  {
+   "id": "GEO-declared-boundary-crossed",
+   "code": "SECTION_BOUNDARY_INCOMPLETE",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "GEO-declared-boundary-crossed-1440.png",
+    "sha256": "ca5e97e4360705dff33848a1565c344a8bb023da41c5d59ec8470a414e134ac1"
+   }
+  },
+  {
+   "id": "GEO-declared-boundary-partial",
+   "code": "SECTION_BOUNDARY_INCOMPLETE",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "KER-plane-equation",
+   "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "KER-plane-equation-1440.png",
+    "sha256": "7f6bff8c19daf0ac9138c9922ede7beb6e40743bb67c0cd95628a5b1b653e10c"
+   }
+  },
+  {
+   "id": "KER-section-on-base-edges",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "viewport": {
+    "width": 1440,
+    "height": 900
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "KER-section-on-base-edges-1440.png",
+    "sha256": "7f6bff8c19daf0ac9138c9922ede7beb6e40743bb67c0cd95628a5b1b653e10c"
+   }
+  },
+  {
+   "id": "CORPUS-DEV01-ratio-unowned",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "CORPUS-DEV01-ratio-unowned-390.png",
+    "sha256": "74970d614d4528a397e17f74b665444098d5dcf91cb8571df009608b30c79303"
+   }
+  },
+  {
+   "id": "CORPUS-DEV03-ratio-unowned",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "CORPUS-DEV06-ratio-unowned",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "CORPUS-DEV09-ratio-unowned",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-negated-plane",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-conditional-plane",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-missing-height",
+   "code": "MISSING_DIMENSION",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "NEG-missing-height-390.png",
+    "sha256": "3ed6037217b604ee2d3f9a30500a42612ad02660834be5a5db1dd0d7eea4feff"
+   }
+  },
+  {
+   "id": "NEG-number-wrong-object",
+   "code": "UNGROUNDED_VALUE",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "NEG-number-wrong-object-390.png",
+    "sha256": "74970d614d4528a397e17f74b665444098d5dcf91cb8571df009608b30c79303"
+   }
+  },
+  {
+   "id": "NEG-wrong-relation",
+   "code": "PLANE_NOT_IN_QUOTE",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "NEG-wrong-relation-390.png",
+    "sha256": "74970d614d4528a397e17f74b665444098d5dcf91cb8571df009608b30c79303"
+   }
+  },
+  {
+   "id": "NEG-ratio-unowned-named",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-ratio-unowned-anonymous",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-residual-unowned",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-swapped-names",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-unread-condition",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-stated-edge-not-in-text",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-contains-a-line",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-other-plane-subject",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "NEG-per-edge-same-name",
+   "code": "INVALID_DERIVED_SECTION",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "NEG-per-edge-same-name-390.png",
+    "sha256": "c83169787a0f405dcbf274d71c74ab05e12ae278a5eee595a65cbd9cbccbdc7c"
+   }
+  },
+  {
+   "id": "NEG-point-first-wrong-reference",
+   "code": "SOURCE_OBJECT_MISMATCH",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "GEO-contradictory-length",
+   "code": "INCONSISTENT_FACTS",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "GEO-contradictory-length-390.png",
+    "sha256": "b3c5d7071fdd630a8e939c679ac069cfb56de2e420407e6dd2adf1777fb1f55f"
+   }
+  },
+  {
+   "id": "GEO-parallel-to-cut-edges",
+   "code": "PARALLEL_NO_INTERSECTION",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "GEO-parallel-to-cut-edges-390.png",
+    "sha256": "b3c5d7071fdd630a8e939c679ac069cfb56de2e420407e6dd2adf1777fb1f55f"
+   }
+  },
+  {
+   "id": "GEO-declared-boundary-crossed",
+   "code": "SECTION_BOUNDARY_INCOMPLETE",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "GEO-declared-boundary-crossed-390.png",
+    "sha256": "b3c5d7071fdd630a8e939c679ac069cfb56de2e420407e6dd2adf1777fb1f55f"
+   }
+  },
+  {
+   "id": "GEO-declared-boundary-partial",
+   "code": "SECTION_BOUNDARY_INCOMPLETE",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false
+  },
+  {
+   "id": "KER-plane-equation",
+   "code": "BRIDGE_UNSUPPORTED_PLANE_KIND",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "KER-plane-equation-390.png",
+    "sha256": "3d1a902edeed5b4d0244b58ef7b771959212ce25b5ceb573b6f58137888a41a3"
+   }
+  },
+  {
+   "id": "KER-section-on-base-edges",
+   "code": "UNSUPPORTED_CAPABILITY",
+   "viewport": {
+    "width": 390,
+    "height": 844
+   },
+   "canvas_after": 0,
+   "learner_reason_shown": true,
+   "code_leaked": false,
+   "internal_name_leaked": false,
+   "served_title_left": false,
+   "overflow": false,
+   "image": {
+    "file": "KER-section-on-base-edges-390.png",
+    "sha256": "3d1a902edeed5b4d0244b58ef7b771959212ce25b5ceb573b6f58137888a41a3"
+   }
+  }
+ ]
+}

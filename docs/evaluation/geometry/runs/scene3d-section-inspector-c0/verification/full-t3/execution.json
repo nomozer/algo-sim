@@ -1,0 +1,32 @@
+{
+  "schema": "authoritative-t3-receipt/2",
+  "run": "scene3d-section-inspector-c0",
+  "branch": "research/scene3d-section-inspector-c0",
+  "baseline_main": "9978e512a8a2a087475d792c0bd9db639c36acaa",
+  "product_commit": "4d3b8849d50adb3ceb427e8f7f630c2cbdcba66a",
+  "candidate_freeze_commit": "ce2aa0f1a9315ea9e6df6801f694cfb2abef39e2",
+  "t3_target_commit": "ce2aa0f1a9315ea9e6df6801f694cfb2abef39e2",
+  "measured_system_hash": "4acdac53ba018a0561d3580006c55a9047613b06332a93ba4b2ea521382ab168",
+  "measured_file_count": 116,
+  "product_paths_changed_vs_main": ["backend/app/ai/function_route.py", "frontend/src/simulations/domains/geometry/scene3d-subentities.ts"],
+  "worktree": ".superpowers/worktrees/hybrid-session5-offline-consumer (git status --porcelain = 0 lines before and after; Vite stopped; nothing written to the worktree during the run)",
+  "command": "ALLOW_LIVE_AI=0 ALGO_SIM_PYTHON=D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe node frontend/scripts/full-gate.mjs",
+  "environment": {"os": "Windows 11 Pro 10.0.26100", "node": "v24.13.0", "python": "Python 3.12 (D:/Documents/projects/algo-sim/backend/.venv)"},
+  "started_utc": "2026-10-23T18:58:27Z",
+  "finished_utc": "2026-10-23T19:05:24Z",
+  "exit_code": 0,
+  "verdict": "FULL_PRODUCT_GATE_PASS",
+  "pytest_backend": "11683 passed, 1 skipped, 2 deselected, 15 xfailed, 1 warning",
+  "pytest_delta_vs_main": "+46 vs 11637 at 57138dbb (main tree): test_section_display_identity.py 51 -> 97 (R1 22, kd 24, F1/F3 regressions)",
+  "vitest_frontend": "74/74 files, 1245 tests passed (+1 file, +7 tests: scene3d-section-vertex-identity.test.ts)",
+  "build": "PASS (tsc -b + vite build)",
+  "demo_replay": "5/5",
+  "demo_crash_surface": "6/6 refusal boundaries correct, 0 thrown",
+  "streams": {
+    "stdout": {"file": "stdout.log", "bytes": 18691, "sha256_as_written": "19283f4b56ec6da9aa4d0c7e2210b9493b3c1536ec178b04469895305e8b977d"},
+    "stderr": {"file": "stderr.log", "bytes": 342, "sha256_as_written": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a", "content": "vite chunk-size warning only"}
+  },
+  "post_t3_freeze_verify": "post-t3-freeze-verify.log (exit 0, MATCH 4acdac53…)",
+  "not_covered_by_t3": "browser gates (verification/browser, verification/refusal, verification/f5-negative-control) and frontend/scripts/*.node-test.mjs (none touched has one)",
+  "provider_calls": 0
+}
