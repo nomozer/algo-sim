@@ -1,0 +1,35 @@
+{
+  "command": [
+    "node",
+    "frontend/scripts/full-gate.mjs"
+  ],
+  "cwd": "D:\\Documents\\projects\\algo-sim\\.superpowers\\worktrees\\t3-hybrid-disabled-integration",
+  "source_commit": "2bbad1f2715c367736b4a5d783551b94b45fbb79",
+  "dirty_before": "",
+  "started_utc": "2026-10-23T03:39:14.323442+00:00",
+  "timeout_seconds": 2400,
+  "attempt_limit": 1,
+  "environment_overrides": {
+    "ALLOW_LIVE_AI": "0",
+    "PYTHONUTF8": "1",
+    "PYTHONIOENCODING": "utf-8",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1"
+  },
+  "exit_code": 0,
+  "timed_out": false,
+  "elapsed_seconds": 554.42,
+  "finished_utc": "2026-10-23T03:48:28.756068+00:00",
+  "dirty_after": "",
+  "streams": {
+    "stdout": {
+      "bytes": 18531,
+      "sha256": "7fec4d6002c3f88ae0c83977bd21097145f7b241fb131f98621ac93d2408114a"
+    },
+    "stderr": {
+      "bytes": 342,
+      "sha256": "aa9b7207d2d2d42fbf4e013331ee76fc39b9b042505b38551893c1f60f35b63a"
+    }
+  }
+}

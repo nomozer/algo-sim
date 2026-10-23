@@ -1,5 +1,16 @@
 # EVIDENCE_INDEX.md — Chỉ mục bằng chứng và chuỗi đính chính (Master Evidence Index)
 
+## WAVE_ID = HYBRID_DISABLED_INTEGRATION
+
+REPORT = docs/evaluation/geometry/runs/hybrid-disabled-integration/BACKEND_HYBRID_INTEGRATION_REPORT.md
+ARTIFACT_DIRECTORY = docs/evaluation/geometry/runs/hybrid-disabled-integration/
+CLASSIFICATION = BACKEND_HYBRID_INTEGRATION_CANDIDATE_READY_FOR_OWNER_GO_MAIN; DISABLED_INTEGRATION; OFFLINE_REPLAY; DEVELOPMENT_EVALUATION_NOT_BLIND; FRONTEND_CONSUMER_ACCEPTANCE_OPEN (Adapter /4 has no caller). Session 4B on `research/hybrid-session4b-integration`: `merge --no-ff` of Session 3 (`0f7b3a69`, contains S1/S2) and Session 4A (`ef6829d3`) onto local main `f10e6283`; product trees equal `84c729e0`. Default isolation 0 startup modules differ from main; flat provider surface `485d3834…` unchanged; seam replay and locked planner diagnostics identical to 4A (12/12; route-B 38/18/4, B27/B28); Adapter /4 boundary 22/22 served, 25/25 refused, 15/15 numeric oracles, 0 leaks. Review round 1 PASS (b99f6420), round 2 PASS (2bbad1f2). CACHE_VERSION 127 NO_BUMP, LLM_ONLY, flat, Hybrid NO-GO, 0 live calls. Not merged, not pushed.
+CODE_COMMIT = 69bd2fe48be1fd3afa6ce4112ccddda92a07d850 (product, unchanged); 2bbad1f2715c367736b4a5d783551b94b45fbb79 (candidate & Full T3 FULL_PRODUCT_GATE_PASS: pytest 11572 passed / 1 skipped / 2 deselected / 15 xfailed, vitest 72 files / 1156 passed, build PASS, demo 5/5, crash 6/6, post-T3 freeze MATCH; measured_system 413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df across 116 entries, recomputed)
+VERIFICATION = docs/evaluation/geometry/runs/hybrid-disabled-integration/run.json; docs/evaluation/geometry/runs/hybrid-disabled-integration/verification/full-t3/execution.json; docs/evaluation/geometry/runs/hybrid-disabled-integration/verification/full-t3/post-t3-freeze-verify.log; docs/evaluation/geometry/runs/hybrid-disabled-integration/results/invariants-default-isolation-2bbad1f2.json; docs/evaluation/geometry/runs/hybrid-disabled-integration/results/adapter4-consumer-after-review/adapter4-consumer-boundary.json; docs/evaluation/geometry/runs/hybrid-disabled-integration/INDEPENDENT_REVIEW.md
+MODEL_REQUEST_COUNT = 0
+CORRECTS = HYBRID_SESSION4A_READINESS (index statements that are no longer true on this branch: "product remains unchanged from local main" and "source run is on the unmerged Session 3 branch" — Session 3 is merged here; 4A files unchanged); main gateway docs at f10e6283 (contract versions /11, /11, /9 → /13, /13, /11 in 84cd09e3)
+CORRECTED_BY = NONE
+
 ## WAVE_ID = HYBRID_SESSION4A_READINESS
 
 REPORT = docs/evaluation/geometry/runs/hybrid-session4a-readiness/handoff.md
@@ -9,7 +20,7 @@ CODE_COMMIT = NONE (offline run tooling only; product remains unchanged from loc
 VERIFICATION = docs/evaluation/geometry/runs/hybrid-session4a-readiness/run.json
 MODEL_REQUEST_COUNT = 0
 CORRECTS = HYBRID_CONTRACT_V2 (source-branch reports at 0f7b3a69: 562 mixed evaluations not reconciled; 500-case fuzz claims contradicted by 13661/19114-call receipts; nonexistent p1-planner.json; 116 measured entries are not all backend files; benchmark false-refusal scope and final T3/documentation identity clarified)
-CORRECTED_BY = NONE
+CORRECTED_BY = HYBRID_DISABLED_INTEGRATION
 SOURCE_CORRECTION_CHAIN = HYBRID_CONTRACT_V2 at 0f7b3a69d0f920a6cc115a7d9e1a89f693137208 CORRECTED_BY HYBRID_SESSION4A_READINESS (source run is on the unmerged Session 3 branch; its bytes are unchanged)
 
 ## WAVE_ID = hybrid-contract-v2

@@ -1,0 +1,79 @@
+{
+  "schema": "run/1",
+  "run": "hybrid-disabled-integration",
+  "task_code": "BACKEND_HYBRID_SESSION4B_INTEGRATION",
+  "wave": 1,
+  "date": "2026-10-23",
+  "timezone": "Asia/Bangkok",
+  "authorization": "Owner Session 4B specification: GO integration branch/worktree, backend fixes for real integration defects, checkpoint commits, independent review, cleanup of campaign temp worktrees; NO-GO merge/push main, Hybrid production, live provider, deleting unpreserved research branches",
+  "branch": "research/hybrid-session4b-integration",
+  "worktree": ".superpowers/worktrees/hybrid-session4b-integration",
+  "base_commit": "f10e6283dd3fd2cfdef189e1bef0ffdecf2be942",
+  "origin_main_at_start": "43247c9e9375a3dbf2b5223324a58e6f932ca596",
+  "merged_sources": {
+    "session3_documentation_head": "0f7b3a69d0f920a6cc115a7d9e1a89f693137208",
+    "session3_product": "69bd2fe48be1fd3afa6ce4112ccddda92a07d850",
+    "session3_t3_candidate": "84c729e0b0df7868dfcc0a6e48cac457d7959e92",
+    "session4a_head": "ef6829d3e1784b661427839b7df9583ca643dde5"
+  },
+  "commits": {
+    "merge_session3": "561958fc",
+    "merge_session4a": "14cdc25a",
+    "gateway_docs_sync": "84cd09e3",
+    "verification_receipts_review_round1_target": "b99f64203be005739cd390e237434d9ba5829d9a",
+    "candidate_t3_target_review_round2_target": "2bbad1f2715c367736b4a5d783551b94b45fbb79",
+    "final_documentation_commit": "Resolve the commit containing this file with git log; docs and receipts only"
+  },
+  "candidate": {
+    "product_commit": "69bd2fe48be1fd3afa6ce4112ccddda92a07d850",
+    "product_commit_rule": "product-paths-excluding-test-only/1",
+    "measured_system_sha256": "413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df",
+    "measured_path_entries": 116,
+    "recomputed_at": ["14cdc25a", "2bbad1f2", "post-T3 2bbad1f2"],
+    "git_trees_equal_to_84c729e0": {
+      "backend/app": "357afcfae2289cfed286cb47f709c708a6c661cc",
+      "backend/tests": "942634c374",
+      "backend/scripts": "5d59373440",
+      "frontend/src": "0d4b20883c",
+      "frontend/scripts": "635b314c8e"
+    }
+  },
+  "full_t3": {
+    "receipt": "verification/full-t3/execution.json",
+    "source_commit": "2bbad1f2715c367736b4a5d783551b94b45fbb79",
+    "result": "FULL_PRODUCT_GATE_PASS",
+    "exit_code": 0,
+    "attempts": 1,
+    "elapsed_seconds": 554.42,
+    "pytest": "11572 passed, 1 skipped, 2 deselected, 15 xfailed",
+    "vitest": "72 files, 1156 passed",
+    "build": "PASS",
+    "demo": "5/5",
+    "crash_surface": "6/6",
+    "post_t3_freeze_verify": "MATCH"
+  },
+  "review": {
+    "round1": {"target": "b99f6420", "verdict": "PASS", "blockers": 0, "important": 4},
+    "round2": {"target": "2bbad1f2", "verdict": "PASS"},
+    "kind": "CODE_EVIDENCE_REVIEW_NOT_HOLDOUT"
+  },
+  "classification": "DISABLED_INTEGRATION; OFFLINE_REPLAY; DEVELOPMENT_EVALUATION_NOT_BLIND",
+  "status": "BACKEND_HYBRID_INTEGRATION_CANDIDATE_READY_FOR_OWNER_GO_MAIN",
+  "open": ["FRONTEND_CONSUMER_ACCEPTANCE_OPEN (Adapter /4 has no caller)"],
+  "product_change": false,
+  "new_runtime_modules": [],
+  "provider_calls": 0,
+  "governance": {
+    "DEFAULT_MODE": "LLM_ONLY",
+    "RESPONSE_CONTRACT": "flat",
+    "HYBRID_PRODUCT_ENABLEMENT": "NO-GO",
+    "ALLOW_LIVE_AI": 0,
+    "CACHE_VERSION": "127",
+    "CACHE_VERSION_DECISION": "NO_BUMP: default route code, prompts, schema, route policy and flat provider surface byte-identical to main",
+    "MAX_MEMORY_DECLARATIONS": 32,
+    "PRODUCTION_REPLACEMENT": "NO-GO",
+    "LIVE_PROVIDER_EVALUATION": "NOT_AUTHORIZED",
+    "MAIN_MERGE_PUSH": "NOT_AUTHORIZED"
+  },
+  "disk_d_free_mb": {"start": 9676, "after_campaign_cleanup": 18948, "handoff": 17094}
+}

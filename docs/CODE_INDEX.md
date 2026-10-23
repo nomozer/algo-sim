@@ -9,7 +9,7 @@ not on `/api/analyze`). Session 3 symbols that had no entry:
 
 | path | owns | tests |
 |---|---|---|
-| `backend/app/ai/adapter4_route.py` | `run_typed_fact_next_v2_route` (`hybrid-simulation-adapter/4`, envelope `hybrid-route-d-simulation/4`): `/2` → `bridge_v2` → `function_route.chay_sau_cau_noi`; no legacy path; section vertices with provenance + closure certificate; `ROUTE_INTERNAL_ERROR` for our own faults. No HTTP/frontend caller | `backend/tests/geometry/test_hybrid_contract_v2.py` |
+| `backend/app/ai/adapter4_route.py` | `run_typed_fact_next_v2_route` (`hybrid-simulation-adapter/4`, envelope `hybrid-route-d-simulation/4`): `/2` → `bridge_v2` → `function_route.chay_sau_cau_noi`; no legacy path; section vertices with provenance, plus a closure certificate when the engine produces one (plane-only sections without a derived solid have none); `ROUTE_INTERNAL_ERROR` for our own faults. No HTTP/frontend caller | `backend/tests/geometry/test_hybrid_contract_v2.py` |
 | `backend/app/simulation/geometry_functions/typed_fact_next.py` | `typed-fact-next/2` schema, `parse_typed_fact_next_v2` (never reads `/1`), `convert_v1_to_v2(raw, route)` (`route ∈ {bridge, adapter3}` else `ROUTE_LABEL_REQUIRED`) | same |
 | `backend/app/simulation/geometry_functions/typed_fact_next_bridge.py` | `bridge_v2` (`typed-fact-next-bridge/2`), refusals `BRIDGE_UNSUPPORTED_*` | same; `test_typedfactnext_planner_bridge.py` |
 

@@ -8,6 +8,12 @@
 
 CANONICAL_NEXT_ACTION = POST_NLU_BASELINE_RESEARCH_PRIORITY_DECISION
 
+Session 4B disabled integration (2026-10-23, `research/hybrid-session4b-integration`, not merged/pushed):
+[`FINAL_HANDOFF`](evaluation/geometry/runs/hybrid-disabled-integration/FINAL_HANDOFF.md). Sessions 1–3 + 4A merged onto
+local main `f10e6283`; product trees equal Session 3 candidate `84c729e0`; candidate `2bbad1f2` Full T3 PASS, review PASS;
+status `BACKEND_HYBRID_INTEGRATION_CANDIDATE_READY_FOR_OWNER_GO_MAIN`, `/4` frontend consumer acceptance OPEN (no caller).
+Defaults, cache 127, frontend and next-action authority unchanged; GO main, live and production remain owner decisions.
+
 Session 4A local readiness audit (2026-10-23, `research/hybrid-session4a-readiness`, no product integration):
 [`handoff`](evaluation/geometry/runs/hybrid-session4a-readiness/handoff.md). Pinned Session 3 `69bd2fe4`/T3 candidate `84c729e0`
 is READY for bounded offline research, main integration PARTIAL, live evaluation BLOCKED on owner GO and curator/model/lock,
