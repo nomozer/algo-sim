@@ -1,0 +1,12 @@
+{
+ "schema": "execution/1",
+ "purpose": "Re-freeze the evaluation candidate after product commit ec17602a (backend/app/ai/function_route.py touched)",
+ "worktree": ".superpowers/worktrees/hybrid-session5-offline-consumer (branch research/scene3d-plane-section-display-identity, clean: 0 status lines before the run)",
+ "commit": "ec17602a2ad26f8c85c5fa6098668aac6c07fb35",
+ "command": "cd backend && PYTHONIOENCODING=utf-8 D:/Documents/projects/algo-sim/backend/.venv/Scripts/python.exe scripts/freeze_evaluation_candidate.py",
+ "exit_code": 0,
+ "clean_tree_recorded": true,
+ "measured_system": {"files": 116, "tree_hash": "ba2854172f0ff236adfb790385b76c2548bea0b2ae97b89cbfb4ca4c555220dd"},
+ "previous_measured_system": {"files": 116, "tree_hash": "413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df"},
+ "manifest_sha256": "736d86b9051a08ed2ccce0992e01ada69d3f8d0531f08d2c8a8feaa429a12c2b"
+}

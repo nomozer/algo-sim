@@ -1,0 +1,21 @@
+{
+  "schema": "CANDIDATE_DIVERGENCE/1",
+  "wave": "scene3d-plane-section-display-identity",
+  "corrects": "docs/evaluation/geometry/runs/hybrid-contract-v2/candidate_divergence.json",
+  "run_id": "thesis-final-20260908T160224Z",
+  "run_candidate_hash": "d72db7c324cf61f3c253725e87a2bb2e1e6c9711850f118b787ee60ea1af82d3",
+  "previous_candidate_hash": "413ee525d20874aa346b13df7e51019266f7d4701af56719c2a2ee736266b5df",
+  "current_candidate_hash": "ba2854172f0ff236adfb790385b76c2548bea0b2ae97b89cbfb4ca4c555220dd",
+  "current_measured_files": 116,
+  "current_product_commit": "ec17602a2ad26f8c85c5fa6098668aac6c07fb35",
+  "diverged": true,
+  "reason": "GO_LOCAL_PUBLICATION_REMEDIATION_MERGE_AND_BACKEND_VISUAL_AB_FIX: presentation-only fix in backend/app/ai/function_route.py (route D, Adapter /4 scenes). A section plane keeps its declared source name (α) as notation/reference (the shared namer's existing prefer_declared_plane_names, now also on for section cuts) and states the source relation as its role; cut roles rebuilt from the planner operand order; a section with an unnamed vertex never keeps a vertex cycle (the prism cycle 'HMH1' named stated-unnamed cuts through coincident auxiliary translates); quantities built on renamed objects keep their kind. Ids, coordinates, depends, events, formation, provenance, answers and closure certificates unchanged (guard test against the historical served envelopes).",
+  "cache_version": 127,
+  "cache_version_hien_tai": 127,
+  "cache_decision": "NO_BUMP: /api/analyze (LLM_ONLY) does not import app.ai.function_route (import-closure lock test_structured_geometry_relations.py::test_Y…); no provider prompt, schema, routing policy or cached envelope changed. The shared simulation_state / display_names code is untouched.",
+  "hieu_luc_len_ket_qua_da_do": {
+    "historical_measurements": "UNCHANGED",
+    "live_requests": 0,
+    "so_lieu_lượt_đo_cuối": "UNCHANGED: historical measurements and frozen corpora remain byte-identical; historical Adapter /4 fixtures are kept, new exports go to this run."
+  }
+}
